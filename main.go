@@ -127,18 +127,31 @@ func MainContent() widgets.QWidget_ITF {
 	// Sidebar with playlists etc.
 	sidebar := widgets.NewQVBoxLayout()
 	libraryList := widgets.NewQListWidget(nil)
+	playlistsList := widgets.NewQListWidget(nil)
+
+	// Library
 	libraryList.AddItems([]string{
 		"Made For You", "Recently Played", "Liked Songs", "Albums", "Artists",
+	})
+	libraryList.ConnectItemPressed(func(item *widgets.QListWidgetItem) {
+		if item != nil {
+			playlistsList.SetCurrentRow(-1)
+		}
 	})
 	library := CreateGroupBox(libraryList)
 	library.SetTitle("Library")
 	sidebar.AddWidget(library, 0, 0)
 
-	playlistsList := widgets.NewQListWidget(nil)
+	// Playlists
 	playlistsList.AddItems([]string{
 		"p01", "p02", "p03", "p04", "p05", "p06", "p07", "p08", "p09",
 	})
 	playlistsList.SetCurrentRow(0)
+	playlistsList.ConnectItemPressed(func(item *widgets.QListWidgetItem) {
+		if item != nil {
+			libraryList.SetCurrentRow(-1)
+		}
+	})
 	playlists := CreateGroupBox(playlistsList)
 	playlists.SetTitle("Playlists")
 	sidebar.AddWidget(playlists, 1, 0)
