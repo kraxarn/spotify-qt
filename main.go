@@ -72,25 +72,9 @@ func NewMenuAction(icon, text string, checkable bool) *widgets.QAction {
 func MainMenu() widgets.QMenu_ITF {
 	menu := widgets.NewQMenu(nil)
 
-	fileMenu := widgets.NewQMenu(nil)
-	fileMenu.SetTitle("File")
-	fileMenu.AddActions([]*widgets.QAction{
-		NewMenuAction("settings", "Settings...", false),
-	})
-	fileMenu.AddSeparator()
-	fileMenu.AddActions([]*widgets.QAction{
-		NewMenuAction("im-user-away",     "Log out", false),
-		NewMenuAction("application-exit", "Quit",    false),
-	})
-	menu.AddMenu(fileMenu)
-
-	playlistMenu := widgets.NewQMenu(nil)
-	playlistMenu.AddActions([]*widgets.QAction{
-		NewMenuAction("view-refresh", "Refresh", false),
-	})
-
 	aboutMenu := widgets.NewQMenu(nil)
 	aboutMenu.SetTitle("About")
+	aboutMenu.SetIcon(gui.QIcon_FromTheme("help-about"))
 	aboutMenu.AddActions([]*widgets.QAction{
 		NewMenuAction("spotify", "About spotify-qt", false),
 		NewMenuAction("qt",      "About Qt",         false),
@@ -101,6 +85,17 @@ func MainMenu() widgets.QMenu_ITF {
 		NewMenuAction("run-clean", "Run GC",            false),
 	})
 	menu.AddMenu(aboutMenu)
+
+	menu.AddActions([]*widgets.QAction{
+		NewMenuAction("view-refresh", "Refresh",     false),
+		NewMenuAction("settings",     "Settings...", false),
+	})
+
+	menu.AddSeparator()
+	menu.AddActions([]*widgets.QAction{
+		NewMenuAction("im-user-away",     "Log out", false),
+		NewMenuAction("application-exit", "Quit",    false),
+	})
 
 	return menu
 }
