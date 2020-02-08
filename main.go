@@ -24,18 +24,6 @@ func CreateGroupBox(widget ...widgets.QWidget_ITF) *widgets.QGroupBox {
 	return group
 }
 
-func CreateRow(table *widgets.QTableWidget, row int, title, artist, album, length string) {
-	rowItems := []*widgets.QTableWidgetItem{
-		widgets.NewQTableWidgetItem2(title,  0),
-		widgets.NewQTableWidgetItem2(artist, 1),
-		widgets.NewQTableWidgetItem2(album,  2),
-		widgets.NewQTableWidgetItem2(length, 3),
-	}
-	for index, item := range rowItems {
-		table.SetItem(row, index, item)
-	}
-}
-
 func MainContent() widgets.QWidget_ITF {
 	container := widgets.NewQSplitter(nil)
 
