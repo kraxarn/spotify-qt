@@ -84,22 +84,6 @@ func MainMenu() widgets.QMenu_ITF {
 	})
 	menu.AddMenu(fileMenu)
 
-	playbackMenu := widgets.NewQMenu(nil)
-	playbackMenu.SetTitle("Playback")
-	playbackMenu.AddActions([]*widgets.QAction{
-		NewMenuAction("media-playback-start", "Play",     false),
-		NewMenuAction("media-playback-pause", "Pause",    false),
-		NewMenuAction("media-playback-stop",  "Stop",     false),
-		NewMenuAction("media-skip-backward",  "Previous", false),
-		NewMenuAction("media-skip-forward",   "Next",     false),
-	})
-	playbackMenu.AddSeparator()
-	playbackMenu.AddActions([]*widgets.QAction{
-		NewMenuAction("media-playlist-repeat",  "Repeat",  true),
-		NewMenuAction("media-playlist-shuffle", "Shuffle", true),
-	})
-	menu.AddMenu(playbackMenu)
-
 	playlistMenu := widgets.NewQMenu(nil)
 	playlistMenu.AddActions([]*widgets.QAction{
 		NewMenuAction("view-refresh", "Refresh", false),
