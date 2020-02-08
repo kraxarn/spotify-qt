@@ -138,6 +138,7 @@ func MainContent() widgets.QWidget_ITF {
 	playlistsList.AddItems([]string{
 		"p01", "p02", "p03", "p04", "p05", "p06", "p07", "p08", "p09",
 	})
+	playlistsList.SetCurrentRow(0)
 	playlists := CreateGroupBox(playlistsList)
 	playlists.SetTitle("Playlists")
 	sidebar.AddWidget(playlists, 1, 0)
