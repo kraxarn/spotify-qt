@@ -24,6 +24,37 @@ func CreateGroupBox(widget ...widgets.QWidget_ITF) *widgets.QGroupBox {
 	return group
 }
 
+func MainToolBar() widgets.QToolBar_ITF {
+	toolBar := widgets.NewQToolBar2(nil)
+	toolBar.SetMovable(false)
+	// Media controls
+	toolBar.AddAction2(gui.QIcon_FromTheme("media-skip-backward"),  "Previous")
+	toolBar.AddAction2(gui.QIcon_FromTheme("media-playback-start"), "Play")
+	toolBar.AddAction2(gui.QIcon_FromTheme("media-playback-stop"),  "Stop")
+	toolBar.AddAction2(gui.QIcon_FromTheme("media-skip-forward"),   "Next")
+	// Progress
+	progress := widgets.NewQSlider(nil)
+	progress.SetOrientation(0x1)
+	toolBar.AddSeparator()
+	toolBar.AddWidget(progress)
+	toolBar.AddSeparator()
+	toolBar.AddWidget(widgets.NewQLabel2("0:00/0:00", nil, 0))
+	toolBar.AddSeparator()
+	// Repeat and shuffle toggles
+	toolBar.AddAction2(gui.QIcon_FromTheme("media-playlist-repeat"),   "Repeat").SetCheckable(true)
+	toolBar.AddAction2(gui.QIcon_FromTheme("media-playlist-shuffle"),  "Shuffle").SetCheckable(true)
+	// Volume slider
+	volume := widgets.NewQSlider(nil)
+	volume.SetOrientation(0x1)
+	volume.SetMaximumWidth(100)
+	volume.SetMinimum(0)
+	volume.SetMaximum(20)
+	volume.SetValue(20)
+	toolBar.AddWidget(volume)
+
+	return toolBar
+}
+
 func MainContent() widgets.QWidget_ITF {
 	container := widgets.NewQSplitter(nil)
 
@@ -93,7 +124,9 @@ func main() {
 	window.SetWindowTitle("spotify-qt")
 	window.SetWindowIcon(gui.QIcon_FromTheme("spotify"))
 	window.Resize2(1280, 720)
+
 	window.SetCentralWidget(MainContent())
+	window.AddToolBar(0x4, MainToolBar())
 
 	window.Show()
 	app.Exec()
