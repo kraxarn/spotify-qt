@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-func LayoutToWidget(layout widgets.QLayout_ITF) widgets.QWidget_ITF {
+func LayoutToWidget(layout widgets.QLayout_ITF) *widgets.QWidget {
 	widget := widgets.NewQWidget(nil, 0)
 	widget.SetLayout(layout)
 	return widget
@@ -57,20 +57,40 @@ func MainContent() widgets.QWidget_ITF {
 	playlists.SetTitle("Playlists")
 	sidebar.AddWidget(playlists, 1, 0)
 
-	container.AddWidget(LayoutToWidget(sidebar))
+	sidebarWidget := LayoutToWidget(sidebar)
+	sidebarWidget.SetMaximumWidth(250)
+	container.AddWidget(sidebarWidget)
 
 	// Table with songs
-	songs := widgets.NewQTableWidget(nil)
+	songs := widgets.NewQTreeWidget(nil)
 	songs.SetColumnCount(4)
-	songs.SetHorizontalHeaderLabels([]string{
+	songs.SetEditTriggers(0)
+	songs.SetSelectionBehavior(1)
+	songs.SetSortingEnabled(true)
+	songs.SetRootIsDecorated(false)
+	songs.SetAllColumnsShowFocus(true)
+	songs.SortByColumn(0, 0)
+	headers := []string{
 		"Title", "Artist", "Album", "Length",
-	})
+	}
+	songs.SetHeaderLabels(headers)
+	for i := range headers {
+		songs.SetColumnWidth(i, 200)
+	}
 	for i := 0; i < 20; i++ {
-		CreateRow(songs, 0,
-			fmt.Sprintf("song%v-title",  i),
-			fmt.Sprintf("song%v-artist", i),
-			fmt.Sprintf("song%v-album",  i),
-			fmt.Sprintf("song%v-length", i))
+		item := widgets.NewQTreeWidgetItem2([]string{
+			fmt.Sprintf("song%02v-title",  i),
+			fmt.Sprintf("song%02v-artist", i),
+			fmt.Sprintf("song%02v-album",  i),
+			fmt.Sprintf("song%02v-length", i),
+		}, 0)
+		if i == 0 {
+			item.SetIcon(0, gui.QIcon_FromTheme("media-playback-start"))
+		} else {
+			item.SetIcon(0, gui.NewQIcon())
+		}
+		songs.InsertTopLevelItem(i, item)
+
 	}
 	container.AddWidget(songs)
 
