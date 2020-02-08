@@ -75,8 +75,12 @@ func MainMenu() widgets.QMenu_ITF {
 	fileMenu := widgets.NewQMenu(nil)
 	fileMenu.SetTitle("File")
 	fileMenu.AddActions([]*widgets.QAction{
-		NewMenuAction("settings",         "Settings...", false),
-		NewMenuAction("application-exit", "Quit",        false),
+		NewMenuAction("settings", "Settings...", false),
+	})
+	fileMenu.AddSeparator()
+	fileMenu.AddActions([]*widgets.QAction{
+		NewMenuAction("im-user-away",     "Log out", false),
+		NewMenuAction("application-exit", "Quit",    false),
 	})
 	menu.AddMenu(fileMenu)
 
