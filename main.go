@@ -63,8 +63,11 @@ func MainToolBar() widgets.QToolBar_ITF {
 	return toolBar
 }
 
-func NewMenuAction(icon, text string) *widgets.QAction {
+func NewMenuAction(icon, text string, shortcut gui.QKeySequence__StandardKey) *widgets.QAction {
 	action := widgets.NewQAction3(gui.QIcon_FromTheme(icon), text, nil)
+	if shortcut != 0 {
+		action.SetShortcut(gui.NewQKeySequence5(shortcut))
+	}
 	return action
 }
 
@@ -75,25 +78,25 @@ func MainMenu() widgets.QMenu_ITF {
 	aboutMenu.SetTitle("About")
 	aboutMenu.SetIcon(gui.QIcon_FromTheme("help-about"))
 	aboutMenu.AddActions([]*widgets.QAction{
-		NewMenuAction("spotify", "About spotify-qt"),
-		NewMenuAction("qt",      "About Qt"),
+		NewMenuAction("spotify", "About spotify-qt", 0),
+		NewMenuAction("qt",      "About Qt",         0),
 	})
 	aboutMenu.AddSeparator()
 	aboutMenu.AddActions([]*widgets.QAction{
-		NewMenuAction("download",  "Check for updates"),
-		NewMenuAction("run-clean", "Run GC"),
+		NewMenuAction("download",  "Check for updates", 0),
+		NewMenuAction("run-clean", "Run GC",            0),
 	})
 	menu.AddMenu(aboutMenu)
 
 	menu.AddActions([]*widgets.QAction{
-		NewMenuAction("view-refresh", "Refresh"),
-		NewMenuAction("settings",     "Settings..."),
+		NewMenuAction("view-refresh", "Refresh",     gui.QKeySequence__Refresh),
+		NewMenuAction("settings",     "Settings...", gui.QKeySequence__Preferences),
 	})
 
 	menu.AddSeparator()
 	menu.AddActions([]*widgets.QAction{
-		NewMenuAction("im-user-away",     "Log out"),
-		NewMenuAction("application-exit", "Quit"),
+		NewMenuAction("im-user-away",     "Log out", 0),
+		NewMenuAction("application-exit", "Quit", gui.QKeySequence__Quit),
 	})
 
 	return menu
