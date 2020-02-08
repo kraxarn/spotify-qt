@@ -148,9 +148,7 @@ func MainContent() widgets.QWidget_ITF {
 			fmt.Sprintf("song%02v-length", i),
 		}, 0)
 		if i == 0 {
-			item.SetIcon(0, gui.QIcon_FromTheme("media-playback-start"))
-		} else {
-			item.SetIcon(0, gui.NewQIcon())
+			item.SetIcon(0, gui.QIcon_FromTheme("media-playback-pause"))
 		}
 		songs.InsertTopLevelItem(i, item)
 
