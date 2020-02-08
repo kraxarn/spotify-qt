@@ -105,8 +105,18 @@ func MainMenu() widgets.QMenu_ITF {
 		NewMenuAction("view-refresh", "Refresh", false),
 	})
 
-	menu.AddAction("View")
-	menu.AddAction("About")
+	aboutMenu := widgets.NewQMenu(nil)
+	aboutMenu.SetTitle("About")
+	aboutMenu.AddActions([]*widgets.QAction{
+		NewMenuAction("spotify", "About spotify-qt", false),
+		NewMenuAction("qt",      "About Qt",         false),
+	})
+	aboutMenu.AddSeparator()
+	aboutMenu.AddActions([]*widgets.QAction{
+		NewMenuAction("download",  "Check for updates", false),
+		NewMenuAction("run-clean", "Run GC",            false),
+	})
+	menu.AddMenu(aboutMenu)
 
 	return menu
 }
