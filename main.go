@@ -63,9 +63,8 @@ func MainToolBar() widgets.QToolBar_ITF {
 	return toolBar
 }
 
-func NewMenuAction(icon, text string, checkable bool) *widgets.QAction {
+func NewMenuAction(icon, text string) *widgets.QAction {
 	action := widgets.NewQAction3(gui.QIcon_FromTheme(icon), text, nil)
-	action.SetCheckable(checkable)
 	return action
 }
 
@@ -76,25 +75,25 @@ func MainMenu() widgets.QMenu_ITF {
 	aboutMenu.SetTitle("About")
 	aboutMenu.SetIcon(gui.QIcon_FromTheme("help-about"))
 	aboutMenu.AddActions([]*widgets.QAction{
-		NewMenuAction("spotify", "About spotify-qt", false),
-		NewMenuAction("qt",      "About Qt",         false),
+		NewMenuAction("spotify", "About spotify-qt"),
+		NewMenuAction("qt",      "About Qt"),
 	})
 	aboutMenu.AddSeparator()
 	aboutMenu.AddActions([]*widgets.QAction{
-		NewMenuAction("download",  "Check for updates", false),
-		NewMenuAction("run-clean", "Run GC",            false),
+		NewMenuAction("download",  "Check for updates"),
+		NewMenuAction("run-clean", "Run GC"),
 	})
 	menu.AddMenu(aboutMenu)
 
 	menu.AddActions([]*widgets.QAction{
-		NewMenuAction("view-refresh", "Refresh",     false),
-		NewMenuAction("settings",     "Settings...", false),
+		NewMenuAction("view-refresh", "Refresh"),
+		NewMenuAction("settings",     "Settings..."),
 	})
 
 	menu.AddSeparator()
 	menu.AddActions([]*widgets.QAction{
-		NewMenuAction("im-user-away",     "Log out", false),
-		NewMenuAction("application-exit", "Quit",    false),
+		NewMenuAction("im-user-away",     "Log out"),
+		NewMenuAction("application-exit", "Quit"),
 	})
 
 	return menu
