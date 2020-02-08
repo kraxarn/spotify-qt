@@ -27,6 +27,14 @@ func CreateGroupBox(widget ...widgets.QWidget_ITF) *widgets.QGroupBox {
 func MainToolBar() widgets.QToolBar_ITF {
 	toolBar := widgets.NewQToolBar2(nil)
 	toolBar.SetMovable(false)
+	// Menu
+	menu := widgets.NewQToolButton(nil)
+	menu.SetText("Menu")
+	menu.SetIcon(gui.QIcon_FromTheme("application-menu"))
+	menu.SetPopupMode(2)
+	menu.SetMenu(MainMenu())
+	toolBar.AddWidget(menu)
+	toolBar.AddSeparator()
 	// Media controls
 	toolBar.AddAction2(gui.QIcon_FromTheme("media-skip-backward"),  "Previous")
 	toolBar.AddAction2(gui.QIcon_FromTheme("media-playback-start"), "Play")
@@ -61,8 +69,8 @@ func NewMenuAction(icon, text string, checkable bool) *widgets.QAction {
 	return action
 }
 
-func MainMenuBar() widgets.QMenuBar_ITF {
-	menu := widgets.NewQMenuBar(nil)
+func MainMenu() widgets.QMenu_ITF {
+	menu := widgets.NewQMenu(nil)
 
 	fileMenu := widgets.NewQMenu(nil)
 	fileMenu.SetTitle("File")
@@ -170,7 +178,6 @@ func main() {
 	window.SetCentralWidget(MainContent())
 	// 1=left, 2=right, 4=top, 8=bottom
 	window.AddToolBar(0x4, MainToolBar())
-	window.SetMenuBar(MainMenuBar())
 
 	window.Show()
 	app.Exec()
