@@ -55,6 +55,50 @@ func MainToolBar() widgets.QToolBar_ITF {
 	return toolBar
 }
 
+func NewMenuAction(icon, text string, checkable bool) *widgets.QAction {
+	action := widgets.NewQAction3(gui.QIcon_FromTheme(icon), text, nil)
+	action.SetCheckable(checkable)
+	return action
+}
+
+func MainMenuBar() widgets.QMenuBar_ITF {
+	menu := widgets.NewQMenuBar(nil)
+
+	fileMenu := widgets.NewQMenu(nil)
+	fileMenu.SetTitle("File")
+	fileMenu.AddActions([]*widgets.QAction{
+		NewMenuAction("settings",         "Settings...", false),
+		NewMenuAction("application-exit", "Quit",        false),
+	})
+	menu.AddMenu(fileMenu)
+
+	playbackMenu := widgets.NewQMenu(nil)
+	playbackMenu.SetTitle("Playback")
+	playbackMenu.AddActions([]*widgets.QAction{
+		NewMenuAction("media-playback-start", "Play",     false),
+		NewMenuAction("media-playback-pause", "Pause",    false),
+		NewMenuAction("media-playback-stop",  "Stop",     false),
+		NewMenuAction("media-skip-backward",  "Previous", false),
+		NewMenuAction("media-skip-forward",   "Next",     false),
+	})
+	playbackMenu.AddSeparator()
+	playbackMenu.AddActions([]*widgets.QAction{
+		NewMenuAction("media-playlist-repeat",  "Repeat",  true),
+		NewMenuAction("media-playlist-shuffle", "Shuffle", true),
+	})
+	menu.AddMenu(playbackMenu)
+
+	playlistMenu := widgets.NewQMenu(nil)
+	playlistMenu.AddActions([]*widgets.QAction{
+		NewMenuAction("view-refresh", "Refresh", false),
+	})
+
+	menu.AddAction("View")
+	menu.AddAction("About")
+
+	return menu
+}
+
 func MainContent() widgets.QWidget_ITF {
 	container := widgets.NewQSplitter(nil)
 
@@ -126,7 +170,9 @@ func main() {
 	window.Resize2(1280, 720)
 
 	window.SetCentralWidget(MainContent())
+	// 1=left, 2=right, 4=top, 8=bottom
 	window.AddToolBar(0x4, MainToolBar())
+	window.SetMenuBar(MainMenuBar())
 
 	window.Show()
 	app.Exec()
