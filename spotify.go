@@ -4,7 +4,6 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"github.com/therecipe/qt/core"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -28,9 +27,9 @@ func NewSpotify() *Spotify {
 
 func (spt *Spotify) Auth(err chan error) {
 	// Check if we already have an access and refresh token
-	settings := core.NewQSettings5(nil)
-	if len(settings.Value("AccessToken", core.NewQVariant1("")).ToString()) > 0 &&
-		len(settings.Value("RefreshToken", core.NewQVariant1("")).ToString()) > 0 {
+	settings := NewSettings()
+	if len(settings.Get("AccessToken", "").(string)) > 0 &&
+		len(settings.Get("RefreshToken", "").(string)) > 0 {
 		fmt.Println("access/refresh token already set, ignoring auth")
 		err <- nil
 		return
@@ -110,8 +109,8 @@ func (spt *Spotify) Auth(err chan error) {
 				err <- fmt.Errorf(jsonErr.(string))
 			}
 			// Otherwise, assume everything went fine and save token
-			settings.SetValue("AccessToken",  core.NewQVariant1(jsonData["access_token"]))
-			settings.SetValue("RefreshToken", core.NewQVariant1(jsonData["refresh_token"]))
+			settings.Set("AccessToken",  jsonData["access_token"])
+			settings.Set("RefreshToken", jsonData["refresh_token"])
 			settings.Sync()
 			spt.lastAuth = time.Now()
 			// Respond to client everything went fine
