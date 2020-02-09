@@ -25,6 +25,33 @@ func NewSpotify() *Spotify {
 	return spt
 }
 
+func (spt *Spotify) Request(url string) (map[string]interface{}, error) {
+	// TODO: Check here if access token needs refreshing
+	// Prepare request
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		return nil, err
+	}
+	// Set header
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %v", spt.AccessToken()))
+	// Send request
+	resp, err := spt.httpClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	respData, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	// Parse response
+	var jsonData map[string]interface{}
+	if err = json.Unmarshal(respData, &jsonData); err != nil {
+		return nil, err
+	}
+	return jsonData, nil
+}
+
 func (spt *Spotify) AccessToken() string {
 	return NewSettings().Get("AccessToken", "").(string)
 }
