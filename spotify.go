@@ -20,13 +20,15 @@ func NewSpotify() *Spotify {
 	return spt
 }
 
-func (spt *Spotify) Auth() error {
+func (spt *Spotify) Auth(err chan error) {
 	// Check environment variables
 	if os.Getenv("SPOTIFY_QT_ID") == "" {
-		fmt.Println("warning: SPOTIFY_QT_ID is not set")
+		err <- fmt.Errorf("SPOTIFY_QT_ID is not set")
+		return
 	}
 	if os.Getenv("SPOTIFY_QT_SECRET") == "" {
-		fmt.Println("warning: SPOTIFY_QT_SECRET is not set")
+		err <- fmt.Errorf("SPOTIFY_QT_SECRET is not set")
+		return
 	}
 	// Scopes for the request for clarity
 	// For now, these are identical to spotify-tui
@@ -53,10 +55,14 @@ func (spt *Spotify) Auth() error {
 	// TODO: This keeps running forever, stop once user has authenticated
 	go func() {
 		http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
-			fmt.Fprintf(writer, "success, you can now go back to spotify-qt")
+			_, _ = fmt.Fprintf(writer, "success, you can now go back to spotify-qt")
 		})
-		http.ListenAndServe(":8888", nil)
+		if e := http.ListenAndServe(":8888", nil); e != nil {
+			err <- e
+		}
 	}()
 	// Open url with xdg-open
-	return exec.Command("xdg-open", authUrl).Run()
+	if e := exec.Command("xdg-open", authUrl).Run(); e != nil {
+		err <- e
+	}
 }
