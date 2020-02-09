@@ -81,6 +81,16 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 	playlists := CreateGroupBox(playlistsList)
 	playlists.SetTitle("Playlists")
 	sidebar.AddWidget(playlists, 1, 0)
+	// Now playing song
+	nowPlaying := widgets.NewQHBoxLayout()
+	nowPlayingArt := widgets.NewQLabel(nil, 0)
+	nowPlayingArt.SetFixedSize2(64, 64)
+	nowPlayingArt.SetPixmap(
+		gui.QIcon_FromTheme("media-optical-audio").Pixmap(nowPlayingArt.Size(), 0, 0))
+	nowPlaying.AddWidget(nowPlayingArt, 0, 0)
+	nowPlayingText := widgets.NewQLabel2("No music playing", nil, 0)
+	nowPlaying.AddWidget(nowPlayingText, 1, 0)
+	sidebar.AddWidget(LayoutToWidget(nowPlaying), 0, 0)
 
 	sidebarWidget := LayoutToWidget(sidebar)
 	sidebarWidget.SetMaximumWidth(250)
