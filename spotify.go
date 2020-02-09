@@ -33,17 +33,25 @@ func (spt *Spotify) RefreshToken() string {
 	return NewSettings().Get("RefreshToken", "").(string)
 }
 
+func (spt *Spotify) ClientID() string {
+	return os.Getenv("SPOTIFY_QT_ID")
+}
+
+func (spt *Spotify) ClientSecret() string {
+	return os.Getenv("SPOTIFY_QT_SECRET")
+}
+
 func (spt *Spotify) Auth(err chan error) {
 	// Check if we already have an access and refresh token
 	settings := NewSettings()
 	if len(spt.AccessToken()) > 0 && len(spt.RefreshToken()) > 0 {
-		fmt.Println("access/refresh token already set, ignoring auth")
-		err <- nil
+		fmt.Println("access/refresh token already set, refreshing access token")
+		err <- spt.Refresh()
 		return
 	}
 	// Check environment variables
-	clientID     := os.Getenv("SPOTIFY_QT_ID")
-	clientSecret := os.Getenv("SPOTIFY_QT_SECRET")
+	clientID     := spt.ClientID()
+	clientSecret := spt.ClientSecret()
 	if clientID == "" {
 		err <- fmt.Errorf("SPOTIFY_QT_ID is not set")
 	}
@@ -132,4 +140,46 @@ func (spt *Spotify) Auth(err chan error) {
 	if e := exec.Command("xdg-open", authUrl).Run(); e != nil {
 		err <- e
 	}
+}
+
+func (spt *Spotify) Refresh() error {
+	// Make sure we have a refresh token
+	if len(spt.RefreshToken()) <= 0 {
+		return fmt.Errorf("refresh token is not set")
+	}
+	// Create form
+	form := url.Values{}
+	form.Add("grant_type", "refresh_token")
+	form.Add("refresh_token", spt.RefreshToken())
+	// Create request
+	req, err := http.NewRequest(http.MethodPost,
+		"https://accounts.spotify.com/api/token", strings.NewReader(form.Encode()))
+	if err != nil {
+		return err
+	}
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Add("Authorization", fmt.Sprintf("Basic %v",
+		base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%v:%v", spt.ClientID(), spt.ClientSecret())))))
+	// Send request
+	response, err := spt.httpClient.Do(req)
+	if err != nil {
+		return err
+	}
+	// Get response data
+	responseData, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return err
+	}
+	// Try to parse response
+	var jsonData map[string]interface{}
+	if err = json.Unmarshal(responseData, &jsonData); err != nil {
+		return err
+	}
+	// Save access token if found
+	if accessToken, ok := jsonData["access_token"]; !ok {
+		return fmt.Errorf("failed to refresh access token: %v", jsonData["error_description"])
+	} else {
+		NewSettings().Set("AccessToken", accessToken)
+	}
+	return nil
 }
