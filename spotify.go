@@ -27,6 +27,14 @@ func NewSpotify() *Spotify {
 }
 
 func (spt *Spotify) Auth(err chan error) {
+	// Check if we already have an access and refresh token
+	settings := core.NewQSettings5(nil)
+	if len(settings.Value("AccessToken", core.NewQVariant1("")).ToString()) > 0 &&
+		len(settings.Value("RefreshToken", core.NewQVariant1("")).ToString()) > 0 {
+		fmt.Println("access/refresh token already set, ignoring auth")
+		err <- nil
+		return
+	}
 	// Check environment variables
 	clientID     := os.Getenv("SPOTIFY_QT_ID")
 	clientSecret := os.Getenv("SPOTIFY_QT_SECRET")
@@ -102,10 +110,10 @@ func (spt *Spotify) Auth(err chan error) {
 				err <- fmt.Errorf(jsonErr.(string))
 			}
 			// Otherwise, assume everything went fine and save token
-			settings := core.NewQSettings5(nil)
 			settings.SetValue("AccessToken",  core.NewQVariant1(jsonData["access_token"]))
 			settings.SetValue("RefreshToken", core.NewQVariant1(jsonData["refresh_token"]))
 			settings.Sync()
+			spt.lastAuth = time.Now()
 			// Respond to client everything went fine
 			_, _ = fmt.Fprintf(writer, "success, you can now go back to spotify-qt")
 			err <- nil
