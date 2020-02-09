@@ -18,6 +18,16 @@ type Spotify struct {
 	httpClient http.Client
 }
 
+type SpotifyPlaylist struct {
+	Collaborative	bool
+	Description		string
+	ID 				string
+	Image 			string
+	Name			string
+	Public			bool
+	Tracks			map[string]interface{}
+}
+
 func NewSpotify() *Spotify {
 	spt := new(Spotify)
 	spt.lastAuth = time.Unix(0, 0)
@@ -206,7 +216,34 @@ func (spt *Spotify) Refresh() error {
 	if accessToken, ok := jsonData["access_token"]; !ok {
 		return fmt.Errorf("failed to refresh access token: %v", jsonData["error_description"])
 	} else {
+		spt.lastAuth = time.Now()
 		NewSettings().Set("AccessToken", accessToken)
 	}
 	return nil
+}
+
+func (spt *Spotify) Playlists() []SpotifyPlaylist {
+	// Request playlists
+	resp, err := spt.Request("https://api.spotify.com/v1/me/playlists?limit=50")
+	if err != nil {
+		return []SpotifyPlaylist{}
+	}
+	// Parse response as playlists
+	items := resp["items"].([]interface{})
+	// Create list of playlists
+	playlists := make([]SpotifyPlaylist, int(resp["total"].(float64)))
+	// Loop through all items and add them to playlist
+	for i, item := range items {
+		data := item.(map[string]interface{})
+		playlists[i] = SpotifyPlaylist{
+			Collaborative: data["collaborative"].(bool),
+			Description:   data["description"].(string),
+			ID:            data["id"].(string),
+			Image:         data["images"].([]interface{})[0].(map[string]interface{})["url"].(string),
+			Name:          data["name"].(string),
+			Public:        data["public"].(bool),
+			Tracks:        data["images"].([]interface{})[0].(map[string]interface{}),
+		}
+	}
+	return playlists
 }
