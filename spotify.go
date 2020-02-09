@@ -25,11 +25,18 @@ func NewSpotify() *Spotify {
 	return spt
 }
 
+func (spt *Spotify) AccessToken() string {
+	return NewSettings().Get("AccessToken", "").(string)
+}
+
+func (spt *Spotify) RefreshToken() string {
+	return NewSettings().Get("RefreshToken", "").(string)
+}
+
 func (spt *Spotify) Auth(err chan error) {
 	// Check if we already have an access and refresh token
 	settings := NewSettings()
-	if len(settings.Get("AccessToken", "").(string)) > 0 &&
-		len(settings.Get("RefreshToken", "").(string)) > 0 {
+	if len(spt.AccessToken()) > 0 && len(spt.RefreshToken()) > 0 {
 		fmt.Println("access/refresh token already set, ignoring auth")
 		err <- nil
 		return
