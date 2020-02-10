@@ -69,6 +69,10 @@ func (tck *SpotifyTrack) Name() string {
 	return tck.Track["name"].(string)
 }
 
+func (tck *SpotifyTrack) Duration() uint {
+	return uint(tck.Track["duration_ms"].(float64))
+}
+
 func NewSpotify() *Spotify {
 	spt := new(Spotify)
 	spt.lastAuth = time.Unix(0, 0)
