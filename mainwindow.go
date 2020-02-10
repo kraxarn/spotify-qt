@@ -2,17 +2,22 @@ package main
 
 import (
 	"fmt"
+	"github.com/therecipe/qt/core"
 	"github.com/therecipe/qt/gui"
 	"github.com/therecipe/qt/widgets"
 )
 
 type MainWindow struct {
+	spotify *Spotify
 	window *widgets.QMainWindow
+	playlists *widgets.QListWidget
+
 }
 
-func NewMainWindow() *MainWindow {
+func NewMainWindow(spotify *Spotify) *MainWindow {
 	// Create the main window struct
 	mw := new(MainWindow)
+	mw.spotify = spotify
 	// Create the main Qt main window
 	window := widgets.NewQMainWindow(nil, 0)
 	window.SetWindowTitle("spotify-qt")
@@ -55,32 +60,31 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 	// Sidebar with playlists etc.
 	sidebar := widgets.NewQVBoxLayout()
 	libraryList := widgets.NewQListWidget(nil)
-	playlistsList := widgets.NewQListWidget(nil)
+	mw.playlists = widgets.NewQListWidget(nil)
 	// Library
 	libraryList.AddItems([]string{
 		"Made For You", "Recently Played", "Liked Songs", "Albums", "Artists",
 	})
 	libraryList.ConnectItemPressed(func(item *widgets.QListWidgetItem) {
 		if item != nil {
-			playlistsList.SetCurrentRow(-1)
+			mw.playlists.SetCurrentRow(-1)
 		}
 	})
 	library := CreateGroupBox(libraryList)
 	library.SetTitle("Library")
 	sidebar.AddWidget(library, 0, 0)
-	// Playlists
-	playlistsList.AddItems([]string{
-		"p01", "p02", "p03", "p04", "p05", "p06", "p07", "p08", "p09",
-	})
-	playlistsList.SetCurrentRow(0)
-	playlistsList.ConnectItemPressed(func(item *widgets.QListWidgetItem) {
+	// Update current playlists
+	mw.RefreshPlaylists()
+	// Set default selected playlist
+	mw.playlists.SetCurrentRow(0)
+	mw.playlists.ConnectItemPressed(func(item *widgets.QListWidgetItem) {
 		if item != nil {
 			libraryList.SetCurrentRow(-1)
 		}
 	})
-	playlists := CreateGroupBox(playlistsList)
-	playlists.SetTitle("Playlists")
-	sidebar.AddWidget(playlists, 1, 0)
+	playlistContainer := CreateGroupBox(mw.playlists)
+	playlistContainer.SetTitle("Playlists")
+	sidebar.AddWidget(playlistContainer, 1, 0)
 	// Now playing song
 	nowPlaying := widgets.NewQHBoxLayout()
 	nowPlayingArt := widgets.NewQLabel(nil, 0)
@@ -122,10 +126,18 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 			item.SetIcon(0, gui.QIcon_FromTheme("media-playback-pause"))
 		}
 		songs.InsertTopLevelItem(i, item)
-
 	}
 	container.AddWidget(songs)
 	return container
+}
+
+func (mw *MainWindow) RefreshPlaylists() {
+	for i, playlist := range mw.spotify.Playlists() {
+		item := widgets.NewQListWidgetItem(nil, i)
+		item.SetData(0, core.NewQVariant1(playlist))
+		item.SetText(playlist.Name)
+		mw.playlists.AddItem2(item)
+	}
 }
 
 func (mw *MainWindow) NewToolBar() widgets.QToolBar_ITF {
