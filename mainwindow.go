@@ -2,16 +2,16 @@ package main
 
 import (
 	"fmt"
-	"github.com/therecipe/qt/core"
 	"github.com/therecipe/qt/gui"
 	"github.com/therecipe/qt/widgets"
 )
 
 type MainWindow struct {
-	spotify *Spotify
-	window *widgets.QMainWindow
-	playlists *widgets.QListWidget
+	spotify 		*Spotify
+	window 			*widgets.QMainWindow
+	playlists		*widgets.QListWidget
 	songs 			*widgets.QTreeWidget
+	sptPlaylists	[]SpotifyPlaylist
 }
 
 func NewMainWindow(spotify *Spotify) *MainWindow {
@@ -204,10 +204,8 @@ func (mw *MainWindow) NewMenu() widgets.QMenu_ITF {
 }
 
 func (mw *MainWindow) RefreshPlaylists() {
-	for i, playlist := range mw.spotify.Playlists() {
-		item := widgets.NewQListWidgetItem(nil, i)
-		item.SetData(0, core.NewQVariant1(playlist))
-		item.SetText(playlist.Name)
-		mw.playlists.AddItem2(item)
+	mw.sptPlaylists = mw.spotify.Playlists()
+	for _, playlist := range mw.sptPlaylists {
+		mw.playlists.AddItem(playlist.Name)
 	}
 }
