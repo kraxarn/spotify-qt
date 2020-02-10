@@ -283,7 +283,7 @@ func (spt *Spotify) Playlists() []SpotifyPlaylist {
 			Image:         data["images"].([]interface{})[0].(map[string]interface{})["url"].(string),
 			Name:          data["name"].(string),
 			Public:        data["public"].(bool),
-			Tracks:        data["images"].([]interface{})[0].(map[string]interface{}),
+			Tracks:        data["tracks"].(map[string]interface{}),
 		}
 	}
 	return playlists
