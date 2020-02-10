@@ -11,7 +11,7 @@ type MainWindow struct {
 	spotify *Spotify
 	window *widgets.QMainWindow
 	playlists *widgets.QListWidget
-
+	songs 			*widgets.QTreeWidget
 }
 
 func NewMainWindow(spotify *Spotify) *MainWindow {
@@ -100,20 +100,20 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 	sidebarWidget.SetMaximumWidth(250)
 	container.AddWidget(sidebarWidget)
 	// Table with songs
-	songs := widgets.NewQTreeWidget(nil)
-	songs.SetColumnCount(4)
-	songs.SetEditTriggers(0)
-	songs.SetSelectionBehavior(1)
-	songs.SetSortingEnabled(true)
-	songs.SetRootIsDecorated(false)
-	songs.SetAllColumnsShowFocus(true)
-	songs.SortByColumn(0, 0)
+	mw.songs = widgets.NewQTreeWidget(nil)
+	mw.songs.SetColumnCount(4)
+	mw.songs.SetEditTriggers(0)
+	mw.songs.SetSelectionBehavior(1)
+	mw.songs.SetSortingEnabled(true)
+	mw.songs.SetRootIsDecorated(false)
+	mw.songs.SetAllColumnsShowFocus(true)
+	mw.songs.SortByColumn(0, 0)
 	headers := []string{
 		"Title", "Artist", "Album", "Length",
 	}
-	songs.SetHeaderLabels(headers)
+	mw.songs.SetHeaderLabels(headers)
 	for i := range headers {
-		songs.SetColumnWidth(i, 200)
+		mw.songs.SetColumnWidth(i, 200)
 	}
 	for i := 0; i < 20; i++ {
 		item := widgets.NewQTreeWidgetItem2([]string{
@@ -125,9 +125,9 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 		if i == 0 {
 			item.SetIcon(0, gui.QIcon_FromTheme("media-playback-pause"))
 		}
-		songs.InsertTopLevelItem(i, item)
+		mw.songs.InsertTopLevelItem(i, item)
 	}
-	container.AddWidget(songs)
+	container.AddWidget(mw.songs)
 	return container
 }
 
