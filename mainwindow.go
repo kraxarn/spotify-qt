@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/therecipe/qt/gui"
 	"github.com/therecipe/qt/widgets"
+	"time"
 )
 
 type MainWindow struct {
@@ -122,8 +123,14 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 		fmt.Println("failed to load tracks in playlist:", err)
 	} else {
 		for i, t := range tracks {
+			duration, err := time.ParseDuration(fmt.Sprintf("%vms", t.Duration()))
+			if err != nil {
+				fmt.Println("failed to parse duration:", err)
+				continue
+			}
 			item := widgets.NewQTreeWidgetItem2([]string{
-				t.Name(), t.Artist(), t.Album(), fmt.Sprintf("%v ms", t.Duration()),
+				t.Name(), t.Artist(), t.Album(),
+				fmt.Sprintf("%.f:%02d", duration.Minutes(), int(duration.Seconds()) % 60),
 			}, 0)
 			mw.songs.InsertTopLevelItem(i, item)
 		}
