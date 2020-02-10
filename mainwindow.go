@@ -121,20 +121,12 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 	if err != nil {
 		fmt.Println("failed to load tracks in playlist:", err)
 	} else {
-		fmt.Printf("tracks in playlist %v:\n%v\n", currentList.Name, tracks)
-	}
-	
-	for i := 0; i < 20; i++ {
-		item := widgets.NewQTreeWidgetItem2([]string{
-			fmt.Sprintf("song%02v-title",  i),
-			fmt.Sprintf("song%02v-artist", i),
-			fmt.Sprintf("song%02v-album",  i),
-			fmt.Sprintf("song%02v-length", i),
-		}, 0)
-		if i == 0 {
-			item.SetIcon(0, gui.QIcon_FromTheme("media-playback-pause"))
+		for i, t := range tracks {
+			item := widgets.NewQTreeWidgetItem2([]string{
+				t.Name(), t.Artist(), t.Album(), fmt.Sprintf("%v ms", t.Duration()),
+			}, 0)
+			mw.songs.InsertTopLevelItem(i, item)
 		}
-		mw.songs.InsertTopLevelItem(i, item)
 	}
 	container.AddWidget(mw.songs)
 	return container
