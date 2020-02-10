@@ -131,15 +131,6 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 	return container
 }
 
-func (mw *MainWindow) RefreshPlaylists() {
-	for i, playlist := range mw.spotify.Playlists() {
-		item := widgets.NewQListWidgetItem(nil, i)
-		item.SetData(0, core.NewQVariant1(playlist))
-		item.SetText(playlist.Name)
-		mw.playlists.AddItem2(item)
-	}
-}
-
 func (mw *MainWindow) NewToolBar() widgets.QToolBar_ITF {
 	toolBar := widgets.NewQToolBar2(nil)
 	toolBar.SetMovable(false)
@@ -210,4 +201,13 @@ func (mw *MainWindow) NewMenu() widgets.QMenu_ITF {
 	})
 	// Return final menu
 	return menu
+}
+
+func (mw *MainWindow) RefreshPlaylists() {
+	for i, playlist := range mw.spotify.Playlists() {
+		item := widgets.NewQListWidgetItem(nil, i)
+		item.SetData(0, core.NewQVariant1(playlist))
+		item.SetText(playlist.Name)
+		mw.playlists.AddItem2(item)
+	}
 }
