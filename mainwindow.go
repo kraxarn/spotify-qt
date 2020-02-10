@@ -115,6 +115,15 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 	for i := range headers {
 		mw.songs.SetColumnWidth(i, 200)
 	}
+	// Load tracks in playlist
+	currentList := mw.sptPlaylists[mw.playlists.CurrentRow()]
+	tracks, err := currentList.LoadTracks(mw.spotify)
+	if err != nil {
+		fmt.Println("failed to load tracks in playlist:", err)
+	} else {
+		fmt.Printf("tracks in playlist %v:\n%v\n", currentList.Name, tracks)
+	}
+	
 	for i := 0; i < 20; i++ {
 		item := widgets.NewQTreeWidgetItem2([]string{
 			fmt.Sprintf("song%02v-title",  i),
