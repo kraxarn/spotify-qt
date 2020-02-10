@@ -28,6 +28,47 @@ type SpotifyPlaylist struct {
 	Tracks			map[string]interface{}
 }
 
+func (pl *SpotifyPlaylist) LoadTracks(spt *Spotify) ([]SpotifyTrack, error) {
+	// Load tracks from api
+	tracks, err := spt.Request(pl.Tracks["href"].(string))
+	if err != nil {
+		return nil, err
+	}
+	// Load tracks
+	trackList := make([]SpotifyTrack, int(pl.Tracks["total"].(float64)))
+	for i, track := range tracks["items"].([]interface{}) {
+		t := track.(map[string]interface{})
+		trackList[i] = SpotifyTrack{
+			AddedAt: time.Time{},
+			IsLocal: t["is_local"].(bool),
+			Track:   t["track"].(map[string]interface{}),
+		}
+	}
+	return trackList, nil
+}
+
+type SpotifyTrack struct {
+	AddedAt time.Time
+	IsLocal bool
+	Track map[string]interface{}
+}
+
+func (tck *SpotifyTrack) ID() string {
+	return tck.Track["id"].(string)
+}
+
+func (tck *SpotifyTrack) Album() string {
+	return tck.Track["album"].(map[string]interface{})["name"].(string)
+}
+
+func (tck *SpotifyTrack) Artist() string {
+	return tck.Track["artists"].([]interface{})[0].(map[string]interface{})["name"].(string)
+}
+
+func (tck *SpotifyTrack) Name() string {
+	return tck.Track["name"].(string)
+}
+
 func NewSpotify() *Spotify {
 	spt := new(Spotify)
 	spt.lastAuth = time.Unix(0, 0)
