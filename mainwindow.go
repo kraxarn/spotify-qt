@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/therecipe/qt/core"
 	"github.com/therecipe/qt/gui"
 	"github.com/therecipe/qt/widgets"
 	"time"
@@ -13,12 +14,15 @@ type MainWindow struct {
 	playlists		*widgets.QListWidget
 	songs 			*widgets.QTreeWidget
 	sptPlaylists	[]SpotifyPlaylist
+
+	musicPlayer *MusicPlayer
 }
 
 func NewMainWindow(spotify *Spotify) *MainWindow {
 	// Create the main window struct
 	mw := new(MainWindow)
 	mw.spotify = spotify
+	mw.musicPlayer = NewMusicPlayer()
 	// Create the main Qt main window
 	window := widgets.NewQMainWindow(nil, 0)
 	window.SetWindowTitle("spotify-qt")
@@ -116,6 +120,12 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 	for i := range headers {
 		mw.songs.SetColumnWidth(i, 200)
 	}
+	mw.songs.ConnectItemPressed(func(item *widgets.QTreeWidgetItem, column int) {
+		trackID := item.Data(0, 1).ToString()
+		if err := mw.musicPlayer.Play(trackID); err != nil {
+			fmt.Println("failed to play track:", err)
+		}
+	})
 	// Load tracks in playlist
 	currentList := mw.sptPlaylists[mw.playlists.CurrentRow()]
 	tracks, err := currentList.LoadTracks(mw.spotify)
@@ -132,6 +142,7 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 				t.Name(), t.Artist(), t.Album(),
 				fmt.Sprintf("%.f:%02d", duration.Minutes(), int(duration.Seconds()) % 60),
 			}, 0)
+			item.SetData(0, 1, core.NewQVariant1(t.ID()))
 			mw.songs.InsertTopLevelItem(i, item)
 		}
 	}
