@@ -54,23 +54,43 @@ type SpotifyTrack struct {
 }
 
 func (tck *SpotifyTrack) ID() string {
-	return tck.Track["id"].(string)
+	id, found := tck.Track["id"]
+	if !found {
+		return "0"
+	}
+	return id.(string)
 }
 
 func (tck *SpotifyTrack) Album() string {
-	return tck.Track["album"].(map[string]interface{})["name"].(string)
+	album, found := tck.Track["album"]
+	if !found {
+		return "(no album)"
+	}
+	return album.(map[string]interface{})["name"].(string)
 }
 
 func (tck *SpotifyTrack) Artist() string {
-	return tck.Track["artists"].([]interface{})[0].(map[string]interface{})["name"].(string)
+	artists, found := tck.Track["artists"]
+	if !found {
+		return "(no artist)"
+	}
+	return artists.([]interface{})[0].(map[string]interface{})["name"].(string)
 }
 
 func (tck *SpotifyTrack) Name() string {
-	return tck.Track["name"].(string)
+	name, found := tck.Track["name"]
+	if !found {
+		return "(no name)"
+	}
+	return name.(string)
 }
 
 func (tck *SpotifyTrack) Duration() uint {
-	return uint(tck.Track["duration_ms"].(float64))
+	duration, found := tck.Track["duration_ms"]
+	if !found {
+		return 0
+	}
+	return uint(duration.(float64))
 }
 
 func NewSpotify() *Spotify {
