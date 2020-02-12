@@ -196,7 +196,6 @@ func (mw *MainWindow) NewMenu() widgets.QMenu_ITF {
 	menu.AddMenu(aboutMenu)
 	// Refresh and settings subsection
 	menu.AddActions([]*widgets.QAction{
-		NewMenuAction("view-refresh", "Refresh",     gui.QKeySequence__Refresh),
 		NewMenuAction("settings",     "Settings...", gui.QKeySequence__Preferences),
 	})
 	// Log out and quit subsection
