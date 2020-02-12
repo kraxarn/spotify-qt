@@ -127,24 +127,8 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 		}
 	})
 	// Load tracks in playlist
-	currentList := mw.sptPlaylists[mw.playlists.CurrentRow()]
-	tracks, err := currentList.LoadTracks(mw.spotify)
-	if err != nil {
+	if err := mw.LoadPlaylist(mw.sptPlaylists[mw.playlists.CurrentRow()]); err != nil {
 		fmt.Println("failed to load tracks in playlist:", err)
-	} else {
-		for i, t := range tracks {
-			duration, err := time.ParseDuration(fmt.Sprintf("%vms", t.Duration()))
-			if err != nil {
-				fmt.Println("failed to parse duration:", err)
-				continue
-			}
-			item := widgets.NewQTreeWidgetItem2([]string{
-				t.Name(), t.Artist(), t.Album(),
-				fmt.Sprintf("%.f:%02d", duration.Minutes(), int(duration.Seconds()) % 60),
-			}, 0)
-			item.SetData(0, 1, core.NewQVariant1(t.ID()))
-			mw.songs.InsertTopLevelItem(i, item)
-		}
 	}
 	container.AddWidget(mw.songs)
 	return container
@@ -227,4 +211,26 @@ func (mw *MainWindow) RefreshPlaylists() {
 	for _, playlist := range mw.sptPlaylists {
 		mw.playlists.AddItem(playlist.Name)
 	}
+}
+
+func (mw *MainWindow) LoadPlaylist(playlist SpotifyPlaylist) error {
+	tracks, err := playlist.LoadTracks(mw.spotify)
+	if err != nil {
+		return err
+	}
+	mw.songs.Clear()
+	for i, t := range tracks {
+		duration, err := time.ParseDuration(fmt.Sprintf("%vms", t.Duration()))
+		if err != nil {
+			fmt.Println("failed to parse duration:", err)
+			continue
+		}
+		item := widgets.NewQTreeWidgetItem2([]string{
+			t.Name(), t.Artist(), t.Album(),
+			fmt.Sprintf("%.f:%02d", duration.Minutes(), int(duration.Seconds()) % 60),
+		}, 0)
+		item.SetData(0, 1, core.NewQVariant1(t.ID()))
+		mw.songs.InsertTopLevelItem(i, item)
+	}
+	return nil
 }
