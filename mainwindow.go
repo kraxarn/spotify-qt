@@ -86,6 +86,9 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 		if item != nil {
 			libraryList.SetCurrentRow(-1)
 		}
+		if err := mw.LoadPlaylist(mw.sptPlaylists[mw.playlists.CurrentRow()]); err != nil {
+			fmt.Println(err)
+		}
 	})
 	playlistContainer := CreateGroupBox(mw.playlists)
 	playlistContainer.SetTitle("Playlists")
