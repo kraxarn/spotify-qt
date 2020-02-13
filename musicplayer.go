@@ -18,11 +18,15 @@ func NewMusicPlayer() *MusicPlayer {
 }
 
 func (mp *MusicPlayer) Connect() {
-	mp.itf = dbus.NewQDBusInterface2(
-		"org.mpris.MediaPlayer2.spotifyd",
-		"/org/mpris/MediaPlayer2",
-		"org.mpris.MediaPlayer2.Player",
-		dbus.QDBusConnection_SessionBus(), nil)
+	go func() {
+		fmt.Println("connecting to d-bus...")
+		mp.itf = dbus.NewQDBusInterface2(
+			"org.mpris.MediaPlayer2.spotifyd",
+			"/org/mpris/MediaPlayer2",
+			"org.mpris.MediaPlayer2.Player",
+			dbus.QDBusConnection_SessionBus(), nil)
+		fmt.Println("connected to d-bus")
+	}()
 }
 
 func (mp *MusicPlayer) Play(trackID string) error {
