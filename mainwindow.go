@@ -9,13 +9,17 @@ import (
 )
 
 type MainWindow struct {
-	spotify 		*Spotify
+	// Widgets
 	window 			*widgets.QMainWindow
 	playlists		*widgets.QListWidget
-	songs 			*widgets.QTreeWidget
+	songs			*widgets.QTreeWidget
+	nowPlaying		*widgets.QLabel
+	position		*widgets.QLabel
+	progress		*widgets.QSlider
+	// Everything else
+	spotify			*Spotify
 	sptPlaylists	[]SpotifyPlaylist
-
-	musicPlayer *MusicPlayer
+	musicPlayer		*MusicPlayer
 }
 
 func NewMainWindow(spotify *Spotify) *MainWindow {
@@ -33,6 +37,25 @@ func NewMainWindow(spotify *Spotify) *MainWindow {
 	window.AddToolBar(0x4, mw.NewToolBar())
 	// Set and return final window
 	mw.window = window
+	// Update player status
+	go func() {
+		for {
+			if !mw.musicPlayer.isDBus {
+				time.Sleep(time.Second * 3)
+				continue
+			}
+			status := mw.musicPlayer.Status()
+			if status != nil {
+				mw.nowPlaying.SetText(fmt.Sprintf("%v\n%v", status.Title, status.Artist))
+				if status.Position > 0 {
+					mw.position.SetText(fmt.Sprintf("%v/%v", FormatTime(status.Position), FormatTime(status.Length)))
+					mw.progress.SetValue(int(status.Position))
+				}
+				mw.progress.SetMaximum(int(status.Length))
+			}
+			time.Sleep(time.Millisecond * 500)
+		}
+	}()
 	return mw
 }
 
@@ -58,6 +81,14 @@ func NewMenuAction(icon, text string, shortcut gui.QKeySequence__StandardKey) *w
 		action.SetShortcut(gui.NewQKeySequence5(shortcut))
 	}
 	return action
+}
+
+func FormatTime(ms int64) string {
+	duration, err := time.ParseDuration(fmt.Sprintf("%vµs", ms))
+	if err != nil {
+		return "0:00"
+	}
+	return fmt.Sprintf("%.f:%02d", duration.Minutes(), int(duration.Seconds()) % 60)
 }
 
 func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
@@ -100,8 +131,8 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 	nowPlayingArt.SetPixmap(
 		gui.QIcon_FromTheme("media-optical-audio").Pixmap(nowPlayingArt.Size(), 0, 0))
 	nowPlaying.AddWidget(nowPlayingArt, 0, 0)
-	nowPlayingText := widgets.NewQLabel2("No music playing", nil, 0)
-	nowPlaying.AddWidget(nowPlayingText, 1, 0)
+	mw.nowPlaying = widgets.NewQLabel2("No music playing", nil, 0)
+	nowPlaying.AddWidget(mw.nowPlaying, 1, 0)
 	sidebar.AddWidget(LayoutToWidget(nowPlaying), 0, 0)
 
 	sidebarWidget := LayoutToWidget(sidebar)
@@ -154,12 +185,13 @@ func (mw *MainWindow) NewToolBar() widgets.QToolBar_ITF {
 	toolBar.AddAction2(gui.QIcon_FromTheme("media-playback-stop"),  "Stop")
 	toolBar.AddAction2(gui.QIcon_FromTheme("media-skip-forward"),   "Next")
 	// Progress
-	progress := widgets.NewQSlider(nil)
-	progress.SetOrientation(0x1)
+	mw.progress = widgets.NewQSlider(nil)
+	mw.progress.SetOrientation(0x1)
 	toolBar.AddSeparator()
-	toolBar.AddWidget(progress)
+	toolBar.AddWidget(mw.progress)
 	toolBar.AddSeparator()
-	toolBar.AddWidget(widgets.NewQLabel2("0:00/0:00", nil, 0))
+	mw.position = widgets.NewQLabel2("0:00/0:00", nil, 0)
+	toolBar.AddWidget(mw.position)
 	toolBar.AddSeparator()
 	// Repeat and shuffle toggles
 	toolBar.AddAction2(gui.QIcon_FromTheme("media-playlist-repeat"),   "Repeat").SetCheckable(true)
