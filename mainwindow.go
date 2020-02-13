@@ -53,7 +53,7 @@ func NewMainWindow(spotify *Spotify) *MainWindow {
 				}
 				mw.progress.SetMaximum(int(status.Length))
 			}
-			time.Sleep(time.Millisecond * 500)
+			time.Sleep(time.Second)
 		}
 	}()
 	return mw
