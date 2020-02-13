@@ -70,7 +70,7 @@ type SpotifyTrack struct {
 
 func (tck *SpotifyTrack) ID() string {
 	id, found := tck.Track["id"]
-	if !found {
+	if !found || id == nil {
 		return "0"
 	}
 	return id.(string)
