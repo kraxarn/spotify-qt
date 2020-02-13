@@ -232,6 +232,9 @@ func (mw *MainWindow) LoadPlaylist(playlist SpotifyPlaylist) error {
 			fmt.Sprintf("%.f:%02d", duration.Minutes(), int(duration.Seconds()) % 60),
 		}, 0)
 		item.SetData(0, 1, core.NewQVariant1(t.ID()))
+		if t.IsLocal {
+			item.SetDisabled(true)
+		}
 		mw.songs.InsertTopLevelItem(i, item)
 	}
 	return nil
