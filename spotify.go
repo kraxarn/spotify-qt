@@ -305,6 +305,10 @@ func (spt *Spotify) PlayTracks(trackIDs []string) error {
 		"uris": trackIDs,
 	})
 }
+func (spt *Spotify) SetShuffle(enabled bool) error {
+	return spt.Put(fmt.Sprintf("me/player/shuffle?state=%v", enabled), nil)
+}
+
 func (spt *Spotify) Pause() error {
 	return spt.Put("me/player/pause", nil)
 }
