@@ -156,9 +156,7 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 	}
 	mw.songs.ConnectItemPressed(func(item *widgets.QTreeWidgetItem, column int) {
 		trackID := item.Data(0, 1).ToString()
-		if err := mw.spotify.PlayTracks([]string{
-			trackID,
-		}); err != nil {
+		if err := mw.spotify.PlayTracks(mw.GetTracksAfter(trackID)); err != nil {
 			mw.SetStatus(fmt.Sprintf("Failed to play track: %v", err))
 		}
 	})
@@ -318,4 +316,20 @@ func (mw *MainWindow) LoadPlaylist(playlist SpotifyPlaylist) error {
 
 func (mw *MainWindow) SetStatus(message string) {
 	mw.window.StatusBar().ShowMessage(message, 3000)
+}
+
+func (mw *MainWindow) GetTracksAfter(trackID string) []string {
+	tracks := make([]string, 0)
+	found := false
+	for i := 0; i < mw.songs.TopLevelItemCount(); i++ {
+		item := mw.songs.TopLevelItem(i).Data(0, 1).ToString()
+		if !found && item == trackID {
+			found = true
+		}
+		if !found {
+			continue
+		}
+		tracks = append(tracks, item)
+	}
+	return tracks
 }
