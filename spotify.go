@@ -305,3 +305,10 @@ func (spt *Spotify) PlayTracks(trackIDs []string) error {
 		"uris": trackIDs,
 	})
 }
+func (spt *Spotify) Pause() error {
+	return spt.Put("me/player/pause", nil)
+}
+
+func (spt *Spotify) Resume() error {
+	return spt.Put("me/player/play", nil)
+}
