@@ -19,6 +19,12 @@ type Spotify struct {
 	httpClient http.Client
 }
 
+type SpotifyPlayback struct {
+	ProgressMs uint
+	Item SpotifyTrack
+	IsPlaying bool
+}
+
 func NewSpotify() *Spotify {
 	spt := new(Spotify)
 	spt.lastAuth = time.Unix(0, 0)
@@ -305,8 +311,21 @@ func (spt *Spotify) PlayTracks(trackIDs []string) error {
 		"uris": trackIDs,
 	})
 }
+
 func (spt *Spotify) SetShuffle(enabled bool) error {
 	return spt.Put(fmt.Sprintf("me/player/shuffle?state=%v", enabled), nil)
+}
+
+func (spt *Spotify) CurrentPlayback() (SpotifyPlayback, error) {
+	resp, err := spt.Get("me/player")
+	if err != nil {
+		return SpotifyPlayback{}, err
+	}
+	return SpotifyPlayback{
+		ProgressMs: uint(resp["progress_ms"].(float64)),
+		Item:       ParseSpotifyTrack(resp["item"].(map[string]interface{})),
+		IsPlaying:  resp["is_playing"].(bool),
+	}, nil
 }
 
 func (spt *Spotify) Pause() error {
