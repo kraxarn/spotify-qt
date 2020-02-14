@@ -299,3 +299,9 @@ func (spt *Spotify) SetDevice(device SpotifyDevice) error {
 		},
 	})
 }
+
+func (spt *Spotify) PlayTracks(trackIDs []string) error {
+	return spt.Put("me/player/play", map[string]interface{}{
+		"uris": trackIDs,
+	})
+}
