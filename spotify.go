@@ -25,7 +25,7 @@ func NewSpotify() *Spotify {
 	return spt
 }
 
-func (spt *Spotify) Request(url string) (map[string]interface{}, error) {
+func (spt *Spotify) Request(url string) (*http.Request, error) {
 	// TODO: Check here if access token needs refreshing
 	// Prepare request
 	req, err := http.NewRequest(http.MethodGet, url, nil)
@@ -34,6 +34,15 @@ func (spt *Spotify) Request(url string) (map[string]interface{}, error) {
 	}
 	// Set header
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %v", spt.AccessToken()))
+	return req, nil
+}
+
+func (spt *Spotify) Get(url string) (map[string]interface{}, error) {
+	// Prepare get
+	req, err := spt.Request(url)
+	if err != nil {
+		return nil, err
+	}
 	// Send request
 	resp, err := spt.httpClient.Do(req)
 	if err != nil {
@@ -214,7 +223,7 @@ func (spt *Spotify) Refresh() error {
 
 func (spt *Spotify) Playlists() []SpotifyPlaylist {
 	// Request playlists
-	resp, err := spt.Request("https://api.spotify.com/v1/me/playlists?limit=50")
+	resp, err := spt.Get("https://api.spotify.com/v1/me/playlists?limit=50")
 	if err != nil {
 		return []SpotifyPlaylist{}
 	}
