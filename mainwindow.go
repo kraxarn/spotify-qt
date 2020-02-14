@@ -19,14 +19,13 @@ type MainWindow struct {
 	// Everything else
 	spotify			*Spotify
 	sptPlaylists	[]SpotifyPlaylist
-	musicPlayer		*MusicPlayer
+	current			SpotifyPlayback
 }
 
 func NewMainWindow(spotify *Spotify) *MainWindow {
 	// Create the main window struct
 	mw := new(MainWindow)
 	mw.spotify = spotify
-	mw.musicPlayer = NewMusicPlayer()
 	// Create the main Qt main window
 	window := widgets.NewQMainWindow(nil, 0)
 	window.SetWindowTitle("spotify-qt")
