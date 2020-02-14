@@ -39,7 +39,7 @@ func (spt *Spotify) Request(url string) (*http.Request, error) {
 
 func (spt *Spotify) Get(url string) (map[string]interface{}, error) {
 	// Prepare get
-	req, err := spt.Request(url)
+	req, err := spt.Request(fmt.Sprintf("https://api.spotify.com/v1/%v", url))
 	if err != nil {
 		return nil, err
 	}
@@ -223,7 +223,7 @@ func (spt *Spotify) Refresh() error {
 
 func (spt *Spotify) Playlists() []SpotifyPlaylist {
 	// Request playlists
-	resp, err := spt.Get("https://api.spotify.com/v1/me/playlists?limit=50")
+	resp, err := spt.Get("me/playlists?limit=50")
 	if err != nil {
 		return []SpotifyPlaylist{}
 	}
