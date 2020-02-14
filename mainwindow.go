@@ -15,7 +15,9 @@ type MainWindow struct {
 	songs			*widgets.QTreeWidget
 	nowPlaying		*widgets.QLabel
 	position		*widgets.QLabel
+	nowAlbum 		*widgets.QLabel
 	progress		*widgets.QSlider
+	playPause		*widgets.QAction
 	// Everything else
 	spotify			*Spotify
 	sptPlaylists	[]SpotifyPlaylist
@@ -125,11 +127,12 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 	sidebar.AddWidget(playlistContainer, 1, 0)
 	// Now playing song
 	nowPlaying := widgets.NewQHBoxLayout()
-	nowPlayingArt := widgets.NewQLabel(nil, 0)
-	nowPlayingArt.SetFixedSize2(64, 64)
-	nowPlayingArt.SetPixmap(
-		gui.QIcon_FromTheme("media-optical-audio").Pixmap(nowPlayingArt.Size(), 0, 0))
-	nowPlaying.AddWidget(nowPlayingArt, 0, 0)
+	nowPlaying.SetSpacing(12)
+	mw.nowAlbum = widgets.NewQLabel(nil, 0)
+	mw.nowAlbum.SetFixedSize2(64, 64)
+	mw.nowAlbum.SetPixmap(
+		gui.QIcon_FromTheme("media-optical-audio").Pixmap(mw.nowAlbum.Size(), 0, 0))
+	nowPlaying.AddWidget(mw.nowAlbum, 0, 0)
 	mw.nowPlaying = widgets.NewQLabel2("No music playing", nil, 0)
 	nowPlaying.AddWidget(mw.nowPlaying, 1, 0)
 	sidebar.AddWidget(LayoutToWidget(nowPlaying), 0, 0)
@@ -180,7 +183,7 @@ func (mw *MainWindow) NewToolBar() widgets.QToolBar_ITF {
 	toolBar.AddSeparator()
 	// Media controls
 	toolBar.AddAction2(gui.QIcon_FromTheme("media-skip-backward"),  "Previous")
-	toolBar.AddAction2(gui.QIcon_FromTheme("media-playback-start"), "Play")
+	mw.playPause = toolBar.AddAction2(gui.QIcon_FromTheme("media-playback-start"), "Play")
 	toolBar.AddAction2(gui.QIcon_FromTheme("media-playback-stop"),  "Stop")
 	toolBar.AddAction2(gui.QIcon_FromTheme("media-skip-forward"),   "Next")
 	// Progress
