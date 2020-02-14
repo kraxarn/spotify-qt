@@ -246,3 +246,25 @@ func (spt *Spotify) Playlists() []SpotifyPlaylist {
 	}
 	return playlists
 }
+
+func (spt *Spotify) Devices() []SpotifyDevice {
+	resp, err := spt.Get("me/player/devices")
+	if err != nil {
+		return []SpotifyDevice{}
+	}
+	allDevices := resp["devices"].([]interface{})
+	devices := make([]SpotifyDevice, len(allDevices))
+	for i, device := range allDevices {
+		data := device.(map[string]interface{})
+		devices[i] = SpotifyDevice{
+			ID:               data["id"].(string),
+			Name:             data["name"].(string),
+			Type:             data["type"].(string),
+			IsActive:         data["is_active"].(bool),
+			IsPrivateSession: data["is_private_session"].(bool),
+			IsRestricted:     data["is_restricted"].(bool),
+			VolumePercent:    uint8(data["volume_percent"].(float64)),
+		}
+	}
+	return devices
+}
