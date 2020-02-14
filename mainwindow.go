@@ -184,6 +184,17 @@ func (mw *MainWindow) NewToolBar() widgets.QToolBar_ITF {
 	// Media controls
 	toolBar.AddAction2(gui.QIcon_FromTheme("media-skip-backward"),  "Previous")
 	mw.playPause = toolBar.AddAction2(gui.QIcon_FromTheme("media-playback-start"), "Play")
+	mw.playPause.ConnectTriggered(func(checked bool) {
+		if mw.playPause.IconText() == "Pause" {
+			if err := mw.spotify.Pause(); err != nil {
+				mw.SetStatus(fmt.Sprintf("Failed to pause: %v", err))
+			}
+		} else {
+			if err := mw.spotify.Resume(); err != nil {
+				mw.SetStatus(fmt.Sprintf("Failed to resume: %v", err))
+			}
+		}
+	})
 	toolBar.AddAction2(gui.QIcon_FromTheme("media-playback-stop"),  "Stop")
 	toolBar.AddAction2(gui.QIcon_FromTheme("media-skip-forward"),   "Next")
 	// Progress
