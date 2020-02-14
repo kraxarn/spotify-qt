@@ -154,23 +154,22 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 	container.AddWidget(sidebarWidget)
 	// Table with songs
 	mw.songs = widgets.NewQTreeWidget(nil)
-	mw.songs.SetColumnCount(4)
 	mw.songs.SetEditTriggers(0)
 	mw.songs.SetSelectionBehavior(1)
 	mw.songs.SetSortingEnabled(true)
 	mw.songs.SetRootIsDecorated(false)
 	mw.songs.SetAllColumnsShowFocus(true)
-	mw.songs.SortByColumn(0, 0)
+	mw.songs.SortByColumn(1, 0)
 	headers := []string{
-		"Title", "Artist", "Album", "Length",
+		" ", "Title", "Artist", "Album", "Length",
 	}
 	mw.songs.SetHeaderLabels(headers)
-	for i := range headers {
-		mw.songs.SetColumnWidth(i, 200)
-	}
+	mw.songs.Header().SetSectionResizeMode(3)
 	mw.songs.ConnectItemPressed(func(item *widgets.QTreeWidgetItem, column int) {
 		trackID := item.Data(0, 1).ToString()
-		if err := mw.spotify.PlayTracks(mw.GetTracksAfter(trackID)); err != nil {
+		if err := mw.spotify.SetShuffle(false); err != nil {
+			mw.SetStatus(fmt.Sprintf("Failed to disable shuffle: %v", err))
+		} else if err := mw.spotify.PlayTracks(mw.GetTracksAfter(trackID)); err != nil {
 			mw.SetStatus(fmt.Sprintf("Failed to play track: %v", err))
 		}
 	})
@@ -327,7 +326,7 @@ func (mw *MainWindow) LoadPlaylist(playlist SpotifyPlaylist) error {
 			continue
 		}
 		item := widgets.NewQTreeWidgetItem2([]string{
-			t.Name(), t.Artist(), t.Album(),
+			" ", t.Name(), t.Artist(), t.Album(),
 			fmt.Sprintf("%.f:%02d", duration.Minutes(), int(duration.Seconds()) % 60),
 		}, 0)
 		item.SetData(0, 1, core.NewQVariant1(fmt.Sprintf("spotify:track:%v", t.ID())))
