@@ -281,3 +281,7 @@ func (mw *MainWindow) LoadPlaylist(playlist SpotifyPlaylist) error {
 	}
 	return nil
 }
+
+func (mw *MainWindow) SetStatus(message string) {
+	mw.window.StatusBar().ShowMessage(message, 3000)
+}
