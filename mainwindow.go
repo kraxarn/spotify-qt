@@ -5,6 +5,8 @@ import (
 	"github.com/therecipe/qt/core"
 	"github.com/therecipe/qt/gui"
 	"github.com/therecipe/qt/widgets"
+	"io/ioutil"
+	"net/http"
 	"time"
 )
 
@@ -24,7 +26,7 @@ type MainWindow struct {
 	current			SpotifyPlayback
 }
 
-func NewMainWindow(spotify *Spotify) *MainWindow {
+func NewMainWindow(spotify *Spotify, app *widgets.QApplication) *MainWindow {
 	// Create the main window struct
 	mw := new(MainWindow)
 	mw.spotify = spotify
@@ -41,20 +43,30 @@ func NewMainWindow(spotify *Spotify) *MainWindow {
 	// Update player status
 	go func() {
 		for {
-			if !mw.musicPlayer.isDBus {
-				time.Sleep(time.Second * 3)
+			playback, err := mw.spotify.CurrentPlayback()
+			if err != nil {
+				mw.SetStatus(fmt.Sprintf("Failed to get current playback: %v", err))
+				time.Sleep(time.Second * 5)
 				continue
 			}
-			status := mw.musicPlayer.Status()
-			if status != nil {
-				mw.nowPlaying.SetText(fmt.Sprintf("%v\n%v", status.Title, status.Artist))
-				if status.Position > 0 {
-					mw.position.SetText(fmt.Sprintf("%v/%v", FormatTime(status.Position), FormatTime(status.Length)))
-					mw.progress.SetValue(int(status.Position))
+			nowPlaying := fmt.Sprintf("%v\n%v", playback.Item.Name(), playback.Item.Artist())
+			if mw.nowPlaying.Text() != nowPlaying {
+				mw.nowPlaying.SetText(nowPlaying)
+				if err := mw.SetAlbumImage(playback.Item.Image()); err != nil {
+					fmt.Println(err)
 				}
-				mw.progress.SetMaximum(int(status.Length))
 			}
-			time.Sleep(time.Second * 5)
+			mw.position.SetText(fmt.Sprintf("%v/%v", FormatTime(playback.ProgressMs), FormatTime(playback.Item.Duration())))
+			mw.progress.SetValue(int(playback.ProgressMs))
+			mw.progress.SetMaximum(int(playback.Item.Duration()))
+			if playback.IsPlaying {
+				mw.playPause.SetIcon(gui.QIcon_FromTheme("media-playback-pause"))
+				mw.playPause.SetText("Pause")
+			} else {
+				mw.playPause.SetIcon(gui.QIcon_FromTheme("media-playback-start"))
+				mw.playPause.SetText("Play")
+			}
+			time.Sleep(time.Second)
 		}
 	}()
 	return mw
