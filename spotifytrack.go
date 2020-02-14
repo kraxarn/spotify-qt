@@ -8,6 +8,20 @@ type SpotifyTrack struct {
 	Track map[string]interface{}
 }
 
+func ParseSpotifyTrack(item map[string]interface{}) SpotifyTrack {
+	var trackData map[string]interface{}
+	if track, found := item["track"]; found {
+		trackData = track.(map[string]interface{})
+	} else {
+		trackData = item
+	}
+	return SpotifyTrack{
+		AddedAt: time.Time{},
+		IsLocal: item["is_local"].(bool),
+		Track:   trackData,
+	}
+}
+
 func (tck *SpotifyTrack) ID() string {
 	id, found := tck.Track["id"]
 	if !found || id == nil {
