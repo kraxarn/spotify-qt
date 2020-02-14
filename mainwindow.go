@@ -219,6 +219,7 @@ func (mw *MainWindow) NewMenu() widgets.QMenu_ITF {
 		NewMenuAction("spotify", "About spotify-qt", 0),
 		NewMenuAction("qt",      "About Qt",         0),
 	})
+
 	// Check for updates / GC subsection
 	aboutMenu.AddSeparator()
 	aboutMenu.AddActions([]*widgets.QAction{
@@ -226,6 +227,15 @@ func (mw *MainWindow) NewMenu() widgets.QMenu_ITF {
 		NewMenuAction("run-clean", "Run GC",            0),
 	})
 	menu.AddMenu(aboutMenu)
+	// Device selection
+	deviceMenu := widgets.NewQMenu(nil)
+	deviceMenu.SetTitle("Device")
+	deviceMenu.SetIcon(gui.QIcon_FromTheme("speaker"))
+	deviceMenu.AddActions([]*widgets.QAction{
+		NewMenuAction("reload", "Refresh", 0),
+	})
+	deviceMenu.AddSeparator()
+	menu.AddMenu(deviceMenu)
 	// Refresh and settings subsection
 	menu.AddActions([]*widgets.QAction{
 		NewMenuAction("settings",     "Settings...", gui.QKeySequence__Preferences),
