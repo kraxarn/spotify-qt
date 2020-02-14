@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -25,10 +26,10 @@ func NewSpotify() *Spotify {
 	return spt
 }
 
-func (spt *Spotify) Request(url string) (*http.Request, error) {
+func (spt *Spotify) Request(url, method string, body io.Reader) (*http.Request, error) {
 	// TODO: Check here if access token needs refreshing
 	// Prepare request
-	req, err := http.NewRequest(http.MethodGet, url, nil)
+	req, err := http.NewRequest(method, fmt.Sprintf("https://api.spotify.com/v1/%v", url), body)
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +40,7 @@ func (spt *Spotify) Request(url string) (*http.Request, error) {
 
 func (spt *Spotify) Get(url string) (map[string]interface{}, error) {
 	// Prepare get
-	req, err := spt.Request(fmt.Sprintf("https://api.spotify.com/v1/%v", url))
+	req, err := spt.Request(url, http.MethodGet, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -59,6 +60,28 @@ func (spt *Spotify) Get(url string) (map[string]interface{}, error) {
 		return nil, err
 	}
 	return jsonData, nil
+}
+
+func (spt *Spotify) Put(url string, body map[string]interface{}) error {
+	// Convert body to json
+	bodyJson, err := json.Marshal(body)
+	if err != nil {
+		return err
+	}
+	// Prepare
+	req, err := spt.Request(url, http.MethodPut, strings.NewReader(string(bodyJson)))
+	if err != nil {
+		return err
+	}
+	// Send
+	resp, err := spt.httpClient.Do(req)
+	if err != nil {
+		return err
+	}
+	if resp.StatusCode != 202 {
+		return fmt.Errorf(resp.Status)
+	}
+	return nil
 }
 
 func (spt *Spotify) AccessToken() string {
