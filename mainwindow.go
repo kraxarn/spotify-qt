@@ -231,8 +231,40 @@ func (mw *MainWindow) NewMenu() widgets.QMenu_ITF {
 	deviceMenu := widgets.NewQMenu(nil)
 	deviceMenu.SetTitle("Device")
 	deviceMenu.SetIcon(gui.QIcon_FromTheme("speaker"))
+	deviceRefresh := NewMenuAction("reload", "Refresh", 0)
+	deviceRefresh.ConnectTriggered(func(checked bool) {
+		// Set status and get devices
+		mw.SetStatus("Refreshing devices...")
+		devices := mw.spotify.Devices()
+		if len(devices) <= 0 {
+			mw.SetStatus("No devices found")
+			return
+		}
+		// Clear all entries
+		if len(deviceMenu.Actions()) > 2 {
+			for _, action := range deviceMenu.Actions()[2:] {
+				deviceMenu.RemoveAction(action)
+			}
+		}
+		// Update devices
+		mw.SetStatus(fmt.Sprintf("Found %v device(s)", len(devices)))
+		for _, device := range devices {
+			action := deviceMenu.AddAction(device.Name)
+			action.SetCheckable(true)
+			action.SetChecked(device.IsActive)
+			action.SetDisabled(device.IsActive)
+			action.ConnectTriggered(func(checked bool) {
+				if err := mw.spotify.SetDevice(device); err != nil {
+					action.SetChecked(false)
+					mw.SetStatus(fmt.Sprintf("Failed to set device: %v", err))
+				} else {
+					action.SetDisabled(true)
+				}
+			})
+		}
+	})
 	deviceMenu.AddActions([]*widgets.QAction{
-		NewMenuAction("reload", "Refresh", 0),
+		deviceRefresh,
 	})
 	deviceMenu.AddSeparator()
 	menu.AddMenu(deviceMenu)
