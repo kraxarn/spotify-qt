@@ -305,7 +305,7 @@ func (mw *MainWindow) LoadPlaylist(playlist SpotifyPlaylist) error {
 			t.Name(), t.Artist(), t.Album(),
 			fmt.Sprintf("%.f:%02d", duration.Minutes(), int(duration.Seconds()) % 60),
 		}, 0)
-		item.SetData(0, 1, core.NewQVariant1(t.ID()))
+		item.SetData(0, 1, core.NewQVariant1(fmt.Sprintf("spotify:track:%v", t.ID())))
 		if t.IsLocal {
 			item.SetDisabled(true)
 		}
