@@ -78,7 +78,7 @@ func (spt *Spotify) Put(url string, body map[string]interface{}) error {
 	if err != nil {
 		return err
 	}
-	if resp.StatusCode != 202 {
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
 		return fmt.Errorf(resp.Status)
 	}
 	return nil
