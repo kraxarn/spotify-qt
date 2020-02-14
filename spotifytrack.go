@@ -47,3 +47,7 @@ func (tck *SpotifyTrack) Duration() uint {
 	}
 	return uint(duration.(float64))
 }
+
+func (tck *SpotifyTrack) Image() string {
+	return tck.Track["album"].(map[string]interface{})["images"].([]interface{})[0].(map[string]interface{})["url"].(string)
+}
