@@ -14,7 +14,7 @@ type SpotifyPlaylist struct {
 
 func (pl *SpotifyPlaylist) LoadTracksFromUrl(tracks []SpotifyTrack, url string, offset int, spt *Spotify) error {
 	// Load tracks from api
-	current, err := spt.Request(url)
+	current, err := spt.Get(url[len("https://api.spotify.com/v1/"):])
 	if err != nil {
 		return err
 	}
