@@ -84,8 +84,8 @@ func NewMenuAction(icon, text string, shortcut gui.QKeySequence__StandardKey) *w
 	return action
 }
 
-func FormatTime(ms int64) string {
-	duration, err := time.ParseDuration(fmt.Sprintf("%vµs", ms))
+func FormatTime(ms uint) string {
+	duration, err := time.ParseDuration(fmt.Sprintf("%vms", ms))
 	if err != nil {
 		return "0:00"
 	}
