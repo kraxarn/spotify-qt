@@ -20,6 +20,7 @@ type PlayerStatus struct {
 	Position, Length int64
 }
 
+// Deprecated: Use Web API directly
 func NewMusicPlayer() *MusicPlayer {
 	// Create media player
 	mp := new(MusicPlayer)
