@@ -1,7 +1,5 @@
 package main
 
-import "time"
-
 type SpotifyPlaylist struct {
 	Collaborative	bool
 	Description		string
@@ -22,11 +20,7 @@ func (pl *SpotifyPlaylist) LoadTracksFromUrl(tracks []SpotifyTrack, url string, 
 	items := current["items"].([]interface{})
 	for i, track := range items {
 		t := track.(map[string]interface{})
-		tracks[offset+i] = SpotifyTrack{
-			AddedAt: time.Time{},
-			IsLocal: t["is_local"].(bool),
-			Track:   t["track"].(map[string]interface{}),
-		}
+		tracks[offset+i] = ParseSpotifyTrack(t)
 	}
 	// Check if there's a next page
 	if current["next"] != nil {
