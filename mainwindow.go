@@ -156,8 +156,10 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 	}
 	mw.songs.ConnectItemPressed(func(item *widgets.QTreeWidgetItem, column int) {
 		trackID := item.Data(0, 1).ToString()
-		if err := mw.musicPlayer.Play(trackID); err != nil {
-			fmt.Println("failed to play track:", err)
+		if err := mw.spotify.PlayTracks([]string{
+			trackID,
+		}); err != nil {
+			mw.SetStatus(fmt.Sprintf("Failed to play track: %v", err))
 		}
 	})
 	// Load tracks in playlist
