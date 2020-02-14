@@ -21,7 +21,7 @@ func main() {
 		fmt.Println("error: authentication failed:", err)
 	}
 	// Create main window
-	window := NewMainWindow(spt)
+	window := NewMainWindow(spt, app)
 	// Show window and run application
 	window.window.Show()
 	app.Exec()
