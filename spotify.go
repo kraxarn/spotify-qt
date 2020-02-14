@@ -291,3 +291,11 @@ func (spt *Spotify) Devices() []SpotifyDevice {
 	}
 	return devices
 }
+
+func (spt *Spotify) SetDevice(device SpotifyDevice) error {
+	return spt.Put("me/player", map[string]interface{}{
+		"device_ids": []string{
+			device.ID,
+		},
+	})
+}
