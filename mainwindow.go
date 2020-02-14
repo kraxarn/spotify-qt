@@ -346,3 +346,20 @@ func (mw *MainWindow) GetTracksAfter(trackID string) []string {
 	}
 	return tracks
 }
+
+func (mw *MainWindow) SetAlbumImage(url string) error {
+	// Download album image
+	resp, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	data, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+	art := gui.NewQPixmap()
+	art.LoadFromData(data, uint(len(data)), "jpeg", 0)
+	mw.nowAlbum.SetPixmap(art.Scaled2(64, 64, 0, 1))
+	return nil
+}
