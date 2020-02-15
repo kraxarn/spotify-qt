@@ -177,6 +177,10 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 	mw.songs.Header().SetSectionResizeMode(3)
 	mw.songs.ConnectItemPressed(func(item *widgets.QTreeWidgetItem, column int) {
 		trackID := item.Data(0, 0x0100).ToString()
+		if len(trackID) <= 0 {
+			mw.SetStatus("Failed to start playback: track not found")
+			return
+		}
 		if err := mw.spotify.SetShuffle(false); err != nil {
 			mw.SetStatus(fmt.Sprintf("Failed to disable shuffle: %v", err))
 		} else if err := mw.spotify.PlayTracks(mw.GetTracksAfter(trackID)); err != nil {
