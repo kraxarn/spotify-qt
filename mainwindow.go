@@ -159,6 +159,7 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 	mw.songs.SetSortingEnabled(true)
 	mw.songs.SetRootIsDecorated(false)
 	mw.songs.SetAllColumnsShowFocus(true)
+	mw.songs.SetColumnCount(5)
 	mw.songs.SortByColumn(1, 0)
 	headers := []string{
 		" ", "Title", "Artist", "Album", "Length",
