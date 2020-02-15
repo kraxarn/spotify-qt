@@ -43,23 +43,32 @@ func NewMainWindow(spotify *Spotify, app *widgets.QApplication) *MainWindow {
 	// Update player status
 	go func() {
 		for {
-			playback, err := mw.spotify.CurrentPlayback()
+			var err error
+			mw.current, err = mw.spotify.CurrentPlayback()
 			if err != nil {
-				mw.SetStatus(fmt.Sprintf("Failed to get current playback: %v", err))
+				fmt.Println("failed to get current playback:", err)
 				time.Sleep(time.Second * 5)
 				continue
 			}
-			nowPlaying := fmt.Sprintf("%v\n%v", playback.Item.Name(), playback.Item.Artist())
+			if !mw.current.IsPlaying {
+				fmt.Println("no music is currently playing")
+				time.Sleep(time.Second * 5)
+				continue
+			}
+			nowPlaying := fmt.Sprintf("%v\n%v", mw.current.Item.Name(), mw.current.Item.Artist())
 			if mw.nowPlaying.Text() != nowPlaying {
+				if mw.nowPlaying.Text() != "No music playing" {
+					mw.SetCurrentSongIcon()
+				}
 				mw.nowPlaying.SetText(nowPlaying)
-				if err := mw.SetAlbumImage(playback.Item.Image()); err != nil {
+				if err := mw.SetAlbumImage(mw.current.Item.Image()); err != nil {
 					fmt.Println(err)
 				}
 			}
-			mw.position.SetText(fmt.Sprintf("%v/%v", FormatTime(playback.ProgressMs), FormatTime(playback.Item.Duration())))
-			mw.progress.SetValue(int(playback.ProgressMs))
-			mw.progress.SetMaximum(int(playback.Item.Duration()))
-			if playback.IsPlaying {
+			mw.position.SetText(fmt.Sprintf("%v/%v", FormatTime(mw.current.ProgressMs), FormatTime(mw.current.Item.Duration())))
+			mw.progress.SetValue(int(mw.current.ProgressMs))
+			mw.progress.SetMaximum(int(mw.current.Item.Duration()))
+			if mw.current.IsPlaying {
 				mw.playPause.SetIcon(gui.QIcon_FromTheme("media-playback-pause"))
 				mw.playPause.SetText("Pause")
 			} else {
