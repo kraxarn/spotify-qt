@@ -375,3 +375,21 @@ func (mw *MainWindow) SetAlbumImage(url string) error {
 	mw.nowAlbum.SetPixmap(art.Scaled2(64, 64, 0, 1))
 	return nil
 }
+
+func (mw *MainWindow) ResetSongIcons() {
+	for i := 0; i < mw.songs.TopLevelItemCount(); i++ {
+		item := mw.songs.TopLevelItem(i)
+		item.SetIcon(0, nil)
+	}
+}
+
+func (mw *MainWindow) SetCurrentSongIcon() {
+	for i := 0; i < mw.songs.TopLevelItemCount(); i++ {
+		item := mw.songs.TopLevelItem(i)
+		if item.Data(0, 0x0100).ToString() == fmt.Sprintf("spotify:track:%v", mw.current.Item.ID()) {
+			item.SetIcon(0, gui.QIcon_FromTheme("media-playback-start"))
+		} else {
+			item.SetIcon(0, nil)
+		}
+	}
+}
