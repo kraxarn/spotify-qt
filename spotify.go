@@ -324,6 +324,14 @@ func (spt *Spotify) CurrentPlayback() (SpotifyPlayback, error) {
 	if err != nil {
 		return SpotifyPlayback{}, err
 	}
+	if resp["item"] == nil {
+		// There's no current track playing
+		return SpotifyPlayback{
+			ProgressMs: 0,
+			Item:       SpotifyTrack{},
+			IsPlaying:  false,
+		}, nil
+	}
 	return SpotifyPlayback{
 		ProgressMs: uint(resp["progress_ms"].(float64)),
 		Item:       ParseSpotifyTrack(resp["item"].(map[string]interface{})),
