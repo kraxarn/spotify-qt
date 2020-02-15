@@ -181,11 +181,13 @@ func (mw *MainWindow) NewCentralWidget() widgets.QWidget_ITF {
 			mw.SetStatus("Failed to start playback: track not found")
 			return
 		}
-		if err := mw.spotify.SetShuffle(false); err != nil {
-			mw.SetStatus(fmt.Sprintf("Failed to disable shuffle: %v", err))
-		} else if err := mw.spotify.PlayTracks(mw.GetTracksAfter(trackID)); err != nil {
-			mw.SetStatus(fmt.Sprintf("Failed to play track: %v", err))
-		}
+		go func() {
+			if err := mw.spotify.SetShuffle(false); err != nil {
+				mw.SetStatus(fmt.Sprintf("Failed to disable shuffle: %v", err))
+			} else if err := mw.spotify.PlayTracks(mw.GetTracksAfter(trackID)); err != nil {
+				mw.SetStatus(fmt.Sprintf("Failed to play track: %v", err))
+			}
+		}()
 	})
 	// Load tracks in playlist
 	if err := mw.LoadPlaylist(mw.sptPlaylists[mw.playlists.CurrentRow()]); err != nil {
