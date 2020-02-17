@@ -17,5 +17,6 @@ add_executable(spotify-qt
 	src/main.cpp
 	src/mainwindow.cpp
 	spotify/spotify.cpp)
+		src/settings.cpp)
 
 target_link_libraries(spotify-qt PRIVATE Qt5::Widgets Qt5::Network)
