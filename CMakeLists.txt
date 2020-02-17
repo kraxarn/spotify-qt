@@ -14,9 +14,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt5 COMPONENTS Widgets Network REQUIRED)
 
 add_executable(spotify-qt
-	src/main.cpp
-	src/mainwindow.cpp
-	spotify/spotify.cpp)
+		src/main.cpp
+		src/mainwindow.cpp
+		src/spotify/spotify.cpp
 		src/settings.cpp)
 
 target_link_libraries(spotify-qt PRIVATE Qt5::Widgets Qt5::Network)
