@@ -16,6 +16,6 @@ find_package(Qt5 COMPONENTS Widgets Network REQUIRED)
 add_executable(spotify-qt
 	src/main.cpp
 	src/mainwindow.cpp
-	src/spotify.cpp)
+	spotify/spotify.cpp)
 
 target_link_libraries(spotify-qt PRIVATE Qt5::Widgets Qt5::Network)
