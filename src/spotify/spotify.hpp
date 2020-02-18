@@ -24,6 +24,10 @@ namespace spt
 		 * Authenticate with Spotify
 		 */
 		bool auth();
+		/**
+		 * HTTP GET request expecting JSON response
+		 */
+		QJsonDocument get(QString &url);
 	private:
 		QDateTime *lastAuth;
 		QNetworkAccessManager *networkManager;
@@ -31,10 +35,6 @@ namespace spt
 		 * Prepare network request with auth header
 		 */
 		QNetworkRequest request(QString &url);
-		/**
-		 * HTTP GET request expecting JSON response
-		 */
-		QJsonDocument get(QString &url);
 		/**
 		 * HTTP PUT request expecting JSON response
 		 */
