@@ -183,14 +183,15 @@ QString Spotify::clientSecret()
 	return QProcessEnvironment::systemEnvironment().value("SPOTIFY_QT_SECRET");
 }
 
-QVector<Playlist> Spotify::playlists()
+void Spotify::playlists(QVector<Playlist> *playlists)
 {
 	// Request playlists
 	auto json = get("me/playlists?limit=50");
 	// Parse as playlists
 	auto items = json["items"].toArray();
 	// Create list of playlists
-	QVector<Playlist> playlists(json["total"].toInt());
+	playlists.clear();
+	playlists.resize(json["total"].toInt());
 	// Loop through all items
 	for (int i = 0; i < items.size(); i++)
 	{
@@ -205,7 +206,6 @@ QVector<Playlist> Spotify::playlists()
 			data["tracks"].toObject()
 		));
 	}
-	return playlists;
 }
 
 QVector<Device> Spotify::devices()
