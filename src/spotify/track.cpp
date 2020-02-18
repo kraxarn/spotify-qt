@@ -40,7 +40,7 @@ QString Track::name()
 
 uint Track::duration()
 {
-	return track.contains("duration_ms") ? static_cast<uint>(track["duration_ms"].toInt()) : 0u;
+	return track.contains("duration_ms") ? static_cast<unsigned int>(track["duration_ms"].toInt()) : 0u;
 }
 
 QString Track::image()
