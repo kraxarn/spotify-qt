@@ -41,13 +41,13 @@ QJsonDocument Spotify::get(QString url)
 	return json;
 }
 
-void Spotify::put(QString url, QVariantMap &body)
+void Spotify::put(QString url, QVariantMap *body)
 {
 	// Set in header we're sending json data
 	auto req = request(url);
 	req.setHeader(QNetworkRequest::ContentTypeHeader, QString("application/json"));
 	// Send the request, we don't expect any response
-	networkManager->put(req, QJsonDocument::fromVariant(body).toJson());
+	networkManager->put(req, QJsonDocument::fromVariant(*body).toJson());
 }
 
 bool Spotify::auth()
@@ -235,6 +235,6 @@ bool Spotify::setDevice(Device &device)
 	body["device_ids"] = {
 		device.id
 	};
-	put("me/player", body);
+	put("me/player", &body);
 	return true;
 }

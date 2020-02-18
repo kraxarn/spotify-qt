@@ -43,7 +43,7 @@ namespace spt
 		/**
 		 * HTTP PUT request expecting JSON response
 		 */
-		void put(QString url, QVariantMap &body);
+		void put(QString url, QVariantMap *body = nullptr);
 
 		bool refresh();
 
