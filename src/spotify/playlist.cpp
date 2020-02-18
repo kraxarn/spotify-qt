@@ -14,12 +14,12 @@ QVector<Track> Playlist::loadTracks(Spotify &spotify)
 	QVector<Track> trackList(tracks["total"].toInt());
 	// Load tracks
 	auto href = tracks["href"].toString();
-	loadTracks(trackList, href, 0, spotify);
+	loadTracksFromUrl(trackList, href, 0, spotify);
 	// Return final track list
 	return trackList;
 }
 
-bool Playlist::loadTracks(QVector<Track> &trackList, QString &url, int offset, Spotify &spotify)
+bool Playlist::loadTracksFromUrl(QVector<Track> &trackList, QString &url, int offset, Spotify &spotify)
 {
 	// Load tracks from api
 	auto newUrl = url.right(QString("https://api.spotify.com/v1/").length());
@@ -32,7 +32,7 @@ bool Playlist::loadTracks(QVector<Track> &trackList, QString &url, int offset, S
 	if (!current["next"].isNull())
 	{
 		auto nextPage = current["next"].toString();
-		loadTracks(trackList, nextPage, offset + items.size(), spotify);
+		loadTracksFromUrl(trackList, nextPage, offset + items.size(), spotify);
 	}
 	return true;
 }
