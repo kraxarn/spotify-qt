@@ -124,6 +124,7 @@ bool Spotify::auth()
 		return false;
 	}
 	// Save access/refresh token to settings
+	*lastAuth = QDateTime::currentDateTime();
 	auto accessToken = jsonData["access_token"].toString();
 	auto refreshToken = jsonData["refresh_token"].toString();
 	settings.setAccessToken(accessToken);
@@ -134,7 +135,42 @@ bool Spotify::auth()
 
 bool Spotify::refresh()
 {
-	return false;
+	// Make sure we have a refresh token
+	Settings settings;
+	auto refreshToken = settings.refreshToken();
+	if (refreshToken.isEmpty())
+	{
+		qWarning() << "warning: attempt to refresh without refresh token";
+		return false;
+	}
+	// Create form
+	auto postData = QString("grant_type=refresh_token&refresh_token=%1")
+		.arg(refreshToken)
+		.toUtf8();
+	// Create request
+	QNetworkRequest request(QUrl("https://accounts.spotify.com/api/token"));
+	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+	request.setRawHeader(
+		"Authorization",
+		"Basic " + QString("%1:%2").arg(clientId()).arg(clientSecret()).toUtf8().toBase64());
+	// Send request
+	auto reply = networkManager->post(request, postData);
+	while (!reply->isFinished())
+		QCoreApplication::processEvents();
+	// Parse json
+	auto json = QJsonDocument::fromJson(reply->readAll()).object();
+	reply->deleteLater();
+	// Check if error
+	if (json.contains("error_description"))
+	{
+		qWarning() << "warning: failed to refresh token:" << json["error_description"];
+		return false;
+	}
+	// Save as access token
+	*lastAuth = QDateTime::currentDateTime();
+	auto accessToken = json["access_token"].toString();
+	settings.setAccessToken(accessToken);
+	return true;
 }
 
 QString Spotify::clientId()
