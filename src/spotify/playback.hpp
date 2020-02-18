@@ -4,10 +4,10 @@
 
 namespace spt
 {
-	struct Playback
+	typedef struct StructPlayback
 	{
 		unsigned int progressMs = 0u;
 		Track *item = nullptr;
 		bool isPlaying = false;
-	};
+	} Playback;
 }
