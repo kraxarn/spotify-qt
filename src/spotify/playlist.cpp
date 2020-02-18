@@ -2,6 +2,12 @@
 
 using namespace spt;
 
+Playlist::Playlist(bool collaborative, QString description, QString id, QString image, QString name,
+				   bool isPublic, QJsonObject tracks)
+	: collaborative(collaborative), description(description), id(id), image(image),
+	  name(name), isPublic(isPublic), tracks(tracks)
+{}
+
 QVector<Track> Playlist::loadTracks(Spotify &spotify)
 {
 	// Allocate memory for all tracks
@@ -30,4 +36,3 @@ bool Playlist::loadTracks(QVector<Track> &trackList, QString &url, int offset, S
 	}
 	return true;
 }
-

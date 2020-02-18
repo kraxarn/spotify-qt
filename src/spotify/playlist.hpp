@@ -13,6 +13,8 @@ namespace spt
 	class Playlist
 	{
 	public:
+		Playlist(bool collaborative, QString description, QString id, QString image,
+			QString name, bool isPublic, QJsonObject tracks);
 		bool collaborative;
 		QString description;
 		QString id;
