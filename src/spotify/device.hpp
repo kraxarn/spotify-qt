@@ -7,7 +7,7 @@ namespace spt
 	struct Device
 	{
 		QString id, name, type;
-		bool isActive, isPrivateSession, isRestricted;
-		uint8_t volumePercent;
+		bool isActive = false, isPrivateSession = false, isRestricted = false;
+		unsigned int volumePercent = 0u;
 	};
 }
