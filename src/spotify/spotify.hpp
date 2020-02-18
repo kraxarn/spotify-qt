@@ -1,6 +1,7 @@
 #pragma once
 
 #include "src/settings.hpp"
+#include "playlist.hpp"
 
 #include <QDateTime>
 #include <QtNetwork>
@@ -28,6 +29,7 @@ namespace spt
 		 * HTTP GET request expecting JSON response
 		 */
 		QJsonDocument get(QString &url);
+		QVector<Playlist> playlists();
 	private:
 		QDateTime *lastAuth;
 		QNetworkAccessManager *networkManager;

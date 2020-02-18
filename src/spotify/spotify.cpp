@@ -182,3 +182,29 @@ QString Spotify::clientSecret()
 {
 	return QProcessEnvironment::systemEnvironment().value("SPOTIFY_QT_SECRET");
 }
+
+QVector<Playlist> Spotify::playlists()
+{
+	// Request playlists
+	auto url = QString("me/playlists?limit=50");
+	auto json = get(url);
+	// Parse as playlists
+	auto items = json["items"].toArray();
+	// Create list of playlists
+	QVector<Playlist> playlists(json["total"].toInt());
+	// Loop through all items
+	for (int i = 0; i < items.size(); i++)
+	{
+		auto data = items.at(i).toObject();
+		playlists.insert(i, Playlist(
+			data["collaborative"].toBool(),
+			data["description"].toString(),
+			data["id"].toString(),
+			data["images"].toArray()[0].toObject()["url"].toString(),
+			data["name"].toString(),
+			data["public"].toBool(),
+			data["tracks"].toObject()
+		));
+	}
+	return playlists;
+}
