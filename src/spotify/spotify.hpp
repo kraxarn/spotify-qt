@@ -29,7 +29,7 @@ namespace spt
 		/**
 		 * HTTP GET request expecting JSON response
 		 */
-		QJsonDocument get(QString &url);
+		QJsonDocument get(QString url);
 		QVector<Playlist> playlists();
 		QVector<Device> devices();
 		bool setDevice(Device &device);
@@ -43,7 +43,7 @@ namespace spt
 		/**
 		 * HTTP PUT request expecting JSON response
 		 */
-		void put(QString &url, QVariantMap &body);
+		void put(QString url, QVariantMap &body);
 
 		bool refresh();
 

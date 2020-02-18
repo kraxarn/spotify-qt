@@ -24,7 +24,7 @@ QNetworkRequest Spotify::request(QString &url)
 	return request;
 }
 
-QJsonDocument Spotify::get(QString &url)
+QJsonDocument Spotify::get(QString url)
 {
 	// Send request
 	auto reply = networkManager->get(request(url));
@@ -41,7 +41,7 @@ QJsonDocument Spotify::get(QString &url)
 	return json;
 }
 
-void Spotify::put(QString &url, QVariantMap &body)
+void Spotify::put(QString url, QVariantMap &body)
 {
 	// Set in header we're sending json data
 	auto req = request(url);
@@ -186,8 +186,7 @@ QString Spotify::clientSecret()
 QVector<Playlist> Spotify::playlists()
 {
 	// Request playlists
-	auto url = QString("me/playlists?limit=50");
-	auto json = get(url);
+	auto json = get("me/playlists?limit=50");
 	// Parse as playlists
 	auto items = json["items"].toArray();
 	// Create list of playlists
@@ -211,8 +210,7 @@ QVector<Playlist> Spotify::playlists()
 
 QVector<Device> Spotify::devices()
 {
-	auto url = QString("me/player/devices");
-	auto json = get(url);
+	auto json = get("me/player/devices");
 	auto items = json["devices"].toArray();
 	QVector<Device> devices(items.size());
 	for (int i = 0; i < items.size(); i++)
@@ -233,11 +231,10 @@ QVector<Device> Spotify::devices()
 
 bool Spotify::setDevice(Device &device)
 {
-	QString url("me/player");
 	QVariantMap body;
 	body["device_ids"] = {
 		device.id
 	};
-	put(url, body);
+	put("me/player", body);
 	return true;
 }
