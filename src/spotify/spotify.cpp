@@ -208,3 +208,36 @@ QVector<Playlist> Spotify::playlists()
 	}
 	return playlists;
 }
+
+QVector<Device> Spotify::devices()
+{
+	auto url = QString("me/player/devices");
+	auto json = get(url);
+	auto items = json["devices"].toArray();
+	QVector<Device> devices(items.size());
+	for (int i = 0; i < items.size(); i++)
+	{
+		auto data = items.at(i).toObject();
+		Device device;
+		device.id				= data["id"].toString();
+		device.name				= data["name"].toString();
+		device.type				= data["type"].toString();
+		device.isActive			= data["is_active"].toBool();
+		device.isPrivateSession	= data["is_private_session"].toBool();
+		device.isRestricted		= data["is_restricted"].toBool();
+		device.volumePercent	= data["volume_percent"].toInt();
+		devices.insert(i, device);
+	}
+	return devices;
+}
+
+bool Spotify::setDevice(Device &device)
+{
+	QString url("me/player");
+	QVariantMap body;
+	body["device_ids"] = {
+		device.id
+	};
+	put(url, body);
+	return true;
+}

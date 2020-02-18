@@ -2,6 +2,7 @@
 
 #include "src/settings.hpp"
 #include "playlist.hpp"
+#include "device.hpp"
 
 #include <QDateTime>
 #include <QtNetwork>
@@ -30,6 +31,8 @@ namespace spt
 		 */
 		QJsonDocument get(QString &url);
 		QVector<Playlist> playlists();
+		QVector<Device> devices();
+		bool setDevice(Device &device);
 	private:
 		QDateTime *lastAuth;
 		QNetworkAccessManager *networkManager;
