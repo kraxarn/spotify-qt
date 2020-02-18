@@ -239,10 +239,10 @@ bool Spotify::setDevice(Device &device)
 	return true;
 }
 
-bool Spotify::playTracks(std::initializer_list<QString> trackIds)
+bool Spotify::playTracks(QStringList &trackIds)
 {
 	QVariantMap body;
-	body["uris"] = QVariant(trackIds);
+	body["uris"] = trackIds;
 	put("me/player/play", &body);
 	return true;
 }

@@ -34,7 +34,7 @@ namespace spt
 		QVector<Playlist> playlists();
 		QVector<Device> devices();
 		bool setDevice(Device &device);
-		bool playTracks(std::initializer_list<QString> trackIds);
+		bool playTracks(QStringList &trackIds);
 		bool setShuffle(bool enabled);
 		Playback currentPlayback();
 		bool pause();
