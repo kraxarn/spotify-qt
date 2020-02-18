@@ -238,3 +238,47 @@ bool Spotify::setDevice(Device &device)
 	put("me/player", &body);
 	return true;
 }
+
+bool Spotify::playTracks(std::initializer_list<QString> trackIds)
+{
+	QVariantMap body;
+	body["uris"] = QVariant(trackIds);
+	put("me/player/play", &body);
+	return true;
+}
+
+bool Spotify::setShuffle(bool enabled)
+{
+	put(QString("me/player/shuffle?state=%1").arg(enabled));
+	return true;
+}
+
+Playback Spotify::currentPlayback()
+{
+	auto json = get("me/player");
+	Playback playback;
+	if (json["item"].isNull())
+	{
+		// No track playing
+		playback.progressMs	= 0u;
+		playback.item 		= new Track();
+		playback.isPlaying 	= false;
+		return playback;
+	}
+	playback.progressMs	= static_cast<unsigned int>(json["progress_ms"].toInt());
+	playback.item 		= new Track(json["item"].toObject());
+	playback.isPlaying 	= json["is_playing"].toBool();
+	return playback;
+}
+
+bool Spotify::pause()
+{
+	put("me/player/pause");
+	return true;
+}
+
+bool Spotify::resume()
+{
+	put("me/player/play");
+	return true;
+}

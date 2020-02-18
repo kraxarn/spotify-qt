@@ -3,6 +3,7 @@
 #include "src/settings.hpp"
 #include "playlist.hpp"
 #include "device.hpp"
+#include "playback.hpp"
 
 #include <QDateTime>
 #include <QtNetwork>
@@ -33,6 +34,11 @@ namespace spt
 		QVector<Playlist> playlists();
 		QVector<Device> devices();
 		bool setDevice(Device &device);
+		bool playTracks(std::initializer_list<QString> trackIds);
+		bool setShuffle(bool enabled);
+		Playback currentPlayback();
+		bool pause();
+		bool resume();
 	private:
 		QDateTime *lastAuth;
 		QNetworkAccessManager *networkManager;
