@@ -23,7 +23,7 @@ QString Track::id()
 
 QString Track::album()
 {
-	return track.contains("album") ? track["album"].toString() : "(no album)";
+	return track.contains("album") ? track["album"].toObject()["name"].toString() : "(no album)";
 }
 
 QString Track::artist()
