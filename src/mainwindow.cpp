@@ -13,29 +13,29 @@ MainWindow::MainWindow(spt::Spotify *spotify, QApplication *app, QWidget *parent
 	// Update player status
 	auto timer = new QTimer(this);
 	QTimer::connect(timer, &QTimer::timeout, this, [=]() {
-		auto curr = spotify->currentPlayback();
-		if (!curr.isPlaying)
+		current = spotify->currentPlayback();
+		if (!current.isPlaying)
 		{
 			playPause->setIcon(QIcon::fromTheme("media-playback-start"));
 			playPause->setText("Play");
 			return;
 		}
-		auto currPlaying = QString("%1\n%2").arg(curr.item->name()).arg(curr.item->artist());
+		auto currPlaying = QString("%1\n%2").arg(current.item->name()).arg(current.item->artist());
 		if (nowPlaying->text() != currPlaying)
 		{
 			if (nowPlaying->text() != "No music playing")
 				setCurrentSongIcon();
 			nowPlaying->setText(currPlaying);
-			setAlbumImage(curr.item->image());
+			setAlbumImage(current.item->image());
 		}
 		position->setText(QString("%1/%2")
-			.arg(formatTime(curr.progressMs))
-			.arg(formatTime(curr.item->duration())));
-		progress->setValue(curr.progressMs);
-		progress->setMaximum(curr.item->duration());
+			.arg(formatTime(current.progressMs))
+			.arg(formatTime(current.item->duration())));
+		progress->setValue(current.progressMs);
+		progress->setMaximum(current.item->duration());
 		playPause->setIcon(QIcon::fromTheme(
-			curr.isPlaying ? "media-playback-pause" : "media-playback-start"));
-		playPause->setText(curr.isPlaying ? "Pause" : "Play");
+			current.isPlaying ? "media-playback-pause" : "media-playback-start"));
+		playPause->setText(current.isPlaying ? "Pause" : "Play");
 	});
 	timer->start(1000);
 }
@@ -50,7 +50,6 @@ MainWindow::~MainWindow()
 	delete	progress;
 	delete	playPause;
 	delete	sptPlaylists;
-	delete	current;
 }
 
 QGroupBox *createGroupBox(QVector<QWidget*> &widgets)
@@ -340,7 +339,7 @@ void MainWindow::setCurrentSongIcon()
 	for (int i = 0; i < songs->topLevelItemCount(); i++)
 	{
 		auto item = songs->topLevelItem(i);
-		if (item->data(0, 0x0100).toString() == QString("spotify:track:%1").arg(current->item->id()))
+		if (item->data(0, 0x0100).toString() == QString("spotify:track:%1").arg(current.item->id()))
 			item->setIcon(0, QIcon::fromTheme("media-playback-start"));
 		else
 			item->setIcon(0, QIcon());
