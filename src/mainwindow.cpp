@@ -11,7 +11,33 @@ MainWindow::MainWindow(spt::Spotify *spotify, QApplication *app, QWidget *parent
 	setCentralWidget(createCentralWidget());
 	addToolBar(Qt::ToolBarArea::TopToolBarArea, createToolBar());
 	// Update player status
-	// TODO
+	auto timer = new QTimer(this);
+	QTimer::connect(timer, &QTimer::timeout, this, [=]() {
+		auto curr = spotify->currentPlayback();
+		if (!curr.isPlaying)
+		{
+			qInfo() << "no music is currently playing";
+			QThread::sleep(5);
+			return;
+		}
+		auto currPlaying = QString("%1\n%2").arg(curr.item->name()).arg(curr.item->artist());
+		if (nowPlaying->text() != currPlaying)
+		{
+			if (nowPlaying->text() != "No music playing")
+				setCurrentSongIcon();
+			nowPlaying->setText(currPlaying);
+			setAlbumImage(curr.item->image());
+		}
+		position->setText(QString("%1/%2")
+			.arg(formatTime(curr.progressMs))
+			.arg(formatTime(curr.item->duration())));
+		progress->setValue(curr.progressMs);
+		progress->setMaximum(curr.item->duration());
+		playPause->setIcon(QIcon::fromTheme(
+			curr.isPlaying ? "media-playback-pause" : "media-playback-start"));
+		playPause->setText(curr.isPlaying ? "Pause" : "Play");
+	});
+	timer->start(1000);
 }
 
 MainWindow::~MainWindow()
