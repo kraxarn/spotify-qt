@@ -8,7 +8,10 @@ MainWindow::MainWindow(spt::Spotify *spotify, QApplication *app, QWidget *parent
 	setWindowTitle("spotify-qt");
 	setWindowIcon(QIcon::fromTheme("spotify"));
 	resize(1280, 720);
-
+	setCentralWidget(createCentralWidget());
+	addToolBar(Qt::ToolBarArea::TopToolBarArea, createToolBar());
+	// Update player status
+	// TODO
 }
 
 MainWindow::~MainWindow()
