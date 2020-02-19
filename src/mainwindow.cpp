@@ -278,10 +278,8 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 	for (int i = 0; i < tracks->length(); i++)
 	{
 		auto track = tracks->at(i);
-		auto duration = QTime().addMSecs(static_cast<int>(track.duration()));
 		auto item = new QTreeWidgetItem({
-			"", track.name(), track.artist(),
-			track.album(),QString("%1:%2").arg(duration.minute()).arg(duration.second() % 60)
+			"", track.name(), track.artist(), formatTime(track.duration())
 		});
 		item->setData(0, 0x0100, QString("spotify:track:%1").arg(track.id()));
 		if (track.isLocal)
