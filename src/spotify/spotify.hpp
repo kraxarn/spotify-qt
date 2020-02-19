@@ -20,11 +20,11 @@ namespace spt { class Spotify; }
 
 namespace spt
 {
-	class Spotify : QObject
+	class Spotify
 	{
 	public:
 		Spotify();
-		~Spotify() override;
+		~Spotify();
 		/**
 		 * Authenticate with Spotify
 		 */
