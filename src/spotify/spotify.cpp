@@ -47,7 +47,8 @@ void Spotify::put(QString url, QVariantMap *body)
 	auto req = request(url);
 	req.setHeader(QNetworkRequest::ContentTypeHeader, QString("application/json"));
 	// Send the request, we don't expect any response
-	networkManager->put(req, QJsonDocument::fromVariant(*body).toJson());
+	auto putData = body == nullptr ? nullptr : QJsonDocument::fromVariant(*body).toJson();
+	networkManager->put(req, putData);
 }
 
 bool Spotify::auth()
