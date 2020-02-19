@@ -40,7 +40,7 @@ private:
 	// Everything else
 	spt::Spotify			*spotify;
 	QVector<spt::Playlist>	*sptPlaylists;
-	spt::Playback			*current;
+	spt::Playback			current;
 	QNetworkAccessManager	*network;
 	// Methods
 	QWidget *createCentralWidget();
