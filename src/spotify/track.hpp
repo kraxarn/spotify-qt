@@ -1,5 +1,7 @@
 #pragma once
 
+namespace spt { class Track; }
+
 #include <QDateTime>
 #include <QJsonDocument>
 #include <QJsonObject>

@@ -1,5 +1,7 @@
 #pragma once
 
+namespace spt { class Spotify; }
+
 #include "src/settings.hpp"
 #include "playlist.hpp"
 #include "device.hpp"

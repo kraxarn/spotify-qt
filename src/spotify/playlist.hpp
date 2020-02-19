@@ -1,5 +1,7 @@
 #pragma once
 
+namespace spt { class Playlist; }
+
 #include "track.hpp"
 #include "spotify.hpp"
 
