@@ -14,6 +14,7 @@ MainWindow::MainWindow(spt::Spotify *spotify, QApplication *app, QWidget *parent
 	// Update player status
 	auto timer = new QTimer(this);
 	QTimer::connect(timer, &QTimer::timeout, this, &MainWindow::refresh);
+	refresh();
 	timer->start(1000);
 	setStatus("Welcome to spotify-qt!");
 }
