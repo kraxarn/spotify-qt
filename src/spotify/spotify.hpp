@@ -33,7 +33,7 @@ namespace spt
 		 * HTTP GET request expecting JSON response
 		 */
 		QJsonDocument get(QString url);
-		void playlists(QVector<Playlist> *playlists);
+		void playlists(QVector<Playlist> **playlists);
 		QVector<Device> devices();
 		bool setDevice(Device device);
 		bool playTracks(QStringList &trackIds);
