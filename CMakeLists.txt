@@ -13,14 +13,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt5 COMPONENTS Core Widgets Network Gui REQUIRED)
 
-add_executable(spotify-qt
-		src/main.cpp
-		src/mainwindow.cpp
-		src/settings.cpp
-		src/spotify/spotify.cpp
-		src/spotify/playlist.cpp
-		src/spotify/track.cpp
-		src/spotify/playback.hpp
-		src/spotify/device.hpp)
+# All .cpp files in stc
+file(GLOB MAIN_SRC "src/*.[hc]pp")
+file(GLOB SPOTIFY_SRC "src/spotify/*.[hc]pp")
+
+add_executable(spotify-qt ${MAIN_SRC} ${SPOTIFY_SRC})
 
 target_link_libraries(spotify-qt PRIVATE Qt5::Core Qt5::Widgets Qt5::Network Qt5::Gui)
