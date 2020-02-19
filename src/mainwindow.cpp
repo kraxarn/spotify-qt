@@ -200,17 +200,17 @@ QToolBar *MainWindow::createToolBar()
 	position = new QLabel("0:00/0:00", this);
 	toolBar->addWidget(position);
 	toolBar->addSeparator();
-	// Repeat and shuffle toggles
-	repeat = toolBar->addAction(QIcon::fromTheme("media-playlist-repeat"), "Repeat");
-	repeat->setCheckable(true);
-	QAction::connect(repeat, &QAction::triggered, [=](bool checked) {
-		spotify->setRepeat(checked ? "context" : "off");
-		refresh();
-	});
+	// Shuffle and repeat toggles
 	shuffle = toolBar->addAction(QIcon::fromTheme("media-playlist-shuffle"), "Shuffle");
 	shuffle->setCheckable(true);
 	QAction::connect(shuffle, &QAction::triggered, [=](bool checked) {
 		spotify->setShuffle(checked);
+		refresh();
+	});
+	repeat = toolBar->addAction(QIcon::fromTheme("media-playlist-repeat"), "Repeat");
+	repeat->setCheckable(true);
+	QAction::connect(repeat, &QAction::triggered, [=](bool checked) {
+		spotify->setRepeat(checked ? "context" : "off");
 		refresh();
 	});
 	// Volume slider
