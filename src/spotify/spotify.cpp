@@ -230,7 +230,7 @@ QVector<Device> Spotify::devices()
 		device.isPrivateSession	= data["is_private_session"].toBool();
 		device.isRestricted		= data["is_restricted"].toBool();
 		device.volumePercent	= data["volume_percent"].toInt();
-		devices.insert(i, device);
+		devices[i] = device;
 	}
 	return devices;
 }
