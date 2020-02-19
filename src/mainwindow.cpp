@@ -4,6 +4,7 @@ MainWindow::MainWindow(spt::Spotify *spotify, QApplication *app, QWidget *parent
 {
 	// Set Spotify
 	this->spotify = spotify;
+	sptPlaylists = new QVector<spt::Playlist>();
 	// Setup main window
 	setWindowTitle("spotify-qt");
 	setWindowIcon(QIcon::fromTheme("spotify"));

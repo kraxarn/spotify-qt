@@ -192,13 +192,8 @@ void Spotify::playlists(QVector<Playlist> **playlists)
 	auto items = json["items"].toArray();
 	// Create list of playlists
 	auto size = json["total"].toInt();
-	if (*playlists == nullptr)
-		*playlists = new QVector<Playlist>(size);
-	else
-	{
-		(*playlists)->clear();
-		(*playlists)->resize(size);
-	}
+	(*playlists)->clear();
+	(*playlists)->resize(size);
 	// Loop through all items
 	for (int i = 0; i < items.size(); i++)
 	{
