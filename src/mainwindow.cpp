@@ -56,6 +56,7 @@ void MainWindow::refresh()
 	playPause->setIcon(QIcon::fromTheme(
 		current.isPlaying ? "media-playback-pause" : "media-playback-start"));
 	playPause->setText(current.isPlaying ? "Pause" : "Play");
+	volume->setValue(current.volume / 5);
 }
 
 QGroupBox *createGroupBox(QVector<QWidget*> &widgets)
@@ -202,7 +203,7 @@ QToolBar *MainWindow::createToolBar()
 	toolBar->addAction(QIcon::fromTheme("media-playlist-shuffle"), "Shuffle")
 		->setCheckable(true);
 	// Volume slider
-	auto volume = new QSlider(this);
+	volume = new QSlider(this);
 	volume->setOrientation(Qt::Orientation::Horizontal);
 	volume->setMaximumWidth(100);
 	volume->setMinimum(0);

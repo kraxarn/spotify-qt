@@ -9,5 +9,6 @@ namespace spt
 		int progressMs = 0;
 		Track *item = nullptr;
 		bool isPlaying = false;
+		int volume = 0;
 	} Playback;
 }

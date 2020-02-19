@@ -39,6 +39,7 @@ private:
 	QLabel		*nowAlbum;
 	QSlider		*progress;
 	QAction		*playPause;
+	QSlider		*volume;
 	// Everything else
 	spt::Spotify			*spotify;
 	QVector<spt::Playlist>	*sptPlaylists;

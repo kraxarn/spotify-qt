@@ -267,11 +267,13 @@ Playback Spotify::currentPlayback()
 		playback.progressMs	= 0u;
 		playback.item 		= new Track();
 		playback.isPlaying 	= false;
+		playback.volume 	= 100;
 		return playback;
 	}
 	playback.progressMs	= json["progress_ms"].toInt();
 	playback.item 		= new Track(json["item"].toObject());
 	playback.isPlaying 	= json["is_playing"].toBool();
+	playback.volume 	= json["device"].toObject()["volume_percent"].toInt();
 	return playback;
 }
 
