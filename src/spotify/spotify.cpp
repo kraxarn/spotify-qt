@@ -51,6 +51,11 @@ void Spotify::put(QString url, QVariantMap *body)
 	networkManager->put(req, putData);
 }
 
+void Spotify::post(QString url)
+{
+	networkManager->post(request(url), QByteArray());
+}
+
 bool Spotify::auth()
 {
 	// Check if we already have access/refresh token
