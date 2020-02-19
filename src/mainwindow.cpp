@@ -5,6 +5,7 @@ MainWindow::MainWindow(spt::Spotify *spotify, QApplication *app, QWidget *parent
 	// Set Spotify
 	this->spotify = spotify;
 	sptPlaylists = new QVector<spt::Playlist>();
+	network = new QNetworkAccessManager();
 	// Setup main window
 	setWindowTitle("spotify-qt");
 	setWindowIcon(QIcon::fromTheme("spotify"));
@@ -376,8 +377,6 @@ void MainWindow::setCurrentSongIcon()
 
 void MainWindow::setAlbumImage(QString url)
 {
-	if (network == nullptr)
-		network = new QNetworkAccessManager();
 	auto reply = network->get(QNetworkRequest(QUrl(url)));
 	while (!reply->isFinished())
 		QCoreApplication::processEvents();
