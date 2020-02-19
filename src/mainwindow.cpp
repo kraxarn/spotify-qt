@@ -151,3 +151,24 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 	}
 	return true;
 }
+
+void MainWindow::setStatus(QString message)
+{
+	statusBar()->showMessage(message, 3000);
+}
+
+QStringList *MainWindow::getTracksAfter(QString &trackId)
+{
+	auto tracks = new QStringList();
+	auto found = false;
+	for (int i = 0; i < songs->topLevelItemCount(); i++)
+	{
+		auto item = songs->topLevelItem(i)->data(0, 0x0100).toString();
+		if (!found && item == trackId)
+			found = true;
+		if (!found)
+			continue;
+		tracks.append(item);
+	}
+	return tracks;
+}

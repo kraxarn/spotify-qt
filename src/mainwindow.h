@@ -17,6 +17,7 @@
 #include <QGroupBox>
 #include <QIcon>
 #include <QHeaderView>
+#include <QStatusBar>
 
 class MainWindow : public QMainWindow
 {
