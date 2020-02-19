@@ -55,4 +55,5 @@ private:
 	void setCurrentSongIcon();
 	void setAlbumImage(QString url);
 	static QString formatTime(int ms);
+	void refreshDevices(QMenu *deviceMenu);
 };

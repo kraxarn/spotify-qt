@@ -206,6 +206,39 @@ QAction *createMenuAction(QString icon, QString text, QKeySequence::StandardKey 
 	return action;
 }
 
+void MainWindow::refreshDevices(QMenu *deviceMenu)
+{
+	// Set status and get devices
+	setStatus("Refreshing devices...");
+	auto devices = spotify->devices();
+	if (devices.isEmpty())
+	{
+		setStatus("No devices found");
+		return;
+	}
+	// Clear all entries
+	for (auto &action : deviceMenu->actions())
+		deviceMenu->removeAction(action);
+	// Update devices
+	setStatus(QString("Found %1 device(s)").arg(devices.length()));
+	for (auto &device : devices)
+	{
+		auto action = deviceMenu->addAction(device.name);
+		action->setCheckable(true);
+		action->setChecked(device.isActive);
+		action->setDisabled(device.isActive);
+		QAction::connect(action, &QAction::triggered, [=](bool triggered) {
+			if (!spotify->setDevice(device))
+			{
+				action->setChecked(false);
+				setStatus(QString("Failed to set device"));
+			}
+			else
+				action->setDisabled(true);
+		});
+	}
+}
+
 QMenu *MainWindow::createMenu()
 {
 	// Create root
@@ -240,49 +273,9 @@ QMenu *MainWindow::createMenu()
 	// Device selection
 	auto deviceMenu = new QMenu("Device");
 	deviceMenu->setIcon(QIcon::fromTheme("speaker"));
-	auto deviceRefresh = new QAction(QIcon::fromTheme("reload"), "Refresh");
-	QAction::connect(deviceRefresh, &QAction::triggered, [=](bool checked) {
-		// Set status and get devices
-		setStatus("Refreshing devices...");
-		auto devices = spotify->devices();
-		if (devices.isEmpty())
-		{
-			setStatus("No devices found");
-			return;
-		}
-		// Clear all entries
-		if (deviceMenu->actions().length() > 2)
-		{
-			for (int i = 0; i < deviceMenu->actions().size(); i++)
-			{
-				if (i < 2)
-					continue;
-				deviceMenu->removeAction(deviceMenu->actions().at(i));
-			}
-		}
-		// Update devices
-		setStatus(QString("Found %1 device(s)").arg(devices.length()));
-		for (auto &device : devices)
-		{
-			auto action = deviceMenu->addAction(device.name);
-			action->setCheckable(true);
-			action->setChecked(device.isActive);
-			action->setDisabled(device.isActive);
-			QAction::connect(action, &QAction::triggered, [=](bool triggered) {
-				if (!spotify->setDevice(device))
-				{
-					action->setChecked(false);
-					setStatus(QString("Failed to set device"));
-				}
-				else
-					action->setDisabled(true);
-			});
-		}
+	QMenu::connect(deviceMenu, &QMenu::aboutToShow, [=]() {
+		refreshDevices(deviceMenu);
 	});
-	deviceMenu->addActions({
-		deviceRefresh
-	});
-	deviceMenu->addSeparator();
 	menu->addMenu(deviceMenu);
 	// Refresh and settings
 	menu->addActions({
