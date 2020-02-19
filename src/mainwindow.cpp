@@ -305,7 +305,7 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 	{
 		auto track = tracks->at(i);
 		auto item = new QTreeWidgetItem({
-			"", track.name(), track.artist(), formatTime(track.duration())
+			"", track.name(), track.artist(), track.album(), formatTime(track.duration())
 		});
 		item->setData(0, 0x0100, QString("spotify:track:%1").arg(track.id()));
 		if (track.isLocal)
