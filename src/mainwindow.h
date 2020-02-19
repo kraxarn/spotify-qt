@@ -20,6 +20,7 @@
 #include <QStatusBar>
 #include <QToolBar>
 #include <QToolButton>
+#include <QMenu>
 
 class MainWindow : public QMainWindow
 {
