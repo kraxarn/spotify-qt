@@ -22,7 +22,7 @@ namespace spt
 		QString album();
 		QString artist();
 		QString name();
-		unsigned int duration();
+		int duration();
 		QString image();
 
 	private:

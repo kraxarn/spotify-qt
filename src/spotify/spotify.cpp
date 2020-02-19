@@ -271,7 +271,7 @@ Playback Spotify::currentPlayback()
 		playback.isPlaying 	= false;
 		return playback;
 	}
-	playback.progressMs	= static_cast<unsigned int>(json["progress_ms"].toInt());
+	playback.progressMs	= json["progress_ms"].toInt();
 	playback.item 		= new Track(json["item"].toObject());
 	playback.isPlaying 	= json["is_playing"].toBool();
 	return playback;

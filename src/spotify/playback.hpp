@@ -6,7 +6,7 @@ namespace spt
 {
 	typedef struct StructPlayback
 	{
-		unsigned int progressMs = 0u;
+		int progressMs = 0;
 		Track *item = nullptr;
 		bool isPlaying = false;
 	} Playback;

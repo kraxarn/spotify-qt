@@ -38,9 +38,9 @@ QString Track::name()
 	return track.contains("name") ? track["name"].toString() : "(no name)";
 }
 
-uint Track::duration()
+int Track::duration()
 {
-	return track.contains("duration_ms") ? static_cast<unsigned int>(track["duration_ms"].toInt()) : 0u;
+	return track.contains("duration_ms") ? track["duration_ms"].toInt() : 0;
 }
 
 QString Track::image()
