@@ -33,7 +33,7 @@ namespace spt
 		QJsonDocument get(QString url);
 		void playlists(QVector<Playlist> *playlists);
 		QVector<Device> devices();
-		bool setDevice(Device &device);
+		bool setDevice(Device device);
 		bool playTracks(QStringList &trackIds);
 		bool setShuffle(bool enabled);
 		Playback currentPlayback();

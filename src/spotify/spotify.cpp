@@ -229,7 +229,7 @@ QVector<Device> Spotify::devices()
 	return devices;
 }
 
-bool Spotify::setDevice(Device &device)
+bool Spotify::setDevice(Device device)
 {
 	QVariantMap body;
 	body["device_ids"] = {
