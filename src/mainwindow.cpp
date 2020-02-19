@@ -212,10 +212,13 @@ QMenu *MainWindow::createMenu()
 	auto menu = new QMenu();
 	// About
 	auto aboutMenu = new QMenu("About");
+	auto aboutQt = createMenuAction("qt", "About Qt", QKeySequence::UnknownKey);
+	QAction::connect(aboutQt, &QAction::triggered, [=](bool checked) {
+		QMessageBox::aboutQt(this);
+	});
 	aboutMenu->setIcon(QIcon::fromTheme("help-about"));
 	aboutMenu->addActions({
 		createMenuAction("spotify", "About spotify-qt", QKeySequence::UnknownKey),
-		createMenuAction("qt",      "About Qt",         QKeySequence::UnknownKey)
 	});
 	// Check for updates
 	aboutMenu->addSeparator();
