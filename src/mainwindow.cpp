@@ -200,8 +200,8 @@ QMenu *MainWindow::createMenu()
 	// Device selection
 	auto deviceMenu = new QMenu("Device");
 	deviceMenu->setIcon(QIcon::fromTheme("speaker"));
-	QAction deviceRefresh(QIcon::fromTheme("reload"), "Refresh");
-	QAction::connect(&deviceRefresh, &QAction::triggered, [=](bool checked) {
+	auto deviceRefresh = new QAction(QIcon::fromTheme("reload"), "Refresh");
+	QAction::connect(deviceRefresh, &QAction::triggered, [=](bool checked) {
 		// Set status and get devices
 		setStatus("Refreshing devices...");
 		auto devices = spotify->devices();
@@ -224,7 +224,7 @@ QMenu *MainWindow::createMenu()
 		setStatus(QString("Found %1 device(s)").arg(devices.length()));
 		for (auto &device : devices)
 		{
-			auto action = new QAction(device.name);
+			auto action = deviceMenu->addAction(device.name);
 			action->setCheckable(true);
 			action->setChecked(device.isActive);
 			action->setDisabled(device.isActive);
@@ -240,7 +240,7 @@ QMenu *MainWindow::createMenu()
 		}
 	});
 	deviceMenu->addActions({
-		&deviceRefresh
+		deviceRefresh
 	});
 	deviceMenu->addSeparator();
 	menu->addMenu(deviceMenu);
