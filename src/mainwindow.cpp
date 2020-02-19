@@ -275,18 +275,18 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 {
 	auto tracks = playlist.loadTracks(*spotify);
 	songs->clear();
-	for (int i = 0; i < tracks.length(); i++)
+	for (int i = 0; i < tracks->length(); i++)
 	{
-		auto track = tracks.at(i);
+		auto track = tracks->at(i);
 		auto duration = QTime().addMSecs(static_cast<int>(track.duration()));
-		QTreeWidgetItem item({
-			"", track.name(), track.artist(), track.album(),
-			QString("%1:%2").arg(duration.minute()).arg(duration.second() % 60)
+		auto item = new QTreeWidgetItem({
+			"", track.name(), track.artist(),
+			track.album(),QString("%1:%2").arg(duration.minute()).arg(duration.second() % 60)
 		});
-		item.setData(0, 0x0100, QString("spotify:track:%1").arg(track.id()));
+		item->setData(0, 0x0100, QString("spotify:track:%1").arg(track.id()));
 		if (track.isLocal)
-			item.setDisabled(true);
-		songs->insertTopLevelItem(i, &item);
+			item->setDisabled(true);
+		songs->insertTopLevelItem(i, item);
 	}
 	return true;
 }
