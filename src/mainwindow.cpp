@@ -39,6 +39,7 @@ MainWindow::MainWindow(spt::Spotify *spotify, QApplication *app, QWidget *parent
 		playPause->setText(current.isPlaying ? "Pause" : "Play");
 	});
 	timer->start(1000);
+	setStatus("Welcome to spotify-qt!");
 }
 
 MainWindow::~MainWindow()
