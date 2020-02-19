@@ -41,6 +41,7 @@ private:
 	spt::Spotify			*spotify;
 	QVector<spt::Playlist>	*sptPlaylists;
 	spt::Playback			*current;
+	QNetworkAccessManager	*network;
 	// Methods
 	QWidget *createCentralWidget();
 	QToolBar *createToolBar();
@@ -49,4 +50,7 @@ private:
 	bool loadPlaylist(spt::Playlist &playlist);
 	void setStatus(QString message);
 	QStringList *getTracksAfter(QString &trackId);
+	void setCurrentSongIcon();
+	void setAlbumImage(QString url);
+	static QString formatTime(int ms);
 };

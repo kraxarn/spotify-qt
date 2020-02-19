@@ -311,3 +311,35 @@ QStringList *MainWindow::getTracksAfter(QString &trackId)
 	}
 	return tracks;
 }
+
+void MainWindow::setCurrentSongIcon()
+{
+	for (int i = 0; i < songs->topLevelItemCount(); i++)
+	{
+		auto item = songs->topLevelItem(i);
+		if (item->data(0, 0x0100).toString() == QString("spotify:track:%1").arg(current->item->id()))
+			item->setIcon(0, QIcon::fromTheme("media-playback-start"));
+		else
+			item->setIcon(0, QIcon());
+	}
+}
+
+void MainWindow::setAlbumImage(QString url)
+{
+	if (network == nullptr)
+		network = new QNetworkAccessManager();
+	auto reply = network->get(QNetworkRequest(QUrl(url)));
+	while (!reply->isFinished())
+		QCoreApplication::processEvents();
+	auto art = new QPixmap();
+	art->loadFromData(reply->readAll(), "jpeg");
+	nowAlbum->setPixmap(art->scaled(64, 64));
+}
+
+QString MainWindow::formatTime(int ms)
+{
+	auto duration = QTime(0, 0).addMSecs(ms);
+	return QString("%1:%2")
+		.arg(duration.minute())
+		.arg(duration.second() % 60, 2, 10, QChar('0'));
+}
