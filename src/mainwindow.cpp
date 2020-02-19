@@ -49,7 +49,7 @@ QWidget *MainWindow::createCentralWidget()
 {
 	auto container = new QSplitter();
 	// Sidebar with playlists etc.
-	QVBoxLayout sidebar;
+	auto sidebar = new QVBoxLayout();
 	auto libraryList = new QListWidget();
 	playlists = new QListWidget();
 	// Library
@@ -63,7 +63,7 @@ QWidget *MainWindow::createCentralWidget()
 	});
 	auto library = createGroupBox(QVector<QWidget*>() << libraryList);
 	library->setTitle("Library");
-	sidebar.addWidget(library);
+	sidebar->addWidget(library);
 	// Update current playlists
 	refreshPlaylists();
 	// Set default selected playlist
@@ -76,19 +76,19 @@ QWidget *MainWindow::createCentralWidget()
 	});
 	auto playlistContainer = createGroupBox(QVector<QWidget*>() << playlists);
 	playlistContainer->setTitle("Playlists");
-	sidebar.addWidget(playlistContainer);
+	sidebar->addWidget(playlistContainer);
 	// Now playing song
-	QHBoxLayout nowPlayingLayout;
-	nowPlayingLayout.setSpacing(12);
+	auto nowPlayingLayout = new QHBoxLayout();
+	nowPlayingLayout->setSpacing(12);
 	nowAlbum = new QLabel();
 	nowAlbum->setFixedSize(64, 64);
 	nowAlbum->setPixmap(QIcon::fromTheme("media-optical-audio").pixmap(nowAlbum->size()));
-	nowPlayingLayout.addWidget(nowAlbum);
+	nowPlayingLayout->addWidget(nowAlbum);
 	nowPlaying = new QLabel("No music playing");
-	nowPlayingLayout.addWidget(nowPlaying);
-	sidebar.addLayout(&nowPlayingLayout);
+	nowPlayingLayout->addWidget(nowPlaying);
+	sidebar->addLayout(nowPlayingLayout);
 	// Sidebar as widget
-	auto sidebarWidget = layoutToWidget(&sidebar);
+	auto sidebarWidget = layoutToWidget(sidebar);
 	sidebarWidget->setMaximumWidth(250);
 	// Table with songs
 	songs = new QTreeWidget();
@@ -127,12 +127,12 @@ QToolBar *MainWindow::createToolBar()
 	auto toolBar = new QToolBar();
 	toolBar->setMovable(false);
 	// Menu
-	QToolButton menu;
-	menu.setText("Menu");
-	menu.setIcon(QIcon::fromTheme("application-menu"));
-	menu.setPopupMode(QToolButton::InstantPopup);
-	menu.setMenu(createMenu());
-	toolBar->addWidget(&menu);
+	auto menu = new QToolButton();
+	menu->setText("Menu");
+	menu->setIcon(QIcon::fromTheme("application-menu"));
+	menu->setPopupMode(QToolButton::InstantPopup);
+	menu->setMenu(createMenu());
+	toolBar->addWidget(menu);
 	toolBar->addSeparator();
 	// Media controls
 	toolBar->addAction(QIcon::fromTheme("media-skip-backward"), "Previous");
@@ -259,7 +259,7 @@ QMenu *MainWindow::createMenu()
 
 void MainWindow::refreshPlaylists()
 {
-	spotify->playlists(sptPlaylists);
+	spotify->playlists(&sptPlaylists);
 	// Create or empty
 	if (playlists == nullptr)
 		playlists = new QListWidget();
