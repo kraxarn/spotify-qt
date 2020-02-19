@@ -29,10 +29,8 @@ bool Playlist::loadTracksFromUrl(QVector<Track> &trackList, QString &url, int of
 	for (int i = 0; i < items.size(); i++)
 		trackList[offset + i] = Track(items.at(i).toObject());
 	// Check if there's a next page
-	if (!current["next"].isNull())
-	{
-		auto nextPage = current["next"].toString();
+	auto nextPage = current["next"].toString();
+	if (!nextPage.isEmpty())
 		loadTracksFromUrl(trackList, nextPage, offset + items.size(), spotify);
-	}
 	return true;
 }
