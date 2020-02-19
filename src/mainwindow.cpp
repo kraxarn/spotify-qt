@@ -167,7 +167,7 @@ QToolBar *MainWindow::createToolBar()
 	toolBar->addWidget(menu);
 	toolBar->addSeparator();
 	// Media controls
-	toolBar->addAction(QIcon::fromTheme("media-skip-backward"), "Previous");
+	auto previous = toolBar->addAction(QIcon::fromTheme("media-skip-backward"), "Previous");
 	playPause = toolBar->addAction(QIcon::fromTheme("media-playback-start"), "Play");
 	QAction::connect(playPause, &QAction::triggered, [=](bool checked) {
 		if (playPause->iconText() == "Pause")
@@ -175,7 +175,15 @@ QToolBar *MainWindow::createToolBar()
 		else
 			spotify->resume();
 	});
-	toolBar->addAction(QIcon::fromTheme("media-skip-forward"),  "Next");
+	auto next = toolBar->addAction(QIcon::fromTheme("media-skip-forward"),  "Next");
+	QAction::connect(previous, &QAction::triggered, [=](bool checked) {
+		spotify->previous();
+		refresh();
+	});
+	QAction::connect(next, &QAction::triggered, [=](bool checked) {
+		spotify->next();
+		refresh();
+	});
 	// Progress
 	progress = new QSlider(this);
 	progress->setOrientation(Qt::Orientation::Horizontal);

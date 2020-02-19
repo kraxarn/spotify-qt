@@ -291,3 +291,14 @@ void Spotify::seek(int position)
 {
 	put(QString("me/player/seek?position_ms=%1").arg(position));
 }
+
+void Spotify::next()
+{
+	post("me/player/next");
+}
+
+void Spotify::previous()
+{
+	post("me/player/previous");
+}
+

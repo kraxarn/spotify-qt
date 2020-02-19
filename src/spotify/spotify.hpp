@@ -42,6 +42,8 @@ namespace spt
 		bool pause();
 		bool resume();
 		void seek(int position);
+		void next();
+		void previous();
 	private:
 		QDateTime *lastAuth;
 		QNetworkAccessManager *networkManager;
@@ -53,6 +55,7 @@ namespace spt
 		 * HTTP PUT request expecting JSON response
 		 */
 		void put(QString url, QVariantMap *body = nullptr);
+		void post(QString url);
 
 		bool refresh();
 
