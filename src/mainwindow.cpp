@@ -95,6 +95,8 @@ QWidget *MainWindow::createCentralWidget()
 			playlists->setCurrentRow(-1);
 		}
 	});
+	libraryList->setEnabled(false);
+	libraryList->setToolTip("Not implemented yet");
 	auto library = createGroupBox(QVector<QWidget*>() << libraryList);
 	library->setTitle("Library");
 	sidebar->addWidget(library);
