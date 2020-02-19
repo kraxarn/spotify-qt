@@ -195,6 +195,7 @@ QMenu *MainWindow::createMenu()
 	aboutMenu.addActions({
 		createMenuAction("download",  "Check for updates", QKeySequence::UnknownKey)
 	});
+	menu->addMenu(&aboutMenu);
 	// Device selection
 	auto deviceMenu = new QMenu("Device");
 	deviceMenu->setIcon(QIcon::fromTheme("speaker"));
