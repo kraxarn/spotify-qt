@@ -186,13 +186,13 @@ QToolBar *MainWindow::createToolBar()
 	toolBar->addAction(QIcon::fromTheme("media-playlist-shuffle"), "Shuffle")
 		->setCheckable(true);
 	// Volume slider
-	QSlider volume;
-	volume.setOrientation(Qt::Orientation::Horizontal);
-	volume.setMaximumWidth(100);
-	volume.setMinimum(0);
-	volume.setMaximum(20);
-	volume.setValue(20);
-	toolBar->addWidget(&volume);
+	auto volume = new QSlider(this);
+	volume->setOrientation(Qt::Orientation::Horizontal);
+	volume->setMaximumWidth(100);
+	volume->setMinimum(0);
+	volume->setMaximum(20);
+	volume->setValue(20);
+	toolBar->addWidget(volume);
 	// Return final tool bar
 	return toolBar;
 }
