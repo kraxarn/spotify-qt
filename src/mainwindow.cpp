@@ -119,6 +119,55 @@ QWidget *MainWindow::createCentralWidget()
 	return container;
 }
 
+QToolBar *MainWindow::createToolBar()
+{
+	auto toolBar = new QToolBar();
+	toolBar->setMovable(false);
+	// Menu
+	QToolButton menu;
+	menu.setText("Menu");
+	menu.setIcon(QIcon::fromTheme("application-menu"));
+	menu.setPopupMode(QToolButton::InstantPopup);
+	menu.setMenu(createMenu());
+	toolBar->addWidget(&menu);
+	toolBar->addSeparator();
+	// Media controls
+	toolBar->addAction(QIcon::fromTheme("media-skip-backward"), "Previous");
+	playPause = toolBar->addAction(QIcon::fromTheme("media-playback-start"), "Play");
+	QAction::connect(playPause, &QAction::triggered, [=](bool checked) {
+		if (playPause->iconText() == "Pause")
+			spotify->pause();
+		else
+			spotify->resume();
+	});
+	toolBar->addAction(QIcon::fromTheme("media-playback-stop"), "Stop");
+	toolBar->addAction(QIcon::fromTheme("media-skip-forward"),  "Next");
+	// Progress
+	progress = new QSlider();
+	progress->setOrientation(Qt::Orientation::Horizontal);
+	toolBar->addSeparator();
+	toolBar->addWidget(progress);
+	toolBar->addSeparator();
+	position = new QLabel("0:00/0:00");
+	toolBar->addWidget(position);
+	toolBar->addSeparator();
+	// Repeat and shuffle toggles
+	toolBar->addAction(QIcon::fromTheme("media-playlist-repeat"), "Repeat")
+		->setCheckable(true);
+	toolBar->addAction(QIcon::fromTheme("media-playlist-shuffle"), "Shuffle")
+		->setCheckable(true);
+	// Volume slider
+	QSlider volume;
+	volume.setOrientation(Qt::Orientation::Horizontal);
+	volume.setMaximumWidth(100);
+	volume.setMinimum(0);
+	volume.setMaximum(20);
+	volume.setValue(20);
+	toolBar->addWidget(&volume);
+	// Return final tool bar
+	return toolBar;
+}
+
 void MainWindow::refreshPlaylists()
 {
 	spotify->playlists(sptPlaylists);

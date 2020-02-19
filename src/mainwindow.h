@@ -18,6 +18,8 @@
 #include <QIcon>
 #include <QHeaderView>
 #include <QStatusBar>
+#include <QToolBar>
+#include <QToolButton>
 
 class MainWindow : public QMainWindow
 {
