@@ -209,6 +209,9 @@ QToolBar *MainWindow::createToolBar()
 	volume->setMaximum(20);
 	volume->setValue(20);
 	toolBar->addWidget(volume);
+	QSlider::connect(volume, &QAbstractSlider::sliderReleased, [=]() {
+		spotify->setVolume(volume->value() * 5);
+	});
 	// Return final tool bar
 	return toolBar;
 }

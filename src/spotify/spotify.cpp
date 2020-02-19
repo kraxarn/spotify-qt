@@ -302,3 +302,8 @@ void Spotify::previous()
 	post("me/player/previous");
 }
 
+void Spotify::setVolume(int volume)
+{
+	put(QString("me/player/volume?volume_percent=%1").arg(volume));
+}
+
