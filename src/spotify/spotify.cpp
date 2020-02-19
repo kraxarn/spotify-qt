@@ -190,13 +190,13 @@ void Spotify::playlists(QVector<Playlist> *playlists)
 	// Parse as playlists
 	auto items = json["items"].toArray();
 	// Create list of playlists
-	playlists.clear();
-	playlists.resize(json["total"].toInt());
+	playlists->clear();
+	playlists->resize(json["total"].toInt());
 	// Loop through all items
 	for (int i = 0; i < items.size(); i++)
 	{
 		auto data = items.at(i).toObject();
-		playlists.insert(i, Playlist(
+		playlists->insert(i, Playlist(
 			data["collaborative"].toBool(),
 			data["description"].toString(),
 			data["id"].toString(),
