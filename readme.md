@@ -1,9 +1,9 @@
 # spotify-qt
-A Spotify client using Qt as a simpler, lighter alternative to the official client. Inspired by [spotify-tui](https://github.com/Rigellute/spotify-tui).
+A Spotify client using Qt as a simpler, lighter alternative to the official client, inspired by [spotify-tui](https://github.com/Rigellute/spotify-tui).
 Much like spotify-tui, you need an actual Spotify client running, for example [spotifyd](https://github.com/Spotifyd/spotifyd).
 
 Currently in beta. Most things should work, but don't be surprised when unexpected things happen.
-I's also not currently available in any package manager on Linux, though, when it's a bit more stable, it will be available through AUR.
+It's also not currently available in any package manager, though, when it's a bit more stable, it will be available through AUR.
 
 ## Installing/building:
 ```
@@ -26,4 +26,5 @@ make
 ## Not implemented yet:
 * Library.
 * Media controls (d-bus).
-* Settings (for spotifyd etc.) and log out.
+* Settings (for spotifyd etc.).
+* Logging out.
