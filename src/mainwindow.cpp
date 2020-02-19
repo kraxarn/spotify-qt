@@ -16,8 +16,8 @@ MainWindow::MainWindow(spt::Spotify *spotify, QApplication *app, QWidget *parent
 		auto curr = spotify->currentPlayback();
 		if (!curr.isPlaying)
 		{
-			qInfo() << "no music is currently playing";
-			QThread::sleep(5);
+			playPause->setIcon(QIcon::fromTheme("media-playback-start"));
+			playPause->setText("Play");
 			return;
 		}
 		auto currPlaying = QString("%1\n%2").arg(curr.item->name()).arg(curr.item->artist());
