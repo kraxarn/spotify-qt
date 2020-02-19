@@ -11,7 +11,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 COMPONENTS Widgets Network REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets Network Gui REQUIRED)
 
 add_executable(spotify-qt
 		src/main.cpp
@@ -23,4 +23,4 @@ add_executable(spotify-qt
 		src/spotify/playback.hpp
 		src/spotify/device.hpp)
 
-target_link_libraries(spotify-qt PRIVATE Qt5::Widgets Qt5::Network)
+target_link_libraries(spotify-qt PRIVATE Qt5::Core Qt5::Widgets Qt5::Network Qt5::Gui)
