@@ -56,10 +56,7 @@ bool Spotify::auth()
 	// Check if we already have access/refresh token
 	Settings settings;
 	if (settings.accessToken().length() > 0 && settings.refreshToken().length() > 0)
-	{
-		qDebug() << "access/refresh token already set, refreshing access token";
 		return refresh();
-	}
 	// Check environmental variables
 	auto id = clientId();
 	auto secret = clientSecret();
