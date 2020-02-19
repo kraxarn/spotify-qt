@@ -150,10 +150,10 @@ QWidget *MainWindow::createCentralWidget()
 
 QToolBar *MainWindow::createToolBar()
 {
-	auto toolBar = new QToolBar();
+	auto toolBar = new QToolBar(this);
 	toolBar->setMovable(false);
 	// Menu
-	auto menu = new QToolButton();
+	auto menu = new QToolButton(this);
 	menu->setText("Menu");
 	menu->setIcon(QIcon::fromTheme("application-menu"));
 	menu->setPopupMode(QToolButton::InstantPopup);
@@ -172,12 +172,12 @@ QToolBar *MainWindow::createToolBar()
 	toolBar->addAction(QIcon::fromTheme("media-playback-stop"), "Stop");
 	toolBar->addAction(QIcon::fromTheme("media-skip-forward"),  "Next");
 	// Progress
-	progress = new QSlider();
+	progress = new QSlider(this);
 	progress->setOrientation(Qt::Orientation::Horizontal);
 	toolBar->addSeparator();
 	toolBar->addWidget(progress);
 	toolBar->addSeparator();
-	position = new QLabel("0:00/0:00");
+	position = new QLabel("0:00/0:00", this);
 	toolBar->addWidget(position);
 	toolBar->addSeparator();
 	// Repeat and shuffle toggles
