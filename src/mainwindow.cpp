@@ -90,6 +90,7 @@ QWidget *MainWindow::createCentralWidget()
 	// Sidebar as widget
 	auto sidebarWidget = layoutToWidget(sidebar);
 	sidebarWidget->setMaximumWidth(250);
+	container->addWidget(sidebarWidget);
 	// Table with songs
 	songs = new QTreeWidget();
 	songs->setEditTriggers(QAbstractItemView::NoEditTriggers);
