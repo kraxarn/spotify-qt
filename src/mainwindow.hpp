@@ -40,6 +40,8 @@ private:
 	QSlider		*progress;
 	QAction		*playPause;
 	QSlider		*volume;
+	QAction		*repeat;
+	QAction		*shuffle;
 	// Everything else
 	spt::Spotify			*spotify;
 	QVector<spt::Playlist>	*sptPlaylists;

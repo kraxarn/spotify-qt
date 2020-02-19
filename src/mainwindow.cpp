@@ -58,6 +58,8 @@ void MainWindow::refresh()
 		current.isPlaying ? "media-playback-pause" : "media-playback-start"));
 	playPause->setText(current.isPlaying ? "Pause" : "Play");
 	volume->setValue(current.volume / 5);
+	repeat->setChecked(current.repeat != "off");
+	shuffle->setChecked(current.shuffle);
 }
 
 QGroupBox *createGroupBox(QVector<QWidget*> &widgets)
@@ -199,10 +201,18 @@ QToolBar *MainWindow::createToolBar()
 	toolBar->addWidget(position);
 	toolBar->addSeparator();
 	// Repeat and shuffle toggles
-	toolBar->addAction(QIcon::fromTheme("media-playlist-repeat"), "Repeat")
-		->setCheckable(true);
-	toolBar->addAction(QIcon::fromTheme("media-playlist-shuffle"), "Shuffle")
-		->setCheckable(true);
+	repeat = toolBar->addAction(QIcon::fromTheme("media-playlist-repeat"), "Repeat");
+	repeat->setCheckable(true);
+	QAction::connect(repeat, &QAction::triggered, [=](bool checked) {
+		spotify->setRepeat(checked ? "context" : "off");
+		refresh();
+	});
+	shuffle = toolBar->addAction(QIcon::fromTheme("media-playlist-shuffle"), "Shuffle");
+	shuffle->setCheckable(true);
+	QAction::connect(shuffle, &QAction::triggered, [=](bool checked) {
+		spotify->setShuffle(checked);
+		refresh();
+	});
 	// Volume slider
 	volume = new QSlider(this);
 	volume->setOrientation(Qt::Orientation::Horizontal);

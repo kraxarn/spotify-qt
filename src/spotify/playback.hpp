@@ -10,5 +10,7 @@ namespace spt
 		Track *item = nullptr;
 		bool isPlaying = false;
 		int volume = 0;
+		QString repeat;
+		bool shuffle;
 	} Playback;
 }

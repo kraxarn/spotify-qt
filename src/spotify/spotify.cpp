@@ -268,12 +268,16 @@ Playback Spotify::currentPlayback()
 		playback.item 		= new Track();
 		playback.isPlaying 	= false;
 		playback.volume 	= 100;
+		playback.repeat 	= "off";
+		playback.shuffle	= false;
 		return playback;
 	}
 	playback.progressMs	= json["progress_ms"].toInt();
 	playback.item 		= new Track(json["item"].toObject());
 	playback.isPlaying 	= json["is_playing"].toBool();
 	playback.volume 	= json["device"].toObject()["volume_percent"].toInt();
+	playback.repeat		= json["repeat_state"].toString();
+	playback.shuffle	= json["shuffle_state"].toBool();
 	return playback;
 }
 
@@ -309,3 +313,7 @@ void Spotify::setVolume(int volume)
 	put(QString("me/player/volume?volume_percent=%1").arg(volume));
 }
 
+void Spotify::setRepeat(QString state)
+{
+	put(QString("me/player/repeat?state=%1").arg(state));
+}

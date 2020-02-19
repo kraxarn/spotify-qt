@@ -45,6 +45,7 @@ namespace spt
 		void next();
 		void previous();
 		void setVolume(int volume);
+		void setRepeat(QString state);
 	private:
 		QDateTime *lastAuth;
 		QNetworkAccessManager *networkManager;
