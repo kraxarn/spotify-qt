@@ -144,6 +144,7 @@ QWidget *MainWindow::createCentralWidget()
 		// This is done in another thread in Go
 		spotify->setShuffle(false);
 		spotify->playTracks(*getTracksAfter(trackId));
+		refresh();
 	});
 	// Load tracks in playlist
 	auto currentPlaylist = sptPlaylists->at(playlists->currentRow());
