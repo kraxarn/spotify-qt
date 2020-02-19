@@ -317,7 +317,7 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 
 void MainWindow::setStatus(QString message)
 {
-	statusBar()->showMessage(message, 3000);
+	statusBar()->showMessage(message, 5000);
 }
 
 QStringList *MainWindow::getTracksAfter(QString &trackId)
