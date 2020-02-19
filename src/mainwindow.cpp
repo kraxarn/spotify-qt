@@ -49,7 +49,6 @@ MainWindow::~MainWindow()
 	delete	nowAlbum;
 	delete	progress;
 	delete	playPause;
-	delete	spotify;
 	delete	sptPlaylists;
 	delete	current;
 }
