@@ -185,18 +185,18 @@ QMenu *MainWindow::createMenu()
 	// Create root
 	auto menu = new QMenu();
 	// About
-	QMenu aboutMenu("About");
-	aboutMenu.setIcon(QIcon::fromTheme("help-about"));
-	aboutMenu.addActions({
+	auto aboutMenu = new QMenu("About");
+	aboutMenu->setIcon(QIcon::fromTheme("help-about"));
+	aboutMenu->addActions({
 		createMenuAction("spotify", "About spotify-qt", QKeySequence::UnknownKey),
 		createMenuAction("qt",      "About Qt",         QKeySequence::UnknownKey)
 	});
 	// Check for updates
-	aboutMenu.addSeparator();
-	aboutMenu.addActions({
+	aboutMenu->addSeparator();
+	aboutMenu->addActions({
 		createMenuAction("download",  "Check for updates", QKeySequence::UnknownKey)
 	});
-	menu->addMenu(&aboutMenu);
+	menu->addMenu(aboutMenu);
 	// Device selection
 	auto deviceMenu = new QMenu("Device");
 	deviceMenu->setIcon(QIcon::fromTheme("speaker"));
