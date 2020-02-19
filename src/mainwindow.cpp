@@ -276,7 +276,7 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 	for (int i = 0; i < tracks.length(); i++)
 	{
 		auto track = tracks.at(i);
-		auto duration = QTime().addMSecs(track.duration());
+		auto duration = QTime().addMSecs(static_cast<int>(track.duration()));
 		QTreeWidgetItem item({
 			"", track.name(), track.artist(), track.album(),
 			QString("%1:%2").arg(duration.minute()).arg(duration.second() % 60)
