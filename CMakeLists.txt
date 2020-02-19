@@ -16,8 +16,8 @@ find_package(Qt5 COMPONENTS Widgets Network REQUIRED)
 add_executable(spotify-qt
 		src/main.cpp
 		src/mainwindow.cpp
-		src/spotify/spotify.cpp
 		src/settings.cpp
+		src/spotify/spotify.cpp
 		src/spotify/playlist.cpp
 		src/spotify/track.cpp
 		src/spotify/playback.hpp
