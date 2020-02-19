@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "mainwindow.hpp"
 
 MainWindow::MainWindow(spt::Spotify *spotify, QApplication *app, QWidget *parent) : QMainWindow(parent)
 {

@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "mainwindow.hpp"
 #include "src/spotify/spotify.hpp"
 
 #include <QApplication>
