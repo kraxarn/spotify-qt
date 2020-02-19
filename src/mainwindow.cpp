@@ -175,7 +175,6 @@ QToolBar *MainWindow::createToolBar()
 		else
 			spotify->resume();
 	});
-	toolBar->addAction(QIcon::fromTheme("media-playback-stop"), "Stop");
 	toolBar->addAction(QIcon::fromTheme("media-skip-forward"),  "Next");
 	// Progress
 	progress = new QSlider(this);
