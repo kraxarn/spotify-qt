@@ -41,6 +41,7 @@ namespace spt
 		Playback currentPlayback();
 		bool pause();
 		bool resume();
+		void seek(int position);
 	private:
 		QDateTime *lastAuth;
 		QNetworkAccessManager *networkManager;

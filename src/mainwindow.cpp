@@ -180,6 +180,9 @@ QToolBar *MainWindow::createToolBar()
 	// Progress
 	progress = new QSlider(this);
 	progress->setOrientation(Qt::Orientation::Horizontal);
+	QSlider::connect(progress, &QAbstractSlider::sliderReleased, [=]() {
+		spotify->seek(progress->value());
+	});
 	toolBar->addSeparator();
 	toolBar->addWidget(progress);
 	toolBar->addSeparator();
