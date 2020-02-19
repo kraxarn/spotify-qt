@@ -13,31 +13,7 @@ MainWindow::MainWindow(spt::Spotify *spotify, QApplication *app, QWidget *parent
 	addToolBar(Qt::ToolBarArea::TopToolBarArea, createToolBar());
 	// Update player status
 	auto timer = new QTimer(this);
-	QTimer::connect(timer, &QTimer::timeout, this, [=]() {
-		current = spotify->currentPlayback();
-		if (!current.isPlaying)
-		{
-			playPause->setIcon(QIcon::fromTheme("media-playback-start"));
-			playPause->setText("Play");
-			return;
-		}
-		auto currPlaying = QString("%1\n%2").arg(current.item->name()).arg(current.item->artist());
-		if (nowPlaying->text() != currPlaying)
-		{
-			if (nowPlaying->text() != "No music playing")
-				setCurrentSongIcon();
-			nowPlaying->setText(currPlaying);
-			setAlbumImage(current.item->image());
-		}
-		position->setText(QString("%1/%2")
-			.arg(formatTime(current.progressMs))
-			.arg(formatTime(current.item->duration())));
-		progress->setValue(current.progressMs);
-		progress->setMaximum(current.item->duration());
-		playPause->setIcon(QIcon::fromTheme(
-			current.isPlaying ? "media-playback-pause" : "media-playback-start"));
-		playPause->setText(current.isPlaying ? "Pause" : "Play");
-	});
+	QTimer::connect(timer, &QTimer::timeout, this, &MainWindow::refresh);
 	timer->start(1000);
 	setStatus("Welcome to spotify-qt!");
 }
@@ -52,6 +28,33 @@ MainWindow::~MainWindow()
 	delete	progress;
 	delete	playPause;
 	delete	sptPlaylists;
+}
+
+void MainWindow::refresh()
+{
+	current = spotify->currentPlayback();
+	if (!current.isPlaying)
+	{
+		playPause->setIcon(QIcon::fromTheme("media-playback-start"));
+		playPause->setText("Play");
+		return;
+	}
+	auto currPlaying = QString("%1\n%2").arg(current.item->name()).arg(current.item->artist());
+	if (nowPlaying->text() != currPlaying)
+	{
+		if (nowPlaying->text() != "No music playing")
+			setCurrentSongIcon();
+		nowPlaying->setText(currPlaying);
+		setAlbumImage(current.item->image());
+	}
+	position->setText(QString("%1/%2")
+						  .arg(formatTime(current.progressMs))
+						  .arg(formatTime(current.item->duration())));
+	progress->setValue(current.progressMs);
+	progress->setMaximum(current.item->duration());
+	playPause->setIcon(QIcon::fromTheme(
+		current.isPlaying ? "media-playback-pause" : "media-playback-start"));
+	playPause->setText(current.isPlaying ? "Pause" : "Play");
 }
 
 QGroupBox *createGroupBox(QVector<QWidget*> &widgets)
