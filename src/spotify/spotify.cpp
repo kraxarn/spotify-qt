@@ -251,7 +251,7 @@ bool Spotify::playTracks(QStringList &trackIds)
 
 bool Spotify::setShuffle(bool enabled)
 {
-	put(QString("me/player/shuffle?state=%1").arg(enabled));
+	put(QString("me/player/shuffle?state=%1").arg(enabled ? "true" : "false"));
 	return true;
 }
 
