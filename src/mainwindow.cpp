@@ -216,14 +216,25 @@ QMenu *MainWindow::createMenu()
 	QAction::connect(aboutQt, &QAction::triggered, [=](bool checked) {
 		QMessageBox::aboutQt(this);
 	});
-	aboutMenu->setIcon(QIcon::fromTheme("help-about"));
-	aboutMenu->addActions({
-		createMenuAction("spotify", "About spotify-qt", QKeySequence::UnknownKey),
+	auto checkForUpdates = createMenuAction("download", "Check for updates", QKeySequence::UnknownKey);
+	QAction::connect(checkForUpdates, &QAction::triggered, [=](bool checked) {
+		setStatus("Checking for updates...");
+		auto reply = network->get(QNetworkRequest(QUrl(
+			"https://api.github.com/repos/kraxarn/spotify-qt/releases")));
+		while (!reply->isFinished())
+			QCoreApplication::processEvents();
+		auto json = QJsonDocument::fromJson(reply->readAll(), nullptr);
+		auto latest = json.array()[0].toObject()["tag_name"].toString();
+		setStatus(latest == APP_VERSION
+			? "You have the latest version"
+			: QString("Update found, latest version is %1, you have version %2")
+				.arg(latest)
+				.arg(APP_VERSION));
 	});
-	// Check for updates
-	aboutMenu->addSeparator();
+	aboutMenu->setIcon(QIcon::fromTheme("help-about"));
+	aboutMenu->addAction(QString("spotify-qt %1").arg(APP_VERSION))->setDisabled(true);
 	aboutMenu->addActions({
-		createMenuAction("download",  "Check for updates", QKeySequence::UnknownKey)
+		aboutQt, checkForUpdates
 	});
 	menu->addMenu(aboutMenu);
 	// Device selection

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "main.hpp"
 #include "spotify/spotify.hpp"
 #include "spotify/playlist.hpp"
 #include "spotify/playback.hpp"
@@ -21,6 +22,7 @@
 #include <QToolBar>
 #include <QToolButton>
 #include <QMenu>
+#include <QMessageBox>
 
 class MainWindow : public QMainWindow
 {
