@@ -271,7 +271,7 @@ void MainWindow::refreshPlaylists()
 
 bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 {
-	auto tracks = playlist.loadTracks(spotify);
+	auto tracks = playlist.loadTracks(*spotify);
 	songs->clear();
 	for (int i = 0; i < tracks.length(); i++)
 	{
@@ -305,7 +305,7 @@ QStringList *MainWindow::getTracksAfter(QString &trackId)
 			found = true;
 		if (!found)
 			continue;
-		tracks.append(item);
+		tracks->append(item);
 	}
 	return tracks;
 }
