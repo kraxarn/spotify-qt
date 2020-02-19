@@ -31,10 +31,10 @@ MainWindow::~MainWindow()
 QGroupBox *createGroupBox(QVector<QWidget*> &widgets)
 {
 	auto group = new QGroupBox();
-	QVBoxLayout layout;
+	auto layout = new QVBoxLayout();
 	for (auto &widget : widgets)
-		layout.addWidget(widget);
-	group->setLayout(&layout);
+		layout->addWidget(widget);
+	group->setLayout(layout);
 	return group;
 }
 
