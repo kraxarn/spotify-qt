@@ -247,7 +247,9 @@ bool Spotify::playTracks(QStringList &trackIds)
 {
 	QVariantMap body;
 	body["uris"] = trackIds;
-	put(QString("me/player/play?device_id=%1").arg(currentDevice), &body);
+	put(currentDevice == nullptr
+		? QString("me/player/play")
+		: QString("me/player/play?device_id=%1").arg(currentDevice), &body);
 	return true;
 }
 
