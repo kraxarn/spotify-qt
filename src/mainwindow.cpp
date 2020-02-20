@@ -48,6 +48,7 @@ void MainWindow::refresh()
 			setCurrentSongIcon();
 		nowPlaying->setText(currPlaying);
 		setAlbumImage(current.item->image());
+		setWindowTitle(QString("%1 - %2").arg(current.item->artist()).arg(current.item->name()));
 	}
 	position->setText(QString("%1/%2")
 						  .arg(formatTime(current.progressMs))
