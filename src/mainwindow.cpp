@@ -279,13 +279,23 @@ QMenu *MainWindow::createMenu()
 	// Create root
 	auto menu = new QMenu();
 	// Testing web player
-	auto webPlayerOpen = menu->addAction("Open Web Player");
+	auto webPlayerOpen = menu->addAction("Embedded Player");
+	webPlayerOpen->setCheckable(true);
 	QAction::connect(webPlayerOpen, &QAction::triggered, [=](bool checked) {
-		auto webView = new QWebEngineView();
+		// Check if already opened
+		if (playerWebView != nullptr)
+		{
+			playerWebView->close();
+			delete playerWebView;
+			playerWebView = nullptr;
+			return;
+		}
+		playerWebView = new QWebEngineView();
+		playerWebView->setWindowTitle("spotify-qt embedded music player console");
 		// Kind of temporary I guess
-		webView->load(QUrl(QString("https://kraxarn.github.io/spotify-qt-player/debug.html?token=%1")
+		playerWebView->load(QUrl(QString("https://kraxarn.github.io/spotify-qt-player/debug.html?token=%1")
 			.arg(Settings().accessToken())));
-		webView->show();
+		playerWebView->show();
 	});
 	// About
 	auto aboutMenu = new QMenu("About");

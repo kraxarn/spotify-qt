@@ -50,6 +50,7 @@ private:
 	QVector<spt::Playlist>	*sptPlaylists;
 	spt::Playback			current;
 	QNetworkAccessManager	*network;
+	QWebEngineView			*playerWebView = nullptr;
 	// Methods
 	QWidget *createCentralWidget();
 	QToolBar *createToolBar();
