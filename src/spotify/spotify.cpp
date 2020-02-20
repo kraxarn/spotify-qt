@@ -67,7 +67,7 @@ bool Spotify::auth()
 	if (secret.isEmpty())
 		qWarning() << "warning: SPOTIFY_QT_SECRET is not set";
 	// Scopes for request, for clarity
-	// For now, these are identical to spotify-tui
+	// For now, these are mostly identical to spotify-tui
 	QStringList scopes = {
 		"playlist-read-collaborative",
 		"playlist-read-private",
@@ -81,7 +81,8 @@ bool Spotify::auth()
 		"user-read-currently-playing",
 		"user-read-playback-state",
 		"user-read-private",
-		"user-read-recently-played"
+		"user-read-recently-played",
+		"streaming"
 	};
 	// Prepare url and open browser
 	QUrl redirectUrl("http://localhost:8888");
