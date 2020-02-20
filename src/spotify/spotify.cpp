@@ -32,11 +32,8 @@ QJsonDocument Spotify::get(QString url)
 	while (!reply->isFinished())
 		QCoreApplication::processEvents();
 	// Parse reply as json
-	QJsonParseError jsonError{};
-	auto json = QJsonDocument::fromJson(reply->readAll(), &jsonError);
+	auto json = QJsonDocument::fromJson(reply->readAll());
 	reply->deleteLater();
-	if (json.isNull())
-		qWarning() << "warning: there was an error parsing json:" << jsonError.errorString();
 	// Return parsed json
 	return json;
 }
