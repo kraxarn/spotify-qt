@@ -244,14 +244,16 @@ void MainWindow::refreshDevices(QMenu *deviceMenu)
 	// Set status and get devices
 	setStatus("Refreshing devices...");
 	auto devices = spotify->devices();
-	if (devices.isEmpty())
-	{
-		setStatus("No devices found");
-		return;
-	}
 	// Clear all entries
 	for (auto &action : deviceMenu->actions())
 		deviceMenu->removeAction(action);
+	// Check if empty
+	if (devices.isEmpty())
+	{
+		setStatus("No devices found");
+		deviceMenu->addAction("No devices found")->setDisabled(true);
+		return;
+	}
 	// Update devices
 	setStatus(QString("Found %1 device(s)").arg(devices.length()));
 	for (auto &device : devices)
