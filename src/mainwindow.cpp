@@ -278,6 +278,34 @@ QMenu *MainWindow::createMenu()
 {
 	// Create root
 	auto menu = new QMenu();
+	// Lyrics
+	auto lyricsOpen = menu->addAction(QIcon::fromTheme("view-media-lyrics"), "Lyrics");
+	QAction::connect(lyricsOpen, &QAction::triggered, [=](bool checked) {
+		setStatus("Loading lyrics...");
+		auto reply = network->get(QNetworkRequest(QUrl(QString(
+			"https://vscode-spotify-lyrics.azurewebsites.net/lyrics?artist=%1&title=%2")
+			.arg(current.item->artist())
+			.arg(current.item->name()))));
+		while (!reply->isFinished())
+			QCoreApplication::processEvents();
+		auto lyricsText = QString(reply->readAll()).trimmed();
+		if (lyricsText == "Not found")
+		{
+			setStatus("Lyrics not found");
+			return;
+		}
+		setStatus("Lyrics loaded");
+		auto dock = new QDockWidget(
+			QString("%1 - %2")
+			.arg(current.item->artist())
+			.arg(current.item->name()), this);
+		auto lyricsView = new QTextEdit(dock);
+		lyricsView->setHtml(lyricsText.replace("\n", "<br/>"));
+		lyricsView->setReadOnly(true);
+		dock->setWidget(lyricsView);
+		dock->setMinimumWidth(300);
+		addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, dock);
+	});
 	// Testing web player
 	auto webPlayerOpen = menu->addAction("Embedded Player");
 	webPlayerOpen->setCheckable(true);

@@ -26,6 +26,8 @@
 #include <QMessageBox>
 #include <QWebEngineView>
 #include <QWebEngineSettings>
+#include <QDockWidget>
+#include <QTextEdit>
 
 class MainWindow : public QMainWindow
 {
