@@ -47,7 +47,8 @@ namespace spt
 		void setVolume(int volume);
 		void setRepeat(QString state);
 	private:
-		QDateTime *lastAuth;
+		QDateTime	*lastAuth;
+		QString		currentDevice;
 		QNetworkAccessManager *networkManager;
 		/**
 		 * Prepare network request with auth header

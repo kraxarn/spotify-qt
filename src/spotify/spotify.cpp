@@ -239,6 +239,7 @@ bool Spotify::setDevice(Device device)
 		device.id
 	};
 	put("me/player", &body);
+	currentDevice = device.id;
 	return true;
 }
 
@@ -246,7 +247,7 @@ bool Spotify::playTracks(QStringList &trackIds)
 {
 	QVariantMap body;
 	body["uris"] = trackIds;
-	put("me/player/play", &body);
+	put(QString("me/player/play?device_id=%1").arg(currentDevice), &body);
 	return true;
 }
 
