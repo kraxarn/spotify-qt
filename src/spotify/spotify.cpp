@@ -82,7 +82,8 @@ bool Spotify::auth()
 		"user-read-playback-state",
 		"user-read-private",
 		"user-read-recently-played",
-		"streaming"
+		"streaming",
+		"user-read-email"
 	};
 	// Prepare url and open browser
 	QUrl redirectUrl("http://localhost:8888");
