@@ -276,6 +276,15 @@ QMenu *MainWindow::createMenu()
 {
 	// Create root
 	auto menu = new QMenu();
+	// Testing web player
+	auto webPlayerOpen = menu->addAction("Open Web Player");
+	QAction::connect(webPlayerOpen, &QAction::triggered, [=](bool checked) {
+		auto webView = new QWebEngineView();
+		// Kind of temporary I guess
+		webView->load(QUrl(QString("https://kraxarn.github.io/spotify-qt-player/debug.html?token=%1")
+			.arg(Settings().accessToken())));
+		webView->show();
+	});
 	// About
 	auto aboutMenu = new QMenu("About");
 	auto aboutQt = createMenuAction("qt", "About Qt", QKeySequence::UnknownKey);
