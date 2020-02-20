@@ -31,3 +31,4 @@ make
 * Logging out.
 * Add to or remove from playlist.
 * Searching.
+* Artist/album view.
