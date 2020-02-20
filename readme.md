@@ -1,6 +1,6 @@
 # spotify-qt
 A Spotify client using Qt as a simpler, lighter alternative to the official client, inspired by [spotify-tui](https://github.com/Rigellute/spotify-tui).
-Much like spotify-tui, you need an actual Spotify client running, for example [spotifyd](https://github.com/Spotifyd/spotifyd).
+Much like spotify-tui, you need an actual Spotify client running, for example [spotifyd](https://github.com/Spotifyd/spotifyd). You can also use the embedded music player if you don't feel like setting more stuff up. Keep in mind it's still pretty buggy and creates a browser instance, however, it's still more lightweight than the official client.
 
 Currently in beta. Most things should work, but don't be surprised when unexpected things happen.
 It's also not currently available in any package manager, though, when it's a bit more stable, it will be available through AUR.
