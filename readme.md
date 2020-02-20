@@ -6,6 +6,7 @@ Currently in beta. Most things should work, but don't be surprised when unexpect
 It's also not currently available in any package manager, though, when it's a bit more stable, it will be available through AUR.
 
 ## Installing/building:
+Make sure you have Qt (5.14+), CMake (3.5+) and various build tools like `make` and `g++`.
 ```
 git clone https://github.com/kraxarn/spotify-qt.git
 cd spotify-qt
@@ -28,3 +29,5 @@ make
 * Media controls (d-bus).
 * Settings (for spotifyd etc.).
 * Logging out.
+* Add to or remove from playlist.
+* Searching.
