@@ -360,6 +360,7 @@ void MainWindow::refreshPlaylists()
 
 bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 {
+	songs->setEnabled(false);
 	auto tracks = playlist.loadTracks(*spotify);
 	songs->clear();
 	for (int i = 0; i < tracks->length(); i++)
@@ -373,6 +374,7 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 			item->setDisabled(true);
 		songs->insertTopLevelItem(i, item);
 	}
+	songs->setEnabled(true);
 	return true;
 }
 
