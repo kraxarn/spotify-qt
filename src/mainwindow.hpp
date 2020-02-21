@@ -5,6 +5,7 @@
 #include "spotify/playlist.hpp"
 #include "spotify/playback.hpp"
 #include "spotify/webplayer.hpp"
+#include "spotify/audiofeatures.hpp"
 
 #include <QMainWindow>
 #include <QListWidget>
@@ -28,6 +29,7 @@
 #include <QWebEngineSettings>
 #include <QDockWidget>
 #include <QTextEdit>
+#include <QTableWidget>
 
 class MainWindow : public QMainWindow
 {

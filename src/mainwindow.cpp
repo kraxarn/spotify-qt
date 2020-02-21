@@ -297,38 +297,17 @@ void MainWindow::refreshDevices(QMenu *deviceMenu)
 	}
 }
 
+QTreeWidgetItem *treeItem(QTreeWidget *tree, const QString &key, const QString &value)
+{
+	return new QTreeWidgetItem(tree, {
+		key, value
+	});
+}
+
 QMenu *MainWindow::createMenu()
 {
 	// Create root
-	auto menu = new QMenu();
-	// Lyrics
-	auto lyricsOpen = menu->addAction(QIcon::fromTheme("view-media-lyrics"), "Lyrics");
-	QAction::connect(lyricsOpen, &QAction::triggered, [=](bool checked) {
-		setStatus("Loading lyrics...");
-		auto reply = network->get(QNetworkRequest(QUrl(QString(
-			"https://vscode-spotify-lyrics.azurewebsites.net/lyrics?artist=%1&title=%2")
-			.arg(current.item->artist())
-			.arg(current.item->name()))));
-		while (!reply->isFinished())
-			QCoreApplication::processEvents();
-		auto lyricsText = QString(reply->readAll()).trimmed();
-		if (lyricsText == "Not found")
-		{
-			setStatus("Lyrics not found");
-			return;
-		}
-		setStatus("Lyrics loaded");
-		auto dock = new QDockWidget(
-			QString("%1 - %2")
-			.arg(current.item->artist())
-			.arg(current.item->name()), this);
-		auto lyricsView = new QTextEdit(dock);
-		lyricsView->setHtml(lyricsText.replace("\n", "<br/>"));
-		lyricsView->setReadOnly(true);
-		dock->setWidget(lyricsView);
-		dock->setMinimumWidth(300);
-		addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, dock);
-	});
+	auto menu = new QMenu(this);
 	// Testing web player
 	auto webPlayerOpen = menu->addAction("Embedded Player");
 	webPlayerOpen->setCheckable(true);
@@ -348,7 +327,7 @@ QMenu *MainWindow::createMenu()
 		playerView->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
 		// Kind of temporary I guess
 		playerWebView->load(QUrl(QString("https://kraxarn.github.io/spotify-qt-player/debug.html?token=%1")
-			.arg(Settings().accessToken())));
+									 .arg(Settings().accessToken())));
 		addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, playerView);
 	});
 	// About
@@ -367,10 +346,10 @@ QMenu *MainWindow::createMenu()
 		auto json = QJsonDocument::fromJson(reply->readAll(), nullptr);
 		auto latest = json.array()[0].toObject()["tag_name"].toString();
 		setStatus(latest == APP_VERSION
-			? "You have the latest version"
-			: QString("Update found, latest version is %1, you have version %2")
-				.arg(latest)
-				.arg(APP_VERSION));
+				  ? "You have the latest version"
+				  : QString("Update found, latest version is %1, you have version %2")
+					  .arg(latest)
+					  .arg(APP_VERSION));
 	});
 	aboutMenu->setIcon(QIcon::fromTheme("help-about"));
 	aboutMenu->addAction(QString("spotify-qt %1").arg(APP_VERSION))->setDisabled(true);
@@ -378,6 +357,80 @@ QMenu *MainWindow::createMenu()
 		aboutQt, checkForUpdates
 	});
 	menu->addMenu(aboutMenu);
+	// Track options
+	auto trackMenu = new QMenu("Track", menu);
+	trackMenu->setIcon(QIcon::fromTheme("view-media-track"));
+	menu->addMenu(trackMenu);
+	// Lyrics
+	auto lyricsOpen = trackMenu->addAction(QIcon::fromTheme("view-media-lyrics"), "Lyrics");
+	QAction::connect(lyricsOpen, &QAction::triggered, [=](bool checked) {
+		setStatus("Loading lyrics...");
+		auto reply = network->get(QNetworkRequest(QUrl(QString(
+			"https://vscode-spotify-lyrics.azurewebsites.net/lyrics?artist=%1&title=%2")
+				.arg(current.item->artist())
+				.arg(current.item->name()))));
+		while (!reply->isFinished())
+			QCoreApplication::processEvents();
+		auto lyricsText = QString(reply->readAll()).trimmed();
+		if (lyricsText == "Not found")
+		{
+			setStatus("Lyrics not found");
+			return;
+		}
+		setStatus("Lyrics loaded");
+		auto dock = new QDockWidget(
+			QString("%1 - %2")
+				.arg(current.item->artist())
+				.arg(current.item->name()), this);
+		auto lyricsView = new QTextEdit(dock);
+		lyricsView->setHtml(lyricsText.replace("\n", "<br/>"));
+		lyricsView->setReadOnly(true);
+		dock->setWidget(lyricsView);
+		dock->setMinimumWidth(300);
+		addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, dock);
+	});
+	// Audio features
+	auto trackFeatures = trackMenu->addAction(QIcon::fromTheme("view-statistics"), "Audio features");
+	QAction::connect(trackFeatures, &QAction::triggered, [=](bool checked) {
+		auto features = spotify->trackAudioFeatures(current.item->id());
+		auto dock = new QDockWidget(QString("%1 - %2")
+			.arg(current.item->artist())
+			.arg(current.item->name()), this);
+		auto tree = new QTreeWidget(dock);
+		tree->setEditTriggers(QAbstractItemView::NoEditTriggers);
+		tree->header()->hide();
+		tree->setSelectionMode(QAbstractItemView::NoSelection);
+		tree->setRootIsDecorated(false);
+		tree->setAllColumnsShowFocus(true);
+		tree->setColumnCount(2);
+		tree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+		tree->addTopLevelItems({
+			treeItem(tree, "Acousticness",
+				QString("%1%").arg(features.acousticness * 100, 0, 'f', 0)),
+			treeItem(tree, "Danceability",
+				QString("%1%").arg(features.danceability * 100, 0, 'f', 0)),
+			treeItem(tree, "Energy",
+				QString("%1%").arg(features.energy * 100, 0, 'f', 0)),
+			treeItem(tree, "Instrumentalness",
+				QString("%1%").arg(features.instrumentalness * 100, 0, 'f', 0)),
+			treeItem(tree, "Key", features.key),
+			treeItem(tree, "Live", features.liveness > 0.8 ? "Yes" : "No"),
+			treeItem(tree, "Loudness",
+				QString("%1%").arg(features.loudness * 100, 0, 'f', 0)),
+			treeItem(tree, "Mode", features.mode == 1 ? "Major" : "Minor"),
+			treeItem(tree, "Speechiness",
+				QString("%1%").arg(features.speechiness * 100, 0, 'f', 0)),
+			treeItem(tree, "Tempo",
+				QString("%1 BPM").arg(features.tempo, 0, 'f', 0)),
+			treeItem(tree, "Time signature",
+				QString("%1 m").arg(features.timeSignature)),
+			treeItem(tree, "Valence",
+				QString("%1%").arg(features.valence * 100, 0, 'f', 0)),
+		});
+		dock->setWidget(tree);
+		dock->setMinimumWidth(150);
+		addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, dock);
+	});
 	// Device selection
 	auto deviceMenu = new QMenu("Device");
 	deviceMenu->setIcon(QIcon::fromTheme("speaker"));
