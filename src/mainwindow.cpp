@@ -143,7 +143,6 @@ QWidget *MainWindow::createCentralWidget()
 	songs->setRootIsDecorated(false);
 	songs->setAllColumnsShowFocus(true);
 	songs->setColumnCount(5);
-	songs->sortByColumn(1, Qt::SortOrder::AscendingOrder);
 	songs->setHeaderLabels({
 		" ", "Title", "Artist", "Album", "Length"
 	});
