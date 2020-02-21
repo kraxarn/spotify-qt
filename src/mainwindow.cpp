@@ -150,7 +150,9 @@ QWidget *MainWindow::createCentralWidget()
 		}
 		// This is done in another thread in Go
 		spotify->setShuffle(false);
-		spotify->playTracks(*getTracksAfter(trackId));
+		auto status = spotify->playTracks(*getTracksAfter(trackId));
+		if (!status.isEmpty())
+			setStatus(QString("Failed to start playback: %1").arg(status));
 		refresh();
 	});
 	// Load tracks in playlist
@@ -311,19 +313,22 @@ QMenu *MainWindow::createMenu()
 	webPlayerOpen->setCheckable(true);
 	QAction::connect(webPlayerOpen, &QAction::triggered, [=](bool checked) {
 		// Check if already opened
-		if (playerWebView != nullptr)
+		if (playerView != nullptr)
 		{
-			playerWebView->close();
-			delete playerWebView;
-			playerWebView = nullptr;
+			removeDockWidget(playerView);
+			delete playerView;
+			playerView = nullptr;
 			return;
 		}
-		playerWebView = new QWebEngineView();
-		playerWebView->setWindowTitle("spotify-qt embedded music player console");
+		playerView = new QDockWidget(this);
+		auto playerWebView = new QWebEngineView(playerView);
+		playerView->setWindowTitle("spotify-qt embedded music player console");
+		playerView->setWidget(playerWebView);
+		playerView->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
 		// Kind of temporary I guess
 		playerWebView->load(QUrl(QString("https://kraxarn.github.io/spotify-qt-player/debug.html?token=%1")
 			.arg(Settings().accessToken())));
-		playerWebView->show();
+		addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, playerView);
 	});
 	// About
 	auto aboutMenu = new QMenu("About");

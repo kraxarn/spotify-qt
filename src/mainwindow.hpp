@@ -52,7 +52,7 @@ private:
 	QVector<spt::Playlist>	*sptPlaylists;
 	spt::Playback			current;
 	QNetworkAccessManager	*network;
-	QWebEngineView			*playerWebView = nullptr;
+	QDockWidget				*playerView = nullptr;
 	// Methods
 	QWidget *createCentralWidget();
 	QToolBar *createToolBar();
