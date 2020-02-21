@@ -21,8 +21,6 @@ make
 * Nothing is cached, so album art, playlists, etc. is fetched every time.
 * Spotify API is pinged every second for updates.
 * Probably very unstable.
-* `SPOTIFY_QT_ID` and `SPOTIFY_QT_SECRET` needs to be set before using the app.
-* First sign in isn't very good.
 
 ## Not implemented yet:
 * Library.
