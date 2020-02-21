@@ -4,13 +4,12 @@ using namespace spt;
 
 Spotify::Spotify()
 {
-	lastAuth = new QDateTime();
+	lastAuth = QDateTime();
 	networkManager = new QNetworkAccessManager();
 }
 
 Spotify::~Spotify()
 {
-	delete lastAuth;
 	delete networkManager;
 }
 
@@ -121,7 +120,7 @@ QString Spotify::auth(const QString &code, const QString &redirect, const QStrin
 	if (jsonData.contains("error_description"))
 		return jsonData["error_description"].toString();
 	// Save access/refresh token to settings
-	*lastAuth = QDateTime::currentDateTime();
+	lastAuth = QDateTime::currentDateTime();
 	auto accessToken = jsonData["access_token"].toString();
 	auto refreshToken = jsonData["refresh_token"].toString();
 	Settings settings;
@@ -166,7 +165,7 @@ bool Spotify::refresh()
 		return false;
 	}
 	// Save as access token
-	*lastAuth = QDateTime::currentDateTime();
+	lastAuth = QDateTime::currentDateTime();
 	auto accessToken = json["access_token"].toString();
 	settings.setAccessToken(accessToken);
 	return true;
