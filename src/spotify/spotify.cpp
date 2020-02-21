@@ -38,14 +38,20 @@ QJsonDocument Spotify::get(QString url)
 	return json;
 }
 
-void Spotify::put(QString url, QVariantMap *body)
+QString Spotify::put(QString url, QVariantMap *body)
 {
 	// Set in header we're sending json data
 	auto req = request(url);
 	req.setHeader(QNetworkRequest::ContentTypeHeader, QString("application/json"));
 	// Send the request, we don't expect any response
 	auto putData = body == nullptr ? nullptr : QJsonDocument::fromVariant(*body).toJson();
-	networkManager->put(req, putData);
+	auto reply = networkManager->put(req, putData);
+	auto replyBody = reply->readAll();
+	reply->deleteLater();
+	if (replyBody.isEmpty())
+		return QString();
+	auto json = QJsonDocument::fromJson(replyBody);
+	return json["error"].toObject()["message"].toString();
 }
 
 void Spotify::post(QString url)
@@ -243,14 +249,13 @@ bool Spotify::setDevice(Device device)
 	return true;
 }
 
-bool Spotify::playTracks(QStringList &trackIds)
+QString Spotify::playTracks(QStringList &trackIds)
 {
 	QVariantMap body;
 	body["uris"] = trackIds;
-	put(currentDevice == nullptr
+	return put(currentDevice == nullptr
 		? QString("me/player/play")
 		: QString("me/player/play?device_id=%1").arg(currentDevice), &body);
-	return true;
 }
 
 bool Spotify::setShuffle(bool enabled)

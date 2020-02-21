@@ -36,7 +36,7 @@ namespace spt
 		void playlists(QVector<Playlist> **playlists);
 		QVector<Device> devices();
 		bool setDevice(Device device);
-		bool playTracks(QStringList &trackIds);
+		QString playTracks(QStringList &trackIds);
 		bool setShuffle(bool enabled);
 		Playback currentPlayback();
 		bool pause();
@@ -57,7 +57,7 @@ namespace spt
 		/**
 		 * HTTP PUT request expecting JSON response
 		 */
-		void put(QString url, QVariantMap *body = nullptr);
+		QString put(QString url, QVariantMap *body = nullptr);
 		void post(QString url);
 
 		bool refresh();
