@@ -8,7 +8,7 @@ SetupDialog::SetupDialog(spt::Spotify *spt, QWidget *parent) : QDialog(parent)
 	auto welcomeText = new QLabel("Welcome to spotify-qt!\n"
 		"Before using the app, you need to setup your Spotify Web API keys.\n"
 		"You can do this by opening the Spotify Dashboard, create a new app and \n"
-  		"set the redirect uri to stpqt://callback.\n"
+  		"set the redirect uri to http://localhost:8888.\n"
 		"Then, enter your Client ID and secret below from the same application page:",
 		this);
 	mainLayout->addWidget(welcomeText);
