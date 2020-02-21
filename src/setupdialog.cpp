@@ -40,7 +40,6 @@ SetupDialog::SetupDialog(spt::Spotify *spt, QWidget *parent) : QDialog(parent)
 		QWebEngineView::connect(webview, &QWebEngineView::urlChanged, [=](const QUrl &url) {
 			if (!url.toString().startsWith(redirect))
 				return;
-			qDebug() << url.query().remove(0, QString("code=").length());
 			webview->close();
 			webview->deleteLater();
 			auto status = spt->auth(
