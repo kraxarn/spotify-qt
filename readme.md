@@ -21,6 +21,7 @@ make
 * Nothing is cached, so album art, playlists, etc. is fetched every time.
 * Spotify API is pinged every second for updates.
 * Probably very unstable.
+* All network requests are done on the main thread.
 
 ## Not implemented yet:
 * Library.
