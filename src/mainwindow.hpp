@@ -60,4 +60,5 @@ private:
 	static QString formatTime(int ms);
 	void refreshDevices(QMenu *deviceMenu);
 	void refresh();
+	QJsonDocument get(const QString &url);
 };
