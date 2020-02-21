@@ -334,6 +334,11 @@ QString formatStat(double value, const QString &measurement)
 		.arg(measurement);
 }
 
+QString formatVolume(double value)
+{
+	return value <= -10 ? "Quiet" : value <= -5 ? "Average" : "Loud";
+}
+
 QMenu *MainWindow::createMenu()
 {
 	// Create root
@@ -445,7 +450,7 @@ QMenu *MainWindow::createMenu()
 			treeItem(tree, "Instrumentalness",formatStat(features.instrumentalness, "vocals")),
 			treeItem(tree, "Key", features.key),
 			treeItem(tree, "Live", features.liveness > 0.8 ? "Yes" : "No"),
-			treeItem(tree, "Loudness", formatStat(features.loudness, "quiet", "loud")),
+			treeItem(tree, "Loudness", formatVolume(features.loudness)),
 			treeItem(tree, "Mode", features.mode == 1 ? "Major" : "Minor"),
 			treeItem(tree, "Speechiness", formatStat(features.speechiness, "spoken words")),
 			treeItem(tree, "Tempo",
