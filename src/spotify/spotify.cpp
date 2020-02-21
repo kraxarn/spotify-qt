@@ -247,9 +247,9 @@ QVector<Device> Spotify::devices()
 QString Spotify::setDevice(Device device)
 {
 	QVariantMap body;
-	body["device_ids"] = {
+	body["device_ids"] = QStringList({
 		device.id
-	};
+	});
 	currentDevice = device.id;
 	return put("me/player", &body);
 }
