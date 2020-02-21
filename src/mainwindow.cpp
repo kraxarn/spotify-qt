@@ -365,9 +365,11 @@ QMenu *MainWindow::createMenu()
 	});
 	// Log out and quit
 	menu->addSeparator();
+	auto quitAction = createMenuAction("application-exit", "Quit",    QKeySequence::Quit);
+	QAction::connect(quitAction, &QAction::triggered, QCoreApplication::quit);
 	menu->addActions({
 		createMenuAction("im-user-away",     "Log out", QKeySequence::UnknownKey),
-		createMenuAction("application-exit", "Quit",    QKeySequence::Quit)
+		quitAction
 	});
 	// Return final menu
 	return menu;
