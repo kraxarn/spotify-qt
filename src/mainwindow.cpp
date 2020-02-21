@@ -233,7 +233,7 @@ QToolBar *MainWindow::createToolBar()
 	return toolBar;
 }
 
-QAction *createMenuAction(QString icon, QString text, QKeySequence::StandardKey shortcut)
+QAction *createMenuAction(const QString &icon, const QString &text, QKeySequence::StandardKey shortcut)
 {
 	auto action = new QAction(QIcon::fromTheme(icon), text);
 	if (shortcut != QKeySequence::UnknownKey)
@@ -413,7 +413,7 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 	return true;
 }
 
-void MainWindow::setStatus(QString message)
+void MainWindow::setStatus(const QString &message)
 {
 	statusBar()->showMessage(message, 5000);
 }
@@ -446,7 +446,7 @@ void MainWindow::setCurrentSongIcon()
 	}
 }
 
-void MainWindow::setAlbumImage(QString url)
+void MainWindow::setAlbumImage(const QString &url)
 {
 	auto reply = network->get(QNetworkRequest(QUrl(url)));
 	while (!reply->isFinished())

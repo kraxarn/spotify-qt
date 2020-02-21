@@ -59,10 +59,10 @@ private:
 	QMenu *createMenu();
 	void refreshPlaylists();
 	bool loadPlaylist(spt::Playlist &playlist);
-	void setStatus(QString message);
+	void setStatus(const QString &message);
 	QStringList *getTracksAfter(QString &trackId);
 	void setCurrentSongIcon();
-	void setAlbumImage(QString url);
+	void setAlbumImage(const QString &url);
 	static QString formatTime(int ms);
 	void refreshDevices(QMenu *deviceMenu);
 	void refresh();
