@@ -184,25 +184,34 @@ QToolBar *MainWindow::createToolBar()
 	auto previous = toolBar->addAction(QIcon::fromTheme("media-skip-backward"), "Previous");
 	playPause = toolBar->addAction(QIcon::fromTheme("media-playback-start"), "Play");
 	QAction::connect(playPause, &QAction::triggered, [=](bool checked) {
-		if (playPause->iconText() == "Pause")
-			spotify->pause();
-		else
-			spotify->resume();
+		auto status = playPause->iconText() == "Pause" ? spotify->pause() : spotify->resume();
+		if (!status.isEmpty())
+		{
+			setStatus(QString("Failed to %1 playback: %2")
+				.arg(playPause->iconText() == "Pause" ? "pause" : "resume")
+				.arg(status));
+		}
 	});
 	auto next = toolBar->addAction(QIcon::fromTheme("media-skip-forward"),  "Next");
 	QAction::connect(previous, &QAction::triggered, [=](bool checked) {
-		spotify->previous();
+		auto status = spotify->previous();
+		if (!status.isEmpty())
+			setStatus(QString("Failed to go to previous track: %1").arg(status));
 		refresh();
 	});
 	QAction::connect(next, &QAction::triggered, [=](bool checked) {
-		spotify->next();
+		auto status = spotify->next();
+		if (!status.isEmpty())
+			setStatus(QString("Failed to go to next track: %1").arg(status));
 		refresh();
 	});
 	// Progress
 	progress = new QSlider(this);
 	progress->setOrientation(Qt::Orientation::Horizontal);
 	QSlider::connect(progress, &QAbstractSlider::sliderReleased, [=]() {
-		spotify->seek(progress->value());
+		auto status = spotify->seek(progress->value());
+		if (!status.isEmpty())
+			setStatus(QString("Failed to seek: %1").arg(status));
 	});
 	toolBar->addSeparator();
 	toolBar->addWidget(progress);
@@ -214,13 +223,17 @@ QToolBar *MainWindow::createToolBar()
 	shuffle = toolBar->addAction(QIcon::fromTheme("media-playlist-shuffle"), "Shuffle");
 	shuffle->setCheckable(true);
 	QAction::connect(shuffle, &QAction::triggered, [=](bool checked) {
-		spotify->setShuffle(checked);
+		auto status = spotify->setShuffle(checked);
+		if (!status.isEmpty())
+			setStatus(QString("Failed to toggle shuffle: %1").arg(status));
 		refresh();
 	});
 	repeat = toolBar->addAction(QIcon::fromTheme("media-playlist-repeat"), "Repeat");
 	repeat->setCheckable(true);
 	QAction::connect(repeat, &QAction::triggered, [=](bool checked) {
-		spotify->setRepeat(checked ? "context" : "off");
+		auto status = spotify->setRepeat(checked ? "context" : "off");
+		if (!status.isEmpty())
+			setStatus(QString("Failed to toggle repeat: %1").arg(status));
 		refresh();
 	});
 	// Volume slider
@@ -232,7 +245,9 @@ QToolBar *MainWindow::createToolBar()
 	volume->setValue(20);
 	toolBar->addWidget(volume);
 	QSlider::connect(volume, &QAbstractSlider::sliderReleased, [=]() {
-		spotify->setVolume(volume->value() * 5);
+		auto status = spotify->setVolume(volume->value() * 5);
+		if (!status.isEmpty())
+			setStatus(QString("Failed to set volume: %1").arg(status));
 	});
 	// Return final tool bar
 	return toolBar;
@@ -270,10 +285,11 @@ void MainWindow::refreshDevices(QMenu *deviceMenu)
 		action->setChecked(device.isActive);
 		action->setDisabled(device.isActive);
 		QAction::connect(action, &QAction::triggered, [=](bool triggered) {
-			if (!spotify->setDevice(device))
+			auto status = spotify->setDevice(device);
+			if (!status.isEmpty())
 			{
 				action->setChecked(false);
-				setStatus(QString("Failed to set device"));
+				setStatus(QString("Failed to set device: %1").arg(status));
 			}
 			else
 				action->setDisabled(true);
