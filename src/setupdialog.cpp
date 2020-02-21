@@ -32,6 +32,7 @@ SetupDialog::SetupDialog(spt::Spotify *spt, QWidget *parent) : QDialog(parent)
 	auto authButton = new QPushButton("Authenticate");
 	QAbstractButton::connect(authButton, &QAbstractButton::clicked, [=](bool checked) {
 		auto clientIdText = clientId->text();
+		auto clientSecretText = clientSecret->text();
 		clientId->setDisabled(true);
 		clientSecret->setDisabled(true);
 		auto redirect = QString("http://localhost:8888");
@@ -44,9 +45,14 @@ SetupDialog::SetupDialog(spt::Spotify *spt, QWidget *parent) : QDialog(parent)
 			webview->deleteLater();
 			auto status = spt->auth(
 				url.query().remove(0, QString("code=").length()),
-				redirect, clientIdText, clientSecret->text());
+				redirect, clientIdText, clientSecretText);
 			if (status.isEmpty())
+			{
+				Settings settings;
+				settings.setClientId(clientIdText);
+				settings.setClientSecret(clientSecretText);
 				accept();
+			}
 			else
 			{
 				QMessageBox::warning(this, "Auth error", status);
