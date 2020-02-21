@@ -427,7 +427,10 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 		});
 		item->setData(0, 0x0100, QString("spotify:track:%1").arg(track.id()));
 		if (track.isLocal)
+		{
 			item->setDisabled(true);
+			item->setToolTip(1, "Local track");
+		}
 		songs->insertTopLevelItem(i, item);
 	}
 	songs->setEnabled(true);
