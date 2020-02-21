@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 	// Spotify class instance
 	spt::Spotify spotify;
 	// First setup window
-	if (Settings().refreshToken().isEmpty() || true)
+	if (Settings().refreshToken().isEmpty())
 	{
 		SetupDialog dialog(&spotify);
 		if (dialog.exec() == QDialog::Rejected)
