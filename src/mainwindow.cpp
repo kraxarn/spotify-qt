@@ -155,9 +155,8 @@ QWidget *MainWindow::createCentralWidget()
 			setStatus("Failed to start playback: track not found");
 			return;
 		}
-		// This is done in another thread in Go
-		spotify->setShuffle(false);
-		auto status = spotify->playTracks(*getTracksAfter(trackId));
+		auto status = spotify->playTracks(trackId,
+			QString("spotify:playlist:%1").arg(sptPlaylists->at(playlists->currentRow()).id));
 		if (!status.isEmpty())
 			setStatus(QString("Failed to start playback: %1").arg(status));
 		refresh();
@@ -423,22 +422,6 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 void MainWindow::setStatus(const QString &message)
 {
 	statusBar()->showMessage(message, 5000);
-}
-
-QStringList *MainWindow::getTracksAfter(QString &trackId)
-{
-	auto tracks = new QStringList();
-	auto found = false;
-	for (int i = 0; i < songs->topLevelItemCount(); i++)
-	{
-		auto item = songs->topLevelItem(i)->data(0, 0x0100).toString();
-		if (!found && item == trackId)
-			found = true;
-		if (!found)
-			continue;
-		tracks->append(item);
-	}
-	return tracks;
 }
 
 void MainWindow::setCurrentSongIcon()
