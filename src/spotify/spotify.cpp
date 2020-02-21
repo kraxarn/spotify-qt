@@ -65,19 +65,8 @@ QString Spotify::errorMessage(QNetworkReply *reply)
 	return json["error"].toObject()["message"].toString();
 }
 
-bool Spotify::auth()
+QString Spotify::authUrl(const QString &clientId, const QString &redirect)
 {
-	// Check if we already have access/refresh token
-	Settings settings;
-	if (settings.accessToken().length() > 0 && settings.refreshToken().length() > 0)
-		return refresh();
-	// Check environmental variables
-	auto id = clientId();
-	auto secret = clientSecret();
-	if (id.isEmpty())
-		qWarning() << "warning: SPOTIFY_QT_ID is not set";
-	if (secret.isEmpty())
-		qWarning() << "warning: SPOTIFY_QT_SECRET is not set";
 	// Scopes for request, for clarity
 	// For now, these are mostly identical to spotify-tui
 	QStringList scopes = {
@@ -98,22 +87,19 @@ bool Spotify::auth()
 		"user-read-email"
 	};
 	// Prepare url and open browser
-	QUrl redirectUrl("http://localhost:8888");
-	auto authUrl = QString(
+	QUrl redirectUrl(redirect);
+	return QString(
 		"https://accounts.spotify.com/authorize?client_id=%1&response_type=code&redirect_uri=%2&scope=%3")
-			.arg(id)
+			.arg(clientId)
 			.arg(QString(redirectUrl.toEncoded()))
 			.arg(scopes.join("%20"));
-	// Start a temporary web server to respond to request
-	// TODO: Qt currently doesn't support this, just open a browser for now
-	QDesktopServices::openUrl(authUrl);
-	// Temporary dialog for entering code
-	auto code = QInputDialog::getText(
-		nullptr,
-		"Enter auth code",
-		"Enter code from query parameter:");
+}
+
+QString Spotify::auth(const QString &code, const QString &redirect, const QString &id, const QString &secret)
+{
 	if (code.isEmpty())
-		return false;
+		return QString("no code specified");
+	QUrl redirectUrl(redirect);
 	// Prepare form to send
 	auto postData = QString("grant_type=authorization_code&code=%1&redirect_uri=%2")
 		.arg(code)
@@ -133,18 +119,16 @@ bool Spotify::auth()
 	auto jsonData = QJsonDocument::fromJson(reply->readAll()).object();
 	reply->deleteLater();
 	if (jsonData.contains("error_description"))
-	{
-		qWarning() << "warning: failed to get tokens from code:" << jsonData["error_description"];
-		return false;
-	}
+		return jsonData["error_description"].toString();
 	// Save access/refresh token to settings
 	*lastAuth = QDateTime::currentDateTime();
 	auto accessToken = jsonData["access_token"].toString();
 	auto refreshToken = jsonData["refresh_token"].toString();
+	Settings settings;
 	settings.setAccessToken(accessToken);
 	settings.setRefreshToken(refreshToken);
 	// Everything hopefully went fine
-	return true;
+	return QString();
 }
 
 bool Spotify::refresh()
@@ -166,7 +150,8 @@ bool Spotify::refresh()
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 	request.setRawHeader(
 		"Authorization",
-		"Basic " + QString("%1:%2").arg(clientId()).arg(clientSecret()).toUtf8().toBase64());
+		"Basic " + QString("%1:%2")
+		.arg(settings.clientId()).arg(settings.clientSecret()).toUtf8().toBase64());
 	// Send request
 	auto reply = networkManager->post(request, postData);
 	while (!reply->isFinished())
@@ -185,16 +170,6 @@ bool Spotify::refresh()
 	auto accessToken = json["access_token"].toString();
 	settings.setAccessToken(accessToken);
 	return true;
-}
-
-QString Spotify::clientId()
-{
-	return QProcessEnvironment::systemEnvironment().value("SPOTIFY_QT_ID");
-}
-
-QString Spotify::clientSecret()
-{
-	return QProcessEnvironment::systemEnvironment().value("SPOTIFY_QT_SECRET");
 }
 
 void Spotify::playlists(QVector<Playlist> **playlists)

@@ -29,7 +29,7 @@ namespace spt
 		/**
 		 * Authenticate with Spotify
 		 */
-		bool auth();
+		QString auth(const QString &code, const QString &redirect, const QString &id, const QString &secret);
 		/**
 		 * HTTP GET request expecting JSON response
 		 */
@@ -48,6 +48,7 @@ namespace spt
 		QString setVolume(int volume);
 		QString setRepeat(QString state);
 		AudioFeatures trackAudioFeatures(const QString &trackId);
+		static QString authUrl(const QString &clientId, const QString &redirect);
 	private:
 		QDateTime	*lastAuth;
 		QString		currentDevice;
@@ -64,8 +65,5 @@ namespace spt
 		static QString errorMessage(QNetworkReply *reply);
 
 		bool refresh();
-
-		static QString clientId();
-		static QString clientSecret();
 	};
 }
