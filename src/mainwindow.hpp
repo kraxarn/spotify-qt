@@ -39,20 +39,15 @@ private:
 	// Widgets
 	QListWidget	*playlists;
 	QTreeWidget	*songs;
-	QLabel		*nowPlaying;
-	QLabel		*position;
-	QLabel		*nowAlbum;
-	QSlider		*progress;
-	QAction		*playPause;
-	QSlider		*volume;
-	QAction		*repeat;
-	QAction		*shuffle;
+	QLabel		*nowPlaying, *position, *nowAlbum;
+	QSlider		*progress, *volume;
+	QAction		*playPause, *repeat, *shuffle;
 	// Everything else
 	spt::Spotify			*spotify;
 	QVector<spt::Playlist>	*sptPlaylists;
 	spt::Playback			current;
 	QNetworkAccessManager	*network;
-	QDockWidget				*playerView = nullptr;
+	QDockWidget				*playerView;
 	// Methods
 	QWidget *createCentralWidget();
 	QToolBar *createToolBar();

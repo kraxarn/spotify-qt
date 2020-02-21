@@ -2,6 +2,13 @@
 
 MainWindow::MainWindow(spt::Spotify *spotify, QApplication *app, QWidget *parent) : QMainWindow(parent)
 {
+	// Some default values to prevent unexpected stuff
+	playlists 	= nullptr;
+	songs 		= nullptr;
+	playerView	= nullptr;
+	volume 		= progress	= nullptr;
+	nowPlaying	= position	= nowAlbum	= nullptr;
+	repeat 		= shuffle	= playPause	= nullptr;
 	// Set Spotify
 	this->spotify = spotify;
 	sptPlaylists = new QVector<spt::Playlist>();
