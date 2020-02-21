@@ -50,7 +50,7 @@ namespace spt
 		AudioFeatures trackAudioFeatures(const QString &trackId);
 		static QString authUrl(const QString &clientId, const QString &redirect);
 	private:
-		QDateTime	lastAuth;
+		qint64		lastAuth;
 		QString		currentDevice;
 		QNetworkAccessManager *networkManager;
 		/**

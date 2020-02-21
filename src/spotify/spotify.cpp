@@ -4,8 +4,9 @@ using namespace spt;
 
 Spotify::Spotify()
 {
-	lastAuth = QDateTime();
+	lastAuth = 0;
 	networkManager = new QNetworkAccessManager();
+	refresh();
 }
 
 Spotify::~Spotify()
@@ -15,6 +16,13 @@ Spotify::~Spotify()
 
 QNetworkRequest Spotify::request(QString &url)
 {
+	// See when last refresh was
+	auto lastRefresh = QDateTime::currentSecsSinceEpoch() - lastAuth;
+	if (lastRefresh >= 3600)
+	{
+		qDebug() << "access token probably expired, refreshing";
+		refresh();
+	}
 	// Prepare request
 	QNetworkRequest request((QUrl("https://api.spotify.com/v1/" + url)));
 	// Set header
@@ -120,7 +128,7 @@ QString Spotify::auth(const QString &code, const QString &redirect, const QStrin
 	if (jsonData.contains("error_description"))
 		return jsonData["error_description"].toString();
 	// Save access/refresh token to settings
-	lastAuth = QDateTime::currentDateTime();
+	lastAuth = QDateTime::currentSecsSinceEpoch();
 	auto accessToken = jsonData["access_token"].toString();
 	auto refreshToken = jsonData["refresh_token"].toString();
 	Settings settings;
@@ -165,7 +173,7 @@ bool Spotify::refresh()
 		return false;
 	}
 	// Save as access token
-	lastAuth = QDateTime::currentDateTime();
+	lastAuth = QDateTime::currentSecsSinceEpoch();
 	auto accessToken = json["access_token"].toString();
 	settings.setAccessToken(accessToken);
 	return true;
