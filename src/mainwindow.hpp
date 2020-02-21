@@ -29,7 +29,6 @@
 #include <QWebEngineSettings>
 #include <QDockWidget>
 #include <QTextEdit>
-#include <QTableWidget>
 
 class MainWindow : public QMainWindow
 {
