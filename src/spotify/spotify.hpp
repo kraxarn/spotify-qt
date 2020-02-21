@@ -35,17 +35,17 @@ namespace spt
 		QJsonDocument get(QString url);
 		void playlists(QVector<Playlist> **playlists);
 		QVector<Device> devices();
-		bool setDevice(Device device);
-		QString playTracks(QStringList &trackIds);
-		bool setShuffle(bool enabled);
+		QString setDevice(Device device);
+		QString playTracks(const QString &track, const QString &context);
+		QString setShuffle(bool enabled);
 		Playback currentPlayback();
-		bool pause();
-		bool resume();
-		void seek(int position);
-		void next();
-		void previous();
-		void setVolume(int volume);
-		void setRepeat(QString state);
+		QString pause();
+		QString resume();
+		QString seek(int position);
+		QString next();
+		QString previous();
+		QString setVolume(int volume);
+		QString setRepeat(QString state);
 	private:
 		QDateTime	*lastAuth;
 		QString		currentDevice;
@@ -58,7 +58,8 @@ namespace spt
 		 * HTTP PUT request expecting JSON response
 		 */
 		QString put(QString url, QVariantMap *body = nullptr);
-		void post(QString url);
+		QString post(QString url);
+		static QString errorMessage(QNetworkReply *reply);
 
 		bool refresh();
 

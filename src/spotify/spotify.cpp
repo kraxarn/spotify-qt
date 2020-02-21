@@ -45,18 +45,24 @@ QString Spotify::put(QString url, QVariantMap *body)
 	req.setHeader(QNetworkRequest::ContentTypeHeader, QString("application/json"));
 	// Send the request, we don't expect any response
 	auto putData = body == nullptr ? nullptr : QJsonDocument::fromVariant(*body).toJson();
-	auto reply = networkManager->put(req, putData);
+	return errorMessage(networkManager->put(req, putData));
+}
+
+QString Spotify::post(QString url)
+{
+	return errorMessage(networkManager->post(request(url), QByteArray()));
+}
+
+QString Spotify::errorMessage(QNetworkReply *reply)
+{
+	while (!reply->isFinished())
+		QCoreApplication::processEvents();
 	auto replyBody = reply->readAll();
 	reply->deleteLater();
 	if (replyBody.isEmpty())
 		return QString();
 	auto json = QJsonDocument::fromJson(replyBody);
 	return json["error"].toObject()["message"].toString();
-}
-
-void Spotify::post(QString url)
-{
-	networkManager->post(request(url), QByteArray());
 }
 
 bool Spotify::auth()
@@ -238,30 +244,31 @@ QVector<Device> Spotify::devices()
 	return devices;
 }
 
-bool Spotify::setDevice(Device device)
+QString Spotify::setDevice(Device device)
 {
 	QVariantMap body;
 	body["device_ids"] = {
 		device.id
 	};
-	put("me/player", &body);
 	currentDevice = device.id;
-	return true;
+	return put("me/player", &body);
 }
 
-QString Spotify::playTracks(QStringList &trackIds)
+QString Spotify::playTracks(const QString &track, const QString &context)
 {
 	QVariantMap body;
-	body["uris"] = trackIds;
+	body["context_uri"] = context;
+	body["offset"] = QJsonObject({
+		QPair<QString, QJsonValue>("uri", track)
+	});
 	return put(currentDevice == nullptr
 		? QString("me/player/play")
 		: QString("me/player/play?device_id=%1").arg(currentDevice), &body);
 }
 
-bool Spotify::setShuffle(bool enabled)
+QString Spotify::setShuffle(bool enabled)
 {
-	put(QString("me/player/shuffle?state=%1").arg(enabled ? "true" : "false"));
-	return true;
+	return put(QString("me/player/shuffle?state=%1").arg(enabled ? "true" : "false"));
 }
 
 Playback Spotify::currentPlayback()
@@ -288,39 +295,37 @@ Playback Spotify::currentPlayback()
 	return playback;
 }
 
-bool Spotify::pause()
+QString Spotify::pause()
 {
-	put("me/player/pause");
-	return true;
+	return put("me/player/pause");
 }
 
-bool Spotify::resume()
+QString Spotify::resume()
 {
-	put("me/player/play");
-	return true;
+	return put("me/player/play");
 }
 
-void Spotify::seek(int position)
+QString Spotify::seek(int position)
 {
-	put(QString("me/player/seek?position_ms=%1").arg(position));
+	return put(QString("me/player/seek?position_ms=%1").arg(position));
 }
 
-void Spotify::next()
+QString Spotify::next()
 {
-	post("me/player/next");
+	return post("me/player/next");
 }
 
-void Spotify::previous()
+QString Spotify::previous()
 {
-	post("me/player/previous");
+	return post("me/player/previous");
 }
 
-void Spotify::setVolume(int volume)
+QString Spotify::setVolume(int volume)
 {
-	put(QString("me/player/volume?volume_percent=%1").arg(volume));
+	return put(QString("me/player/volume?volume_percent=%1").arg(volume));
 }
 
-void Spotify::setRepeat(QString state)
+QString Spotify::setRepeat(QString state)
 {
-	put(QString("me/player/repeat?state=%1").arg(state));
+	return put(QString("me/player/repeat?state=%1").arg(state));
 }
