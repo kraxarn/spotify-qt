@@ -72,16 +72,12 @@ QGroupBox *SettingsDialog::spotifySettings()
 	auto sptMainLayout = new QVBoxLayout(this);
 	sptSettings->setLayout(sptMainLayout);
 	// Executable settings
-	auto sptPath = new QLineEdit("/usr/bin/spotifyd", this);
-	sptPath->setPlaceholderText("spotifyd path");
+	sptPath = new QLineEdit(this);
+	sptPath->setPlaceholderText("librespot/spotifyd path");
 	sptMainLayout->addWidget(sptPath);
 	// Spotifyd version
-	QProcess process(this);
-	process.start("/usr/bin/spotifyd", {
-		"--version"
-	});
-	process.waitForFinished();
-	auto sptVersion = new QLabel(process.readAllStandardOutput(), this);
+	sptVersion = new QLabel("(no client provided)", this);
+	sptVersion->setEnabled(false);
 	sptMainLayout->addWidget(sptVersion);
 	// Override spotifyd config
 	auto sptOverride = new QCheckBox("Override spotifyd config", this);
@@ -142,10 +138,56 @@ QStringList SettingsDialog::backends()
 	return QStringList();
 }
 
+QString SettingsDialog::sptClient(const QString &path)
+{
+	// Check if it exists
+	QFileInfo file(path);
+	if (!file.exists())
+		return QString();
+	// Check if either client
+	if (file.baseName() != "librespot" && file.baseName() != "spotifyd")
+		return QString();
+	// Everything seems fine
+	return clientVersion(file);
+}
+
+QString SettingsDialog::clientVersion(const QFileInfo &fileInfo)
+{
+	// Prepare process
+	QProcess process;
+	// Get version info
+	if (fileInfo.baseName() == "librespot")
+	{
+		// --name is always required
+		// --backend ? is just used to not actually start
+		process.start(fileInfo.absoluteFilePath(), {
+			"--backend", "?", "--name", ""
+		});
+		process.waitForFinished();
+		// Version info is output to stderr for some reason
+		QString out(process.readAllStandardError());
+		auto right = out.right(out.length() - out.indexOf("] librespot") - 2);
+		return right.left(right.indexOf("."));
+	}
+	// spotifyd has a simple --version
+	process.start(fileInfo.absoluteFilePath(), {
+		"--version"
+	});
+	process.waitForFinished();
+	// Entire stdout is version
+	return process.readAllStandardOutput();
+}
+
 void SettingsDialog::applySettings()
 {
 	// Set theme
 	QApplication::setStyle(appTheme->currentText());
 	settings.setStyle(appTheme->currentText());
-}
 
+	// Check spotify client path
+	if (!sptPath->text().isEmpty())
+	{
+		sptVersion->setEnabled(true);
+		sptVersion->setText(sptClient(sptPath->text()));
+	}
+}

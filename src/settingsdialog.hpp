@@ -19,6 +19,7 @@
 #include <QProcess>
 #include <QStringRef>
 #include <QAction>
+#include <QFileInfo>
 
 class SettingsDialog : public QDialog
 {
@@ -31,6 +32,10 @@ private:
 	QStringList backends();
 	void applySettings();
 	Settings settings;
+	QString sptClient(const QString &path);
+	QString clientVersion(const QFileInfo &fileInfo);
 	// All settings properties
-	QComboBox	*appTheme = nullptr;
+	QComboBox	*appTheme	= nullptr;
+	QLineEdit	*sptPath	= nullptr;
+	QLabel		*sptVersion	= nullptr;
 };
