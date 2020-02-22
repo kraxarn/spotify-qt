@@ -1,6 +1,6 @@
 #pragma once
 
-#include "spotify/spotify.hpp"
+#include "spotify/auth.hpp"
 
 #include <QDialog>
 #include <QVBoxLayout>
@@ -18,6 +18,8 @@
 class SetupDialog : public QDialog
 {
 public:
-	explicit SetupDialog(spt::Spotify *spt, QWidget *parent = nullptr);
-	int exec() override;
+	explicit SetupDialog(QWidget *parent = nullptr);
+	virtual ~SetupDialog();
+private:
+	spt::Auth *auth;
 };

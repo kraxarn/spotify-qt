@@ -1,7 +1,9 @@
 #include "setupdialog.hpp"
 
-SetupDialog::SetupDialog(spt::Spotify *spt, QWidget *parent) : QDialog(parent)
+SetupDialog::SetupDialog(QWidget *parent) : QDialog(parent)
 {
+	// Auth
+	auth = new spt::Auth();
 	// Main layout
 	auto mainLayout = new QVBoxLayout();
 	// Welcome text
@@ -42,7 +44,7 @@ SetupDialog::SetupDialog(spt::Spotify *spt, QWidget *parent) : QDialog(parent)
 				return;
 			webview->close();
 			webview->deleteLater();
-			auto status = spt->auth(
+			auto status = auth->auth(
 				url.query().remove(0, QString("code=").length()),
 				redirect, clientIdText, clientSecretText);
 			if (status.isEmpty())
@@ -61,7 +63,7 @@ SetupDialog::SetupDialog(spt::Spotify *spt, QWidget *parent) : QDialog(parent)
 		});
 		webview->resize(1280, 720);
 		webview->show();
-		webview->load(QUrl(spt::Spotify::authUrl(clientIdText, redirect)));
+		webview->load(QUrl(spt::Auth::authUrl(clientIdText, redirect)));
 	});
 	auto buttonBox = new QHBoxLayout();
 	buttonBox->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
@@ -72,7 +74,7 @@ SetupDialog::SetupDialog(spt::Spotify *spt, QWidget *parent) : QDialog(parent)
 	setLayout(mainLayout);
 }
 
-int SetupDialog::exec()
+SetupDialog::~SetupDialog()
 {
-	return QDialog::exec();
+	delete auth;
 }
