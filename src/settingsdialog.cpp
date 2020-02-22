@@ -163,7 +163,6 @@ bool SettingsDialog::applySettings()
 			applyFail("spotify client");
 			return false;
 		}
-		sptVersion->setEnabled(true);
 		sptVersion->setText(client);
 		settings.setSptPath(sptPath->text());
 	}
