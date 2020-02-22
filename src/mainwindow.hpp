@@ -1,6 +1,7 @@
 #pragma once
 
 #include "main.hpp"
+#include "settingsdialog.hpp"
 #include "spotify/spotify.hpp"
 #include "spotify/playlist.hpp"
 #include "spotify/playback.hpp"

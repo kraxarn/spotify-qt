@@ -435,9 +435,12 @@ QMenu *MainWindow::createMenu()
 	});
 	menu->addMenu(deviceMenu);
 	// Refresh and settings
-	menu->addActions({
-		createMenuAction("settings", "Settings...", QKeySequence::Preferences)
+	auto openSettings = createMenuAction("settings", "Settings...", QKeySequence::Preferences);
+	QAction::connect(openSettings, &QAction::triggered, [=]() {
+		SettingsDialog dialog(this);
+		dialog.exec();
 	});
+	menu->addAction(openSettings);
 	// Log out and quit
 	menu->addSeparator();
 	auto quitAction = createMenuAction("application-exit", "Quit",    QKeySequence::Quit);
