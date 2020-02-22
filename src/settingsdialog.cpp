@@ -112,21 +112,6 @@ QGroupBox *SettingsDialog::spotifySettings()
 	return sptSettings;
 }
 
-QStringList SettingsDialog::backends()
-{
-	QProcess process(this);
-	process.start("/usr/bin/spotifyd", {
-		"--help"
-	});
-	process.waitForFinished();
-	QString out(process.readAllStandardOutput());
-	QStringList lines(out.split('\n'));
-	for (auto &line : lines)
-		if (line.trimmed().startsWith("-b"))
-			return line.right(line.length() - line.indexOf(':') - 2).remove(']').split(", ");
-	return QStringList();
-}
-
 QString SettingsDialog::sptClient(const QString &path)
 {
 	// Check if it exists

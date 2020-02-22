@@ -30,7 +30,6 @@ public:
 private:
 	QGroupBox *appSettings();
 	QGroupBox *spotifySettings();
-	QStringList backends();
 	bool applySettings();
 	void applyFail(const QString &setting);
 	Settings settings;
