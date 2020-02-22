@@ -38,32 +38,52 @@ SetupDialog::SetupDialog(QWidget *parent) : QDialog(parent)
 		clientId->setDisabled(true);
 		clientSecret->setDisabled(true);
 		auto redirect = QString("http://localhost:8888");
-		auto webview = new QWebEngineView(nullptr);
-		QWebEngineView::connect(webview, &QWebEngineView::urlChanged, [=](const QUrl &url) {
-			if (!url.toString().startsWith(redirect))
+
+		auto server = new QTcpServer(this);
+		if (!server->listen(QHostAddress::LocalHost, 8888))
+		{
+			QMessageBox::warning(this,
+				"server error",
+				QString("failed to start a temporary server on port 8888: %1").arg(server->errorString()));
+			return;
+		}
+		QTcpServer::connect(server, &QTcpServer::newConnection, [=]() {
+			// Settings for later
+			Settings settings;
+			// Read
+			auto socket = server->nextPendingConnection();
+			socket->waitForReadyRead();
+			auto response = QString(socket->readAll());
+			// Client might want to request favicon or something
+			if (!response.contains("?code="))
+			{
+				socket->close();
 				return;
-			webview->close();
-			webview->deleteLater();
-			auto status = auth->auth(
-				url.query().remove(0, QString("code=").length()),
-				redirect, clientIdText, clientSecretText);
+			}
+			// Do magic with code received
+			// GET /?code=<code> HTTP...
+			auto left = response.left(response.indexOf(" HTTP"));
+			auto code = left.right(left.length() - left.indexOf("?code=") - 6);
+			auto status = auth->auth(code, redirect, clientIdText, clientSecretText);
+			// Write
+			socket->write(QString("HTTP/1.1 200 OK\r\n\r\n%1")
+				.arg(status.isEmpty()
+					? "success, you can now return to spotify-qt"
+					: QString("failed to authenticate: %1").arg(status)).toUtf8());
+			socket->flush();
+			socket->waitForBytesWritten(3000);
+			socket->close();
+			// Close it all down if ok
 			if (status.isEmpty())
 			{
-				Settings settings;
 				settings.setClientId(clientIdText);
 				settings.setClientSecret(clientSecretText);
+				server->close();
+				delete server;
 				accept();
 			}
-			else
-			{
-				QMessageBox::warning(this, "Auth error", status);
-				clientId->setDisabled(false);
-				clientSecret->setDisabled(false);
-			}
 		});
-		webview->resize(1280, 720);
-		webview->show();
-		webview->load(QUrl(spt::Auth::authUrl(clientIdText, redirect)));
+		QDesktopServices::openUrl(QUrl(spt::Auth::authUrl(clientIdText, redirect)));
 	});
 	auto buttonBox = new QHBoxLayout();
 	buttonBox->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));

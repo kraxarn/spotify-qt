@@ -14,6 +14,7 @@
 #include <QCoreApplication>
 #include <QWebEngineView>
 #include <QMessageBox>
+#include <QTcpServer>
 
 class SetupDialog : public QDialog
 {
