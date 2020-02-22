@@ -49,3 +49,13 @@ void Settings::setClientSecret(const QString &value)
 {
 	settings->setValue("ClientSecret", value);
 }
+
+QString Settings::style()
+{
+	return settings->value("Style").toString();
+}
+
+void Settings::setStyle(const QString &value)
+{
+	settings->setValue("Style", value);
+}
