@@ -148,6 +148,7 @@ QWidget *MainWindow::createCentralWidget()
 		" ", "Title", "Artist", "Album", "Length"
 	});
 	songs->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+	songs->header()->setSectionsMovable(false);
 	// Song context menu
 	songs->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(songs, &QWidget::customContextMenuRequested, [=](const QPoint &pos) {
