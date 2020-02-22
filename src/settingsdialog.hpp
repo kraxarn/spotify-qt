@@ -35,7 +35,8 @@ private:
 	Settings settings;
 	static QString sptClient(const QString &path);
 	// All settings properties
-	QComboBox	*appTheme	= nullptr;
-	QLineEdit	*sptPath	= nullptr;
-	QLabel		*sptVersion	= nullptr;
+	QComboBox	*appTheme		= nullptr;
+	QLineEdit	*sptPath		= nullptr;
+	QLabel		*sptVersion		= nullptr;
+	QCheckBox	*sptStartClient	= nullptr;
 };

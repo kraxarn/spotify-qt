@@ -38,10 +38,6 @@ QGroupBox *SettingsDialog::appSettings()
 	auto appSettings = new QGroupBox("Application", this);
 	auto appLayout = new QGridLayout(this);
 	appSettings->setLayout(appLayout);
-	// Embedded player
-	auto appPlayer = new QCheckBox("Embedded player", this);
-	appPlayer->setToolTip("Embedded player, removes the need for an external player, but not as reliable");
-	appLayout->addWidget(appPlayer, 0, 0, 1, 2);
 	// Theme
 	auto appThemeLabel = new QLabel("Theme", this);
 	appThemeLabel->setToolTip("Theme used throughout the application");
@@ -62,6 +58,15 @@ QGroupBox *SettingsDialog::appSettings()
 	});
 	appRefresh->setCurrentIndex(1);
 	appLayout->addWidget(appRefresh);
+	// Embedded player
+	auto appPlayer = new QCheckBox("Embedded player", this);
+	appPlayer->setToolTip("Embedded player, removes the need for an external player, but not as reliable");
+	appLayout->addWidget(appPlayer, 2, 0, 1, 2);
+	// Start client
+	sptStartClient = new QCheckBox("Start Spotify on app start", this);
+	sptStartClient->setToolTip("Start specified Spotify client on start together with the app");
+	sptStartClient->setChecked(settings.sptStartClient());
+	appLayout->addWidget(sptStartClient, 3, 0, 1, 2);
 	return appSettings;
 }
 
@@ -166,6 +171,8 @@ bool SettingsDialog::applySettings()
 		settings.setSptPath(sptPath->text());
 	}
 
+	// Other Spotify stuff
+	settings.setSptStartClient(sptStartClient->isChecked());
 	// Everything is fine
 	return true;
 }

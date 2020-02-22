@@ -27,6 +27,9 @@ public:
 
 	QString sptPath();
 	void setSptPath(const QString &value);
+
+	bool sptStartClient();
+	void setSptStartClient(bool value);
 private:
 	QSettings *settings;
 };

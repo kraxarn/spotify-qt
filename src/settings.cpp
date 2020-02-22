@@ -67,5 +67,15 @@ QString Settings::sptPath()
 
 void Settings::setSptPath(const QString &value)
 {
-settings->setValue("Spotify/Path", value);
+	settings->setValue("Spotify/Path", value);
+}
+
+bool Settings::sptStartClient()
+{
+	return settings->value("Spotify/StartClient").toBool();
+}
+
+void Settings::setSptStartClient(bool value)
+{
+	settings->setValue("Spotify/StartClient", value);
 }
