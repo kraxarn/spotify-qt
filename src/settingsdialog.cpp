@@ -121,20 +121,14 @@ QString SettingsDialog::sptClient(const QString &path)
 	// Check if either client
 	if (file.baseName() != "librespot" && file.baseName() != "spotifyd")
 		return QString();
-	// Everything seems fine
-	return clientVersion(file);
-}
-
-QString SettingsDialog::clientVersion(const QFileInfo &fileInfo)
-{
 	// Prepare process
 	QProcess process;
 	// Get version info
-	if (fileInfo.baseName() == "librespot")
+	if (file.baseName() == "librespot")
 	{
 		// --name is always required
 		// --backend ? is just used to not actually start
-		process.start(fileInfo.absoluteFilePath(), {
+		process.start(file.absoluteFilePath(), {
 			"--backend", "?", "--name", ""
 		});
 		process.waitForFinished();
@@ -144,7 +138,7 @@ QString SettingsDialog::clientVersion(const QFileInfo &fileInfo)
 		return right.left(right.indexOf("."));
 	}
 	// spotifyd has a simple --version
-	process.start(fileInfo.absoluteFilePath(), {
+	process.start(file.absoluteFilePath(), {
 		"--version"
 	});
 	process.waitForFinished();
