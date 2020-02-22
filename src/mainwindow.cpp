@@ -413,11 +413,7 @@ QMenu *MainWindow::createMenu()
 	auto checkForUpdates = createMenuAction("download", "Check for updates", QKeySequence::UnknownKey);
 	QAction::connect(checkForUpdates, &QAction::triggered, [=](bool checked) {
 		setStatus("Checking for updates...");
-		auto reply = network->get(QNetworkRequest(QUrl(
-			"https://api.github.com/repos/kraxarn/spotify-qt/releases")));
-		while (!reply->isFinished())
-			QCoreApplication::processEvents();
-		auto json = QJsonDocument::fromJson(reply->readAll(), nullptr);
+		auto json = get("https://api.github.com/repos/kraxarn/spotify-qt/releases");
 		auto latest = json.array()[0].toObject()["tag_name"].toString();
 		setStatus(latest == APP_VERSION
 				  ? "You have the latest version"
