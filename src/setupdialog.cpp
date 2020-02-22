@@ -15,11 +15,12 @@ SetupDialog::SetupDialog(QWidget *parent) : QDialog(parent)
 		this);
 	mainLayout->addWidget(welcomeText);
 	// Client ID
-	auto clientId = new QLineEdit(this);
+	Settings settings;
+	auto clientId = new QLineEdit(settings.clientId(), this);
 	clientId->setPlaceholderText("Client ID");
 	mainLayout->addWidget(clientId);
 	// Client secret
-	auto clientSecret = new QLineEdit(this);
+	auto clientSecret = new QLineEdit(settings.clientSecret(), this);
 	clientSecret->setPlaceholderText("Client secret");
 	mainLayout->addWidget(clientSecret);
 	// Add buttons
