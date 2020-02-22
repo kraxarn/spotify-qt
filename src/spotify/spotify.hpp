@@ -27,10 +27,6 @@ namespace spt
 		Spotify();
 		~Spotify();
 		/**
-		 * Authenticate with Spotify
-		 */
-		QString auth(const QString &code, const QString &redirect, const QString &id, const QString &secret);
-		/**
 		 * HTTP GET request expecting JSON response
 		 */
 		QJsonDocument get(QString url);
@@ -49,7 +45,6 @@ namespace spt
 		QString setRepeat(QString state);
 		AudioFeatures trackAudioFeatures(QString trackId);
 		Track trackInfo(QString trackId);
-		static QString authUrl(const QString &clientId, const QString &redirect);
 	private:
 		qint64		lastAuth;
 		QString		currentDevice;
