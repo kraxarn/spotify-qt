@@ -254,11 +254,3 @@ AudioFeatures Spotify::trackAudioFeatures(QString trackId)
 			: trackId));
 	return AudioFeatures(json.object());
 }
-
-Track Spotify::trackInfo(QString trackId)
-{
-	return Track(get(QString("tracks/%1")
-		.arg(trackId.startsWith("spotify:track:")
-			? trackId.remove(0, QString("spotify:track:").length())
-			: trackId)).object());
-}

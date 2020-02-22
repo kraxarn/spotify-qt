@@ -44,7 +44,6 @@ namespace spt
 		QString setVolume(int volume);
 		QString setRepeat(QString state);
 		AudioFeatures trackAudioFeatures(QString trackId);
-		Track trackInfo(QString trackId);
 	private:
 		qint64		lastAuth;
 		QString		currentDevice;
