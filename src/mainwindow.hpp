@@ -29,6 +29,7 @@
 #include <QWebEngineSettings>
 #include <QDockWidget>
 #include <QTextEdit>
+#include <QApplication>
 
 class MainWindow : public QMainWindow
 {
@@ -62,4 +63,6 @@ private:
 	void refreshDevices(QMenu *deviceMenu);
 	void refresh();
 	QJsonDocument get(const QString &url);
+	void openAudioFeaturesWidget(const QString &trackId);
+	void openLyrics(const QString &trackId);
 };

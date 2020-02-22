@@ -333,9 +333,12 @@ QString parseKey(int key)
 	}
 }
 
-AudioFeatures Spotify::trackAudioFeatures(const QString &trackId)
+AudioFeatures Spotify::trackAudioFeatures(QString trackId)
 {
-	auto json = get(QString("audio-features/%1").arg(trackId));
+	auto json = get(QString("audio-features/%1")
+		.arg(trackId.startsWith("spotify:track:")
+			? trackId.remove(0, QString("spotify:track:").length())
+			: trackId));
 	AudioFeatures features;
 	features.mode 				= json["mode"].toInt();
 	features.timeSignature		= json["time_signature"].toInt();
@@ -349,4 +352,12 @@ AudioFeatures Spotify::trackAudioFeatures(const QString &trackId)
 	features.valence			= json["valence"].toDouble();
 	features.tempo				= json["tempo"].toDouble();
 	return features;
+}
+
+Track Spotify::trackInfo(QString trackId)
+{
+	return Track(get(QString("tracks/%1")
+		.arg(trackId.startsWith("spotify:track:")
+			? trackId.remove(0, QString("spotify:track:").length())
+			: trackId)).object());
 }

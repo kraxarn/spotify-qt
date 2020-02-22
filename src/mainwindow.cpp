@@ -58,8 +58,8 @@ void MainWindow::refresh()
 		setWindowTitle(QString("%1 - %2").arg(current.item->artist()).arg(current.item->name()));
 	}
 	position->setText(QString("%1/%2")
-						  .arg(formatTime(current.progressMs))
-						  .arg(formatTime(current.item->duration())));
+		.arg(formatTime(current.progressMs))
+		.arg(formatTime(current.item->duration())));
 	progress->setValue(current.progressMs);
 	progress->setMaximum(current.item->duration());
 	playPause->setIcon(QIcon::fromTheme(
@@ -147,7 +147,28 @@ QWidget *MainWindow::createCentralWidget()
 		" ", "Title", "Artist", "Album", "Length"
 	});
 	songs->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-	QTreeWidget::connect(songs, &QTreeWidget::itemPressed, this, [=](QTreeWidgetItem *item, int column) {
+	// Song context menu
+	songs->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+	QWidget::connect(songs, &QWidget::customContextMenuRequested, [=](const QPoint &pos) {
+		auto item = songs->itemAt(pos);
+		auto trackId = item->data(0, 0x0100).toString();
+		if (trackId.isEmpty())
+			return;
+		auto songMenu = new QMenu(songs);
+		auto trackFeatures = songMenu->addAction(QIcon::fromTheme("view-statistics"), "Audio features");
+		QAction::connect(trackFeatures, &QAction::triggered, [=](bool checked) {
+			openAudioFeaturesWidget(trackId);
+		});
+		auto lyrics = songMenu->addAction(QIcon::fromTheme("view-media-lyrics"), "Lyrics");
+		QAction::connect(lyrics, &QAction::triggered, [=](bool checked) {
+			openLyrics(trackId);
+		});
+		songMenu->popup(songs->mapToGlobal(pos));
+	});
+	//auto songMenu = new QMenu(songs);
+	QTreeWidget::connect(songs, &QTreeWidget::itemActivated, this, [=](QTreeWidgetItem *item, int column) {
+		if (QApplication::mouseButtons() != Qt::LeftButton)
+			return;
 		auto trackId = item->data(0, 0x0100).toString();
 		if (trackId.isEmpty())
 		{
@@ -339,6 +360,75 @@ QString formatVolume(double value)
 	return value <= -10 ? "Quiet" : value <= -5 ? "Average" : "Loud";
 }
 
+void MainWindow::openAudioFeaturesWidget(const QString &trackId)
+{
+	auto trackInfo = spotify->trackInfo(trackId);
+	auto features = spotify->trackAudioFeatures(trackId);
+	auto dock = new QDockWidget(QString("%1 - %2")
+		.arg(trackInfo.artist())
+		.arg(trackInfo.name())
+		.replace("&", "&&"), this);
+	auto tree = new QTreeWidget(dock);
+	tree->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	tree->header()->hide();
+	tree->setSelectionMode(QAbstractItemView::NoSelection);
+	tree->setRootIsDecorated(false);
+	tree->setAllColumnsShowFocus(true);
+	tree->setColumnCount(2);
+	tree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+	tree->addTopLevelItems({
+		treeItem(tree, "Acousticness", features.acousticness > 0.8 ? "Acoustic" : "Not acoustic"),
+		treeItem(tree, "Danceability", formatStat(features.danceability, {
+			"Not suitable", "Not very suitable", "Average",
+			"Suitable", "Very suitable"
+		})),
+		treeItem(tree, "Energy", formatStat(features.energy, "low", "high")),
+		treeItem(tree, "Instrumentalness",formatStat(features.instrumentalness, "vocals")),
+		treeItem(tree, "Key", features.key),
+		treeItem(tree, "Live", features.liveness > 0.8 ? "Yes" : "No"),
+		treeItem(tree, "Loudness", formatVolume(features.loudness)),
+		treeItem(tree, "Mode", features.mode == 1 ? "Major" : "Minor"),
+		treeItem(tree, "Speechiness", formatStat(features.speechiness, "spoken words")),
+		treeItem(tree, "Tempo",
+			QString("%1 BPM").arg(features.tempo, 0, 'f', 0)),
+		treeItem(tree, "Time signature",
+			QString("%1").arg(features.timeSignature)),
+		treeItem(tree, "Valence", formatStat(features.valence, "negative", "positive")),
+	});
+	dock->setWidget(tree);
+	dock->setMinimumWidth(150);
+	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, dock);
+}
+
+void MainWindow::openLyrics(const QString &trackId)
+{
+	auto track = spotify->trackInfo(trackId);
+	setStatus("Loading lyrics...");
+	auto reply = network->get(QNetworkRequest(QUrl(QString(
+		"https://vscode-spotify-lyrics.azurewebsites.net/lyrics?artist=%1&title=%2")
+			.arg(track.artist())
+			.arg(track.name()))));
+	while (!reply->isFinished())
+		QCoreApplication::processEvents();
+	auto lyricsText = QString(reply->readAll()).trimmed();
+	if (lyricsText == "Not found")
+	{
+		setStatus("Lyrics not found");
+		return;
+	}
+	setStatus("Lyrics loaded");
+	auto dock = new QDockWidget(
+		QString("%1 - %2")
+			.arg(track.artist())
+			.arg(track.name()), this);
+	auto lyricsView = new QTextEdit(dock);
+	lyricsView->setHtml(lyricsText.replace("\n", "<br/>"));
+	lyricsView->setReadOnly(true);
+	dock->setWidget(lyricsView);
+	dock->setMinimumWidth(300);
+	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, dock);
+}
+
 QMenu *MainWindow::createMenu()
 {
 	// Create root
@@ -392,77 +482,6 @@ QMenu *MainWindow::createMenu()
 		aboutQt, checkForUpdates
 	});
 	menu->addMenu(aboutMenu);
-	// Track options
-	auto trackMenu = new QMenu("Track", menu);
-	trackMenu->setIcon(QIcon::fromTheme("view-media-track"));
-	menu->addMenu(trackMenu);
-	// Lyrics
-	auto lyricsOpen = trackMenu->addAction(QIcon::fromTheme("view-media-lyrics"), "Lyrics");
-	QAction::connect(lyricsOpen, &QAction::triggered, [=](bool checked) {
-		setStatus("Loading lyrics...");
-		auto reply = network->get(QNetworkRequest(QUrl(QString(
-			"https://vscode-spotify-lyrics.azurewebsites.net/lyrics?artist=%1&title=%2")
-				.arg(current.item->artist())
-				.arg(current.item->name()))));
-		while (!reply->isFinished())
-			QCoreApplication::processEvents();
-		auto lyricsText = QString(reply->readAll()).trimmed();
-		if (lyricsText == "Not found")
-		{
-			setStatus("Lyrics not found");
-			return;
-		}
-		setStatus("Lyrics loaded");
-		auto dock = new QDockWidget(
-			QString("%1 - %2")
-				.arg(current.item->artist())
-				.arg(current.item->name()), this);
-		auto lyricsView = new QTextEdit(dock);
-		lyricsView->setHtml(lyricsText.replace("\n", "<br/>"));
-		lyricsView->setReadOnly(true);
-		dock->setWidget(lyricsView);
-		dock->setMinimumWidth(300);
-		addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, dock);
-	});
-	// Audio features
-	auto trackFeatures = trackMenu->addAction(QIcon::fromTheme("view-statistics"), "Audio features");
-	QAction::connect(trackFeatures, &QAction::triggered, [=](bool checked) {
-		auto features = spotify->trackAudioFeatures(current.item->id());
-		auto dock = new QDockWidget(QString("%1 - %2")
-			.arg(current.item->artist())
-			.arg(current.item->name())
-			.replace("&", "&&"), this);
-		auto tree = new QTreeWidget(dock);
-		tree->setEditTriggers(QAbstractItemView::NoEditTriggers);
-		tree->header()->hide();
-		tree->setSelectionMode(QAbstractItemView::NoSelection);
-		tree->setRootIsDecorated(false);
-		tree->setAllColumnsShowFocus(true);
-		tree->setColumnCount(2);
-		tree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-		tree->addTopLevelItems({
-			treeItem(tree, "Acousticness", features.acousticness > 0.8 ? "Acoustic" : "Not acoustic"),
-			treeItem(tree, "Danceability", formatStat(features.danceability, {
-					"Not suitable", "Not very suitable", "Average",
-					"Suitable", "Very suitable"
-				})),
-			treeItem(tree, "Energy", formatStat(features.energy, "low", "high")),
-			treeItem(tree, "Instrumentalness",formatStat(features.instrumentalness, "vocals")),
-			treeItem(tree, "Key", features.key),
-			treeItem(tree, "Live", features.liveness > 0.8 ? "Yes" : "No"),
-			treeItem(tree, "Loudness", formatVolume(features.loudness)),
-			treeItem(tree, "Mode", features.mode == 1 ? "Major" : "Minor"),
-			treeItem(tree, "Speechiness", formatStat(features.speechiness, "spoken words")),
-			treeItem(tree, "Tempo",
-				QString("%1 BPM").arg(features.tempo, 0, 'f', 0)),
-			treeItem(tree, "Time signature",
-				QString("%1").arg(features.timeSignature)),
-			treeItem(tree, "Valence", formatStat(features.valence, "negative", "positive")),
-		});
-		dock->setWidget(tree);
-		dock->setMinimumWidth(150);
-		addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, dock);
-	});
 	// Device selection
 	auto deviceMenu = new QMenu("Device");
 	deviceMenu->setIcon(QIcon::fromTheme("speaker"));
@@ -516,6 +535,8 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 			item->setDisabled(true);
 			item->setToolTip(1, "Local track");
 		}
+		if (current.item != nullptr && track.id() == current.item->id())
+			item->setIcon(0, QIcon::fromTheme("media-playback-start"));
 		songs->insertTopLevelItem(i, item);
 	}
 	songs->setEnabled(true);

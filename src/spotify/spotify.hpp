@@ -47,7 +47,8 @@ namespace spt
 		QString previous();
 		QString setVolume(int volume);
 		QString setRepeat(QString state);
-		AudioFeatures trackAudioFeatures(const QString &trackId);
+		AudioFeatures trackAudioFeatures(QString trackId);
+		Track trackInfo(QString trackId);
 		static QString authUrl(const QString &clientId, const QString &redirect);
 	private:
 		qint64		lastAuth;
