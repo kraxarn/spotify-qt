@@ -42,18 +42,10 @@ QString ClientHandler::start()
 	auto bitrate = 320;
 	// Attempt to start client (for now assume librespot)
 	process = new QProcess();
-	QProcess::connect(process, &QProcess::readyReadStandardOutput, [=]() {
-		qDebug() << process->readAllStandardOutput();
-	});
-	QProcess::connect(process, &QProcess::readyReadStandardError, [=]() {
-		qDebug() << process->readAllStandardError();
-	});
-	// TODO: cache
-	qDebug() << path;
 	process->start(path, {
-		"--name", "spotify-qt",
+		"--no-daemon",
 		"--bitrate", QString::number(bitrate),
-		"--verbose",
+		"--device-name", "spotify-qt",
 		"--username", username,
 		"--password", password
 	});
