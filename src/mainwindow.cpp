@@ -166,9 +166,7 @@ QWidget *MainWindow::createCentralWidget()
 		songMenu->popup(songs->mapToGlobal(pos));
 	});
 	//auto songMenu = new QMenu(songs);
-	QTreeWidget::connect(songs, &QTreeWidget::itemActivated, this, [=](QTreeWidgetItem *item, int column) {
-		if (QApplication::mouseButtons() != Qt::LeftButton)
-			return;
+	QTreeWidget::connect(songs, &QTreeWidget::itemClicked, this, [=](QTreeWidgetItem *item, int column) {
 		auto trackId = item->data(0, 0x0100).toString();
 		if (trackId.isEmpty())
 		{
