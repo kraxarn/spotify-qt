@@ -12,7 +12,6 @@
 #include <QDesktopServices>
 #include <QPushButton>
 #include <QCoreApplication>
-#include <QWebEngineView>
 #include <QMessageBox>
 #include <QTcpServer>
 

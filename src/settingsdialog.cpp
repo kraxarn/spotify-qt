@@ -60,7 +60,8 @@ QGroupBox *SettingsDialog::appSettings()
 	appLayout->addWidget(appRefresh);
 	// Embedded player
 	auto appPlayer = new QCheckBox("Embedded player", this);
-	appPlayer->setToolTip("Embedded player, removes the need for an external player, but not as reliable");
+	appPlayer->setToolTip("Temporarily disabled for being very unreliable and too bloated");
+	appPlayer->setEnabled(false);
 	appLayout->addWidget(appPlayer, 2, 0, 1, 2);
 	// Start client
 	sptStartClient = new QCheckBox("Autostart spotifyd", this);

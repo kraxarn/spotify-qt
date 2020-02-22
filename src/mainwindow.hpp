@@ -27,8 +27,6 @@
 #include <QToolButton>
 #include <QMenu>
 #include <QMessageBox>
-#include <QWebEngineView>
-#include <QWebEngineSettings>
 #include <QDockWidget>
 #include <QTextEdit>
 #include <QApplication>
@@ -52,7 +50,6 @@ private:
 	QVector<spt::Playlist>	*sptPlaylists;
 	spt::Playback			current;
 	QNetworkAccessManager	*network;
-	QDockWidget				*playerView;
 	spt::ClientHandler		*sptClient;
 	// Methods
 	QWidget *createCentralWidget();

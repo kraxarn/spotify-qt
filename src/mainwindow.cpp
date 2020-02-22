@@ -5,7 +5,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	// Some default values to prevent unexpected stuff
 	playlists 	= nullptr;
 	songs 		= nullptr;
-	playerView	= nullptr;
 	sptClient	= nullptr;
 	volume 		= progress	= nullptr;
 	nowPlaying	= position	= nowAlbum	= nullptr;
@@ -397,28 +396,6 @@ QMenu *MainWindow::createMenu()
 {
 	// Create root
 	auto menu = new QMenu(this);
-	// Testing web player
-	auto webPlayerOpen = menu->addAction("Embedded Player");
-	webPlayerOpen->setCheckable(true);
-	QAction::connect(webPlayerOpen, &QAction::triggered, [=](bool checked) {
-		// Check if already opened
-		if (playerView != nullptr)
-		{
-			removeDockWidget(playerView);
-			delete playerView;
-			playerView = nullptr;
-			return;
-		}
-		playerView = new QDockWidget(this);
-		auto playerWebView = new QWebEngineView(playerView);
-		playerView->setWindowTitle("spotify-qt embedded music player console");
-		playerView->setWidget(playerWebView);
-		playerView->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
-		// Kind of temporary I guess
-		playerWebView->load(QUrl(QString("https://kraxarn.github.io/spotify-qt-player/debug.html?token=%1")
-									 .arg(Settings().accessToken())));
-		addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, playerView);
-	});
 	// About
 	auto aboutMenu = new QMenu("About");
 	auto aboutQt = createMenuAction("qt", "About Qt", QKeySequence::UnknownKey);
