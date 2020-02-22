@@ -13,15 +13,15 @@ int main(int argc, char *argv[])
 	QCoreApplication::setApplicationName("spotify-qt");
 	// Create Qt application
 	QApplication app(argc, argv);
-	// Spotify class instance
-	spt::Spotify spotify;
 	// First setup window
 	if (Settings().refreshToken().isEmpty())
 	{
-		SetupDialog dialog(&spotify);
+		SetupDialog dialog;
 		if (dialog.exec() == QDialog::Rejected)
 			return 0;
 	}
+	// Spotify class instance
+	spt::Spotify spotify;
 	// Create main window
 	MainWindow w(&spotify, &app);
 	// Show window and run application
