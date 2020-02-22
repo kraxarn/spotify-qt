@@ -34,7 +34,7 @@ private:
 	void applyFail(const QString &setting);
 	Settings settings;
 	QString sptClient(const QString &path);
-	QString clientVersion(const QFileInfo &fileInfo);
+	static QString clientVersion(const QFileInfo &fileInfo);
 	// All settings properties
 	QComboBox	*appTheme	= nullptr;
 	QLineEdit	*sptPath	= nullptr;
