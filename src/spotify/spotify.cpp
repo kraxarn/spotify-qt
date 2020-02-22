@@ -285,6 +285,7 @@ AudioFeatures Spotify::trackAudioFeatures(QString trackId)
 	features.speechiness		= json["speechiness"].toDouble();
 	features.valence			= json["valence"].toDouble();
 	features.tempo				= json["tempo"].toDouble();
+	features.loudness			= json["loudness"].toDouble();
 	return features;
 }
 
