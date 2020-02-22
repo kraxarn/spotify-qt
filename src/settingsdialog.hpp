@@ -20,6 +20,7 @@
 #include <QStringRef>
 #include <QAction>
 #include <QFileInfo>
+#include <QInputDialog>
 #include <QMessageBox>
 
 class SettingsDialog : public QDialog
