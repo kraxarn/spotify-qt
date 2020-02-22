@@ -19,7 +19,7 @@ class SetupDialog : public QDialog
 {
 public:
 	explicit SetupDialog(QWidget *parent = nullptr);
-	virtual ~SetupDialog();
+	~SetupDialog() override;
 private:
 	spt::Auth *auth;
 };
