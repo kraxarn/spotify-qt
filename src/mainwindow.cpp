@@ -158,15 +158,14 @@ QWidget *MainWindow::createCentralWidget()
 		auto songMenu = new QMenu(songs);
 		auto trackFeatures = songMenu->addAction(QIcon::fromTheme("view-statistics"), "Audio features");
 		QAction::connect(trackFeatures, &QAction::triggered, [=](bool checked) {
-			openAudioFeaturesWidget(trackId);
+			openAudioFeaturesWidget(trackId, item->text(2), item->text(1));
 		});
 		auto lyrics = songMenu->addAction(QIcon::fromTheme("view-media-lyrics"), "Lyrics");
 		QAction::connect(lyrics, &QAction::triggered, [=](bool checked) {
-			openLyrics(trackId);
+			openLyrics(item->text(2), item->text(1));
 		});
 		songMenu->popup(songs->mapToGlobal(pos));
 	});
-	//auto songMenu = new QMenu(songs);
 	QTreeWidget::connect(songs, &QTreeWidget::itemClicked, this, [=](QTreeWidgetItem *item, int column) {
 		auto trackId = item->data(0, 0x0100).toString();
 		if (trackId.isEmpty())
@@ -324,13 +323,12 @@ QTreeWidgetItem *treeItem(QTreeWidget *tree, const QString &key, const QString &
 	});
 }
 
-void MainWindow::openAudioFeaturesWidget(const QString &trackId)
+void MainWindow::openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name)
 {
-	auto trackInfo = spotify->trackInfo(trackId);
 	auto features = spotify->trackAudioFeatures(trackId);
 	auto dock = new QDockWidget(QString("%1 - %2")
-		.arg(trackInfo.artist())
-		.arg(trackInfo.name())
+		.arg(artist)
+		.arg(name)
 		.replace("&", "&&"), this);
 	auto tree = new QTreeWidget(dock);
 	tree->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -351,14 +349,13 @@ void MainWindow::openAudioFeaturesWidget(const QString &trackId)
 	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, dock);
 }
 
-void MainWindow::openLyrics(const QString &trackId)
+void MainWindow::openLyrics(const QString &artist, const QString &name)
 {
-	auto track = spotify->trackInfo(trackId);
 	setStatus("Loading lyrics...");
 	auto reply = network->get(QNetworkRequest(QUrl(QString(
 		"https://vscode-spotify-lyrics.azurewebsites.net/lyrics?artist=%1&title=%2")
-			.arg(track.artist())
-			.arg(track.name()))));
+			.arg(artist)
+			.arg(name))));
 	while (!reply->isFinished())
 		QCoreApplication::processEvents();
 	auto lyricsText = QString(reply->readAll()).trimmed();
@@ -370,8 +367,8 @@ void MainWindow::openLyrics(const QString &trackId)
 	setStatus("Lyrics loaded");
 	auto dock = new QDockWidget(
 		QString("%1 - %2")
-			.arg(track.artist())
-			.arg(track.name()), this);
+			.arg(artist)
+			.arg(name), this);
 	auto lyricsView = new QTextEdit(dock);
 	lyricsView->setHtml(lyricsText.replace("\n", "<br/>"));
 	lyricsView->setReadOnly(true);
