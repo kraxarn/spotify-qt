@@ -101,7 +101,7 @@ QGroupBox *SettingsDialog::spotifySettings()
 	sptLayout->addWidget(sptUsername, 0, 1);
 	// Device name
 	sptLayout->addWidget(new QLabel("Device name", this));
-	auto sptName = new QLineEdit(this);
+	auto sptName = new QLineEdit("spotify-qt", this);
 	sptLayout->addWidget(sptName);
 	// Bitrate
 	sptLayout->addWidget(new QLabel("Bitrate", this));
@@ -109,6 +109,7 @@ QGroupBox *SettingsDialog::spotifySettings()
 	sptBitrate->addItems({
 		"Low (96 kbit/s)", "Medium (160 kbit/s)", "High (320 kbit/s)"
 	});
+	sptBitrate->setCurrentIndex(2);
 	sptLayout->addWidget(sptBitrate);
 	// Volume normalization
 	auto sptVolNorm = new QCheckBox("Volume normalization", this);
