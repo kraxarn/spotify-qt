@@ -7,6 +7,7 @@
 #include "spotify/playback.hpp"
 #include "spotify/webplayer.hpp"
 #include "spotify/audiofeatures.hpp"
+#include "spotify/clienthandler.hpp"
 
 #include <QMainWindow>
 #include <QListWidget>
@@ -37,7 +38,7 @@ class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 public:
-	MainWindow(QWidget *parent = nullptr);
+	explicit MainWindow(QWidget *parent = nullptr);
 	~MainWindow() override;
 private:
 	// Widgets
@@ -52,6 +53,7 @@ private:
 	spt::Playback			current;
 	QNetworkAccessManager	*network;
 	QDockWidget				*playerView;
+	spt::ClientHandler		*sptClient;
 	// Methods
 	QWidget *createCentralWidget();
 	QToolBar *createToolBar();

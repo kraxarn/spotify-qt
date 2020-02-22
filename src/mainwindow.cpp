@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	playlists 	= nullptr;
 	songs 		= nullptr;
 	playerView	= nullptr;
+	sptClient	= nullptr;
 	volume 		= progress	= nullptr;
 	nowPlaying	= position	= nowAlbum	= nullptr;
 	repeat 		= shuffle	= playPause	= nullptr;
@@ -20,13 +21,24 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	setCentralWidget(createCentralWidget());
 	addToolBar(Qt::ToolBarArea::TopToolBarArea, createToolBar());
 	// Apply selected style
-	QApplication::setStyle(Settings().style());
+	Settings settings;
+	QApplication::setStyle(settings.style());
 	// Update player status
 	auto timer = new QTimer(this);
 	QTimer::connect(timer, &QTimer::timeout, this, &MainWindow::refresh);
 	refresh();
 	timer->start(1000);
 	setStatus("Welcome to spotify-qt!");
+	// Check if should start client
+	if (settings.sptStartClient())
+	{
+		sptClient = new spt::ClientHandler();
+		auto status = sptClient->start();
+		if (!status.isEmpty())
+			QMessageBox::warning(this,
+				"Client error",
+				QString("Failed to autostart Spotify client: %1").arg(status));
+	}
 }
 
 MainWindow::~MainWindow()
@@ -40,6 +52,7 @@ MainWindow::~MainWindow()
 	delete	playPause;
 	delete	sptPlaylists;
 	delete	spotify;
+	delete sptClient;
 }
 
 void MainWindow::refresh()
