@@ -63,7 +63,7 @@ QGroupBox *SettingsDialog::appSettings()
 	appPlayer->setToolTip("Embedded player, removes the need for an external player, but not as reliable");
 	appLayout->addWidget(appPlayer, 2, 0, 1, 2);
 	// Start client
-	sptStartClient = new QCheckBox("Start Spotify on app start", this);
+	sptStartClient = new QCheckBox("Autostart Spotify client", this);
 	sptStartClient->setToolTip("Start specified Spotify client on start together with the app");
 	sptStartClient->setChecked(settings.sptStartClient());
 	appLayout->addWidget(sptStartClient, 3, 0, 1, 2);
