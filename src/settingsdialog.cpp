@@ -103,9 +103,6 @@ QGroupBox *SettingsDialog::spotifySettings()
 	auto bitrate = settings.sptBitrate();
 	sptBitrate->setCurrentIndex(bitrate == 96 ? 0 : bitrate == 160 ? 1 : 2);
 	sptLayout->addWidget(sptBitrate);
-	// Volume normalization
-	auto sptVolNorm = new QCheckBox("Volume normalization", this);
-	sptLayout->addWidget(sptVolNorm, 6, 0, 1, 2);
 	// Final layout
 	return sptSettings;
 }
