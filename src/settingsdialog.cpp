@@ -99,10 +99,6 @@ QGroupBox *SettingsDialog::spotifySettings()
 	sptLayout->addWidget(new QLabel("Username", this), 0, 0);
 	sptUsername = new QLineEdit(settings.sptUser(), this);
 	sptLayout->addWidget(sptUsername, 0, 1);
-	// Device name
-	sptLayout->addWidget(new QLabel("Device name", this));
-	auto sptName = new QLineEdit("spotify-qt", this);
-	sptLayout->addWidget(sptName);
 	// Bitrate
 	sptLayout->addWidget(new QLabel("Bitrate", this));
 	auto sptBitrate = new QComboBox(this);
