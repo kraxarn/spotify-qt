@@ -18,6 +18,7 @@
 #include <QComboBox>
 #include <QProcess>
 #include <QStringRef>
+#include <QAction>
 
 class SettingsDialog : public QDialog
 {
