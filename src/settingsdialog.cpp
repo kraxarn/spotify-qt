@@ -96,11 +96,12 @@ QGroupBox *SettingsDialog::spotifySettings()
 	sptLayout->addWidget(sptUsername, 0, 1);
 	// Bitrate
 	sptLayout->addWidget(new QLabel("Bitrate", this));
-	auto sptBitrate = new QComboBox(this);
+	sptBitrate = new QComboBox(this);
 	sptBitrate->addItems({
 		"Low (96 kbit/s)", "Medium (160 kbit/s)", "High (320 kbit/s)"
 	});
-	sptBitrate->setCurrentIndex(2);
+	auto bitrate = settings.sptBitrate();
+	sptBitrate->setCurrentIndex(bitrate == 96 ? 0 : bitrate == 160 ? 1 : 2);
 	sptLayout->addWidget(sptBitrate);
 	// Volume normalization
 	auto sptVolNorm = new QCheckBox("Volume normalization", this);
@@ -151,6 +152,8 @@ bool SettingsDialog::applySettings()
 	// Other Spotify stuff
 	settings.setSptStartClient(sptStartClient->isChecked());
 	settings.setSptUser(sptUsername->text());
+	auto bitrate = sptBitrate->currentIndex();
+	settings.setSptBitrate(bitrate == 0 ? 96 : bitrate == 1 ? 160 : 320);
 
 	// Everything is fine
 	return true;

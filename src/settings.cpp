@@ -89,3 +89,13 @@ void Settings::setSptUser(const QString &value)
 {
 	settings->setValue("Spotify/Username", value);
 }
+
+int Settings::sptBitrate()
+{
+	return settings->value("Spotify/Bitrate").toInt();
+}
+
+void Settings::setSptBitrate(int value)
+{
+	settings->setValue("Spotify/Bitrate", value);
+}

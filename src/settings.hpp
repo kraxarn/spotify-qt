@@ -33,6 +33,9 @@ public:
 
 	QString sptUser();
 	void setSptUser(const QString &value);
+
+	int sptBitrate();
+	void setSptBitrate(int value);
 private:
 	QSettings *settings;
 };

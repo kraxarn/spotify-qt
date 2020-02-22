@@ -41,4 +41,5 @@ private:
 	QLabel		*sptVersion		= nullptr;
 	QCheckBox	*sptStartClient	= nullptr;
 	QLineEdit	*sptUsername	= nullptr;
+	QComboBox	*sptBitrate		= nullptr;
 };
