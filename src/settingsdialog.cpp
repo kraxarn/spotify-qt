@@ -63,8 +63,8 @@ QGroupBox *SettingsDialog::appSettings()
 	appPlayer->setToolTip("Embedded player, removes the need for an external player, but not as reliable");
 	appLayout->addWidget(appPlayer, 2, 0, 1, 2);
 	// Start client
-	sptStartClient = new QCheckBox("Autostart Spotify client", this);
-	sptStartClient->setToolTip("Start specified Spotify client on start together with the app");
+	sptStartClient = new QCheckBox("Autostart spotifyd", this);
+	sptStartClient->setToolTip("Start spotifyd together with the app");
 	sptStartClient->setChecked(settings.sptStartClient());
 	appLayout->addWidget(sptStartClient, 3, 0, 1, 2);
 	return appSettings;
@@ -73,15 +73,15 @@ QGroupBox *SettingsDialog::appSettings()
 QGroupBox *SettingsDialog::spotifySettings()
 {
 	// Main container for everything
-	auto sptSettings = new QGroupBox("Spotify", this);
+	auto sptSettings = new QGroupBox("spotifyd", this);
 	auto sptMainLayout = new QVBoxLayout(this);
 	sptSettings->setLayout(sptMainLayout);
 	// Executable settings
 	sptPath = new QLineEdit(settings.sptPath(), this);
-	sptPath->setPlaceholderText("librespot/spotifyd path");
+	sptPath->setPlaceholderText("spotifyd path");
 	sptMainLayout->addWidget(sptPath);
 	// Spotifyd version
-	sptVersion = new QLabel("(no client provided)", this);
+	sptVersion = new QLabel("(no spotifyd provided)", this);
 	if (!settings.sptPath().isEmpty())
 		sptVersion->setText(sptClient(settings.sptPath()));
 	sptVersion->setEnabled(false);
@@ -116,25 +116,11 @@ QString SettingsDialog::sptClient(const QString &path)
 	if (!file.exists())
 		return QString();
 	// Check if either client
-	if (file.baseName() != "librespot" && file.baseName() != "spotifyd")
+	if (file.baseName() != "spotifyd")
 		return QString();
 	// Prepare process
 	QProcess process;
 	// Get version info
-	if (file.baseName() == "librespot")
-	{
-		// --name is always required
-		// --backend ? is just used to not actually start
-		process.start(file.absoluteFilePath(), {
-			"--backend", "?", "--name", ""
-		});
-		process.waitForFinished();
-		// Version info is output to stderr for some reason
-		QString out(process.readAllStandardError());
-		auto right = out.right(out.length() - out.indexOf("] librespot") - 2);
-		return right.left(right.indexOf("."));
-	}
-	// spotifyd has a simple --version
 	process.start(file.absoluteFilePath(), {
 		"--version"
 	});
@@ -155,7 +141,7 @@ bool SettingsDialog::applySettings()
 		auto client = sptClient(sptPath->text());
 		if (client.isEmpty())
 		{
-			applyFail("spotify client");
+			applyFail("spotifyd path");
 			return false;
 		}
 		sptVersion->setText(client);
