@@ -94,11 +94,6 @@ QGroupBox *SettingsDialog::spotifySettings()
 	sptLayout->addWidget(new QLabel("Username", this), 0, 0);
 	auto username = new QLineEdit(this);
 	sptLayout->addWidget(username, 0, 1);
-	// Backend
-	sptLayout->addWidget(new QLabel("Backend", this));
-	auto sptBackend = new QComboBox(this);
-	sptBackend->addItems(backends());
-	sptLayout->addWidget(sptBackend);
 	// Device name
 	sptLayout->addWidget(new QLabel("Device name", this));
 	auto sptName = new QLineEdit(this);
