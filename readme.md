@@ -24,7 +24,7 @@ make
 * All network requests are done on the main thread.
 
 ## Not implemented yet:
-* Library.
+* Library (made for you, recently played, etc.).
 * Media controls (d-bus).
 * Settings (for spotifyd etc.).
 * Logging out.
