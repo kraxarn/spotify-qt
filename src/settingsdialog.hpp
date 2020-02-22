@@ -26,7 +26,7 @@ public:
 	explicit SettingsDialog(QWidget *parent = nullptr);
 private:
 	QGroupBox *appSettings();
-	QGroupBox *spotifydSettings();
+	QGroupBox *spotifySettings();
 	QStringList backends();
 	void applySettings();
 	Settings settings;

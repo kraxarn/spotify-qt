@@ -7,7 +7,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 	// Add app settings to main layout
 	mainLayout->addWidget(appSettings(), 0, 0, Qt::AlignTop);
 	// Add spotifyd settings to main layout
-	mainLayout->addWidget(spotifydSettings(), 0, 1);
+	mainLayout->addWidget(spotifySettings(), 0, 1);
 	// Buttons
 	auto okButton = new QPushButton("OK");
 	QPushButton::connect(okButton, &QPushButton::clicked, [=](bool checked) {
@@ -65,10 +65,10 @@ QGroupBox *SettingsDialog::appSettings()
 	return appSettings;
 }
 
-QGroupBox *SettingsDialog::spotifydSettings()
+QGroupBox *SettingsDialog::spotifySettings()
 {
 	// Main container for everything
-	auto sptSettings = new QGroupBox("spotifyd", this);
+	auto sptSettings = new QGroupBox("Spotify", this);
 	auto sptMainLayout = new QVBoxLayout(this);
 	sptSettings->setLayout(sptMainLayout);
 	// Executable settings
