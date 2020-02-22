@@ -22,6 +22,11 @@ public:
 
 	QString style();
 	void setStyle(const QString &value);
+
+	// Spotify settings
+
+	QString sptPath();
+	void setSptPath(const QString &value);
 private:
 	QSettings *settings;
 };

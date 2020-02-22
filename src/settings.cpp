@@ -59,3 +59,13 @@ void Settings::setStyle(const QString &value)
 {
 	settings->setValue("Style", value);
 }
+
+QString Settings::sptPath()
+{
+	return settings->value("Spotify/Path").toString();
+}
+
+void Settings::setSptPath(const QString &value)
+{
+settings->setValue("Spotify/Path", value);
+}

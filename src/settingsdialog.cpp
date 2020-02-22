@@ -11,8 +11,8 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 	// Buttons
 	auto okButton = new QPushButton("OK");
 	QPushButton::connect(okButton, &QPushButton::clicked, [=](bool checked) {
-		applySettings();
-		accept();
+		if (applySettings())
+			accept();
 	});
 	auto applyButton = new QPushButton("Apply");
 	QPushButton::connect(applyButton, &QPushButton::clicked, [=](bool checked) {
@@ -72,11 +72,13 @@ QGroupBox *SettingsDialog::spotifySettings()
 	auto sptMainLayout = new QVBoxLayout(this);
 	sptSettings->setLayout(sptMainLayout);
 	// Executable settings
-	sptPath = new QLineEdit(this);
+	sptPath = new QLineEdit(settings.sptPath(), this);
 	sptPath->setPlaceholderText("librespot/spotifyd path");
 	sptMainLayout->addWidget(sptPath);
 	// Spotifyd version
 	sptVersion = new QLabel("(no client provided)", this);
+	if (!settings.sptPath().isEmpty())
+		sptVersion->setText(sptClient(settings.sptPath()));
 	sptVersion->setEnabled(false);
 	sptMainLayout->addWidget(sptVersion);
 	// Override spotifyd config
@@ -178,7 +180,7 @@ QString SettingsDialog::clientVersion(const QFileInfo &fileInfo)
 	return process.readAllStandardOutput();
 }
 
-void SettingsDialog::applySettings()
+bool SettingsDialog::applySettings()
 {
 	// Set theme
 	QApplication::setStyle(appTheme->currentText());
@@ -187,7 +189,24 @@ void SettingsDialog::applySettings()
 	// Check spotify client path
 	if (!sptPath->text().isEmpty())
 	{
+		auto client = sptClient(sptPath->text());
+		if (client.isEmpty())
+		{
+			applyFail("spotify client");
+			return false;
+		}
 		sptVersion->setEnabled(true);
-		sptVersion->setText(sptClient(sptPath->text()));
+		sptVersion->setText(client);
+		settings.setSptPath(sptPath->text());
 	}
+
+	// Everything is fine
+	return true;
+}
+
+void SettingsDialog::applyFail(const QString &setting)
+{
+	QMessageBox::warning(this,
+		"Failed to apply settings",
+		QString("Failed to apply setting \"%1\". Check your settings and try again.").arg(setting));
 }

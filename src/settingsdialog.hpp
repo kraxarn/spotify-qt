@@ -20,6 +20,7 @@
 #include <QStringRef>
 #include <QAction>
 #include <QFileInfo>
+#include <QMessageBox>
 
 class SettingsDialog : public QDialog
 {
@@ -30,7 +31,8 @@ private:
 	QGroupBox *appSettings();
 	QGroupBox *spotifySettings();
 	QStringList backends();
-	void applySettings();
+	bool applySettings();
+	void applyFail(const QString &setting);
 	Settings settings;
 	QString sptClient(const QString &path);
 	QString clientVersion(const QFileInfo &fileInfo);
