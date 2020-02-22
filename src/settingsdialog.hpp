@@ -1,5 +1,7 @@
 #pragma once
 
+#include "src/settings.hpp"
+
 #include <QDialog>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -27,6 +29,7 @@ private:
 	QGroupBox *spotifydSettings();
 	QStringList backends();
 	void applySettings();
+	Settings settings;
 	// All settings properties
 	QComboBox	*appTheme = nullptr;
 };

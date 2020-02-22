@@ -152,5 +152,6 @@ void SettingsDialog::applySettings()
 {
 	// Set theme
 	QApplication::setStyle(appTheme->currentText());
+	settings.setStyle(appTheme->currentText());
 }
 
