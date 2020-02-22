@@ -36,15 +36,10 @@ QString ClientHandler::start()
 		QString("Enter password for Spotify user \"%1\":").arg(username));
 	if (password.isEmpty())
 		return "no password provided";
-	// Get all the common stuff
-	// (temp default values)
-	auto deviceName = QString("spotify-qt");
-	auto bitrate = 320;
-	// Attempt to start client (for now assume librespot)
+	// Attempt to start spotifyd
 	process = new QProcess();
 	process->start(path, {
-		"--no-daemon",
-		"--bitrate", QString::number(bitrate),
+		"--bitrate", QString::number(settings.sptBitrate()),
 		"--device-name", "spotify-qt",
 		"--username", username,
 		"--password", password
