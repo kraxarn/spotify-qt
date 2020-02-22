@@ -30,6 +30,9 @@ public:
 
 	bool sptStartClient();
 	void setSptStartClient(bool value);
+
+	QString sptUser();
+	void setSptUser(const QString &value);
 private:
 	QSettings *settings;
 };

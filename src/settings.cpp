@@ -79,3 +79,13 @@ void Settings::setSptStartClient(bool value)
 {
 	settings->setValue("Spotify/StartClient", value);
 }
+
+QString Settings::sptUser()
+{
+	return settings->value("Spotify/Username").toString();
+}
+
+void Settings::setSptUser(const QString &value)
+{
+	settings->setValue("Spotify/Username", value);
+}

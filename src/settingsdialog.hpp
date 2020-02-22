@@ -39,4 +39,5 @@ private:
 	QLineEdit	*sptPath		= nullptr;
 	QLabel		*sptVersion		= nullptr;
 	QCheckBox	*sptStartClient	= nullptr;
+	QLineEdit	*sptUsername	= nullptr;
 };

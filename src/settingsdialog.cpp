@@ -97,8 +97,8 @@ QGroupBox *SettingsDialog::spotifySettings()
 	sptMainLayout->addLayout(sptLayout);
 	// Username
 	sptLayout->addWidget(new QLabel("Username", this), 0, 0);
-	auto username = new QLineEdit(this);
-	sptLayout->addWidget(username, 0, 1);
+	sptUsername = new QLineEdit(settings.sptUser(), this);
+	sptLayout->addWidget(sptUsername, 0, 1);
 	// Device name
 	sptLayout->addWidget(new QLabel("Device name", this));
 	auto sptName = new QLineEdit(this);
@@ -173,6 +173,8 @@ bool SettingsDialog::applySettings()
 
 	// Other Spotify stuff
 	settings.setSptStartClient(sptStartClient->isChecked());
+	settings.setSptUser(sptUsername->text());
+
 	// Everything is fine
 	return true;
 }
