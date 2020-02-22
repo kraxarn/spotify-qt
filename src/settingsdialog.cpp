@@ -41,13 +41,13 @@ QGroupBox *SettingsDialog::appSettings()
 	// Theme
 	auto appThemeLabel = new QLabel("Theme", this);
 	appThemeLabel->setToolTip("Theme used throughout the application");
-	appLayout->addWidget(appThemeLabel, 1, 0);
+	appLayout->addWidget(appThemeLabel, 0, 0);
 	appTheme = new QComboBox(this);
 	appTheme->addItems(QStyleFactory::keys());
 	for (auto &style : QStyleFactory::keys())
 		if (style.toLower() == QApplication::style()->objectName())
 			appTheme->setCurrentText(style);
-	appLayout->addWidget(appTheme, 1, 1);
+	appLayout->addWidget(appTheme, 0, 1);
 	// Refresh interval
 	auto appRefreshLabel = new QLabel("Refresh interval", this);
 	appRefreshLabel->setToolTip("How often to refresh playback status from the Spotify servers");
