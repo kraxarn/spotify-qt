@@ -98,6 +98,7 @@ QGroupBox *SettingsDialog::spotifySettings()
 	// Override spotifyd config
 	auto sptOverride = new QCheckBox("Override spotifyd config", this);
 	sptOverride->setToolTip("Ignore spotifyd config and use specified config instead");
+	sptOverride->setChecked(true);
 	sptMainLayout->addWidget(sptOverride);
 	// Layout for all settings
 	auto sptLayout = new QGridLayout();
