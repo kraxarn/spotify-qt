@@ -95,7 +95,7 @@ QGroupBox *SettingsDialog::spotifySettings()
 	sptUsername = new QLineEdit(settings.sptUser(), this);
 	sptLayout->addWidget(sptUsername, 0, 1);
 	// Bitrate
-	sptLayout->addWidget(new QLabel("Bitrate", this));
+	sptLayout->addWidget(new QLabel("Quality", this));
 	sptBitrate = new QComboBox(this);
 	sptBitrate->addItems({
 		"Low (96 kbit/s)", "Medium (160 kbit/s)", "High (320 kbit/s)"
