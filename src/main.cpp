@@ -20,10 +20,8 @@ int main(int argc, char *argv[])
 		if (dialog.exec() == QDialog::Rejected)
 			return 0;
 	}
-	// Spotify class instance
-	spt::Spotify spotify;
 	// Create main window
-	MainWindow w(&spotify, &app);
+	MainWindow w;
 	// Show window and run application
 	w.show();
 	return QApplication::exec();

@@ -35,7 +35,7 @@ class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 public:
-	MainWindow(spt::Spotify *spotify, QApplication *app, QWidget *parent = nullptr);
+	MainWindow(QWidget *parent = nullptr);
 	~MainWindow() override;
 private:
 	// Widgets

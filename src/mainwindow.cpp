@@ -1,6 +1,6 @@
 #include "mainwindow.hpp"
 
-MainWindow::MainWindow(spt::Spotify *spotify, QApplication *app, QWidget *parent) : QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
 	// Some default values to prevent unexpected stuff
 	playlists 	= nullptr;
@@ -10,7 +10,7 @@ MainWindow::MainWindow(spt::Spotify *spotify, QApplication *app, QWidget *parent
 	nowPlaying	= position	= nowAlbum	= nullptr;
 	repeat 		= shuffle	= playPause	= nullptr;
 	// Set Spotify
-	this->spotify = spotify;
+	spotify = new spt::Spotify();
 	sptPlaylists = new QVector<spt::Playlist>();
 	network = new QNetworkAccessManager();
 	// Setup main window
@@ -37,6 +37,7 @@ MainWindow::~MainWindow()
 	delete	progress;
 	delete	playPause;
 	delete	sptPlaylists;
+	delete	spotify;
 }
 
 void MainWindow::refresh()
