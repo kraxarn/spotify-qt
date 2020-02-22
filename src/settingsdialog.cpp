@@ -62,6 +62,18 @@ QGroupBox *SettingsDialog::appSettings()
 	});
 	appRefresh->setCurrentIndex(1);
 	appLayout->addWidget(appRefresh);
+	// Spotify client
+	auto appClientLabel = new QLabel("Client", this);
+	appClientLabel->setToolTip("What Spotify client to configure and start with application");
+	appLayout->addWidget(appClientLabel);
+	auto appClient = new QComboBox(this);
+	auto noDevicesAction = new QAction("No clients found", this);
+	noDevicesAction->setEnabled(false);
+	appClient->addItems({
+		"librespot", "spotifyd"
+	});
+	appClient->setCurrentIndex(-1);
+	appLayout->addWidget(appClient);
 	return appSettings;
 }
 
