@@ -107,14 +107,6 @@ QGroupBox *SettingsDialog::spotifySettings()
 	sptLayout->addWidget(new QLabel("Username", this), 0, 0);
 	auto username = new QLineEdit(this);
 	sptLayout->addWidget(username, 0, 1);
-	// Password method
-	sptLayout->addWidget(new QLabel("Password method", this));
-	auto pwMethod = new QComboBox(this);
-	pwMethod->addItems({
-		"Plain text", "Command", "Keyring"
-	});
-	pwMethod->setCurrentIndex(-1);
-	sptLayout->addWidget(pwMethod);
 	// Password
 	auto pwTitle = new QLabel("Password", this);
 	sptLayout->addWidget(pwTitle);
