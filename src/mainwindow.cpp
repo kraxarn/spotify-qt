@@ -324,41 +324,6 @@ QTreeWidgetItem *treeItem(QTreeWidget *tree, const QString &key, const QString &
 	});
 }
 
-QString formatStat(double value, const QStringList &stages)
-{
-	/*
-	 * 0: 00-20
-	 * 1: 20-40
-	 * 2: 40-60
-	 * 3: 60-80
-	 * 4: 80-100
-	 */
-	return stages[value < 0.2 ? 0 : value < 0.4 ? 1 : value < 0.6 ? 2 : value < 0.8 ? 3 : 4];
-}
-
-QString formatStat(double value, const QString &low, const QString &high)
-{
-	if (value < 0.2 || value > 0.8)
-		return QString("Very %1").arg(value < 0.2 ? low : high);
-	if (value < 0.4 || value > 0.6)
-		return QString("%1%2")
-			.arg((value < 0.4 ? low : high)[0].toUpper())
-			.arg(QString(value < 0.4 ? low : high).remove(0, 1));
-	return "Average";
-}
-
-QString formatStat(double value, const QString &measurement)
-{
-	return QString("%1 %2")
-		.arg(value < 0.2 ? "No" : value < 0.4 ? "Few" : value < 0.6 ? "Some" : value < 0.8 ? "A lot of" : "Only")
-		.arg(measurement);
-}
-
-QString formatVolume(double value)
-{
-	return value <= -10 ? "Quiet" : value <= -5 ? "Average" : "Loud";
-}
-
 void MainWindow::openAudioFeaturesWidget(const QString &trackId)
 {
 	auto trackInfo = spotify->trackInfo(trackId);
@@ -375,25 +340,12 @@ void MainWindow::openAudioFeaturesWidget(const QString &trackId)
 	tree->setAllColumnsShowFocus(true);
 	tree->setColumnCount(2);
 	tree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-	tree->addTopLevelItems({
-		treeItem(tree, "Acousticness", features.acousticness > 0.8 ? "Acoustic" : "Not acoustic"),
-		treeItem(tree, "Danceability", formatStat(features.danceability, {
-			"Not suitable", "Not very suitable", "Average",
-			"Suitable", "Very suitable"
-		})),
-		treeItem(tree, "Energy", formatStat(features.energy, "low", "high")),
-		treeItem(tree, "Instrumentalness",formatStat(features.instrumentalness, "vocals")),
-		treeItem(tree, "Key", features.key),
-		treeItem(tree, "Live", features.liveness > 0.8 ? "Yes" : "No"),
-		treeItem(tree, "Loudness", formatVolume(features.loudness)),
-		treeItem(tree, "Mode", features.mode == 1 ? "Major" : "Minor"),
-		treeItem(tree, "Speechiness", formatStat(features.speechiness, "spoken words")),
-		treeItem(tree, "Tempo",
-			QString("%1 BPM").arg(features.tempo, 0, 'f', 0)),
-		treeItem(tree, "Time signature",
-			QString("%1").arg(features.timeSignature)),
-		treeItem(tree, "Valence", formatStat(features.valence, "negative", "positive")),
-	});
+	QMapIterator<QString, QString> i(features.values);
+	while (i.hasNext())
+	{
+		i.next();
+		tree->addTopLevelItem(treeItem(tree, i.key(), i.value()));
+	}
 	dock->setWidget(tree);
 	dock->setMinimumWidth(150);
 	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, dock);

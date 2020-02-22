@@ -30,6 +30,7 @@
 #include <QDockWidget>
 #include <QTextEdit>
 #include <QApplication>
+#include <QMapIterator>
 
 class MainWindow : public QMainWindow
 {

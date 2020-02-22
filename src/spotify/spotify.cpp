@@ -246,47 +246,13 @@ QString Spotify::setRepeat(QString state)
 	return put(QString("me/player/repeat?state=%1").arg(state));
 }
 
-QString parseKey(int key)
-{
-	// https://en.wikipedia.org/wiki/Pitch_class
-	switch (key)
-	{
-		case 0:  return "C";
-		case 1:  return "C♯, D♭";
-		case 2:  return "D";
-		case 3:  return "D♯, E♭";
-		case 4:  return "E";
-		case 5:  return "F";
-		case 6:  return "F♯, G♭";
-		case 7:  return "G";
-		case 8:  return "G♯, A♭";
-		case 9:  return "A";
-		case 10: return "A♯, B♭";
-		case 11: return "B";
-		default: return "?";
-	}
-}
-
 AudioFeatures Spotify::trackAudioFeatures(QString trackId)
 {
 	auto json = get(QString("audio-features/%1")
 		.arg(trackId.startsWith("spotify:track:")
 			? trackId.remove(0, QString("spotify:track:").length())
 			: trackId));
-	AudioFeatures features;
-	features.mode 				= json["mode"].toInt();
-	features.timeSignature		= json["time_signature"].toInt();
-	features.key 				= parseKey(json["key"].toInt());
-	features.acousticness		= json["acousticness"].toDouble();
-	features.danceability		= json["danceability"].toDouble();
-	features.energy				= json["energy"].toDouble();
-	features.instrumentalness	= json["instrumentalness"].toDouble();
-	features.liveness			= json["liveness"].toDouble();
-	features.speechiness		= json["speechiness"].toDouble();
-	features.valence			= json["valence"].toDouble();
-	features.tempo				= json["tempo"].toDouble();
-	features.loudness			= json["loudness"].toDouble();
-	return features;
+	return AudioFeatures(json.object());
 }
 
 Track Spotify::trackInfo(QString trackId)
