@@ -28,5 +28,5 @@ private:
 	QStringList backends();
 	void applySettings();
 	// All settings properties
-	QComboBox	*appTheme;
+	QComboBox	*appTheme = nullptr;
 };
