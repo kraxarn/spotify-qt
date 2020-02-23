@@ -58,6 +58,8 @@ private:
 		RoleArtistId	= 0x0101,	// 257
 		RoleAlbumId		= 0x0102,	// 258
 	};
+	// What Spotify context we're currently in
+	QString sptContext;
 	// Methods
 	QWidget *createCentralWidget();
 	QToolBar *createToolBar();

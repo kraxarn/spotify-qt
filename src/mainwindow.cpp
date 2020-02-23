@@ -191,13 +191,15 @@ QWidget *MainWindow::createCentralWidget()
 		auto goArtist = songMenu->addAction(QIcon::fromTheme("view-media-artist"), "View artist");
 		auto goAlbum = songMenu->addAction(QIcon::fromTheme("view-media-album-cover"), "Open album");
 		QAction::connect(goAlbum, &QAction::triggered, [=](bool checked) {
-			auto tracks = spotify->albumTracks(item->data(0, RoleAlbumId).toString());
+			auto albumId = item->data(0, RoleAlbumId).toString();
+			auto tracks = spotify->albumTracks(albumId);
 			if (tracks->length() <= 1)
 				setStatus("Album only contains one song or is empty");
 			else
 			{
 				playlists->setCurrentRow(-1);
 				libraryList->setCurrentRow(-1);
+				sptContext = QString("spotify:album:%1").arg(albumId);
 				loadSongs(*tracks);
 			}
 			delete tracks;
@@ -211,8 +213,7 @@ QWidget *MainWindow::createCentralWidget()
 			setStatus("Failed to start playback: track not found");
 			return;
 		}
-		auto status = spotify->playTracks(trackId,
-			QString("spotify:playlist:%1").arg(sptPlaylists->at(playlists->currentRow()).id));
+		auto status = spotify->playTracks(trackId, sptContext);
 		if (!status.isEmpty())
 			setStatus(QString("Failed to start playback: %1").arg(status));
 		refresh();
@@ -510,6 +511,7 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 	songs->setEnabled(false);
 	auto result = loadSongs(*playlist.loadTracks(*spotify));
 	songs->setEnabled(true);
+	sptContext = QString("spotify:playlist:%1").arg(playlist.id);
 	return result;
 }
 
