@@ -29,7 +29,7 @@ Track::Track(const QJsonObject &item)
 		? track["duration_ms"].toInt()
 		: 0;
 	image = track.contains("album")
-		? track["album"].toObject()["images"].toArray()[0].toObject()["url"].toString()
+		? track["album"].toObject()["images"].toArray()[2].toObject()["url"].toString()
 		: "";
 	isLocal = item["is_local"].toBool();
 }
