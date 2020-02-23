@@ -466,18 +466,18 @@ void MainWindow::refreshPlaylists()
 		playlists->addItem(playlist.name);
 }
 
-bool MainWindow::loadPlaylist(spt::Playlist &playlist)
+bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 {
-	songs->setEnabled(false);
-	auto tracks = playlist.loadTracks(*spotify);
 	songs->clear();
-	for (int i = 0; i < tracks->length(); i++)
+	for (int i = 0; i < tracks.length(); i++)
 	{
-		auto track = tracks->at(i);
+		auto track = tracks.at(i);
 		auto item = new QTreeWidgetItem({
 			"", track.name(), track.artist(), track.album(), formatTime(track.duration())
 		});
-		item->setData(0, RoleTrackId, QString("spotify:track:%1").arg(track.id()));
+		item->setData(0, RoleTrackId,  QString("spotify:track:%1").arg(track.id()));
+		item->setData(0, RoleArtistId, track.artistId());
+		item->setData(0, RoleAlbumId,  track.albumId());
 		if (track.isLocal)
 		{
 			item->setDisabled(true);
@@ -487,8 +487,14 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 			item->setIcon(0, QIcon::fromTheme("media-playback-start"));
 		songs->insertTopLevelItem(i, item);
 	}
-	songs->setEnabled(true);
 	return true;
+}
+
+bool MainWindow::loadPlaylist(spt::Playlist &playlist)
+{
+	songs->setEnabled(false);
+	loadSongs(*playlist.loadTracks(*spotify));
+	songs->setEnabled(true);
 }
 
 void MainWindow::setStatus(const QString &message)

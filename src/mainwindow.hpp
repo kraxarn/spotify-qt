@@ -63,6 +63,7 @@ private:
 	QToolBar *createToolBar();
 	QMenu *createMenu();
 	void refreshPlaylists();
+	bool loadSongs(const QVector<spt::Track> &tracks);
 	bool loadPlaylist(spt::Playlist &playlist);
 	void setStatus(const QString &message);
 	void setCurrentSongIcon();
