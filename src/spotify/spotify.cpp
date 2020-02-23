@@ -254,3 +254,15 @@ AudioFeatures Spotify::trackAudioFeatures(QString trackId)
 			: trackId));
 	return AudioFeatures(json.object());
 }
+
+QVector<Track> *Spotify::albumTracks(const QString &albumID)
+{
+	auto json = get(QString("albums/%1").arg(albumID));
+	auto tracks = new QVector<Track>();
+	tracks->reserve(json["total_tracks"].toInt());
+	// Loop through all items
+	for (auto track : json["tracks"].toObject()["items"].toArray())
+		tracks->append(Track(track.toObject()));
+	// Return final vector
+	return tracks;
+}
