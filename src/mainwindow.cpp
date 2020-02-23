@@ -179,6 +179,14 @@ QWidget *MainWindow::createCentralWidget()
 		QAction::connect(lyrics, &QAction::triggered, [=](bool checked) {
 			openLyrics(item->text(2), item->text(1));
 		});
+		auto share = songMenu->addMenu(QIcon::fromTheme("document-share"), "Share");
+		auto shareSongLink = share->addAction("Copy song link");
+		QAction::connect(shareSongLink, &QAction::triggered, [=](bool checked) {
+			QApplication::clipboard()->setText(
+				QString("https://open.spotify.com/track/%1")
+					.arg(QString(trackId).remove(0, QString("spotify:track:").length())));
+			setStatus("Link copied to clipboard");
+		});
 		songMenu->popup(songs->mapToGlobal(pos));
 	});
 	QTreeWidget::connect(songs, &QTreeWidget::itemClicked, this, [=](QTreeWidgetItem *item, int column) {

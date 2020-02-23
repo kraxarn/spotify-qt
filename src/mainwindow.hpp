@@ -31,6 +31,7 @@
 #include <QTextEdit>
 #include <QApplication>
 #include <QMapIterator>
+#include <QClipboard>
 
 class MainWindow : public QMainWindow
 {
