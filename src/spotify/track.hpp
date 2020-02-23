@@ -12,22 +12,10 @@ namespace spt
 	class Track
 	{
 	public:
-		QDateTime addedAt;
-		bool isLocal;
-
 		Track();
-		explicit Track(QJsonObject item);
-
-		QString id();
-		QString album();
-		QString albumId();
-		QString artist();
-		QString artistId();
-		QString name();
-		int duration();
-		QString image();
-
-	private:
-		QJsonObject track;
+		explicit Track(const QJsonObject &item);
+		QString id, album, albumId, artist, artistId, name, image;
+		int duration;
+		bool isLocal;
 	};
 }

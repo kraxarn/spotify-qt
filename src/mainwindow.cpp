@@ -63,20 +63,20 @@ void MainWindow::refresh()
 		playPause->setText("Play");
 		return;
 	}
-	auto currPlaying = QString("%1\n%2").arg(current.item->name()).arg(current.item->artist());
+	auto currPlaying = QString("%1\n%2").arg(current.item->name).arg(current.item->artist);
 	if (nowPlaying->text() != currPlaying)
 	{
 		if (nowPlaying->text() != "No music playing")
 			setCurrentSongIcon();
 		nowPlaying->setText(currPlaying);
-		setAlbumImage(current.item->image());
-		setWindowTitle(QString("%1 - %2").arg(current.item->artist()).arg(current.item->name()));
+		setAlbumImage(current.item->image);
+		setWindowTitle(QString("%1 - %2").arg(current.item->artist).arg(current.item->name));
 	}
 	position->setText(QString("%1/%2")
 		.arg(formatTime(current.progressMs))
-		.arg(formatTime(current.item->duration())));
+		.arg(formatTime(current.item->duration)));
 	progress->setValue(current.progressMs);
-	progress->setMaximum(current.item->duration());
+	progress->setMaximum(current.item->duration);
 	playPause->setIcon(QIcon::fromTheme(
 		current.isPlaying ? "media-playback-pause" : "media-playback-start"));
 	playPause->setText(current.isPlaying ? "Pause" : "Play");
@@ -488,17 +488,17 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 	{
 		auto track = tracks.at(i);
 		auto item = new QTreeWidgetItem({
-			"", track.name(), track.artist(), track.album(), formatTime(track.duration())
+			"", track.name, track.artist, track.album, formatTime(track.duration)
 		});
-		item->setData(0, RoleTrackId,  QString("spotify:track:%1").arg(track.id()));
-		item->setData(0, RoleArtistId, track.artistId());
-		item->setData(0, RoleAlbumId,  track.albumId());
+		item->setData(0, RoleTrackId,  QString("spotify:track:%1").arg(track.id));
+		item->setData(0, RoleArtistId, track.artistId);
+		item->setData(0, RoleAlbumId,  track.albumId);
 		if (track.isLocal)
 		{
 			item->setDisabled(true);
 			item->setToolTip(1, "Local track");
 		}
-		if (current.item != nullptr && track.id() == current.item->id())
+		if (current.item != nullptr && track.id == current.item->id)
 			item->setIcon(0, QIcon::fromTheme("media-playback-start"));
 		songs->insertTopLevelItem(i, item);
 	}
@@ -522,7 +522,7 @@ void MainWindow::setCurrentSongIcon()
 	for (int i = 0; i < songs->topLevelItemCount(); i++)
 	{
 		auto item = songs->topLevelItem(i);
-		if (item->data(0, RoleTrackId).toString() == QString("spotify:track:%1").arg(current.item->id()))
+		if (item->data(0, RoleTrackId).toString() == QString("spotify:track:%1").arg(current.item->id))
 			item->setIcon(0, QIcon::fromTheme("media-playback-start"));
 		else
 			item->setIcon(0, QIcon());
