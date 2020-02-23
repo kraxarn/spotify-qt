@@ -187,6 +187,20 @@ QWidget *MainWindow::createCentralWidget()
 					.arg(QString(trackId).remove(0, QString("spotify:track:").length())));
 			setStatus("Link copied to clipboard");
 		});
+		songMenu->addSeparator();
+		auto goAlbum = songMenu->addAction(QIcon::fromTheme("view-media-album-cover"), "Open album");
+		QAction::connect(goAlbum, &QAction::triggered, [=](bool checked) {
+			auto tracks = spotify->albumTracks(item->data(0, RoleAlbumId).toString());
+			if (tracks->length() <= 1)
+				setStatus("Album only contains one song or is empty");
+			else
+			{
+				playlists->setCurrentRow(-1);
+				libraryList->setCurrentRow(-1);
+				loadSongs(*tracks);
+			}
+			delete tracks;
+		});
 		songMenu->popup(songs->mapToGlobal(pos));
 	});
 	QTreeWidget::connect(songs, &QTreeWidget::itemClicked, this, [=](QTreeWidgetItem *item, int column) {
