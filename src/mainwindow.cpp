@@ -538,9 +538,9 @@ void MainWindow::setAlbumImage(const QString &url)
 	auto reply = network->get(QNetworkRequest(QUrl(url)));
 	while (!reply->isFinished())
 		QCoreApplication::processEvents();
-	auto art = new QPixmap();
-	art->loadFromData(reply->readAll(), "jpeg");
-	nowAlbum->setPixmap(art->scaled(64, 64));
+	QPixmap art;
+	art.loadFromData(reply->readAll(), "jpeg");
+	nowAlbum->setPixmap(art);
 }
 
 QString MainWindow::formatTime(int ms)
