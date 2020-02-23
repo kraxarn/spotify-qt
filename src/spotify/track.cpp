@@ -23,7 +23,14 @@ QString Track::id()
 
 QString Track::album()
 {
-	return track.contains("album") ? track["album"].toObject()["name"].toString() : "(no album)";
+	return track.contains("album")
+		? track["album"].toObject()["name"].toString() : "(no album)";
+}
+
+QString Track::albumId()
+{
+	return track.contains("album")
+		? track["album"].toObject()["id"].toString() : "0";
 }
 
 QString Track::artist()
@@ -31,6 +38,12 @@ QString Track::artist()
 	return track.contains("artists")
 		? track["artists"].toArray()[0].toObject()["name"].toString()
 		: "(no artist)";
+}
+
+QString Track::artistId()
+{
+	return track.contains("artists")
+		? track["artists"].toArray()[0].toObject()["id"].toString() : "0";
 }
 
 QString Track::name()

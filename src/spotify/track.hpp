@@ -20,7 +20,9 @@ namespace spt
 
 		QString id();
 		QString album();
+		QString albumId();
 		QString artist();
+		QString artistId();
 		QString name();
 		int duration();
 		QString image();
