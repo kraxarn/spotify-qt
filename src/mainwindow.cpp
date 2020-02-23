@@ -188,6 +188,7 @@ QWidget *MainWindow::createCentralWidget()
 			setStatus("Link copied to clipboard");
 		});
 		songMenu->addSeparator();
+		auto goArtist = songMenu->addAction(QIcon::fromTheme("view-media-artist"), "View artist");
 		auto goAlbum = songMenu->addAction(QIcon::fromTheme("view-media-album-cover"), "Open album");
 		QAction::connect(goAlbum, &QAction::triggered, [=](bool checked) {
 			auto tracks = spotify->albumTracks(item->data(0, RoleAlbumId).toString());
