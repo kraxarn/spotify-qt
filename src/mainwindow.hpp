@@ -52,6 +52,12 @@ private:
 	spt::Playback			current;
 	QNetworkAccessManager	*network;
 	spt::ClientHandler		*sptClient;
+	// Constants for track info
+	enum DataRole {
+		RoleTrackId		= 0x0100,	// 256
+		RoleArtistId	= 0x0101,	// 257
+		RoleAlbumId		= 0x0102,	// 258
+	};
 	// Methods
 	QWidget *createCentralWidget();
 	QToolBar *createToolBar();

@@ -167,7 +167,7 @@ QWidget *MainWindow::createCentralWidget()
 	songs->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(songs, &QWidget::customContextMenuRequested, [=](const QPoint &pos) {
 		auto item = songs->itemAt(pos);
-		auto trackId = item->data(0, 0x0100).toString();
+		auto trackId = item->data(0, RoleTrackId).toString();
 		if (trackId.isEmpty())
 			return;
 		auto songMenu = new QMenu(songs);
@@ -190,7 +190,7 @@ QWidget *MainWindow::createCentralWidget()
 		songMenu->popup(songs->mapToGlobal(pos));
 	});
 	QTreeWidget::connect(songs, &QTreeWidget::itemClicked, this, [=](QTreeWidgetItem *item, int column) {
-		auto trackId = item->data(0, 0x0100).toString();
+		auto trackId = item->data(0, RoleTrackId).toString();
 		if (trackId.isEmpty())
 		{
 			setStatus("Failed to start playback: track not found");
@@ -477,7 +477,7 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 		auto item = new QTreeWidgetItem({
 			"", track.name(), track.artist(), track.album(), formatTime(track.duration())
 		});
-		item->setData(0, 0x0100, QString("spotify:track:%1").arg(track.id()));
+		item->setData(0, RoleTrackId, QString("spotify:track:%1").arg(track.id()));
 		if (track.isLocal)
 		{
 			item->setDisabled(true);
@@ -501,7 +501,7 @@ void MainWindow::setCurrentSongIcon()
 	for (int i = 0; i < songs->topLevelItemCount(); i++)
 	{
 		auto item = songs->topLevelItem(i);
-		if (item->data(0, 0x0100).toString() == QString("spotify:track:%1").arg(current.item->id()))
+		if (item->data(0, RoleTrackId).toString() == QString("spotify:track:%1").arg(current.item->id()))
 			item->setIcon(0, QIcon::fromTheme("media-playback-start"));
 		else
 			item->setIcon(0, QIcon());
