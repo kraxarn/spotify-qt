@@ -80,7 +80,8 @@ void MainWindow::refresh()
 	playPause->setIcon(QIcon::fromTheme(
 		current.isPlaying ? "media-playback-pause" : "media-playback-start"));
 	playPause->setText(current.isPlaying ? "Pause" : "Play");
-	volume->setValue(current.volume / 5);
+	if (!Settings().pulseVolume())
+		volume->setValue(current.volume / 5);
 	repeat->setChecked(current.repeat != "off");
 	shuffle->setChecked(current.shuffle);
 }
@@ -303,11 +304,42 @@ QToolBar *MainWindow::createToolBar()
 	volume->setMaximum(20);
 	volume->setValue(20);
 	toolBar->addWidget(volume);
-	QSlider::connect(volume, &QAbstractSlider::sliderReleased, [=]() {
-		auto status = spotify->setVolume(volume->value() * 5);
-		if (!status.isEmpty())
-			setStatus(QString("Failed to set volume: %1").arg(status));
-	});
+	Settings settings;
+	if (settings.pulseVolume())
+	{
+		// If using PulseAudio for volume control, update on every
+		QSlider::connect(volume, &QAbstractSlider::valueChanged, [](int value) {
+			QProcess process;
+			// Find what sink to use
+			process.start("/usr/bin/pactl", {
+				"list", "sink-inputs"
+			});
+			process.waitForFinished();
+			auto sinks = QString(process.readAllStandardOutput()).split("Sinked Input #");
+			QString sink;
+			for (auto &s : sinks)
+				if (s.contains("Spotify"))
+					sink = s;
+			if (sink.isEmpty())
+				return;
+			// Sink was found, get id
+			auto left = sink.left(sink.indexOf('\n'));
+			auto sinkId = left.right(left.length() - left.lastIndexOf('#') - 1);
+			process.start("/usr/bin/pactl", {
+				"set-sink-input-volume", sinkId, QString::number(value * 0.05, 'f', 2)
+			});
+			process.waitForFinished();
+		});
+	}
+	else
+	{
+		// If using Spotify for volume control, only update on release
+		QSlider::connect(volume, &QAbstractSlider::sliderReleased, [=]() {
+			auto status = spotify->setVolume(volume->value() * 5);
+			if (!status.isEmpty())
+				setStatus(QString("Failed to set volume: %1").arg(status));
+		});
+	}
 	// Return final tool bar
 	return toolBar;
 }
