@@ -99,3 +99,13 @@ void Settings::setSptBitrate(int value)
 {
 	settings->setValue("Spotify/Bitrate", value);
 }
+
+bool Settings::pulseVolume()
+{
+	return settings->value("PulseVolume").toBool();
+}
+
+void Settings::setPulseVolume(bool value)
+{
+	settings->setValue("PulseVolume", value);
+}

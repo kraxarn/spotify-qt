@@ -23,6 +23,9 @@ public:
 	QString style();
 	void setStyle(const QString &value);
 
+	bool pulseVolume();
+	void setPulseVolume(bool value);
+
 	// Spotify settings
 
 	QString sptPath();
