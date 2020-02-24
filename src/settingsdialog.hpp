@@ -22,6 +22,7 @@
 #include <QFileInfo>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QFileInfo>
 
 class SettingsDialog : public QDialog
 {
@@ -35,8 +36,10 @@ private:
 	void applyFail(const QString &setting);
 	Settings settings;
 	static QString sptClient(const QString &path);
+	static bool isPulse();
 	// All settings properties
 	QComboBox	*appTheme		= nullptr;
+	QCheckBox	*appPulse		= nullptr;
 	QLineEdit	*sptPath		= nullptr;
 	QLabel		*sptVersion		= nullptr;
 	QCheckBox	*sptStartClient	= nullptr;

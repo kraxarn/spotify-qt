@@ -68,6 +68,15 @@ QGroupBox *SettingsDialog::appSettings()
 	sptStartClient->setToolTip("Start spotifyd together with the app");
 	sptStartClient->setChecked(settings.sptStartClient());
 	appLayout->addWidget(sptStartClient, 3, 0, 1, 2);
+	// PulseAudio volume control
+	if (isPulse())
+	{
+		appPulse = new QCheckBox("PulseAudio volume control", this);
+		appPulse->setToolTip(
+			"Use PulseAudio for volume control instead, only works if listening on same device");
+		appPulse->setChecked(settings.pulseVolume());
+		appLayout->addWidget(appPulse, 4, 0, 1, 2);
+	}
 	return appSettings;
 }
 
@@ -134,6 +143,10 @@ bool SettingsDialog::applySettings()
 	QApplication::setStyle(appTheme->currentText());
 	settings.setStyle(appTheme->currentText());
 
+	// PulseAudio volume
+	if (appPulse != nullptr)
+		settings.setPulseVolume(appPulse->isChecked());
+
 	// Check spotify client path
 	if (!sptPath->text().isEmpty())
 	{
@@ -162,4 +175,10 @@ void SettingsDialog::applyFail(const QString &setting)
 	QMessageBox::warning(this,
 		"Failed to apply settings",
 		QString("Failed to apply setting \"%1\". Check your settings and try again.").arg(setting));
+}
+
+bool SettingsDialog::isPulse()
+{
+	// Assume /usr/bin/pactl
+	return QFileInfo("/usr/bin/pactl").isExecutable();
 }
