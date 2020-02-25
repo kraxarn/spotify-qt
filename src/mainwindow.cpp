@@ -531,10 +531,10 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 	return true;
 }
 
-bool MainWindow::loadAlbum(const QString &albumId)
+bool MainWindow::loadAlbum(const QString &albumId, bool ignoreEmpty)
 {
 	auto tracks = spotify->albumTracks(albumId);
-	if (tracks->length() <= 1)
+	if (ignoreEmpty && tracks->length() <= 1)
 		setStatus("Album only contains one song or is empty");
 	else
 	{
