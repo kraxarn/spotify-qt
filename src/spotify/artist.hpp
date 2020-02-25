@@ -3,6 +3,7 @@
 namespace spt { class Artist; }
 
 #include "spotify.hpp"
+#include "album.hpp"
 
 #include <QStringList>
 #include <QString>
@@ -21,5 +22,6 @@ namespace spt
 		QStringList genres;
 		QString id, name, image;
 		QVector<Track> topTracks(Spotify &spotify);
+		QVector<Album> albums(Spotify &spotify);
 	};
 }
