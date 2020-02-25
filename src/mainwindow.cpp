@@ -596,3 +596,58 @@ QJsonDocument MainWindow::getJson(const QString &url)
 {
 	return QJsonDocument::fromJson(get(url));
 }
+
+void MainWindow::openArtist(const QString &artistId)
+{
+	auto artist = spotify->artist(artistId);
+	auto dock = new QDockWidget(artist.name, this);
+	auto layout = new QVBoxLayout();
+	//layout->setContentsMargins(0, 0, 0, 0);
+	// Get cover image (320x320 -> 320x160)
+	QPixmap cover;
+	cover.loadFromData(get(artist.image), "jpeg");
+	auto coverLabel = new QLabel(dock);
+	coverLabel->setPixmap(cover.copy(0, 80, 320, 160));
+	layout->addWidget(coverLabel);
+	// Artist name title
+	auto title = new QLabel(artist.name, dock);
+	title->setAlignment(Qt::AlignHCenter);
+	auto titleFont = title->font();
+	titleFont.setPointSize(24);
+	title->setFont(titleFont);
+	layout->addWidget(title);
+	// Genres
+	auto genres = new QLabel(artist.genres.join(", "));
+	genres->setWordWrap(true);
+	layout->addWidget(genres);
+	// Tabs
+	auto tabs = new QTabWidget(dock);
+	layout->addWidget(tabs);
+	// Top tracks
+	auto topTracks = artist.topTracks(*spotify);
+	QStringList topTrackIds;
+	auto topTracksList = new QListWidget(tabs);
+	for (auto &track : topTracks)
+	{
+		auto item = new QListWidgetItem(track.name, topTracksList);
+		QPixmap iconData;
+		iconData.loadFromData(get(track.image), "jpeg");
+		item->setIcon(QIcon(iconData));
+		item->setData(RoleTrackId, track.id);
+		topTrackIds.append(QString("spotify:track:%1").arg(track.id));
+	}
+	QListWidget::connect(topTracksList, &QListWidget::itemClicked, [this, topTrackIds](QListWidgetItem *item) {
+		auto result =  spotify->playTracks(
+			QString("spotify:track:%1").arg(item->data(RoleTrackId).toString()), topTrackIds);
+		if (!result.isEmpty())
+			setStatus(QString("Failed to start playback: %1").arg(result));
+	});
+	tabs->addTab(topTracksList, "Popular");
+	tabs->addTab(new QWidget(tabs), "Albums");
+	tabs->addTab(new QWidget(tabs), "Appears on");
+	tabs->addTab(new QWidget(tabs), "Related");
+
+	dock->setWidget(layoutToWidget(layout));
+	dock->setFixedWidth(320);
+	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, dock);
+}
