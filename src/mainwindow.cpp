@@ -543,6 +543,7 @@ bool MainWindow::loadAlbum(const QString &albumId)
 		loadSongs(*tracks);
 	}
 	delete tracks;
+	return true;
 }
 
 bool MainWindow::loadPlaylist(spt::Playlist &playlist)
