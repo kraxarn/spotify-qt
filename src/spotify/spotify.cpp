@@ -277,3 +277,14 @@ Artist Spotify::artist(const QString &artistId)
 {
 	return Artist(get(QString("artists/%1").arg(artistId)).object());
 }
+
+QVector<Track> Spotify::artistTopTracks(const QString &artistId)
+{
+	auto json = get(QString("artists/%1/top-tracks").arg(artistId)).object();
+	auto items = json["tracks"].toArray();
+	QVector<Track> tracks;
+	tracks.reserve(items.size());
+	for (auto item : items)
+		tracks.append(Track(item.toObject()));
+	return tracks;
+}

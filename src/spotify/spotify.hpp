@@ -47,6 +47,7 @@ namespace spt
 		AudioFeatures trackAudioFeatures(QString trackId);
 		QVector<Track> *albumTracks(const QString &albumID);
 		Artist artist(const QString &artistId);
+		QVector<Track> artistTopTracks(const QString &artistId);
 	private:
 		qint64		lastAuth;
 		QString		currentDevice;
