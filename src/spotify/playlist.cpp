@@ -4,8 +4,13 @@ using namespace spt;
 
 Playlist::Playlist(bool collaborative, QString description, QString id, QString image, QString name,
 				   bool isPublic, QJsonObject tracks)
-	: collaborative(collaborative), description(description), id(id), image(image),
-	  name(name), isPublic(isPublic), tracks(tracks)
+	: collaborative(collaborative),
+	description(std::move(description)),
+	id(std::move(id)),
+	image(std::move(image)),
+	name(std::move(name)),
+	isPublic(isPublic),
+	tracks(std::move(tracks))
 {}
 
 QVector<Track> Playlist::loadTracks(Spotify &spotify)
