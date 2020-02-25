@@ -9,6 +9,7 @@ namespace spt { class Artist; }
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QPixmap>
+#include <QVector>
 
 namespace spt
 {
@@ -18,6 +19,7 @@ namespace spt
 		explicit Artist(const QJsonObject &json);
 		int followers, popularity;
 		QStringList genres;
-		QString name, image;
+		QString id, name, image;
+		QVector<Track> topTracks(Spotify &spotify);
 	};
 }
