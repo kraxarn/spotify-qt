@@ -583,11 +583,16 @@ QString MainWindow::formatTime(int ms)
 		.arg(duration.second() % 60, 2, 10, QChar('0'));
 }
 
-QJsonDocument MainWindow::get(const QString &url)
+QByteArray MainWindow::get(const QString &url)
 {
 	auto reply = network->get(QNetworkRequest(QUrl(url)));
 	while (!reply->isFinished())
 		QCoreApplication::processEvents();
 	reply->deleteLater();
-	return QJsonDocument::fromJson(reply->readAll());
+	return reply->readAll();
+}
+
+QJsonDocument MainWindow::getJson(const QString &url)
+{
+	return QJsonDocument::fromJson(get(url));
 }
