@@ -190,6 +190,9 @@ QWidget *MainWindow::createCentralWidget()
 		});
 		songMenu->addSeparator();
 		auto goArtist = songMenu->addAction(QIcon::fromTheme("view-media-artist"), "View artist");
+		QAction::connect(goArtist, &QAction::triggered, [=](bool checked) {
+			openArtist(item->data(0, RoleArtistId).toString());
+		});
 		auto goAlbum = songMenu->addAction(QIcon::fromTheme("view-media-album-cover"), "Open album");
 		goAlbum->setEnabled(!sptContext.startsWith("spotify:album"));
 		QAction::connect(goAlbum, &QAction::triggered, [=](bool checked) {
