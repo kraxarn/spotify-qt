@@ -182,6 +182,18 @@ QString Spotify::playTracks(const QString &track, const QString &context)
 		: QString("me/player/play?device_id=%1").arg(currentDevice), &body);
 }
 
+QString Spotify::playTracks(const QString &track, const QStringList &all)
+{
+	QVariantMap body;
+	body["uris"] = all;
+	body["offset"] = QJsonObject({
+		QPair<QString, QJsonValue>("uri", track)
+	});
+	return put(currentDevice == nullptr
+		? QString("me/player/play")
+		: QString("me/player/play?device_id=%1").arg(currentDevice), &body);
+}
+
 QString Spotify::setShuffle(bool enabled)
 {
 	return put(QString("me/player/shuffle?state=%1").arg(enabled ? "true" : "false"));
