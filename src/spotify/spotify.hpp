@@ -7,6 +7,7 @@ namespace spt { class Spotify; }
 #include "device.hpp"
 #include "playback.hpp"
 #include "audiofeatures.hpp"
+#include "artist.hpp"
 
 #include <QDateTime>
 #include <QtNetwork>
@@ -45,6 +46,7 @@ namespace spt
 		QString setRepeat(QString state);
 		AudioFeatures trackAudioFeatures(QString trackId);
 		QVector<Track> *albumTracks(const QString &albumID);
+		Artist artist(const QString &artistId);
 	private:
 		qint64		lastAuth;
 		QString		currentDevice;

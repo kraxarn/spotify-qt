@@ -272,3 +272,8 @@ QVector<Track> *Spotify::albumTracks(const QString &albumID)
 	// Return final vector
 	return tracks;
 }
+
+Artist Spotify::artist(const QString &artistId)
+{
+	return Artist(get(QString("artists/%1").arg(artistId)).object());
+}
