@@ -66,6 +66,7 @@ private:
 	QMenu *createMenu();
 	void refreshPlaylists();
 	bool loadSongs(const QVector<spt::Track> &tracks);
+	bool loadAlbum(const QString &albumId);
 	bool loadPlaylist(spt::Playlist &playlist);
 	void setStatus(const QString &message);
 	void setCurrentSongIcon();

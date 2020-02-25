@@ -196,18 +196,7 @@ QWidget *MainWindow::createCentralWidget()
 		auto goAlbum = songMenu->addAction(QIcon::fromTheme("view-media-album-cover"), "Open album");
 		goAlbum->setEnabled(!sptContext.startsWith("spotify:album"));
 		QAction::connect(goAlbum, &QAction::triggered, [=](bool checked) {
-			auto albumId = item->data(0, RoleAlbumId).toString();
-			auto tracks = spotify->albumTracks(albumId);
-			if (tracks->length() <= 1)
-				setStatus("Album only contains one song or is empty");
-			else
-			{
-				playlists->setCurrentRow(-1);
-				libraryList->setCurrentRow(-1);
-				sptContext = QString("spotify:album:%1").arg(albumId);
-				loadSongs(*tracks);
-			}
-			delete tracks;
+			loadAlbum(item->data(0, RoleAlbumId).toString());
 		});
 		songMenu->popup(songs->mapToGlobal(pos));
 	});
@@ -540,6 +529,20 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 		songs->insertTopLevelItem(i, item);
 	}
 	return true;
+}
+
+bool MainWindow::loadAlbum(const QString &albumId)
+{
+	auto tracks = spotify->albumTracks(albumId);
+	if (tracks->length() <= 1)
+		setStatus("Album only contains one song or is empty");
+	else
+	{
+		playlists->setCurrentRow(-1);
+		sptContext = QString("spotify:album:%1").arg(albumId);
+		loadSongs(*tracks);
+	}
+	delete tracks;
 }
 
 bool MainWindow::loadPlaylist(spt::Playlist &playlist)
