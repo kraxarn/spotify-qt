@@ -542,7 +542,7 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 {
 	songs->setEnabled(false);
-	auto result = loadSongs(*playlist.loadTracks(*spotify));
+	auto result = loadSongs(playlist.loadTracks(*spotify));
 	songs->setEnabled(true);
 	sptContext = QString("spotify:playlist:%1").arg(playlist.id);
 	return result;

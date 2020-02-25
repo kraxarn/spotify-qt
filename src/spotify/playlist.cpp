@@ -8,10 +8,10 @@ Playlist::Playlist(bool collaborative, QString description, QString id, QString 
 	  name(name), isPublic(isPublic), tracks(tracks)
 {}
 
-QVector<Track> *Playlist::loadTracks(Spotify &spotify)
+QVector<Track> Playlist::loadTracks(Spotify &spotify)
 {
 	// Allocate memory for all tracks
-	auto trackList = new QVector<Track>(tracks["total"].toInt());
+	QVector<Track> trackList(tracks["total"].toInt());
 	// Load tracks
 	auto href = tracks["href"].toString();
 	loadTracksFromUrl(trackList, href, 0, spotify);

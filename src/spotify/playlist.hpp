@@ -23,7 +23,7 @@ namespace spt
 		QString image;
 		QString name;
 		bool isPublic;
-		QVector<Track> *loadTracks(Spotify &spotify);
+		QVector<Track> loadTracks(Spotify &spotify);
 	private:
 		QJsonObject tracks;
 		static bool loadTracksFromUrl(QVector<Track> *trackList, QString &url, int offset, Spotify &spotify);
