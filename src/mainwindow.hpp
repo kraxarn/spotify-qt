@@ -74,6 +74,7 @@ private:
 	void refreshDevices(QMenu *deviceMenu);
 	void refresh();
 	QJsonDocument get(const QString &url);
+	QJsonDocument getJson(const QString &url);
 	void openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name);
 	void openLyrics(const QString &artist, const QString &name);
 };
