@@ -26,6 +26,6 @@ namespace spt
 		QVector<Track> loadTracks(Spotify &spotify);
 	private:
 		QJsonObject tracks;
-		static bool loadTracksFromUrl(QVector<Track> *trackList, QString &url, int offset, Spotify &spotify);
+		static bool loadTracksFromUrl(QVector<Track> &trackList, QString &url, int offset, Spotify &spotify);
 	};
 }
