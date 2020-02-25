@@ -315,7 +315,7 @@ QToolBar *MainWindow::createToolBar()
 				"list", "sink-inputs"
 			});
 			process.waitForFinished();
-			auto sinks = QString(process.readAllStandardOutput()).split("Sinked Input #");
+			auto sinks = QString(process.readAllStandardOutput()).split("Sink Input #");
 			QString sink;
 			for (auto &s : sinks)
 				if (s.contains("Spotify"))
