@@ -11,7 +11,8 @@ Playlist::Playlist(bool collaborative, QString description, QString id, QString 
 QVector<Track> Playlist::loadTracks(Spotify &spotify)
 {
 	// Allocate memory for all tracks
-	QVector<Track> trackList(tracks["total"].toInt());
+	QVector<Track> trackList;
+	trackList.reserve(tracks["total"].toInt());
 	// Load tracks
 	auto href = tracks["href"].toString();
 	loadTracksFromUrl(trackList, href, 0, spotify);
@@ -26,8 +27,8 @@ bool Playlist::loadTracksFromUrl(QVector<Track> &trackList, QString &url, int of
 	auto current = spotify.get(newUrl);
 	// Load from url
 	auto items = current["items"].toArray();
-	for (int i = 0; i < items.size(); i++)
-		trackList[offset + i] = Track(items.at(i).toObject());
+	for (auto item : items)
+		trackList.append(Track(item.toObject()));
 	// Check if there's a next page
 	auto nextPage = current["next"].toString();
 	if (!nextPage.isEmpty())
