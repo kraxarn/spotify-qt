@@ -630,10 +630,10 @@ QPixmap MainWindow::getAlbum(const QString &url)
 void MainWindow::openArtist(const QString &artistId)
 {
 	auto artist = spotify->artist(artistId);
-	auto dock = new QDockWidget(artist.name, this);
+	auto dock = new QDockWidget(this);
 	dock->setFeatures(QDockWidget::DockWidgetClosable);
 	auto layout = new QVBoxLayout();
-	//layout->setContentsMargins(0, 0, 0, 0);
+	layout->setContentsMargins(-1, 0, -1, 0);
 	// Get cover image (320x320 -> 320x160)
 	QPixmap cover;
 	cover.loadFromData(get(artist.image), "jpeg");
