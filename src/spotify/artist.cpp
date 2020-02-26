@@ -34,3 +34,14 @@ QVector<Album> Artist::albums(Spotify &spotify)
 		albums.append(Album(item.toObject()));
 	return albums;
 }
+
+QVector<Artist> Artist::relatedArtists(Spotify &spotify)
+{
+	auto json = spotify.get(QString("artists/%1/related-artists").arg(id));
+	auto items = json["artists"].toArray();
+	QVector<Artist> artists;
+	artists.reserve(items.size());
+	for (auto item : items)
+		artists.append(Artist(item.toObject()));
+	return artists;
+}

@@ -23,5 +23,6 @@ namespace spt
 		QString id, name, image;
 		QVector<Track> topTracks(Spotify &spotify);
 		QVector<Album> albums(Spotify &spotify);
+		QVector<Artist> relatedArtists(Spotify &spotify);
 	};
 }
