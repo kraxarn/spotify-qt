@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	QDir cacheDir(cacheLocation);
 	cacheDir.mkpath(".");
 	cacheDir.mkdir("album");
+	cacheDir.mkdir("playlist");
 	// Set Spotify
 	spotify = new spt::Spotify();
 	sptPlaylists = new QVector<spt::Playlist>();
