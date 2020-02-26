@@ -76,6 +76,7 @@ private:
 	void refresh();
 	QByteArray get(const QString &url);
 	QJsonDocument getJson(const QString &url);
+	QPixmap getAlbum(const QString &url);
 	void openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name);
 	void openLyrics(const QString &artist, const QString &name);
 	void openArtist(const QString &artistId);

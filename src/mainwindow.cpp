@@ -574,12 +574,7 @@ void MainWindow::setCurrentSongIcon()
 
 void MainWindow::setAlbumImage(const QString &url)
 {
-	auto reply = network->get(QNetworkRequest(QUrl(url)));
-	while (!reply->isFinished())
-		QCoreApplication::processEvents();
-	QPixmap art;
-	art.loadFromData(reply->readAll(), "jpeg");
-	nowAlbum->setPixmap(art);
+	nowAlbum->setPixmap(getAlbum(url));
 }
 
 QString MainWindow::formatTime(int ms)
@@ -602,6 +597,13 @@ QByteArray MainWindow::get(const QString &url)
 QJsonDocument MainWindow::getJson(const QString &url)
 {
 	return QJsonDocument::fromJson(get(url));
+}
+
+QPixmap MainWindow::getAlbum(const QString &url)
+{
+	QPixmap img;
+	img.loadFromData(get(url), "jpeg");
+	return img;
 }
 
 void MainWindow::openArtist(const QString &artistId)
@@ -637,9 +639,7 @@ void MainWindow::openArtist(const QString &artistId)
 	for (auto &track : topTracks)
 	{
 		auto item = new QListWidgetItem(track.name, topTracksList);
-		QPixmap iconData;
-		iconData.loadFromData(get(track.image), "jpeg");
-		item->setIcon(QIcon(iconData));
+		item->setIcon(QIcon(getAlbum(track.image)));
 		item->setData(RoleTrackId, track.id);
 		topTrackIds.append(QString("spotify:track:%1").arg(track.id));
 	}
@@ -661,9 +661,7 @@ void MainWindow::openArtist(const QString &artistId)
 		auto item = new QListWidgetItem(QString("%1 (%2)")
 			.arg(album.name)
 			.arg(year.isEmpty() ? "unknown" : year), parent);
-		QPixmap iconData;
-		iconData.loadFromData(get(album.image), "jpeg");
-		item->setIcon(QIcon(iconData));
+		item->setIcon(QIcon(getAlbum(album.image)));
 		item->setData(RoleAlbumId, album.id);
 	}
 	auto loadAlbumId = [this](QListWidgetItem *item) {
