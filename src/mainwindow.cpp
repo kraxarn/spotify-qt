@@ -569,6 +569,8 @@ bool MainWindow::loadAlbum(const QString &albumId, bool ignoreEmpty)
 
 bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 {
+	if (loadPlaylistFromCache(playlist))
+		return true;
 	songs->setEnabled(false);
 	auto result = loadSongs(playlist.loadTracks(*spotify));
 	songs->setEnabled(true);
