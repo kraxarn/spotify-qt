@@ -58,16 +58,11 @@ QGroupBox *SettingsDialog::appSettings()
 	});
 	appRefresh->setCurrentIndex(1);
 	appLayout->addWidget(appRefresh);
-	// Embedded player
-	auto appPlayer = new QCheckBox("Embedded player", this);
-	appPlayer->setToolTip("Temporarily disabled for being very unreliable and too bloated");
-	appPlayer->setEnabled(false);
-	appLayout->addWidget(appPlayer, 2, 0, 1, 2);
 	// Start client
 	sptStartClient = new QCheckBox("Autostart spotifyd", this);
 	sptStartClient->setToolTip("Start spotifyd together with the app");
 	sptStartClient->setChecked(settings.sptStartClient());
-	appLayout->addWidget(sptStartClient, 3, 0, 1, 2);
+	appLayout->addWidget(sptStartClient, 2, 0, 1, 2);
 	// PulseAudio volume control
 	if (isPulse())
 	{
@@ -75,7 +70,7 @@ QGroupBox *SettingsDialog::appSettings()
 		appPulse->setToolTip(
 			"Use PulseAudio for volume control instead, only works if listening on same device");
 		appPulse->setChecked(settings.pulseVolume());
-		appLayout->addWidget(appPulse, 4, 0, 1, 2);
+		appLayout->addWidget(appPulse, 3, 0, 1, 2);
 	}
 	return appSettings;
 }
