@@ -220,10 +220,10 @@ QWidget *MainWindow::createCentralWidget()
 		refresh();
 	});
 	// Load tracks in playlist
-	if (!loadPlaylistFromCache())
+	auto currentPlaylist = sptPlaylists->at(playlists->currentRow());
+	if (!loadPlaylistFromCache(currentPlaylist))
 	{
 		// Load from cache failed, load first in list
-		auto currentPlaylist = sptPlaylists->at(playlists->currentRow());
 		loadPlaylist(currentPlaylist);
 	}
 	else
@@ -578,9 +578,9 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 	return result;
 }
 
-bool MainWindow::loadPlaylistFromCache()
+bool MainWindow::loadPlaylistFromCache(spt::Playlist &playlist)
 {
-	auto filePath = QString("%1/lastPlaylist").arg(cacheLocation);
+	auto filePath = QString("%1/playlist/%2").arg(cacheLocation).arg(playlist.id);
 	if (!QFileInfo::exists(filePath))
 		return false;
 	QFile file(filePath);
@@ -754,7 +754,7 @@ void MainWindow::openArtist(const QString &artistId)
 void MainWindow::cachePlaylist(spt::Playlist &playlist)
 {
 	QJsonDocument json(playlist.toJson(*spotify));
-	QFile file(QString("%1/lastPlaylist").arg(cacheLocation));
+	QFile file(QString("%1/playlist/%2").arg(cacheLocation).arg(playlist.id));
 	file.open(QIODevice::WriteOnly);
 	file.write(json.toBinaryData());
 }
