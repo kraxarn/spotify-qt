@@ -84,4 +84,5 @@ private:
 	void openArtist(const QString &artistId);
 	void cachePlaylist(spt::Playlist &playlist);
 	bool loadPlaylistFromCache(spt::Playlist &playlist);
+	void refreshPlaylist(spt::Playlist &playlist);
 };
