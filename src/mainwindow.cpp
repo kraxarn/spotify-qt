@@ -631,6 +631,7 @@ void MainWindow::openArtist(const QString &artistId)
 {
 	auto artist = spotify->artist(artistId);
 	auto dock = new QDockWidget(artist.name, this);
+	dock->setFeatures(QDockWidget::DockWidgetClosable);
 	auto layout = new QVBoxLayout();
 	//layout->setContentsMargins(0, 0, 0, 0);
 	// Get cover image (320x320 -> 320x160)
