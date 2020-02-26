@@ -220,21 +220,20 @@ QWidget *MainWindow::createCentralWidget()
 		refresh();
 	});
 	// Load tracks in playlist
-	auto currentPlaylist = sptPlaylists->at(playlists->currentRow());
-	if (!loadPlaylistFromCache(currentPlaylist))
+	auto playlistId = Settings().lastPlaylist();
+	// Default to first in list
+	if (playlistId.isEmpty())
+		playlistId = sptPlaylists->at(0).id;
+	// Find playlist in list
+	int i = 0;
+	for (auto &playlist : *sptPlaylists)
 	{
-		// Load from cache failed, load first in list
-		loadPlaylist(currentPlaylist);
-	}
-	else
-	{
-		// When loading from cache, it's not necessarily the first playlist
-		for (int i = 0; i < sptPlaylists->length(); i++)
-			if (sptContext.endsWith(sptPlaylists->at(i).id))
-			{
-				playlists->setCurrentRow(i);
-				break;
-			}
+		if (playlist.id == playlistId)
+		{
+			playlists->setCurrentRow(i);
+			loadPlaylist(playlist);
+		}
+		i++;
 	}
 	// Add to main thing
 	container->addWidget(songs);
