@@ -4,6 +4,20 @@ using namespace spt;
 
 Track::Track(const QJsonObject &item)
 {
+	// If album is a string, track is loaded from cache
+	if (item["album"].isString())
+	{
+		id			= item["id"].toString();
+		album		= item["album"].toString();
+		albumId		= item["albumId"].toString();
+		artist		= item["artist"].toString();
+		artistId	= item["artistId"].toString();
+		name		= item["name"].toString();
+		duration	= item["duration"].toInt();
+		image		= item["image"].toString();
+		isLocal		= item["isLocal"].toBool();
+		return;
+	}
 	// Object that contains the actual track object
 	auto track = item.contains("track") ? item["track"].toObject() : item;
 	// All properties
@@ -39,4 +53,19 @@ Track::Track()
 	id = album = albumId = artist = artistId = name = image = QString();
 	duration = 0;
 	isLocal = false;
+}
+
+QJsonObject Track::toJson()
+{
+	return QJsonObject({
+		QPair<QString, QString>("id", id),
+		QPair<QString, QString>("album", album),
+		QPair<QString, QString>("albumId", albumId),
+		QPair<QString, QString>("artist", artist),
+		QPair<QString, QString>("artistId", artistId),
+		QPair<QString, QString>("name", name),
+		QPair<QString, QString>("image", image),
+		QPair<QString, int>("duration", duration),
+		QPair<QString, bool>("isLocal", isLocal)
+	});
 }

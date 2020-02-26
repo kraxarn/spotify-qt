@@ -17,5 +17,6 @@ namespace spt
 		QString id, album, albumId, artist, artistId, name, image;
 		int duration;
 		bool isLocal;
+		QJsonObject toJson();
 	};
 }
