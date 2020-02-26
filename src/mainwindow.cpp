@@ -675,8 +675,20 @@ void MainWindow::openArtist(const QString &artistId)
 	tabs->addTab(albumList,  "Albums");
 	tabs->addTab(singleList, "Singles");
 	// Related artists
-	tabs->addTab(new QWidget(tabs), "Related");
-
+	auto relatedArtists = artist.relatedArtists(*spotify);
+	auto relatedList = new QListWidget(tabs);
+	for (auto &related : relatedArtists)
+	{
+		auto item = new QListWidgetItem(related.name, relatedList);
+		item->setData(RoleArtistId, related.id);
+	}
+	QListWidget::connect(relatedList, &QListWidget::itemClicked, [this, relatedList](QListWidgetItem *item) {
+		relatedList->setEnabled(false);
+		openArtist(item->data(RoleArtistId).toString());
+		relatedList->setEnabled(true);
+	});
+	tabs->addTab(relatedList, "Related");
+	// Rest of dock
 	dock->setWidget(layoutToWidget(layout));
 	dock->setFixedWidth(320);
 	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, dock);
