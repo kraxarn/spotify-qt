@@ -16,13 +16,9 @@ namespace spt
 	class Playlist
 	{
 	public:
-		Playlist(bool collaborative, QString description, QString id, QString image,
-			QString name, bool isPublic, QJsonObject tracks);
+		Playlist(const QJsonObject &json);
 		bool collaborative;
-		QString description;
-		QString id;
-		QString image;
-		QString name;
+		QString description, id, image, name;
 		bool isPublic;
 		QVector<Track> loadTracks(Spotify &spotify);
 	private:

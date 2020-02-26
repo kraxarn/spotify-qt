@@ -125,18 +125,7 @@ void Spotify::playlists(QVector<Playlist> **playlists)
 	(*playlists)->reserve(size);
 	// Loop through all items
 	for (int i = 0; i < items.size(); i++)
-	{
-		auto data = items.at(i).toObject();
-		(**playlists).insert(i, Playlist(
-			data["collaborative"].toBool(),
-			data["description"].toString(),
-			data["id"].toString(),
-			data["images"].toArray()[0].toObject()["url"].toString(),
-			data["name"].toString(),
-			data["public"].toBool(),
-			data["tracks"].toObject()
-		));
-	}
+		(*playlists)->insert(i, Playlist(items.at(i).toObject()));
 }
 
 QVector<Device> Spotify::devices()

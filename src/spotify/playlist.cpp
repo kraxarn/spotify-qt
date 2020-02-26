@@ -2,16 +2,16 @@
 
 using namespace spt;
 
-Playlist::Playlist(bool collaborative, QString description, QString id, QString image, QString name,
-				   bool isPublic, QJsonObject tracks)
-	: collaborative(collaborative),
-	description(std::move(description)),
-	id(std::move(id)),
-	image(std::move(image)),
-	name(std::move(name)),
-	isPublic(isPublic),
-	tracks(std::move(tracks))
-{}
+Playlist::Playlist(const QJsonObject &json)
+{
+	collaborative	= json["collaborative"].toBool();
+	description		= json["description"].toString();
+	id				= json["id"].toString();
+	image			= json["images"].toArray()[0].toObject()["url"].toString();
+	name			= json["name"].toString();
+	isPublic		= json["public"].toBool();
+	tracks			= json["tracks"].toObject();
+}
 
 QVector<Track> Playlist::loadTracks(Spotify &spotify)
 {
