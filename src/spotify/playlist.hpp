@@ -21,6 +21,7 @@ namespace spt
 		QString description, id, image, name;
 		bool isPublic;
 		QVector<Track> loadTracks(Spotify &spotify);
+		QJsonObject toJson(Spotify &spotify);
 	private:
 		QJsonObject tracks;
 		static bool loadTracksFromUrl(QVector<Track> &trackList, QString &url, int offset, Spotify &spotify);

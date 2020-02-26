@@ -752,21 +752,7 @@ void MainWindow::openArtist(const QString &artistId)
 
 void MainWindow::cachePlaylist(spt::Playlist &playlist)
 {
-	QJsonDocument json;
-	// Load tracks to put in JSON
-	QJsonArray tracks;
-	for (auto &track : playlist.loadTracks(*spotify))
-		tracks.append(track.toJson());
-	json.setObject(QJsonObject({
-		QPair<QString, bool>("collaborative", playlist.collaborative),
-		QPair<QString, QString>("description", playlist.description),
-		QPair<QString, QString>("id", playlist.id),
-		QPair<QString, QString>("image", playlist.image),
-		QPair<QString, QString>("name", playlist.name),
-		QPair<QString, bool>("isPublic", playlist.isPublic),
-		QPair<QString, bool>("total", tracks.size()),
-		QPair<QString, QJsonArray>("tracks", tracks),
-	}));
+	QJsonDocument json(playlist.toJson(*spotify));
 	QFile file(QString("%1/lastPlaylist").arg(cacheLocation));
 	file.open(QIODevice::WriteOnly);
 	file.write(json.toBinaryData());

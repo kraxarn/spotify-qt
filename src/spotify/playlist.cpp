@@ -40,3 +40,22 @@ bool Playlist::loadTracksFromUrl(QVector<Track> &trackList, QString &url, int of
 		loadTracksFromUrl(trackList, nextPage, offset + items.size(), spotify);
 	return true;
 }
+
+QJsonObject Playlist::toJson(Spotify &spotify)
+{
+	QJsonDocument json;
+	// Load tracks to put in JSON
+	QJsonArray jsonTracks;
+	for (auto &track : loadTracks(spotify))
+		jsonTracks.append(track.toJson());
+	return QJsonObject({
+		QPair<QString, bool>("collaborative", collaborative),
+		QPair<QString, QString>("description", description),
+		QPair<QString, QString>("id", id),
+		QPair<QString, QString>("image", image),
+		QPair<QString, QString>("name", name),
+		QPair<QString, bool>("isPublic", isPublic),
+		QPair<QString, bool>("total", jsonTracks.size()),
+		QPair<QString, QJsonArray>("tracks", jsonTracks),
+	});
+}
