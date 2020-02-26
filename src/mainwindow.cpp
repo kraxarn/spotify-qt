@@ -650,8 +650,31 @@ void MainWindow::openArtist(const QString &artistId)
 			setStatus(QString("Failed to start playback: %1").arg(result));
 	});
 	tabs->addTab(topTracksList, "Popular");
-	tabs->addTab(new QWidget(tabs), "Albums");
-	tabs->addTab(new QWidget(tabs), "Appears on");
+	// Albums
+	auto albums = artist.albums(*spotify);
+	auto albumList = new QListWidget(tabs);
+	auto singleList = new QListWidget(tabs);
+	for (auto &album : albums)
+	{
+		auto parent = album.albumGroup == "single" ? singleList : albumList;
+		auto year = album.releaseDate.toString("yyyy");
+		auto item = new QListWidgetItem(QString("%1 (%2)")
+			.arg(album.name)
+			.arg(year.isEmpty() ? "unknown" : year), parent);
+		QPixmap iconData;
+		iconData.loadFromData(get(album.image), "jpeg");
+		item->setIcon(QIcon(iconData));
+		item->setData(RoleAlbumId, album.id);
+	}
+	auto loadAlbumId = [this](QListWidgetItem *item) {
+		if (!loadAlbum(item->data(RoleAlbumId).toString(), false))
+			setStatus(QString("Failed to load album"));
+	};
+	QListWidget::connect(albumList,  &QListWidget::itemClicked, loadAlbumId);
+	QListWidget::connect(singleList, &QListWidget::itemClicked, loadAlbumId);
+	tabs->addTab(albumList,  "Albums");
+	tabs->addTab(singleList, "Singles");
+	// Related artists
 	tabs->addTab(new QWidget(tabs), "Related");
 
 	dock->setWidget(layoutToWidget(layout));
