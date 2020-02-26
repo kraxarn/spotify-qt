@@ -9,6 +9,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	volume 		= progress	= nullptr;
 	nowPlaying	= position	= nowAlbum	= nullptr;
 	repeat 		= shuffle	= playPause	= nullptr;
+	// Set cache root location
+	cacheLocation = QStandardPaths::standardLocations(QStandardPaths::CacheLocation)[0];
+	// Create main cache path and album subdir
+	QDir cacheDir(cacheLocation);
+	cacheDir.mkpath(".");
+	cacheDir.mkdir("album");
 	// Set Spotify
 	spotify = new spt::Spotify();
 	sptPlaylists = new QVector<spt::Playlist>();
@@ -602,7 +608,22 @@ QJsonDocument MainWindow::getJson(const QString &url)
 QPixmap MainWindow::getAlbum(const QString &url)
 {
 	QPixmap img;
-	img.loadFromData(get(url), "jpeg");
+	// Check if cache exists
+	auto cachePath = QString("%1/album/%2").arg(cacheLocation).arg(QFileInfo(url).baseName());
+	if (QFileInfo::exists(cachePath))
+	{
+		// Read file from cache
+		QFile file(cachePath);
+		file.open(QIODevice::ReadOnly);
+		img.loadFromData(file.readAll(), "jpeg");
+	}
+	else
+	{
+		// Download image and save to cache
+		img.loadFromData(get(url), "jpeg");
+		if (!img.save(cachePath, "jpeg"))
+			qDebug() << "failed to save album cache to" << cachePath;
+	}
 	return img;
 }
 

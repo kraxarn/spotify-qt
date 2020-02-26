@@ -32,6 +32,7 @@
 #include <QApplication>
 #include <QMapIterator>
 #include <QClipboard>
+#include <QFileInfo>
 
 class MainWindow : public QMainWindow
 {
@@ -52,6 +53,7 @@ private:
 	spt::Playback			current;
 	QNetworkAccessManager	*network;
 	spt::ClientHandler		*sptClient;
+	QString					cacheLocation;
 	// Constants for track info
 	enum DataRole {
 		RoleTrackId		= 0x0100,	// 256
