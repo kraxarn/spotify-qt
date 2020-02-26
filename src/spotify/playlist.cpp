@@ -57,5 +57,6 @@ QJsonObject Playlist::toJson(Spotify &spotify)
 		QPair<QString, bool>("isPublic", isPublic),
 		QPair<QString, bool>("total", jsonTracks.size()),
 		QPair<QString, QJsonArray>("tracks", jsonTracks),
+		QPair<QString, QString>("snapshot", snapshot)
 	});
 }
