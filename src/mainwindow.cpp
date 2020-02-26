@@ -569,6 +569,7 @@ bool MainWindow::loadAlbum(const QString &albumId, bool ignoreEmpty)
 
 bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 {
+	Settings().setLastPlaylist(playlist.id);
 	if (loadPlaylistFromCache(playlist))
 		return true;
 	songs->setEnabled(false);
