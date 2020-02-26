@@ -225,7 +225,6 @@ QWidget *MainWindow::createCentralWidget()
 		loadPlaylist(currentPlaylist);
 		cachePlaylist(currentPlaylist);
 	}
-	qDebug() << "load playlist:" << timer.elapsed() << "ms";
 	// Add to main thing
 	container->addWidget(songs);
 	return container;
