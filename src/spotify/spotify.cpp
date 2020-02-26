@@ -278,3 +278,8 @@ Artist Spotify::artist(const QString &artistId)
 {
 	return Artist(get(QString("artists/%1").arg(artistId)).object());
 }
+
+Playlist Spotify::playlist(const QString &playlistId)
+{
+	return Playlist(get(QString("playlists/%1").arg(playlistId)).object());
+}
