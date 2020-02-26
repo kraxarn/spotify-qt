@@ -109,3 +109,13 @@ void Settings::setPulseVolume(bool value)
 {
 	settings->setValue("PulseVolume", value);
 }
+
+QString Settings::lastPlaylist()
+{
+	return settings->value("LastPlaylist").toString();
+}
+
+void Settings::setLastPlaylist(const QString &value)
+{
+	settings->setValue("LastPlaylist", value);
+}

@@ -26,6 +26,9 @@ public:
 	bool pulseVolume();
 	void setPulseVolume(bool value);
 
+	QString lastPlaylist();
+	void setLastPlaylist(const QString &value);
+
 	// Spotify settings
 
 	QString sptPath();
