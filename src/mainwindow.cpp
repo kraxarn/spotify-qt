@@ -701,10 +701,10 @@ void MainWindow::openArtist(const QString &artistId)
 		auto item = new QListWidgetItem(related.name, relatedList);
 		item->setData(RoleArtistId, related.id);
 	}
-	QListWidget::connect(relatedList, &QListWidget::itemClicked, [this, relatedList](QListWidgetItem *item) {
+	QListWidget::connect(relatedList, &QListWidget::itemClicked, [this, relatedList, dock](QListWidgetItem *item) {
 		relatedList->setEnabled(false);
 		openArtist(item->data(RoleArtistId).toString());
-		relatedList->setEnabled(true);
+		dock->close();
 	});
 	tabs->addTab(relatedList, "Related");
 	// Rest of dock
