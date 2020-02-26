@@ -487,6 +487,19 @@ QMenu *MainWindow::createMenu()
 	aboutMenu->addActions({
 		aboutQt, checkForUpdates
 	});
+	aboutMenu->addSeparator();
+	QAction::connect(
+		aboutMenu->addAction(QIcon::fromTheme("folder-temp"), "Open cache directory"),
+		&QAction::triggered, [this](bool checked) {
+			QDesktopServices::openUrl(QUrl(cacheLocation));
+		}
+	);
+	QAction::connect(
+		aboutMenu->addAction(QIcon::fromTheme("folder-txt"), "Open config file"),
+		&QAction::triggered, [this](bool checked) {
+			QDesktopServices::openUrl(QUrl(Settings().fileName()));
+		}
+	);
 	menu->addMenu(aboutMenu);
 	// Device selection
 	auto deviceMenu = new QMenu("Device");
