@@ -8,6 +8,8 @@ public:
 	Settings();
 	virtual ~Settings();
 
+	QString fileName();
+
 	QString accessToken();
 	void setAccessToken(QString &value);
 

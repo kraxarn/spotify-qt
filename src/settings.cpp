@@ -10,6 +10,11 @@ Settings::~Settings()
 	delete settings;
 }
 
+QString Settings::fileName()
+{
+	return settings->fileName();
+}
+
 QString Settings::accessToken()
 {
 	return settings->value("AccessToken").toString();
