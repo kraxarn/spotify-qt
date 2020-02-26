@@ -221,10 +221,7 @@ QWidget *MainWindow::createCentralWidget()
 	// Load tracks in playlist
 	auto currentPlaylist = sptPlaylists->at(playlists->currentRow());
 	if (!loadPlaylistFromCache())
-	{
 		loadPlaylist(currentPlaylist);
-		cachePlaylist(currentPlaylist);
-	}
 	// Add to main thing
 	container->addWidget(songs);
 	return container;
@@ -562,6 +559,8 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 	auto result = loadSongs(playlist.loadTracks(*spotify));
 	songs->setEnabled(true);
 	sptContext = QString("spotify:playlist:%1").arg(playlist.id);
+	if (result)
+		cachePlaylist(playlist);
 	return result;
 }
 
