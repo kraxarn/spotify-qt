@@ -1,10 +1,8 @@
 #include "mainwindow.hpp"
 #include "setupdialog.hpp"
-#include "src/spotify/spotify.hpp"
 
 #include <QApplication>
 #include <QCoreApplication>
-#include <QDesktopServices>
 
 int main(int argc, char *argv[])
 {
