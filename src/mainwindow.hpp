@@ -82,4 +82,6 @@ private:
 	void openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name);
 	void openLyrics(const QString &artist, const QString &name);
 	void openArtist(const QString &artistId);
+	void cachePlaylist(spt::Playlist &playlist);
+	bool loadPlaylistFromCache();
 };

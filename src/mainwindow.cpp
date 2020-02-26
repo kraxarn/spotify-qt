@@ -220,7 +220,12 @@ QWidget *MainWindow::createCentralWidget()
 	});
 	// Load tracks in playlist
 	auto currentPlaylist = sptPlaylists->at(playlists->currentRow());
-	loadPlaylist(currentPlaylist);
+	if (!loadPlaylistFromCache())
+	{
+		loadPlaylist(currentPlaylist);
+		cachePlaylist(currentPlaylist);
+	}
+	qDebug() << "load playlist:" << timer.elapsed() << "ms";
 	// Add to main thing
 	container->addWidget(songs);
 	return container;
@@ -561,6 +566,26 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 	return result;
 }
 
+bool MainWindow::loadPlaylistFromCache()
+{
+	auto filePath = QString("%1/lastPlaylist").arg(cacheLocation);
+	if (!QFileInfo::exists(filePath))
+		return false;
+	QFile file(filePath);
+	file.open(QIODevice::ReadOnly);
+	auto json = QJsonDocument::fromBinaryData(file.readAll(), QJsonDocument::BypassValidation);
+	if (json.isNull())
+		return false;
+	QVector<spt::Track> tracks;
+	for (auto track : json["tracks"].toArray())
+		tracks.append(spt::Track(track.toObject()));
+	songs->setEnabled(false);
+	auto result = loadSongs(tracks);
+	songs->setEnabled(true);
+	sptContext = QString("spotify:playlist:%1").arg(json["id"].toString());
+	return result;
+}
+
 void MainWindow::setStatus(const QString &message)
 {
 	statusBar()->showMessage(message, 5000);
@@ -712,4 +737,26 @@ void MainWindow::openArtist(const QString &artistId)
 	dock->setWidget(layoutToWidget(layout));
 	dock->setFixedWidth(320);
 	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, dock);
+}
+
+void MainWindow::cachePlaylist(spt::Playlist &playlist)
+{
+	QJsonDocument json;
+	// Load tracks to put in JSON
+	QJsonArray tracks;
+	for (auto &track : playlist.loadTracks(*spotify))
+		tracks.append(track.toJson());
+	json.setObject(QJsonObject({
+		QPair<QString, bool>("collaborative", playlist.collaborative),
+		QPair<QString, QString>("description", playlist.description),
+		QPair<QString, QString>("id", playlist.id),
+		QPair<QString, QString>("image", playlist.image),
+		QPair<QString, QString>("name", playlist.name),
+		QPair<QString, bool>("isPublic", playlist.isPublic),
+		QPair<QString, bool>("total", tracks.size()),
+		QPair<QString, QJsonArray>("tracks", tracks),
+	}));
+	QFile file(QString("%1/lastPlaylist").arg(cacheLocation));
+	file.open(QIODevice::WriteOnly);
+	file.write(json.toBinaryData());
 }
