@@ -4,13 +4,19 @@ using namespace spt;
 
 Playlist::Playlist(const QJsonObject &json)
 {
+	// If image exists, it's loaded from cache
+	auto fromCache = json.contains("image");
+
 	collaborative	= json["collaborative"].toBool();
 	description		= json["description"].toString();
 	id				= json["id"].toString();
-	image			= json["images"].toArray()[0].toObject()["url"].toString();
+	image			= fromCache
+		? json["image"].toString()
+		: json["images"].toArray()[0].toObject()["url"].toString();
 	name			= json["name"].toString();
 	isPublic		= json["public"].toBool();
 	tracks			= json["tracks"].toObject();
+	snapshot		= json[fromCache ? "snapshot" : "snapshot_id"].toString();
 }
 
 QVector<Track> Playlist::loadTracks(Spotify &spotify)
