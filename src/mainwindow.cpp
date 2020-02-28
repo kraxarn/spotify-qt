@@ -493,7 +493,7 @@ QMenu *MainWindow::createMenu()
 		&QAction::triggered, [this](bool checked) {
 			if (!QDesktopServices::openUrl(QUrl(cacheLocation)))
 				QMessageBox::warning(this,
-					"Failed to open path",
+					"No path",
 					QString("Failed to open path: %1").arg(cacheLocation));
 		}
 	);
@@ -502,7 +502,7 @@ QMenu *MainWindow::createMenu()
 		&QAction::triggered, [this](bool checked) {
 			if (!QDesktopServices::openUrl(QUrl(Settings().fileName())))
 				QMessageBox::warning(this,
-					"Failed to open path",
+					"No file",
 					QString("Failed to open file: %1").arg(Settings().fileName()));
 		}
 	);
