@@ -524,12 +524,38 @@ QMenu *MainWindow::createMenu()
 	menu->addAction(openSettings);
 	// Log out and quit
 	menu->addSeparator();
-	auto quitAction = createMenuAction("application-exit", "Quit",    QKeySequence::Quit);
+	auto quitAction = createMenuAction("application-exit", "Quit", QKeySequence::Quit);
 	QAction::connect(quitAction, &QAction::triggered, QCoreApplication::quit);
-	menu->addActions({
-		createMenuAction("im-user-away",     "Log out", QKeySequence::UnknownKey),
-		quitAction
+	auto logOutAction = createMenuAction("im-user-away",  "Log out", QKeySequence::UnknownKey);
+	QAction::connect(logOutAction, &QAction::triggered, [this](){
+		QMessageBox box(
+			QMessageBox::Icon::Question,
+			"Are you sure?",
+			"Do you also want to clear your application credentials or only log out?");
+		auto clearAll = box.addButton("Clear everything", QMessageBox::ButtonRole::AcceptRole);
+		auto logOut   = box.addButton("Only log out",     QMessageBox::ButtonRole::AcceptRole);
+		auto cancel   = box.addButton("Cancel",           QMessageBox::ButtonRole::RejectRole);
+		box.exec();
+		auto result = box.clickedButton();
+		// Return if we pressed cancel
+		if (result == nullptr || result == cancel)
+			return;
+		Settings settings;
+		// Clear client secret/id if clearAll
+		if (result == clearAll)
+			settings.removeClient();
+		// Clear login if cleatAll/logOut
+		if (result == clearAll || result == logOut)
+			settings.removeTokens();
+		QMessageBox::information(this,
+			"Logged out",
+			"You are now logged out, the application will now close");
+		QCoreApplication::quit();
 	});
+	menu->addActions({
+		logOutAction, quitAction
+	});
+
 	// Return final menu
 	return menu;
 }
