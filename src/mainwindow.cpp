@@ -356,7 +356,8 @@ QToolBar *MainWindow::createToolBar()
 	return toolBar;
 }
 
-QAction *createMenuAction(const QString &icon, const QString &text, QKeySequence::StandardKey shortcut)
+QAction *MainWindow::createMenuAction(const QString &iconName,
+	const QString &text, QKeySequence::StandardKey shortcut)
 {
 	auto action = new QAction(QIcon::fromTheme(icon), text);
 	if (shortcut != QKeySequence::UnknownKey)

@@ -66,6 +66,7 @@ private:
 	QWidget *createCentralWidget();
 	QToolBar *createToolBar();
 	QMenu *createMenu();
+	QAction *createMenuAction(const QString &iconName, const QString &text, QKeySequence::StandardKey shortcut);
 	void refreshPlaylists();
 	bool loadSongs(const QVector<spt::Track> &tracks);
 	bool loadAlbum(const QString &albumId, bool ignoreEmpty = true);
