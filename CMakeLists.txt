@@ -20,7 +20,7 @@ file(GLOB MAIN_SRC "src/*.[hc]pp")
 file(GLOB SPOTIFY_SRC "src/spotify/*.[hc]pp")
 
 ## Add all source files to main executable
-add_executable(spotify-qt ${MAIN_SRC} ${SPOTIFY_SRC})
+add_executable(spotify-qt ${MAIN_SRC} ${SPOTIFY_SRC} res.qrc)
 
 # Link Qt/KDE
 target_link_libraries(spotify-qt PRIVATE

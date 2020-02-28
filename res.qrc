@@ -1,0 +1,26 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource>
+        <file>res/ic/application-exit.svg</file>
+        <file>res/ic/document-share.svg</file>
+        <file>res/ic/folder-temp.svg</file>
+        <file>res/ic/help-about.svg</file>
+        <file>res/ic/media-optical-audio.svg</file>
+        <file>res/ic/media-playback-start.svg</file>
+        <file>res/ic/media-playlist-shuffle.svg</file>
+        <file>res/ic/media-skip-forward.svg</file>
+        <file>res/ic/speaker.svg</file>
+        <file>res/ic/view-media-artist.svg</file>
+        <file>res/ic/view-statistics.svg</file>
+        <file>res/ic/application-menu.svg</file>
+        <file>res/ic/download.svg</file>
+        <file>res/ic/folder-txt.svg</file>
+        <file>res/ic/im-user-away.svg</file>
+        <file>res/ic/media-playback-pause.svg</file>
+        <file>res/ic/media-playlist-repeat.svg</file>
+        <file>res/ic/media-skip-backward.svg</file>
+        <file>res/ic/settings.svg</file>
+        <file>res/ic/view-media-album-cover.svg</file>
+        <file>res/ic/view-media-lyrics.svg</file>
+    </qresource>
+</RCC>
