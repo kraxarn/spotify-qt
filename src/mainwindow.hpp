@@ -86,4 +86,6 @@ private:
 	void cachePlaylist(spt::Playlist &playlist);
 	bool loadPlaylistFromCache(spt::Playlist &playlist);
 	void refreshPlaylist(spt::Playlist &playlist);
+
+	QIcon icon(const QString &name);
 };

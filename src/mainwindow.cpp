@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	network = new QNetworkAccessManager();
 	// Setup main window
 	setWindowTitle("spotify-qt");
-	setWindowIcon(QIcon::fromTheme("spotify"));
+	setWindowIcon(icon("spotify"));
 	resize(1280, 720);
 	setCentralWidget(createCentralWidget());
 	addToolBar(Qt::ToolBarArea::TopToolBarArea, createToolBar());
@@ -66,7 +66,7 @@ void MainWindow::refresh()
 	current = spotify->currentPlayback();
 	if (!current.isPlaying)
 	{
-		playPause->setIcon(QIcon::fromTheme("media-playback-start"));
+		playPause->setIcon(icon("media-playback-start"));
 		playPause->setText("Play");
 		return;
 	}
@@ -84,7 +84,7 @@ void MainWindow::refresh()
 		.arg(formatTime(current.item->duration)));
 	progress->setValue(current.progressMs);
 	progress->setMaximum(current.item->duration);
-	playPause->setIcon(QIcon::fromTheme(
+	playPause->setIcon(icon(
 		current.isPlaying ? "media-playback-pause" : "media-playback-start"));
 	playPause->setText(current.isPlaying ? "Pause" : "Play");
 	if (!Settings().pulseVolume())
@@ -149,7 +149,7 @@ QWidget *MainWindow::createCentralWidget()
 	nowPlayingLayout->setSpacing(12);
 	nowAlbum = new QLabel();
 	nowAlbum->setFixedSize(64, 64);
-	nowAlbum->setPixmap(QIcon::fromTheme("media-optical-audio").pixmap(nowAlbum->size()));
+	nowAlbum->setPixmap(icon("media-optical-audio").pixmap(nowAlbum->size()));
 	nowPlayingLayout->addWidget(nowAlbum);
 	nowPlaying = new QLabel("No music playing");
 	nowPlayingLayout->addWidget(nowPlaying);
@@ -179,15 +179,15 @@ QWidget *MainWindow::createCentralWidget()
 		if (trackId.isEmpty())
 			return;
 		auto songMenu = new QMenu(songs);
-		auto trackFeatures = songMenu->addAction(QIcon::fromTheme("view-statistics"), "Audio features");
+		auto trackFeatures = songMenu->addAction(icon("view-statistics"), "Audio features");
 		QAction::connect(trackFeatures, &QAction::triggered, [=](bool checked) {
 			openAudioFeaturesWidget(trackId, item->text(2), item->text(1));
 		});
-		auto lyrics = songMenu->addAction(QIcon::fromTheme("view-media-lyrics"), "Lyrics");
+		auto lyrics = songMenu->addAction(icon("view-media-lyrics"), "Lyrics");
 		QAction::connect(lyrics, &QAction::triggered, [=](bool checked) {
 			openLyrics(item->text(2), item->text(1));
 		});
-		auto share = songMenu->addMenu(QIcon::fromTheme("document-share"), "Share");
+		auto share = songMenu->addMenu(icon("document-share"), "Share");
 		auto shareSongLink = share->addAction("Copy song link");
 		QAction::connect(shareSongLink, &QAction::triggered, [=](bool checked) {
 			QApplication::clipboard()->setText(
@@ -196,11 +196,11 @@ QWidget *MainWindow::createCentralWidget()
 			setStatus("Link copied to clipboard");
 		});
 		songMenu->addSeparator();
-		auto goArtist = songMenu->addAction(QIcon::fromTheme("view-media-artist"), "View artist");
+		auto goArtist = songMenu->addAction(icon("view-media-artist"), "View artist");
 		QAction::connect(goArtist, &QAction::triggered, [=](bool checked) {
 			openArtist(item->data(0, RoleArtistId).toString());
 		});
-		auto goAlbum = songMenu->addAction(QIcon::fromTheme("view-media-album-cover"), "Open album");
+		auto goAlbum = songMenu->addAction(icon("view-media-album-cover"), "Open album");
 		goAlbum->setEnabled(!sptContext.startsWith("spotify:album"));
 		QAction::connect(goAlbum, &QAction::triggered, [=](bool checked) {
 			loadAlbum(item->data(0, RoleAlbumId).toString());
@@ -247,14 +247,14 @@ QToolBar *MainWindow::createToolBar()
 	// Menu
 	auto menu = new QToolButton(this);
 	menu->setText("Menu");
-	menu->setIcon(QIcon::fromTheme("application-menu"));
+	menu->setIcon(icon("application-menu"));
 	menu->setPopupMode(QToolButton::InstantPopup);
 	menu->setMenu(createMenu());
 	toolBar->addWidget(menu);
 	toolBar->addSeparator();
 	// Media controls
-	auto previous = toolBar->addAction(QIcon::fromTheme("media-skip-backward"), "Previous");
-	playPause = toolBar->addAction(QIcon::fromTheme("media-playback-start"), "Play");
+	auto previous = toolBar->addAction(icon("media-skip-backward"), "Previous");
+	playPause = toolBar->addAction(icon("media-playback-start"), "Play");
 	QAction::connect(playPause, &QAction::triggered, [=](bool checked) {
 		auto status = playPause->iconText() == "Pause" ? spotify->pause() : spotify->resume();
 		if (!status.isEmpty())
@@ -264,7 +264,7 @@ QToolBar *MainWindow::createToolBar()
 				.arg(status));
 		}
 	});
-	auto next = toolBar->addAction(QIcon::fromTheme("media-skip-forward"),  "Next");
+	auto next = toolBar->addAction(icon("media-skip-forward"),  "Next");
 	QAction::connect(previous, &QAction::triggered, [=](bool checked) {
 		auto status = spotify->previous();
 		if (!status.isEmpty())
@@ -292,7 +292,7 @@ QToolBar *MainWindow::createToolBar()
 	toolBar->addWidget(position);
 	toolBar->addSeparator();
 	// Shuffle and repeat toggles
-	shuffle = toolBar->addAction(QIcon::fromTheme("media-playlist-shuffle"), "Shuffle");
+	shuffle = toolBar->addAction(icon("media-playlist-shuffle"), "Shuffle");
 	shuffle->setCheckable(true);
 	QAction::connect(shuffle, &QAction::triggered, [=](bool checked) {
 		auto status = spotify->setShuffle(checked);
@@ -300,7 +300,7 @@ QToolBar *MainWindow::createToolBar()
 			setStatus(QString("Failed to toggle shuffle: %1").arg(status));
 		refresh();
 	});
-	repeat = toolBar->addAction(QIcon::fromTheme("media-playlist-repeat"), "Repeat");
+	repeat = toolBar->addAction(icon("media-playlist-repeat"), "Repeat");
 	repeat->setCheckable(true);
 	QAction::connect(repeat, &QAction::triggered, [=](bool checked) {
 		auto status = spotify->setRepeat(checked ? "context" : "off");
@@ -359,7 +359,7 @@ QToolBar *MainWindow::createToolBar()
 QAction *MainWindow::createMenuAction(const QString &iconName,
 	const QString &text, QKeySequence::StandardKey shortcut)
 {
-	auto action = new QAction(QIcon::fromTheme(icon), text);
+	auto action = new QAction(icon(iconName), text);
 	if (shortcut != QKeySequence::UnknownKey)
 		action->setShortcut(QKeySequence(shortcut));
 	return action;
@@ -483,14 +483,14 @@ QMenu *MainWindow::createMenu()
 					  .arg(latest)
 					  .arg(APP_VERSION));
 	});
-	aboutMenu->setIcon(QIcon::fromTheme("help-about"));
+	aboutMenu->setIcon(icon("help-about"));
 	aboutMenu->addAction(QString("spotify-qt %1").arg(APP_VERSION))->setDisabled(true);
 	aboutMenu->addActions({
 		aboutQt, checkForUpdates
 	});
 	aboutMenu->addSeparator();
 	QAction::connect(
-		aboutMenu->addAction(QIcon::fromTheme("folder-temp"), "Open cache directory"),
+		aboutMenu->addAction(icon("folder-temp"), "Open cache directory"),
 		&QAction::triggered, [this](bool checked) {
 			if (!QDesktopServices::openUrl(QUrl(cacheLocation)))
 				QMessageBox::warning(this,
@@ -499,7 +499,7 @@ QMenu *MainWindow::createMenu()
 		}
 	);
 	QAction::connect(
-		aboutMenu->addAction(QIcon::fromTheme("folder-txt"), "Open config file"),
+		aboutMenu->addAction(icon("folder-txt"), "Open config file"),
 		&QAction::triggered, [this](bool checked) {
 			if (!QDesktopServices::openUrl(QUrl(Settings().fileName())))
 				QMessageBox::warning(this,
@@ -510,7 +510,7 @@ QMenu *MainWindow::createMenu()
 	menu->addMenu(aboutMenu);
 	// Device selection
 	auto deviceMenu = new QMenu("Device");
-	deviceMenu->setIcon(QIcon::fromTheme("speaker"));
+	deviceMenu->setIcon(icon("speaker"));
 	QMenu::connect(deviceMenu, &QMenu::aboutToShow, [=]() {
 		refreshDevices(deviceMenu);
 	});
@@ -565,7 +565,7 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 			item->setToolTip(1, "Local track");
 		}
 		if (current.item != nullptr && track.id == current.item->id)
-			item->setIcon(0, QIcon::fromTheme("media-playback-start"));
+			item->setIcon(0, icon("media-playback-start"));
 		songs->insertTopLevelItem(i, item);
 	}
 	return true;
@@ -640,7 +640,7 @@ void MainWindow::setCurrentSongIcon()
 	{
 		auto item = songs->topLevelItem(i);
 		if (item->data(0, RoleTrackId).toString() == QString("spotify:track:%1").arg(current.item->id))
-			item->setIcon(0, QIcon::fromTheme("media-playback-start"));
+			item->setIcon(0, icon("media-playback-start"));
 		else
 			item->setIcon(0, QIcon());
 	}
@@ -788,4 +788,9 @@ void MainWindow::cachePlaylist(spt::Playlist &playlist)
 	QFile file(QString("%1/playlist/%2").arg(cacheLocation).arg(playlist.id));
 	file.open(QIODevice::WriteOnly);
 	file.write(json.toBinaryData());
+}
+
+QIcon MainWindow::icon(const QString &name)
+{
+	return QIcon::fromTheme(name, QIcon(QString(":/res/ic/%1.svg").arg(name)));
 }
