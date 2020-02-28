@@ -491,13 +491,19 @@ QMenu *MainWindow::createMenu()
 	QAction::connect(
 		aboutMenu->addAction(QIcon::fromTheme("folder-temp"), "Open cache directory"),
 		&QAction::triggered, [this](bool checked) {
-			QDesktopServices::openUrl(QUrl(cacheLocation));
+			if (!QDesktopServices::openUrl(QUrl(cacheLocation)))
+				QMessageBox::information(this,
+					"Failed to open path",
+					QString("Failed to open path: %1").arg(cacheLocation));
 		}
 	);
 	QAction::connect(
 		aboutMenu->addAction(QIcon::fromTheme("folder-txt"), "Open config file"),
 		&QAction::triggered, [this](bool checked) {
-			QDesktopServices::openUrl(QUrl(Settings().fileName()));
+			if (!QDesktopServices::openUrl(QUrl(Settings().fileName())))
+				QMessageBox::information(this,
+					"Failed to open path",
+					QString("Failed to open file: %1").arg(Settings().fileName()));
 		}
 	);
 	menu->addMenu(aboutMenu);
