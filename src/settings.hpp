@@ -44,6 +44,12 @@ public:
 
 	int sptBitrate();
 	void setSptBitrate(int value);
+
+	// Clear and log out
+
+	void removeClient();
+	void removeTokens();
+
 private:
 	QSettings *settings;
 };

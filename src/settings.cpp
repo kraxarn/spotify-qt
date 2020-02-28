@@ -124,3 +124,15 @@ void Settings::setLastPlaylist(const QString &value)
 {
 	settings->setValue("LastPlaylist", value);
 }
+
+void Settings::removeClient()
+{
+	settings->remove("ClientId");
+	settings->remove("ClientSecret");
+}
+
+void Settings::removeTokens()
+{
+	settings->remove("AccessToken");
+	settings->remove("RefreshToken");
+}
