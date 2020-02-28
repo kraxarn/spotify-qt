@@ -13,7 +13,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Find Qt
-find_package(Qt5 COMPONENTS Core Widgets Network Gui REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets Network Gui Svg REQUIRED)
 
 # Glob source files
 file(GLOB MAIN_SRC "src/*.[hc]pp")
@@ -27,4 +27,5 @@ target_link_libraries(spotify-qt PRIVATE
 		Qt5::Core
 		Qt5::Widgets
 		Qt5::Network
-		Qt5::Gui)
+		Qt5::Gui
+		Qt5::Svg)
