@@ -58,7 +58,7 @@ MainWindow::~MainWindow()
 	delete	playPause;
 	delete	sptPlaylists;
 	delete	spotify;
-	delete sptClient;
+	delete	sptClient;
 }
 
 void MainWindow::refresh()
