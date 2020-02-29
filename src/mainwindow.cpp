@@ -653,6 +653,7 @@ void MainWindow::refreshPlaylist(spt::Playlist &playlist)
 	if (playlist.snapshot == newPlaylist.snapshot)
 		return;
 	loadSongs(newPlaylist.loadTracks(*spotify));
+	cachePlaylist(newPlaylist);
 }
 
 void MainWindow::setStatus(const QString &message)
