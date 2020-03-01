@@ -163,6 +163,13 @@ QWidget *MainWindow::createCentralWidget()
 	nowPlaying->setWordWrap(true);
 	nowPlayingLayout->addWidget(nowPlaying);
 	sidebar->addLayout(nowPlayingLayout);
+	// Show menu when clicking now playing
+	nowPlaying->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+	QLabel::connect(nowPlaying, &QWidget::customContextMenuRequested, [this](const QPoint &pos) {
+		auto track = current.item;
+		songMenu(nowPlaying, track->id, track->artist, track->name, track->artistId, track->albumId)
+			->popup(nowPlaying->mapToGlobal(pos));
+	});
 	// Sidebar as widget
 	auto sidebarWidget = layoutToWidget(sidebar);
 	sidebarWidget->setMaximumWidth(250);
