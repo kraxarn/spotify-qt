@@ -746,6 +746,7 @@ void MainWindow::openArtist(const QString &artistId)
 	// Artist name title
 	auto title = new QLabel(artist.name, dock);
 	title->setAlignment(Qt::AlignHCenter);
+	title->setWordWrap(true);
 	auto titleFont = title->font();
 	titleFont.setPointSize(24);
 	title->setFont(titleFont);
