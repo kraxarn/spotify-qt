@@ -160,6 +160,7 @@ QWidget *MainWindow::createCentralWidget()
 	nowAlbum->setPixmap(icon("media-optical-audio").pixmap(nowAlbum->size()));
 	nowPlayingLayout->addWidget(nowAlbum);
 	nowPlaying = new QLabel("No music playing");
+	nowPlaying->setWordWrap(true);
 	nowPlayingLayout->addWidget(nowPlaying);
 	sidebar->addLayout(nowPlayingLayout);
 	// Sidebar as widget
