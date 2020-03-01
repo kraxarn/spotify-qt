@@ -22,5 +22,7 @@
         <file>res/ic/settings.svg</file>
         <file>res/ic/view-media-album-cover.svg</file>
         <file>res/ic/view-media-lyrics.svg</file>
+        <file>res/logo/spotify.svg</file>
+        <file>res/logo/qt.svg</file>
     </qresource>
 </RCC>
