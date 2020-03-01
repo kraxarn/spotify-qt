@@ -252,6 +252,29 @@ QMenu *MainWindow::songMenu(QWidget *parent, const QString &trackId, const QStri
 		setStatus("Link copied to clipboard");
 	});
 	songMenu->addSeparator();
+	auto addPlaylist = songMenu->addMenu(icon("list-add"), "Add to playlist");
+	for (auto &playlist : *sptPlaylists)
+		addPlaylist->addAction(playlist.name)->setData(playlist.id);
+	auto remPlaylist = songMenu->addAction(icon("list-remove"), "Remove from playlist");
+	QAction::connect(remPlaylist, &QAction::triggered, [this, trackId, name, artist](bool checked) {
+		// Remove from interface
+		for (int i = 0; i < songs->topLevelItemCount(); i++)
+		{
+			auto item = songs->topLevelItem(i);
+			if (item->data(0, RoleTrackId).toString() == trackId)
+			{
+				songs->takeTopLevelItem(i);
+				break;
+			}
+		}
+		// Remove from Spotify
+		// TODO
+		// Update status
+		auto currentPlaylist = sptPlaylists->at(playlists->currentRow());
+		setStatus(QString("Removed \"%1 - %2\" from \"%3\"")
+			.arg(name).arg(artist).arg(currentPlaylist.name));
+	});
+	songMenu->addSeparator();
 	auto goArtist = songMenu->addAction(icon("view-media-artist"), "View artist");
 	QAction::connect(goArtist, &QAction::triggered, [=](bool checked) {
 		openArtist(artistId);
