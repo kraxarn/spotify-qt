@@ -135,7 +135,7 @@ QWidget *MainWindow::createCentralWidget()
 	refreshPlaylists();
 	// Set default selected playlist
 	playlists->setCurrentRow(0);
-	QListWidget::connect(playlists, &QListWidget::itemPressed, this, [=](QListWidgetItem *item) {
+	QListWidget::connect(playlists, &QListWidget::itemClicked, this, [this, libraryList](QListWidgetItem *item) {
 		if (item != nullptr)
 			libraryList->setCurrentRow(-1);
 		auto currentPlaylist = sptPlaylists->at(playlists->currentRow());
