@@ -141,6 +141,14 @@ QWidget *MainWindow::createCentralWidget()
 		auto currentPlaylist = sptPlaylists->at(playlists->currentRow());
 		loadPlaylist(currentPlaylist);
 	});
+	QListWidget::connect(playlists, &QListWidget::itemDoubleClicked, this, [this](QListWidgetItem *item) {
+		auto currentPlaylist = sptPlaylists->at(playlists->currentRow());
+		loadPlaylist(currentPlaylist);
+		auto result = spotify->playTracks(
+			QString("spotify:playlist:%1").arg(currentPlaylist.id));
+		if (!result.isEmpty())
+			setStatus(QString("Failed to start playlist playback: %1").arg(result));
+	});
 	auto playlistContainer = createGroupBox(QVector<QWidget*>() << playlists);
 	playlistContainer->setTitle("Playlists");
 	sidebar->addWidget(playlistContainer);
