@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	network = new QNetworkAccessManager();
 	// Setup main window
 	setWindowTitle("spotify-qt");
-	setWindowIcon(icon("spotify"));
+	setWindowIcon(icon("logo:spotify"));
 	resize(1280, 720);
 	setCentralWidget(createCentralWidget());
 	addToolBar(Qt::ToolBarArea::TopToolBarArea, createToolBar());
@@ -476,7 +476,7 @@ QMenu *MainWindow::createMenu()
 	auto menu = new QMenu(this);
 	// About
 	auto aboutMenu = new QMenu("About");
-	auto aboutQt = createMenuAction("qt", "About Qt", QKeySequence::UnknownKey);
+	auto aboutQt = createMenuAction("logo:qt", "About Qt", QKeySequence::UnknownKey);
 	QAction::connect(aboutQt, &QAction::triggered, [=](bool checked) {
 		QMessageBox::aboutQt(this);
 	});
@@ -827,5 +827,10 @@ void MainWindow::cachePlaylist(spt::Playlist &playlist)
 
 QIcon MainWindow::icon(const QString &name)
 {
+	if (name.startsWith("logo:"))
+	{
+		QString icName = name.right(name.length() - QString("logo:").length());
+		return QIcon::fromTheme(icName, QIcon(QString(":/res/logo/%1.svg").arg(icName)));
+	}
 	return QIcon::fromTheme(name, QIcon(QString(":/res/ic/%1.svg").arg(name)));
 }
