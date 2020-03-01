@@ -187,34 +187,9 @@ QWidget *MainWindow::createCentralWidget()
 		auto trackId = item->data(0, RoleTrackId).toString();
 		if (trackId.isEmpty())
 			return;
-		auto songMenu = new QMenu(songs);
-		auto trackFeatures = songMenu->addAction(icon("view-statistics"), "Audio features");
-		QAction::connect(trackFeatures, &QAction::triggered, [=](bool checked) {
-			openAudioFeaturesWidget(trackId, item->text(2), item->text(1));
-		});
-		auto lyrics = songMenu->addAction(icon("view-media-lyrics"), "Lyrics");
-		QAction::connect(lyrics, &QAction::triggered, [=](bool checked) {
-			openLyrics(item->text(2), item->text(1));
-		});
-		auto share = songMenu->addMenu(icon("document-share"), "Share");
-		auto shareSongLink = share->addAction("Copy song link");
-		QAction::connect(shareSongLink, &QAction::triggered, [=](bool checked) {
-			QApplication::clipboard()->setText(
-				QString("https://open.spotify.com/track/%1")
-					.arg(QString(trackId).remove(0, QString("spotify:track:").length())));
-			setStatus("Link copied to clipboard");
-		});
-		songMenu->addSeparator();
-		auto goArtist = songMenu->addAction(icon("view-media-artist"), "View artist");
-		QAction::connect(goArtist, &QAction::triggered, [=](bool checked) {
-			openArtist(item->data(0, RoleArtistId).toString());
-		});
-		auto goAlbum = songMenu->addAction(icon("view-media-album-cover"), "Open album");
-		goAlbum->setEnabled(!sptContext.startsWith("spotify:album"));
-		QAction::connect(goAlbum, &QAction::triggered, [=](bool checked) {
-			loadAlbum(item->data(0, RoleAlbumId).toString());
-		});
-		songMenu->popup(songs->mapToGlobal(pos));
+		songMenu(songs, trackId, item->text(2), item->text(1),
+			item->data(0, RoleArtistId).toString(),
+			item->data(0, RoleAlbumId).toString())->popup(songs->mapToGlobal(pos));
 	});
 	QTreeWidget::connect(songs, &QTreeWidget::itemClicked, this, [=](QTreeWidgetItem *item, int column) {
 		auto trackId = item->data(0, RoleTrackId).toString();
@@ -247,6 +222,39 @@ QWidget *MainWindow::createCentralWidget()
 	// Add to main thing
 	container->addWidget(songs);
 	return container;
+}
+
+QMenu *MainWindow::songMenu(QWidget *parent, const QString &trackId, const QString &artist,
+	const QString &name, const QString &artistId, const QString &albumId)
+{
+	auto songMenu = new QMenu(parent);
+	auto trackFeatures = songMenu->addAction(icon("view-statistics"), "Audio features");
+	QAction::connect(trackFeatures, &QAction::triggered, [=](bool checked) {
+		openAudioFeaturesWidget(trackId, artist, name);
+	});
+	auto lyrics = songMenu->addAction(icon("view-media-lyrics"), "Lyrics");
+	QAction::connect(lyrics, &QAction::triggered, [=](bool checked) {
+		openLyrics(artist, name);
+	});
+	auto share = songMenu->addMenu(icon("document-share"), "Share");
+	auto shareSongLink = share->addAction("Copy song link");
+	QAction::connect(shareSongLink, &QAction::triggered, [=](bool checked) {
+		QApplication::clipboard()->setText(
+			QString("https://open.spotify.com/track/%1")
+				.arg(QString(trackId).remove(0, QString("spotify:track:").length())));
+		setStatus("Link copied to clipboard");
+	});
+	songMenu->addSeparator();
+	auto goArtist = songMenu->addAction(icon("view-media-artist"), "View artist");
+	QAction::connect(goArtist, &QAction::triggered, [=](bool checked) {
+		openArtist(artistId);
+	});
+	auto goAlbum = songMenu->addAction(icon("view-media-album-cover"), "Open album");
+	goAlbum->setEnabled(!sptContext.startsWith("spotify:album"));
+	QAction::connect(goAlbum, &QAction::triggered, [=](bool checked) {
+		loadAlbum(albumId);
+	});
+	return songMenu;
 }
 
 QToolBar *MainWindow::createToolBar()
