@@ -301,7 +301,7 @@ QMenu *MainWindow::songMenu(QWidget *parent, const QString &trackId, const QStri
 		// TODO
 		// Update status
 		setStatus(QString("Removed \"%1 - %2\" from \"%3\"")
-			.arg(name).arg(artist).arg(currentPlaylist.name));
+			.arg(name).arg(artist).arg(currentPlaylist->name));
 	});
 	songMenu->addSeparator();
 	auto goArtist = songMenu->addAction(icon("view-media-artist"), "View artist");
