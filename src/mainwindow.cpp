@@ -713,23 +713,31 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 
 bool MainWindow::loadPlaylistFromCache(spt::Playlist &playlist)
 {
-	auto filePath = QString("%1/playlist/%2").arg(cacheLocation).arg(playlist.id);
-	if (!QFileInfo::exists(filePath))
+	auto tracks = playlistTracks(playlist.id);
+	if (tracks.isEmpty())
 		return false;
-	QFile file(filePath);
-	file.open(QIODevice::ReadOnly);
-	auto json = QJsonDocument::fromBinaryData(file.readAll(), QJsonDocument::BypassValidation);
-	if (json.isNull())
-		return false;
-	QVector<spt::Track> tracks;
-	for (auto track : json["tracks"].toArray())
-		tracks.append(spt::Track(track.toObject()));
 	songs->setEnabled(false);
 	auto result = loadSongs(tracks);
 	songs->setEnabled(true);
 	sptContext = QString("spotify:playlist:%1").arg(json["id"].toString());
 	refreshPlaylist(playlist);
 	return result;
+}
+
+QVector<spt::Track> MainWindow::playlistTracks(const QString &playlistId)
+{
+	QVector<spt::Track> tracks;
+	auto filePath = QString("%1/playlist/%2").arg(cacheLocation).arg(playlistId);
+	if (!QFileInfo::exists(filePath))
+		return tracks;
+	QFile file(filePath);
+	file.open(QIODevice::ReadOnly);
+	auto json = QJsonDocument::fromBinaryData(file.readAll(), QJsonDocument::BypassValidation);
+	if (json.isNull())
+		return tracks;
+	for (auto track : json["tracks"].toArray())
+		tracks.append(spt::Track(track.toObject()));
+	return tracks;
 }
 
 void MainWindow::refreshPlaylist(spt::Playlist &playlist, bool force)
