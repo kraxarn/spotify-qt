@@ -51,6 +51,7 @@ namespace spt
 		Artist artist(const QString &artistId);
 		Playlist playlist(const QString &playlistId);
 		QString addToPlaylist(const QString &playlistId, const QString &trackId);
+		QString removeFromPlaylist(const QString &playlistId, const QString &trackId, int pos);
 	private:
 		qint64		lastAuth;
 		QString		currentDevice;
@@ -64,6 +65,7 @@ namespace spt
 		 */
 		QString put(QString url, QVariantMap *body = nullptr);
 		QString post(QString url);
+		QString del(QString url, QVariantMap *body);
 		static QString errorMessage(QNetworkReply *reply);
 
 		bool refresh();

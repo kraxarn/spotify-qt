@@ -62,6 +62,14 @@ QString Spotify::post(QString url)
 	return errorMessage(networkManager->post(req, QByteArray()));
 }
 
+QString Spotify::del(QString url, QVariantMap *body)
+{
+	auto req = request(url);
+	req.setHeader(QNetworkRequest::ContentTypeHeader, QString("application/json"));
+	auto delData = body == nullptr ? nullptr : QJsonDocument::fromVariant(*body).toJson();
+	return errorMessage(networkManager->sendCustomRequest(req, "DELETE", delData));
+}
+
 QString Spotify::errorMessage(QNetworkReply *reply)
 {
 	while (!reply->isFinished())
@@ -299,4 +307,18 @@ QString Spotify::addToPlaylist(const QString &playlistId, const QString &trackId
 {
 	return post(QString("playlists/%1/tracks?uris=%2")
 		.arg(playlistId).arg(trackId));
+}
+
+QString Spotify::removeFromPlaylist(const QString &playlistId, const QString &trackId, int pos)
+{
+	QVariantMap body;
+	body["tracks"] = QJsonArray({
+		QJsonObject({
+			QPair<QString, QString>("uri", trackId),
+			QPair<QString, QJsonArray>("positions", QJsonArray({
+				pos
+			}))
+		})
+	});
+	return del(QString("playlists/%1/tracks").arg(playlistId), &body);
 }
