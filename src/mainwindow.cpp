@@ -254,11 +254,12 @@ QMenu *MainWindow::songMenu(QWidget *parent, const QString &trackId, const QStri
 	songMenu->addSeparator();
 	// Add to playlist
 	auto addPlaylist = songMenu->addMenu(icon("list-add"), "Add to playlist");
-	auto currentPlaylist = sptPlaylists->at(playlists->currentRow());
+	auto currentPlaylist = playlists->currentRow() == -1
+		? nullptr : &sptPlaylists->at(playlists->currentRow());
 	for (auto &playlist : *sptPlaylists)
 	{
 		// Don't add if current
-		if (playlist.id == currentPlaylist.id)
+		if (currentPlaylist != nullptr && playlist.id == currentPlaylist->id)
 			continue;
 		// Create main action
 		auto action = addPlaylist->addAction(playlist.name);
