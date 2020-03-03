@@ -292,3 +292,9 @@ Playlist Spotify::playlist(const QString &playlistId)
 {
 	return Playlist(get(QString("playlists/%1").arg(playlistId)).object());
 }
+
+QString Spotify::addToPlaylist(const QString &playlistId, const QString &trackId)
+{
+	return post(QString("playlists/%1/tracks?uris=%2")
+		.arg(playlistId).arg(trackId));
+}
