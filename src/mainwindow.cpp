@@ -288,18 +288,32 @@ QMenu *MainWindow::songMenu(QWidget *parent, const QString &trackId, const QStri
 	auto remPlaylist = songMenu->addAction(icon("list-remove"), "Remove from playlist");
 	QAction::connect(remPlaylist, &QAction::triggered, [this, trackId, name, artist, currentPlaylist](bool checked) {
 		// Remove from interface
-		for (int i = 0; i < songs->topLevelItemCount(); i++)
+		QTreeWidgetItem *item;
+		int i;
+		for (i = 0; i < songs->topLevelItemCount(); i++)
 		{
-			auto item = songs->topLevelItem(i);
+			item = songs->topLevelItem(i);
 			if (item->data(0, RoleTrackId).toString() == trackId)
-			{
-				songs->takeTopLevelItem(i);
 				break;
-			}
+			// Failed to find
+			item = nullptr;
+		}
+		if (item == nullptr)
+		{
+			setStatus("Failed to remove track, not found in playlist");
+			return;
 		}
 		// Remove from Spotify
-		// TODO
+		auto status = spotify->removeFromPlaylist(currentPlaylist->id, trackId,
+			item->data(0, RoleIndex).toInt());
 		// Update status
+		if (!status.isEmpty())
+		{
+			setStatus(QString("Failed to remove track from playlist: %1").arg(status));
+			return;
+		}
+		// i doesn't necessarily match item index depending on sorting order
+		songs->takeTopLevelItem(i);
 		setStatus(QString("Removed \"%1 - %2\" from \"%3\"")
 			.arg(name).arg(artist).arg(currentPlaylist->name));
 	});
