@@ -16,6 +16,7 @@ Track::Track(const QJsonObject &item)
 		duration	= item["duration"].toInt();
 		image		= item["image"].toString();
 		isLocal		= item["isLocal"].toBool();
+		addedAt		= QDateTime::fromString(item["addedAt"].toString());
 		return;
 	}
 	// Object that contains the actual track object
@@ -45,6 +46,9 @@ Track::Track(const QJsonObject &item)
 	image = track.contains("album")
 		? track["album"].toObject()["images"].toArray()[2].toObject()["url"].toString()
 		: "";
+	addedAt = track.contains("added_at")
+		? QDateTime::fromString(track["added_at"].toString(), Qt::DateFormat::ISODate)
+		: QDateTime();
 	isLocal = item["is_local"].toBool();
 }
 
@@ -66,6 +70,7 @@ QJsonObject Track::toJson()
 		QPair<QString, QString>("name", name),
 		QPair<QString, QString>("image", image),
 		QPair<QString, int>("duration", duration),
-		QPair<QString, bool>("isLocal", isLocal)
+		QPair<QString, bool>("isLocal", isLocal),
+		QPair<QString, QString>("addedAt", addedAt.toString())
 	});
 }
