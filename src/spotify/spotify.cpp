@@ -57,7 +57,9 @@ QString Spotify::put(QString url, QVariantMap *body)
 
 QString Spotify::post(QString url)
 {
-	return errorMessage(networkManager->post(request(url), QByteArray()));
+	auto req = request(url);
+	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+	return errorMessage(networkManager->post(req, QByteArray()));
 }
 
 QString Spotify::errorMessage(QNetworkReply *reply)
