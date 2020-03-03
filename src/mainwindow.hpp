@@ -85,7 +85,7 @@ private:
 	void openArtist(const QString &artistId);
 	void cachePlaylist(spt::Playlist &playlist);
 	bool loadPlaylistFromCache(spt::Playlist &playlist);
-	void refreshPlaylist(spt::Playlist &playlist);
+	void refreshPlaylist(spt::Playlist &playlist, bool force = false);
 	QMenu *songMenu(QWidget *parent, const QString &trackId, const QString &artist,
 		const QString &name, const QString &artistId, const QString &albumId);
 	QIcon icon(const QString &name);

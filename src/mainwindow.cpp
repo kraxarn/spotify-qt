@@ -709,10 +709,10 @@ bool MainWindow::loadPlaylistFromCache(spt::Playlist &playlist)
 	return result;
 }
 
-void MainWindow::refreshPlaylist(spt::Playlist &playlist)
+void MainWindow::refreshPlaylist(spt::Playlist &playlist, bool force)
 {
 	auto newPlaylist = spotify->playlist(playlist.id);
-	if (playlist.snapshot == newPlaylist.snapshot)
+	if (!force && playlist.snapshot == newPlaylist.snapshot)
 		return;
 	loadSongs(newPlaylist.loadTracks(*spotify));
 	cachePlaylist(newPlaylist);
