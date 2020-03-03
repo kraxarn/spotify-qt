@@ -258,9 +258,6 @@ QMenu *MainWindow::songMenu(QWidget *parent, const QString &trackId, const QStri
 		? nullptr : &sptPlaylists->at(playlists->currentRow());
 	for (auto &playlist : *sptPlaylists)
 	{
-		// Don't add if current
-		if (currentPlaylist != nullptr && playlist.id == currentPlaylist->id)
-			continue;
 		// Create main action
 		auto action = addPlaylist->addAction(playlist.name);
 		action->setData(playlist.id);
