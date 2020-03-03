@@ -46,8 +46,8 @@ Track::Track(const QJsonObject &item)
 	image = track.contains("album")
 		? track["album"].toObject()["images"].toArray()[2].toObject()["url"].toString()
 		: "";
-	addedAt = track.contains("added_at")
-		? QDateTime::fromString(track["added_at"].toString(), Qt::DateFormat::ISODate)
+	addedAt = item.contains("added_at")
+		? QDateTime::fromString(item["added_at"].toString(), Qt::DateFormat::ISODate)
 		: QDateTime();
 	isLocal = item["is_local"].toBool();
 }
