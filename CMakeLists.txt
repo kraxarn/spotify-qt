@@ -22,6 +22,13 @@ file(GLOB SPOTIFY_SRC "src/spotify/*.[hc]pp")
 ## Add all source files to main executable
 add_executable(spotify-qt ${MAIN_SRC} ${SPOTIFY_SRC} res.qrc)
 
+# Get version from Git
+execute_process(COMMAND ${GIT_EXECUTABLE} describe --abbrev=0 --tags
+		WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+		OUTPUT_VARIABLE GIT_TAG
+		OUTPUT_STRIP_TRAILING_WHITESPACE)
+target_compile_definitions(spotify-qt PRIVATE APP_VERSION="${GIT_TAG}")
+
 # Link Qt/KDE
 target_link_libraries(spotify-qt PRIVATE
 		Qt5::Core
