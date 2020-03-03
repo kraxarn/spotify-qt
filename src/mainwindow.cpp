@@ -584,6 +584,14 @@ QMenu *MainWindow::createMenu()
 		dialog.exec();
 	});
 	menu->addAction(openSettings);
+	// Debug stuff
+	menu->addSeparator();
+	auto refPlaylist = menu->addAction(
+		QIcon::fromTheme("reload"), "Refresh current playlist");
+	QAction::connect(refPlaylist, &QAction::triggered, [&]() {
+		auto currentPlaylist = sptPlaylists->at(playlists->currentRow());
+		refreshPlaylist(currentPlaylist, true);
+	});
 	// Log out and quit
 	menu->addSeparator();
 	auto quitAction = createMenuAction("application-exit", "Quit", QKeySequence::Quit);
