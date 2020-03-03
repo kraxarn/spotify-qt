@@ -23,10 +23,17 @@ file(GLOB SPOTIFY_SRC "src/spotify/*.[hc]pp")
 add_executable(spotify-qt ${MAIN_SRC} ${SPOTIFY_SRC} res.qrc)
 
 # Get version from Git
-execute_process(COMMAND ${GIT_EXECUTABLE} describe --abbrev=0 --tags
-		WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-		OUTPUT_VARIABLE GIT_TAG
-		OUTPUT_STRIP_TRAILING_WHITESPACE)
+find_package(Git QUIET)
+if (GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
+	execute_process(COMMAND ${GIT_EXECUTABLE} describe --abbrev=0 --tags
+			WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+			OUTPUT_VARIABLE GIT_TAG
+			OUTPUT_STRIP_TRAILING_WHITESPACE)
+else()
+	message(STATUS "warning: git or source code dir not found")
+	set(GIT_TAG "v0.0")
+endif()
+
 target_compile_definitions(spotify-qt PRIVATE APP_VERSION="${GIT_TAG}")
 
 # Link Qt/KDE
