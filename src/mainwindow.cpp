@@ -670,6 +670,7 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 		item->setData(0, RoleTrackId,  QString("spotify:track:%1").arg(track.id));
 		item->setData(0, RoleArtistId, track.artistId);
 		item->setData(0, RoleAlbumId,  track.albumId);
+		item->setData(0, RoleIndex,    i);
 		if (track.isLocal)
 		{
 			item->setDisabled(true);

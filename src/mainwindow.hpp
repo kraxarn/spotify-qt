@@ -58,6 +58,7 @@ private:
 		RoleTrackId		= 0x0100,	// 256
 		RoleArtistId	= 0x0101,	// 257
 		RoleAlbumId		= 0x0102,	// 258
+		RoleIndex		= 0x0103	// 259
 	};
 	// What Spotify context we're currently in
 	QString sptContext;
