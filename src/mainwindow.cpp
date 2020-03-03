@@ -716,7 +716,7 @@ bool MainWindow::loadPlaylistFromCache(spt::Playlist &playlist)
 	songs->setEnabled(false);
 	auto result = loadSongs(tracks);
 	songs->setEnabled(true);
-	sptContext = QString("spotify:playlist:%1").arg(json["id"].toString());
+	sptContext = QString("spotify:playlist:%1").arg(playlist.id);
 	refreshPlaylist(playlist);
 	return result;
 }
