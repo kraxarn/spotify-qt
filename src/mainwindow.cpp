@@ -252,11 +252,27 @@ QMenu *MainWindow::songMenu(QWidget *parent, const QString &trackId, const QStri
 		setStatus("Link copied to clipboard");
 	});
 	songMenu->addSeparator();
+	// Add to playlist
 	auto addPlaylist = songMenu->addMenu(icon("list-add"), "Add to playlist");
+	auto currentPlaylist = sptPlaylists->at(playlists->currentRow());
 	for (auto &playlist : *sptPlaylists)
-		addPlaylist->addAction(playlist.name)->setData(playlist.id);
+	{
+		// Don't add if current
+		if (playlist.id == currentPlaylist.id)
+			continue;
+		// Create main action
+		auto action = addPlaylist->addAction(playlist.name);
+		action->setData(playlist.id);
+	}
+	QMenu::connect(addPlaylist, &QMenu::triggered, [this, trackId](QAction *action) {
+		// TODO: Check if track is already in playlist
+		auto result = spotify->addToPlaylist(action->data().toString(), trackId);
+		if (!result.isEmpty())
+			setStatus(QString("Failed to add track to playlist: %1").arg(result));
+	});
+	// Remove from playlist
 	auto remPlaylist = songMenu->addAction(icon("list-remove"), "Remove from playlist");
-	QAction::connect(remPlaylist, &QAction::triggered, [this, trackId, name, artist](bool checked) {
+	QAction::connect(remPlaylist, &QAction::triggered, [this, trackId, name, artist, currentPlaylist](bool checked) {
 		// Remove from interface
 		for (int i = 0; i < songs->topLevelItemCount(); i++)
 		{
@@ -270,7 +286,6 @@ QMenu *MainWindow::songMenu(QWidget *parent, const QString &trackId, const QStri
 		// Remove from Spotify
 		// TODO
 		// Update status
-		auto currentPlaylist = sptPlaylists->at(playlists->currentRow());
 		setStatus(QString("Removed \"%1 - %2\" from \"%3\"")
 			.arg(name).arg(artist).arg(currentPlaylist.name));
 	});
