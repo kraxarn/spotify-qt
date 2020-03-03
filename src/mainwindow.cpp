@@ -183,7 +183,7 @@ QWidget *MainWindow::createCentralWidget()
 	songs->setAllColumnsShowFocus(true);
 	songs->setColumnCount(5);
 	songs->setHeaderLabels({
-		" ", "Title", "Artist", "Album", "Length"
+		" ", "Title", "Artist", "Album", "Length", "Added"
 	});
 	songs->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 	songs->header()->setSectionsMovable(false);
@@ -663,7 +663,8 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 	{
 		auto track = tracks.at(i);
 		auto item = new QTreeWidgetItem({
-			"", track.name, track.artist, track.album, formatTime(track.duration)
+			"", track.name, track.artist, track.album,
+			formatTime(track.duration), track.addedAt.toString("yyyy-MM-dd")
 		});
 		item->setData(0, RoleTrackId,  QString("spotify:track:%1").arg(track.id));
 		item->setData(0, RoleArtistId, track.artistId);
