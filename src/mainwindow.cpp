@@ -262,20 +262,23 @@ QMenu *MainWindow::songMenu(QWidget *parent, const QString &trackId, const QStri
 		auto action = addPlaylist->addAction(playlist.name);
 		action->setData(playlist.id);
 	}
-	QMenu::connect(addPlaylist, &QMenu::triggered, [this, trackId](QAction *action) {
+	QMenu::connect(addPlaylist, &QMenu::triggered, [this, trackId, currentPlaylist](QAction *action) {
 		// Check if it's already in the playlist
 		auto playlistId = action->data().toString();
-		spt::Playlist *playlist = nullptr;
-		for (auto &pl : *sptPlaylists)
-			if (pl.id == playlistId)
+		auto tracks = playlistTracks(playlistId);
+		for (auto &track : tracks)
+		{
+			if (trackId.endsWith(track.id))
 			{
 				if (QMessageBox::information(this,
-					"Duplicate",
-					"Track is already in the playlist, do you want to add it anyway?",
-					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::No)
+					 "Duplicate",
+					 "Track is already in the playlist, do you want to add it anyway?",
+					 QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes)
+					== QMessageBox::No)
 					return;
 				break;
 			}
+		}
 		// Actually add
 		auto result = spotify->addToPlaylist(playlistId, trackId);
 		if (!result.isEmpty())
