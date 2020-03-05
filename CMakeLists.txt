@@ -29,7 +29,7 @@ if (GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
 			WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 			OUTPUT_VARIABLE GIT_TAG
 			OUTPUT_STRIP_TRAILING_WHITESPACE)
-else()
+elseif(NOT GIT_TAG)
 	message(STATUS "warning: git or source code dir not found")
 	set(GIT_TAG "v0.0")
 endif()
