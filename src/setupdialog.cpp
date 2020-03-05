@@ -33,57 +33,63 @@ SetupDialog::SetupDialog(QWidget *parent) : QDialog(parent)
 		QDesktopServices::openUrl(QUrl("https://developer.spotify.com/dashboard/applications"));
 	});
 	auto authButton = new QPushButton("Authenticate");
-	QAbstractButton::connect(authButton, &QAbstractButton::clicked, [=](bool checked) {
+	QTcpServer *server = nullptr;
+	QAbstractButton::connect(authButton, &QAbstractButton::clicked, [&](bool checked) {
 		auto clientIdText = clientId->text();
 		auto clientSecretText = clientSecret->text();
 		clientId->setDisabled(true);
 		clientSecret->setDisabled(true);
 		auto redirect = QString("http://localhost:8888");
 
-		auto server = new QTcpServer(this);
-		if (!server->listen(QHostAddress::LocalHost, 8888))
+		if (server == nullptr)
 		{
-			QMessageBox::warning(this,
-				"server error",
-				QString("failed to start a temporary server on port 8888: %1").arg(server->errorString()));
-			return;
-		}
-		QTcpServer::connect(server, &QTcpServer::newConnection, [=]() {
-			// Settings for later
-			Settings settings;
-			// Read
-			auto socket = server->nextPendingConnection();
-			socket->waitForReadyRead();
-			auto response = QString(socket->readAll());
-			// Client might want to request favicon or something
-			if (!response.contains("?code="))
+			server = new QTcpServer(this);
+			if (!server->listen(QHostAddress::LocalHost, 8888))
 			{
-				socket->close();
+				QMessageBox::warning(this,
+				 "server error",
+				 QString("failed to start a temporary server on port 8888: %1")
+					 .arg(server->errorString()));
 				return;
 			}
-			// Do magic with code received
-			// GET /?code=<code> HTTP...
-			auto left = response.left(response.indexOf(" HTTP"));
-			auto code = left.right(left.length() - left.indexOf("?code=") - 6);
-			auto status = auth->auth(code, redirect, clientIdText, clientSecretText);
-			// Write
-			socket->write(QString("HTTP/1.1 200 OK\r\n\r\n%1")
-				.arg(status.isEmpty()
-					? "success, you can now return to spotify-qt"
-					: QString("failed to authenticate: %1").arg(status)).toUtf8());
-			socket->flush();
-			socket->waitForBytesWritten(3000);
-			socket->close();
-			// Close it all down if ok
-			if (status.isEmpty())
+			QTcpServer::connect(server, &QTcpServer::newConnection, [=]()
 			{
-				settings.setClientId(clientIdText);
-				settings.setClientSecret(clientSecretText);
-				server->close();
-				delete server;
-				accept();
-			}
-		});
+				// Settings for later
+				Settings settings;
+				// Read
+				auto socket = server->nextPendingConnection();
+				socket->waitForReadyRead();
+				auto response = QString(socket->readAll());
+				// Client might want to request favicon or something
+				if (!response.contains("?code="))
+				{
+					socket->close();
+					return;
+				}
+				// Do magic with code received
+				// GET /?code=<code> HTTP...
+				auto left = response.left(response.indexOf(" HTTP"));
+				auto code = left.right(left.length() - left.indexOf("?code=") - 6);
+				auto status = auth->auth(code, redirect, clientIdText, clientSecretText);
+				// Write
+				socket->write(QString("HTTP/1.1 200 OK\r\n\r\n%1")
+					.arg(status.isEmpty()
+						? "success, you can now return to spotify-qt"
+						: QString("failed to authenticate: %1").arg(status)).toUtf8());
+				socket->flush();
+				socket->waitForBytesWritten(3000);
+				socket->close();
+				// Close it all down if ok
+				if (status.isEmpty())
+				{
+					settings.setClientId(clientIdText);
+					settings.setClientSecret(clientSecretText);
+					server->close();
+					delete server;
+					accept();
+				}
+			});
+		}
 		QDesktopServices::openUrl(QUrl(spt::Auth::authUrl(clientIdText, redirect)));
 	});
 	auto buttonBox = new QHBoxLayout();
