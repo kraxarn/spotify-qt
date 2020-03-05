@@ -33,8 +33,8 @@ SetupDialog::SetupDialog(QWidget *parent) : QDialog(parent)
 		QDesktopServices::openUrl(QUrl("https://developer.spotify.com/dashboard/applications"));
 	});
 	auto authButton = new QPushButton("Authenticate");
-	QTcpServer *server = nullptr;
-	QAbstractButton::connect(authButton, &QAbstractButton::clicked, [&](bool checked) {
+	server = nullptr;
+	QAbstractButton::connect(authButton, &QAbstractButton::clicked, [=](bool checked) {
 		auto clientIdText = clientId->text();
 		auto clientSecretText = clientSecret->text();
 		clientId->setDisabled(true);

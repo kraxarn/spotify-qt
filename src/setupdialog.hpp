@@ -21,5 +21,6 @@ public:
 	explicit SetupDialog(QWidget *parent = nullptr);
 	~SetupDialog() override;
 private:
-	spt::Auth *auth;
+	spt::Auth	*auth;
+	QTcpServer	*server;
 };
