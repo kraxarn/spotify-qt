@@ -37,7 +37,7 @@ endif()
 target_compile_definitions(spotify-qt PRIVATE APP_VERSION="${GIT_TAG}")
 
 # Set install targets for 'make install'
-install(TARGETS spotify-qt)
+install(TARGETS spotify-qt CONFIGURATIONS Release RUNTIME DESTINATION bin)
 
 # Link Qt/KDE
 target_link_libraries(spotify-qt PRIVATE
