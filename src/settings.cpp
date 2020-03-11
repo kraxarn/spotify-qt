@@ -125,12 +125,12 @@ void Settings::setLastPlaylist(const QString &value)
 	settings->setValue("LastPlaylist", value);
 }
 
-bool Settings::stylePalette()
+Settings::Palette Settings::stylePalette()
 {
-	return settings->value("StylePalette").toBool();
+	return (Settings::Palette) settings->value("StylePalette").toInt();
 }
 
-void Settings::setStylePalette(bool value)
+void Settings::setStylePalette(Settings::Palette value)
 {
 	settings->setValue("StylePalette", value);
 }

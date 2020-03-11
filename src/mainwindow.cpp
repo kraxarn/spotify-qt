@@ -26,11 +26,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	resize(1280, 720);
 	setCentralWidget(createCentralWidget());
 	addToolBar(Qt::ToolBarArea::TopToolBarArea, createToolBar());
-	// Apply selected style
+	// Apply selected style and palette
 	Settings settings;
 	QApplication::setStyle(settings.style());
-	if (settings.stylePalette())
-		QApplication::setPalette(QApplication::style()->standardPalette());
+	applyPalette(settings.stylePalette());
 	// Update player status
 	auto timer = new QTimer(this);
 	QTimer::connect(timer, &QTimer::timeout, this, &MainWindow::refresh);
@@ -945,4 +944,16 @@ QIcon MainWindow::icon(const QString &name)
 		return QIcon(QString(":/res/logo/%1.svg")
 			.arg(name.right(name.length() - QString("logo:").length())));
 	return QIcon::fromTheme(name, QIcon(QString(":/res/ic/%1.svg").arg(name)));
+}
+
+void MainWindow::applyPalette(Settings::Palette palette)
+{
+	QPalette p;
+	switch (palette)
+	{
+		case Settings::paletteApp:		p = QApplication::palette(); 					break;
+		case Settings::paletteStyle:	p = QApplication::style()->standardPalette();	break;
+		case Settings::paletteDark:		p = DarkPalette();								break;
+	}
+	QApplication::setPalette(p);
 }

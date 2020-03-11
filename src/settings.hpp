@@ -8,6 +8,13 @@ public:
 	Settings();
 	virtual ~Settings();
 
+	enum Palette
+	{
+		paletteApp   = 0,	// Default app palette
+		paletteStyle = 1,	// Palette from current style
+		paletteDark  = 2,	// Custom dark palette
+	};
+
 	QString fileName();
 
 	QString accessToken();
@@ -31,8 +38,8 @@ public:
 	QString lastPlaylist();
 	void setLastPlaylist(const QString &value);
 
-	bool stylePalette();
-	void setStylePalette(bool value);
+	Palette stylePalette();
+	void setStylePalette(Palette value);
 
 	// Spotify settings
 

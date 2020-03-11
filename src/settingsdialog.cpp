@@ -48,6 +48,16 @@ QGroupBox *SettingsDialog::appSettings()
 		if (style.toLower() == QApplication::style()->objectName())
 			appTheme->setCurrentText(style);
 	appLayout->addWidget(appTheme, 0, 1);
+	// Style palette
+	auto appPaletteLabel = new QLabel("Colors", this);
+	appPaletteLabel->setToolTip("What color palette to use with current theme");
+	appLayout->addWidget(appPaletteLabel, 1, 0);
+	appPalette = new QComboBox(this);
+	appPalette->addItems({
+		"Default", "From style", "Dark"
+	});
+	appPalette->setCurrentIndex(settings.stylePalette());
+	appLayout->addWidget(appPalette, 1, 1);
 	// Refresh interval
 	auto appRefreshLabel = new QLabel("Refresh interval", this);
 	appRefreshLabel->setToolTip("How often to refresh playback status from the Spotify servers");
@@ -62,12 +72,7 @@ QGroupBox *SettingsDialog::appSettings()
 	sptStartClient = new QCheckBox("Autostart spotifyd", this);
 	sptStartClient->setToolTip("Start spotifyd together with the app");
 	sptStartClient->setChecked(settings.sptStartClient());
-	appLayout->addWidget(sptStartClient, 2, 0, 1, 2);
-	// Style palette
-	appPalette = new QCheckBox("Use style palette", this);
-	appPalette->setToolTip("Use standard palette from current theme");
-	appPalette->setChecked(settings.stylePalette());
-	appLayout->addWidget(appPalette, 3, 0, 1, 2);
+	appLayout->addWidget(sptStartClient, 3, 0, 1, 2);
 	// PulseAudio volume control
 	if (isPulse())
 	{
@@ -143,11 +148,18 @@ bool SettingsDialog::applySettings()
 	QApplication::setStyle(appTheme->currentText());
 	settings.setStyle(appTheme->currentText());
 
+	// Warn when changing palette
+	auto palette = (Settings::Palette) appPalette->currentIndex();
+	if (palette != settings.stylePalette())
+	{
+		QMessageBox::information(
+			this, "Palette",
+			"Please restart the application to fully apply selected palette");
+	}
+
 	// Set palette
-	QApplication::setPalette(appPalette->isChecked()
-		? QApplication::style()->standardPalette()
-		: QApplication::palette());
-	settings.setStylePalette(appPalette->isChecked());
+	MainWindow::applyPalette(palette);
+	settings.setStylePalette(palette);
 
 	// PulseAudio volume
 	if (appPulse != nullptr)

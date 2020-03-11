@@ -1,6 +1,7 @@
 #pragma once
 
-#include "src/settings.hpp"
+#include "settings.hpp"
+#include "mainwindow.hpp"
 
 #include <QDialog>
 #include <QHBoxLayout>
@@ -40,7 +41,7 @@ private:
 	// All settings properties
 	QComboBox	*appTheme		= nullptr;
 	QCheckBox	*appPulse		= nullptr;
-	QCheckBox	*appPalette		= nullptr;
+	QComboBox	*appPalette		= nullptr;
 	QLineEdit	*sptPath		= nullptr;
 	QLabel		*sptVersion		= nullptr;
 	QCheckBox	*sptStartClient	= nullptr;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "settingsdialog.hpp"
+#include "darkpalette.hpp"
 #include "spotify/spotify.hpp"
 #include "spotify/playlist.hpp"
 #include "spotify/playback.hpp"
@@ -39,6 +40,7 @@ class MainWindow : public QMainWindow
 public:
 	explicit MainWindow(QWidget *parent = nullptr);
 	~MainWindow() override;
+	static void applyPalette(Settings::Palette palette);
 private:
 	// Widgets
 	QListWidget	*playlists;
