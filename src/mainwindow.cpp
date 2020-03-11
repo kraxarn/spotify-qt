@@ -367,6 +367,17 @@ QToolBar *MainWindow::createToolBar()
 			setStatus(QString("Failed to go to next track: %1").arg(status));
 		refresh();
 	});
+	// Search
+	auto search = toolBar->addAction(icon("search"), "Search");
+	search->setCheckable(true);
+	auto searchBox = new QLineEdit(this);
+	searchBox->setMaximumWidth(0);
+	QAction::connect(search, &QAction::triggered, [=](bool checked) {
+		// For some reason show/hide doesn't work
+		searchBox->setText(QString());
+		searchBox->setMaximumWidth(checked ? 200 : 0);
+	});
+	toolBar->addWidget(searchBox);
 	// Progress
 	progress = new QSlider(this);
 	progress->setOrientation(Qt::Orientation::Horizontal);
