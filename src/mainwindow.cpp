@@ -369,7 +369,7 @@ QToolBar *MainWindow::createToolBar()
 		refresh();
 	});
 	// Search
-	auto search = toolBar->addAction(icon("search"), "Search");
+	auto search = toolBar->addAction(icon("edit-find"), "Search");
 	search->setCheckable(true);
 	auto searchBox = new QLineEdit(this);
 	searchBox->setMaximumWidth(0);
