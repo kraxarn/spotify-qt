@@ -40,6 +40,7 @@ private:
 	// All settings properties
 	QComboBox	*appTheme		= nullptr;
 	QCheckBox	*appPulse		= nullptr;
+	QCheckBox	*appPalette		= nullptr;
 	QLineEdit	*sptPath		= nullptr;
 	QLabel		*sptVersion		= nullptr;
 	QCheckBox	*sptStartClient	= nullptr;

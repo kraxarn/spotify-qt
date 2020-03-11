@@ -125,6 +125,16 @@ void Settings::setLastPlaylist(const QString &value)
 	settings->setValue("LastPlaylist", value);
 }
 
+bool Settings::stylePalette()
+{
+	return settings->value("StylePalette").toBool();
+}
+
+void Settings::setStylePalette(bool value)
+{
+	settings->setValue("StylePalette", value);
+}
+
 void Settings::removeClient()
 {
 	settings->remove("ClientId");

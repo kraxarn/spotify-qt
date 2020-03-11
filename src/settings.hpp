@@ -31,6 +31,9 @@ public:
 	QString lastPlaylist();
 	void setLastPlaylist(const QString &value);
 
+	bool stylePalette();
+	void setStylePalette(bool value);
+
 	// Spotify settings
 
 	QString sptPath();

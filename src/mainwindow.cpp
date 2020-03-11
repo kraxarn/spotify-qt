@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	// Apply selected style
 	Settings settings;
 	QApplication::setStyle(settings.style());
+	if (settings.stylePalette())
+		QApplication::setPalette(QApplication::style()->standardPalette());
 	// Update player status
 	auto timer = new QTimer(this);
 	QTimer::connect(timer, &QTimer::timeout, this, &MainWindow::refresh);

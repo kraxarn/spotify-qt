@@ -63,6 +63,11 @@ QGroupBox *SettingsDialog::appSettings()
 	sptStartClient->setToolTip("Start spotifyd together with the app");
 	sptStartClient->setChecked(settings.sptStartClient());
 	appLayout->addWidget(sptStartClient, 2, 0, 1, 2);
+	// Style palette
+	appPalette = new QCheckBox("Use style palette", this);
+	appPalette->setToolTip("Use standard palette from current theme");
+	appPalette->setChecked(settings.stylePalette());
+	appLayout->addWidget(appPalette, 3, 0, 1, 2);
 	// PulseAudio volume control
 	if (isPulse())
 	{
@@ -70,7 +75,7 @@ QGroupBox *SettingsDialog::appSettings()
 		appPulse->setToolTip(
 			"Use PulseAudio for volume control instead, only works if listening on same device");
 		appPulse->setChecked(settings.pulseVolume());
-		appLayout->addWidget(appPulse, 3, 0, 1, 2);
+		appLayout->addWidget(appPulse, 4, 0, 1, 2);
 	}
 	return appSettings;
 }
@@ -137,6 +142,12 @@ bool SettingsDialog::applySettings()
 	// Set theme
 	QApplication::setStyle(appTheme->currentText());
 	settings.setStyle(appTheme->currentText());
+
+	// Set palette
+	QApplication::setPalette(appPalette->isChecked()
+		? QApplication::style()->standardPalette()
+		: QApplication::palette());
+	settings.setStylePalette(appPalette->isChecked());
 
 	// PulseAudio volume
 	if (appPulse != nullptr)
