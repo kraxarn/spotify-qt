@@ -13,7 +13,7 @@ DarkPalette::DarkPalette()
 	setColor(QPalette::WindowText,		text);
 	setColor(QPalette::Base,			base);
 	setColor(QPalette::AlternateBase,	background);
-	setColor(QPalette::ToolTipBase,	text);
+	setColor(QPalette::ToolTipBase,	base);
 	setColor(QPalette::ToolTipText,	text);
 	setColor(QPalette::Text,			text);
 	setColor(QPalette::Button,			background);
