@@ -371,6 +371,7 @@ QToolBar *MainWindow::createToolBar()
 	// Search
 	auto search = toolBar->addAction(icon("edit-find"), "Search");
 	search->setCheckable(true);
+	search->setVisible(false); // temporary until implemented
 	auto searchBox = new QLineEdit(this);
 	searchBox->setMaximumWidth(0);
 	QAction::connect(search, &QAction::triggered, [=](bool checked) {
