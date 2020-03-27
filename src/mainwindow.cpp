@@ -459,37 +459,10 @@ QToolBar *MainWindow::createToolBar()
 	return toolBar;
 }
 
-QTreeWidgetItem *treeItem(QTreeWidget *tree, const QString &key, const QString &value)
-{
-	return new QTreeWidgetItem(tree, {
-		key, value
-	});
-}
-
 void MainWindow::openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name)
 {
-	auto features = spotify->trackAudioFeatures(trackId);
-	auto dock = new QDockWidget(QString("%1 - %2")
-		.arg(artist)
-		.arg(name)
-		.replace("&", "&&"), this);
-	auto tree = new QTreeWidget(dock);
-	tree->setEditTriggers(QAbstractItemView::NoEditTriggers);
-	tree->header()->hide();
-	tree->setSelectionMode(QAbstractItemView::NoSelection);
-	tree->setRootIsDecorated(false);
-	tree->setAllColumnsShowFocus(true);
-	tree->setColumnCount(2);
-	tree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-	QMapIterator<QString, QString> i(features.values);
-	while (i.hasNext())
-	{
-		i.next();
-		tree->addTopLevelItem(treeItem(tree, i.key(), i.value()));
-	}
-	dock->setWidget(tree);
-	dock->setMinimumWidth(150);
-	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, dock);
+	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea,
+		new AudioFeaturesView(*spotify, trackId, artist, name, this));
 }
 
 void MainWindow::openLyrics(const QString &artist, const QString &name)

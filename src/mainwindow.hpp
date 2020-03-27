@@ -5,6 +5,7 @@
 #include "artistview.hpp"
 #include "icon.hpp"
 #include "mainmenu.hpp"
+#include "audiofeaturesview.hpp"
 #include "spotify/spotify.hpp"
 #include "spotify/playlist.hpp"
 #include "spotify/playback.hpp"
