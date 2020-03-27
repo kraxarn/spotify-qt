@@ -23,8 +23,8 @@ MainMenu::MainMenu(spt::Spotify &spotify, QWidget *parent) : QMenu(parent), pare
 	aboutMenu->setIcon(Icon::get("help-about"));
 	aboutMenu->addAction(QString("spotify-qt %1").arg(APP_VERSION))->setDisabled(true);
 	aboutMenu->addActions({
-							  aboutQt, checkForUpdates
-						  });
+		aboutQt, checkForUpdates
+	});
 	aboutMenu->addSeparator();
 	QAction::connect(
 		aboutMenu->addAction(Icon::get("folder-temp"), "Open cache directory"),
