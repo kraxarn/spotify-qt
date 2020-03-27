@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	network = new QNetworkAccessManager();
 	// Setup main window
 	setWindowTitle("spotify-qt");
-	setWindowIcon(icon("logo:spotify-qt"));
+	setWindowIcon(Icon::get("logo:spotify-qt"));
 	resize(1280, 720);
 	setCentralWidget(createCentralWidget());
 	addToolBar(Qt::ToolBarArea::TopToolBarArea, createToolBar());
@@ -67,7 +67,7 @@ void MainWindow::refresh()
 	current = spotify->currentPlayback();
 	if (!current.isPlaying)
 	{
-		playPause->setIcon(icon("media-playback-start"));
+		playPause->setIcon(Icon::get("media-playback-start"));
 		playPause->setText("Play");
 		return;
 	}
@@ -85,7 +85,7 @@ void MainWindow::refresh()
 		.arg(formatTime(current.item->duration)));
 	progress->setValue(current.progressMs);
 	progress->setMaximum(current.item->duration);
-	playPause->setIcon(icon(
+	playPause->setIcon(Icon::get(
 		current.isPlaying ? "media-playback-pause" : "media-playback-start"));
 	playPause->setText(current.isPlaying ? "Pause" : "Play");
 	if (!Settings().pulseVolume())
@@ -158,7 +158,7 @@ QWidget *MainWindow::createCentralWidget()
 	nowPlayingLayout->setSpacing(12);
 	nowAlbum = new QLabel();
 	nowAlbum->setFixedSize(64, 64);
-	nowAlbum->setPixmap(icon("media-optical-audio").pixmap(nowAlbum->size()));
+	nowAlbum->setPixmap(Icon::get("media-optical-audio").pixmap(nowAlbum->size()));
 	nowPlayingLayout->addWidget(nowAlbum);
 	nowPlaying = new QLabel("No music playing");
 	nowPlaying->setWordWrap(true);
@@ -236,15 +236,15 @@ QMenu *MainWindow::songMenu(QWidget *parent, const QString &trackId, const QStri
 	const QString &name, const QString &artistId, const QString &albumId)
 {
 	auto songMenu = new QMenu(parent);
-	auto trackFeatures = songMenu->addAction(icon("view-statistics"), "Audio features");
+	auto trackFeatures = songMenu->addAction(Icon::get("view-statistics"), "Audio features");
 	QAction::connect(trackFeatures, &QAction::triggered, [=](bool checked) {
 		openAudioFeaturesWidget(trackId, artist, name);
 	});
-	auto lyrics = songMenu->addAction(icon("view-media-lyrics"), "Lyrics");
+	auto lyrics = songMenu->addAction(Icon::get("view-media-lyrics"), "Lyrics");
 	QAction::connect(lyrics, &QAction::triggered, [=](bool checked) {
 		openLyrics(artist, name);
 	});
-	auto share = songMenu->addMenu(icon("document-share"), "Share");
+	auto share = songMenu->addMenu(Icon::get("document-share"), "Share");
 	auto shareSongLink = share->addAction("Copy song link");
 	QAction::connect(shareSongLink, &QAction::triggered, [=](bool checked) {
 		QApplication::clipboard()->setText(
@@ -254,7 +254,7 @@ QMenu *MainWindow::songMenu(QWidget *parent, const QString &trackId, const QStri
 	});
 	songMenu->addSeparator();
 	// Add to playlist
-	auto addPlaylist = songMenu->addMenu(icon("list-add"), "Add to playlist");
+	auto addPlaylist = songMenu->addMenu(Icon::get("list-add"), "Add to playlist");
 	auto currentPlaylist = playlists->currentRow() == -1
 		? nullptr : &sptPlaylists->at(playlists->currentRow());
 	for (auto &playlist : *sptPlaylists)
@@ -286,7 +286,7 @@ QMenu *MainWindow::songMenu(QWidget *parent, const QString &trackId, const QStri
 			setStatus(QString("Failed to add track to playlist: %1").arg(result));
 	});
 	// Remove from playlist
-	auto remPlaylist = songMenu->addAction(icon("list-remove"), "Remove from playlist");
+	auto remPlaylist = songMenu->addAction(Icon::get("list-remove"), "Remove from playlist");
 	QAction::connect(remPlaylist, &QAction::triggered, [this, trackId, name, artist, currentPlaylist](bool checked) {
 		// Remove from interface
 		QTreeWidgetItem *item;
@@ -319,11 +319,11 @@ QMenu *MainWindow::songMenu(QWidget *parent, const QString &trackId, const QStri
 			.arg(name).arg(artist).arg(currentPlaylist->name));
 	});
 	songMenu->addSeparator();
-	auto goArtist = songMenu->addAction(icon("view-media-artist"), "View artist");
+	auto goArtist = songMenu->addAction(Icon::get("view-media-artist"), "View artist");
 	QAction::connect(goArtist, &QAction::triggered, [=](bool checked) {
 		openArtist(artistId);
 	});
-	auto goAlbum = songMenu->addAction(icon("view-media-album-cover"), "Open album");
+	auto goAlbum = songMenu->addAction(Icon::get("view-media-album-cover"), "Open album");
 	goAlbum->setEnabled(!sptContext.startsWith("spotify:album"));
 	QAction::connect(goAlbum, &QAction::triggered, [=](bool checked) {
 		loadAlbum(albumId);
@@ -338,14 +338,14 @@ QToolBar *MainWindow::createToolBar()
 	// Menu
 	auto menu = new QToolButton(this);
 	menu->setText("Menu");
-	menu->setIcon(icon("application-menu"));
+	menu->setIcon(Icon::get("application-menu"));
 	menu->setPopupMode(QToolButton::InstantPopup);
 	menu->setMenu(createMenu());
 	toolBar->addWidget(menu);
 	toolBar->addSeparator();
 	// Media controls
-	auto previous = toolBar->addAction(icon("media-skip-backward"), "Previous");
-	playPause = toolBar->addAction(icon("media-playback-start"), "Play");
+	auto previous = toolBar->addAction(Icon::get("media-skip-backward"), "Previous");
+	playPause = toolBar->addAction(Icon::get("media-playback-start"), "Play");
 	QAction::connect(playPause, &QAction::triggered, [=](bool checked) {
 		auto status = playPause->iconText() == "Pause" ? spotify->pause() : spotify->resume();
 		if (!status.isEmpty())
@@ -355,7 +355,7 @@ QToolBar *MainWindow::createToolBar()
 				.arg(status));
 		}
 	});
-	auto next = toolBar->addAction(icon("media-skip-forward"),  "Next");
+	auto next = toolBar->addAction(Icon::get("media-skip-forward"),  "Next");
 	QAction::connect(previous, &QAction::triggered, [=](bool checked) {
 		auto status = spotify->previous();
 		if (!status.isEmpty())
@@ -369,7 +369,7 @@ QToolBar *MainWindow::createToolBar()
 		refresh();
 	});
 	// Search
-	auto search = toolBar->addAction(icon("edit-find"), "Search");
+	auto search = toolBar->addAction(Icon::get("edit-find"), "Search");
 	search->setCheckable(true);
 	search->setVisible(false); // temporary until implemented
 	auto searchBox = new QLineEdit(this);
@@ -395,7 +395,7 @@ QToolBar *MainWindow::createToolBar()
 	toolBar->addWidget(position);
 	toolBar->addSeparator();
 	// Shuffle and repeat toggles
-	shuffle = toolBar->addAction(icon("media-playlist-shuffle"), "Shuffle");
+	shuffle = toolBar->addAction(Icon::get("media-playlist-shuffle"), "Shuffle");
 	shuffle->setCheckable(true);
 	QAction::connect(shuffle, &QAction::triggered, [=](bool checked) {
 		auto status = spotify->setShuffle(checked);
@@ -403,7 +403,7 @@ QToolBar *MainWindow::createToolBar()
 			setStatus(QString("Failed to toggle shuffle: %1").arg(status));
 		refresh();
 	});
-	repeat = toolBar->addAction(icon("media-playlist-repeat"), "Repeat");
+	repeat = toolBar->addAction(Icon::get("media-playlist-repeat"), "Repeat");
 	repeat->setCheckable(true);
 	QAction::connect(repeat, &QAction::triggered, [=](bool checked) {
 		auto status = spotify->setRepeat(checked ? "context" : "off");
@@ -704,7 +704,7 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 			item->setToolTip(1, "Local track");
 		}
 		if (current.item != nullptr && track.id == current.item->id)
-			item->setIcon(0, icon("media-playback-start"));
+			item->setIcon(0, Icon::get("media-playback-start"));
 		songs->insertTopLevelItem(i, item);
 	}
 	return true;
@@ -788,7 +788,7 @@ void MainWindow::setCurrentSongIcon()
 	{
 		auto item = songs->topLevelItem(i);
 		if (item->data(0, RoleTrackId).toString() == QString("spotify:track:%1").arg(current.item->id))
-			item->setIcon(0, icon("media-playback-start"));
+			item->setIcon(0, Icon::get("media-playback-start"));
 		else
 			item->setIcon(0, QIcon());
 	}
@@ -856,14 +856,6 @@ void MainWindow::cachePlaylist(spt::Playlist &playlist)
 	QFile file(QString("%1/playlist/%2").arg(cacheLocation).arg(playlist.id));
 	file.open(QIODevice::WriteOnly);
 	file.write(json.toBinaryData());
-}
-
-QIcon MainWindow::icon(const QString &name)
-{
-	if (name.startsWith("logo:"))
-		return QIcon(QString(":/res/logo/%1.svg")
-			.arg(name.right(name.length() - QString("logo:").length())));
-	return QIcon::fromTheme(name, QIcon(QString(":/res/ic/%1.svg").arg(name)));
 }
 
 void MainWindow::applyPalette(Settings::Palette palette)

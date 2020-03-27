@@ -3,6 +3,7 @@
 #include "settingsdialog.hpp"
 #include "darkpalette.hpp"
 #include "artistview.hpp"
+#include "icon.hpp"
 #include "spotify/spotify.hpp"
 #include "spotify/playlist.hpp"
 #include "spotify/playback.hpp"
@@ -93,5 +94,4 @@ private:
 	void refreshPlaylist(spt::Playlist &playlist, bool force = false);
 	QMenu *songMenu(QWidget *parent, const QString &trackId, const QString &artist,
 		const QString &name, const QString &artistId, const QString &albumId);
-	QIcon icon(const QString &name);
 };
