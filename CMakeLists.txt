@@ -19,8 +19,12 @@ find_package(Qt5 COMPONENTS Core Widgets Network Gui Svg REQUIRED)
 file(GLOB MAIN_SRC "src/*.[hc]pp")
 file(GLOB SPOTIFY_SRC "src/spotify/*.[hc]pp")
 
-## Add all source files to main executable
-add_executable(spotify-qt ${MAIN_SRC} ${SPOTIFY_SRC} res.qrc)
+# Add all source files to main executable
+if(ANDROID)
+    add_library(spotify-qt SHARED ${MAIN_SRC} ${SPOTIFY_SRC} res.qrc)
+else()
+    add_executable(spotify-qt ${MAIN_SRC} ${SPOTIFY_SRC} res.qrc)
+endif()
 
 # Get version from Git
 find_package(Git QUIET)
