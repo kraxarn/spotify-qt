@@ -32,7 +32,7 @@ QNetworkRequest Spotify::request(const QString &url)
 }
 
 template<typename F>
-void Spotify::get(const QString &url, F &func)
+void Spotify::get(const QString &url, F func)
 {
 	// Prepare signal
 	QMetaObject::Connection connection;
@@ -134,7 +134,7 @@ bool Spotify::refresh()
 }
 
 template<typename F>
-void Spotify::playlists(F &func)
+void Spotify::playlists(F func)
 {
 	// Request playlists
 	get("me/playlists?limit=50", [this, func](const QJsonDocument &json) {
@@ -152,7 +152,7 @@ void Spotify::playlists(F &func)
 }
 
 template<typename F>
-void Spotify::devices(F &func)
+void Spotify::devices(F func)
 {
 	get("me/player/devices", [this, func](const QJsonDocument &json) {
 		auto items = json["devices"].toArray();
@@ -223,7 +223,7 @@ QString Spotify::setShuffle(bool enabled)
 }
 
 template<typename F>
-void Spotify::currentPlayback(F &func)
+void Spotify::currentPlayback(F func)
 {
 	get("me/player", [this, func](const QJsonDocument &json) {
 		Playback playback;
@@ -286,7 +286,7 @@ QString Spotify::setRepeat(QString state)
 }
 
 template <typename F>
-void Spotify::trackAudioFeatures(QString trackId, F &func)
+void Spotify::trackAudioFeatures(const QString &trackId, F func)
 {
 	get(QString("audio-features/%1")
 		.arg(trackId.startsWith("spotify:track:")
@@ -297,7 +297,7 @@ void Spotify::trackAudioFeatures(QString trackId, F &func)
 }
 
 template<typename F>
-void Spotify::albumTracks(const QString &albumID, F &func)
+void Spotify::albumTracks(const QString &albumID, F func)
 {
 	get(QString("albums/%1").arg(albumID), [this, func](const QJsonDocument &json) {
 		auto albumName = json["name"].toString();
@@ -317,7 +317,7 @@ void Spotify::albumTracks(const QString &albumID, F &func)
 }
 
 template<typename F>
-void Spotify::artist(const QString &artistId, F &func)
+void Spotify::artist(const QString &artistId, F func)
 {
 	get(QString("artists/%1").arg(artistId), [this, func](const QJsonDocument &json) {
 		func(Artist(json.object()));
@@ -325,7 +325,7 @@ void Spotify::artist(const QString &artistId, F &func)
 }
 
 template<typename F>
-void Spotify::playlist(const QString &playlistId, F &func)
+void Spotify::playlist(const QString &playlistId, F func)
 {
 	get(QString("playlists/%1").arg(playlistId), [this, func](const QJsonDocument &json) {
 		func(Playlist(json.object()));
