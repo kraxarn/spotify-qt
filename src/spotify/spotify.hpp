@@ -19,33 +19,26 @@ namespace spt { class Spotify; }
 #include <QDesktopServices>
 #include <QInputDialog>
 #include <QCoreApplication>
-#include <QObject>
 
 namespace spt
 {
-	class Spotify : public QObject
+	class Spotify
 	{
-		Q_OBJECT
-
 	public:
 		Spotify();
 		~Spotify();
 		/**
 		 * HTTP GET request expecting JSON response
 		 */
-		template<typename F>
-		void get(const QString &url, F func);
-		template<typename F>
-		void playlists(F func);
-		template<typename F>
-		void devices(F func);
+		QJsonDocument get(QString url);
+		void playlists(QVector<Playlist> **playlists);
+		QVector<Device> devices();
 		QString setDevice(Device device);
 		QString playTracks(const QString &track, const QString &context);
 		QString playTracks(const QString &track, const QStringList &all);
 		QString playTracks(const QString &context);
 		QString setShuffle(bool enabled);
-		template<typename F>
-		void currentPlayback(F func);
+		Playback currentPlayback();
 		QString pause();
 		QString resume();
 		QString seek(int position);
@@ -53,29 +46,20 @@ namespace spt
 		QString previous();
 		QString setVolume(int volume);
 		QString setRepeat(QString state);
-		template <typename F>
-		void trackAudioFeatures(const QString &trackId, F func);
-		template<typename F>
-		void albumTracks(const QString &albumID, F func);
-		template<typename F>
-		void artist(const QString &artistId, F func);
-		template<typename F>
-		void playlist(const QString &playlistId, F func);
+		AudioFeatures trackAudioFeatures(QString trackId);
+		QVector<Track> *albumTracks(const QString &albumID);
+		Artist artist(const QString &artistId);
+		Playlist playlist(const QString &playlistId);
 		QString addToPlaylist(const QString &playlistId, const QString &trackId);
 		QString removeFromPlaylist(const QString &playlistId, const QString &trackId, int pos);
-
-	signals:
-		void error(const QString &message);
-
 	private:
-		qint64					lastAuth;
-		QString					currentDevice;
-		QNetworkAccessManager	*networkManager;
-
+		qint64		lastAuth;
+		QString		currentDevice;
+		QNetworkAccessManager *networkManager;
 		/**
 		 * Prepare network request with auth header
 		 */
-		QNetworkRequest request(const QString &url);
+		QNetworkRequest request(QString &url);
 		/**
 		 * HTTP PUT request expecting JSON response
 		 */

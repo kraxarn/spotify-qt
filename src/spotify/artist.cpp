@@ -13,18 +13,15 @@ Artist::Artist(const QJsonObject &json)
 	for (auto genre : json["genres"].toArray())
 		genres.append(genre.toString());
 }
-
-template<typename F>
-void Artist::topTracks(Spotify &spotify, F func)
+QVector<Track> Artist::topTracks(Spotify &spotify)
 {
-	spotify.get(QString("artists/%1/top-tracks?country=from_token").arg(id), [this func](const QJsonDocument &json) {
-		auto items = json["tracks"].toArray();
-		QVector<Track> tracks;
-		tracks.reserve(items.size());
-		for (auto item : items)
-			tracks.append(Track(item.toObject()));
-		func(tracks);
-	});
+	auto json = spotify.get(QString("artists/%1/top-tracks?country=from_token").arg(id));
+	auto items = json["tracks"].toArray();
+	QVector<Track> tracks;
+	tracks.reserve(items.size());
+	for (auto item : items)
+		tracks.append(Track(item.toObject()));
+	return tracks;
 }
 
 QVector<Album> Artist::albums(Spotify &spotify)

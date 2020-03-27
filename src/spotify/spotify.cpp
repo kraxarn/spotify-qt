@@ -14,7 +14,7 @@ Spotify::~Spotify()
 	delete networkManager;
 }
 
-QNetworkRequest Spotify::request(const QString &url)
+QNetworkRequest Spotify::request(QString &url)
 {
 	// See when last refresh was
 	auto lastRefresh = QDateTime::currentSecsSinceEpoch() - lastAuth;
@@ -31,28 +31,18 @@ QNetworkRequest Spotify::request(const QString &url)
 	return request;
 }
 
-template<typename F>
-void Spotify::get(const QString &url, F func)
+QJsonDocument Spotify::get(QString url)
 {
-	// Prepare signal
-	QMetaObject::Connection connection;
-	connection = QNetworkAccessManager::connect(networkManager, &QNetworkAccessManager::finished,
-		[this, connection, url, func](QNetworkReply *reply) {
-		// Parse reply as json
-		auto json = QJsonDocument::fromJson(reply->readAll());
-		reply->deleteLater();
-		// Check for errors
-		if (!json["error"].isNull())
-			emit error(QString("%1 failed: %2")
-				.arg(url)
-				.arg(json["error"].toObject()["message"].toString()));
-		else
-			func(json);
-		// Disconnect
-		QNetworkAccessManager::disconnect(connection);
-	});
 	// Send request
-	networkManager->get(request(url));
+	auto reply = networkManager->get(request(url));
+	// Wait for request to finish
+	while (!reply->isFinished())
+		QCoreApplication::processEvents();
+	// Parse reply as json
+	auto json = QJsonDocument::fromJson(reply->readAll());
+	reply->deleteLater();
+	// Return parsed json
+	return json;
 }
 
 QString Spotify::put(QString url, QVariantMap *body)
@@ -133,45 +123,40 @@ bool Spotify::refresh()
 	return true;
 }
 
-template<typename F>
-void Spotify::playlists(F func)
+void Spotify::playlists(QVector<Playlist> **playlists)
 {
 	// Request playlists
-	get("me/playlists?limit=50", [this, func](const QJsonDocument &json) {
-		// Parse as playlists
-		auto items = json["items"].toArray();
-		// Create list of playlists
-		auto size = json["total"].toInt();
-		QVector<Playlist> playlists;
-		playlists.reserve(size);
-		for (int i = 0; i < items.size(); i++)
-			playlists.insert(i, Playlist(items.at(i).toObject()));
-		// Emit list of playlists
-		func(playlists);
-	});
+	auto json = get("me/playlists?limit=50");
+	// Parse as playlists
+	auto items = json["items"].toArray();
+	// Create list of playlists
+	auto size = json["total"].toInt();
+	(*playlists)->clear();
+	(*playlists)->reserve(size);
+	// Loop through all items
+	for (int i = 0; i < items.size(); i++)
+		(*playlists)->insert(i, Playlist(items.at(i).toObject()));
 }
 
-template<typename F>
-void Spotify::devices(F func)
+QVector<Device> Spotify::devices()
 {
-	get("me/player/devices", [this, func](const QJsonDocument &json) {
-		auto items = json["devices"].toArray();
-		QVector<Device> devices(items.size());
-		for (int i = 0; i < items.size(); i++)
-		{
-			auto data = items.at(i).toObject();
-			Device device;
-			device.id				= data["id"].toString();
-			device.name				= data["name"].toString();
-			device.type				= data["type"].toString();
-			device.isActive			= data["is_active"].toBool();
-			device.isPrivateSession	= data["is_private_session"].toBool();
-			device.isRestricted		= data["is_restricted"].toBool();
-			device.volumePercent	= data["volume_percent"].toInt();
-			devices[i] = device;
-		}
-		func(devices);
-	});
+	auto json = get("me/player/devices");
+	auto items = json["devices"].toArray();
+	QVector<Device> devices(items.size());
+	for (int i = 0; i < items.size(); i++)
+	{
+		auto data = items.at(i).toObject();
+		Device device;
+		device.id				= data["id"].toString();
+		device.name				= data["name"].toString();
+		device.type				= data["type"].toString();
+		device.isActive			= data["is_active"].toBool();
+		device.isPrivateSession	= data["is_private_session"].toBool();
+		device.isRestricted		= data["is_restricted"].toBool();
+		device.volumePercent	= data["volume_percent"].toInt();
+		devices[i] = device;
+	}
+	return devices;
 }
 
 QString Spotify::setDevice(Device device)
@@ -222,32 +207,28 @@ QString Spotify::setShuffle(bool enabled)
 	return put(QString("me/player/shuffle?state=%1").arg(enabled ? "true" : "false"));
 }
 
-template<typename F>
-void Spotify::currentPlayback(F func)
+Playback Spotify::currentPlayback()
 {
-	get("me/player", [this, func](const QJsonDocument &json) {
-		Playback playback;
-		if (json["item"].isNull())
-		{
-			// No track playing
-			playback.progressMs	= 0u;
-			playback.item 		= new Track();
-			playback.isPlaying 	= false;
-			playback.volume 	= 100;
-			playback.repeat 	= "off";
-			playback.shuffle	= false;
-		}
-		else
-		{
-			playback.progressMs	= json["progress_ms"].toInt();
-			playback.item 		= new Track(json["item"].toObject());
-			playback.isPlaying 	= json["is_playing"].toBool();
-			playback.volume 	= json["device"].toObject()["volume_percent"].toInt();
-			playback.repeat		= json["repeat_state"].toString();
-			playback.shuffle	= json["shuffle_state"].toBool();
-		}
-		func(playback);
-	});
+	auto json = get("me/player");
+	Playback playback;
+	if (json["item"].isNull())
+	{
+		// No track playing
+		playback.progressMs	= 0u;
+		playback.item 		= new Track();
+		playback.isPlaying 	= false;
+		playback.volume 	= 100;
+		playback.repeat 	= "off";
+		playback.shuffle	= false;
+		return playback;
+	}
+	playback.progressMs	= json["progress_ms"].toInt();
+	playback.item 		= new Track(json["item"].toObject());
+	playback.isPlaying 	= json["is_playing"].toBool();
+	playback.volume 	= json["device"].toObject()["volume_percent"].toInt();
+	playback.repeat		= json["repeat_state"].toString();
+	playback.shuffle	= json["shuffle_state"].toBool();
+	return playback;
 }
 
 QString Spotify::pause()
@@ -285,51 +266,41 @@ QString Spotify::setRepeat(QString state)
 	return put(QString("me/player/repeat?state=%1").arg(state));
 }
 
-template <typename F>
-void Spotify::trackAudioFeatures(const QString &trackId, F func)
+AudioFeatures Spotify::trackAudioFeatures(QString trackId)
 {
-	get(QString("audio-features/%1")
+	auto json = get(QString("audio-features/%1")
 		.arg(trackId.startsWith("spotify:track:")
 			? trackId.remove(0, QString("spotify:track:").length())
-			: trackId), [this, func](const QJsonDocument &json) {
-		func(AudioFeatures(json.object()));
-	});
+			: trackId));
+	return AudioFeatures(json.object());
 }
 
-template<typename F>
-void Spotify::albumTracks(const QString &albumID, F func)
+QVector<Track> *Spotify::albumTracks(const QString &albumID)
 {
-	get(QString("albums/%1").arg(albumID), [this, func](const QJsonDocument &json) {
-		auto albumName = json["name"].toString();
-		QVector<Track> tracks;
-		tracks.reserve(json["total_tracks"].toInt());
-		// Loop through all items
-		for (auto track : json["tracks"].toObject()["items"].toArray())
-		{
-			auto t = Track(track.toObject());
-			// Album name is not included, so we have to set it manually
-			t.album = albumName;
-			tracks.append(t);
-		}
-		// Emit final vector
-		func(tracks);
-	});
+	auto json = get(QString("albums/%1").arg(albumID));
+	auto albumName = json["name"].toString();
+	auto tracks = new QVector<Track>();
+	tracks->reserve(json["total_tracks"].toInt());
+	// Loop through all items
+	for (auto track : json["tracks"].toObject()["items"].toArray())
+	{
+		auto t = Track(track.toObject());
+		// Album name is not included, so we have to set it manually
+		t.album = albumName;
+		tracks->append(t);
+	}
+	// Return final vector
+	return tracks;
 }
 
-template<typename F>
-void Spotify::artist(const QString &artistId, F func)
+Artist Spotify::artist(const QString &artistId)
 {
-	get(QString("artists/%1").arg(artistId), [this, func](const QJsonDocument &json) {
-		func(Artist(json.object()));
-	});
+	return Artist(get(QString("artists/%1").arg(artistId)).object());
 }
 
-template<typename F>
-void Spotify::playlist(const QString &playlistId, F func)
+Playlist Spotify::playlist(const QString &playlistId)
 {
-	get(QString("playlists/%1").arg(playlistId), [this, func](const QJsonDocument &json) {
-		func(Playlist(json.object()));
-	});
+	return Playlist(get(QString("playlists/%1").arg(playlistId)).object());
 }
 
 QString Spotify::addToPlaylist(const QString &playlistId, const QString &trackId)
