@@ -64,34 +64,40 @@ MainWindow::~MainWindow()
 
 void MainWindow::refresh()
 {
-	current = spotify->currentPlayback();
-	if (!current.isPlaying)
-	{
-		playPause->setIcon(Icon::get("media-playback-start"));
-		playPause->setText("Play");
-		return;
-	}
-	auto currPlaying = QString("%1\n%2").arg(current.item->name).arg(current.item->artist);
-	if (nowPlaying->text() != currPlaying)
-	{
-		if (nowPlaying->text() != "No music playing")
-			setCurrentSongIcon();
-		nowPlaying->setText(currPlaying);
-		setAlbumImage(current.item->image);
-		setWindowTitle(QString("%1 - %2").arg(current.item->artist).arg(current.item->name));
-	}
-	position->setText(QString("%1/%2")
-		.arg(formatTime(current.progressMs))
-		.arg(formatTime(current.item->duration)));
-	progress->setValue(current.progressMs);
-	progress->setMaximum(current.item->duration);
-	playPause->setIcon(Icon::get(
-		current.isPlaying ? "media-playback-pause" : "media-playback-start"));
-	playPause->setText(current.isPlaying ? "Pause" : "Play");
-	if (!Settings().pulseVolume())
-		volume->setValue(current.volume / 5);
-	repeat->setChecked(current.repeat != "off");
-	shuffle->setChecked(current.shuffle);
+	QMetaObject::Connection connection;
+	// Probably move this
+	connection = spt::Spotify::connect(spotify, &spt::Spotify::currentPlaybackResponse,
+		[this, connection](const spt::Playback &playback) {
+		current = playback;
+		if (!current.isPlaying)
+		{
+			playPause->setIcon(Icon::get("media-playback-start"));
+			playPause->setText("Play");
+			return;
+		}
+		auto currPlaying = QString("%1\n%2").arg(current.item->name).arg(current.item->artist);
+		if (nowPlaying->text() != currPlaying)
+		{
+			if (nowPlaying->text() != "No music playing")
+				setCurrentSongIcon();
+			nowPlaying->setText(currPlaying);
+			setAlbumImage(current.item->image);
+			setWindowTitle(QString("%1 - %2").arg(current.item->artist).arg(current.item->name));
+		}
+		position->setText(QString("%1/%2")
+			.arg(formatTime(current.progressMs))
+			.arg(formatTime(current.item->duration)));
+		progress->setValue(current.progressMs);
+		progress->setMaximum(current.item->duration);
+		playPause->setIcon(Icon::get(
+			current.isPlaying ? "media-playback-pause" : "media-playback-start"));
+		playPause->setText(current.isPlaying ? "Pause" : "Play");
+		if (!Settings().pulseVolume())
+			volume->setValue(current.volume / 5);
+		repeat->setChecked(current.repeat != "off");
+		shuffle->setChecked(current.shuffle);
+		spt::Spotify::disconnect(connection);
+	});
 }
 
 QGroupBox *createGroupBox(QVector<QWidget*> &widgets)
@@ -473,15 +479,21 @@ void MainWindow::openLyrics(const QString &artist, const QString &name)
 
 void MainWindow::refreshPlaylists()
 {
-	spotify->playlists(&sptPlaylists);
 	// Create or empty
 	if (playlists == nullptr)
 		playlists = new QListWidget();
 	else
 		playlists->clear();
-	// Add all playlists
-	for (auto &playlist : *sptPlaylists)
-		playlists->addItem(playlist.name);
+
+	spt::Spotify::connect(spotify, &spt::Spotify::playlistsResponse, [this](const QVector<spt::Playlist> &response) {
+		// Update Spotify playlists
+		delete sptPlaylists;
+		sptPlaylists = new QVector<spt::Playlist>(response);
+		// Add all playlists
+		for (auto &playlist : *sptPlaylists)
+			playlists->addItem(playlist.name);
+	});
+	spotify->getPlaylists();
 }
 
 bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
@@ -512,16 +524,20 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 
 bool MainWindow::loadAlbum(const QString &albumId, bool ignoreEmpty)
 {
-	auto tracks = spotify->albumTracks(albumId);
-	if (ignoreEmpty && tracks->length() <= 1)
-		setStatus("Album only contains one song or is empty");
-	else
-	{
-		playlists->setCurrentRow(-1);
-		sptContext = QString("spotify:album:%1").arg(albumId);
-		loadSongs(*tracks);
-	}
-	delete tracks;
+	QMetaObject::Connection connection;
+	connection = spt::Spotify::connect(spotify, &spt::Spotify::albumTracksResponse,
+		[this, ignoreEmpty, albumId](const QVector<spt::Track> &tracks) {
+		if (ignoreEmpty && tracks.length() <= 1)
+			setStatus("Album only contains one song or is empty");
+		else
+		{
+			playlists->setCurrentRow(-1);
+			sptContext = QString("spotify:album:%1").arg(albumId);
+			loadSongs(tracks);
+		}
+	});
+	spotify->getAlbumTracks(albumId);
+	// Temporary response
 	return true;
 }
 
@@ -570,11 +586,16 @@ QVector<spt::Track> MainWindow::playlistTracks(const QString &playlistId)
 
 void MainWindow::refreshPlaylist(spt::Playlist &playlist, bool force)
 {
-	auto newPlaylist = spotify->playlist(playlist.id);
-	if (!force && playlist.snapshot == newPlaylist.snapshot)
-		return;
-	loadSongs(newPlaylist.loadTracks(*spotify));
-	cachePlaylist(newPlaylist);
+	QMetaObject::Connection connection;
+	connection = spt::Spotify::connect(spotify, &spt::Spotify::playlistResponse,
+		[this, connection, playlist, force](spt::Playlist &newPlaylist) {
+			if (!force && playlist.snapshot == newPlaylist.snapshot)
+				return;
+			loadSongs(newPlaylist.loadTracks(*spotify));
+			cachePlaylist(newPlaylist);
+			spt::Spotify::disconnect(connection);
+	});
+	spotify->getPlaylist(playlist.id);
 }
 
 void MainWindow::setStatus(const QString &message)
