@@ -104,7 +104,7 @@ QGroupBox *createGroupBox(QVector<QWidget*> &widgets)
 	return group;
 }
 
-QWidget *layoutToWidget(QLayout *layout)
+QWidget *MainWindow::layoutToWidget(QLayout *layout)
 {
 	auto widget = new QWidget();
 	widget->setLayout(layout);
@@ -845,90 +845,9 @@ QPixmap MainWindow::getAlbum(const QString &url)
 
 void MainWindow::openArtist(const QString &artistId)
 {
-	auto artist = spotify->artist(artistId);
-	auto dock = new QDockWidget(this);
-	dock->setFeatures(QDockWidget::DockWidgetClosable);
-	auto layout = new QVBoxLayout();
-	layout->setContentsMargins(-1, 0, -1, 0);
-	// Get cover image (320x320 -> 320x160)
-	QPixmap cover;
-	cover.loadFromData(get(artist.image), "jpeg");
-	auto coverLabel = new QLabel(dock);
-	coverLabel->setPixmap(cover.copy(0, 80, 320, 160));
-	layout->addWidget(coverLabel);
-	// Artist name title
-	auto title = new QLabel(artist.name, dock);
-	title->setAlignment(Qt::AlignHCenter);
-	title->setWordWrap(true);
-	auto titleFont = title->font();
-	titleFont.setPointSize(24);
-	title->setFont(titleFont);
-	layout->addWidget(title);
-	// Genres
-	auto genres = new QLabel(artist.genres.join(", "));
-	genres->setWordWrap(true);
-	layout->addWidget(genres);
-	// Tabs
-	auto tabs = new QTabWidget(dock);
-	layout->addWidget(tabs);
-	// Top tracks
-	auto topTracks = artist.topTracks(*spotify);
-	QStringList topTrackIds;
-	auto topTracksList = new QListWidget(tabs);
-	for (auto &track : topTracks)
-	{
-		auto item = new QListWidgetItem(track.name, topTracksList);
-		item->setIcon(QIcon(getAlbum(track.image)));
-		item->setData(RoleTrackId, track.id);
-		topTrackIds.append(QString("spotify:track:%1").arg(track.id));
-	}
-	QListWidget::connect(topTracksList, &QListWidget::itemClicked, [this, topTrackIds](QListWidgetItem *item) {
-		auto result =  spotify->playTracks(
-			QString("spotify:track:%1").arg(item->data(RoleTrackId).toString()), topTrackIds);
-		if (!result.isEmpty())
-			setStatus(QString("Failed to start playback: %1").arg(result));
-	});
-	tabs->addTab(topTracksList, "Popular");
-	// Albums
-	auto albums = artist.albums(*spotify);
-	auto albumList = new QListWidget(tabs);
-	auto singleList = new QListWidget(tabs);
-	for (auto &album : albums)
-	{
-		auto parent = album.albumGroup == "single" ? singleList : albumList;
-		auto year = album.releaseDate.toString("yyyy");
-		auto item = new QListWidgetItem(QString("%1 (%2)")
-			.arg(album.name)
-			.arg(year.isEmpty() ? "unknown" : year), parent);
-		item->setIcon(QIcon(getAlbum(album.image)));
-		item->setData(RoleAlbumId, album.id);
-	}
-	auto loadAlbumId = [this](QListWidgetItem *item) {
-		if (!loadAlbum(item->data(RoleAlbumId).toString(), false))
-			setStatus(QString("Failed to load album"));
-	};
-	QListWidget::connect(albumList,  &QListWidget::itemClicked, loadAlbumId);
-	QListWidget::connect(singleList, &QListWidget::itemClicked, loadAlbumId);
-	tabs->addTab(albumList,  "Albums");
-	tabs->addTab(singleList, "Singles");
-	// Related artists
-	auto relatedArtists = artist.relatedArtists(*spotify);
-	auto relatedList = new QListWidget(tabs);
-	for (auto &related : relatedArtists)
-	{
-		auto item = new QListWidgetItem(related.name, relatedList);
-		item->setData(RoleArtistId, related.id);
-	}
-	QListWidget::connect(relatedList, &QListWidget::itemClicked, [this, relatedList, dock](QListWidgetItem *item) {
-		relatedList->setEnabled(false);
-		openArtist(item->data(RoleArtistId).toString());
-		dock->close();
-	});
-	tabs->addTab(relatedList, "Related");
-	// Rest of dock
-	dock->setWidget(layoutToWidget(layout));
-	dock->setFixedWidth(320);
-	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, dock);
+	addDockWidget(
+		Qt::DockWidgetArea::RightDockWidgetArea,
+		new ArtistView(*spotify, artistId, this));
 }
 
 void MainWindow::cachePlaylist(spt::Playlist &playlist)

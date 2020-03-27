@@ -2,6 +2,7 @@
 
 #include "settingsdialog.hpp"
 #include "darkpalette.hpp"
+#include "artistview.hpp"
 #include "spotify/spotify.hpp"
 #include "spotify/playlist.hpp"
 #include "spotify/playback.hpp"
@@ -41,6 +42,19 @@ public:
 	explicit MainWindow(QWidget *parent = nullptr);
 	~MainWindow() override;
 	static void applyPalette(Settings::Palette palette);
+	// Constants for track info
+	enum DataRole {
+		RoleTrackId		= 0x0100,	// 256
+		RoleArtistId	= 0x0101,	// 257
+		RoleAlbumId		= 0x0102,	// 258
+		RoleIndex		= 0x0103	// 259
+	};
+	QByteArray get(const QString &url);
+	void setStatus(const QString &message);
+	bool loadAlbum(const QString &albumId, bool ignoreEmpty = true);
+	void openArtist(const QString &artistId);
+	static QWidget *layoutToWidget(QLayout *layout);
+	QPixmap getAlbum(const QString &url);
 private:
 	// Widgets
 	QListWidget	*playlists;
@@ -55,13 +69,6 @@ private:
 	QNetworkAccessManager	*network;
 	spt::ClientHandler		*sptClient;
 	QString					cacheLocation;
-	// Constants for track info
-	enum DataRole {
-		RoleTrackId		= 0x0100,	// 256
-		RoleArtistId	= 0x0101,	// 257
-		RoleAlbumId		= 0x0102,	// 258
-		RoleIndex		= 0x0103	// 259
-	};
 	// What Spotify context we're currently in
 	QString sptContext;
 	// Methods
@@ -71,20 +78,15 @@ private:
 	QAction *createMenuAction(const QString &iconName, const QString &text, QKeySequence::StandardKey shortcut);
 	void refreshPlaylists();
 	bool loadSongs(const QVector<spt::Track> &tracks);
-	bool loadAlbum(const QString &albumId, bool ignoreEmpty = true);
 	bool loadPlaylist(spt::Playlist &playlist);
-	void setStatus(const QString &message);
 	void setCurrentSongIcon();
 	void setAlbumImage(const QString &url);
 	static QString formatTime(int ms);
 	void refreshDevices(QMenu *deviceMenu);
 	void refresh();
-	QByteArray get(const QString &url);
 	QJsonDocument getJson(const QString &url);
-	QPixmap getAlbum(const QString &url);
 	void openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name);
 	void openLyrics(const QString &artist, const QString &name);
-	void openArtist(const QString &artistId);
 	void cachePlaylist(spt::Playlist &playlist);
 	bool loadPlaylistFromCache(spt::Playlist &playlist);
 	QVector<spt::Track> playlistTracks(const QString &playlistId);
