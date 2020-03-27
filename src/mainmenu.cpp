@@ -6,8 +6,8 @@ MainMenu::MainMenu(spt::Spotify &spotify, QWidget *parent) : QMenu(parent), pare
 	// About
 	auto aboutMenu = new QMenu("About");
 	auto aboutQt = createMenuAction("logo:qt", "About Qt");
-	QAction::connect(aboutQt, &QAction::triggered, [=](bool checked) {
-		QMessageBox::aboutQt(this);
+	QAction::connect(aboutQt, &QAction::triggered, [parent](bool checked) {
+		QMessageBox::aboutQt(parent);
 	});
 	auto checkForUpdates = createMenuAction("download", "Check for updates");
 	QAction::connect(checkForUpdates, &QAction::triggered, [window](bool checked) {
@@ -28,18 +28,18 @@ MainMenu::MainMenu(spt::Spotify &spotify, QWidget *parent) : QMenu(parent), pare
 	aboutMenu->addSeparator();
 	QAction::connect(
 		aboutMenu->addAction(Icon::get("folder-temp"), "Open cache directory"),
-		&QAction::triggered, [this, window](bool checked) {
+		&QAction::triggered, [parent, window](bool checked) {
 			if (!QDesktopServices::openUrl(QUrl(window->cacheLocation)))
-				QMessageBox::warning(this,
+				QMessageBox::warning(parent,
 					 "No path",
 					 QString("Failed to open path: %1").arg(window->cacheLocation));
 		}
 	);
 	QAction::connect(
 		aboutMenu->addAction(Icon::get("folder-txt"), "Open config file"),
-		&QAction::triggered, [this](bool checked) {
+		&QAction::triggered, [parent](bool checked) {
 			if (!QDesktopServices::openUrl(QUrl(Settings().fileName())))
-				QMessageBox::warning(this,
+				QMessageBox::warning(parent,
 					 "No file",
 					 QString("Failed to open file: %1").arg(Settings().fileName()));
 		}
@@ -54,8 +54,8 @@ MainMenu::MainMenu(spt::Spotify &spotify, QWidget *parent) : QMenu(parent), pare
 	addMenu(deviceMenu);
 	// Refresh and settings
 	auto openSettings = createMenuAction("settings", "Settings...", QKeySequence::Preferences);
-	QAction::connect(openSettings, &QAction::triggered, [=]() {
-		SettingsDialog dialog(this);
+	QAction::connect(openSettings, &QAction::triggered, [parent]() {
+		SettingsDialog dialog(parent);
 		dialog.exec();
 	});
 	addAction(openSettings);
@@ -72,7 +72,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, QWidget *parent) : QMenu(parent), pare
 	auto quitAction = createMenuAction("application-exit", "Quit", QKeySequence::Quit);
 	QAction::connect(quitAction, &QAction::triggered, QCoreApplication::quit);
 	auto logOutAction = createMenuAction("im-user-away",  "Log out");
-	QAction::connect(logOutAction, &QAction::triggered, [this](){
+	QAction::connect(logOutAction, &QAction::triggered, [parent](){
 		QMessageBox box(
 			QMessageBox::Icon::Question,
 			"Are you sure?",
@@ -92,7 +92,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, QWidget *parent) : QMenu(parent), pare
 		// Clear login if cleatAll/logOut
 		if (result == clearAll || result == logOut)
 			settings.removeTokens();
-		QMessageBox::information(this,
+		QMessageBox::information(parent,
 			 "Logged out",
 			 "You are now logged out, the application will now close");
 		QCoreApplication::quit();
