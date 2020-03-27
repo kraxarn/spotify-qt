@@ -22,8 +22,28 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 	tabs->addTab(playlistList,	"Playlists");
 
 	// Start searching when pressing enter
-	QLineEdit::connect(searchBox, &QLineEdit::returnPressed, [this]() {
-		// ...
+	QLineEdit::connect(searchBox, &QLineEdit::returnPressed, [this, &spotify, searchBox]() {
+		// Empty all previous results
+		trackList->clear();
+		artistList->clear();
+		albumList->clear();
+		playlistList->clear();
+		// Get new results
+		searchBox->setEnabled(false);
+		auto results = spotify.search(searchBox->text());
+		searchBox->setEnabled(true);
+		// Albums
+		for (auto &album : results.albums)
+			albumList->addItem(album.name);
+		// Artists
+		for (auto &artist : results.artists)
+			artistList->addItem(artist.name);
+		// Playlists
+		for (auto &playlist : results.playlists)
+			playlistList->addItem(playlist.name);
+		// Tracks
+		for (auto &track : results.tracks)
+			trackList->addItem(QString("%1 - %2").arg(track.name).arg(track.artist));
 	});
 
 	// Setup dock
