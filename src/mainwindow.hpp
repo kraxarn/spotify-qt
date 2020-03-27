@@ -4,6 +4,7 @@
 #include "darkpalette.hpp"
 #include "artistview.hpp"
 #include "icon.hpp"
+#include "mainmenu.hpp"
 #include "spotify/spotify.hpp"
 #include "spotify/playlist.hpp"
 #include "spotify/playback.hpp"
@@ -51,47 +52,45 @@ public:
 		RoleIndex		= 0x0103	// 259
 	};
 	QByteArray get(const QString &url);
+	QJsonDocument getJson(const QString &url);
 	void setStatus(const QString &message);
 	bool loadAlbum(const QString &albumId, bool ignoreEmpty = true);
 	void openArtist(const QString &artistId);
 	static QWidget *layoutToWidget(QLayout *layout);
 	QPixmap getAlbum(const QString &url);
+	void refreshPlaylist(spt::Playlist &playlist, bool force = false);
+	// I know these should be methods, I'm just lazy
+	QString					cacheLocation;
+	QVector<spt::Playlist>	*sptPlaylists;
+	QListWidget				*playlists;
 private:
 	// Widgets
-	QListWidget	*playlists;
 	QTreeWidget	*songs;
 	QLabel		*nowPlaying, *position, *nowAlbum;
 	QSlider		*progress, *volume;
 	QAction		*playPause, *repeat, *shuffle;
 	// Everything else
 	spt::Spotify			*spotify;
-	QVector<spt::Playlist>	*sptPlaylists;
 	spt::Playback			current;
 	QNetworkAccessManager	*network;
 	spt::ClientHandler		*sptClient;
-	QString					cacheLocation;
 	// What Spotify context we're currently in
 	QString sptContext;
 	// Methods
 	QWidget *createCentralWidget();
 	QToolBar *createToolBar();
-	QMenu *createMenu();
-	QAction *createMenuAction(const QString &iconName, const QString &text, QKeySequence::StandardKey shortcut);
 	void refreshPlaylists();
 	bool loadSongs(const QVector<spt::Track> &tracks);
 	bool loadPlaylist(spt::Playlist &playlist);
 	void setCurrentSongIcon();
 	void setAlbumImage(const QString &url);
 	static QString formatTime(int ms);
-	void refreshDevices(QMenu *deviceMenu);
 	void refresh();
-	QJsonDocument getJson(const QString &url);
 	void openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name);
 	void openLyrics(const QString &artist, const QString &name);
 	void cachePlaylist(spt::Playlist &playlist);
 	bool loadPlaylistFromCache(spt::Playlist &playlist);
 	QVector<spt::Track> playlistTracks(const QString &playlistId);
-	void refreshPlaylist(spt::Playlist &playlist, bool force = false);
 	QMenu *songMenu(QWidget *parent, const QString &trackId, const QString &artist,
 		const QString &name, const QString &artistId, const QString &albumId);
 };

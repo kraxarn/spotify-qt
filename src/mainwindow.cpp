@@ -340,7 +340,7 @@ QToolBar *MainWindow::createToolBar()
 	menu->setText("Menu");
 	menu->setIcon(Icon::get("application-menu"));
 	menu->setPopupMode(QToolButton::InstantPopup);
-	menu->setMenu(createMenu());
+	menu->setMenu(new MainMenu(*spotify, this));
 	toolBar->addWidget(menu);
 	toolBar->addSeparator();
 	// Media controls
@@ -459,51 +459,6 @@ QToolBar *MainWindow::createToolBar()
 	return toolBar;
 }
 
-QAction *MainWindow::createMenuAction(const QString &iconName,
-	const QString &text, QKeySequence::StandardKey shortcut)
-{
-	auto action = new QAction(icon(iconName), text);
-	if (shortcut != QKeySequence::UnknownKey)
-		action->setShortcut(QKeySequence(shortcut));
-	return action;
-}
-
-void MainWindow::refreshDevices(QMenu *deviceMenu)
-{
-	// Set status and get devices
-	setStatus("Refreshing devices...");
-	auto devices = spotify->devices();
-	// Clear all entries
-	for (auto &action : deviceMenu->actions())
-		deviceMenu->removeAction(action);
-	// Check if empty
-	if (devices.isEmpty())
-	{
-		setStatus("No devices found");
-		deviceMenu->addAction("No devices found")->setDisabled(true);
-		return;
-	}
-	// Update devices
-	setStatus(QString("Found %1 device(s)").arg(devices.length()));
-	for (auto &device : devices)
-	{
-		auto action = deviceMenu->addAction(device.name);
-		action->setCheckable(true);
-		action->setChecked(device.isActive);
-		action->setDisabled(device.isActive);
-		QAction::connect(action, &QAction::triggered, [=](bool triggered) {
-			auto status = spotify->setDevice(device);
-			if (!status.isEmpty())
-			{
-				action->setChecked(false);
-				setStatus(QString("Failed to set device: %1").arg(status));
-			}
-			else
-				action->setDisabled(true);
-		});
-	}
-}
-
 QTreeWidgetItem *treeItem(QTreeWidget *tree, const QString &key, const QString &value)
 {
 	return new QTreeWidgetItem(tree, {
@@ -563,112 +518,6 @@ void MainWindow::openLyrics(const QString &artist, const QString &name)
 	dock->setWidget(lyricsView);
 	dock->setMinimumWidth(300);
 	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, dock);
-}
-
-QMenu *MainWindow::createMenu()
-{
-	// Create root
-	auto menu = new QMenu(this);
-	// About
-	auto aboutMenu = new QMenu("About");
-	auto aboutQt = createMenuAction("logo:qt", "About Qt", QKeySequence::UnknownKey);
-	QAction::connect(aboutQt, &QAction::triggered, [=](bool checked) {
-		QMessageBox::aboutQt(this);
-	});
-	auto checkForUpdates = createMenuAction("download", "Check for updates", QKeySequence::UnknownKey);
-	QAction::connect(checkForUpdates, &QAction::triggered, [=](bool checked) {
-		setStatus("Checking for updates...");
-		auto json = getJson("https://api.github.com/repos/kraxarn/spotify-qt/releases");
-		auto latest = json.array()[0].toObject()["tag_name"].toString();
-		setStatus(latest == APP_VERSION
-				  ? "You have the latest version"
-				  : QString("Update found, latest version is %1, you have version %2")
-					  .arg(latest)
-					  .arg(APP_VERSION));
-	});
-	aboutMenu->setIcon(icon("help-about"));
-	aboutMenu->addAction(QString("spotify-qt %1").arg(APP_VERSION))->setDisabled(true);
-	aboutMenu->addActions({
-		aboutQt, checkForUpdates
-	});
-	aboutMenu->addSeparator();
-	QAction::connect(
-		aboutMenu->addAction(icon("folder-temp"), "Open cache directory"),
-		&QAction::triggered, [this](bool checked) {
-			if (!QDesktopServices::openUrl(QUrl(cacheLocation)))
-				QMessageBox::warning(this,
-					"No path",
-					QString("Failed to open path: %1").arg(cacheLocation));
-		}
-	);
-	QAction::connect(
-		aboutMenu->addAction(icon("folder-txt"), "Open config file"),
-		&QAction::triggered, [this](bool checked) {
-			if (!QDesktopServices::openUrl(QUrl(Settings().fileName())))
-				QMessageBox::warning(this,
-					"No file",
-					QString("Failed to open file: %1").arg(Settings().fileName()));
-		}
-	);
-	menu->addMenu(aboutMenu);
-	// Device selection
-	auto deviceMenu = new QMenu("Device");
-	deviceMenu->setIcon(icon("speaker"));
-	QMenu::connect(deviceMenu, &QMenu::aboutToShow, [=]() {
-		refreshDevices(deviceMenu);
-	});
-	menu->addMenu(deviceMenu);
-	// Refresh and settings
-	auto openSettings = createMenuAction("settings", "Settings...", QKeySequence::Preferences);
-	QAction::connect(openSettings, &QAction::triggered, [=]() {
-		SettingsDialog dialog(this);
-		dialog.exec();
-	});
-	menu->addAction(openSettings);
-	// Debug stuff
-	menu->addSeparator();
-	auto refPlaylist = menu->addAction(
-		QIcon::fromTheme("reload"), "Refresh current playlist");
-	QAction::connect(refPlaylist, &QAction::triggered, [&]() {
-		auto currentPlaylist = sptPlaylists->at(playlists->currentRow());
-		refreshPlaylist(currentPlaylist, true);
-	});
-	// Log out and quit
-	menu->addSeparator();
-	auto quitAction = createMenuAction("application-exit", "Quit", QKeySequence::Quit);
-	QAction::connect(quitAction, &QAction::triggered, QCoreApplication::quit);
-	auto logOutAction = createMenuAction("im-user-away",  "Log out", QKeySequence::UnknownKey);
-	QAction::connect(logOutAction, &QAction::triggered, [this](){
-		QMessageBox box(
-			QMessageBox::Icon::Question,
-			"Are you sure?",
-			"Do you also want to clear your application credentials or only log out?");
-		auto clearAll = box.addButton("Clear everything", QMessageBox::ButtonRole::AcceptRole);
-		auto logOut   = box.addButton("Only log out",     QMessageBox::ButtonRole::AcceptRole);
-		auto cancel   = box.addButton("Cancel",           QMessageBox::ButtonRole::RejectRole);
-		box.exec();
-		auto result = box.clickedButton();
-		// Return if we pressed cancel
-		if (result == nullptr || result == cancel)
-			return;
-		Settings settings;
-		// Clear client secret/id if clearAll
-		if (result == clearAll)
-			settings.removeClient();
-		// Clear login if cleatAll/logOut
-		if (result == clearAll || result == logOut)
-			settings.removeTokens();
-		QMessageBox::information(this,
-			"Logged out",
-			"You are now logged out, the application will now close");
-		QCoreApplication::quit();
-	});
-	menu->addActions({
-		logOutAction, quitAction
-	});
-
-	// Return final menu
-	return menu;
 }
 
 void MainWindow::refreshPlaylists()
