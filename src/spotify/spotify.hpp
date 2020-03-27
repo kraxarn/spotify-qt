@@ -8,6 +8,7 @@ namespace spt { class Spotify; }
 #include "playback.hpp"
 #include "audiofeatures.hpp"
 #include "artist.hpp"
+#include "searchresults.hpp"
 
 #include <QDateTime>
 #include <QtNetwork>
@@ -52,6 +53,7 @@ namespace spt
 		Playlist playlist(const QString &playlistId);
 		QString addToPlaylist(const QString &playlistId, const QString &trackId);
 		QString removeFromPlaylist(const QString &playlistId, const QString &trackId, int pos);
+		SearchResults search(const QString &query);
 	private:
 		qint64		lastAuth;
 		QString		currentDevice;
