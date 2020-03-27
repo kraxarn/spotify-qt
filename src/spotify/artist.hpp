@@ -21,7 +21,8 @@ namespace spt
 		int followers, popularity;
 		QStringList genres;
 		QString id, name, image;
-		QVector<Track> topTracks(Spotify &spotify);
+		template<typename F>
+		void topTracks(Spotify &spotify, F func);
 		QVector<Album> albums(Spotify &spotify);
 		QVector<Artist> relatedArtists(Spotify &spotify);
 	};
