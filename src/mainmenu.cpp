@@ -15,10 +15,10 @@ MainMenu::MainMenu(spt::Spotify &spotify, QWidget *parent) : QMenu(parent), pare
 		auto json = window->getJson("https://api.github.com/repos/kraxarn/spotify-qt/releases");
 		auto latest = json.array()[0].toObject()["tag_name"].toString();
 		window->setStatus(latest == APP_VERSION
-				  ? "You have the latest version"
-				  : QString("Update found, latest version is %1, you have version %2")
-					  .arg(latest)
-					  .arg(APP_VERSION));
+			? "You have the latest version"
+			: QString("Update found, latest version is %1, you have version %2")
+				.arg(latest)
+				.arg(APP_VERSION));
 	});
 	aboutMenu->setIcon(Icon::get("help-about"));
 	aboutMenu->addAction(QString("spotify-qt %1").arg(APP_VERSION))->setDisabled(true);
