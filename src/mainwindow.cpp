@@ -342,8 +342,20 @@ QToolBar *MainWindow::createToolBar()
 	menu->setPopupMode(QToolButton::InstantPopup);
 	menu->setMenu(new MainMenu(*spotify, this));
 	toolBar->addWidget(menu);
-	toolBar->addSeparator();
+	// Search
+	search = toolBar->addAction(Icon::get("edit-find"), "Search");
+	search->setCheckable(true);
+	searchView = new SearchView(*spotify, this);
+	addDockWidget(Qt::RightDockWidgetArea, searchView);
+	searchView->hide();
+	QAction::connect(search, &QAction::triggered, [this](bool checked) {
+		if (checked)
+			searchView->show();
+		else
+			searchView->hide();
+	});
 	// Media controls
+	toolBar->addSeparator();
 	auto previous = toolBar->addAction(Icon::get("media-skip-backward"), "Previous");
 	playPause = toolBar->addAction(Icon::get("media-playback-start"), "Play");
 	QAction::connect(playPause, &QAction::triggered, [=](bool checked) {
@@ -368,18 +380,6 @@ QToolBar *MainWindow::createToolBar()
 			setStatus(QString("Failed to go to next track: %1").arg(status));
 		refresh();
 	});
-	// Search
-	auto search = toolBar->addAction(Icon::get("edit-find"), "Search");
-	search->setCheckable(true);
-	search->setVisible(false); // temporary until implemented
-	auto searchBox = new QLineEdit(this);
-	searchBox->setMaximumWidth(0);
-	QAction::connect(search, &QAction::triggered, [=](bool checked) {
-		// For some reason show/hide doesn't work
-		searchBox->setText(QString());
-		searchBox->setMaximumWidth(checked ? 200 : 0);
-	});
-	toolBar->addWidget(searchBox);
 	// Progress
 	progress = new QSlider(this);
 	progress->setOrientation(Qt::Orientation::Horizontal);

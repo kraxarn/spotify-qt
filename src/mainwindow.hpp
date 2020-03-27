@@ -7,6 +7,7 @@
 #include "mainmenu.hpp"
 #include "audiofeaturesview.hpp"
 #include "lyricsview.hpp"
+#include "searchview.hpp"
 #include "spotify/spotify.hpp"
 #include "spotify/playlist.hpp"
 #include "spotify/playback.hpp"
@@ -65,6 +66,7 @@ public:
 	QString					cacheLocation;
 	QVector<spt::Playlist>	*sptPlaylists;
 	QListWidget				*playlists;
+	QAction					*search;
 private:
 	// Widgets
 	QTreeWidget	*songs;
@@ -76,6 +78,7 @@ private:
 	spt::Playback			current;
 	QNetworkAccessManager	*network;
 	spt::ClientHandler		*sptClient;
+	QDockWidget				*searchView;
 	// What Spotify context we're currently in
 	QString sptContext;
 	// Methods
