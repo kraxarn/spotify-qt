@@ -467,30 +467,8 @@ void MainWindow::openAudioFeaturesWidget(const QString &trackId, const QString &
 
 void MainWindow::openLyrics(const QString &artist, const QString &name)
 {
-	setStatus("Loading lyrics...");
-	auto reply = network->get(QNetworkRequest(QUrl(QString(
-		"https://vscode-spotify-lyrics.azurewebsites.net/lyrics?artist=%1&title=%2")
-			.arg(artist)
-			.arg(name))));
-	while (!reply->isFinished())
-		QCoreApplication::processEvents();
-	auto lyricsText = QString(reply->readAll()).trimmed();
-	if (lyricsText == "Not found")
-	{
-		setStatus("Lyrics not found");
-		return;
-	}
-	setStatus("Lyrics loaded");
-	auto dock = new QDockWidget(
-		QString("%1 - %2")
-			.arg(artist)
-			.arg(name), this);
-	auto lyricsView = new QTextEdit(dock);
-	lyricsView->setHtml(lyricsText.replace("\n", "<br/>"));
-	lyricsView->setReadOnly(true);
-	dock->setWidget(lyricsView);
-	dock->setMinimumWidth(300);
-	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, dock);
+	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea,
+		new LyricsView(artist, name, this));
 }
 
 void MainWindow::refreshPlaylists()
