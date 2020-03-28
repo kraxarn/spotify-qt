@@ -55,7 +55,10 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 		}
 		// Playlists
 		for (auto &playlist : results.playlists)
-			playlistList->addItem(playlist.name);
+		{
+			auto item = new QListWidgetItem(spt::Playlist(playlist).name, playlistList);
+			item->setData(0x100, playlist);
+		}
 		// Tracks
 		for (auto &track : results.tracks)
 			trackList->addTopLevelItem(new QTreeWidgetItem({
@@ -75,6 +78,12 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 	QTreeWidget::connect(albumList, &QTreeWidget::itemClicked, [this, window](QTreeWidgetItem *item, int column) {
 		if (!window->loadAlbum(item->data(0, MainWindow::RoleAlbumId).toString(), false))
 			window->setStatus(QString("Failed to load album"));
+	});
+	// Open playlist
+	QListWidget::connect(playlistList, &QListWidget::itemClicked, [this, window](QListWidgetItem *item) {
+		auto playlist = spt::Playlist(item->data(0x100).value<QJsonObject>());
+		if (!window->loadPlaylist(playlist))
+			window->setStatus(QString("Failed to load playlist"));
 	});
 
 	// Setup dock

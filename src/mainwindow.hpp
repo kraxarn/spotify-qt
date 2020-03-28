@@ -62,6 +62,7 @@ public:
 	static QWidget *layoutToWidget(QLayout *layout);
 	QPixmap getAlbum(const QString &url);
 	void refreshPlaylist(spt::Playlist &playlist, bool force = false);
+	bool loadPlaylist(spt::Playlist &playlist);
 	// I know these should be methods, I'm just lazy
 	QString					cacheLocation;
 	QVector<spt::Playlist>	*sptPlaylists;
@@ -86,7 +87,6 @@ private:
 	QToolBar *createToolBar();
 	void refreshPlaylists();
 	bool loadSongs(const QVector<spt::Track> &tracks);
-	bool loadPlaylist(spt::Playlist &playlist);
 	void setCurrentSongIcon();
 	void setAlbumImage(const QString &url);
 	static QString formatTime(int ms);
