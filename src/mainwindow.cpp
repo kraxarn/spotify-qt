@@ -621,11 +621,11 @@ QJsonDocument MainWindow::getJson(const QString &url)
 	return QJsonDocument::fromJson(get(url));
 }
 
-QPixmap MainWindow::getAlbum(const QString &url)
+QPixmap MainWindow::getImage(const QString &type, const QString &url)
 {
 	QPixmap img;
 	// Check if cache exists
-	auto cachePath = QString("%1/album/%2").arg(cacheLocation).arg(QFileInfo(url).baseName());
+	auto cachePath = QString("%1/%2/%3").arg(cacheLocation).arg(type).arg(QFileInfo(url).baseName());
 	if (QFileInfo::exists(cachePath))
 	{
 		// Read file from cache
@@ -641,6 +641,11 @@ QPixmap MainWindow::getAlbum(const QString &url)
 			qDebug() << "failed to save album cache to" << cachePath;
 	}
 	return img;
+}
+
+QPixmap MainWindow::getAlbum(const QString &url)
+{
+	getImage("album", url);
 }
 
 void MainWindow::openArtist(const QString &artistId)

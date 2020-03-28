@@ -61,6 +61,7 @@ public:
 	void openArtist(const QString &artistId);
 	static QWidget *layoutToWidget(QLayout *layout);
 	QPixmap getAlbum(const QString &url);
+	QPixmap getImage(const QString &type, const QString &url);
 	void refreshPlaylist(spt::Playlist &playlist, bool force = false);
 	bool loadPlaylist(spt::Playlist &playlist);
 	// I know these should be methods, I'm just lazy
