@@ -37,7 +37,6 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 		// Get new results
 		searchBox->setEnabled(false);
 		auto results = spotify.search(searchBox->text());
-		searchBox->setEnabled(true);
 		// Albums
 		for (auto &album : results.albums)
 		{
@@ -62,7 +61,8 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 			trackList->addTopLevelItem(new QTreeWidgetItem({
 				track.name, track.artist
 			}));
-
+		// Search done
+		searchBox->setEnabled(true);
 	});
 
 	// Open artist view
