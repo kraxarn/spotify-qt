@@ -68,16 +68,16 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 		searchBox->setEnabled(true);
 	});
 
-	// Open artist view
-	QListWidget::connect(artistList, &QListWidget::itemClicked, [this, window](QListWidgetItem *item) {
-		artistList->setEnabled(false);
-		window->openArtist(item->data(MainWindow::RoleArtistId).toString());
-		close();
-	});
 	// Open album
 	QTreeWidget::connect(albumList, &QTreeWidget::itemClicked, [this, window](QTreeWidgetItem *item, int column) {
 		if (!window->loadAlbum(item->data(0, MainWindow::RoleAlbumId).toString(), false))
 			window->setStatus(QString("Failed to load album"));
+	});
+	// Open artist
+	QListWidget::connect(artistList, &QListWidget::itemClicked, [this, window](QListWidgetItem *item) {
+		artistList->setEnabled(false);
+		window->openArtist(item->data(MainWindow::RoleArtistId).toString());
+		close();
 	});
 	// Open playlist
 	QListWidget::connect(playlistList, &QListWidget::itemClicked, [this, window](QListWidgetItem *item) {
