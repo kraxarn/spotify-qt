@@ -8,6 +8,8 @@
 #include <QLineEdit>
 #include <QTabWidget>
 #include <QListWidget>
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
 
 class SearchView : public QDockWidget
 {
@@ -16,5 +18,6 @@ public:
 	explicit SearchView(spt::Spotify &spotify, QWidget *parent = nullptr);
 
 private:
-	QListWidget	*trackList, *artistList, *albumList, *playlistList;
+	QTreeWidget	*trackList;
+	QListWidget	*artistList, *albumList, *playlistList;
 };

@@ -11,10 +11,21 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 	auto tabs = new QTabWidget(this);
 	layout->addWidget(tabs);
 	// All lists
-	trackList		= new QListWidget(this);
+	trackList		= new QTreeWidget(this);
 	artistList		= new QListWidget(this);
 	albumList		= new QListWidget(this);
 	playlistList	= new QListWidget(this);
+	// Track list
+	trackList->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	trackList->setSelectionBehavior(QAbstractItemView::SelectRows);
+	trackList->setRootIsDecorated(false);
+	trackList->setAllColumnsShowFocus(true);
+	trackList->setColumnCount(2);
+	trackList->setHeaderLabels({
+		"Title", "Artist"
+	});
+	trackList->header()->setSectionResizeMode(QHeaderView::Stretch);
+	trackList->header()->setSectionsMovable(false);
 	// Add all tabs
 	tabs->addTab(trackList,		"Tracks");
 	tabs->addTab(artistList,	"Artists");
@@ -43,7 +54,9 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 			playlistList->addItem(playlist.name);
 		// Tracks
 		for (auto &track : results.tracks)
-			trackList->addItem(QString("%1 - %2").arg(track.name).arg(track.artist));
+			trackList->addTopLevelItem(new QTreeWidgetItem({
+				track.name, track.artist
+			}));
 	});
 
 	// Setup dock
