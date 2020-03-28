@@ -61,9 +61,12 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 		}
 		// Tracks
 		for (auto &track : results.tracks)
-			trackList->addTopLevelItem(new QTreeWidgetItem({
+		{
+			auto item = new QTreeWidgetItem(trackList,{
 				track.name, track.artist
-			}));
+			});
+			item->setData(0, MainWindow::RoleTrackId, track.id);
+		}
 		// Search done
 		searchBox->setEnabled(true);
 	});
@@ -84,6 +87,15 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 		auto playlist = spt::Playlist(item->data(0x100).value<QJsonObject>());
 		if (!window->loadPlaylist(playlist))
 			window->setStatus(QString("Failed to load playlist"));
+	});
+	// Open track
+	QTreeWidget::connect(trackList, &QTreeWidget::itemClicked, [this, window, &spotify](QTreeWidgetItem *item, int column) {
+		// Do we want it to continue playing results?
+		auto trackId = QString("spotify:track:%1")
+			.arg(item->data(0, MainWindow::RoleTrackId).toString());
+		auto status = spotify.playTracks(trackId, QStringList(trackId));
+		if (!status.isEmpty())
+			window->setStatus(QString("Failed to play track: %1").arg(status));
 	});
 
 	// Setup dock
