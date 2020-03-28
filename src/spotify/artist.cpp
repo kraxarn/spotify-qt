@@ -26,7 +26,7 @@ QVector<Track> Artist::topTracks(Spotify &spotify)
 
 QVector<Album> Artist::albums(Spotify &spotify)
 {
-	auto json = spotify.get(QString("artists/%1/albums").arg(id));
+	auto json = spotify.get(QString("artists/%1/albums?country=from_token").arg(id));
 	auto items = json["items"].toArray();
 	QVector<Album> albums;
 	albums.reserve(items.size());

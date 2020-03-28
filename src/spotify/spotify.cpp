@@ -325,7 +325,8 @@ QString Spotify::removeFromPlaylist(const QString &playlistId, const QString &tr
 
 SearchResults Spotify::search(const QString &query)
 {
-	auto json = get(QString("search?q=%1&type=album,artist,playlist,track&limit=50").arg(query));
+	auto json = get(
+		QString("search?q=%1&type=album,artist,playlist,track&limit=50&market=from_token").arg(query));
 	SearchResults results;
 	// Albums
 	results.albums.reserve(json["albums"].toObject()["total"].toInt());
