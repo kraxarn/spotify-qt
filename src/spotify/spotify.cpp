@@ -159,7 +159,7 @@ QVector<Device> Spotify::devices()
 	return devices;
 }
 
-QString Spotify::setDevice(Device device)
+QString Spotify::setDevice(const Device &device)
 {
 	QVariantMap body;
 	body["device_ids"] = QStringList({
@@ -261,7 +261,7 @@ QString Spotify::setVolume(int volume)
 	return put(QString("me/player/volume?volume_percent=%1").arg(volume));
 }
 
-QString Spotify::setRepeat(QString state)
+QString Spotify::setRepeat(const QString &state)
 {
 	return put(QString("me/player/repeat?state=%1").arg(state));
 }

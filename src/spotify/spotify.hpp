@@ -34,7 +34,7 @@ namespace spt
 		QJsonDocument get(QString url);
 		void playlists(QVector<Playlist> **playlists);
 		QVector<Device> devices();
-		QString setDevice(Device device);
+		QString setDevice(const Device &device);
 		QString playTracks(const QString &track, const QString &context);
 		QString playTracks(const QString &track, const QStringList &all);
 		QString playTracks(const QString &context);
@@ -46,7 +46,7 @@ namespace spt
 		QString next();
 		QString previous();
 		QString setVolume(int volume);
-		QString setRepeat(QString state);
+		QString setRepeat(const QString &state);
 		AudioFeatures trackAudioFeatures(QString trackId);
 		QVector<Track> *albumTracks(const QString &albumID);
 		Artist artist(const QString &artistId);
