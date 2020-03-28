@@ -645,7 +645,7 @@ QPixmap MainWindow::getImage(const QString &type, const QString &url)
 
 QPixmap MainWindow::getAlbum(const QString &url)
 {
-	getImage("album", url);
+	return getImage("album", url);
 }
 
 void MainWindow::openArtist(const QString &artistId)
