@@ -49,7 +49,10 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 		}
 		// Artists
 		for (auto &artist : results.artists)
-			artistList->addItem(artist.name);
+		{
+			auto item = new QListWidgetItem(artist.name, artistList);
+			item->setData(MainWindow::RoleArtistId, artist.id);
+		}
 		// Playlists
 		for (auto &playlist : results.playlists)
 			playlistList->addItem(playlist.name);
@@ -58,6 +61,14 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 			trackList->addTopLevelItem(new QTreeWidgetItem({
 				track.name, track.artist
 			}));
+
+	});
+
+	// Open artist view when clicking on an artist
+	QListWidget::connect(artistList, &QListWidget::itemClicked, [this, window](QListWidgetItem *item) {
+		artistList->setEnabled(false);
+		window->openArtist(item->data(MainWindow::RoleArtistId).toString());
+		close();
 	});
 
 	// Setup dock
