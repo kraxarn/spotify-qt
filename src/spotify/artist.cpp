@@ -13,7 +13,8 @@ Artist::Artist(const QJsonObject &json)
 	for (auto genre : json["genres"].toArray())
 		genres.append(genre.toString());
 }
-QVector<Track> Artist::topTracks(Spotify &spotify)
+
+QVector<Track> Artist::topTracks(Spotify &spotify) const
 {
 	auto json = spotify.get(QString("artists/%1/top-tracks?country=from_token").arg(id));
 	auto items = json["tracks"].toArray();
@@ -24,7 +25,7 @@ QVector<Track> Artist::topTracks(Spotify &spotify)
 	return tracks;
 }
 
-QVector<Album> Artist::albums(Spotify &spotify)
+QVector<Album> Artist::albums(Spotify &spotify) const
 {
 	auto json = spotify.get(QString("artists/%1/albums?country=from_token").arg(id));
 	auto items = json["items"].toArray();
@@ -35,7 +36,7 @@ QVector<Album> Artist::albums(Spotify &spotify)
 	return albums;
 }
 
-QVector<Artist> Artist::relatedArtists(Spotify &spotify)
+QVector<Artist> Artist::relatedArtists(Spotify &spotify) const
 {
 	auto json = spotify.get(QString("artists/%1/related-artists").arg(id));
 	auto items = json["artists"].toArray();
