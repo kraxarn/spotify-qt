@@ -18,6 +18,8 @@ public:
 	explicit SearchView(spt::Spotify &spotify, QWidget *parent = nullptr);
 
 private:
-	QTreeWidget	*trackList;
-	QListWidget	*artistList, *albumList, *playlistList;
+	QTreeWidget	*trackList, *albumList;
+	QListWidget	*artistList, *playlistList;
+
+	QTreeWidget *defaultTree(const QStringList &headers);
 };

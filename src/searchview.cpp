@@ -11,21 +11,16 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 	auto tabs = new QTabWidget(this);
 	layout->addWidget(tabs);
 	// All lists
-	trackList		= new QTreeWidget(this);
 	artistList		= new QListWidget(this);
-	albumList		= new QListWidget(this);
 	playlistList	= new QListWidget(this);
 	// Track list
-	trackList->setEditTriggers(QAbstractItemView::NoEditTriggers);
-	trackList->setSelectionBehavior(QAbstractItemView::SelectRows);
-	trackList->setRootIsDecorated(false);
-	trackList->setAllColumnsShowFocus(true);
-	trackList->setColumnCount(2);
-	trackList->setHeaderLabels({
+	trackList = defaultTree({
 		"Title", "Artist"
 	});
-	trackList->header()->setSectionResizeMode(QHeaderView::Stretch);
-	trackList->header()->setSectionsMovable(false);
+	// Album list
+	albumList = defaultTree({
+		"Title", "Artist"
+	});
 	// Add all tabs
 	tabs->addTab(trackList,		"Tracks");
 	tabs->addTab(artistList,	"Artists");
@@ -33,7 +28,7 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 	tabs->addTab(playlistList,	"Playlists");
 
 	// Start searching when pressing enter
-	QLineEdit::connect(searchBox, &QLineEdit::returnPressed, [this, &spotify, searchBox]() {
+	QLineEdit::connect(searchBox, &QLineEdit::returnPressed, [this, &spotify, searchBox, window]() {
 		// Empty all previous results
 		trackList->clear();
 		artistList->clear();
@@ -45,7 +40,13 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 		searchBox->setEnabled(true);
 		// Albums
 		for (auto &album : results.albums)
-			albumList->addItem(album.name);
+		{
+			auto item = new QTreeWidgetItem({
+				album.name, album.artist
+			});
+			item->setIcon(0, window->getAlbum(album.image));
+			albumList->addTopLevelItem(item);
+		}
 		// Artists
 		for (auto &artist : results.artists)
 			artistList->addItem(artist.name);
@@ -67,4 +68,16 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 	QDockWidget::connect(this, &QDockWidget::visibilityChanged, [window](bool visible) {
 		window->search->setChecked(visible);
 	});
+}
+
+QTreeWidget *SearchView::defaultTree(const QStringList &headers)
+{
+	auto tree = new QTreeWidget(this);
+	tree->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	tree->setSelectionBehavior(QAbstractItemView::SelectRows);
+	tree->setRootIsDecorated(false);
+	tree->setAllColumnsShowFocus(true);
+	tree->setColumnCount(headers.length());
+	tree->setHeaderLabels(headers);
+	return tree;
 }
