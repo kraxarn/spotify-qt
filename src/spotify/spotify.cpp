@@ -338,7 +338,7 @@ SearchResults Spotify::search(const QString &query)
 	// Playlists
 	results.playlists.reserve(json["playlists"].toObject()["total"].toInt());
 	for (auto playlist : json["playlists"].toObject()["items"].toArray())
-		results.playlists.append(Playlist(playlist.toObject()));
+		results.playlists.append(playlist.toObject());
 	// Tracks
 	results.tracks.reserve(json["tracks"].toObject()["total"].toInt());
 	for (auto track : json["tracks"].toObject()["items"].toArray())
