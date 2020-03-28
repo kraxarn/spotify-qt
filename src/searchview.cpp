@@ -87,6 +87,8 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 		auto playlist = spt::Playlist(item->data(0x100).value<QJsonObject>());
 		if (!window->loadPlaylist(playlist))
 			window->setStatus(QString("Failed to load playlist"));
+		else
+			window->playlists->setCurrentRow(-1);
 	});
 	// Open track
 	QTreeWidget::connect(trackList, &QTreeWidget::itemClicked, [this, window, &spotify](QTreeWidgetItem *item, int column) {
