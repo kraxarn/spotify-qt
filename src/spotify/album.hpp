@@ -10,8 +10,8 @@ namespace spt
 	class Album
 	{
 	public:
-		Album(const QJsonObject &json);
-		QString id, albumGroup, image, name;
+		explicit Album(const QJsonObject &json);
+		QString id, albumGroup, image, name, artist;
 		QDateTime releaseDate;
 	};
 }
