@@ -25,4 +25,3 @@ make
 ## Not implemented yet:
 * Library (made for you, recently played, etc.).
 * Media controls (d-bus).
-* Searching.
