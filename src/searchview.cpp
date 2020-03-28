@@ -45,6 +45,7 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 				album.name, album.artist
 			});
 			item->setIcon(0, window->getAlbum(album.image));
+			item->setData(0, MainWindow::RoleAlbumId, album.id);
 			albumList->addTopLevelItem(item);
 		}
 		// Artists
@@ -64,11 +65,16 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 
 	});
 
-	// Open artist view when clicking on an artist
+	// Open artist view
 	QListWidget::connect(artistList, &QListWidget::itemClicked, [this, window](QListWidgetItem *item) {
 		artistList->setEnabled(false);
 		window->openArtist(item->data(MainWindow::RoleArtistId).toString());
 		close();
+	});
+	// Open album
+	QTreeWidget::connect(albumList, &QTreeWidget::itemClicked, [this, window](QTreeWidgetItem *item, int column) {
+		if (!window->loadAlbum(item->data(0, MainWindow::RoleAlbumId).toString(), false))
+			window->setStatus(QString("Failed to load album"));
 	});
 
 	// Setup dock
