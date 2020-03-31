@@ -2,15 +2,21 @@
 
 #include "track.hpp"
 
+#include <QJsonObject>
+
 namespace spt
 {
-	typedef struct StructPlayback
+	class Playback
 	{
-		int progressMs = 0;
-		Track *item = nullptr;
-		bool isPlaying = false;
-		int volume = 0;
-		QString repeat;
-		bool shuffle;
-	} Playback;
+	public:
+		Playback();
+		Playback(const QJsonObject &json);
+
+		int		progressMs	= 0;
+		Track	item		= Track();
+		bool	isPlaying	= false;
+		int		volume		= 100;
+		QString	repeat		= "off";
+		bool	shuffle		= false;
+	};
 }
