@@ -3,6 +3,9 @@
 #include "track.hpp"
 
 #include <QJsonObject>
+#include <QMap>
+#include <QString>
+#include <QVariant>
 
 namespace spt
 {
@@ -11,6 +14,7 @@ namespace spt
 	public:
 		Playback();
 		Playback(const QJsonObject &json);
+		QMap<QString, QVariant> metadata();
 
 		int		progressMs	= 0;
 		Track	item		= Track();

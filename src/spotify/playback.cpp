@@ -16,3 +16,16 @@ spt::Playback::Playback(const QJsonObject &json)
 		shuffle		= json["shuffle_state"].toBool();
 	}
 }
+
+QMap<QString, QVariant> spt::Playback::metadata()
+{
+	return QMap<QString, QVariant>({
+		{ "xesam:title",	item.name },
+		{ "xesam:artist",	QStringList(item.artist) },
+		{ "xesam:album", 	item.album },
+		{ "xesam:url", 		QString("https://open.spotify.com/track/%1").arg(item.id) },
+		{ "mpris:length",	item.duration },
+		{ "mpris:artUrl", 	item.image },
+		{ "mpris:trackid", QString("spotify:track:%1").arg(item.id) }
+	});
+}
