@@ -20,7 +20,7 @@ spt::Playback::Playback(const QJsonObject &json)
 QMap<QString, QVariant> spt::Playback::metadata()
 {
 	return QMap<QString, QVariant>({
-		{ "xesam:title",	item.name },
+		{ "xesam:title",		item.name },
 		{ "xesam:artist",	QStringList(item.artist) },
 		{ "xesam:album", 	item.album },
 		{ "xesam:url", 		QString("https://open.spotify.com/track/%1").arg(item.id) },
