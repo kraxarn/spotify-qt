@@ -71,20 +71,20 @@ void MainWindow::refresh()
 		playPause->setText("Play");
 		return;
 	}
-	auto currPlaying = QString("%1\n%2").arg(current.item->name).arg(current.item->artist);
+	auto currPlaying = QString("%1\n%2").arg(current.item.name).arg(current.item.artist);
 	if (nowPlaying->text() != currPlaying)
 	{
 		if (nowPlaying->text() != "No music playing")
 			setCurrentSongIcon();
 		nowPlaying->setText(currPlaying);
-		setAlbumImage(current.item->image);
-		setWindowTitle(QString("%1 - %2").arg(current.item->artist).arg(current.item->name));
+		setAlbumImage(current.item.image);
+		setWindowTitle(QString("%1 - %2").arg(current.item.artist).arg(current.item.name));
 	}
 	position->setText(QString("%1/%2")
 		.arg(formatTime(current.progressMs))
-		.arg(formatTime(current.item->duration)));
+		.arg(formatTime(current.item.duration)));
 	progress->setValue(current.progressMs);
-	progress->setMaximum(current.item->duration);
+	progress->setMaximum(current.item.duration);
 	playPause->setIcon(Icon::get(
 		current.isPlaying ? "media-playback-pause" : "media-playback-start"));
 	playPause->setText(current.isPlaying ? "Pause" : "Play");
@@ -168,7 +168,7 @@ QWidget *MainWindow::createCentralWidget()
 	nowPlaying->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QLabel::connect(nowPlaying, &QWidget::customContextMenuRequested, [this](const QPoint &pos) {
 		auto track = current.item;
-		songMenu(nowPlaying, track->id, track->artist, track->name, track->artistId, track->albumId)
+		songMenu(nowPlaying, track.id, track.artist, track.name, track.artistId, track.albumId)
 			->popup(nowPlaying->mapToGlobal(pos));
 	});
 	// Sidebar as widget
@@ -503,7 +503,7 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 			item->setDisabled(true);
 			item->setToolTip(1, "Local track");
 		}
-		if (current.item != nullptr && track.id == current.item->id)
+		if (track.id == current.item.id)
 			item->setIcon(0, Icon::get("media-playback-start"));
 		songs->insertTopLevelItem(i, item);
 	}
@@ -587,7 +587,7 @@ void MainWindow::setCurrentSongIcon()
 	for (int i = 0; i < songs->topLevelItemCount(); i++)
 	{
 		auto item = songs->topLevelItem(i);
-		if (item->data(0, RoleTrackId).toString() == QString("spotify:track:%1").arg(current.item->id))
+		if (item->data(0, RoleTrackId).toString() == QString("spotify:track:%1").arg(current.item.id))
 			item->setIcon(0, Icon::get("media-playback-start"));
 		else
 			item->setIcon(0, QIcon());
