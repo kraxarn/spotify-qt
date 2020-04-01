@@ -22,9 +22,7 @@ void MediaPlayerPlayer::Play()
 
 void MediaPlayerPlayer::PlayPause()
 {
-	if (parent == nullptr)
-		return;
-	if (((MainWindow*) parent)->isPlaying)
+	if (spotify->currentPlayback().isPlaying)
 		spotify->pause();
 	else
 		spotify->resume();
