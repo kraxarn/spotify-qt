@@ -1,7 +1,7 @@
 #include "mediaplayerplayer.hpp"
 
 MediaPlayerPlayer::MediaPlayerPlayer(spt::Spotify *spotify, QObject *parent)
-: spotify(spotify), dBus(QDBusConnection::sessionBus()), QDBusAbstractAdaptor(parent)
+: spotify(spotify), dBus(QDBusConnection::sessionBus()), parent((QWidget*) parent), QDBusAbstractAdaptor(parent)
 {
 }
 
@@ -24,7 +24,7 @@ void MediaPlayerPlayer::PlayPause()
 {
 	if (parent == nullptr)
 		return;
-	if (((MainWindow*) parent)->current.isPlaying)
+	if (((MainWindow*) parent)->isPlaying)
 		spotify->pause();
 	else
 		spotify->resume();

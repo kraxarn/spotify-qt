@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	volume 		= progress	= nullptr;
 	nowPlaying	= position	= nowAlbum	= nullptr;
 	repeat 		= shuffle	= playPause	= nullptr;
+	isPlaying	= false;
 	// Set cache root location
 	cacheLocation = QStandardPaths::standardLocations(QStandardPaths::CacheLocation)[0];
 	// Create main cache path and album subdir
@@ -65,6 +66,7 @@ MainWindow::~MainWindow()
 void MainWindow::refresh()
 {
 	current = spotify->currentPlayback();
+	isPlaying = current.isPlaying;
 	if (!current.isPlaying)
 	{
 		playPause->setIcon(Icon::get("media-playback-start"));

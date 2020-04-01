@@ -69,7 +69,7 @@ public:
 	QVector<spt::Playlist>	*sptPlaylists;
 	QListWidget				*playlists;
 	QAction					*search;
-	spt::Playback			current;
+	bool 					isPlaying;
 private:
 	// Widgets
 	QTreeWidget	*songs;
@@ -81,6 +81,7 @@ private:
 	QNetworkAccessManager	*network;
 	spt::ClientHandler		*sptClient;
 	QDockWidget				*searchView;
+	spt::Playback			current;
 	// What Spotify context we're currently in
 	QString sptContext;
 	// Methods
