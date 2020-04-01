@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../spotify/spotify.hpp"
+#include "mediaplayerplayer.hpp"
 
 #include <QDBusConnection>
 #include <QDebug>
@@ -8,11 +9,6 @@
 #include <QDBusInterface>
 #include <QDBusAbstractAdaptor>
 #include <QCoreApplication>
-
-#define SERVICE_NAME "org.mpris.MediaPlayer2.spotify-qt"
-#define SERVICE_INTERFACE "org.mpris.MediaPlayer2"
-#define SERVICE_PLAYER_INTERFACE "org.mpris.MediaPlayer2.Player"
-#define SERVICE_PATH "/org/mpris/MediaPlayer2"
 
 class MediaPlayer : public QObject
 {
@@ -27,7 +23,7 @@ class MediaPlayer : public QObject
 
 public:
 	explicit MediaPlayer(spt::Spotify *spotify, QWidget *parent = nullptr);
-	virtual ~MediaPlayer();
+	~MediaPlayer() override;
 
 	bool canQuit() const;
 	QString identity() const;
@@ -39,7 +35,8 @@ public slots:
 	Q_NOREPLY void Raise();
 
 private:
-	QDBusConnection	dBus;
-	spt::Spotify	*spotify;
-	QWidget			*parent;
+	QDBusConnection		dBus;
+	spt::Spotify		*spotify;
+	QWidget				*parent;
+	MediaPlayerPlayer	*player;
 };

@@ -69,6 +69,7 @@ public:
 	QVector<spt::Playlist>	*sptPlaylists;
 	QListWidget				*playlists;
 	QAction					*search;
+	spt::Playback			current;
 private:
 	// Widgets
 	QTreeWidget	*songs;
@@ -77,7 +78,6 @@ private:
 	QAction		*playPause, *repeat, *shuffle;
 	// Everything else
 	spt::Spotify			*spotify;
-	spt::Playback			current;
 	QNetworkAccessManager	*network;
 	spt::ClientHandler		*sptClient;
 	QDockWidget				*searchView;
