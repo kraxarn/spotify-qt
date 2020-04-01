@@ -18,12 +18,13 @@ find_package(Qt5 COMPONENTS Core Widgets Network Gui Svg DBus REQUIRED)
 # Glob source files
 file(GLOB MAIN_SRC "src/*.[hc]pp")
 file(GLOB SPOTIFY_SRC "src/spotify/*.[hc]pp")
+file(GLOB MEDIAPLAYER_SRC "src/mediaplayer/*.[hc]pp")
 
 # Add all source files to main executable
 if(ANDROID)
-    add_library(spotify-qt SHARED ${MAIN_SRC} ${SPOTIFY_SRC} res.qrc)
+    add_library(spotify-qt SHARED ${MAIN_SRC} ${SPOTIFY_SRC} ${MEDIAPLAYER_SRC} res.qrc)
 else()
-    add_executable(spotify-qt ${MAIN_SRC} ${SPOTIFY_SRC} res.qrc)
+    add_executable(spotify-qt ${MAIN_SRC} ${SPOTIFY_SRC} ${MEDIAPLAYER_SRC} res.qrc)
 endif()
 
 # Get version from Git
