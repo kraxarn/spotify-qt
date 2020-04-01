@@ -56,3 +56,22 @@ QMap<QString, QVariant> MediaPlayerPlayer::metadata()
 {
 	return spotify->currentPlayback().metadata();
 }
+
+float MediaPlayerPlayer::getVolume()
+{
+	return (float) spotify->currentPlayback().volume / 100.f;
+}
+
+void MediaPlayerPlayer::setVolume(float value)
+{
+	spotify->setVolume((int) (value * 100));
+}
+
+int MediaPlayerPlayer::position()
+{
+	return spotify->currentPlayback().progressMs;
+}
+QString MediaPlayerPlayer::playbackStatus()
+{
+	return spotify->currentPlayback().isPlaying ? "Playing" : "Paused";
+}
