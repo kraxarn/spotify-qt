@@ -44,5 +44,4 @@ public slots:
 private:
 	QDBusConnection	dBus;
 	spt::Spotify	*spotify;
-	QWidget			*parent = nullptr;
 };

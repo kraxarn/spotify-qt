@@ -1,7 +1,7 @@
 #include "mediaplayerplayer.hpp"
 
 MediaPlayerPlayer::MediaPlayerPlayer(spt::Spotify *spotify, QObject *parent)
-: spotify(spotify), dBus(QDBusConnection::sessionBus()), parent((QWidget*) parent), QDBusAbstractAdaptor(parent)
+: spotify(spotify), dBus(QDBusConnection::sessionBus()), QDBusAbstractAdaptor(parent)
 {
 }
 
