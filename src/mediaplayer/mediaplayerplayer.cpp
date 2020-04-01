@@ -57,17 +57,17 @@ QMap<QString, QVariant> MediaPlayerPlayer::metadata()
 	return spotify->currentPlayback().metadata();
 }
 
-float MediaPlayerPlayer::getVolume()
+double MediaPlayerPlayer::getVolume()
 {
-	return (float) spotify->currentPlayback().volume / 100.f;
+	return spotify->currentPlayback().volume / 100.0;
 }
 
-void MediaPlayerPlayer::setVolume(float value)
+void MediaPlayerPlayer::setVolume(double value)
 {
 	spotify->setVolume((int) (value * 100));
 }
 
-int MediaPlayerPlayer::position()
+qint64 MediaPlayerPlayer::position()
 {
 	return spotify->currentPlayback().progressMs;
 }

@@ -24,8 +24,8 @@ class MediaPlayerPlayer : public QDBusAbstractAdaptor
 	Q_PROPERTY(bool CanPlay READ canControl)
 	Q_PROPERTY(bool CanSeek READ canControl)
 	Q_PROPERTY(QMap<QString, QVariant> Metadata READ metadata)
-	Q_PROPERTY(float Volume READ getVolume WRITE setVolume)
-	Q_PROPERTY(int Position READ position)
+	Q_PROPERTY(double Volume READ getVolume WRITE setVolume)
+	Q_PROPERTY(qint64 Position READ position)
 	Q_PROPERTY(QString PlaybackStatus READ playbackStatus)
 
 public:
@@ -34,10 +34,10 @@ public:
 	bool canControl();
 	QMap<QString, QVariant> metadata();
 
-	float getVolume();
-	void setVolume(float value);
+	double getVolume();
+	void setVolume(double value);
 
-	int position();
+	qint64 position();
 
 	QString playbackStatus();
 
