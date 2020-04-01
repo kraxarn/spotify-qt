@@ -49,3 +49,12 @@ void MediaPlayerPlayer::Stop()
 {
 	spotify->pause();
 }
+
+bool MediaPlayerPlayer::canControl()
+{
+	return true;
+}
+QMap<QString, QVariant> MediaPlayerPlayer::metadata()
+{
+	return spotify->currentPlayback().metadata();
+}
