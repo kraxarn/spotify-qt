@@ -1,5 +1,7 @@
 #pragma once
 
+class MediaPlayer;
+
 #include "../spotify/spotify.hpp"
 #include "mediaplayerplayer.hpp"
 
@@ -10,7 +12,7 @@
 #include <QDBusAbstractAdaptor>
 #include <QCoreApplication>
 
-class MediaPlayer : public QObject
+class MediaPlayer : public QDBusAbstractAdaptor
 {
 	Q_OBJECT
 	Q_CLASSINFO("D-Bus Interface", "org.mpris.MediaPlayer2")
@@ -22,8 +24,7 @@ class MediaPlayer : public QObject
 	Q_PROPERTY(QStringList SupportedMimeTypes READ supportedMimeTypes)
 
 public:
-	explicit MediaPlayer(spt::Spotify *spotify, QWidget *parent = nullptr);
-	~MediaPlayer() override;
+	explicit MediaPlayer(spt::Spotify *spotify, QObject *parent);
 
 	bool canQuit() const;
 	QString identity() const;
@@ -37,6 +38,5 @@ public slots:
 private:
 	QDBusConnection		dBus;
 	spt::Spotify		*spotify;
-	QWidget				*parent;
-	MediaPlayerPlayer	*player;
+	QObject				*parent;
 };

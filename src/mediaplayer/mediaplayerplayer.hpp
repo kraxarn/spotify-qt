@@ -12,7 +12,7 @@ class MediaPlayerPlayer;
 #include <QDBusAbstractAdaptor>
 #include <QCoreApplication>
 
-class MediaPlayerPlayer : public QObject
+class MediaPlayerPlayer : public QDBusAbstractAdaptor
 {
 	Q_OBJECT
 	Q_CLASSINFO("D-Bus Interface", "org.mpris.MediaPlayer2.Player")
@@ -20,8 +20,7 @@ class MediaPlayerPlayer : public QObject
 	//Q_PROPERTY(bool CanQuit READ canQuit)
 
 public:
-	explicit MediaPlayerPlayer(spt::Spotify *spotify, QWidget *parent = nullptr);
-	~MediaPlayerPlayer() override;
+	explicit MediaPlayerPlayer(spt::Spotify *spotify, QObject *parent);
 
 public slots:
 	Q_NOREPLY void Next();
@@ -36,5 +35,5 @@ public slots:
 private:
 	QDBusConnection	dBus;
 	spt::Spotify	*spotify;
-	QWidget			*parent;
+	QWidget			*parent = nullptr;
 };
