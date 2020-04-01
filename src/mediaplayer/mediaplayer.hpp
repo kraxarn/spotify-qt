@@ -1,6 +1,6 @@
 #pragma once
 
-#include "spotify/spotify.hpp"
+#include "../spotify/spotify.hpp"
 
 #include <QDBusConnection>
 #include <QDebug>
