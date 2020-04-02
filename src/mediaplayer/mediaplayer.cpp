@@ -34,3 +34,8 @@ QStringList MediaPlayer::supportedMimeTypes() const
 {
 	return QStringList();
 }
+
+bool MediaPlayer::hasTrackList() const
+{
+	return false;
+}

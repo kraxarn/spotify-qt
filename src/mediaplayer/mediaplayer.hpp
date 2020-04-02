@@ -22,11 +22,13 @@ class MediaPlayer : public QDBusAbstractAdaptor
 	Q_PROPERTY(QString Identity READ identity)
 	Q_PROPERTY(QStringList SupportedUriSchemas READ supportedUriSchemas)
 	Q_PROPERTY(QStringList SupportedMimeTypes READ supportedMimeTypes)
+	Q_PROPERTY(bool HasTrackList READ hasTrackList)
 
 public:
 	explicit MediaPlayer(spt::Spotify *spotify, QObject *parent);
 
 	bool canQuit() const;
+	bool hasTrackList() const;
 	QString identity() const;
 	QStringList supportedUriSchemas() const;
 	QStringList supportedMimeTypes() const;
