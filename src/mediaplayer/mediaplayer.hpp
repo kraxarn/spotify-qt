@@ -11,6 +11,7 @@ class MediaPlayer;
 #include <QDBusInterface>
 #include <QDBusAbstractAdaptor>
 #include <QCoreApplication>
+#include <QStringList>
 
 class MediaPlayer : public QDBusAbstractAdaptor
 {
@@ -35,8 +36,8 @@ public:
 	QStringList supportedMimeTypes() const;
 
 public slots:
-	Q_NOREPLY void Quit();
-	Q_NOREPLY void Raise();
+	Q_NOREPLY void Quit() const;
+	Q_NOREPLY void Raise() const;
 
 private:
 	QDBusConnection		dBus;

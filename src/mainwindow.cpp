@@ -67,6 +67,11 @@ MainWindow::~MainWindow()
 void MainWindow::refresh()
 {
 	current = spotify->currentPlayback();
+	if (mediaPlayer != nullptr)
+	{
+		mediaPlayer->metadataChanged();
+		mediaPlayer->tick(current.progressMs);
+	}
 	isPlaying = current.isPlaying;
 	if (!current.isPlaying)
 	{
@@ -82,6 +87,8 @@ void MainWindow::refresh()
 		nowPlaying->setText(currPlaying);
 		setAlbumImage(current.item.image);
 		setWindowTitle(QString("%1 - %2").arg(current.item.artist).arg(current.item.name));
+		if (mediaPlayer != nullptr)
+			mediaPlayer->currentSourceChanged();
 	}
 	position->setText(QString("%1/%2")
 		.arg(formatTime(current.progressMs))
@@ -391,7 +398,7 @@ QToolBar *MainWindow::createToolBar()
 		if (!status.isEmpty())
 			setStatus(QString("Failed to seek: %1").arg(status));
 		if (mediaPlayer != nullptr)
-			mediaPlayer->updateSeeked(progress->value());
+			mediaPlayer->stateUpdated();
 	});
 	toolBar->addSeparator();
 	toolBar->addWidget(progress);

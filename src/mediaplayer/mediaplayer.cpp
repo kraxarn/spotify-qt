@@ -5,12 +5,12 @@ MediaPlayer::MediaPlayer(spt::Spotify *spotify, QObject *parent) : spotify(spoti
 {
 }
 
-void MediaPlayer::Quit()
+void MediaPlayer::Quit() const
 {
 	QCoreApplication::quit();
 }
 
-void MediaPlayer::Raise()
+void MediaPlayer::Raise() const
 {
 	if (parent != nullptr)
 		((QWidget*) parent)->raise();

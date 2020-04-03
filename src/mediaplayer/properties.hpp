@@ -2,6 +2,7 @@
 
 #include <QDBusAbstractAdaptor>
 #include <QMap>
+#include <QDebug>
 
 namespace mp
 {
@@ -15,6 +16,7 @@ namespace mp
 		void updateMetadata(const QMap<QString, QVariant> &metadata);
 
 	signals:
-		void PropertiesChanged(QMap<QString, QVariant> metadata);
+		void PropertiesChanged(QString interfaceName, QMap<QString, QVariant> changedProperties,
+			QStringList invalidatedProperties);
 	};
 }

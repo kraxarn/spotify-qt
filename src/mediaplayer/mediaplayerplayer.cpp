@@ -1,26 +1,28 @@
 #include "mediaplayerplayer.hpp"
 
+using namespace mp;
+
 MediaPlayerPlayer::MediaPlayerPlayer(spt::Spotify *spotify, QObject *parent)
 : spotify(spotify), dBus(QDBusConnection::sessionBus()), QDBusAbstractAdaptor(parent)
 {
 }
 
-void MediaPlayerPlayer::Next()
+void MediaPlayerPlayer::Next() const
 {
 	spotify->next();
 }
 
-void MediaPlayerPlayer::Pause()
+void MediaPlayerPlayer::Pause() const
 {
 	spotify->pause();
 }
 
-void MediaPlayerPlayer::Play()
+void MediaPlayerPlayer::Play() const
 {
 	spotify->resume();
 }
 
-void MediaPlayerPlayer::PlayPause()
+void MediaPlayerPlayer::PlayPause() const
 {
 	if (spotify->currentPlayback().isPlaying)
 		spotify->pause();
@@ -28,76 +30,126 @@ void MediaPlayerPlayer::PlayPause()
 		spotify->resume();
 }
 
-void MediaPlayerPlayer::Previous()
+void MediaPlayerPlayer::Previous() const
 {
 	spotify->previous();
 }
 
-void MediaPlayerPlayer::Seek(qint64 offset)
+void MediaPlayerPlayer::Seek(qint64 offset) const
 {
 	spotify->seek(offset);
 }
 
-void MediaPlayerPlayer::SetPosition(QDBusObjectPath trackId, qint64 position)
+void MediaPlayerPlayer::SetPosition(QDBusObjectPath trackId, qint64 position) const
 {
 	spotify->seek(position);
 }
 
-void MediaPlayerPlayer::Stop()
+void MediaPlayerPlayer::Stop() const
 {
 	spotify->pause();
 }
 
-bool MediaPlayerPlayer::canControl()
+bool MediaPlayerPlayer::canControl() const
 {
 	return true;
 }
-QMap<QString, QVariant> MediaPlayerPlayer::metadata()
+QMap<QString, QVariant> MediaPlayerPlayer::metadata() const
 {
 	return spotify->currentPlayback().metadata();
 }
 
-double MediaPlayerPlayer::getVolume()
+double MediaPlayerPlayer::getVolume() const
 {
 	return spotify->currentPlayback().volume / 100.0;
 }
 
-void MediaPlayerPlayer::setVolume(double value)
+void MediaPlayerPlayer::setVolume(double value) const
 {
 	spotify->setVolume((int) (value * 100));
 }
 
-qint64 MediaPlayerPlayer::position()
+qint64 MediaPlayerPlayer::position() const
 {
 	return spotify->currentPlayback().progressMs;
 }
-QString MediaPlayerPlayer::playbackStatus()
+
+QString MediaPlayerPlayer::playbackStatus() const
 {
 	return spotify->currentPlayback().isPlaying ? "Playing" : "Paused";
 }
 
-void MediaPlayerPlayer::OpenUri(QString uri)
+void MediaPlayerPlayer::OpenUri(QString uri) const
 {
 	// TODO
 	qWarning() << "warning: tried to open" << uri << "but not implemented yet";
 }
 
-double MediaPlayerPlayer::playbackRate()
+double MediaPlayerPlayer::playbackRate() const
 {
 	return 1.0;
 }
 
-void MediaPlayerPlayer::setPlaybackRate(double value)
+void MediaPlayerPlayer::setPlaybackRate(double value) const
 {
 	qWarning() << "warning: changing playback rate is not supported by spotify";
 }
 
-bool MediaPlayerPlayer::shuffle()
+bool MediaPlayerPlayer::shuffle() const
 {
 	return spotify->currentPlayback().shuffle;
 }
 
-void MediaPlayerPlayer::setShuffle(bool value)
+void MediaPlayerPlayer::setShuffle(bool value) const
 {
 	spotify->setShuffle(value);
+}
+
+void MediaPlayerPlayer::emitMetadataChange() const
+{
+	QVariantMap properties;
+	properties["Metadata"] = spotify->currentPlayback().metadata();
+	Service::signalPropertiesChange(this, properties);
+}
+
+void MediaPlayerPlayer::currentSourceChanged() const
+{
+	QVariantMap properties;
+	properties["Metadata"] = spotify->currentPlayback().metadata();
+	properties["CanSeek"] = true;
+	Service::signalPropertiesChange(this, properties);
+}
+
+void MediaPlayerPlayer::stateUpdated() const
+{
+	QVariantMap properties;
+	properties["PlaybackStatus"] = spotify->currentPlayback().isPlaying ? "Playing" : "Paused";
+	properties["CanPause"] = true;
+	Service::signalPropertiesChange(this, properties);
+}
+
+void MediaPlayerPlayer::totalTimeChanged() const
+{
+	QVariantMap properties;
+	properties["Metadata"] = spotify->currentPlayback().metadata();
+	Service::signalPropertiesChange(this, properties);
+}
+
+void MediaPlayerPlayer::seekableChanged(bool seekable) const
+{
+	QVariantMap properties;
+	properties["CanSeek"] = seekable;
+	Service::signalPropertiesChange(this, properties);
+}
+
+void MediaPlayerPlayer::volumeChanged() const
+{
+	QVariantMap properties;
+	properties["Volume"] = spotify->currentPlayback().volume / 100.0;
+	Service::signalPropertiesChange(this, properties);
+}
+
+void MediaPlayerPlayer::tick(qint64 newPos)
+{
+	emit Seeked(newPos * 1000);
 }
