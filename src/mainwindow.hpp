@@ -8,6 +8,7 @@
 #include "audiofeaturesview.hpp"
 #include "lyricsview.hpp"
 #include "searchview.hpp"
+#include "mediaplayer/service.hpp"
 #include "spotify/spotify.hpp"
 #include "spotify/playlist.hpp"
 #include "spotify/playback.hpp"
@@ -82,6 +83,7 @@ private:
 	spt::ClientHandler		*sptClient;
 	QDockWidget				*searchView;
 	spt::Playback			current;
+	mp::Service				*mediaPlayer = nullptr;
 	// What Spotify context we're currently in
 	QString sptContext;
 	// Methods

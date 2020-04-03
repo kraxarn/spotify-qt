@@ -1,5 +1,7 @@
 #pragma once
 
+namespace mp { class Service; }
+
 #include "mediaplayer.hpp"
 #include "mediaplayerplayer.hpp"
 #include "../spotify/spotify.hpp"
@@ -17,6 +19,7 @@ namespace mp
 		virtual ~Service();
 
 	private:
+		spt::Spotify		*spotify;
 		MediaPlayer			*player;
 		MediaPlayerPlayer	*playerPlayer;
 	};
