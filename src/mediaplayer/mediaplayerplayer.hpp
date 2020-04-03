@@ -18,15 +18,19 @@ class MediaPlayerPlayer : public QDBusAbstractAdaptor
 	Q_CLASSINFO("D-Bus Interface", "org.mpris.MediaPlayer2.Player")
 
 	Q_PROPERTY(QString PlaybackStatus READ playbackStatus)
+	Q_PROPERTY(double Rate READ playbackRate WRITE setPlaybackRate)
 	Q_PROPERTY(QMap<QString, QVariant> Metadata READ metadata)
 	Q_PROPERTY(double Volume READ getVolume WRITE setVolume)
 	Q_PROPERTY(qint64 Position READ position)
+	Q_PROPERTY(double MinimumRate READ playbackRate)
+	Q_PROPERTY(double MaximumRate READ playbackRate)
 	Q_PROPERTY(bool CanGoNext READ canControl)
 	Q_PROPERTY(bool CanGoPrevious READ canControl)
 	Q_PROPERTY(bool CanPlay READ canControl)
 	Q_PROPERTY(bool CanPause READ canControl)
 	Q_PROPERTY(bool CanSeek READ canControl)
 	Q_PROPERTY(bool CanControl READ canControl)
+	Q_PROPERTY(bool Shuffle READ shuffle WRITE setShuffle)
 
 public:
 	explicit MediaPlayerPlayer(spt::Spotify *spotify, QObject *parent);
@@ -40,6 +44,15 @@ public:
 	qint64 position();
 
 	QString playbackStatus();
+
+	double playbackRate();
+	void setPlaybackRate(double value);
+
+	bool shuffle();
+	void setShuffle(bool value);
+
+signals:
+	void Seeked(qint64 position);
 
 public slots:
 	Q_NOREPLY void Next();

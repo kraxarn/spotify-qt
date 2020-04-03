@@ -75,3 +75,29 @@ QString MediaPlayerPlayer::playbackStatus()
 {
 	return spotify->currentPlayback().isPlaying ? "Playing" : "Paused";
 }
+
+void MediaPlayerPlayer::OpenUri(QString uri)
+{
+	// TODO
+	qWarning() << "warning: tried to open" << uri << "but not implemented yet";
+}
+
+double MediaPlayerPlayer::playbackRate()
+{
+	return 1.0;
+}
+
+void MediaPlayerPlayer::setPlaybackRate(double value)
+{
+	qWarning() << "warning: changing playback rate is not supported by spotify";
+}
+
+bool MediaPlayerPlayer::shuffle()
+{
+	return spotify->currentPlayback().shuffle;
+}
+
+void MediaPlayerPlayer::setShuffle(bool value)
+{
+	spotify->setShuffle(value);
+}

@@ -20,6 +20,7 @@ class MediaPlayer : public QDBusAbstractAdaptor
 	Q_PROPERTY(bool CanQuit READ canQuit)
 	Q_PROPERTY(bool CanRaise READ canQuit)
 	Q_PROPERTY(QString Identity READ identity)
+	Q_PROPERTY(QString DesktopEntry READ identity)
 	Q_PROPERTY(QStringList SupportedUriSchemas READ supportedUriSchemas)
 	Q_PROPERTY(QStringList SupportedMimeTypes READ supportedMimeTypes)
 	Q_PROPERTY(bool HasTrackList READ hasTrackList)
