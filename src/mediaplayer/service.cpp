@@ -18,3 +18,8 @@ Service::~Service()
 {
 	QDBusConnection::sessionBus().unregisterService(SERVICE_NAME);
 }
+
+void Service::updateSeeked(qint64 position)
+{
+	emit playerPlayer->Seeked(position);
+}

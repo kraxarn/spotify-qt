@@ -390,6 +390,8 @@ QToolBar *MainWindow::createToolBar()
 		auto status = spotify->seek(progress->value());
 		if (!status.isEmpty())
 			setStatus(QString("Failed to seek: %1").arg(status));
+		if (mediaPlayer != nullptr)
+			mediaPlayer->updateSeeked(progress->value());
 	});
 	toolBar->addSeparator();
 	toolBar->addWidget(progress);

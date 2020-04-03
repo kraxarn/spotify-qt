@@ -18,6 +18,8 @@ namespace mp
 		Service(spt::Spotify *spotify, QObject *parent);
 		virtual ~Service();
 
+		void updateSeeked(qint64 position);
+
 	private:
 		spt::Spotify		*spotify;
 		MediaPlayer			*player;
