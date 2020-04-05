@@ -55,9 +55,9 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 	{
 		auto parent = album.albumGroup == "single" ? singleList : albumList;
 		auto year = album.releaseDate.toString("yyyy");
-		auto item = new QListWidgetItem(QString("%1 (%2)")
+		auto item = new QListWidgetItem(QString("%1%2")
 			.arg(album.name)
-			.arg(year.isEmpty() ? "unknown" : year), parent);
+			.arg(year.isEmpty() ? "" : QString(" (%1)").arg(year)), parent);
 		item->setIcon(QIcon(window->getAlbum(album.image)));
 		item->setData(MainWindow::RoleAlbumId, album.id);
 	}
