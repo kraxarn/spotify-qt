@@ -83,7 +83,7 @@ private:
 	spt::ClientHandler		*sptClient;
 	QDockWidget				*searchView;
 	spt::Playback			current;
-	mp::Service				*mediaPlayer = nullptr;
+	mp::Service				*mediaPlayer;
 	// What Spotify context we're currently in
 	QString sptContext;
 	// Methods

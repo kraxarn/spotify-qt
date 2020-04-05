@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	nowPlaying	= position	= nowAlbum	= nullptr;
 	repeat 		= shuffle	= playPause	= nullptr;
 	isPlaying	= false;
+	mediaPlayer	= nullptr;
 	// Set cache root location
 	cacheLocation = QStandardPaths::standardLocations(QStandardPaths::CacheLocation)[0];
 	// Create main cache path and album subdir
