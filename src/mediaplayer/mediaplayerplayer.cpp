@@ -71,7 +71,7 @@ void MediaPlayerPlayer::setVolume(double value) const
 
 qint64 MediaPlayerPlayer::position() const
 {
-	return spotify->currentPlayback().progressMs;
+	return spotify->currentPlayback().progressMs * 1000;
 }
 
 QString MediaPlayerPlayer::playbackStatus() const
