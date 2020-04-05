@@ -17,7 +17,7 @@ spt::Playback::Playback(const QJsonObject &json)
 	}
 }
 
-QVariantMap spt::Playback::metadata()
+QVariantMap spt::Playback::metadata() const
 {
 	QString itemName(isPlaying ? item.name : "");
 	QStringList itemArtist(isPlaying ? item.artist : "");
