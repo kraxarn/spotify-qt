@@ -54,15 +54,18 @@ namespace mp
 		bool shuffle() const;
 		void setShuffle(bool value) const;
 
-	signals:
-		void currentSourceChanged(const spt::Playback &playback) const;
-		void totalTimeChanged(const spt::Playback &playback) const;
-		void Seeked(qint64 position);
-		void stateUpdated() const;
-		void seekableChanged(bool seekable) const;
-		void tick(qint64 newPos);
+		void setCurrentPlayback(const spt::Playback &playback);
+
 		void emitMetadataChange() const;
+		void currentSourceChanged() const;
+		void stateUpdated() const;
+		void totalTimeChanged() const;
+		void seekableChanged(bool seekable) const;
 		void volumeChanged() const;
+		void tick(qint64 newPos);
+
+	signals:
+		void Seeked(qint64 position);
 
 	public slots:
 		void Next() const;
