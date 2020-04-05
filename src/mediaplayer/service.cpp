@@ -5,7 +5,7 @@ using namespace mp;
 #define SERVICE_NAME "org.mpris.MediaPlayer2.spotify-qt"
 #define SERVICE_PATH "/org/mpris/MediaPlayer2"
 
-Service::Service(spt::Spotify *spotify, QObject *parent) : QObject(parent)
+Service::Service(spt::Spotify *spotify, QObject *parent) : spotify(spotify), QObject(parent)
 {
 	if (!QDBusConnection::sessionBus().registerService(SERVICE_NAME))
 	{
