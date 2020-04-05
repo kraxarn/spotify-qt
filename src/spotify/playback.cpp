@@ -27,13 +27,14 @@ QVariantMap spt::Playback::metadata() const
 	QString itemImage(isPlaying ? item.image : "");
 
 	auto metadata = QVariantMap({
-		{ "xesam:title",		itemName },
-		{ "xesam:artist",	itemArtist },
-		{ "xesam:album", 	itemAlbum },
-		{ "xesam:url", 		QString("https://open.spotify.com/track/%1").arg(itemId) },
-		{ "mpris:length",	itemDuration },
-		{ "mpris:artUrl", 	itemImage },
-		{ "mpris:trackid",	QString("spotify:track:%1").arg(itemId) }
+		{ "xesam:title",			itemName },
+		{ "xesam:artist",		itemArtist },
+		{ "xesam:album", 		itemAlbum },
+		{ "xesam:albumArtist",	itemArtist },
+		{ "xesam:url", 			QString("https://open.spotify.com/track/%1").arg(itemId) },
+		{ "mpris:length",		(qulonglong) itemDuration * 1000 },
+		{ "mpris:artUrl", 		itemImage },
+		{ "mpris:trackid",		QString("spotify:track:%1").arg(itemId) },
 	});
 	return metadata;
 }
