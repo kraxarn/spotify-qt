@@ -115,8 +115,9 @@ void MediaPlayerPlayer::emitMetadataChange() const
 void MediaPlayerPlayer::currentSourceChanged() const
 {
 	QVariantMap properties;
-	properties["Metadata"] = spotify->currentPlayback().metadata();
-	properties["CanSeek"] = true;
+	properties["Metadata"] = playback.metadata();
+	properties["PlaybackStatus"] = playback.isPlaying ? "Playing" : "Paused";
+	//properties["CanSeek"] = true;
 	Service::signalPropertiesChange(this, properties);
 }
 
@@ -124,7 +125,7 @@ void MediaPlayerPlayer::stateUpdated() const
 {
 	QVariantMap properties;
 	properties["PlaybackStatus"] = spotify->currentPlayback().isPlaying ? "Playing" : "Paused";
-	properties["CanPause"] = true;
+	//properties["CanPause"] = true;
 	Service::signalPropertiesChange(this, properties);
 }
 
