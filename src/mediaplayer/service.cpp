@@ -2,7 +2,7 @@
 
 using namespace mp;
 
-#define SERVICE_NAME "org.mpris.MediaPlayer2.spotify-qt"
+#define SERVICE_NAME "org.mpris.MediaPlayer2.spotifyqt"
 #define SERVICE_PATH "/org/mpris/MediaPlayer2"
 
 Service::Service(spt::Spotify *spotify, QObject *parent) : spotify(spotify), QObject(parent)
@@ -18,12 +18,42 @@ Service::Service(spt::Spotify *spotify, QObject *parent) : spotify(spotify), QOb
 		qWarning() << "warning: failed to register d-bus object";
 }
 
-Service::~Service()
+Service::~Service() = default;
+/*{
+	QDBusConnection::sessionBus().unregisterService(SERVICE_NAME);
+}*/
+
+void Service::metadataChanged()
 {
-	//QDBusConnection::sessionBus().unregisterService(SERVICE_NAME);
+	emit playerPlayer->playbackStatusChanged();
 }
 
-void Service::signalPropertiesChange(const QObject* adaptor, const QVariantMap& properties)
+void Service::currentSourceChanged()
+{
+	emit playerPlayer->currentTrackChanged();
+}
+
+void Service::totalTimeChanged()
+{
+	emit playerPlayer->playbackStatusChanged();
+}
+
+void Service::stateChanged()
+{
+	emit playerPlayer->playbackStatusChanged();
+}
+
+void Service::seekableChanged()
+{
+	emit playerPlayer->canSeekChanged();
+}
+
+void Service::volumeChanged()
+{
+	emit playerPlayer->volumeChanged(spotify->currentPlayback().volume);
+}
+
+/*void Service::signalPropertiesChange(const QObject* adaptor, const QVariantMap& properties)
 {
 	QDBusMessage msg = QDBusMessage::createSignal("/org/mpris/MediaPlayer2",
 		"org.freedesktop.DBus.Properties", "PropertiesChanged" );
@@ -64,7 +94,7 @@ void Service::volumeChanged()
 void Service::tick(qint64 newPos)
 {
 	emit playerPlayer->tick(newPos);
-}
+}*/
 
 /*void Service::updateMetadata(const QVariantMap &metadata)
 {

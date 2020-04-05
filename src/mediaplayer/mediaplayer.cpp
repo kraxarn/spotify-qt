@@ -5,37 +5,49 @@ MediaPlayer::MediaPlayer(spt::Spotify *spotify, QObject *parent) : spotify(spoti
 {
 }
 
-void MediaPlayer::Quit() const
+MediaPlayer::~MediaPlayer() = default;
+
+bool MediaPlayer::CanQuit() const
+{
+	return true;
+}
+
+bool MediaPlayer::CanRaise() const
+{
+	return true;
+}
+
+bool MediaPlayer::HasTrackList() const
+{
+	return false;
+}
+
+void MediaPlayer::Quit()
 {
 	QCoreApplication::quit();
 }
 
-void MediaPlayer::Raise() const
+void MediaPlayer::Raise()
 {
-	if (parent != nullptr)
-		((QWidget*) parent)->raise();
+	emit raisePlayer();
 }
 
-bool MediaPlayer::canQuit() const
-{
-	return true;
-}
-QString MediaPlayer::identity() const
+QString MediaPlayer::Identity() const
 {
 	return "spotify-qt";
 }
 
-QStringList MediaPlayer::supportedUriSchemas() const
+QString MediaPlayer::DesktopEntry() const
 {
-	return QStringList("spotify");
+	return "spotify-qt";
 }
 
-QStringList MediaPlayer::supportedMimeTypes() const
+QStringList MediaPlayer::SupportedUriSchemas() const
+{
+	return QStringList() << "spotify";
+}
+
+QStringList MediaPlayer::SupportedMimeTypes() const
 {
 	return QStringList();
-}
-
-bool MediaPlayer::hasTrackList() const
-{
-	return false;
 }
