@@ -69,9 +69,8 @@ void MainWindow::refresh()
 	current = spotify->currentPlayback();
 	if (mediaPlayer != nullptr)
 	{
-		emit mediaPlayer->metadataChanged();
-		//mediaPlayer->metadataChanged();
-		//mediaPlayer->tick(current.progressMs);
+		mediaPlayer->metadataChanged();
+		mediaPlayer->tick(current.progressMs);
 	}
 	isPlaying = current.isPlaying;
 	if (!current.isPlaying)
@@ -399,10 +398,7 @@ QToolBar *MainWindow::createToolBar()
 		if (!status.isEmpty())
 			setStatus(QString("Failed to seek: %1").arg(status));
 		if (mediaPlayer != nullptr)
-		{
-			emit mediaPlayer->stateChanged();
-			//mediaPlayer->stateUpdated();
-		}
+			mediaPlayer->stateUpdated();
 	});
 	toolBar->addSeparator();
 	toolBar->addWidget(progress);

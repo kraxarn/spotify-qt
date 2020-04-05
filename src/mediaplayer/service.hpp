@@ -4,6 +4,7 @@ namespace mp { class Service; }
 
 #include "mediaplayer.hpp"
 #include "mediaplayerplayer.hpp"
+#include "properties.hpp"
 #include "../spotify/spotify.hpp"
 
 #include <QDBusContext>
@@ -18,14 +19,19 @@ namespace mp
 		Service(spt::Spotify *spotify, QObject *parent);
 		virtual ~Service();
 
-	public slots:
+		static void signalPropertiesChange(const QObject* adaptor, const QVariantMap& properties);
+
 		void metadataChanged();
+
 		void currentSourceChanged();
-		void totalTimeChanged();
-		void stateChanged();
+
+		void stateUpdated();
+
 		void seekableChanged();
+
 		void volumeChanged();
 
+		void tick(qint64 newPos);
 
 	private:
 		spt::Spotify		*spotify;
