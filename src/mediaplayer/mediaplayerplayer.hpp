@@ -24,7 +24,7 @@ namespace mp
 		Q_PROPERTY(double Rate READ playbackRate WRITE setPlaybackRate)
 		Q_PROPERTY(QVariantMap Metadata READ metadata)
 		Q_PROPERTY(double Volume READ getVolume WRITE setVolume)
-		Q_PROPERTY(qint64 Position READ position)
+		Q_PROPERTY(qlonglong Position READ position)
 		Q_PROPERTY(double MinimumRate READ playbackRate)
 		Q_PROPERTY(double MaximumRate READ playbackRate)
 		Q_PROPERTY(bool CanGoNext READ canControl)
@@ -44,7 +44,7 @@ namespace mp
 		double getVolume() const;
 		void setVolume(double value) const;
 
-		qint64 position() const;
+		qlonglong position() const;
 
 		QString playbackStatus() const;
 
