@@ -18,10 +18,7 @@ Service::Service(spt::Spotify *spotify, QObject *parent) : spotify(spotify), QOb
 		qWarning() << "warning: failed to register d-bus object";
 }
 
-Service::~Service()
-{
-	//QDBusConnection::sessionBus().unregisterService(SERVICE_NAME);
-}
+Service::~Service() = default;
 
 void Service::signalPropertiesChange(const QObject* adaptor, const QVariantMap& properties)
 {
