@@ -34,8 +34,6 @@ namespace mp
 
 	private:
 		spt::Spotify		*spotify;
-		MediaPlayer			*player;
 		MediaPlayerPlayer	*playerPlayer;
-		//Properties			*properties = nullptr;
 	};
 }
