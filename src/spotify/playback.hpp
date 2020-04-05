@@ -13,7 +13,7 @@ namespace spt
 	{
 	public:
 		Playback();
-		Playback(const QJsonObject &json);
+		explicit Playback(const QJsonObject &json);
 		QVariantMap metadata();
 
 		int		progressMs	= 0;
