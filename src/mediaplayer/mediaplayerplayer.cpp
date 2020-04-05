@@ -40,7 +40,7 @@ void MediaPlayerPlayer::Seek(qint64 offset) const
 	spotify->seek(offset);
 }
 
-void MediaPlayerPlayer::SetPosition(QDBusObjectPath trackId, qint64 position) const
+void MediaPlayerPlayer::SetPosition(const QDBusObjectPath &trackId, qint64 position) const
 {
 	spotify->seek(position);
 }
