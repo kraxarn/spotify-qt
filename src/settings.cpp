@@ -135,6 +135,21 @@ void Settings::setStylePalette(Settings::Palette value)
 	settings->setValue("StylePalette", value);
 }
 
+bool Settings::mediaController()
+{
+#ifdef Q_OS_LINUX
+	auto defVal = true;
+#else
+	auto defVal = false;
+#endif
+	return settings->value("MediaController", defVal).toBool();
+}
+
+void Settings::setMediaController(bool value)
+{
+	settings->setValue("MediaController", value);
+}
+
 void Settings::removeClient()
 {
 	settings->remove("ClientId");

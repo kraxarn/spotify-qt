@@ -41,6 +41,9 @@ public:
 	Palette stylePalette();
 	void setStylePalette(Palette value);
 
+	bool mediaController();
+	void setMediaController(bool value);
+
 	// Spotify settings
 
 	QString sptPath();

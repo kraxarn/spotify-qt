@@ -82,6 +82,17 @@ QGroupBox *SettingsDialog::appSettings()
 		appPulse->setChecked(settings.pulseVolume());
 		appLayout->addWidget(appPulse, 4, 0, 1, 2);
 	}
+	// MPRIS D-Bus
+	appMedia = new QCheckBox("Media Controller", this);
+	appMedia->setChecked(settings.mediaController());
+#ifdef Q_OS_LINUX
+	appMedia->setToolTip("Enable media controller through the MPRIS D-Bus interface, buggy (issue #4)");
+#else
+	appMedia->setToolTip("Currently only available on Linux");
+	appMedia->setEnabled(false);
+#endif
+	appLayout->addWidget(appMedia, 5, 0, 1, 2);
+
 	return appSettings;
 }
 
@@ -151,15 +162,20 @@ bool SettingsDialog::applySettings()
 	// Warn when changing palette
 	auto palette = (Settings::Palette) appPalette->currentIndex();
 	if (palette != settings.stylePalette())
-	{
 		QMessageBox::information(
 			this, "Palette",
 			"Please restart the application to fully apply selected palette");
-	}
 
 	// Set palette
 	MainWindow::applyPalette(palette);
 	settings.setStylePalette(palette);
+
+	// Media controller
+	if (appMedia->isChecked() != settings.mediaController())
+		QMessageBox::information(
+			this, "Media Controller",
+			"Please restart the application to apply changes");
+	settings.setMediaController(appMedia->isChecked());
 
 	// PulseAudio volume
 	if (appPulse != nullptr)

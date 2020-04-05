@@ -47,4 +47,5 @@ private:
 	QCheckBox	*sptStartClient	= nullptr;
 	QLineEdit	*sptUsername	= nullptr;
 	QComboBox	*sptBitrate		= nullptr;
+	QCheckBox	*appMedia		= nullptr;
 };
