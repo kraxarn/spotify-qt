@@ -21,7 +21,7 @@ make
 * Spotify API is pinged every second for updates.
 * Probably very unstable.
 * All network requests are done on the main thread.
-* D-Bus media controller is buggy (see issue #4).
+* D-Bus media controller is buggy (see issue [#4](https://github.com/kraxarn/spotify-qt/issues/4)).
 
 ## Not implemented yet:
 * Library (made for you, recently played, etc.).
