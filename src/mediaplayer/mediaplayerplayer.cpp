@@ -5,6 +5,7 @@ using namespace mp;
 MediaPlayerPlayer::MediaPlayerPlayer(spt::Spotify *spotify, QObject *parent)
 : spotify(spotify), dBus(QDBusConnection::sessionBus()), QDBusAbstractAdaptor(parent)
 {
+	currentPlayback = spotify->currentPlayback();
 }
 
 void MediaPlayerPlayer::Next() const
@@ -112,11 +113,11 @@ void MediaPlayerPlayer::emitMetadataChange() const
 	Service::signalPropertiesChange(this, properties);
 }
 
-void MediaPlayerPlayer::currentSourceChanged(const spt::Playback &playback) const
+void MediaPlayerPlayer::currentSourceChanged() const
 {
 	QVariantMap properties;
-	properties["Metadata"] = playback.metadata();
-	properties["PlaybackStatus"] = playback.isPlaying ? "Playing" : "Paused";
+	properties["Metadata"] = currentPlayback.metadata();
+	properties["PlaybackStatus"] = currentPlayback.isPlaying ? "Playing" : "Paused";
 	//properties["CanSeek"] = true;
 	Service::signalPropertiesChange(this, properties);
 }
@@ -129,10 +130,10 @@ void MediaPlayerPlayer::stateUpdated() const
 	Service::signalPropertiesChange(this, properties);
 }
 
-void MediaPlayerPlayer::totalTimeChanged(const spt::Playback &playback) const
+void MediaPlayerPlayer::totalTimeChanged() const
 {
 	QVariantMap properties;
-	properties["Metadata"] = playback.metadata();
+	properties["Metadata"] = currentPlayback.metadata();
 	Service::signalPropertiesChange(this, properties);
 }
 
@@ -153,4 +154,9 @@ void MediaPlayerPlayer::volumeChanged() const
 void MediaPlayerPlayer::tick(qint64 newPos)
 {
 	emit Seeked(newPos * 1000);
+}
+
+void MediaPlayerPlayer::setCurrentPlayback(const spt::Playback &playback)
+{
+	currentPlayback = playback;
 }

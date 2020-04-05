@@ -81,5 +81,6 @@ namespace mp
 	private:
 		QDBusConnection	dBus;
 		spt::Spotify	*spotify;
+		spt::Playback	currentPlayback;
 	};
 }
