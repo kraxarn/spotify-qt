@@ -67,11 +67,6 @@ MainWindow::~MainWindow()
 void MainWindow::refresh()
 {
 	current = spotify->currentPlayback();
-	if (mediaPlayer != nullptr)
-	{
-		mediaPlayer->metadataChanged();
-		mediaPlayer->tick(current.progressMs);
-	}
 	isPlaying = current.isPlaying;
 	if (!current.isPlaying)
 	{
