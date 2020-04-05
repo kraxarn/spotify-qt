@@ -54,6 +54,14 @@ namespace mp
 		bool shuffle() const;
 		void setShuffle(bool value) const;
 
+		void tick(qint64 newPos);
+		void emitMetadataChange() const;
+		void currentSourceChanged(const spt::Playback &playback) const;
+		void stateUpdated() const;
+		void totalTimeChanged(const spt::Playback &playback) const;
+		void seekableChanged(bool seekable) const;
+		void volumeChanged() const;
+
 	signals:
 		void Seeked(qint64 position);
 
@@ -67,15 +75,6 @@ namespace mp
 		void Seek(qint64 offset) const;
 		void SetPosition(QDBusObjectPath trackId, qint64 position) const;
 		void OpenUri(QString uri) const;
-
-	//private slots:
-		void tick(qint64 newPos);
-		void emitMetadataChange() const;
-		void currentSourceChanged(const spt::Playback &playback) const;
-		void stateUpdated() const;
-		void totalTimeChanged(const spt::Playback &playback) const;
-		void seekableChanged(bool seekable) const;
-		void volumeChanged() const;
 
 	private:
 		QDBusConnection	dBus;
