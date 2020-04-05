@@ -71,9 +71,9 @@ namespace mp
 	//private slots:
 		void tick(qint64 newPos);
 		void emitMetadataChange() const;
-		void currentSourceChanged() const;
+		void currentSourceChanged(const spt::Playback &playback) const;
 		void stateUpdated() const;
-		void totalTimeChanged() const;
+		void totalTimeChanged(const spt::Playback &playback) const;
 		void seekableChanged(bool seekable) const;
 		void volumeChanged() const;
 

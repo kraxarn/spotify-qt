@@ -112,7 +112,7 @@ void MediaPlayerPlayer::emitMetadataChange() const
 	Service::signalPropertiesChange(this, properties);
 }
 
-void MediaPlayerPlayer::currentSourceChanged() const
+void MediaPlayerPlayer::currentSourceChanged(const spt::Playback &playback) const
 {
 	QVariantMap properties;
 	properties["Metadata"] = playback.metadata();
@@ -129,10 +129,10 @@ void MediaPlayerPlayer::stateUpdated() const
 	Service::signalPropertiesChange(this, properties);
 }
 
-void MediaPlayerPlayer::totalTimeChanged() const
+void MediaPlayerPlayer::totalTimeChanged(const spt::Playback &playback) const
 {
 	QVariantMap properties;
-	properties["Metadata"] = spotify->currentPlayback().metadata();
+	properties["Metadata"] = playback.metadata();
 	Service::signalPropertiesChange(this, properties);
 }
 

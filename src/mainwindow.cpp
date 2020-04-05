@@ -83,7 +83,7 @@ void MainWindow::refresh()
 		setAlbumImage(current.item.image);
 		setWindowTitle(QString("%1 - %2").arg(current.item.artist).arg(current.item.name));
 		if (mediaPlayer != nullptr)
-			mediaPlayer->currentSourceChanged();
+			mediaPlayer->currentSourceChanged(current);
 	}
 	position->setText(QString("%1/%2")
 		.arg(formatTime(current.progressMs))

@@ -23,7 +23,7 @@ namespace mp
 
 		void metadataChanged();
 
-		void currentSourceChanged();
+		void currentSourceChanged(const spt::Playback &playback);
 
 		void stateUpdated();
 

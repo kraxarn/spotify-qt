@@ -37,10 +37,10 @@ void Service::metadataChanged()
 	emit playerPlayer->emitMetadataChange();
 }
 
-void Service::currentSourceChanged()
+void Service::currentSourceChanged(const spt::Playback &playback)
 {
-	emit playerPlayer->currentSourceChanged();
-	emit playerPlayer->totalTimeChanged();
+	emit playerPlayer->currentSourceChanged(playback);
+	emit playerPlayer->totalTimeChanged(playback);
 }
 
 void Service::stateUpdated()
