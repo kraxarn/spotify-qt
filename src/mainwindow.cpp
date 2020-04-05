@@ -409,7 +409,6 @@ QToolBar *MainWindow::createToolBar()
 		auto status = spotify->setShuffle(checked);
 		if (!status.isEmpty())
 			setStatus(QString("Failed to toggle shuffle: %1").arg(status));
-		refresh();
 	});
 	repeat = toolBar->addAction(Icon::get("media-playlist-repeat"), "Repeat");
 	repeat->setCheckable(true);
@@ -417,7 +416,6 @@ QToolBar *MainWindow::createToolBar()
 		auto status = spotify->setRepeat(checked ? "context" : "off");
 		if (!status.isEmpty())
 			setStatus(QString("Failed to toggle repeat: %1").arg(status));
-		refresh();
 	});
 	// Volume slider
 	volume = new QSlider(this);
