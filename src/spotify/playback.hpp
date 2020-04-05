@@ -14,7 +14,7 @@ namespace spt
 	public:
 		Playback();
 		Playback(const QJsonObject &json);
-		QMap<QString, QVariant> metadata();
+		QVariantMap metadata();
 
 		int		progressMs	= 0;
 		Track	item		= Track();

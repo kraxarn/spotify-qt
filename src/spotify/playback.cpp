@@ -17,7 +17,7 @@ spt::Playback::Playback(const QJsonObject &json)
 	}
 }
 
-QMap<QString, QVariant> spt::Playback::metadata()
+QVariantMap spt::Playback::metadata()
 {
 	QString itemName(isPlaying ? item.name : "");
 	QStringList itemArtist(isPlaying ? item.artist : "");
@@ -26,8 +26,8 @@ QMap<QString, QVariant> spt::Playback::metadata()
 	auto itemDuration = isPlaying ? item.duration : 0;
 	QString itemImage(isPlaying ? item.image : "");
 
-	auto metadata = QMap<QString, QVariant>({
-		{ "xesam:title",	itemName },
+	auto metadata = QVariantMap({
+		{ "xesam:title",		itemName },
 		{ "xesam:artist",	itemArtist },
 		{ "xesam:album", 	itemAlbum },
 		{ "xesam:url", 		QString("https://open.spotify.com/track/%1").arg(itemId) },
