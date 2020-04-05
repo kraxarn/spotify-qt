@@ -343,7 +343,7 @@ QMenu *MainWindow::songMenu(QWidget *parent, const QString &trackId, const QStri
 
 QToolBar *MainWindow::createToolBar()
 {
-	auto toolBar = new QToolBar(this);
+	auto toolBar = new QToolBar("Media controls", this);
 	toolBar->setMovable(false);
 	// Menu
 	auto menu = new QToolButton(this);
