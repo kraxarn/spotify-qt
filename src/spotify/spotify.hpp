@@ -54,6 +54,7 @@ namespace spt
 		QString addToPlaylist(const QString &playlistId, const QString &trackId);
 		QString removeFromPlaylist(const QString &playlistId, const QString &trackId, int pos);
 		SearchResults search(const QString &query);
+		QVector<Artist> topArtists();
 	private:
 		qint64		lastAuth;
 		QString		currentDevice;

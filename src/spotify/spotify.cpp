@@ -328,3 +328,14 @@ SearchResults Spotify::search(const QString &query)
 
 	return results;
 }
+
+QVector<Artist> Spotify::topArtists()
+{
+	auto json = get("me/top/artists?limit=10");
+	auto artistItems = json.object()["items"].toArray();
+	QVector<Artist> artists;
+	artists.reserve(10);
+	for (auto item : artistItems)
+		artists.append(Artist(item.toObject()));
+	return artists;
+}
