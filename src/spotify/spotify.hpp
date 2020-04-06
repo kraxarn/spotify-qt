@@ -55,6 +55,7 @@ namespace spt
 		QString removeFromPlaylist(const QString &playlistId, const QString &trackId, int pos);
 		SearchResults search(const QString &query);
 		QVector<Artist> topArtists();
+		QVector<Track> topTracks();
 	private:
 		qint64		lastAuth;
 		QString		currentDevice;

@@ -339,3 +339,14 @@ QVector<Artist> Spotify::topArtists()
 		artists.append(Artist(item.toObject()));
 	return artists;
 }
+
+QVector<Track> Spotify::topTracks()
+{
+	auto json = get("me/top/tracks?limit=10");
+	auto trackItems = json.object()["items"].toArray();
+	QVector<Track> tracks;
+	tracks.reserve(10);
+	for (auto item : trackItems)
+		tracks.append(Track(item.toObject()));
+	return tracks;
+}
