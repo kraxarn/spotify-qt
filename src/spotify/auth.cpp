@@ -31,7 +31,8 @@ QString Auth::authUrl(const QString &clientId, const QString &redirect)
 		"user-read-private",
 		"user-read-recently-played",
 		"streaming",
-		"user-read-email"
+		"user-read-email",
+		"user-top-read"
 	};
 	// Prepare url and open browser
 	QUrl redirectUrl(redirect);
