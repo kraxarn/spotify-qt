@@ -9,7 +9,7 @@ Service::Service(spt::Spotify *spotify, QObject *parent) : spotify(spotify), QOb
 {
 	if (!QDBusConnection::sessionBus().registerService(SERVICE_NAME))
 	{
-		qWarning() << "warning: failed to register d-bus service";
+		qWarning() << "warning: failed to register d-bus service, is another instance running?";
 		return;
 	}
 	new MediaPlayer(spotify, this);
