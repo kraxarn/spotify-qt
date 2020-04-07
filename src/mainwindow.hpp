@@ -15,7 +15,6 @@
 #include "spotify/webplayer.hpp"
 #include "spotify/audiofeatures.hpp"
 #include "spotify/clienthandler.hpp"
-#include "spotify/item.hpp"
 
 #include <QMainWindow>
 #include <QListWidget>

@@ -2,7 +2,6 @@
 
 namespace spt { class Track; }
 
-#include "item.hpp"
 #include <QDateTime>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -10,7 +9,7 @@ namespace spt { class Track; }
 
 namespace spt
 {
-	class Track : public Item
+	class Track
 	{
 	public:
 		Track();
@@ -20,8 +19,5 @@ namespace spt
 		bool isLocal;
 		QDateTime addedAt;
 		QJsonObject toJson();
-
-		QString itemName() override;
-		QString itemId() override;
 	};
 }
