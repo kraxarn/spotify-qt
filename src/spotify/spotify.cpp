@@ -353,7 +353,7 @@ QVector<Track> Spotify::topTracks()
 
 QVector<Album> Spotify::savedAlbums()
 {
-	auto json = get("me/albums?limit=10");
+	auto json = get("me/albums");
 	auto albumItems = json.object()["items"].toArray();
 	QVector<Album> albums;
 	albums.reserve(10);
