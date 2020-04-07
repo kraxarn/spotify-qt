@@ -117,24 +117,97 @@ QWidget *MainWindow::layoutToWidget(QLayout *layout)
 	return widget;
 }
 
+QTreeWidgetItem *MainWindow::treeItem(QTreeWidget *tree, const QString &name, const QString &toolTip, const QStringList &childrenItems)
+{
+	auto item = new QTreeWidgetItem(tree, {name});
+	item->setToolTip(0, toolTip);
+	for (auto &child : childrenItems)
+		item->addChild(new QTreeWidgetItem(item, {child}));
+	return item;
+}
+
 QWidget *MainWindow::createCentralWidget()
 {
 	auto container = new QSplitter();
 	// Sidebar with playlists etc.
 	auto sidebar = new QVBoxLayout();
-	auto libraryList = new QListWidget();
+	auto libraryList = new QTreeWidget(this);
 	playlists = new QListWidget();
 	// Library
-	libraryList->addItems({
-		"Made For You", "Recently Played", "Liked Songs", "Albums", "Artists"
+	libraryList->addTopLevelItems({
+		treeItem(libraryList, "Made For You", "Personalized music", {
+			"Discover Weekly", "Release Radar", "On Repeat", "Repeat Rewind"
+		}),
+		treeItem(libraryList, "Recently Played", "Most recently played tracks from any device"),
+		treeItem(libraryList, "Liked", "Liked and saved tracks"),
+		treeItem(libraryList, "Albums", "Liked and saved albums"),
+		treeItem(libraryList, "Artists", "Most played artists for the past 6 months"),
+		treeItem(libraryList, "Tracks", "Most played tracks for the past 6 months")
 	});
-	QListWidget::connect(libraryList, &QListWidget::itemPressed, this, [=](QListWidgetItem *item) {
+	libraryList->header()->hide();
+	QTreeWidget::connect(libraryList, &QTreeWidget::itemClicked, [this](QTreeWidgetItem *item, int column) {
 		if (item != nullptr) {
 			playlists->setCurrentRow(-1);
+			if (item->parent() != nullptr)
+			{
+				auto data = item->data(0, 0x100).toString();
+				switch (item->data(0, 0x101).toInt())
+				{
+					case RoleArtistId:	openArtist(data);	break;
+					case RoleAlbumId:	loadAlbum(data);	break;
+					case RoleTrackId:
+						// Get all children of parent to get track ids
+						QStringList trackIds;
+						for (int i = 0; i < item->parent()->childCount(); i++)
+							trackIds.append(QString("spotify:track:%1")
+								.arg(item->parent()->child(i)->data(0, 0x100).toString()));
+						// Play in context of all children
+						spotify->playTracks(
+							QString("spotify:track:%1").arg(item->data(0, 0x100).toString()), trackIds);
+						break;
+				}
+			}
 		}
 	});
-	libraryList->setEnabled(false);
-	libraryList->setToolTip("Not implemented yet");
+	// When expanding top artists, update it
+	QTreeWidget::connect(libraryList, &QTreeWidget::itemExpanded, [this](QTreeWidgetItem *item) {
+		QVector<QVariantList> results;
+		item->takeChildren();
+
+		if (item->text(0) == "Artists")
+			for (auto &artist : spotify->topArtists())
+				results.append({artist.name, artist.id, RoleArtistId});
+		else if (item->text(0) == "Tracks")
+			for (auto &track : spotify->topTracks())
+				results.append({track.name, track.id, RoleTrackId});
+		else if (item->text(0) == "Albums")
+			for (auto &album : spotify->savedAlbums())
+				results.append({album.name, album.id, RoleAlbumId});
+		else if (item->text(0) == "Liked")
+			for (auto &track : spotify->savedTracks())
+				results.append({track.name, track.id, RoleTrackId});
+		else if (item->text(0) == "Recently Played")
+			for (auto &track : spotify->recentlyPlayed())
+				results.append({track.name, track.id, RoleTrackId});
+
+		// No results
+		if (results.isEmpty())
+		{
+			auto child = new QTreeWidgetItem(item, {"No results"});
+			child->setDisabled(true);
+			child->setToolTip(0, "If they should be here, try logging out and back in");
+			item->addChild(child);
+			return;
+		}
+		// Add all to the list
+		for (auto &result : results)
+		{
+			auto child = new QTreeWidgetItem(item, {result[0].toString()});
+			child->setData(0, 0x100, result[1]);
+			child->setData(0, 0x101, result[2]);
+			item->addChild(child);
+		}
+	});
 	auto library = createGroupBox(QVector<QWidget*>() << libraryList);
 	library->setTitle("Library");
 	sidebar->addWidget(library);

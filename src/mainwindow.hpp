@@ -15,6 +15,7 @@
 #include "spotify/webplayer.hpp"
 #include "spotify/audiofeatures.hpp"
 #include "spotify/clienthandler.hpp"
+#include "spotify/item.hpp"
 
 #include <QMainWindow>
 #include <QListWidget>
@@ -102,4 +103,5 @@ private:
 	QVector<spt::Track> playlistTracks(const QString &playlistId);
 	QMenu *songMenu(QWidget *parent, const QString &trackId, const QString &artist,
 		const QString &name, const QString &artistId, const QString &albumId);
+	QTreeWidgetItem *treeItem(QTreeWidget *tree, const QString &name, const QString &toolTip = QString::Null(), const QStringList &childrenItems = QStringList(QString::Null()));
 };
