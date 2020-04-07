@@ -57,6 +57,7 @@ namespace spt
 		QVector<Artist> topArtists();
 		QVector<Track> topTracks();
 		QVector<Album> savedAlbums();
+		QVector<Track> savedTracks();
 	private:
 		qint64		lastAuth;
 		QString		currentDevice;

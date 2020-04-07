@@ -361,3 +361,14 @@ QVector<Album> Spotify::savedAlbums()
 		albums.append(Album(item.toObject()["album"].toObject()));
 	return albums;
 }
+
+QVector<Track> Spotify::savedTracks()
+{
+	auto json = get("me/tracks");
+	auto trackItems = json.object()["items"].toArray();
+	QVector<Track> tracks;
+	tracks.reserve(10);
+	for (auto item : trackItems)
+		tracks.append(Track(item.toObject()));
+	return tracks;
+}
