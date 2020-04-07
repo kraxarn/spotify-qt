@@ -11,3 +11,13 @@ Album::Album(const QJsonObject &json)
 	artist		= json["artists"].toArray()[0].toObject()["name"].toString();
 	releaseDate	= QDateTime::fromString(json["release_date"].toString(), Qt::ISODate);
 }
+
+QString Album::itemName()
+{
+	return name;
+}
+
+QString Album::itemId()
+{
+	return QString("spotify:album:%1").arg(id);
+}

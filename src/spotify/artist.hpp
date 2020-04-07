@@ -4,6 +4,7 @@ namespace spt { class Artist; }
 
 #include "spotify.hpp"
 #include "album.hpp"
+#include "item.hpp"
 
 #include <QStringList>
 #include <QString>
@@ -14,7 +15,7 @@ namespace spt { class Artist; }
 
 namespace spt
 {
-	class Artist
+	class Artist : public Item
 	{
 	public:
 		explicit Artist(const QJsonObject &json);
@@ -24,5 +25,8 @@ namespace spt
 		QVector<Track> topTracks(Spotify &spotify) const;
 		QVector<Album> albums(Spotify &spotify) const;
 		QVector<Artist> relatedArtists(Spotify &spotify) const;
+
+		QString itemName() override;
+		QString itemId() override;
 	};
 }

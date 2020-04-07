@@ -46,3 +46,13 @@ QVector<Artist> Artist::relatedArtists(Spotify &spotify) const
 		artists.append(Artist(item.toObject()));
 	return artists;
 }
+
+QString Artist::itemName()
+{
+	return name;
+}
+
+QString Artist::itemId()
+{
+	return QString();
+}

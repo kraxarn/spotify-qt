@@ -74,3 +74,13 @@ QJsonObject Track::toJson()
 		QPair<QString, QString>("addedAt", addedAt.toString())
 	});
 }
+
+QString Track::itemName()
+{
+	return name;
+}
+
+QString Track::itemId()
+{
+	return QString("spotify:track:%1").arg(id);
+}
