@@ -74,9 +74,9 @@ public:
 private:
 	// Widgets
 	QTreeWidget	*songs;
-	QLabel		*nowPlaying, *position, *nowAlbum;
-	QSlider		*progress, *volume;
-	QAction		*playPause, *repeat, *shuffle;
+	QLabel		*nowPlaying,	*position,	*nowAlbum;
+	QSlider		*progress,		*volume;
+	QAction		*playPause,		*repeat,	*shuffle;
 	// Everything else
 	spt::Spotify			*spotify;
 	QNetworkAccessManager	*network;
