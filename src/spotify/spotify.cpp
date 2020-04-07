@@ -358,6 +358,6 @@ QVector<Album> Spotify::savedAlbums()
 	QVector<Album> albums;
 	albums.reserve(10);
 	for (auto item : albumItems)
-		albums.append(Album(item.toObject()));
+		albums.append(Album(item.toObject()["album"].toObject()));
 	return albums;
 }
