@@ -372,3 +372,14 @@ QVector<Track> Spotify::savedTracks()
 		tracks.append(Track(item.toObject()));
 	return tracks;
 }
+
+QVector<Track> Spotify::recentlyPlayed()
+{
+	auto json = get("me/player/recently-played?limit=10");
+	auto trackItems = json.object()["items"].toArray();
+	QVector<Track> tracks;
+	tracks.reserve(10);
+	for (auto item : trackItems)
+		tracks.append(Track(item.toObject()));
+	return tracks;
+}
