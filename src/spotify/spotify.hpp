@@ -56,6 +56,7 @@ namespace spt
 		SearchResults search(const QString &query);
 		QVector<Artist> topArtists();
 		QVector<Track> topTracks();
+		QVector<Album> savedAlbums();
 	private:
 		qint64		lastAuth;
 		QString		currentDevice;
