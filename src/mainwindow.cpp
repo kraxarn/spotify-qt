@@ -135,9 +135,6 @@ QWidget *MainWindow::createCentralWidget()
 	playlists = new QListWidget();
 	// Library
 	libraryList->addTopLevelItems({
-		treeItem(libraryList, "Made For You", "Personalized music", {
-			"Discover Weekly", "Release Radar", "On Repeat", "Repeat Rewind"
-		}),
 		treeItem(libraryList, "Recently Played", "Most recently played tracks from any device"),
 		treeItem(libraryList, "Liked", "Liked and saved tracks"),
 		treeItem(libraryList, "Albums", "Liked and saved albums"),
