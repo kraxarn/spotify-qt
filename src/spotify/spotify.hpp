@@ -59,6 +59,7 @@ namespace spt
 		QVector<Album> savedAlbums();
 		QVector<Track> savedTracks();
 		QVector<Track> recentlyPlayed();
+		QVector<Album> newReleases();
 	private:
 		qint64		lastAuth;
 		QString		currentDevice;

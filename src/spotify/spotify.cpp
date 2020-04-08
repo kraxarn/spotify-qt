@@ -383,3 +383,14 @@ QVector<Track> Spotify::recentlyPlayed()
 		tracks.append(Track(item.toObject()));
 	return tracks;
 }
+
+QVector<Album> Spotify::newReleases()
+{
+	auto json = get("browse/new-releases");
+	auto albumItems = json.object()["albums"].toObject()["items"].toArray();
+	QVector<Album> albums;
+	albums.reserve(albumItems.size());
+	for (auto item : albumItems)
+		albums.append(Album(item.toObject()));
+	return albums;
+}
