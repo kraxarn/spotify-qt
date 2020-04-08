@@ -150,8 +150,8 @@ QWidget *MainWindow::createCentralWidget()
 				auto data = item->data(0, 0x100).toString();
 				switch (item->data(0, 0x101).toInt())
 				{
-					case RoleArtistId:	openArtist(data);	break;
-					case RoleAlbumId:	loadAlbum(data);	break;
+					case RoleArtistId:	openArtist(data);		break;
+					case RoleAlbumId:	loadAlbum(data, false);	break;
 					case RoleTrackId:
 						// Get all children of parent to get track ids
 						QStringList trackIds;
