@@ -131,7 +131,7 @@ QWidget *MainWindow::createCentralWidget()
 	auto container = new QSplitter();
 	// Sidebar with playlists etc.
 	auto sidebar = new QVBoxLayout();
-	auto libraryList = new QTreeWidget(this);
+	libraryList = new QTreeWidget(this);
 	playlists = new QListWidget();
 	// Library
 	libraryList->addTopLevelItems({

@@ -84,6 +84,7 @@ private:
 	QDockWidget				*searchView;
 	spt::Playback			current;
 	mp::Service				*mediaPlayer;
+	QTreeWidget				*libraryList;
 	// What Spotify context we're currently in
 	QString sptContext;
 	// Methods
