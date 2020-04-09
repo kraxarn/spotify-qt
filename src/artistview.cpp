@@ -80,7 +80,6 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 	QListWidget::connect(relatedList, &QListWidget::itemClicked, [this, relatedList, window](QListWidgetItem *item) {
 		relatedList->setEnabled(false);
 		window->openArtist(item->data(MainWindow::RoleArtistId).toString());
-		close();
 	});
 	tabs->addTab(relatedList, "Related");
 	// Rest of dock

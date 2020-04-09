@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	repeat 		= shuffle	= playPause	= nullptr;
 	isPlaying	= false;
 	mediaPlayer	= nullptr;
+	artistView	= nullptr;
 	// Set cache root location
 	cacheLocation = QStandardPaths::standardLocations(QStandardPaths::CacheLocation)[0];
 	// Create main cache path and album subdir
@@ -731,9 +732,14 @@ QPixmap MainWindow::getAlbum(const QString &url)
 
 void MainWindow::openArtist(const QString &artistId)
 {
-	addDockWidget(
-		Qt::DockWidgetArea::RightDockWidgetArea,
-		new ArtistView(*spotify, artistId, this));
+	auto view = new ArtistView(*spotify, artistId, this);
+	if (artistView != nullptr)
+	{
+		artistView->close();
+		artistView->deleteLater();
+	}
+	artistView = view;
+	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, artistView);
 	libraryList->setCurrentItem(nullptr);
 }
 
