@@ -734,6 +734,7 @@ void MainWindow::openArtist(const QString &artistId)
 	addDockWidget(
 		Qt::DockWidgetArea::RightDockWidgetArea,
 		new ArtistView(*spotify, artistId, this));
+	libraryList->setCurrentItem(nullptr);
 }
 
 void MainWindow::cachePlaylist(spt::Playlist &playlist)
