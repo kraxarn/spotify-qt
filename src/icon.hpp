@@ -1,6 +1,10 @@
 #pragma once
 
+#include "settings.hpp"
+
 #include <QIcon>
+#include <QString>
+#include <QDebug>
 
 class Icon
 {
@@ -9,4 +13,5 @@ public:
 
 private:
 	Icon();
+	static QString theme;
 };
