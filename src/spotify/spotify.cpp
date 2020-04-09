@@ -375,7 +375,7 @@ QVector<Track> Spotify::savedTracks()
 
 QVector<Track> Spotify::recentlyPlayed()
 {
-	auto json = get("me/player/recently-played?limit=10");
+	auto json = get("me/player/recently-played?limit=50");
 	auto trackItems = json.object()["items"].toArray();
 	QVector<Track> tracks;
 	tracks.reserve(10);
