@@ -212,9 +212,9 @@ QWidget *MainWindow::createCentralWidget()
 	refreshPlaylists();
 	// Set default selected playlist
 	playlists->setCurrentRow(0);
-	QListWidget::connect(playlists, &QListWidget::itemClicked, this, [this, libraryList](QListWidgetItem *item) {
-		//if (item != nullptr)
-		//	libraryList->setCurrentRow(-1);
+	QListWidget::connect(playlists, &QListWidget::itemClicked, this, [this](QListWidgetItem *item) {
+		if (item != nullptr)
+			libraryList->setCurrentItem(nullptr);
 		auto currentPlaylist = sptPlaylists->at(playlists->currentRow());
 		loadPlaylist(currentPlaylist);
 	});
@@ -594,6 +594,7 @@ bool MainWindow::loadAlbum(const QString &albumId, bool ignoreEmpty)
 	else
 	{
 		playlists->setCurrentRow(-1);
+		libraryList->setCurrentItem(nullptr);
 		sptContext = QString("spotify:album:%1").arg(albumId);
 		loadSongs(*tracks);
 	}
