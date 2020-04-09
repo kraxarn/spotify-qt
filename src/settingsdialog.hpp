@@ -24,6 +24,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QFileInfo>
+#include <QFileDialog>
 
 class SettingsDialog : public QDialog
 {

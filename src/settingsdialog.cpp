@@ -90,9 +90,20 @@ QGroupBox *SettingsDialog::spotifySettings()
 	auto sptMainLayout = new QVBoxLayout(this);
 	sptSettings->setLayout(sptMainLayout);
 	// Executable settings
+	auto sptPathLayout = new QHBoxLayout();
 	sptPath = new QLineEdit(settings.sptPath(), this);
 	sptPath->setPlaceholderText("spotifyd path");
-	sptMainLayout->addWidget(sptPath);
+	sptPathLayout->addWidget(sptPath, 1);
+	auto sptPathBrowse = new QPushButton("...", this);
+	sptPathBrowse->setMaximumWidth(40);
+	sptPathBrowse->setFlat(true);
+	QAbstractButton::connect(sptPathBrowse, &QAbstractButton::clicked, [this](bool checked) {
+		auto filePath = QFileDialog::getOpenFileName(this, "spotifyd path", "/");
+		if (!filePath.isEmpty())
+			sptPath->setText(filePath);
+	});
+	sptPathLayout->addWidget(sptPathBrowse);
+	sptMainLayout->addLayout(sptPathLayout);
 	// Spotifyd version
 	sptVersion = new QLabel("(no spotifyd provided)", this);
 	if (!settings.sptPath().isEmpty())
