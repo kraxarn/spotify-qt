@@ -152,7 +152,7 @@ void Settings::setMediaController(bool value)
 
 bool Settings::darkTheme()
 {
-	return (Settings::Palette) settings->value("StylePalette").toInt() == paletteDark;
+	return stylePalette() == paletteDark;
 }
 
 void Settings::setDarkTheme(bool value)
