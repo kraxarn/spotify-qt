@@ -1,30 +1,57 @@
 <!DOCTYPE RCC>
 <RCC version="1.0">
     <qresource>
-        <file>res/ic/application-exit.svg</file>
-        <file>res/ic/document-share.svg</file>
-        <file>res/ic/folder-temp.svg</file>
-        <file>res/ic/help-about.svg</file>
-        <file>res/ic/media-optical-audio.svg</file>
-        <file>res/ic/media-playback-start.svg</file>
-        <file>res/ic/media-playlist-shuffle.svg</file>
-        <file>res/ic/media-skip-forward.svg</file>
-        <file>res/ic/speaker.svg</file>
-        <file>res/ic/view-media-artist.svg</file>
-        <file>res/ic/view-statistics.svg</file>
-        <file>res/ic/application-menu.svg</file>
-        <file>res/ic/download.svg</file>
-        <file>res/ic/folder-txt.svg</file>
-        <file>res/ic/im-user-away.svg</file>
-        <file>res/ic/media-playback-pause.svg</file>
-        <file>res/ic/media-playlist-repeat.svg</file>
-        <file>res/ic/media-skip-backward.svg</file>
-        <file>res/ic/settings.svg</file>
-        <file>res/ic/view-media-album-cover.svg</file>
-        <file>res/ic/view-media-lyrics.svg</file>
-        <file>res/ic/list-add.svg</file>
-        <file>res/ic/list-remove.svg</file>
-        <file>res/ic/edit-find.svg</file>
+        <!-- Light icons -->
+        <file>res/ic/light/application-exit.svg</file>
+        <file>res/ic/light/document-share.svg</file>
+        <file>res/ic/light/folder-temp.svg</file>
+        <file>res/ic/light/help-about.svg</file>
+        <file>res/ic/light/media-optical-audio.svg</file>
+        <file>res/ic/light/media-playback-start.svg</file>
+        <file>res/ic/light/media-playlist-shuffle.svg</file>
+        <file>res/ic/light/media-skip-forward.svg</file>
+        <file>res/ic/light/speaker.svg</file>
+        <file>res/ic/light/view-media-artist.svg</file>
+        <file>res/ic/light/view-statistics.svg</file>
+        <file>res/ic/light/application-menu.svg</file>
+        <file>res/ic/light/download.svg</file>
+        <file>res/ic/light/folder-txt.svg</file>
+        <file>res/ic/light/im-user-away.svg</file>
+        <file>res/ic/light/media-playback-pause.svg</file>
+        <file>res/ic/light/media-playlist-repeat.svg</file>
+        <file>res/ic/light/media-skip-backward.svg</file>
+        <file>res/ic/light/configure.svg</file>
+        <file>res/ic/light/view-media-album-cover.svg</file>
+        <file>res/ic/light/view-media-lyrics.svg</file>
+        <file>res/ic/light/list-add.svg</file>
+        <file>res/ic/light/list-remove.svg</file>
+        <file>res/ic/light/edit-find.svg</file>
+        <!-- Dark icons -->
+        <file>res/ic/dark/application-exit.svg</file>
+        <file>res/ic/dark/document-share.svg</file>
+        <file>res/ic/dark/folder-temp.svg</file>
+        <file>res/ic/dark/help-about.svg</file>
+        <file>res/ic/dark/media-optical-audio.svg</file>
+        <file>res/ic/dark/media-playback-start.svg</file>
+        <file>res/ic/dark/media-playlist-shuffle.svg</file>
+        <file>res/ic/dark/media-skip-forward.svg</file>
+        <file>res/ic/dark/speaker.svg</file>
+        <file>res/ic/dark/view-media-artist.svg</file>
+        <file>res/ic/dark/view-statistics.svg</file>
+        <file>res/ic/dark/application-menu.svg</file>
+        <file>res/ic/dark/download.svg</file>
+        <file>res/ic/dark/folder-txt.svg</file>
+        <file>res/ic/dark/im-user-away.svg</file>
+        <file>res/ic/dark/media-playback-pause.svg</file>
+        <file>res/ic/dark/media-playlist-repeat.svg</file>
+        <file>res/ic/dark/media-skip-backward.svg</file>
+        <file>res/ic/dark/configure.svg</file>
+        <file>res/ic/dark/view-media-album-cover.svg</file>
+        <file>res/ic/dark/view-media-lyrics.svg</file>
+        <file>res/ic/dark/list-add.svg</file>
+        <file>res/ic/dark/list-remove.svg</file>
+        <file>res/ic/dark/edit-find.svg</file>
+        <!-- Logos -->
         <file>res/logo/spotify-qt.svg</file>
         <file>res/logo/qt.svg</file>
     </qresource>
