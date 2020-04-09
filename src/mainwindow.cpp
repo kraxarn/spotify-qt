@@ -135,11 +135,11 @@ QWidget *MainWindow::createCentralWidget()
 	playlists = new QListWidget();
 	// Library
 	libraryList->addTopLevelItems({
-		treeItem(libraryList, "Recently Played", "Most recently played tracks from any device"),
-		treeItem(libraryList, "Liked", "Liked and saved tracks"),
+		treeItem(libraryList, "Recently Played", "Most recently played tracks from any device", QStringList()),
+		treeItem(libraryList, "Liked", "Liked and saved tracks", QStringList()),
+		treeItem(libraryList, "Tracks", "Most played tracks for the past 6 months", QStringList()),
 		treeItem(libraryList, "Albums", "Liked and saved albums"),
-		treeItem(libraryList, "Artists", "Most played artists for the past 6 months"),
-		treeItem(libraryList, "Tracks", "Most played tracks for the past 6 months")
+		treeItem(libraryList, "Artists", "Most played artists for the past 6 months")
 	});
 	libraryList->header()->hide();
 	QTreeWidget::connect(libraryList, &QTreeWidget::itemClicked, [this](QTreeWidgetItem *item, int column) {
@@ -164,6 +164,15 @@ QWidget *MainWindow::createCentralWidget()
 						break;
 				}
 			}
+			else
+			{
+				if (item->text(0) == "Recently Played")
+					loadSongs(spotify->recentlyPlayed());
+				else if (item->text(0) == "Liked")
+					loadSongs(spotify->savedTracks());
+				else if (item->text(0) == "Tracks")
+					loadSongs(spotify->topTracks());
+			}
 		}
 	});
 	// When expanding top artists, update it
@@ -174,18 +183,9 @@ QWidget *MainWindow::createCentralWidget()
 		if (item->text(0) == "Artists")
 			for (auto &artist : spotify->topArtists())
 				results.append({artist.name, artist.id, RoleArtistId});
-		else if (item->text(0) == "Tracks")
-			for (auto &track : spotify->topTracks())
-				results.append({track.name, track.id, RoleTrackId});
 		else if (item->text(0) == "Albums")
 			for (auto &album : spotify->savedAlbums())
 				results.append({album.name, album.id, RoleAlbumId});
-		else if (item->text(0) == "Liked")
-			for (auto &track : spotify->savedTracks())
-				results.append({track.name, track.id, RoleTrackId});
-		else if (item->text(0) == "Recently Played")
-			for (auto &track : spotify->recentlyPlayed())
-				results.append({track.name, track.id, RoleTrackId});
 
 		// No results
 		if (results.isEmpty())
