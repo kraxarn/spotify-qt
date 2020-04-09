@@ -48,7 +48,9 @@ Track::Track(const QJsonObject &item)
 		: "";
 	addedAt = item.contains("added_at")
 		? QDateTime::fromString(item["added_at"].toString(), Qt::DateFormat::ISODate)
-		: QDateTime();
+		: item.contains("played_at")
+			? QDateTime::fromString(item["played_at"].toString(), Qt::DateFormat::ISODate)
+			: QDateTime();
 	isLocal = item["is_local"].toBool();
 }
 
