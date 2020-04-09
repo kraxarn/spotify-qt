@@ -76,6 +76,9 @@ namespace spt
 		QString del(QString url, QVariantMap *body);
 		static QString errorMessage(QNetworkReply *reply);
 
+		template <class T>
+		QVector<T> loadItems(const QString &url);
+
 		bool refresh();
 	};
 }

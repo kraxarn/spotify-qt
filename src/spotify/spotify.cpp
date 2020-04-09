@@ -329,26 +329,30 @@ SearchResults Spotify::search(const QString &query)
 	return results;
 }
 
+template<class T>
+QVector<T> Spotify::loadItems(const QString &url)
+{
+	auto items = get(url).object()["items"].toArray();
+	QVector<T> result;
+	result.reserve(items.count());
+	for (auto item : items)
+		result.append(T(item.toObject()));
+	return result;
+}
+
 QVector<Artist> Spotify::topArtists()
 {
-	auto json = get("me/top/artists?limit=10");
-	auto artistItems = json.object()["items"].toArray();
-	QVector<Artist> artists;
-	artists.reserve(10);
-	for (auto item : artistItems)
-		artists.append(Artist(item.toObject()));
-	return artists;
+	return loadItems<Artist>("me/top/artists?limit=10");
 }
 
 QVector<Track> Spotify::topTracks()
 {
-	auto json = get("me/top/tracks?limit=50");
-	auto trackItems = json.object()["items"].toArray();
-	QVector<Track> tracks;
-	tracks.reserve(50);
-	for (auto item : trackItems)
-		tracks.append(Track(item.toObject()));
-	return tracks;
+	return loadItems<Track>("me/top/tracks?limit=50");
+}
+
+QVector<Track> Spotify::recentlyPlayed()
+{
+	return loadItems<Track>("me/player/recently-played?limit=50");
 }
 
 QVector<Album> Spotify::savedAlbums()
@@ -374,17 +378,6 @@ QVector<Track> Spotify::savedTracks(int offset)
 	// Add all in next page
 	if (json.contains("next") && !json["next"].isNull())
 		tracks.append(savedTracks(json["offset"].toInt() + json["limit"].toInt()));
-	return tracks;
-}
-
-QVector<Track> Spotify::recentlyPlayed()
-{
-	auto json = get("me/player/recently-played?limit=50");
-	auto trackItems = json.object()["items"].toArray();
-	QVector<Track> tracks;
-	tracks.reserve(10);
-	for (auto item : trackItems)
-		tracks.append(Track(item.toObject()));
 	return tracks;
 }
 
