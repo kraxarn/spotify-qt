@@ -53,7 +53,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, QWidget *parent) : QMenu(parent), pare
 	});
 	addMenu(deviceMenu);
 	// Refresh and settings
-	auto openSettings = createMenuAction("settings", "Settings...", QKeySequence::Preferences);
+	auto openSettings = createMenuAction("configure", "Settings...", QKeySequence::Preferences);
 	QAction::connect(openSettings, &QAction::triggered, [parent]() {
 		SettingsDialog dialog(parent);
 		dialog.exec();
