@@ -48,6 +48,8 @@ QGroupBox *SettingsDialog::appSettings()
 	});
 	appRefresh->setCurrentIndex(1);
 	appLayout->addWidget(appRefresh);
+	appRefresh->hide();
+	appRefreshLabel->hide();
 	// Dark theme
 	darkTheme = new QCheckBox("Dark theme", this);
 	darkTheme->setToolTip("Use custom dark theme");
