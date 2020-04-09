@@ -57,7 +57,7 @@ namespace spt
 		QVector<Artist> topArtists();
 		QVector<Track> topTracks();
 		QVector<Album> savedAlbums();
-		QVector<Track> savedTracks();
+		QVector<Track> savedTracks(int offset = 0);
 		QVector<Track> recentlyPlayed();
 		QVector<Album> newReleases();
 	private:

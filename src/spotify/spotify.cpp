@@ -362,14 +362,18 @@ QVector<Album> Spotify::savedAlbums()
 	return albums;
 }
 
-QVector<Track> Spotify::savedTracks()
+QVector<Track> Spotify::savedTracks(int offset)
 {
-	auto json = get("me/tracks");
-	auto trackItems = json.object()["items"].toArray();
+	auto json = get(QString("me/tracks?limit=50&offset=%1").arg(offset)).object();
+	auto trackItems = json["items"].toArray();
 	QVector<Track> tracks;
-	tracks.reserve(10);
+	tracks.reserve(50);
+	// Add all in current page
 	for (auto item : trackItems)
 		tracks.append(Track(item.toObject()));
+	// Add all in next page
+	if (json.contains("next") && !json["next"].isNull())
+		tracks.append(savedTracks(json["offset"].toInt() + json["limit"].toInt()));
 	return tracks;
 }
 
