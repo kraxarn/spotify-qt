@@ -282,7 +282,11 @@ QWidget *MainWindow::createCentralWidget()
 			setStatus("Failed to start playback: track not found");
 			return;
 		}
-		auto status = spotify->playTracks(trackId, sptContext);
+		// If we played from library, we don't have any context
+		auto status = libraryList->currentItem() != nullptr
+			? spotify->playTracks(trackId, currentTracks())
+			: spotify->playTracks(trackId, sptContext);
+
 		if (!status.isEmpty())
 			setStatus(QString("Failed to start playback: %1").arg(status));
 		refresh();
@@ -750,4 +754,13 @@ void MainWindow::applyPalette(Settings::Palette palette)
 		case Settings::paletteDark:		p = DarkPalette();								break;
 	}
 	QApplication::setPalette(p);
+}
+
+QStringList MainWindow::currentTracks()
+{
+	QStringList tracks;
+	tracks.reserve(songs->topLevelItemCount());
+	for (int i = 0; i < songs->topLevelItemCount(); i++)
+		tracks.append(songs->topLevelItem(i)->data(0, RoleTrackId).toString());
+	return tracks;
 }
