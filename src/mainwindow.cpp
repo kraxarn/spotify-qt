@@ -365,7 +365,7 @@ QMenu *MainWindow::songMenu(QWidget *parent, const QString &trackId, const QStri
 	auto remPlaylist = songMenu->addAction(Icon::get("list-remove"), "Remove from playlist");
 	QAction::connect(remPlaylist, &QAction::triggered, [this, trackId, name, artist, currentPlaylist](bool checked) {
 		// Remove from interface
-		QTreeWidgetItem *item;
+		QTreeWidgetItem *item = nullptr;
 		int i;
 		for (i = 0; i < songs->topLevelItemCount(); i++)
 		{
