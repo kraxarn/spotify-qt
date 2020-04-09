@@ -48,4 +48,5 @@ private:
 	QComboBox	*sptBitrate		= nullptr;
 	QCheckBox	*appMedia		= nullptr;
 	QCheckBox	*darkTheme		= nullptr;
+	QCheckBox	*sptOrder		= nullptr;
 };

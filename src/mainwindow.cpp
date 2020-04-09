@@ -285,7 +285,7 @@ QWidget *MainWindow::createCentralWidget()
 			return;
 		}
 		// If we played from library, we don't have any context
-		auto status = libraryList->currentItem() != nullptr
+		auto status = libraryList->currentItem() != nullptr || !Settings().sptPlaybackOrder()
 			? spotify->playTracks(trackId, currentTracks())
 			: spotify->playTracks(trackId, sptContext);
 

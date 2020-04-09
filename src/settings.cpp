@@ -162,6 +162,16 @@ void Settings::setDarkTheme(bool value)
 	setStylePalette(value ? paletteDark : paletteApp);
 }
 
+bool Settings::sptPlaybackOrder()
+{
+	return settings->value("SpotifyPlaybackOrder", false).toBool();
+}
+
+void Settings::setSptPlaybackOrder(bool value)
+{
+	settings->setValue("SpotifyPlaybackOrder", value);
+}
+
 void Settings::removeClient()
 {
 	settings->remove("ClientId");

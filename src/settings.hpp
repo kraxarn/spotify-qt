@@ -47,6 +47,9 @@ public:
 	bool darkTheme();
 	void setDarkTheme(bool value);
 
+	bool sptPlaybackOrder();
+	void setSptPlaybackOrder(bool value);
+
 	// Spotify settings
 
 	QString sptPath();

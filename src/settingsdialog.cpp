@@ -79,6 +79,11 @@ QGroupBox *SettingsDialog::appSettings()
 	appMedia->setEnabled(false);
 #endif
 	appLayout->addWidget(appMedia, 4, 0, 1, 2);
+	// Spotify playback order
+	sptOrder = new QCheckBox("Spotify playback order", this);
+	sptOrder->setToolTip("Use Spotify playback order instead of app list order");
+	sptOrder->setChecked(settings.sptPlaybackOrder());
+	appLayout->addWidget(sptOrder, 5, 0, 1, 2);
 
 	return appSettings;
 }
@@ -190,6 +195,7 @@ bool SettingsDialog::applySettings()
 	}
 
 	// Other Spotify stuff
+	settings.setSptPlaybackOrder(sptOrder->isChecked());
 	settings.setSptStartClient(sptStartClient->isChecked());
 	settings.setSptUser(sptUsername->text());
 	auto bitrate = sptBitrate->currentIndex();
