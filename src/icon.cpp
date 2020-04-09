@@ -14,5 +14,5 @@ QIcon Icon::get(const QString &name)
 		return QIcon(QString(":/res/logo/%1.svg")
 			 .arg(name.right(name.length() - QString("logo:").length())));
 	return QIcon::fromTheme(name, QIcon(QString(":/res/ic/%1/%2.svg")
-		.arg(Settings().darkTheme() ? "dark" : "light").arg(name)));
+		.arg(theme).arg(name)));
 }
