@@ -38,26 +38,6 @@ QGroupBox *SettingsDialog::appSettings()
 	auto appSettings = new QGroupBox("Application", this);
 	auto appLayout = new QGridLayout(this);
 	appSettings->setLayout(appLayout);
-	// Theme
-	auto appThemeLabel = new QLabel("Theme", this);
-	appThemeLabel->setToolTip("Theme used throughout the application");
-	appLayout->addWidget(appThemeLabel, 0, 0);
-	appTheme = new QComboBox(this);
-	appTheme->addItems(QStyleFactory::keys());
-	for (auto &style : QStyleFactory::keys())
-		if (style.toLower() == QApplication::style()->objectName())
-			appTheme->setCurrentText(style);
-	appLayout->addWidget(appTheme, 0, 1);
-	// Style palette
-	auto appPaletteLabel = new QLabel("Colors", this);
-	appPaletteLabel->setToolTip("What color palette to use with current theme");
-	appLayout->addWidget(appPaletteLabel, 1, 0);
-	appPalette = new QComboBox(this);
-	appPalette->addItems({
-		"Default", "From style", "Dark"
-	});
-	appPalette->setCurrentIndex(settings.stylePalette());
-	appLayout->addWidget(appPalette, 1, 1);
 	// Refresh interval
 	auto appRefreshLabel = new QLabel("Refresh interval", this);
 	appRefreshLabel->setToolTip("How often to refresh playback status from the Spotify servers");
@@ -68,11 +48,16 @@ QGroupBox *SettingsDialog::appSettings()
 	});
 	appRefresh->setCurrentIndex(1);
 	appLayout->addWidget(appRefresh);
+	// Dark theme
+	darkTheme = new QCheckBox("Dark theme", this);
+	darkTheme->setToolTip("Use custom dark theme");
+	darkTheme->setChecked(settings.darkTheme());
+	appLayout->addWidget(darkTheme, 1, 0, 1, 2);
 	// Start client
 	sptStartClient = new QCheckBox("Autostart spotifyd", this);
 	sptStartClient->setToolTip("Start spotifyd together with the app");
 	sptStartClient->setChecked(settings.sptStartClient());
-	appLayout->addWidget(sptStartClient, 3, 0, 1, 2);
+	appLayout->addWidget(sptStartClient, 2, 0, 1, 2);
 	// PulseAudio volume control
 	if (isPulse())
 	{
@@ -80,7 +65,7 @@ QGroupBox *SettingsDialog::appSettings()
 		appPulse->setToolTip(
 			"Use PulseAudio for volume control instead, only works if listening on same device");
 		appPulse->setChecked(settings.pulseVolume());
-		appLayout->addWidget(appPulse, 4, 0, 1, 2);
+		appLayout->addWidget(appPulse, 3, 0, 1, 2);
 	}
 	// MPRIS D-Bus
 	appMedia = new QCheckBox("Media Controller", this);
@@ -91,7 +76,7 @@ QGroupBox *SettingsDialog::appSettings()
 	appMedia->setToolTip("Currently only available on Linux");
 	appMedia->setEnabled(false);
 #endif
-	appLayout->addWidget(appMedia, 5, 0, 1, 2);
+	appLayout->addWidget(appMedia, 4, 0, 1, 2);
 
 	return appSettings;
 }
@@ -156,19 +141,16 @@ QString SettingsDialog::sptClient(const QString &path)
 bool SettingsDialog::applySettings()
 {
 	// Set theme
-	QApplication::setStyle(appTheme->currentText());
-	settings.setStyle(appTheme->currentText());
-
-	// Warn when changing palette
-	auto palette = (Settings::Palette) appPalette->currentIndex();
-	if (palette != settings.stylePalette())
+	auto changeTheme = darkTheme->isChecked() != settings.darkTheme();
+	if (changeTheme)
+	{
 		QMessageBox::information(
-			this, "Palette",
-			"Please restart the application to fully apply selected palette");
-
-	// Set palette
-	MainWindow::applyPalette(palette);
-	settings.setStylePalette(palette);
+			this, "Dark Theme",
+			"Please restart the application to fully apply selected theme");
+		settings.setDarkTheme(darkTheme->isChecked());
+		QApplication::setStyle(settings.style());
+		MainWindow::applyPalette(settings.stylePalette());
+	}
 
 	// Media controller
 	if (appMedia->isChecked() != settings.mediaController())

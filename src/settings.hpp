@@ -44,6 +44,9 @@ public:
 	bool mediaController();
 	void setMediaController(bool value);
 
+	bool darkTheme();
+	void setDarkTheme(bool value);
+
 	// Spotify settings
 
 	QString sptPath();

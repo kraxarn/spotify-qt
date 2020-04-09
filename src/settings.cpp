@@ -150,6 +150,18 @@ void Settings::setMediaController(bool value)
 	settings->setValue("MediaController", value);
 }
 
+bool Settings::darkTheme()
+{
+	return (Settings::Palette) settings->value("StylePalette").toInt() == paletteDark;
+}
+
+void Settings::setDarkTheme(bool value)
+{
+	// When enabling dark theme, also set style to fusion to match better
+	setStyle(value ? "Fusion" : QString());
+	setStylePalette(value ? paletteDark : paletteApp);
+}
+
 void Settings::removeClient()
 {
 	settings->remove("ClientId");

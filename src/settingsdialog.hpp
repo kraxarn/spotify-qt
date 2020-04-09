@@ -39,13 +39,12 @@ private:
 	static QString sptClient(const QString &path);
 	static bool isPulse();
 	// All settings properties
-	QComboBox	*appTheme		= nullptr;
 	QCheckBox	*appPulse		= nullptr;
-	QComboBox	*appPalette		= nullptr;
 	QLineEdit	*sptPath		= nullptr;
 	QLabel		*sptVersion		= nullptr;
 	QCheckBox	*sptStartClient	= nullptr;
 	QLineEdit	*sptUsername	= nullptr;
 	QComboBox	*sptBitrate		= nullptr;
 	QCheckBox	*appMedia		= nullptr;
+	QCheckBox	*darkTheme		= nullptr;
 };
