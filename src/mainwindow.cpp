@@ -143,6 +143,7 @@ QWidget *MainWindow::createCentralWidget()
 		treeItem(libraryList, "Artists", "Most played artists for the past 6 months")
 	});
 	libraryList->header()->hide();
+	libraryList->setCurrentItem(nullptr);
 	QTreeWidget::connect(libraryList, &QTreeWidget::itemClicked, [this](QTreeWidgetItem *item, int column) {
 		if (item != nullptr) {
 			playlists->setCurrentRow(-1);
