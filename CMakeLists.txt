@@ -15,6 +15,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Find Qt
 find_package(Qt5 COMPONENTS Core Widgets Network Gui Svg DBus REQUIRED)
 
+# Kind KDE crash handler if specified
+if(USE_CRASH_HANDLER)
+	find_package(KF5Crash REQUIRED)
+endif()
+
 # Glob source files
 file(GLOB MAIN_SRC "src/*.[hc]pp")
 file(GLOB SPOTIFY_SRC "src/spotify/*.[hc]pp")
@@ -40,6 +45,9 @@ elseif(NOT GIT_TAG)
 endif()
 
 target_compile_definitions(spotify-qt PRIVATE APP_VERSION="${GIT_TAG}")
+if(USE_CRASH_HANDLER)
+	target_compile_definitions(spotify-qt PRIVATE USE_CRASH_HANDLER)
+endif()
 
 # Set install targets for 'make install'
 install(TARGETS spotify-qt CONFIGURATIONS Release RUNTIME DESTINATION bin)
@@ -52,3 +60,7 @@ target_link_libraries(spotify-qt PRIVATE
 		Qt5::Gui
 		Qt5::Svg
 		Qt5::DBus)
+
+if(USE_CRASH_HANDLER)
+	target_link_libraries(spotify-qt PRIVATE KF5::Crash)
+endif()
