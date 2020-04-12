@@ -154,16 +154,6 @@ QWidget *MainWindow::createCentralWidget()
 				{
 					case RoleArtistId:	openArtist(data);		break;
 					case RoleAlbumId:	loadAlbum(data, false);	break;
-					case RoleTrackId:
-						// Get all children of parent to get track ids
-						QStringList trackIds;
-						for (int i = 0; i < item->parent()->childCount(); i++)
-							trackIds.append(QString("spotify:track:%1")
-								.arg(item->parent()->child(i)->data(0, 0x100).toString()));
-						// Play in context of all children
-						spotify->playTracks(
-							QString("spotify:track:%1").arg(item->data(0, 0x100).toString()), trackIds);
-						break;
 				}
 			}
 			else
