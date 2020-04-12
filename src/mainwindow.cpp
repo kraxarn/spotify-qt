@@ -177,6 +177,23 @@ QWidget *MainWindow::createCentralWidget()
 			}
 		}
 	});
+	QTreeWidget::connect(libraryList, &QTreeWidget::itemDoubleClicked, [this](QTreeWidgetItem *item, int column) {
+		// Fetch all tracks in list
+		QStringList trackIds;
+		auto tracks = item->text(0) == "Recently Played"
+			? spotify->recentlyPlayed()
+			: item->text(0) == "Liked"
+				? spotify->savedTracks()
+				: item->text(0) == "Tracks"
+					? spotify->topTracks()
+					: QVector<spt::Track>();
+		for (auto &track : tracks)
+			trackIds.append(QString("spotify:track:%1").arg(track.id));
+		// Play in context of all tracks
+		auto status = spotify->playTracks(trackIds.first(), trackIds);
+		if (!status.isEmpty())
+			setStatus(QString("Failed to start playback: %1").arg(status));
+	});
 	// When expanding top artists, update it
 	QTreeWidget::connect(libraryList, &QTreeWidget::itemExpanded, [this](QTreeWidgetItem *item) {
 		QVector<QVariantList> results;
