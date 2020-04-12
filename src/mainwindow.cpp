@@ -674,8 +674,8 @@ QVector<spt::Track> MainWindow::playlistTracks(const QString &playlistId)
 void MainWindow::refreshPlaylist(spt::Playlist &playlist, bool force)
 {
 	auto newPlaylist = spotify->playlist(playlist.id);
-	if (!force && playlist.snapshot == newPlaylist.snapshot)
-		return;
+	//if (!force && playlist.snapshot == newPlaylist.snapshot)
+	//	return;
 	loadSongs(newPlaylist.loadTracks(*spotify));
 	cachePlaylist(newPlaylist);
 }
