@@ -92,6 +92,8 @@ namespace spt
 		template <class T>
 		QVector<T> loadItems(const QString &url);
 
+		QVector<Track> albumTracks(const QString &albumId, const QString &albumName, int offset);
+
 		bool refresh();
 	};
 }
