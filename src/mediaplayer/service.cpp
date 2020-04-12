@@ -64,6 +64,11 @@ void Service::tick(qint64 newPos)
 	emit playerPlayer->tick(newPos);
 }
 
+spt::Playback Service::currentPlayback()
+{
+	return ((MainWindow*) parent())->currentPlayback();
+}
+
 /*void Service::updateMetadata(const QVariantMap &metadata)
 {
 	//properties->updateMetadata(metadata);

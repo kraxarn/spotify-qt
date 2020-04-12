@@ -792,3 +792,8 @@ QStringList MainWindow::currentTracks()
 		tracks.append(songs->topLevelItem(i)->data(0, RoleTrackId).toString());
 	return tracks;
 }
+
+spt::Playback MainWindow::currentPlayback()
+{
+	return current;
+}

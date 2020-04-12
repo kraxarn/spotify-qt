@@ -5,7 +5,6 @@ using namespace mp;
 MediaPlayerPlayer::MediaPlayerPlayer(spt::Spotify *spotify, QObject *parent)
 : spotify(spotify), dBus(QDBusConnection::sessionBus()), QDBusAbstractAdaptor(parent)
 {
-	currentPlayback = spotify->currentPlayback();
 }
 
 void MediaPlayerPlayer::Next() const
@@ -25,7 +24,7 @@ void MediaPlayerPlayer::Play() const
 
 void MediaPlayerPlayer::PlayPause() const
 {
-	if (spotify->currentPlayback().isPlaying)
+	if (currentPlayback().isPlaying)
 		spotify->pause();
 	else
 		spotify->resume();
@@ -57,12 +56,12 @@ bool MediaPlayerPlayer::canControl() const
 }
 QMap<QString, QVariant> MediaPlayerPlayer::metadata() const
 {
-	return spotify->currentPlayback().metadata();
+	return currentPlayback().metadata();
 }
 
 double MediaPlayerPlayer::getVolume() const
 {
-	return spotify->currentPlayback().volume / 100.0;
+	return currentPlayback().volume / 100.0;
 }
 
 void MediaPlayerPlayer::setVolume(double value) const
@@ -72,12 +71,12 @@ void MediaPlayerPlayer::setVolume(double value) const
 
 qint64 MediaPlayerPlayer::position() const
 {
-	return spotify->currentPlayback().progressMs * 1000;
+	return currentPlayback().progressMs * 1000;
 }
 
 QString MediaPlayerPlayer::playbackStatus() const
 {
-	return spotify->currentPlayback().isPlaying ? "Playing" : "Paused";
+	return currentPlayback().isPlaying ? "Playing" : "Paused";
 }
 
 void MediaPlayerPlayer::OpenUri(QString uri) const
@@ -98,7 +97,7 @@ void MediaPlayerPlayer::setPlaybackRate(double value) const
 
 bool MediaPlayerPlayer::shuffle() const
 {
-	return spotify->currentPlayback().shuffle;
+	return currentPlayback().shuffle;
 }
 
 void MediaPlayerPlayer::setShuffle(bool value) const
@@ -109,15 +108,15 @@ void MediaPlayerPlayer::setShuffle(bool value) const
 void MediaPlayerPlayer::emitMetadataChange() const
 {
 	QVariantMap properties;
-	properties["Metadata"] = spotify->currentPlayback().metadata();
+	properties["Metadata"] = currentPlayback().metadata();
 	Service::signalPropertiesChange(this, properties);
 }
 
 void MediaPlayerPlayer::currentSourceChanged() const
 {
 	QVariantMap properties;
-	properties["Metadata"] = currentPlayback.metadata();
-	properties["PlaybackStatus"] = currentPlayback.isPlaying ? "Playing" : "Paused";
+	properties["Metadata"] = currentPlayback().metadata();
+	properties["PlaybackStatus"] = currentPlayback().isPlaying ? "Playing" : "Paused";
 	//properties["CanSeek"] = true;
 	Service::signalPropertiesChange(this, properties);
 }
@@ -125,7 +124,7 @@ void MediaPlayerPlayer::currentSourceChanged() const
 void MediaPlayerPlayer::stateUpdated() const
 {
 	QVariantMap properties;
-	properties["PlaybackStatus"] = spotify->currentPlayback().isPlaying ? "Playing" : "Paused";
+	properties["PlaybackStatus"] = currentPlayback().isPlaying ? "Playing" : "Paused";
 	//properties["CanPause"] = true;
 	Service::signalPropertiesChange(this, properties);
 }
@@ -133,7 +132,7 @@ void MediaPlayerPlayer::stateUpdated() const
 void MediaPlayerPlayer::totalTimeChanged() const
 {
 	QVariantMap properties;
-	properties["Metadata"] = currentPlayback.metadata();
+	properties["Metadata"] = currentPlayback().metadata();
 	Service::signalPropertiesChange(this, properties);
 }
 
@@ -147,7 +146,7 @@ void MediaPlayerPlayer::seekableChanged(bool seekable) const
 void MediaPlayerPlayer::volumeChanged() const
 {
 	QVariantMap properties;
-	properties["Volume"] = spotify->currentPlayback().volume / 100.0;
+	properties["Volume"] = currentPlayback().volume / 100.0;
 	Service::signalPropertiesChange(this, properties);
 }
 
@@ -158,5 +157,9 @@ void MediaPlayerPlayer::tick(qint64 newPos)
 
 void MediaPlayerPlayer::setCurrentPlayback(const spt::Playback &playback)
 {
-	currentPlayback = playback;
+}
+
+spt::Playback MediaPlayerPlayer::currentPlayback() const
+{
+	return ((Service*) parent())->currentPlayback();
 }

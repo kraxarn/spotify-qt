@@ -4,6 +4,7 @@ namespace mp { class MediaPlayerPlayer; }
 
 #include "../spotify/spotify.hpp"
 #include "../mainwindow.hpp"
+#include "service.hpp"
 
 #include <QDBusConnection>
 #include <QDebug>
@@ -81,6 +82,7 @@ namespace mp
 	private:
 		QDBusConnection	dBus;
 		spt::Spotify	*spotify;
-		spt::Playback	currentPlayback;
+
+		spt::Playback currentPlayback() const;
 	};
 }
