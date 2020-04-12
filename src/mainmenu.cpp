@@ -59,14 +59,6 @@ MainMenu::MainMenu(spt::Spotify &spotify, QWidget *parent) : QMenu(parent), pare
 		dialog.exec();
 	});
 	addAction(openSettings);
-	// Debug stuff
-	addSeparator();
-	auto refPlaylist = addAction(
-		QIcon::fromTheme("reload"), "Refresh current playlist");
-	QAction::connect(refPlaylist, &QAction::triggered, [window]() {
-		auto currentPlaylist = window->sptPlaylists->at(window->playlists->currentRow());
-		window->refreshPlaylist(currentPlaylist, true);
-	});
 	// Log out and quit
 	addSeparator();
 	auto quitAction = createMenuAction("application-exit", "Quit", QKeySequence::Quit);
