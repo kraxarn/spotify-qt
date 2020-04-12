@@ -97,6 +97,7 @@ private:
 	void setAlbumImage(const QString &url);
 	static QString formatTime(int ms);
 	void refresh();
+	void refreshed(const spt::Playback &playback);
 	void openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name);
 	void openLyrics(const QString &artist, const QString &name);
 	void cachePlaylist(spt::Playlist &playlist);

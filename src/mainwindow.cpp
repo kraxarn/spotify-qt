@@ -52,6 +52,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	// Start media controller if specified
 	if (settings.mediaController())
 		mediaPlayer = new mp::Service(spotify, this);
+	// Start listening to current playback responses
+	spt::Spotify::connect(spotify, &spt::Spotify::gotPlayback, [this](const spt::Playback &playback) {
+		refreshed(playback);
+	});
 }
 
 MainWindow::~MainWindow()
@@ -70,7 +74,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::refresh()
 {
-	current = spotify->currentPlayback();
+	spotify->requestCurrentPlayback();
+}
+
+void MainWindow::refreshed(const spt::Playback &playback)
+{
+	current = playback;
 	isPlaying = current.isPlaying;
 	if (!current.isPlaying)
 	{
