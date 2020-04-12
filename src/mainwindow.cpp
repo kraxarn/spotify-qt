@@ -169,7 +169,6 @@ QWidget *MainWindow::createCentralWidget()
 	});
 	QTreeWidget::connect(libraryList, &QTreeWidget::itemDoubleClicked, [this](QTreeWidgetItem *item, int column) {
 		// Fetch all tracks in list
-		QStringList trackIds;
 		auto tracks = item->text(0) == "Recently Played"
 			? spotify->recentlyPlayed()
 			: item->text(0) == "Liked"
@@ -177,6 +176,9 @@ QWidget *MainWindow::createCentralWidget()
 				: item->text(0) == "Tracks"
 					? spotify->topTracks()
 					: QVector<spt::Track>();
+		// Get id of all tracks
+		QStringList trackIds;
+		tracks.reserve(tracks.length());
 		for (auto &track : tracks)
 			trackIds.append(QString("spotify:track:%1").arg(track.id));
 		// Play in context of all tracks
