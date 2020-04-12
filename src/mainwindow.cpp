@@ -49,7 +49,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 				"Client error",
 				QString("Failed to autostart Spotify client: %1").arg(status));
 	}
-	mediaPlayer = new mp::Service(spotify, this);
+	// Start media controller if specified
+	if (settings.mediaController())
+		mediaPlayer = new mp::Service(spotify, this);
 }
 
 MainWindow::~MainWindow()
