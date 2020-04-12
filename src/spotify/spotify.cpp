@@ -411,7 +411,7 @@ QVector<Album> Spotify::newReleases()
 
 void Spotify::requestCurrentPlayback()
 {
-	auto context = new QObject(this);
+	auto context = new QObject();
 	Spotify::connect(this, &Spotify::got, context, [this, context](const QJsonDocument &json) {
 		delete context;
 		emit gotPlayback(Playback(json.object()));
