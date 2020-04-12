@@ -56,6 +56,7 @@ void Spotify::getLater(const QString &url)
 		reply->deleteLater();
 		emit got(json);
 	});
+	networkManager->get(request(url));
 }
 
 QString Spotify::put(QString url, QVariantMap *body)
@@ -412,4 +413,5 @@ void Spotify::requestCurrentPlayback()
 		Spotify::disconnect(connection);
 		emit gotPlayback(Playback(json.object()));
 	});
+	getLater("me/player");
 }
