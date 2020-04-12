@@ -132,6 +132,8 @@ QGroupBox *SettingsDialog::spotifySettings()
 	auto bitrate = settings.sptBitrate();
 	sptBitrate->setCurrentIndex(bitrate == 96 ? 0 : bitrate == 160 ? 1 : 2);
 	sptLayout->addWidget(sptBitrate);
+	// Filler
+	sptMainLayout->addStretch(1);
 	// Final layout
 	return sptSettings;
 }
@@ -153,7 +155,7 @@ QString SettingsDialog::sptClient(const QString &path)
 	});
 	process.waitForFinished();
 	// Entire stdout is version
-	return process.readAllStandardOutput();
+	return process.readAllStandardOutput().trimmed();
 }
 
 bool SettingsDialog::applySettings()
