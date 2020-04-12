@@ -23,8 +23,10 @@ namespace spt { class Spotify; }
 
 namespace spt
 {
-	class Spotify
+	class Spotify : public QObject
 	{
+		Q_OBJECT
+
 	public:
 		Spotify();
 		~Spotify();
@@ -60,6 +62,17 @@ namespace spt
 		QVector<Track> savedTracks(int offset = 0);
 		QVector<Track> recentlyPlayed();
 		QVector<Album> newReleases();
+
+	public slots:
+		void requestCurrentPlayback();
+
+	private slots:
+		void getLater(const QString &url);
+
+	signals:
+		void got(const QJsonDocument &json);
+		void gotPlayback(const Playback &playback);
+
 	private:
 		qint64		lastAuth;
 		QString		currentDevice;
@@ -67,7 +80,7 @@ namespace spt
 		/**
 		 * Prepare network request with auth header
 		 */
-		QNetworkRequest request(QString &url);
+		QNetworkRequest request(const QString &url);
 		/**
 		 * HTTP PUT request expecting JSON response
 		 */

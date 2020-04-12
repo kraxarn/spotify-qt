@@ -14,7 +14,7 @@ Spotify::~Spotify()
 	delete networkManager;
 }
 
-QNetworkRequest Spotify::request(QString &url)
+QNetworkRequest Spotify::request(const QString &url)
 {
 	// See when last refresh was
 	auto lastRefresh = QDateTime::currentSecsSinceEpoch() - lastAuth;
@@ -43,6 +43,19 @@ QJsonDocument Spotify::get(QString url)
 	reply->deleteLater();
 	// Return parsed json
 	return json;
+}
+
+void Spotify::getLater(const QString &url)
+{
+	// Prepare fetch of request
+	QMetaObject::Connection connection;
+	connection = QNetworkAccessManager::connect(networkManager, &QNetworkAccessManager::finished, [this, connection](QNetworkReply *reply) {
+		QNetworkAccessManager::disconnect(connection);
+		// Parse reply as json
+		auto json = QJsonDocument::fromJson(reply->readAll());
+		reply->deleteLater();
+		emit got(json);
+	});
 }
 
 QString Spotify::put(QString url, QVariantMap *body)
@@ -390,4 +403,13 @@ QVector<Album> Spotify::newReleases()
 	for (auto item : albumItems)
 		albums.append(Album(item.toObject()));
 	return albums;
+}
+
+void Spotify::requestCurrentPlayback()
+{
+	QMetaObject::Connection connection;
+	connection = Spotify::connect(this, &Spotify::got, [this, connection](const QJsonDocument &json){
+		Spotify::disconnect(connection);
+		emit gotPlayback(Playback(json.object()));
+	});
 }
