@@ -397,7 +397,7 @@ QMenu *MainWindow::songMenu(QWidget *parent, const QString &trackId, const QStri
 		}
 		// i doesn't necessarily match item index depending on sorting order
 		songs->takeTopLevelItem(i);
-		setStatus(QString("Removed \"%1 - %2\" from \"%3\"")
+		setStatus(QString(R"(Removed "%1 - %2" from "%3")")
 			.arg(name).arg(artist).arg(currentPlaylist->name));
 	});
 	songMenu->addSeparator();
