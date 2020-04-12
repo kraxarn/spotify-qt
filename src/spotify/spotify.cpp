@@ -224,11 +224,6 @@ QString Spotify::setShuffle(bool enabled)
 	return put(QString("me/player/shuffle?state=%1").arg(enabled ? "true" : "false"));
 }
 
-Playback Spotify::currentPlayback()
-{
-	return Playback(get("me/player").object());
-}
-
 QString Spotify::pause()
 {
 	return put("me/player/pause");

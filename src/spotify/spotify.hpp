@@ -41,7 +41,6 @@ namespace spt
 		QString playTracks(const QString &track, const QStringList &all);
 		QString playTracks(const QString &context);
 		QString setShuffle(bool enabled);
-		Playback currentPlayback();
 		QString pause();
 		QString resume();
 		QString seek(int position);
