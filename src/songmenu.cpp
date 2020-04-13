@@ -56,7 +56,10 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 			}
 		}
 		// Actually add
-		auto result = spotify->addToPlaylist(playlistId, trackId);
+		auto plTrack = trackId.startsWith("spotify:track")
+			? trackId
+			: QString("spotify:track:%1").arg(trackId);
+		auto result = spotify->addToPlaylist(playlistId, plTrack);
 		if (!result.isEmpty())
 			mainWindow->setStatus(QString("Failed to add track to playlist: %1").arg(result));
 	});
