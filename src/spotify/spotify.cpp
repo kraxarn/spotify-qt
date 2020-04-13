@@ -48,12 +48,12 @@ QJsonDocument Spotify::get(QString url)
 void Spotify::getLater(const QString &url)
 {
 	// Prepare fetch of request
-	QMetaObject::Connection connection;
-	connection = QNetworkAccessManager::connect(networkManager, &QNetworkAccessManager::finished, [this, connection, url](QNetworkReply *reply) {
+	auto context = new QObject();
+	QNetworkAccessManager::connect(networkManager, &QNetworkAccessManager::finished, context, [this, context, url](QNetworkReply *reply) {
 		auto replyUrl = reply->url().toString();
 		if (replyUrl.right(replyUrl.length() - 27) != url)
 			return;
-		QNetworkAccessManager::disconnect(connection);
+		delete context;
 		// Parse reply as json
 		auto json = QJsonDocument::fromJson(reply->readAll());
 		reply->deleteLater();
