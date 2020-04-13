@@ -2,6 +2,7 @@
 
 #include "spotify/spotify.hpp"
 #include "mainwindow.hpp"
+#include "songmenu.hpp"
 
 #include <QDockWidget>
 #include <QVBoxLayout>

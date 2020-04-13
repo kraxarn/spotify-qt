@@ -38,6 +38,7 @@ ArtistView::ArtistView(spt::Spotify *spotify, const QString &artistId, QWidget *
 		auto item = new QListWidgetItem(track.name, topTracksList);
 		item->setIcon(QIcon(window->getAlbum(track.image)));
 		item->setData(MainWindow::RoleTrackId, track.id);
+		item->setData(MainWindow::RoleAlbumId, track.albumId);
 		topTrackIds.append(QString("spotify:track:%1").arg(track.id));
 	}
 	QListWidget::connect(topTracksList, &QListWidget::itemClicked, [this, topTrackIds, &spotify, window](QListWidgetItem *item) {
@@ -45,6 +46,16 @@ ArtistView::ArtistView(spt::Spotify *spotify, const QString &artistId, QWidget *
 			QString("spotify:track:%1").arg(item->data(MainWindow::RoleTrackId).toString()), topTrackIds);
 		if (!result.isEmpty())
 			window->setStatus(QString("Failed to start playback: %1").arg(result));
+	});
+	topTracksList->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+	QWidget::connect(topTracksList, &QWidget::customContextMenuRequested, [topTracksList, artist, window, spotify](const QPoint &pos) {
+		auto item = topTracksList->itemAt(pos);
+		auto trackId = item->data(MainWindow::RoleTrackId).toString();
+		if (trackId.isEmpty())
+			return;
+		(new SongMenu(trackId, artist.name, item->text(), artist.id,
+			item->data(MainWindow::RoleAlbumId).toString(), spotify, window))
+			->popup(topTracksList->mapToGlobal(pos));
 	});
 	tabs->addTab(topTracksList, "Popular");
 	// Albums
