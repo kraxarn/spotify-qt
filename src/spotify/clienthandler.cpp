@@ -33,7 +33,8 @@ QString ClientHandler::start()
 	// Ask for password
 	auto password = QInputDialog::getText(parent,
 		"Enter password",
-		QString("Enter password for Spotify user \"%1\":").arg(username));
+		QString("Enter password for Spotify user \"%1\":").arg(username),
+		QLineEdit::Password);
 	if (password.isEmpty())
 		return "no password provided";
 	// Attempt to start spotifyd
