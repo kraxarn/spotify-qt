@@ -14,5 +14,5 @@ class ArtistView : public QDockWidget
 	Q_OBJECT
 
 public:
-	ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *parent);
+	ArtistView(spt::Spotify *spotify, const QString &artistId, QWidget *parent);
 };

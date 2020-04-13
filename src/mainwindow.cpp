@@ -658,7 +658,7 @@ QPixmap MainWindow::getAlbum(const QString &url)
 
 void MainWindow::openArtist(const QString &artistId)
 {
-	auto view = new ArtistView(*spotify, artistId, this);
+	auto view = new ArtistView(spotify, artistId, this);
 	if (artistView != nullptr)
 	{
 		artistView->close();

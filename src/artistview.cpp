@@ -1,10 +1,10 @@
 #include "artistview.hpp"
 
-ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *parent) : QDockWidget(parent)
+ArtistView::ArtistView(spt::Spotify *spotify, const QString &artistId, QWidget *parent) : QDockWidget(parent)
 {
 	auto window = (MainWindow*) parent;
 
-	auto artist = spotify.artist(artistId);
+	auto artist = spotify->artist(artistId);
 	setFeatures(QDockWidget::DockWidgetClosable);
 	auto layout = new QVBoxLayout();
 	layout->setContentsMargins(-1, 0, -1, 0);
@@ -30,7 +30,7 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 	auto tabs = new QTabWidget(this);
 	layout->addWidget(tabs);
 	// Top tracks
-	auto topTracks = artist.topTracks(spotify);
+	auto topTracks = artist.topTracks(*spotify);
 	QStringList topTrackIds;
 	auto topTracksList = new QListWidget(tabs);
 	for (auto &track : topTracks)
@@ -41,14 +41,14 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 		topTrackIds.append(QString("spotify:track:%1").arg(track.id));
 	}
 	QListWidget::connect(topTracksList, &QListWidget::itemClicked, [this, topTrackIds, &spotify, window](QListWidgetItem *item) {
-		auto result =  spotify.playTracks(
+		auto result =  spotify->playTracks(
 			QString("spotify:track:%1").arg(item->data(MainWindow::RoleTrackId).toString()), topTrackIds);
 		if (!result.isEmpty())
 			window->setStatus(QString("Failed to start playback: %1").arg(result));
 	});
 	tabs->addTab(topTracksList, "Popular");
 	// Albums
-	auto albums = artist.albums(spotify);
+	auto albums = artist.albums(*spotify);
 	auto albumList = new QListWidget(tabs);
 	auto singleList = new QListWidget(tabs);
 	for (auto &album : albums)
@@ -70,7 +70,7 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 	tabs->addTab(albumList,  "Albums");
 	tabs->addTab(singleList, "Singles");
 	// Related artists
-	auto relatedArtists = artist.relatedArtists(spotify);
+	auto relatedArtists = artist.relatedArtists(*spotify);
 	auto relatedList = new QListWidget(tabs);
 	for (auto &related : relatedArtists)
 	{
