@@ -94,6 +94,8 @@ private:
 	mp::Service				*mediaPlayer;
 	QTreeWidget				*libraryList;
 	QDockWidget				*artistView;
+	AudioFeaturesView		*audioFeaturesView;
+	LyricsView				*lyricsView;
 	// Methods
 	QWidget *createCentralWidget();
 	QToolBar *createToolBar();

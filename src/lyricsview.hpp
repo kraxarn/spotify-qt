@@ -1,9 +1,10 @@
 #pragma once
 
+class LyricsView;
+
 #include "mainwindow.hpp"
 
 #include <QDockWidget>
-
 
 class LyricsView : public QDockWidget
 {

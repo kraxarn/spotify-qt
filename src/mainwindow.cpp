@@ -12,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	isPlaying	= false;
 	mediaPlayer	= nullptr;
 	artistView	= nullptr;
+	lyricsView	= nullptr;
+	audioFeaturesView	= nullptr;
 	// Set cache root location
 	cacheLocation = QStandardPaths::standardLocations(QStandardPaths::CacheLocation)[0];
 	// Create main cache path and album subdir
@@ -470,15 +472,31 @@ QToolBar *MainWindow::createToolBar()
 
 void MainWindow::openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name)
 {
-	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea,
-		new AudioFeaturesView(*spotify, trackId, artist, name, this));
+	auto view = new AudioFeaturesView(*spotify, trackId, artist, name, this);
+	if (audioFeaturesView != nullptr)
+	{
+		audioFeaturesView->close();
+		audioFeaturesView->deleteLater();
+	}
+	audioFeaturesView = view;
+	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, audioFeaturesView);
 }
 
 void MainWindow::openLyrics(const QString &artist, const QString &name)
 {
 	auto view = new LyricsView(artist, name, this);
-	if (view->lyricsFound())
-		addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, view);
+	if (!view->lyricsFound())
+	{
+		view->deleteLater();
+		return;
+	}
+	if (lyricsView != nullptr)
+	{
+		lyricsView->close();
+		lyricsView->deleteLater();
+	}
+	lyricsView = view;
+	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, lyricsView);
 }
 
 void MainWindow::refreshPlaylists()
