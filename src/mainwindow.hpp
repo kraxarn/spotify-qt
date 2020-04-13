@@ -63,7 +63,7 @@ public:
 	static QWidget *layoutToWidget(QLayout *layout);
 	QPixmap getAlbum(const QString &url);
 	QPixmap getImage(const QString &type, const QString &url);
-	void refreshPlaylist(spt::Playlist &playlist, bool force = false);
+	void refreshPlaylist(spt::Playlist &playlist);
 	bool loadPlaylist(spt::Playlist &playlist);
 	spt::Playback currentPlayback();
 	// I know these should be methods, I'm just lazy
