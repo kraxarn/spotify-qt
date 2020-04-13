@@ -5,7 +5,10 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 {
 	auto mainWindow = dynamic_cast<MainWindow*>(parent);
 	if (mainWindow == nullptr)
+	{
 		qDebug() << "warning: parent of song menu is not main window";
+		return;
+	}
 
 	auto trackFeatures = addAction(Icon::get("view-statistics"), "Audio features");
 	QAction::connect(trackFeatures, &QAction::triggered, [=](bool checked) {
