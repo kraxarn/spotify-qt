@@ -26,8 +26,9 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 	addSeparator();
 	// Add to playlist
 	auto addPlaylist = addMenu(Icon::get("list-add"), "Add to playlist");
-	auto currentPlaylist = mainWindow->hasPlaylistSelected()
-						   ? nullptr : &mainWindow->sptPlaylists->at(mainWindow->playlists->currentRow());
+	auto currentPlaylist = !mainWindow->hasPlaylistSelected()
+		? nullptr
+		: &mainWindow->sptPlaylists->at(mainWindow->playlists->currentRow());
 	for (auto &playlist : *mainWindow->sptPlaylists)
 	{
 		// Create main action
