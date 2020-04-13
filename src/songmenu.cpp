@@ -97,6 +97,6 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 	auto goAlbum = addAction(Icon::get("view-media-album-cover"), "Open album");
 	goAlbum->setEnabled(!mainWindow->sptContext.startsWith("spotify:album"));
 	QAction::connect(goAlbum, &QAction::triggered, [=](bool checked) {
-		mainWindow->loadAlbum(albumId);
+		mainWindow->loadAlbum(albumId, false);
 	});
 }
