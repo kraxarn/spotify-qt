@@ -205,7 +205,7 @@ QString Spotify::playTracks(const QString &track, const QStringList &all)
 	body["offset"] = QJsonObject({
 		QPair<QString, QJsonValue>("uri", track)
 	});
-	return put(currentDevice == nullptr
+	return put(currentDevice == nullptr || currentDevice.isEmpty()
 		? QString("me/player/play")
 		: QString("me/player/play?device_id=%1").arg(currentDevice), &body);
 }
