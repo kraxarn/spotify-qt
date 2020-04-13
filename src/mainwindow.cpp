@@ -476,8 +476,9 @@ void MainWindow::openAudioFeaturesWidget(const QString &trackId, const QString &
 
 void MainWindow::openLyrics(const QString &artist, const QString &name)
 {
-	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea,
-		new LyricsView(artist, name, this));
+	auto view = new LyricsView(artist, name, this);
+	if (view->lyricsFound())
+		addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, view);
 }
 
 void MainWindow::refreshPlaylists()

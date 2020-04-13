@@ -12,6 +12,7 @@ LyricsView::LyricsView(const QString &artist, const QString &name, QWidget *pare
 	if (lyricsText == "Not found")
 	{
 		window->setStatus("Lyrics not found");
+		found = false;
 		return;
 	}
 	window->setStatus("Lyrics loaded");
@@ -23,4 +24,10 @@ LyricsView::LyricsView(const QString &artist, const QString &name, QWidget *pare
 	lyricsView->setReadOnly(true);
 	setWidget(lyricsView);
 	setMinimumWidth(300);
+	found = true;
+}
+
+bool LyricsView::lyricsFound()
+{
+	return found;
 }
