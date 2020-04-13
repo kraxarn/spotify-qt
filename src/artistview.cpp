@@ -41,7 +41,7 @@ ArtistView::ArtistView(spt::Spotify *spotify, const QString &artistId, QWidget *
 		item->setData(MainWindow::RoleAlbumId, track.albumId);
 		topTrackIds.append(QString("spotify:track:%1").arg(track.id));
 	}
-	QListWidget::connect(topTracksList, &QListWidget::itemClicked, [this, topTrackIds, &spotify, window](QListWidgetItem *item) {
+	QListWidget::connect(topTracksList, &QListWidget::itemClicked, [this, topTrackIds, spotify, window](QListWidgetItem *item) {
 		auto result =  spotify->playTracks(
 			QString("spotify:track:%1").arg(item->data(MainWindow::RoleTrackId).toString()), topTrackIds);
 		if (!result.isEmpty())
