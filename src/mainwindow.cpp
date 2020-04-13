@@ -266,7 +266,7 @@ QWidget *MainWindow::createCentralWidget()
 	nowPlaying->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QLabel::connect(nowPlaying, &QWidget::customContextMenuRequested, [this](const QPoint &pos) {
 		auto track = current.item;
-		songMenu(nowPlaying, track.id, track.artist, track.name, track.artistId, track.albumId)
+		songMenu(track.id, track.artist, track.name, track.artistId, track.albumId)
 			->popup(nowPlaying->mapToGlobal(pos));
 	});
 	// Sidebar as widget
@@ -293,7 +293,7 @@ QWidget *MainWindow::createCentralWidget()
 		auto trackId = item->data(0, RoleTrackId).toString();
 		if (trackId.isEmpty())
 			return;
-		songMenu(songs, trackId, item->text(2), item->text(1),
+		songMenu(trackId, item->text(2), item->text(1),
 			item->data(0, RoleArtistId).toString(),
 			item->data(0, RoleAlbumId).toString())->popup(songs->mapToGlobal(pos));
 	});
@@ -334,7 +334,7 @@ QWidget *MainWindow::createCentralWidget()
 	return container;
 }
 
-QMenu *MainWindow::songMenu(QWidget *parent, const QString &trackId, const QString &artist,
+QMenu *MainWindow::songMenu(const QString &trackId, const QString &artist,
 	const QString &name, const QString &artistId, const QString &albumId)
 {
 	return new SongMenu(trackId, artist, name, artistId, albumId, spotify, this);

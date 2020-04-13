@@ -106,7 +106,7 @@ private:
 	void refreshed(const spt::Playback &playback);
 	void cachePlaylist(spt::Playlist &playlist);
 	bool loadPlaylistFromCache(spt::Playlist &playlist);
-	QMenu *songMenu(QWidget *parent, const QString &trackId, const QString &artist,
+	QMenu *songMenu(const QString &trackId, const QString &artist,
 		const QString &name, const QString &artistId, const QString &albumId);
 	QTreeWidgetItem *treeItem(QTreeWidget *tree, const QString &name, const QString &toolTip = QString::Null(), const QStringList &childrenItems = QStringList(QString::Null()));
 	QStringList currentTracks();
