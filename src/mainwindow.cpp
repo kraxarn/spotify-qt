@@ -337,100 +337,7 @@ QWidget *MainWindow::createCentralWidget()
 QMenu *MainWindow::songMenu(QWidget *parent, const QString &trackId, const QString &artist,
 	const QString &name, const QString &artistId, const QString &albumId)
 {
-	auto songMenu = new QMenu(parent);
-	auto trackFeatures = songMenu->addAction(Icon::get("view-statistics"), "Audio features");
-	QAction::connect(trackFeatures, &QAction::triggered, [=](bool checked) {
-		openAudioFeaturesWidget(trackId, artist, name);
-	});
-	auto lyrics = songMenu->addAction(Icon::get("view-media-lyrics"), "Lyrics");
-	QAction::connect(lyrics, &QAction::triggered, [=](bool checked) {
-		openLyrics(artist, name);
-	});
-	auto share = songMenu->addMenu(Icon::get("document-share"), "Share");
-	auto shareSongLink = share->addAction("Copy song link");
-	QAction::connect(shareSongLink, &QAction::triggered, [=](bool checked) {
-		QApplication::clipboard()->setText(
-			QString("https://open.spotify.com/track/%1")
-				.arg(QString(trackId).remove(0, QString("spotify:track:").length())));
-		setStatus("Link copied to clipboard");
-	});
-	songMenu->addSeparator();
-	// Add to playlist
-	auto addPlaylist = songMenu->addMenu(Icon::get("list-add"), "Add to playlist");
-	auto currentPlaylist = playlists->currentRow() == -1
-		? nullptr : &sptPlaylists->at(playlists->currentRow());
-	for (auto &playlist : *sptPlaylists)
-	{
-		// Create main action
-		auto action = addPlaylist->addAction(playlist.name);
-		action->setData(playlist.id);
-	}
-	QMenu::connect(addPlaylist, &QMenu::triggered, [this, trackId, currentPlaylist](QAction *action) {
-		// Check if it's already in the playlist
-		auto playlistId = action->data().toString();
-		auto tracks = playlistTracks(playlistId);
-		for (auto &track : tracks)
-		{
-			if (trackId.endsWith(track.id))
-			{
-				if (QMessageBox::information(this,
-					 "Duplicate",
-					 "Track is already in the playlist, do you want to add it anyway?",
-					 QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes)
-					== QMessageBox::No)
-					return;
-				break;
-			}
-		}
-		// Actually add
-		auto result = spotify->addToPlaylist(playlistId, trackId);
-		if (!result.isEmpty())
-			setStatus(QString("Failed to add track to playlist: %1").arg(result));
-	});
-	// Remove from playlist
-	auto remPlaylist = songMenu->addAction(Icon::get("list-remove"), "Remove from playlist");
-	QAction::connect(remPlaylist, &QAction::triggered, [this, trackId, name, artist, currentPlaylist](bool checked) {
-		// Remove from interface
-		QTreeWidgetItem *item = nullptr;
-		int i;
-		for (i = 0; i < songs->topLevelItemCount(); i++)
-		{
-			item = songs->topLevelItem(i);
-			if (item->data(0, RoleTrackId).toString() == trackId)
-				break;
-			// Failed to find
-			item = nullptr;
-		}
-		if (item == nullptr)
-		{
-			setStatus("Failed to remove track, not found in playlist");
-			return;
-		}
-		// Remove from Spotify
-		auto status = spotify->removeFromPlaylist(currentPlaylist->id, trackId,
-			item->data(0, RoleIndex).toInt());
-		// Update status
-		if (!status.isEmpty())
-		{
-			setStatus(QString("Failed to remove track from playlist: %1").arg(status));
-			return;
-		}
-		// i doesn't necessarily match item index depending on sorting order
-		songs->takeTopLevelItem(i);
-		setStatus(QString(R"(Removed "%1 - %2" from "%3")")
-			.arg(name).arg(artist).arg(currentPlaylist->name));
-	});
-	songMenu->addSeparator();
-	auto goArtist = songMenu->addAction(Icon::get("view-media-artist"), "View artist");
-	QAction::connect(goArtist, &QAction::triggered, [=](bool checked) {
-		openArtist(artistId);
-	});
-	auto goAlbum = songMenu->addAction(Icon::get("view-media-album-cover"), "Open album");
-	goAlbum->setEnabled(!sptContext.startsWith("spotify:album"));
-	QAction::connect(goAlbum, &QAction::triggered, [=](bool checked) {
-		loadAlbum(albumId);
-	});
-	return songMenu;
+	return new SongMenu(trackId, artist, name, artistId, albumId, spotify, this);
 }
 
 QToolBar *MainWindow::createToolBar()
@@ -794,4 +701,9 @@ QStringList MainWindow::currentTracks()
 spt::Playback MainWindow::currentPlayback()
 {
 	return current;
+}
+
+bool MainWindow::hasPlaylistSelected()
+{
+	return playlists->currentRow() >= 0;
 }

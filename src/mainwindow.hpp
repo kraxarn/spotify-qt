@@ -8,6 +8,7 @@
 #include "audiofeaturesview.hpp"
 #include "lyricsview.hpp"
 #include "searchview.hpp"
+#include "songmenu.hpp"
 #include "mediaplayer/service.hpp"
 #include "spotify/spotify.hpp"
 #include "spotify/playlist.hpp"
@@ -66,15 +67,21 @@ public:
 	void refreshPlaylist(spt::Playlist &playlist);
 	bool loadPlaylist(spt::Playlist &playlist);
 	spt::Playback currentPlayback();
+	void openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name);
+	void openLyrics(const QString &artist, const QString &name);
+	bool hasPlaylistSelected();
+	QVector<spt::Track> playlistTracks(const QString &playlistId);
 	// I know these should be methods, I'm just lazy
 	QString					cacheLocation;
 	QVector<spt::Playlist>	*sptPlaylists;
 	QListWidget				*playlists;
 	QAction					*search;
 	bool 					isPlaying;
+	QTreeWidget				*songs;
+	// What Spotify context we're currently in
+	QString sptContext;
 private:
 	// Widgets
-	QTreeWidget	*songs;
 	QLabel		*nowPlaying,	*position,	*nowAlbum;
 	QSlider		*progress,		*volume;
 	QAction		*playPause,		*repeat,	*shuffle;
@@ -87,8 +94,6 @@ private:
 	mp::Service				*mediaPlayer;
 	QTreeWidget				*libraryList;
 	QDockWidget				*artistView;
-	// What Spotify context we're currently in
-	QString sptContext;
 	// Methods
 	QWidget *createCentralWidget();
 	QToolBar *createToolBar();
@@ -99,11 +104,8 @@ private:
 	static QString formatTime(int ms);
 	void refresh();
 	void refreshed(const spt::Playback &playback);
-	void openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name);
-	void openLyrics(const QString &artist, const QString &name);
 	void cachePlaylist(spt::Playlist &playlist);
 	bool loadPlaylistFromCache(spt::Playlist &playlist);
-	QVector<spt::Track> playlistTracks(const QString &playlistId);
 	QMenu *songMenu(QWidget *parent, const QString &trackId, const QString &artist,
 		const QString &name, const QString &artistId, const QString &albumId);
 	QTreeWidgetItem *treeItem(QTreeWidget *tree, const QString &name, const QString &toolTip = QString::Null(), const QStringList &childrenItems = QStringList(QString::Null()));
