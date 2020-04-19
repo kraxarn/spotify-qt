@@ -520,7 +520,7 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 		auto track = tracks.at(i);
 		auto item = new QTreeWidgetItem({
 			"", track.name, track.artist, track.album,
-			formatTime(track.duration), track.addedAt.toString("yyyy-MM-dd")
+			formatTime(track.duration), track.addedAt.date().toString(Qt::SystemLocaleShortDate)
 		});
 		item->setData(0, RoleTrackId,  QString("spotify:track:%1").arg(track.id));
 		item->setData(0, RoleArtistId, track.artistId);
