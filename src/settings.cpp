@@ -172,6 +172,40 @@ void Settings::setSptPlaybackOrder(bool value)
 	settings->setValue("SpotifyPlaybackOrder", value);
 }
 
+QList<int> Settings::hiddenSongHeaders()
+{
+	QList<int> list;
+	auto headers = settings->value("HiddenSongHeaders").toString();
+	if (!headers.isEmpty())
+	{
+		for (auto &value : headers.split(','))
+			list.append(value.toInt());
+	}
+	return list;
+}
+
+void Settings::setHiddenSongHeaders(const QList<int> &values)
+{
+	QStringList list;
+	for (auto &value : values)
+		list.append(QString::number(value));
+	settings->setValue("HiddenSongHeaders", list.join(','));
+}
+
+void Settings::removeHiddenSongHeader(int id)
+{
+	auto headers = hiddenSongHeaders();
+	headers.removeOne(id);
+	setHiddenSongHeaders(headers);
+}
+
+void Settings::addHiddenSongHeader(int id)
+{
+	auto headers = hiddenSongHeaders();
+	headers.append(id);
+	setHiddenSongHeaders(headers);
+}
+
 void Settings::removeClient()
 {
 	settings->remove("ClientId");

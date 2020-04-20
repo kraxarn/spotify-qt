@@ -50,6 +50,11 @@ public:
 	bool sptPlaybackOrder();
 	void setSptPlaybackOrder(bool value);
 
+	QList<int> hiddenSongHeaders();
+	void setHiddenSongHeaders(const QList<int> &values);
+	void addHiddenSongHeader(int id);
+	void removeHiddenSongHeader(int id);
+
 	// Spotify settings
 
 	QString sptPath();

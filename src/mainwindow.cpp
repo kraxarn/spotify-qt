@@ -288,6 +288,9 @@ QWidget *MainWindow::createCentralWidget()
 	});
 	songs->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 	songs->header()->setSectionsMovable(false);
+	// Hide specified columns
+	for (auto &value : Settings().hiddenSongHeaders())
+		songs->header()->setSectionHidden(value + 1, true);
 	// Song context menu
 	songs->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(songs, &QWidget::customContextMenuRequested, [=](const QPoint &pos) {
@@ -315,6 +318,42 @@ QWidget *MainWindow::createCentralWidget()
 			setStatus(QString("Failed to start playback: %1").arg(status));
 		refresh();
 	});
+
+	// Songs header context menu
+	songs->header()->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+	QLabel::connect(songs->header(), &QWidget::customContextMenuRequested, [this](const QPoint &pos) {
+		auto menu = new QMenu(songs->header());
+
+		auto showHeaders = menu->addMenu("Columns to show");
+		//auto defaultSort = menu->addMenu("Sort by default");
+
+		auto headerTitles = QStringList({
+			"Title", "Artist", "Album", "Length", "Added"
+		});
+
+		auto headers = Settings().hiddenSongHeaders();
+
+		for (int i = 0; i < headerTitles.size(); i++)
+		{
+			auto showTitle = showHeaders->addAction(headerTitles.at(i));
+			showTitle->setCheckable(true);
+			showTitle->setChecked(!headers.contains(i));
+			showTitle->setData(QVariant(i));
+		}
+
+		QMenu::connect(menu, &QMenu::triggered, [this](QAction *action) {
+			int i = action->data().toInt();
+			Settings settings;
+			songs->header()->setSectionHidden(i + 1, !action->isChecked());
+			if (action->isChecked())
+				settings.removeHiddenSongHeader(i);
+			else
+				settings.addHiddenSongHeader(i);
+		});
+
+		menu->popup(songs->header()->mapToGlobal(pos));
+	});
+
 	// Load tracks in playlist
 	auto playlistId = Settings().lastPlaylist();
 	// Default to first in list
