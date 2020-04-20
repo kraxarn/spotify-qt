@@ -78,7 +78,6 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 	});
 	// Open artist
 	QListWidget::connect(artistList, &QListWidget::itemClicked, [this, window](QListWidgetItem *item) {
-		artistList->setEnabled(false);
 		window->openArtist(item->data(MainWindow::RoleArtistId).toString());
 		close();
 	});
