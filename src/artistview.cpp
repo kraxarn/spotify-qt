@@ -54,7 +54,7 @@ ArtistView::ArtistView(spt::Spotify *spotify, const QString &artistId, QWidget *
 		if (trackId.isEmpty())
 			return;
 		(new SongMenu(trackId, artist.name, item->text(), artist.id,
-			item->data(MainWindow::RoleAlbumId).toString(), spotify, window))
+			item->data(MainWindow::RoleAlbumId).toString(), spotify, false, window))
 			->popup(topTracksList->mapToGlobal(pos));
 	});
 	tabs->addTab(topTracksList, "Popular");

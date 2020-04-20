@@ -1,7 +1,7 @@
 #include "songmenu.hpp"
 
 SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString &name,
-		const QString &artistId, const QString &albumId, spt::Spotify *spotify, QWidget *parent) : QMenu(parent)
+		const QString &artistId, const QString &albumId, spt::Spotify *spotify, bool remFromPlaylist, QWidget *parent) : QMenu(parent)
 {
 	auto mainWindow = dynamic_cast<MainWindow*>(parent);
 	if (mainWindow == nullptr)
@@ -65,6 +65,7 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 	});
 	// Remove from playlist
 	auto remPlaylist = addAction(Icon::get("list-remove"), "Remove from playlist");
+	remPlaylist->setEnabled(remFromPlaylist);
 	QAction::connect(remPlaylist, &QAction::triggered, [this, trackId, name, artist, currentPlaylist, mainWindow, spotify](bool checked) {
 		// Remove from interface
 		QTreeWidgetItem *item = nullptr;

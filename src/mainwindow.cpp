@@ -378,7 +378,7 @@ QWidget *MainWindow::createCentralWidget()
 QMenu *MainWindow::songMenu(const QString &trackId, const QString &artist,
 	const QString &name, const QString &artistId, const QString &albumId)
 {
-	return new SongMenu(trackId, artist, name, artistId, albumId, spotify, this);
+	return new SongMenu(trackId, artist, name, artistId, albumId, spotify, true, this);
 }
 
 QToolBar *MainWindow::createToolBar()
