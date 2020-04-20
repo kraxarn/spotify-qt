@@ -323,16 +323,11 @@ QWidget *MainWindow::createCentralWidget()
 	songs->header()->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QLabel::connect(songs->header(), &QWidget::customContextMenuRequested, [this](const QPoint &pos) {
 		auto menu = new QMenu(songs->header());
-
 		auto showHeaders = menu->addMenu("Columns to show");
-		//auto defaultSort = menu->addMenu("Sort by default");
-
 		auto headerTitles = QStringList({
 			"Title", "Artist", "Album", "Length", "Added"
 		});
-
 		auto headers = Settings().hiddenSongHeaders();
-
 		for (int i = 0; i < headerTitles.size(); i++)
 		{
 			auto showTitle = showHeaders->addAction(headerTitles.at(i));
@@ -340,7 +335,6 @@ QWidget *MainWindow::createCentralWidget()
 			showTitle->setChecked(!headers.contains(i));
 			showTitle->setData(QVariant(i));
 		}
-
 		QMenu::connect(menu, &QMenu::triggered, [this](QAction *action) {
 			int i = action->data().toInt();
 			Settings settings;
@@ -350,7 +344,6 @@ QWidget *MainWindow::createCentralWidget()
 			else
 				settings.addHiddenSongHeader(i);
 		});
-
 		menu->popup(songs->header()->mapToGlobal(pos));
 	});
 
