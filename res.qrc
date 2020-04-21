@@ -26,6 +26,8 @@
         <file>res/ic/light/list-add.svg</file>
         <file>res/ic/light/list-remove.svg</file>
         <file>res/ic/light/edit-find.svg</file>
+        <file>res/ic/light/starred-symbolic.svg</file>
+        <file>res/ic/light/non-starred-symbolic.svg</file>
         <!-- Dark icons -->
         <file>res/ic/dark/application-exit.svg</file>
         <file>res/ic/dark/document-share.svg</file>
@@ -51,6 +53,8 @@
         <file>res/ic/dark/list-add.svg</file>
         <file>res/ic/dark/list-remove.svg</file>
         <file>res/ic/dark/edit-find.svg</file>
+        <file>res/ic/dark/starred-symbolic.svg</file>
+        <file>res/ic/dark/non-starred-symbolic.svg</file>
         <!-- Logos -->
         <file>res/logo/spotify-qt.svg</file>
         <file>res/logo/qt.svg</file>
