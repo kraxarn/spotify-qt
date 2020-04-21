@@ -213,3 +213,6 @@ compile_commands.json
 
 # Build folder
 build/
+
+# Idea based stuff
+.idea/
