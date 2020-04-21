@@ -417,6 +417,24 @@ QVector<Track> Spotify::savedTracks(int offset)
 	return tracks;
 }
 
+QString Spotify::addSavedTrack(const QString &trackId)
+{
+	QVariantMap body;
+	body["ids"] = QStringList({
+		trackId.right(trackId.length() - QString("spotify:track:").length())
+	});
+	return put("me/tracks", &body);
+}
+
+QString Spotify::removeSavedTrack(const QString &trackId)
+{
+	QVariantMap body;
+	body["ids"] = QStringList({
+		trackId.right(trackId.length() - QString("spotify:track:").length())
+	});
+	return del("me/tracks", &body);
+}
+
 QVector<Album> Spotify::newReleases()
 {
 	auto json = get("browse/new-releases");

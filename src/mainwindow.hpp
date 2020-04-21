@@ -71,6 +71,7 @@ public:
 	void openLyrics(const QString &artist, const QString &name);
 	bool hasPlaylistSelected();
 	QVector<spt::Track> playlistTracks(const QString &playlistId);
+	QString currentLibraryItem();
 	// I know these should be methods, I'm just lazy
 	QString					cacheLocation;
 	QVector<spt::Playlist>	*sptPlaylists;

@@ -760,3 +760,10 @@ bool MainWindow::hasPlaylistSelected()
 {
 	return playlists->currentRow() >= 0;
 }
+
+QString MainWindow::currentLibraryItem()
+{
+	return libraryList->currentIndex().row() >= 0
+		? libraryList->currentItem()->text(0)
+		: QString();
+}

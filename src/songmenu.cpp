@@ -32,6 +32,18 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 			.arg(QString(trackId).remove(0, QString("spotify:track:").length())));
 	});
 	addSeparator();
+	// Add/remove liked
+	auto isLiked = mainWindow->currentLibraryItem() == "Liked";
+	auto toggleLiked = addAction(
+		Icon::get(isLiked ? "starred-symbolic" : "non-starred-symbolic"),
+		isLiked ? "Remove from liked" : "Add to liked");
+	QAction::connect(toggleLiked, &QAction::triggered, [isLiked, spotify, trackId, mainWindow](bool checked) {
+		auto status = isLiked ? spotify->removeSavedTrack(trackId) : spotify->addSavedTrack(trackId);
+		if (!status.isEmpty())
+			mainWindow->setStatus(QString("Failed to %1 liked: %2")
+				.arg(isLiked ? "remove from" : "add to")
+				.arg(status));
+	});
 	// Add to playlist
 	auto addPlaylist = addMenu(Icon::get("list-add"), "Add to playlist");
 	auto currentPlaylist = !mainWindow->hasPlaylistSelected()

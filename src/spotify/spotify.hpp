@@ -59,6 +59,8 @@ namespace spt
 		QVector<Track> topTracks();
 		QVector<Album> savedAlbums();
 		QVector<Track> savedTracks(int offset = 0);
+		QString addSavedTrack(const QString &trackId);
+		QString removeSavedTrack(const QString &trackId);
 		QVector<Track> recentlyPlayed();
 		QVector<Album> newReleases();
 
