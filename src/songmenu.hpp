@@ -4,6 +4,7 @@
 #include "mainwindow.hpp"
 
 #include <QMenu>
+#include <QDesktopServices>
 
 class SongMenu : public QMenu
 {

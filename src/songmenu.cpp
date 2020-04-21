@@ -26,6 +26,11 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 				.arg(QString(trackId).remove(0, QString("spotify:track:").length())));
 		mainWindow->setStatus("Link copied to clipboard");
 	});
+	auto shareSongOpen = share->addAction("Open in Spotify");
+	QAction::connect(shareSongOpen, &QAction::triggered, [=](bool checked) {
+		QDesktopServices::openUrl(QString("https://open.spotify.com/track/%1")
+			.arg(QString(trackId).remove(0, QString("spotify:track:").length())));
+	});
 	addSeparator();
 	// Add to playlist
 	auto addPlaylist = addMenu(Icon::get("list-add"), "Add to playlist");
