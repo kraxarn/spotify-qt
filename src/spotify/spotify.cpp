@@ -421,7 +421,9 @@ QString Spotify::addSavedTrack(const QString &trackId)
 {
 	QVariantMap body;
 	body["ids"] = QStringList({
-		trackId.right(trackId.length() - QString("spotify:track:").length())
+		trackId.startsWith("spotify:track")
+			? trackId.right(trackId.length() - QString("spotify:track:").length())
+			: trackId
 	});
 	return put("me/tracks", &body);
 }
@@ -430,7 +432,9 @@ QString Spotify::removeSavedTrack(const QString &trackId)
 {
 	QVariantMap body;
 	body["ids"] = QStringList({
-		trackId.right(trackId.length() - QString("spotify:track:").length())
+		trackId.startsWith("spotify:track")
+			? trackId.right(trackId.length() - QString("spotify:track:").length())
+			: trackId
 	});
 	return del("me/tracks", &body);
 }
