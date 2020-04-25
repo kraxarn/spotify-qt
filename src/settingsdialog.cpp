@@ -6,7 +6,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 	auto mainLayout = new QVBoxLayout();
 	auto tabs = new QTabWidget();
 	tabs->addTab(appSettings(), "Application");
-	// Add spotifyd settings to main layout
+	tabs->addTab(interfaceSettings(), "Interface");
 	tabs->addTab(spotifySettings(), "Spotify");
 	mainLayout->addWidget(tabs);
 	// Buttons
@@ -49,11 +49,6 @@ QWidget *SettingsDialog::appSettings()
 	appLayout->addWidget(appRefresh);
 	appRefresh->hide();
 	appRefreshLabel->hide();
-	// Dark theme
-	darkTheme = new QCheckBox("Dark theme", this);
-	darkTheme->setToolTip("Use custom dark theme");
-	darkTheme->setChecked(settings.darkTheme());
-	appLayout->addWidget(darkTheme, 1, 0, 1, 2);
 	// Start client
 	sptStartClient = new QCheckBox("Autostart spotifyd", this);
 	sptStartClient->setToolTip("Start spotifyd together with the app");
@@ -83,23 +78,35 @@ QWidget *SettingsDialog::appSettings()
 	sptOrder->setToolTip("Use Spotify playback order instead of app list order");
 	sptOrder->setChecked(settings.sptPlaybackOrder());
 	appLayout->addWidget(sptOrder, 5, 0, 1, 2);
+
+QWidget *SettingsDialog::interfaceSettings()
+{
+	auto layout = new QVBoxLayout();
+	// Dark theme
+	darkTheme = new QCheckBox("Dark theme", this);
+	darkTheme->setToolTip("Use custom dark theme");
+	darkTheme->setChecked(settings.darkTheme());
+	layout->addWidget(darkTheme);
 	// Tray icon settings
 	appTrayIcon = new QCheckBox("Tray icon", this);
 	appTrayIcon->setToolTip("Add an icon to the system tray for quick access");
 	appTrayIcon->setChecked(settings.trayIcon());
-	appLayout->addWidget(appTrayIcon, 6, 0, 1, 2);
+	layout->addWidget(appTrayIcon);
 	// Desktop notifications
 	appTrayNotify = new QCheckBox("Desktop notifications", this);
 	appTrayNotify->setToolTip("Replace status bar with desktop notifications (suppresses any non-error messages)");
 	appTrayNotify->setChecked(settings.trayNotifications());
-	appLayout->addWidget(appTrayNotify, 7, 0, 1, 2);
+	layout->addWidget(appTrayNotify);
 	QCheckBox::connect(appTrayNotify, &QCheckBox::stateChanged, [this](int state) {
 		if (state == Qt::CheckState::Checked && appTrayIcon != nullptr) {
 			appTrayIcon->setChecked(true);
 		}
 	});
+	// Filler
+	layout->addStretch(1);
+	// Final layout
 	auto widget = new QWidget();
-	widget->setLayout(appLayout);
+	widget->setLayout(layout);
 	return widget;
 }
 

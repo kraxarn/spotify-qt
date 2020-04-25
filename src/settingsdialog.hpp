@@ -33,6 +33,7 @@ public:
 	explicit SettingsDialog(QWidget *parent = nullptr);
 private:
 	QWidget *appSettings();
+	QWidget *interfaceSettings();
 	QWidget *spotifySettings();
 	bool applySettings();
 	void applyFail(const QString &setting);
