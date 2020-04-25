@@ -37,7 +37,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 
 QWidget *SettingsDialog::appSettings()
 {
-	auto appLayout = new QGridLayout();
+	auto appLayout = new QVBoxLayout();
 	// Refresh interval
 	auto appRefreshLabel = new QLabel("Refresh interval", this);
 	appRefreshLabel->setToolTip("How often to refresh playback status from the Spotify servers");
@@ -54,7 +54,7 @@ QWidget *SettingsDialog::appSettings()
 	sptStartClient = new QCheckBox("Autostart spotifyd", this);
 	sptStartClient->setToolTip("Start spotifyd together with the app");
 	sptStartClient->setChecked(settings.sptStartClient());
-	appLayout->addWidget(sptStartClient, 2, 0, 1, 2);
+	appLayout->addWidget(sptStartClient);
 	// PulseAudio volume control
 	if (isPulse())
 	{
@@ -62,7 +62,7 @@ QWidget *SettingsDialog::appSettings()
 		appPulse->setToolTip(
 			"Use PulseAudio for volume control instead, only works if listening on same device");
 		appPulse->setChecked(settings.pulseVolume());
-		appLayout->addWidget(appPulse, 3, 0, 1, 2);
+		appLayout->addWidget(appPulse);
 	}
 	// MPRIS D-Bus
 	appMedia = new QCheckBox("Media controller", this);
@@ -73,12 +73,19 @@ QWidget *SettingsDialog::appSettings()
 	appMedia->setToolTip("Currently only available on Linux");
 	appMedia->setEnabled(false);
 #endif
-	appLayout->addWidget(appMedia, 4, 0, 1, 2);
+	appLayout->addWidget(appMedia);
 	// Spotify playback order
 	sptOrder = new QCheckBox("Spotify playback order", this);
 	sptOrder->setToolTip("Use Spotify playback order instead of app list order");
 	sptOrder->setChecked(settings.sptPlaybackOrder());
-	appLayout->addWidget(sptOrder, 5, 0, 1, 2);
+	appLayout->addWidget(sptOrder);
+	// Filler
+	appLayout->addStretch(1);
+	// Final layout
+	auto widget = new QWidget();
+	widget->setLayout(appLayout);
+	return widget;
+}
 
 QWidget *SettingsDialog::interfaceSettings()
 {
