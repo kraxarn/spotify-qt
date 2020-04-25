@@ -32,8 +32,8 @@ class SettingsDialog : public QDialog
 public:
 	explicit SettingsDialog(QWidget *parent = nullptr);
 private:
-	QGroupBox *appSettings();
-	QGroupBox *spotifySettings();
+	QWidget *appSettings();
+	QWidget *spotifySettings();
 	bool applySettings();
 	void applyFail(const QString &setting);
 	Settings settings;

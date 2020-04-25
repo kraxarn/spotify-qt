@@ -3,11 +3,12 @@
 SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 {
 	// Main layout
-	auto mainLayout = new QGridLayout();
-	// Add app settings to main layout
-	mainLayout->addWidget(appSettings(), 0, 0, Qt::AlignTop);
+	auto mainLayout = new QVBoxLayout();
+	auto tabs = new QTabWidget();
+	tabs->addTab(appSettings(), "Application");
 	// Add spotifyd settings to main layout
-	mainLayout->addWidget(spotifySettings(), 0, 1);
+	tabs->addTab(spotifySettings(), "Spotify");
+	mainLayout->addWidget(tabs);
 	// Buttons
 	auto okButton = new QPushButton("OK");
 	QPushButton::connect(okButton, &QPushButton::clicked, [=](bool checked) {
@@ -27,17 +28,15 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 	buttons->addWidget(okButton);
 	buttons->addWidget(applyButton);
 	buttons->addWidget(cancelButton);
-	mainLayout->addLayout(buttons, 1, 0, 1, 2);
+	mainLayout->addLayout(buttons);
 	// Set layout
 	setWindowTitle("Settings");
 	setLayout(mainLayout);
 }
 
-QGroupBox *SettingsDialog::appSettings()
+QWidget *SettingsDialog::appSettings()
 {
-	auto appSettings = new QGroupBox("Application", this);
-	auto appLayout = new QGridLayout(this);
-	appSettings->setLayout(appLayout);
+	auto appLayout = new QGridLayout();
 	// Refresh interval
 	auto appRefreshLabel = new QLabel("Refresh interval", this);
 	appRefreshLabel->setToolTip("How often to refresh playback status from the Spotify servers");
@@ -99,15 +98,15 @@ QGroupBox *SettingsDialog::appSettings()
 			appTrayIcon->setChecked(true);
 		}
 	});
-	return appSettings;
+	auto widget = new QWidget();
+	widget->setLayout(appLayout);
+	return widget;
 }
 
-QGroupBox *SettingsDialog::spotifySettings()
+QWidget *SettingsDialog::spotifySettings()
 {
 	// Main container for everything
-	auto sptSettings = new QGroupBox("spotifyd", this);
-	auto sptMainLayout = new QVBoxLayout(this);
-	sptSettings->setLayout(sptMainLayout);
+	auto sptMainLayout = new QVBoxLayout();
 	// Executable settings
 	auto sptPathLayout = new QHBoxLayout();
 	sptPath = new QLineEdit(settings.sptPath(), this);
@@ -153,7 +152,9 @@ QGroupBox *SettingsDialog::spotifySettings()
 	// Filler
 	sptMainLayout->addStretch(1);
 	// Final layout
-	return sptSettings;
+	auto widget = new QWidget();
+	widget->setLayout(sptMainLayout);
+	return widget;
 }
 
 QString SettingsDialog::sptClient(const QString &path)
