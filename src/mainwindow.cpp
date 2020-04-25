@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	mediaPlayer	= nullptr;
 	artistView	= nullptr;
 	lyricsView	= nullptr;
+	trayIcon	= nullptr;
 	audioFeaturesView	= nullptr;
 	// Set cache root location
 	cacheLocation = QStandardPaths::standardLocations(QStandardPaths::CacheLocation)[0];
@@ -58,6 +59,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	spt::Spotify::connect(spotify, &spt::Spotify::gotPlayback, [this](const spt::Playback &playback) {
 		refreshed(playback);
 	});
+	// Create tray icon if specified
+	if (settings.trayIcon())
+		trayIcon = new TrayIcon(spotify, this);
 }
 
 MainWindow::~MainWindow()
@@ -72,6 +76,13 @@ MainWindow::~MainWindow()
 	delete	sptPlaylists;
 	delete	spotify;
 	delete	sptClient;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+	if (trayIcon != nullptr)
+		delete trayIcon;
+	event->accept();
 }
 
 void MainWindow::refresh()

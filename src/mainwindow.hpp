@@ -9,6 +9,7 @@
 #include "lyricsview.hpp"
 #include "searchview.hpp"
 #include "songmenu.hpp"
+#include "trayicon.hpp"
 #include "mediaplayer/service.hpp"
 #include "spotify/spotify.hpp"
 #include "spotify/playlist.hpp"
@@ -41,6 +42,7 @@
 #include <QMapIterator>
 #include <QClipboard>
 #include <QFileInfo>
+#include <QCloseEvent>
 
 class MainWindow : public QMainWindow
 {
@@ -48,6 +50,11 @@ class MainWindow : public QMainWindow
 public:
 	explicit MainWindow(QWidget *parent = nullptr);
 	~MainWindow() override;
+
+protected:
+	void closeEvent(QCloseEvent *event) override;
+
+public:
 	static void applyPalette(Settings::Palette palette);
 	// Constants for track info
 	enum DataRole {
@@ -97,6 +104,7 @@ private:
 	QDockWidget				*artistView;
 	AudioFeaturesView		*audioFeaturesView;
 	LyricsView				*lyricsView;
+	TrayIcon				*trayIcon;
 	// Methods
 	QWidget *createCentralWidget();
 	QToolBar *createToolBar();
