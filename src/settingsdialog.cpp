@@ -199,7 +199,9 @@ QWidget *SettingsDialog::aboutSettings()
 	layout->addSpacing(8);
 	auto options = new QGridLayout();
 	// About Qt
-	auto aboutQt = new QPushButton(Icon::get("logo:qt"), "About Qt");
+	auto aboutQt = new QPushButton(Icon::get("logo:qt"),
+		QString("About Qt %1.%2")
+			.arg(QT_VERSION_MAJOR).arg(QT_VERSION_MINOR));
 	aboutQt->setFlat(true);
 	QAbstractButton::connect(aboutQt, &QPushButton::clicked, [this](bool checked) {
 		QMessageBox::aboutQt(this);
