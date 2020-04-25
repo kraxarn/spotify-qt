@@ -55,6 +55,12 @@ public:
 	void addHiddenSongHeader(int id);
 	void removeHiddenSongHeader(int id);
 
+	bool trayIcon();
+	void setTrayIcon(bool value);
+
+	bool trayNotifications();
+	void setTrayNotifications(bool value);
+
 	// Spotify settings
 
 	QString sptPath();

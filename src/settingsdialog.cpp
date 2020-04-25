@@ -84,7 +84,21 @@ QGroupBox *SettingsDialog::appSettings()
 	sptOrder->setToolTip("Use Spotify playback order instead of app list order");
 	sptOrder->setChecked(settings.sptPlaybackOrder());
 	appLayout->addWidget(sptOrder, 5, 0, 1, 2);
-
+	// Tray icon settings
+	appTrayIcon = new QCheckBox("Tray icon", this);
+	appTrayIcon->setToolTip("Add an icon to the system tray for quick access");
+	appTrayIcon->setChecked(settings.trayIcon());
+	appLayout->addWidget(appTrayIcon, 6, 0, 1, 2);
+	// Desktop notifications
+	appTrayNotify = new QCheckBox("Desktop notifications", this);
+	appTrayNotify->setToolTip("Replace status bar with desktop notifications (suppresses any non-error messages)");
+	appTrayNotify->setChecked(settings.trayNotifications());
+	appLayout->addWidget(appTrayNotify, 7, 0, 1, 2);
+	QCheckBox::connect(appTrayNotify, &QCheckBox::stateChanged, [this](int state) {
+		if (state == Qt::CheckState::Checked && appTrayIcon != nullptr) {
+			appTrayIcon->setChecked(true);
+		}
+	});
 	return appSettings;
 }
 
@@ -199,6 +213,17 @@ bool SettingsDialog::applySettings()
 		sptVersion->setText(client);
 		settings.setSptPath(sptPath->text());
 	}
+
+	// Desktop notifications and tray icon
+	if (appTrayNotify->isChecked() && !appTrayIcon->isChecked())
+	{
+		appTrayIcon->setChecked(true);
+		QMessageBox::information(
+			this, "Desktop Notifications",
+			"Desktop notifications requires tray icon to be enabled, so it was enabled");
+	}
+	settings.setTrayIcon(appTrayIcon->isChecked());
+	settings.setTrayNotifications(appTrayNotify->isChecked());
 
 	// Other Spotify stuff
 	settings.setSptPlaybackOrder(sptOrder->isChecked());

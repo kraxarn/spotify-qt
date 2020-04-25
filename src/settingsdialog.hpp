@@ -49,4 +49,6 @@ private:
 	QCheckBox	*appMedia		= nullptr;
 	QCheckBox	*darkTheme		= nullptr;
 	QCheckBox	*sptOrder		= nullptr;
+	QCheckBox	*appTrayIcon	= nullptr;
+	QCheckBox	*appTrayNotify	= nullptr;
 };

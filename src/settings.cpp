@@ -15,6 +15,18 @@ QString Settings::fileName()
 	return settings->fileName();
 }
 
+void Settings::removeClient()
+{
+	settings->remove("ClientId");
+	settings->remove("ClientSecret");
+}
+
+void Settings::removeTokens()
+{
+	settings->remove("AccessToken");
+	settings->remove("RefreshToken");
+}
+
 QString Settings::accessToken()
 {
 	return settings->value("AccessToken").toString();
@@ -206,14 +218,22 @@ void Settings::addHiddenSongHeader(int id)
 	setHiddenSongHeaders(headers);
 }
 
-void Settings::removeClient()
+bool Settings::trayIcon()
 {
-	settings->remove("ClientId");
-	settings->remove("ClientSecret");
+	return settings->value("TrayIcon", false).toBool();
 }
 
-void Settings::removeTokens()
+void Settings::setTrayIcon(bool value)
 {
-	settings->remove("AccessToken");
-	settings->remove("RefreshToken");
+	settings->setValue("TrayIcon", value);
+}
+
+bool Settings::trayNotifications()
+{
+	return settings->value("TrayNotifications", false).toBool();
+}
+
+void Settings::setTrayNotifications(bool value)
+{
+	settings->setValue("TrayNotifications", value);
 }
