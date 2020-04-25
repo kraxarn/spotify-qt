@@ -8,7 +8,8 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 	tabs->addTab(appSettings(), "Application");
 	tabs->addTab(interfaceSettings(), "Interface");
 	tabs->addTab(spotifySettings(), "Spotify");
-	mainLayout->addWidget(tabs);
+	tabs->addTab(aboutSettings(), "About");
+	mainLayout->addWidget(tabs, 1);
 	// Buttons
 	auto okButton = new QPushButton("OK");
 	QPushButton::connect(okButton, &QPushButton::clicked, [=](bool checked) {
@@ -169,6 +170,94 @@ QWidget *SettingsDialog::spotifySettings()
 	// Final layout
 	auto widget = new QWidget();
 	widget->setLayout(sptMainLayout);
+	return widget;
+}
+
+QWidget *SettingsDialog::aboutSettings()
+{
+	auto layout = new QVBoxLayout();
+
+	// Title
+	auto title = new QHBoxLayout();
+	title->setAlignment(Qt::AlignHCenter);
+	auto titleLogo = new QLabel();
+	titleLogo->setPixmap(Icon::get("logo:spotify-qt").pixmap(64, 64));
+	title->addWidget(titleLogo);
+	layout->addLayout(title);
+	auto titleVersion = new QVBoxLayout();
+	titleVersion->setSpacing(0);
+	titleVersion->setAlignment(Qt::AlignVCenter);
+	auto titleAppName = new QLabel("spotify-qt");
+	auto appNameFont = titleAppName->font();
+	appNameFont.setPointSize(appNameFont.pointSizeF() * 1.5);
+	titleAppName->setFont(appNameFont);
+	titleVersion->addWidget(titleAppName);
+	titleVersion->addWidget(new QLabel(APP_VERSION));
+	title->addLayout(titleVersion);
+
+	// Grid with buttons
+	layout->addSpacing(8);
+	auto options = new QGridLayout();
+	// About Qt
+	auto aboutQt = new QPushButton(Icon::get("logo:qt"), "About Qt");
+	aboutQt->setFlat(true);
+	QAbstractButton::connect(aboutQt, &QPushButton::clicked, [this](bool checked) {
+		QMessageBox::aboutQt(this);
+	});
+	options->addWidget(aboutQt);
+	// Check for updates
+	auto checkUpdates = new QPushButton(Icon::get("download"), "Check for updates");
+	checkUpdates->setFlat(true);
+	QAbstractButton::connect(checkUpdates, &QPushButton::clicked, [this, checkUpdates](bool checked) {
+		auto window = dynamic_cast<MainWindow*>(parent());
+		if (window == nullptr)
+			return;
+		checkUpdates->setEnabled(false);
+		checkUpdates->setText("Please wait...");
+		auto json = window->getJson("https://api.github.com/repos/kraxarn/spotify-qt/releases");
+		auto latest = json.array()[0].toObject()["tag_name"].toString();
+		auto isLatest = latest == APP_VERSION;
+		checkUpdates->setText(isLatest
+			? "None found"
+			: "Update found");
+		if (!isLatest)
+			window->setStatus(
+				QString("Update found, latest version is %1, you have version %2")
+					.arg(latest)
+					.arg(APP_VERSION), true);
+		checkUpdates->setEnabled(true);
+	});
+	options->addWidget(checkUpdates, 0, 1);
+	// Open cache directory
+	auto openCache = new QPushButton(Icon::get("folder-temp"), "Open cache directory");
+	openCache->setFlat(true);
+	QAbstractButton::connect(openCache, &QPushButton::clicked, [this](bool checked) {
+		auto window = dynamic_cast<MainWindow*>(parent());
+		if (window == nullptr)
+			return;
+		if (!QDesktopServices::openUrl(QUrl(window->cacheLocation)))
+			QMessageBox::warning(this,
+				"No path",
+				QString("Failed to open path: %1").arg(window->cacheLocation));
+	});
+	options->addWidget(openCache);
+	// Open config file
+	auto openConfig = new QPushButton(Icon::get("folder-txt"), "Open config file");
+	openConfig->setFlat(true);
+	QAbstractButton::connect(openConfig, &QPushButton::clicked, [this](bool checked) {
+		if (!QDesktopServices::openUrl(QUrl(Settings().fileName())))
+			QMessageBox::warning(this,
+				"No file",
+				QString("Failed to open file: %1").arg(Settings().fileName()));
+	});
+	options->addWidget(openConfig);
+	layout->addLayout(options, 1);
+
+	// Filler
+	layout->addStretch(1);
+	// Final layout
+	auto widget = new QWidget();
+	widget->setLayout(layout);
 	return widget;
 }
 

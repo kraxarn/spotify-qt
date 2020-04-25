@@ -35,6 +35,7 @@ private:
 	QWidget *appSettings();
 	QWidget *interfaceSettings();
 	QWidget *spotifySettings();
+	QWidget *aboutSettings();
 	bool applySettings();
 	void applyFail(const QString &setting);
 	Settings settings;

@@ -2,49 +2,9 @@
 
 MainMenu::MainMenu(spt::Spotify &spotify, QWidget *parent) : QMenu(parent), parent(parent), spotify(spotify)
 {
-	auto window = (MainWindow*) parent;
 	// About
-	auto aboutMenu = new QMenu("About");
-	auto aboutQt = createMenuAction("logo:qt", "About Qt");
-	QAction::connect(aboutQt, &QAction::triggered, [parent](bool checked) {
-		QMessageBox::aboutQt(parent);
-	});
-	auto checkForUpdates = createMenuAction("download", "Check for updates");
-	QAction::connect(checkForUpdates, &QAction::triggered, [window](bool checked) {
-		window->setStatus("Checking for updates...");
-		auto json = window->getJson("https://api.github.com/repos/kraxarn/spotify-qt/releases");
-		auto latest = json.array()[0].toObject()["tag_name"].toString();
-		window->setStatus(latest == APP_VERSION
-			? "You have the latest version"
-			: QString("Update found, latest version is %1, you have version %2")
-				.arg(latest)
-				.arg(APP_VERSION));
-	});
-	aboutMenu->setIcon(Icon::get("help-about"));
-	aboutMenu->addAction(QString("spotify-qt %1").arg(APP_VERSION))->setDisabled(true);
-	aboutMenu->addActions({
-		aboutQt, checkForUpdates
-	});
-	aboutMenu->addSeparator();
-	QAction::connect(
-		aboutMenu->addAction(Icon::get("folder-temp"), "Open cache directory"),
-		&QAction::triggered, [parent, window](bool checked) {
-			if (!QDesktopServices::openUrl(QUrl(window->cacheLocation)))
-				QMessageBox::warning(parent,
-					 "No path",
-					 QString("Failed to open path: %1").arg(window->cacheLocation));
-		}
-	);
-	QAction::connect(
-		aboutMenu->addAction(Icon::get("folder-txt"), "Open config file"),
-		&QAction::triggered, [parent](bool checked) {
-			if (!QDesktopServices::openUrl(QUrl(Settings().fileName())))
-				QMessageBox::warning(parent,
-					 "No file",
-					 QString("Failed to open file: %1").arg(Settings().fileName()));
-		}
-	);
-	addMenu(aboutMenu);
+	addAction(Icon::get("help-about"),
+		QString("spotify-qt %1").arg(APP_VERSION))->setDisabled(true);
 	// Device selection
 	auto deviceMenu = new QMenu("Device");
 	deviceMenu->setIcon(Icon::get("speaker"));
