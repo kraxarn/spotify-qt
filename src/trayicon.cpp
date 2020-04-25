@@ -22,7 +22,8 @@ TrayIcon::TrayIcon(spt::Spotify *spotify, QObject *parent) : QSystemTrayIcon(par
 		spotify->next();
 	});
 	contextMenu->addSeparator();
-	contextMenu->addAction(Icon::get("application-exit"), "Quit");
+	auto quit = contextMenu->addAction(Icon::get("application-exit"), "Quit");
+	QAction::connect(quit, &QAction::triggered, QCoreApplication::quit);
 
 	setIcon(QIcon::fromTheme("spotify-qt", Icon::get("logo:spotify-qt")));
 	setContextMenu(contextMenu);
