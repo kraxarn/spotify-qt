@@ -104,7 +104,7 @@ QGroupBox *SettingsDialog::spotifySettings()
 	sptPathBrowse->setFlat(true);
 	QAbstractButton::connect(sptPathBrowse, &QAbstractButton::clicked, [this](bool checked) {
 		auto filePath = QFileDialog::getOpenFileName(this, "spotifyd path", "/");
-		if (!filePath.isEmpty())
+		if (!filePath.isEmpty() && sptPath != nullptr)
 			sptPath->setText(filePath);
 	});
 	sptPathLayout->addWidget(sptPathBrowse);
@@ -112,7 +112,11 @@ QGroupBox *SettingsDialog::spotifySettings()
 	// Spotifyd version
 	sptVersion = new QLabel("(no spotifyd provided)", this);
 	if (!settings.sptPath().isEmpty())
-		sptVersion->setText(sptClient(settings.sptPath()));
+	{
+		auto client = sptClient(settings.sptPath());
+		if (sptVersion != nullptr)
+			sptVersion->setText(client);
+	}
 	sptVersion->setEnabled(false);
 	sptMainLayout->addWidget(sptVersion);
 	// Layout for all settings
