@@ -217,7 +217,7 @@ QWidget *MainWindow::createCentralWidget()
 		// Play in context of all tracks
 		auto status = spotify->playTracks(trackIds.first(), trackIds);
 		if (!status.isEmpty())
-			setStatus(QString("Failed to start playback: %1").arg(status));
+			setStatus(QString("Failed to start playback: %1").arg(status), true);
 	});
 	// When expanding top artists, update it
 	QTreeWidget::connect(libraryList, &QTreeWidget::itemExpanded, [this](QTreeWidgetItem *item) {
@@ -268,7 +268,7 @@ QWidget *MainWindow::createCentralWidget()
 		auto result = spotify->playTracks(
 			QString("spotify:playlist:%1").arg(currentPlaylist.id));
 		if (!result.isEmpty())
-			setStatus(QString("Failed to start playlist playback: %1").arg(result));
+			setStatus(QString("Failed to start playlist playback: %1").arg(result), true);
 	});
 	auto playlistContainer = createGroupBox(QVector<QWidget*>() << playlists);
 	playlistContainer->setTitle("Playlists");
@@ -326,7 +326,7 @@ QWidget *MainWindow::createCentralWidget()
 		auto trackId = item->data(0, RoleTrackId).toString();
 		if (trackId.isEmpty())
 		{
-			setStatus("Failed to start playback: track not found");
+			setStatus("Failed to start playback: track not found", true);
 			return;
 		}
 		// If we played from library, we don't have any context
@@ -335,7 +335,7 @@ QWidget *MainWindow::createCentralWidget()
 			: spotify->playTracks(trackId, sptContext);
 
 		if (!status.isEmpty())
-			setStatus(QString("Failed to start playback: %1").arg(status));
+			setStatus(QString("Failed to start playback: %1").arg(status), true);
 		refresh();
 	});
 
@@ -427,20 +427,20 @@ QToolBar *MainWindow::createToolBar()
 		{
 			setStatus(QString("Failed to %1 playback: %2")
 				.arg(playPause->iconText() == "Pause" ? "pause" : "resume")
-				.arg(status));
+				.arg(status), true);
 		}
 	});
 	auto next = toolBar->addAction(Icon::get("media-skip-forward"),  "Next");
 	QAction::connect(previous, &QAction::triggered, [=](bool checked) {
 		auto status = spotify->previous();
 		if (!status.isEmpty())
-			setStatus(QString("Failed to go to previous track: %1").arg(status));
+			setStatus(QString("Failed to go to previous track: %1").arg(status), true);
 		refresh();
 	});
 	QAction::connect(next, &QAction::triggered, [=](bool checked) {
 		auto status = spotify->next();
 		if (!status.isEmpty())
-			setStatus(QString("Failed to go to next track: %1").arg(status));
+			setStatus(QString("Failed to go to next track: %1").arg(status), true);
 		refresh();
 	});
 	// Progress
@@ -449,7 +449,7 @@ QToolBar *MainWindow::createToolBar()
 	QSlider::connect(progress, &QAbstractSlider::sliderReleased, [=]() {
 		auto status = spotify->seek(progress->value());
 		if (!status.isEmpty())
-			setStatus(QString("Failed to seek: %1").arg(status));
+			setStatus(QString("Failed to seek: %1").arg(status), true);
 		if (mediaPlayer != nullptr)
 			mediaPlayer->stateUpdated();
 	});
@@ -465,14 +465,14 @@ QToolBar *MainWindow::createToolBar()
 	QAction::connect(shuffle, &QAction::triggered, [=](bool checked) {
 		auto status = spotify->setShuffle(checked);
 		if (!status.isEmpty())
-			setStatus(QString("Failed to toggle shuffle: %1").arg(status));
+			setStatus(QString("Failed to toggle shuffle: %1").arg(status), true);
 	});
 	repeat = toolBar->addAction(Icon::get("media-playlist-repeat"), "Repeat");
 	repeat->setCheckable(true);
 	QAction::connect(repeat, &QAction::triggered, [=](bool checked) {
 		auto status = spotify->setRepeat(checked ? "context" : "off");
 		if (!status.isEmpty())
-			setStatus(QString("Failed to toggle repeat: %1").arg(status));
+			setStatus(QString("Failed to toggle repeat: %1").arg(status), true);
 	});
 	// Volume slider
 	volume = new QSlider(this);
@@ -515,7 +515,7 @@ QToolBar *MainWindow::createToolBar()
 		QSlider::connect(volume, &QAbstractSlider::sliderReleased, [=]() {
 			auto status = spotify->setVolume(volume->value() * 5);
 			if (!status.isEmpty())
-				setStatus(QString("Failed to set volume: %1").arg(status));
+				setStatus(QString("Failed to set volume: %1").arg(status), true);
 		});
 	}
 	// Return final tool bar
@@ -594,7 +594,7 @@ bool MainWindow::loadAlbum(const QString &albumId, bool ignoreEmpty)
 {
 	auto tracks = spotify->albumTracks(albumId);
 	if (ignoreEmpty && tracks->length() <= 1)
-		setStatus("Album only contains one song or is empty");
+		setStatus("Album only contains one song or is empty", true);
 	else
 	{
 		playlists->setCurrentRow(-1);
