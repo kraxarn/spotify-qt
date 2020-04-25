@@ -115,7 +115,7 @@ void MainMenu::refreshDevices(QMenu *deviceMenu)
 	// Check if empty
 	if (devices.isEmpty())
 	{
-		window->setStatus("No devices found");
+		window->setStatus("No devices found", true);
 		deviceMenu->addAction("No devices found")->setDisabled(true);
 		return;
 	}
@@ -132,7 +132,7 @@ void MainMenu::refreshDevices(QMenu *deviceMenu)
 			if (!status.isEmpty())
 			{
 				action->setChecked(false);
-				window->setStatus(QString("Failed to set device: %1").arg(status));
+				window->setStatus(QString("Failed to set device: %1").arg(status), true);
 			}
 			else
 				action->setDisabled(true);

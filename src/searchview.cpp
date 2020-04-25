@@ -74,7 +74,7 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 	// Open album
 	QTreeWidget::connect(albumList, &QTreeWidget::itemClicked, [this, window](QTreeWidgetItem *item, int column) {
 		if (!window->loadAlbum(item->data(0, MainWindow::RoleAlbumId).toString(), false))
-			window->setStatus(QString("Failed to load album"));
+			window->setStatus(QString("Failed to load album"), true);
 	});
 	// Open artist
 	QListWidget::connect(artistList, &QListWidget::itemClicked, [this, window](QListWidgetItem *item) {
@@ -85,7 +85,7 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 	QListWidget::connect(playlistList, &QListWidget::itemClicked, [this, window](QListWidgetItem *item) {
 		auto playlist = spt::Playlist(item->data(0x100).value<QJsonObject>());
 		if (!window->loadPlaylist(playlist))
-			window->setStatus(QString("Failed to load playlist"));
+			window->setStatus(QString("Failed to load playlist"), true);
 		else
 			window->playlists->setCurrentRow(-1);
 	});
@@ -96,7 +96,7 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 			.arg(item->data(0, MainWindow::RoleTrackId).toString());
 		auto status = spotify.playTracks(trackId, QStringList(trackId));
 		if (!status.isEmpty())
-			window->setStatus(QString("Failed to play track: %1").arg(status));
+			window->setStatus(QString("Failed to play track: %1").arg(status), true);
 	});
 
 	// Setup dock

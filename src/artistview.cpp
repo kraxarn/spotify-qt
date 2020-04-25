@@ -45,7 +45,7 @@ ArtistView::ArtistView(spt::Spotify *spotify, const QString &artistId, QWidget *
 		auto result =  spotify->playTracks(
 			QString("spotify:track:%1").arg(item->data(MainWindow::RoleTrackId).toString()), topTrackIds);
 		if (!result.isEmpty())
-			window->setStatus(QString("Failed to start playback: %1").arg(result));
+			window->setStatus(QString("Failed to start playback: %1").arg(result), true);
 	});
 	topTracksList->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(topTracksList, &QWidget::customContextMenuRequested, [topTracksList, artist, window, spotify](const QPoint &pos) {
@@ -74,7 +74,7 @@ ArtistView::ArtistView(spt::Spotify *spotify, const QString &artistId, QWidget *
 	}
 	auto loadAlbumId = [this, window](QListWidgetItem *item) {
 		if (!window->loadAlbum(item->data(MainWindow::RoleAlbumId).toString(), false))
-			window->setStatus(QString("Failed to load album"));
+			window->setStatus(QString("Failed to load album"), true);
 	};
 	QListWidget::connect(albumList,  &QListWidget::itemClicked, loadAlbumId);
 	QListWidget::connect(singleList, &QListWidget::itemClicked, loadAlbumId);

@@ -42,7 +42,7 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 		if (!status.isEmpty())
 			mainWindow->setStatus(QString("Failed to %1 liked: %2")
 				.arg(isLiked ? "remove from" : "add to")
-				.arg(status));
+				.arg(status), true);
 	});
 	// Add to playlist
 	auto addPlaylist = addMenu(Icon::get("list-add"), "Add to playlist");
@@ -78,7 +78,7 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 			: QString("spotify:track:%1").arg(trackId);
 		auto result = spotify->addToPlaylist(playlistId, plTrack);
 		if (!result.isEmpty())
-			mainWindow->setStatus(QString("Failed to add track to playlist: %1").arg(result));
+			mainWindow->setStatus(QString("Failed to add track to playlist: %1").arg(result), true);
 	});
 	// Remove from playlist
 	auto remPlaylist = addAction(Icon::get("list-remove"), "Remove from playlist");
@@ -97,7 +97,7 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 		}
 		if (item == nullptr)
 		{
-			mainWindow->setStatus("Failed to remove track, not found in playlist");
+			mainWindow->setStatus("Failed to remove track, not found in playlist", true);
 			return;
 		}
 		// Remove from Spotify
@@ -106,7 +106,7 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 		// Update status
 		if (!status.isEmpty())
 		{
-			mainWindow->setStatus(QString("Failed to remove track from playlist: %1").arg(status));
+			mainWindow->setStatus(QString("Failed to remove track from playlist: %1").arg(status), true);
 			return;
 		}
 		// i doesn't necessarily match item index depending on sorting order

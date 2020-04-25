@@ -65,7 +65,7 @@ public:
 	};
 	QByteArray get(const QString &url);
 	QJsonDocument getJson(const QString &url);
-	void setStatus(const QString &message);
+	void setStatus(const QString &message, bool important = false);
 	bool loadAlbum(const QString &albumId, bool ignoreEmpty = true);
 	void openArtist(const QString &artistId);
 	static QWidget *layoutToWidget(QLayout *layout);

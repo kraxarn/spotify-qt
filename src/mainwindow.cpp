@@ -649,10 +649,13 @@ void MainWindow::refreshPlaylist(spt::Playlist &playlist)
 	cachePlaylist(newPlaylist);
 }
 
-void MainWindow::setStatus(const QString &message)
+void MainWindow::setStatus(const QString &message, bool important)
 {
 	if (trayIcon != nullptr && Settings().trayNotifications())
-		trayIcon->message(message);
+	{
+		if (important)
+			trayIcon->message(message);
+	}
 	else
 		statusBar()->showMessage(message, 5000);
 }

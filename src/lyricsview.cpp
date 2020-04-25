@@ -11,7 +11,7 @@ LyricsView::LyricsView(const QString &artist, const QString &name, QWidget *pare
 	auto lyricsText = QString(reply).trimmed();
 	if (lyricsText == "Not found")
 	{
-		window->setStatus("Lyrics not found");
+		window->setStatus("Lyrics not found", true);
 		found = false;
 		return;
 	}
