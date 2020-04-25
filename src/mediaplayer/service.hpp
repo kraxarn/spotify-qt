@@ -10,7 +10,7 @@ namespace mp { class Service; }
 
 namespace mp
 {
-	class Service : public QObject //, public QDBusContext
+	class Service : public QObject
 	{
 	Q_OBJECT
 
@@ -33,6 +33,8 @@ namespace mp
 		void volumeChanged();
 
 		void tick(qint64 newPos);
+
+		bool isValid();
 
 	private:
 		spt::Spotify		*spotify;

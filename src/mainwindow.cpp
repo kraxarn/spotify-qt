@@ -53,7 +53,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	}
 	// Start media controller if specified
 	if (settings.mediaController())
+	{
 		mediaPlayer = new mp::Service(spotify, this);
+		// Check if something went wrong during init
+		if (!mediaPlayer->isValid())
+		{
+			delete mediaPlayer;
+			mediaPlayer = nullptr;
+		}
+	}
 	// Start listening to current playback responses
 	spt::Spotify::connect(spotify, &spt::Spotify::gotPlayback, [this](const spt::Playback &playback) {
 		refreshed(playback);

@@ -5,7 +5,7 @@ using namespace mp;
 #define SERVICE_NAME "org.mpris.MediaPlayer2.spotify-qt"
 #define SERVICE_PATH "/org/mpris/MediaPlayer2"
 
-Service::Service(spt::Spotify *spotify, QObject *parent) : spotify(spotify), QObject(parent)
+Service::Service(spt::Spotify *spotify, QObject *parent) : spotify(spotify), playerPlayer(nullptr), QObject(parent)
 {
 	if (!QDBusConnection::sessionBus().registerService(SERVICE_NAME))
 	{
@@ -69,22 +69,7 @@ spt::Playback Service::currentPlayback()
 	return ((MainWindow*) parent())->currentPlayback();
 }
 
-/*void Service::updateMetadata(const QVariantMap &metadata)
+bool Service::isValid()
 {
-	//properties->updateMetadata(metadata);
-
-	QVariantMap properties;
-	properties["Metadata"] = metadata;
-
-	auto msg = QDBusMessage::createSignal(SERVICE_PATH,
-		"org.freedesktop.DBus.Properties", "PropertiesChanged");
-	msg << "org.mpris.MediaPlayer2.Player";
-	msg << metadata;
-	msg << QStringList();
-	QDBusConnection::sessionBus().send(msg);
+	return playerPlayer != nullptr;
 }
-
-void Service::updateSeeked(qint64 position)
-{
-	emit playerPlayer->Seeked(position);
-}*/
