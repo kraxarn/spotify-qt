@@ -5,6 +5,7 @@ class TrayIcon;
 #include "icon.hpp"
 #include "mainwindow.hpp"
 #include "spotify/spotify.hpp"
+#include "spotify/playback.hpp"
 
 #include <QSystemTrayIcon>
 #include <QMenu>
@@ -19,8 +20,9 @@ public:
 	void message(const QString &message);
 
 private:
-	bool			isPlaying();
+	spt::Playback	playback();
 	QMenu 			*contextMenu;
 	QAction			*playPause;
+	QAction			*currentTrack;
 	spt::Spotify	*spotify;
 };

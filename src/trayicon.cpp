@@ -3,13 +3,16 @@
 TrayIcon::TrayIcon(spt::Spotify *spotify, QObject *parent) : QSystemTrayIcon(parent), spotify(spotify)
 {
 	contextMenu = new QMenu();
+	currentTrack = contextMenu->addAction("-");
+	currentTrack->setEnabled(false);
+	contextMenu->addSeparator();
 	auto previous = contextMenu->addAction(Icon::get("media-skip-backward"), "Previous");
 	QAction::connect(previous, &QAction::triggered, [spotify]() {
 		spotify->previous();
 	});
 	playPause = contextMenu->addAction(Icon::get("media-playback-start"), "Play");
 	QAction::connect(playPause, &QAction::triggered, [this](bool checked) {
-		if (isPlaying())
+		if (playback().isPlaying)
 			this->spotify->pause();
 		else
 			this->spotify->resume();
@@ -34,9 +37,13 @@ TrayIcon::TrayIcon(spt::Spotify *spotify, QObject *parent) : QSystemTrayIcon(par
 	});
 
 	QMenu::connect(contextMenu, &QMenu::aboutToShow, [this]() {
-		auto playing = isPlaying();
-		playPause->setIcon(Icon::get(playing ? "media-playback-pause" : "media-playback-start"));
-		playPause->setText(playing ? "Pause" : "Play");
+		auto current = playback();
+		currentTrack->setText(QString("%1 - %2")
+			.arg(current.item.artist)
+			.arg(current.item.name));
+		auto isPlaying = current.isPlaying;
+		playPause->setIcon(Icon::get(isPlaying ? "media-playback-pause" : "media-playback-start"));
+		playPause->setText(isPlaying ? "Pause" : "Play");
 	});
 }
 
@@ -50,10 +57,10 @@ void TrayIcon::message(const QString &message)
 	showMessage("spotify-qt", message);
 }
 
-bool TrayIcon::isPlaying()
+spt::Playback TrayIcon::playback()
 {
 	auto mainWindow = dynamic_cast<MainWindow*>(this->parent());
 	if (mainWindow == nullptr)
-		return false;
-	return mainWindow->currentPlayback().isPlaying;
+		return spt::Playback();
+	return mainWindow->currentPlayback();
 }
