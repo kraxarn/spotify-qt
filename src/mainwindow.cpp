@@ -41,7 +41,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	QTimer::connect(timer, &QTimer::timeout, this, &MainWindow::refresh);
 	refresh();
 	timer->start(1000);
-	setStatus("Welcome to spotify-qt!");
 	// Check if should start client
 	if (settings.sptStartClient())
 	{
@@ -62,6 +61,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	// Create tray icon if specified
 	if (settings.trayIcon())
 		trayIcon = new TrayIcon(spotify, this);
+	// Welcome
+	setStatus("Welcome to spotify-qt!");
 }
 
 MainWindow::~MainWindow()
