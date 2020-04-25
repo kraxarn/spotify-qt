@@ -7,16 +7,16 @@ TrayIcon::TrayIcon(spt::Spotify *spotify, QObject *parent) : QSystemTrayIcon(par
 	QAction::connect(previous, &QAction::triggered, [spotify]() {
 		spotify->previous();
 	});
-	auto next = contextMenu->addAction(Icon::get("media-skip-forward"),  "Next");
-	QAction::connect(next, &QAction::triggered, [spotify]() {
-		spotify->next();
-	});
 	playPause = contextMenu->addAction(Icon::get("media-playback-start"), "Play");
 	QAction::connect(playPause, &QAction::triggered, [this](bool checked) {
 		if (isPlaying())
 			this->spotify->pause();
 		else
 			this->spotify->resume();
+	});
+	auto next = contextMenu->addAction(Icon::get("media-skip-forward"),  "Next");
+	QAction::connect(next, &QAction::triggered, [spotify]() {
+		spotify->next();
 	});
 	contextMenu->addSeparator();
 	contextMenu->addAction(Icon::get("application-exit"), "Quit");
