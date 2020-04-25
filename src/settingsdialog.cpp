@@ -70,7 +70,7 @@ QGroupBox *SettingsDialog::appSettings()
 		appLayout->addWidget(appPulse, 3, 0, 1, 2);
 	}
 	// MPRIS D-Bus
-	appMedia = new QCheckBox("Media Controller", this);
+	appMedia = new QCheckBox("Media controller", this);
 	appMedia->setChecked(settings.mediaController());
 #ifdef Q_OS_LINUX
 	appMedia->setToolTip("Enable media controller through the MPRIS D-Bus interface, buggy (issue #4)");
