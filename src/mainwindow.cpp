@@ -651,7 +651,10 @@ void MainWindow::refreshPlaylist(spt::Playlist &playlist)
 
 void MainWindow::setStatus(const QString &message)
 {
-	statusBar()->showMessage(message, 5000);
+	if (trayIcon != nullptr && Settings().trayNotifications())
+		trayIcon->message(message);
+	else
+		statusBar()->showMessage(message, 5000);
 }
 
 void MainWindow::setCurrentSongIcon()
