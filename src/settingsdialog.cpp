@@ -33,7 +33,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 	// Set layout
 	setWindowTitle("Settings");
 	setLayout(mainLayout);
-	mainLayout->setSizeConstraint(QLayout::SetFixedSize);
+	resize(360, 260);
 }
 
 QWidget *SettingsDialog::appSettings()
