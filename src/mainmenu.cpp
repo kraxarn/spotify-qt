@@ -69,6 +69,9 @@ void MainMenu::refreshDevices(QMenu *deviceMenu)
 	// Set status and get devices
 	window->setStatus("Refreshing devices...");
 	auto devices = spotify.devices();
+	// Probably left menu before it loaded
+	if (deviceMenu == nullptr)
+		return;
 	// Clear all entries
 	for (auto &action : deviceMenu->actions())
 		deviceMenu->removeAction(action);
