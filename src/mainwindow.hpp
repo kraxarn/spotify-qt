@@ -56,6 +56,7 @@ protected:
 
 public:
 	static void applyPalette(Settings::Palette palette);
+	static bool hasDarkBackground();
 	// Constants for track info
 	enum DataRole {
 		RoleTrackId		= 0x0100,	// 256
@@ -106,6 +107,7 @@ private:
 	AudioFeaturesView		*audioFeaturesView;
 	LyricsView				*lyricsView;
 	TrayIcon				*trayIcon;
+	static bool				darkBackground;
 	// Methods
 	QWidget *createCentralWidget();
 	QToolBar *createToolBar();

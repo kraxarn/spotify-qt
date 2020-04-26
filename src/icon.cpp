@@ -9,7 +9,7 @@ Icon::Icon()
 QIcon Icon::get(const QString &name)
 {
 	if (theme.isNull())
-		theme = Settings().darkTheme() ? "dark" : "light";
+		theme = MainWindow::hasDarkBackground() ? "dark" : "light";
 	if (name.startsWith("logo:"))
 		return QIcon(QString(":/res/logo/%1.svg")
 			 .arg(name.right(name.length() - QString("logo:").length())));

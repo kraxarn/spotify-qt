@@ -1,5 +1,7 @@
 #include "mainwindow.hpp"
 
+bool MainWindow::darkBackground	= false;
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
 	// Some default values to prevent unexpected stuff
@@ -22,6 +24,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	cacheDir.mkpath(".");
 	cacheDir.mkdir("album");
 	cacheDir.mkdir("playlist");
+	// Check for dark background
+	auto bg = palette().color(backgroundRole());
+	if (((bg.red() + bg.green() + bg.blue()) / 3) < 128)
+		darkBackground = true;
 	// Set Spotify
 	spotify = new spt::Spotify();
 	sptPlaylists = new QVector<spt::Playlist>();
@@ -803,4 +809,9 @@ void MainWindow::reloadTrayIcon()
 	}
 	if (Settings().trayIcon())
 		trayIcon = new TrayIcon(spotify, this);
+}
+
+bool MainWindow::hasDarkBackground()
+{
+	return darkBackground;
 }

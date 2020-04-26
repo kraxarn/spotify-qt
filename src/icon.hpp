@@ -1,6 +1,6 @@
 #pragma once
 
-#include "settings.hpp"
+#include "mainwindow.hpp"
 
 #include <QIcon>
 #include <QString>
