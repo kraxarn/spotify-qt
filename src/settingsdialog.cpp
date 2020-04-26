@@ -111,6 +111,11 @@ QWidget *SettingsDialog::interfaceSettings()
 			appTrayIcon->setChecked(true);
 		}
 	});
+	// Invert tray icon
+	appTrayInvert = new QCheckBox("Invert tray icon", this);
+	appTrayInvert->setToolTip("Invert colors in tray icon to be visible on light backgrounds");
+	appTrayInvert->setChecked(settings.trayLightIcon());
+	layout->addWidget(appTrayInvert);
 	// Filler
 	layout->addStretch(1);
 	// Final layout
@@ -331,6 +336,7 @@ bool SettingsDialog::applySettings()
 	}
 	settings.setTrayIcon(appTrayIcon->isChecked());
 	settings.setTrayNotifications(appTrayNotify->isChecked());
+	settings.setTrayLightIcon(appTrayInvert->isChecked());
 
 	// Other Spotify stuff
 	settings.setSptPlaybackOrder(sptOrder->isChecked());

@@ -53,4 +53,5 @@ private:
 	QCheckBox	*sptOrder		= nullptr;
 	QCheckBox	*appTrayIcon	= nullptr;
 	QCheckBox	*appTrayNotify	= nullptr;
+	QCheckBox	*appTrayInvert	= nullptr;
 };

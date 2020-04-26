@@ -237,3 +237,13 @@ void Settings::setTrayNotifications(bool value)
 {
 	settings->setValue("TrayNotifications", value);
 }
+
+bool Settings::trayLightIcon()
+{
+	return settings->value("TrayLightIcon", false).toBool();
+}
+
+void Settings::setTrayLightIcon(bool value)
+{
+	settings->setValue("TrayLightIcon", value);
+}

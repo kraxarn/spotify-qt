@@ -61,6 +61,9 @@ public:
 	bool trayNotifications();
 	void setTrayNotifications(bool value);
 
+	bool trayLightIcon();
+	void setTrayLightIcon(bool value);
+
 	// Spotify settings
 
 	QString sptPath();
