@@ -334,9 +334,21 @@ bool SettingsDialog::applySettings()
 			this, "Desktop Notifications",
 			"Desktop notifications requires tray icon to be enabled, so it was enabled");
 	}
+	// Check if tray icon needs to be reloaded
+	auto reloadTray = settings.trayIcon() != appTrayIcon->isChecked()
+		|| settings.trayNotifications() != appTrayNotify->isChecked()
+		|| settings.trayLightIcon() != appTrayInvert->isChecked();
+	// Apply
 	settings.setTrayIcon(appTrayIcon->isChecked());
 	settings.setTrayNotifications(appTrayNotify->isChecked());
 	settings.setTrayLightIcon(appTrayInvert->isChecked());
+	// Reload if needed
+	if (reloadTray)
+	{
+		auto window = dynamic_cast<MainWindow*>(parent());
+		if (window != nullptr)
+			window->reloadTrayIcon();
+	}
 
 	// Other Spotify stuff
 	settings.setSptPlaybackOrder(sptOrder->isChecked());

@@ -793,3 +793,14 @@ QString MainWindow::currentLibraryItem()
 		? libraryList->currentItem()->text(0)
 		: QString();
 }
+
+void MainWindow::reloadTrayIcon()
+{
+	if (trayIcon != nullptr)
+	{
+		delete trayIcon;
+		trayIcon = nullptr;
+	}
+	if (Settings().trayIcon())
+		trayIcon = new TrayIcon(spotify, this);
+}

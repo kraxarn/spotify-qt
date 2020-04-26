@@ -79,6 +79,7 @@ public:
 	bool hasPlaylistSelected();
 	QVector<spt::Track> playlistTracks(const QString &playlistId);
 	QString currentLibraryItem();
+	void reloadTrayIcon();
 	// I know these should be methods, I'm just lazy
 	QString					cacheLocation;
 	QVector<spt::Playlist>	*sptPlaylists;
