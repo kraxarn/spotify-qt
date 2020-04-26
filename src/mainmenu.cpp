@@ -75,7 +75,6 @@ void MainMenu::refreshDevices(QMenu *deviceMenu)
 	// Check if empty
 	if (devices.isEmpty())
 	{
-		window->setStatus("No devices found", true);
 		deviceMenu->addAction("No devices found")->setDisabled(true);
 		return;
 	}
