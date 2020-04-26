@@ -57,6 +57,8 @@
         <file>res/ic/dark/non-starred-symbolic.svg</file>
         <!-- Logos -->
         <file>res/logo/spotify-qt.svg</file>
+        <file>res/logo/spotify-qt-symbolic-light.svg</file>
+        <file>res/logo/spotify-qt-symbolic-dark.svg</file>
         <file>res/logo/qt.svg</file>
     </qresource>
 </RCC>
