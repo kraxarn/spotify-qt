@@ -39,6 +39,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 QWidget *SettingsDialog::appSettings()
 {
 	auto appLayout = new QVBoxLayout();
+	appLayout->setAlignment(Qt::AlignTop);
 	// Refresh interval
 	auto appRefreshLabel = new QLabel("Refresh interval", this);
 	appRefreshLabel->setToolTip("How often to refresh playback status from the Spotify servers");
@@ -80,8 +81,6 @@ QWidget *SettingsDialog::appSettings()
 	sptOrder->setToolTip("Use Spotify playback order instead of app list order");
 	sptOrder->setChecked(settings.sptPlaybackOrder());
 	appLayout->addWidget(sptOrder);
-	// Filler
-	appLayout->addStretch(1);
 	// Final layout
 	auto widget = new QWidget();
 	widget->setLayout(appLayout);
@@ -91,6 +90,7 @@ QWidget *SettingsDialog::appSettings()
 QWidget *SettingsDialog::interfaceSettings()
 {
 	auto layout = new QVBoxLayout();
+	layout->setAlignment(Qt::AlignTop);
 	// Dark theme
 	darkTheme = new QCheckBox("Dark theme", this);
 	darkTheme->setToolTip("Use custom dark theme");
@@ -121,8 +121,6 @@ QWidget *SettingsDialog::interfaceSettings()
 	itfResizeAuto->setToolTip("Automatically resize track list headers to fit content");
 	itfResizeAuto->setChecked(settings.songHeaderResizeMode() == QHeaderView::ResizeToContents);
 	layout->addWidget(itfResizeAuto);
-	// Filler
-	layout->addStretch(1);
 	// Final layout
 	auto widget = new QWidget();
 	widget->setLayout(layout);
@@ -133,6 +131,7 @@ QWidget *SettingsDialog::spotifySettings()
 {
 	// Main container for everything
 	auto sptMainLayout = new QVBoxLayout();
+	sptMainLayout->setAlignment(Qt::AlignTop);
 	// Executable settings
 	auto sptPathLayout = new QHBoxLayout();
 	sptPath = new QLineEdit(settings.sptPath(), this);
@@ -175,8 +174,6 @@ QWidget *SettingsDialog::spotifySettings()
 	auto bitrate = settings.sptBitrate();
 	sptBitrate->setCurrentIndex(bitrate == 96 ? 0 : bitrate == 160 ? 1 : 2);
 	sptLayout->addWidget(sptBitrate);
-	// Filler
-	sptMainLayout->addStretch(1);
 	// Final layout
 	auto widget = new QWidget();
 	widget->setLayout(sptMainLayout);
@@ -186,7 +183,7 @@ QWidget *SettingsDialog::spotifySettings()
 QWidget *SettingsDialog::aboutSettings()
 {
 	auto layout = new QVBoxLayout();
-
+	layout->setAlignment(Qt::AlignTop);
 	// Title
 	auto title = new QHBoxLayout();
 	title->setAlignment(Qt::AlignHCenter);
@@ -204,7 +201,6 @@ QWidget *SettingsDialog::aboutSettings()
 	titleVersion->addWidget(titleAppName);
 	titleVersion->addWidget(new QLabel(APP_VERSION));
 	title->addLayout(titleVersion);
-
 	// Grid with buttons
 	layout->addSpacing(8);
 	auto options = new QGridLayout();
@@ -264,9 +260,6 @@ QWidget *SettingsDialog::aboutSettings()
 	});
 	options->addWidget(openConfig);
 	layout->addLayout(options, 1);
-
-	// Filler
-	layout->addStretch(1);
 	// Final layout
 	auto widget = new QWidget();
 	widget->setLayout(layout);
