@@ -312,9 +312,11 @@ QWidget *MainWindow::createCentralWidget()
 	songs->setHeaderLabels({
 		" ", "Title", "Artist", "Album", "Length", "Added"
 	});
+	songs->header()->setSectionsMovable(false);
 	Settings settings;
 	songs->header()->setSectionResizeMode(settings.songHeaderResizeMode());
-	songs->header()->setSectionsMovable(false);
+	if (settings.songHeaderSortBy() > 0)
+		songs->header()->setSortIndicator(settings.songHeaderSortBy() + 1, Qt::AscendingOrder);
 	// Hide specified columns
 	for (auto &value : Settings().hiddenSongHeaders())
 		songs->header()->setSectionHidden(value + 1, true);
@@ -350,26 +352,43 @@ QWidget *MainWindow::createCentralWidget()
 	songs->header()->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QLabel::connect(songs->header(), &QWidget::customContextMenuRequested, [this](const QPoint &pos) {
 		auto menu = new QMenu(songs->header());
-		auto showHeaders = menu->addMenu("Columns to show");
+		auto showHeaders = menu->addMenu(Icon::get("visibility"), "Columns to show");
+		auto sortBy = menu->addMenu(Icon::get("view-sort-ascending"), "Default sorting");
 		auto headerTitles = QStringList({
 			"Title", "Artist", "Album", "Length", "Added"
 		});
-		auto headers = Settings().hiddenSongHeaders();
+		Settings settings;
+		auto headers = settings.hiddenSongHeaders();
 		for (int i = 0; i < headerTitles.size(); i++)
 		{
 			auto showTitle = showHeaders->addAction(headerTitles.at(i));
 			showTitle->setCheckable(true);
 			showTitle->setChecked(!headers.contains(i));
 			showTitle->setData(QVariant(i));
+
+			auto sortTitle = sortBy->addAction(headerTitles.at(i));
+			sortTitle->setCheckable(true);
+			sortTitle->setChecked(i == settings.songHeaderSortBy());
+			sortTitle->setData(QVariant(100 + i));
 		}
 		QMenu::connect(menu, &QMenu::triggered, [this](QAction *action) {
 			int i = action->data().toInt();
 			Settings settings;
-			songs->header()->setSectionHidden(i + 1, !action->isChecked());
-			if (action->isChecked())
-				settings.removeHiddenSongHeader(i);
-			else
-				settings.addHiddenSongHeader(i);
+			// Columns to show
+			if (i < 100)
+			{
+				songs->header()->setSectionHidden(i + 1, !action->isChecked());
+				if (action->isChecked())
+					settings.removeHiddenSongHeader(i);
+				else
+					settings.addHiddenSongHeader(i);
+				return;
+			}
+			// Sort by
+			i -= 100;
+			if (settings.songHeaderSortBy() != i)
+				songs->header()->setSortIndicator(i + 1, Qt::AscendingOrder);
+			settings.setSongHeaderSortBy(settings.songHeaderSortBy() == i ? -1 : i);
 		});
 		menu->popup(songs->header()->mapToGlobal(pos));
 	});

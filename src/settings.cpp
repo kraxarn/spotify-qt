@@ -258,3 +258,13 @@ void Settings::setSongHeaderResizeMode(QHeaderView::ResizeMode value)
 {
 	settings->setValue("SongHeaderResizeMode", value);
 }
+
+int Settings::songHeaderSortBy()
+{
+	return settings->value("SongHeaderSortBy", -1).toInt();
+}
+
+void Settings::setSongHeaderSortBy(int value)
+{
+	settings->setValue("SongHeaderSortBy", value);
+}

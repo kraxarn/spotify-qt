@@ -68,6 +68,9 @@ public:
 	QHeaderView::ResizeMode songHeaderResizeMode();
 	void setSongHeaderResizeMode(QHeaderView::ResizeMode value);
 
+	int songHeaderSortBy();
+	void setSongHeaderSortBy(int value);
+
 	// Spotify settings
 
 	QString sptPath();
