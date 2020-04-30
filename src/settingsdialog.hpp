@@ -41,18 +41,20 @@ private:
 	Settings settings;
 	static QString sptClient(const QString &path);
 	static bool isPulse();
-	// All settings properties
+	// App settings
+	QCheckBox	*appStartSpt	= nullptr;
 	QCheckBox	*appPulse		= nullptr;
+	QCheckBox	*appMedia		= nullptr;
+	QCheckBox	*appSptOrder	= nullptr;
+	// Interface settings
+	QCheckBox	*itfDark		= nullptr;
+	QCheckBox	*itfTrayIcon	= nullptr;
+	QCheckBox	*itfTrayNotify	= nullptr;
+	QCheckBox	*itfTrayInvert	= nullptr;
+	QCheckBox	*itfResizeAuto	= nullptr;
+	// Spotify settings
 	QLineEdit	*sptPath		= nullptr;
 	QLabel		*sptVersion		= nullptr;
-	QCheckBox	*sptStartClient	= nullptr;
 	QLineEdit	*sptUsername	= nullptr;
 	QComboBox	*sptBitrate		= nullptr;
-	QCheckBox	*appMedia		= nullptr;
-	QCheckBox	*darkTheme		= nullptr;
-	QCheckBox	*sptOrder		= nullptr;
-	QCheckBox	*appTrayIcon	= nullptr;
-	QCheckBox	*appTrayNotify	= nullptr;
-	QCheckBox	*appTrayInvert	= nullptr;
-	QCheckBox	*itfResizeAuto	= nullptr;
 };

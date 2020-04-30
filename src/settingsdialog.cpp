@@ -53,10 +53,10 @@ QWidget *SettingsDialog::appSettings()
 	appRefresh->hide();
 	appRefreshLabel->hide();
 	// Start client
-	sptStartClient = new QCheckBox("Autostart spotifyd", this);
-	sptStartClient->setToolTip("Start spotifyd together with the app");
-	sptStartClient->setChecked(settings.sptStartClient());
-	appLayout->addWidget(sptStartClient);
+	appStartSpt = new QCheckBox("Autostart spotifyd", this);
+	appStartSpt->setToolTip("Start spotifyd together with the app");
+	appStartSpt->setChecked(settings.sptStartClient());
+	appLayout->addWidget(appStartSpt);
 	// PulseAudio volume control
 	if (isPulse())
 	{
@@ -77,10 +77,10 @@ QWidget *SettingsDialog::appSettings()
 #endif
 	appLayout->addWidget(appMedia);
 	// Spotify playback order
-	sptOrder = new QCheckBox("Spotify playback order", this);
-	sptOrder->setToolTip("Use Spotify playback order instead of app list order");
-	sptOrder->setChecked(settings.sptPlaybackOrder());
-	appLayout->addWidget(sptOrder);
+	appSptOrder = new QCheckBox("Spotify playback order", this);
+	appSptOrder->setToolTip("Use Spotify playback order instead of app list order");
+	appSptOrder->setChecked(settings.sptPlaybackOrder());
+	appLayout->addWidget(appSptOrder);
 	// Final layout
 	auto widget = new QWidget();
 	widget->setLayout(appLayout);
@@ -92,30 +92,30 @@ QWidget *SettingsDialog::interfaceSettings()
 	auto layout = new QVBoxLayout();
 	layout->setAlignment(Qt::AlignTop);
 	// Dark theme
-	darkTheme = new QCheckBox("Dark theme", this);
-	darkTheme->setToolTip("Use custom dark theme");
-	darkTheme->setChecked(settings.darkTheme());
-	layout->addWidget(darkTheme);
+	itfDark = new QCheckBox("Dark theme", this);
+	itfDark->setToolTip("Use custom dark theme");
+	itfDark->setChecked(settings.darkTheme());
+	layout->addWidget(itfDark);
 	// Tray icon settings
-	appTrayIcon = new QCheckBox("Tray icon", this);
-	appTrayIcon->setToolTip("Add an icon to the system tray for quick access");
-	appTrayIcon->setChecked(settings.trayIcon());
-	layout->addWidget(appTrayIcon);
+	itfTrayIcon = new QCheckBox("Tray icon", this);
+	itfTrayIcon->setToolTip("Add an icon to the system tray for quick access");
+	itfTrayIcon->setChecked(settings.trayIcon());
+	layout->addWidget(itfTrayIcon);
 	// Desktop notifications
-	appTrayNotify = new QCheckBox("Desktop notifications", this);
-	appTrayNotify->setToolTip("Replace status bar with desktop notifications (suppresses any non-error messages)");
-	appTrayNotify->setChecked(settings.trayNotifications());
-	layout->addWidget(appTrayNotify);
-	QCheckBox::connect(appTrayNotify, &QCheckBox::stateChanged, [this](int state) {
-		if (state == Qt::CheckState::Checked && appTrayIcon != nullptr) {
-			appTrayIcon->setChecked(true);
+	itfTrayNotify = new QCheckBox("Desktop notifications", this);
+	itfTrayNotify->setToolTip("Replace status bar with desktop notifications (suppresses any non-error messages)");
+	itfTrayNotify->setChecked(settings.trayNotifications());
+	layout->addWidget(itfTrayNotify);
+	QCheckBox::connect(itfTrayNotify, &QCheckBox::stateChanged, [this](int state) {
+		if (state == Qt::CheckState::Checked && itfTrayIcon != nullptr) {
+			itfTrayIcon->setChecked(true);
 		}
 	});
 	// Invert tray icon
-	appTrayInvert = new QCheckBox("Invert tray icon", this);
-	appTrayInvert->setToolTip("Invert colors in tray icon to be visible on light backgrounds");
-	appTrayInvert->setChecked(settings.trayLightIcon());
-	layout->addWidget(appTrayInvert);
+	itfTrayInvert = new QCheckBox("Invert tray icon", this);
+	itfTrayInvert->setToolTip("Invert colors in tray icon to be visible on light backgrounds");
+	itfTrayInvert->setChecked(settings.trayLightIcon());
+	layout->addWidget(itfTrayInvert);
 	// Song header resize mode
 	itfResizeAuto = new QCheckBox("Auto resize track list headers", this);
 	itfResizeAuto->setToolTip("Automatically resize track list headers to fit content");
@@ -289,13 +289,13 @@ QString SettingsDialog::sptClient(const QString &path)
 bool SettingsDialog::applySettings()
 {
 	// Set theme
-	auto changeTheme = darkTheme->isChecked() != settings.darkTheme();
+	auto changeTheme = itfDark->isChecked() != settings.darkTheme();
 	if (changeTheme)
 	{
 		QMessageBox::information(
 			this, "Dark Theme",
 			"Please restart the application to fully apply selected theme");
-		settings.setDarkTheme(darkTheme->isChecked());
+		settings.setDarkTheme(itfDark->isChecked());
 		QApplication::setStyle(settings.style());
 		MainWindow::applyPalette(settings.stylePalette());
 	}
@@ -325,21 +325,21 @@ bool SettingsDialog::applySettings()
 	}
 
 	// Desktop notifications and tray icon
-	if (appTrayNotify->isChecked() && !appTrayIcon->isChecked())
+	if (itfTrayNotify->isChecked() && !itfTrayIcon->isChecked())
 	{
-		appTrayIcon->setChecked(true);
+		itfTrayIcon->setChecked(true);
 		QMessageBox::information(
 			this, "Desktop Notifications",
 			"Desktop notifications requires tray icon to be enabled, so it was enabled");
 	}
 	// Check if tray icon needs to be reloaded
-	auto reloadTray = settings.trayIcon() != appTrayIcon->isChecked()
-		|| settings.trayNotifications() != appTrayNotify->isChecked()
-		|| settings.trayLightIcon() != appTrayInvert->isChecked();
+	auto reloadTray = settings.trayIcon() != itfTrayIcon->isChecked()
+		|| settings.trayNotifications() != itfTrayNotify->isChecked()
+		|| settings.trayLightIcon() != itfTrayInvert->isChecked();
 	// Apply
-	settings.setTrayIcon(appTrayIcon->isChecked());
-	settings.setTrayNotifications(appTrayNotify->isChecked());
-	settings.setTrayLightIcon(appTrayInvert->isChecked());
+	settings.setTrayIcon(itfTrayIcon->isChecked());
+	settings.setTrayNotifications(itfTrayNotify->isChecked());
+	settings.setTrayLightIcon(itfTrayInvert->isChecked());
 	// Reload if needed
 	auto window = dynamic_cast<MainWindow*>(parent());
 	if (reloadTray && window != nullptr)
@@ -353,8 +353,8 @@ bool SettingsDialog::applySettings()
 	settings.setSongHeaderResizeMode(resizeMode);
 
 	// Other Spotify stuff
-	settings.setSptPlaybackOrder(sptOrder->isChecked());
-	settings.setSptStartClient(sptStartClient->isChecked());
+	settings.setSptPlaybackOrder(appSptOrder->isChecked());
+	settings.setSptStartClient(appStartSpt->isChecked());
 	settings.setSptUser(sptUsername->text());
 	auto bitrate = sptBitrate->currentIndex();
 	settings.setSptBitrate(bitrate == 0 ? 96 : bitrate == 1 ? 160 : 320);
