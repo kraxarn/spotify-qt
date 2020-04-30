@@ -40,6 +40,8 @@ QString ClientHandler::start()
 	// Attempt to start spotifyd
 	process = new QProcess();
 	process->start(path, {
+		"--no-daemon"
+		"--backend", "pulseaudio",
 		"--bitrate", QString::number(settings.sptBitrate()),
 		"--device-name", "spotify-qt",
 		"--username", username,
