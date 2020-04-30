@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QSettings>
+#include <QHeaderView>
 
 class Settings
 {
@@ -63,6 +64,9 @@ public:
 
 	bool trayLightIcon();
 	void setTrayLightIcon(bool value);
+
+	QHeaderView::ResizeMode songHeaderResizeMode();
+	void setSongHeaderResizeMode(QHeaderView::ResizeMode value);
 
 	// Spotify settings
 

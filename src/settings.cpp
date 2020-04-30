@@ -247,3 +247,14 @@ void Settings::setTrayLightIcon(bool value)
 {
 	settings->setValue("TrayLightIcon", value);
 }
+
+QHeaderView::ResizeMode Settings::songHeaderResizeMode()
+{
+	return (QHeaderView::ResizeMode) settings->value(
+		"SongHeaderResizeMode", QHeaderView::ResizeToContents).toInt();
+}
+
+void Settings::setSongHeaderResizeMode(QHeaderView::ResizeMode value)
+{
+	settings->setValue("SongHeaderResizeMode", value);
+}

@@ -116,6 +116,11 @@ QWidget *SettingsDialog::interfaceSettings()
 	appTrayInvert->setToolTip("Invert colors in tray icon to be visible on light backgrounds");
 	appTrayInvert->setChecked(settings.trayLightIcon());
 	layout->addWidget(appTrayInvert);
+	// Song header resize mode
+	itfResizeAuto = new QCheckBox("Auto resize track list headers", this);
+	itfResizeAuto->setToolTip("Automatically resize track list headers to fit content");
+	itfResizeAuto->setChecked(settings.songHeaderResizeMode() == QHeaderView::ResizeToContents);
+	layout->addWidget(itfResizeAuto);
 	// Filler
 	layout->addStretch(1);
 	// Final layout
@@ -343,12 +348,16 @@ bool SettingsDialog::applySettings()
 	settings.setTrayNotifications(appTrayNotify->isChecked());
 	settings.setTrayLightIcon(appTrayInvert->isChecked());
 	// Reload if needed
-	if (reloadTray)
-	{
-		auto window = dynamic_cast<MainWindow*>(parent());
-		if (window != nullptr)
-			window->reloadTrayIcon();
-	}
+	auto window = dynamic_cast<MainWindow*>(parent());
+	if (reloadTray && window != nullptr)
+		window->reloadTrayIcon();
+	// Song header resize mode
+	auto resizeMode = itfResizeAuto->isChecked()
+		? QHeaderView::ResizeToContents
+		: QHeaderView::Interactive;
+	if (resizeMode != settings.songHeaderResizeMode() && window != nullptr)
+		window->songs->header()->setSectionResizeMode(resizeMode);
+	settings.setSongHeaderResizeMode(resizeMode);
 
 	// Other Spotify stuff
 	settings.setSptPlaybackOrder(sptOrder->isChecked());
