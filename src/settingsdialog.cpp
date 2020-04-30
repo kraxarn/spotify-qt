@@ -38,25 +38,25 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 
 QWidget *SettingsDialog::appSettings()
 {
-	auto appLayout = new QVBoxLayout();
-	appLayout->setAlignment(Qt::AlignTop);
+	auto layout = new QVBoxLayout();
+	layout->setAlignment(Qt::AlignTop);
 	// Refresh interval
 	auto appRefreshLabel = new QLabel("Refresh interval", this);
 	appRefreshLabel->setToolTip("How often to refresh playback status from the Spotify servers");
-	appLayout->addWidget(appRefreshLabel);
+	layout->addWidget(appRefreshLabel);
 	auto appRefresh = new QComboBox(this);
 	appRefresh->addItems({
 		"Fast (3s)", "Medium (5s)", "Slow (10s)"
 	});
 	appRefresh->setCurrentIndex(1);
-	appLayout->addWidget(appRefresh);
+	layout->addWidget(appRefresh);
 	appRefresh->hide();
 	appRefreshLabel->hide();
 	// Start client
 	appStartSpt = new QCheckBox("Autostart spotifyd", this);
 	appStartSpt->setToolTip("Start spotifyd together with the app");
 	appStartSpt->setChecked(settings.sptStartClient());
-	appLayout->addWidget(appStartSpt);
+	layout->addWidget(appStartSpt);
 	// PulseAudio volume control
 	if (isPulse())
 	{
@@ -64,7 +64,7 @@ QWidget *SettingsDialog::appSettings()
 		appPulse->setToolTip(
 			"Use PulseAudio for volume control instead, only works if listening on same device");
 		appPulse->setChecked(settings.pulseVolume());
-		appLayout->addWidget(appPulse);
+		layout->addWidget(appPulse);
 	}
 	// MPRIS D-Bus
 	appMedia = new QCheckBox("Media controller", this);
@@ -75,15 +75,15 @@ QWidget *SettingsDialog::appSettings()
 	appMedia->setToolTip("Currently only available on Linux");
 	appMedia->setEnabled(false);
 #endif
-	appLayout->addWidget(appMedia);
+	layout->addWidget(appMedia);
 	// Spotify playback order
 	appSptOrder = new QCheckBox("Spotify playback order", this);
 	appSptOrder->setToolTip("Use Spotify playback order instead of app list order");
 	appSptOrder->setChecked(settings.sptPlaybackOrder());
-	appLayout->addWidget(appSptOrder);
+	layout->addWidget(appSptOrder);
 	// Final layout
 	auto widget = new QWidget();
-	widget->setLayout(appLayout);
+	widget->setLayout(layout);
 	return widget;
 }
 
@@ -130,8 +130,8 @@ QWidget *SettingsDialog::interfaceSettings()
 QWidget *SettingsDialog::spotifySettings()
 {
 	// Main container for everything
-	auto sptMainLayout = new QVBoxLayout();
-	sptMainLayout->setAlignment(Qt::AlignTop);
+	auto layout = new QVBoxLayout();
+	layout->setAlignment(Qt::AlignTop);
 	// Executable settings
 	auto sptPathLayout = new QHBoxLayout();
 	sptPath = new QLineEdit(settings.sptPath(), this);
@@ -146,7 +146,7 @@ QWidget *SettingsDialog::spotifySettings()
 			sptPath->setText(filePath);
 	});
 	sptPathLayout->addWidget(sptPathBrowse);
-	sptMainLayout->addLayout(sptPathLayout);
+	layout->addLayout(sptPathLayout);
 	// Spotifyd version
 	sptVersion = new QLabel("(no spotifyd provided)", this);
 	if (!settings.sptPath().isEmpty())
@@ -156,11 +156,11 @@ QWidget *SettingsDialog::spotifySettings()
 			sptVersion->setText(client);
 	}
 	sptVersion->setEnabled(false);
-	sptMainLayout->addWidget(sptVersion);
+	layout->addWidget(sptVersion);
 	// Layout for all settings
 	auto sptLayout = new QGridLayout();
 	sptLayout->setEnabled(false);
-	sptMainLayout->addLayout(sptLayout);
+	layout->addLayout(sptLayout);
 	// Username
 	sptLayout->addWidget(new QLabel("Username", this), 0, 0);
 	sptUsername = new QLineEdit(settings.sptUser(), this);
@@ -176,7 +176,7 @@ QWidget *SettingsDialog::spotifySettings()
 	sptLayout->addWidget(sptBitrate);
 	// Final layout
 	auto widget = new QWidget();
-	widget->setLayout(sptMainLayout);
+	widget->setLayout(layout);
 	return widget;
 }
 
