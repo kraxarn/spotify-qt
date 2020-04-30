@@ -312,7 +312,8 @@ QWidget *MainWindow::createCentralWidget()
 	songs->setHeaderLabels({
 		" ", "Title", "Artist", "Album", "Length", "Added"
 	});
-	songs->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+	Settings settings;
+	songs->header()->setSectionResizeMode(settings.songHeaderResizeMode());
 	songs->header()->setSectionsMovable(false);
 	// Hide specified columns
 	for (auto &value : Settings().hiddenSongHeaders())
