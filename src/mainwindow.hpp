@@ -108,6 +108,7 @@ private:
 	LyricsView				*lyricsView;
 	TrayIcon				*trayIcon;
 	static bool				darkBackground;
+	int						refreshCount;
 	// Methods
 	QWidget *createCentralWidget();
 	QToolBar *createToolBar();

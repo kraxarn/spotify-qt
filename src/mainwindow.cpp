@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	lyricsView	= nullptr;
 	trayIcon	= nullptr;
 	audioFeaturesView	= nullptr;
+	refreshCount 		= -1;
 	// Set cache root location
 	cacheLocation = QStandardPaths::standardLocations(QStandardPaths::CacheLocation)[0];
 	// Create main cache path and album subdir
@@ -102,7 +103,17 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::refresh()
 {
-	spotify->requestCurrentPlayback();
+	if (refreshCount < 0
+		|| ++refreshCount >= Settings().refreshInterval()
+		|| current.progressMs + 1000 > current.item.duration)
+	{
+		spotify->requestCurrentPlayback();
+		refreshCount = 0;
+		return;
+	}
+	// Assume last refresh was 1 sec ago
+	current.progressMs += 1000;
+	refreshed(current);
 }
 
 void MainWindow::refreshed(const spt::Playback &playback)
