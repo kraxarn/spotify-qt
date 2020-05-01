@@ -459,7 +459,9 @@ QToolBar *MainWindow::createToolBar()
 	auto previous = toolBar->addAction(Icon::get("media-skip-backward"), "Previous");
 	playPause = toolBar->addAction(Icon::get("media-playback-start"), "Play");
 	QAction::connect(playPause, &QAction::triggered, [=](bool checked) {
-		auto status = playPause->iconText() == "Pause" ? spotify->pause() : spotify->resume();
+		current.isPlaying = !current.isPlaying;
+		refreshed(current);
+		auto status = playPause->iconText() == "Play" ? spotify->pause() : spotify->resume();
 		if (!status.isEmpty())
 		{
 			setStatus(QString("Failed to %1 playback: %2")
@@ -500,6 +502,8 @@ QToolBar *MainWindow::createToolBar()
 	shuffle = toolBar->addAction(Icon::get("media-playlist-shuffle"), "Shuffle");
 	shuffle->setCheckable(true);
 	QAction::connect(shuffle, &QAction::triggered, [=](bool checked) {
+		current.shuffle = !current.shuffle;
+		refreshed(current);
 		auto status = spotify->setShuffle(checked);
 		if (!status.isEmpty())
 			setStatus(QString("Failed to toggle shuffle: %1").arg(status), true);
@@ -507,7 +511,10 @@ QToolBar *MainWindow::createToolBar()
 	repeat = toolBar->addAction(Icon::get("media-playlist-repeat"), "Repeat");
 	repeat->setCheckable(true);
 	QAction::connect(repeat, &QAction::triggered, [=](bool checked) {
-		auto status = spotify->setRepeat(checked ? "context" : "off");
+		auto repeatMode = QString(checked ? "context" : "off");
+		current.repeat = repeatMode;
+		refreshed(current);
+		auto status = spotify->setRepeat(repeatMode);
 		if (!status.isEmpty())
 			setStatus(QString("Failed to toggle repeat: %1").arg(status), true);
 	});
