@@ -74,7 +74,7 @@ QWidget *SettingsDialog::appSettings()
 	appMedia = new QCheckBox("Media controller", this);
 	appMedia->setChecked(settings.mediaController());
 #ifdef Q_OS_LINUX
-	appMedia->setToolTip("Enable media controller through the MPRIS D-Bus interface, buggy (issue #4)");
+	appMedia->setToolTip("Enable media controller through the MPRIS D-Bus interface");
 #else
 	appMedia->setToolTip("Currently only available on Linux");
 	appMedia->setEnabled(false);
