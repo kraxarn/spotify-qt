@@ -268,3 +268,13 @@ void Settings::setSongHeaderSortBy(int value)
 {
 	settings->setValue("SongHeaderSortBy", value);
 }
+
+int Settings::refreshInterval()
+{
+	return settings->value("RefreshInterval", 3).toInt();
+}
+
+void Settings::setRefreshInterval(int value)
+{
+	settings->setValue("RefreshInterval", value);
+}

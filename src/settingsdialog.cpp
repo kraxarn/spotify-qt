@@ -41,17 +41,21 @@ QWidget *SettingsDialog::appSettings()
 	auto layout = new QVBoxLayout();
 	layout->setAlignment(Qt::AlignTop);
 	// Refresh interval
+	auto appRefreshLayout = new QHBoxLayout();
 	auto appRefreshLabel = new QLabel("Refresh interval", this);
 	appRefreshLabel->setToolTip("How often to refresh playback status from the Spotify servers");
-	layout->addWidget(appRefreshLabel);
-	auto appRefresh = new QComboBox(this);
+	appRefreshLayout->addWidget(appRefreshLabel);
+	appRefresh = new QComboBox(this);
 	appRefresh->addItems({
-		"Fast (3s)", "Medium (5s)", "Slow (10s)"
+		"1", "3", "10"
 	});
-	appRefresh->setCurrentIndex(1);
-	layout->addWidget(appRefresh);
-	appRefresh->hide();
-	appRefreshLabel->hide();
+	appRefresh->setEditable(true);
+	appRefresh->setCurrentIndex(-1);
+	appRefresh->setEditText(QString::number(settings.refreshInterval()));
+	appRefresh->setValidator(new QIntValidator(1, 60, this));
+	appRefreshLayout->addWidget(appRefresh);
+	appRefreshLayout->addWidget(new QLabel("seconds"));
+	layout->addLayout(appRefreshLayout);
 	// Start client
 	appStartSpt = new QCheckBox("Autostart spotifyd", this);
 	appStartSpt->setToolTip("Start spotifyd together with the app");
@@ -351,6 +355,16 @@ bool SettingsDialog::applySettings()
 	if (resizeMode != settings.songHeaderResizeMode() && window != nullptr)
 		window->songs->header()->setSectionResizeMode(resizeMode);
 	settings.setSongHeaderResizeMode(resizeMode);
+
+	// Refresh interval
+	auto ok = false;
+	auto interval = appRefresh->currentText().toInt(&ok);
+	if (!ok || interval <= 0 || interval > 60)
+	{
+		applyFail("refresh interval");
+		return false;
+	}
+	settings.setRefreshInterval(interval);
 
 	// Other Spotify stuff
 	settings.setSptPlaybackOrder(appSptOrder->isChecked());

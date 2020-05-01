@@ -42,6 +42,7 @@ private:
 	static QString sptClient(const QString &path);
 	static bool isPulse();
 	// App settings
+	QComboBox	*appRefresh		= nullptr;
 	QCheckBox	*appStartSpt	= nullptr;
 	QCheckBox	*appPulse		= nullptr;
 	QCheckBox	*appMedia		= nullptr;

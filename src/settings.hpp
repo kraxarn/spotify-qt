@@ -71,6 +71,9 @@ public:
 	int songHeaderSortBy();
 	void setSongHeaderSortBy(int value);
 
+	int refreshInterval();
+	void setRefreshInterval(int value);
+
 	// Spotify settings
 
 	QString sptPath();
