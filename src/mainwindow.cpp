@@ -112,6 +112,8 @@ void MainWindow::refresh()
 		return;
 	}
 	// Assume last refresh was 1 sec ago
+	if (!current.isPlaying)
+		return;
 	current.progressMs += 1000;
 	refreshed(current);
 }
