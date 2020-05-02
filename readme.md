@@ -1,6 +1,6 @@
 # spotify-qt
 A Spotify client using Qt as a simpler, lighter alternative to the official client, inspired by [spotify-tui](https://github.com/Rigellute/spotify-tui).
-Much like spotify-tui, you need an actual Spotify client running, for example [spotifyd](https://github.com/Spotifyd/spotifyd), which can be configured from within the app.
+Much like spotify-tui, you need an actual Spotify client running, for example [spotifyd](https://github.com/Spotifyd/spotifyd), which can be configured from within the app. Also like other clients, controlling music playback requires Spotify Premium.
 
 Currently mostly stable. Most things should work, but don't be surprised when unexpected things happen, but please open an issue about it.
 It's also currently only available through [AUR](https://aur.archlinux.org/packages/spotify-qt). Feel free to add it to any other package manager, but if you do, open a pull request or an issue so I can add it to a list.
