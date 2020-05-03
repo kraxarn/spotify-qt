@@ -619,6 +619,7 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 {
 	songs->clear();
 	trackItems.clear();
+	playingTrackItem = nullptr;
 	for (int i = 0; i < tracks.length(); i++)
 	{
 		auto track = tracks.at(i);
