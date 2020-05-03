@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	lyricsView	= nullptr;
 	trayIcon	= nullptr;
 	audioFeaturesView	= nullptr;
+	playingTrackItem	= nullptr;
 	refreshCount 		= -1;
 	// Set cache root location
 	cacheLocation = QStandardPaths::standardLocations(QStandardPaths::CacheLocation)[0];
@@ -131,8 +132,8 @@ void MainWindow::refreshed(const spt::Playback &playback)
 	auto currPlaying = QString("%1\n%2").arg(current.item.name).arg(current.item.artist);
 	if (nowPlaying->text() != currPlaying)
 	{
-		if (nowPlaying->text() != "No music playing")
-			setCurrentSongIcon();
+		if (current.isPlaying)
+			setPlayingTrackItem(trackItems[current.item.id]);
 		nowPlaying->setText(currPlaying);
 		setAlbumImage(current.item.image);
 		setWindowTitle(QString("%1 - %2").arg(current.item.artist).arg(current.item.name));
@@ -352,12 +353,16 @@ QWidget *MainWindow::createCentralWidget()
 			return;
 		}
 		// If we played from library, we don't have any context
-		auto status = libraryList->currentItem() != nullptr || !Settings().sptPlaybackOrder()
-			? spotify->playTracks(trackId, currentTracks())
+		auto allTracks = currentTracks();
+		auto status = (libraryList->currentItem() != nullptr || !Settings().sptPlaybackOrder())
+			&& allTracks.count() < 500
+			? spotify->playTracks(trackId, allTracks)
 			: spotify->playTracks(trackId, sptContext);
 
 		if (!status.isEmpty())
 			setStatus(QString("Failed to start playback: %1").arg(status), true);
+		else
+			setPlayingTrackItem(item);
 		refresh();
 	});
 
@@ -613,6 +618,7 @@ void MainWindow::refreshPlaylists()
 bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 {
 	songs->clear();
+	trackItems.clear();
 	for (int i = 0; i < tracks.length(); i++)
 	{
 		auto track = tracks.at(i);
@@ -630,8 +636,9 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 			item->setToolTip(1, "Local track");
 		}
 		else if (track.id == current.item.id)
-			item->setIcon(0, Icon::get("media-playback-start"));
+			setPlayingTrackItem(item);
 		songs->insertTopLevelItem(i, item);
+		trackItems[track.id] = item;
 	}
 	return true;
 }
@@ -713,18 +720,6 @@ void MainWindow::setStatus(const QString &message, bool important)
 	}
 	else
 		statusBar()->showMessage(message, 5000);
-}
-
-void MainWindow::setCurrentSongIcon()
-{
-	for (int i = 0; i < songs->topLevelItemCount(); i++)
-	{
-		auto item = songs->topLevelItem(i);
-		if (item->data(0, RoleTrackId).toString() == QString("spotify:track:%1").arg(current.item.id))
-			item->setIcon(0, Icon::get("media-playback-start"));
-		else
-			item->setIcon(0, QIcon());
-	}
 }
 
 void MainWindow::setAlbumImage(const QString &url)
@@ -819,7 +814,12 @@ QStringList MainWindow::currentTracks()
 	QStringList tracks;
 	tracks.reserve(songs->topLevelItemCount());
 	for (int i = 0; i < songs->topLevelItemCount(); i++)
-		tracks.append(songs->topLevelItem(i)->data(0, RoleTrackId).toString());
+	{
+		auto trackId = songs->topLevelItem(i)->data(0, RoleTrackId).toString();
+		// spotify:track: = 14
+		if (trackId.length() > 14)
+			tracks.append(trackId);
+	}
 	return tracks;
 }
 
@@ -854,4 +854,12 @@ void MainWindow::reloadTrayIcon()
 bool MainWindow::hasDarkBackground()
 {
 	return darkBackground;
+}
+
+void MainWindow::setPlayingTrackItem(QTreeWidgetItem *item)
+{
+	if (playingTrackItem != nullptr)
+		playingTrackItem->setIcon(0, QIcon());
+	item->setIcon(0, Icon::get("media-playback-start"));
+	playingTrackItem = item;
 }

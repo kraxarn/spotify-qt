@@ -109,12 +109,13 @@ private:
 	TrayIcon				*trayIcon;
 	static bool				darkBackground;
 	int						refreshCount;
+	QTreeWidgetItem*		playingTrackItem;
+	QHash<QString, QTreeWidgetItem*>	trackItems;
 	// Methods
 	QWidget *createCentralWidget();
 	QToolBar *createToolBar();
 	void refreshPlaylists();
 	bool loadSongs(const QVector<spt::Track> &tracks);
-	void setCurrentSongIcon();
 	void setAlbumImage(const QString &url);
 	static QString formatTime(int ms);
 	void refresh();
@@ -125,4 +126,5 @@ private:
 		const QString &name, const QString &artistId, const QString &albumId);
 	QTreeWidgetItem *treeItem(QTreeWidget *tree, const QString &name, const QString &toolTip = QString::Null(), const QStringList &childrenItems = QStringList(QString::Null()));
 	QStringList currentTracks();
+	void setPlayingTrackItem(QTreeWidgetItem *item);
 };
