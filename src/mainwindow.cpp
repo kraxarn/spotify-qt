@@ -629,7 +629,7 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 			item->setDisabled(true);
 			item->setToolTip(1, "Local track");
 		}
-		if (track.id == current.item.id)
+		else if (track.id == current.item.id)
 			item->setIcon(0, Icon::get("media-playback-start"));
 		songs->insertTopLevelItem(i, item);
 	}
