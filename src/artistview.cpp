@@ -60,24 +60,34 @@ ArtistView::ArtistView(spt::Spotify *spotify, const QString &artistId, QWidget *
 	tabs->addTab(topTracksList, "Popular");
 	// Albums
 	auto albums = artist.albums(*spotify);
-	auto albumList = new QListWidget(tabs);
-	auto singleList = new QListWidget(tabs);
+	auto albumList = new QTreeWidget(tabs);
+	auto singleList = new QTreeWidget(tabs);
+	for (auto &list : {albumList, singleList})
+	{
+		list->setColumnCount(2);
+		list->header()->hide();
+		list->setRootIsDecorated(false);
+		list->header()->resizeSection(0, 235);
+		list->header()->resizeSection(1, 1);
+	}
 	for (auto &album : albums)
 	{
-		auto parent = album.albumGroup == "single" ? singleList : albumList;
+		auto parentTab = album.albumGroup == "single" ? singleList : albumList;
 		auto year = album.releaseDate.toString("yyyy");
-		auto item = new QListWidgetItem(QString("%1%2")
-			.arg(album.name)
-			.arg(year.isEmpty() ? "" : QString(" (%1)").arg(year)), parent);
-		item->setIcon(QIcon(window->getAlbum(album.image)));
-		item->setData(MainWindow::RoleAlbumId, album.id);
+		auto item = new QTreeWidgetItem(parentTab, {
+			album.name,
+			year.isEmpty() ? QString() : year
+		});
+		item->setIcon(0, QIcon(window->getAlbum(album.image)));
+		item->setData(0, MainWindow::RoleAlbumId, album.id);
+		parentTab->insertTopLevelItem(0, item);
 	}
-	auto loadAlbumId = [this, window](QListWidgetItem *item) {
-		if (!window->loadAlbum(item->data(MainWindow::RoleAlbumId).toString(), false))
+	auto loadAlbumId = [this, window](QTreeWidgetItem *item) {
+		if (!window->loadAlbum(item->data(0, MainWindow::RoleAlbumId).toString(), false))
 			window->setStatus(QString("Failed to load album"), true);
 	};
-	QListWidget::connect(albumList,  &QListWidget::itemClicked, loadAlbumId);
-	QListWidget::connect(singleList, &QListWidget::itemClicked, loadAlbumId);
+	QTreeWidget::connect(albumList,  &QTreeWidget::itemClicked, loadAlbumId);
+	QTreeWidget::connect(singleList, &QTreeWidget::itemClicked, loadAlbumId);
 	tabs->addTab(albumList,  "Albums");
 	tabs->addTab(singleList, "Singles");
 	// Related artists

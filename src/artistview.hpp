@@ -9,6 +9,7 @@
 #include <QLabel>
 #include <QTabWidget>
 #include <QListWidget>
+#include <QTreeWidget>
 
 class ArtistView : public QDockWidget
 {
