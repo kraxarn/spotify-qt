@@ -860,6 +860,11 @@ void MainWindow::setPlayingTrackItem(QTreeWidgetItem *item)
 {
 	if (playingTrackItem != nullptr)
 		playingTrackItem->setIcon(0, QIcon());
+	if (item == nullptr)
+	{
+		playingTrackItem = nullptr;
+		return;
+	}
 	item->setIcon(0, Icon::get("media-playback-start"));
 	playingTrackItem = item;
 }
