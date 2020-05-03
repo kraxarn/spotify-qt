@@ -132,7 +132,7 @@ void MainWindow::refreshed(const spt::Playback &playback)
 	auto currPlaying = QString("%1\n%2").arg(current.item.name).arg(current.item.artist);
 	if (nowPlaying->text() != currPlaying)
 	{
-		if (current.isPlaying)
+		if (current.isPlaying && trackItems.contains(current.item.id))
 			setPlayingTrackItem(trackItems[current.item.id]);
 		nowPlaying->setText(currPlaying);
 		setAlbumImage(current.item.image);
