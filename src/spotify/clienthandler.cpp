@@ -46,5 +46,27 @@ QString ClientHandler::start()
 		"--username", username,
 		"--password", password
 	});
-	return QString();
+QString ClientHandler::clientExec(const QString &path, const QStringList &arguments)
+{
+	// Check if it exists
+	QFileInfo file(path);
+	if (!file.exists())
+		return QString();
+	// Check if either client
+	if (file.baseName() != "spotifyd")
+		return QString();
+	// Prepare process
+	QProcess process;
+	// Get version info
+	process.start(file.absoluteFilePath(), arguments);
+	process.waitForFinished();
+	// Entire stdout is version
+	return process.readAllStandardOutput().trimmed();
+}
+
+QString ClientHandler::version(const QString &path)
+{
+	return clientExec(path, {
+		"--version"
+	});
 }

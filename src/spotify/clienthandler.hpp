@@ -14,9 +14,11 @@ namespace spt
 	public:
 		explicit ClientHandler(QWidget *parent = nullptr);
 		virtual ~ClientHandler();
+		static QString version(const QString &path);
 		QString start();
 		QProcess *process = nullptr;
 	private:
 		QWidget *parent;
+		static QString clientExec(const QString &path, const QStringList &arguments);
 	};
 }

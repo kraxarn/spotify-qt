@@ -2,6 +2,7 @@
 
 #include "settings.hpp"
 #include "mainwindow.hpp"
+#include "spotify/clienthandler.hpp"
 
 #include <QDialog>
 #include <QHBoxLayout>
@@ -39,7 +40,6 @@ private:
 	bool applySettings();
 	void applyFail(const QString &setting);
 	Settings settings;
-	static QString sptClient(const QString &path);
 	static bool isPulse();
 	// App settings
 	QComboBox	*appRefresh		= nullptr;

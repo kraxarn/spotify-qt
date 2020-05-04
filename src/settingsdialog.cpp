@@ -155,7 +155,7 @@ QWidget *SettingsDialog::spotifySettings()
 	sptVersion = new QLabel("(no spotifyd provided)", this);
 	if (!settings.sptPath().isEmpty())
 	{
-		auto client = sptClient(settings.sptPath());
+		auto client = spt::ClientHandler::version(settings.sptPath());
 		if (sptVersion != nullptr)
 			sptVersion->setText(client);
 	}
@@ -270,26 +270,6 @@ QWidget *SettingsDialog::aboutSettings()
 	return widget;
 }
 
-QString SettingsDialog::sptClient(const QString &path)
-{
-	// Check if it exists
-	QFileInfo file(path);
-	if (!file.exists())
-		return QString();
-	// Check if either client
-	if (file.baseName() != "spotifyd")
-		return QString();
-	// Prepare process
-	QProcess process;
-	// Get version info
-	process.start(file.absoluteFilePath(), {
-		"--version"
-	});
-	process.waitForFinished();
-	// Entire stdout is version
-	return process.readAllStandardOutput().trimmed();
-}
-
 bool SettingsDialog::applySettings()
 {
 	// Set theme
@@ -318,7 +298,7 @@ bool SettingsDialog::applySettings()
 	// Check spotify client path
 	if (!sptPath->text().isEmpty())
 	{
-		auto client = sptClient(sptPath->text());
+		auto client = spt::ClientHandler::version(sptPath->text());
 		if (client.isEmpty())
 		{
 			applyFail("spotifyd path");
