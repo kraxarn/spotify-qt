@@ -278,3 +278,13 @@ void Settings::setRefreshInterval(int value)
 {
 	settings->setValue("RefreshInterval", value);
 }
+
+bool Settings::sptGlobalConfig()
+{
+	return settings->value("Spotify/GlobalConfig", false).toBool();
+}
+
+void Settings::setSptGlobalConfig(bool value)
+{
+	settings->setValue("Spotify/GlobalConfig", value);
+}

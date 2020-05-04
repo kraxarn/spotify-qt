@@ -88,6 +88,9 @@ public:
 	int sptBitrate();
 	void setSptBitrate(int value);
 
+	bool sptGlobalConfig();
+	void setSptGlobalConfig(bool value);
+
 	// Clear and log out
 
 	void removeClient();

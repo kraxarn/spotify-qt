@@ -41,6 +41,7 @@ private:
 	void applyFail(const QString &setting);
 	Settings settings;
 	static bool isPulse();
+	static bool sptConfigExists();
 	// App settings
 	QComboBox	*appRefresh		= nullptr;
 	QCheckBox	*appPulse		= nullptr;
@@ -58,4 +59,5 @@ private:
 	QLineEdit	*sptUsername	= nullptr;
 	QComboBox	*sptBitrate		= nullptr;
 	QCheckBox	*sptAppStart	= nullptr;
+	QCheckBox	*sptGlobal		= nullptr;
 };

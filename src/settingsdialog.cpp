@@ -178,6 +178,11 @@ QWidget *SettingsDialog::spotifySettings()
 	sptAppStart->setToolTip("Start spotifyd together with the app (always starts and doesn't automatically close)");
 	sptAppStart->setChecked(settings.sptStartClient());
 	layout->addWidget(sptAppStart);
+	// Global config
+	sptGlobal = new QCheckBox("Use global config", this);
+	sptGlobal->setToolTip("Use spotifyd.conf file in either ~/.config/spotifyd or /etc/spotifyd only");
+	sptGlobal->setChecked(settings.sptGlobalConfig());
+	layout->addWidget(sptGlobal);
 	// Final layout
 	auto widget = new QWidget();
 	widget->setLayout(layout);
@@ -346,6 +351,13 @@ bool SettingsDialog::applySettings()
 	}
 	settings.setRefreshInterval(interval);
 
+	// Spotify global config
+	if (sptGlobal->isChecked() && !sptConfigExists())
+		QMessageBox::warning(this,
+			"spotifyd config not found",
+			QString("Couldn't find a config file for spotifyd. You may experience issues."));
+	settings.setSptGlobalConfig(sptGlobal->isChecked());
+
 	// Other Spotify stuff
 	settings.setSptPlaybackOrder(appSptOrder->isChecked());
 	settings.setSptStartClient(sptAppStart->isChecked());
@@ -368,4 +380,12 @@ bool SettingsDialog::isPulse()
 {
 	// Assume /usr/bin/pactl
 	return QFileInfo("/usr/bin/pactl").isExecutable();
+}
+
+bool SettingsDialog::sptConfigExists()
+{
+	// Config is either ~/.config/spotifyd/spotifyd.conf or /etc/spotifyd/spotifyd.conf
+	return QFile(QString("%1/.config/spotifyd/spotifyd.conf")
+		.arg(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0])).exists()
+		|| QFile("/etc/spotifyd/spotifyd.conf").exists();
 }
