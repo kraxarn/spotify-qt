@@ -43,7 +43,6 @@ private:
 	static bool isPulse();
 	// App settings
 	QComboBox	*appRefresh		= nullptr;
-	QCheckBox	*appStartSpt	= nullptr;
 	QCheckBox	*appPulse		= nullptr;
 	QCheckBox	*appMedia		= nullptr;
 	QCheckBox	*appSptOrder	= nullptr;
@@ -58,4 +57,5 @@ private:
 	QLabel		*sptVersion		= nullptr;
 	QLineEdit	*sptUsername	= nullptr;
 	QComboBox	*sptBitrate		= nullptr;
+	QCheckBox	*sptAppStart	= nullptr;
 };

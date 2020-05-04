@@ -56,11 +56,6 @@ QWidget *SettingsDialog::appSettings()
 	appRefreshLayout->addWidget(appRefresh);
 	appRefreshLayout->addWidget(new QLabel("seconds"));
 	layout->addLayout(appRefreshLayout);
-	// Start client
-	appStartSpt = new QCheckBox("Autostart spotifyd", this);
-	appStartSpt->setToolTip("Start spotifyd together with the app");
-	appStartSpt->setChecked(settings.sptStartClient());
-	layout->addWidget(appStartSpt);
 	// PulseAudio volume control
 	if (isPulse())
 	{
@@ -178,6 +173,11 @@ QWidget *SettingsDialog::spotifySettings()
 	auto bitrate = settings.sptBitrate();
 	sptBitrate->setCurrentIndex(bitrate == 96 ? 0 : bitrate == 160 ? 1 : 2);
 	sptLayout->addWidget(sptBitrate);
+	// Start with app
+	sptAppStart = new QCheckBox("Start with app", this);
+	sptAppStart->setToolTip("Start spotifyd together with the app");
+	sptAppStart->setChecked(settings.sptStartClient());
+	layout->addWidget(sptAppStart);
 	// Final layout
 	auto widget = new QWidget();
 	widget->setLayout(layout);
@@ -348,7 +348,7 @@ bool SettingsDialog::applySettings()
 
 	// Other Spotify stuff
 	settings.setSptPlaybackOrder(appSptOrder->isChecked());
-	settings.setSptStartClient(appStartSpt->isChecked());
+	settings.setSptStartClient(sptAppStart->isChecked());
 	settings.setSptUser(sptUsername->text());
 	auto bitrate = sptBitrate->currentIndex();
 	settings.setSptBitrate(bitrate == 0 ? 96 : bitrate == 1 ? 160 : 320);
