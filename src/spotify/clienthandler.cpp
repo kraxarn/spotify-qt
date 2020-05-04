@@ -19,7 +19,7 @@ QString ClientHandler::start()
 {
 	Settings settings;
 	// Check if empty
-	auto path = settings.sptPath();
+	path = settings.sptPath();
 	if (path.isEmpty())
 		return "path is empty";
 	// Check if path exists
@@ -39,13 +39,22 @@ QString ClientHandler::start()
 		return "no password provided";
 	// Attempt to start spotifyd
 	process = new QProcess();
-	process->start(path, {
-		"--backend", "pulseaudio",
-		"--bitrate", QString::number(settings.sptBitrate()),
-		"--device-name", "spotify-qt",
-		"--username", username,
-		"--password", password
+	QStringList arguments({
+		"--bitrate",		QString::number(settings.sptBitrate()),
+		"--device-name",	"spotify-qt",
+		"--username",		username,
+		"--password",		password
 	});
+	if (supportsPulse())
+		arguments.append({
+			"--backend", "pulseaudio"
+		});
+	else
+		qDebug() << "warning: spotifyd was compiled without pulseaudio support";
+	process->start(path, arguments);
+	return QString();
+}
+
 QString ClientHandler::clientExec(const QString &path, const QStringList &arguments)
 {
 	// Check if it exists
@@ -62,6 +71,13 @@ QString ClientHandler::clientExec(const QString &path, const QStringList &argume
 	process.waitForFinished();
 	// Entire stdout is version
 	return process.readAllStandardOutput().trimmed();
+}
+
+bool ClientHandler::supportsPulse()
+{
+	return clientExec(path, {
+		"--help"
+	}).contains("pulseaudio");
 }
 
 QString ClientHandler::version(const QString &path)

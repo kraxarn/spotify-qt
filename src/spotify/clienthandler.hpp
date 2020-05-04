@@ -19,6 +19,8 @@ namespace spt
 		QProcess *process = nullptr;
 	private:
 		QWidget *parent;
+		QString path;
+		bool supportsPulse();
 		static QString clientExec(const QString &path, const QStringList &arguments);
 	};
 }
