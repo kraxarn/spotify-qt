@@ -10,6 +10,7 @@
 #include "searchview.hpp"
 #include "songmenu.hpp"
 #include "trayicon.hpp"
+#include "playlistmenu.hpp"
 #include "mediaplayer/service.hpp"
 #include "spotify/spotify.hpp"
 #include "spotify/playlist.hpp"

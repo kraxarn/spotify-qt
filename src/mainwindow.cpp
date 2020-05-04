@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	cacheDir.mkpath(".");
 	cacheDir.mkdir("album");
 	cacheDir.mkdir("playlist");
+	cacheDir.mkdir("playlistImage");
 	// Check for dark background
 	auto bg = palette().color(backgroundRole());
 	if (((bg.red() + bg.green() + bg.blue()) / 3) < 128)
@@ -289,6 +290,11 @@ QWidget *MainWindow::createCentralWidget()
 			QString("spotify:playlist:%1").arg(currentPlaylist.id));
 		if (!result.isEmpty())
 			setStatus(QString("Failed to start playlist playback: %1").arg(result), true);
+	});
+	playlists->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+	QWidget::connect(playlists, &QWidget::customContextMenuRequested, [=](const QPoint &pos) {
+		(new PlaylistMenu(*spotify, sptPlaylists->at(playlists->currentRow()), this))
+			->popup(playlists->mapToGlobal(pos));
 	});
 	auto playlistContainer = createGroupBox(QVector<QWidget*>() << playlists);
 	playlistContainer->setTitle("Playlists");
