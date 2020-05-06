@@ -206,6 +206,11 @@ QWidget *SettingsDialog::aboutSettings()
 	titleVersion->addWidget(titleAppName);
 	titleVersion->addWidget(new QLabel(APP_VERSION));
 	title->addLayout(titleVersion);
+	// User info
+	auto window = dynamic_cast<MainWindow*>(parent());
+	if (window != nullptr)
+		layout->addWidget(new QLabel(QString("Hello %1!")
+			.arg(window->getCurrentUser().displayName)), 0, Qt::AlignHCenter);
 	// Grid with buttons
 	layout->addSpacing(8);
 	auto options = new QGridLayout();
@@ -221,8 +226,7 @@ QWidget *SettingsDialog::aboutSettings()
 	// Check for updates
 	auto checkUpdates = new QPushButton(Icon::get("download"), "Check for updates");
 	checkUpdates->setFlat(true);
-	QAbstractButton::connect(checkUpdates, &QPushButton::clicked, [this, checkUpdates](bool checked) {
-		auto window = dynamic_cast<MainWindow*>(parent());
+	QAbstractButton::connect(checkUpdates, &QPushButton::clicked, [window, checkUpdates](bool checked) {
 		if (window == nullptr)
 			return;
 		checkUpdates->setEnabled(false);
@@ -244,8 +248,7 @@ QWidget *SettingsDialog::aboutSettings()
 	// Open cache directory
 	auto openCache = new QPushButton(Icon::get("folder-temp"), "Open cache directory");
 	openCache->setFlat(true);
-	QAbstractButton::connect(openCache, &QPushButton::clicked, [this](bool checked) {
-		auto window = dynamic_cast<MainWindow*>(parent());
+	QAbstractButton::connect(openCache, &QPushButton::clicked, [this, window](bool checked) {
 		if (window == nullptr)
 			return;
 		if (!QDesktopServices::openUrl(QUrl(window->cacheLocation)))
