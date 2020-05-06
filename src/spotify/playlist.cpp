@@ -17,6 +17,12 @@ Playlist::Playlist(const QJsonObject &json)
 	isPublic		= json["public"].toBool();
 	tracks			= json["tracks"].toObject();
 	snapshot		= json[fromCache ? "snapshot" : "snapshot_id"].toString();
+	ownerId			= fromCache
+		? json["ownerId"].toString()
+		: json["owner"].toObject()["id"].toString();
+	ownerName		= fromCache
+		? json["ownerName"].toString()
+		: json["owner"].toObject()["display_name"].toString();
 }
 
 QVector<Track> Playlist::loadTracks(Spotify &spotify)
@@ -63,6 +69,8 @@ QJsonObject Playlist::toJson(Spotify &spotify)
 		QPair<QString, bool>("isPublic", isPublic),
 		QPair<QString, bool>("total", jsonTracks.size()),
 		QPair<QString, QJsonArray>("tracks", jsonTracks),
-		QPair<QString, QString>("snapshot", snapshot)
+		QPair<QString, QString>("snapshot", snapshot),
+		QPair<QString, QString>("ownerId", ownerId),
+		QPair<QString, QString>("ownerName", ownerName)
 	});
 }

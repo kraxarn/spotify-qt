@@ -18,7 +18,7 @@ namespace spt
 	public:
 		Playlist(const QJsonObject &json);
 		bool collaborative;
-		QString description, id, image, name, snapshot;
+		QString description, id, image, name, snapshot, ownerId, ownerName;
 		bool isPublic;
 		QVector<Track> loadTracks(Spotify &spotify);
 		QJsonObject toJson(Spotify &spotify);
