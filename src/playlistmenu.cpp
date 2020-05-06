@@ -5,7 +5,9 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 	auto window = dynamic_cast<MainWindow*>(parent);
 	if (window == nullptr)
 		return;
+	auto isOwner = !playlist.ownerId.isEmpty() && playlist.ownerId == window->getCurrentUser().id;
 	auto playlistName = addAction(window->getImage("playlistImage", playlist.image), playlist.name);
+	playlistName->setEnabled(isOwner);
 	QAction::connect(playlistName, &QAction::triggered, [window, playlist](bool checked) {
 		QInputDialog::getText(window, "New name",
 			"Name:", QLineEdit::Normal, playlist.name);
@@ -41,6 +43,7 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 	auto editPlaylist = addMenu(Icon::get("document-edit"), "Edit");
 	if (editDescription == nullptr)
 		editDescription = editPlaylist->addAction("Add description");
+	editDescription->setEnabled(isOwner);
 	QAction::connect(editDescription, &QAction::triggered, [window, playlist](bool checked) {
 		auto text = TextEditDialog::getText("New description",
 			"Description:", playlist.description, window);
