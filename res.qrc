@@ -30,6 +30,7 @@
         <file>res/ic/light/non-starred-symbolic.svg</file>
         <file>res/ic/light/visibility.svg</file>
         <file>res/ic/light/view-sort-ascending.svg</file>
+        <file>res/ic/light/document-edit.svg</file>
         <!-- Dark icons -->
         <file>res/ic/dark/application-exit.svg</file>
         <file>res/ic/dark/document-share.svg</file>
@@ -59,6 +60,7 @@
         <file>res/ic/dark/non-starred-symbolic.svg</file>
         <file>res/ic/dark/visibility.svg</file>
         <file>res/ic/dark/view-sort-ascending.svg</file>
+        <file>res/ic/dark/document-edit.svg</file>
         <!-- Logos -->
         <file>res/logo/spotify-qt.svg</file>
         <file>res/logo/spotify-qt-symbolic-light.svg</file>
