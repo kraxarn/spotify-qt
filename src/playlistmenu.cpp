@@ -16,6 +16,9 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 	if (!playlist.description.isEmpty())
 		editDescription = addAction(playlist.description);
 
+	if (!isOwner && !playlist.ownerName.isEmpty())
+		addAction(QString("By %1").arg(playlist.ownerName))->setEnabled(false);
+
 	auto tracks = window->playlistTracks(playlist.id);
 	auto duration = 0;
 	for (auto &track : tracks)
