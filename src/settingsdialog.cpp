@@ -11,25 +11,21 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 	tabs->addTab(aboutSettings(), "About");
 	mainLayout->addWidget(tabs, 1);
 	// Buttons
-	auto okButton = new QPushButton("OK");
+	auto buttons = new QDialogButtonBox();
+	auto okButton = buttons->addButton(QDialogButtonBox::Ok);
 	QPushButton::connect(okButton, &QPushButton::clicked, [=](bool checked) {
 		if (applySettings())
 			accept();
 	});
-	auto applyButton = new QPushButton("Apply");
+	auto applyButton = buttons->addButton(QDialogButtonBox::Apply);
 	QPushButton::connect(applyButton, &QPushButton::clicked, [=](bool checked) {
 		applySettings();
 	});
-	auto cancelButton = new QPushButton("Cancel");
+	auto cancelButton = buttons->addButton(QDialogButtonBox::Cancel);
 	QPushButton::connect(cancelButton, &QPushButton::clicked, [=](bool checked) {
 		accept();
 	});
-	auto buttons = new QHBoxLayout();
-	buttons->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
-	buttons->addWidget(okButton);
-	buttons->addWidget(applyButton);
-	buttons->addWidget(cancelButton);
-	mainLayout->addLayout(buttons);
+	mainLayout->addWidget(buttons);
 	// Set layout
 	setWindowTitle("Settings");
 	setLayout(mainLayout);
