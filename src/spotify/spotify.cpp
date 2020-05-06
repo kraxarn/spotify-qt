@@ -459,3 +459,14 @@ void Spotify::requestCurrentPlayback()
 	});
 	getLater("me/player");
 }
+
+User Spotify::me()
+{
+	auto json = get("me");
+	User user;
+	user.displayName	= json["display_name"].toString();
+	user.id				= json["id"].toString();
+	user.image			= json["images"].toArray()[2].toObject()["url"].toString();
+	user.product		= json["product"].toString();
+	return user;
+}

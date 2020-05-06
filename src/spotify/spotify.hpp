@@ -9,6 +9,7 @@ namespace spt { class Spotify; }
 #include "audiofeatures.hpp"
 #include "artist.hpp"
 #include "searchresults.hpp"
+#include "user.hpp"
 
 #include <QDateTime>
 #include <QtNetwork>
@@ -63,6 +64,7 @@ namespace spt
 		QString removeSavedTrack(const QString &trackId);
 		QVector<Track> recentlyPlayed();
 		QVector<Album> newReleases();
+		User me();
 
 	public slots:
 		void requestCurrentPlayback();
