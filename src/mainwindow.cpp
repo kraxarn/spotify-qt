@@ -122,6 +122,9 @@ void MainWindow::refresh()
 
 void MainWindow::refreshed(const spt::Playback &playback)
 {
+	// Just so it doesn't make the app startup slower for now
+	if (currentUser.id.isEmpty())
+		currentUser = spotify->me();
 	current = playback;
 	isPlaying = current.isPlaying;
 	if (!current.isPlaying)
@@ -874,4 +877,9 @@ void MainWindow::setPlayingTrackItem(QTreeWidgetItem *item)
 	}
 	item->setIcon(0, Icon::get("media-playback-start"));
 	playingTrackItem = item;
+}
+
+spt::User MainWindow::getCurrentUser()
+{
+	return currentUser;
 }

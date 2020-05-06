@@ -18,6 +18,7 @@
 #include "spotify/webplayer.hpp"
 #include "spotify/audiofeatures.hpp"
 #include "spotify/clienthandler.hpp"
+#include "spotify/user.hpp"
 
 #include <QMainWindow>
 #include <QListWidget>
@@ -82,6 +83,7 @@ public:
 	QVector<spt::Track> playlistTracks(const QString &playlistId);
 	QString currentLibraryItem();
 	void reloadTrayIcon();
+	spt::User getCurrentUser();
 	// I know these should be methods, I'm just lazy
 	QString					cacheLocation;
 	QVector<spt::Playlist>	*sptPlaylists;
@@ -111,6 +113,7 @@ private:
 	static bool				darkBackground;
 	int						refreshCount;
 	QTreeWidgetItem*		playingTrackItem;
+	spt::User				currentUser;
 	QHash<QString, QTreeWidgetItem*>	trackItems;
 	// Methods
 	QWidget *createCentralWidget();
