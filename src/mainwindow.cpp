@@ -620,7 +620,10 @@ void MainWindow::refreshPlaylists()
 		playlists->clear();
 	// Add all playlists
 	for (auto &playlist : *sptPlaylists)
-		playlists->addItem(playlist.name);
+	{
+		auto item = new QListWidgetItem(playlist.name, playlists);
+		item->setToolTip(playlist.description);
+	}
 }
 
 bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
