@@ -26,7 +26,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	cacheDir.mkpath(".");
 	cacheDir.mkdir("album");
 	cacheDir.mkdir("playlist");
-	cacheDir.mkdir("playlistImage");
 	// Check for dark background
 	auto bg = palette().color(backgroundRole());
 	if (((bg.red() + bg.green() + bg.blue()) / 3) < 128)
