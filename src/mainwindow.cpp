@@ -610,6 +610,8 @@ void MainWindow::openLyrics(const QString &artist, const QString &name)
 
 void MainWindow::refreshPlaylists()
 {
+	auto lastIndex = playlists == nullptr
+		? -1 : playlists->currentRow();
 	spotify->playlists(&sptPlaylists);
 	// Create or empty
 	if (playlists == nullptr)
@@ -622,6 +624,8 @@ void MainWindow::refreshPlaylists()
 		auto item = new QListWidgetItem(playlist.name, playlists);
 		item->setToolTip(playlist.description);
 	}
+	if (lastIndex >= 0)
+		playlists->setCurrentRow(lastIndex);
 }
 
 bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
