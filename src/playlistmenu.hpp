@@ -2,7 +2,7 @@
 
 #include "spotify/playlist.hpp"
 #include "mainwindow.hpp"
-#include "texteditdialog.hpp"
+#include "playlisteditdialog.hpp"
 
 #include <QMenu>
 #include <QUrl>
@@ -15,4 +15,7 @@ class PlaylistMenu : public QMenu
 
 public:
 	PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist, QWidget *parent = nullptr);
+
+private:
+	PlaylistEditDialog	*editDialog = nullptr;
 };

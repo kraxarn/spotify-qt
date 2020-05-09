@@ -8,13 +8,19 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 	auto isOwner = !playlist.ownerId.isEmpty() && playlist.ownerId == window->getCurrentUser().id;
 	auto playlistName = addAction(window->getImage("playlistImage", playlist.image), playlist.name);
 	playlistName->setEnabled(isOwner);
-	QAction::connect(playlistName, &QAction::triggered, [window, playlist](bool checked) {
-		QInputDialog::getText(window, "New name",
-			"Name:", QLineEdit::Normal, playlist.name);
+	QAction::connect(playlistName, &QAction::triggered, [this, window, playlist](bool checked) {
+		if (editDialog != nullptr)
+			delete editDialog;
+		editDialog = new PlaylistEditDialog(playlist, 0, this);
+		editDialog->show();
 	});
-	QAction *editDescription = nullptr;
 	if (!playlist.description.isEmpty())
-		editDescription = addAction(playlist.description);
+		QAction::connect(addAction(playlist.description), &QAction::triggered, [this, playlist](bool checked) {
+			if (editDialog != nullptr)
+				delete editDialog;
+			editDialog = new PlaylistEditDialog(playlist, 1, parentWidget());
+			editDialog->show();
+		});
 
 	if (!isOwner && !playlist.ownerName.isEmpty())
 		addAction(QString("By %1").arg(playlist.ownerName))->setEnabled(false);
@@ -42,22 +48,6 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 		if (!status.isEmpty())
 			window->setStatus(status, true);
 	});
-
-	auto editPlaylist = addMenu(Icon::get("document-edit"), "Edit");
-	if (editDescription == nullptr)
-		editDescription = editPlaylist->addAction("Add description");
-	editDescription->setEnabled(isOwner);
-	QAction::connect(editDescription, &QAction::triggered, [window, playlist](bool checked) {
-		auto text = TextEditDialog::getText("New description",
-			"Description:", playlist.description, window);
-		qDebug() << text;
-	});
-	auto editPublic = editPlaylist->addAction("Public");
-	editPublic->setCheckable(true);
-	editPublic->setChecked(playlist.isPublic);
-	auto editCollaborative = editPlaylist->addAction("Collaborative");
-	editCollaborative->setCheckable(true);
-	editCollaborative->setChecked(playlist.collaborative);
 
 	auto share = addMenu(Icon::get("document-share"), "Share");
 	auto sharePlaylist = share->addAction("Copy playlist link");
