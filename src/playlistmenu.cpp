@@ -5,31 +5,6 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 	auto window = dynamic_cast<MainWindow*>(parent);
 	if (window == nullptr)
 		return;
-	auto isOwner = !playlist.ownerId.isEmpty() && playlist.ownerId == window->getCurrentUser().id;
-	auto playlistName = addAction(window->getImage("playlistImage", playlist.image), playlist.name);
-	playlistName->setEnabled(isOwner);
-	QAction::connect(playlistName, &QAction::triggered, [this, window, playlist](bool checked) {
-		if (editDialog != nullptr)
-			delete editDialog;
-		editDialog = new PlaylistEditDialog(playlist, 0, this);
-		editDialog->show();
-	});
-	if (!playlist.description.isEmpty())
-	{
-		auto description = addAction(playlist.description);
-		QAction::connect(description, &QAction::triggered, [this, playlist](bool checked)
-		{
-			if (editDialog != nullptr)
-				delete editDialog;
-			editDialog = new PlaylistEditDialog(playlist, 1, parentWidget());
-			editDialog->show();
-		});
-		description->setEnabled(isOwner);
-	}
-
-	if (!isOwner && !playlist.ownerName.isEmpty())
-		addAction(QString("By %1").arg(playlist.ownerName))->setEnabled(false);
-
 	auto tracks = window->playlistTracks(playlist.id);
 	auto duration = 0;
 	for (auto &track : tracks)
@@ -40,7 +15,9 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 			.arg(tracks.length())
 			.arg(minutes >= 60 ? QString("%1 h ").arg(minutes / 60) : QString())
 			.arg(minutes % 60))->setEnabled(false);
-
+	auto isOwner = !playlist.ownerId.isEmpty() && playlist.ownerId == window->getCurrentUser().id;
+	if (!isOwner && !playlist.ownerName.isEmpty())
+		addAction(QString("By %1").arg(playlist.ownerName))->setEnabled(false);
 	addSeparator();
 	auto playShuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle play");
 	QAction::connect(playShuffle, &QAction::triggered, [tracks, playlist, &spotify, window](bool checked) {
