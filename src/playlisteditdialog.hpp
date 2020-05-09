@@ -10,13 +10,15 @@
 #include <QPushButton>
 #include <QDialogButtonBox>
 #include <QCheckBox>
+#include <QMessageBox>
 
 class PlaylistEditDialog : public QDialog
 {
 	Q_OBJECT
 
 public:
-	PlaylistEditDialog(const spt::Playlist &playlist, int selectedIndex, QWidget *parent = nullptr);
+	PlaylistEditDialog(spt::Spotify *spotify, const spt::Playlist &playlist,
+		int selectedIndex, QWidget *parent = nullptr);
 
 private:
 	QLineEdit	*name;

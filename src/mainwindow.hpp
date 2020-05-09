@@ -84,6 +84,7 @@ public:
 	QString currentLibraryItem();
 	void reloadTrayIcon();
 	spt::User getCurrentUser();
+	void refreshPlaylists();
 	// I know these should be methods, I'm just lazy
 	QString					cacheLocation;
 	QVector<spt::Playlist>	*sptPlaylists;
@@ -117,7 +118,6 @@ private:
 	// Methods
 	QWidget *createCentralWidget();
 	QToolBar *createToolBar();
-	void refreshPlaylists();
 	bool loadSongs(const QVector<spt::Track> &tracks);
 	void setAlbumImage(const QString &url);
 	static QString formatTime(int ms);

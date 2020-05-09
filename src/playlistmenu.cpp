@@ -31,12 +31,14 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 			window->setStatus(status, true);
 	});
 	if (isOwner)
-		QAction::connect(addAction(Icon::get("document-edit"), "Edit"), &QAction::triggered, [this, playlist](bool checked)
+		QAction::connect(addAction(Icon::get("document-edit"), "Edit"), &QAction::triggered,
+			[this, playlist, &spotify, window](bool checked)
 		{
 			if (editDialog != nullptr)
 				delete editDialog;
-			editDialog = new PlaylistEditDialog(playlist, -1, parentWidget());
-			editDialog->show();
+			editDialog = new PlaylistEditDialog(&spotify, playlist, -1, parentWidget());
+			if (editDialog->exec() == QDialog::Accepted)
+				window->refreshPlaylists();
 		});
 	auto share = addMenu(Icon::get("document-share"), "Share");
 	auto sharePlaylist = share->addAction("Copy playlist link");

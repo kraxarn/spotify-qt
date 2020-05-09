@@ -1,6 +1,7 @@
 #include "playlisteditdialog.hpp"
 
-PlaylistEditDialog::PlaylistEditDialog(const spt::Playlist &playlist, int selectedIndex, QWidget *parent)
+PlaylistEditDialog::PlaylistEditDialog(spt::Spotify *spotify, const spt::Playlist &playlist,
+	int selectedIndex, QWidget *parent)
 	: QDialog(parent)
 {
 	setWindowTitle(playlist.name);
@@ -34,8 +35,20 @@ PlaylistEditDialog::PlaylistEditDialog(const spt::Playlist &playlist, int select
 	// Dialog buttons
 	auto buttons = new QDialogButtonBox(this);
 	buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-	QDialogButtonBox::connect(buttons, &QDialogButtonBox::accepted, [this] {
-		accept();
+	QDialogButtonBox::connect(buttons, &QDialogButtonBox::accepted, [this, playlist, spotify] {
+		auto pl = playlist;
+		pl.name				= name->text();
+		pl.description		= description->toPlainText();
+		pl.isPublic			= isPublic->isChecked();
+		pl.collaborative	= isCollaborative->isChecked();
+		auto result = spotify->editPlaylist(pl);
+		if (result.isEmpty())
+		{
+			accept();
+			return;
+		}
+		QMessageBox::warning(this, "Edit failed",
+			QString("Failed to save changes: %1").arg(result));
 	});
 	QDialogButtonBox::connect(buttons, &QDialogButtonBox::rejected, [this] {
 		reject();
