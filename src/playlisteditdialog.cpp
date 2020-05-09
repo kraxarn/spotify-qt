@@ -25,7 +25,9 @@ PlaylistEditDialog::PlaylistEditDialog(const spt::Playlist &playlist, int select
 	toggles->addWidget(isCollaborative);
 	layout->addLayout(toggles);
 	// Focus depending on selected index
-	if (selectedIndex == 0)
+	if (selectedIndex < 0)
+		setFocus();
+	else if (selectedIndex == 0)
 		name->setFocus();
 	else if (selectedIndex == 1)
 		description->setFocus();

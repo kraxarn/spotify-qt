@@ -48,7 +48,14 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 		if (!status.isEmpty())
 			window->setStatus(status, true);
 	});
-
+	if (isOwner)
+		QAction::connect(addAction(Icon::get("document-edit"), "Edit"), &QAction::triggered, [this, playlist](bool checked)
+		{
+			if (editDialog != nullptr)
+				delete editDialog;
+			editDialog = new PlaylistEditDialog(playlist, -1, parentWidget());
+			editDialog->show();
+		});
 	auto share = addMenu(Icon::get("document-share"), "Share");
 	auto sharePlaylist = share->addAction("Copy playlist link");
 	QAction::connect(sharePlaylist, &QAction::triggered, [window, playlist](bool checked) {
