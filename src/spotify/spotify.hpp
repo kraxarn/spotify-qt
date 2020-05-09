@@ -63,7 +63,7 @@ namespace spt
 		QString addSavedTrack(const QString &trackId);
 		QString removeSavedTrack(const QString &trackId);
 		QVector<Track> recentlyPlayed();
-		QVector<Album> newReleases();
+		QVector<Album> newReleases(int offset = 0);
 		User me();
 		QString editPlaylist(const Playlist &playlist);
 

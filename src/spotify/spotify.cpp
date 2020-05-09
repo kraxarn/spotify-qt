@@ -439,14 +439,17 @@ QString Spotify::removeSavedTrack(const QString &trackId)
 	return del("me/tracks", &body);
 }
 
-QVector<Album> Spotify::newReleases()
+QVector<Album> Spotify::newReleases(int offset)
 {
-	auto json = get("browse/new-releases");
-	auto albumItems = json.object()["albums"].toObject()["items"].toArray();
+	auto json = get(QString("browse/new-releases?limit=50&offset=%1").arg(offset))
+		.object()["albums"].toObject();
+	auto albumItems = json["items"].toArray();
 	QVector<Album> albums;
 	albums.reserve(albumItems.size());
 	for (auto item : albumItems)
 		albums.append(Album(item.toObject()));
+	if (json.contains("next") && !json["next"].isNull())
+		albums << newReleases(json["offset"].toInt() + json["limit"].toInt());
 	return albums;
 }
 
