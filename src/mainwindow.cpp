@@ -11,7 +11,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	volume 		= progress	= nullptr;
 	nowPlaying	= position	= nowAlbum	= nullptr;
 	repeat 		= shuffle	= playPause	= nullptr;
-	isPlaying	= false;
 	mediaPlayer	= nullptr;
 	artistView	= nullptr;
 	lyricsView	= nullptr;
@@ -125,7 +124,6 @@ void MainWindow::refreshed(const spt::Playback &playback)
 	if (currentUser.id.isEmpty())
 		currentUser = spotify->me();
 	current = playback;
-	isPlaying = current.isPlaying;
 	if (!current.isPlaying)
 	{
 		playPause->setIcon(Icon::get("media-playback-start"));
