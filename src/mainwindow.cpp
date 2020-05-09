@@ -193,6 +193,7 @@ QWidget *MainWindow::createCentralWidget()
 		treeItem(libraryList, "Recently Played", "Most recently played tracks from any device", QStringList()),
 		treeItem(libraryList, "Liked", "Liked and saved tracks", QStringList()),
 		treeItem(libraryList, "Tracks", "Most played tracks for the past 6 months", QStringList()),
+		treeItem(libraryList, "New Releases", "New albums from artists you listen to", QStringList()),
 		treeItem(libraryList, "Albums", "Liked and saved albums"),
 		treeItem(libraryList, "Artists", "Most played artists for the past 6 months")
 	});
@@ -218,6 +219,16 @@ QWidget *MainWindow::createCentralWidget()
 					loadSongs(spotify->savedTracks());
 				else if (item->text(0) == "Tracks")
 					loadSongs(spotify->topTracks());
+				else if (item->text(0) == "New Releases")
+				{
+					auto all = allArtists();
+					auto releases = spotify->newReleases();
+					QVector<spt::Track> good;
+					for (auto &album : releases)
+						if (all.contains(album.artist))
+							good << *spotify->albumTracks(album.id);
+					loadSongs(good);
+				}
 			}
 		}
 	});
