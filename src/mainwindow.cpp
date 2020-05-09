@@ -623,6 +623,7 @@ void MainWindow::refreshPlaylists()
 	{
 		auto item = new QListWidgetItem(playlist.name, playlists);
 		item->setToolTip(playlist.description);
+		item->setData(RolePlaylistId, playlist.id);
 	}
 	if (lastIndex >= 0)
 		playlists->setCurrentRow(lastIndex);
@@ -886,4 +887,16 @@ void MainWindow::setPlayingTrackItem(QTreeWidgetItem *item)
 spt::User MainWindow::getCurrentUser()
 {
 	return currentUser;
+}
+
+QSet<QString> MainWindow::allArtists()
+{
+	QSet<QString> artistIds;
+	QElapsedTimer timer;
+	timer.start();
+	for (auto i = 0; i < playlists->count(); i++)
+		for (auto &track : playlistTracks(playlists->item(i)->data(RolePlaylistId).toString()))
+			artistIds << track.artist;
+	qDebug() << "fetched" << artistIds.count() << "artists in" << timer.elapsed() << "ms";
+	return artistIds;
 }

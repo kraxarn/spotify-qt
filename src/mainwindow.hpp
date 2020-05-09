@@ -64,7 +64,8 @@ public:
 		RoleTrackId		= 0x0100,	// 256
 		RoleArtistId	= 0x0101,	// 257
 		RoleAlbumId		= 0x0102,	// 258
-		RoleIndex		= 0x0103	// 259
+		RoleIndex		= 0x0103,	// 259
+		RolePlaylistId	= 0x0104	// 260
 	};
 	QByteArray get(const QString &url);
 	QJsonDocument getJson(const QString &url);
@@ -130,4 +131,5 @@ private:
 	QTreeWidgetItem *treeItem(QTreeWidget *tree, const QString &name, const QString &toolTip = QString::Null(), const QStringList &childrenItems = QStringList(QString::Null()));
 	QStringList currentTracks();
 	void setPlayingTrackItem(QTreeWidgetItem *item);
+	QSet<QString> allArtists();
 };
