@@ -4,6 +4,8 @@ using namespace spt;
 
 ClientHandler::ClientHandler(QWidget *parent) : parent(parent)
 {
+	path = Settings().sptPath();
+	process = new QProcess();
 }
 
 ClientHandler::~ClientHandler()
@@ -17,15 +19,23 @@ ClientHandler::~ClientHandler()
 
 QString ClientHandler::start()
 {
+	// Don't start if already running
+	if (isRunning())
+		return QString();
 	Settings settings;
 	// Check if empty
-	path = settings.sptPath();
 	if (path.isEmpty())
 		return "path is empty";
 	// Check if path exists
 	QFileInfo info(path);
 	if (!info.exists())
 		return "file in path does not exist";
+	// If using global config, just start
+	if (settings.sptGlobalConfig())
+	{
+		process->start(path);
+		return QString();
+	}
 	// Check if username exists
 	auto username = settings.sptUser();
 	if (username.isEmpty())
@@ -38,7 +48,6 @@ QString ClientHandler::start()
 	if (password.isEmpty())
 		return "no password provided";
 	// Attempt to start spotifyd
-	process = new QProcess();
 	QStringList arguments({
 		"--bitrate",		QString::number(settings.sptBitrate()),
 		"--device-name",	"spotify-qt",
@@ -85,4 +94,15 @@ QString ClientHandler::version(const QString &path)
 	return clientExec(path, {
 		"--version"
 	});
+}
+
+bool ClientHandler::isRunning()
+{
+	if (path.isEmpty() || !QFile("/usr/bin/ps").exists())
+		return false;
+	QProcess ps;
+	ps.start("/usr/bin/ps", {"aux"});
+	ps.waitForFinished();
+	auto out = ps.readAllStandardOutput();
+	return QString(out).contains(path);
 }

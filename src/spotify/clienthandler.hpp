@@ -17,6 +17,7 @@ namespace spt
 		static QString version(const QString &path);
 		QString start();
 		QProcess *process = nullptr;
+		bool isRunning();
 	private:
 		QWidget *parent;
 		QString path;
