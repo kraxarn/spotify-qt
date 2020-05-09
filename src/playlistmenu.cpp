@@ -15,12 +15,17 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 		editDialog->show();
 	});
 	if (!playlist.description.isEmpty())
-		QAction::connect(addAction(playlist.description), &QAction::triggered, [this, playlist](bool checked) {
+	{
+		auto description = addAction(playlist.description);
+		QAction::connect(description, &QAction::triggered, [this, playlist](bool checked)
+		{
 			if (editDialog != nullptr)
 				delete editDialog;
 			editDialog = new PlaylistEditDialog(playlist, 1, parentWidget());
 			editDialog->show();
 		});
+		description->setEnabled(isOwner);
+	}
 
 	if (!isOwner && !playlist.ownerName.isEmpty())
 		addAction(QString("By %1").arg(playlist.ownerName))->setEnabled(false);
