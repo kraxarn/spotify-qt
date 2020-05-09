@@ -67,7 +67,7 @@ QJsonObject Playlist::toJson(Spotify &spotify)
 		QPair<QString, QString>("image", image),
 		QPair<QString, QString>("name", name),
 		QPair<QString, bool>("isPublic", isPublic),
-		QPair<QString, bool>("total", jsonTracks.size()),
+		QPair<QString, int>("total", jsonTracks.size()),
 		QPair<QString, QJsonArray>("tracks", jsonTracks),
 		QPair<QString, QString>("snapshot", snapshot),
 		QPair<QString, QString>("ownerId", ownerId),
