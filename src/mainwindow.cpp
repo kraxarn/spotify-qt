@@ -906,12 +906,9 @@ spt::User MainWindow::getCurrentUser()
 
 QSet<QString> MainWindow::allArtists()
 {
-	QSet<QString> artistIds;
-	QElapsedTimer timer;
-	timer.start();
+	QSet<QString> artists;
 	for (auto i = 0; i < playlists->count(); i++)
 		for (auto &track : playlistTracks(playlists->item(i)->data(RolePlaylistId).toString()))
-			artistIds << track.artist;
-	qDebug() << "fetched" << artistIds.count() << "artists in" << timer.elapsed() << "ms";
-	return artistIds;
+			artists << track.artist;
+	return artists;
 }
