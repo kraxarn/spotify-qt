@@ -470,3 +470,14 @@ User Spotify::me()
 	user.product		= json["product"].toString();
 	return user;
 }
+
+QString Spotify::editPlaylist(const Playlist &playlist)
+{
+	QVariantMap body({
+		{ "name",			playlist.name			},
+		{ "public",			playlist.isPublic		},
+		{ "collaborative",	playlist.collaborative	},
+		{ "description",		playlist.description	}
+	});
+	return put(QString("playlists/%1").arg(playlist.id), &body);
+}

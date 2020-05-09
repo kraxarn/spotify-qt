@@ -65,6 +65,7 @@ namespace spt
 		QVector<Track> recentlyPlayed();
 		QVector<Album> newReleases();
 		User me();
+		QString editPlaylist(const Playlist &playlist);
 
 	public slots:
 		void requestCurrentPlayback();
