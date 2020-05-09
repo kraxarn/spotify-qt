@@ -226,7 +226,11 @@ QWidget *MainWindow::createCentralWidget()
 					QVector<spt::Track> good;
 					for (auto &album : releases)
 						if (all.contains(album.artist))
-							good << *spotify->albumTracks(album.id);
+							for (auto &track : *spotify->albumTracks(album.id))
+							{
+								track.addedAt = album.releaseDate;
+								good << track;
+							}
 					loadSongs(good);
 				}
 			}
