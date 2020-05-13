@@ -44,6 +44,15 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 				.arg(isLiked ? "remove from" : "add to")
 				.arg(status), true);
 	});
+	// Add to queue
+	auto addQueue = addAction(Icon::get("media-playlist-append"), "Add to queue");
+	QAction::connect(addQueue, &QAction::triggered, [mainWindow, trackId, spotify](bool checked) {
+		auto status = spotify->addToQueue(trackId.startsWith("spotify:track")
+			? trackId
+			: QString("spotify:track:%1").arg(trackId));
+		if (!status.isEmpty())
+			mainWindow->setStatus(status, true);
+	});
 	// Add to playlist
 	auto addPlaylist = addMenu(Icon::get("list-add"), "Add to playlist");
 	auto currentPlaylist = !mainWindow->hasPlaylistSelected()

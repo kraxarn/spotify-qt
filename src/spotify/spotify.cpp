@@ -484,3 +484,8 @@ QString Spotify::editPlaylist(const Playlist &playlist)
 	});
 	return put(QString("playlists/%1").arg(playlist.id), &body);
 }
+
+QString Spotify::addToQueue(const QString &uri)
+{
+	return post(QString("me/player/queue?uri=%1").arg(uri));
+}
