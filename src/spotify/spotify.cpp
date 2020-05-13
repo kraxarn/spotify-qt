@@ -69,7 +69,17 @@ QString Spotify::put(QString url, QVariantMap *body)
 	req.setHeader(QNetworkRequest::ContentTypeHeader, QString("application/json"));
 	// Send the request, we don't expect any response
 	auto putData = body == nullptr ? nullptr : QJsonDocument::fromVariant(*body).toJson();
-	return errorMessage(networkManager->put(req, putData));
+	auto reply = errorMessage(networkManager->put(req, putData));
+	if (reply.contains("No active device found"))
+	{
+		auto d = devices();
+		if (d.length() == 1)
+		{
+			setDevice(devices().at(0));
+			return put(url, body);
+		}
+	}
+	return reply;
 }
 
 QString Spotify::post(QString url)
