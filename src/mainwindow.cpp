@@ -25,6 +25,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	cacheDir.mkpath(".");
 	cacheDir.mkdir("album");
 	cacheDir.mkdir("playlist");
+	// Apply selected style and palette
+	Settings settings;
+	QApplication::setStyle(settings.style());
+	applyPalette(settings.stylePalette());
 	// Check for dark background
 	auto bg = palette().color(backgroundRole());
 	if (((bg.red() + bg.green() + bg.blue()) / 3) < 128)
@@ -39,10 +43,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	resize(1280, 720);
 	setCentralWidget(createCentralWidget());
 	addToolBar(Qt::ToolBarArea::TopToolBarArea, createToolBar());
-	// Apply selected style and palette
-	Settings settings;
-	QApplication::setStyle(settings.style());
-	applyPalette(settings.stylePalette());
 	// Update player status
 	auto timer = new QTimer(this);
 	QTimer::connect(timer, &QTimer::timeout, this, &MainWindow::refresh);
