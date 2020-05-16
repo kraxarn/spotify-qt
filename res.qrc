@@ -32,6 +32,9 @@
         <file>res/ic/light/view-sort-ascending.svg</file>
         <file>res/ic/light/document-edit.svg</file>
         <file>res/ic/light/media-playlist-append.svg</file>
+        <file>res/ic/light/audio-volume-low.svg</file>
+        <file>res/ic/light/audio-volume-medium.svg</file>
+        <file>res/ic/light/audio-volume-high.svg</file>
         <!-- Dark icons -->
         <file>res/ic/dark/application-exit.svg</file>
         <file>res/ic/dark/document-share.svg</file>
@@ -63,6 +66,9 @@
         <file>res/ic/dark/view-sort-ascending.svg</file>
         <file>res/ic/dark/document-edit.svg</file>
         <file>res/ic/dark/media-playlist-append.svg</file>
+        <file>res/ic/dark/audio-volume-low.svg</file>
+        <file>res/ic/dark/audio-volume-medium.svg</file>
+        <file>res/ic/dark/audio-volume-high.svg</file>
         <!-- Logos -->
         <file>res/logo/spotify-qt.svg</file>
         <file>res/logo/spotify-qt-symbolic-light.svg</file>
