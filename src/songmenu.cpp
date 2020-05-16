@@ -5,11 +5,10 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 {
 	auto mainWindow = dynamic_cast<MainWindow*>(parent);
 	if (mainWindow == nullptr)
-	{
-		qDebug() << "warning: parent of song menu is not main window";
 		return;
-	}
-
+	auto track = trackId.startsWith("spotify:track")
+		? QString(trackId).remove(0, QString("spotify:track:").length())
+		: trackId;
 	auto trackFeatures = addAction(Icon::get("view-statistics"), "Audio features");
 	QAction::connect(trackFeatures, &QAction::triggered, [=](bool checked) {
 		mainWindow->openAudioFeaturesWidget(trackId, artist, name);
@@ -22,14 +21,12 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 	auto shareSongLink = share->addAction("Copy song link");
 	QAction::connect(shareSongLink, &QAction::triggered, [=](bool checked) {
 		QApplication::clipboard()->setText(
-			QString("https://open.spotify.com/track/%1")
-				.arg(QString(trackId).remove(0, QString("spotify:track:").length())));
+			QString("https://open.spotify.com/track/%1").arg(track));
 		mainWindow->setStatus("Link copied to clipboard");
 	});
 	auto shareSongOpen = share->addAction("Open in Spotify");
 	QAction::connect(shareSongOpen, &QAction::triggered, [=](bool checked) {
-		QDesktopServices::openUrl(QString("https://open.spotify.com/track/%1")
-			.arg(QString(trackId).remove(0, QString("spotify:track:").length())));
+		QDesktopServices::openUrl(QString("https://open.spotify.com/track/%1").arg(track));
 	});
 	addSeparator();
 	// Add/remove liked
