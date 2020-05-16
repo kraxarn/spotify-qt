@@ -288,3 +288,23 @@ void Settings::setSptGlobalConfig(bool value)
 {
 	settings->setValue("Spotify/GlobalConfig", value);
 }
+
+QString Settings::lastVersion()
+{
+	return settings->value("LastVersion").toString();
+}
+
+void Settings::setLastVersion(const QString &value)
+{
+	settings->setValue("LastVersion", value);
+}
+
+bool Settings::showChangelog()
+{
+	return settings->value("ShowChangelog", true).toBool();
+}
+
+void Settings::setShowChangelog(bool value)
+{
+	settings->setValue("ShowChangelog", value);
+}

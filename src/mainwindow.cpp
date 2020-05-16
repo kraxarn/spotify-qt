@@ -76,6 +76,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	// Create tray icon if specified
 	if (settings.trayIcon())
 		trayIcon = new TrayIcon(spotify, this);
+	// If new version has been detected, show what's new dialog
+	if (settings.showChangelog() && settings.lastVersion() != APP_VERSION)
+		(new WhatsNewDialog(APP_VERSION, this))->open();
+	settings.setLastVersion(APP_VERSION);
 	// Welcome
 	setStatus("Welcome to spotify-qt!");
 }

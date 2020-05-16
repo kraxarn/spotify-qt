@@ -74,6 +74,12 @@ public:
 	int refreshInterval();
 	void setRefreshInterval(int value);
 
+	QString lastVersion();
+	void setLastVersion(const QString &value);
+
+	bool showChangelog();
+	void setShowChangelog(bool value);
+
 	// Spotify settings
 
 	QString sptPath();

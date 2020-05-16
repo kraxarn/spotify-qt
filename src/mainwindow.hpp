@@ -19,6 +19,7 @@
 #include "spotify/audiofeatures.hpp"
 #include "spotify/clienthandler.hpp"
 #include "spotify/user.hpp"
+#include "whatsnewdialog.hpp"
 
 #include <QMainWindow>
 #include <QListWidget>
