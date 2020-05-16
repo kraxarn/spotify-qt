@@ -786,6 +786,8 @@ QJsonDocument MainWindow::getJson(const QString &url)
 QPixmap MainWindow::getImage(const QString &type, const QString &url)
 {
 	QPixmap img;
+	if (url.isEmpty())
+		return img;
 	// Check if cache exists
 	auto cachePath = QString("%1/%2/%3").arg(cacheLocation).arg(type).arg(QFileInfo(url).baseName());
 	if (QFileInfo::exists(cachePath))
