@@ -6,7 +6,7 @@ Currently mostly stable. Most things should work, but don't be surprised when un
 It's also currently only available through [AUR](https://aur.archlinux.org/packages/spotify-qt). Feel free to add it to any other package manager, but if you do, open a pull request or an issue so I can add it to a list.
 
 ## Installing/building:
-Make sure you have Qt (5.14+), CMake (3.5+) and various build tools like `make`, `g++` and `git`.
+Make sure you have Qt (5.12+), CMake (3.5+) and various build tools like `make`, `g++` and `git`.
 ```
 git clone https://github.com/kraxarn/spotify-qt.git
 cd spotify-qt
