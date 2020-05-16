@@ -16,7 +16,8 @@ namespace spt
 	class Playlist
 	{
 	public:
-		Playlist(const QJsonObject &json);
+		Playlist() = default;
+		explicit Playlist(const QJsonObject &json);
 		bool collaborative;
 		QString description, id, image, name, snapshot, ownerId, ownerName;
 		bool isPublic;

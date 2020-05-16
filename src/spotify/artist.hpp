@@ -17,6 +17,7 @@ namespace spt
 	class Artist
 	{
 	public:
+		Artist() = default;
 		explicit Artist(const QJsonObject &json);
 		int followers, popularity;
 		QStringList genres;
