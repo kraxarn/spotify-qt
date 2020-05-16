@@ -100,6 +100,7 @@ private:
 	QLabel		*nowPlaying,	*position,	*nowAlbum;
 	QSlider		*progress,		*volume;
 	QAction		*playPause,		*repeat,	*shuffle;
+	QToolButton	*volumeButton;
 	// Everything else
 	spt::Spotify			*spotify;
 	QNetworkAccessManager	*network;
@@ -133,4 +134,5 @@ private:
 	QStringList currentTracks();
 	void setPlayingTrackItem(QTreeWidgetItem *item);
 	QSet<QString> allArtists();
+	QIcon volumeIcon();
 };
