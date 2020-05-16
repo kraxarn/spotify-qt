@@ -128,7 +128,7 @@ void MainWindow::refreshed(const spt::Playback &playback)
 	if (currentUser.id.isEmpty())
 		currentUser = spotify->me();
 	current = playback;
-	if (!current.isPlaying)
+	if (!current.isPlaying && current.item.name == "(no name)")
 	{
 		playPause->setIcon(Icon::get("media-playback-start"));
 		playPause->setText("Play");
