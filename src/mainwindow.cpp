@@ -727,7 +727,7 @@ QVector<spt::Track> MainWindow::playlistTracks(const QString &playlistId)
 	auto json = QJsonDocument::fromBinaryData(file.readAll(), QJsonDocument::BypassValidation);
 	if (json.isNull())
 		return tracks;
-	for (auto track : json["tracks"].toArray())
+	for (auto track : json.object()["tracks"].toArray())
 		tracks.append(spt::Track(track.toObject()));
 	return tracks;
 }

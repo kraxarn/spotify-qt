@@ -17,7 +17,7 @@ Artist::Artist(const QJsonObject &json)
 QVector<Track> Artist::topTracks(Spotify &spotify) const
 {
 	auto json = spotify.get(QString("artists/%1/top-tracks?country=from_token").arg(id));
-	auto items = json["tracks"].toArray();
+	auto items = json.object()["tracks"].toArray();
 	QVector<Track> tracks;
 	tracks.reserve(items.size());
 	for (auto item : items)
@@ -28,7 +28,7 @@ QVector<Track> Artist::topTracks(Spotify &spotify) const
 QVector<Album> Artist::albums(Spotify &spotify) const
 {
 	auto json = spotify.get(QString("artists/%1/albums?country=from_token").arg(id));
-	auto items = json["items"].toArray();
+	auto items = json.object()["items"].toArray();
 	QVector<Album> albums;
 	albums.reserve(items.size());
 	for (auto item : items)
@@ -39,7 +39,7 @@ QVector<Album> Artist::albums(Spotify &spotify) const
 QVector<Artist> Artist::relatedArtists(Spotify &spotify) const
 {
 	auto json = spotify.get(QString("artists/%1/related-artists").arg(id));
-	auto items = json["artists"].toArray();
+	auto items = json.object()["artists"].toArray();
 	QVector<Artist> artists;
 	artists.reserve(items.size());
 	for (auto item : items)
