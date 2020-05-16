@@ -47,6 +47,7 @@ private:
 	QCheckBox	*appPulse		= nullptr;
 	QCheckBox	*appMedia		= nullptr;
 	QCheckBox	*appSptOrder	= nullptr;
+	QCheckBox	*appWhatsNew	= nullptr;
 	// Interface settings
 	QCheckBox	*itfDark		= nullptr;
 	QCheckBox	*itfTrayIcon	= nullptr;

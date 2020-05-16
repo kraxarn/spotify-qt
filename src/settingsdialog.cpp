@@ -76,6 +76,11 @@ QWidget *SettingsDialog::appSettings()
 	appSptOrder->setToolTip("Use Spotify playback order instead of app list order");
 	appSptOrder->setChecked(settings.sptPlaybackOrder());
 	layout->addWidget(appSptOrder);
+	// What's new dialog
+	appWhatsNew = new QCheckBox("Show what's new on start", this);
+	appWhatsNew->setToolTip("Show what's new in the latest version after the app has been updated");
+	appWhatsNew->setChecked(settings.showChangelog());
+	layout->addWidget(appWhatsNew);
 	// Final layout
 	auto widget = new QWidget();
 	widget->setLayout(layout);
@@ -357,8 +362,11 @@ bool SettingsDialog::applySettings()
 			QString("Couldn't find a config file for spotifyd. You may experience issues."));
 	settings.setSptGlobalConfig(sptGlobal->isChecked());
 
-	// Other Spotify stuff
+	// Other application stuff
+	settings.setShowChangelog(appWhatsNew->isChecked());
 	settings.setSptPlaybackOrder(appSptOrder->isChecked());
+
+	// Other Spotify stuff
 	settings.setSptStartClient(sptAppStart->isChecked());
 	settings.setSptUser(sptUsername->text());
 	auto bitrate = sptBitrate->currentIndex();
