@@ -80,6 +80,9 @@ public:
 	bool showChangelog();
 	void setShowChangelog(bool value);
 
+	bool useFallbackIcons();
+	void setUseFallbackIcons(bool value);
+
 	// Spotify settings
 
 	QString sptPath();

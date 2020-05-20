@@ -308,3 +308,13 @@ void Settings::setShowChangelog(bool value)
 {
 	settings->setValue("ShowChangelog", value);
 }
+
+bool Settings::useFallbackIcons()
+{
+	return settings->value("FallbackIcons", false).toBool();
+}
+
+void Settings::setUseFallbackIcons(bool value)
+{
+	settings->setValue("FallbackIcons", value);
+}

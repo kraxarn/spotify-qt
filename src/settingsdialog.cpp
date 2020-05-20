@@ -121,6 +121,14 @@ QWidget *SettingsDialog::interfaceSettings()
 	itfResizeAuto->setToolTip("Automatically resize track list headers to fit content");
 	itfResizeAuto->setChecked(settings.songHeaderResizeMode() == QHeaderView::ResizeToContents);
 	layout->addWidget(itfResizeAuto);
+	// Always use fallback icons (if system icons are an option)
+	if (hasIconTheme())
+	{
+		itfIcFallback = new QCheckBox("Always use fallback icons", this);
+		itfIcFallback->setToolTip("Always use bundled fallback icons, even if system icons are available");
+		itfIcFallback->setChecked(settings.useFallbackIcons());
+		layout->addWidget(itfIcFallback);
+	}
 	// Final layout
 	auto widget = new QWidget();
 	widget->setLayout(layout);
@@ -366,6 +374,10 @@ bool SettingsDialog::applySettings()
 	settings.setShowChangelog(appWhatsNew->isChecked());
 	settings.setSptPlaybackOrder(appSptOrder->isChecked());
 
+	// Other interface stuff
+	if (itfIcFallback != nullptr)
+		settings.setUseFallbackIcons(itfIcFallback->isChecked());
+
 	// Other Spotify stuff
 	settings.setSptStartClient(sptAppStart->isChecked());
 	settings.setSptUser(sptUsername->text());
@@ -395,4 +407,9 @@ bool SettingsDialog::sptConfigExists()
 	return QFile(QString("%1/.config/spotifyd/spotifyd.conf")
 		.arg(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0])).exists()
 		|| QFile("/etc/spotifyd/spotifyd.conf").exists();
+}
+
+bool SettingsDialog::hasIconTheme()
+{
+	return !QIcon::fromTheme("media-playback-start").isNull();
 }

@@ -42,6 +42,7 @@ private:
 	Settings settings;
 	static bool isPulse();
 	static bool sptConfigExists();
+	static bool hasIconTheme();
 	// App settings
 	QComboBox	*appRefresh		= nullptr;
 	QCheckBox	*appPulse		= nullptr;
@@ -54,6 +55,7 @@ private:
 	QCheckBox	*itfTrayNotify	= nullptr;
 	QCheckBox	*itfTrayInvert	= nullptr;
 	QCheckBox	*itfResizeAuto	= nullptr;
+	QCheckBox	*itfIcFallback	= nullptr;
 	// Spotify settings
 	QLineEdit	*sptPath		= nullptr;
 	QLabel		*sptVersion		= nullptr;

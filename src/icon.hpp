@@ -1,6 +1,7 @@
 #pragma once
 
 #include "mainwindow.hpp"
+#include "settings.hpp"
 
 #include <QIcon>
 #include <QString>
@@ -14,4 +15,5 @@ public:
 private:
 	Icon();
 	static QString theme;
+	static QVariant useFallbackIcons;
 };
