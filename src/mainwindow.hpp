@@ -87,6 +87,7 @@ public:
 	void reloadTrayIcon();
 	spt::User getCurrentUser();
 	void refreshPlaylists();
+	void setFixedWidthTime(bool value);
 	// I know these should be methods, I'm just lazy
 	QString					cacheLocation;
 	QVector<spt::Playlist>	*sptPlaylists;

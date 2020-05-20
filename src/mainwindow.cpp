@@ -942,3 +942,7 @@ QIcon MainWindow::volumeIcon()
 	return Icon::get(QString("audio-volume-%1")
 		.arg(vol < 33 ? "low" : vol > 66 ? "high" : "medium"));
 }
+void MainWindow::setFixedWidthTime(bool value)
+{
+	position->setFont(value ? QFont("monospace") : QFont());
+}

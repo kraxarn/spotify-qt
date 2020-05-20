@@ -382,6 +382,8 @@ bool SettingsDialog::applySettings()
 	// Other interface stuff
 	if (itfIcFallback != nullptr)
 		settings.setUseFallbackIcons(itfIcFallback->isChecked());
+	if (window != nullptr)
+		window->setFixedWidthTime(itfMonoTime->isChecked());
 	settings.setFixedWidthTime(itfMonoTime->isChecked());
 
 	// Other Spotify stuff
