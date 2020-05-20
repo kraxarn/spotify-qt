@@ -129,6 +129,11 @@ QWidget *SettingsDialog::interfaceSettings()
 		itfIcFallback->setChecked(settings.useFallbackIcons());
 		layout->addWidget(itfIcFallback);
 	}
+	// Monospace remaining time
+	itfMonoTime = new QCheckBox("Fixed width remaining time", this);
+	itfMonoTime->setToolTip("Use a fixed width for remaining time to avoid resizing");
+	itfMonoTime->setChecked(settings.fixedWidthTime());
+	layout->addWidget(itfMonoTime);
 	// Final layout
 	auto widget = new QWidget();
 	widget->setLayout(layout);
@@ -377,6 +382,7 @@ bool SettingsDialog::applySettings()
 	// Other interface stuff
 	if (itfIcFallback != nullptr)
 		settings.setUseFallbackIcons(itfIcFallback->isChecked());
+	settings.setFixedWidthTime(itfMonoTime->isChecked());
 
 	// Other Spotify stuff
 	settings.setSptStartClient(sptAppStart->isChecked());

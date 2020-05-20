@@ -100,6 +100,9 @@ public:
 	bool sptGlobalConfig();
 	void setSptGlobalConfig(bool value);
 
+	bool fixedWidthTime();
+	void setFixedWidthTime(bool value);
+
 	// Clear and log out
 
 	void removeClient();

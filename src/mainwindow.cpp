@@ -528,6 +528,8 @@ QToolBar *MainWindow::createToolBar()
 	toolBar->addWidget(progress);
 	toolBar->addSeparator();
 	position = new QLabel("0:00/0:00", this);
+	if (Settings().fixedWidthTime())
+		position->setFont(QFont("monospace"));
 	toolBar->addWidget(position);
 	toolBar->addSeparator();
 	// Shuffle and repeat toggles

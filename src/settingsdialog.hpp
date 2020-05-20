@@ -56,6 +56,7 @@ private:
 	QCheckBox	*itfTrayInvert	= nullptr;
 	QCheckBox	*itfResizeAuto	= nullptr;
 	QCheckBox	*itfIcFallback	= nullptr;
+	QCheckBox	*itfMonoTime	= nullptr;
 	// Spotify settings
 	QLineEdit	*sptPath		= nullptr;
 	QLabel		*sptVersion		= nullptr;

@@ -318,3 +318,13 @@ void Settings::setUseFallbackIcons(bool value)
 {
 	settings->setValue("FallbackIcons", value);
 }
+
+bool Settings::fixedWidthTime()
+{
+	return settings->value("FixedWidthTime", false).toBool();
+}
+
+void Settings::setFixedWidthTime(bool value)
+{
+	settings->setValue("FixedWidthTime", value);
+}
