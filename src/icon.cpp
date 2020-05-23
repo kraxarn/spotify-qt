@@ -20,5 +20,5 @@ QIcon Icon::get(const QString &name)
 			 .arg(name.right(name.length() - QString("logo:").length())));
 	auto fallback = QString(":/res/ic/%1/%2.svg").arg(theme).arg(name);
 	return useFallbackIcons.toBool()
-		? QIcon(fallback) : QIcon::fromTheme(name, QIcon());
+		? QIcon(fallback) : QIcon::fromTheme(name, QIcon(fallback));
 }
