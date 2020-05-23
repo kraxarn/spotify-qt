@@ -33,7 +33,7 @@ QJsonDocument Settings::legacyToJson()
 			{ "style", settings.value("Style").toString() },
 			{ "pulse_volume", settings.value("PulseVolume").toBool() },
 			{ "last_playlist", settings.value("LastPlaylist").toString() },
-			{ "style_palette", settings.value("StylePalette").toString() },
+			{ "style_palette", settings.value("StylePalette").toInt() },
 			{ "media_controller", settings.value("MediaController").toBool() },
 			{ "spotify_playback_order", settings.value("SpotifyPlaybackOrder").toBool() },
 			{ "hidden_song_headers", QJsonArray::fromStringList(
@@ -57,6 +57,8 @@ QJsonDocument Settings::legacyToJson()
 			{ "global_config", settings.value("Spotify/GlobalConfig").toBool() }
 		})
 	});
+
+	return QJsonDocument(json);
 }
 
 void Settings::removeClient()
