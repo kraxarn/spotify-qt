@@ -13,8 +13,13 @@ int main(int argc, char *argv[])
 	// Set name for settings etc.
 	QCoreApplication::setOrganizationName("kraxarn");
 	QCoreApplication::setApplicationName("spotify-qt");
+	QCoreApplication::setApplicationVersion(APP_VERSION);
 	// Create Qt application
 	QApplication app(argc, argv);
+	// Show version if requested
+	QCommandLineParser parser;
+	parser.addVersionOption();
+	parser.process(app);
 #ifdef USE_CRASH_HANDLER
 	// We want to enable KDE crash handler
 	KCrash::initialize();
