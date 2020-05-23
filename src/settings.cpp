@@ -1,5 +1,8 @@
 #include "settings.hpp"
 
+#include <QDebug>
+#include <QStandardPaths>
+
 Settings::Settings()
 {
 	settings = new QSettings();
@@ -13,6 +16,47 @@ Settings::~Settings()
 QString Settings::fileName()
 {
 	return settings->fileName();
+}
+
+QJsonDocument Settings::legacyToJson()
+{
+	QSettings settings;
+
+	QJsonObject json({
+		QPair<QString, QJsonObject>("Account", {
+			{ "access_token", settings.value("AccessToken").toString() },
+			{ "refresh_token", settings.value("RefreshToken").toString() },
+			{ "client_id", settings.value("ClientId").toString() },
+			{ "client_secret", settings.value("ClientSecret").toString() }
+		}),
+		QPair<QString, QJsonObject>("General", {
+			{ "style", settings.value("Style").toString() },
+			{ "pulse_volume", settings.value("PulseVolume").toBool() },
+			{ "last_playlist", settings.value("LastPlaylist").toString() },
+			{ "style_palette", settings.value("StylePalette").toString() },
+			{ "media_controller", settings.value("MediaController").toBool() },
+			{ "spotify_playback_order", settings.value("SpotifyPlaybackOrder").toBool() },
+			{ "hidden_song_headers", QJsonArray::fromStringList(
+				settings.value("HiddenSongHeaders").toString().split(",")) },
+			{ "tray_icon", settings.value("TrayIcon").toBool() },
+			{ "tray_notifications", settings.value("TrayNotifications").toBool() },
+			{ "tray_light_icon", settings.value("TrayLightIcon").toBool() },
+			{ "song_header_resize_mode", settings.value("SongHeaderResizeMode").toInt() },
+			{ "song_header_sort_by", settings.value("SongHeaderSortBy").toInt() },
+			{ "refresh_interval", settings.value("RefreshInterval").toInt() },
+			{ "last_version", settings.value("LastVersion").toString() },
+			{ "show_changelog", settings.value("ShowChangelog").toBool() },
+			{ "fallback_icons", settings.value("FallbackIcons").toBool() },
+			{ "fixed_width_time", settings.value("FixedWidthTime").toBool() }
+		}),
+		QPair<QString, QJsonObject>("Spotify", {
+			{ "path", settings.value("Spotify/Path").toString() },
+			{ "start_client", settings.value("Spotify/StartClient").toBool() },
+			{ "username", settings.value("Spotify/Username").toString() },
+			{ "bitrate", settings.value("Spotify/Bitrate").toInt() },
+			{ "global_config", settings.value("Spotify/GlobalConfig").toBool() }
+		})
+	});
 }
 
 void Settings::removeClient()

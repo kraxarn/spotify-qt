@@ -2,6 +2,10 @@
 
 #include <QSettings>
 #include <QHeaderView>
+#include <QCoreApplication>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QJsonArray>
 
 class Settings
 {
@@ -107,6 +111,10 @@ public:
 
 	void removeClient();
 	void removeTokens();
+
+	// QSettings > JSON
+
+	static QJsonDocument legacyToJson();
 
 private:
 	QSettings *settings;
