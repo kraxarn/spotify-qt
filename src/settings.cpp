@@ -34,7 +34,15 @@ void Settings::load()
 {
 	QFile file(fileName());
 	file.open(QIODevice::ReadOnly | QIODevice::Text);
-	auto json = nlohmann::json::parse(QString(file.readAll()).toStdString());
+	auto data = QString(file.readAll()).toStdString();
+	if (data.empty())
+	{
+		qDebug() << "warning: json config is empty";
+		file.close();
+		return;
+	}
+	auto json = nlohmann::json::parse(data);
+	file.close();
 
 	auto a = json["Account"];
 	account.accessToken = a["access_token"];
