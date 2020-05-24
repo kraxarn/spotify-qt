@@ -63,13 +63,10 @@ void Settings::load()
 	general.fallbackIcons = g["fallback_icons"];
 	general.fixedWidthTime = g["fixed_width_time"];
 	general.stylePalette = g["style_palette"];
-	//general.hiddenSongHeaders = g["hidden_song_headers"].get<std::vector<int>>();
+	general.hiddenSongHeaders = g["hidden_song_headers"].get<std::vector<int>>();
 	general.songHeaderResizeMode = g["song_header_resize_mode"];
 	general.songHeaderSortBy = g["song_header_sort_by"];
 	general.refreshInterval = g["refresh_interval"];
-
-	//for (auto &val : g["hidden_song_headers"].items())1
-	//	general.hiddenSongHeaders.push_back(val.value());
 
 	auto s = json["Spotify"];
 	spotify.path = s["path"];
