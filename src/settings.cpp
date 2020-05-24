@@ -24,19 +24,19 @@ Settings::~Settings()
 	delete settings;
 }
 
-QString Settings::fileName()
+std::string Settings::fileName()
 {
 	return QString("%1.json").arg(QStandardPaths::writableLocation(
-		QStandardPaths::AppConfigLocation));
+		QStandardPaths::AppConfigLocation)).toStdString();
 }
 
 void Settings::load()
 {
-	std::ifstream file(fileName().toStdString());
+	std::ifstream file(fileName());
 	std::string data((std::istreambuf_iterator<char>(file)), (std::istreambuf_iterator<char>()));
 	if (data.empty())
 	{
-		qDebug() << "warning: json config in" << fileName() << "is empty";
+		std::cerr << "warning: json config in" << fileName() << "is empty";
 		file.close();
 		return;
 	}

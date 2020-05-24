@@ -2,6 +2,7 @@
 
 #include "lib/json.hpp"
 
+#include <iostream>
 #include <fstream>
 #include <string>
 
@@ -59,7 +60,7 @@ public:
 	bool darkTheme();
 	void setDarkTheme(bool value);
 
-	static QString fileName();
+	static std::string fileName();
 
 private:
 

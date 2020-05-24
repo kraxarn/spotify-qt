@@ -279,10 +279,10 @@ QWidget *SettingsDialog::aboutSettings()
 	auto openConfig = new QPushButton(Icon::get("folder-txt"), "Open config file");
 	openConfig->setFlat(true);
 	QAbstractButton::connect(openConfig, &QPushButton::clicked, [this](bool checked) {
-		if (!QDesktopServices::openUrl(QUrl(settings.fileName())))
+		if (!QDesktopServices::openUrl(QUrl(QString::fromStdString(settings.fileName()))))
 			QMessageBox::warning(this,
 				"No file",
-				QString("Failed to open file: %1").arg(settings.fileName()));
+				QString("Failed to open file: %1").arg(QString::fromStdString(settings.fileName())));
 	});
 	options->addWidget(openConfig);
 	layout->addLayout(options, 1);

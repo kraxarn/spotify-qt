@@ -17,10 +17,10 @@ int main(int argc, char *argv[])
 	// Create Qt application
 	QApplication app(argc, argv);
 	// JSON Settings
-	if (!QFile::exists(Settings::fileName()))
+	if (!QFile::exists(QString::fromStdString(Settings::fileName())))
 	{
 		qDebug() << "no json settings, attempting to convert legacy settings...";
-		QFile jsonFile(Settings::fileName());
+		QFile jsonFile(QString::fromStdString(Settings::fileName()));
 		jsonFile.open(QIODevice::WriteOnly);
 		auto jsonData = Settings().legacyToJson().toJson();
 		jsonFile.write(jsonData);
