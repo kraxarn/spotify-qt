@@ -13,7 +13,7 @@ QIcon Icon::get(const QString &name)
 	if (theme.isNull())
 		theme = MainWindow::hasDarkBackground() ? "dark" : "light";
 	if (!useFallbackIcons.isValid())
-		useFallbackIcons = Settings().useFallbackIcons();
+		useFallbackIcons = Settings().general.fallbackIcons;
 
 	if (name.startsWith("logo:"))
 		return QIcon(QString(":/res/logo/%1.svg")

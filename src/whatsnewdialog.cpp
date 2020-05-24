@@ -28,7 +28,9 @@ WhatsNewDialog::WhatsNewDialog(const QString &tag, QWidget *parent) : QDialog(pa
 	auto buttons = new QDialogButtonBox(this);
 	QPushButton::connect(buttons->addButton("Don't show again", QDialogButtonBox::RejectRole),
 		&QPushButton::clicked, [=](bool checked) {
-			Settings().setShowChangelog(false);
+			Settings settings;
+			settings.general.showChangelog = false;
+			settings.save();
 			reject();
 	});
 	QPushButton::connect(buttons->addButton(QDialogButtonBox::Ok),

@@ -4,7 +4,7 @@ using namespace spt;
 
 ClientHandler::ClientHandler(QWidget *parent) : parent(parent)
 {
-	path = Settings().sptPath();
+	path = QString::fromStdString(Settings().spotify.path);
 	process = new QProcess();
 }
 
@@ -31,27 +31,27 @@ QString ClientHandler::start()
 	if (!info.exists())
 		return "file in path does not exist";
 	// If using global config, just start
-	if (settings.sptGlobalConfig())
+	if (settings.spotify.globalConfig)
 	{
 		process->start(path);
 		return QString();
 	}
 	// Check if username exists
-	auto username = settings.sptUser();
-	if (username.isEmpty())
+	auto username = settings.spotify.username;
+	if (username.empty())
 		return "no username provided";
 	// Ask for password
 	auto password = QInputDialog::getText(parent,
 		"Enter password",
-		QString("Enter password for Spotify user \"%1\":").arg(username),
+		QString("Enter password for Spotify user \"%1\":").arg(QString::fromStdString(username)),
 		QLineEdit::Password);
 	if (password.isEmpty())
 		return "no password provided";
 	// Attempt to start spotifyd
 	QStringList arguments({
-		"--bitrate",		QString::number(settings.sptBitrate()),
+		"--bitrate",		QString::number(settings.spotify.bitrate),
 		"--device-name",	"spotify-qt",
-		"--username",		username,
+		"--username",		QString::fromStdString(username),
 		"--password",		password
 	});
 	if (supportsPulse())

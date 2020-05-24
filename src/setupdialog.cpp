@@ -16,11 +16,11 @@ SetupDialog::SetupDialog(QWidget *parent) : QDialog(parent)
 	mainLayout->addWidget(welcomeText);
 	// Client ID
 	Settings settings;
-	auto clientId = new QLineEdit(settings.clientId(), this);
+	auto clientId = new QLineEdit(QString::fromStdString(settings.account.clientId), this);
 	clientId->setPlaceholderText("Client ID");
 	mainLayout->addWidget(clientId);
 	// Client secret
-	auto clientSecret = new QLineEdit(settings.clientSecret(), this);
+	auto clientSecret = new QLineEdit(QString::fromStdString(settings.account.clientSecret), this);
 	clientSecret->setPlaceholderText("Client secret");
 	mainLayout->addWidget(clientSecret);
 	// Add buttons
@@ -82,8 +82,9 @@ SetupDialog::SetupDialog(QWidget *parent) : QDialog(parent)
 				// Close it all down if ok
 				if (status.isEmpty())
 				{
-					settings.setClientId(clientIdText);
-					settings.setClientSecret(clientSecretText);
+					settings.account.clientId = clientIdText.toStdString();
+					settings.account.clientSecret = clientSecretText.toStdString();
+					settings.save();
 					server->close();
 					delete server;
 					accept();

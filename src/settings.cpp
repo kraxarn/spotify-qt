@@ -1,11 +1,22 @@
 #include "settings.hpp"
 
-#include <QDebug>
-#include <QStandardPaths>
-
 Settings::Settings()
 {
-	settings = new QSettings();
+	// Settings is legacy, only instance when needed
+	settings = nullptr;
+
+	// Default values
+#ifdef Q_OS_LINUX
+	general.mediaController = true;
+#endif
+	general.showChangelog = true;
+	general.stylePalette = paletteApp;
+	general.songHeaderResizeMode = (int) QHeaderView::ResizeToContents;
+	general.songHeaderSortBy = -1;
+	general.refreshInterval = 3;
+	spotify.bitrate = 320;
+
+	load();
 }
 
 Settings::~Settings()
@@ -15,46 +26,131 @@ Settings::~Settings()
 
 QString Settings::fileName()
 {
-	return settings->fileName();
+	return QString("%1.json").arg(QStandardPaths::writableLocation(
+		QStandardPaths::AppConfigLocation));
+}
+
+void Settings::load()
+{
+	QFile file(fileName());
+	file.open(QIODevice::ReadOnly | QIODevice::Text);
+	auto json = nlohmann::json::parse(QString(file.readAll()).toStdString());
+
+	auto a = json["Account"];
+	account.accessToken = a["access_token"];
+	account.refreshToken = a["refresh_token"];
+	account.clientId = a["client_id"];
+	account.clientSecret = a["client_secret"];
+
+	auto g = json["General"];
+	general.style = g["style"];
+	general.lastPlaylist = g["last_playlist"];
+	general.lastVersion = g["last_version"];
+	general.pulseVolume = g["pulse_volume"];
+	general.mediaController = g["media_controller"];
+	general.spotifyPlaybackOrder = g["spotify_playback_order"];
+	general.trayIcon = g["tray_icon"];
+	general.trayNotifications = g["tray_notifications"];
+	general.trayLightIcon = g["tray_light_icon"];
+	general.showChangelog = g["show_changelog"];
+	general.fallbackIcons = g["fallback_icons"];
+	general.fixedWidthTime = g["fixed_width_time"];
+	general.stylePalette = g["style_palette"];
+	//general.hiddenSongHeaders = g["hidden_song_headers"].get<std::vector<int>>();
+	general.songHeaderResizeMode = g["song_header_resize_mode"];
+	general.songHeaderSortBy = g["song_header_sort_by"];
+	general.refreshInterval = g["refresh_interval"];
+
+	//for (auto &val : g["hidden_song_headers"].items())1
+	//	general.hiddenSongHeaders.push_back(val.value());
+
+	auto s = json["Spotify"];
+	spotify.path = s["path"];
+	spotify.username = s["username"];
+	spotify.startClient = s["start_client"];
+	spotify.globalConfig = s["global_config"];
+	spotify.bitrate = s["bitrate"];
+}
+
+void Settings::save()
+{
+	nlohmann::json json = {
+		{"Account", {
+			{"access_token", account.accessToken},
+			{"refresh_token", account.refreshToken},
+			{"client_id", account.clientId},
+			{"client_secret", account.clientSecret}
+		}},
+		{"General", {
+			{"style", general.style},
+			{"pulse_volume", general.pulseVolume},
+			{"last_playlist", general.lastPlaylist},
+			{"style_palette", general.stylePalette},
+			{"media_controller", general.mediaController},
+			{"spotify_playback_order", general.spotifyPlaybackOrder},
+			{"hidden_song_headers", general.hiddenSongHeaders},
+			{"tray_icon", general.trayIcon},
+			{"tray_notifications", general.trayNotifications},
+			{"tray_light_icon", general.trayLightIcon},
+			{"song_header_resize_mode", general.songHeaderResizeMode},
+			{"song_header_sort_by", general.songHeaderSortBy},
+			{"refresh_interval", general.refreshInterval},
+			{"last_version", general.lastVersion},
+			{"show_changelog", general.showChangelog},
+			{"fallback_icons", general.fallbackIcons},
+			{"fixed_width_time", general.fixedWidthTime}
+		}},
+		{"Spotify", {
+			{"path", spotify.path},
+			{"start_client", spotify.startClient},
+			{"username", spotify.username},
+			{"bitrate", spotify.bitrate},
+			{"global_config", spotify.globalConfig}
+		 }}
+	 };
 }
 
 QJsonDocument Settings::legacyToJson()
 {
-	QSettings settings;
+	if (settings == nullptr)
+		settings = new QSettings();
+
+	QJsonArray jsonHiddenSongHeaders;
+	for (auto &val : hiddenSongHeaders())
+		jsonHiddenSongHeaders.append(val);
 
 	QJsonObject json({
 		QPair<QString, QJsonObject>("Account", {
-			{ "access_token", settings.value("AccessToken").toString() },
-			{ "refresh_token", settings.value("RefreshToken").toString() },
-			{ "client_id", settings.value("ClientId").toString() },
-			{ "client_secret", settings.value("ClientSecret").toString() }
+			{ "access_token", accessToken() },
+			{ "refresh_token", refreshToken() },
+			{ "client_id", clientId() },
+			{ "client_secret", clientSecret() }
 		}),
 		QPair<QString, QJsonObject>("General", {
-			{ "style", settings.value("Style").toString() },
-			{ "pulse_volume", settings.value("PulseVolume").toBool() },
-			{ "last_playlist", settings.value("LastPlaylist").toString() },
-			{ "style_palette", settings.value("StylePalette").toInt() },
-			{ "media_controller", settings.value("MediaController").toBool() },
-			{ "spotify_playback_order", settings.value("SpotifyPlaybackOrder").toBool() },
-			{ "hidden_song_headers", QJsonArray::fromStringList(
-				settings.value("HiddenSongHeaders").toString().split(",")) },
-			{ "tray_icon", settings.value("TrayIcon").toBool() },
-			{ "tray_notifications", settings.value("TrayNotifications").toBool() },
-			{ "tray_light_icon", settings.value("TrayLightIcon").toBool() },
-			{ "song_header_resize_mode", settings.value("SongHeaderResizeMode").toInt() },
-			{ "song_header_sort_by", settings.value("SongHeaderSortBy").toInt() },
-			{ "refresh_interval", settings.value("RefreshInterval").toInt() },
-			{ "last_version", settings.value("LastVersion").toString() },
-			{ "show_changelog", settings.value("ShowChangelog").toBool() },
-			{ "fallback_icons", settings.value("FallbackIcons").toBool() },
-			{ "fixed_width_time", settings.value("FixedWidthTime").toBool() }
+			{ "style", style() },
+			{ "pulse_volume", pulseVolume() },
+			{ "last_playlist", lastPlaylist() },
+			{ "style_palette", stylePalette() },
+			{ "media_controller", mediaController() },
+			{ "spotify_playback_order", sptPlaybackOrder() },
+			{ "hidden_song_headers", jsonHiddenSongHeaders },
+			{ "tray_icon", trayIcon() },
+			{ "tray_notifications", trayNotifications() },
+			{ "tray_light_icon", trayLightIcon() },
+			{ "song_header_resize_mode", songHeaderResizeMode() },
+			{ "song_header_sort_by", songHeaderSortBy() },
+			{ "refresh_interval", refreshInterval() },
+			{ "last_version", lastVersion() },
+			{ "show_changelog", showChangelog() },
+			{ "fallback_icons", useFallbackIcons() },
+			{ "fixed_width_time", fixedWidthTime() }
 		}),
 		QPair<QString, QJsonObject>("Spotify", {
-			{ "path", settings.value("Spotify/Path").toString() },
-			{ "start_client", settings.value("Spotify/StartClient").toBool() },
-			{ "username", settings.value("Spotify/Username").toString() },
-			{ "bitrate", settings.value("Spotify/Bitrate").toInt() },
-			{ "global_config", settings.value("Spotify/GlobalConfig").toBool() }
+			{ "path", sptPath() },
+			{ "start_client", sptStartClient() },
+			{ "username", sptUser() },
+			{ "bitrate", sptBitrate() },
+			{ "global_config", sptGlobalConfig() }
 		})
 	});
 
@@ -63,14 +159,14 @@ QJsonDocument Settings::legacyToJson()
 
 void Settings::removeClient()
 {
-	settings->remove("ClientId");
-	settings->remove("ClientSecret");
+	account.clientId = std::string();
+	account.clientSecret = std::string();
 }
 
 void Settings::removeTokens()
 {
-	settings->remove("AccessToken");
-	settings->remove("RefreshToken");
+	account.accessToken = std::string();
+	account.refreshToken = std::string();
 }
 
 QString Settings::accessToken()
@@ -210,14 +306,14 @@ void Settings::setMediaController(bool value)
 
 bool Settings::darkTheme()
 {
-	return stylePalette() == paletteDark;
+	return general.stylePalette == paletteDark;
 }
 
 void Settings::setDarkTheme(bool value)
 {
 	// When enabling dark theme, also set style to fusion to match better
-	setStyle(value ? "Fusion" : QString());
-	setStylePalette(value ? paletteDark : paletteApp);
+	general.style = value ? "Fusion" : std::string();
+	general.stylePalette = value ? paletteDark : paletteApp;
 }
 
 bool Settings::sptPlaybackOrder()

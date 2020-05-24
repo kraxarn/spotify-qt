@@ -118,6 +118,7 @@ private:
 	int						refreshCount;
 	QTreeWidgetItem*		playingTrackItem;
 	spt::User				currentUser;
+	Settings				settings;
 	QHash<QString, QTreeWidgetItem*>	trackItems;
 	// Methods
 	QWidget *createCentralWidget();

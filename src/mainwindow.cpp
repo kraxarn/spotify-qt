@@ -26,9 +26,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	cacheDir.mkdir("album");
 	cacheDir.mkdir("playlist");
 	// Apply selected style and palette
-	Settings settings;
-	QApplication::setStyle(settings.style());
-	applyPalette(settings.stylePalette());
+	QApplication::setStyle(QString::fromStdString(settings.general.style));
+	applyPalette(settings.general.stylePalette);
 	// Check for dark background
 	auto bg = palette().color(backgroundRole());
 	if (((bg.red() + bg.green() + bg.blue()) / 3) < 128)
@@ -49,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	refresh();
 	timer->start(1000);
 	// Check if should start client
-	if (settings.sptStartClient())
+	if (settings.spotify.startClient)
 	{
 		sptClient = new spt::ClientHandler();
 		auto status = sptClient->start();
@@ -59,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 				QString("Failed to autostart Spotify client: %1").arg(status));
 	}
 	// Start media controller if specified
-	if (settings.mediaController())
+	if (settings.general.mediaController)
 	{
 		mediaPlayer = new mp::Service(spotify, this);
 		// Check if something went wrong during init
@@ -74,12 +73,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 		refreshed(playback);
 	});
 	// Create tray icon if specified
-	if (settings.trayIcon())
+	if (settings.general.trayIcon)
 		trayIcon = new TrayIcon(spotify, this);
 	// If new version has been detected, show what's new dialog
-	if (settings.showChangelog() && settings.lastVersion() != APP_VERSION)
+	if (settings.general.showChangelog && settings.general.lastVersion != APP_VERSION)
 		(new WhatsNewDialog(APP_VERSION, this))->open();
-	settings.setLastVersion(APP_VERSION);
+	settings.general.lastVersion = APP_VERSION;
+	settings.save();
 	// Welcome
 	setStatus("Welcome to spotify-qt!");
 }
@@ -108,7 +108,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::refresh()
 {
 	if (refreshCount < 0
-		|| ++refreshCount >= Settings().refreshInterval()
+		|| ++refreshCount >= settings.general.refreshInterval
 		|| current.progressMs + 1000 > current.item.duration)
 	{
 		spotify->requestCurrentPlayback();
@@ -153,7 +153,7 @@ void MainWindow::refreshed(const spt::Playback &playback)
 	playPause->setIcon(Icon::get(
 		current.isPlaying ? "media-playback-pause" : "media-playback-start"));
 	playPause->setText(current.isPlaying ? "Pause" : "Play");
-	if (!Settings().pulseVolume())
+	if (!settings.general.pulseVolume)
 		volume->setValue(current.volume / 5);
 	repeat->setChecked(current.repeat != "off");
 	shuffle->setChecked(current.shuffle);
@@ -352,12 +352,11 @@ QWidget *MainWindow::createCentralWidget()
 		" ", "Title", "Artist", "Album", "Length", "Added"
 	});
 	songs->header()->setSectionsMovable(false);
-	Settings settings;
-	songs->header()->setSectionResizeMode(settings.songHeaderResizeMode());
-	if (settings.songHeaderSortBy() > 0)
-		songs->header()->setSortIndicator(settings.songHeaderSortBy() + 1, Qt::AscendingOrder);
+	songs->header()->setSectionResizeMode((QHeaderView::ResizeMode) settings.general.songHeaderResizeMode);
+	if (settings.general.songHeaderSortBy > 0)
+		songs->header()->setSortIndicator(settings.general.songHeaderSortBy + 1, Qt::AscendingOrder);
 	// Hide specified columns
-	for (auto &value : Settings().hiddenSongHeaders())
+	for (auto &value : settings.general.hiddenSongHeaders)
 		songs->header()->setSectionHidden(value + 1, true);
 	// Song context menu
 	songs->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
@@ -379,7 +378,7 @@ QWidget *MainWindow::createCentralWidget()
 		}
 		// If we played from library, we don't have any context
 		auto allTracks = currentTracks();
-		auto status = (libraryList->currentItem() != nullptr || !Settings().sptPlaybackOrder())
+		auto status = (libraryList->currentItem() != nullptr || !settings.general.spotifyPlaybackOrder)
 			&& allTracks.count() < 500
 			? spotify->playTracks(trackId, allTracks)
 			: spotify->playTracks(trackId, sptContext);
@@ -400,44 +399,45 @@ QWidget *MainWindow::createCentralWidget()
 		auto headerTitles = QStringList({
 			"Title", "Artist", "Album", "Length", "Added"
 		});
-		Settings settings;
-		auto headers = settings.hiddenSongHeaders();
+		auto headers = settings.general.hiddenSongHeaders;
 		for (int i = 0; i < headerTitles.size(); i++)
 		{
 			auto showTitle = showHeaders->addAction(headerTitles.at(i));
 			showTitle->setCheckable(true);
-			showTitle->setChecked(!headers.contains(i));
+			showTitle->setChecked(std::find(headers.begin(), headers.end(), i) == headers.end());
 			showTitle->setData(QVariant(i));
 
 			auto sortTitle = sortBy->addAction(headerTitles.at(i));
 			sortTitle->setCheckable(true);
-			sortTitle->setChecked(i == settings.songHeaderSortBy());
+			sortTitle->setChecked(i == settings.general.songHeaderSortBy);
 			sortTitle->setData(QVariant(100 + i));
 		}
 		QMenu::connect(menu, &QMenu::triggered, [this](QAction *action) {
 			int i = action->data().toInt();
-			Settings settings;
 			// Columns to show
 			if (i < 100)
 			{
 				songs->header()->setSectionHidden(i + 1, !action->isChecked());
 				if (action->isChecked())
-					settings.removeHiddenSongHeader(i);
+					settings.general.hiddenSongHeaders.erase(std::remove(settings.general.hiddenSongHeaders.begin(),
+						settings.general.hiddenSongHeaders.end(), i));
 				else
-					settings.addHiddenSongHeader(i);
+					settings.general.hiddenSongHeaders.push_back(i);
+				settings.save();
 				return;
 			}
 			// Sort by
 			i -= 100;
-			if (settings.songHeaderSortBy() != i)
+			if (settings.general.songHeaderSortBy != i)
 				songs->header()->setSortIndicator(i + 1, Qt::AscendingOrder);
-			settings.setSongHeaderSortBy(settings.songHeaderSortBy() == i ? -1 : i);
+			settings.general.songHeaderSortBy = settings.general.songHeaderSortBy == i ? -1 : i;
+			settings.save();
 		});
 		menu->popup(songs->header()->mapToGlobal(pos));
 	});
 
 	// Load tracks in playlist
-	auto playlistId = Settings().lastPlaylist();
+	auto playlistId = QString::fromStdString(settings.general.lastPlaylist);
 	// Default to first in list
 	if (playlistId.isEmpty())
 		playlistId = sptPlaylists->at(0).id;
@@ -528,7 +528,7 @@ QToolBar *MainWindow::createToolBar()
 	toolBar->addWidget(progress);
 	toolBar->addSeparator();
 	position = new QLabel("0:00/0:00", this);
-	if (Settings().fixedWidthTime())
+	if (settings.general.fixedWidthTime)
 		position->setFont(QFont("monospace"));
 	toolBar->addWidget(position);
 	toolBar->addSeparator();
@@ -575,8 +575,7 @@ QToolBar *MainWindow::createToolBar()
 	QSlider::connect(volume, &QAbstractSlider::valueChanged, [this](int value) {
 		volumeButton->setIcon(volumeIcon());
 	});
-	Settings settings;
-	if (settings.pulseVolume())
+	if (settings.general.pulseVolume)
 	{
 		// If using PulseAudio for volume control, update on every
 		QSlider::connect(volume, &QAbstractSlider::valueChanged, [](int value) {
@@ -712,7 +711,8 @@ bool MainWindow::loadAlbum(const QString &albumId, bool ignoreEmpty)
 
 bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 {
-	Settings().setLastPlaylist(playlist.id);
+	settings.general.lastPlaylist = playlist.id.toStdString();
+	settings.save();
 	if (loadPlaylistFromCache(playlist))
 		return true;
 	songs->setEnabled(false);
@@ -764,7 +764,7 @@ void MainWindow::refreshPlaylist(spt::Playlist &playlist)
 
 void MainWindow::setStatus(const QString &message, bool important)
 {
-	if (trayIcon != nullptr && Settings().trayNotifications())
+	if (trayIcon != nullptr && settings.general.trayNotifications)
 	{
 		if (important)
 			trayIcon->message(message);
@@ -900,7 +900,7 @@ void MainWindow::reloadTrayIcon()
 		delete trayIcon;
 		trayIcon = nullptr;
 	}
-	if (Settings().trayIcon())
+	if (settings.general.trayIcon)
 		trayIcon = new TrayIcon(spotify, this);
 }
 

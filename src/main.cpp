@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 	qDebug() << "crash handler initialized";
 #endif
 	// First setup window
-	if (Settings().refreshToken().isEmpty())
+	if (Settings().account.refreshToken.empty())
 	{
 		SetupDialog dialog;
 		if (dialog.exec() == QDialog::Rejected)

@@ -1,17 +1,24 @@
 #pragma once
 
+#include "lib/json.hpp"
+
 #include <QSettings>
 #include <QHeaderView>
 #include <QCoreApplication>
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>
+#include <QFile>
+#include <QStandardPaths>
 
 class Settings
 {
 public:
-	Settings();
+	explicit Settings();
 	virtual ~Settings();
+
+	QJsonDocument legacyToJson();
+	void save();
 
 	enum Palette
 	{
@@ -20,7 +27,38 @@ public:
 		paletteDark  = 2,	// Custom dark palette
 	};
 
+	typedef struct {
+		std::string accessToken, refreshToken, clientId, clientSecret;
+	} Account;
+
+	typedef struct {
+		std::string style, lastPlaylist, lastVersion;
+		bool pulseVolume, mediaController, spotifyPlaybackOrder, trayIcon, trayNotifications, trayLightIcon,
+			showChangelog, fallbackIcons, fixedWidthTime;
+		Palette stylePalette;
+		std::vector<int> hiddenSongHeaders;
+		int songHeaderResizeMode, songHeaderSortBy, refreshInterval;
+	} General;
+
+	typedef struct {
+		std::string path, username;
+		bool startClient, globalConfig;
+		int bitrate;
+	} Spotify;
+
+	Account account;
+	General general;
+	Spotify spotify;
+
+	void removeClient();
+	void removeTokens();
+
+	bool darkTheme();
+	void setDarkTheme(bool value);
+
 	QString fileName();
+
+private:
 
 	QString accessToken();
 	void setAccessToken(QString &value);
@@ -48,9 +86,6 @@ public:
 
 	bool mediaController();
 	void setMediaController(bool value);
-
-	bool darkTheme();
-	void setDarkTheme(bool value);
 
 	bool sptPlaybackOrder();
 	void setSptPlaybackOrder(bool value);
@@ -107,15 +142,7 @@ public:
 	bool fixedWidthTime();
 	void setFixedWidthTime(bool value);
 
-	// Clear and log out
+	void load();
 
-	void removeClient();
-	void removeTokens();
-
-	// QSettings > JSON
-
-	static QJsonDocument legacyToJson();
-
-private:
 	QSettings *settings;
 };
