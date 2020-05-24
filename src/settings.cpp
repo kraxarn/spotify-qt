@@ -32,12 +32,11 @@ QString Settings::fileName()
 
 void Settings::load()
 {
-	QFile file(fileName());
-	file.open(QIODevice::ReadOnly | QIODevice::Text);
-	auto data = QString(file.readAll()).toStdString();
+	std::ifstream file(fileName().toStdString());
+	std::string data((std::istreambuf_iterator<char>(file)), (std::istreambuf_iterator<char>()));
 	if (data.empty())
 	{
-		qDebug() << "warning: json config is empty";
+		qDebug() << "warning: json config in" << fileName() << "is empty";
 		file.close();
 		return;
 	}

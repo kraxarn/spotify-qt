@@ -2,6 +2,9 @@
 
 #include "lib/json.hpp"
 
+#include <fstream>
+#include <string>
+
 #include <QSettings>
 #include <QHeaderView>
 #include <QCoreApplication>
