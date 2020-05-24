@@ -59,7 +59,7 @@ public:
 	bool darkTheme();
 	void setDarkTheme(bool value);
 
-	QString fileName();
+	static QString fileName();
 
 private:
 
