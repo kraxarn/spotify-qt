@@ -110,8 +110,12 @@ void Settings::save()
 			{"username", spotify.username},
 			{"bitrate", spotify.bitrate},
 			{"global_config", spotify.globalConfig}
-		 }}
-	 };
+		}}
+	};
+
+	std::ofstream file(fileName());
+	file << json.dump(4);
+	file.close();
 }
 
 QJsonDocument Settings::legacyToJson()
