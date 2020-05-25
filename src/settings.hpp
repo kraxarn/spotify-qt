@@ -18,11 +18,11 @@
 class Settings
 {
 public:
-	explicit Settings();
+	Settings();
 	virtual ~Settings();
 
 	QJsonDocument legacyToJson();
-	void save();
+	void save() const;
 
 	enum Palette
 	{

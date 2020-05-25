@@ -2,9 +2,9 @@
 
 using namespace spt;
 
-ClientHandler::ClientHandler(QWidget *parent) : parent(parent)
+ClientHandler::ClientHandler(const Settings &settings, QWidget *parent) : settings(settings), parent(parent)
 {
-	path = QString::fromStdString(Settings().spotify.path);
+	path = QString::fromStdString(settings.spotify.path);
 	process = new QProcess();
 }
 
@@ -22,7 +22,6 @@ QString ClientHandler::start()
 	// Don't start if already running
 	if (isRunning())
 		return QString();
-	Settings settings;
 	// Check if empty
 	if (path.isEmpty())
 		return "path is empty";

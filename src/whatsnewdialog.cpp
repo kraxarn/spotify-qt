@@ -1,6 +1,6 @@
 #include "whatsnewdialog.hpp"
 
-WhatsNewDialog::WhatsNewDialog(const QString &tag, QWidget *parent) : QDialog(parent)
+WhatsNewDialog::WhatsNewDialog(const QString &tag, Settings &settings, QWidget *parent) : QDialog(parent)
 {
 	auto window = dynamic_cast<MainWindow*>(parent);
 	if (window == nullptr)
@@ -27,8 +27,7 @@ WhatsNewDialog::WhatsNewDialog(const QString &tag, QWidget *parent) : QDialog(pa
 	layout->addWidget(text, 1);
 	auto buttons = new QDialogButtonBox(this);
 	QPushButton::connect(buttons->addButton("Don't show again", QDialogButtonBox::RejectRole),
-		&QPushButton::clicked, [=](bool checked) {
-			Settings settings;
+		&QPushButton::clicked, [this, &settings](bool checked) {
 			settings.general.showChangelog = false;
 			settings.save();
 			reject();

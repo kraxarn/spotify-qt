@@ -1,5 +1,6 @@
 #include "mainwindow.hpp"
 #include "setupdialog.hpp"
+#include "icon.hpp"
 
 #include <QApplication>
 #include <QCoreApplication>
@@ -17,12 +18,14 @@ int main(int argc, char *argv[])
 	// Create Qt application
 	QApplication app(argc, argv);
 	// JSON Settings
+	Settings settings;
+	Icon::settings = &settings;
 	if (!QFile::exists(QString::fromStdString(Settings::fileName())))
 	{
 		qDebug() << "no json settings, attempting to convert legacy settings...";
 		QFile jsonFile(QString::fromStdString(Settings::fileName()));
 		jsonFile.open(QIODevice::WriteOnly);
-		auto jsonData = Settings().legacyToJson().toJson();
+		auto jsonData = settings.legacyToJson().toJson();
 		jsonFile.write(jsonData);
 		jsonFile.close();
 	}
@@ -38,14 +41,14 @@ int main(int argc, char *argv[])
 	qDebug() << "crash handler initialized";
 #endif
 	// First setup window
-	if (Settings().account.refreshToken.empty())
+	if (settings.account.refreshToken.empty())
 	{
-		SetupDialog dialog;
+		SetupDialog dialog(settings);
 		if (dialog.exec() == QDialog::Rejected)
 			return 0;
 	}
 	// Create main window
-	MainWindow w;
+	MainWindow w(settings);
 	// Show window and run application
 	w.show();
 	return QApplication::exec();

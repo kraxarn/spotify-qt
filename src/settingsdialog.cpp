@@ -1,6 +1,6 @@
 #include "settingsdialog.hpp"
 
-SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
+SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent) : settings(settings), QDialog(parent)
 {
 	// Main layout
 	auto mainLayout = new QVBoxLayout();
@@ -13,16 +13,16 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 	// Buttons
 	auto buttons = new QDialogButtonBox();
 	auto okButton = buttons->addButton(QDialogButtonBox::Ok);
-	QPushButton::connect(okButton, &QPushButton::clicked, [=](bool checked) {
+	QPushButton::connect(okButton, &QPushButton::clicked, [this](bool checked) {
 		if (applySettings())
 			accept();
 	});
 	auto applyButton = buttons->addButton(QDialogButtonBox::Apply);
-	QPushButton::connect(applyButton, &QPushButton::clicked, [=](bool checked) {
+	QPushButton::connect(applyButton, &QPushButton::clicked, [this](bool checked) {
 		applySettings();
 	});
 	auto cancelButton = buttons->addButton(QDialogButtonBox::Cancel);
-	QPushButton::connect(cancelButton, &QPushButton::clicked, [=](bool checked) {
+	QPushButton::connect(cancelButton, &QPushButton::clicked, [this](bool checked) {
 		accept();
 	});
 	mainLayout->addWidget(buttons);

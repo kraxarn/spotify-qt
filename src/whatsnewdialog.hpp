@@ -12,5 +12,5 @@ class WhatsNewDialog : public QDialog
 	Q_OBJECT
 
 public:
-	WhatsNewDialog(const QString &tag, QWidget *parent);
+	WhatsNewDialog(const QString &tag, Settings &settings, QWidget *parent);
 };

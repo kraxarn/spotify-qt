@@ -30,8 +30,10 @@
 class SettingsDialog : public QDialog
 {
 	Q_OBJECT
+
 public:
-	explicit SettingsDialog(QWidget *parent = nullptr);
+	explicit SettingsDialog(Settings &settings, QWidget *parent = nullptr);
+
 private:
 	QWidget *appSettings();
 	QWidget *interfaceSettings();

@@ -11,6 +11,7 @@ class Icon
 {
 public:
 	static QIcon get(const QString &name);
+	static Settings *settings;
 
 private:
 	Icon();

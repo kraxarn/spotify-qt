@@ -76,7 +76,7 @@ void Settings::load()
 	spotify.bitrate = s["bitrate"];
 }
 
-void Settings::save()
+void Settings::save() const
 {
 	nlohmann::json json = {
 		{"Account", {

@@ -1,6 +1,7 @@
 #include "mainmenu.hpp"
 
-MainMenu::MainMenu(spt::Spotify &spotify, QWidget *parent) : QMenu(parent), parent(parent), spotify(spotify)
+MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent) : QMenu(parent),
+	parent(parent), spotify(spotify), settings(settings)
 {
 	// About
 	addAction(Icon::get("help-about"),
@@ -14,8 +15,8 @@ MainMenu::MainMenu(spt::Spotify &spotify, QWidget *parent) : QMenu(parent), pare
 	addMenu(deviceMenu);
 	// Refresh and settings
 	auto openSettings = createMenuAction("configure", "Settings...", QKeySequence::Preferences);
-	QAction::connect(openSettings, &QAction::triggered, [parent]() {
-		SettingsDialog dialog(parent);
+	QAction::connect(openSettings, &QAction::triggered, [this]() {
+		SettingsDialog dialog(this->settings, this->parent);
 		dialog.exec();
 	});
 	addAction(openSettings);
@@ -24,7 +25,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, QWidget *parent) : QMenu(parent), pare
 	auto quitAction = createMenuAction("application-exit", "Quit", QKeySequence::Quit);
 	QAction::connect(quitAction, &QAction::triggered, QCoreApplication::quit);
 	auto logOutAction = createMenuAction("im-user-away",  "Log out");
-	QAction::connect(logOutAction, &QAction::triggered, [parent](){
+	QAction::connect(logOutAction, &QAction::triggered, [this](){
 		QMessageBox box(
 			QMessageBox::Icon::Question,
 			"Are you sure?",
@@ -37,14 +38,14 @@ MainMenu::MainMenu(spt::Spotify &spotify, QWidget *parent) : QMenu(parent), pare
 		// Return if we pressed cancel
 		if (result == nullptr || result == cancel)
 			return;
-		Settings settings;
 		// Clear client secret/id if clearAll
 		if (result == clearAll)
-			settings.removeClient();
+			this->settings.removeClient();
 		// Clear login if cleatAll/logOut
 		if (result == clearAll || result == logOut)
-			settings.removeTokens();
-		QMessageBox::information(parent,
+			this->settings.removeTokens();
+		this->settings.save();
+		QMessageBox::information(this->parent,
 			 "Logged out",
 			 "You are now logged out, the application will now close");
 		QCoreApplication::quit();

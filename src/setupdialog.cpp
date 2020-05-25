@@ -1,9 +1,9 @@
 #include "setupdialog.hpp"
 
-SetupDialog::SetupDialog(QWidget *parent) : QDialog(parent)
+SetupDialog::SetupDialog(Settings &settings, QWidget *parent) : settings(settings), QDialog(parent)
 {
 	// Auth
-	auth = new spt::Auth();
+	auth = new spt::Auth(settings);
 	// Main layout
 	auto mainLayout = new QVBoxLayout();
 	// Welcome text
@@ -15,12 +15,11 @@ SetupDialog::SetupDialog(QWidget *parent) : QDialog(parent)
 		this);
 	mainLayout->addWidget(welcomeText);
 	// Client ID
-	Settings settings;
-	auto clientId = new QLineEdit(QString::fromStdString(settings.account.clientId), this);
+	clientId = new QLineEdit(QString::fromStdString(settings.account.clientId), this);
 	clientId->setPlaceholderText("Client ID");
 	mainLayout->addWidget(clientId);
 	// Client secret
-	auto clientSecret = new QLineEdit(QString::fromStdString(settings.account.clientSecret), this);
+	clientSecret = new QLineEdit(QString::fromStdString(settings.account.clientSecret), this);
 	clientSecret->setPlaceholderText("Client secret");
 	mainLayout->addWidget(clientSecret);
 	// Add buttons
@@ -34,12 +33,12 @@ SetupDialog::SetupDialog(QWidget *parent) : QDialog(parent)
 	});
 	auto authButton = new QPushButton("Authenticate");
 	server = nullptr;
-	QAbstractButton::connect(authButton, &QAbstractButton::clicked, [=](bool checked) {
-		auto clientIdText = clientId->text();
-		auto clientSecretText = clientSecret->text();
+	QAbstractButton::connect(authButton, &QAbstractButton::clicked, [this](bool checked) {
+		clientIdText = clientId->text();
+		clientSecretText = clientSecret->text();
 		clientId->setDisabled(true);
 		clientSecret->setDisabled(true);
-		auto redirect = QString("http://localhost:8888");
+		redirect = QString("http://localhost:8888");
 
 		if (server == nullptr)
 		{
@@ -52,10 +51,8 @@ SetupDialog::SetupDialog(QWidget *parent) : QDialog(parent)
 					 .arg(server->errorString()));
 				return;
 			}
-			QTcpServer::connect(server, &QTcpServer::newConnection, [=]()
+			QTcpServer::connect(server, &QTcpServer::newConnection, [this]()
 			{
-				// Settings for later
-				Settings settings;
 				// Read
 				auto socket = server->nextPendingConnection();
 				socket->waitForReadyRead();
@@ -82,9 +79,9 @@ SetupDialog::SetupDialog(QWidget *parent) : QDialog(parent)
 				// Close it all down if ok
 				if (status.isEmpty())
 				{
-					settings.account.clientId = clientIdText.toStdString();
-					settings.account.clientSecret = clientSecretText.toStdString();
-					settings.save();
+					this->settings.account.clientId = clientIdText.toStdString();
+					this->settings.account.clientSecret = clientSecretText.toStdString();
+					this->settings.save();
 					server->close();
 					delete server;
 					accept();

@@ -2,7 +2,7 @@
 
 bool MainWindow::darkBackground	= false;
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
+MainWindow::MainWindow(Settings settings, QWidget *parent) : settings(settings), QMainWindow(parent)
 {
 	// Some default values to prevent unexpected stuff
 	playlists 	= nullptr;
@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	if (((bg.red() + bg.green() + bg.blue()) / 3) < 128)
 		darkBackground = true;
 	// Set Spotify
-	spotify = new spt::Spotify();
+	spotify = new spt::Spotify(settings);
 	sptPlaylists = new QVector<spt::Playlist>();
 	network = new QNetworkAccessManager();
 	// Setup main window
@@ -50,7 +50,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	// Check if should start client
 	if (settings.spotify.startClient)
 	{
-		sptClient = new spt::ClientHandler();
+		sptClient = new spt::ClientHandler(settings, this);
 		auto status = sptClient->start();
 		if (!status.isEmpty())
 			QMessageBox::warning(this,
@@ -74,10 +74,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	});
 	// Create tray icon if specified
 	if (settings.general.trayIcon)
-		trayIcon = new TrayIcon(spotify, this);
+		trayIcon = new TrayIcon(spotify, settings, this);
 	// If new version has been detected, show what's new dialog
 	if (settings.general.showChangelog && settings.general.lastVersion != APP_VERSION)
-		(new WhatsNewDialog(APP_VERSION, this))->open();
+		(new WhatsNewDialog(APP_VERSION, settings, this))->open();
 	settings.general.lastVersion = APP_VERSION;
 	settings.save();
 	// Welcome
@@ -472,7 +472,7 @@ QToolBar *MainWindow::createToolBar()
 	menu->setText("Menu");
 	menu->setIcon(Icon::get("application-menu"));
 	menu->setPopupMode(QToolButton::InstantPopup);
-	menu->setMenu(new MainMenu(*spotify, this));
+	menu->setMenu(new MainMenu(*spotify, settings, this));
 	toolBar->addWidget(menu);
 	// Search
 	search = toolBar->addAction(Icon::get("edit-find"), "Search");
@@ -901,7 +901,7 @@ void MainWindow::reloadTrayIcon()
 		trayIcon = nullptr;
 	}
 	if (settings.general.trayIcon)
-		trayIcon = new TrayIcon(spotify, this);
+		trayIcon = new TrayIcon(spotify, settings, this);
 }
 
 bool MainWindow::hasDarkBackground()
