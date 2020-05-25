@@ -36,7 +36,7 @@ void Settings::load()
 	std::string data((std::istreambuf_iterator<char>(file)), (std::istreambuf_iterator<char>()));
 	if (data.empty())
 	{
-		std::cerr << "warning: json config in" << fileName() << "is empty";
+		std::cerr << "warning: json config in \"" << fileName() << "\" is empty" << std::endl;
 		file.close();
 		return;
 	}
