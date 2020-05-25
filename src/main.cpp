@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
 		auto jsonData = settings.legacyToJson().toJson();
 		jsonFile.write(jsonData);
 		jsonFile.close();
+		settings = Settings();
 	}
 	// Show version if requested
 	QCommandLineParser parser;
