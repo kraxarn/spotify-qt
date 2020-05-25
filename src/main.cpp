@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 	// JSON Settings
 	Settings settings;
-	Icon::settings = &settings;
+	Icon::useFallbackIcons = settings.general.fallbackIcons;
 	if (!QFile::exists(QString::fromStdString(Settings::fileName())))
 	{
 		qDebug() << "no json settings, attempting to convert legacy settings...";

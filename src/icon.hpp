@@ -11,10 +11,9 @@ class Icon
 {
 public:
 	static QIcon get(const QString &name);
-	static Settings *settings;
+	static bool useFallbackIcons;
 
 private:
 	Icon();
 	static QString theme;
-	static QVariant useFallbackIcons;
 };
