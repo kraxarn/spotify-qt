@@ -41,7 +41,7 @@ private:
 	QWidget *aboutSettings();
 	bool applySettings();
 	void applyFail(const QString &setting);
-	Settings settings;
+	Settings &settings;
 	static bool isPulse();
 	static bool sptConfigExists();
 	static bool hasIconTheme();

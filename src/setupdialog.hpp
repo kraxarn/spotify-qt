@@ -26,7 +26,7 @@ public:
 private:
 	spt::Auth	*auth;
 	QTcpServer	*server;
-	Settings	settings;
+	Settings	&settings;
 	QLineEdit	*clientId, *clientSecret;
 	QString		clientIdText, clientSecretText, redirect;
 };

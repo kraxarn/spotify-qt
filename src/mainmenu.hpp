@@ -16,7 +16,7 @@ public:
 private:
 	QWidget			*parent;
 	spt::Spotify	&spotify;
-	Settings		settings;
+	Settings		&settings;
 	QAction *createMenuAction(const QString &iconName, const QString &text,
 		QKeySequence::StandardKey shortcut = QKeySequence::UnknownKey);
 	void refreshDevices(QMenu *deviceMenu);
