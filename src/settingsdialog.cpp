@@ -147,7 +147,7 @@ QWidget *SettingsDialog::spotifySettings()
 	layout->setAlignment(Qt::AlignTop);
 	// Executable settings
 	auto sptPathLayout = new QHBoxLayout();
-	sptPath = new QLineEdit(QString::fromStdString(settings.spotify.path), this);
+	sptPath = new QLineEdit(settings.spotify.path, this);
 	sptPath->setPlaceholderText("spotifyd path");
 	sptPathLayout->addWidget(sptPath, 1);
 	auto sptPathBrowse = new QPushButton("...", this);
@@ -162,9 +162,9 @@ QWidget *SettingsDialog::spotifySettings()
 	layout->addLayout(sptPathLayout);
 	// Spotifyd version
 	sptVersion = new QLabel("(no spotifyd provided)", this);
-	if (!settings.spotify.path.empty())
+	if (!settings.spotify.path.isEmpty())
 	{
-		auto client = spt::ClientHandler::version(QString::fromStdString(settings.spotify.path));
+		auto client = spt::ClientHandler::version(settings.spotify.path);
 		if (sptVersion != nullptr)
 			sptVersion->setText(client);
 	}
@@ -176,7 +176,7 @@ QWidget *SettingsDialog::spotifySettings()
 	layout->addLayout(sptLayout);
 	// Username
 	sptLayout->addWidget(new QLabel("Username", this), 0, 0);
-	sptUsername = new QLineEdit(QString::fromStdString(settings.spotify.username), this);
+	sptUsername = new QLineEdit(settings.spotify.username, this);
 	sptLayout->addWidget(sptUsername, 0, 1);
 	// Bitrate
 	sptLayout->addWidget(new QLabel("Quality", this));
@@ -279,10 +279,10 @@ QWidget *SettingsDialog::aboutSettings()
 	auto openConfig = new QPushButton(Icon::get("folder-txt"), "Open config file");
 	openConfig->setFlat(true);
 	QAbstractButton::connect(openConfig, &QPushButton::clicked, [this](bool checked) {
-		if (!QDesktopServices::openUrl(QUrl(QString::fromStdString(settings.fileName()))))
+		if (!QDesktopServices::openUrl(QUrl(settings.fileName())))
 			QMessageBox::warning(this,
 				"No file",
-				QString("Failed to open file: %1").arg(QString::fromStdString(settings.fileName())));
+				QString("Failed to open file: %1").arg(settings.fileName()));
 	});
 	options->addWidget(openConfig);
 	layout->addLayout(options, 1);
@@ -302,7 +302,7 @@ bool SettingsDialog::applySettings()
 			this, "Dark Theme",
 			"Please restart the application to fully apply selected theme");
 		settings.setDarkTheme(itfDark->isChecked());
-		QApplication::setStyle(QString::fromStdString(settings.general.style));
+		QApplication::setStyle(settings.general.style);
 		MainWindow::applyPalette(settings.general.stylePalette);
 	}
 
@@ -327,7 +327,7 @@ bool SettingsDialog::applySettings()
 			return false;
 		}
 		sptVersion->setText(client);
-		settings.spotify.path = sptPath->text().toStdString();
+		settings.spotify.path = sptPath->text();
 	}
 
 	// Desktop notifications and tray icon
@@ -388,7 +388,7 @@ bool SettingsDialog::applySettings()
 
 	// Other Spotify stuff
 	settings.spotify.startClient =sptAppStart->isChecked();
-	settings.spotify.username = sptUsername->text().toStdString();
+	settings.spotify.username = sptUsername->text();
 	auto bitrate = sptBitrate->currentIndex();
 	settings.spotify.bitrate = bitrate == 0 ? 96 : bitrate == 1 ? 160 : 320;
 

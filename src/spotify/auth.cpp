@@ -71,9 +71,8 @@ QString Auth::auth(const QString &code, const QString &redirect, const QString &
 	// Save access/refresh token to settings
 	auto accessToken = jsonData["access_token"].toString();
 	auto refreshToken = jsonData["refresh_token"].toString();
-	settings.account.accessToken = accessToken.toStdString();
-	settings.account.refreshToken = refreshToken.toStdString();
-	std::cout << settings.account.accessToken << settings.account.refreshToken << std::endl;
+	settings.account.accessToken = accessToken;
+	settings.account.refreshToken = refreshToken;
 	settings.save();
 	// Everything hopefully went fine
 	return QString();

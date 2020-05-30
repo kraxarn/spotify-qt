@@ -24,75 +24,91 @@ Settings::~Settings()
 	delete settings;
 }
 
-std::string Settings::fileName()
+QString Settings::fileName()
 {
 	return QString("%1.json").arg(QStandardPaths::writableLocation(
-		QStandardPaths::AppConfigLocation)).toStdString();
+		QStandardPaths::AppConfigLocation));
 }
 
 void Settings::load()
 {
-	std::ifstream file(fileName());
-	std::string data((std::istreambuf_iterator<char>(file)), (std::istreambuf_iterator<char>()));
-	if (data.empty())
+	QFile file(fileName());
+	file.open(QIODevice::ReadOnly);
+	auto data = file.readAll();
+	if (data.isEmpty())
 	{
-		std::cerr << "warning: json config in \"" << fileName() << "\" is empty" << std::endl;
+		qDebug() << "warning: json config in" << fileName() << "is empty";
 		file.close();
 		return;
 	}
-	auto json = nlohmann::json::parse(data);
-	file.close();
 
-	auto a = json["Account"];
-	account.accessToken = a["access_token"];
-	account.refreshToken = a["refresh_token"];
-	account.clientId = a["client_id"];
-	account.clientSecret = a["client_secret"];
+	QJsonParseError error;
+	auto json = QJsonDocument::fromJson(data, &error);
+	file.close();
+	if (error.error != QJsonParseError::NoError)
+	{
+		qDebug() << "error while reading json settings:" << error.errorString();
+		return;
+	}
+
+	QVector<int> hiddenSongHeaders;
+	for (auto val : json["General"].toObject()["hidden_song_headers"].toArray())
+		hiddenSongHeaders.append(val.toInt());
+
+	auto a = json["Account"].toObject();
+	account.accessToken = a["access_token"].toString();
+	account.refreshToken = a["refresh_token"].toString();
+	account.clientId = a["client_id"].toString();
+	account.clientSecret = a["client_secret"].toString();
 
 	auto g = json["General"];
-	general.style = g["style"];
-	general.lastPlaylist = g["last_playlist"];
-	general.lastVersion = g["last_version"];
-	general.pulseVolume = g["pulse_volume"];
-	general.mediaController = g["media_controller"];
-	general.spotifyPlaybackOrder = g["spotify_playback_order"];
-	general.trayIcon = g["tray_icon"];
-	general.trayNotifications = g["tray_notifications"];
-	general.trayLightIcon = g["tray_light_icon"];
-	general.showChangelog = g["show_changelog"];
-	general.fallbackIcons = g["fallback_icons"];
-	general.fixedWidthTime = g["fixed_width_time"];
-	general.stylePalette = g["style_palette"];
-	general.hiddenSongHeaders = g["hidden_song_headers"].get<std::vector<int>>();
-	general.songHeaderResizeMode = g["song_header_resize_mode"];
-	general.songHeaderSortBy = g["song_header_sort_by"];
-	general.refreshInterval = g["refresh_interval"];
+	general.style = g["style"].toString();
+	general.lastPlaylist = g["last_playlist"].toString();
+	general.lastVersion = g["last_version"].toString();
+	general.pulseVolume = g["pulse_volume"].toBool(false);
+	general.mediaController = g["media_controller"].toBool(hasMediaControllerSupport());
+	general.spotifyPlaybackOrder = g["spotify_playback_order"].toBool(false);
+	general.trayIcon = g["tray_icon"].toBool(false);
+	general.trayNotifications = g["tray_notifications"].toBool(false);
+	general.trayLightIcon = g["tray_light_icon"].toBool(false);
+	general.showChangelog = g["show_changelog"].toBool(true);
+	general.fallbackIcons = g["fallback_icons"].toBool(false);
+	general.fixedWidthTime = g["fixed_width_time"].toBool(true);
+	general.stylePalette = (Palette) g["style_palette"].toInt(paletteApp);
+	general.hiddenSongHeaders = hiddenSongHeaders;
+	general.songHeaderResizeMode = g["song_header_resize_mode"].toInt(QHeaderView::ResizeToContents);
+	general.songHeaderSortBy = g["song_header_sort_by"].toInt(-1);
+	general.refreshInterval = g["refresh_interval"].toInt(3);
 
 	auto s = json["Spotify"];
-	spotify.path = s["path"];
-	spotify.username = s["username"];
-	spotify.startClient = s["start_client"];
-	spotify.globalConfig = s["global_config"];
-	spotify.bitrate = s["bitrate"];
+	spotify.path = s["path"].toString();
+	spotify.username = s["username"].toString();
+	spotify.startClient = s["start_client"].toBool(false);
+	spotify.globalConfig = s["global_config"].toBool(false);
+	spotify.bitrate = s["bitrate"].toInt(320);
 }
 
 void Settings::save() const
 {
-	nlohmann::json json = {
-		{"Account", {
+	QJsonArray jsonHiddenSongHeaders;
+	for (auto &val : general.hiddenSongHeaders)
+		jsonHiddenSongHeaders.append(val);
+
+	QJsonObject json({
+		QPair<QString, QJsonObject>("Account", {
 			{"access_token", account.accessToken},
 			{"refresh_token", account.refreshToken},
 			{"client_id", account.clientId},
 			{"client_secret", account.clientSecret}
-		}},
-		{"General", {
+		}),
+		QPair<QString, QJsonObject>("General", {
 			{"style", general.style},
 			{"pulse_volume", general.pulseVolume},
 			{"last_playlist", general.lastPlaylist},
 			{"style_palette", general.stylePalette},
 			{"media_controller", general.mediaController},
 			{"spotify_playback_order", general.spotifyPlaybackOrder},
-			{"hidden_song_headers", general.hiddenSongHeaders},
+			{"hidden_song_headers", jsonHiddenSongHeaders},
 			{"tray_icon", general.trayIcon},
 			{"tray_notifications", general.trayNotifications},
 			{"tray_light_icon", general.trayLightIcon},
@@ -103,18 +119,19 @@ void Settings::save() const
 			{"show_changelog", general.showChangelog},
 			{"fallback_icons", general.fallbackIcons},
 			{"fixed_width_time", general.fixedWidthTime}
-		}},
-		{"Spotify", {
+		}),
+		QPair<QString, QJsonObject>("Spotify", {
 			{"path", spotify.path},
 			{"start_client", spotify.startClient},
 			{"username", spotify.username},
 			{"bitrate", spotify.bitrate},
 			{"global_config", spotify.globalConfig}
-		}}
-	};
+		})
+	});
 
-	std::ofstream file(fileName());
-	file << json.dump(4);
+	QFile file(fileName());
+	file.open(QIODevice::WriteOnly);
+	file.write(QJsonDocument(json).toJson(QJsonDocument::Indented));
 	file.close();
 }
 
@@ -167,14 +184,14 @@ QJsonDocument Settings::legacyToJson()
 
 void Settings::removeClient()
 {
-	account.clientId = std::string();
-	account.clientSecret = std::string();
+	account.clientId = QString();
+	account.clientSecret = QString();
 }
 
 void Settings::removeTokens()
 {
-	account.accessToken = std::string();
-	account.refreshToken = std::string();
+	account.accessToken = QString();
+	account.refreshToken = QString();
 }
 
 QString Settings::accessToken()
@@ -239,12 +256,7 @@ Settings::Palette Settings::stylePalette()
 
 bool Settings::mediaController()
 {
-#ifdef Q_OS_LINUX
-	auto defVal = true;
-#else
-	auto defVal = false;
-#endif
-	return settings->value("MediaController", defVal).toBool();
+	return settings->value("MediaController", hasMediaControllerSupport()).toBool();
 }
 
 bool Settings::darkTheme()
@@ -255,7 +267,7 @@ bool Settings::darkTheme()
 void Settings::setDarkTheme(bool value)
 {
 	// When enabling dark theme, also set style to fusion to match better
-	general.style = value ? "Fusion" : std::string();
+	general.style = value ? "Fusion" : QString();
 	general.stylePalette = value ? paletteDark : paletteApp;
 }
 
@@ -330,4 +342,14 @@ bool Settings::useFallbackIcons()
 bool Settings::fixedWidthTime()
 {
 	return settings->value("FixedWidthTime", false).toBool();
+}
+
+bool Settings::hasMediaControllerSupport()
+{
+	// Currently, only d-bus mpris is supported under Linux
+#ifdef Q_OS_LINUX
+	return true;
+#else
+	return false;
+#endif
 }

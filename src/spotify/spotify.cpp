@@ -27,7 +27,7 @@ QNetworkRequest Spotify::request(const QString &url)
 	QNetworkRequest request((QUrl("https://api.spotify.com/v1/" + url)));
 	// Set header
 	request.setRawHeader("Authorization",
-		("Bearer " + QString::fromStdString(settings.account.accessToken)).toUtf8());
+		("Bearer " + settings.account.accessToken).toUtf8());
 	// Return prepared header
 	return request;
 }
@@ -114,14 +114,14 @@ bool Spotify::refresh()
 {
 	// Make sure we have a refresh token
 	auto refreshToken = settings.account.refreshToken;
-	if (refreshToken.empty())
+	if (refreshToken.isEmpty())
 	{
 		qWarning() << "warning: attempt to refresh without refresh token";
 		return false;
 	}
 	// Create form
 	auto postData = QString("grant_type=refresh_token&refresh_token=%1")
-		.arg(QString::fromStdString(refreshToken))
+		.arg(refreshToken)
 		.toUtf8();
 	// Create request
 	QNetworkRequest request(QUrl("https://accounts.spotify.com/api/token"));
@@ -129,8 +129,8 @@ bool Spotify::refresh()
 	request.setRawHeader(
 		"Authorization",
 		"Basic " + QString("%1:%2")
-		.arg(QString::fromStdString(settings.account.clientId))
-		.arg(QString::fromStdString(settings.account.clientSecret)).toUtf8().toBase64());
+		.arg(settings.account.clientId)
+		.arg(settings.account.clientSecret).toUtf8().toBase64());
 	// Send request
 	auto reply = networkManager->post(request, postData);
 	while (!reply->isFinished())
@@ -147,7 +147,7 @@ bool Spotify::refresh()
 	// Save as access token
 	lastAuth = QDateTime::currentSecsSinceEpoch();
 	auto accessToken = json["access_token"].toString();
-	settings.account.accessToken = accessToken.toStdString();
+	settings.account.accessToken = accessToken;
 	settings.save();
 	return true;
 }

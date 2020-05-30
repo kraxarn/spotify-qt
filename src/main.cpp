@@ -20,10 +20,10 @@ int main(int argc, char *argv[])
 	// JSON Settings
 	Settings settings;
 	Icon::useFallbackIcons = settings.general.fallbackIcons;
-	if (!QFile::exists(QString::fromStdString(Settings::fileName())))
+	if (!QFile::exists(Settings::fileName()))
 	{
 		qDebug() << "no json settings, attempting to convert legacy settings...";
-		QFile jsonFile(QString::fromStdString(Settings::fileName()));
+		QFile jsonFile(Settings::fileName());
 		jsonFile.open(QIODevice::WriteOnly);
 		auto jsonData = settings.legacyToJson().toJson();
 		jsonFile.write(jsonData);
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 	qDebug() << "crash handler initialized";
 #endif
 	// First setup window
-	if (settings.account.refreshToken.empty())
+	if (settings.account.refreshToken.isEmpty())
 	{
 		SetupDialog dialog(settings);
 		if (dialog.exec() == QDialog::Rejected)

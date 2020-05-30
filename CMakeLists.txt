@@ -24,11 +24,10 @@ endif()
 file(GLOB MAIN_SRC "src/*.[hc]pp")
 file(GLOB SPOTIFY_SRC "src/spotify/*.[hc]pp")
 file(GLOB MEDIAPLAYER_SRC "src/mediaplayer/*.[hc]pp")
-file(GLOB LIB_SRC "src/lib/*.hpp")
 
 # Add all source files to main executable
 if(ANDROID)
-    add_library(spotify-qt SHARED ${MAIN_SRC} ${SPOTIFY_SRC} ${MEDIAPLAYER_SRC} ${LIB_SRC} res.qrc)
+    add_library(spotify-qt SHARED ${MAIN_SRC} ${SPOTIFY_SRC} ${MEDIAPLAYER_SRC} res.qrc)
 else()
     add_executable(spotify-qt ${MAIN_SRC} ${SPOTIFY_SRC} ${MEDIAPLAYER_SRC} ${LIB_SRC} res.qrc)
 endif()

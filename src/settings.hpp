@@ -1,11 +1,5 @@
 #pragma once
 
-#include "lib/json.hpp"
-
-#include <iostream>
-#include <fstream>
-#include <string>
-
 #include <QSettings>
 #include <QHeaderView>
 #include <QCoreApplication>
@@ -14,6 +8,7 @@
 #include <QJsonArray>
 #include <QFile>
 #include <QStandardPaths>
+#include <QDebug>
 
 class Settings
 {
@@ -32,20 +27,20 @@ public:
 	};
 
 	typedef struct {
-		std::string accessToken, refreshToken, clientId, clientSecret;
+		QString accessToken, refreshToken, clientId, clientSecret;
 	} Account;
 
 	typedef struct {
-		std::string style, lastPlaylist, lastVersion;
+		QString style, lastPlaylist, lastVersion;
 		bool pulseVolume, mediaController, spotifyPlaybackOrder, trayIcon, trayNotifications, trayLightIcon,
 			showChangelog, fallbackIcons, fixedWidthTime;
 		Palette stylePalette;
-		std::vector<int> hiddenSongHeaders;
+		QVector<int> hiddenSongHeaders;
 		int songHeaderResizeMode, songHeaderSortBy, refreshInterval;
 	} General;
 
 	typedef struct {
-		std::string path, username;
+		QString path, username;
 		bool startClient, globalConfig;
 		int bitrate;
 	} Spotify;
@@ -60,7 +55,9 @@ public:
 	bool darkTheme();
 	void setDarkTheme(bool value);
 
-	static std::string fileName();
+	static QString fileName();
+
+	static bool hasMediaControllerSupport();
 
 private:
 

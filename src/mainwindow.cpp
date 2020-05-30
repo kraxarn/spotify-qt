@@ -26,7 +26,7 @@ MainWindow::MainWindow(Settings settings, QWidget *parent) : settings(settings),
 	cacheDir.mkdir("album");
 	cacheDir.mkdir("playlist");
 	// Apply selected style and palette
-	QApplication::setStyle(QString::fromStdString(settings.general.style));
+	QApplication::setStyle(settings.general.style);
 	applyPalette(settings.general.stylePalette);
 	// Check for dark background
 	auto bg = palette().color(backgroundRole());
@@ -437,7 +437,7 @@ QWidget *MainWindow::createCentralWidget()
 	});
 
 	// Load tracks in playlist
-	auto playlistId = QString::fromStdString(settings.general.lastPlaylist);
+	auto playlistId = settings.general.lastPlaylist;
 	// Default to first in list
 	if (playlistId.isEmpty())
 		playlistId = sptPlaylists->at(0).id;
@@ -711,7 +711,7 @@ bool MainWindow::loadAlbum(const QString &albumId, bool ignoreEmpty)
 
 bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 {
-	settings.general.lastPlaylist = playlist.id.toStdString();
+	settings.general.lastPlaylist = playlist.id;
 	settings.save();
 	if (loadPlaylistFromCache(playlist))
 		return true;
