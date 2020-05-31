@@ -60,59 +60,31 @@ public:
 	static bool hasMediaControllerSupport();
 
 private:
-
 	QString accessToken();
-
 	QString refreshToken();
-
 	QString clientId();
-
 	QString clientSecret();
-
 	QString style();
-
 	bool pulseVolume();
-
 	QString lastPlaylist();
-
 	Palette stylePalette();
-
 	bool mediaController();
-
 	bool sptPlaybackOrder();
-
 	QList<int> hiddenSongHeaders();
-
 	bool trayIcon();
-
 	bool trayNotifications();
-
 	bool trayLightIcon();
-
 	QHeaderView::ResizeMode songHeaderResizeMode();
-
 	int songHeaderSortBy();
-
 	int refreshInterval();
-
 	QString lastVersion();
-
 	bool showChangelog();
-
 	bool useFallbackIcons();
-
-	// Spotify settings
-
 	QString sptPath();
-
 	bool sptStartClient();
-
 	QString sptUser();
-
 	int sptBitrate();
-
 	bool sptGlobalConfig();
-
 	bool fixedWidthTime();
 
 	void load();
