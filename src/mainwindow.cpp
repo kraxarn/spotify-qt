@@ -555,7 +555,7 @@ QToolBar *MainWindow::createToolBar()
 	volume->setFixedHeight(100);
 	volume->setMinimum(0);
 	volume->setMaximum(20);
-	volume->setValue(20);
+	volume->setValue(spt::ClientHandler::getVolume() * 20);
 	// Layout for volume slider
 	auto volumeMenu = new QMenu(this);
 	volumeMenu->setContentsMargins(2, 6, 2, 6);

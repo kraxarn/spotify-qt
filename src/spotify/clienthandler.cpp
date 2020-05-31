@@ -106,12 +106,7 @@ bool ClientHandler::isRunning()
 	return QString(out).contains(path);
 }
 
-float ClientHandler::getVolume()
-{
-	return 0;
-}
-
-void ClientHandler::setVolume(float value)
+QString ClientHandler::getSinkInfo()
 {
 	QProcess process;
 	// Find what sink to use
@@ -120,15 +115,40 @@ void ClientHandler::setVolume(float value)
 	});
 	process.waitForFinished();
 	auto sinks = QString(process.readAllStandardOutput()).split("Sink Input #");
-	QString sink;
-	for (auto &s : sinks)
-		if (s.contains("Spotify"))
-			sink = s;
+	for (auto &sink : sinks)
+		if (sink.contains("Spotify"))
+			return sink;
+	return QString();
+}
+
+float ClientHandler::getVolume()
+{
+	auto sink = getSinkInfo();
+	auto i = sink.indexOf("Volume:");
+	if (i < 0)
+		return 1.0;
+	bool ok;
+	for (auto &p : sink.right(sink.length() - i).split(' '))
+	{
+		if (!p.endsWith('%'))
+			continue;
+		auto v = p.left(p.length() - 1).toInt(&ok);
+		if (!ok)
+			continue;
+		return v / 100.0;
+	}
+	return 1.0;
+}
+
+void ClientHandler::setVolume(float value)
+{
+	auto sink = getSinkInfo();
 	if (sink.isEmpty())
 		return;
 	// Sink was found, get id
 	auto left = sink.left(sink.indexOf('\n'));
 	auto sinkId = left.right(left.length() - left.lastIndexOf('#') - 1);
+	QProcess process;
 	process.start("/usr/bin/pactl", {
 		"set-sink-input-volume", sinkId, QString::number(value, 'f', 2)
 	});

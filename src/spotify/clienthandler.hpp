@@ -27,5 +27,6 @@ namespace spt
 		Settings settings;
 		bool supportsPulse();
 		static QString clientExec(const QString &path, const QStringList &arguments);
+		static QString getSinkInfo();
 	};
 }
