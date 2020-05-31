@@ -1,6 +1,6 @@
 #include "settings.hpp"
 
-Settings::Settings(bool v)
+Settings::Settings()
 {
 	settings = nullptr;
 	load();
@@ -19,7 +19,7 @@ QString Settings::fileName()
 
 Settings Settings::get()
 {
-	return Settings(false);
+	return Settings();
 }
 
 void Settings::load()

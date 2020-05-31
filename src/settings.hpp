@@ -13,7 +13,6 @@
 class Settings
 {
 public:
-	Settings(bool v);
 	virtual ~Settings();
 
 	QJsonDocument legacyToJson();
@@ -62,6 +61,8 @@ public:
 	static Settings get();
 
 private:
+	Settings();
+
 	QString accessToken();
 	QString refreshToken();
 	QString clientId();

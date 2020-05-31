@@ -18,17 +18,18 @@ int main(int argc, char *argv[])
 	// Create Qt application
 	QApplication app(argc, argv);
 	// JSON Settings
-	auto settings = Settings::get();
-	Icon::useFallbackIcons = settings.general.fallbackIcons;
 	if (!QFile::exists(Settings::fileName()))
 	{
 		qDebug() << "no json settings, attempting to convert legacy settings...";
 		QFile jsonFile(Settings::fileName());
 		jsonFile.open(QIODevice::WriteOnly);
-		auto jsonData = settings.legacyToJson().toJson();
+		auto jsonData = Settings::get().legacyToJson().toJson();
 		jsonFile.write(jsonData);
 		jsonFile.close();
 	}
+	// Check fallback icons
+	auto settings = Settings::get();
+	Icon::useFallbackIcons = settings.general.fallbackIcons;
 	// Show version if requested
 	QCommandLineParser parser;
 	parser.addVersionOption();

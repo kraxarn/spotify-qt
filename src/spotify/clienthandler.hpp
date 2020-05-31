@@ -12,7 +12,7 @@ namespace spt
 	class ClientHandler
 	{
 	public:
-		explicit ClientHandler(const Settings &settings, QWidget *parent = nullptr);
+		explicit ClientHandler(QWidget *parent = nullptr);
 		virtual ~ClientHandler();
 		static QString version(const QString &path);
 		QString start();
@@ -24,7 +24,6 @@ namespace spt
 	private:
 		QWidget *parent;
 		QString path;
-		Settings settings;
 		bool supportsPulse();
 		static QString clientExec(const QString &path, const QStringList &arguments);
 		static QString getSinkInfo();
