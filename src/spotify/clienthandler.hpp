@@ -18,6 +18,9 @@ namespace spt
 		QString start();
 		QProcess *process = nullptr;
 		bool isRunning();
+		static float getVolume();
+		static void setVolume(float value);
+
 	private:
 		QWidget *parent;
 		QString path;

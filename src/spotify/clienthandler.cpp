@@ -105,3 +105,32 @@ bool ClientHandler::isRunning()
 	auto out = ps.readAllStandardOutput();
 	return QString(out).contains(path);
 }
+
+float ClientHandler::getVolume()
+{
+	return 0;
+}
+
+void ClientHandler::setVolume(float value)
+{
+	QProcess process;
+	// Find what sink to use
+	process.start("/usr/bin/pactl", {
+		"list", "sink-inputs"
+	});
+	process.waitForFinished();
+	auto sinks = QString(process.readAllStandardOutput()).split("Sink Input #");
+	QString sink;
+	for (auto &s : sinks)
+		if (s.contains("Spotify"))
+			sink = s;
+	if (sink.isEmpty())
+		return;
+	// Sink was found, get id
+	auto left = sink.left(sink.indexOf('\n'));
+	auto sinkId = left.right(left.length() - left.lastIndexOf('#') - 1);
+	process.start("/usr/bin/pactl", {
+		"set-sink-input-volume", sinkId, QString::number(value, 'f', 2)
+	});
+	process.waitForFinished();
+}
