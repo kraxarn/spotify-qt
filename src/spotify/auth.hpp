@@ -16,12 +16,11 @@ namespace spt
 	class Auth
 	{
 	public:
-		explicit Auth(Settings &settings);
+		Auth();
 		virtual ~Auth();
 		static QString authUrl(const QString &clientId, const QString &redirect);
 		QString auth(const QString &code, const QString &redirect, const QString &id, const QString &secret);
 	private:
-		Settings settings;
 		QNetworkAccessManager *networkManager;
 	};
 }

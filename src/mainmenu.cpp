@@ -1,7 +1,7 @@
 #include "mainmenu.hpp"
 
-MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent) : QMenu(parent),
-	parent(parent), spotify(spotify), settings(settings)
+MainMenu::MainMenu(spt::Spotify &spotify, QWidget *parent) : QMenu(parent),
+	parent(parent), spotify(spotify)
 {
 	// About
 	addAction(Icon::get("help-about"),
@@ -16,7 +16,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent) :
 	// Refresh and settings
 	auto openSettings = createMenuAction("configure", "Settings...", QKeySequence::Preferences);
 	QAction::connect(openSettings, &QAction::triggered, [this]() {
-		SettingsDialog dialog(this->settings, this->parent);
+		SettingsDialog dialog(this->parent);
 		dialog.exec();
 	});
 	addAction(openSettings);
@@ -39,12 +39,13 @@ MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent) :
 		if (result == nullptr || result == cancel)
 			return;
 		// Clear client secret/id if clearAll
+		auto settings = Settings::get();
 		if (result == clearAll)
-			this->settings.removeClient();
+			settings.removeClient();
 		// Clear login if cleatAll/logOut
 		if (result == clearAll || result == logOut)
-			this->settings.removeTokens();
-		this->settings.save();
+			settings.removeTokens();
+		settings.save();
 		QMessageBox::information(this->parent,
 			 "Logged out",
 			 "You are now logged out, the application will now close");

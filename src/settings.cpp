@@ -1,21 +1,8 @@
 #include "settings.hpp"
 
-Settings::Settings()
+Settings::Settings(bool v)
 {
-	// Settings is legacy, only instance when needed
 	settings = nullptr;
-
-	// Default values
-#ifdef Q_OS_LINUX
-	general.mediaController = true;
-#endif
-	general.showChangelog = true;
-	general.stylePalette = paletteApp;
-	general.songHeaderResizeMode = (int) QHeaderView::ResizeToContents;
-	general.songHeaderSortBy = -1;
-	general.refreshInterval = 3;
-	spotify.bitrate = 320;
-
 	load();
 }
 
@@ -28,6 +15,11 @@ QString Settings::fileName()
 {
 	return QString("%1.json").arg(QStandardPaths::writableLocation(
 		QStandardPaths::AppConfigLocation));
+}
+
+Settings Settings::get()
+{
+	return Settings(false);
 }
 
 void Settings::load()
@@ -260,7 +252,7 @@ bool Settings::mediaController()
 	return settings->value("MediaController", hasMediaControllerSupport()).toBool();
 }
 
-bool Settings::darkTheme()
+bool Settings::darkTheme() const
 {
 	return general.stylePalette == paletteDark;
 }

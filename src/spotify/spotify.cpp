@@ -2,7 +2,7 @@
 
 using namespace spt;
 
-Spotify::Spotify(Settings &settings) : settings(settings)
+Spotify::Spotify()
 {
 	lastAuth = 0;
 	networkManager = new QNetworkAccessManager();
@@ -27,7 +27,7 @@ QNetworkRequest Spotify::request(const QString &url)
 	QNetworkRequest request((QUrl("https://api.spotify.com/v1/" + url)));
 	// Set header
 	request.setRawHeader("Authorization",
-		("Bearer " + settings.account.accessToken).toUtf8());
+		("Bearer " + Settings::get().account.accessToken).toUtf8());
 	// Return prepared header
 	return request;
 }
@@ -112,6 +112,7 @@ QString Spotify::errorMessage(QNetworkReply *reply)
 
 bool Spotify::refresh()
 {
+	auto settings = Settings::get();
 	// Make sure we have a refresh token
 	auto refreshToken = settings.account.refreshToken;
 	if (refreshToken.isEmpty())

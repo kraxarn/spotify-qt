@@ -1,13 +1,14 @@
 #include "settingsdialog.hpp"
 
-SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent) : settings(settings), QDialog(parent)
+SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 {
+	auto settings = Settings::get();
 	// Main layout
 	auto mainLayout = new QVBoxLayout();
 	auto tabs = new QTabWidget();
-	tabs->addTab(appSettings(), "Application");
-	tabs->addTab(interfaceSettings(), "Interface");
-	tabs->addTab(spotifySettings(), "Spotify");
+	tabs->addTab(appSettings(settings), "Application");
+	tabs->addTab(interfaceSettings(settings), "Interface");
+	tabs->addTab(spotifySettings(settings), "Spotify");
 	tabs->addTab(aboutSettings(), "About");
 	mainLayout->addWidget(tabs, 1);
 	// Buttons
@@ -32,7 +33,7 @@ SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent) : settings(s
 	resize(360, 260);
 }
 
-QWidget *SettingsDialog::appSettings()
+QWidget *SettingsDialog::appSettings(const Settings &settings)
 {
 	auto layout = new QVBoxLayout();
 	layout->setAlignment(Qt::AlignTop);
@@ -87,7 +88,7 @@ QWidget *SettingsDialog::appSettings()
 	return widget;
 }
 
-QWidget *SettingsDialog::interfaceSettings()
+QWidget *SettingsDialog::interfaceSettings(const Settings &settings)
 {
 	auto layout = new QVBoxLayout();
 	layout->setAlignment(Qt::AlignTop);
@@ -140,7 +141,7 @@ QWidget *SettingsDialog::interfaceSettings()
 	return widget;
 }
 
-QWidget *SettingsDialog::spotifySettings()
+QWidget *SettingsDialog::spotifySettings(const Settings &settings)
 {
 	// Main container for everything
 	auto layout = new QVBoxLayout();
@@ -279,10 +280,10 @@ QWidget *SettingsDialog::aboutSettings()
 	auto openConfig = new QPushButton(Icon::get("folder-txt"), "Open config file");
 	openConfig->setFlat(true);
 	QAbstractButton::connect(openConfig, &QPushButton::clicked, [this](bool checked) {
-		if (!QDesktopServices::openUrl(QUrl(settings.fileName())))
+		if (!QDesktopServices::openUrl(QUrl(Settings::fileName())))
 			QMessageBox::warning(this,
 				"No file",
-				QString("Failed to open file: %1").arg(settings.fileName()));
+				QString("Failed to open file: %1").arg(Settings::fileName()));
 	});
 	options->addWidget(openConfig);
 	layout->addLayout(options, 1);
@@ -294,6 +295,7 @@ QWidget *SettingsDialog::aboutSettings()
 
 bool SettingsDialog::applySettings()
 {
+	auto settings = Settings::get();
 	// Set theme
 	auto changeTheme = itfDark->isChecked() != settings.darkTheme();
 	if (changeTheme)

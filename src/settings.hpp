@@ -13,7 +13,7 @@
 class Settings
 {
 public:
-	Settings();
+	Settings(bool v);
 	virtual ~Settings();
 
 	QJsonDocument legacyToJson();
@@ -52,12 +52,14 @@ public:
 	void removeClient();
 	void removeTokens();
 
-	bool darkTheme();
+	bool darkTheme() const;
 	void setDarkTheme(bool value);
 
 	static QString fileName();
 
 	static bool hasMediaControllerSupport();
+
+	static Settings get();
 
 private:
 	QString accessToken();

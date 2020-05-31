@@ -1,9 +1,10 @@
 #include "setupdialog.hpp"
 
-SetupDialog::SetupDialog(Settings &settings, QWidget *parent) : settings(settings), QDialog(parent)
+SetupDialog::SetupDialog(QWidget *parent) : QDialog(parent)
 {
+	auto settings = Settings::get();
 	// Auth
-	auth = new spt::Auth(settings);
+	auth = new spt::Auth();
 	// Main layout
 	auto mainLayout = new QVBoxLayout();
 	// Welcome text
@@ -79,9 +80,10 @@ SetupDialog::SetupDialog(Settings &settings, QWidget *parent) : settings(setting
 				// Close it all down if ok
 				if (status.isEmpty())
 				{
-					this->settings.account.clientId = clientIdText;
-					this->settings.account.clientSecret = clientSecretText;
-					this->settings.save();
+					auto settings = Settings::get();
+					settings.account.clientId = clientIdText;
+					settings.account.clientSecret = clientSecretText;
+					settings.save();
 					server->close();
 					delete server;
 					accept();

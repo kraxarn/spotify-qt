@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 	// Create Qt application
 	QApplication app(argc, argv);
 	// JSON Settings
-	Settings settings;
+	auto settings = Settings::get();
 	Icon::useFallbackIcons = settings.general.fallbackIcons;
 	if (!QFile::exists(Settings::fileName()))
 	{
@@ -28,7 +28,6 @@ int main(int argc, char *argv[])
 		auto jsonData = settings.legacyToJson().toJson();
 		jsonFile.write(jsonData);
 		jsonFile.close();
-		settings = Settings();
 	}
 	// Show version if requested
 	QCommandLineParser parser;
@@ -44,12 +43,12 @@ int main(int argc, char *argv[])
 	// First setup window
 	if (settings.account.refreshToken.isEmpty())
 	{
-		SetupDialog dialog(settings);
+		SetupDialog dialog;
 		if (dialog.exec() == QDialog::Rejected)
 			return 0;
 	}
 	// Create main window
-	MainWindow w(settings);
+	MainWindow w;
 	// Show window and run application
 	w.show();
 	return QApplication::exec();

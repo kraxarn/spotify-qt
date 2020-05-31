@@ -2,7 +2,7 @@
 
 using namespace spt;
 
-Auth::Auth(Settings &settings) : settings(settings)
+Auth::Auth()
 {
 	networkManager = new QNetworkAccessManager();
 }
@@ -71,6 +71,7 @@ QString Auth::auth(const QString &code, const QString &redirect, const QString &
 	// Save access/refresh token to settings
 	auto accessToken = jsonData["access_token"].toString();
 	auto refreshToken = jsonData["refresh_token"].toString();
+	auto settings = Settings::get();
 	settings.account.accessToken = accessToken;
 	settings.account.refreshToken = refreshToken;
 	settings.save();

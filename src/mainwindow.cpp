@@ -2,7 +2,7 @@
 
 bool MainWindow::darkBackground	= false;
 
-MainWindow::MainWindow(Settings settings, QWidget *parent) : settings(settings), QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
 	// Some default values to prevent unexpected stuff
 	playlists 	= nullptr;
@@ -26,6 +26,7 @@ MainWindow::MainWindow(Settings settings, QWidget *parent) : settings(settings),
 	cacheDir.mkdir("album");
 	cacheDir.mkdir("playlist");
 	// Apply selected style and palette
+	auto settings = Settings::get();
 	QApplication::setStyle(settings.general.style);
 	applyPalette(settings.general.stylePalette);
 	// Check for dark background
@@ -33,7 +34,7 @@ MainWindow::MainWindow(Settings settings, QWidget *parent) : settings(settings),
 	if (((bg.red() + bg.green() + bg.blue()) / 3) < 128)
 		darkBackground = true;
 	// Set Spotify
-	spotify = new spt::Spotify(settings);
+	spotify = new spt::Spotify();
 	sptPlaylists = new QVector<spt::Playlist>();
 	network = new QNetworkAccessManager();
 	// Setup main window
@@ -50,7 +51,7 @@ MainWindow::MainWindow(Settings settings, QWidget *parent) : settings(settings),
 	// Check if should start client
 	if (settings.spotify.startClient)
 	{
-		sptClient = new spt::ClientHandler(settings, this);
+		sptClient = new spt::ClientHandler(this);
 		auto status = sptClient->start();
 		if (!status.isEmpty())
 			QMessageBox::warning(this,
@@ -74,7 +75,7 @@ MainWindow::MainWindow(Settings settings, QWidget *parent) : settings(settings),
 	});
 	// Create tray icon if specified
 	if (settings.general.trayIcon)
-		trayIcon = new TrayIcon(spotify, settings, this);
+		trayIcon = new TrayIcon(spotify, this);
 	// If new version has been detected, show what's new dialog
 	if (settings.general.showChangelog && settings.general.lastVersion != APP_VERSION)
 		(new WhatsNewDialog(APP_VERSION, settings, this))->open();
@@ -107,6 +108,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::refresh()
 {
+	auto settings = Settings::get();
 	if (refreshCount < 0
 		|| ++refreshCount >= settings.general.refreshInterval
 		|| current.progressMs + 1000 > current.item.duration)
@@ -153,7 +155,7 @@ void MainWindow::refreshed(const spt::Playback &playback)
 	playPause->setIcon(Icon::get(
 		current.isPlaying ? "media-playback-pause" : "media-playback-start"));
 	playPause->setText(current.isPlaying ? "Pause" : "Play");
-	if (!settings.general.pulseVolume)
+	if (!Settings::get().general.pulseVolume)
 		volume->setValue(current.volume / 5);
 	repeat->setChecked(current.repeat != "off");
 	shuffle->setChecked(current.shuffle);
@@ -352,6 +354,7 @@ QWidget *MainWindow::createCentralWidget()
 		" ", "Title", "Artist", "Album", "Length", "Added"
 	});
 	songs->header()->setSectionsMovable(false);
+	auto settings = Settings::get();
 	songs->header()->setSectionResizeMode((QHeaderView::ResizeMode) settings.general.songHeaderResizeMode);
 	if (settings.general.songHeaderSortBy > 0)
 		songs->header()->setSortIndicator(settings.general.songHeaderSortBy + 1, Qt::AscendingOrder);
@@ -399,6 +402,7 @@ QWidget *MainWindow::createCentralWidget()
 		auto headerTitles = QStringList({
 			"Title", "Artist", "Album", "Length", "Added"
 		});
+		auto settings = Settings::get();
 		auto headers = settings.general.hiddenSongHeaders;
 		for (int i = 0; i < headerTitles.size(); i++)
 		{
@@ -413,6 +417,7 @@ QWidget *MainWindow::createCentralWidget()
 			sortTitle->setData(QVariant(100 + i));
 		}
 		QMenu::connect(menu, &QMenu::triggered, [this](QAction *action) {
+			auto settings = Settings::get();
 			int i = action->data().toInt();
 			// Columns to show
 			if (i < 100)
@@ -472,7 +477,7 @@ QToolBar *MainWindow::createToolBar()
 	menu->setText("Menu");
 	menu->setIcon(Icon::get("application-menu"));
 	menu->setPopupMode(QToolButton::InstantPopup);
-	menu->setMenu(new MainMenu(*spotify, settings, this));
+	menu->setMenu(new MainMenu(*spotify, this));
 	toolBar->addWidget(menu);
 	// Search
 	search = toolBar->addAction(Icon::get("edit-find"), "Search");
@@ -525,6 +530,7 @@ QToolBar *MainWindow::createToolBar()
 	toolBar->addWidget(progress);
 	toolBar->addSeparator();
 	position = new QLabel("0:00/0:00", this);
+	auto settings = Settings::get();
 	if (settings.general.fixedWidthTime)
 		position->setFont(QFont("monospace"));
 	toolBar->addWidget(position);
@@ -689,6 +695,7 @@ bool MainWindow::loadAlbum(const QString &albumId, bool ignoreEmpty)
 
 bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 {
+	auto settings = Settings::get();
 	settings.general.lastPlaylist = playlist.id;
 	settings.save();
 	if (loadPlaylistFromCache(playlist))
@@ -743,7 +750,7 @@ void MainWindow::refreshPlaylist(spt::Playlist &playlist)
 
 void MainWindow::setStatus(const QString &message, bool important)
 {
-	if (trayIcon != nullptr && settings.general.trayNotifications)
+	if (trayIcon != nullptr && Settings::get().general.trayNotifications)
 	{
 		if (important)
 			trayIcon->message(message);
@@ -879,8 +886,8 @@ void MainWindow::reloadTrayIcon()
 		delete trayIcon;
 		trayIcon = nullptr;
 	}
-	if (settings.general.trayIcon)
-		trayIcon = new TrayIcon(spotify, settings, this);
+	if (Settings::get().general.trayIcon)
+		trayIcon = new TrayIcon(spotify, this);
 }
 
 bool MainWindow::hasDarkBackground()
