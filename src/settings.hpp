@@ -58,7 +58,7 @@ public:
 
 	static bool hasMediaControllerSupport();
 
-	static Settings get();
+	static Settings *get();
 
 private:
 	Settings();
@@ -91,6 +91,8 @@ private:
 	bool fixedWidthTime();
 
 	void load();
+
+	static Settings *set;
 
 	QSettings *settings;
 };

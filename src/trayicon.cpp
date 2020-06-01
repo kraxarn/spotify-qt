@@ -26,7 +26,7 @@ TrayIcon::TrayIcon(spt::Spotify *spotify, QObject *parent) : QSystemTrayIcon(par
 	QAction::connect(quit, &QAction::triggered, QCoreApplication::quit);
 
 	setIcon(Icon::get(QString("logo:spotify-qt-symbolic-%1")
-		.arg(Settings::get().general.trayLightIcon ? "light" : "dark")).pixmap(64, 64));
+		.arg(Settings::get()->general.trayLightIcon ? "light" : "dark")).pixmap(64, 64));
 	setContextMenu(contextMenu);
 	show();
 

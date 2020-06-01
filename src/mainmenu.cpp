@@ -41,11 +41,11 @@ MainMenu::MainMenu(spt::Spotify &spotify, QWidget *parent) : QMenu(parent),
 		// Clear client secret/id if clearAll
 		auto settings = Settings::get();
 		if (result == clearAll)
-			settings.removeClient();
+			settings->removeClient();
 		// Clear login if cleatAll/logOut
 		if (result == clearAll || result == logOut)
-			settings.removeTokens();
-		settings.save();
+			settings->removeTokens();
+		settings->save();
 		QMessageBox::information(this->parent,
 			 "Logged out",
 			 "You are now logged out, the application will now close");

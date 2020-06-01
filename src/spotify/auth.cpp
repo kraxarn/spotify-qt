@@ -72,9 +72,9 @@ QString Auth::auth(const QString &code, const QString &redirect, const QString &
 	auto accessToken = jsonData["access_token"].toString();
 	auto refreshToken = jsonData["refresh_token"].toString();
 	auto settings = Settings::get();
-	settings.account.accessToken = accessToken;
-	settings.account.refreshToken = refreshToken;
-	settings.save();
+	settings->account.accessToken = accessToken;
+	settings->account.refreshToken = refreshToken;
+	settings->save();
 	// Everything hopefully went fine
 	return QString();
 }

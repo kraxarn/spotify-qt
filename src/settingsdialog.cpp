@@ -6,9 +6,9 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 	// Main layout
 	auto mainLayout = new QVBoxLayout();
 	auto tabs = new QTabWidget();
-	tabs->addTab(appSettings(settings), "Application");
-	tabs->addTab(interfaceSettings(settings), "Interface");
-	tabs->addTab(spotifySettings(settings), "Spotify");
+	tabs->addTab(appSettings(*settings), "Application");
+	tabs->addTab(interfaceSettings(*settings), "Interface");
+	tabs->addTab(spotifySettings(*settings), "Spotify");
 	tabs->addTab(aboutSettings(), "About");
 	mainLayout->addWidget(tabs, 1);
 	// Buttons
@@ -297,27 +297,27 @@ bool SettingsDialog::applySettings()
 {
 	auto settings = Settings::get();
 	// Set theme
-	auto changeTheme = itfDark->isChecked() != settings.darkTheme();
+	auto changeTheme = itfDark->isChecked() != settings->darkTheme();
 	if (changeTheme)
 	{
 		QMessageBox::information(
 			this, "Dark Theme",
 			"Please restart the application to fully apply selected theme");
-		settings.setDarkTheme(itfDark->isChecked());
-		QApplication::setStyle(settings.general.style);
-		MainWindow::applyPalette(settings.general.stylePalette);
+		settings->setDarkTheme(itfDark->isChecked());
+		QApplication::setStyle(settings->general.style);
+		MainWindow::applyPalette(settings->general.stylePalette);
 	}
 
 	// Media controller
-	if (appMedia->isChecked() != settings.general.mediaController)
+	if (appMedia->isChecked() != settings->general.mediaController)
 		QMessageBox::information(
 			this, "Media Controller",
 			"Please restart the application to apply changes");
-	settings.general.mediaController = appMedia->isChecked();
+	settings->general.mediaController = appMedia->isChecked();
 
 	// PulseAudio volume
 	if (appPulse != nullptr)
-		settings.general.pulseVolume = appPulse->isChecked();
+		settings->general.pulseVolume = appPulse->isChecked();
 
 	// Check spotify client path
 	if (!sptPath->text().isEmpty())
@@ -329,7 +329,7 @@ bool SettingsDialog::applySettings()
 			return false;
 		}
 		sptVersion->setText(client);
-		settings.spotify.path = sptPath->text();
+		settings->spotify.path = sptPath->text();
 	}
 
 	// Desktop notifications and tray icon
@@ -341,13 +341,13 @@ bool SettingsDialog::applySettings()
 			"Desktop notifications requires tray icon to be enabled, so it was enabled");
 	}
 	// Check if tray icon needs to be reloaded
-	auto reloadTray = settings.general.trayIcon != itfTrayIcon->isChecked()
-		|| settings.general.trayNotifications != itfTrayNotify->isChecked()
-		|| settings.general.trayLightIcon != itfTrayInvert->isChecked();
+	auto reloadTray = settings->general.trayIcon != itfTrayIcon->isChecked()
+		|| settings->general.trayNotifications != itfTrayNotify->isChecked()
+		|| settings->general.trayLightIcon != itfTrayInvert->isChecked();
 	// Apply
-	settings.general.trayIcon = itfTrayIcon->isChecked();
-	settings.general.trayNotifications = itfTrayNotify->isChecked();
-	settings.general.trayLightIcon = itfTrayInvert->isChecked();
+	settings->general.trayIcon = itfTrayIcon->isChecked();
+	settings->general.trayNotifications = itfTrayNotify->isChecked();
+	settings->general.trayLightIcon = itfTrayInvert->isChecked();
 	// Reload if needed
 	auto window = dynamic_cast<MainWindow*>(parent());
 	if (reloadTray && window != nullptr)
@@ -356,9 +356,9 @@ bool SettingsDialog::applySettings()
 	auto resizeMode = itfResizeAuto->isChecked()
 		? QHeaderView::ResizeToContents
 		: QHeaderView::Interactive;
-	if (resizeMode != settings.general.songHeaderResizeMode && window != nullptr)
+	if (resizeMode != settings->general.songHeaderResizeMode && window != nullptr)
 		window->songs->header()->setSectionResizeMode(resizeMode);
-	settings.general.songHeaderResizeMode = resizeMode;
+	settings->general.songHeaderResizeMode = resizeMode;
 
 	// Refresh interval
 	auto ok = false;
@@ -368,34 +368,34 @@ bool SettingsDialog::applySettings()
 		applyFail("refresh interval");
 		return false;
 	}
-	settings.general.refreshInterval = interval;
+	settings->general.refreshInterval = interval;
 
 	// Spotify global config
 	if (sptGlobal->isChecked() && !sptConfigExists())
 		QMessageBox::warning(this,
 			"spotifyd config not found",
 			QString("Couldn't find a config file for spotifyd. You may experience issues."));
-	settings.spotify.globalConfig = sptGlobal->isChecked();
+	settings->spotify.globalConfig = sptGlobal->isChecked();
 
 	// Other application stuff
-	settings.general.showChangelog = appWhatsNew->isChecked();
-	settings.general.spotifyPlaybackOrder = appSptOrder->isChecked();
+	settings->general.showChangelog = appWhatsNew->isChecked();
+	settings->general.spotifyPlaybackOrder = appSptOrder->isChecked();
 
 	// Other interface stuff
 	if (itfIcFallback != nullptr)
-		settings.general.fallbackIcons = itfIcFallback->isChecked();
+		settings->general.fallbackIcons = itfIcFallback->isChecked();
 	if (window != nullptr)
 		window->setFixedWidthTime(itfMonoTime->isChecked());
-	settings.general.fixedWidthTime = itfMonoTime->isChecked();
+	settings->general.fixedWidthTime = itfMonoTime->isChecked();
 
 	// Other Spotify stuff
-	settings.spotify.startClient =sptAppStart->isChecked();
-	settings.spotify.username = sptUsername->text();
+	settings->spotify.startClient =sptAppStart->isChecked();
+	settings->spotify.username = sptUsername->text();
 	auto bitrate = sptBitrate->currentIndex();
-	settings.spotify.bitrate = bitrate == 0 ? 96 : bitrate == 1 ? 160 : 320;
+	settings->spotify.bitrate = bitrate == 0 ? 96 : bitrate == 1 ? 160 : 320;
 
 	// Everything is fine
-	settings.save();
+	settings->save();
 	return true;
 }
 

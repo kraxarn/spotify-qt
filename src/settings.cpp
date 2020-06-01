@@ -1,5 +1,7 @@
 #include "settings.hpp"
 
+Settings *Settings::set = nullptr;
+
 Settings::Settings()
 {
 	settings = nullptr;
@@ -17,9 +19,11 @@ QString Settings::fileName()
 		QStandardPaths::AppConfigLocation));
 }
 
-Settings Settings::get()
+Settings *Settings::get()
 {
-	return Settings();
+	if (Settings::set == nullptr)
+		Settings::set = new Settings();
+	return Settings::set;
 }
 
 void Settings::load()
