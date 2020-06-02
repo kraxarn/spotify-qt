@@ -9,6 +9,7 @@
 #include <QFile>
 #include <QStandardPaths>
 #include <QDebug>
+#include <QMutex>
 
 class Settings
 {
@@ -17,7 +18,8 @@ public:
 	virtual ~Settings();
 
 	QJsonDocument legacyToJson();
-	void save() const;
+	void save();
+	void load();
 
 	enum Palette
 	{
@@ -87,9 +89,7 @@ private:
 	bool sptGlobalConfig();
 	bool fixedWidthTime();
 
-	void load();
-
 	static Settings *set;
-
 	QSettings *settings;
+	QMutex mutex;
 };

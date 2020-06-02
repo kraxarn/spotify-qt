@@ -77,8 +77,10 @@ void Settings::load()
 	spotify.bitrate = s["bitrate"].toInt(320);
 }
 
-void Settings::save() const
+void Settings::save()
 {
+	mutex.lock();
+
 	QJsonArray jsonHiddenSongHeaders;
 	for (auto &val : general.hiddenSongHeaders)
 		jsonHiddenSongHeaders.append(val);
@@ -123,6 +125,7 @@ void Settings::save() const
 	file.open(QIODevice::WriteOnly);
 	file.write(QJsonDocument(json).toJson(QJsonDocument::Indented));
 	file.close();
+	mutex.unlock();
 }
 
 QJsonDocument Settings::legacyToJson()

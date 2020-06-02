@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 		auto jsonData = settings.legacyToJson().toJson();
 		jsonFile.write(jsonData);
 		jsonFile.close();
-		settings = Settings();
+		settings.load();
 	}
 	// Check fallback icons
 	Icon::useFallbackIcons = settings.general.fallbackIcons;
