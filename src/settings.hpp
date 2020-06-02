@@ -13,6 +13,7 @@
 class Settings
 {
 public:
+	Settings();
 	virtual ~Settings();
 
 	QJsonDocument legacyToJson();
@@ -58,11 +59,7 @@ public:
 
 	static bool hasMediaControllerSupport();
 
-	static Settings *get();
-
 private:
-	Settings();
-
 	QString accessToken();
 	QString refreshToken();
 	QString clientId();

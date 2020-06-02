@@ -51,7 +51,7 @@ class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 public:
-	MainWindow(QWidget *parent = nullptr);
+	MainWindow(Settings &settings, QWidget *parent = nullptr);
 	~MainWindow() override;
 
 protected:
@@ -118,6 +118,7 @@ private:
 	int						refreshCount;
 	QTreeWidgetItem*		playingTrackItem;
 	spt::User				currentUser;
+	Settings				&settings;
 	QHash<QString, QTreeWidgetItem*>	trackItems;
 	// Methods
 	QWidget *createCentralWidget();

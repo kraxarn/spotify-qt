@@ -29,7 +29,7 @@ namespace spt
 		Q_OBJECT
 
 	public:
-		Spotify();
+		explicit Spotify(Settings &settings);
 		~Spotify();
 		/**
 		 * HTTP GET request expecting JSON response
@@ -81,6 +81,7 @@ namespace spt
 	private:
 		qint64		lastAuth;
 		QString		currentDevice;
+		Settings	&settings;
 		QNetworkAccessManager *networkManager;
 		/**
 		 * Prepare network request with auth header

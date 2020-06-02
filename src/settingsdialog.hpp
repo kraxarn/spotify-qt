@@ -32,18 +32,19 @@ class SettingsDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit SettingsDialog(QWidget *parent = nullptr);
+	explicit SettingsDialog(Settings &settings, QWidget *parent = nullptr);
 
 private:
-	QWidget *appSettings(const Settings &settings);
-	QWidget *interfaceSettings(const Settings &settings);
-	QWidget *spotifySettings(const Settings &settings);
+	QWidget *appSettings();
+	QWidget *interfaceSettings();
+	QWidget *spotifySettings();
 	QWidget *aboutSettings();
 	bool applySettings();
 	void applyFail(const QString &setting);
 	static bool isPulse();
 	static bool sptConfigExists();
 	static bool hasIconTheme();
+	Settings &settings;
 	// App settings
 	QComboBox	*appRefresh		= nullptr;
 	QCheckBox	*appPulse		= nullptr;

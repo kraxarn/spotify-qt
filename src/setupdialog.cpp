@@ -1,10 +1,9 @@
 #include "setupdialog.hpp"
 
-SetupDialog::SetupDialog(QWidget *parent) : QDialog(parent)
+SetupDialog::SetupDialog(Settings &settings, QWidget *parent) : settings(settings), QDialog(parent)
 {
-	auto settings = Settings::get();
 	// Auth
-	auth = new spt::Auth();
+	auth = new spt::Auth(settings);
 	// Main layout
 	auto mainLayout = new QVBoxLayout();
 	// Welcome text
@@ -16,20 +15,20 @@ SetupDialog::SetupDialog(QWidget *parent) : QDialog(parent)
 		this);
 	mainLayout->addWidget(welcomeText);
 	// Client ID
-	clientId = new QLineEdit(settings->account.clientId, this);
+	clientId = new QLineEdit(settings.account.clientId, this);
 	clientId->setPlaceholderText("Client ID");
 	mainLayout->addWidget(clientId);
 	// Client secret
-	clientSecret = new QLineEdit(settings->account.clientSecret, this);
+	clientSecret = new QLineEdit(settings.account.clientSecret, this);
 	clientSecret->setPlaceholderText("Client secret");
 	mainLayout->addWidget(clientSecret);
 	// Add buttons
 	auto cancelButton = new QPushButton("Cancel");
-	QAbstractButton::connect(cancelButton, &QAbstractButton::clicked, [=](bool checked) {
+	QAbstractButton::connect(cancelButton, &QAbstractButton::clicked, [this](bool checked) {
 		reject();
 	});
 	auto dashboardButton = new QPushButton("Spotify Dashboard");
-	QAbstractButton::connect(dashboardButton, &QAbstractButton::clicked, [=](bool checked) {
+	QAbstractButton::connect(dashboardButton, &QAbstractButton::clicked, [this](bool checked) {
 		QDesktopServices::openUrl(QUrl("https://developer.spotify.com/dashboard/applications"));
 	});
 	auto authButton = new QPushButton("Authenticate");
@@ -80,10 +79,9 @@ SetupDialog::SetupDialog(QWidget *parent) : QDialog(parent)
 				// Close it all down if ok
 				if (status.isEmpty())
 				{
-					auto settings = Settings::get();
-					settings->account.clientId = clientIdText;
-					settings->account.clientSecret = clientSecretText;
-					settings->save();
+					this->settings.account.clientId = clientIdText;
+					this->settings.account.clientSecret = clientSecretText;
+					this->settings.save();
 					server->close();
 					delete server;
 					accept();

@@ -19,13 +19,6 @@ QString Settings::fileName()
 		QStandardPaths::AppConfigLocation));
 }
 
-Settings *Settings::get()
-{
-	if (Settings::set == nullptr)
-		Settings::set = new Settings();
-	return Settings::set;
-}
-
 void Settings::load()
 {
 	QFile file(fileName());

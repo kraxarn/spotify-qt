@@ -15,7 +15,7 @@ class TrayIcon : private QSystemTrayIcon
 	Q_OBJECT
 
 public:
-	TrayIcon(spt::Spotify *spotify, QObject *parent = nullptr);
+	TrayIcon(spt::Spotify *spotify, const Settings &settings, QObject *parent = nullptr);
 	~TrayIcon();
 	void message(const QString &message);
 
@@ -25,4 +25,5 @@ private:
 	QAction			*playPause;
 	QAction			*currentTrack;
 	spt::Spotify	*spotify;
+	const Settings	&settings;
 };

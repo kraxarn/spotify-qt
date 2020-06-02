@@ -1,6 +1,7 @@
 #include "trayicon.hpp"
 
-TrayIcon::TrayIcon(spt::Spotify *spotify, QObject *parent) : QSystemTrayIcon(parent), spotify(spotify)
+TrayIcon::TrayIcon(spt::Spotify *spotify, const Settings &settings, QObject *parent)
+	: spotify(spotify), settings(settings), QSystemTrayIcon(parent)
 {
 	contextMenu = new QMenu();
 	currentTrack = contextMenu->addAction("-");
@@ -26,7 +27,7 @@ TrayIcon::TrayIcon(spt::Spotify *spotify, QObject *parent) : QSystemTrayIcon(par
 	QAction::connect(quit, &QAction::triggered, QCoreApplication::quit);
 
 	setIcon(Icon::get(QString("logo:spotify-qt-symbolic-%1")
-		.arg(Settings::get()->general.trayLightIcon ? "light" : "dark")).pixmap(64, 64));
+		.arg(settings.general.trayLightIcon ? "light" : "dark")).pixmap(64, 64));
 	setContextMenu(contextMenu);
 	show();
 
