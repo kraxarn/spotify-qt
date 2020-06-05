@@ -113,6 +113,13 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 			item->data(0, MainWindow::RoleAlbumId).toString(), &spotify, window))
 			->popup(trackList->mapToGlobal(pos));
 	});
+	// Playlist context menu
+	playlistList->setContextMenuPolicy(Qt::CustomContextMenu);
+	QWidget::connect(playlistList, &QWidget::customContextMenuRequested, [this, window, &spotify](const QPoint &pos) {
+		auto item = trackList->itemAt(pos);
+		(new PlaylistMenu(spotify, item->data(0, 0x100).toString(), window))
+			->popup(playlistList->mapToGlobal(pos));
+	});
 
 	// Setup dock
 	setWindowTitle("Search");

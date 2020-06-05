@@ -16,6 +16,8 @@ class PlaylistMenu : public QMenu
 public:
 	PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist, QWidget *parent = nullptr);
 
+	PlaylistMenu(spt::Spotify &spotify, const QString &playlistId, QWidget *parent = nullptr);
+
 private:
 	PlaylistEditDialog	*editDialog = nullptr;
 };

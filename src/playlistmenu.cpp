@@ -54,3 +54,8 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 			.arg(QString(playlist.id)));
 	});
 }
+
+PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const QString &playlistId, QWidget *parent)
+	: PlaylistMenu(spotify, spotify.playlist(playlistId), parent)
+{
+}
