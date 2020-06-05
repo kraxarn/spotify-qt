@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
 	if (!QFile::exists(Settings::fileName()))
 	{
 		qDebug() << "no json settings, attempting to convert legacy settings...";
+		QDir::root().mkpath(Settings::filePath());
 		QFile jsonFile(Settings::fileName());
 		jsonFile.open(QIODevice::WriteOnly);
 		auto jsonData = settings.legacyToJson().toJson();

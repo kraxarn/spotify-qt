@@ -19,6 +19,11 @@ QString Settings::fileName()
 		QStandardPaths::AppConfigLocation));
 }
 
+QString Settings::filePath()
+{
+	return QFileInfo(fileName()).absolutePath();
+}
+
 void Settings::load()
 {
 	QFile file(fileName());
@@ -121,6 +126,7 @@ void Settings::save()
 		})
 	});
 
+	QDir::root().mkpath(Settings::filePath());
 	QFile file(fileName());
 	file.open(QIODevice::WriteOnly);
 	file.write(QJsonDocument(json).toJson(QJsonDocument::Indented));

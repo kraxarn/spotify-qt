@@ -10,6 +10,7 @@
 #include <QStandardPaths>
 #include <QDebug>
 #include <QMutex>
+#include <QDir>
 
 class Settings
 {
@@ -58,6 +59,7 @@ public:
 	void setDarkTheme(bool value);
 
 	static QString fileName();
+	static QString filePath();
 
 	static bool hasMediaControllerSupport();
 
