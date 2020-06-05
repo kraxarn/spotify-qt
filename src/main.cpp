@@ -5,10 +5,6 @@
 #include <QApplication>
 #include <QCoreApplication>
 
-#ifdef USE_CRASH_HANDLER
-#include <kcrash.h>
-#endif
-
 int main(int argc, char *argv[])
 {
 	// Set name for settings etc.
@@ -36,13 +32,6 @@ int main(int argc, char *argv[])
 	QCommandLineParser parser;
 	parser.addVersionOption();
 	parser.process(app);
-#ifdef USE_CRASH_HANDLER
-	// We want to enable KDE crash handler
-	KCrash::initialize();
-	if (!KCrash::isDrKonqiEnabled())
-		qDebug() << "warning: crash handler enabled, but dr konqi is not";
-	qDebug() << "crash handler initialized";
-#endif
 	// First setup window
 	if (settings.account.refreshToken.isEmpty())
 	{
