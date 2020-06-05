@@ -32,7 +32,7 @@ QString ClientHandler::start()
 	// If using global config, just start
 	if (settings.spotify.globalConfig)
 	{
-		process->start(path);
+		process->start(path, QStringList());
 		return QString();
 	}
 	// Check if username exists
