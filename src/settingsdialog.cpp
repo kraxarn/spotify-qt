@@ -205,6 +205,13 @@ QWidget *SettingsDialog::spotifySettings()
 
 QWidget *SettingsDialog::aboutSettings()
 {
+	auto cacheSize = 0u;
+	auto mainWindow = dynamic_cast<MainWindow*>(parentWidget());
+	if (mainWindow != nullptr)
+		for (auto const &file : QDir(mainWindow->cacheLocation).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
+			for (auto const &f : QDir(file.absoluteFilePath()).entryInfoList(QDir::Files))
+				cacheSize += f.size();
+
 	auto layout = new QVBoxLayout();
 	layout->setAlignment(Qt::AlignTop);
 	// Title
@@ -266,7 +273,8 @@ QWidget *SettingsDialog::aboutSettings()
 	});
 	options->addWidget(checkUpdates, 0, 1);
 	// Open cache directory
-	auto openCache = new QPushButton(Icon::get("folder-temp"), "Open cache directory");
+	auto openCache = new QPushButton(Icon::get("folder-temp"),
+		QString("Open cache directory (%1M)").arg(cacheSize / 1000 / 1000));
 	openCache->setFlat(true);
 	QAbstractButton::connect(openCache, &QPushButton::clicked, [this, window](bool checked) {
 		if (window == nullptr)
