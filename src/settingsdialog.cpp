@@ -249,12 +249,14 @@ QWidget *SettingsDialog::aboutSettings()
 			return;
 		checkUpdates->setEnabled(false);
 		checkUpdates->setText("Please wait...");
-		auto json = window->getJson("https://api.github.com/repos/kraxarn/spotify-qt/releases");
-		auto latest = json.array()[0].toObject()["tag_name"].toString();
-		auto isLatest = latest == APP_VERSION;
-		checkUpdates->setText(isLatest
-			? "None found"
-			: "Update found");
+		auto json = window->getJson("https://api.github.com/repos/kraxarn/spotify-qt/releases/latest");
+		auto latest = json.object()["tag_name"].toString();
+		auto isLatest = latest.isEmpty() || latest == APP_VERSION;
+		checkUpdates->setText(latest.isEmpty()
+			? "Error"
+			: isLatest
+				? "None found"
+				: "Update found");
 		if (!isLatest)
 			window->setStatus(
 				QString("Update found, latest version is %1, you have version %2")
