@@ -66,6 +66,8 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 				track.name, track.artist
 			});
 			item->setData(0, MainWindow::RoleTrackId, track.id);
+			item->setData(0, MainWindow::RoleArtistId, track.artistId);
+			item->setData(0, MainWindow::RoleAlbumId, track.albumId);
 		}
 		// Search done
 		searchBox->setEnabled(true);
@@ -97,6 +99,19 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 		auto status = spotify.playTracks(trackId, QStringList(trackId));
 		if (!status.isEmpty())
 			window->setStatus(QString("Failed to play track: %1").arg(status), true);
+	});
+
+	// Track context menu
+	trackList->setContextMenuPolicy(Qt::CustomContextMenu);
+	QWidget::connect(trackList, &QWidget::customContextMenuRequested, [this, window, &spotify](const QPoint &pos) {
+		auto item = trackList->itemAt(pos);
+		auto trackId = item->data(0, MainWindow::RoleTrackId).toString();
+		if (trackId.isEmpty())
+			return;
+		(new SongMenu(trackId, item->text(1),
+			item->text(0), item->data(0, MainWindow::RoleArtistId).toString(),
+			item->data(0, MainWindow::RoleAlbumId).toString(), &spotify, window))
+			->popup(trackList->mapToGlobal(pos));
 	});
 
 	// Setup dock
