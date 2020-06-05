@@ -718,12 +718,12 @@ bool MainWindow::loadPlaylistFromCache(spt::Playlist &playlist)
 QVector<spt::Track> MainWindow::playlistTracks(const QString &playlistId)
 {
 	QVector<spt::Track> tracks;
-	auto filePath = QString("%1/playlist/%2").arg(cacheLocation).arg(playlistId);
+	auto filePath = QString("%1/playlist/%2.json").arg(cacheLocation).arg(playlistId);
 	if (!QFileInfo::exists(filePath))
 		return tracks;
 	QFile file(filePath);
 	file.open(QIODevice::ReadOnly);
-	auto json = QJsonDocument::fromBinaryData(file.readAll(), QJsonDocument::BypassValidation);
+	auto json = QJsonDocument::fromJson(file.readAll());
 	file.close();
 	if (json.isNull())
 		return tracks;
@@ -823,10 +823,15 @@ void MainWindow::openArtist(const QString &artistId)
 
 void MainWindow::cachePlaylist(spt::Playlist &playlist)
 {
+	// Remove old format if needed before caching
+	auto baseFile = QString("%1/playlist/%2").arg(cacheLocation).arg(playlist.id);
+	if (QFileInfo::exists(baseFile))
+		QFile(baseFile).remove();
+	// Save new
 	QJsonDocument json(playlist.toJson(*spotify));
-	QFile file(QString("%1/playlist/%2").arg(cacheLocation).arg(playlist.id));
+	QFile file(QString("%1.json").arg(baseFile));
 	file.open(QIODevice::WriteOnly);
-	file.write(json.toBinaryData());
+	file.write(json.toJson());
 }
 
 void MainWindow::applyPalette(Settings::Palette palette)
