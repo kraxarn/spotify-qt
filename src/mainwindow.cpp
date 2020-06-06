@@ -137,8 +137,9 @@ void MainWindow::refreshed(const spt::Playback &playback)
 	auto currPlaying = QString("%1\n%2").arg(current.item.name).arg(current.item.artist);
 	if (nowPlaying->text() != currPlaying)
 	{
-		if (current.isPlaying && trackItems.contains(current.item.id))
-			setPlayingTrackItem(trackItems[current.item.id]);
+		if (current.isPlaying)
+			setPlayingTrackItem(trackItems.contains(current.item.id)
+				? trackItems[current.item.id] : nullptr);
 		nowPlaying->setText(currPlaying);
 		setAlbumImage(current.item.image);
 		setWindowTitle(QString("%1 - %2").arg(current.item.artist).arg(current.item.name));
