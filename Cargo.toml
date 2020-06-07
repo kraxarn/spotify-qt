@@ -1,0 +1,16 @@
+[package]
+name = "spotify-qt"
+version = "2.90.0"
+authors = ["kraxarn <me@kraxarn.com>"]
+edition = "2018"
+
+[dependencies]
+qt_core = ""
+qt_widgets = ""
+qt_gui = ""
+serde_json = ""
+dirs-next = ""
+
+[dependencies.serde]
+version = "^1.0"
+features = ["derive"]
