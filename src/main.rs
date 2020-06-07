@@ -1,5 +1,6 @@
+extern crate serde;
 
-mod spotify;
+mod spt;
 mod settings;
 
 fn main() {

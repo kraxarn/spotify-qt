@@ -1,6 +1,5 @@
-extern crate serde;
-
 use std::io::{Read, Write};
+use std::sync::{MutexGuard, PoisonError};
 
 enum Palette {
 	App = 0,   // Default app palette
@@ -9,48 +8,48 @@ enum Palette {
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]
-struct Account {
-	access_token: String,
-	client_id: String,
-	client_secret: String,
-	refresh_token: String,
+pub struct Account {
+	pub access_token: String,
+	pub client_id: String,
+	pub client_secret: String,
+	pub refresh_token: String,
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]
-struct General {
-	fallback_icons: bool,
-	fixed_width_time: bool,
-	hidden_song_headers: Vec<i32>,
-	last_playlist: String,
-	last_version: String,
-	media_controller: bool,
-	pulse_volume: bool,
-	refresh_interval: i32,
-	show_changelog: bool,
-	song_header_resize_mode: i32,
-	song_header_sort_by: i32,
-	spotify_playback_order: bool,
-	style: String,
-	style_palette: u8,
-	tray_icon: bool,
-	tray_light_icon: bool,
-	tray_notifications: bool,
+pub struct General {
+	pub fallback_icons: bool,
+	pub fixed_width_time: bool,
+	pub hidden_song_headers: Vec<i32>,
+	pub last_playlist: String,
+	pub last_version: String,
+	pub media_controller: bool,
+	pub pulse_volume: bool,
+	pub refresh_interval: i32,
+	pub show_changelog: bool,
+	pub song_header_resize_mode: i32,
+	pub song_header_sort_by: i32,
+	pub spotify_playback_order: bool,
+	pub style: String,
+	pub style_palette: u8,
+	pub tray_icon: bool,
+	pub tray_light_icon: bool,
+	pub tray_notifications: bool,
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]
-struct Spotify {
-	bitrate: i32,
-	global_config: bool,
-	path: String,
-	start_client: bool,
-	username: String,
+pub struct Spotify {
+	pub bitrate: i32,
+	pub global_config: bool,
+	pub path: String,
+	pub start_client: bool,
+	pub username: String,
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct Settings {
-	account: Account,
-	general: General,
-	spotify: Spotify
+	pub account: Account,
+	pub general: General,
+	pub spotify: Spotify
 }
 
 impl Account {
@@ -148,4 +147,24 @@ fn file_path() -> std::path::PathBuf {
 
 fn file_name() -> std::path::PathBuf {
 	file_path().join("spotify-qt.json")
+}
+
+pub struct SettingsManager {
+	settings: std::sync::Mutex<Settings>
+}
+
+impl SettingsManager {
+	pub fn new() -> Self {
+		Self {
+			settings: std::sync::Mutex::new(Settings::new())
+		}
+	}
+
+	pub fn get(&self) -> MutexGuard<Settings> {
+		match self.settings.lock() {
+			Ok(settings) => settings,
+			Err(error) =>
+				panic!("failed to acquire settings lock: {}", error),
+		}
+	}
 }

@@ -10,7 +10,16 @@ qt_widgets = ""
 qt_gui = ""
 serde_json = ""
 dirs-next = ""
+chrono = ""
 
 [dependencies.serde]
 version = "^1.0"
 features = ["derive"]
+
+[dependencies.reqwest]
+version = "^0.10"
+features = ["json"]
+
+[dependencies.tokio]
+version = "^0.2"
+features = ["full"]
