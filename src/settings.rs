@@ -1,5 +1,6 @@
 use std::io::{Read, Write};
 use std::sync::{MutexGuard, PoisonError};
+use tokio::io::Error;
 
 enum Palette {
 	App = 0,   // Default app palette
@@ -131,7 +132,7 @@ impl Settings {
 		Ok(settings)
 	}
 
-	fn save(&self) -> std::result::Result<(), std::io::Error> {
+	pub fn save(&self) -> std::result::Result<(), std::io::Error> {
 		let data = serde_json::to_string(self)?;
 		std::fs::write(file_name(), data)?;
 		Ok(())
@@ -156,15 +157,18 @@ pub struct SettingsManager {
 impl SettingsManager {
 	pub fn new() -> Self {
 		Self {
-			settings: std::sync::Mutex::new(Settings::new())
+			settings: std::sync::Mutex::new(match Settings::load() {
+				Ok(settings) => settings,
+				Err(err) => {
+					println!("warning: failed to load settings: {}", err);
+					Settings::new()
+				}
+			})
 		}
 	}
 
-	pub fn get(&self) -> MutexGuard<Settings> {
-		match self.settings.lock() {
-			Ok(settings) => settings,
-			Err(error) =>
-				panic!("failed to acquire settings lock: {}", error),
-		}
+	pub fn get(&self) -> std::sync::MutexGuard<Settings> {
+		self.settings.lock()
+			.expect("error: failed to get mutex lock for settings")
 	}
 }

@@ -11,6 +11,7 @@ qt_gui = ""
 serde_json = ""
 dirs-next = ""
 chrono = ""
+base64 = ""
 
 [dependencies.serde]
 version = "^1.0"

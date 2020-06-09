@@ -1208,6 +1208,7 @@ dependencies = [
 name = "spotify-qt"
 version = "2.90.0"
 dependencies = [
+ "base64 0.11.0",
  "chrono",
  "dirs-next",
  "qt_core",
