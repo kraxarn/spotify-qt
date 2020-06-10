@@ -1,7 +1,5 @@
 #include "settings.hpp"
 
-Settings *Settings::set = nullptr;
-
 Settings::Settings()
 {
 	settings = nullptr;

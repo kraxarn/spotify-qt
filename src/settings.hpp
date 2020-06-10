@@ -91,7 +91,6 @@ private:
 	bool sptGlobalConfig();
 	bool fixedWidthTime();
 
-	static Settings *set;
 	QSettings *settings;
 	QMutex mutex;
 };
