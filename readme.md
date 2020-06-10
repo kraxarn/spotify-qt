@@ -5,6 +5,8 @@ Much like spotify-tui, you need an actual Spotify client running, for example [s
 Currently mostly stable. Most things should work, but don't be surprised when unexpected things happen, but please open an issue about it.
 It's also currently only available through [AUR](https://aur.archlinux.org/packages/spotify-qt). Feel free to add it to any other package manager, but if you do, open a pull request or an issue so I can add it to a list.
 
+Note that most development is now happening in the [rs](https://github.com/kraxarn/spotify-qt/tree/rs) branch, rewriting the application in Rust for the next major update.
+
 ## Installing/building:
 Make sure you have Qt (5.12+), CMake (3.5+) and various build tools like `make`, `g++` and `git`.
 ```
