@@ -23,6 +23,11 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 	addSeparator();
 	auto playShuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle play");
 	QAction::connect(playShuffle, &QAction::triggered, [tracks, playlist, &spotify, window](bool checked) {
+		if (tracks.isEmpty())
+		{
+			window->setStatus("No tracks found to shuffle", true);
+			return;
+		}
 		auto initial = tracks.at(QRandomGenerator::global()->bounded(tracks.length()));
 		auto status = spotify.playTracks(
 			QString("spotify:track:%1").arg(initial.id),
