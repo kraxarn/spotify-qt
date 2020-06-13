@@ -46,6 +46,8 @@
 #include <QClipboard>
 #include <QFileInfo>
 #include <QCloseEvent>
+#include <QPainter>
+#include <QPainterPath>
 
 class MainWindow : public QMainWindow
 {
