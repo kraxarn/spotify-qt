@@ -145,7 +145,8 @@ void MainWindow::refreshed(const spt::Playback &playback)
 		setWindowTitle(QString("%1 - %2").arg(current.item.artist).arg(current.item.name));
 		if (mediaPlayer != nullptr)
 			mediaPlayer->currentSourceChanged(current);
-		trayIcon->setPixmap(getAlbum(current.item.image));
+		if (settings.general.trayAlbumArt)
+			trayIcon->setPixmap(getAlbum(current.item.image));
 	}
 	position->setText(QString("%1/%2")
 		.arg(formatTime(current.progressMs))

@@ -116,6 +116,11 @@ QWidget *SettingsDialog::interfaceSettings()
 	itfTrayInvert->setToolTip("Invert colors in tray icon to be visible on light backgrounds");
 	itfTrayInvert->setChecked(settings.general.trayLightIcon);
 	layout->addWidget(itfTrayInvert);
+	// Album art in tray
+	itfTrayAlbum = new QCheckBox("Album art in tray icon", this);
+	itfTrayAlbum->setToolTip("Show album art of current track in tray icon");
+	itfTrayAlbum->setChecked(settings.general.trayAlbumArt);
+	layout->addWidget(itfTrayAlbum);
 	// Song header resize mode
 	itfResizeAuto = new QCheckBox("Auto resize track list headers", this);
 	itfResizeAuto->setToolTip("Automatically resize track list headers to fit content");
@@ -356,6 +361,7 @@ bool SettingsDialog::applySettings()
 	settings.general.trayIcon = itfTrayIcon->isChecked();
 	settings.general.trayNotifications = itfTrayNotify->isChecked();
 	settings.general.trayLightIcon = itfTrayInvert->isChecked();
+	settings.general.trayAlbumArt = itfTrayAlbum->isChecked();
 	// Reload if needed
 	auto window = dynamic_cast<MainWindow*>(parent());
 	if (reloadTray && window != nullptr)

@@ -63,6 +63,7 @@ void Settings::load()
 	general.trayIcon = g["tray_icon"].toBool(false);
 	general.trayNotifications = g["tray_notifications"].toBool(false);
 	general.trayLightIcon = g["tray_light_icon"].toBool(false);
+	general.trayAlbumArt = g["tray_album_art"].toBool(true);
 	general.showChangelog = g["show_changelog"].toBool(true);
 	general.fallbackIcons = g["fallback_icons"].toBool(false);
 	general.fixedWidthTime = g["fixed_width_time"].toBool(true);
@@ -110,6 +111,7 @@ void Settings::save()
 			{"spotify_playback_order", general.spotifyPlaybackOrder},
 			{"style", general.style},
 			{"style_palette", general.stylePalette},
+			{"tray_album_art", general.trayAlbumArt},
 			{"tray_icon", general.trayIcon},
 			{"tray_light_icon", general.trayLightIcon},
 			{"tray_notifications", general.trayNotifications}
@@ -120,7 +122,6 @@ void Settings::save()
 			{"path", spotify.path},
 			{"start_client", spotify.startClient},
 			{"username", spotify.username},
-
 		})
 	});
 
