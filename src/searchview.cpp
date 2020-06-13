@@ -56,7 +56,7 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 		// Playlists
 		for (auto &json : results.playlists)
 		{
-			auto playlist = spt::Playlist(json);
+			spt::Playlist playlist(json);
 			auto item = new QListWidgetItem(playlist.name, playlistList);
 			item->setData(MainWindow::RolePlaylistId, playlist.id);
 		}
@@ -86,7 +86,7 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 	});
 	// Open playlist
 	QListWidget::connect(playlistList, &QListWidget::itemClicked, [this, window](QListWidgetItem *item) {
-		auto playlist = spt::Playlist(item->data(0x100).value<QJsonObject>());
+		spt::Playlist playlist(item->data(0x100).value<QJsonObject>());
 		if (!window->loadPlaylist(playlist))
 			window->setStatus(QString("Failed to load playlist"), true);
 		else
