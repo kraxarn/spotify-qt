@@ -54,10 +54,11 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 			item->setData(MainWindow::RoleArtistId, artist.id);
 		}
 		// Playlists
-		for (auto &playlist : results.playlists)
+		for (auto &json : results.playlists)
 		{
-			auto item = new QListWidgetItem(spt::Playlist(playlist).name, playlistList);
-			item->setData(0x100, playlist);
+			auto playlist = spt::Playlist(json);
+			auto item = new QListWidgetItem(playlist.name, playlistList);
+			item->setData(MainWindow::RolePlaylistId, playlist.id);
 		}
 		// Tracks
 		for (auto &track : results.tracks)
@@ -116,8 +117,8 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 	// Playlist context menu
 	playlistList->setContextMenuPolicy(Qt::CustomContextMenu);
 	QWidget::connect(playlistList, &QWidget::customContextMenuRequested, [this, window, &spotify](const QPoint &pos) {
-		auto item = trackList->itemAt(pos);
-		(new PlaylistMenu(spotify, item->data(0, 0x100).toString(), window))
+		auto item = playlistList->itemAt(pos);
+		(new PlaylistMenu(spotify, item->data(MainWindow::RolePlaylistId).toString(), window))
 			->popup(playlistList->mapToGlobal(pos));
 	});
 
