@@ -67,3 +67,8 @@ spt::Playback TrayIcon::playback()
 		return spt::Playback();
 	return mainWindow->currentPlayback();
 }
+
+void TrayIcon::setPixmap(const QPixmap &pixmap)
+{
+	setIcon(pixmap);
+}

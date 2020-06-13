@@ -18,6 +18,7 @@ public:
 	TrayIcon(spt::Spotify *spotify, const Settings &settings, QObject *parent = nullptr);
 	~TrayIcon();
 	void message(const QString &message);
+	void setPixmap(const QPixmap &pixmap);
 
 private:
 	spt::Playback	playback();
