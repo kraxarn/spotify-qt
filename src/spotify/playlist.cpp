@@ -25,7 +25,7 @@ Playlist::Playlist(const QJsonObject &json)
 		: json["owner"].toObject()["display_name"].toString();
 }
 
-QVector<Track> Playlist::loadTracks(Spotify &spotify)
+QVector<Track> Playlist::loadTracks(Spotify &spotify) const
 {
 	// Allocate memory for all tracks
 	QVector<Track> trackList;

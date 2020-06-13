@@ -21,7 +21,7 @@ namespace spt
 		bool collaborative;
 		QString description, id, image, name, snapshot, ownerId, ownerName;
 		bool isPublic;
-		QVector<Track> loadTracks(Spotify &spotify);
+		QVector<Track> loadTracks(Spotify &spotify) const;
 		QJsonObject toJson(Spotify &spotify);
 	private:
 		QJsonObject tracks;
