@@ -756,7 +756,7 @@ void MainWindow::setStatus(const QString &message, bool important)
 
 void MainWindow::setAlbumImage(const QString &url)
 {
-	nowAlbum->setPixmap(getAlbum(url));
+	nowAlbum->setPixmap(mask(getAlbum(url)));
 }
 
 QString MainWindow::formatTime(int ms)
@@ -932,4 +932,31 @@ QIcon MainWindow::volumeIcon()
 void MainWindow::setFixedWidthTime(bool value)
 {
 	position->setFont(value ? QFont("monospace") : QFont());
+}
+
+QPixmap MainWindow::mask(const QPixmap &source)
+{
+	auto img = source.toImage().convertToFormat(QImage::Format_ARGB32);
+	QImage out(img.size(), QImage::Format_ARGB32);
+	out.fill(Qt::GlobalColor::transparent);
+	QPainter painter(&out);
+	painter.setOpacity(0);
+	painter.setBrush(Qt::white);
+	painter.setPen(Qt::NoPen);
+	painter.drawImage(0, 0, img);
+	painter.setOpacity(1);
+	QPainterPath path(QPointF(0, 0));
+
+	QPolygonF shape;
+	shape << QPointF(img.width() / 4, 0)
+		<< QPointF(img.width(), 0)
+		<< QPointF(img.width(), (img.height() / 4) * 3)
+		<< QPointF((img.width() / 4) * 3, img.height())
+		<< QPointF(0, img.height())
+		<< QPointF(0, img.height() / 4);
+
+	path.addPolygon(shape);
+	painter.setClipPath(path);
+	painter.drawImage(0, 0, img);
+	return QPixmap::fromImage(out);
 }

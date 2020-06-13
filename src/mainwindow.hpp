@@ -88,6 +88,7 @@ public:
 	spt::User getCurrentUser();
 	void refreshPlaylists();
 	void setFixedWidthTime(bool value);
+	static QPixmap mask(const QPixmap &source);
 	// I know these should be methods, I'm just lazy
 	QString					cacheLocation;
 	QVector<spt::Playlist>	*sptPlaylists;
