@@ -552,45 +552,9 @@ QToolBar *MainWindow::createToolBar()
 		if (!status.isEmpty())
 			setStatus(QString("Failed to toggle repeat: %1").arg(status), true);
 	});
-	// Volume slider
-	volume = new QSlider(this);
-	volume->setOrientation(Qt::Orientation::Vertical);
-	volume->setFixedHeight(100);
-	volume->setMinimum(0);
-	volume->setMaximum(20);
-	volume->setValue(spt::ClientHandler::getVolume() * 20);
-	// Layout for volume slider
-	auto volumeMenu = new QMenu(this);
-	volumeMenu->setContentsMargins(2, 6, 2, 6);
-	auto volumeLayout = new QVBoxLayout();
-	volumeLayout->addWidget(volume);
-	volumeMenu->setLayout(volumeLayout);
-	// Volume action for slider
-	volumeButton = new QToolButton(this);
-	volumeButton->setText("Volume");
-	volumeButton->setIcon(volumeIcon());
-	volumeButton->setPopupMode(QToolButton::InstantPopup);
-	volumeButton->setMenu(volumeMenu);
+	// Volume
+	volumeButton = new VolumeButton(settings, *spotify, this);
 	toolBar->addWidget(volumeButton);
-	QSlider::connect(volume, &QAbstractSlider::valueChanged, [this](int value) {
-		volumeButton->setIcon(volumeIcon());
-	});
-	if (settings.general.pulseVolume)
-	{
-		// If using PulseAudio for volume control, update on every tick
-		QSlider::connect(volume, &QAbstractSlider::valueChanged, [](int value) {
-			spt::ClientHandler::setVolume(value * 0.05);
-		});
-	}
-	else
-	{
-		// If using Spotify for volume control, only update on release
-		QSlider::connect(volume, &QAbstractSlider::sliderReleased, [this]() {
-			auto status = spotify->setVolume(volume->value() * 5);
-			if (!status.isEmpty())
-				setStatus(QString("Failed to set volume: %1").arg(status), true);
-		});
-	}
 	// Return final tool bar
 	return toolBar;
 }
@@ -921,13 +885,6 @@ QSet<QString> MainWindow::allArtists()
 		for (auto &track : playlistTracks(playlists->item(i)->data(RolePlaylistId).toString()))
 			artists << track.artist;
 	return artists;
-}
-
-QIcon MainWindow::volumeIcon()
-{
-	auto vol = volume->value() * 5;
-	return Icon::get(QString("audio-volume-%1")
-		.arg(vol < 33 ? "low" : vol > 66 ? "high" : "medium"));
 }
 
 void MainWindow::setFixedWidthTime(bool value)

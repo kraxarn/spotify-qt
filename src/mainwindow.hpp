@@ -20,6 +20,7 @@
 #include "spotify/clienthandler.hpp"
 #include "spotify/user.hpp"
 #include "whatsnewdialog.hpp"
+#include "volumebutton.hpp"
 
 #include <QMainWindow>
 #include <QListWidget>
@@ -104,7 +105,7 @@ private:
 	QLabel		*nowPlaying,	*position,	*nowAlbum;
 	QSlider		*progress,		*volume;
 	QAction		*playPause,		*repeat,	*shuffle;
-	QToolButton	*volumeButton;
+	VolumeButton	*volumeButton;
 	// Everything else
 	spt::Spotify			*spotify;
 	QNetworkAccessManager	*network;
@@ -139,5 +140,4 @@ private:
 	QStringList currentTracks();
 	void setPlayingTrackItem(QTreeWidgetItem *item);
 	QSet<QString> allArtists();
-	QIcon volumeIcon();
 };
