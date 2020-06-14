@@ -1,6 +1,6 @@
 #include "volumebutton.hpp"
 
-VolumeButton::VolumeButton(const Settings &settings, spt::Spotify &spotify, QWidget *parent)
+VolumeButton::VolumeButton(Settings &settings, spt::Spotify &spotify, QWidget *parent)
 	: settings(settings), spotify(spotify), volume(new QSlider(this)), QToolButton(parent)
 {
 	// Volume slider
@@ -8,7 +8,8 @@ VolumeButton::VolumeButton(const Settings &settings, spt::Spotify &spotify, QWid
 	volume->setFixedHeight(100);
 	volume->setMinimum(0);
 	volume->setMaximum(20);
-	volume->setValue(spt::ClientHandler::getVolume() * 20);
+	volume->setValue(settings.general.lastVolume > 0
+		? settings.general.lastVolume : spt::ClientHandler::getVolume() * 20);
 
 	// Layout for volume slider
 	auto volumeMenu = new QMenu(this);
@@ -46,6 +47,12 @@ VolumeButton::VolumeButton(const Settings &settings, spt::Spotify &spotify, QWid
 			}
 		});
 	}
+}
+
+VolumeButton::~VolumeButton()
+{
+	settings.general.lastVolume = volume->value();
+	settings.save();
 }
 
 void VolumeButton::wheelEvent(QWheelEvent *event)

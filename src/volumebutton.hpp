@@ -17,7 +17,9 @@ class VolumeButton : public QToolButton
 	Q_OBJECT
 
 public:
-	VolumeButton(const Settings &settings, spt::Spotify &spotify, QWidget *parent);
+	VolumeButton(Settings &settings, spt::Spotify &spotify, QWidget *parent);
+	~VolumeButton();
+
 	void updateIcon();
 
 protected:
@@ -26,6 +28,6 @@ protected:
 
 private:
 	QSlider *volume;
-	const Settings &settings;
+	Settings &settings;
 	spt::Spotify &spotify;
 };

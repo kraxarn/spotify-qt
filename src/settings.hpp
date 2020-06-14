@@ -39,7 +39,7 @@ public:
 			showChangelog, fallbackIcons, fixedWidthTime, trayAlbumArt;
 		Palette stylePalette;
 		QVector<int> hiddenSongHeaders;
-		int songHeaderResizeMode, songHeaderSortBy, refreshInterval;
+		int songHeaderResizeMode, songHeaderSortBy, refreshInterval, lastVolume;
 	} General;
 
 	typedef struct {

@@ -57,6 +57,7 @@ void Settings::load()
 	general.style = g["style"].toString();
 	general.lastPlaylist = g["last_playlist"].toString();
 	general.lastVersion = g["last_version"].toString();
+	general.lastVolume = g["last_volume"].toInt();
 	general.pulseVolume = g["pulse_volume"].toBool(false);
 	general.mediaController = g["media_controller"].toBool(hasMediaControllerSupport());
 	general.spotifyPlaybackOrder = g["spotify_playback_order"].toBool(false);
@@ -102,6 +103,7 @@ void Settings::save()
 			{"hidden_song_headers", jsonHiddenSongHeaders},
 			{"last_playlist", general.lastPlaylist},
 			{"last_version", general.lastVersion},
+			{"last_volume", general.lastVolume},
 			{"media_controller", general.mediaController},
 			{"pulse_volume", general.pulseVolume},
 			{"refresh_interval", general.refreshInterval},
