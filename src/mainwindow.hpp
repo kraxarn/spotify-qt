@@ -120,7 +120,7 @@ private:
 	TrayIcon				*trayIcon;
 	static bool				darkBackground;
 	int						refreshCount;
-	QTreeWidgetItem*		playingTrackItem;
+	QTreeWidgetItem			*playingTrackItem;
 	spt::User				currentUser;
 	Settings				&settings;
 	QHash<QString, QTreeWidgetItem*>	trackItems;
