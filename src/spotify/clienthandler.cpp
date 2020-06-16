@@ -108,6 +108,8 @@ bool ClientHandler::isRunning()
 
 QString ClientHandler::getSinkInfo()
 {
+	if (!QFileInfo::exists("/usr/bin/pactl"))
+		return QString();
 	QProcess process;
 	// Find what sink to use
 	process.start("/usr/bin/pactl", {
@@ -124,6 +126,8 @@ QString ClientHandler::getSinkInfo()
 float ClientHandler::getVolume()
 {
 	auto sink = getSinkInfo();
+	if (sink.isEmpty())
+		return 1.0;
 	auto i = sink.indexOf("Volume:");
 	if (i < 0)
 		return 1.0;
