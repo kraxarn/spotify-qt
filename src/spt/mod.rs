@@ -8,7 +8,6 @@ pub struct Spotify {
 	current_device: String,
 	settings: super::settings::SettingsManager,
 	web_client: reqwest::Client
-	//web_client: hyper::Client<hyper::client::HttpConnector>
 }
 
 pub struct SearchResults {
@@ -48,4 +47,25 @@ pub struct Track {
 	image: String,
 	is_local: bool,
 	name: String
+}
+
+#[derive(serde::Deserialize)]
+pub struct Playlist {
+	collaborative: bool,
+	description: String,
+	id: String,
+	image: String,
+	is_public: bool,
+	name: String,
+	owner_id: String,
+	owner_name: String,
+	snapshot: String,
+	tracks: serde_json::Value
+}
+
+#[derive(serde::Deserialize)]
+pub struct Device {
+	id: String,
+	name: String,
+	is_active: bool
 }

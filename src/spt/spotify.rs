@@ -1,5 +1,9 @@
-use crate::spt::spotify::RequestError::Network;
+use crate::spt::spotify::RequestError::{Network, Generic};
 use tokio::io::Error;
+use crate::spt::{Playlist, Device};
+use super::reqwest::get;
+use serde_json::Value;
+use serde::Deserialize;
 
 type Response = std::result::Result<serde_json::Value, reqwest::Error>;
 
@@ -21,6 +25,36 @@ struct RefreshResult {
 	access_token: String
 }
 
+#[derive(serde::Deserialize)]
+struct PlaylistsResult {
+	items: Vec<Playlist>,
+	total: i32
+}
+
+#[derive(serde::Deserialize)]
+struct DevicesResult {
+	devices: Vec<Device>
+}
+
+#[derive(serde::Deserialize)]
+struct ErrorResult {
+	error: Option<ErrorMessageResult>
+}
+
+#[derive(serde::Deserialize)]
+struct ErrorMessageResult {
+	message: String
+}
+
+impl From<ErrorResult> for Result<(), RequestError> {
+	fn from(err: ErrorResult) -> Self {
+		match err.error {
+			Some(err) => Err(Generic(String::from(err.message))),
+			None => Ok(()),
+		}
+	}
+}
+
 impl super::Spotify {
 	async fn new(settings: crate::settings::SettingsManager) -> Self {
 		let spt = Self {
@@ -33,12 +67,13 @@ impl super::Spotify {
 		spt
 	}
 
-	async fn get(&self, url: &str) -> Response {
-		self.web_client.get(url).send().await?.json().await
+	async fn get<D>(&self, url: &str) -> Result<D, reqwest::Error> where D: for<'de> Deserialize<'de> {
+		self.web_client.get(url).send().await?.json::<D>().await
 	}
 
-	async fn put<S>(&self, url: &str, body: &S) -> Response where S: serde::Serialize {
-		self.web_client.put(url).json(body).send().await?.json().await
+	async fn put<D>(&self, url: &str, body: &[(&str, &str)]) -> Result<D, reqwest::Error>
+		where D: for<'de> serde::Deserialize<'de> {
+		self.web_client.put(url).json(body).send().await?.json::<D>().await
 	}
 
 	async fn post(&self, url: &str) -> Response {
@@ -67,7 +102,7 @@ impl super::Spotify {
 		}
 
 		// Create request
-		let json = self.web_client.post("https://accounts.spotify.com/api/token")
+		let json: RefreshResult = self.web_client.post("https://accounts.spotify.com/api/token")
 			.header(reqwest::header::CONTENT_TYPE, "application/x-www-form-urlencoded")
 			.header(reqwest::header::AUTHORIZATION,
 				format!("Basic {}", base64::encode(
@@ -76,7 +111,8 @@ impl super::Spotify {
 				("grant_type", "refresh_token"),
 				("refresh_token", &settings.account.refresh_token)
 			])
-			.send().await?.json::<RefreshResult>().await?;
+			.send().await?
+			.json().await?;
 
 		match json.error_description {
 			serde_json::value::Value::String(error) =>
