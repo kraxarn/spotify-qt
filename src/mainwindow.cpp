@@ -8,7 +8,7 @@ MainWindow::MainWindow(Settings &settings, QWidget *parent) : settings(settings)
 	playlists 	= nullptr;
 	songs 		= nullptr;
 	sptClient	= nullptr;
-	volume 		= progress	= nullptr;
+	progress	= nullptr;
 	nowPlaying	= position	= nowAlbum	= nullptr;
 	repeat 		= shuffle	= playPause	= nullptr;
 	mediaPlayer	= nullptr;
@@ -157,7 +157,7 @@ void MainWindow::refreshed(const spt::Playback &playback)
 		current.isPlaying ? "media-playback-pause" : "media-playback-start"));
 	playPause->setText(current.isPlaying ? "Pause" : "Play");
 	if (!settings.general.pulseVolume)
-		volume->setValue(current.volume / 5);
+		volumeButton->setVolume(current.volume / 5);
 	repeat->setChecked(current.repeat != "off");
 	shuffle->setChecked(current.shuffle);
 }

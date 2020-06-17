@@ -67,3 +67,8 @@ void VolumeButton::updateIcon()
 	setIcon(Icon::get(QString("audio-volume-%1")
 		.arg(vol < 33 ? "low" : vol > 66 ? "high" : "medium")));
 }
+
+void VolumeButton::setVolume(int value)
+{
+	volume->setValue(value);
+}

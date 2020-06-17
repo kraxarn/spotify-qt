@@ -21,10 +21,10 @@ public:
 	~VolumeButton();
 
 	void updateIcon();
+	void setVolume(int value);
 
 protected:
 	void wheelEvent(QWheelEvent *event) override;
-
 
 private:
 	QSlider *volume;

@@ -103,7 +103,7 @@ public:
 private:
 	// Widgets
 	QLabel		*nowPlaying,	*position,	*nowAlbum;
-	QSlider		*progress,		*volume;
+	QSlider		*progress;
 	QAction		*playPause,		*repeat,	*shuffle;
 	VolumeButton	*volumeButton;
 	// Everything else
