@@ -4,25 +4,28 @@ using namespace spt;
 
 Playlist::Playlist(const QJsonObject &json)
 {
-	// If image exists, it's loaded from cache
-	auto fromCache = json.contains("image");
-
 	collaborative	= json["collaborative"].toBool();
 	description		= json["description"].toString();
 	id				= json["id"].toString();
-	image			= fromCache
+	image = json.contains("image")
 		? json["image"].toString()
 		: json["images"].toArray()[0].toObject()["url"].toString();
-	name			= json["name"].toString();
-	isPublic		= json["public"].toBool();
-	tracks			= json["tracks"].toObject();
-	snapshot		= json[fromCache ? "snapshot" : "snapshot_id"].toString();
-	ownerId			= fromCache
-		? json["ownerId"].toString()
-		: json["owner"].toObject()["id"].toString();
-	ownerName		= fromCache
-		? json["ownerName"].toString()
-		: json["owner"].toObject()["display_name"].toString();
+	name = json["name"].toString();
+	isPublic = Utils::getProperty(json, {
+		"is_public", "public"
+	}).toBool();
+	tracks = json["tracks"].toObject();
+	snapshot = Utils::getProperty(json, {
+		"snapshot", "snapshot_id"
+	}).toString();
+	ownerId = Utils::getProperty(json, {
+		"owner_id", "ownerId", "owner"
+	}).toString();
+	ownerName = json.contains("owner_name")
+		? json["owner_name"].toString()
+		: json.contains("ownerName")
+			? json["ownerName"].toString()
+			: json["owner"].toObject()["display_name"].toString();
 }
 
 QVector<Track> Playlist::loadTracks(Spotify &spotify) const
@@ -59,17 +62,18 @@ QJsonObject Playlist::toJson(Spotify &spotify)
 	QJsonArray jsonTracks;
 	for (auto &track : loadTracks(spotify))
 		jsonTracks.append(track.toJson());
+
 	return QJsonObject({
 		QPair<QString, bool>("collaborative", collaborative),
 		QPair<QString, QString>("description", description),
 		QPair<QString, QString>("id", id),
 		QPair<QString, QString>("image", image),
 		QPair<QString, QString>("name", name),
-		QPair<QString, bool>("isPublic", isPublic),
+		QPair<QString, bool>("is_public", isPublic),
 		QPair<QString, int>("total", jsonTracks.size()),
 		QPair<QString, QJsonArray>("tracks", jsonTracks),
 		QPair<QString, QString>("snapshot", snapshot),
-		QPair<QString, QString>("ownerId", ownerId),
-		QPair<QString, QString>("ownerName", ownerName)
+		QPair<QString, QString>("owner_id", ownerId),
+		QPair<QString, QString>("owner_name", ownerName)
 	});
 }

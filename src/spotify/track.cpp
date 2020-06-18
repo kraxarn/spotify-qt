@@ -9,16 +9,25 @@ Track::Track(const QJsonObject &item)
 	{
 		id			= item["id"].toString();
 		album		= item["album"].toString();
-		albumId		= item["albumId"].toString();
+		albumId = Utils::getProperty(item, {
+			"album_id", "albumId"
+		}).toString();
 		artist		= item["artist"].toString();
-		artistId	= item["artistId"].toString();
+		artistId = Utils::getProperty(item, {
+			"artist_id", "artistId"
+		}).toString();
 		name		= item["name"].toString();
 		duration	= item["duration"].toInt();
 		image		= item["image"].toString();
-		isLocal		= item["isLocal"].toBool();
-		addedAt		= QDateTime::fromString(item["addedAt"].toString());
+		isLocal = Utils::getProperty(item, {
+			"is_local", "isLocal"
+		}).toBool();
+		addedAt = QDateTime::fromString(Utils::getProperty(item, {
+			"added_at", "addedAt"
+		}).toString());
 		return;
 	}
+
 	// Object that contains the actual track object
 	auto track = item.contains("track") ? item["track"].toObject() : item;
 	// All properties
@@ -66,13 +75,13 @@ QJsonObject Track::toJson()
 	return QJsonObject({
 		QPair<QString, QString>("id", id),
 		QPair<QString, QString>("album", album),
-		QPair<QString, QString>("albumId", albumId),
+		QPair<QString, QString>("album_id", albumId),
 		QPair<QString, QString>("artist", artist),
-		QPair<QString, QString>("artistId", artistId),
+		QPair<QString, QString>("artist_id", artistId),
 		QPair<QString, QString>("name", name),
 		QPair<QString, QString>("image", image),
 		QPair<QString, int>("duration", duration),
-		QPair<QString, bool>("isLocal", isLocal),
-		QPair<QString, QString>("addedAt", addedAt.toString())
+		QPair<QString, bool>("is_local", isLocal),
+		QPair<QString, QString>("added_at", addedAt.toString())
 	});
 }
