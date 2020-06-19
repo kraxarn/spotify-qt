@@ -44,6 +44,11 @@ target_compile_definitions(spotify-qt PRIVATE APP_VERSION="${GIT_TAG}")
 # Set install targets for 'make install'
 install(TARGETS spotify-qt CONFIGURATIONS Release RUNTIME DESTINATION bin)
 
+# Don't show console window under windows
+if (WIN32)
+	target_link_options(spotify-qt PRIVATE -mwindows)
+endif ()
+
 # Link Qt/KDE
 target_link_libraries(spotify-qt PRIVATE
 		Qt5::Core
