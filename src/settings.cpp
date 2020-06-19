@@ -61,7 +61,7 @@ void Settings::load()
 	general.pulseVolume = g["pulse_volume"].toBool(false);
 	general.mediaController = g["media_controller"].toBool(hasMediaControllerSupport());
 	general.spotifyPlaybackOrder = g["spotify_playback_order"].toBool(false);
-	general.trayIcon = g["tray_icon"].toBool(false);
+	general.trayIcon = g["tray_icon"].toBool(true);
 	general.trayNotifications = g["tray_notifications"].toBool(false);
 	general.trayLightIcon = g["tray_light_icon"].toBool(false);
 	general.trayAlbumArt = g["tray_album_art"].toBool(true);
