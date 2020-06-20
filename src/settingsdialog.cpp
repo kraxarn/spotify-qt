@@ -7,6 +7,7 @@ SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent) : settings(s
 	auto tabs = new QTabWidget();
 	tabs->addTab(appSettings(), "Application");
 	tabs->addTab(interfaceSettings(), "Interface");
+	tabs->addTab(traySettings(), "Tray icon");
 	tabs->addTab(spotifySettings(), "Spotify");
 	tabs->addTab(aboutSettings(), "About");
 	mainLayout->addWidget(tabs, 1);
@@ -96,31 +97,6 @@ QWidget *SettingsDialog::interfaceSettings()
 	itfDark->setToolTip("Use custom dark theme");
 	itfDark->setChecked(settings.darkTheme());
 	layout->addWidget(itfDark);
-	// Tray icon settings
-	itfTrayIcon = new QCheckBox("Tray icon", this);
-	itfTrayIcon->setToolTip("Add an icon to the system tray for quick access");
-	itfTrayIcon->setChecked(settings.general.trayIcon);
-	layout->addWidget(itfTrayIcon);
-	// Desktop notifications
-	itfTrayNotify = new QCheckBox("Desktop notifications", this);
-	itfTrayNotify->setToolTip("Replace status bar with desktop notifications (suppresses any non-error messages)");
-	itfTrayNotify->setChecked(settings.general.trayNotifications);
-	layout->addWidget(itfTrayNotify);
-	QCheckBox::connect(itfTrayNotify, &QCheckBox::stateChanged, [this](int state) {
-		if (state == Qt::CheckState::Checked && itfTrayIcon != nullptr) {
-			itfTrayIcon->setChecked(true);
-		}
-	});
-	// Invert tray icon
-	itfTrayInvert = new QCheckBox("Invert tray icon", this);
-	itfTrayInvert->setToolTip("Invert colors in tray icon to be visible on light backgrounds");
-	itfTrayInvert->setChecked(settings.general.trayLightIcon);
-	layout->addWidget(itfTrayInvert);
-	// Album art in tray
-	itfTrayAlbum = new QCheckBox("Album art in tray icon", this);
-	itfTrayAlbum->setToolTip("Show album art of current track in tray icon");
-	itfTrayAlbum->setChecked(settings.general.trayAlbumArt);
-	layout->addWidget(itfTrayAlbum);
 	// Song header resize mode
 	itfResizeAuto = new QCheckBox("Auto resize track list headers", this);
 	itfResizeAuto->setToolTip("Automatically resize track list headers to fit content");
@@ -139,6 +115,42 @@ QWidget *SettingsDialog::interfaceSettings()
 	itfMonoTime->setToolTip("Use a fixed width for remaining time to avoid resizing");
 	itfMonoTime->setChecked(settings.general.fixedWidthTime);
 	layout->addWidget(itfMonoTime);
+	// Final layout
+	auto widget = new QWidget();
+	widget->setLayout(layout);
+	return widget;
+}
+
+QWidget *SettingsDialog::traySettings()
+{
+	// Main container for everything
+	auto layout = new QVBoxLayout();
+	layout->setAlignment(Qt::AlignTop);
+	// Tray icon settings
+	itfTrayIcon = new QCheckBox("Enabled", this);
+	itfTrayIcon->setToolTip("Add an icon to the system tray for quick access");
+	itfTrayIcon->setChecked(settings.general.trayIcon);
+	layout->addWidget(itfTrayIcon);
+	// Desktop notifications
+	itfTrayNotify = new QCheckBox("Desktop notifications", this);
+	itfTrayNotify->setToolTip("Replace status bar with desktop notifications (suppresses any non-error messages)");
+	itfTrayNotify->setChecked(settings.general.trayNotifications);
+	layout->addWidget(itfTrayNotify);
+	QCheckBox::connect(itfTrayNotify, &QCheckBox::stateChanged, [this](int state) {
+		if (state == Qt::CheckState::Checked && itfTrayIcon != nullptr) {
+			itfTrayIcon->setChecked(true);
+		}
+	});
+	// Invert tray icon
+	itfTrayInvert = new QCheckBox("Invert icon", this);
+	itfTrayInvert->setToolTip("Invert colors in tray icon to be visible on light backgrounds");
+	itfTrayInvert->setChecked(settings.general.trayLightIcon);
+	layout->addWidget(itfTrayInvert);
+	// Album art in tray
+	itfTrayAlbum = new QCheckBox("Album art as icon", this);
+	itfTrayAlbum->setToolTip("Show album art of current track in tray icon");
+	itfTrayAlbum->setChecked(settings.general.trayAlbumArt);
+	layout->addWidget(itfTrayAlbum);
 	// Final layout
 	auto widget = new QWidget();
 	widget->setLayout(layout);

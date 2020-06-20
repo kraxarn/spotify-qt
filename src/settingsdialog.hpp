@@ -37,6 +37,7 @@ public:
 private:
 	QWidget *appSettings();
 	QWidget *interfaceSettings();
+	QWidget *traySettings();
 	QWidget *spotifySettings();
 	QWidget *aboutSettings();
 	bool applySettings();
@@ -53,12 +54,13 @@ private:
 	QCheckBox	*appWhatsNew	= nullptr;
 	// Interface settings
 	QCheckBox	*itfDark		= nullptr;
-	QCheckBox	*itfTrayIcon	= nullptr;
-	QCheckBox	*itfTrayNotify	= nullptr;
-	QCheckBox	*itfTrayInvert	= nullptr;
 	QCheckBox	*itfResizeAuto	= nullptr;
 	QCheckBox	*itfIcFallback	= nullptr;
 	QCheckBox	*itfMonoTime	= nullptr;
+	// Tray icon settings
+	QCheckBox	*itfTrayIcon	= nullptr;
+	QCheckBox	*itfTrayNotify	= nullptr;
+	QCheckBox	*itfTrayInvert	= nullptr;
 	QCheckBox	*itfTrayAlbum	= nullptr;
 	// Spotify settings
 	QLineEdit	*sptPath		= nullptr;
