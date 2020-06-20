@@ -25,5 +25,6 @@ namespace spt
 		QVector<Track> topTracks(Spotify &spotify) const;
 		QVector<Album> albums(Spotify &spotify) const;
 		QVector<Artist> relatedArtists(Spotify &spotify) const;
+		QVector<QPair<QString, QString>> externalUrls;
 	};
 }
