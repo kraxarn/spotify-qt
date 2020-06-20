@@ -14,14 +14,46 @@ ArtistView::ArtistView(spt::Spotify *spotify, const QString &artistId, QWidget *
 	auto coverLabel = new QLabel(this);
 	coverLabel->setPixmap(cover.copy(0, 80, 320, 160));
 	layout->addWidget(coverLabel);
+	// Format followers
+	char prefix = artist.followers > 1000000 ? 'M' : artist.followers > 1000 ? 'k': '\0';
+	auto followers = QString("%1%2 follower%3")
+		.arg(prefix == 'M'
+			? artist.followers / 1000000 : prefix == 'k'
+				? artist.followers / 1000 : artist.followers)
+		.arg(prefix)
+		.arg(artist.followers == 1 ? "" : "s");
 	// Artist name title
-	auto title = new QLabel(artist.name, this);
-	title->setAlignment(Qt::AlignHCenter);
-	title->setWordWrap(true);
-	auto titleFont = title->font();
+	auto title = new QHBoxLayout();
+	auto follow = new QPushButton(this);
+	follow->setIcon(Icon::get("starred-symbolic"));
+	follow->setToolTip(QString("Follow artist (%1)").arg(followers));
+	follow->setFlat(true);
+	title->addWidget(follow);
+
+	auto name = new QLabel(artist.name, this);
+	name->setAlignment(Qt::AlignHCenter);
+	name->setWordWrap(true);
+	auto titleFont = name->font();
 	titleFont.setPointSize(24);
-	title->setFont(titleFont);
-	layout->addWidget(title);
+	name->setFont(titleFont);
+	title->addWidget(name, 1);
+
+	auto links = new QToolButton(this);
+	links->setPopupMode(QToolButton::InstantPopup);
+	links->setIcon(Icon::get("globe"));
+	links->setToolTip("External URLs");
+	title->addWidget(links);
+
+	auto linkMenu = new QMenu(links);
+	for (auto &url : artist.externalUrls)
+		linkMenu->addAction(url.first)->setData(url.second);
+	QMenu::connect(linkMenu, &QMenu::triggered, [](QAction *action) {
+		QDesktopServices::openUrl(QUrl(action->data().toString()));
+	});
+	links->setMenu(linkMenu);
+
+	layout->addLayout(title);
+
 	// Genres
 	auto genres = new QLabel(artist.genres.join(", "));
 	genres->setWordWrap(true);
