@@ -894,6 +894,9 @@ void MainWindow::setFixedWidthTime(bool value)
 
 QPixmap MainWindow::mask(const QPixmap &source)
 {
+	if (source.isNull())
+		return source;
+
 	auto img = source.toImage().convertToFormat(QImage::Format_ARGB32);
 	QImage out(img.size(), QImage::Format_ARGB32);
 	out.fill(Qt::GlobalColor::transparent);
