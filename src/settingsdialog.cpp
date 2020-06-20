@@ -63,15 +63,12 @@ QWidget *SettingsDialog::appSettings()
 		layout->addWidget(appPulse);
 	}
 	// MPRIS D-Bus
+#ifdef Q_OS_LINUX
 	appMedia = new QCheckBox("Media controller", this);
 	appMedia->setChecked(settings.general.mediaController);
-#ifdef Q_OS_LINUX
 	appMedia->setToolTip("Enable media controller through the MPRIS D-Bus interface");
-#else
-	appMedia->setToolTip("Currently only available on Linux");
-	appMedia->setEnabled(false);
-#endif
 	layout->addWidget(appMedia);
+#endif
 	// Spotify playback order
 	appSptOrder = new QCheckBox("Spotify playback order", this);
 	appSptOrder->setToolTip("Use Spotify playback order instead of app list order");
@@ -334,11 +331,14 @@ bool SettingsDialog::applySettings()
 	}
 
 	// Media controller
-	if (appMedia->isChecked() != settings.general.mediaController)
-		QMessageBox::information(
-			this, "Media Controller",
-			"Please restart the application to apply changes");
-	settings.general.mediaController = appMedia->isChecked();
+	if (appMedia != nullptr)
+	{
+		if (appMedia->isChecked() != settings.general.mediaController)
+			QMessageBox::information(
+				this, "Media Controller",
+				"Please restart the application to apply changes");
+		settings.general.mediaController = appMedia->isChecked();
+	}
 
 	// PulseAudio volume
 	if (appPulse != nullptr)
