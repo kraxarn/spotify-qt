@@ -10,6 +10,7 @@
 #include <QTabWidget>
 #include <QListWidget>
 #include <QTreeWidget>
+#include <QToolTip>
 
 class ArtistView : public QDockWidget
 {

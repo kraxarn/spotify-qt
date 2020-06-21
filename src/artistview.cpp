@@ -22,6 +22,7 @@ ArtistView::ArtistView(spt::Spotify *spotify, const QString &artistId, QWidget *
 				? artist.followers / 1000 : artist.followers)
 		.arg(prefix)
 		.arg(artist.followers == 1 ? "" : "s");
+
 	// Artist name title
 	auto title = new QHBoxLayout();
 	auto follow = new QPushButton(this);
@@ -38,19 +39,19 @@ ArtistView::ArtistView(spt::Spotify *spotify, const QString &artistId, QWidget *
 	name->setFont(titleFont);
 	title->addWidget(name, 1);
 
-	auto links = new QToolButton(this);
-	links->setPopupMode(QToolButton::InstantPopup);
-	links->setIcon(Icon::get("globe"));
-	links->setToolTip("External URLs");
-	title->addWidget(links);
-
-	auto linkMenu = new QMenu(links);
-	for (auto &url : artist.externalUrls)
-		linkMenu->addAction(url.first)->setData(url.second);
-	QMenu::connect(linkMenu, &QMenu::triggered, [](QAction *action) {
-		QDesktopServices::openUrl(QUrl(action->data().toString()));
+	auto popularityText = QString("%1% popularity").arg(artist.popularity);
+	auto popularity = new QPushButton(this);
+	popularity->setToolTip(popularityText);
+	//popularity->setIcon(Icon::get("draw-donut"));
+	popularity->setIcon(QIcon(MainWindow::mask(
+		Icon::get("draw-donut").pixmap(64, 64),
+		MainWindow::MaskShape::Pie,
+		QVariant(artist.popularity))));
+	popularity->setFlat(true);
+	QAbstractButton::connect(popularity, &QAbstractButton::clicked, [popularity, popularityText](bool checked) {
+		QToolTip::showText(QCursor::pos(), popularityText);
 	});
-	links->setMenu(linkMenu);
+	title->addWidget(popularity);
 
 	layout->addLayout(title);
 
