@@ -71,6 +71,10 @@ public:
 		RoleIndex		= 0x0103,	// 259
 		RolePlaylistId	= 0x0104	// 260
 	};
+	enum class MaskShape {
+		App,
+		Pie
+	};
 	QByteArray get(const QString &url);
 	QJsonDocument getJson(const QString &url);
 	void setStatus(const QString &message, bool important = false);
@@ -91,7 +95,7 @@ public:
 	spt::User getCurrentUser();
 	void refreshPlaylists();
 	void setFixedWidthTime(bool value);
-	static QPixmap mask(const QPixmap &source);
+	static QPixmap mask(const QPixmap &source, MaskShape shape = MaskShape::App, const QVariant &data = QVariant());
 	// I know these should be methods, I'm just lazy
 	QString					cacheLocation;
 	QVector<spt::Playlist>	*sptPlaylists;

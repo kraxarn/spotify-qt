@@ -892,7 +892,7 @@ void MainWindow::setFixedWidthTime(bool value)
 	position->setFont(value ? QFont("monospace") : QFont());
 }
 
-QPixmap MainWindow::mask(const QPixmap &source)
+QPixmap MainWindow::mask(const QPixmap &source, MaskShape shape, const QVariant &data)
 {
 	if (source.isNull())
 		return source;
@@ -908,15 +908,52 @@ QPixmap MainWindow::mask(const QPixmap &source)
 	painter.setOpacity(1);
 	QPainterPath path(QPointF(0, 0));
 
-	QPolygonF shape;
-	shape << QPointF(img.width() / 4, 0)
-		<< QPointF(img.width(), 0)
-		<< QPointF(img.width(), (img.height() / 4) * 3)
-		<< QPointF((img.width() / 4) * 3, img.height())
-		<< QPointF(0, img.height())
-		<< QPointF(0, img.height() / 4);
+	QPolygonF polygon;
+	switch (shape)
+	{
+		case MaskShape::App:
 
-	path.addPolygon(shape);
+			polygon << QPointF(img.width() / 4, 0)
+					<< QPointF(img.width(), 0)
+					<< QPointF(img.width(), (img.height() / 4) * 3)
+					<< QPointF((img.width() / 4) * 3, img.height())
+					<< QPointF(0, img.height())
+					<< QPointF(0, img.height() / 4);
+			break;
+
+		case MaskShape::Pie:
+			switch (data.toInt() / 25)
+			{
+				case 0:
+					polygon = QPolygonF(QRectF(
+						img.width() / 2, 0,
+						img.width() / 2, img.height() / 2));
+					break;
+
+				case 1:
+					polygon = QPolygonF(QRectF(
+						img.width() / 2, 0,
+						img.width() / 2, img.height()));
+					break;
+
+				case 2:
+					polygon << QPointF(img.width() / 2, 0)
+							<< QPointF(img.width() / 2, img.height() / 2)
+							<< QPointF(0, img.height() / 2)
+							<< QPointF(0, img.height())
+							<< QPointF(img.width(), img.height())
+							<< QPointF(img.width(), 0);
+					break;
+
+				case 3:
+					polygon = QPolygonF(QRectF(
+						0, 0, img.width(), img.height()));
+					break;
+			}
+			break;
+	}
+
+	path.addPolygon(polygon);
 	painter.setClipPath(path);
 	painter.drawImage(0, 0, img);
 	return QPixmap::fromImage(out);
