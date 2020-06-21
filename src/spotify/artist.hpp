@@ -4,6 +4,7 @@ namespace spt { class Artist; }
 
 #include "album.hpp"
 #include "spotify.hpp"
+#include "track.hpp"
 
 #include <QJsonArray>
 #include <QJsonObject>

@@ -2,6 +2,7 @@
 
 #include "icon.hpp"
 #include "mainwindow.hpp"
+#include "spotify/spotify.hpp"
 
 #include <QDesktopServices>
 #include <QMenu>
