@@ -1,13 +1,13 @@
 #pragma once
 
-#include "spotify/playlist.hpp"
 #include "mainwindow.hpp"
 #include "playlisteditdialog.hpp"
+#include "spotify/playlist.hpp"
 
-#include <QMenu>
-#include <QUrl>
-#include <QRandomGenerator>
 #include <QInputDialog>
+#include <QMenu>
+#include <QRandomGenerator>
+#include <QUrl>
 
 class PlaylistMenu : public QMenu
 {

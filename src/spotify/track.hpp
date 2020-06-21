@@ -5,9 +5,9 @@ namespace spt { class Track; }
 #include "utils.hpp"
 
 #include <QDateTime>
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QJsonArray>
 
 namespace spt
 {

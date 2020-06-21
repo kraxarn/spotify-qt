@@ -2,16 +2,16 @@
 
 namespace mp { class MediaPlayerPlayer; }
 
-#include "../spotify/spotify.hpp"
 #include "../mainwindow.hpp"
+#include "../spotify/spotify.hpp"
 #include "service.hpp"
 
+#include <QCoreApplication>
+#include <QDBusAbstractAdaptor>
 #include <QDBusConnection>
-#include <QDebug>
 #include <QDBusError>
 #include <QDBusInterface>
-#include <QDBusAbstractAdaptor>
-#include <QCoreApplication>
+#include <QDebug>
 #include <QVariantMap>
 
 namespace mp

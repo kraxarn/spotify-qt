@@ -3,8 +3,8 @@
 #include "icon.hpp"
 #include "mainwindow.hpp"
 
-#include <QMenu>
 #include <QDesktopServices>
+#include <QMenu>
 
 class SongMenu : public QMenu
 {

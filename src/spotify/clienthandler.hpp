@@ -2,10 +2,10 @@
 
 #include "src/settings.hpp"
 
-#include <QProcess>
+#include <QDebug>
 #include <QFileInfo>
 #include <QInputDialog>
-#include <QDebug>
+#include <QProcess>
 
 namespace spt
 {

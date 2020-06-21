@@ -3,9 +3,9 @@
 #include "mainwindow.hpp"
 #include "settings.hpp"
 
-#include <QtGlobal>
 #include <QDialog>
 #include <QVBoxLayout>
+#include <QtGlobal>
 
 class WhatsNewDialog : public QDialog
 {

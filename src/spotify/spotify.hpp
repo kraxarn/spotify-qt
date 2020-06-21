@@ -2,25 +2,25 @@
 
 namespace spt { class Spotify; }
 
-#include "src/settings.hpp"
-#include "playlist.hpp"
+#include "artist.hpp"
+#include "audiofeatures.hpp"
 #include "device.hpp"
 #include "playback.hpp"
-#include "audiofeatures.hpp"
-#include "artist.hpp"
+#include "playlist.hpp"
 #include "searchresults.hpp"
+#include "src/settings.hpp"
 #include "user.hpp"
 
+#include <QCoreApplication>
 #include <QDateTime>
-#include <QtNetwork>
-#include <QSettings>
-#include <QProcessEnvironment>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QString>
 #include <QDesktopServices>
 #include <QInputDialog>
-#include <QCoreApplication>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QProcessEnvironment>
+#include <QSettings>
+#include <QString>
+#include <QtNetwork>
 
 namespace spt
 {

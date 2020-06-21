@@ -1,16 +1,16 @@
 #pragma once
 
-#include "spotify/spotify.hpp"
 #include "mainwindow.hpp"
 #include "songmenu.hpp"
+#include "spotify/spotify.hpp"
 
 #include <QDockWidget>
-#include <QVBoxLayout>
 #include <QLabel>
-#include <QTabWidget>
 #include <QListWidget>
-#include <QTreeWidget>
+#include <QTabWidget>
 #include <QToolTip>
+#include <QTreeWidget>
+#include <QVBoxLayout>
 
 class ArtistView : public QDockWidget
 {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QJsonValue>
 #include <QJsonObject>
+#include <QJsonValue>
 #include <QStringList>
 
 class Utils

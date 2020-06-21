@@ -2,10 +2,10 @@
 
 #include "spotify/spotify.hpp"
 
-#include <QDockWidget>
-#include <QTreeWidget>
 #include <QAbstractItemView>
+#include <QDockWidget>
 #include <QHeaderView>
+#include <QTreeWidget>
 
 class AudioFeaturesView : public QDockWidget
 {

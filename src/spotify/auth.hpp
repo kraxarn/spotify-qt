@@ -2,14 +2,14 @@
 
 #include "src/settings.hpp"
 
-#include <QString>
-#include <QUrl>
-#include <QNetworkRequest>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
 #include <QCoreApplication>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QString>
+#include <QUrl>
 
 namespace spt
 {

@@ -6,9 +6,9 @@ namespace spt { class Playlist; }
 #include "track.hpp"
 #include "utils.hpp"
 
-#include <QString>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QString>
 #include <QVector>
 
 namespace spt

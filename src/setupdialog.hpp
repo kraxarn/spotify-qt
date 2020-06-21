@@ -2,18 +2,18 @@
 
 #include "spotify/auth.hpp"
 
+#include <QCoreApplication>
+#include <QDebug>
+#include <QDesktopServices>
 #include <QDialog>
-#include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QDebug>
-#include <QUrl>
 #include <QLineEdit>
-#include <QDesktopServices>
-#include <QPushButton>
-#include <QCoreApplication>
 #include <QMessageBox>
+#include <QPushButton>
 #include <QTcpServer>
+#include <QUrl>
+#include <QVBoxLayout>
 
 class SetupDialog : public QDialog
 {

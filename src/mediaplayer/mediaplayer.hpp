@@ -5,12 +5,12 @@ class MediaPlayer;
 #include "../spotify/spotify.hpp"
 #include "mediaplayerplayer.hpp"
 
+#include <QCoreApplication>
+#include <QDBusAbstractAdaptor>
 #include <QDBusConnection>
-#include <QDebug>
 #include <QDBusError>
 #include <QDBusInterface>
-#include <QDBusAbstractAdaptor>
-#include <QCoreApplication>
+#include <QDebug>
 #include <QStringList>
 
 class MediaPlayer : public QDBusAbstractAdaptor

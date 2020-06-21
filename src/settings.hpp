@@ -1,16 +1,16 @@
 #pragma once
 
-#include <QSettings>
-#include <QHeaderView>
 #include <QCoreApplication>
-#include <QJsonObject>
-#include <QJsonDocument>
-#include <QJsonArray>
-#include <QFile>
-#include <QStandardPaths>
 #include <QDebug>
-#include <QMutex>
 #include <QDir>
+#include <QFile>
+#include <QHeaderView>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QMutex>
+#include <QSettings>
+#include <QStandardPaths>
 
 class Settings
 {

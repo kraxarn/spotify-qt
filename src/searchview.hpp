@@ -4,12 +4,12 @@
 #include "spotify/spotify.hpp"
 
 #include <QDockWidget>
-#include <QVBoxLayout>
 #include <QLineEdit>
-#include <QTabWidget>
 #include <QListWidget>
+#include <QTabWidget>
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
+#include <QVBoxLayout>
 
 class SearchView : public QDockWidget
 {

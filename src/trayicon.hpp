@@ -4,11 +4,11 @@ class TrayIcon;
 
 #include "icon.hpp"
 #include "mainwindow.hpp"
-#include "spotify/spotify.hpp"
 #include "spotify/playback.hpp"
+#include "spotify/spotify.hpp"
 
-#include <QSystemTrayIcon>
 #include <QMenu>
+#include <QSystemTrayIcon>
 
 class TrayIcon : private QSystemTrayIcon
 {

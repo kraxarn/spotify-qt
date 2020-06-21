@@ -5,12 +5,12 @@ class VolumeButton;
 #include "icon.hpp"
 #include "spotify/clienthandler.hpp"
 
-#include <QMenu>
-#include <QToolButton>
-#include <QWheelEvent>
 #include <QDebug>
-#include <QVBoxLayout>
+#include <QMenu>
 #include <QSlider>
+#include <QToolButton>
+#include <QVBoxLayout>
+#include <QWheelEvent>
 
 class VolumeButton : public QToolButton
 {

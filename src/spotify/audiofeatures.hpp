@@ -1,9 +1,9 @@
 #pragma once
 
-#include <QString>
 #include <QJsonObject>
-#include <QStringList>
 #include <QMap>
+#include <QString>
+#include <QStringList>
 
 namespace spt
 {

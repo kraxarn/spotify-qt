@@ -2,14 +2,14 @@
 
 namespace spt { class Artist; }
 
-#include "spotify.hpp"
 #include "album.hpp"
+#include "spotify.hpp"
 
-#include <QStringList>
-#include <QString>
-#include <QJsonObject>
 #include <QJsonArray>
+#include <QJsonObject>
 #include <QPixmap>
+#include <QString>
+#include <QStringList>
 #include <QVector>
 
 namespace spt

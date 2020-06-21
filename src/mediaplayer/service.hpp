@@ -2,9 +2,9 @@
 
 namespace mp { class Service; }
 
+#include "../spotify/spotify.hpp"
 #include "mediaplayer.hpp"
 #include "mediaplayerplayer.hpp"
-#include "../spotify/spotify.hpp"
 
 #include <QDBusContext>
 

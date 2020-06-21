@@ -1,31 +1,31 @@
 #pragma once
 
-#include "settings.hpp"
 #include "mainwindow.hpp"
+#include "settings.hpp"
 #include "spotify/clienthandler.hpp"
 
-#include <QDialog>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QGroupBox>
+#include <QAction>
+#include <QApplication>
 #include <QCheckBox>
 #include <QComboBox>
-#include <QApplication>
-#include <QStyleFactory>
-#include <QDebug>
-#include <QGridLayout>
-#include <QLabel>
-#include <QPushButton>
-#include <QLineEdit>
 #include <QComboBox>
-#include <QProcess>
-#include <QStringRef>
-#include <QAction>
-#include <QFileInfo>
-#include <QInputDialog>
-#include <QMessageBox>
-#include <QFileInfo>
+#include <QDebug>
+#include <QDialog>
 #include <QFileDialog>
+#include <QFileInfo>
+#include <QFileInfo>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QHBoxLayout>
+#include <QInputDialog>
+#include <QLabel>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QProcess>
+#include <QPushButton>
+#include <QStringRef>
+#include <QStyleFactory>
+#include <QVBoxLayout>
 
 class SettingsDialog : public QDialog
 {

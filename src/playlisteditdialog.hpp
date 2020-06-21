@@ -2,15 +2,15 @@
 
 #include "spotify/playlist.hpp"
 
+#include <QCheckBox>
 #include <QDialog>
+#include <QDialogButtonBox>
+#include <QHBoxLayout>
 #include <QLabel>
+#include <QMessageBox>
+#include <QPushButton>
 #include <QTextEdit>
 #include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QPushButton>
-#include <QDialogButtonBox>
-#include <QCheckBox>
-#include <QMessageBox>
 
 class PlaylistEditDialog : public QDialog
 {
