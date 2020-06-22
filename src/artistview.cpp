@@ -24,7 +24,7 @@ ArtistView::ArtistView(spt::Spotify *spotify, const QString &artistId, QWidget *
 		.arg(artist.followers == 1 ? "" : "s");
 
 	// Artist name title
-	auto isFollowing = spotify->isFollowing("artist", {artistId})[0];
+	auto isFollowing = spotify->isFollowing(spt::Spotify::FollowType::Artist, {artistId})[0];
 	auto title = new QHBoxLayout();
 	auto follow = new QPushButton(this);
 	follow->setIcon(Icon::get(QString("%1starred-symbolic").arg(isFollowing ? "" : "non-")));

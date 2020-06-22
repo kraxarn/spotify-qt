@@ -29,6 +29,12 @@ namespace spt
 		Q_OBJECT
 
 	public:
+		enum class FollowType
+		{
+			Artist,
+			User
+		};
+
 		explicit Spotify(Settings &settings);
 		~Spotify();
 		/**
@@ -68,7 +74,8 @@ namespace spt
 		QString editPlaylist(const Playlist &playlist);
 		QString addToQueue(const QString &uri);
 		QVector<Artist> followedArtists(const QString &offset = QString());
-		QVector<bool> isFollowing(const QString &type, const QStringList &ids);
+		QVector<bool> isFollowing(FollowType type, const QStringList &ids);
+
 
 	public slots:
 		void requestCurrentPlayback();
@@ -103,5 +110,6 @@ namespace spt
 		QVector<Track> albumTracks(const QString &albumId, const QString &albumName, int offset);
 
 		bool refresh();
+		QString followTypeString(FollowType type);
 	};
 }
