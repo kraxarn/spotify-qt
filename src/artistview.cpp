@@ -30,6 +30,17 @@ ArtistView::ArtistView(spt::Spotify *spotify, const QString &artistId, QWidget *
 	follow->setIcon(Icon::get(QString("%1starred-symbolic").arg(isFollowing ? "" : "non-")));
 	follow->setToolTip(QString("%1 artist (%2)").arg(isFollowing ? "Unfollow" : "Follow").arg(followers));
 	follow->setFlat(true);
+	QAbstractButton::connect(follow, &QAbstractButton::clicked, [follow, spotify, artistId](bool checked) {
+		auto isFollowing = follow->toolTip().contains("Unfollow");
+		follow->setIcon(Icon::get(QString("%1starred-symbolic").arg(isFollowing ? "non-" : "")));
+		follow->setToolTip(follow->toolTip().replace(
+			isFollowing ? "Unfollow" : "Follow",
+				isFollowing ? "Follow" : "Unfollow"));
+		if (isFollowing)
+			spotify->unfollow(spt::Spotify::FollowType::Artist, {artistId});
+		else
+			spotify->follow(spt::Spotify::FollowType::Artist, {artistId});
+	});
 	title->addWidget(follow);
 
 	auto name = new QLabel(artist.name, this);

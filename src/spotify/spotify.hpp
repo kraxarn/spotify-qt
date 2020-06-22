@@ -75,7 +75,8 @@ namespace spt
 		QString addToQueue(const QString &uri);
 		QVector<Artist> followedArtists(const QString &offset = QString());
 		QVector<bool> isFollowing(FollowType type, const QStringList &ids);
-
+		void follow(FollowType type, const QStringList &ids);
+		void unfollow(FollowType type, const QStringList &ids);
 
 	public slots:
 		void requestCurrentPlayback();
