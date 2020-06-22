@@ -516,3 +516,13 @@ QVector<Artist> Spotify::followedArtists(const QString &offset)
 		artists << followedArtists(json["cursors"].toObject()["after"].toString());
 	return artists;
 }
+
+QVector<bool> Spotify::isFollowing(const QString &type, const QStringList &ids)
+{
+	auto json = get(QString("me/following/contains?type=%1&ids=%2")
+		.arg(type).arg(ids.join(','))).array();
+	QVector<bool> values;
+	for (auto value : json)
+		values.append(value.toBool());
+	return values;
+}
