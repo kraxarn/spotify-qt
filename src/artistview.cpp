@@ -23,11 +23,20 @@ ArtistView::ArtistView(spt::Spotify *spotify, const QString &artistId, QWidget *
 		.arg(prefix)
 		.arg(artist.followers == 1 ? "" : "s");
 
+	// Check if already following
+	auto isFollowing = false;
+	for (auto &followed : spotify->followedArtists())
+		if (followed.id == artistId)
+		{
+			isFollowing = true;
+			break;
+		}
+
 	// Artist name title
 	auto title = new QHBoxLayout();
 	auto follow = new QPushButton(this);
-	follow->setIcon(Icon::get("starred-symbolic"));
-	follow->setToolTip(QString("Follow artist (%1)").arg(followers));
+	follow->setIcon(Icon::get(QString("%1starred-symbolic").arg(isFollowing ? "" : "non-")));
+	follow->setToolTip(QString("%1 artist (%2)").arg(isFollowing ? "Unfollow" : "Follow").arg(followers));
 	follow->setFlat(true);
 	title->addWidget(follow);
 
@@ -42,7 +51,6 @@ ArtistView::ArtistView(spt::Spotify *spotify, const QString &artistId, QWidget *
 	auto popularityText = QString("%1% popularity").arg(artist.popularity);
 	auto popularity = new QPushButton(this);
 	popularity->setToolTip(popularityText);
-	//popularity->setIcon(Icon::get("draw-donut"));
 	popularity->setIcon(QIcon(MainWindow::mask(
 		Icon::get("draw-donut").pixmap(64, 64),
 		MainWindow::MaskShape::Pie,
@@ -52,7 +60,6 @@ ArtistView::ArtistView(spt::Spotify *spotify, const QString &artistId, QWidget *
 		QToolTip::showText(QCursor::pos(), popularityText);
 	});
 	title->addWidget(popularity);
-
 	layout->addLayout(title);
 
 	// Genres

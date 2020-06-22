@@ -501,3 +501,18 @@ QString Spotify::addToQueue(const QString &uri)
 {
 	return post(QString("me/player/queue?uri=%1").arg(uri));
 }
+
+QVector<Artist> Spotify::followedArtists(const QString &offset)
+{
+	auto json = get(QString("me/following?type=artist&limit=50%1")
+		.arg(offset.isEmpty() ? "" : QString("&after=%1").arg(offset)))
+			.object()["artists"].toObject();
+	auto items = json["items"].toArray();
+	QVector<Artist> artists;
+	artists.reserve(items.size());
+	for (auto item : items)
+		artists.append(Artist(item.toObject()));
+	if (!json["cursors"].isNull() && !json["cursors"].toObject()["after"].isNull())
+		artists << followedArtists(json["cursors"].toObject()["after"].toString());
+	return artists;
+}

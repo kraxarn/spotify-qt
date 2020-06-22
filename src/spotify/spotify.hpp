@@ -67,6 +67,7 @@ namespace spt
 		User me();
 		QString editPlaylist(const Playlist &playlist);
 		QString addToQueue(const QString &uri);
+		QVector<Artist> followedArtists(const QString &offset = QString());
 
 	public slots:
 		void requestCurrentPlayback();
