@@ -3,6 +3,7 @@
 #include "mainwindow.hpp"
 #include "settings.hpp"
 #include "spotify/clienthandler.hpp"
+#include "systeminfodialog.hpp"
 
 #include <QAction>
 #include <QApplication>
@@ -45,6 +46,7 @@ private:
 	static bool isPulse();
 	static bool sptConfigExists();
 	static bool hasIconTheme();
+	static QString systemInfo();
 	Settings &settings;
 	// App settings
 	QComboBox	*appRefresh		= nullptr;

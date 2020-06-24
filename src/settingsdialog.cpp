@@ -310,6 +310,15 @@ QWidget *SettingsDialog::aboutSettings()
 	});
 	options->addWidget(openConfig);
 	layout->addLayout(options, 1);
+	// Generate report
+#ifdef Q_OS_LINUX
+	auto generateReport = new QPushButton("System info", this);
+	generateReport->setFlat(true);
+	QAbstractButton::connect(generateReport, &QPushButton::clicked, [this](bool checked) {
+		(new SystemInfoDialog(systemInfo(), this))->show();
+	});
+	layout->addWidget(generateReport);
+#endif
 	// Final layout
 	auto widget = new QWidget();
 	widget->setLayout(layout);
@@ -450,3 +459,40 @@ bool SettingsDialog::hasIconTheme()
 {
 	return !QIcon::fromTheme("media-playback-start").isNull();
 }
+
+QString SettingsDialog::systemInfo()
+{
+	QMap<QString, QString> info;
+
+	// OS release
+	QFile lsbFile("/etc/lsb-release");
+	if (lsbFile.exists() && lsbFile.open(QIODevice::ReadOnly))
+		for (const auto &line : QString(lsbFile.readAll()).split('\n'))
+			if (line.startsWith("DISTRIB_DESCRIPTION"))
+				info["LSB release"] = line.right(line.length() - 21).left(line.length() - 22);
+
+	// Linux version
+	QFile procFile("/proc/version");
+	if (procFile.exists() && procFile.open(QIODevice::ReadOnly))
+		info["Linux version"] = QString(procFile.readAll()).split(' ')[2];
+
+	// Qt version
+	info["Qt version"] = QT_VERSION_STR;
+
+	// spotify-qt version
+	info["App version"] = APP_VERSION;
+
+	// Desktop environment
+	if (qEnvironmentVariableIsSet("XDG_CURRENT_DESKTOP"))
+		info["Current desktop"] = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
+
+	QString systemInfo("<table>");
+	QMapIterator<QString, QString> i(info);
+	while (i.hasNext())
+	{
+		i.next();
+		systemInfo += QString("<tr><td>%1:</td> <td>%2</td></tr>").arg(i.key()).arg(i.value());
+	}
+	return systemInfo + "</table>";
+}
+
