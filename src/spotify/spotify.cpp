@@ -79,6 +79,19 @@ QString Spotify::put(QString url, QVariantMap *body)
 			setDevice(devices().at(0));
 			return put(url, body);
 		}
+		else
+		{
+			DeviceSelectDialog dialog(d);
+			if (dialog.exec() == QDialog::Accepted)
+			{
+				auto selected = dialog.selectedDevice();
+				if (!selected.id.isEmpty())
+				{
+					setDevice(selected);
+					return put(url, body);
+				}
+			}
+		}
 	}
 	return reply;
 }
