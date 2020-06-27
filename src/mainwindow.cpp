@@ -649,7 +649,7 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 
 bool MainWindow::loadAlbum(const QString &albumId, bool ignoreEmpty)
 {
-	auto tracks = loadAlbumFromCache(albumId);
+	auto tracks = loadTracksFromCache(albumId);
 	if (tracks.isEmpty())
 		tracks = spotify->albumTracks(albumId);
 
@@ -661,16 +661,16 @@ bool MainWindow::loadAlbum(const QString &albumId, bool ignoreEmpty)
 		libraryList->setCurrentItem(nullptr);
 		sptContext = QString("spotify:album:%1").arg(albumId);
 		loadSongs(tracks);
-		saveAlbumToCache(albumId, tracks);
+		saveTracksToCache(albumId, tracks);
 	}
 
 	return true;
 }
 
-QVector<spt::Track> MainWindow::loadAlbumFromCache(const QString &albumId)
+QVector<spt::Track> MainWindow::loadTracksFromCache(const QString &id)
 {
 	QVector<spt::Track> tracks;
-	auto filePath = QString("%1/tracks/%2.json").arg(cacheLocation).arg(albumId);
+	auto filePath = QString("%1/tracks/%2.json").arg(cacheLocation).arg(id);
 	if (!QFileInfo::exists(filePath))
 		return tracks;
 	QFile file(filePath);
@@ -684,12 +684,12 @@ QVector<spt::Track> MainWindow::loadAlbumFromCache(const QString &albumId)
 	return tracks;
 }
 
-void MainWindow::saveAlbumToCache(const QString &albumId, const QVector<spt::Track> &tracks)
+void MainWindow::saveTracksToCache(const QString &id, const QVector<spt::Track> &tracks)
 {
 	QJsonArray json;
 	for (auto &track : tracks)
 		json.append(track.toJson());
-	QFile file(QString("%1/tracks/%2.json").arg(cacheLocation).arg(albumId));
+	QFile file(QString("%1/tracks/%2.json").arg(cacheLocation).arg(id));
 	file.open(QIODevice::WriteOnly);
 	file.write(QJsonDocument(json).toJson());
 }
