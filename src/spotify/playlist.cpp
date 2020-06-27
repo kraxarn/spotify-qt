@@ -18,9 +18,11 @@ Playlist::Playlist(const QJsonObject &json)
 	snapshot = Utils::getProperty(json, {
 		"snapshot", "snapshot_id"
 	}).toString();
-	ownerId = Utils::getProperty(json, {
-		"owner_id", "ownerId", "owner"
-	}).toString();
+	ownerId = json.contains("owner_id")
+		? json["owner_id"].toString()
+		: json.contains("ownerId")
+			? json["owner_id"].toString()
+			:  json["owner"].toObject()["id"].toString();
 	ownerName = json.contains("owner_name")
 		? json["owner_name"].toString()
 		: json.contains("ownerName")
