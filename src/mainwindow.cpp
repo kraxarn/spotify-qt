@@ -209,7 +209,6 @@ QWidget *MainWindow::createCentralWidget()
 	libraryList->setCurrentItem(nullptr);
 	QTreeWidget::connect(libraryList, &QTreeWidget::itemClicked, [this](QTreeWidgetItem *item, int column) {
 		if (item != nullptr) {
-			songs->setEnabled(false);
 			playlists->setCurrentRow(-1);
 			if (item->parent() != nullptr)
 			{
@@ -217,7 +216,6 @@ QWidget *MainWindow::createCentralWidget()
 				switch (item->data(0, 0x101).toInt())
 				{
 					case RoleArtistId:
-						songs->setEnabled(true);
 						openArtist(data);
 						break;
 
@@ -228,28 +226,37 @@ QWidget *MainWindow::createCentralWidget()
 			}
 			else
 			{
+				auto id = item->text(0).toLower().replace(' ', '_');
+				auto cacheTracks = loadTracksFromCache(id);
+				if (cacheTracks.isEmpty())
+					songs->setEnabled(false);
+				else
+					loadSongs(cacheTracks);
+
+				QVector<spt::Track> tracks;
 				if (item->text(0) == "Recently Played")
-					loadSongs(spotify->recentlyPlayed());
+					tracks = spotify->recentlyPlayed();
 				else if (item->text(0) == "Liked")
-					loadSongs(spotify->savedTracks());
+					tracks = spotify->savedTracks();
 				else if (item->text(0) == "Tracks")
-					loadSongs(spotify->topTracks());
+					tracks = spotify->topTracks();
 				else if (item->text(0) == "New Releases")
 				{
 					auto all = allArtists();
 					auto releases = spotify->newReleases();
-					QVector<spt::Track> good;
 					for (auto &album : releases)
 						if (all.contains(album.artist))
 							for (auto &track : spotify->albumTracks(album.id))
 							{
 								track.addedAt = album.releaseDate;
-								good << track;
+								tracks << track;
 							}
-					loadSongs(good);
 				}
+
+				saveTracksToCache(id, tracks);
+				loadSongs(tracks);
+				songs->setEnabled(true);
 			}
-			songs->setEnabled(true);
 		}
 	});
 	QTreeWidget::connect(libraryList, &QTreeWidget::itemDoubleClicked, [this](QTreeWidgetItem *item, int column) {
