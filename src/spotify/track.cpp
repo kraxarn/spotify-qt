@@ -70,7 +70,7 @@ Track::Track()
 	isLocal = false;
 }
 
-QJsonObject Track::toJson()
+QJsonObject Track::toJson() const
 {
 	return QJsonObject({
 		QPair<QString, QString>("id", id),

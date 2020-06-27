@@ -144,4 +144,6 @@ private:
 	QStringList currentTracks();
 	void setPlayingTrackItem(QTreeWidgetItem *item);
 	QSet<QString> allArtists();
+	QVector<spt::Track> loadAlbumFromCache(const QString &albumId);
+	void saveAlbumToCache(const QString &albumId, const QVector<spt::Track> &tracks);
 };

@@ -25,6 +25,7 @@ MainWindow::MainWindow(Settings &settings, QWidget *parent) : settings(settings)
 	cacheDir.mkpath(".");
 	cacheDir.mkdir("album");
 	cacheDir.mkdir("playlist");
+	cacheDir.mkdir("tracks");
 	// Apply selected style and palette
 	QApplication::setStyle(settings.general.style);
 	applyPalette(settings.general.stylePalette);
@@ -648,7 +649,10 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 
 bool MainWindow::loadAlbum(const QString &albumId, bool ignoreEmpty)
 {
-	auto tracks = spotify->albumTracks(albumId);
+	auto tracks = loadAlbumFromCache(albumId);
+	if (tracks.isEmpty())
+		tracks = spotify->albumTracks(albumId);
+
 	if (ignoreEmpty && tracks.length() <= 1)
 		setStatus("Album only contains one song or is empty", true);
 	else
@@ -657,8 +661,37 @@ bool MainWindow::loadAlbum(const QString &albumId, bool ignoreEmpty)
 		libraryList->setCurrentItem(nullptr);
 		sptContext = QString("spotify:album:%1").arg(albumId);
 		loadSongs(tracks);
+		saveAlbumToCache(albumId, tracks);
 	}
+
 	return true;
+}
+
+QVector<spt::Track> MainWindow::loadAlbumFromCache(const QString &albumId)
+{
+	QVector<spt::Track> tracks;
+	auto filePath = QString("%1/tracks/%2.json").arg(cacheLocation).arg(albumId);
+	if (!QFileInfo::exists(filePath))
+		return tracks;
+	QFile file(filePath);
+	file.open(QIODevice::ReadOnly);
+	auto json = QJsonDocument::fromJson(file.readAll());
+	file.close();
+	if (json.isNull())
+		return tracks;
+	for (auto track : json.array())
+		tracks.append(spt::Track(track.toObject()));
+	return tracks;
+}
+
+void MainWindow::saveAlbumToCache(const QString &albumId, const QVector<spt::Track> &tracks)
+{
+	QJsonArray json;
+	for (auto &track : tracks)
+		json.append(track.toJson());
+	QFile file(QString("%1/tracks/%2.json").arg(cacheLocation).arg(albumId));
+	file.open(QIODevice::WriteOnly);
+	file.write(QJsonDocument(json).toJson());
 }
 
 bool MainWindow::loadPlaylist(spt::Playlist &playlist)

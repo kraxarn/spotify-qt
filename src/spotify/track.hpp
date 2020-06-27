@@ -20,6 +20,6 @@ namespace spt
 		int duration;
 		bool isLocal;
 		QDateTime addedAt;
-		QJsonObject toJson();
+		QJsonObject toJson() const;
 	};
 }
