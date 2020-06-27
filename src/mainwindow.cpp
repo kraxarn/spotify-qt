@@ -268,11 +268,17 @@ QWidget *MainWindow::createCentralWidget()
 				: item->text(0) == "Tracks"
 					? spotify->topTracks()
 					: QVector<spt::Track>();
+
+		// If none were found, don't do anything
+		if (tracks.isEmpty())
+			return;
+
 		// Get id of all tracks
 		QStringList trackIds;
 		tracks.reserve(tracks.length());
 		for (auto &track : tracks)
 			trackIds.append(QString("spotify:track:%1").arg(track.id));
+
 		// Play in context of all tracks
 		auto status = spotify->playTracks(trackIds.first(), trackIds);
 		if (!status.isEmpty())
