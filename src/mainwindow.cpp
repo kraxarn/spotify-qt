@@ -208,14 +208,21 @@ QWidget *MainWindow::createCentralWidget()
 	libraryList->setCurrentItem(nullptr);
 	QTreeWidget::connect(libraryList, &QTreeWidget::itemClicked, [this](QTreeWidgetItem *item, int column) {
 		if (item != nullptr) {
+			songs->setEnabled(false);
 			playlists->setCurrentRow(-1);
 			if (item->parent() != nullptr)
 			{
 				auto data = item->data(0, 0x100).toString();
 				switch (item->data(0, 0x101).toInt())
 				{
-					case RoleArtistId:	openArtist(data);		break;
-					case RoleAlbumId:	loadAlbum(data, false);	break;
+					case RoleArtistId:
+						songs->setEnabled(true);
+						openArtist(data);
+						break;
+
+					case RoleAlbumId:
+						loadAlbum(data, false);
+						break;
 				}
 			}
 			else
@@ -241,6 +248,7 @@ QWidget *MainWindow::createCentralWidget()
 					loadSongs(good);
 				}
 			}
+			songs->setEnabled(true);
 		}
 	});
 	QTreeWidget::connect(libraryList, &QTreeWidget::itemDoubleClicked, [this](QTreeWidgetItem *item, int column) {
