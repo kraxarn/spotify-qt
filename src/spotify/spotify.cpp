@@ -300,24 +300,24 @@ QVector<Track> Spotify::albumTracks(const QString &albumId, const QString &album
 	return tracks;
 }
 
-QVector<Track> *Spotify::albumTracks(const QString &albumID)
+QVector<Track> Spotify::albumTracks(const QString &albumID)
 {
 	auto json = get(QString("albums/%1").arg(albumID));
 	auto albumName = json["name"].toString();
-	auto tracks = new QVector<Track>();
-	tracks->reserve(json["total_tracks"].toInt());
+	QVector<Track> tracks;
+	tracks.reserve(json["total_tracks"].toInt());
 	// Loop through all items
 	for (auto track : json["tracks"].toObject()["items"].toArray())
 	{
 		auto t = Track(track.toObject());
 		// Album name is not included, so we have to set it manually
 		t.album = albumName;
-		tracks->append(t);
+		tracks.append(t);
 	}
 	// Check if we have any more to add
 	auto tracksLimit = json["tracks"].toObject()["limit"].toInt();
 	if (json["tracks"].toObject()["total"].toInt() > tracksLimit)
-		tracks->append(albumTracks(albumID, albumName, tracksLimit));
+		tracks.append(albumTracks(albumID, albumName, tracksLimit));
 	// Return final vector
 	return tracks;
 }

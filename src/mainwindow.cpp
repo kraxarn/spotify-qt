@@ -240,7 +240,7 @@ QWidget *MainWindow::createCentralWidget()
 					QVector<spt::Track> good;
 					for (auto &album : releases)
 						if (all.contains(album.artist))
-							for (auto &track : *spotify->albumTracks(album.id))
+							for (auto &track : spotify->albumTracks(album.id))
 							{
 								track.addedAt = album.releaseDate;
 								good << track;
@@ -649,16 +649,15 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 bool MainWindow::loadAlbum(const QString &albumId, bool ignoreEmpty)
 {
 	auto tracks = spotify->albumTracks(albumId);
-	if (ignoreEmpty && tracks->length() <= 1)
+	if (ignoreEmpty && tracks.length() <= 1)
 		setStatus("Album only contains one song or is empty", true);
 	else
 	{
 		playlists->setCurrentRow(-1);
 		libraryList->setCurrentItem(nullptr);
 		sptContext = QString("spotify:album:%1").arg(albumId);
-		loadSongs(*tracks);
+		loadSongs(tracks);
 	}
-	delete tracks;
 	return true;
 }
 
