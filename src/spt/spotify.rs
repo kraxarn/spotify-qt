@@ -1,17 +1,21 @@
 use crate::spt::spotify::RequestError::{Network, Generic};
 use tokio::io::Error;
-use crate::spt::{Playlist, Device};
-use super::reqwest::get;
-use serde_json::Value;
-use serde::Deserialize;
+use crate::spt::{Playlist, Device, Track};
+use super::reqwest::{get, Method, RequestBuilder};
+use serde_json::{json, Value};
+use serde::{Deserialize, Serialize};
+use serde::export::fmt::Display;
+use serde::export::Formatter;
 
-type Response = std::result::Result<serde_json::Value, reqwest::Error>;
-
+#[derive(Debug)]
 enum RequestError {
 	Generic(String),
 	Io(std::io::Error),
 	Network(reqwest::Error)
 }
+
+type Response = std::result::Result<serde_json::Value, reqwest::Error>;
+type RequestResult<T> = Result<T, RequestError>;
 
 impl std::convert::From<reqwest::Error> for RequestError {
 	fn from(err: reqwest::Error) -> Self {
@@ -57,42 +61,75 @@ impl From<ErrorResult> for Result<(), RequestError> {
 
 impl super::Spotify {
 	async fn new(settings: crate::settings::SettingsManager) -> Self {
-		let spt = Self {
+		let mut spt = Self {
 			last_auth: 0,
 			current_device: std::string::String::new(),
 			settings,
 			web_client: reqwest::Client::new()
 		};
-		//spt.refresh().await;
+		spt.refresh().await.unwrap();
 		spt
 	}
 
-	async fn get<D>(&self, url: &str) -> Result<D, reqwest::Error> where D: for<'de> Deserialize<'de> {
-		self.web_client.get(url).send().await?.json::<D>().await
+	async fn request(&mut self, method: Method, url: &str) -> RequestBuilder {
+		let last_refresh = chrono::Utc::now().timestamp() - self.last_auth;
+		if last_refresh >= 36000 {
+			println!("access token probably expired, refreshing");
+			match self.refresh().await {
+				Ok(()) => {},
+				Err(err) => println!("error: failed to refresh token: {:?}", err),
+			}
+		}
+
+		let mut headers = reqwest::header::HeaderMap::new();
+		headers.insert(
+			reqwest::header::AUTHORIZATION,
+			format!("Bearer {}", self.settings.get().account.access_token).parse().unwrap());
+		self.web_client
+			.request(method, url)
+			.headers(headers)
 	}
 
-	async fn put<D>(&self, url: &str, body: &[(&str, &str)]) -> Result<D, reqwest::Error>
+	async fn get<D>(&mut self, url: &str) -> Result<D, reqwest::Error>
+		where D: for<'de> Deserialize<'de> {
+		self.request(Method::GET, url).await
+			.send().await?
+			.json::<D>().await
+	}
+
+	async fn put<D>(&mut self, url: &str, body: &serde_json::Value) -> Result<D, reqwest::Error>
 		where D: for<'de> serde::Deserialize<'de> {
-		self.web_client.put(url).json(body).send().await?.json::<D>().await
+		self.request(Method::PUT, url).await
+			.json(body)
+			.send().await?
+			.json::<D>().await
 	}
 
-	async fn post(&self, url: &str) -> Response {
+	async fn post<D>(&mut self, url: &str) -> Result<D, reqwest::Error>
+		where D: for<'de> serde::Deserialize<'de> {
 		let mut headers = reqwest::header::HeaderMap::new();
 		headers.insert(
 			reqwest::header::CONTENT_TYPE,
 			"application/x-www-form-urlencoded".parse().unwrap());
-		self.web_client.post(url).headers(headers).send().await?.json().await
+		self.request(Method::POST, url).await
+			.headers(headers)
+			.send().await?
+			.json().await
 	}
 
-	async fn delete<S>(&self, url: &str, body: &S) -> Response where S: serde::Serialize {
+	async fn delete<S>(&mut self, url: &str, body: &S) -> Response where S: serde::Serialize {
 		let mut headers = reqwest::header::HeaderMap::new();
 		headers.insert(
 			reqwest::header::CONTENT_TYPE,
 			"application/json".parse().unwrap());
-		self.web_client.delete(url).headers(headers).json(body).send().await?.json().await
+		self.request(Method::DELETE, url).await
+			.headers(headers)
+			.json(body)
+			.send().await?
+			.json().await
 	}
 
-	async fn refresh(&mut self) -> std::result::Result<(), RequestError> {
+	async fn refresh(&mut self) -> RequestResult<()> {
 		// Make sure we have a refresh token
 		let mut settings = self.settings.get();
 		let s = &settings.account.refresh_token;
