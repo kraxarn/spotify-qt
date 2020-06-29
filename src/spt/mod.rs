@@ -1,7 +1,14 @@
-
 extern crate reqwest;
+extern crate chrono;
+
+use serde::Deserialize;
+use chrono::{DateTime, Utc, TimeZone};
 
 pub mod spotify;
+
+pub fn date_from_str(date: &str) -> DateTime<Utc> {
+	Utc.datetime_from_str(date, "%Y-%m-%dT%H:%M:%SZ").unwrap()
+}
 
 pub struct Spotify {
 	last_auth: i64,
@@ -24,7 +31,7 @@ pub struct Album {
 	id: String,
 	image: String,
 	name: String,
-	release_date: chrono::DateTime<chrono::Utc>
+	release_date: String //chrono::DateTime<chrono::Utc>
 }
 
 pub struct Artist {
@@ -36,8 +43,9 @@ pub struct Artist {
 	popularity: i32
 }
 
+#[derive(Deserialize)]
 pub struct Track {
-	added_at: chrono::DateTime<chrono::Utc>,
+	added_at: String, //chrono::DateTime<chrono::Utc>,
 	album: String,
 	album_id: String,
 	artist: String,
@@ -49,7 +57,7 @@ pub struct Track {
 	name: String
 }
 
-#[derive(serde::Deserialize)]
+#[derive(Deserialize)]
 pub struct Playlist {
 	collaborative: bool,
 	description: String,
@@ -63,7 +71,7 @@ pub struct Playlist {
 	tracks: serde_json::Value
 }
 
-#[derive(serde::Deserialize)]
+#[derive(Deserialize)]
 pub struct Device {
 	id: String,
 	name: String,
