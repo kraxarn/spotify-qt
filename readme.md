@@ -7,6 +7,10 @@ It's also currently only available through [AUR](https://aur.archlinux.org/packa
 
 Note that most development is now happening in the [rs](https://github.com/kraxarn/spotify-qt/tree/rs) branch, rewriting the application in Rust for the next major update.
 
+## Supported platforms
+Tested: Linux, Windows
+Supported: macOS, *BSD, Haiku, any platform [officially supported](https://doc.qt.io/qt-5/supported-platforms.html) by Qt5
+
 ## Installing/building:
 Make sure you have Qt (5.12+), CMake (3.5+) and various build tools like `make`, `g++` and `git`.
 ```
