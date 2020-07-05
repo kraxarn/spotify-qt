@@ -30,11 +30,18 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 	});
 	addSeparator();
 	// Add/remove liked
-	auto isLiked = mainWindow->currentLibraryItem() == "Liked";
+	likedTracks = mainWindow->loadTracksFromCache("liked");
+	auto isLiked = false;
+	for (auto i = 0; i < likedTracks.length(); i++)
+		if (likedTracks.at(i).id == track)
+		{
+			isLiked = true;
+			break;
+		}
 	auto toggleLiked = addAction(
 		Icon::get(isLiked ? "starred-symbolic" : "non-starred-symbolic"),
 		isLiked ? "Dislike" : "Like");
-	QAction::connect(toggleLiked, &QAction::triggered, [isLiked, spotify, trackId, mainWindow](bool checked) {
+	QAction::connect(toggleLiked, &QAction::triggered, [this, isLiked, spotify, trackId, mainWindow](bool checked) {
 		auto status = isLiked ? spotify->removeSavedTrack(trackId) : spotify->addSavedTrack(trackId);
 		if (!status.isEmpty())
 			mainWindow->setStatus(QString("Failed to %1: %2")

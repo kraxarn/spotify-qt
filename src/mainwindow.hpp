@@ -96,6 +96,8 @@ public:
 	void refreshPlaylists();
 	void setFixedWidthTime(bool value);
 	static QPixmap mask(const QPixmap &source, MaskShape shape = MaskShape::App, const QVariant &data = QVariant());
+	QVector<spt::Track> loadTracksFromCache(const QString &id);
+	void saveTracksToCache(const QString &id, const QVector<spt::Track> &tracks);
 	// I know these should be methods, I'm just lazy
 	QString					cacheLocation;
 	QVector<spt::Playlist>	*sptPlaylists;
@@ -145,6 +147,4 @@ private:
 	QStringList currentTracks();
 	void setPlayingTrackItem(QTreeWidgetItem *item);
 	QSet<QString> allArtists();
-	QVector<spt::Track> loadTracksFromCache(const QString &id);
-	void saveTracksToCache(const QString &id, const QVector<spt::Track> &tracks);
 };
