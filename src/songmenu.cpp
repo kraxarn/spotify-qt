@@ -37,8 +37,8 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 	QAction::connect(toggleLiked, &QAction::triggered, [isLiked, spotify, trackId, mainWindow](bool checked) {
 		auto status = isLiked ? spotify->removeSavedTrack(trackId) : spotify->addSavedTrack(trackId);
 		if (!status.isEmpty())
-			mainWindow->setStatus(QString("Failed to %1 liked: %2")
-				.arg(isLiked ? "remove from" : "add to")
+			mainWindow->setStatus(QString("Failed to %1: %2")
+				.arg(isLiked ? "dislike" : "like")
 				.arg(status), true);
 	});
 	// Add to queue
