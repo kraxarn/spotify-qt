@@ -3,9 +3,21 @@
 MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
 	: settings(settings), parent(parent), spotify(spotify), QMenu(parent)
 {
-	// About
-	addAction(Icon::get("help-about"),
-		QString("spotify-qt %1").arg(APP_VERSION))->setDisabled(true);
+	// Update notifier
+	about = addAction(Icon::get("help-about"), QString("Checking for updates..."));
+	about->setDisabled(true);
+	// Check for updates
+	auto mainWindow = dynamic_cast<MainWindow*>(parent);
+	if (mainWindow != nullptr)
+	{
+		auto json = mainWindow->getJson("https://api.github.com/repos/kraxarn/spotify-qt/releases/latest");
+		auto latest = json.object()["tag_name"].toString();
+		auto isLatest = latest.isEmpty() || latest == APP_VERSION;
+		if (latest.isEmpty() || isLatest)
+			about->setVisible(false);
+		else
+			about->setText(QString("New version: %1").arg(latest));
+	}
 	// Device selection
 	auto deviceMenu = new QMenu("Device");
 	deviceMenu->setIcon(Icon::get("speaker"));
