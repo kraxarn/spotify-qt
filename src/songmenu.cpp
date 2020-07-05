@@ -33,7 +33,7 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 	auto isLiked = mainWindow->currentLibraryItem() == "Liked";
 	auto toggleLiked = addAction(
 		Icon::get(isLiked ? "starred-symbolic" : "non-starred-symbolic"),
-		isLiked ? "Remove from liked" : "Add to liked");
+		isLiked ? "Dislike" : "Like");
 	QAction::connect(toggleLiked, &QAction::triggered, [isLiked, spotify, trackId, mainWindow](bool checked) {
 		auto status = isLiked ? spotify->removeSavedTrack(trackId) : spotify->addSavedTrack(trackId);
 		if (!status.isEmpty())
@@ -51,6 +51,7 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 			mainWindow->setStatus(status, true);
 	});
 	// Add to playlist
+	addSeparator();
 	auto addPlaylist = addMenu(Icon::get("list-add"), "Add to playlist");
 	auto currentPlaylist = !mainWindow->hasPlaylistSelected()
 		? nullptr
