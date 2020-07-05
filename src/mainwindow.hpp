@@ -1,5 +1,7 @@
 #pragma once
 
+class MainWindow;
+
 #include "artistview.hpp"
 #include "audiofeaturesview.hpp"
 #include "darkpalette.hpp"

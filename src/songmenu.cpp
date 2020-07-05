@@ -1,9 +1,11 @@
 #include "songmenu.hpp"
 
 SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString &name,
-		const QString &artistId, const QString &albumId, spt::Spotify *spotify, QWidget *parent) : QMenu(parent)
+		const QString &artistId, const QString &albumId, spt::Spotify *spotify, QWidget *parent)
+		: trackId(trackId), spotify(spotify), artistId(artistId), albumId(albumId), name(name),
+			artist(artist), QMenu(parent)
 {
-	auto mainWindow = dynamic_cast<MainWindow*>(parent);
+	mainWindow = dynamic_cast<MainWindow*>(parent);
 	if (mainWindow == nullptr)
 		return;
 	auto track = trackId.startsWith("spotify:track")
@@ -31,7 +33,7 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 	addSeparator();
 	// Add/remove liked
 	likedTracks = mainWindow->loadTracksFromCache("liked");
-	auto isLiked = false;
+	isLiked = false;
 	for (auto i = 0; i < likedTracks.length(); i++)
 		if (likedTracks.at(i).id == track)
 		{
@@ -41,8 +43,10 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 	auto toggleLiked = addAction(
 		Icon::get(isLiked ? "starred-symbolic" : "non-starred-symbolic"),
 		isLiked ? "Dislike" : "Like");
-	QAction::connect(toggleLiked, &QAction::triggered, [this, isLiked, spotify, trackId, mainWindow](bool checked) {
-		auto status = isLiked ? spotify->removeSavedTrack(trackId) : spotify->addSavedTrack(trackId);
+	QAction::connect(toggleLiked, &QAction::triggered, [this](bool checked) {
+		auto status = isLiked
+			? this->spotify->removeSavedTrack(this->trackId)
+			: this->spotify->addSavedTrack(this->trackId);
 		if (!status.isEmpty())
 			mainWindow->setStatus(QString("Failed to %1: %2")
 				.arg(isLiked ? "dislike" : "like")
@@ -50,17 +54,17 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 	});
 	// Add to queue
 	auto addQueue = addAction(Icon::get("media-playlist-append"), "Add to queue");
-	QAction::connect(addQueue, &QAction::triggered, [mainWindow, trackId, spotify](bool checked) {
-		auto status = spotify->addToQueue(trackId.startsWith("spotify:track")
-			? trackId
-			: QString("spotify:track:%1").arg(trackId));
+	QAction::connect(addQueue, &QAction::triggered, [this](bool checked) {
+		auto status = this->spotify->addToQueue(this->trackId.startsWith("spotify:track")
+			? this->trackId
+			: QString("spotify:track:%1").arg(this->trackId));
 		if (!status.isEmpty())
 			mainWindow->setStatus(status, true);
 	});
 	// Add to playlist
 	addSeparator();
 	auto addPlaylist = addMenu(Icon::get("list-add"), "Add to playlist");
-	auto currentPlaylist = !mainWindow->hasPlaylistSelected()
+	currentPlaylist = !mainWindow->hasPlaylistSelected()
 		? nullptr
 		: &mainWindow->sptPlaylists->at(mainWindow->playlists->currentRow());
 	for (auto &playlist : *mainWindow->sptPlaylists)
@@ -69,13 +73,13 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 		auto action = addPlaylist->addAction(playlist.name);
 		action->setData(playlist.id);
 	}
-	QMenu::connect(addPlaylist, &QMenu::triggered, [this, trackId, currentPlaylist, mainWindow, spotify](QAction *action) {
+	QMenu::connect(addPlaylist, &QMenu::triggered, [this](QAction *action) {
 		// Check if it's already in the playlist
 		auto playlistId = action->data().toString();
 		auto tracks = mainWindow->playlistTracks(playlistId);
 		for (auto &track : tracks)
 		{
-			if (trackId.endsWith(track.id))
+			if (this->trackId.endsWith(track.id))
 			{
 				if (QMessageBox::information(this,
 					"Duplicate",
@@ -87,24 +91,24 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 			}
 		}
 		// Actually add
-		auto plTrack = trackId.startsWith("spotify:track")
-			? trackId
-			: QString("spotify:track:%1").arg(trackId);
-		auto result = spotify->addToPlaylist(playlistId, plTrack);
+		auto plTrack = this->trackId.startsWith("spotify:track")
+			? this->trackId
+			: QString("spotify:track:%1").arg(this->trackId);
+		auto result = this->spotify->addToPlaylist(playlistId, plTrack);
 		if (!result.isEmpty())
 			mainWindow->setStatus(QString("Failed to add track to playlist: %1").arg(result), true);
 	});
 	// Remove from playlist
 	auto remPlaylist = addAction(Icon::get("list-remove"), "Remove from playlist");
 	remPlaylist->setEnabled(mainWindow->playlists->currentRow() >= 0);
-	QAction::connect(remPlaylist, &QAction::triggered, [this, trackId, name, artist, currentPlaylist, mainWindow, spotify](bool checked) {
+	QAction::connect(remPlaylist, &QAction::triggered, [this](bool checked) {
 		// Remove from interface
 		QTreeWidgetItem *item = nullptr;
 		int i;
 		for (i = 0; i < mainWindow->songs->topLevelItemCount(); i++)
 		{
 			item = mainWindow->songs->topLevelItem(i);
-			if (item->data(0, MainWindow::RoleTrackId).toString() == trackId)
+			if (item->data(0, MainWindow::RoleTrackId).toString() == this->trackId)
 				break;
 			// Failed to find
 			item = nullptr;
@@ -115,7 +119,7 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 			return;
 		}
 		// Remove from Spotify
-		auto status = spotify->removeFromPlaylist(currentPlaylist->id, trackId,
+		auto status = this->spotify->removeFromPlaylist(currentPlaylist->id, this->trackId,
 			item->data(0, MainWindow::RoleIndex).toInt());
 		// Update status
 		if (!status.isEmpty())
@@ -126,15 +130,15 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 		// i doesn't necessarily match item index depending on sorting order
 		mainWindow->songs->takeTopLevelItem(i);
 		mainWindow->setStatus(QString(R"(Removed "%1 - %2" from "%3")")
-			.arg(name).arg(artist).arg(currentPlaylist->name));
+			.arg(this->name).arg(this->artist).arg(currentPlaylist->name));
 	});
 	addSeparator();
 	auto goArtist = addAction(Icon::get("view-media-artist"), "View artist");
-	QAction::connect(goArtist, &QAction::triggered, [=](bool checked) {
-		mainWindow->openArtist(artistId);
+	QAction::connect(goArtist, &QAction::triggered, [this](bool checked) {
+		mainWindow->openArtist(this->artistId);
 	});
 	auto goAlbum = addAction(Icon::get("view-media-album-cover"), "Open album");
-	QAction::connect(goAlbum, &QAction::triggered, [=](bool checked) {
-		mainWindow->loadAlbum(albumId, false);
+	QAction::connect(goAlbum, &QAction::triggered, [this](bool checked) {
+		mainWindow->loadAlbum(this->albumId, false);
 	});
 }
