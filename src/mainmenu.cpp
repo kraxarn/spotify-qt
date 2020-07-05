@@ -19,10 +19,10 @@ MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
 			about->setText(QString("New version: %1").arg(latest));
 	}
 	// Device selection
-	auto deviceMenu = new QMenu("Device");
+	deviceMenu = new QMenu("Device");
 	deviceMenu->setIcon(Icon::get("speaker"));
-	QMenu::connect(deviceMenu, &QMenu::aboutToShow, [=]() {
-		refreshDevices(deviceMenu);
+	QMenu::connect(deviceMenu, &QMenu::aboutToShow, [this]() {
+		refreshDevices();
 	});
 	addMenu(deviceMenu);
 	// Refresh and settings
@@ -76,7 +76,7 @@ QAction *MainMenu::createMenuAction(const QString &iconName,
 	return action;
 }
 
-void MainMenu::refreshDevices(QMenu *deviceMenu)
+void MainMenu::refreshDevices()
 {
 	auto window = (MainWindow*) parent;
 	// Set status and get devices
