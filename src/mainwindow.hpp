@@ -140,7 +140,8 @@ private:
 	bool loadPlaylistFromCache(spt::Playlist &playlist);
 	QMenu *songMenu(const QString &trackId, const QString &artist,
 		const QString &name, const QString &artistId, const QString &albumId);
-	QTreeWidgetItem *treeItem(QTreeWidget *tree, const QString &name, const QString &toolTip = QString::Null(), const QStringList &childrenItems = QStringList(QString::Null()));
+	QTreeWidgetItem *treeItem(QTreeWidget *tree, const QString &name, const QString &toolTip = QString::Null(),
+		const QStringList &childrenItems = QStringList(QString::Null()));
 	QStringList currentTracks();
 	void setPlayingTrackItem(QTreeWidgetItem *item);
 	QSet<QString> allArtists();
