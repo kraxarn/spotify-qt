@@ -20,4 +20,5 @@ private:
 	const QString &trackId, &artistId, &albumId, &name, &artist;
 	MainWindow *mainWindow;
 	const spt::Playlist *currentPlaylist;
+	QString track;
 };
