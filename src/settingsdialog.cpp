@@ -433,6 +433,7 @@ bool SettingsDialog::applySettings()
 	settings.spotify.username = sptUsername->text();
 	auto bitrate = sptBitrate->currentIndex();
 	settings.spotify.bitrate = bitrate == 0 ? 96 : bitrate == 1 ? 160 : 320;
+	settings.spotify.alwaysStart = sptAlways->isChecked();
 
 	// Everything is fine
 	settings.save();

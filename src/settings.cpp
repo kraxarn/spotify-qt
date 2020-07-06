@@ -75,7 +75,7 @@ void Settings::load()
 	general.trayNotifications = g["tray_notifications"].toBool(false);
 
 	auto s = json["Spotify"];
-	spotify.alwaysStart = g["always_start"].toBool(true);
+	spotify.alwaysStart = s["always_start"].toBool(true);
 	spotify.bitrate = s["bitrate"].toInt(320);
 	spotify.globalConfig = s["global_config"].toBool(false);
 	spotify.path = s["path"].toString();
