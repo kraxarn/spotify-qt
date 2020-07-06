@@ -49,38 +49,38 @@ void Settings::load()
 
 	auto a = json["Account"].toObject();
 	account.accessToken = a["access_token"].toString();
-	account.refreshToken = a["refresh_token"].toString();
 	account.clientId = a["client_id"].toString();
 	account.clientSecret = a["client_secret"].toString();
+	account.refreshToken = a["refresh_token"].toString();
 
 	auto g = json["General"];
-	general.style = g["style"].toString();
+	general.fallbackIcons = g["fallback_icons"].toBool(false);
+	general.fixedWidthTime = g["fixed_width_time"].toBool(true);
+	general.hiddenSongHeaders = hiddenSongHeaders;
 	general.lastPlaylist = g["last_playlist"].toString();
 	general.lastVersion = g["last_version"].toString();
 	general.lastVolume = g["last_volume"].toInt();
-	general.pulseVolume = g["pulse_volume"].toBool(false);
 	general.mediaController = g["media_controller"].toBool(hasMediaControllerSupport());
-	general.spotifyPlaybackOrder = g["spotify_playback_order"].toBool(false);
-	general.trayIcon = g["tray_icon"].toBool(true);
-	general.trayNotifications = g["tray_notifications"].toBool(false);
-	general.trayLightIcon = g["tray_light_icon"].toBool(false);
-	general.trayAlbumArt = g["tray_album_art"].toBool(false);
+	general.pulseVolume = g["pulse_volume"].toBool(false);
+	general.refreshInterval = g["refresh_interval"].toInt(3);
 	general.showChangelog = g["show_changelog"].toBool(true);
-	general.fallbackIcons = g["fallback_icons"].toBool(false);
-	general.fixedWidthTime = g["fixed_width_time"].toBool(true);
-	general.stylePalette = (Palette) g["style_palette"].toInt(paletteApp);
-	general.hiddenSongHeaders = hiddenSongHeaders;
 	general.songHeaderResizeMode = g["song_header_resize_mode"].toInt(QHeaderView::ResizeToContents);
 	general.songHeaderSortBy = g["song_header_sort_by"].toInt(-1);
-	general.refreshInterval = g["refresh_interval"].toInt(3);
+	general.spotifyPlaybackOrder = g["spotify_playback_order"].toBool(false);
+	general.style = g["style"].toString();
+	general.stylePalette = (Palette) g["style_palette"].toInt(paletteApp);
+	general.trayAlbumArt = g["tray_album_art"].toBool(false);
+	general.trayIcon = g["tray_icon"].toBool(true);
+	general.trayLightIcon = g["tray_light_icon"].toBool(false);
+	general.trayNotifications = g["tray_notifications"].toBool(false);
 
 	auto s = json["Spotify"];
-	spotify.path = s["path"].toString();
-	spotify.username = s["username"].toString();
-	spotify.startClient = s["start_client"].toBool(false);
-	spotify.globalConfig = s["global_config"].toBool(false);
-	spotify.bitrate = s["bitrate"].toInt(320);
 	spotify.alwaysStart = g["always_start"].toBool(true);
+	spotify.bitrate = s["bitrate"].toInt(320);
+	spotify.globalConfig = s["global_config"].toBool(false);
+	spotify.path = s["path"].toString();
+	spotify.startClient = s["start_client"].toBool(false);
+	spotify.username = s["username"].toString();
 }
 
 void Settings::save()
