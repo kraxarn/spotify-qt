@@ -120,12 +120,12 @@ void Settings::save()
 			{"tray_notifications", general.trayNotifications}
 		}),
 		QPair<QString, QJsonObject>("Spotify", {
+			{"always_start", spotify.alwaysStart},
 			{"bitrate", spotify.bitrate},
 			{"global_config", spotify.globalConfig},
 			{"path", spotify.path},
 			{"start_client", spotify.startClient},
 			{"username", spotify.username},
-			{"always_start", spotify.alwaysStart},
 		})
 	});
 
