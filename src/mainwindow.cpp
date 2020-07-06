@@ -49,7 +49,8 @@ MainWindow::MainWindow(Settings &settings, QWidget *parent) : settings(settings)
 	refresh();
 	timer->start(1000);
 	// Check if should start client
-	if (settings.spotify.startClient)
+	if (settings.spotify.startClient
+		&& (settings.spotify.alwaysStart || spotify->devices().isEmpty()))
 	{
 		sptClient = new spt::ClientHandler(settings, this);
 		auto status = sptClient->start();
