@@ -80,6 +80,7 @@ void Settings::load()
 	spotify.startClient = s["start_client"].toBool(false);
 	spotify.globalConfig = s["global_config"].toBool(false);
 	spotify.bitrate = s["bitrate"].toInt(320);
+	spotify.alwaysStart = g["always_start"].toBool(true);
 }
 
 void Settings::save()
@@ -124,6 +125,7 @@ void Settings::save()
 			{"path", spotify.path},
 			{"start_client", spotify.startClient},
 			{"username", spotify.username},
+			{"always_start", spotify.alwaysStart},
 		})
 	});
 

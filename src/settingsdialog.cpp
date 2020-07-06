@@ -211,6 +211,11 @@ QWidget *SettingsDialog::spotifySettings()
 	sptGlobal->setToolTip("Use spotifyd.conf file in either ~/.config/spotifyd or /etc/spotifyd only");
 	sptGlobal->setChecked(settings.spotify.globalConfig);
 	layout->addWidget(sptGlobal);
+	// Always start
+	sptAlways = new QCheckBox("Always start", this);
+	sptAlways->setToolTip("Always start client, even if there are other devices already available");
+	sptAlways->setChecked(settings.spotify.alwaysStart);
+	layout->addWidget(sptAlways);
 	// Final layout
 	auto widget = new QWidget();
 	widget->setLayout(layout);

@@ -71,4 +71,5 @@ private:
 	QComboBox	*sptBitrate		= nullptr;
 	QCheckBox	*sptAppStart	= nullptr;
 	QCheckBox	*sptGlobal		= nullptr;
+	QCheckBox	*sptAlways		= nullptr;
 };
