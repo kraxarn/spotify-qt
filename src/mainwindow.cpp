@@ -464,9 +464,14 @@ QWidget *MainWindow::createCentralWidget()
 
 	// Load tracks in playlist
 	auto playlistId = settings.general.lastPlaylist;
-	// Default to first in list
-	if (playlistId.isEmpty() && sptPlaylists->length() > 0)
+	if (sptPlaylists->isEmpty())
 	{
+		// If no playlists were found
+		// TODO: Load something from library here
+	}
+	else if (playlistId.isEmpty())
+	{
+		// Default to first in list
 		playlistId = sptPlaylists->at(0).id;
 	}
 	else
