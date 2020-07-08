@@ -465,18 +465,23 @@ QWidget *MainWindow::createCentralWidget()
 	// Load tracks in playlist
 	auto playlistId = settings.general.lastPlaylist;
 	// Default to first in list
-	if (playlistId.isEmpty())
-		playlistId = sptPlaylists->at(0).id;
-	// Find playlist in list
-	int i = 0;
-	for (auto &playlist : *sptPlaylists)
+	if (playlistId.isEmpty() && sptPlaylists->length() > 0)
 	{
-		if (playlist.id == playlistId)
+		playlistId = sptPlaylists->at(0).id;
+	}
+	else
+	{
+		// Find playlist in list
+		int i = 0;
+		for (auto &playlist : *sptPlaylists)
 		{
-			playlists->setCurrentRow(i);
-			loadPlaylist(playlist);
+			if (playlist.id == playlistId)
+			{
+				playlists->setCurrentRow(i);
+				loadPlaylist(playlist);
+			}
+			i++;
 		}
-		i++;
 	}
 	// Add to main thing
 	container->addWidget(songs);
