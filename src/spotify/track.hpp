@@ -2,7 +2,7 @@
 
 namespace spt { class Track; }
 
-#include "utils.hpp"
+#include "../utils.hpp"
 
 #include <QDateTime>
 #include <QJsonArray>

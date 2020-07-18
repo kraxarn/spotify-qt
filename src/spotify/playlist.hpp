@@ -4,7 +4,7 @@ namespace spt { class Playlist; }
 
 #include "spotify.hpp"
 #include "track.hpp"
-#include "utils.hpp"
+#include "../utils.hpp"
 
 #include <QJsonDocument>
 #include <QJsonObject>
