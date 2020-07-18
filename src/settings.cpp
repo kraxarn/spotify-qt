@@ -68,7 +68,7 @@ void Settings::load()
 	general.songHeaderSortBy = g["song_header_sort_by"].toInt(-1);
 	general.spotifyPlaybackOrder = g["spotify_playback_order"].toBool(false);
 	general.style = g["style"].toString();
-	general.stylePalette = (Palette) g["style_palette"].toInt(paletteApp);
+	general.stylePalette = (Utils::Palette) g["style_palette"].toInt(Utils::paletteApp);
 	general.trayAlbumArt = g["tray_album_art"].toBool(false);
 	general.trayIcon = g["tray_icon"].toBool(true);
 	general.trayLightIcon = g["tray_light_icon"].toBool(false);
@@ -251,9 +251,9 @@ QString Settings::lastPlaylist()
 	return settings->value("LastPlaylist").toString();
 }
 
-Settings::Palette Settings::stylePalette()
+Utils::Palette Settings::stylePalette()
 {
-	return (Settings::Palette) settings->value("StylePalette").toInt();
+	return (Utils::Palette) settings->value("StylePalette").toInt();
 }
 
 bool Settings::mediaController()
@@ -263,14 +263,14 @@ bool Settings::mediaController()
 
 bool Settings::darkTheme() const
 {
-	return general.stylePalette == paletteDark;
+	return general.stylePalette == Utils::paletteDark;
 }
 
 void Settings::setDarkTheme(bool value)
 {
 	// When enabling dark theme, also set style to fusion to match better
 	general.style = value ? "Fusion" : QString();
-	general.stylePalette = value ? paletteDark : paletteApp;
+	general.stylePalette = value ? Utils::paletteDark : Utils::paletteApp;
 }
 
 bool Settings::sptPlaybackOrder()

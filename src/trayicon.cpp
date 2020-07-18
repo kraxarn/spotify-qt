@@ -70,5 +70,5 @@ spt::Playback TrayIcon::playback()
 
 void TrayIcon::setPixmap(const QPixmap &pixmap)
 {
-	setIcon(MainWindow::mask(pixmap));
+	setIcon(Utils::mask(pixmap));
 }

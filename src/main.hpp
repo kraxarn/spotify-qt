@@ -19,6 +19,7 @@
 #include "spotify/user.hpp"
 #include "spotify/webplayer.hpp"
 #include "trayicon.hpp"
+#include "utils.hpp"
 #include "volumebutton.hpp"
 #include "whatsnewdialog.hpp"
 

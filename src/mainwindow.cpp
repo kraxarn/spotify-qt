@@ -1,6 +1,6 @@
 #include "mainwindow.hpp"
 
-bool MainWindow::darkBackground	= false;
+
 
 MainWindow::MainWindow(Settings &settings)
 	: settings(settings), QMainWindow()
@@ -17,12 +17,12 @@ MainWindow::MainWindow(Settings &settings)
 
 	// Apply selected style and palette
 	QApplication::setStyle(settings.general.style);
-	applyPalette(settings.general.stylePalette);
+	Utils::applyPalette(settings.general.stylePalette);
 
 	// Check for dark background
 	auto bg = palette().color(backgroundRole());
 	if (((bg.red() + bg.green() + bg.blue()) / 3) < 128)
-		darkBackground = true;
+		Utils::darkBackground = true;
 
 	// Set Spotify
 	spotify = new spt::Spotify(settings, this);
@@ -130,8 +130,8 @@ void MainWindow::refreshed(const spt::Playback &playback)
 			trayIcon->setPixmap(getAlbum(current.item.image));
 	}
 	position->setText(QString("%1/%2")
-		.arg(formatTime(current.progressMs))
-		.arg(formatTime(current.item.duration)));
+		.arg(Utils::formatTime(current.progressMs))
+		.arg(Utils::formatTime(current.item.duration)));
 	progress->setValue(current.progressMs);
 	progress->setMaximum(current.item.duration);
 	playPause->setIcon(Icon::get(
@@ -143,32 +143,6 @@ void MainWindow::refreshed(const spt::Playback &playback)
 	shuffle->setChecked(current.shuffle);
 }
 
-QGroupBox *createGroupBox(QVector<QWidget*> &widgets)
-{
-	auto group = new QGroupBox();
-	auto layout = new QVBoxLayout();
-	for (auto &widget : widgets)
-		layout->addWidget(widget);
-	group->setLayout(layout);
-	return group;
-}
-
-QWidget *MainWindow::layoutToWidget(QLayout *layout)
-{
-	auto widget = new QWidget();
-	widget->setLayout(layout);
-	return widget;
-}
-
-QTreeWidgetItem *MainWindow::treeItem(QTreeWidget *tree, const QString &name, const QString &toolTip, const QStringList &childrenItems)
-{
-	auto item = new QTreeWidgetItem(tree, {name});
-	item->setToolTip(0, toolTip);
-	for (auto &child : childrenItems)
-		item->addChild(new QTreeWidgetItem(item, {child}));
-	return item;
-}
-
 QWidget *MainWindow::createCentralWidget()
 {
 	auto container = new QSplitter();
@@ -178,12 +152,12 @@ QWidget *MainWindow::createCentralWidget()
 	playlists = new QListWidget(this);
 	// Library
 	libraryList->addTopLevelItems({
-		treeItem(libraryList, "Recently Played", "Most recently played tracks from any device", QStringList()),
-		treeItem(libraryList, "Liked", "Liked and saved tracks", QStringList()),
-		treeItem(libraryList, "Tracks", "Most played tracks for the past 6 months", QStringList()),
-		treeItem(libraryList, "New Releases", "New albums from artists you listen to", QStringList()),
-		treeItem(libraryList, "Albums", "Liked and saved albums"),
-		treeItem(libraryList, "Artists", "Most played artists for the past 6 months")
+		Utils::treeItem(libraryList, "Recently Played", "Most recently played tracks from any device", QStringList()),
+		Utils::treeItem(libraryList, "Liked", "Liked and saved tracks", QStringList()),
+		Utils::treeItem(libraryList, "Tracks", "Most played tracks for the past 6 months", QStringList()),
+		Utils::treeItem(libraryList, "New Releases", "New albums from artists you listen to", QStringList()),
+		Utils::treeItem(libraryList, "Albums", "Liked and saved albums"),
+		Utils::treeItem(libraryList, "Artists", "Most played artists for the past 6 months")
 	});
 	libraryList->header()->hide();
 	libraryList->setCurrentItem(nullptr);
@@ -195,11 +169,11 @@ QWidget *MainWindow::createCentralWidget()
 				auto data = item->data(0, 0x100).toString();
 				switch (item->data(0, 0x101).toInt())
 				{
-					case RoleArtistId:
+					case Utils::RoleArtistId:
 						openArtist(data);
 						break;
 
-					case RoleAlbumId:
+					case Utils::RoleAlbumId:
 						loadAlbum(data, false);
 						break;
 				}
@@ -271,10 +245,10 @@ QWidget *MainWindow::createCentralWidget()
 
 		if (item->text(0) == "Artists")
 			for (auto &artist : spotify->topArtists())
-				results.append({artist.name, artist.id, RoleArtistId});
+				results.append({artist.name, artist.id, Utils::RoleArtistId});
 		else if (item->text(0) == "Albums")
 			for (auto &album : spotify->savedAlbums())
-				results.append({album.name, album.id, RoleAlbumId});
+				results.append({album.name, album.id, Utils::RoleAlbumId});
 
 		// No results
 		if (results.isEmpty())
@@ -294,7 +268,7 @@ QWidget *MainWindow::createCentralWidget()
 			item->addChild(child);
 		}
 	});
-	auto library = createGroupBox(QVector<QWidget*>() << libraryList);
+	auto library = Utils::createGroupBox(QVector<QWidget*>() << libraryList, this);
 	library->setTitle("Library");
 	sidebar->addWidget(library);
 	// Update current playlists
@@ -320,7 +294,7 @@ QWidget *MainWindow::createCentralWidget()
 		(new PlaylistMenu(*spotify, sptPlaylists.at(playlists->currentRow()), this))
 			->popup(playlists->mapToGlobal(pos));
 	});
-	auto playlistContainer = createGroupBox(QVector<QWidget*>() << playlists);
+	auto playlistContainer = Utils::createGroupBox(QVector<QWidget*>() << playlists, this);
 	playlistContainer->setTitle("Playlists");
 	sidebar->addWidget(playlistContainer);
 	// Now playing song
@@ -342,7 +316,7 @@ QWidget *MainWindow::createCentralWidget()
 			->popup(nowPlaying->mapToGlobal(pos));
 	});
 	// Sidebar as widget
-	auto sidebarWidget = layoutToWidget(sidebar);
+	auto sidebarWidget = Utils::layoutToWidget(sidebar);
 	sidebarWidget->setMaximumWidth(250);
 	container->addWidget(sidebarWidget);
 	// Table with songs
@@ -367,15 +341,15 @@ QWidget *MainWindow::createCentralWidget()
 	songs->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(songs, &QWidget::customContextMenuRequested, [this](const QPoint &pos) {
 		auto item = songs->itemAt(pos);
-		auto trackId = item->data(0, RoleTrackId).toString();
+		auto trackId = item->data(0, Utils::RoleTrackId).toString();
 		if (trackId.isEmpty())
 			return;
 		songMenu(trackId, item->text(2), item->text(1),
-			item->data(0, RoleArtistId).toString(),
-			item->data(0, RoleAlbumId).toString())->popup(songs->mapToGlobal(pos));
+			item->data(0, Utils::RoleArtistId).toString(),
+			item->data(0, Utils::RoleAlbumId).toString())->popup(songs->mapToGlobal(pos));
 	});
 	QTreeWidget::connect(songs, &QTreeWidget::itemClicked, this, [=](QTreeWidgetItem *item, int column) {
-		auto trackId = item->data(0, RoleTrackId).toString();
+		auto trackId = item->data(0, Utils::RoleTrackId).toString();
 		if (trackId.isEmpty())
 		{
 			setStatus("Failed to start playback: track not found", true);
@@ -614,7 +588,7 @@ void MainWindow::refreshPlaylists()
 	{
 		auto item = new QListWidgetItem(playlist.name, playlists);
 		item->setToolTip(playlist.description);
-		item->setData(RolePlaylistId, playlist.id);
+		item->setData(Utils::RolePlaylistId, playlist.id);
 	}
 	if (lastIndex >= 0)
 		playlists->setCurrentRow(lastIndex);
@@ -630,12 +604,12 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 		auto track = tracks.at(i);
 		auto item = new QTreeWidgetItem({
 			"", track.name, track.artist, track.album,
-			formatTime(track.duration), track.addedAt.date().toString(Qt::SystemLocaleShortDate)
+			Utils::formatTime(track.duration), track.addedAt.date().toString(Qt::SystemLocaleShortDate)
 		});
-		item->setData(0, RoleTrackId,  QString("spotify:track:%1").arg(track.id));
-		item->setData(0, RoleArtistId, track.artistId);
-		item->setData(0, RoleAlbumId,  track.albumId);
-		item->setData(0, RoleIndex,    i);
+		item->setData(0, Utils::RoleTrackId,  QString("spotify:track:%1").arg(track.id));
+		item->setData(0, Utils::RoleArtistId, track.artistId);
+		item->setData(0, Utils::RoleAlbumId,  track.albumId);
+		item->setData(0, Utils::RoleIndex,    i);
 		if (track.isLocal)
 		{
 			item->setDisabled(true);
@@ -763,15 +737,7 @@ void MainWindow::setStatus(const QString &message, bool important)
 
 void MainWindow::setAlbumImage(const QString &url)
 {
-	nowAlbum->setPixmap(mask(getAlbum(url)));
-}
-
-QString MainWindow::formatTime(int ms)
-{
-	auto duration = QTime(0, 0).addMSecs(ms);
-	return QString("%1:%2")
-		.arg(duration.minute())
-		.arg(duration.second() % 60, 2, 10, QChar('0'));
+	nowAlbum->setPixmap(Utils::mask(getAlbum(url)));
 }
 
 QByteArray MainWindow::get(const QString &url)
@@ -843,40 +809,18 @@ void MainWindow::cachePlaylist(spt::Playlist &playlist)
 	file.write(json.toJson());
 }
 
-void MainWindow::applyPalette(Settings::Palette palette)
-{
-	QPalette p;
-	switch (palette)
-	{
-		case Settings::paletteApp:		p = QApplication::palette(); 					break;
-		case Settings::paletteStyle:	p = QApplication::style()->standardPalette();	break;
-		case Settings::paletteDark:		p = DarkPalette();								break;
-	}
-	QApplication::setPalette(p);
-}
-
 QStringList MainWindow::currentTracks()
 {
 	QStringList tracks;
 	tracks.reserve(songs->topLevelItemCount());
 	for (int i = 0; i < songs->topLevelItemCount(); i++)
 	{
-		auto trackId = songs->topLevelItem(i)->data(0, RoleTrackId).toString();
+		auto trackId = songs->topLevelItem(i)->data(0, Utils::RoleTrackId).toString();
 		// spotify:track: = 14
 		if (trackId.length() > 14)
 			tracks.append(trackId);
 	}
 	return tracks;
-}
-
-spt::Playback MainWindow::currentPlayback()
-{
-	return current;
-}
-
-bool MainWindow::hasPlaylistSelected()
-{
-	return playlists->currentRow() >= 0;
 }
 
 QString MainWindow::currentLibraryItem()
@@ -897,11 +841,6 @@ void MainWindow::reloadTrayIcon()
 		trayIcon = new TrayIcon(spotify, settings, this);
 }
 
-bool MainWindow::hasDarkBackground()
-{
-	return darkBackground;
-}
-
 void MainWindow::setPlayingTrackItem(QTreeWidgetItem *item)
 {
 	if (playingTrackItem != nullptr)
@@ -915,16 +854,11 @@ void MainWindow::setPlayingTrackItem(QTreeWidgetItem *item)
 	playingTrackItem = item;
 }
 
-spt::User MainWindow::getCurrentUser()
-{
-	return currentUser;
-}
-
 QSet<QString> MainWindow::allArtists()
 {
 	QSet<QString> artists;
 	for (auto i = 0; i < playlists->count(); i++)
-		for (auto &track : playlistTracks(playlists->item(i)->data(RolePlaylistId).toString()))
+		for (auto &track : playlistTracks(playlists->item(i)->data(Utils::RolePlaylistId).toString()))
 			artists << track.artist;
 	return artists;
 }
@@ -934,74 +868,22 @@ void MainWindow::setFixedWidthTime(bool value)
 	position->setFont(value ? QFont("monospace") : QFont());
 }
 
-QPixmap MainWindow::mask(const QPixmap &source, MaskShape shape, const QVariant &data)
+//region Getters
+
+spt::Playback MainWindow::currentPlayback()
 {
-	if (source.isNull())
-		return source;
-
-	auto img = source.toImage().convertToFormat(QImage::Format_ARGB32);
-	QImage out(img.size(), QImage::Format_ARGB32);
-	out.fill(Qt::GlobalColor::transparent);
-	QPainter painter(&out);
-	painter.setOpacity(0);
-	painter.setBrush(Qt::white);
-	painter.setPen(Qt::NoPen);
-	painter.drawImage(0, 0, img);
-	painter.setOpacity(1);
-	QPainterPath path(QPointF(0, 0));
-
-	QPolygonF polygon;
-	switch (shape)
-	{
-		case MaskShape::App:
-
-			polygon << QPointF(img.width() / 4, 0)
-					<< QPointF(img.width(), 0)
-					<< QPointF(img.width(), (img.height() / 4) * 3)
-					<< QPointF((img.width() / 4) * 3, img.height())
-					<< QPointF(0, img.height())
-					<< QPointF(0, img.height() / 4);
-			break;
-
-		case MaskShape::Pie:
-			switch (data.toInt() / 25)
-			{
-				case 0:
-					polygon = QPolygonF(QRectF(
-						img.width() / 2, 0,
-						img.width() / 2, img.height() / 2));
-					break;
-
-				case 1:
-					polygon = QPolygonF(QRectF(
-						img.width() / 2, 0,
-						img.width() / 2, img.height()));
-					break;
-
-				case 2:
-					polygon << QPointF(img.width() / 2, 0)
-							<< QPointF(img.width() / 2, img.height() / 2)
-							<< QPointF(0, img.height() / 2)
-							<< QPointF(0, img.height())
-							<< QPointF(img.width(), img.height())
-							<< QPointF(img.width(), 0);
-					break;
-
-				case 3:
-					polygon = QPolygonF(QRectF(
-						0, 0, img.width(), img.height()));
-					break;
-			}
-			break;
-	}
-
-	path.addPolygon(polygon);
-	painter.setClipPath(path);
-	painter.drawImage(0, 0, img);
-	return QPixmap::fromImage(out);
+	return current;
 }
 
-//region Getters
+bool MainWindow::hasPlaylistSelected()
+{
+	return playlists->currentRow() >= 0;
+}
+
+spt::User MainWindow::getCurrentUser()
+{
+	return currentUser;
+}
 
 QString &MainWindow::getCacheLocation()
 {

@@ -341,7 +341,7 @@ bool SettingsDialog::applySettings()
 			"Please restart the application to fully apply selected theme");
 		settings.setDarkTheme(itfDark->isChecked());
 		QApplication::setStyle(settings.general.style);
-		MainWindow::applyPalette(settings.general.stylePalette);
+		Utils::applyPalette(settings.general.stylePalette);
 	}
 
 	// Media controller
