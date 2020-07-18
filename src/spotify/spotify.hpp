@@ -37,12 +37,9 @@ namespace spt
 		};
 
 		explicit Spotify(Settings &settings);
-		~Spotify();
-		/**
-		 * HTTP GET request expecting JSON response
-		 */
+
 		QJsonDocument get(QString url);
-		void playlists(QVector<Playlist> **playlists);
+		QVector<Playlist> playlists();
 		QVector<Device> devices();
 		QString setDevice(const Device &device);
 		QString playTracks(const QString &track, const QString &context);

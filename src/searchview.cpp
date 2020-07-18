@@ -90,7 +90,7 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 		if (!window->loadPlaylist(playlist))
 			window->setStatus(QString("Failed to load playlist"), true);
 		else
-			window->playlists->setCurrentRow(-1);
+			window->getPlaylistsList()->setCurrentRow(-1);
 	});
 	// Open track
 	QTreeWidget::connect(trackList, &QTreeWidget::itemClicked, [this, window, &spotify](QTreeWidgetItem *item, int column) {
@@ -128,7 +128,7 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 	setFixedWidth(320);
 	// Uncheck search when closing
 	QDockWidget::connect(this, &QDockWidget::visibilityChanged, [window](bool visible) {
-		window->search->setChecked(visible);
+		window->getSearchAction()->setChecked(visible);
 	});
 }
 

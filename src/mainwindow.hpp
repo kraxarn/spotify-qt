@@ -1,62 +1,13 @@
 #pragma once
 
-class MainWindow;
-
-#include "artistview.hpp"
-#include "audiofeaturesview.hpp"
-#include "darkpalette.hpp"
-#include "icon.hpp"
-#include "lyricsview.hpp"
-#include "mainmenu.hpp"
-#include "mediaplayer/service.hpp"
-#include "playlistmenu.hpp"
-#include "searchview.hpp"
-#include "settingsdialog.hpp"
-#include "songmenu.hpp"
-#include "spotify/audiofeatures.hpp"
-#include "spotify/clienthandler.hpp"
-#include "spotify/playback.hpp"
-#include "spotify/playlist.hpp"
-#include "spotify/spotify.hpp"
-#include "spotify/user.hpp"
-#include "spotify/webplayer.hpp"
-#include "trayicon.hpp"
-#include "volumebutton.hpp"
-#include "whatsnewdialog.hpp"
-
-#include <QAction>
-#include <QApplication>
-#include <QClipboard>
-#include <QCloseEvent>
-#include <QDockWidget>
-#include <QFileInfo>
-#include <QGroupBox>
-#include <QHBoxLayout>
-#include <QHeaderView>
-#include <QIcon>
-#include <QLabel>
-#include <QListWidget>
-#include <QListWidget>
-#include <QMainWindow>
-#include <QMapIterator>
-#include <QMenu>
-#include <QMessageBox>
-#include <QPainter>
-#include <QPainterPath>
-#include <QSlider>
-#include <QSplitter>
-#include <QStatusBar>
-#include <QTextEdit>
-#include <QToolBar>
-#include <QToolButton>
-#include <QTreeWidget>
-#include <QVBoxLayout>
+#include "main.hpp"
 
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
+
 public:
-	MainWindow(Settings &settings, QWidget *parent = nullptr);
+	explicit MainWindow(Settings &settings);
 	~MainWindow() override;
 
 protected:
@@ -100,38 +51,59 @@ public:
 	static QPixmap mask(const QPixmap &source, MaskShape shape = MaskShape::App, const QVariant &data = QVariant());
 	QVector<spt::Track> loadTracksFromCache(const QString &id);
 	void saveTracksToCache(const QString &id, const QVector<spt::Track> &tracks);
-	// I know these should be methods, I'm just lazy
-	QString					cacheLocation;
-	QVector<spt::Playlist>	*sptPlaylists;
-	QListWidget				*playlists;
-	QAction					*search;
-	QTreeWidget				*songs;
-	// What Spotify context we're currently in
-	QString sptContext;
+
+	// Getters for private properties
+	QString &getCacheLocation();
+	QVector<spt::Playlist> &getSptPlaylists();
+	QListWidget *getPlaylistsList();
+	QAction *getSearchAction();
+	QTreeWidget *getSongsTree();
+	QString &getSptContext();
+
 private:
-	// Widgets
-	QLabel		*nowPlaying,	*position,	*nowAlbum;
-	QSlider		*progress;
-	QAction		*playPause,		*repeat,	*shuffle;
-	VolumeButton	*volumeButton;
-	// Everything else
-	spt::Spotify			*spotify;
-	QNetworkAccessManager	*network;
-	spt::ClientHandler		*sptClient;
-	QDockWidget				*searchView;
-	spt::Playback			current;
-	mp::Service				*mediaPlayer;
-	QTreeWidget				*libraryList;
-	QDockWidget				*artistView;
-	AudioFeaturesView		*audioFeaturesView;
-	LyricsView				*lyricsView;
-	TrayIcon				*trayIcon;
-	static bool				darkBackground;
-	int						refreshCount;
-	QTreeWidgetItem			*playingTrackItem;
-	spt::User				currentUser;
-	Settings				&settings;
-	QHash<QString, QTreeWidgetItem*>	trackItems;
+	// Static
+	static bool darkBackground;
+
+	// Constructor
+	Settings &settings;
+
+	// Qt Widgets
+	QAction *playPause = nullptr;
+	QAction *repeat = nullptr;
+	QAction *search = nullptr;
+	QAction *shuffle = nullptr;
+	QDockWidget *artistView = nullptr;
+	QDockWidget *searchView = nullptr;
+	QLabel *nowAlbum = nullptr;
+	QLabel *nowPlaying = nullptr;
+	QLabel *position = nullptr;
+	QListWidget *playlists = nullptr;
+	QSlider *progress = nullptr;
+	QTreeWidget *libraryList = nullptr;
+	QTreeWidget *songs = nullptr;
+	QTreeWidgetItem *playingTrackItem = nullptr;
+
+	// spt
+	spt::ClientHandler *sptClient = nullptr;
+	spt::Playback current;
+	spt::Spotify *spotify = nullptr;
+
+	// Non-Widget Qt
+	QNetworkAccessManager *network = nullptr;
+
+	// Other
+	AudioFeaturesView *audioFeaturesView = nullptr;
+	LyricsView *lyricsView = nullptr;
+	QHash<QString, QTreeWidgetItem*> trackItems;
+	QString cacheLocation;
+	QString sptContext;
+	QVector<spt::Playlist> sptPlaylists;
+	TrayIcon *trayIcon = nullptr;
+	VolumeButton *volumeButton = nullptr;
+	int refreshCount = -1;
+	mp::Service *mediaPlayer = nullptr;
+	spt::User currentUser;
+
 	// Methods
 	QWidget *createCentralWidget();
 	QToolBar *createToolBar();

@@ -2,52 +2,45 @@
 
 bool MainWindow::darkBackground	= false;
 
-MainWindow::MainWindow(Settings &settings, QWidget *parent) : settings(settings), QMainWindow(parent)
+MainWindow::MainWindow(Settings &settings)
+	: settings(settings), QMainWindow()
 {
-	// Some default values to prevent unexpected stuff
-	playlists 	= nullptr;
-	songs 		= nullptr;
-	sptClient	= nullptr;
-	progress	= nullptr;
-	nowPlaying	= position	= nowAlbum	= nullptr;
-	repeat 		= shuffle	= playPause	= nullptr;
-	mediaPlayer	= nullptr;
-	artistView	= nullptr;
-	lyricsView	= nullptr;
-	trayIcon	= nullptr;
-	audioFeaturesView	= nullptr;
-	playingTrackItem	= nullptr;
-	refreshCount 		= -1;
 	// Set cache root location
 	cacheLocation = QStandardPaths::standardLocations(QStandardPaths::CacheLocation)[0];
+
 	// Create main cache path and album subdir
 	QDir cacheDir(cacheLocation);
 	cacheDir.mkpath(".");
 	cacheDir.mkdir("album");
 	cacheDir.mkdir("playlist");
 	cacheDir.mkdir("tracks");
+
 	// Apply selected style and palette
 	QApplication::setStyle(settings.general.style);
 	applyPalette(settings.general.stylePalette);
+
 	// Check for dark background
 	auto bg = palette().color(backgroundRole());
 	if (((bg.red() + bg.green() + bg.blue()) / 3) < 128)
 		darkBackground = true;
+
 	// Set Spotify
 	spotify = new spt::Spotify(settings);
-	sptPlaylists = new QVector<spt::Playlist>();
 	network = new QNetworkAccessManager();
+
 	// Setup main window
 	setWindowTitle("spotify-qt");
 	setWindowIcon(Icon::get("logo:spotify-qt"));
 	resize(1280, 720);
 	setCentralWidget(createCentralWidget());
 	addToolBar(Qt::ToolBarArea::TopToolBarArea, createToolBar());
+
 	// Update player status
 	auto timer = new QTimer(this);
 	QTimer::connect(timer, &QTimer::timeout, this, &MainWindow::refresh);
 	refresh();
 	timer->start(1000);
+
 	// Check if should start client
 	if (settings.spotify.startClient
 		&& (settings.spotify.alwaysStart || spotify->devices().isEmpty()))
@@ -55,10 +48,12 @@ MainWindow::MainWindow(Settings &settings, QWidget *parent) : settings(settings)
 		sptClient = new spt::ClientHandler(settings, this);
 		auto status = sptClient->start();
 		if (!status.isEmpty())
-			QMessageBox::warning(this,
+			QMessageBox::warning(
+				this,
 				"Client error",
 				QString("Failed to autostart Spotify client: %1").arg(status));
 	}
+
 	// Start media controller if specified
 	if (settings.general.mediaController)
 	{
@@ -70,18 +65,23 @@ MainWindow::MainWindow(Settings &settings, QWidget *parent) : settings(settings)
 			mediaPlayer = nullptr;
 		}
 	}
+
 	// Start listening to current playback responses
-	spt::Spotify::connect(spotify, &spt::Spotify::gotPlayback, [this](const spt::Playback &playback) {
+	spt::Spotify::connect(spotify, &spt::Spotify::gotPlayback, [this](const spt::Playback &playback)
+	{
 		refreshed(playback);
 	});
+
 	// Create tray icon if specified
 	if (settings.general.trayIcon)
 		trayIcon = new TrayIcon(spotify, settings, this);
+
 	// If new version has been detected, show what's new dialog
 	if (settings.general.showChangelog && settings.general.lastVersion != APP_VERSION)
 		(new WhatsNewDialog(APP_VERSION, settings, this))->open();
 	settings.general.lastVersion = APP_VERSION;
 	settings.save();
+
 	// Welcome
 	setStatus("Welcome to spotify-qt!");
 }
@@ -95,7 +95,6 @@ MainWindow::~MainWindow()
 	delete	nowAlbum;
 	delete	progress;
 	delete	playPause;
-	delete	sptPlaylists;
 	delete	spotify;
 	delete	sptClient;
 }
@@ -325,11 +324,11 @@ QWidget *MainWindow::createCentralWidget()
 	QListWidget::connect(playlists, &QListWidget::itemClicked, this, [this](QListWidgetItem *item) {
 		if (item != nullptr)
 			libraryList->setCurrentItem(nullptr);
-		auto currentPlaylist = sptPlaylists->at(playlists->currentRow());
+		auto currentPlaylist = sptPlaylists.at(playlists->currentRow());
 		loadPlaylist(currentPlaylist);
 	});
 	QListWidget::connect(playlists, &QListWidget::itemDoubleClicked, this, [this](QListWidgetItem *item) {
-		auto currentPlaylist = sptPlaylists->at(playlists->currentRow());
+		auto currentPlaylist = sptPlaylists.at(playlists->currentRow());
 		loadPlaylist(currentPlaylist);
 		auto result = spotify->playTracks(
 			QString("spotify:playlist:%1").arg(currentPlaylist.id));
@@ -338,7 +337,7 @@ QWidget *MainWindow::createCentralWidget()
 	});
 	playlists->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(playlists, &QWidget::customContextMenuRequested, [=](const QPoint &pos) {
-		(new PlaylistMenu(*spotify, sptPlaylists->at(playlists->currentRow()), this))
+		(new PlaylistMenu(*spotify, sptPlaylists.at(playlists->currentRow()), this))
 			->popup(playlists->mapToGlobal(pos));
 	});
 	auto playlistContainer = createGroupBox(QVector<QWidget*>() << playlists);
@@ -464,7 +463,7 @@ QWidget *MainWindow::createCentralWidget()
 
 	// Load tracks in playlist
 	auto playlistId = settings.general.lastPlaylist;
-	if (sptPlaylists->isEmpty())
+	if (sptPlaylists.isEmpty())
 	{
 		// If no playlists were found
 		// TODO: Load something from library here
@@ -472,13 +471,13 @@ QWidget *MainWindow::createCentralWidget()
 	else if (playlistId.isEmpty())
 	{
 		// Default to first in list
-		playlistId = sptPlaylists->at(0).id;
+		playlistId = sptPlaylists.at(0).id;
 	}
 	else
 	{
 		// Find playlist in list
 		int i = 0;
-		for (auto &playlist : *sptPlaylists)
+		for (auto &playlist : sptPlaylists)
 		{
 			if (playlist.id == playlistId)
 			{
@@ -623,16 +622,20 @@ void MainWindow::openLyrics(const QString &artist, const QString &name)
 
 void MainWindow::refreshPlaylists()
 {
-	auto lastIndex = playlists == nullptr
-		? -1 : playlists->currentRow();
-	spotify->playlists(&sptPlaylists);
+	auto lastIndex =
+		playlists == nullptr
+		? -1
+		: playlists->currentRow();
+	sptPlaylists = spotify->playlists();
+
 	// Create or empty
 	if (playlists == nullptr)
 		playlists = new QListWidget();
 	else
 		playlists->clear();
+
 	// Add all playlists
-	for (auto &playlist : *sptPlaylists)
+	for (auto &playlist : sptPlaylists)
 	{
 		auto item = new QListWidgetItem(playlist.name, playlists);
 		item->setToolTip(playlist.description);
@@ -1022,3 +1025,37 @@ QPixmap MainWindow::mask(const QPixmap &source, MaskShape shape, const QVariant 
 	painter.drawImage(0, 0, img);
 	return QPixmap::fromImage(out);
 }
+
+//region Getters
+
+QString &MainWindow::getCacheLocation()
+{
+	return cacheLocation;
+}
+
+QVector<spt::Playlist> &MainWindow::getSptPlaylists()
+{
+	return sptPlaylists;
+}
+
+QListWidget *MainWindow::getPlaylistsList()
+{
+	return playlists;
+}
+
+QAction *MainWindow::getSearchAction()
+{
+	return search;
+}
+
+QTreeWidget *MainWindow::getSongsTree()
+{
+	return songs;
+}
+
+QString &MainWindow::getSptContext()
+{
+	return sptContext;
+}
+
+//endregion

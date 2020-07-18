@@ -5,13 +5,8 @@ using namespace spt;
 Spotify::Spotify(Settings &settings) : settings(settings)
 {
 	lastAuth = 0;
-	networkManager = new QNetworkAccessManager();
+	networkManager = new QNetworkAccessManager(this);
 	refresh();
-}
-
-Spotify::~Spotify()
-{
-	delete networkManager;
 }
 
 QNetworkRequest Spotify::request(const QString &url)
@@ -165,7 +160,7 @@ bool Spotify::refresh()
 	return true;
 }
 
-void Spotify::playlists(QVector<Playlist> **playlists)
+QVector<Playlist> Spotify::playlists()
 {
 	// Request playlists
 	auto json = get("me/playlists?limit=50");
@@ -173,11 +168,12 @@ void Spotify::playlists(QVector<Playlist> **playlists)
 	auto items = json["items"].toArray();
 	// Create list of playlists
 	auto size = json["total"].toInt();
-	(*playlists)->clear();
-	(*playlists)->reserve(size);
+	QVector<Playlist> playlists;
+	playlists.reserve(size);
 	// Loop through all items
 	for (int i = 0; i < items.size(); i++)
-		(*playlists)->insert(i, Playlist(items.at(i).toObject()));
+		playlists.insert(i, Playlist(items.at(i).toObject()));
+	return playlists;
 }
 
 QVector<Device> Spotify::devices()

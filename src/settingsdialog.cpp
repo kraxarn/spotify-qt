@@ -227,7 +227,7 @@ QWidget *SettingsDialog::aboutSettings()
 	auto cacheSize = 0u;
 	auto mainWindow = dynamic_cast<MainWindow*>(parentWidget());
 	if (mainWindow != nullptr)
-		for (auto const &file : QDir(mainWindow->cacheLocation).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
+		for (auto const &file : QDir(mainWindow->getCacheLocation()).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
 			for (auto const &f : QDir(file.absoluteFilePath()).entryInfoList(QDir::Files))
 				cacheSize += f.size();
 
@@ -298,10 +298,10 @@ QWidget *SettingsDialog::aboutSettings()
 	QAbstractButton::connect(openCache, &QPushButton::clicked, [this, window](bool checked) {
 		if (window == nullptr)
 			return;
-		if (!QDesktopServices::openUrl(QUrl(window->cacheLocation)))
+		if (!QDesktopServices::openUrl(QUrl(window->getCacheLocation())))
 			QMessageBox::warning(this,
 				"No path",
-				QString("Failed to open path: %1").arg(window->cacheLocation));
+				QString("Failed to open path: %1").arg(window->getCacheLocation()));
 	});
 	options->addWidget(openCache);
 	// Open config file
@@ -397,7 +397,7 @@ bool SettingsDialog::applySettings()
 		? QHeaderView::ResizeToContents
 		: QHeaderView::Interactive;
 	if (resizeMode != settings.general.songHeaderResizeMode && window != nullptr)
-		window->songs->header()->setSectionResizeMode(resizeMode);
+		window->getSongsTree()->header()->setSectionResizeMode(resizeMode);
 	settings.general.songHeaderResizeMode = resizeMode;
 
 	// Refresh interval

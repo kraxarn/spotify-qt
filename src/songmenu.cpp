@@ -65,8 +65,8 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 	auto addPlaylist = addMenu(Icon::get("list-add"), "Add to playlist");
 	auto currentPlaylist = !mainWindow->hasPlaylistSelected()
 		? nullptr
-		: &mainWindow->sptPlaylists->at(mainWindow->playlists->currentRow());
-	for (auto &playlist : *mainWindow->sptPlaylists)
+		: &mainWindow->getSptPlaylists().at(mainWindow->getPlaylistsList()->currentRow());
+	for (auto &playlist : mainWindow->getSptPlaylists())
 	{
 		// Create main action
 		auto action = addPlaylist->addAction(playlist.name);
@@ -99,15 +99,15 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 	});
 	// Remove from playlist
 	auto remPlaylist = addAction(Icon::get("list-remove"), "Remove from playlist");
-	remPlaylist->setEnabled(mainWindow->playlists->currentRow() >= 0);
+	remPlaylist->setEnabled(mainWindow->getPlaylistsList()->currentRow() >= 0);
 	QAction::connect(remPlaylist, &QAction::triggered, [
 		mainWindow, trackId, spotify, currentPlaylist, name, artist](bool checked) {
 		// Remove from interface
 		QTreeWidgetItem *item = nullptr;
 		int i;
-		for (i = 0; i < mainWindow->songs->topLevelItemCount(); i++)
+		for (i = 0; i < mainWindow->getSongsTree()->topLevelItemCount(); i++)
 		{
-			item = mainWindow->songs->topLevelItem(i);
+			item = mainWindow->getSongsTree()->topLevelItem(i);
 			if (item->data(0, MainWindow::RoleTrackId).toString() == trackId)
 				break;
 			// Failed to find
@@ -128,7 +128,7 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 			return;
 		}
 		// i doesn't necessarily match item index depending on sorting order
-		mainWindow->songs->takeTopLevelItem(i);
+		mainWindow->getSongsTree()->takeTopLevelItem(i);
 		mainWindow->setStatus(QString(R"(Removed "%1 - %2" from "%3")")
 			.arg(name).arg(artist).arg(currentPlaylist->name));
 	});
