@@ -8,10 +8,6 @@ class MainWindow : public QMainWindow
 
 public:
 	explicit MainWindow(Settings &settings);
-	~MainWindow() override;
-
-protected:
-	void closeEvent(QCloseEvent *event) override;
 
 public:
 	static void applyPalette(Settings::Palette palette);

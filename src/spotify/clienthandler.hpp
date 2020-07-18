@@ -9,11 +9,13 @@
 
 namespace spt
 {
-	class ClientHandler
+	class ClientHandler : public QObject
 	{
+	Q_OBJECT
+
 	public:
 		explicit ClientHandler(const Settings &settings, QWidget *parent = nullptr);
-		virtual ~ClientHandler();
+
 		static QString version(const QString &path);
 		QString start();
 		QProcess *process = nullptr;
@@ -22,7 +24,7 @@ namespace spt
 		static void setVolume(float value);
 
 	private:
-		QWidget *parent;
+		QWidget* parentWidget = nullptr;
 		QString path;
 		const Settings &settings;
 		bool supportsPulse();

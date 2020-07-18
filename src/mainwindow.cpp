@@ -25,7 +25,7 @@ MainWindow::MainWindow(Settings &settings)
 		darkBackground = true;
 
 	// Set Spotify
-	spotify = new spt::Spotify(settings);
+	spotify = new spt::Spotify(settings, this);
 	network = new QNetworkAccessManager();
 
 	// Setup main window
@@ -84,26 +84,6 @@ MainWindow::MainWindow(Settings &settings)
 
 	// Welcome
 	setStatus("Welcome to spotify-qt!");
-}
-
-MainWindow::~MainWindow()
-{
-	delete	playlists;
-	delete	songs;
-	delete	nowPlaying;
-	delete	position;
-	delete	nowAlbum;
-	delete	progress;
-	delete	playPause;
-	delete	spotify;
-	delete	sptClient;
-}
-
-void MainWindow::closeEvent(QCloseEvent *event)
-{
-	if (trayIcon != nullptr)
-		delete trayIcon;
-	event->accept();
 }
 
 void MainWindow::refresh()
@@ -195,7 +175,7 @@ QWidget *MainWindow::createCentralWidget()
 	// Sidebar with playlists etc.
 	auto sidebar = new QVBoxLayout();
 	libraryList = new QTreeWidget(this);
-	playlists = new QListWidget();
+	playlists = new QListWidget(this);
 	// Library
 	libraryList->addTopLevelItems({
 		treeItem(libraryList, "Recently Played", "Most recently played tracks from any device", QStringList()),
@@ -346,11 +326,11 @@ QWidget *MainWindow::createCentralWidget()
 	// Now playing song
 	auto nowPlayingLayout = new QHBoxLayout();
 	nowPlayingLayout->setSpacing(12);
-	nowAlbum = new QLabel();
+	nowAlbum = new QLabel(this);
 	nowAlbum->setFixedSize(64, 64);
 	nowAlbum->setPixmap(Icon::get("media-optical-audio").pixmap(nowAlbum->size()));
 	nowPlayingLayout->addWidget(nowAlbum);
-	nowPlaying = new QLabel("No music playing");
+	nowPlaying = new QLabel("No music playing", this);
 	nowPlaying->setWordWrap(true);
 	nowPlayingLayout->addWidget(nowPlaying);
 	sidebar->addLayout(nowPlayingLayout);
@@ -366,7 +346,7 @@ QWidget *MainWindow::createCentralWidget()
 	sidebarWidget->setMaximumWidth(250);
 	container->addWidget(sidebarWidget);
 	// Table with songs
-	songs = new QTreeWidget();
+	songs = new QTreeWidget(this);
 	songs->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	songs->setSelectionBehavior(QAbstractItemView::SelectRows);
 	songs->setSortingEnabled(true);
@@ -628,13 +608,8 @@ void MainWindow::refreshPlaylists()
 		: playlists->currentRow();
 	sptPlaylists = spotify->playlists();
 
-	// Create or empty
-	if (playlists == nullptr)
-		playlists = new QListWidget();
-	else
-		playlists->clear();
-
 	// Add all playlists
+	playlists->clear();
 	for (auto &playlist : sptPlaylists)
 	{
 		auto item = new QListWidgetItem(playlist.name, playlists);

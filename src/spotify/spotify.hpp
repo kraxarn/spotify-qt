@@ -36,7 +36,7 @@ namespace spt
 			User
 		};
 
-		explicit Spotify(Settings &settings);
+		explicit Spotify(Settings &settings, QObject *parent = nullptr);
 
 		QJsonDocument get(QString url);
 		QVector<Playlist> playlists();
