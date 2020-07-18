@@ -2,15 +2,15 @@
 
 #include "darkpalette.hpp"
 
+#include <QApplication>
+#include <QGroupBox>
 #include <QJsonObject>
 #include <QJsonValue>
-#include <QStringList>
-#include <QTreeWidgetItem>
-#include <QTreeWidget>
-#include <QApplication>
 #include <QPainter>
 #include <QPainterPath>
-#include <QGroupBox>
+#include <QStringList>
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
 #include <QVBoxLayout>
 
 class Utils
