@@ -9,6 +9,9 @@ class MainWindow : public QMainWindow
 public:
 	explicit MainWindow(Settings &settings);
 
+protected:
+	void closeEvent(QCloseEvent *event) override;
+
 public:
 	QByteArray get(const QString &url);
 	QJsonDocument getJson(const QString &url);

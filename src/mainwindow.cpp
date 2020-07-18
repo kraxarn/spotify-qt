@@ -86,6 +86,12 @@ MainWindow::MainWindow(Settings &settings)
 	setStatus("Welcome to spotify-qt!");
 }
 
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+	delete trayIcon;
+	event->accept();
+}
+
 void MainWindow::refresh()
 {
 	if (refreshCount < 0
