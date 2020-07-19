@@ -44,6 +44,7 @@ public:
 	QAction *getSearchAction();
 	QTreeWidget *getSongsTree();
 	QString &getSptContext();
+	LibraryList *getLibraryList();
 
 private:
 	// Constructor

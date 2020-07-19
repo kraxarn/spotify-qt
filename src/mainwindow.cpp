@@ -150,45 +150,18 @@ void MainWindow::refreshed(const spt::Playback &playback)
 QWidget *MainWindow::createCentralWidget()
 {
 	auto container = new QSplitter();
-	// Sidebar with playlists etc.
 	auto sidebar = new QVBoxLayout();
-	libraryList = new LibraryList(*spotify, this);
-	playlists = new QListWidget(this);
 
 	//region Library
+	libraryList = new LibraryList(*spotify, this);
 	auto library = Utils::createGroupBox(QVector<QWidget*>() << libraryList, this);
 	library->setTitle("Library");
 	sidebar->addWidget(library);
 	//endregion
 
 	//region Playlists
-	// Update current playlists
+	playlists = new PlaylistList(*spotify, this);
 	refreshPlaylists();
-
-	// Set default selected playlist
-	playlists->setCurrentRow(0);
-
-	QListWidget::connect(playlists, &QListWidget::itemClicked, this, [this](QListWidgetItem *item) {
-		if (item != nullptr)
-			libraryList->setCurrentItem(nullptr);
-		auto currentPlaylist = sptPlaylists.at(playlists->currentRow());
-		loadPlaylist(currentPlaylist);
-	});
-
-	QListWidget::connect(playlists, &QListWidget::itemDoubleClicked, this, [this](QListWidgetItem *item) {
-		auto currentPlaylist = sptPlaylists.at(playlists->currentRow());
-		loadPlaylist(currentPlaylist);
-		auto result = spotify->playTracks(
-			QString("spotify:playlist:%1").arg(currentPlaylist.id));
-		if (!result.isEmpty())
-			setStatus(QString("Failed to start playlist playback: %1").arg(result), true);
-	});
-
-	playlists->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QWidget::connect(playlists, &QWidget::customContextMenuRequested, [=](const QPoint &pos) {
-		(new PlaylistMenu(*spotify, sptPlaylists.at(playlists->currentRow()), this))
-			->popup(playlists->mapToGlobal(pos));
-	});
 
 	auto playlistContainer = Utils::createGroupBox(QVector<QWidget*>() << playlists, this);
 	playlistContainer->setTitle("Playlists");
@@ -818,6 +791,11 @@ QTreeWidget *MainWindow::getSongsTree()
 QString &MainWindow::getSptContext()
 {
 	return sptContext;
+}
+
+LibraryList *MainWindow::getLibraryList()
+{
+	return libraryList;
 }
 
 //endregion

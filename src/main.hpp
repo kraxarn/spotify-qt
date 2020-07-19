@@ -8,6 +8,7 @@
 #include "lyricsview.hpp"
 #include "mainmenu.hpp"
 #include "mediaplayer/service.hpp"
+#include "playlistlist.hpp"
 #include "playlistmenu.hpp"
 #include "searchview.hpp"
 #include "settingsdialog.hpp"
