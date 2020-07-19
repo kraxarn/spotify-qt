@@ -4,6 +4,7 @@
 #include "audiofeaturesview.hpp"
 #include "darkpalette.hpp"
 #include "icon.hpp"
+#include "librarylist.hpp"
 #include "lyricsview.hpp"
 #include "mainmenu.hpp"
 #include "mediaplayer/service.hpp"

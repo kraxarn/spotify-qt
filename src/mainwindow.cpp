@@ -1,7 +1,5 @@
 #include "mainwindow.hpp"
 
-
-
 MainWindow::MainWindow(Settings &settings)
 	: settings(settings), QMainWindow()
 {
@@ -154,80 +152,8 @@ QWidget *MainWindow::createCentralWidget()
 	auto container = new QSplitter();
 	// Sidebar with playlists etc.
 	auto sidebar = new QVBoxLayout();
-	libraryList = new QTreeWidget(this);
+	libraryList = new LibraryList(*spotify, this);
 	playlists = new QListWidget(this);
-	// Library
-	libraryList->addTopLevelItems({
-		Utils::treeItem(libraryList, "Recently Played", "Most recently played tracks from any device", QStringList()),
-		Utils::treeItem(libraryList, "Liked", "Liked and saved tracks", QStringList()),
-		Utils::treeItem(libraryList, "Tracks", "Most played tracks for the past 6 months", QStringList()),
-		Utils::treeItem(libraryList, "New Releases", "New albums from artists you listen to", QStringList()),
-		Utils::treeItem(libraryList, "Albums", "Liked and saved albums"),
-		Utils::treeItem(libraryList, "Artists", "Most played artists for the past 6 months")
-	});
-	libraryList->header()->hide();
-	libraryList->setCurrentItem(nullptr);
-	QTreeWidget::connect(libraryList, &QTreeWidget::itemClicked, [this](QTreeWidgetItem *item, int column) {
-		if (item != nullptr) {
-			playlists->setCurrentRow(-1);
-			if (item->parent() != nullptr)
-			{
-				auto data = item->data(0, 0x100).toString();
-				switch (item->data(0, 0x101).toInt())
-				{
-					case Utils::RoleArtistId:
-						openArtist(data);
-						break;
-
-					case Utils::RoleAlbumId:
-						loadAlbum(data, false);
-						break;
-				}
-			}
-			else
-			{
-				auto id = item->text(0).toLower().replace(' ', '_');
-				auto cacheTracks = loadTracksFromCache(id);
-				if (cacheTracks.isEmpty())
-					songs->setEnabled(false);
-				else
-					loadSongs(cacheTracks);
-
-				QVector<spt::Track> tracks;
-				if (item->text(0) == "Recently Played")
-					tracks = spotify->recentlyPlayed();
-				else if (item->text(0) == "Liked")
-					tracks = spotify->savedTracks();
-				else if (item->text(0) == "Tracks")
-					tracks = spotify->topTracks();
-				else if (item->text(0) == "New Releases")
-				{
-					auto all = allArtists();
-					auto releases = spotify->newReleases();
-					for (auto &album : releases)
-						if (all.contains(album.artist))
-							for (auto &track : spotify->albumTracks(album.id))
-							{
-								track.addedAt = album.releaseDate;
-								tracks << track;
-							}
-				}
-
-				saveTracksToCache(id, tracks);
-				loadSongs(tracks);
-				songs->setEnabled(true);
-			}
-		}
-	});
-	QTreeWidget::connect(libraryList, &QTreeWidget::itemDoubleClicked, [this](QTreeWidgetItem *item, int column) {
-		// Fetch all tracks in list
-		auto tracks = item->text(0) == "Recently Played"
-			? spotify->recentlyPlayed()
-			: item->text(0) == "Liked"
-				? spotify->savedTracks()
-				: item->text(0) == "Tracks"
-					? spotify->topTracks()
-					: QVector<spt::Track>();
 
 		// If none were found, don't do anything
 		if (tracks.isEmpty())
