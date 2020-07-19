@@ -34,6 +34,8 @@ public:
 	void setFixedWidthTime(bool value);
 	QVector<spt::Track> loadTracksFromCache(const QString &id);
 	void saveTracksToCache(const QString &id, const QVector<spt::Track> &tracks);
+	bool loadSongs(const QVector<spt::Track> &tracks);
+	QSet<QString> allArtists();
 
 	// Getters for private properties
 	QString &getCacheLocation();
@@ -59,7 +61,7 @@ private:
 	QLabel *position = nullptr;
 	QListWidget *playlists = nullptr;
 	QSlider *progress = nullptr;
-	QTreeWidget *libraryList = nullptr;
+	LibraryList *libraryList = nullptr;
 	QTreeWidget *songs = nullptr;
 	QTreeWidgetItem *playingTrackItem = nullptr;
 
@@ -87,7 +89,6 @@ private:
 	// Methods
 	QWidget *createCentralWidget();
 	QToolBar *createToolBar();
-	bool loadSongs(const QVector<spt::Track> &tracks);
 	void setAlbumImage(const QString &url);
 	void refresh();
 	void refreshed(const spt::Playback &playback);
@@ -95,8 +96,6 @@ private:
 	bool loadPlaylistFromCache(spt::Playlist &playlist);
 	QMenu *songMenu(const QString &trackId, const QString &artist,
 		const QString &name, const QString &artistId, const QString &albumId);
-
 	QStringList currentTracks();
 	void setPlayingTrackItem(QTreeWidgetItem *item);
-	QSet<QString> allArtists();
 };

@@ -155,64 +155,26 @@ QWidget *MainWindow::createCentralWidget()
 	libraryList = new LibraryList(*spotify, this);
 	playlists = new QListWidget(this);
 
-		// If none were found, don't do anything
-		if (tracks.isEmpty())
-			return;
-
-		// Get id of all tracks
-		QStringList trackIds;
-		tracks.reserve(tracks.length());
-		for (auto &track : tracks)
-			trackIds.append(QString("spotify:track:%1").arg(track.id));
-
-		// Play in context of all tracks
-		auto status = spotify->playTracks(trackIds.first(), trackIds);
-		if (!status.isEmpty())
-			setStatus(QString("Failed to start playback: %1").arg(status), true);
-	});
-	// When expanding top artists, update it
-	QTreeWidget::connect(libraryList, &QTreeWidget::itemExpanded, [this](QTreeWidgetItem *item) {
-		QVector<QVariantList> results;
-		item->takeChildren();
-
-		if (item->text(0) == "Artists")
-			for (auto &artist : spotify->topArtists())
-				results.append({artist.name, artist.id, Utils::RoleArtistId});
-		else if (item->text(0) == "Albums")
-			for (auto &album : spotify->savedAlbums())
-				results.append({album.name, album.id, Utils::RoleAlbumId});
-
-		// No results
-		if (results.isEmpty())
-		{
-			auto child = new QTreeWidgetItem(item, {"No results"});
-			child->setDisabled(true);
-			child->setToolTip(0, "If they should be here, try logging out and back in");
-			item->addChild(child);
-			return;
-		}
-		// Add all to the list
-		for (auto &result : results)
-		{
-			auto child = new QTreeWidgetItem(item, {result[0].toString()});
-			child->setData(0, 0x100, result[1]);
-			child->setData(0, 0x101, result[2]);
-			item->addChild(child);
-		}
-	});
+	//region Library
 	auto library = Utils::createGroupBox(QVector<QWidget*>() << libraryList, this);
 	library->setTitle("Library");
 	sidebar->addWidget(library);
+	//endregion
+
+	//region Playlists
 	// Update current playlists
 	refreshPlaylists();
+
 	// Set default selected playlist
 	playlists->setCurrentRow(0);
+
 	QListWidget::connect(playlists, &QListWidget::itemClicked, this, [this](QListWidgetItem *item) {
 		if (item != nullptr)
 			libraryList->setCurrentItem(nullptr);
 		auto currentPlaylist = sptPlaylists.at(playlists->currentRow());
 		loadPlaylist(currentPlaylist);
 	});
+
 	QListWidget::connect(playlists, &QListWidget::itemDoubleClicked, this, [this](QListWidgetItem *item) {
 		auto currentPlaylist = sptPlaylists.at(playlists->currentRow());
 		loadPlaylist(currentPlaylist);
@@ -221,14 +183,18 @@ QWidget *MainWindow::createCentralWidget()
 		if (!result.isEmpty())
 			setStatus(QString("Failed to start playlist playback: %1").arg(result), true);
 	});
+
 	playlists->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(playlists, &QWidget::customContextMenuRequested, [=](const QPoint &pos) {
 		(new PlaylistMenu(*spotify, sptPlaylists.at(playlists->currentRow()), this))
 			->popup(playlists->mapToGlobal(pos));
 	});
+
 	auto playlistContainer = Utils::createGroupBox(QVector<QWidget*>() << playlists, this);
 	playlistContainer->setTitle("Playlists");
 	sidebar->addWidget(playlistContainer);
+	//endregion
+
 	// Now playing song
 	auto nowPlayingLayout = new QHBoxLayout();
 	nowPlayingLayout->setSpacing(12);
@@ -240,6 +206,7 @@ QWidget *MainWindow::createCentralWidget()
 	nowPlaying->setWordWrap(true);
 	nowPlayingLayout->addWidget(nowPlaying);
 	sidebar->addLayout(nowPlayingLayout);
+
 	// Show menu when clicking now playing
 	nowPlaying->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QLabel::connect(nowPlaying, &QWidget::customContextMenuRequested, [this](const QPoint &pos) {
@@ -247,11 +214,13 @@ QWidget *MainWindow::createCentralWidget()
 		songMenu(track.id, track.artist, track.name, track.artistId, track.albumId)
 			->popup(nowPlaying->mapToGlobal(pos));
 	});
+
 	// Sidebar as widget
 	auto sidebarWidget = Utils::layoutToWidget(sidebar);
 	sidebarWidget->setMaximumWidth(250);
 	container->addWidget(sidebarWidget);
-	// Table with songs
+
+	//region Songs
 	songs = new QTreeWidget(this);
 	songs->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	songs->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -266,9 +235,11 @@ QWidget *MainWindow::createCentralWidget()
 	songs->header()->setSectionResizeMode((QHeaderView::ResizeMode) settings.general.songHeaderResizeMode);
 	if (settings.general.songHeaderSortBy > 0)
 		songs->header()->setSortIndicator(settings.general.songHeaderSortBy + 1, Qt::AscendingOrder);
+
 	// Hide specified columns
 	for (auto &value : settings.general.hiddenSongHeaders)
 		songs->header()->setSectionHidden(value + 1, true);
+
 	// Song context menu
 	songs->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(songs, &QWidget::customContextMenuRequested, [this](const QPoint &pos) {
@@ -280,6 +251,7 @@ QWidget *MainWindow::createCentralWidget()
 			item->data(0, Utils::RoleArtistId).toString(),
 			item->data(0, Utils::RoleAlbumId).toString())->popup(songs->mapToGlobal(pos));
 	});
+
 	QTreeWidget::connect(songs, &QTreeWidget::itemClicked, this, [=](QTreeWidgetItem *item, int column) {
 		auto trackId = item->data(0, Utils::RoleTrackId).toString();
 		if (trackId.isEmpty())
@@ -346,6 +318,7 @@ QWidget *MainWindow::createCentralWidget()
 		});
 		menu->popup(songs->header()->mapToGlobal(pos));
 	});
+	//endregion
 
 	// Load tracks in playlist
 	auto playlistId = settings.general.lastPlaylist;
