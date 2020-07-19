@@ -40,28 +40,14 @@ LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 	setCurrentItem(nullptr);
 
 	QTreeWidget::connect(
-		this, &QTreeWidget::itemClicked, this,
-		[this](QTreeWidgetItem *item, int column)
-		{
-			clicked(item);
-		});
-
+		this, &QTreeWidget::itemClicked, this, &LibraryList::clicked);
 	QTreeWidget::connect(
-		this, &QTreeWidget::itemDoubleClicked, this,
-		[this](QTreeWidgetItem *item, int column)
-		{
-			doubleClicked(item);
-		});
-
+		this, &QTreeWidget::itemDoubleClicked, this, &LibraryList::doubleClicked);
 	QTreeWidget::connect(
-		this, &QTreeWidget::itemExpanded, this,
-		[this](QTreeWidgetItem *item)
-		{
-			expanded(item);
-		});
+		this, &QTreeWidget::itemExpanded, this, &LibraryList::expanded);
 }
 
-void LibraryList::clicked(QTreeWidgetItem *item)
+void LibraryList::clicked(QTreeWidgetItem *item, int)
 {
 	auto mainWindow = dynamic_cast<MainWindow *>(parent);
 	if (mainWindow == nullptr)
@@ -118,7 +104,7 @@ void LibraryList::clicked(QTreeWidgetItem *item)
 	}
 }
 
-void LibraryList::doubleClicked(QTreeWidgetItem *item)
+void LibraryList::doubleClicked(QTreeWidgetItem *item, int)
 {
 	auto mainWindow = dynamic_cast<MainWindow*>(parent);
 	if (mainWindow == nullptr)

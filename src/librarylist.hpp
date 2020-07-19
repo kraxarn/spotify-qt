@@ -20,8 +20,8 @@ private:
 	spt::Spotify &spotify;
 	QWidget *parent = nullptr;
 
-	void clicked(QTreeWidgetItem *item);
-	void doubleClicked(QTreeWidgetItem *item);
+	void clicked(QTreeWidgetItem *item, int column);
+	void doubleClicked(QTreeWidgetItem *item, int column);
 	void expanded(QTreeWidgetItem *item);
 };
 

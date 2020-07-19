@@ -11,26 +11,13 @@ PlaylistList::PlaylistList(spt::Spotify &spotify, QWidget *parent)
 	setCurrentRow(0);
 
 	QListWidget::connect(
-		this, &QListWidget::itemClicked, this,
-		[this](QListWidgetItem *item)
-		{
-			clicked(item);
-		});
-
+		this, &QListWidget::itemClicked, this, &PlaylistList::clicked);
 	QListWidget::connect(
-		this, &QListWidget::itemDoubleClicked, this,
-		[this](QListWidgetItem *item)
-		{
-			doubleClicked();
-		});
+		this, &QListWidget::itemDoubleClicked, this, &PlaylistList::doubleClicked);
 
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(
-		this, &QWidget::customContextMenuRequested, this,
-		[this](const QPoint &pos)
-		{
-			menu(pos);
-		});
+		this, &QWidget::customContextMenuRequested, this, &PlaylistList::menu);
 }
 
 void PlaylistList::clicked(QListWidgetItem *item)
@@ -43,7 +30,7 @@ void PlaylistList::clicked(QListWidgetItem *item)
 	mainWindow->loadPlaylist(currentPlaylist);
 }
 
-void PlaylistList::doubleClicked()
+void PlaylistList::doubleClicked(QListWidgetItem *)
 {
 	auto mainWindow = (MainWindow *) parent;
 	auto currentPlaylist = mainWindow->getSptPlaylists().at(currentRow());

@@ -18,6 +18,6 @@ private:
 	QWidget *parent;
 
 	void clicked(QListWidgetItem *item);
-	void doubleClicked();
+	void doubleClicked(QListWidgetItem *item);
 	void menu(const QPoint &pos);
 };
