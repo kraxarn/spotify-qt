@@ -2,7 +2,6 @@
 
 #include "artistview.hpp"
 #include "audiofeaturesview.hpp"
-#include "centralwidget.hpp"
 #include "darkpalette.hpp"
 #include "icon.hpp"
 #include "lyricsview.hpp"

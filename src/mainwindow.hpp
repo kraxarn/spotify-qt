@@ -34,14 +34,6 @@ public:
 	void setFixedWidthTime(bool value);
 	QVector<spt::Track> loadTracksFromCache(const QString &id);
 	void saveTracksToCache(const QString &id, const QVector<spt::Track> &tracks);
-	QMenu *songMenu(
-		const QString &trackId, const QString &artist,
-		const QString &name, const QString &artistId, const QString &albumId);
-	QStringList currentTracks();
-	void setPlayingTrackItem(QTreeWidgetItem *item);
-	void refresh();
-	bool loadSongs(const QVector<spt::Track> &tracks);
-	QSet<QString> allArtists();
 
 	// Getters for private properties
 	QString &getCacheLocation();
@@ -50,9 +42,6 @@ public:
 	QAction *getSearchAction();
 	QTreeWidget *getSongsTree();
 	QString &getSptContext();
-	spt::Spotify *getSpotify();
-	Settings &getSettings();
-	spt::Playback &getCurrentPlayback();
 
 private:
 	// Constructor
@@ -65,14 +54,19 @@ private:
 	QAction *shuffle = nullptr;
 	QDockWidget *artistView = nullptr;
 	QDockWidget *searchView = nullptr;
+	QLabel *nowAlbum = nullptr;
+	QLabel *nowPlaying = nullptr;
 	QLabel *position = nullptr;
+	QListWidget *playlists = nullptr;
 	QSlider *progress = nullptr;
+	QTreeWidget *libraryList = nullptr;
+	QTreeWidget *songs = nullptr;
 	QTreeWidgetItem *playingTrackItem = nullptr;
 
 	// spt
 	spt::ClientHandler *sptClient = nullptr;
-	spt::Spotify *spotify = nullptr;
 	spt::Playback current;
+	spt::Spotify *spotify = nullptr;
 
 	// Non-Widget Qt
 	QNetworkAccessManager *network = nullptr;
@@ -89,12 +83,20 @@ private:
 	int refreshCount = -1;
 	mp::Service *mediaPlayer = nullptr;
 	spt::User currentUser;
-	CentralWidget *centralWidget;
 
 	// Methods
+	QWidget *createCentralWidget();
 	QToolBar *createToolBar();
+	bool loadSongs(const QVector<spt::Track> &tracks);
 	void setAlbumImage(const QString &url);
+	void refresh();
 	void refreshed(const spt::Playback &playback);
 	void cachePlaylist(spt::Playlist &playlist);
 	bool loadPlaylistFromCache(spt::Playlist &playlist);
+	QMenu *songMenu(const QString &trackId, const QString &artist,
+		const QString &name, const QString &artistId, const QString &albumId);
+
+	QStringList currentTracks();
+	void setPlayingTrackItem(QTreeWidgetItem *item);
+	QSet<QString> allArtists();
 };
