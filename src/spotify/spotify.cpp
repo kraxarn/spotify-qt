@@ -498,12 +498,14 @@ User Spotify::me()
 
 QString Spotify::editPlaylist(const Playlist &playlist)
 {
-	QVariantMap body({
-		{ "name",			playlist.name			},
-		{ "public",			playlist.isPublic		},
-		{ "collaborative",	playlist.collaborative	},
-		{ "description",		playlist.description	}
-	});
+	QVariantMap body(
+		{
+			{"name", playlist.name},
+			{"public", playlist.isPublic},
+			{"collaborative", playlist.collaborative},
+			{"description", playlist.description}
+		}
+	);
 	return put(QString("playlists/%1").arg(playlist.id), &body);
 }
 

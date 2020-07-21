@@ -1,6 +1,9 @@
 #include "audiofeaturesview.hpp"
 
-AudioFeaturesView::AudioFeaturesView(spt::Spotify &spotify, const QString &trackId, const QString &artist, const QString &name, QWidget *parent) : QDockWidget(parent)
+AudioFeaturesView::AudioFeaturesView(
+	spt::Spotify &spotify, const QString &trackId, const QString &artist,
+	const QString &name, QWidget *parent)
+	: QDockWidget(parent)
 {
 	auto features = spotify.trackAudioFeatures(trackId);
 	setWindowTitle(QString("%1 - %2")

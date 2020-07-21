@@ -46,16 +46,20 @@ QString ClientHandler::start()
 		return "no password provided";
 
 	// Attempt to start spotifyd
-	QStringList arguments({
-							  "--bitrate", QString::number(settings.spotify.bitrate),
-							  "--device-name", "spotify-qt",
-							  "--username", username,
-							  "--password", password
-						  });
+	QStringList arguments(
+		{
+			"--bitrate", QString::number(settings.spotify.bitrate),
+			"--device-name", "spotify-qt",
+			"--username", username,
+			"--password", password
+		}
+	);
 	if (supportsPulse())
-		arguments.append({
-							 "--backend", "pulseaudio"
-						 });
+		arguments.append(
+			{
+				"--backend", "pulseaudio"
+			}
+		);
 	else
 		qDebug() << "warning: spotifyd was compiled without pulseaudio support";
 

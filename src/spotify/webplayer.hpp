@@ -7,9 +7,10 @@ namespace spt
 	class WebPlayer
 	{
 	public:
-		explicit WebPlayer(QString token);
+		explicit WebPlayer(const QString &token);
 		QString html();
+
 	private:
-		QString token;
+		const QString &token;
 	};
 }

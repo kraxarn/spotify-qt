@@ -65,17 +65,19 @@ QJsonObject Playlist::toJson(Spotify &spotify)
 	for (auto &track : loadTracks(spotify))
 		jsonTracks.append(track.toJson());
 
-	return QJsonObject({
-		QPair<QString, bool>("collaborative", collaborative),
-		QPair<QString, QString>("description", description),
-		QPair<QString, QString>("id", id),
-		QPair<QString, QString>("image", image),
-		QPair<QString, QString>("name", name),
-		QPair<QString, bool>("is_public", isPublic),
-		QPair<QString, int>("total", jsonTracks.size()),
-		QPair<QString, QJsonArray>("tracks", jsonTracks),
-		QPair<QString, QString>("snapshot", snapshot),
-		QPair<QString, QString>("owner_id", ownerId),
-		QPair<QString, QString>("owner_name", ownerName)
-	});
+	return QJsonObject(
+		{
+			QPair<QString, bool>("collaborative", collaborative),
+			QPair<QString, QString>("description", description),
+			QPair<QString, QString>("id", id),
+			QPair<QString, QString>("image", image),
+			QPair<QString, QString>("name", name),
+			QPair<QString, bool>("is_public", isPublic),
+			QPair<QString, int>("total", jsonTracks.size()),
+			QPair<QString, QJsonArray>("tracks", jsonTracks),
+			QPair<QString, QString>("snapshot", snapshot),
+			QPair<QString, QString>("owner_id", ownerId),
+			QPair<QString, QString>("owner_name", ownerName)
+		}
+	);
 }
