@@ -10,7 +10,7 @@ QJsonValue Utils::getProperty(const QJsonObject &json, const QStringList &names)
 	return QJsonValue();
 }
 
-QTreeWidgetItem *Utils::treeItem(
+QTreeWidgetItem *Utils::treeItemWithChildren(
 	QTreeWidget *tree, const QString &name,
 	const QString &toolTip, const QStringList &childrenItems)
 {
@@ -130,4 +130,21 @@ QGroupBox *Utils::createGroupBox(QVector<QWidget*> &widgets, QWidget *parent)
 		layout->addWidget(widget);
 	group->setLayout(layout);
 	return group;
+}
+
+QAction *Utils::createMenuAction(
+	const QString &iconName, const QString &text,
+	QKeySequence::StandardKey shortcut)
+{
+	auto action = new QAction(Icon::get(iconName), text);
+	if (shortcut != QKeySequence::UnknownKey)
+		action->setShortcut(QKeySequence(shortcut));
+	return action;
+}
+
+QTreeWidgetItem *Utils::treeItem(QTreeWidget *tree, const QString &key, const QString &value)
+{
+	return new QTreeWidgetItem(tree, {
+		key, value
+	});
 }

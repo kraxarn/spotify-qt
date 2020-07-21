@@ -14,12 +14,10 @@ public:
 	MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent = nullptr);
 
 private:
-	QWidget			*parent;
-	spt::Spotify	&spotify;
-	Settings		&settings;
-	QAction			*about;
-	QMenu			*deviceMenu;
-	QAction *createMenuAction(const QString &iconName, const QString &text,
-		QKeySequence::StandardKey shortcut = QKeySequence::UnknownKey);
+	QWidget *parent;
+	spt::Spotify &spotify;
+	Settings &settings;
+	QAction *about;
+	QMenu *deviceMenu;
 	void refreshDevices();
 };

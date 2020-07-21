@@ -32,7 +32,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
 	});
 	addMenu(deviceMenu);
 	// Refresh and settings
-	auto openSettings = createMenuAction("configure", "Settings...", QKeySequence::Preferences);
+	auto openSettings = Utils::createMenuAction("configure", "Settings...", QKeySequence::Preferences);
 	QAction::connect(openSettings, &QAction::triggered, [this]() {
 		SettingsDialog dialog(this->settings, this->parent);
 		dialog.exec();
@@ -40,9 +40,9 @@ MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
 	addAction(openSettings);
 	// Log out and quit
 	addSeparator();
-	auto quitAction = createMenuAction("application-exit", "Quit", QKeySequence::Quit);
+	auto quitAction = Utils::createMenuAction("application-exit", "Quit", QKeySequence::Quit);
 	QAction::connect(quitAction, &QAction::triggered, QCoreApplication::quit);
-	auto logOutAction = createMenuAction("im-user-away",  "Log out");
+	auto logOutAction = Utils::createMenuAction("im-user-away",  "Log out");
 	QAction::connect(logOutAction, &QAction::triggered, [this](){
 		QMessageBox box(
 			QMessageBox::Icon::Question,
@@ -71,15 +71,6 @@ MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
 	addActions({
 		 logOutAction, quitAction
 	});
-}
-
-QAction *MainMenu::createMenuAction(const QString &iconName,
-	const QString &text, QKeySequence::StandardKey shortcut)
-{
-	auto action = new QAction(Icon::get(iconName), text);
-	if (shortcut != QKeySequence::UnknownKey)
-		action->setShortcut(QKeySequence(shortcut));
-	return action;
 }
 
 void MainMenu::refreshDevices()

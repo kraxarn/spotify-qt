@@ -1,7 +1,9 @@
 #pragma once
 
 #include "darkpalette.hpp"
+#include "icon.hpp"
 
+#include <QAction>
 #include <QApplication>
 #include <QGroupBox>
 #include <QJsonObject>
@@ -40,7 +42,7 @@ public:
 
 	static QJsonValue getProperty(const QJsonObject &json, const QStringList &names);
 
-	static QTreeWidgetItem *treeItem(
+	static QTreeWidgetItem *treeItemWithChildren(
 		QTreeWidget *tree, const QString &name, const QString &toolTip = QString::Null(),
 		const QStringList &childrenItems = QStringList(QString::Null()));
 
@@ -57,6 +59,13 @@ public:
 	static QGroupBox *createGroupBox(QVector<QWidget*> &widgets, QWidget *parent);
 
 	static bool darkBackground;
+
+	static QAction *createMenuAction(
+		const QString &iconName, const QString &text,
+		QKeySequence::StandardKey shortcut = QKeySequence::UnknownKey);
+
+	static QTreeWidgetItem *treeItem(
+		QTreeWidget *tree, const QString &key, const QString &value);
 
 private:
 	Utils() = default;

@@ -5,31 +5,31 @@ LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 {
 	addTopLevelItems(
 		{
-			Utils::treeItem(
+			Utils::treeItemWithChildren(
 				this,
 				"Recently Played",
 				"Most recently played tracks from any device",
 				QStringList()),
-			Utils::treeItem(
+			Utils::treeItemWithChildren(
 				this,
 				"Liked",
 				"Liked and saved tracks",
 				QStringList()),
-			Utils::treeItem(
+			Utils::treeItemWithChildren(
 				this,
 				"Tracks", ""
 						  "Most played tracks for the past 6 months",
 				QStringList()),
-			Utils::treeItem(
+			Utils::treeItemWithChildren(
 				this,
 				"New Releases",
 				"New albums from artists you listen to",
 				QStringList()),
-			Utils::treeItem(
+			Utils::treeItemWithChildren(
 				this,
 				"Albums",
 				"Liked and saved albums"),
-			Utils::treeItem(
+			Utils::treeItemWithChildren(
 				this,
 				"Artists",
 				"Most played artists for the past 6 months")

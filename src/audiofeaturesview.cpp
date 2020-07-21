@@ -19,15 +19,8 @@ AudioFeaturesView::AudioFeaturesView(spt::Spotify &spotify, const QString &track
 	while (i.hasNext())
 	{
 		i.next();
-		tree->addTopLevelItem(treeItem(tree, i.key(), i.value()));
+		tree->addTopLevelItem(Utils::treeItem(tree, i.key(), i.value()));
 	}
 	setWidget(tree);
 	setMinimumWidth(150);
-}
-
-QTreeWidgetItem *AudioFeaturesView::treeItem(QTreeWidget *tree, const QString &key, const QString &value)
-{
-	return new QTreeWidgetItem(tree, {
-		key, value
-	});
 }
