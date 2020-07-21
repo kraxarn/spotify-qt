@@ -1,4 +1,6 @@
 # spotify-qt
+![spotify-qt with breeze dark](https://i.vgy.me/wF2EV5.png)
+
 A Spotify client using Qt as a simpler, lighter alternative to the official client, inspired by [spotify-tui](https://github.com/Rigellute/spotify-tui).
 Much like spotify-tui, you need an actual Spotify client running, for example [spotifyd](https://github.com/Spotifyd/spotifyd), which can be configured from within the app. Also like other clients, controlling music playback requires Spotify Premium.
 
