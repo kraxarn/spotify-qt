@@ -38,7 +38,7 @@ namespace spt
 
 		explicit Spotify(Settings &settings, QObject *parent = nullptr);
 
-		QJsonDocument get(QString url);
+		QJsonDocument get(const QString &url);
 		QVector<Playlist> playlists();
 		QVector<Device> devices();
 		QString setDevice(const Device &device);
@@ -98,9 +98,9 @@ namespace spt
 		/**
 		 * HTTP PUT request expecting JSON response
 		 */
-		QString put(QString url, QVariantMap *body = nullptr);
-		QString post(QString url);
-		QString del(QString url, QVariantMap *body);
+		QString put(const QString &url, QVariantMap *body = nullptr);
+		QString post(const QString &url);
+		QString del(const QString &url, QVariantMap *body);
 		static QString errorMessage(QNetworkReply *reply);
 
 		template <class T>

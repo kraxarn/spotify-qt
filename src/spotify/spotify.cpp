@@ -28,7 +28,7 @@ QNetworkRequest Spotify::request(const QString &url)
 	return request;
 }
 
-QJsonDocument Spotify::get(QString url)
+QJsonDocument Spotify::get(const QString &url)
 {
 	// Send request
 	auto reply = networkManager->get(request(url));
@@ -59,7 +59,7 @@ void Spotify::getLater(const QString &url)
 	networkManager->get(request(url));
 }
 
-QString Spotify::put(QString url, QVariantMap *body)
+QString Spotify::put(const QString &url, QVariantMap *body)
 {
 	// Set in header we're sending json data
 	auto req = request(url);
@@ -92,14 +92,14 @@ QString Spotify::put(QString url, QVariantMap *body)
 	return reply;
 }
 
-QString Spotify::post(QString url)
+QString Spotify::post(const QString &url)
 {
 	auto req = request(url);
 	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 	return errorMessage(networkManager->post(req, QByteArray()));
 }
 
-QString Spotify::del(QString url, QVariantMap *body)
+QString Spotify::del(const QString &url, QVariantMap *body)
 {
 	auto req = request(url);
 	req.setHeader(QNetworkRequest::ContentTypeHeader, QString("application/json"));
