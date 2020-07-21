@@ -75,7 +75,9 @@ MainWindow::MainWindow(Settings &settings)
 		trayIcon = new TrayIcon(spotify, settings, this);
 
 	// If new version has been detected, show what's new dialog
-	if (settings.general.showChangelog && settings.general.lastVersion != APP_VERSION)
+	if (settings.general.showChangelog
+		&& settings.general.lastVersion != APP_VERSION
+		&& APP_VERSION != QString("v0.0"))
 		(new WhatsNewDialog(APP_VERSION, settings, this))->open();
 	settings.general.lastVersion = APP_VERSION;
 	settings.save();
