@@ -4,10 +4,6 @@ QString Icon::theme = QString();
 
 bool Icon::useFallbackIcons = false;
 
-Icon::Icon()
-{
-}
-
 QIcon Icon::get(const QString &name)
 {
 	if (theme.isNull())

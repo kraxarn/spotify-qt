@@ -109,6 +109,6 @@ namespace spt
 		QVector<Track> albumTracks(const QString &albumId, const QString &albumName, int offset);
 
 		bool refresh();
-		QString followTypeString(FollowType type);
+		static QString followTypeString(FollowType type);
 	};
 }

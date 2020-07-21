@@ -14,6 +14,6 @@ public:
 	static bool useFallbackIcons;
 
 private:
-	Icon();
+	Icon() = default;
 	static QString theme;
 };

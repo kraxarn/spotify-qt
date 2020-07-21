@@ -705,13 +705,6 @@ QStringList MainWindow::currentTracks()
 	return tracks;
 }
 
-QString MainWindow::currentLibraryItem()
-{
-	return libraryList->currentIndex().row() >= 0
-		? libraryList->currentItem()->text(0)
-		: QString();
-}
-
 void MainWindow::reloadTrayIcon()
 {
 	if (trayIcon != nullptr)
@@ -790,11 +783,6 @@ QAction *MainWindow::getSearchAction()
 QTreeWidget *MainWindow::getSongsTree()
 {
 	return songs;
-}
-
-QString &MainWindow::getSptContext()
-{
-	return sptContext;
 }
 
 LibraryList *MainWindow::getLibraryList()

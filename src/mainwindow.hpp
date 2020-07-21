@@ -27,7 +27,6 @@ public:
 	void openLyrics(const QString &artist, const QString &name);
 	bool hasPlaylistSelected();
 	QVector<spt::Track> playlistTracks(const QString &playlistId);
-	QString currentLibraryItem();
 	void reloadTrayIcon();
 	spt::User getCurrentUser();
 	void refreshPlaylists();
@@ -43,7 +42,6 @@ public:
 	QListWidget *getPlaylistsList();
 	QAction *getSearchAction();
 	QTreeWidget *getSongsTree();
-	QString &getSptContext();
 	LibraryList *getLibraryList();
 
 private:
