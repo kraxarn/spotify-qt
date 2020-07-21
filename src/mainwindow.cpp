@@ -186,6 +186,8 @@ QWidget *MainWindow::createCentralWidget()
 	nowPlaying->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QLabel::connect(nowPlaying, &QWidget::customContextMenuRequested, [this](const QPoint &pos) {
 		auto track = current.item;
+		if (track.name.isEmpty() && track.artist.isEmpty())
+			return;
 		songMenu(track.id, track.artist, track.name, track.artistId, track.albumId)
 			->popup(nowPlaying->mapToGlobal(pos));
 	});
