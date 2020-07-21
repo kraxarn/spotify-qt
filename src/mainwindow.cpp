@@ -31,7 +31,8 @@ MainWindow::MainWindow(Settings &settings)
 	setWindowIcon(Icon::get("logo:spotify-qt"));
 	resize(1280, 720);
 	setCentralWidget(createCentralWidget());
-	addToolBar(Qt::ToolBarArea::TopToolBarArea, createToolBar());
+	toolBar = new MainToolBar(*spotify, settings, this);
+	addToolBar(Qt::ToolBarArea::TopToolBarArea, toolBar);
 
 	// Update player status
 	auto timer = new QTimer(this);
@@ -115,10 +116,13 @@ void MainWindow::refreshed(const spt::Playback &playback)
 	if (currentUser.id.isEmpty())
 		currentUser = spotify->me();
 	current = playback;
+
+	auto mainToolBar = dynamic_cast<MainToolBar *>(toolBar);
+
 	if (!current.isPlaying && current.item.name == "(no name)")
 	{
-		playPause->setIcon(Icon::get("media-playback-start"));
-		playPause->setText("Play");
+		mainToolBar->playPause->setIcon(Icon::get("media-playback-start"));
+		mainToolBar->playPause->setText("Play");
 		return;
 	}
 	auto currPlaying = QString("%1\n%2").arg(current.item.name).arg(current.item.artist);
@@ -135,18 +139,18 @@ void MainWindow::refreshed(const spt::Playback &playback)
 		if (trayIcon != nullptr && settings.general.trayAlbumArt)
 			trayIcon->setPixmap(getAlbum(current.item.image));
 	}
-	position->setText(QString("%1/%2")
+	mainToolBar->position->setText(QString("%1/%2")
 		.arg(Utils::formatTime(current.progressMs))
 		.arg(Utils::formatTime(current.item.duration)));
-	progress->setValue(current.progressMs);
-	progress->setMaximum(current.item.duration);
-	playPause->setIcon(Icon::get(
+	mainToolBar->progress->setValue(current.progressMs);
+	mainToolBar->progress->setMaximum(current.item.duration);
+	mainToolBar->playPause->setIcon(Icon::get(
 		current.isPlaying ? "media-playback-pause" : "media-playback-start"));
-	playPause->setText(current.isPlaying ? "Pause" : "Play");
+	mainToolBar->playPause->setText(current.isPlaying ? "Pause" : "Play");
 	if (!settings.general.pulseVolume)
-		volumeButton->setVolume(current.volume / 5);
-	repeat->setChecked(current.repeat != "off");
-	shuffle->setChecked(current.shuffle);
+		mainToolBar->volumeButton->setVolume(current.volume / 5);
+	mainToolBar->repeat->setChecked(current.repeat != "off");
+	mainToolBar->shuffle->setChecked(current.shuffle);
 }
 
 QWidget *MainWindow::createCentralWidget()
@@ -236,99 +240,6 @@ QMenu *MainWindow::songMenu(const QString &trackId, const QString &artist,
 	const QString &name, const QString &artistId, const QString &albumId)
 {
 	return new SongMenu(trackId, artist, name, artistId, albumId, spotify, this);
-}
-
-QToolBar *MainWindow::createToolBar()
-{
-	auto toolBar = new QToolBar("Media controls", this);
-	toolBar->setMovable(false);
-	// Menu
-	auto menu = new QToolButton(this);
-	menu->setText("Menu");
-	menu->setIcon(Icon::get("application-menu"));
-	menu->setPopupMode(QToolButton::InstantPopup);
-	menu->setMenu(new MainMenu(*spotify, settings, this));
-	toolBar->addWidget(menu);
-	// Search
-	search = toolBar->addAction(Icon::get("edit-find"), "Search");
-	search->setCheckable(true);
-	searchView = new SearchView(*spotify, this);
-	addDockWidget(Qt::RightDockWidgetArea, searchView);
-	searchView->hide();
-	QAction::connect(search, &QAction::triggered, [this](bool checked) {
-		searchView->setHidden(!checked);
-	});
-	// Media controls
-	toolBar->addSeparator();
-	auto previous = toolBar->addAction(Icon::get("media-skip-backward"), "Previous");
-	playPause = toolBar->addAction(Icon::get("media-playback-start"), "Play");
-	QAction::connect(playPause, &QAction::triggered, [=](bool checked) {
-		current.isPlaying = !current.isPlaying;
-		refreshed(current);
-		auto status = playPause->iconText() == "Play" ? spotify->pause() : spotify->resume();
-		if (!status.isEmpty())
-		{
-			setStatus(QString("Failed to %1 playback: %2")
-				.arg(playPause->iconText() == "Pause" ? "pause" : "resume")
-				.arg(status), true);
-		}
-	});
-	auto next = toolBar->addAction(Icon::get("media-skip-forward"),  "Next");
-	QAction::connect(previous, &QAction::triggered, [=](bool checked) {
-		auto status = spotify->previous();
-		if (!status.isEmpty())
-			setStatus(QString("Failed to go to previous track: %1").arg(status), true);
-		refresh();
-	});
-	QAction::connect(next, &QAction::triggered, [=](bool checked) {
-		auto status = spotify->next();
-		if (!status.isEmpty())
-			setStatus(QString("Failed to go to next track: %1").arg(status), true);
-		refresh();
-	});
-	// Progress
-	progress = new QSlider(this);
-	progress->setOrientation(Qt::Orientation::Horizontal);
-	QSlider::connect(progress, &QAbstractSlider::sliderReleased, [=]() {
-		auto status = spotify->seek(progress->value());
-		if (!status.isEmpty())
-			setStatus(QString("Failed to seek: %1").arg(status), true);
-		if (mediaPlayer != nullptr)
-			mediaPlayer->stateUpdated();
-	});
-	toolBar->addSeparator();
-	toolBar->addWidget(progress);
-	toolBar->addSeparator();
-	position = new QLabel("0:00/0:00", this);
-	if (settings.general.fixedWidthTime)
-		position->setFont(QFont("monospace"));
-	toolBar->addWidget(position);
-	toolBar->addSeparator();
-	// Shuffle and repeat toggles
-	shuffle = toolBar->addAction(Icon::get("media-playlist-shuffle"), "Shuffle");
-	shuffle->setCheckable(true);
-	QAction::connect(shuffle, &QAction::triggered, [=](bool checked) {
-		current.shuffle = !current.shuffle;
-		refreshed(current);
-		auto status = spotify->setShuffle(checked);
-		if (!status.isEmpty())
-			setStatus(QString("Failed to toggle shuffle: %1").arg(status), true);
-	});
-	repeat = toolBar->addAction(Icon::get("media-playlist-repeat"), "Repeat");
-	repeat->setCheckable(true);
-	QAction::connect(repeat, &QAction::triggered, [=](bool checked) {
-		auto repeatMode = QString(checked ? "context" : "off");
-		current.repeat = repeatMode;
-		refreshed(current);
-		auto status = spotify->setRepeat(repeatMode);
-		if (!status.isEmpty())
-			setStatus(QString("Failed to toggle repeat: %1").arg(status), true);
-	});
-	// Volume
-	volumeButton = new VolumeButton(settings, *spotify, this);
-	toolBar->addWidget(volumeButton);
-	// Return final tool bar
-	return toolBar;
 }
 
 void MainWindow::openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name)
@@ -644,7 +555,7 @@ QSet<QString> MainWindow::allArtists()
 
 void MainWindow::setFixedWidthTime(bool value)
 {
-	position->setFont(value ? QFont("monospace") : QFont());
+	((MainToolBar *) toolBar)->position->setFont(value ? QFont("monospace") : QFont());
 }
 
 //region Getters
@@ -681,7 +592,7 @@ QListWidget *MainWindow::getPlaylistsList()
 
 QAction *MainWindow::getSearchAction()
 {
-	return search;
+	return ((MainToolBar *) toolBar)->search;
 }
 
 QTreeWidget *MainWindow::getSongsTree()
@@ -697,6 +608,16 @@ LibraryList *MainWindow::getLibraryList()
 QString &MainWindow::getSptContext()
 {
 	return sptContext;
+}
+
+spt::Playback &MainWindow::getCurrentPlayback()
+{
+	return current;
+}
+
+mp::Service *MainWindow::getMediaPlayer()
+{
+	return mediaPlayer;
 }
 
 //endregion

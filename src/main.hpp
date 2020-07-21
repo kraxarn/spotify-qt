@@ -7,6 +7,7 @@
 #include "librarylist.hpp"
 #include "lyricsview.hpp"
 #include "mainmenu.hpp"
+#include "maintoolbar.hpp"
 #include "mediaplayer/service.hpp"
 #include "playlistlist.hpp"
 #include "playlistmenu.hpp"

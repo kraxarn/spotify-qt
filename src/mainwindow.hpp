@@ -41,6 +41,7 @@ public:
 	QStringList currentTracks();
 	void setPlayingTrackItem(QTreeWidgetItem *item);
 	void refresh();
+	void refreshed(const spt::Playback &playback);
 
 	// Getters for private properties
 	QString &getCacheLocation();
@@ -50,26 +51,22 @@ public:
 	QTreeWidget *getSongsTree();
 	LibraryList *getLibraryList();
 	QString &getSptContext();
+	spt::Playback &getCurrentPlayback();
+	mp::Service *getMediaPlayer();
 
 private:
 	// Constructor
 	Settings &settings;
 
 	// Qt Widgets
-	QAction *playPause = nullptr;
-	QAction *repeat = nullptr;
-	QAction *search = nullptr;
-	QAction *shuffle = nullptr;
 	QDockWidget *artistView = nullptr;
-	QDockWidget *searchView = nullptr;
 	QLabel *nowAlbum = nullptr;
 	QLabel *nowPlaying = nullptr;
-	QLabel *position = nullptr;
 	QListWidget *playlists = nullptr;
-	QSlider *progress = nullptr;
 	LibraryList *libraryList = nullptr;
 	QTreeWidget *songs = nullptr;
 	QTreeWidgetItem *playingTrackItem = nullptr;
+	QToolBar *toolBar = nullptr;
 
 	// spt
 	spt::ClientHandler *sptClient = nullptr;
@@ -87,16 +84,13 @@ private:
 	QString sptContext;
 	QVector<spt::Playlist> sptPlaylists;
 	TrayIcon *trayIcon = nullptr;
-	VolumeButton *volumeButton = nullptr;
 	int refreshCount = -1;
 	mp::Service *mediaPlayer = nullptr;
 	spt::User currentUser;
 
 	// Methods
 	QWidget *createCentralWidget();
-	QToolBar *createToolBar();
 	void setAlbumImage(const QString &url);
-	void refreshed(const spt::Playback &playback);
 	void cachePlaylist(spt::Playlist &playlist);
 	bool loadPlaylistFromCache(spt::Playlist &playlist);
 };
