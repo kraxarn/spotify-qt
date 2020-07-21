@@ -16,7 +16,13 @@ MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
 		if (latest.isEmpty() || isLatest)
 			about->setVisible(false);
 		else
+		{
+			about->setDisabled(false);
 			about->setText(QString("Update found: %1").arg(latest));
+			QAction::connect(about, &QAction::triggered, []() {
+				QDesktopServices::openUrl(QUrl("https://github.com/kraxarn/spotify-qt/releases/latest"));
+			});
+		}
 	}
 	// Device selection
 	deviceMenu = new QMenu("Device");
