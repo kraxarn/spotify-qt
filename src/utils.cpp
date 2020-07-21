@@ -1,4 +1,5 @@
 #include "utils.hpp"
+#include "icon.hpp"
 
 bool Utils::darkBackground = false;
 

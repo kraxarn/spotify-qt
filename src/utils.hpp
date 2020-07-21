@@ -1,7 +1,6 @@
 #pragma once
 
 #include "darkpalette.hpp"
-#include "icon.hpp"
 
 #include <QAction>
 #include <QApplication>
