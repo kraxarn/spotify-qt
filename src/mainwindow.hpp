@@ -35,6 +35,12 @@ public:
 	void saveTracksToCache(const QString &id, const QVector<spt::Track> &tracks);
 	bool loadSongs(const QVector<spt::Track> &tracks);
 	QSet<QString> allArtists();
+	QMenu *songMenu(
+		const QString &trackId, const QString &artist,
+		const QString &name, const QString &artistId, const QString &albumId);
+	QStringList currentTracks();
+	void setPlayingTrackItem(QTreeWidgetItem *item);
+	void refresh();
 
 	// Getters for private properties
 	QString &getCacheLocation();
@@ -43,6 +49,7 @@ public:
 	QAction *getSearchAction();
 	QTreeWidget *getSongsTree();
 	LibraryList *getLibraryList();
+	QString &getSptContext();
 
 private:
 	// Constructor
@@ -89,12 +96,7 @@ private:
 	QWidget *createCentralWidget();
 	QToolBar *createToolBar();
 	void setAlbumImage(const QString &url);
-	void refresh();
 	void refreshed(const spt::Playback &playback);
 	void cachePlaylist(spt::Playlist &playlist);
 	bool loadPlaylistFromCache(spt::Playlist &playlist);
-	QMenu *songMenu(const QString &trackId, const QString &artist,
-		const QString &name, const QString &artistId, const QString &albumId);
-	QStringList currentTracks();
-	void setPlayingTrackItem(QTreeWidgetItem *item);
 };
