@@ -239,7 +239,7 @@ QWidget *MainWindow::createCentralWidget()
 QMenu *MainWindow::songMenu(const QString &trackId, const QString &artist,
 	const QString &name, const QString &artistId, const QString &albumId)
 {
-	return new SongMenu(trackId, artist, name, artistId, albumId, spotify, this);
+	return new SongMenu(trackId, artist, name, artistId, albumId, *spotify, this);
 }
 
 void MainWindow::openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name)
@@ -482,7 +482,7 @@ QPixmap MainWindow::getAlbum(const QString &url)
 
 void MainWindow::openArtist(const QString &artistId)
 {
-	auto view = new ArtistView(spotify, artistId, this);
+	auto view = new ArtistView(*spotify, artistId, this);
 	if (artistView != nullptr)
 	{
 		artistView->close();

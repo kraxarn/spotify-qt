@@ -114,7 +114,7 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 			return;
 		(new SongMenu(trackId, item->text(1),
 			item->text(0), item->data(0, Utils::RoleArtistId).toString(),
-			item->data(0, Utils::RoleAlbumId).toString(), &spotify, window))
+			item->data(0, Utils::RoleAlbumId).toString(), spotify, window))
 			->popup(trackList->mapToGlobal(pos));
 	});
 
