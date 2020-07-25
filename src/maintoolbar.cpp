@@ -13,13 +13,13 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, Settings &settings, QWidget *par
 	menu->setText("Menu");
 	menu->setIcon(Icon::get("application-menu"));
 	menu->setPopupMode(QToolButton::InstantPopup);
-	menu->setMenu(new MainMenu(spotify, settings, this));
+	menu->setMenu(new MainMenu(spotify, settings, mainWindow));
 	addWidget(menu);
 
 	// Search
 	search = addAction(Icon::get("edit-find"), "Search");
 	search->setCheckable(true);
-	searchView = new SearchView(spotify, this);
+	searchView = new SearchView(spotify, mainWindow);
 	mainWindow->addDockWidget(Qt::RightDockWidgetArea, searchView);
 	searchView->hide();
 	QAction::connect(search, &QAction::triggered, [this](bool checked)
