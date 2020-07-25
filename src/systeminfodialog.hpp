@@ -2,6 +2,7 @@
 
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QFile>
 #include <QLabel>
 #include <QPushButton>
 #include <QTextEdit>
@@ -12,5 +13,8 @@ class SystemInfoDialog : public QDialog
 	Q_OBJECT
 
 public:
-	SystemInfoDialog(const QString &info, QWidget *parent = nullptr);
+	explicit SystemInfoDialog(QWidget *parent = nullptr);
+
+private:
+	static QString systemInfo();
 };

@@ -46,7 +46,6 @@ private:
 	static bool isPulse();
 	static bool sptConfigExists();
 	static bool hasIconTheme();
-	static QString systemInfo();
 	Settings &settings;
 	// App settings
 	QComboBox	*appRefresh		= nullptr;
