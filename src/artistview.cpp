@@ -124,8 +124,20 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 		item->setData(0, Utils::RoleAlbumId, album.id);
 		parentTab->insertTopLevelItem(0, item);
 	}
-	QTreeWidget::connect(albumList, &QTreeWidget::itemClicked, this, &ArtistView::loadAlbumId);
-	QTreeWidget::connect(singleList, &QTreeWidget::itemClicked, this, &ArtistView::loadAlbumId);
+
+	QVector<QTreeWidget *> lists(
+		{
+			albumList, singleList
+		}
+	);
+	for (auto list : lists)
+	{
+		QTreeWidget::connect(list, &QTreeWidget::itemClicked, this, &ArtistView::loadAlbumId);
+
+		list->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+		QWidget::connect(list, &QWidget::customContextMenuRequested, this, &ArtistView::albumMenu);
+	}
+
 	tabs->addTab(albumList, "Albums");
 	tabs->addTab(singleList, "Singles");
 
@@ -189,4 +201,13 @@ void ArtistView::relatedClick(QListWidgetItem *item)
 {
 	relatedList->setEnabled(false);
 	((MainWindow*) parent)->openArtist(item->data(Utils::RoleArtistId).toString());
+}
+
+void ArtistView::albumMenu(const QPoint &pos)
+{
+	auto item = topTracksList->itemAt(pos);
+	auto albumId = item->data(Utils::RoleAlbumId).toString();
+	if (albumId.isEmpty())
+		return;
+	(new AlbumMenu(spotify, albumId, parent))->popup(topTracksList->mapToGlobal(pos));
 }

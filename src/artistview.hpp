@@ -1,5 +1,6 @@
 #pragma once
 
+#include "albummenu.hpp"
 #include "mainwindow.hpp"
 #include "songmenu.hpp"
 #include "spotify/spotify.hpp"
@@ -34,4 +35,5 @@ private:
 	void trackMenu(const QPoint &pos);
 	void loadAlbumId(QTreeWidgetItem *item);
 	void relatedClick(QListWidgetItem *item);
+	void albumMenu(const QPoint &pos);
 };
