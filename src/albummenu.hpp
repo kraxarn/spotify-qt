@@ -1,6 +1,7 @@
 #pragma once
 
 #include "mainwindow.hpp"
+#include "spotify/spotify.hpp"
 
 #include <QApplication>
 #include <QDesktopServices>
