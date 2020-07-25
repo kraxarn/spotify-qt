@@ -2,7 +2,7 @@
 
 namespace spt { class Spotify; }
 
-#include "../deviceselectdialog.hpp"
+#include "../dialog/deviceselectdialog.hpp"
 #include "artist.hpp"
 #include "audiofeatures.hpp"
 #include "device.hpp"

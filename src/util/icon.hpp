@@ -1,7 +1,7 @@
 #pragma once
 
-#include "mainwindow.hpp"
-#include "settings.hpp"
+#include "../mainwindow.hpp"
+#include "../settings.hpp"
 
 #include <QDebug>
 #include <QIcon>

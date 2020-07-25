@@ -1,6 +1,6 @@
 #pragma once
 
-#include "utils.hpp"
+#include "util/utils.hpp"
 
 #include <QCoreApplication>
 #include <QDebug>

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "mainwindow.hpp"
-#include "playlisteditdialog.hpp"
-#include "spotify/playlist.hpp"
+#include "../dialog/playlisteditdialog.hpp"
+#include "../mainwindow.hpp"
+#include "../spotify/playlist.hpp"
 
 #include <QInputDialog>
 #include <QMenu>

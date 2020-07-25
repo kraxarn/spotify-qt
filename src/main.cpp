@@ -1,6 +1,6 @@
+#include "dialog/setupdialog.hpp"
 #include "mainwindow.hpp"
-#include "setupdialog.hpp"
-#include "icon.hpp"
+#include "util/icon.hpp"
 
 #include <QApplication>
 #include <QCoreApplication>

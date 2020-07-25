@@ -2,10 +2,10 @@
 
 class TrayIcon;
 
-#include "icon.hpp"
 #include "mainwindow.hpp"
 #include "spotify/playback.hpp"
 #include "spotify/spotify.hpp"
+#include "util/icon.hpp"
 
 #include <QMenu>
 #include <QSystemTrayIcon>

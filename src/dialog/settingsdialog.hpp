@@ -1,8 +1,8 @@
 #pragma once
 
-#include "mainwindow.hpp"
-#include "settings.hpp"
-#include "spotify/clienthandler.hpp"
+#include "../mainwindow.hpp"
+#include "../settings.hpp"
+#include "../spotify/clienthandler.hpp"
 #include "systeminfodialog.hpp"
 
 #include <QAction>

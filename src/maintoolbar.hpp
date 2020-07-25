@@ -1,11 +1,11 @@
 #pragma once
 
-#include "icon.hpp"
-#include "mainmenu.hpp"
 #include "mainwindow.hpp"
+#include "menu/mainmenu.hpp"
 #include "searchview.hpp"
 #include "settings.hpp"
 #include "spotify/spotify.hpp"
+#include "util/icon.hpp"
 #include "volumebutton.hpp"
 
 #include <QToolBar>

@@ -2,9 +2,9 @@
 
 class LibraryList;
 
-#include "utils.hpp"
-#include "mainwindow.hpp"
-#include "spotify/spotify.hpp"
+#include "../mainwindow.hpp"
+#include "../spotify/spotify.hpp"
+#include "../util/utils.hpp"
 
 #include <QTreeWidget>
 #include <QHeaderView>

@@ -2,8 +2,8 @@
 
 class VolumeButton;
 
-#include "icon.hpp"
 #include "spotify/clienthandler.hpp"
+#include "util/icon.hpp"
 
 #include <QDebug>
 #include <QMenu>

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "icon.hpp"
-#include "mainwindow.hpp"
-#include "spotify/spotify.hpp"
+#include "../mainwindow.hpp"
+#include "../spotify/spotify.hpp"
+#include "../util/icon.hpp"
 
 #include <QDesktopServices>
 #include <QMenu>

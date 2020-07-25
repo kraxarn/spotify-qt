@@ -1,8 +1,8 @@
 #pragma once
 
-#include "albummenu.hpp"
 #include "mainwindow.hpp"
-#include "songmenu.hpp"
+#include "menu/albummenu.hpp"
+#include "menu/songmenu.hpp"
 #include "spotify/spotify.hpp"
 
 #include <QDockWidget>

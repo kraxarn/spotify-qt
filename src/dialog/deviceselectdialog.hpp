@@ -1,6 +1,6 @@
 #pragma once
 
-#include "spotify/device.hpp"
+#include "../spotify/device.hpp"
 
 #include <QDialog>
 #include <QDialogButtonBox>

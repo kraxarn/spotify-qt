@@ -1,6 +1,6 @@
 #pragma once
 
-#include "spotify/playlist.hpp"
+#include "../spotify/playlist.hpp"
 
 #include <QCheckBox>
 #include <QDialog>
