@@ -17,7 +17,7 @@ public:
 private:
 	QWidget *parent = nullptr;
 	QVector<spt::Track> tracks;
-	const QString &albumId;
+	QString albumId;
 	spt::Spotify &spotify;
 
 	void shuffle(bool checked);
