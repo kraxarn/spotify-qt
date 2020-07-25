@@ -1,15 +1,15 @@
 #include "albummenu.hpp"
 
-AlbumMenu::AlbumMenu(spt::Spotify &spotify, const spt::Album &album, QWidget *parent)
-	: parent(parent), album(album), spotify(spotify), QMenu(parent)
+AlbumMenu::AlbumMenu(spt::Spotify &spotify, const QString &albumId, QWidget *parent)
+	: parent(parent), albumId(albumId), spotify(spotify), QMenu(parent)
 {
 	auto mainWindow = dynamic_cast<MainWindow *>(parent);
 	if (mainWindow == nullptr)
 		return;
 
-	tracks = mainWindow->loadTracksFromCache(album.id);
+	tracks = mainWindow->loadTracksFromCache(albumId);
 	if (tracks.isEmpty())
-		tracks = spotify.albumTracks(album.id);
+		tracks = spotify.albumTracks(albumId);
 
 	auto duration = 0;
 	for (auto &track : tracks)
@@ -45,7 +45,7 @@ void AlbumMenu::shuffle(bool)
 	auto initial = tracks.at(QRandomGenerator::global()->bounded(tracks.length()));
 	auto status = spotify.playTracks(
 		QString("spotify:track:%1").arg(initial.id),
-		QString("spotify:album:%1").arg(album.id));
+		QString("spotify:album:%1").arg(albumId));
 
 	if (status.isEmpty())
 		status = spotify.setShuffle(true);
@@ -57,7 +57,7 @@ void AlbumMenu::shareAlbum(bool)
 {
 	QApplication::clipboard()->setText(
 		QString("https://open.spotify.com/playlist/%1")
-			.arg(QString(album.id)));
+			.arg(QString(albumId)));
 	((MainWindow *) parent)->setStatus("Link copied to clipboard");
 }
 
@@ -65,5 +65,5 @@ void AlbumMenu::shareOpen(bool)
 {
 	QDesktopServices::openUrl(
 		QString("https://open.spotify.com/album/%1")
-			.arg(QString(album.id)));
+			.arg(QString(albumId)));
 }
