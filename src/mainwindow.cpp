@@ -31,7 +31,6 @@ MainWindow::MainWindow(Settings &settings)
 	splash->showMessage("Connecting...");
 	spotify = new spt::Spotify(settings, this);
 	network = new QNetworkAccessManager();
-	splash->showMessage("Welcome!");
 
 	// Setup main window
 	setWindowTitle("spotify-qt");
@@ -42,10 +41,12 @@ MainWindow::MainWindow(Settings &settings)
 	addToolBar(Qt::ToolBarArea::TopToolBarArea, toolBar);
 
 	// Update player status
+	splash->showMessage("Refreshing...");
 	auto timer = new QTimer(this);
 	QTimer::connect(timer, &QTimer::timeout, this, &MainWindow::refresh);
 	refresh();
 	timer->start(1000);
+	splash->showMessage("Welcome!");
 
 	// Check if should start client
 	if (settings.spotify.startClient
