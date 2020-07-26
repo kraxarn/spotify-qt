@@ -30,20 +30,20 @@ void Utils::applyPalette(Palette palette)
 	QPalette p;
 	switch (palette)
 	{
-		case paletteApp: p = QApplication::palette();
+		case PaletteApp: p = QApplication::palette();
 			break;
 
-		case paletteStyle: p = QApplication::style()->standardPalette();
+		case PaletteStyle: p = QApplication::style()->standardPalette();
 			break;
 
-		case paletteDark: p = DarkPalette();
+		case PaletteDark: p = DarkPalette();
 			break;
 	}
 
 	QApplication::setPalette(p);
 }
 
-QPixmap Utils::mask(const QPixmap &source, Utils::MaskShape shape, const QVariant &data)
+QPixmap Utils::mask(const QPixmap &source, MaskShape shape, const QVariant &data)
 {
 	if (source.isNull())
 		return source;
@@ -62,8 +62,7 @@ QPixmap Utils::mask(const QPixmap &source, Utils::MaskShape shape, const QVarian
 	QPolygonF polygon;
 	switch (shape)
 	{
-		case Utils::MaskShape::App:
-
+		case MaskShape::App:
 			polygon << QPointF(img.width() / 4.f, 0)
 					<< QPointF(img.width(), 0)
 					<< QPointF(img.width(), (img.height() / 4.f) * 3)
@@ -72,7 +71,7 @@ QPixmap Utils::mask(const QPixmap &source, Utils::MaskShape shape, const QVarian
 					<< QPointF(0, img.height() / 4.f);
 			break;
 
-		case Utils::MaskShape::Pie:
+		case MaskShape::Pie:
 			switch (data.toInt() / 25)
 			{
 				case 0:

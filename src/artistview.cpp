@@ -64,7 +64,7 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 	popularity->setToolTip(popularityText);
 	popularity->setIcon(QIcon(Utils::mask(
 		Icon::get("draw-donut").pixmap(64, 64),
-		Utils::MaskShape::Pie,
+		MaskShape::Pie,
 		QVariant(artist.popularity))));
 	popularity->setFlat(true);
 	QAbstractButton::connect(popularity, &QAbstractButton::clicked, [popularity, popularityText](bool checked)
@@ -90,8 +90,8 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 	{
 		auto item = new QListWidgetItem(track.name, topTracksList);
 		item->setIcon(QIcon(mainWindow->getAlbum(track.image)));
-		item->setData(Utils::RoleTrackId, track.id);
-		item->setData(Utils::RoleAlbumId, track.albumId);
+		item->setData(RoleTrackId, track.id);
+		item->setData(RoleAlbumId, track.albumId);
 		topTrackIds.append(QString("spotify:track:%1").arg(track.id));
 	}
 	QListWidget::connect(topTracksList, &QListWidget::itemClicked, this, &ArtistView::trackClick);
@@ -121,7 +121,7 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 			year.isEmpty() ? QString() : year
 		});
 		item->setIcon(0, QIcon(mainWindow->getAlbum(album.image)));
-		item->setData(0, Utils::RoleAlbumId, album.id);
+		item->setData(0, RoleAlbumId, album.id);
 		parentTab->insertTopLevelItem(0, item);
 	}
 
@@ -147,7 +147,7 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 	for (auto &related : relatedArtists)
 	{
 		auto item = new QListWidgetItem(related.name, relatedList);
-		item->setData(Utils::RoleArtistId, related.id);
+		item->setData(RoleArtistId, related.id);
 	}
 	QListWidget::connect(relatedList, &QListWidget::itemClicked, this, &ArtistView::relatedClick);
 	tabs->addTab(relatedList, "Related");
@@ -173,7 +173,7 @@ void ArtistView::follow(bool)
 void ArtistView::trackClick(QListWidgetItem *item)
 {
 	auto result = spotify.playTracks(
-		QString("spotify:track:%1").arg(item->data(Utils::RoleTrackId).toString()),
+		QString("spotify:track:%1").arg(item->data(RoleTrackId).toString()),
 		topTrackIds);
 	if (!result.isEmpty())
 		((MainWindow*) parent)->setStatus(QString("Failed to start playback: %1").arg(result), true);
@@ -182,31 +182,31 @@ void ArtistView::trackClick(QListWidgetItem *item)
 void ArtistView::trackMenu(const QPoint &pos)
 {
 	auto item = topTracksList->itemAt(pos);
-	auto trackId = item->data(Utils::RoleTrackId).toString();
+	auto trackId = item->data(RoleTrackId).toString();
 	if (trackId.isEmpty())
 		return;
 	(new SongMenu(trackId, artist.name, item->text(), artist.id,
-				  item->data(Utils::RoleAlbumId).toString(), spotify, parent))
+				  item->data(RoleAlbumId).toString(), spotify, parent))
 		->popup(topTracksList->mapToGlobal(pos));
 }
 
 void ArtistView::loadAlbumId(QTreeWidgetItem *item)
 {
 	auto mainWindow = (MainWindow*) parent;
-	if (!mainWindow->loadAlbum(item->data(0, Utils::RoleAlbumId).toString(), false))
+	if (!mainWindow->loadAlbum(item->data(0, RoleAlbumId).toString(), false))
 		mainWindow->setStatus(QString("Failed to load album"), true);
 }
 
 void ArtistView::relatedClick(QListWidgetItem *item)
 {
 	relatedList->setEnabled(false);
-	((MainWindow*) parent)->openArtist(item->data(Utils::RoleArtistId).toString());
+	((MainWindow*) parent)->openArtist(item->data(RoleArtistId).toString());
 }
 
 void ArtistView::albumMenu(const QPoint &pos)
 {
 	auto item = topTracksList->itemAt(pos);
-	auto albumId = item->data(Utils::RoleAlbumId).toString();
+	auto albumId = item->data(RoleAlbumId).toString();
 	if (albumId.isEmpty())
 		return;
 	(new AlbumMenu(spotify, albumId, parent))->popup(topTracksList->mapToGlobal(pos));

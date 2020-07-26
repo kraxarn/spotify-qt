@@ -294,7 +294,7 @@ void MainWindow::refreshPlaylists()
 	{
 		auto item = new QListWidgetItem(playlist.name, playlists);
 		item->setToolTip(playlist.description);
-		item->setData(Utils::RolePlaylistId, playlist.id);
+		item->setData(RolePlaylistId, playlist.id);
 	}
 	if (lastIndex >= 0)
 		playlists->setCurrentRow(lastIndex);
@@ -312,10 +312,10 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 			"", track.name, track.artist, track.album,
 			Utils::formatTime(track.duration), track.addedAt.date().toString(Qt::SystemLocaleShortDate)
 		});
-		item->setData(0, Utils::RoleTrackId,  QString("spotify:track:%1").arg(track.id));
-		item->setData(0, Utils::RoleArtistId, track.artistId);
-		item->setData(0, Utils::RoleAlbumId,  track.albumId);
-		item->setData(0, Utils::RoleIndex,    i);
+		item->setData(0, RoleTrackId,  QString("spotify:track:%1").arg(track.id));
+		item->setData(0, RoleArtistId, track.artistId);
+		item->setData(0, RoleAlbumId,  track.albumId);
+		item->setData(0, RoleIndex,    i);
 		if (track.isLocal)
 		{
 			item->setDisabled(true);
@@ -521,7 +521,7 @@ QStringList MainWindow::currentTracks()
 	tracks.reserve(songs->topLevelItemCount());
 	for (int i = 0; i < songs->topLevelItemCount(); i++)
 	{
-		auto trackId = songs->topLevelItem(i)->data(0, Utils::RoleTrackId).toString();
+		auto trackId = songs->topLevelItem(i)->data(0, RoleTrackId).toString();
 		// spotify:track: = 14
 		if (trackId.length() > 14)
 			tracks.append(trackId);
@@ -557,7 +557,7 @@ QSet<QString> MainWindow::allArtists()
 {
 	QSet<QString> artists;
 	for (auto i = 0; i < playlists->count(); i++)
-		for (auto &track : playlistTracks(playlists->item(i)->data(Utils::RolePlaylistId).toString()))
+		for (auto &track : playlistTracks(playlists->item(i)->data(RolePlaylistId).toString()))
 			artists << track.artist;
 	return artists;
 }

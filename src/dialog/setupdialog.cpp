@@ -30,8 +30,7 @@ SetupDialog::SetupDialog(Settings &settings, QWidget *parent) : settings(setting
 	auto dashboardButton = new QPushButton("Spotify Dashboard");
 	QAbstractButton::connect(dashboardButton, &QAbstractButton::clicked, [this](bool checked) {
 		QString url("https://developer.spotify.com/dashboard/applications");
-		if (!QDesktopServices::openUrl(QUrl(url)))
-			OpenLinkDialog(url, this).exec();
+		Utils::openUrl(url, LinkType::Web, this);
 	});
 	auto authButton = new QPushButton("Authenticate");
 	server = nullptr;
@@ -91,8 +90,7 @@ SetupDialog::SetupDialog(Settings &settings, QWidget *parent) : settings(setting
 			});
 		}
 		auto url = spt::Auth::authUrl(clientIdText, redirect);
-		if (!QDesktopServices::openUrl(QUrl(url)))
-			OpenLinkDialog(url, this).exec();
+		Utils::openUrl(url, LinkType::Web, this);
 	});
 	auto buttonBox = new QHBoxLayout();
 	buttonBox->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));

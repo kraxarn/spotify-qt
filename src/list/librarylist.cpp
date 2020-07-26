@@ -61,10 +61,10 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 			auto data = item->data(0, 0x100).toString();
 			switch (item->data(0, 0x101).toInt())
 			{
-				case Utils::RoleArtistId: mainWindow->openArtist(data);
+				case RoleArtistId: mainWindow->openArtist(data);
 					break;
 
-				case Utils::RoleAlbumId: mainWindow->loadAlbum(data, false);
+				case RoleAlbumId: mainWindow->loadAlbum(data, false);
 					break;
 			}
 		}
@@ -143,10 +143,10 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 
 	if (item->text(0) == "Artists")
 		for (auto &artist : spotify.topArtists())
-			results.append({artist.name, artist.id, Utils::RoleArtistId});
+			results.append({artist.name, artist.id, RoleArtistId});
 	else if (item->text(0) == "Albums")
 		for (auto &album : spotify.savedAlbums())
-			results.append({album.name, album.id, Utils::RoleAlbumId});
+			results.append({album.name, album.id, RoleAlbumId});
 
 	// No results
 	if (results.isEmpty())

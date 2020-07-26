@@ -44,21 +44,21 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 				album.name, album.artist
 			});
 			item->setIcon(0, window->getAlbum(album.image));
-			item->setData(0, Utils::RoleAlbumId, album.id);
+			item->setData(0, RoleAlbumId, album.id);
 			albumList->addTopLevelItem(item);
 		}
 		// Artists
 		for (auto &artist : results.artists)
 		{
 			auto item = new QListWidgetItem(artist.name, artistList);
-			item->setData(Utils::RoleArtistId, artist.id);
+			item->setData(RoleArtistId, artist.id);
 		}
 		// Playlists
 		for (auto &json : results.playlists)
 		{
 			spt::Playlist playlist(json);
 			auto item = new QListWidgetItem(playlist.name, playlistList);
-			item->setData(Utils::RolePlaylistId, playlist.id);
+			item->setData(RolePlaylistId, playlist.id);
 		}
 		// Tracks
 		for (auto &track : results.tracks)
@@ -66,9 +66,9 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 			auto item = new QTreeWidgetItem(trackList,{
 				track.name, track.artist
 			});
-			item->setData(0, Utils::RoleTrackId, track.id);
-			item->setData(0, Utils::RoleArtistId, track.artistId);
-			item->setData(0, Utils::RoleAlbumId, track.albumId);
+			item->setData(0, RoleTrackId, track.id);
+			item->setData(0, RoleArtistId, track.artistId);
+			item->setData(0, RoleAlbumId, track.albumId);
 		}
 		// Search done
 		searchBox->setEnabled(true);
@@ -76,19 +76,19 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 
 	// Open album
 	QTreeWidget::connect(albumList, &QTreeWidget::itemClicked, [this, window](QTreeWidgetItem *item, int column) {
-		if (!window->loadAlbum(item->data(0, Utils::RoleAlbumId).toString(), false))
+		if (!window->loadAlbum(item->data(0, RoleAlbumId).toString(), false))
 			window->setStatus(QString("Failed to load album"), true);
 	});
 
 	// Open artist
 	QListWidget::connect(artistList, &QListWidget::itemClicked, [this, window](QListWidgetItem *item) {
-		window->openArtist(item->data(Utils::RoleArtistId).toString());
+		window->openArtist(item->data(RoleArtistId).toString());
 		close();
 	});
 
 	// Open playlist
 	QListWidget::connect(playlistList, &QListWidget::itemClicked, [this, window, &spotify](QListWidgetItem *item) {
-		spt::Playlist playlist(spotify.playlist(item->data(Utils::RolePlaylistId).toString()));
+		spt::Playlist playlist(spotify.playlist(item->data(RolePlaylistId).toString()));
 		if (!window->loadPlaylist(playlist))
 			window->setStatus(QString("Failed to load playlist"), true);
 		else
@@ -99,7 +99,7 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 	QTreeWidget::connect(trackList, &QTreeWidget::itemClicked, [this, window, &spotify](QTreeWidgetItem *item, int column) {
 		// Do we want it to continue playing results?
 		auto trackId = QString("spotify:track:%1")
-			.arg(item->data(0, Utils::RoleTrackId).toString());
+			.arg(item->data(0, RoleTrackId).toString());
 		auto status = spotify.playTracks(trackId, QStringList(trackId));
 		if (!status.isEmpty())
 			window->setStatus(QString("Failed to play track: %1").arg(status), true);
@@ -109,12 +109,12 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 	trackList->setContextMenuPolicy(Qt::CustomContextMenu);
 	QWidget::connect(trackList, &QWidget::customContextMenuRequested, [this, window, &spotify](const QPoint &pos) {
 		auto item = trackList->itemAt(pos);
-		auto trackId = item->data(0, Utils::RoleTrackId).toString();
+		auto trackId = item->data(0, RoleTrackId).toString();
 		if (trackId.isEmpty())
 			return;
 		(new SongMenu(trackId, item->text(1),
-			item->text(0), item->data(0, Utils::RoleArtistId).toString(),
-			item->data(0, Utils::RoleAlbumId).toString(), spotify, window))
+			item->text(0), item->data(0, RoleArtistId).toString(),
+			item->data(0, RoleAlbumId).toString(), spotify, window))
 			->popup(trackList->mapToGlobal(pos));
 	});
 
@@ -122,7 +122,7 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 	playlistList->setContextMenuPolicy(Qt::CustomContextMenu);
 	QWidget::connect(playlistList, &QWidget::customContextMenuRequested, [this, window, &spotify](const QPoint &pos) {
 		auto item = playlistList->itemAt(pos);
-		(new PlaylistMenu(spotify, item->data(Utils::RolePlaylistId).toString(), window))
+		(new PlaylistMenu(spotify, item->data(RolePlaylistId).toString(), window))
 			->popup(playlistList->mapToGlobal(pos));
 	});
 

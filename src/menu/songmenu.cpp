@@ -151,7 +151,7 @@ void SongMenu::remFromPlaylist(bool)
 	for (i = 0; i < mainWindow->getSongsTree()->topLevelItemCount(); i++)
 	{
 		item = mainWindow->getSongsTree()->topLevelItem(i);
-		if (item->data(0, Utils::RoleTrackId).toString() == trackId)
+		if (item->data(0, RoleTrackId).toString() == trackId)
 			break;
 		// Failed to find
 		item = nullptr;
@@ -164,7 +164,7 @@ void SongMenu::remFromPlaylist(bool)
 	// Remove from Spotify
 	auto status = spotify.removeFromPlaylist(
 		currentPlaylist->id, trackId,
-		item->data(0, Utils::RoleIndex).toInt());
+		item->data(0, RoleIndex).toInt());
 	// Update status
 	if (!status.isEmpty())
 	{

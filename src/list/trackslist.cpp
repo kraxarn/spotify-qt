@@ -40,14 +40,14 @@ TracksList::TracksList(spt::Spotify &spotify, Settings &settings, QWidget *paren
 void TracksList::menu(const QPoint &pos)
 {
 	auto item = itemAt(pos);
-	auto trackId = item->data(0, Utils::RoleTrackId).toString();
+	auto trackId = item->data(0, RoleTrackId).toString();
 	if (trackId.isEmpty())
 		return;
 
 	((MainWindow *) parent)->songMenu(
 			trackId, item->text(2), item->text(1),
-			item->data(0, Utils::RoleArtistId).toString(),
-			item->data(0, Utils::RoleAlbumId).toString())
+			item->data(0, RoleArtistId).toString(),
+			item->data(0, RoleAlbumId).toString())
 		->popup(mapToGlobal(pos));
 }
 
@@ -55,7 +55,7 @@ void TracksList::clicked(QTreeWidgetItem *item, int)
 {
 	auto mainWindow = (MainWindow *) this->parent;
 
-	auto trackId = item->data(0, Utils::RoleTrackId).toString();
+	auto trackId = item->data(0, RoleTrackId).toString();
 	if (trackId.isEmpty())
 	{
 		mainWindow->setStatus("Failed to start playback: track not found", true);

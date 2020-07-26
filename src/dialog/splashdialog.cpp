@@ -10,7 +10,7 @@ SplashDialog::SplashDialog(const QPalette &palette)
 	QPainter painter(&image);
 	painter.drawPixmap(
 		0, 0,
-		Utils::mask(background, Utils::MaskShape::App, QVariant()));
+		Utils::mask(background, MaskShape::App, QVariant()));
 	painter.drawPixmap(12, 12, Icon::get("logo:spotify-qt").pixmap(80, 80));
 
 	setPixmap(QPixmap::fromImage(image));

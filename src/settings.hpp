@@ -1,5 +1,6 @@
 #pragma once
 
+#include "enum/palette.hpp"
 #include "util/utils.hpp"
 
 #include <QCoreApplication>
@@ -32,7 +33,7 @@ public:
 		QString style, lastPlaylist, lastVersion;
 		bool pulseVolume, mediaController, spotifyPlaybackOrder, trayIcon, trayNotifications, trayLightIcon,
 			showChangelog, fallbackIcons, fixedWidthTime, trayAlbumArt;
-		Utils::Palette stylePalette;
+		Palette stylePalette;
 		QVector<int> hiddenSongHeaders;
 		int songHeaderResizeMode, songHeaderSortBy, refreshInterval, lastVolume;
 	} General;
@@ -66,7 +67,7 @@ private:
 	QString style();
 	bool pulseVolume();
 	QString lastPlaylist();
-	Utils::Palette stylePalette();
+	Palette stylePalette();
 	bool mediaController();
 	bool sptPlaybackOrder();
 	QList<int> hiddenSongHeaders();

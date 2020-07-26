@@ -1,5 +1,8 @@
 #pragma once
 
+#include "../enum/linktype.hpp"
+#include "../util/utils.hpp"
+
 #include <QClipboard>
 #include <QDialog>
 #include <QDialogButtonBox>
@@ -9,10 +12,15 @@
 #include <QTextEdit>
 #include <QVBoxLayout>
 
-class OpenLinkDialog : public QDialog
+class OpenLinkDialog: public QDialog
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
-	OpenLinkDialog(const QString &link, QWidget *parent = nullptr);
+	OpenLinkDialog(const QString &link, LinkType linkType, QWidget *parent = nullptr);
+
+private:
+	LinkType linkType;
+
+	QString titleText();
 };

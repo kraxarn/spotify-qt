@@ -287,10 +287,7 @@ QWidget *SettingsDialog::aboutSettings()
 	QAbstractButton::connect(openCache, &QPushButton::clicked, [this, window](bool checked) {
 		if (window == nullptr)
 			return;
-		if (!QDesktopServices::openUrl(QUrl(window->getCacheLocation())))
-			QMessageBox::warning(this,
-				"No path",
-				QString("Failed to open path: %1").arg(window->getCacheLocation()));
+		Utils::openUrl(window->getCacheLocation(), LinkType::Web, this);
 	});
 	options->addWidget(openCache);
 
