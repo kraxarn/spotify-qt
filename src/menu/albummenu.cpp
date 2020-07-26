@@ -63,7 +63,7 @@ void AlbumMenu::shareAlbum(bool)
 
 void AlbumMenu::shareOpen(bool)
 {
-	QDesktopServices::openUrl(
+	Utils::openUrl(
 		QString("https://open.spotify.com/album/%1")
-			.arg(QString(albumId)));
+			.arg(QString(albumId)), LinkType::Web, this->parent);
 }

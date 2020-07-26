@@ -31,7 +31,9 @@ SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString 
 	auto shareSongOpen = share->addAction("Open in Spotify");
 	QAction::connect(shareSongOpen, &QAction::triggered, [this](bool checked)
 	{
-		QDesktopServices::openUrl(QString("https://open.spotify.com/track/%1").arg(track));
+		Utils::openUrl(
+			QString("https://open.spotify.com/track/%1").arg(track),
+			LinkType::Web, this->parent);
 	});
 
 	// Add/remove liked

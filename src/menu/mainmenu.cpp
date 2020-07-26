@@ -19,8 +19,11 @@ MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
 		{
 			about->setDisabled(false);
 			about->setText(QString("Update found: %1").arg(latest));
-			QAction::connect(about, &QAction::triggered, []() {
-				QDesktopServices::openUrl(QUrl("https://github.com/kraxarn/spotify-qt/releases/latest"));
+			QAction::connect(about, &QAction::triggered, [this]()
+			{
+				Utils::openUrl(
+					"https://github.com/kraxarn/spotify-qt/releases/latest",
+					LinkType::Web, this->parent);
 			});
 		}
 	}

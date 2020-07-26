@@ -1,6 +1,7 @@
 #include "playlistmenu.hpp"
 
-PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist, QWidget *parent) : QMenu(parent)
+PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist, QWidget *parent)
+	: parent(parent), playlist(playlist), QMenu(parent)
 {
 	auto window = dynamic_cast<MainWindow*>(parent);
 	if (window == nullptr)
@@ -56,9 +57,9 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 		window->setStatus("Link copied to clipboard");
 	});
 	auto shareSongOpen = share->addAction("Open in Spotify");
-	QAction::connect(shareSongOpen, &QAction::triggered, [playlist](bool checked) {
-		QDesktopServices::openUrl(QString("https://open.spotify.com/playlist/%1")
-			.arg(QString(playlist.id)));
+	QAction::connect(shareSongOpen, &QAction::triggered, [this](bool checked) {
+		Utils::openUrl(QString("https://open.spotify.com/playlist/%1")
+			.arg(QString(this->playlist.id)), LinkType::Web, this->parent);
 	});
 }
 
