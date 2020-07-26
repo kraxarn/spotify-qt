@@ -39,6 +39,19 @@ public:
 		paletteDark = 2,  // Custom dark palette
 	};
 
+	enum class LinkType
+	{
+		/**
+		 * A webpage
+		 */
+		Web,
+
+		/**
+		 * A local file or directory
+		 */
+		Path
+	};
+
 	static QJsonValue getProperty(const QJsonObject &json, const QStringList &names);
 
 	static QTreeWidgetItem *treeItemWithChildren(
@@ -65,6 +78,8 @@ public:
 
 	static QTreeWidgetItem *treeItem(
 		QTreeWidget *tree, const QString &key, const QString &value);
+
+	static void openUrl(const QString &url, LinkType linkType, QWidget *parent);
 
 private:
 	Utils() = default;

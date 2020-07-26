@@ -1,5 +1,7 @@
 #include "utils.hpp"
+
 #include "icon.hpp"
+#include "../dialog/openlinkdialog.hpp"
 
 bool Utils::darkBackground = false;
 
@@ -148,4 +150,10 @@ QTreeWidgetItem *Utils::treeItem(QTreeWidget *tree, const QString &key, const QS
 	return new QTreeWidgetItem(tree, {
 		key, value
 	});
+}
+
+void Utils::openUrl(const QString &url, LinkType linkType, QWidget *parent)
+{
+	if (!QDesktopServices::openUrl(QUrl(url)))
+		OpenLinkDialog(url, linkType, parent).exec();
 }
