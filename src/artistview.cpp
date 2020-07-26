@@ -218,5 +218,5 @@ void ArtistView::albumMenu(const QPoint &pos)
 	auto albumId = item->data(0, RoleAlbumId).toString();
 	if (albumId.isEmpty())
 		return;
-	(new AlbumMenu(spotify, albumId, parent))->popup(topTracksList->mapToGlobal(pos));
+	(new AlbumMenu(spotify, albumId, parent))->popup(list->mapToGlobal(pos));
 }
