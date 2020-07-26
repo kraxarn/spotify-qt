@@ -3,6 +3,11 @@
 MainWindow::MainWindow(Settings &settings)
 	: settings(settings), QMainWindow()
 {
+	// Splash
+	auto splash = new SplashDialog(palette());
+	splash->show();
+	splash->showMessage("Please wait...");
+
 	// Set cache root location
 	cacheLocation = QStandardPaths::standardLocations(QStandardPaths::CacheLocation)[0];
 
@@ -23,8 +28,10 @@ MainWindow::MainWindow(Settings &settings)
 		Utils::darkBackground = true;
 
 	// Set Spotify
+	splash->showMessage("Connecting...");
 	spotify = new spt::Spotify(settings, this);
 	network = new QNetworkAccessManager();
+	splash->showMessage("Welcome!");
 
 	// Setup main window
 	setWindowTitle("spotify-qt");
@@ -85,6 +92,7 @@ MainWindow::MainWindow(Settings &settings)
 
 	// Welcome
 	setStatus("Welcome to spotify-qt!");
+	splash->finish(this);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

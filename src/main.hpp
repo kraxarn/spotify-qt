@@ -3,6 +3,7 @@
 #include "artistview.hpp"
 #include "audiofeaturesview.hpp"
 #include "dialog/settingsdialog.hpp"
+#include "dialog/splashdialog.hpp"
 #include "dialog/whatsnewdialog.hpp"
 #include "list/librarylist.hpp"
 #include "list/playlistlist.hpp"
