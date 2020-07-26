@@ -9,7 +9,7 @@ MainWindow::MainWindow(Settings &settings)
 		Utils::darkBackground = true;
 
 	// Splash
-	auto splash = new SplashDialog(palette());
+	auto splash = new SplashDialog();
 	splash->show();
 	splash->showMessage("Please wait...");
 

@@ -12,9 +12,6 @@ class SplashDialog: public QSplashScreen
 	Q_OBJECT
 
 public:
-	explicit SplashDialog(const QPalette &palette);
+	SplashDialog();
 	void showMessage(const QString &message);
-
-private:
-	const QPalette &palette;
 };

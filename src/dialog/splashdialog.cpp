@@ -1,7 +1,7 @@
 #include "splashdialog.hpp"
 
-SplashDialog::SplashDialog(const QPalette &palette)
-	: palette(palette), QSplashScreen()
+SplashDialog::SplashDialog()
+	: QSplashScreen()
 {
 	QPixmap background(104, 104);
 	background.fill(QColor::fromRgb(0x4caf50));
