@@ -61,6 +61,9 @@ Track::Track(const QJsonObject &item)
 			? QDateTime::fromString(item["played_at"].toString(), Qt::DateFormat::ISODate)
 			: QDateTime();
 	isLocal = item["is_local"].toBool();
+
+	if (addedAt == QDateTime(QDate(1970, 1, 1).startOfDay(Qt::UTC)))
+		addedAt = QDateTime();
 }
 
 Track::Track()
