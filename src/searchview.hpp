@@ -11,15 +11,21 @@
 #include <QTreeWidgetItem>
 #include <QVBoxLayout>
 
-class SearchView : public QDockWidget
+class SearchView: public QDockWidget
 {
-	Q_OBJECT
+Q_OBJECT
+
 public:
 	explicit SearchView(spt::Spotify &spotify, QWidget *parent = nullptr);
 
 private:
-	QTreeWidget	*trackList, *albumList;
-	QListWidget	*artistList, *playlistList;
+	QListWidget *artistList = nullptr;
+	QListWidget *playlistList = nullptr;
+	QTreeWidget *albumList = nullptr;
+	QTreeWidget *trackList = nullptr;
+	QWidget *parent = nullptr;
+	spt::Spotify &spotify;
 
 	QTreeWidget *defaultTree(const QStringList &headers);
+	void albumMenu(const QPoint &pos);
 };

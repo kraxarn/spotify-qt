@@ -1,6 +1,7 @@
 #include "searchview.hpp"
 
-SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(parent)
+SearchView::SearchView(spt::Spotify &spotify, QWidget *parent)
+	: spotify(spotify), parent(parent), QDockWidget(parent)
 {
 	auto window = (MainWindow*) parent;
 	auto layout = new QVBoxLayout();
@@ -80,6 +81,10 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent) : QDockWidget(par
 			window->setStatus(QString("Failed to load album"), true);
 	});
 
+	// Album context menu
+	albumList->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+	QWidget::connect(albumList, &QWidget::customContextMenuRequested, this, &SearchView::albumMenu);
+
 	// Open artist
 	QListWidget::connect(artistList, &QListWidget::itemClicked, [this, window](QListWidgetItem *item) {
 		window->openArtist(item->data(RoleArtistId).toString());
@@ -146,4 +151,13 @@ QTreeWidget *SearchView::defaultTree(const QStringList &headers)
 	tree->setColumnCount(headers.length());
 	tree->setHeaderLabels(headers);
 	return tree;
+}
+
+void SearchView::albumMenu(const QPoint &pos)
+{
+	auto item = albumList->itemAt(pos);
+	auto albumId = item->data(0, RoleAlbumId).toString();
+	if (albumId.isEmpty())
+		return;
+	(new AlbumMenu(spotify, albumId, parent))->popup(albumList->mapToGlobal(pos));
 }
