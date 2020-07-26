@@ -233,6 +233,7 @@ QWidget *SettingsDialog::aboutSettings()
 
 	auto layout = new QVBoxLayout();
 	layout->setAlignment(Qt::AlignTop);
+
 	// Title
 	auto title = new QHBoxLayout();
 	title->setAlignment(Qt::AlignHCenter);
@@ -250,14 +251,17 @@ QWidget *SettingsDialog::aboutSettings()
 	titleVersion->addWidget(titleAppName);
 	titleVersion->addWidget(new QLabel(APP_VERSION));
 	title->addLayout(titleVersion);
+
 	// User info
 	auto window = dynamic_cast<MainWindow*>(parent());
 	if (window != nullptr)
 		layout->addWidget(new QLabel(QString("Hello %1!")
 			.arg(window->getCurrentUser().displayName)), 0, Qt::AlignHCenter);
+
 	// Grid with buttons
 	layout->addSpacing(8);
 	auto options = new QGridLayout();
+
 	// About Qt
 	auto aboutQt = new QPushButton(Icon::get("logo:qt"),
 		QString("About Qt %1.%2")
@@ -267,30 +271,15 @@ QWidget *SettingsDialog::aboutSettings()
 		QMessageBox::aboutQt(this);
 	});
 	options->addWidget(aboutQt);
-	// Check for updates
-	auto checkUpdates = new QPushButton(Icon::get("download"), "Check for updates");
-	checkUpdates->setFlat(true);
-	QAbstractButton::connect(checkUpdates, &QPushButton::clicked, [window, checkUpdates](bool checked) {
-		if (window == nullptr)
-			return;
-		checkUpdates->setEnabled(false);
-		checkUpdates->setText("Please wait...");
-		auto json = window->getJson("https://api.github.com/repos/kraxarn/spotify-qt/releases/latest");
-		auto latest = json.object()["tag_name"].toString();
-		auto isLatest = latest.isEmpty() || latest == APP_VERSION;
-		checkUpdates->setText(latest.isEmpty()
-			? "Error"
-			: isLatest
-				? "None found"
-				: "Update found");
-		if (!isLatest)
-			window->setStatus(
-				QString("Update found, latest version is %1, you have version %2")
-					.arg(latest)
-					.arg(APP_VERSION), true);
-		checkUpdates->setEnabled(true);
+
+	// Generate report
+	auto generateReport = new QPushButton(Icon::get("description"), "System info", this);
+	generateReport->setFlat(true);
+	QAbstractButton::connect(generateReport, &QPushButton::clicked, [this](bool checked) {
+		(new SystemInfoDialog(this))->show();
 	});
-	options->addWidget(checkUpdates, 0, 1);
+	options->addWidget(generateReport, 0, 1);
+
 	// Open cache directory
 	auto openCache = new QPushButton(Icon::get("folder-temp"),
 		QString("Open cache directory (%1M)").arg(cacheSize / 1000 / 1000));
@@ -304,6 +293,7 @@ QWidget *SettingsDialog::aboutSettings()
 				QString("Failed to open path: %1").arg(window->getCacheLocation()));
 	});
 	options->addWidget(openCache);
+
 	// Open config file
 	auto openConfig = new QPushButton(Icon::get("folder-txt"), "Open config file");
 	openConfig->setFlat(true);
@@ -315,15 +305,7 @@ QWidget *SettingsDialog::aboutSettings()
 	});
 	options->addWidget(openConfig);
 	layout->addLayout(options, 1);
-	// Generate report
-#ifdef Q_OS_LINUX
-	auto generateReport = new QPushButton("System info", this);
-	generateReport->setFlat(true);
-	QAbstractButton::connect(generateReport, &QPushButton::clicked, [this](bool checked) {
-		(new SystemInfoDialog(this))->show();
-	});
-	layout->addWidget(generateReport);
-#endif
+
 	// Final layout
 	auto widget = new QWidget();
 	widget->setLayout(layout);
