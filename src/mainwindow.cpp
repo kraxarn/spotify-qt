@@ -3,6 +3,11 @@
 MainWindow::MainWindow(Settings &settings)
 	: settings(settings), QMainWindow()
 {
+	// Check for dark background
+	auto bg = palette().color(backgroundRole());
+	if (((bg.red() + bg.green() + bg.blue()) / 3) < 128)
+		Utils::darkBackground = true;
+
 	// Splash
 	auto splash = new SplashDialog(palette());
 	splash->show();
@@ -21,11 +26,6 @@ MainWindow::MainWindow(Settings &settings)
 	// Apply selected style and palette
 	QApplication::setStyle(settings.general.style);
 	Utils::applyPalette(settings.general.stylePalette);
-
-	// Check for dark background
-	auto bg = palette().color(backgroundRole());
-	if (((bg.red() + bg.green() + bg.blue()) / 3) < 128)
-		Utils::darkBackground = true;
 
 	// Set Spotify
 	splash->showMessage("Connecting...");
