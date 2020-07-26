@@ -62,12 +62,12 @@ QPixmap Utils::mask(const QPixmap &source, Utils::MaskShape shape, const QVarian
 	{
 		case Utils::MaskShape::App:
 
-			polygon << QPointF(img.width() / 4, 0)
+			polygon << QPointF(img.width() / 4.f, 0)
 					<< QPointF(img.width(), 0)
-					<< QPointF(img.width(), (img.height() / 4) * 3)
-					<< QPointF((img.width() / 4) * 3, img.height())
+					<< QPointF(img.width(), (img.height() / 4.f) * 3)
+					<< QPointF((img.width() / 4.f) * 3, img.height())
 					<< QPointF(0, img.height())
-					<< QPointF(0, img.height() / 4);
+					<< QPointF(0, img.height() / 4.f);
 			break;
 
 		case Utils::MaskShape::Pie:
@@ -75,20 +75,20 @@ QPixmap Utils::mask(const QPixmap &source, Utils::MaskShape shape, const QVarian
 			{
 				case 0:
 					polygon = QPolygonF(QRectF(
-						img.width() / 2, 0,
-						img.width() / 2, img.height() / 2));
+						img.width() / 2.f, 0,
+						img.width() / 2.f, img.height() / 2.f));
 					break;
 
 				case 1:
 					polygon = QPolygonF(QRectF(
-						img.width() / 2, 0,
-						img.width() / 2, img.height()));
+						img.width() / 2.f, 0,
+						img.width() / 2.f, img.height()));
 					break;
 
 				case 2:
-					polygon << QPointF(img.width() / 2, 0)
-							<< QPointF(img.width() / 2, img.height() / 2)
-							<< QPointF(0, img.height() / 2)
+					polygon << QPointF(img.width() / 2.f, 0)
+							<< QPointF(img.width() / 2.f, img.height() / 2.f)
+							<< QPointF(0, img.height() / 2.f)
 							<< QPointF(0, img.height())
 							<< QPointF(img.width(), img.height())
 							<< QPointF(img.width(), 0);
