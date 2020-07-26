@@ -80,7 +80,7 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 	layout->addWidget(genres);
 
 	// Tabs
-	auto tabs = new QTabWidget(this);
+	tabs = new QTabWidget(this);
 	layout->addWidget(tabs);
 
 	// Top tracks
@@ -102,8 +102,8 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 
 	// Albums
 	auto albums = artist.albums(spotify);
-	auto albumList = new QTreeWidget(tabs);
-	auto singleList = new QTreeWidget(tabs);
+	albumList = new QTreeWidget(tabs);
+	singleList = new QTreeWidget(tabs);
 	for (auto &list : {albumList, singleList})
 	{
 		list->setColumnCount(2);
@@ -205,8 +205,17 @@ void ArtistView::relatedClick(QListWidgetItem *item)
 
 void ArtistView::albumMenu(const QPoint &pos)
 {
-	auto item = topTracksList->itemAt(pos);
-	auto albumId = item->data(RoleAlbumId).toString();
+	auto list =
+		tabs->currentIndex() == 1
+		? albumList
+		: tabs->currentIndex() == 2
+		  ? singleList
+		  : nullptr;
+	if (list == nullptr)
+		return;
+
+	auto item = list->itemAt(pos);
+	auto albumId = item->data(0, RoleAlbumId).toString();
 	if (albumId.isEmpty())
 		return;
 	(new AlbumMenu(spotify, albumId, parent))->popup(topTracksList->mapToGlobal(pos));

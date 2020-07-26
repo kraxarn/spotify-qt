@@ -25,6 +25,9 @@ private:
 	QListWidget *topTracksList = nullptr;
 	QPushButton *followButton = nullptr;
 	QStringList topTrackIds;
+	QTabWidget *tabs = nullptr;
+	QTreeWidget *albumList = nullptr;
+	QTreeWidget *singleList = nullptr;
 	QWidget *parent = nullptr;
 	const QString &artistId;
 	spt::Artist artist;
