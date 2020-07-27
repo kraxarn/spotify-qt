@@ -1,5 +1,7 @@
 #pragma once
 
+#include <utility>
+
 #include "../mainwindow.hpp"
 #include "../spotify/spotify.hpp"
 #include "../util/icon.hpp"
@@ -13,8 +15,8 @@ Q_OBJECT
 
 public:
 	SongMenu(
-		const QString &trackId, const QString &artist, const QString &name,
-		const QString &artistId, const QString &albumId, spt::Spotify &spotify, QWidget *parent = nullptr);
+		const QString &trackId, QString artist, QString name, const QString &artistId,
+		const QString &albumId, spt::Spotify &spotify, QWidget *parent = nullptr);
 
 private:
 	QWidget *parent;

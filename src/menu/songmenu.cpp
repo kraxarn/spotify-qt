@@ -1,8 +1,8 @@
 #include "songmenu.hpp"
 
-SongMenu::SongMenu(const QString &trackId, const QString &artist, const QString &name,
+SongMenu::SongMenu(const QString &trackId, QString artist, QString name,
 				   const QString &artistId, const QString &albumId, spt::Spotify &spotify, QWidget *parent)
-	: spotify(spotify), trackId(trackId), artist(artist), name(name), QMenu(parent)
+	: spotify(spotify), trackId(trackId), artist(std::move(artist)), name(std::move(name)), QMenu(parent)
 {
 	this->parent = dynamic_cast<MainWindow *>(parent);
 	if (this->parent == nullptr)
