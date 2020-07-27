@@ -13,7 +13,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Find Qt
-find_package(Qt5 COMPONENTS Core Widgets Network Gui Svg DBus REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets Network Gui Svg DBus Quick QuickControls2 REQUIRED)
 
 # Glob source files
 file(GLOB MAIN_SRC "src/*.[hc]pp")
@@ -60,4 +60,6 @@ target_link_libraries(spotify-qt PRIVATE
 		Qt5::Network
 		Qt5::Gui
 		Qt5::Svg
-		Qt5::DBus)
+		Qt5::DBus
+		Qt5::Quick
+		Qt5::QuickControls2)

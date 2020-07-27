@@ -89,6 +89,10 @@
         <file>res/logo/spotify-qt-symbolic-light.svg</file>
         <file>res/logo/spotify-qt.svg</file>
         <!-- QML -->
+        <file>qml/Footer.qml</file>
+        <file>qml/LibraryView.qml</file>
+        <file>qml/PlaylistsView.qml</file>
+        <file>qml/SearchView.qml</file>
         <file>qml/main.qml</file>
     </qresource>
 </RCC>

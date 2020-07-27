@@ -1,3 +1,5 @@
+import com.kraxarn.spotify 1.0
+
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -10,6 +12,8 @@ ApplicationWindow {
 	height: 960
 	
 	readonly property bool inPortrait: root.width < root.height
+
+	property Spotify spotify: Spotify {}
 
 	function icSrc(name) {
 		return "qrc:/res/ic/dark/%1.svg".arg(name)
@@ -53,68 +57,7 @@ ApplicationWindow {
 		}
 	}
 
-	footer: ColumnLayout {
-		id: footer
-		anchors {
-			left: parent.left
-			right: parent.right
-			leftMargin: !inPortrait ? drawer.width : 12
-			rightMargin: !inPortrait ? 0 : 12
-		}
-		RowLayout {
-			Layout.topMargin: 16
-			Slider {
-				Layout.fillWidth: true
-				value: 0
-			}
-			Label {
-				text: "0:00/0:00"
-			}
-		}
-		RowLayout {
-			Layout.bottomMargin: 6
-			Item {
-				Layout.fillWidth: true
-			}
-			ToolButton {
-				icon.name: "media-playlist-shuffle"
-				icon.source: icSrc("media-playlist-shuffle")
-				checkable: true
-			}
-			ToolButton {
-				icon.name: "media-playlist-repeat"
-				icon.source: icSrc("media-playlist-repeat")
-				checkable: true
-			}
-			ToolSeparator {
-			}
-			ToolButton {
-				icon.name: "media-skip-backward"
-				icon.source: icSrc("media-skip-backward")
-			}
-			ToolButton {
-				icon.name: "media-playback-start"
-				icon.source: icSrc("media-playback-start")
-			}
-			ToolButton {
-				icon.name: "media-skip-forward"
-				icon.source: icSrc("media-skip-forward")
-			}
-			ToolSeparator {
-			}
-			ToolButton {
-				icon.name: "audio-volume-high"
-				icon.source: icSrc("audio-volume-high")
-			}
-			ToolButton {
-				icon.name: "overflow-menu"
-				icon.source: icSrc("overflow-menu")
-			}
-			Item {
-				Layout.fillWidth: true
-			}
-		}
-	}
+	footer: Footer {}
 
 	Drawer {
 		id: drawer
@@ -131,63 +74,9 @@ ApplicationWindow {
 			anchors.fill: parent
 			StackLayout {
 				currentIndex: drawerTabs.currentIndex
-				// Search
-				Item {
-					Layout.fillHeight: true
-					RowLayout {
-						anchors {
-							bottom: parent.bottom
-							left: parent.left
-							right: parent.right
-							margins: 16
-						}
-						TextField {
-							Layout.fillWidth: true
-							placeholderText: "Search query"
-						}
-						ToolButton {
-							id: menuSearchSelectedType
-							icon.name: "view-media-track"
-							onClicked: menuSearchType.open()
-							Menu {
-								id: menuSearchType
-								onClosed: console.log(menuSearchSelectedType.icon.name)
-								MenuItem {
-									text: "Tracks"
-									icon.name: "view-media-track"
-									onClicked: menuSearchSelectedType.icon.name = "view-media-track"
-								}
-								MenuItem {
-									text: "Artists"
-									icon.name: "view-media-artist"
-									onClicked: menuSearchSelectedType.icon.name = "view-media-artist"
-								}
-								MenuItem {
-									text: "Albums"
-									icon.name: "view-media-album-cover"
-									onClicked: menuSearchSelectedType.icon.name = "view-media-album-cover"
-								}
-								MenuItem {
-									text: "Playlists"
-									icon.name: "view-media-playlist"
-									onClicked: menuSearchSelectedType.icon.name = "view-media-playlist"
-								}
-							}
-						}
-					}
-				}
-				// Library
-				Item {
-					Label {
-						text: "library"
-					}
-				}
-				// Playlists
-				Item {
-					Label {
-						text: "playlists"
-					}
-				}
+				SearchView {}
+				LibraryView {}
+				PlaylistsView {}
 			}
 			TabBar {
 				id: drawerTabs
@@ -214,7 +103,7 @@ ApplicationWindow {
 				ToolButton {
 					Layout.fillWidth: true
 					icon.name: "help-about"
-					text: "spotify-qtquick v3.0-alpha.1"
+					text: "spotify-qtquick %1".arg(AppVersion)
 					enabled: false
 				}
 				ToolButton {

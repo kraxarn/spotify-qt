@@ -5,6 +5,28 @@
 #include <QApplication>
 #include <QCoreApplication>
 
+#define USE_QT_QUICK
+
+#ifdef USE_QT_QUICK
+#include "qml/spotifyqml.hpp"
+
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include <QQuickStyle>
+#endif
+
+#ifdef USE_QT_QUICK
+void defineTypes(QQmlApplicationEngine &engine)
+{
+	engine.rootContext()->setContextProperty("AppVersion", APP_VERSION);
+
+	qmlRegisterType<SpotifyQml>(
+		"com.kraxarn.spotify",
+		1, 0,
+		"Spotify");
+}
+#endif
+
 int main(int argc, char *argv[])
 {
 	// Set name for settings etc.
@@ -45,6 +67,16 @@ int main(int argc, char *argv[])
 			return 0;
 	}
 
+#ifdef USE_QT_QUICK
+	QQmlApplicationEngine engine;
+	QQuickStyle::setStyle(
+		QQuickStyle::availableStyles().contains("Plasma")
+		? "Plasma"
+		: "Material/Dark");
+	qDebug() << "using" << QQuickStyle::name() << "style";
+	defineTypes(engine);
+	engine.load(QUrl("qrc:/qml/main.qml"));
+#else
 	// Create main window
 	MainWindow w(settings);
 
@@ -53,5 +85,8 @@ int main(int argc, char *argv[])
 		return 1;
 
 	w.show();
+#endif
+
+	// Run application
 	return QApplication::exec();
 }
