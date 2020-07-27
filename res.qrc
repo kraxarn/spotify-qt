@@ -88,5 +88,7 @@
         <file>res/logo/spotify-qt-symbolic-dark.svg</file>
         <file>res/logo/spotify-qt-symbolic-light.svg</file>
         <file>res/logo/spotify-qt.svg</file>
+        <!-- QML -->
+        <file>qml/main.qml</file>
     </qresource>
 </RCC>
