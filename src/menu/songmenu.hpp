@@ -20,9 +20,9 @@ private:
 	QWidget *parent;
 	spt::Spotify &spotify;
 	bool isLiked;
-	const QString &trackId;
-	const QString &artist;
-	const QString &name;
+	const QString trackId;
+	const QString artist;
+	const QString name;
 	QString track;
 	const spt::Playlist *currentPlaylist = nullptr;
 
