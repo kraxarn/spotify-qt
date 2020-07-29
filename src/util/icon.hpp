@@ -15,5 +15,4 @@ public:
 
 private:
 	Icon() = default;
-	static QString theme;
 };
