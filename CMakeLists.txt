@@ -56,3 +56,6 @@ target_link_libraries(spotify-qt PRIVATE
 		Qt5::Gui
 		Qt5::Svg
 		Qt5::DBus)
+
+# Unit testing
+add_subdirectory(test)
