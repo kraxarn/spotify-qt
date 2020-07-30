@@ -50,57 +50,54 @@ LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 void LibraryList::clicked(QTreeWidgetItem *item, int)
 {
 	auto mainWindow = dynamic_cast<MainWindow *>(parent);
-	if (mainWindow == nullptr)
+	if (mainWindow == nullptr || item == nullptr)
 		return;
 
-	if (item != nullptr)
+	mainWindow->getPlaylistsList()->setCurrentRow(-1);
+	if (item->parent() != nullptr)
 	{
-		mainWindow->getPlaylistsList()->setCurrentRow(-1);
-		if (item->parent() != nullptr)
+		auto data = item->data(0, 0x100).toString();
+		switch (item->data(0, 0x101).toInt())
 		{
-			auto data = item->data(0, 0x100).toString();
-			switch (item->data(0, 0x101).toInt())
-			{
-				case RoleArtistId: mainWindow->openArtist(data);
-					break;
+			case RoleArtistId: mainWindow->openArtist(data);
+				break;
 
-				case RoleAlbumId: mainWindow->loadAlbum(data, false);
-					break;
-			}
+			case RoleAlbumId: mainWindow->loadAlbum(data, false);
+				break;
 		}
+	}
+	else
+	{
+		auto id = item->text(0).toLower().replace(' ', '_');
+		auto cacheTracks = mainWindow->loadTracksFromCache(id);
+		if (cacheTracks.isEmpty())
+			mainWindow->getSongsTree()->setEnabled(false);
 		else
+			mainWindow->loadSongs(cacheTracks);
+
+		QVector<spt::Track> tracks;
+		if (item->text(0) == "Recently Played")
+			tracks = spotify.recentlyPlayed();
+		else if (item->text(0) == "Liked")
+			tracks = spotify.savedTracks();
+		else if (item->text(0) == "Tracks")
+			tracks = spotify.topTracks();
+		else if (item->text(0) == "New Releases")
 		{
-			auto id = item->text(0).toLower().replace(' ', '_');
-			auto cacheTracks = mainWindow->loadTracksFromCache(id);
-			if (cacheTracks.isEmpty())
-				mainWindow->getSongsTree()->setEnabled(false);
-			else
-				mainWindow->loadSongs(cacheTracks);
-
-			QVector<spt::Track> tracks;
-			if (item->text(0) == "Recently Played")
-				tracks = spotify.recentlyPlayed();
-			else if (item->text(0) == "Liked")
-				tracks = spotify.savedTracks();
-			else if (item->text(0) == "Tracks")
-				tracks = spotify.topTracks();
-			else if (item->text(0) == "New Releases")
-			{
-				auto all = mainWindow->allArtists();
-				auto releases = spotify.newReleases();
-				for (auto &album : releases)
-					if (all.contains(album.artist))
-						for (auto &track : spotify.albumTracks(album.id))
-						{
-							track.addedAt = album.releaseDate;
-							tracks << track;
-						}
-			}
-
-			mainWindow->saveTracksToCache(id, tracks);
-			mainWindow->loadSongs(tracks);
-			mainWindow->getSongsTree()->setEnabled(true);
+			auto all = mainWindow->allArtists();
+			auto releases = spotify.newReleases();
+			for (auto &album : releases)
+				if (all.contains(album.artist))
+					for (auto &track : spotify.albumTracks(album.id))
+					{
+						track.addedAt = album.releaseDate;
+						tracks << track;
+					}
 		}
+
+		mainWindow->saveTracksToCache(id, tracks);
+		mainWindow->loadSongs(tracks);
+		mainWindow->getSongsTree()->setEnabled(true);
 	}
 }
 
