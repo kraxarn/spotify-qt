@@ -143,6 +143,7 @@ void MainWindow::refreshed(const spt::Playback &playback)
 		nowPlaying->setText(currPlaying);
 		setAlbumImage(current.item.image);
 		setWindowTitle(QString("%1 - %2").arg(current.item.artist).arg(current.item.name));
+		updateContextIcon();
 		if (mediaPlayer != nullptr)
 			mediaPlayer->currentSourceChanged(current);
 		if (trayIcon != nullptr && settings.general.trayAlbumArt)
@@ -182,6 +183,15 @@ QWidget *MainWindow::createCentralWidget()
 	playlistContainer->setTitle("Playlists");
 	sidebar->addWidget(playlistContainer);
 	//endregion
+
+	// Current context info
+	auto contextLayout = new QHBoxLayout();
+	contextIcon = new QLabel();
+	contextInfo = new QLabel();
+	contextLayout->addSpacing(16);
+	contextLayout->addWidget(contextIcon);
+	contextLayout->addWidget(contextInfo, 1);
+	sidebar->addLayout(contextLayout);
 
 	// Now playing song
 	auto nowPlayingLayout = new QHBoxLayout();
@@ -565,6 +575,40 @@ QSet<QString> MainWindow::allArtists()
 void MainWindow::setFixedWidthTime(bool value)
 {
 	((MainToolBar *) toolBar)->position->setFont(value ? QFont("monospace") : QFont());
+}
+
+void MainWindow::updateContextIcon()
+{
+	auto currentName =
+		current.contextType.isEmpty() || current.contextUri.isEmpty()
+		? "No context"
+		: current.contextType == "album"
+		  ? current.item.album
+		  : current.contextType == "artist"
+			? current.item.artist
+			: getPlaylistName(current.contextUri);
+
+	contextInfo->setText(currentName);
+	auto size = contextInfo->fontInfo().pixelSize();
+	contextIcon->setPixmap(
+		Icon::get(
+			QString("view-media-%1")
+				.arg(current.contextType.isEmpty()
+					 ? "track"
+					 : current.contextType == "album"
+					   ? "album-cover"
+					   : current.contextType))
+			.pixmap(size, size));
+}
+
+QString MainWindow::getPlaylistName(const QString &id)
+{
+	for (auto &playlist : sptPlaylists)
+	{
+		if (id.endsWith(playlist.id))
+			return playlist.name;
+	}
+	return QString();
 }
 
 //region Getters

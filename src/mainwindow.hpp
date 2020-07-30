@@ -67,6 +67,8 @@ private:
 	QTreeWidget *songs = nullptr;
 	QTreeWidgetItem *playingTrackItem = nullptr;
 	QToolBar *toolBar = nullptr;
+	QLabel *contextIcon = nullptr;
+	QLabel *contextInfo = nullptr;
 
 	// spt
 	spt::ClientHandler *sptClient = nullptr;
@@ -93,4 +95,6 @@ private:
 	void setAlbumImage(const QString &url);
 	void cachePlaylist(spt::Playlist &playlist);
 	bool loadPlaylistFromCache(spt::Playlist &playlist);
+	void updateContextIcon();
+	QString getPlaylistName(const QString &id);
 };

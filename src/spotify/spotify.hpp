@@ -9,7 +9,7 @@ namespace spt { class Spotify; }
 #include "playback.hpp"
 #include "playlist.hpp"
 #include "searchresults.hpp"
-#include "src/settings.hpp"
+#include "../settings.hpp"
 #include "user.hpp"
 
 #include <QCoreApplication>

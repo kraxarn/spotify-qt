@@ -12,15 +12,17 @@ namespace spt
 	class Playback
 	{
 	public:
-		Playback();
+		Playback() = default;
 		explicit Playback(const QJsonObject &json);
 		QVariantMap metadata() const;
 
-		int		progressMs	= 0;
-		Track	item		= Track();
-		bool	isPlaying	= false;
-		int		volume		= 100;
-		QString	repeat		= "off";
-		bool	shuffle		= false;
+		QString contextType;
+		QString contextUri;
+		QString repeat = "off";
+		Track item = Track();
+		bool isPlaying = false;
+		bool shuffle = false;
+		int progressMs = 0;
+		int volume = 100;
 	};
 }
