@@ -44,7 +44,7 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 	followButton->setToolTip(
 		QString("%1 artist (%2)")
 			.arg(isFollowing
-				 ? "UnfollowButton"
+				 ? "Unfollow"
 				 : "Follow").arg(followers));
 	followButton->setFlat(true);
 	QAbstractButton::connect(followButton, &QAbstractButton::clicked, this, &ArtistView::follow);
