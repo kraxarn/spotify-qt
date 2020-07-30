@@ -29,9 +29,9 @@
 #include <QStyleFactory>
 #include <QVBoxLayout>
 
-class SettingsDialog : public QDialog
+class SettingsDialog: public QDialog
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
 	explicit SettingsDialog(Settings &settings, QWidget *parent = nullptr);
@@ -47,29 +47,36 @@ private:
 	static bool isPulse();
 	static bool sptConfigExists();
 	static bool hasIconTheme();
+	void globalConfigToggle(int state);
+
 	Settings &settings;
+
 	// App settings
-	QComboBox	*appRefresh		= nullptr;
-	QCheckBox	*appPulse		= nullptr;
-	QCheckBox	*appMedia		= nullptr;
-	QCheckBox	*appSptOrder	= nullptr;
-	QCheckBox	*appWhatsNew	= nullptr;
+	QCheckBox *appMedia = nullptr;
+	QCheckBox *appPulse = nullptr;
+	QCheckBox *appSptOrder = nullptr;
+	QCheckBox *appWhatsNew = nullptr;
+	QComboBox *appRefresh = nullptr;
+
 	// Interface settings
-	QCheckBox	*itfDark		= nullptr;
-	QCheckBox	*itfResizeAuto	= nullptr;
-	QCheckBox	*itfIcFallback	= nullptr;
-	QCheckBox	*itfMonoTime	= nullptr;
+	QCheckBox *itfDark = nullptr;
+	QCheckBox *itfIcFallback = nullptr;
+	QCheckBox *itfMonoTime = nullptr;
+	QCheckBox *itfResizeAuto = nullptr;
+
 	// Tray icon settings
-	QCheckBox	*itfTrayIcon	= nullptr;
-	QCheckBox	*itfTrayNotify	= nullptr;
-	QCheckBox	*itfTrayInvert	= nullptr;
-	QCheckBox	*itfTrayAlbum	= nullptr;
+	QCheckBox *itfTrayAlbum = nullptr;
+	QCheckBox *itfTrayIcon = nullptr;
+	QCheckBox *itfTrayInvert = nullptr;
+	QCheckBox *itfTrayNotify = nullptr;
+
 	// Spotify settings
-	QLineEdit	*sptPath		= nullptr;
-	QLabel		*sptVersion		= nullptr;
-	QLineEdit	*sptUsername	= nullptr;
-	QComboBox	*sptBitrate		= nullptr;
-	QCheckBox	*sptAppStart	= nullptr;
-	QCheckBox	*sptGlobal		= nullptr;
-	QCheckBox	*sptAlways		= nullptr;
+	QCheckBox *sptAlways = nullptr;
+	QCheckBox *sptAppStart = nullptr;
+	QCheckBox *sptGlobal = nullptr;
+	QComboBox *sptBitrate = nullptr;
+	QGroupBox *sptGroup = nullptr;
+	QLabel *sptVersion = nullptr;
+	QLineEdit *sptPath = nullptr;
+	QLineEdit *sptUsername = nullptr;
 };

@@ -159,6 +159,7 @@ QWidget *SettingsDialog::spotifySettings()
 	// Main container for everything
 	auto layout = new QVBoxLayout();
 	layout->setAlignment(Qt::AlignTop);
+
 	// Executable settings
 	auto sptPathLayout = new QHBoxLayout();
 	sptPath = new QLineEdit(settings.spotify.path, this);
@@ -174,6 +175,7 @@ QWidget *SettingsDialog::spotifySettings()
 	});
 	sptPathLayout->addWidget(sptPathBrowse);
 	layout->addLayout(sptPathLayout);
+
 	// Spotifyd version
 	sptVersion = new QLabel("(no spotifyd provided)", this);
 	if (!settings.spotify.path.isEmpty())
@@ -184,42 +186,59 @@ QWidget *SettingsDialog::spotifySettings()
 	}
 	sptVersion->setEnabled(false);
 	layout->addWidget(sptVersion);
-	// Layout for all settings
+
+	// Global config
+	sptGlobal = new QCheckBox("Use global config", this);
+	sptGlobal->setToolTip("Use spotifyd.conf file in either ~/.config/spotifyd or /etc/spotifyd only");
+	sptGlobal->setChecked(settings.spotify.globalConfig);
+	QCheckBox::connect(sptGlobal, &QCheckBox::stateChanged, this, &SettingsDialog::globalConfigToggle);
+	layout->addWidget(sptGlobal);
+
+	// Box and layout for all app specific settings
+	sptGroup = new QGroupBox("App specific settings", this);
+	sptGroup->setEnabled(!sptGlobal->isChecked());
 	auto sptLayout = new QGridLayout();
-	sptLayout->setEnabled(false);
-	layout->addLayout(sptLayout);
+
 	// Username
-	sptLayout->addWidget(new QLabel("Username", this), 0, 0);
-	sptUsername = new QLineEdit(settings.spotify.username, this);
+	sptLayout->addWidget(new QLabel("Username", sptGroup), 0, 0);
+	sptUsername = new QLineEdit(settings.spotify.username, sptGroup);
 	sptLayout->addWidget(sptUsername, 0, 1);
+
 	// Bitrate
-	sptLayout->addWidget(new QLabel("Quality", this));
-	sptBitrate = new QComboBox(this);
-	sptBitrate->addItems({
-		"Low (96 kbit/s)", "Medium (160 kbit/s)", "High (320 kbit/s)"
-	});
+	sptLayout->addWidget(new QLabel("Quality", sptGroup), 1, 0);
+	sptBitrate = new QComboBox(sptGroup);
+	sptBitrate->addItems(
+		{
+			"Low (96 kbit/s)", "Medium (160 kbit/s)", "High (320 kbit/s)"
+		}
+	);
 	auto bitrate = settings.spotify.bitrate;
 	sptBitrate->setCurrentIndex(bitrate == 96 ? 0 : bitrate == 160 ? 1 : 2);
-	sptLayout->addWidget(sptBitrate);
+	sptLayout->addWidget(sptBitrate, 1, 1);
+	sptGroup->setLayout(sptLayout);
+	layout->addWidget(sptGroup);
+
 	// Start with app
 	sptAppStart = new QCheckBox("Start with app", this);
 	sptAppStart->setToolTip("Start spotifyd together with the app (always starts and doesn't automatically close)");
 	sptAppStart->setChecked(settings.spotify.startClient);
 	layout->addWidget(sptAppStart);
-	// Global config
-	sptGlobal = new QCheckBox("Use global config", this);
-	sptGlobal->setToolTip("Use spotifyd.conf file in either ~/.config/spotifyd or /etc/spotifyd only");
-	sptGlobal->setChecked(settings.spotify.globalConfig);
-	layout->addWidget(sptGlobal);
+
 	// Always start
 	sptAlways = new QCheckBox("Always start", this);
 	sptAlways->setToolTip("Always start client, even if there are other devices already available");
 	sptAlways->setChecked(settings.spotify.alwaysStart);
 	layout->addWidget(sptAlways);
+
 	// Final layout
 	auto widget = new QWidget();
 	widget->setLayout(layout);
 	return widget;
+}
+
+void SettingsDialog::globalConfigToggle(int state)
+{
+	sptGroup->setEnabled(state == Qt::Unchecked);
 }
 
 QWidget *SettingsDialog::aboutSettings()
