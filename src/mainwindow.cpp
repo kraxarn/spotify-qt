@@ -18,14 +18,14 @@ MainWindow::MainWindow(Settings &settings)
 	cacheDir.mkdir("playlist");
 	cacheDir.mkdir("tracks");
 
-	// Check for dark background
-	auto bg = splash->palette().color(backgroundRole());
-	if (((bg.red() + bg.green() + bg.blue()) / 3) < 128)
-		Utils::darkBackground = true;
-
 	// Apply selected style and palette
 	QApplication::setStyle(settings.general.style);
 	Utils::applyPalette(settings.general.stylePalette);
+
+	// Check for dark background
+	auto bg = palette().color(backgroundRole());
+	if (((bg.red() + bg.green() + bg.blue()) / 3) < 128)
+		Utils::darkBackground = true;
 
 	// Set Spotify
 	splash->showMessage("Connecting...");
