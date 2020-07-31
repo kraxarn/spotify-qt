@@ -25,6 +25,7 @@ namespace spt
 
 		QVector<Track> loadTracks(Spotify &spotify) const;
 		QJsonObject toJson(Spotify &spotify) const;
+		QJsonObject toJson(const QJsonArray &jsonTracks = QJsonArray()) const;
 		bool isOwner(const User &user) const;
 
 		bool collaborative;

@@ -94,5 +94,7 @@
         <file>qml/PlaylistsView.qml</file>
         <file>qml/SearchView.qml</file>
         <file>qml/main.qml</file>
+        <!-- QML JS -->
+        <file>qml/js/playlistView.js</file>
     </qresource>
 </RCC>

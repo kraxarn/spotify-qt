@@ -13,7 +13,9 @@ ApplicationWindow {
 	
 	readonly property bool inPortrait: root.width < root.height
 
-	property Spotify spotify: Spotify {}
+	Spotify {
+		id: spotify
+	}
 
 	function icSrc(name) {
 		return "qrc:/res/ic/dark/%1.svg".arg(name)
@@ -74,6 +76,7 @@ ApplicationWindow {
 			anchors.fill: parent
 			StackLayout {
 				currentIndex: drawerTabs.currentIndex
+				Layout.bottomMargin: drawerTabs.height
 				SearchView {}
 				LibraryView {}
 				PlaylistsView {}

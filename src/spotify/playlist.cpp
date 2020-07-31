@@ -73,6 +73,16 @@ QJsonObject Playlist::toJson(Spotify &spotify) const
 	for (auto &track : loadTracks(spotify))
 		jsonTracks.append(track.toJson());
 
+	return toJson(jsonTracks);
+}
+
+bool Playlist::isOwner(const User &user) const
+{
+	return !ownerId.isEmpty() && ownerId == user.id;
+}
+
+QJsonObject Playlist::toJson(const QJsonArray &jsonTracks) const
+{
 	return QJsonObject({
 		QPair<QString, bool>("collaborative", collaborative),
 		QPair<QString, QString>("description", description),
@@ -86,9 +96,4 @@ QJsonObject Playlist::toJson(Spotify &spotify) const
 		QPair<QString, QString>("owner_id", ownerId),
 		QPair<QString, QString>("owner_name", ownerName)
 	});
-}
-
-bool Playlist::isOwner(const User &user) const
-{
-	return !ownerId.isEmpty() && ownerId == user.id;
 }
