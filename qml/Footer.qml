@@ -4,6 +4,10 @@ import QtQuick.Layouts 1.12
 
 ColumnLayout {
 	id: footer
+	readonly property var playPause: playPause
+	readonly property var progress: progress
+	readonly property var position: position
+
 	anchors {
 		left: parent.left
 		right: parent.right
@@ -13,10 +17,13 @@ ColumnLayout {
 	RowLayout {
 		Layout.topMargin: 16
 		Slider {
+			id: progress
 			Layout.fillWidth: true
+			from: 0
 			value: 0
 		}
 		Label {
+			id: position
 			text: "0:00/0:00"
 		}
 	}
@@ -42,6 +49,7 @@ ColumnLayout {
 			icon.source: icSrc("media-skip-backward")
 		}
 		ToolButton {
+			id: playPause
 			icon.name: "media-playback-start"
 			icon.source: icSrc("media-playback-start")
 		}

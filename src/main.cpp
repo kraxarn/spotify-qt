@@ -7,6 +7,7 @@
 
 #ifdef USE_QT_QUICK
 #include "../qml/src/spotifyqml.hpp"
+#include "../qml/src/utilsqml.hpp"
 
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -22,6 +23,11 @@ void defineTypes(QQmlApplicationEngine &engine)
 		"com.kraxarn.spotify",
 		1, 0,
 		"Spotify");
+
+	qmlRegisterType<UtilsQml>(
+		"com.kraxarn.utils",
+		1, 0,
+		"Utils");
 }
 #endif
 
@@ -73,6 +79,13 @@ int main(int argc, char *argv[])
 		: "Material/Dark");
 	qDebug() << "using" << QQuickStyle::name() << "style";
 	defineTypes(engine);
+	QQmlApplicationEngine::connect(
+		&engine, &QQmlApplicationEngine::objectCreated, &app,
+		[](QObject *obj, const QUrl &url)
+	{
+		if (obj == nullptr)
+			QCoreApplication::quit();
+	}, Qt::QueuedConnection);
 	engine.load(QUrl("qrc:/qml/main.qml"));
 #else
 	// Create main window

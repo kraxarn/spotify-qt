@@ -41,6 +41,20 @@ QVariantMap spt::Playback::metadata() const
 	return metadata;
 }
 
+QJsonObject spt::Playback::toJson() const
+{
+	return QJsonObject(
+		{
+			QPair<QString, int>("progress_ms", progressMs),
+			QPair<QString, QJsonObject>("item", item.toJson()),
+			QPair<QString, bool>("is_playing", isPlaying),
+			QPair<QString, int>("volume", volume),
+			QPair<QString, QString>("repeat", repeat),
+			QPair<QString, bool>("shuffle", shuffle)
+		}
+	);
+}
+
 int spt::Playback::volume() const
 {
 	return device.volumePercent;

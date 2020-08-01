@@ -1,20 +1,29 @@
 import com.kraxarn.spotify 1.0
+import com.kraxarn.utils 1.0
 
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
+import QtQuick.Controls.Material 2.12
+
+import "js/main.js" as MainJs
 
 ApplicationWindow {
 	id: root
-	title: "spotify-qtquick"
+	title: "spotify-qt-quick"
 	visible: true
 	width: 540
 	height: 960
 	
 	readonly property bool inPortrait: root.width < root.height
 
+	Utils {
+		id: utils
+	}
+
 	Spotify {
 		id: spotify
+		onPlaybackChanged: MainJs.playbackChanged()
 	}
 
 	function icSrc(name) {
@@ -36,15 +45,27 @@ ApplicationWindow {
 					drawer.visible = !drawer.visible
 				}
 			}
-			Label {
-				Layout.fillWidth: true
+			Image {
+				id: currentAlbum
 				Layout.leftMargin: inPortrait ? 0 : 12
-				text: "No media playing"
-				font.pixelSize: 20
+				Layout.maximumHeight: currentPlaying.height - 6
+				fillMode: Image.PreserveAspectFit
+				source: icSrc("media-optical-audio")
 			}
-			ToolButton {
-				icon.name: "media-optical-audio"
-				icon.source: icSrc("media-optical-audio")
+			Column {
+				id: currentPlaying
+				Layout.fillWidth: true
+				spacing: -4
+				Label {
+					id: currentArtist
+					text: ""
+					font.pixelSize: 14
+				}
+				Label {
+					id: currentTrack
+					text: "No media playing"
+					font.pixelSize: 20
+				}
 			}
 			ToolButton {
 				icon.name: "speaker"
