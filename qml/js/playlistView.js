@@ -2,7 +2,12 @@
 function loadPlaylists() {
 	spotify.playlists.forEach(playlist => {
 		listModel.append({
-			"text": playlist.name
+			"id": playlist.id,
+			"name": playlist.name,
 		})
 	})
+}
+
+function clickedPlaylist(model) {
+	console.log(`"${model.name}": spotify:playlist:${model.id}`)
 }

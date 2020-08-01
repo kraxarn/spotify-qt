@@ -12,8 +12,9 @@ ListView {
 		Button {
 			height: playlistList.height / 10
 			width: playlistList.width
-			text: model.text
+			text: model.name
 			flat: true
+			onClicked: JS.clickedPlaylist(model)
 		}
 	}
 
