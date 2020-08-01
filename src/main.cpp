@@ -5,10 +5,8 @@
 #include <QApplication>
 #include <QCoreApplication>
 
-#define USE_QT_QUICK
-
 #ifdef USE_QT_QUICK
-#include "qml/spotifyqml.hpp"
+#include "../qml/src/spotifyqml.hpp"
 
 #include <QQmlApplicationEngine>
 #include <QQmlContext>

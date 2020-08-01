@@ -12,8 +12,16 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Check if we should include Qt Quick
+if(USE_QT_QUICK)
+	set(QT_QUICK_PKG Quick QuickControls2)
+	set(QT_QUICK_LINK Qt5::Quick Qt5::QuickControls2)
+	file(GLOB QML_SRC "qml/src/*.[hc]pp")
+	add_compile_definitions(USE_QT_QUICK)
+endif()
+
 # Find Qt
-find_package(Qt5 COMPONENTS Core Widgets Network Gui Svg DBus Quick QuickControls2 REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets Network Gui Svg DBus ${QT_QUICK_PKG} REQUIRED)
 
 # Glob source files
 file(GLOB MAIN_SRC "src/*.[hc]pp")
@@ -21,9 +29,9 @@ file(GLOB SUB_SRC "src/*/*.[hc]pp")
 
 # Add all source files to main executable
 if(ANDROID)
-    add_library(spotify-qt SHARED ${MAIN_SRC} ${SUB_SRC} res.qrc)
+    add_library(spotify-qt SHARED ${MAIN_SRC} ${SUB_SRC} ${QML_SRC} res.qrc)
 else()
-    add_executable(spotify-qt ${MAIN_SRC} ${SUB_SRC} ${LIB_SRC} res.qrc)
+    add_executable(spotify-qt ${MAIN_SRC} ${SUB_SRC} ${QML_SRC} ${LIB_SRC} res.qrc)
 endif()
 
 # Get version from Git
@@ -61,5 +69,4 @@ target_link_libraries(spotify-qt PRIVATE
 		Qt5::Gui
 		Qt5::Svg
 		Qt5::DBus
-		Qt5::Quick
-		Qt5::QuickControls2)
+		${QT_QUICK_LINK})
