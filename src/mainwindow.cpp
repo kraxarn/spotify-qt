@@ -510,7 +510,6 @@ void MainWindow::openArtist(const QString &artistId)
 	}
 	artistView = view;
 	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, artistView);
-	libraryList->setCurrentItem(nullptr);
 }
 
 void MainWindow::cachePlaylist(spt::Playlist &playlist)
