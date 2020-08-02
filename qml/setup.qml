@@ -30,6 +30,17 @@ ApplicationWindow {
 		width: root.width * 0.9
 	}
 
+	Dialog {
+		id: authErrorDialog
+		title: "Error"
+		standardButtons: Dialog.Ok
+		modal: true
+		anchors.centerIn: parent
+		Label {
+			id: authErrorMsg
+		}
+	}
+
 	Drawer {
 		id: authDrawer
 		width: root.width

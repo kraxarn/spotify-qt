@@ -58,6 +58,10 @@ int main(int argc, char *argv[])
 
 	// Create Qt application
 	QApplication app(argc, argv);
+#ifdef USE_QT_QUICK
+	QQmlApplicationEngine engine;
+	defineTypes(engine);
+#endif
 
 	// JSON Settings
 	Settings settings;
@@ -84,19 +88,25 @@ int main(int argc, char *argv[])
 	// First setup window
 	if (settings.account.refreshToken.isEmpty())
 	{
+#ifdef USE_QT_QUICK
+		engine.load(QUrl("qrc:/qml/setup.qml"));
+		QApplication::exec();
+		settings.load();
+		if (settings.account.accessToken.isEmpty() || settings.account.refreshToken.isEmpty())
+			return 0;
+#else
 		SetupDialog dialog(settings);
 		if (dialog.exec() == QDialog::Rejected)
 			return 0;
+#endif
 	}
 
 #ifdef USE_QT_QUICK
-	QQmlApplicationEngine engine;
 	QQuickStyle::setStyle("Material"
 		/*QQuickStyle::availableStyles().contains("Plasma")
 		? "Plasma"
 		: "Material"*/);
 	qDebug() << "using" << QQuickStyle::name() << "style";
-	defineTypes(engine);
 	QQmlApplicationEngine::connect(
 		&engine, &QQmlApplicationEngine::objectCreated, &app,
 		[](QObject *obj, const QUrl &url)
@@ -104,8 +114,6 @@ int main(int argc, char *argv[])
 			if (obj == nullptr)
 				QCoreApplication::quit();
 		}, Qt::QueuedConnection);
-	engine.load(QUrl("qrc:/qml/setup.qml"));
-	QApplication::exec();
 	engine.load(QUrl("qrc:/qml/main.qml"));
 #else
 	// Create main window

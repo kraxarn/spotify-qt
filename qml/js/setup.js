@@ -14,21 +14,38 @@ function openDashboard() {
 }
 
 function authenticate() {
+	if (!clientId.text || !clientSecret.text) {
+		authError("Both client id and client secret are required")
+		return
+	}
+
 	authWeb.url = utils.sptAuthUrl(clientId.text)
 	authDrawer.open()
+}
+
+function authError(msg) {
+	authErrorMsg.text = msg
+	authErrorDialog.open()
 }
 
 function webLoadingChanged(request) {
 	if (!request.url.toString().startsWith("http://localhost:8888")) {
 		return
 	}
+	authDrawer.close()
 
-	let params = utils.extractUrlQuery(request.url)
-	console.log(JSON.stringify(params))
+	let code = utils.extractUrlQuery(request.url)["code"]
+	if (!code) {
+		authError("Authentication failed")
+		return
+	}
 
-	/*if (request.url.toString().startsWith("http://localhost:8888/?code=")) {
-		authDrawer.close()
-		root.close()
-		Qt.quit()
-	}*/
+	let status = utils.sptAuth(code, clientId.text, clientSecret.text)
+	if (!status.success) {
+		authError(status.message)
+		return
+	}
+
+	root.close()
+	Qt.quit()
 }

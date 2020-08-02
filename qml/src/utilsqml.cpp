@@ -1,5 +1,7 @@
 #include "utilsqml.hpp"
 
+#define REDIRECT_URL "http://localhost:8888"
+
 UtilsQml::UtilsQml(QObject *parent)
 	: QObject(parent)
 {
@@ -17,7 +19,7 @@ void UtilsQml::copyToClipboard(const QString &text)
 
 QString UtilsQml::sptAuthUrl(const QString &clientId)
 {
-	return spt::Auth::authUrl(clientId, "http://localhost:8888");
+	return spt::Auth::authUrl(clientId, REDIRECT_URL);
 }
 
 QJsonObject UtilsQml::extractUrlQuery(const QUrl &url)
@@ -28,4 +30,16 @@ QJsonObject UtilsQml::extractUrlQuery(const QUrl &url)
 		obj[item.first] = item.second;
 	}
 	return obj;
+}
+
+QJsonObject UtilsQml::sptAuth(const QString &code, const QString &clientId, const QString &clientSecret)
+{
+	Settings settings;
+	auto status = spt::Auth(settings).auth(code, REDIRECT_URL, clientId, clientSecret);
+	return QJsonObject(
+		{
+			QPair<QString, bool>("success", status.isEmpty()),
+			QPair<QString, QString>("message", status)
+		}
+	);
 }
