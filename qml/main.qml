@@ -162,37 +162,13 @@ ApplicationWindow {
 		}
 	}
 
-	Component {
-		id: listSeparator
-		Rectangle {
-			anchors.left: parent.left
-			anchors.right: parent.right
-			anchors.leftMargin: 16
-			anchors.rightMargin: anchors.leftMargin
-			height: 1
-			color: "#9e9e9e"
-			opacity: 0
-		}
-	}
-
 	ListView {
 		id: trackList
 		anchors.fill: parent
 		anchors.leftMargin: !inPortrait ? drawer.width : 0
 		anchors.topMargin: toolBar.height
-		section.property: "track"
-		section.criteria: ViewSection.FullString
-		section.delegate: listSeparator
 		model: ListModel {
-			id: listModel
-			Component.onCompleted: {
-				for (var i = 0; i < 200; i++) {
-					listModel.append({
-						"artist": Math.round(Math.random() * 1024 * 1024).toString(16),
-						"track": Math.round(Math.random() * 1024 * 1024).toString(16)
-					})
-				}
-			}
+			id: trackListModel
 		}
 		delegate: listDelegate
 	}

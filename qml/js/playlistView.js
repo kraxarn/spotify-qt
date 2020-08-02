@@ -1,4 +1,3 @@
-
 function loadPlaylists() {
 	spotify.playlists.forEach(playlist => {
 		listModel.append({
@@ -8,6 +7,22 @@ function loadPlaylists() {
 	})
 }
 
+function loadPlaylist(id) {
+	trackList.enabled = false
+
+	let tracks = spotify.getPlaylistTracks(id)
+	trackListModel.clear()
+
+	tracks.forEach(track => trackListModel.append({
+		"id": track["id"],
+		"artist": track["artist"],
+		"track": track["name"]
+	}))
+
+	trackList.enabled = true
+}
+
 function clickedPlaylist(model) {
-	console.log(`"${model.name}": spotify:playlist:${model.id}`)
+	drawer.close()
+	loadPlaylist(model.id)
 }
