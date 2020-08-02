@@ -94,10 +94,8 @@ void Settings::load()
 	spotify.keyringPassword = s["keyring_password"].toBool(false);
 }
 
-void Settings::save()
+QJsonObject Settings::toJson()
 {
-	mutex.lock();
-
 	QJsonArray jsonHiddenSongHeaders;
 	for (auto &val : general.hiddenSongHeaders)
 		jsonHiddenSongHeaders.append(val);
@@ -106,7 +104,7 @@ void Settings::save()
 	for (auto &val : general.customPlaylistOrder)
 		jsonCustomPlaylistOrder.append(val);
 
-	QJsonObject json(
+	return QJsonObject(
 		{
 			QPair<QString, QJsonObject>("Account", {
 				{"access_token", account.accessToken},
@@ -151,11 +149,15 @@ void Settings::save()
 			})
 		}
 	);
+}
 
+void Settings::save()
+{
+	mutex.lock();
 	QDir::root().mkpath(Settings::filePath());
 	QFile file(fileName());
 	file.open(QIODevice::WriteOnly);
-	file.write(QJsonDocument(json).toJson(QJsonDocument::Indented));
+	file.write(QJsonDocument(toJson()).toJson(QJsonDocument::Indented));
 	file.close();
 	mutex.unlock();
 }
