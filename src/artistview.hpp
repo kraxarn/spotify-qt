@@ -39,4 +39,5 @@ private:
 	void loadAlbumId(QTreeWidgetItem *item);
 	void relatedClick(QListWidgetItem *item);
 	void albumMenu(const QPoint &pos);
+	void albumDoubleClicked(QTreeWidgetItem *item, int column);
 };

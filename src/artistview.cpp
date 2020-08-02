@@ -136,6 +136,7 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 
 		list->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 		QWidget::connect(list, &QWidget::customContextMenuRequested, this, &ArtistView::albumMenu);
+		QTreeWidget::connect(list, &QTreeWidget::itemDoubleClicked, this, &ArtistView::albumDoubleClicked);
 	}
 
 	tabs->addTab(albumList, "Albums");
@@ -219,4 +220,13 @@ void ArtistView::albumMenu(const QPoint &pos)
 	if (albumId.isEmpty())
 		return;
 	(new AlbumMenu(spotify, albumId, parent))->popup(list->mapToGlobal(pos));
+}
+
+void ArtistView::albumDoubleClicked(QTreeWidgetItem *item, int)
+{
+	auto mainWindow = (MainWindow*) parent;
+	auto result = spotify.playTracks(
+		QString("spotify:album:%1").arg(item->data(0, RoleAlbumId).toString()));
+	if (!result.isEmpty())
+		mainWindow->setStatus(QString("Failed to start playlist playback: %1").arg(result), true);
 }
