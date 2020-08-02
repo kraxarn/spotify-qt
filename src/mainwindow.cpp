@@ -327,10 +327,14 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 		item->setData(0, RoleArtistId, track.artistId);
 		item->setData(0, RoleAlbumId,  track.albumId);
 		item->setData(0, RoleIndex,    i);
-		if (track.isLocal)
+		if (track.isLocal || !track.isPlayable)
 		{
 			item->setDisabled(true);
-			item->setToolTip(1, "Local track");
+			item->setToolTip(
+				1,
+				track.isLocal
+				? "Local track"
+				: "Unavailable");
 		}
 		else if (track.id == current.item.id)
 			setPlayingTrackItem(item);
