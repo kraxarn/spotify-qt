@@ -53,6 +53,9 @@ void TracksList::menu(const QPoint &pos)
 
 void TracksList::clicked(QTreeWidgetItem *item, int)
 {
+	if (item->isDisabled())
+		return;
+
 	auto mainWindow = (MainWindow *) this->parent;
 
 	auto trackId = item->data(0, RoleTrackId).toString();
