@@ -14,6 +14,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickStyle>
+#include <QtWebEngine>
 
 #endif
 
@@ -45,6 +46,15 @@ int main(int argc, char *argv[])
 	QCoreApplication::setOrganizationName("kraxarn");
 	QCoreApplication::setApplicationName("spotify-qt");
 	QCoreApplication::setApplicationVersion(APP_VERSION);
+
+#ifdef USE_QT_QUICK
+	/*
+	 * Web engine is probably needed on mobile devices
+	 * for authentication as a temporary web server
+	 * probably can't be created
+	 */
+	QtWebEngine::initialize();
+#endif
 
 	// Create Qt application
 	QApplication app(argc, argv);
@@ -84,7 +94,7 @@ int main(int argc, char *argv[])
 	QQuickStyle::setStyle("Material"
 		/*QQuickStyle::availableStyles().contains("Plasma")
 		? "Plasma"
-		: "Material/Dark"*/);
+		: "Material"*/);
 	qDebug() << "using" << QQuickStyle::name() << "style";
 	defineTypes(engine);
 	QQmlApplicationEngine::connect(
@@ -95,6 +105,8 @@ int main(int argc, char *argv[])
 				QCoreApplication::quit();
 		}, Qt::QueuedConnection);
 	engine.load(QUrl("qrc:/qml/setup.qml"));
+	QApplication::exec();
+	engine.load(QUrl("qrc:/qml/main.qml"));
 #else
 	// Create main window
 	MainWindow w(settings);

@@ -5,6 +5,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls.Material 2.12
+import QtWebEngine 1.10
 
 import "js/setup.js" as JS
 
@@ -27,6 +28,18 @@ ApplicationWindow {
 	OpenLinkDialog {
 		id: openLinkDialog
 		width: root.width * 0.9
+	}
+
+	Drawer {
+		id: authDrawer
+		width: root.width
+		height: root.height
+		edge: Qt.BottomEdge
+		WebEngineView {
+			id: authWeb
+			anchors.fill: parent
+			onLoadingChanged: loadRequest => JS.webLoadingChanged(loadRequest)
+		}
 	}
 
 	ColumnLayout {
@@ -86,6 +99,7 @@ ApplicationWindow {
 		Button {
 			text: "Authenticate"
 			Layout.fillWidth: true
+			onClicked: JS.authenticate()
 		}
 	}
 }

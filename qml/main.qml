@@ -1,5 +1,6 @@
 import com.kraxarn.spotify 1.0
 import com.kraxarn.utils 1.0
+import com.kraxarn.settings 1.0
 
 import QtQuick 2.12
 import QtQuick.Controls 2.12
@@ -27,6 +28,10 @@ ApplicationWindow {
 	Spotify {
 		id: spotify
 		onPlaybackChanged: JS.playbackChanged()
+	}
+
+	Settings {
+		id: settings
 	}
 
 	function icSrc(name) {
@@ -200,6 +205,7 @@ ApplicationWindow {
 			}
 			ToolButton {
 				anchors {
+					verticalCenter: parent.verticalCenter
 					right: parent.right
 					rightMargin: 16
 				}

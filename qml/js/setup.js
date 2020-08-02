@@ -12,3 +12,23 @@ function openDashboard() {
 	openLinkDialog.linkText = "https://developer.spotify.com/dashboard/applications"
 	openLinkDialog.open()
 }
+
+function authenticate() {
+	authWeb.url = utils.sptAuthUrl(clientId.text)
+	authDrawer.open()
+}
+
+function webLoadingChanged(request) {
+	if (!request.url.toString().startsWith("http://localhost:8888")) {
+		return
+	}
+
+	let params = utils.extractUrlQuery(request.url)
+	console.log(JSON.stringify(params))
+
+	/*if (request.url.toString().startsWith("http://localhost:8888/?code=")) {
+		authDrawer.close()
+		root.close()
+		Qt.quit()
+	}*/
+}

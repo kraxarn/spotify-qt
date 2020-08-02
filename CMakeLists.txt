@@ -14,8 +14,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Check if we should include Qt Quick
 if(USE_QT_QUICK)
-	set(QT_QUICK_PKG Quick QuickControls2)
-	set(QT_QUICK_LINK Qt5::Quick Qt5::QuickControls2)
+	set(QT_QUICK_PKG Quick QuickControls2 WebEngine)
+	set(QT_QUICK_LINK Qt5::Quick Qt5::QuickControls2 Qt5::WebEngine)
 	file(GLOB QML_SRC "qml/src/*.[hc]pp")
 	add_compile_definitions(USE_QT_QUICK)
 endif()

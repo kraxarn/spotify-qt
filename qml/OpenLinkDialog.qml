@@ -4,8 +4,6 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
-import "js/openLinkDialog.js" as JS
-
 Dialog {
 	title: "Link error"
 	modal: true

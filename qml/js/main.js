@@ -7,8 +7,6 @@ function playbackChanged() {
 		currentArtist.text = null
 		currentTrack.text = "No media playing"
 		footer.playPause.icon.name = "media-playback-start"
-		// ...
-
 		return
 	}
 
