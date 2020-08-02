@@ -59,3 +59,21 @@ QJsonObject SpotifyQml::getPlayback()
 {
 	return current.toJson();
 }
+
+QJsonArray SpotifyQml::getPlaylistTracks(const QString &playlistId)
+{
+	auto tracks = spotify->playlist(playlistId).loadTracks(*spotify);
+	std::sort(tracks.begin(), tracks.end(), [](const spt::Track &t1, const spt::Track &t2) {
+		return t1.artist < t2.artist;
+	});
+
+	QJsonArray items;
+	for (auto &track : tracks)
+		items.append(track.toJson());
+	return items;
+}
+
+QJsonObject SpotifyQml::getSettings()
+{
+	return settings.toJson();
+}
