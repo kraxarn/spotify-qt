@@ -6,7 +6,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls.Material 2.12
 
-import "js/main.js" as MainJs
+import "js/main.js" as JS
 
 ApplicationWindow {
 	id: root
@@ -14,8 +14,11 @@ ApplicationWindow {
 	visible: true
 	width: 540
 	height: 960
-	
+	Material.theme: Material.System
+
 	readonly property bool inPortrait: root.width < root.height
+
+	readonly property int listItemHeight: 48
 
 	Utils {
 		id: utils
@@ -23,7 +26,7 @@ ApplicationWindow {
 
 	Spotify {
 		id: spotify
-		onPlaybackChanged: MainJs.playbackChanged()
+		onPlaybackChanged: JS.playbackChanged()
 	}
 
 	function icSrc(name) {
@@ -68,14 +71,28 @@ ApplicationWindow {
 				}
 			}
 			ToolButton {
-				icon.name: "speaker"
-				icon.source: icSrc("speaker")
-				text: "Device"
+				icon.name: "view-sort"
+				onClicked: trackSortMenu.popup()
+				Menu {
+					id: trackSortMenu
+					MenuItem {
+						text: "Sort by"
+						enabled: false
+					}
+					MenuItem {
+						text: "Track"
+						icon.name: "view-media-track"
+					}
+					MenuItem {
+						text: "Artist"
+						icon.name: "view-media-artist"
+					}
+				}
 			}
 			ToolButton {
 				icon.name: "configure"
 				icon.source: icSrc("configure")
-				text: "Settings"
+				onClicked: settingsDrawer.open()
 			}
 		}
 	}
@@ -137,24 +154,55 @@ ApplicationWindow {
 		}
 	}
 
+	Drawer {
+		id: settingsDrawer
+		width: root.width
+		height: root.height - toolBar.height
+		edge: Qt.BottomEdge
+
+		Label {
+			text: "Settings"
+		}
+
+		RoundButton {
+			anchors {
+				right: parent.right
+				bottom: parent.bottom
+				rightMargin: 16
+				bottomMargin: 16
+			}
+			icon.name: "document-save"
+			padding: 24
+			onClicked: settingsDrawer.close()
+		}
+	}
+
 	Component {
 		id: listDelegate
-		RowLayout {
+		Button {
 			id: listRow
-			height: trackList.height / 20
-			width: trackList.width - 32
-			x: 16
+			height: listItemHeight
+			width: trackList.width
+			flat: true
+			onClicked: console.log(model.id)
 			Label {
+				anchors {
+					verticalCenter: parent.verticalCenter
+					left: parent.left
+					leftMargin: 16
+				}
 				text: model.track
-				Layout.preferredWidth: trackList.width / 3
 			}
 			Label {
+				anchors.verticalCenter: parent.verticalCenter
+				x: parent.width / 2
 				text: model.artist
 			}
-			Item {
-				Layout.fillWidth: true
-			}
 			ToolButton {
+				anchors {
+					right: parent.right
+					rightMargin: 16
+				}
 				icon.name: "overflow-menu"
 				icon.source: icSrc("overflow-menu")
 				flat: true

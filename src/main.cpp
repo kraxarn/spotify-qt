@@ -73,10 +73,10 @@ int main(int argc, char *argv[])
 
 #ifdef USE_QT_QUICK
 	QQmlApplicationEngine engine;
-	QQuickStyle::setStyle(
-		QQuickStyle::availableStyles().contains("Plasma")
+	QQuickStyle::setStyle("Material"
+		/*QQuickStyle::availableStyles().contains("Plasma")
 		? "Plasma"
-		: "Material/Dark");
+		: "Material/Dark"*/);
 	qDebug() << "using" << QQuickStyle::name() << "style";
 	defineTypes(engine);
 	QQmlApplicationEngine::connect(

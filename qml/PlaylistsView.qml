@@ -12,7 +12,7 @@ ListView {
 	Component {
 		id: playlistItem
 		Button {
-			height: playlistList.height / 10
+			height: listItemHeight
 			width: playlistList.width
 			text: model.name
 			flat: true

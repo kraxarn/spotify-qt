@@ -4,22 +4,16 @@ function playbackChanged() {
 	let item = playback["item"]
 
 	if (!playback["is_playing"] && playback["item"]["name"] === "(no name)") {
-		currentPlaying.text = "No media playing"
+		currentArtist.text = null
+		currentTrack.text = "No media playing"
 		footer.playPause.icon.name = "media-playback-start"
 		// ...
 
 		return
 	}
 
-	//currentPlaying.text = `${item["artist"]} - ${item["name"]}`
-
 	currentArtist.text = item["artist"]
 	currentTrack.text = item["name"]
-
-
-	//currentAlbum.icon.name = null
-	//currentAlbum.icon.source = item["image"]
-
 	currentAlbum.source = item["image"]
 
 	footer.playPause.icon.name = `media-playback-${playback["is_playing"] ? "pause" : "start"}`
