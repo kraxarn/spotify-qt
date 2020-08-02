@@ -6,12 +6,15 @@
 #include <QCoreApplication>
 
 #ifdef USE_QT_QUICK
+
 #include "../qml/src/spotifyqml.hpp"
 #include "../qml/src/utilsqml.hpp"
+#include "../qml/src/settingsqml.hpp"
 
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickStyle>
+
 #endif
 
 #ifdef USE_QT_QUICK
@@ -28,6 +31,11 @@ void defineTypes(QQmlApplicationEngine &engine)
 		"com.kraxarn.utils",
 		1, 0,
 		"Utils");
+
+	qmlRegisterType<SettingsQml>(
+		"com.kraxarn.settings",
+		1, 0,
+		"Settings");
 }
 #endif
 
@@ -82,11 +90,11 @@ int main(int argc, char *argv[])
 	QQmlApplicationEngine::connect(
 		&engine, &QQmlApplicationEngine::objectCreated, &app,
 		[](QObject *obj, const QUrl &url)
-	{
-		if (obj == nullptr)
-			QCoreApplication::quit();
-	}, Qt::QueuedConnection);
-	engine.load(QUrl("qrc:/qml/main.qml"));
+		{
+			if (obj == nullptr)
+				QCoreApplication::quit();
+		}, Qt::QueuedConnection);
+	engine.load(QUrl("qrc:/qml/setup.qml"));
 #else
 	// Create main window
 	MainWindow w(settings);

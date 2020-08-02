@@ -22,7 +22,7 @@ QString Settings::filePath()
 	return QFileInfo(fileName()).absolutePath();
 }
 
-void Settings::load()
+void Settings::fromJson(const QJsonObject &json)
 {
 	QFile file(fileName());
 	file.open(QIODevice::ReadOnly);
@@ -92,6 +92,30 @@ void Settings::load()
 	spotify.startClient = s["start_client"].toBool(false);
 	spotify.username = s["username"].toString();
 	spotify.keyringPassword = s["keyring_password"].toBool(false);
+}
+
+void Settings::load()
+{
+	QFile file(fileName());
+	file.open(QIODevice::ReadOnly);
+	auto data = file.readAll();
+	if (data.isEmpty())
+	{
+		qDebug() << "warning: json config in" << fileName() << "is empty";
+		file.close();
+		return;
+	}
+
+	QJsonParseError error;
+	auto json = QJsonDocument::fromJson(data, &error);
+	file.close();
+	if (error.error != QJsonParseError::NoError)
+	{
+		qDebug() << "error while reading json settings:" << error.errorString();
+		return;
+	}
+
+	fromJson(json.object());
 }
 
 QJsonObject Settings::toJson()

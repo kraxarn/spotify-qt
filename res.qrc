@@ -94,8 +94,11 @@
         <file>qml/PlaylistsView.qml</file>
         <file>qml/SearchView.qml</file>
         <file>qml/main.qml</file>
+        <file>qml/setup.qml</file>
+        <file>qml/OpenLinkDialog.qml</file>
         <!-- QML JS -->
         <file>qml/js/playlistView.js</file>
         <file>qml/js/main.js</file>
+        <file>qml/js/setup.js</file>
     </qresource>
 </RCC>

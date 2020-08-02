@@ -72,8 +72,3 @@ QJsonArray SpotifyQml::getPlaylistTracks(const QString &playlistId)
 		items.append(track.toJson());
 	return items;
 }
-
-QJsonObject SpotifyQml::getSettings()
-{
-	return settings.toJson();
-}

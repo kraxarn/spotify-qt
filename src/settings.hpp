@@ -25,6 +25,7 @@ public:
 
 	QJsonDocument legacyToJson();
 	QJsonObject toJson();
+	void fromJson(const QJsonObject &json);
 	void save();
 	void load();
 
