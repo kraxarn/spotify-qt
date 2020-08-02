@@ -25,6 +25,7 @@ Track::Track(const QJsonObject &item)
 		addedAt = QDateTime::fromString(Utils::getProperty(item, {
 			"added_at", "addedAt"
 		}).toString());
+		isPlayable = item["is_playable"].toBool(true);
 		return;
 	}
 
@@ -61,6 +62,7 @@ Track::Track(const QJsonObject &item)
 			? QDateTime::fromString(item["played_at"].toString(), Qt::DateFormat::ISODate)
 			: QDateTime();
 	isLocal = item["is_local"].toBool();
+	isPlayable = track["is_playable"].toBool(true);
 
 	if (addedAt == QDateTime(QDate(1970, 1, 1).startOfDay(Qt::UTC)))
 		addedAt = QDateTime();
@@ -71,6 +73,7 @@ Track::Track()
 	id = album = albumId = artist = artistId = name = image = QString();
 	duration = 0;
 	isLocal = false;
+	isPlayable = true;
 }
 
 QJsonObject Track::toJson() const
@@ -86,6 +89,7 @@ QJsonObject Track::toJson() const
 			QPair<QString, QString>("image", image),
 			QPair<QString, int>("duration", duration),
 			QPair<QString, bool>("is_local", isLocal),
+			QPair<QString, bool>("is_playable", isPlayable),
 			QPair<QString, QString>("added_at", addedAt.toString())
 		}
 	);

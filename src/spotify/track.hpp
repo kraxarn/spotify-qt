@@ -18,7 +18,7 @@ namespace spt
 		explicit Track(const QJsonObject &item);
 		QString id, album, albumId, artist, artistId, name, image;
 		int duration;
-		bool isLocal;
+		bool isLocal, isPlayable;
 		QDateTime addedAt;
 		QJsonObject toJson() const;
 	};
