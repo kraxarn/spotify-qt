@@ -18,6 +18,8 @@ public:
 	Q_INVOKABLE QJsonObject sptAuth(const QString &code, const QString &clientId, const QString &clientSecret);
 	Q_INVOKABLE QJsonObject extractUrlQuery(const QUrl &url);
 	Q_INVOKABLE QStringList availableStyles();
+	Q_INVOKABLE void aboutQt();
+	Q_INVOKABLE QString systemInfo();
 };
 
 

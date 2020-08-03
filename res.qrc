@@ -97,6 +97,7 @@
         <file>qml/setup.qml</file>
         <file>qml/OpenLinkDialog.qml</file>
         <file>qml/SettingsDialog.qml</file>
+        <file>qml/SettingsLayout.qml</file>
         <!-- QML JS -->
         <file>qml/js/playlistView.js</file>
         <file>qml/js/main.js</file>

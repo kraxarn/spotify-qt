@@ -12,7 +12,6 @@
 #include "../qml/src/settingsqml.hpp"
 
 #include <QQmlApplicationEngine>
-#include <QQmlContext>
 #include <QQuickStyle>
 #include <QtWebEngine>
 
@@ -22,6 +21,9 @@
 void defineTypes(QQmlApplicationEngine &engine)
 {
 	engine.rootContext()->setContextProperty("AppVersion", APP_VERSION);
+	engine.rootContext()->setContextProperty(
+		"QtVersion",
+		QString("%1.%2").arg(QT_VERSION_MAJOR).arg(QT_VERSION_MINOR));
 
 	qmlRegisterType<SpotifyQml>(
 		"com.kraxarn.spotify",
