@@ -1,5 +1,7 @@
 #include "utilsqml.hpp"
 
+#include <QQuickStyle>
+
 #define REDIRECT_URL "http://localhost:8888"
 
 UtilsQml::UtilsQml(QObject *parent)
@@ -42,4 +44,9 @@ QJsonObject UtilsQml::sptAuth(const QString &code, const QString &clientId, cons
 			QPair<QString, QString>("message", status)
 		}
 	);
+}
+
+QStringList UtilsQml::availableStyles()
+{
+	return QQuickStyle::availableStyles();
 }

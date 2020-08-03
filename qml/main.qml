@@ -18,7 +18,6 @@ ApplicationWindow {
 	Material.theme: Material.System
 
 	readonly property bool inPortrait: root.width < root.height
-
 	readonly property int listItemHeight: 48
 
 	Utils {
@@ -159,27 +158,8 @@ ApplicationWindow {
 		}
 	}
 
-	Drawer {
+	SettingsDialog {
 		id: settingsDrawer
-		width: root.width
-		height: root.height - toolBar.height
-		edge: Qt.BottomEdge
-
-		Label {
-			text: "Settings"
-		}
-
-		RoundButton {
-			anchors {
-				right: parent.right
-				bottom: parent.bottom
-				rightMargin: 16
-				bottomMargin: 16
-			}
-			icon.name: "document-save"
-			padding: 24
-			onClicked: settingsDrawer.close()
-		}
 	}
 
 	Component {
