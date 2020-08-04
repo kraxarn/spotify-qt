@@ -5,12 +5,35 @@ SettingsQml::SettingsQml(QObject *parent)
 {
 }
 
-QJsonObject SettingsQml::getSettings()
+QJsonObject SettingsQml::getAccount()
 {
-	return settings.toJson();
+	return settings.toJson()["Account"].toObject();
 }
 
-void SettingsQml::setSettings(const QJsonObject &value)
+QJsonObject SettingsQml::getGeneral()
 {
-	settings.fromJson(value);
+	return settings.toJson()["General"].toObject();
+}
+
+void SettingsQml::setGeneral(const QJsonObject &json)
+{
+	update("General", json);
+}
+
+QJsonObject SettingsQml::getSpotify()
+{
+	return settings.toJson()["Spotify"].toObject();
+}
+
+void SettingsQml::setSpotify(const QJsonObject &json)
+{
+	update("Spotify", json);
+}
+
+void SettingsQml::update(const QString &section, const QJsonObject &value)
+{
+	auto json = settings.toJson();
+	json[section] = value;
+	settings.fromJson(json);
+	settings.save();
 }

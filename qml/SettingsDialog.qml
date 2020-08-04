@@ -16,6 +16,8 @@ Drawer {
 		title: "spotifyd path"
 	}
 
+	onOpened: () => JS.reload()
+
 	ColumnLayout {
 		anchors.fill: parent
 		StackLayout {
@@ -35,7 +37,7 @@ Drawer {
 
 				Label { text: "Style" }
 				ComboBox {
-					id: styleBox
+					id: style
 					Layout.fillWidth: true
 					model: utils.availableStyles()
 				}
@@ -163,7 +165,7 @@ Drawer {
 			id: tabs
 			Layout.alignment: Qt.AlignBottom
 			Layout.fillWidth: true
-			currentIndex: 1
+			currentIndex: 0
 			TabButton {
 				text: "Application"
 			}
@@ -175,6 +177,7 @@ Drawer {
 			}
 		}
 	}
+
 	RoundButton {
 		id: saveButton
 		readonly property int margin: 16
@@ -189,6 +192,6 @@ Drawer {
 		height: size
 		icon.name: "document-save"
 		padding: 24
-		onClicked: root.close()
+		onClicked: JS.save()
 	}
 }

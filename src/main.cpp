@@ -104,10 +104,9 @@ int main(int argc, char *argv[])
 	}
 
 #ifdef USE_QT_QUICK
-	QQuickStyle::setStyle("Material"
-		/*QQuickStyle::availableStyles().contains("Plasma")
-		? "Plasma"
-		: "Material"*/);
+	QQuickStyle::setStyle(QQuickStyle::availableStyles().contains(settings.general.style)
+		? settings.general.style
+		: "Material");
 	qDebug() << "using" << QQuickStyle::name() << "style";
 	QQmlApplicationEngine::connect(
 		&engine, &QQmlApplicationEngine::objectCreated, &app,

@@ -75,7 +75,7 @@ ApplicationWindow {
 		TextField {
 			id: clientId
 			Layout.fillWidth: true
-			text: settings.settings.Account.client_id
+			text: settings.account.client_id
 		}
 		Label {
 			text: "Client Secret"
@@ -84,7 +84,7 @@ ApplicationWindow {
 		TextField {
 			id: clientSecret
 			Layout.fillWidth: true
-			text: settings.settings.Account.client_secret
+			text: settings.account.client_secret
 		}
 	}
 
