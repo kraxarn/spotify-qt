@@ -16,6 +16,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if(USE_QT_QUICK)
 	set(QT_QUICK_PKG Quick QuickControls2 WebEngine)
 	set(QT_QUICK_LINK Qt5::Quick Qt5::QuickControls2 Qt5::WebEngine)
+	set(QML_RES qml/res.qrc)
 	file(GLOB QML_SRC "qml/src/*.[hc]pp")
 	add_compile_definitions(USE_QT_QUICK)
 endif()
@@ -29,9 +30,9 @@ file(GLOB SUB_SRC "src/*/*.[hc]pp")
 
 # Add all source files to main executable
 if(ANDROID)
-    add_library(spotify-qt SHARED ${MAIN_SRC} ${SUB_SRC} ${QML_SRC} res.qrc)
+    add_library(spotify-qt SHARED ${MAIN_SRC} ${SUB_SRC} ${QML_SRC} ${QML_RES} res.qrc)
 else()
-    add_executable(spotify-qt ${MAIN_SRC} ${SUB_SRC} ${QML_SRC} ${LIB_SRC} res.qrc)
+    add_executable(spotify-qt ${MAIN_SRC} ${SUB_SRC} ${QML_SRC} ${QML_RES} ${LIB_SRC} res.qrc)
 endif()
 
 # Get version from Git

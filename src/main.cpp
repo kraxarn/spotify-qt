@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
 	if (settings.account.refreshToken.isEmpty())
 	{
 #ifdef USE_QT_QUICK
-		engine.load(QUrl("qrc:/qml/setup.qml"));
+		engine.load(QUrl("qrc:/setup.qml"));
 		QApplication::exec();
 		settings.load();
 		if (settings.account.accessToken.isEmpty() || settings.account.refreshToken.isEmpty())
@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
 			if (obj == nullptr)
 				QCoreApplication::quit();
 		}, Qt::QueuedConnection);
-	engine.load(QUrl("qrc:/qml/main.qml"));
+	engine.load(QUrl("qrc:/main.qml"));
 #else
 	// Create main window
 	MainWindow w(settings);
