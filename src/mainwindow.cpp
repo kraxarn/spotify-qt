@@ -467,7 +467,10 @@ QByteArray MainWindow::get(const QString &url)
 	while (!reply->isFinished())
 		QCoreApplication::processEvents();
 	reply->deleteLater();
-	return reply->readAll();
+	return
+		reply->error() == QNetworkReply::NoError
+		? reply->readAll()
+		: QByteArray();
 }
 
 QJsonDocument MainWindow::getJson(const QString &url)
