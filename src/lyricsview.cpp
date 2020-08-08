@@ -27,7 +27,7 @@ LyricsView::LyricsView(const QString &artist, const QString &name, QWidget *pare
 	found = true;
 }
 
-bool LyricsView::lyricsFound()
+bool LyricsView::lyricsFound() const
 {
 	return found;
 }

@@ -13,7 +13,7 @@ class LyricsView : public QDockWidget
 public:
 	LyricsView(const QString &artist, const QString &name, QWidget *parent);
 
-	bool lyricsFound();
+	bool lyricsFound() const;
 
 private:
 	bool found;
