@@ -61,7 +61,7 @@ bool Playlist::loadTracksFromUrl(QVector<Track> &trackList, QString &url, int of
 	return true;
 }
 
-QJsonObject Playlist::toJson(Spotify &spotify)
+QJsonObject Playlist::toJson(Spotify &spotify) const
 {
 	// Load tracks to put in JSON
 	QJsonArray jsonTracks;
