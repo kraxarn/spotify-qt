@@ -606,6 +606,10 @@ void MainWindow::updateContextIcon()
 					   ? "album-cover"
 					   : current.contextType))
 			.pixmap(size, size));
+
+	auto show = currentName != "No context";
+	contextIcon->setVisible(show);
+	contextInfo->setVisible(show);
 }
 
 QString MainWindow::getPlaylistName(const QString &id)
