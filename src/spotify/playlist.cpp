@@ -36,7 +36,10 @@ QVector<Track> Playlist::loadTracks(Spotify &spotify) const
 	QVector<Track> trackList;
 	trackList.reserve(tracks["total"].toInt());
 	// Load tracks
-	auto href = QString("%1&market=from_token").arg(tracks["href"].toString());
+	auto tracksHref = tracks["href"].toString();
+	auto href = QString("%1%2market=from_token")
+		.arg(tracksHref)
+		.arg(tracksHref.contains('?') ? '&' : '?');
 	loadTracksFromUrl(trackList, href, 0, spotify);
 	// Return final track list
 	return trackList;
