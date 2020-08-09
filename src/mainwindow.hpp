@@ -97,4 +97,6 @@ private:
 	bool loadPlaylistFromCache(spt::Playlist &playlist);
 	void updateContextIcon();
 	QString getPlaylistName(const QString &id);
+	void contextInfoMenu(const QPoint &pos);
+	void contextInfoOpen(bool checked);
 };

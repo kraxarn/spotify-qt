@@ -193,6 +193,9 @@ QWidget *MainWindow::createCentralWidget()
 	contextLayout->addWidget(contextIcon);
 	contextLayout->addWidget(contextInfo, 1);
 	sidebar->addLayout(contextLayout);
+	contextInfo->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+	QWidget::connect(
+		contextInfo, &QWidget::customContextMenuRequested, this, &MainWindow::contextInfoMenu);
 
 	// Now playing song
 	auto nowPlayingLayout = new QHBoxLayout();
@@ -620,6 +623,34 @@ QString MainWindow::getPlaylistName(const QString &id)
 			return playlist.name;
 	}
 	return QString();
+}
+
+void MainWindow::contextInfoMenu(const QPoint &pos)
+{
+	auto menu = new QMenu(contextInfo);
+	auto open = menu->addAction(
+		QIcon(contextIcon->pixmap(Qt::ReturnByValue)),
+		QString("Open %1").arg(current.contextType));
+	menu->popup(contextInfo->mapToGlobal(pos));
+	QAction::connect(open, &QAction::triggered, this, &MainWindow::contextInfoOpen);
+}
+
+void MainWindow::contextInfoOpen(bool)
+{
+	auto type = current.contextType;
+	auto uri = current.contextUri.split(':').last();
+
+	if (type == "album")
+		loadAlbum(uri);
+	else if (type == "artist")
+		openArtist(uri);
+	else if (type == "playlist")
+	{
+		auto playlist = spotify->playlist(uri);
+		libraryList->setCurrentItem(nullptr);
+		playlists->setCurrentRow(-1);
+		loadPlaylist(playlist);
+	}
 }
 
 //region Getters
