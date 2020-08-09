@@ -21,5 +21,5 @@ public:
 private:
 	PlaylistEditDialog	*editDialog = nullptr;
 	QWidget *parent = nullptr;
-	const spt::Playlist &playlist;
+	const spt::Playlist playlist;
 };
