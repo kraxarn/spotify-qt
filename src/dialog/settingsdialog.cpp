@@ -112,6 +112,13 @@ QWidget *SettingsDialog::interfaceSettings()
 	itfMonoTime->setToolTip("Use a fixed width for remaining time to avoid resizing");
 	itfMonoTime->setChecked(settings.general.fixedWidthTime);
 	layout->addWidget(itfMonoTime);
+
+	// Context info
+	itfContextInfo = new QCheckBox("Show context information", this);
+	itfContextInfo->setToolTip("Show what context music is currently playing from above current track");
+	itfContextInfo->setChecked(settings.general.showContextInfo);
+	layout->addWidget(itfContextInfo);
+
 	// Final layout
 	auto widget = new QWidget();
 	widget->setLayout(layout);

@@ -59,6 +59,7 @@ private:
 	QComboBox *appRefresh = nullptr;
 
 	// Interface settings
+	QCheckBox *itfContextInfo = nullptr;
 	QCheckBox *itfDark = nullptr;
 	QCheckBox *itfIcFallback = nullptr;
 	QCheckBox *itfMonoTime = nullptr;

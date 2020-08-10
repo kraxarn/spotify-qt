@@ -591,6 +591,13 @@ void MainWindow::setFixedWidthTime(bool value)
 
 void MainWindow::updateContextIcon()
 {
+	if (!settings.general.showContextInfo)
+	{
+		contextIcon->setVisible(false);
+		contextInfo->setVisible(false);
+		return;
+	}
+
 	auto currentName =
 		current.contextType.isEmpty() || current.contextUri.isEmpty()
 		? "No context"

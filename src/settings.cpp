@@ -64,6 +64,7 @@ void Settings::load()
 	general.pulseVolume = g["pulse_volume"].toBool(false);
 	general.refreshInterval = g["refresh_interval"].toInt(3);
 	general.showChangelog = g["show_changelog"].toBool(true);
+	general.showContextInfo = g["show_context_info"].toBool(true);
 	general.songHeaderResizeMode = g["song_header_resize_mode"].toInt(QHeaderView::ResizeToContents);
 	general.songHeaderSortBy = g["song_header_sort_by"].toInt(-1);
 	general.spotifyPlaybackOrder = g["spotify_playback_order"].toBool(false);
@@ -110,6 +111,7 @@ void Settings::save()
 				{"pulse_volume", general.pulseVolume},
 				{"refresh_interval", general.refreshInterval},
 				{"show_changelog", general.showChangelog},
+				{"show_context_info", general.showContextInfo},
 				{"song_header_resize_mode", general.songHeaderResizeMode},
 				{"song_header_sort_by", general.songHeaderSortBy},
 				{"spotify_playback_order", general.spotifyPlaybackOrder},

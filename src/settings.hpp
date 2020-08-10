@@ -32,7 +32,7 @@ public:
 	typedef struct {
 		QString style, lastPlaylist, lastVersion;
 		bool pulseVolume, mediaController, spotifyPlaybackOrder, trayIcon, trayNotifications, trayLightIcon,
-			showChangelog, fallbackIcons, fixedWidthTime, trayAlbumArt;
+			showChangelog, fallbackIcons, fixedWidthTime, trayAlbumArt, showContextInfo;
 		Palette stylePalette;
 		QVector<int> hiddenSongHeaders;
 		int songHeaderResizeMode, songHeaderSortBy, refreshInterval, lastVolume;
