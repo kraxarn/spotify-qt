@@ -14,6 +14,9 @@ Drawer {
 	FileDialog {
 		id: spotifydFileDialog
 		title: "spotifyd path"
+		onAccepted: {
+			sptPath.text = fileUrl.toString().replace("file:///", "/")
+		}
 	}
 
 	onOpened: () => JS.reload()
@@ -58,6 +61,7 @@ Drawer {
 					Label { text: "spotifyd path" }
 					RowLayout {
 						TextField {
+							id: sptPath
 							Layout.fillWidth: true
 						}
 						Button {
@@ -86,6 +90,7 @@ Drawer {
 					id: appSettings
 					title: "App specific settings"
 					Layout.fillWidth: true
+					enabled: !globalConfig.checked
 					SettingsLayout {
 						anchors {
 							left: parent.left

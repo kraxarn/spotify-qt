@@ -20,6 +20,13 @@ function reload() {
 
 	spotifyPlaybackOrder.checked = general["spotify_playback_order"]
 	whatsNewOnStart.checked = general["show_changelog"]
+
+	// Spotify
+	let spotify = settings.spotify
+	sptPath.text = spotify["path"]
+	startWithApp.checked = spotify["start_client"]
+	alwaysStart.checked = spotify["always_start"]
+	globalConfig.checked = spotify["global_config"]
 }
 
 function save() {
@@ -32,8 +39,14 @@ function save() {
 	general["spotify_playback_order"] = spotifyPlaybackOrder.checked
 	general["show_changelog"] = whatsNewOnStart.checked
 
-	// ...
+	// Spotify
+	let spotify = settings.spotify
+	spotify["path"] = sptPath.text
+	spotify["start_client"] = startWithApp.checked
+	spotify["always_start"] = alwaysStart.checked
+	spotify["global_config"] = globalConfig.checked
 
 	settings.general = general
+	settings.spotify = spotify
 	root.close()
 }
