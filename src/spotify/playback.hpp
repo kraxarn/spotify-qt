@@ -1,6 +1,7 @@
 #pragma once
 
 #include "track.hpp"
+#include "device.hpp"
 
 #include <QJsonObject>
 #include <QMap>
@@ -24,5 +25,6 @@ namespace spt
 		bool shuffle = false;
 		int progressMs = 0;
 		int volume = 100;
+		spt::Device device;
 	};
 }

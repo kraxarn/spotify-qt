@@ -19,6 +19,7 @@ spt::Playback::Playback(const QJsonObject &json)
 		json["context"].isObject()
 		? json["context"].toObject()["type"].toString()
 		: QString();
+	device = Device(json["device"].toObject());
 }
 
 QVariantMap spt::Playback::metadata() const

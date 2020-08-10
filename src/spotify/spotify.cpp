@@ -183,15 +183,7 @@ QVector<Device> Spotify::devices()
 	auto items = json["devices"].toArray();
 	QVector<Device> devices(items.size());
 	for (int i = 0; i < items.size(); i++)
-	{
-		auto data = items.at(i).toObject();
-		Device device;
-		device.id				= data["id"].toString();
-		device.name				= data["name"].toString();
-		device.type				= data["type"].toString();
-		device.isActive			= data["is_active"].toBool();
-		devices[i] = device;
-	}
+		devices[i] = Device(items.at(i).toObject());
 	return devices;
 }
 

@@ -1,12 +1,19 @@
 #pragma once
 
 #include <QString>
+#include <QJsonObject>
 
 namespace spt
 {
-	typedef struct StructDevice
+	class Device
 	{
-		QString id, name, type;
+	public:
+		Device() = default;
+		Device(const QJsonObject &json);
+
+		QString id;
+		QString name;
+		QString type;
 		bool isActive = false;
-	} Device;
+	};
 }
