@@ -319,9 +319,7 @@ QWidget *SettingsDialog::aboutSettings()
 	layout->addLayout(options, 1);
 
 	// Final layout
-	auto widget = new QWidget();
-	widget->setLayout(layout);
-	return widget;
+	return Utils::layoutToWidget(layout);
 }
 
 bool SettingsDialog::applySettings()
