@@ -272,10 +272,9 @@ QWidget *SettingsDialog::aboutSettings()
 	title->addLayout(titleVersion);
 
 	// User info
-	auto window = dynamic_cast<MainWindow*>(parent());
-	if (window != nullptr)
+	if (mainWindow != nullptr)
 		layout->addWidget(new QLabel(QString("Hello %1!")
-			.arg(window->getCurrentUser().displayName)), 0, Qt::AlignHCenter);
+			.arg(mainWindow->getCurrentUser().displayName)), 0, Qt::AlignHCenter);
 
 	// Grid with buttons
 	layout->addSpacing(8);
@@ -294,8 +293,8 @@ QWidget *SettingsDialog::aboutSettings()
 	// Generate report
 	auto generateReport = new QPushButton(Icon::get("description"), "System info", this);
 	generateReport->setFlat(true);
-	QAbstractButton::connect(generateReport, &QPushButton::clicked, [this](bool checked) {
-		(new SystemInfoDialog(this))->show();
+	QAbstractButton::connect(generateReport, &QPushButton::clicked, [this, mainWindow](bool checked) {
+		(new SystemInfoDialog(mainWindow, this))->show();
 	});
 	options->addWidget(generateReport, 0, 1);
 
@@ -303,10 +302,10 @@ QWidget *SettingsDialog::aboutSettings()
 	auto openCache = new QPushButton(Icon::get("folder-temp"),
 		QString("Open cache directory (%1M)").arg(cacheSize / 1000 / 1000));
 	openCache->setFlat(true);
-	QAbstractButton::connect(openCache, &QPushButton::clicked, [this, window](bool checked) {
-		if (window == nullptr)
+	QAbstractButton::connect(openCache, &QPushButton::clicked, [this, mainWindow](bool checked) {
+		if (mainWindow == nullptr)
 			return;
-		Utils::openUrl(window->getCacheLocation(), LinkType::Web, this);
+		Utils::openUrl(mainWindow->getCacheLocation(), LinkType::Web, this);
 	});
 	options->addWidget(openCache);
 
