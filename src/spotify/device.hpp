@@ -9,11 +9,12 @@ namespace spt
 	{
 	public:
 		Device() = default;
-		Device(const QJsonObject &json);
+		explicit Device(const QJsonObject &json);
 
 		QString id;
 		QString name;
 		QString type;
 		bool isActive = false;
+		int volumePercent;
 	};
 }

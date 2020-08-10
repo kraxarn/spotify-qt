@@ -8,4 +8,5 @@ Device::Device(const QJsonObject &json)
 	name = json["name"].toString();
 	type = json["type"].toString();
 	isActive = json["is_active"].toBool();
+	volumePercent = json["volume_percent"].toInt();
 }

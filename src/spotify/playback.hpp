@@ -17,6 +17,8 @@ namespace spt
 		explicit Playback(const QJsonObject &json);
 		QVariantMap metadata() const;
 
+		int volume() const;
+
 		QString contextType;
 		QString contextUri;
 		QString repeat = "off";
@@ -24,7 +26,6 @@ namespace spt
 		bool isPlaying = false;
 		bool shuffle = false;
 		int progressMs = 0;
-		int volume = 100;
 		spt::Device device;
 	};
 }

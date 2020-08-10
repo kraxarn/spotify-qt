@@ -158,7 +158,7 @@ void MainWindow::refreshed(const spt::Playback &playback)
 		current.isPlaying ? "media-playback-pause" : "media-playback-start"));
 	mainToolBar->playPause->setText(current.isPlaying ? "Pause" : "Play");
 	if (!settings.general.pulseVolume)
-		mainToolBar->volumeButton->setVolume(current.volume / 5);
+		mainToolBar->volumeButton->setVolume(current.volume() / 5);
 	mainToolBar->repeat->setChecked(current.repeat != "off");
 	mainToolBar->shuffle->setChecked(current.shuffle);
 }

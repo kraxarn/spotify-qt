@@ -8,7 +8,6 @@ spt::Playback::Playback(const QJsonObject &json)
 	progressMs = json["progress_ms"].toInt();
 	item = Track(json["item"].toObject());
 	isPlaying = json["is_playing"].toBool();
-	volume = json["device"].toObject()["volume_percent"].toInt();
 	repeat = json["repeat_state"].toString();
 	shuffle = json["shuffle_state"].toBool();
 	contextUri =
@@ -44,4 +43,9 @@ QVariantMap spt::Playback::metadata() const
 		}
 	);
 	return metadata;
+}
+
+int spt::Playback::volume() const
+{
+	return device.volumePercent;
 }

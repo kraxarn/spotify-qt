@@ -61,7 +61,7 @@ QMap<QString, QVariant> MediaPlayerPlayer::metadata() const
 
 double MediaPlayerPlayer::getVolume() const
 {
-	return currentPlayback().volume / 100.0;
+	return currentPlayback().volume() / 100.0;
 }
 
 void MediaPlayerPlayer::setVolume(double value) const
@@ -146,7 +146,7 @@ void MediaPlayerPlayer::seekableChanged(bool seekable) const
 void MediaPlayerPlayer::volumeChanged() const
 {
 	QVariantMap properties;
-	properties["Volume"] = currentPlayback().volume / 100.0;
+	properties["Volume"] = currentPlayback().volume() / 100.0;
 	Service::signalPropertiesChange(this, properties);
 }
 
