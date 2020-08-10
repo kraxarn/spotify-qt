@@ -187,8 +187,10 @@ QWidget *MainWindow::createCentralWidget()
 	// Current context info
 	auto contextLayout = new QHBoxLayout();
 	contextIcon = new QLabel();
+	contextIcon->setVisible(false);
 	contextInfo = new QLabel();
 	contextInfo->setToolTip("Currently playing from");
+	contextInfo->setVisible(false);
 	contextLayout->addSpacing(16);
 	contextLayout->addWidget(contextIcon);
 	contextLayout->addWidget(contextInfo, 1);
