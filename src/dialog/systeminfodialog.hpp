@@ -1,5 +1,8 @@
 #pragma once
 
+#include "../spotify/spotify.hpp"
+#include "../mainwindow.hpp"
+
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QFile>
@@ -13,8 +16,10 @@ class SystemInfoDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit SystemInfoDialog(QWidget *parent = nullptr);
+	explicit SystemInfoDialog(QWidget *mainWindow, QWidget *parent = nullptr);
 
 private:
-	static QString systemInfo();
+	QString systemInfo();
+
+	QWidget *mainWindow = nullptr;
 };

@@ -1,6 +1,7 @@
 #include "systeminfodialog.hpp"
 
-SystemInfoDialog::SystemInfoDialog(QWidget *parent) : QDialog(parent)
+SystemInfoDialog::SystemInfoDialog(QWidget *mainWindow, QWidget *parent)
+	: mainWindow(mainWindow), QDialog(parent)
 {
 	auto layout = new QVBoxLayout();
 	setLayout(layout);
@@ -52,6 +53,11 @@ QString SystemInfoDialog::systemInfo()
 	// Desktop environment
 	if (qEnvironmentVariableIsSet("XDG_CURRENT_DESKTOP"))
 		info["Current desktop"] = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
+
+	// Device
+	auto device = ((MainWindow*) mainWindow)->getCurrentPlayback().device;
+	if (!device.name.isEmpty() && !device.type.isEmpty())
+		info["Device"] = QString("%1 (%2)").arg(device.name).arg(device.type);
 
 	QString systemInfo("<table>");
 	QMapIterator<QString, QString> i(info);
