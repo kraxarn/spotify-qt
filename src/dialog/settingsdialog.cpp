@@ -430,6 +430,7 @@ bool SettingsDialog::applySettings()
 	if (window != nullptr)
 		window->setFixedWidthTime(itfMonoTime->isChecked());
 	settings.general.fixedWidthTime = itfMonoTime->isChecked();
+	settings.general.showContextInfo = itfContextInfo->isChecked();
 
 	// Other Spotify stuff
 	settings.spotify.startClient =sptAppStart->isChecked();
