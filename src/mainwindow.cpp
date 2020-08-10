@@ -631,7 +631,7 @@ QString MainWindow::getPlaylistName(const QString &id)
 		if (id.endsWith(playlist.id))
 			return playlist.name;
 	}
-	return QString();
+	return spotify->playlist(id.split(':').last()).name;
 }
 
 void MainWindow::contextInfoMenu(const QPoint &pos)
