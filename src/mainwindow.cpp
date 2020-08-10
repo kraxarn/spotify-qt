@@ -398,8 +398,11 @@ void MainWindow::saveTracksToCache(const QString &id, const QVector<spt::Track> 
 
 bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 {
-	settings.general.lastPlaylist = playlist.id;
-	settings.save();
+	if (!getPlaylistNameFromSaved(playlist.id).isEmpty())
+	{
+		settings.general.lastPlaylist = playlist.id;
+		settings.save();
+	}
 	if (loadPlaylistFromCache(playlist))
 		return true;
 	songs->setEnabled(false);
@@ -624,13 +627,21 @@ void MainWindow::updateContextIcon()
 	contextInfo->setVisible(show);
 }
 
-QString MainWindow::getPlaylistName(const QString &id)
+QString MainWindow::getPlaylistNameFromSaved(const QString &id)
 {
 	for (auto &playlist : sptPlaylists)
 	{
 		if (id.endsWith(playlist.id))
 			return playlist.name;
 	}
+	return QString();
+}
+
+QString MainWindow::getPlaylistName(const QString &id)
+{
+	auto name = getPlaylistNameFromSaved(id);
+	if (!name.isEmpty())
+		return name;
 	return spotify->playlist(id.split(':').last()).name;
 }
 
