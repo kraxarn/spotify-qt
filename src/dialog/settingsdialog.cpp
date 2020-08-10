@@ -89,16 +89,19 @@ QWidget *SettingsDialog::interfaceSettings()
 {
 	auto layout = new QVBoxLayout();
 	layout->setAlignment(Qt::AlignTop);
+
 	// Dark theme
 	itfDark = new QCheckBox("Dark theme", this);
 	itfDark->setToolTip("Use custom dark theme");
 	itfDark->setChecked(settings.darkTheme());
 	layout->addWidget(itfDark);
+
 	// Song header resize mode
 	itfResizeAuto = new QCheckBox("Auto resize track list headers", this);
 	itfResizeAuto->setToolTip("Automatically resize track list headers to fit content");
 	itfResizeAuto->setChecked(settings.general.songHeaderResizeMode == QHeaderView::ResizeToContents);
 	layout->addWidget(itfResizeAuto);
+
 	// Always use fallback icons (if system icons are an option)
 	if (hasIconTheme())
 	{
@@ -107,6 +110,7 @@ QWidget *SettingsDialog::interfaceSettings()
 		itfIcFallback->setChecked(settings.general.fallbackIcons);
 		layout->addWidget(itfIcFallback);
 	}
+
 	// Monospace remaining time
 	itfMonoTime = new QCheckBox("Fixed width remaining time", this);
 	itfMonoTime->setToolTip("Use a fixed width for remaining time to avoid resizing");
