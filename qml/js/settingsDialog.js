@@ -11,12 +11,10 @@ function reload() {
 		? 0 : general["refresh_interval"] === 10
 			? 2 : 1
 
-	if (general["style"] && style.model[general["style"]]) {
-		for (let i = 0; i < style.model.length; i++) {
-			if (general["style"] === style.model) {
-				style.currentIndex = i
-				break
-			}
+	for (let i = 0; i < style.model.length; i++) {
+		if (general["style"] === style.model[i]) {
+			style.currentIndex = i
+			break
 		}
 	}
 
