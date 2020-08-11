@@ -7,7 +7,7 @@ import "js/playlistView.js" as JS
 ListView {
 	id: playlistList
 
-	Component.onCompleted: JS.loadPlaylist(spotify.settings.General.last_playlist)
+	Component.onCompleted: JS.loadPlaylist(settings.general.last_playlist)
 
 	Component {
 		id: playlistItem
