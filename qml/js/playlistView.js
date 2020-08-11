@@ -20,6 +20,7 @@ function loadPlaylist(id) {
 	}))
 
 	trackList.enabled = true
+	currentPlaylist = id
 }
 
 function clickedPlaylist(model) {
