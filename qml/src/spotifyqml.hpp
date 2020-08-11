@@ -17,6 +17,8 @@ public:
 	QJsonObject getPlayback();
 
 	Q_INVOKABLE QJsonArray getPlaylistTracks(const QString &playlistId);
+	Q_INVOKABLE QString playTracksWithContext(const QString &track, const QString &context);
+	Q_INVOKABLE void requestPlayback();
 
 signals:
 	void playlistsChanged();

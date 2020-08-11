@@ -171,7 +171,9 @@ ApplicationWindow {
 			height: listItemHeight
 			width: trackList.width
 			flat: true
-			onClicked: console.log(model.id)
+			onClicked: JS.playTrack(model.id)
+			readonly property var foregroundColor: currentTrackId === model.id
+				? Material.accent : undefined
 			Label {
 				anchors {
 					verticalCenter: parent.verticalCenter
@@ -179,11 +181,13 @@ ApplicationWindow {
 					leftMargin: 16
 				}
 				text: model.track
+				Material.foreground: foregroundColor
 			}
 			Label {
 				anchors.verticalCenter: parent.verticalCenter
 				x: parent.width / 2
 				text: model.artist
+				Material.foreground: foregroundColor
 			}
 			ToolButton {
 				anchors {

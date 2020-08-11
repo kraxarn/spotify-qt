@@ -72,3 +72,14 @@ QJsonArray SpotifyQml::getPlaylistTracks(const QString &playlistId)
 		items.append(track.toJson());
 	return items;
 }
+
+QString SpotifyQml::playTracksWithContext(const QString &track, const QString &context)
+{
+	return spotify->playTracks(track, context);
+}
+
+void SpotifyQml::requestPlayback()
+{
+	spotify->requestCurrentPlayback();
+	refreshCount = 0;
+}

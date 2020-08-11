@@ -13,9 +13,19 @@ function playbackChanged() {
 	currentArtist.text = item["artist"]
 	currentTrack.text = item["name"]
 	currentAlbum.source = item["image"]
+	currentTrackId = item["id"]
 
 	footer.playPause.icon.name = `media-playback-${playback["is_playing"] ? "pause" : "start"}`
 	footer.progress.to = item["duration"]
 	footer.progress.value = playback["progress_ms"]
 	footer.position.text = `${utils.formatTime(playback["progress_ms"])}/${utils.formatTime(item["duration"])}`
+}
+
+function playTrack(id) {
+	let status = spotify.playTracksWithContext(`spotify:track:${id}`, root.currentContext)
+	if (status) {
+		console.log(status)
+	} else {
+		spotify.requestPlayback()
+	}
 }
