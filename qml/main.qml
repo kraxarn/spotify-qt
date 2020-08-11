@@ -19,6 +19,8 @@ ApplicationWindow {
 
 	readonly property bool inPortrait: root.width < root.height
 	readonly property int listItemHeight: 48
+	property string currentContext
+	property string currentTrackId
 
 	Utils {
 		id: utils

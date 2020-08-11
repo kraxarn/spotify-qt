@@ -20,7 +20,7 @@ function loadPlaylist(id) {
 	}))
 
 	trackList.enabled = true
-	currentPlaylist = id
+	root.currentContext = `spotify:playlist:${id}`
 }
 
 function clickedPlaylist(model) {

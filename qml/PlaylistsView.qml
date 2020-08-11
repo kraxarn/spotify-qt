@@ -7,7 +7,6 @@ import "js/playlistView.js" as JS
 ListView {
 	id: playlistList
 
-	property string currentPlaylist
 	Component.onCompleted: JS.loadPlaylist(settings.general.last_playlist)
 
 	Component {
@@ -18,7 +17,7 @@ ListView {
 			text: model.name
 			flat: true
 			onClicked: JS.clickedPlaylist(model)
-			highlighted: currentPlaylist === model.id
+			highlighted: root.currentContext === `spotify:playlist:${model.id}`
 		}
 	}
 
