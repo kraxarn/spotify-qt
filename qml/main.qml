@@ -15,7 +15,12 @@ ApplicationWindow {
 	visible: true
 	width: 540
 	height: 960
-	Material.theme: Material.System
+
+	Material.theme: Material.Dark
+	// Spotify-like colors
+	Material.primary: "#282828"
+	Material.background: "#121212"
+	Material.accent: "#1db954"
 
 	readonly property bool inPortrait: root.width < root.height
 	readonly property int listItemHeight: 48
@@ -107,6 +112,7 @@ ApplicationWindow {
 
 	Drawer {
 		id: drawer
+		Material.background: Material.primary
 		width: inPortrait ? root.width * 0.66 : 400
 		height: root.height - (inPortrait ? 0 : toolBar.height)
 		y: inPortrait ? 0 : toolBar.height
