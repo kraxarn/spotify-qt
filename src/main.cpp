@@ -54,6 +54,7 @@ int main(int argc, char *argv[])
 	 * Web engine is probably needed on mobile devices
 	 * for authentication as a temporary web server
 	 * probably can't be created
+	 * TODO: Qt on mobile doesn't even support WebEngine
 	 */
 	QtWebEngine::initialize();
 #endif
