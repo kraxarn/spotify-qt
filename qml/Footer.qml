@@ -23,7 +23,6 @@ Pane {
 		}
 
 		RowLayout {
-			Layout.topMargin: 16
 			Slider {
 				id: progress
 				Layout.fillWidth: true
@@ -36,18 +35,12 @@ Pane {
 			}
 		}
 		RowLayout {
-			Layout.bottomMargin: 6
 			Item {
 				Layout.fillWidth: true
 			}
 			ToolButton {
 				icon.name: "media-playlist-shuffle"
 				icon.source: icSrc("media-playlist-shuffle")
-				checkable: true
-			}
-			ToolButton {
-				icon.name: "media-playlist-repeat"
-				icon.source: icSrc("media-playlist-repeat")
 				checkable: true
 			}
 			ToolSeparator {
@@ -68,12 +61,9 @@ Pane {
 			ToolSeparator {
 			}
 			ToolButton {
-				icon.name: "audio-volume-high"
-				icon.source: icSrc("audio-volume-high")
-			}
-			ToolButton {
-				icon.name: "overflow-menu"
-				icon.source: icSrc("overflow-menu")
+				icon.name: "media-playlist-repeat"
+				icon.source: icSrc("media-playlist-repeat")
+				checkable: true
 			}
 			Item {
 				Layout.fillWidth: true

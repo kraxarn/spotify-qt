@@ -82,28 +82,27 @@ ApplicationWindow {
 				}
 			}
 			ToolButton {
-				icon.name: "view-sort"
-				onClicked: trackSortMenu.popup()
+				icon.name: "overflow-menu"
+				icon.source: icSrc("overflow-menu")
+				onClicked: mainMenu.open()
 				Menu {
-					id: trackSortMenu
-					MenuItem {
-						text: "Sort by"
-						enabled: false
+					id: mainMenu
+					Menu {
+						title: "Sort by"
+						MenuItem {
+							text: "Track"
+							icon.name: "view-media-track"
+						}
+						MenuItem {
+							text: "Artist"
+							icon.name: "view-media-artist"
+						}
 					}
 					MenuItem {
-						text: "Track"
-						icon.name: "view-media-track"
-					}
-					MenuItem {
-						text: "Artist"
-						icon.name: "view-media-artist"
+						text: "Settings"
+						onClicked: settingsDrawer.open()
 					}
 				}
-			}
-			ToolButton {
-				icon.name: "configure"
-				icon.source: icSrc("configure")
-				onClicked: settingsDrawer.open()
 			}
 		}
 	}
