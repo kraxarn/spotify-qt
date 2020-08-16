@@ -152,6 +152,14 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 		for (auto &artist : spotify.followedArtists())
 			results.append({artist.name, artist.id, RoleArtistId});
 
+	std::sort(
+		results.begin(), results.end(),
+		[](const QVariantList &x, const QVariantList &y)
+		{
+			return x.first().toString() < y.first().toString();
+		}
+	);
+
 	// No results
 	if (results.isEmpty())
 	{
