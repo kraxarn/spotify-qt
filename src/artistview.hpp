@@ -29,7 +29,7 @@ private:
 	QTreeWidget *albumList = nullptr;
 	QTreeWidget *singleList = nullptr;
 	QWidget *parent = nullptr;
-	const QString &artistId;
+	QString artistId;
 	spt::Artist artist;
 	spt::Spotify &spotify;
 
