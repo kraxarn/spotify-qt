@@ -107,7 +107,7 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 
 void LibraryList::doubleClicked(QTreeWidgetItem *item, int)
 {
-	auto mainWindow = dynamic_cast<MainWindow*>(parent);
+	auto mainWindow = dynamic_cast<MainWindow *>(parent);
 	if (mainWindow == nullptr)
 		return;
 
