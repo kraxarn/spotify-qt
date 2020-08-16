@@ -17,8 +17,8 @@ LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 				QStringList()),
 			Utils::treeItemWithChildren(
 				this,
-				"Tracks", ""
-						  "Most played tracks for the past 6 months",
+				"Tracks",
+				"Most played tracks for the past 6 months",
 				QStringList()),
 			Utils::treeItemWithChildren(
 				this,
