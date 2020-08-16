@@ -32,7 +32,11 @@ LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 			Utils::treeItemWithChildren(
 				this,
 				"Artists",
-				"Most played artists for the past 6 months")
+				"Most played artists for the past 6 months"),
+			Utils::treeItemWithChildren(
+				this,
+				"Following",
+				"Artists you're currently following")
 		}
 	);
 
@@ -144,6 +148,9 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 	else if (item->text(0) == "Albums")
 		for (auto &album : spotify.savedAlbums())
 			results.append({album.name, album.id, RoleAlbumId});
+	else if (item->text(0) == "Following")
+		for (auto &artist : spotify.followedArtists())
+			results.append({artist.name, artist.id, RoleArtistId});
 
 	// No results
 	if (results.isEmpty())
