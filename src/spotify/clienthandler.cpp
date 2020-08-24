@@ -2,11 +2,19 @@
 
 using namespace spt;
 
+QStringList ClientHandler::log;
+
 ClientHandler::ClientHandler(const Settings &settings, QWidget *parent)
 	: settings(settings), parentWidget(parent), QObject(parent)
 {
 	path = settings.spotify.path;
 	process = new QProcess(parent);
+}
+
+ClientHandler::~ClientHandler()
+{
+	if (process != nullptr)
+		process->close();
 }
 
 QString ClientHandler::start()
@@ -48,6 +56,7 @@ QString ClientHandler::start()
 	// Attempt to start spotifyd
 	QStringList arguments(
 		{
+			"--no-daemon",
 			"--bitrate", QString::number(settings.spotify.bitrate),
 			"--device-name", "spotify-qt",
 			"--username", username,
@@ -62,6 +71,8 @@ QString ClientHandler::start()
 		);
 	else
 		qDebug() << "warning: spotifyd was compiled without pulseaudio support";
+
+	QProcess::connect(process, &QProcess::readyReadStandardOutput, this, &ClientHandler::readyRead);
 
 	process->start(path, arguments);
 	return QString();
@@ -171,4 +182,16 @@ void ClientHandler::setVolume(float value)
 	});
 
 	process.waitForFinished();
+}
+
+void ClientHandler::readyRead()
+{
+	log << QString("[%1] %2")
+		.arg(QDateTime::currentDateTime().toString("hh:mm:ss"))
+		.arg(QString(process->readAllStandardOutput()));
+}
+
+QStringList ClientHandler::getLog()
+{
+	return log;
 }
