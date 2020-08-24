@@ -3,8 +3,9 @@
 #include "../mainwindow.hpp"
 #include "../settings.hpp"
 #include "../spotify/clienthandler.hpp"
-#include "systeminfodialog.hpp"
+#include "clienthandlerlogdialog.hpp"
 #include "openlinkdialog.hpp"
+#include "systeminfodialog.hpp"
 
 #include <QAction>
 #include <QApplication>

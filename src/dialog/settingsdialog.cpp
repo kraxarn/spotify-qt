@@ -185,6 +185,15 @@ QWidget *SettingsDialog::spotifySettings()
 			sptPath->setText(filePath);
 	});
 	sptPathLayout->addWidget(sptPathBrowse);
+	auto sptOpenLog = new QPushButton(this);
+	sptOpenLog->setIcon(Icon::get("folder-txt"));
+	sptOpenLog->setToolTip("Open log");
+	sptOpenLog->setFlat(true);
+	QAbstractButton::connect(sptOpenLog, &QAbstractButton::clicked, [this](bool checked)
+	{
+		(new ClientHandlerLogDialog(this))->exec();
+	});
+	sptPathLayout->addWidget(sptOpenLog);
 	layout->addLayout(sptPathLayout);
 
 	// Spotifyd version
