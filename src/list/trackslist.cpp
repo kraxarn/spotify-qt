@@ -30,7 +30,7 @@ TracksList::TracksList(spt::Spotify &spotify, Settings &settings, QWidget *paren
 	// Song context menu
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested, this, &TracksList::menu);
-	QTreeWidget::connect(this, &QTreeWidget::itemClicked, this, &TracksList::clicked);
+	QTreeWidget::connect(this, &QTreeWidget::itemDoubleClicked, this, &TracksList::clicked);
 
 	// Songs header context menu
 	header()->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
