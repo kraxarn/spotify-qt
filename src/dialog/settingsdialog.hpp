@@ -58,6 +58,7 @@ private:
 	QCheckBox *appSptOrder = nullptr;
 	QCheckBox *appWhatsNew = nullptr;
 	QComboBox *appRefresh = nullptr;
+	QCheckBox *appOneClick = nullptr;
 
 	// Interface settings
 	QCheckBox *itfContextInfo = nullptr;

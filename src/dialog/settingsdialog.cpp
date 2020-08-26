@@ -79,6 +79,11 @@ QWidget *SettingsDialog::appSettings()
 	appWhatsNew->setToolTip("Show what's new in the latest version after the app has been updated");
 	appWhatsNew->setChecked(settings.general.showChangelog);
 	layout->addWidget(appWhatsNew);
+	// Single click to play tracks
+	appOneClick = new QCheckBox("Single click to play tracks", this);
+	appOneClick->setToolTip("Play tracks, instead of selecting only, from single click");
+	appOneClick->setChecked(settings.general.singleClickPlay);
+	layout->addWidget(appOneClick);
 	// Final layout
 	auto widget = new QWidget();
 	widget->setLayout(layout);
@@ -432,6 +437,7 @@ bool SettingsDialog::applySettings()
 	// Other application stuff
 	settings.general.showChangelog = appWhatsNew->isChecked();
 	settings.general.spotifyPlaybackOrder = appSptOrder->isChecked();
+	settings.general.singleClickPlay = appOneClick->isChecked();
 
 	// Other interface stuff
 	if (itfIcFallback != nullptr)

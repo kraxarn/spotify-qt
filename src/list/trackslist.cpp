@@ -27,10 +27,15 @@ TracksList::TracksList(spt::Spotify &spotify, Settings &settings, QWidget *paren
 	for (auto &value : settings.general.hiddenSongHeaders)
 		header()->setSectionHidden(value + 1, true);
 
+	// Play tracks on click
+	auto event = settings.general.singleClickPlay
+		? &QTreeWidget::itemClicked
+		: &QTreeWidget::itemDoubleClicked;
+	QTreeWidget::connect(this, event, this, &TracksList::clicked);
+
 	// Song context menu
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested, this, &TracksList::menu);
-	QTreeWidget::connect(this, &QTreeWidget::itemClicked, this, &TracksList::clicked);
 
 	// Songs header context menu
 	header()->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
