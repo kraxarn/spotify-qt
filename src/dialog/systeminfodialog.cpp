@@ -32,18 +32,6 @@ QString SystemInfoDialog::systemInfo()
 {
 	QMap<QString, QString> info;
 
-	// OS release
-	QFile lsbFile("/etc/lsb-release");
-	if (lsbFile.exists() && lsbFile.open(QIODevice::ReadOnly))
-		for (const auto &line : QString(lsbFile.readAll()).split('\n'))
-			if (line.startsWith("DISTRIB_DESCRIPTION"))
-				info["LSB release"] = line.right(line.length() - 21).left(line.length() - 22);
-
-	// Linux version
-	QFile procFile("/proc/version");
-	if (procFile.exists() && procFile.open(QIODevice::ReadOnly))
-		info["Linux version"] = QString(procFile.readAll()).split(' ')[2];
-
 	// Qt version
 	info["Qt version"] = QT_VERSION_STR;
 
@@ -58,6 +46,15 @@ QString SystemInfoDialog::systemInfo()
 	auto device = ((MainWindow*) mainWindow)->getCurrentPlayback().device;
 	if (!device.name.isEmpty() && !device.type.isEmpty())
 		info["Device"] = QString("%1 (%2)").arg(device.name).arg(device.type);
+
+	// Kernel
+	info["Kernel"] = QString("%1 %2").arg(QSysInfo::kernelType()).arg(QSysInfo::kernelVersion());
+
+	// Product
+	info["Product"] = QSysInfo::prettyProductName();
+
+	// Build ABI
+	info["ABI"] = QSysInfo::buildAbi();
 
 	QString systemInfo("<table>");
 	QMapIterator<QString, QString> i(info);
