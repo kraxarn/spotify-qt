@@ -99,8 +99,11 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 					}
 		}
 
-		mainWindow->saveTracksToCache(id, tracks);
-		mainWindow->loadSongs(tracks);
+		if (!tracks.isEmpty())
+		{
+			mainWindow->saveTracksToCache(id, tracks);
+			mainWindow->loadSongs(tracks);
+		}
 		mainWindow->getSongsTree()->setEnabled(true);
 	}
 }
