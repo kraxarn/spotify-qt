@@ -100,4 +100,5 @@ private:
 	QString getPlaylistNameFromSaved(const QString &id);
 	void contextInfoMenu(const QPoint &pos);
 	void contextInfoOpen(bool checked);
+	QIcon currentContextIcon() const;
 };

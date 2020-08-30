@@ -592,6 +592,17 @@ void MainWindow::setFixedWidthTime(bool value)
 	((MainToolBar *) toolBar)->position->setFont(value ? QFont("monospace") : QFont());
 }
 
+QIcon MainWindow::currentContextIcon() const
+{
+	return Icon::get(
+		QString("view-media-%1")
+			.arg(current.contextType.isEmpty()
+				 ? "track"
+				 : current.contextType == "album"
+				   ? "album-cover"
+				   : current.contextType));
+}
+
 void MainWindow::updateContextIcon()
 {
 	if (!settings.general.showContextInfo)
@@ -612,15 +623,7 @@ void MainWindow::updateContextIcon()
 
 	contextInfo->setText(currentName);
 	auto size = contextInfo->fontInfo().pixelSize();
-	contextIcon->setPixmap(
-		Icon::get(
-			QString("view-media-%1")
-				.arg(current.contextType.isEmpty()
-					 ? "track"
-					 : current.contextType == "album"
-					   ? "album-cover"
-					   : current.contextType))
-			.pixmap(size, size));
+	contextIcon->setPixmap(currentContextIcon().pixmap(size, size));
 
 	auto show = currentName != "No context";
 	contextIcon->setVisible(show);
@@ -648,13 +651,8 @@ QString MainWindow::getPlaylistName(const QString &id)
 void MainWindow::contextInfoMenu(const QPoint &pos)
 {
 	auto menu = new QMenu(contextInfo);
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-	auto icon = contextIcon->pixmap(Qt::ReturnByValue);
-#else
-	auto icon = *contextIcon->pixmap();
-#endif
 	auto open = menu->addAction(
-		QIcon(icon),
+		currentContextIcon(),
 		QString("Open %1").arg(current.contextType));
 	menu->popup(contextInfo->mapToGlobal(pos));
 	QAction::connect(open, &QAction::triggered, this, &MainWindow::contextInfoOpen);
