@@ -87,6 +87,12 @@ SetupDialog::SetupDialog(Settings &settings, QWidget *parent) : settings(setting
 					delete server;
 					accept();
 				}
+				else
+				{
+					// Otherwise re-enable fields
+					clientId->setDisabled(false);
+					clientSecret->setDisabled(false);
+				}
 			});
 		}
 		auto url = spt::Auth::authUrl(clientIdText, redirect);
