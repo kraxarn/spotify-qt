@@ -648,8 +648,13 @@ QString MainWindow::getPlaylistName(const QString &id)
 void MainWindow::contextInfoMenu(const QPoint &pos)
 {
 	auto menu = new QMenu(contextInfo);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+	auto icon = contextIcon->pixmap(Qt::ReturnByValue);
+#else
+	auto icon = *contextIcon->pixmap();
+#endif
 	auto open = menu->addAction(
-		QIcon(contextIcon->pixmap(Qt::ReturnByValue)),
+		QIcon(icon),
 		QString("Open %1").arg(current.contextType));
 	menu->popup(contextInfo->mapToGlobal(pos));
 	QAction::connect(open, &QAction::triggered, this, &MainWindow::contextInfoOpen);
