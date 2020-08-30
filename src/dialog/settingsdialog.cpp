@@ -245,7 +245,7 @@ QWidget *SettingsDialog::spotifySettings()
 
 	// Start with app
 	sptAppStart = new QCheckBox("Start with app", this);
-	sptAppStart->setToolTip("Start spotifyd together with the app (always starts and doesn't automatically close)");
+	sptAppStart->setToolTip("Start, and close, spotifyd together with the app (only available with app config)");
 	sptAppStart->setChecked(settings.spotify.startClient);
 	layout->addWidget(sptAppStart);
 
