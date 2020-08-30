@@ -41,7 +41,7 @@ endif()
 target_compile_definitions(spotify-qt PRIVATE APP_VERSION="${GIT_TAG}")
 
 # Set install targets for 'make install'
-install(TARGETS spotify-qt CONFIGURATIONS Release RUNTIME DESTINATION bin)
+install(TARGETS spotify-qt RUNTIME DESTINATION bin)
 if (UNIX)
 	# Install icons and desktop shortcut on unix-like
 	install(FILES res/logo/spotify-qt.svg DESTINATION share/icons/hicolor/scalable/apps)
