@@ -2,12 +2,13 @@
 
 #include "src/settings.hpp"
 
+#include <QDateTime>
 #include <QDebug>
 #include <QFileInfo>
 #include <QInputDialog>
+#include <QList>
 #include <QProcess>
 #include <QStringList>
-#include <QList>
 
 namespace spt
 {
