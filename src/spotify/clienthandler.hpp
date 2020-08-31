@@ -37,6 +37,6 @@ namespace spt
 		bool supportsPulse();
 		static QString clientExec(const QString &path, const QStringList &arguments);
 		static QString getSinkInfo();
-		void readyRead();
+		void readyRead() const;
 	};
 }

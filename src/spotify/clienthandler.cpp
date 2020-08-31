@@ -184,7 +184,7 @@ void ClientHandler::setVolume(float value)
 	process.waitForFinished();
 }
 
-void ClientHandler::readyRead()
+void ClientHandler::readyRead() const
 {
 	for (auto &line : QString(process->readAllStandardOutput()).split('\n'))
 	{
