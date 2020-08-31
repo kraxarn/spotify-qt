@@ -186,9 +186,14 @@ void ClientHandler::setVolume(float value)
 
 void ClientHandler::readyRead()
 {
-	log << QString("[%1] %2")
-		.arg(QDateTime::currentDateTime().toString("hh:mm:ss"))
-		.arg(QString(process->readAllStandardOutput()));
+	for (auto &line : QString(process->readAllStandardOutput()).split('\n'))
+	{
+		if (line.isEmpty())
+			continue;
+		log << QString("[%1] %2")
+			.arg(QDateTime::currentDateTime().toString("hh:mm:ss"))
+			.arg(line);
+	}
 }
 
 QStringList ClientHandler::getLog()
