@@ -196,7 +196,7 @@ QWidget *SettingsDialog::spotifySettings()
 	sptOpenLog->setFlat(true);
 	QAbstractButton::connect(sptOpenLog, &QAbstractButton::clicked, [this](bool checked)
 	{
-		(new ClientHandlerLogDialog(this))->exec();
+		(new ClientHandlerLogDialog(this->parentWidget()))->show();
 	});
 	sptPathLayout->addWidget(sptOpenLog);
 	layout->addLayout(sptPathLayout);
