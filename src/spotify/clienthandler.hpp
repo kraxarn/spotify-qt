@@ -12,7 +12,7 @@
 
 namespace spt
 {
-	class ClientHandler : public QObject
+	class ClientHandler: public QObject
 	{
 	Q_OBJECT
 
@@ -26,11 +26,10 @@ namespace spt
 		bool isRunning();
 		static float getVolume();
 		static void setVolume(float value);
-
 		static QStringList getLog();
 
 	private:
-		QWidget* parentWidget = nullptr;
+		QWidget *parentWidget = nullptr;
 		QString path;
 		static QStringList log;
 		const Settings &settings;
