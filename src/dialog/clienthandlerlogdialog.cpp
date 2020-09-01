@@ -6,7 +6,7 @@ ClientHandlerLogDialog::ClientHandlerLogDialog(QWidget *parent)
 	auto layout = new QVBoxLayout();
 	setLayout(layout);
 	setWindowTitle("Spotify client log");
-	setMinimumSize(500, 300);
+	setMinimumSize(600, 400);
 
 	auto logText = new QTextEdit(this);
 	logText->setReadOnly(true);
