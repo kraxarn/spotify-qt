@@ -32,8 +32,9 @@ QWidget *SettingsDialog::aboutSettings()
 
 	// User info
 	if (mainWindow != nullptr)
-		layout->addWidget(new QLabel(QString("Hello %1!")
-										 .arg(mainWindow->getCurrentUser().displayName)), 0, Qt::AlignHCenter);
+		layout->addWidget(new QLabel(
+			QString("Hello %1!")
+				.arg(mainWindow->getCurrentUser().displayName)), 0, Qt::AlignHCenter);
 
 	// Grid with buttons
 	layout->addSpacing(8);
