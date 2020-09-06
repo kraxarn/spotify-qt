@@ -10,17 +10,17 @@ SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent)
 	// Tabs
 	pages.append(
 		{
-			AppSettings(settings, this),
-			InterfaceSettings(settings, this)
+			new AppSettings(settings, this),
+			new InterfaceSettings(settings, this),
+			new TraySettings(settings, this)
 		}
 	);
 
-	for (auto &page : pages)
+	for (auto page : pages)
 	{
-		tabs->addTab(page.toWidget(), page.title());
+		tabs->addTab(page->toWidget(), page->title());
 	}
 
-	tabs->addTab(traySettings(), "Tray icon");
 	tabs->addTab(spotifySettings(), "Spotify");
 	tabs->addTab(aboutSettings(), "About");
 	mainLayout->addWidget(tabs, 1);
@@ -49,57 +49,6 @@ SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent)
 	setWindowTitle("Settings");
 	setLayout(mainLayout);
 	resize(360, 260);
-}
-
-QWidget *SettingsDialog::interfaceSettings()
-{
-	auto layout = new QVBoxLayout();
-	layout->setAlignment(Qt::AlignTop);
-
-
-
-	// Final layout
-	auto widget = new QWidget();
-	widget->setLayout(layout);
-	return widget;
-}
-
-QWidget *SettingsDialog::traySettings()
-{
-	// Main container for everything
-	auto layout = new QVBoxLayout();
-	layout->setAlignment(Qt::AlignTop);
-	// Tray icon settings
-	itfTrayIcon = new QCheckBox("Enabled", this);
-	itfTrayIcon->setToolTip("Add an icon to the system tray for quick access");
-	itfTrayIcon->setChecked(settings.general.trayIcon);
-	layout->addWidget(itfTrayIcon);
-	// Desktop notifications
-	itfTrayNotify = new QCheckBox("Desktop notifications", this);
-	itfTrayNotify->setToolTip("Replace status bar with desktop notifications (suppresses any non-error messages)");
-	itfTrayNotify->setChecked(settings.general.trayNotifications);
-	layout->addWidget(itfTrayNotify);
-	QCheckBox::connect(itfTrayNotify, &QCheckBox::stateChanged, [this](int state)
-	{
-		if (state == Qt::CheckState::Checked && itfTrayIcon != nullptr)
-		{
-			itfTrayIcon->setChecked(true);
-		}
-	});
-	// Invert tray icon
-	itfTrayInvert = new QCheckBox("Invert icon", this);
-	itfTrayInvert->setToolTip("Invert colors in tray icon to be visible on light backgrounds");
-	itfTrayInvert->setChecked(settings.general.trayLightIcon);
-	layout->addWidget(itfTrayInvert);
-	// Album art in tray
-	itfTrayAlbum = new QCheckBox("Album art as icon", this);
-	itfTrayAlbum->setToolTip("Show album art of current track in tray icon");
-	itfTrayAlbum->setChecked(settings.general.trayAlbumArt);
-	layout->addWidget(itfTrayAlbum);
-	// Final layout
-	auto widget = new QWidget();
-	widget->setLayout(layout);
-	return widget;
 }
 
 QWidget *SettingsDialog::spotifySettings()
@@ -290,15 +239,12 @@ bool SettingsDialog::applySettings()
 
 	for (auto &page : pages)
 	{
-		if (!page.applySettings(window))
+		if (!page->applySettings(window))
 			return false;
 	}
 
 	// TODO: Save settings
 	//return true; // TODO
-
-
-
 
 	// Check spotify client path
 	if (!sptPath->text().isEmpty())
@@ -312,27 +258,6 @@ bool SettingsDialog::applySettings()
 		sptVersion->setText(client);
 		settings.spotify.path = sptPath->text();
 	}
-
-	// Desktop notifications and tray icon
-	if (itfTrayNotify->isChecked() && !itfTrayIcon->isChecked())
-	{
-		itfTrayIcon->setChecked(true);
-		QMessageBox::information(
-			this, "Desktop Notifications",
-			"Desktop notifications requires tray icon to be enabled, so it was enabled");
-	}
-	// Check if tray icon needs to be reloaded
-	auto reloadTray = settings.general.trayIcon != itfTrayIcon->isChecked()
-		|| settings.general.trayNotifications != itfTrayNotify->isChecked()
-		|| settings.general.trayLightIcon != itfTrayInvert->isChecked();
-	// Apply
-	settings.general.trayIcon = itfTrayIcon->isChecked();
-	settings.general.trayNotifications = itfTrayNotify->isChecked();
-	settings.general.trayLightIcon = itfTrayInvert->isChecked();
-	settings.general.trayAlbumArt = itfTrayAlbum->isChecked();
-	// Reload if needed
-	if (reloadTray && window != nullptr)
-		window->reloadTrayIcon();
 
 	// Spotify global config
 	if (sptGlobal->isChecked() && !sptConfigExists())
