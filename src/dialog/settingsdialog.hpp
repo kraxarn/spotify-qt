@@ -6,8 +6,6 @@
 #include "clienthandlerlogdialog.hpp"
 #include "openlinkdialog.hpp"
 #include "systeminfodialog.hpp"
-#include "../settingspage/settingspage.hpp"
-#include "../settingspage/pages.hpp"
 
 #include <QAction>
 #include <QApplication>
@@ -40,17 +38,27 @@ public:
 	explicit SettingsDialog(Settings &settings, QWidget *parent = nullptr);
 
 private:
+	QWidget *appSettings();
 	QWidget *interfaceSettings();
 	QWidget *traySettings();
 	QWidget *spotifySettings();
 	QWidget *aboutSettings();
 	bool applySettings();
+	void applyFail(const QString &setting);
+	static bool isPulse();
 	static bool sptConfigExists();
 	static bool hasIconTheme();
 	void globalConfigToggle(int state);
 
 	Settings &settings;
-	QVector<SettingsPage> pages;
+
+	// App settings
+	QCheckBox *appMedia = nullptr;
+	QCheckBox *appPulse = nullptr;
+	QCheckBox *appSptOrder = nullptr;
+	QCheckBox *appWhatsNew = nullptr;
+	QComboBox *appRefresh = nullptr;
+	QCheckBox *appOneClick = nullptr;
 
 	// Interface settings
 	QCheckBox *itfContextInfo = nullptr;
