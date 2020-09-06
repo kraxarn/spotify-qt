@@ -11,11 +11,9 @@
 #include <QApplication>
 #include <QCheckBox>
 #include <QComboBox>
-#include <QComboBox>
 #include <QDebug>
 #include <QDialog>
 #include <QFileDialog>
-#include <QFileInfo>
 #include <QFileInfo>
 #include <QGridLayout>
 #include <QGroupBox>
