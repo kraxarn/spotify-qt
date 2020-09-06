@@ -1,8 +1,9 @@
 #include "lyricsview.hpp"
 
-LyricsView::LyricsView(const QString &artist, const QString &name, QWidget *parent) : QDockWidget(parent)
+LyricsView::LyricsView(const QString &artist, const QString &name, QWidget *parent)
+	: QDockWidget(parent)
 {
-	auto window = (MainWindow*) parent;
+	auto window = (MainWindow *) parent;
 
 	auto reply = window->get(
 		QString("https://lyrics.fandom.com/wiki/%1:%2?action=raw")
@@ -19,9 +20,10 @@ LyricsView::LyricsView(const QString &artist, const QString &name, QWidget *pare
 	auto lyricsStart = html.indexOf("<lyrics>") + 9;
 	html = html.mid(lyricsStart, html.indexOf("</lyrics>") - lyricsStart);
 
-	setWindowTitle(QString("%1 - %2")
-		.arg(artist)
-		.arg(name));
+	setWindowTitle(
+		QString("%1 - %2")
+			.arg(artist)
+			.arg(name));
 	auto lyricsView = new QTextEdit(this);
 	lyricsView->setPlainText(html);
 	lyricsView->setReadOnly(true);

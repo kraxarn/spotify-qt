@@ -6,9 +6,9 @@ class LyricsView;
 
 #include <QDockWidget>
 
-class LyricsView : public QDockWidget
+class LyricsView: public QDockWidget
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
 	LyricsView(const QString &artist, const QString &name, QWidget *parent);
