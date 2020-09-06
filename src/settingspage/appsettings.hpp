@@ -2,10 +2,8 @@
 
 #include "settingspage.hpp"
 
-class AppSettings: QWidget, public SettingsPage
+class AppSettings: public SettingsPage
 {
-Q_OBJECT
-
 public:
 	AppSettings(Settings &settings, QWidget *parent);
 
@@ -13,7 +11,6 @@ public:
 
 private:
 	QString title() override;
-	QWidget *toWidget() override;
 	bool applySettings(QWidget* mainWindow) override;
 
 	QCheckBox *appMedia = nullptr;

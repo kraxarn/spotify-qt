@@ -1,14 +1,14 @@
 #include "appsettings.hpp"
 
 AppSettings::AppSettings(Settings &settings, QWidget *parent)
-	: QWidget(parent), SettingsPage(settings, parent)
+	: SettingsPage(settings, parent)
 {
 	// Refresh interval
 	auto appRefreshLayout = new QHBoxLayout();
-	auto appRefreshLabel = new QLabel("Refresh interval", this);
+	auto appRefreshLabel = new QLabel("Refresh interval", parent);
 	appRefreshLabel->setToolTip("How often to refresh playback status from the Spotify servers");
 	appRefreshLayout->addWidget(appRefreshLabel);
-	appRefresh = new QComboBox(this);
+	appRefresh = new QComboBox(parent);
 	appRefresh->addItems(
 		{
 			"1", "3", "10"
@@ -17,7 +17,7 @@ AppSettings::AppSettings(Settings &settings, QWidget *parent)
 	appRefresh->setEditable(true);
 	appRefresh->setCurrentIndex(-1);
 	appRefresh->setEditText(QString::number(settings.general.refreshInterval));
-	appRefresh->setValidator(new QIntValidator(1, 60, this));
+	appRefresh->setValidator(new QIntValidator(1, 60, parent));
 	appRefreshLayout->addWidget(appRefresh);
 	appRefreshLayout->addWidget(new QLabel("seconds"));
 	page->addLayout(appRefreshLayout);
@@ -25,7 +25,7 @@ AppSettings::AppSettings(Settings &settings, QWidget *parent)
 	// PulseAudio volume control
 	if (isPulse())
 	{
-		appPulse = new QCheckBox("PulseAudio volume control", this);
+		appPulse = new QCheckBox("PulseAudio volume control", parent);
 		appPulse->setToolTip(
 			"Use PulseAudio for volume control instead, only works if listening on same device");
 		appPulse->setChecked(settings.general.pulseVolume);
@@ -34,26 +34,26 @@ AppSettings::AppSettings(Settings &settings, QWidget *parent)
 
 	// MPRIS D-Bus
 #ifdef Q_OS_LINUX
-	appMedia = new QCheckBox("Media controller", this);
+	appMedia = new QCheckBox("Media controller", parent);
 	appMedia->setChecked(settings.general.mediaController);
 	appMedia->setToolTip("Enable media controller through the MPRIS D-Bus interface");
 	page->addWidget(appMedia);
 #endif
 
 	// Spotify playback order
-	appSptOrder = new QCheckBox("Spotify playback order", this);
+	appSptOrder = new QCheckBox("Spotify playback order", parent);
 	appSptOrder->setToolTip("Use Spotify playback order instead of app list order");
 	appSptOrder->setChecked(settings.general.spotifyPlaybackOrder);
 	page->addWidget(appSptOrder);
 
 	// What's new dialog
-	appWhatsNew = new QCheckBox("Show what's new on start", this);
+	appWhatsNew = new QCheckBox("Show what's new on start", parent);
 	appWhatsNew->setToolTip("Show what's new in the latest version after the app has been updated");
 	appWhatsNew->setChecked(settings.general.showChangelog);
 	page->addWidget(appWhatsNew);
 
 	// Single click to play tracks
-	appOneClick = new QCheckBox("Single click to play tracks", this);
+	appOneClick = new QCheckBox("Single click to play tracks", parent);
 	appOneClick->setToolTip("Play tracks, instead of selecting only, from single click");
 	appOneClick->setChecked(settings.general.singleClickPlay);
 	page->addWidget(appOneClick);
@@ -70,11 +70,6 @@ QString AppSettings::title()
 	return "Application";
 }
 
-QWidget *AppSettings::toWidget()
-{
-	return this;
-}
-
 bool AppSettings::applySettings(QWidget*)
 {
 	// Media controller
@@ -82,7 +77,7 @@ bool AppSettings::applySettings(QWidget*)
 	{
 		if (appMedia->isChecked() != settings.general.mediaController)
 			QMessageBox::information(
-				this, "Media Controller",
+				parent, "Media Controller",
 				"Please restart the application to apply changes");
 		settings.general.mediaController = appMedia->isChecked();
 	}

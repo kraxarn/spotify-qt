@@ -2,15 +2,12 @@
 
 #include "settingspage.hpp"
 
-class TraySettings: QWidget, public SettingsPage
+class TraySettings: public SettingsPage
 {
-Q_OBJECT
-
 public:
 	TraySettings(Settings &settings, QWidget *parent);
 
 	QString title() override;
-	QWidget *toWidget() override;
 	bool applySettings(QWidget *mainWindow) override;
 
 private:

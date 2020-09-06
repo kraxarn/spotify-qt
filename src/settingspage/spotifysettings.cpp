@@ -5,32 +5,32 @@ SpotifySettings::SpotifySettings(Settings &settings, QWidget *parent)
 {
 	// Executable settings
 	auto sptPathLayout = new QHBoxLayout();
-	sptPath = new QLineEdit(settings.spotify.path, this);
+	sptPath = new QLineEdit(settings.spotify.path, parent);
 	sptPath->setPlaceholderText("spotifyd path");
 	sptPathLayout->addWidget(sptPath, 1);
-	auto sptPathBrowse = new QPushButton("...", this);
+	auto sptPathBrowse = new QPushButton("...", parent);
 	sptPathBrowse->setMaximumWidth(40);
 	sptPathBrowse->setFlat(true);
 	QAbstractButton::connect(sptPathBrowse, &QAbstractButton::clicked, [this](bool checked)
 	{
-		auto filePath = QFileDialog::getOpenFileName(this, "spotifyd path", "/");
+		auto filePath = QFileDialog::getOpenFileName(this->parent, "spotifyd path", "/");
 		if (!filePath.isEmpty() && sptPath != nullptr)
 			sptPath->setText(filePath);
 	});
 	sptPathLayout->addWidget(sptPathBrowse);
-	auto sptOpenLog = new QPushButton(this);
+	auto sptOpenLog = new QPushButton(parent);
 	sptOpenLog->setIcon(Icon::get("folder-txt"));
 	sptOpenLog->setToolTip("Open log");
 	sptOpenLog->setFlat(true);
 	QAbstractButton::connect(sptOpenLog, &QAbstractButton::clicked, [this](bool checked)
 	{
-		(new ClientHandlerLogDialog(this->parentWidget()))->show();
+		(new ClientHandlerLogDialog(this->parent))->show();
 	});
 	sptPathLayout->addWidget(sptOpenLog);
 	page->addLayout(sptPathLayout);
 
 	// Spotifyd version
-	sptVersion = new QLabel("(no spotifyd provided)", this);
+	sptVersion = new QLabel("(no spotifyd provided)", parent);
 	if (!settings.spotify.path.isEmpty())
 	{
 		auto client = spt::ClientHandler::version(settings.spotify.path);
@@ -41,14 +41,14 @@ SpotifySettings::SpotifySettings(Settings &settings, QWidget *parent)
 	page->addWidget(sptVersion);
 
 	// Global config
-	sptGlobal = new QCheckBox("Use global config", this);
+	sptGlobal = new QCheckBox("Use global config", parent);
 	sptGlobal->setToolTip("Use spotifyd.conf file in either ~/.config/spotifyd or /etc/spotifyd only");
 	sptGlobal->setChecked(settings.spotify.globalConfig);
 	QCheckBox::connect(sptGlobal, &QCheckBox::stateChanged, this, &SpotifySettings::globalConfigToggle);
 	page->addWidget(sptGlobal);
 
 	// Box and layout for all app specific settings
-	sptGroup = new QGroupBox("App specific settings", this);
+	sptGroup = new QGroupBox("App specific settings", parent);
 	sptGroup->setEnabled(!sptGlobal->isChecked());
 	auto sptLayout = new QGridLayout();
 
@@ -72,13 +72,13 @@ SpotifySettings::SpotifySettings(Settings &settings, QWidget *parent)
 	page->addWidget(sptGroup);
 
 	// Start with app
-	sptAppStart = new QCheckBox("Start with app", this);
+	sptAppStart = new QCheckBox("Start with app", parent);
 	sptAppStart->setToolTip("Start, and close, spotifyd together with the app (only closes with app config)");
 	sptAppStart->setChecked(settings.spotify.startClient);
 	page->addWidget(sptAppStart);
 
 	// Always start
-	sptAlways = new QCheckBox("Always start", this);
+	sptAlways = new QCheckBox("Always start", parent);
 	sptAlways->setToolTip("Always start client, even if there are other devices already available");
 	sptAlways->setChecked(settings.spotify.alwaysStart);
 	page->addWidget(sptAlways);
@@ -87,11 +87,6 @@ SpotifySettings::SpotifySettings(Settings &settings, QWidget *parent)
 QString SpotifySettings::title()
 {
 	return "Spotify";
-}
-
-QWidget *SpotifySettings::toWidget()
-{
-	return this;
 }
 
 bool SpotifySettings::applySettings(QWidget *mainWindow)
@@ -112,7 +107,7 @@ bool SpotifySettings::applySettings(QWidget *mainWindow)
 	// Spotify global config
 	if (sptGlobal->isChecked() && !sptConfigExists())
 		QMessageBox::warning(
-			this,
+			parent,
 			"spotifyd config not found",
 			QString("Couldn't find a config file for spotifyd. You may experience issues."));
 	settings.spotify.globalConfig = sptGlobal->isChecked();
