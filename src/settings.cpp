@@ -47,6 +47,10 @@ void Settings::load()
 	for (auto val : json["General"].toObject()["hidden_song_headers"].toArray())
 		hiddenSongHeaders.append(val.toInt());
 
+	QStringList customPlaylistOrder;
+	for (auto val : json["General"].toObject()["custom_playlist_order"].toArray())
+		customPlaylistOrder.append(val.toString());
+
 	auto a = json["Account"].toObject();
 	account.accessToken = a["access_token"].toString();
 	account.clientId = a["client_id"].toString();
@@ -54,6 +58,7 @@ void Settings::load()
 	account.refreshToken = a["refresh_token"].toString();
 
 	auto g = json["General"];
+	general.customPlaylistOrder = customPlaylistOrder;
 	general.fallbackIcons = g["fallback_icons"].toBool(false);
 	general.fixedWidthTime = g["fixed_width_time"].toBool(true);
 	general.hiddenSongHeaders = hiddenSongHeaders;
@@ -94,6 +99,10 @@ void Settings::save()
 	for (auto &val : general.hiddenSongHeaders)
 		jsonHiddenSongHeaders.append(val);
 
+	QJsonArray jsonCustomPlaylistOrder;
+	for (auto &val : general.customPlaylistOrder)
+		jsonCustomPlaylistOrder.append(val);
+
 	QJsonObject json(
 		{
 			QPair<QString, QJsonObject>("Account", {
@@ -103,6 +112,7 @@ void Settings::save()
 				{"refresh_token", account.refreshToken}
 			}),
 			QPair<QString, QJsonObject>("General", {
+				{"custom_playlist_order", jsonCustomPlaylistOrder},
 				{"fallback_icons", general.fallbackIcons},
 				{"fixed_width_time", general.fixedWidthTime},
 				{"hidden_song_headers", jsonHiddenSongHeaders},

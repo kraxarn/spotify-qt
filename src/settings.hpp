@@ -38,6 +38,7 @@ public:
 		QVector<int> hiddenSongHeaders;
 		int songHeaderResizeMode, songHeaderSortBy, refreshInterval, lastVolume;
 		PlaylistOrder playlistOrder;
+		QStringList customPlaylistOrder;
 	} General;
 
 	typedef struct {

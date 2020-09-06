@@ -154,9 +154,18 @@ bool SettingsDialog::applySettings()
 	settings.spotify.bitrate = bitrate == 0 ? 96 : bitrate == 1 ? 160 : 320;
 	settings.spotify.alwaysStart = sptAlways->isChecked();
 
-	// Playlist stuff
+	// Custom playlist order
 	auto playlistOrder = (PlaylistOrder) plOrder->currentIndex();
-	if (settings.general.playlistOrder != playlistOrder && window != nullptr)
+	if (playlistOrder == PlaylistOrderCustom)
+	{
+		QStringList order;
+		for (auto i = 0; i < plList->count(); i++)
+			order.append(plList->item(i)->data(RolePlaylistId).toString());
+		settings.general.customPlaylistOrder = order;
+	}
+
+	// Playlist stuff
+	if ((settings.general.playlistOrder != playlistOrder || playlistOrder == PlaylistOrderCustom) && window != nullptr)
 		window->orderPlaylists(playlistOrder);
 	settings.general.playlistOrder = playlistOrder;
 

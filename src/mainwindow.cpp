@@ -706,6 +706,8 @@ void MainWindow::orderPlaylists(PlaylistOrder order)
 	while (playlists->item(0) != nullptr)
 		items.insert(i, playlists->takeItem(0));
 
+	QMap<QString, int> customOrder;
+
 	switch (order)
 	{
 		case PlaylistOrderDefault:
@@ -737,7 +739,19 @@ void MainWindow::orderPlaylists(PlaylistOrder order)
 			break;
 
 		case PlaylistOrderCustom:
-			// TODO: Load saved order
+			i = 0;
+			for (auto &playlist : settings.general.customPlaylistOrder)
+				customOrder[playlist] = i++;
+			std::sort(items.begin(), items.end(), [customOrder](QListWidgetItem *i1, QListWidgetItem *i2)
+			{
+				auto id1 = i1->data(DataRole::RolePlaylistId).toString();
+				auto id2 = i2->data(DataRole::RolePlaylistId).toString();
+
+				return
+					customOrder.contains(id1) && customOrder.contains(id2)
+					? customOrder[id1] < customOrder[id2]
+					: false;
+			});
 			break;
 	}
 
