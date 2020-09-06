@@ -46,18 +46,10 @@ private:
 	QWidget *aboutSettings();
 	bool applySettings();
 	static bool sptConfigExists();
-	static bool hasIconTheme();
 	void globalConfigToggle(int state);
 
 	Settings &settings;
 	QVector<SettingsPage> pages;
-
-	// Interface settings
-	QCheckBox *itfContextInfo = nullptr;
-	QCheckBox *itfDark = nullptr;
-	QCheckBox *itfIcFallback = nullptr;
-	QCheckBox *itfMonoTime = nullptr;
-	QCheckBox *itfResizeAuto = nullptr;
 
 	// Tray icon settings
 	QCheckBox *itfTrayAlbum = nullptr;
