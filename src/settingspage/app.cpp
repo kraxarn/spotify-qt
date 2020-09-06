@@ -65,3 +65,9 @@ QWidget *SettingsDialog::appSettings()
 	widget->setLayout(layout);
 	return widget;
 }
+
+bool SettingsDialog::isPulse()
+{
+	// Assume /usr/bin/pactl
+	return QFileInfo("/usr/bin/pactl").isExecutable();
+}

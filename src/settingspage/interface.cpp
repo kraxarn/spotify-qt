@@ -43,3 +43,8 @@ QWidget *SettingsDialog::interfaceSettings()
 	widget->setLayout(layout);
 	return widget;
 }
+
+bool SettingsDialog::hasIconTheme()
+{
+	return !QIcon::fromTheme("media-playback-start").isNull();
+}

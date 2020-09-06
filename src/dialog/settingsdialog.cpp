@@ -157,21 +157,10 @@ void SettingsDialog::applyFail(const QString &setting)
 		QString("Failed to apply setting \"%1\". Check your settings and try again.").arg(setting));
 }
 
-bool SettingsDialog::isPulse()
-{
-	// Assume /usr/bin/pactl
-	return QFileInfo("/usr/bin/pactl").isExecutable();
-}
-
 bool SettingsDialog::sptConfigExists()
 {
 	// Config is either ~/.config/spotifyd/spotifyd.conf or /etc/spotifyd/spotifyd.conf
 	return QFile(QString("%1/.config/spotifyd/spotifyd.conf")
 		.arg(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0])).exists()
 		|| QFile("/etc/spotifyd/spotifyd.conf").exists();
-}
-
-bool SettingsDialog::hasIconTheme()
-{
-	return !QIcon::fromTheme("media-playback-start").isNull();
 }
