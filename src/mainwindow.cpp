@@ -138,7 +138,8 @@ void MainWindow::refreshed(const spt::Playback &playback)
 	if (nowPlaying->text() != currPlaying)
 	{
 		if (current.isPlaying)
-			setPlayingTrackItem(trackItems.contains(current.item.id)
+			setPlayingTrackItem(
+				trackItems.contains(current.item.id)
 				? trackItems[current.item.id] : nullptr);
 		nowPlaying->setText(currPlaying);
 		setAlbumImage(current.item.image);
@@ -149,9 +150,10 @@ void MainWindow::refreshed(const spt::Playback &playback)
 		if (trayIcon != nullptr && settings.general.trayAlbumArt)
 			trayIcon->setPixmap(getAlbum(current.item.image));
 	}
-	mainToolBar->position->setText(QString("%1/%2")
-		.arg(Utils::formatTime(current.progressMs))
-		.arg(Utils::formatTime(current.item.duration)));
+	mainToolBar->position->setText(
+		QString("%1/%2")
+			.arg(Utils::formatTime(current.progressMs))
+			.arg(Utils::formatTime(current.item.duration)));
 	mainToolBar->progress->setValue(current.progressMs);
 	mainToolBar->progress->setMaximum(current.item.duration);
 	mainToolBar->playPause->setIcon(Icon::get(
@@ -170,7 +172,7 @@ QWidget *MainWindow::createCentralWidget()
 
 	//region Library
 	libraryList = new LibraryList(*spotify, this);
-	auto library = Utils::createGroupBox(QVector<QWidget*>() << libraryList, this);
+	auto library = Utils::createGroupBox(QVector<QWidget *>() << libraryList, this);
 	library->setTitle("Library");
 	sidebar->addWidget(library);
 	//endregion
@@ -179,7 +181,7 @@ QWidget *MainWindow::createCentralWidget()
 	playlists = new PlaylistList(*spotify, this);
 	refreshPlaylists();
 
-	auto playlistContainer = Utils::createGroupBox(QVector<QWidget*>() << playlists, this);
+	auto playlistContainer = Utils::createGroupBox(QVector<QWidget *>() << playlists, this);
 	playlistContainer->setTitle("Playlists");
 	sidebar->addWidget(playlistContainer);
 	//endregion
@@ -213,7 +215,8 @@ QWidget *MainWindow::createCentralWidget()
 
 	// Show menu when clicking now playing
 	nowPlaying->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QLabel::connect(nowPlaying, &QWidget::customContextMenuRequested, [this](const QPoint &pos) {
+	QLabel::connect(nowPlaying, &QWidget::customContextMenuRequested, [this](const QPoint &pos)
+	{
 		auto track = current.item;
 		if (track.name.isEmpty() && track.artist.isEmpty())
 			return;
@@ -242,26 +245,26 @@ QWidget *MainWindow::createCentralWidget()
 		// Default to first in list
 		playlistId = sptPlaylists.at(0).id;
 	}
-	else
+
+	// Find playlist in list
+	for (auto i = 0; i < playlists->count(); i++)
 	{
-		// Find playlist in list
-		int i = 0;
-		for (auto &playlist : sptPlaylists)
+		auto item = playlists->item(i);
+
+		if (item->data(RolePlaylistId).toString().endsWith(playlistId))
 		{
-			if (playlist.id == playlistId)
-			{
-				playlists->setCurrentRow(i);
-				loadPlaylist(playlist);
-			}
-			i++;
+			playlists->setCurrentRow(i);
+			loadPlaylist(sptPlaylists[item->data(RolePlaylistIndex).toInt()]);
 		}
 	}
+
 	// Add to main thing
 	container->addWidget(songs);
 	return container;
 }
 
-QMenu *MainWindow::songMenu(const QString &trackId, const QString &artist,
+QMenu *MainWindow::songMenu(
+	const QString &trackId, const QString &artist,
 	const QString &name, const QString &artistId, const QString &albumId)
 {
 	return new SongMenu(trackId, artist, name, artistId, albumId, *spotify, this);
@@ -330,8 +333,8 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 		});
 		item->setData(0, RoleTrackId,  QString("spotify:track:%1").arg(track.id));
 		item->setData(0, RoleArtistId, track.artistId);
-		item->setData(0, RoleAlbumId,  track.albumId);
-		item->setData(0, RoleIndex,    i);
+		item->setData(0, RoleAlbumId, track.albumId);
+		item->setData(0, RoleIndex, i);
 		if (track.isLocal || !track.isPlayable)
 		{
 			item->setDisabled(true);
