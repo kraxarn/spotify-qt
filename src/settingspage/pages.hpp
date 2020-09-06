@@ -1,6 +1,7 @@
 #pragma once
 
+#include "aboutsettings.hpp"
 #include "appsettings.hpp"
 #include "interfacesettings.hpp"
-#include "traysettings.hpp"
 #include "spotifysettings.hpp"
+#include "traysettings.hpp"
