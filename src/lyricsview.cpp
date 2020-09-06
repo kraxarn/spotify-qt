@@ -25,7 +25,7 @@ LyricsView::LyricsView(const QString &artist, const QString &name, QWidget *pare
 			.arg(artist)
 			.arg(name));
 	auto lyricsView = new QTextEdit(this);
-	lyricsView->setPlainText(html);
+	lyricsView->setPlainText(html.trimmed());
 	lyricsView->setReadOnly(true);
 	setWidget(lyricsView);
 	setMinimumWidth(300);
@@ -39,7 +39,9 @@ bool LyricsView::lyricsFound() const
 
 QString LyricsView::format(const QString &word)
 {
-	return word.left(1).toUpper() +
-		word.right(word.length() - 1).toLower()
-			.replace(' ', '_');
+	auto words = word.split(' ');
+	for (auto &w : words)
+		w = w.left(1).toUpper() +
+			w.right(w.length() - 1).toLower();
+	return words.join('_');
 }
