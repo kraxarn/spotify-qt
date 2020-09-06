@@ -1,6 +1,7 @@
 #include "settingsdialog.hpp"
 
-SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent) : settings(settings), QDialog(parent)
+SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent)
+	: settings(settings), QDialog(parent)
 {
 	// Main layout
 	auto mainLayout = new QVBoxLayout();
@@ -16,16 +17,19 @@ SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent) : settings(s
 	// Buttons
 	auto buttons = new QDialogButtonBox();
 	auto okButton = buttons->addButton(QDialogButtonBox::Ok);
-	QPushButton::connect(okButton, &QPushButton::clicked, [this](bool checked) {
+	QPushButton::connect(okButton, &QPushButton::clicked, [this](bool checked)
+	{
 		if (applySettings())
 			accept();
 	});
 	auto applyButton = buttons->addButton(QDialogButtonBox::Apply);
-	QPushButton::connect(applyButton, &QPushButton::clicked, [this](bool checked) {
+	QPushButton::connect(applyButton, &QPushButton::clicked, [this](bool checked)
+	{
 		applySettings();
 	});
 	auto cancelButton = buttons->addButton(QDialogButtonBox::Cancel);
-	QPushButton::connect(cancelButton, &QPushButton::clicked, [this](bool checked) {
+	QPushButton::connect(cancelButton, &QPushButton::clicked, [this](bool checked)
+	{
 		accept();
 	});
 	mainLayout->addWidget(buttons);
@@ -100,11 +104,12 @@ bool SettingsDialog::applySettings()
 	settings.general.trayLightIcon = itfTrayInvert->isChecked();
 	settings.general.trayAlbumArt = itfTrayAlbum->isChecked();
 	// Reload if needed
-	auto window = dynamic_cast<MainWindow*>(parent());
+	auto window = dynamic_cast<MainWindow *>(parent());
 	if (reloadTray && window != nullptr)
 		window->reloadTrayIcon();
 	// Song header resize mode
-	auto resizeMode = itfResizeAuto->isChecked()
+	auto resizeMode =
+		itfResizeAuto->isChecked()
 		? QHeaderView::ResizeToContents
 		: QHeaderView::Interactive;
 	if (resizeMode != settings.general.songHeaderResizeMode && window != nullptr)
@@ -123,7 +128,8 @@ bool SettingsDialog::applySettings()
 
 	// Spotify global config
 	if (sptGlobal->isChecked() && !sptConfigExists())
-		QMessageBox::warning(this,
+		QMessageBox::warning(
+			this,
 			"spotifyd config not found",
 			QString("Couldn't find a config file for spotifyd. You may experience issues."));
 	settings.spotify.globalConfig = sptGlobal->isChecked();
@@ -142,7 +148,7 @@ bool SettingsDialog::applySettings()
 	settings.general.showContextInfo = itfContextInfo->isChecked();
 
 	// Other Spotify stuff
-	settings.spotify.startClient =sptAppStart->isChecked();
+	settings.spotify.startClient = sptAppStart->isChecked();
 	settings.spotify.username = sptUsername->text();
 	auto bitrate = sptBitrate->currentIndex();
 	settings.spotify.bitrate = bitrate == 0 ? 96 : bitrate == 1 ? 160 : 320;
@@ -161,7 +167,8 @@ bool SettingsDialog::applySettings()
 
 void SettingsDialog::applyFail(const QString &setting)
 {
-	QMessageBox::warning(this,
+	QMessageBox::warning(
+		this,
 		"Failed to apply settings",
 		QString("Failed to apply setting \"%1\". Check your settings and try again.").arg(setting));
 }
@@ -169,7 +176,8 @@ void SettingsDialog::applyFail(const QString &setting)
 bool SettingsDialog::sptConfigExists()
 {
 	// Config is either ~/.config/spotifyd/spotifyd.conf or /etc/spotifyd/spotifyd.conf
-	return QFile(QString("%1/.config/spotifyd/spotifyd.conf")
-		.arg(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0])).exists()
+	return QFile(
+		QString("%1/.config/spotifyd/spotifyd.conf")
+			.arg(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0])).exists()
 		|| QFile("/etc/spotifyd/spotifyd.conf").exists();
 }
