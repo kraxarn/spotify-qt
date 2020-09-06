@@ -19,5 +19,3 @@ private:
 	bool found;
 	static QString format(const QString &word);
 };
-
-
