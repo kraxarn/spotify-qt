@@ -2,7 +2,7 @@
 
 #include "settingspage.hpp"
 
-class AppSettings: QWidget, public SettingsPage
+class AppSettings: public QWidget, public SettingsPage
 {
 Q_OBJECT
 
@@ -14,7 +14,7 @@ public:
 private:
 	QString title() override;
 	QWidget *toWidget() override;
-	bool applySettings(QWidget* mainWindow) override;
+	bool applySettings() override;
 
 	QCheckBox *appMedia = nullptr;
 	QCheckBox *appPulse = nullptr;

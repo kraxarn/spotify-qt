@@ -75,7 +75,7 @@ QWidget *AppSettings::toWidget()
 	return this;
 }
 
-bool AppSettings::applySettings(QWidget*)
+bool AppSettings::applySettings()
 {
 	// Media controller
 	if (appMedia != nullptr)
