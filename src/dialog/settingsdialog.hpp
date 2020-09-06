@@ -40,22 +40,8 @@ public:
 	explicit SettingsDialog(Settings &settings, QWidget *parent = nullptr);
 
 private:
-	QWidget *spotifySettings();
-	QWidget *aboutSettings();
 	bool applySettings();
-	static bool sptConfigExists();
-	void globalConfigToggle(int state);
 
 	Settings &settings;
 	QVector<SettingsPage*> pages;
-
-	// Spotify settings
-	QCheckBox *sptAlways = nullptr;
-	QCheckBox *sptAppStart = nullptr;
-	QCheckBox *sptGlobal = nullptr;
-	QComboBox *sptBitrate = nullptr;
-	QGroupBox *sptGroup = nullptr;
-	QLabel *sptVersion = nullptr;
-	QLineEdit *sptPath = nullptr;
-	QLineEdit *sptUsername = nullptr;
 };
