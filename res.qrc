@@ -16,7 +16,10 @@
         <file>res/ic/light/edit-find.svg</file>
         <file>res/ic/light/folder-temp.svg</file>
         <file>res/ic/light/folder-txt.svg</file>
+        <file>res/ic/light/go-down.svg</file>
+        <file>res/ic/light/go-up.svg</file>
         <file>res/ic/light/help-about.svg</file>
+        <file>res/ic/light/hint.svg</file>
         <file>res/ic/light/im-user-away.svg</file>
         <file>res/ic/light/list-add.svg</file>
         <file>res/ic/light/list-remove.svg</file>
@@ -54,7 +57,10 @@
         <file>res/ic/dark/edit-find.svg</file>
         <file>res/ic/dark/folder-temp.svg</file>
         <file>res/ic/dark/folder-txt.svg</file>
+        <file>res/ic/dark/go-down.svg</file>
+        <file>res/ic/dark/go-up.svg</file>
         <file>res/ic/dark/help-about.svg</file>
+        <file>res/ic/dark/hint.svg</file>
         <file>res/ic/dark/im-user-away.svg</file>
         <file>res/ic/dark/list-add.svg</file>
         <file>res/ic/dark/list-remove.svg</file>
