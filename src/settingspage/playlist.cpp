@@ -51,7 +51,6 @@ QWidget *SettingsDialog::playlistSettings()
 		buttons->addAction(Icon::get("go-down"), "Down"),
 		&QAction::triggered, this, &SettingsDialog::playlistDown);
 
-	buttons->addAction(Icon::get("hint"), "Hide"); // hint <-> visibility
 	plListLayout->addWidget(buttons);
 	layout->addLayout(plListLayout, 1);
 	playlistItemChanged(plOrder->currentIndex());
@@ -62,7 +61,6 @@ QWidget *SettingsDialog::playlistSettings()
 		auto mainItem = mainList->item(i);
 		auto listItem = new QListWidgetItem(mainItem->text());
 		listItem->setData(DataRole::RolePlaylistId, mainItem->data(DataRole::RolePlaylistId));
-		listItem->setIcon(Icon::get(i % 2 == 0 ? "hint" : "visibility"));
 		plList->addItem(listItem);
 	}
 
