@@ -180,6 +180,8 @@ QWidget *MainWindow::createCentralWidget()
 	//region Playlists
 	playlists = new PlaylistList(*spotify, this);
 	refreshPlaylists();
+	if (settings.general.playlistOrder != PlaylistOrderDefault)
+		orderPlaylists(settings.general.playlistOrder);
 
 	auto playlistContainer = Utils::createGroupBox(QVector<QWidget *>() << playlists, this);
 	playlistContainer->setTitle("Playlists");
@@ -243,7 +245,7 @@ QWidget *MainWindow::createCentralWidget()
 	else if (playlistId.isEmpty())
 	{
 		// Default to first in list
-		playlistId = sptPlaylists.at(0).id;
+		playlistId = playlists->item(0)->data(RolePlaylistId).toString();
 	}
 
 	// Find playlist in list
@@ -254,7 +256,7 @@ QWidget *MainWindow::createCentralWidget()
 		if (item->data(RolePlaylistId).toString().endsWith(playlistId))
 		{
 			playlists->setCurrentRow(i);
-			loadPlaylist(sptPlaylists[item->data(RolePlaylistIndex).toInt()]);
+			loadPlaylist(sptPlaylists[item->data(RoleIndex).toInt()]);
 		}
 	}
 
@@ -309,11 +311,13 @@ void MainWindow::refreshPlaylists()
 
 	// Add all playlists
 	playlists->clear();
+	auto i = 0;
 	for (auto &playlist : sptPlaylists)
 	{
 		auto item = new QListWidgetItem(playlist.name, playlists);
 		item->setToolTip(playlist.description);
 		item->setData(RolePlaylistId, playlist.id);
+		item->setData(RoleIndex, i++);
 	}
 	if (lastIndex >= 0)
 		playlists->setCurrentRow(lastIndex);
@@ -327,11 +331,14 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 	for (int i = 0; i < tracks.length(); i++)
 	{
 		auto track = tracks.at(i);
-		auto item = new QTreeWidgetItem({
-			"", track.name, track.artist, track.album,
-			Utils::formatTime(track.duration), track.addedAt.date().toString(Qt::SystemLocaleShortDate)
-		});
-		item->setData(0, RoleTrackId,  QString("spotify:track:%1").arg(track.id));
+		auto item = new QTreeWidgetItem(
+			{
+				"", track.name, track.artist, track.album,
+				Utils::formatTime(track.duration),
+				track.addedAt.date().toString(Qt::SystemLocaleShortDate)
+			}
+		);
+		item->setData(0, RoleTrackId, QString("spotify:track:%1").arg(track.id));
 		item->setData(0, RoleArtistId, track.artistId);
 		item->setData(0, RoleAlbumId, track.albumId);
 		item->setData(0, RoleIndex, i);
@@ -677,6 +684,65 @@ void MainWindow::contextInfoOpen(bool)
 		playlists->setCurrentRow(-1);
 		loadPlaylist(playlist);
 	}
+}
+
+int latestTrack(const QVector<spt::Track> &tracks)
+{
+	auto latest = 0;
+	for (int i = 0; i < tracks.length(); i++)
+	{
+		if (tracks[i].addedAt > tracks[latest].addedAt)
+			latest = i;
+	}
+	return latest;
+}
+
+void MainWindow::orderPlaylists(PlaylistOrder order)
+{
+	QList<QListWidgetItem *> items;
+	items.reserve(playlists->count());
+
+	auto i = 0;
+	while (playlists->item(0) != nullptr)
+		items.insert(i, playlists->takeItem(0));
+
+	switch (order)
+	{
+		case PlaylistOrderDefault:
+			std::sort(items.begin(), items.end(), [](QListWidgetItem *i1, QListWidgetItem *i2)
+			{
+				return i1->data(RoleIndex).toInt() < i2->data(RoleIndex).toInt();
+			});
+			break;
+
+		case PlaylistOrderAlphabetical:
+			std::sort(items.begin(), items.end(), [](QListWidgetItem *i1, QListWidgetItem *i2)
+			{
+				return i1->text() < i2->text();
+			});
+			break;
+
+		case PlaylistOrderRecent:
+			// TODO: Currently sorts by when tracks where added, not when playlist was last played
+			std::sort(items.begin(), items.end(), [this](QListWidgetItem *i1, QListWidgetItem *i2)
+			{
+				auto t1 = playlistTracks(i1->data(DataRole::RolePlaylistId).toString());
+				auto t2 = playlistTracks(i2->data(DataRole::RolePlaylistId).toString());
+
+				return
+					t1.length() > 0 && t2.length() > 0
+					? t1.at(latestTrack(t1)).addedAt > t2.at(latestTrack(t2)).addedAt
+					: false;
+			});
+			break;
+
+		case PlaylistOrderCustom:
+			// TODO: Load saved order
+			break;
+	}
+
+	for (auto item : items)
+		playlists->addItem(item);
 }
 
 //region Getters

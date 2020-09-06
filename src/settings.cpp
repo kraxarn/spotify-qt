@@ -61,6 +61,7 @@ void Settings::load()
 	general.lastVersion = g["last_version"].toString();
 	general.lastVolume = g["last_volume"].toInt();
 	general.mediaController = g["media_controller"].toBool(hasMediaControllerSupport());
+	general.playlistOrder = (PlaylistOrder) g["playlist_order"].toInt(PlaylistOrderDefault);
 	general.pulseVolume = g["pulse_volume"].toBool(false);
 	general.refreshInterval = g["refresh_interval"].toInt(3);
 	general.showChangelog = g["show_changelog"].toBool(true);
@@ -109,6 +110,7 @@ void Settings::save()
 				{"last_version", general.lastVersion},
 				{"last_volume", general.lastVolume},
 				{"media_controller", general.mediaController},
+				{"playlist_order", general.playlistOrder},
 				{"pulse_volume", general.pulseVolume},
 				{"refresh_interval", general.refreshInterval},
 				{"show_changelog", general.showChangelog},

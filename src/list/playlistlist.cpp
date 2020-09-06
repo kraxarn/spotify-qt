@@ -26,7 +26,11 @@ void PlaylistList::clicked(QListWidgetItem *item)
 	if (item != nullptr)
 		mainWindow->getLibraryList()->setCurrentItem(nullptr);
 
-	auto currentPlaylist = mainWindow->getSptPlaylists().at(currentRow());
+	auto index = item == nullptr
+		? currentRow()
+		: item->data(RoleIndex).toInt();
+
+	auto currentPlaylist = mainWindow->getSptPlaylists().at(index);
 	mainWindow->loadPlaylist(currentPlaylist);
 }
 

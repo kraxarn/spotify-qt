@@ -42,6 +42,7 @@ public:
 	void setPlayingTrackItem(QTreeWidgetItem *item);
 	void refresh();
 	void refreshed(const spt::Playback &playback);
+	void orderPlaylists(PlaylistOrder order);
 
 	// Getters for private properties
 	QString &getCacheLocation();

@@ -9,8 +9,10 @@ SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent) : settings(s
 	tabs->addTab(interfaceSettings(), "Interface");
 	tabs->addTab(traySettings(), "Tray icon");
 	tabs->addTab(spotifySettings(), "Spotify");
+	tabs->addTab(playlistSettings(), "Playlists");
 	tabs->addTab(aboutSettings(), "About");
 	mainLayout->addWidget(tabs, 1);
+
 	// Buttons
 	auto buttons = new QDialogButtonBox();
 	auto okButton = buttons->addButton(QDialogButtonBox::Ok);
@@ -27,10 +29,11 @@ SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent) : settings(s
 		accept();
 	});
 	mainLayout->addWidget(buttons);
+
 	// Set layout
 	setWindowTitle("Settings");
 	setLayout(mainLayout);
-	resize(360, 260);
+	resize(440, 340);
 }
 
 void SettingsDialog::globalConfigToggle(int state)
@@ -144,6 +147,12 @@ bool SettingsDialog::applySettings()
 	auto bitrate = sptBitrate->currentIndex();
 	settings.spotify.bitrate = bitrate == 0 ? 96 : bitrate == 1 ? 160 : 320;
 	settings.spotify.alwaysStart = sptAlways->isChecked();
+
+	// Playlist stuff
+	auto playlistOrder = (PlaylistOrder) plOrder->currentIndex();
+	if (settings.general.playlistOrder != playlistOrder && window != nullptr)
+		window->orderPlaylists(playlistOrder);
+	settings.general.playlistOrder = playlistOrder;
 
 	// Everything is fine
 	settings.save();

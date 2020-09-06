@@ -1,6 +1,7 @@
 #pragma once
 
 #include "enum/palette.hpp"
+#include "enum/playlistorder.hpp"
 #include "util/utils.hpp"
 
 #include <QCoreApplication>
@@ -36,6 +37,7 @@ public:
 		Palette stylePalette;
 		QVector<int> hiddenSongHeaders;
 		int songHeaderResizeMode, songHeaderSortBy, refreshInterval, lastVolume;
+		PlaylistOrder playlistOrder;
 	} General;
 
 	typedef struct {

@@ -41,12 +41,17 @@ private:
 	QWidget *traySettings();
 	QWidget *spotifySettings();
 	QWidget *aboutSettings();
+	QWidget *playlistSettings();
 	bool applySettings();
 	void applyFail(const QString &setting);
 	static bool isPulse();
 	static bool sptConfigExists();
 	static bool hasIconTheme();
 	void globalConfigToggle(int state);
+	void playlistItemChanged(int index);
+	void playlistMove(int steps);
+	void playlistUp();
+	void playlistDown();
 
 	Settings &settings;
 
@@ -80,4 +85,11 @@ private:
 	QLabel *sptVersion = nullptr;
 	QLineEdit *sptPath = nullptr;
 	QLineEdit *sptUsername = nullptr;
+
+	// Playlist settings
+	QComboBox *plOrder = nullptr;
+	QHBoxLayout *plListLayout = nullptr;
+	QLabel *plHint = nullptr;
+	QListWidget *plList = nullptr;
+	QStringList plHints;
 };
