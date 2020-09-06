@@ -40,6 +40,8 @@ public:
 	explicit SettingsDialog(Settings &settings, QWidget *parent = nullptr);
 
 private:
+	QWidget *interfaceSettings();
+	QWidget *traySettings();
 	QWidget *spotifySettings();
 	QWidget *aboutSettings();
 	bool applySettings();
@@ -47,7 +49,13 @@ private:
 	void globalConfigToggle(int state);
 
 	Settings &settings;
-	QVector<SettingsPage*> pages;
+	QVector<SettingsPage> pages;
+
+	// Tray icon settings
+	QCheckBox *itfTrayAlbum = nullptr;
+	QCheckBox *itfTrayIcon = nullptr;
+	QCheckBox *itfTrayInvert = nullptr;
+	QCheckBox *itfTrayNotify = nullptr;
 
 	// Spotify settings
 	QCheckBox *sptAlways = nullptr;
