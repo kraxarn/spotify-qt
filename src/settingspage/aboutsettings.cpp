@@ -4,7 +4,7 @@ AboutSettings::AboutSettings(Settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
 	auto cacheSize = 0u;
-	auto mainWindow = dynamic_cast<MainWindow *>(parent);
+	auto mainWindow = dynamic_cast<MainWindow *>(parentWidget());
 	if (mainWindow != nullptr)
 		for (auto const &file : QDir(mainWindow->getCacheLocation()).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
 			for (auto const &f : QDir(file.absoluteFilePath()).entryInfoList(QDir::Files))
@@ -46,29 +46,28 @@ AboutSettings::AboutSettings(Settings &settings, QWidget *parent)
 	aboutQt->setFlat(true);
 	QAbstractButton::connect(aboutQt, &QPushButton::clicked, [this](bool checked)
 	{
-		QMessageBox::aboutQt(this->parent);
+		QMessageBox::aboutQt(this);
 	});
 	options->addWidget(aboutQt);
 
 	// Generate report
-	auto generateReport = new QPushButton(Icon::get("description"), "System info", parent);
+	auto generateReport = new QPushButton(Icon::get("description"), "System info", this);
 	generateReport->setFlat(true);
 	QAbstractButton::connect(generateReport, &QPushButton::clicked, [this, mainWindow](bool checked)
 	{
-		(new SystemInfoDialog(mainWindow, this->parent))->show();
+		(new SystemInfoDialog(mainWindow, this))->show();
 	});
 	options->addWidget(generateReport, 0, 1);
 
 	// Open cache directory
-	auto openCache = new QPushButton(
-		Icon::get("folder-temp"),
-		QString("Open cache directory (%1M)").arg(cacheSize / 1000 / 1000));
+	auto openCache = new QPushButton(Icon::get("folder-temp"),
+									 QString("Open cache directory (%1M)").arg(cacheSize / 1000 / 1000));
 	openCache->setFlat(true);
 	QAbstractButton::connect(openCache, &QPushButton::clicked, [this, mainWindow](bool checked)
 	{
 		if (mainWindow == nullptr)
 			return;
-		Utils::openUrl(mainWindow->getCacheLocation(), LinkType::Web, this->parent);
+		Utils::openUrl(mainWindow->getCacheLocation(), LinkType::Web, this);
 	});
 	options->addWidget(openCache);
 
@@ -77,7 +76,7 @@ AboutSettings::AboutSettings(Settings &settings, QWidget *parent)
 	openConfig->setFlat(true);
 	QAbstractButton::connect(openConfig, &QPushButton::clicked, [this](bool checked)
 	{
-		Utils::openUrl(Settings::fileName(), LinkType::Path, this->parent);
+		Utils::openUrl(Settings::fileName(), LinkType::Path, this);
 	});
 	options->addWidget(openConfig);
 	page->addLayout(options, 1);
@@ -86,6 +85,11 @@ AboutSettings::AboutSettings(Settings &settings, QWidget *parent)
 QString AboutSettings::title()
 {
 	return "About";
+}
+
+QWidget *AboutSettings::toWidget()
+{
+	return this;
 }
 
 bool AboutSettings::applySettings(QWidget *)

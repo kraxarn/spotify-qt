@@ -2,12 +2,15 @@
 
 #include "settingspage.hpp"
 
-class SpotifySettings: public SettingsPage
+class SpotifySettings: QWidget, public SettingsPage
 {
+Q_OBJECT
+
 public:
 	SpotifySettings(Settings &settings, QWidget *parent);
 
 	QString title() override;
+	QWidget *toWidget() override;
 	bool applySettings(QWidget *mainWindow) override;
 
 private:

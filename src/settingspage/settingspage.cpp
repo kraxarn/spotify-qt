@@ -14,8 +14,3 @@ void SettingsPage::applyFail(const QString &name)
 		"Failed to apply settings",
 		QString("Failed to apply setting \"%1\". Check your settings and try again.").arg(name));
 }
-
-QWidget *SettingsPage::toWidget()
-{
-	Utils::layoutToWidget(page);
-}
