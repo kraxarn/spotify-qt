@@ -17,6 +17,7 @@ private:
 	spt::Spotify &spotify;
 	QWidget *parent;
 
+	int getItemIndex(QListWidgetItem *item);
 	void clicked(QListWidgetItem *item);
 	void doubleClicked(QListWidgetItem *item);
 	void menu(const QPoint &pos);

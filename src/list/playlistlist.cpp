@@ -20,24 +20,27 @@ PlaylistList::PlaylistList(spt::Spotify &spotify, QWidget *parent)
 		this, &QWidget::customContextMenuRequested, this, &PlaylistList::menu);
 }
 
+int PlaylistList::getItemIndex(QListWidgetItem *item)
+{
+	return item == nullptr
+		? currentRow()
+		: item->data(RoleIndex).toInt();
+}
+
 void PlaylistList::clicked(QListWidgetItem *item)
 {
 	auto mainWindow = (MainWindow *) parent;
 	if (item != nullptr)
 		mainWindow->getLibraryList()->setCurrentItem(nullptr);
 
-	auto index = item == nullptr
-		? currentRow()
-		: item->data(RoleIndex).toInt();
-
-	auto currentPlaylist = mainWindow->getSptPlaylists().at(index);
+	auto currentPlaylist = mainWindow->getSptPlaylists().at(getItemIndex(item));
 	mainWindow->loadPlaylist(currentPlaylist);
 }
 
-void PlaylistList::doubleClicked(QListWidgetItem *)
+void PlaylistList::doubleClicked(QListWidgetItem *item)
 {
 	auto mainWindow = (MainWindow *) parent;
-	auto currentPlaylist = mainWindow->getSptPlaylists().at(currentRow());
+	auto currentPlaylist = mainWindow->getSptPlaylists().at(getItemIndex(item));
 	mainWindow->loadPlaylist(currentPlaylist);
 
 	auto result = spotify.playTracks(
@@ -51,7 +54,7 @@ void PlaylistList::menu(const QPoint &pos)
 	auto mainWindow = (MainWindow *) parent;
 	(new PlaylistMenu(
 		spotify,
-		mainWindow->getSptPlaylists().at(currentRow()), parent))
+		mainWindow->getSptPlaylists().at(getItemIndex(itemAt(pos))), parent))
 		->popup(mapToGlobal(pos));
 }
 
