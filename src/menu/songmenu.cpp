@@ -63,8 +63,12 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name,
 		!mainWindow->hasPlaylistSelected()
 		? nullptr
 		: &mainWindow->getSptPlaylists().at(mainWindow->getPlaylistsList()->currentRow());
+	auto currentUserId = mainWindow->getCurrentUser().id;
 	for (auto &playlist : mainWindow->getSptPlaylists())
 	{
+		if (!playlist.collaborative && playlist.ownerId != currentUserId)
+			continue;
+
 		// Create main action
 		auto action = addPlaylist->addAction(playlist.name);
 		action->setData(playlist.id);
