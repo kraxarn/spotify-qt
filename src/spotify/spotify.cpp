@@ -22,7 +22,8 @@ QNetworkRequest Spotify::request(const QString &url)
 	// Prepare request
 	QNetworkRequest request((QUrl("https://api.spotify.com/v1/" + url)));
 	// Set header
-	request.setRawHeader("Authorization",
+	request.setRawHeader(
+		"Authorization",
 		("Bearer " + settings.account.accessToken).toUtf8());
 	// Return prepared header
 	return request;
@@ -46,16 +47,21 @@ void Spotify::getLater(const QString &url)
 {
 	// Prepare fetch of request
 	auto context = new QObject();
-	QNetworkAccessManager::connect(networkManager, &QNetworkAccessManager::finished, context, [this, context, url](QNetworkReply *reply) {
-		auto replyUrl = reply->url().toString();
-		if (replyUrl.right(replyUrl.length() - 27) != url)
-			return;
-		delete context;
-		// Parse reply as json
-		auto json = QJsonDocument::fromJson(reply->readAll());
-		reply->deleteLater();
-		emit got(json);
-	});
+	QNetworkAccessManager::connect(
+		networkManager,
+		&QNetworkAccessManager::finished,
+		context,
+		[this, context, url](QNetworkReply *reply)
+		{
+			auto replyUrl = reply->url().toString();
+			if (replyUrl.right(replyUrl.length() - 27) != url)
+				return;
+			delete context;
+			// Parse reply as json
+			auto json = QJsonDocument::fromJson(reply->readAll());
+			reply->deleteLater();
+			emit got(json);
+		});
 	networkManager->get(request(url));
 }
 
@@ -138,8 +144,8 @@ bool Spotify::refresh()
 	request.setRawHeader(
 		"Authorization",
 		"Basic " + QString("%1:%2")
-		.arg(settings.account.clientId)
-		.arg(settings.account.clientSecret).toUtf8().toBase64());
+			.arg(settings.account.clientId)
+			.arg(settings.account.clientSecret).toUtf8().toBase64());
 	// Send request
 	auto reply = networkManager->post(request, postData);
 	while (!reply->isFinished())
@@ -190,9 +196,11 @@ QVector<Device> Spotify::devices()
 QString Spotify::setDevice(const Device &device)
 {
 	QVariantMap body;
-	body["device_ids"] = QStringList({
-		device.id
-	});
+	body["device_ids"] = QStringList(
+		{
+			device.id
+		}
+	);
 	currentDevice = device.id;
 	return put("me/player", &body);
 }
@@ -201,10 +209,13 @@ QString Spotify::playTracks(const QString &track, const QString &context)
 {
 	QVariantMap body;
 	body["context_uri"] = context;
-	body["offset"] = QJsonObject({
-		QPair<QString, QJsonValue>("uri", track)
-	});
-	return put(currentDevice == nullptr
+	body["offset"] = QJsonObject(
+		{
+			QPair<QString, QJsonValue>("uri", track)
+		}
+	);
+	return put(
+		currentDevice == nullptr
 		? QString("me/player/play")
 		: QString("me/player/play?device_id=%1").arg(currentDevice), &body);
 }
@@ -213,10 +224,13 @@ QString Spotify::playTracks(const QString &track, const QStringList &all)
 {
 	QVariantMap body;
 	body["uris"] = all;
-	body["offset"] = QJsonObject({
-		QPair<QString, QJsonValue>("uri", track)
-	});
-	return put(currentDevice == nullptr || currentDevice.isEmpty()
+	body["offset"] = QJsonObject(
+		{
+			QPair<QString, QJsonValue>("uri", track)
+		}
+	);
+	return put(
+		currentDevice == nullptr || currentDevice.isEmpty()
 		? QString("me/player/play")
 		: QString("me/player/play?device_id=%1").arg(currentDevice), &body);
 }
@@ -225,7 +239,8 @@ QString Spotify::playTracks(const QString &context)
 {
 	QVariantMap body;
 	body["context_uri"] = context;
-	return put(currentDevice == nullptr
+	return put(
+		currentDevice == nullptr
 		? QString("me/player/play")
 		: QString("me/player/play?device_id=%1").arg(currentDevice), &body);
 }
@@ -272,11 +287,12 @@ QString Spotify::setRepeat(const QString &state)
 
 AudioFeatures Spotify::trackAudioFeatures(QString trackId)
 {
-	auto json = get(QString("audio-features/%1")
-		.arg(trackId.startsWith("spotify:track:")
-			? trackId.remove(0, QString("spotify:track:").length())
-			: trackId));
-	return AudioFeatures(json.object());
+	auto json = getAsObject(
+		QString("audio-features/%1")
+			.arg(trackId.startsWith("spotify:track:")
+				 ? trackId.remove(0, QString("spotify:track:").length())
+				 : trackId));
+	return AudioFeatures(json);
 }
 
 QVector<Track> Spotify::albumTracks(const QString &albumId, const QString &albumName, int offset)
@@ -333,21 +349,28 @@ Playlist Spotify::playlist(const QString &playlistId)
 
 QString Spotify::addToPlaylist(const QString &playlistId, const QString &trackId)
 {
-	return post(QString("playlists/%1/tracks?uris=%2")
-		.arg(playlistId).arg(trackId));
+	return post(
+		QString("playlists/%1/tracks?uris=%2")
+			.arg(playlistId).arg(trackId));
 }
 
 QString Spotify::removeFromPlaylist(const QString &playlistId, const QString &trackId, int pos)
 {
 	QVariantMap body;
-	body["tracks"] = QJsonArray({
-		QJsonObject({
-			QPair<QString, QString>("uri", trackId),
-			QPair<QString, QJsonArray>("positions", QJsonArray({
-				pos
-			}))
-		})
-	});
+	body["tracks"] = QJsonArray(
+		{
+			QJsonObject(
+				{
+					QPair<QString, QString>("uri", trackId),
+					QPair<QString, QJsonArray>("positions", QJsonArray(
+						{
+							pos
+						}
+					))
+				}
+			)
+		}
+	);
 	return del(QString("playlists/%1/tracks").arg(playlistId), &body);
 }
 
@@ -431,22 +454,26 @@ QVector<Track> Spotify::savedTracks(int offset)
 QString Spotify::addSavedTrack(const QString &trackId)
 {
 	QVariantMap body;
-	body["ids"] = QStringList({
-		trackId.startsWith("spotify:track")
+	body["ids"] = QStringList(
+		{
+			trackId.startsWith("spotify:track")
 			? trackId.right(trackId.length() - QString("spotify:track:").length())
 			: trackId
-	});
+		}
+	);
 	return put("me/tracks", &body);
 }
 
 QString Spotify::removeSavedTrack(const QString &trackId)
 {
 	QVariantMap body;
-	body["ids"] = QStringList({
-		trackId.startsWith("spotify:track")
+	body["ids"] = QStringList(
+		{
+			trackId.startsWith("spotify:track")
 			? trackId.right(trackId.length() - QString("spotify:track:").length())
 			: trackId
-	});
+		}
+	);
 	return del("me/tracks", &body);
 }
 
@@ -467,7 +494,8 @@ QVector<Album> Spotify::newReleases(int offset)
 void Spotify::requestCurrentPlayback()
 {
 	auto context = new QObject();
-	Spotify::connect(this, &Spotify::got, context, [this, context](const QJsonDocument &json) {
+	Spotify::connect(this, &Spotify::got, context, [this, context](const QJsonDocument &json)
+	{
 		delete context;
 		emit gotPlayback(Playback(json.object()));
 	});
@@ -478,10 +506,10 @@ User Spotify::me()
 {
 	auto json = get("me");
 	User user;
-	user.displayName	= json["display_name"].toString();
-	user.id				= json["id"].toString();
-	user.image			= json["images"].toArray()[2].toObject()["url"].toString();
-	user.product		= json["product"].toString();
+	user.displayName = json["display_name"].toString();
+	user.id = json["id"].toString();
+	user.image = json["images"].toArray()[2].toObject()["url"].toString();
+	user.product = json["product"].toString();
 	return user;
 }
 
@@ -532,11 +560,9 @@ QString Spotify::followTypeString(FollowType type)
 {
 	switch (type)
 	{
-		case FollowType::Artist:
-			return "artist";
+		case FollowType::Artist: return "artist";
 
-		case FollowType::User:
-			return "user";
+		case FollowType::User: return "user";
 	}
 
 	return QString();
@@ -545,11 +571,11 @@ QString Spotify::followTypeString(FollowType type)
 void Spotify::follow(Spotify::FollowType type, const QStringList &ids)
 {
 	put(QString("me/following?type=%1&ids=%2")
-		.arg(followTypeString(type)).arg(ids.join(',')));
+			.arg(followTypeString(type)).arg(ids.join(',')));
 }
 
 void Spotify::unfollow(Spotify::FollowType type, const QStringList &ids)
 {
 	del(QString("me/following?type=%1&ids=%2")
-		.arg(followTypeString(type)).arg(ids.join(',')), {});
+			.arg(followTypeString(type)).arg(ids.join(',')), {});
 }
