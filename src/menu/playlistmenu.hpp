@@ -6,8 +6,11 @@
 
 #include <QInputDialog>
 #include <QMenu>
-#include <QRandomGenerator>
 #include <QUrl>
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+#include <QRandomGenerator>
+#endif
 
 class PlaylistMenu : public QMenu
 {
