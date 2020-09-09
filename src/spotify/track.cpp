@@ -64,8 +64,10 @@ Track::Track(const QJsonObject &item)
 	isLocal = item["is_local"].toBool();
 	isPlayable = track["is_playable"].toBool(true);
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
 	if (addedAt == QDateTime(QDate(1970, 1, 1).startOfDay(Qt::UTC)))
 		addedAt = QDateTime();
+#endif
 }
 
 Track::Track()
