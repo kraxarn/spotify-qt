@@ -33,14 +33,27 @@ QJsonDocument Spotify::get(const QString &url)
 {
 	// Send request
 	auto reply = networkManager->get(request(url));
+
 	// Wait for request to finish
 	while (!reply->isFinished())
 		QCoreApplication::processEvents();
+
 	// Parse reply as json
 	auto json = QJsonDocument::fromJson(reply->readAll());
 	reply->deleteLater();
+
 	// Return parsed json
 	return json;
+}
+
+QJsonObject Spotify::getAsObject(const QString &url)
+{
+	return get(url).object();
+}
+
+QJsonArray Spotify::getAsArray(const QString &url)
+{
+	return get(url).array();
 }
 
 void Spotify::getLater(const QString &url)
@@ -170,7 +183,7 @@ bool Spotify::refresh()
 QVector<Playlist> Spotify::playlists()
 {
 	// Request playlists
-	auto json = get("me/playlists?limit=50");
+	auto json = getAsObject("me/playlists?limit=50");
 	// Parse as playlists
 	auto items = json["items"].toArray();
 	// Create list of playlists
@@ -185,7 +198,7 @@ QVector<Playlist> Spotify::playlists()
 
 QVector<Device> Spotify::devices()
 {
-	auto json = get("me/player/devices");
+	auto json = getAsObject("me/player/devices");
 	auto items = json["devices"].toArray();
 	QVector<Device> devices(items.size());
 	for (int i = 0; i < items.size(); i++)
@@ -297,7 +310,7 @@ AudioFeatures Spotify::trackAudioFeatures(QString trackId)
 
 QVector<Track> Spotify::albumTracks(const QString &albumId, const QString &albumName, int offset)
 {
-	auto json = get(QString("albums/%1/tracks?limit=50&offset=%2").arg(albumId).arg(offset)).object();
+	auto json = getAsObject(QString("albums/%1/tracks?limit=50&offset=%2").arg(albumId).arg(offset));
 	auto trackItems = json["items"].toArray();
 	QVector<Track> tracks;
 	tracks.reserve(50);
@@ -317,7 +330,7 @@ QVector<Track> Spotify::albumTracks(const QString &albumId, const QString &album
 
 QVector<Track> Spotify::albumTracks(const QString &albumID)
 {
-	auto json = get(QString("albums/%1").arg(albumID));
+	auto json = getAsObject(QString("albums/%1").arg(albumID));
 	auto albumName = json["name"].toString();
 	QVector<Track> tracks;
 	tracks.reserve(json["total_tracks"].toInt());
@@ -339,12 +352,12 @@ QVector<Track> Spotify::albumTracks(const QString &albumID)
 
 Artist Spotify::artist(const QString &artistId)
 {
-	return Artist(get(QString("artists/%1").arg(artistId)).object());
+	return Artist(getAsObject(QString("artists/%1").arg(artistId)));
 }
 
 Playlist Spotify::playlist(const QString &playlistId)
 {
-	return Playlist(get(QString("playlists/%1").arg(playlistId)).object());
+	return Playlist(getAsObject(QString("playlists/%1").arg(playlistId)));
 }
 
 QString Spotify::addToPlaylist(const QString &playlistId, const QString &trackId)
@@ -376,7 +389,7 @@ QString Spotify::removeFromPlaylist(const QString &playlistId, const QString &tr
 
 SearchResults Spotify::search(const QString &query)
 {
-	auto json = get(
+	auto json = getAsObject(
 		QString("search?q=%1&type=album,artist,playlist,track&limit=50&market=from_token").arg(query));
 	SearchResults results;
 	// Albums
@@ -402,7 +415,7 @@ SearchResults Spotify::search(const QString &query)
 template<class T>
 QVector<T> Spotify::loadItems(const QString &url)
 {
-	auto items = get(url).object()["items"].toArray();
+	auto items = getAsObject(url)["items"].toArray();
 	QVector<T> result;
 	result.reserve(items.count());
 	for (auto item : items)
@@ -427,8 +440,8 @@ QVector<Track> Spotify::recentlyPlayed()
 
 QVector<Album> Spotify::savedAlbums()
 {
-	auto json = get("me/albums");
-	auto albumItems = json.object()["items"].toArray();
+	auto json = getAsObject("me/albums");
+	auto albumItems = json["items"].toArray();
 	QVector<Album> albums;
 	albums.reserve(10);
 	for (auto item : albumItems)
@@ -438,7 +451,7 @@ QVector<Album> Spotify::savedAlbums()
 
 QVector<Track> Spotify::savedTracks(int offset)
 {
-	auto json = get(QString("me/tracks?limit=50&offset=%1").arg(offset)).object();
+	auto json = getAsObject(QString("me/tracks?limit=50&offset=%1").arg(offset));
 	auto trackItems = json["items"].toArray();
 	QVector<Track> tracks;
 	tracks.reserve(50);
@@ -479,8 +492,8 @@ QString Spotify::removeSavedTrack(const QString &trackId)
 
 QVector<Album> Spotify::newReleases(int offset)
 {
-	auto json = get(QString("browse/new-releases?limit=50&offset=%1").arg(offset))
-		.object()["albums"].toObject();
+	auto json = getAsObject(QString("browse/new-releases?limit=50&offset=%1").arg(offset))
+	["albums"].toObject();
 	auto albumItems = json["items"].toArray();
 	QVector<Album> albums;
 	albums.reserve(albumItems.size());
@@ -504,7 +517,7 @@ void Spotify::requestCurrentPlayback()
 
 User Spotify::me()
 {
-	auto json = get("me");
+	auto json = getAsObject("me");
 	User user;
 	user.displayName = json["display_name"].toString();
 	user.id = json["id"].toString();
@@ -533,9 +546,10 @@ QString Spotify::addToQueue(const QString &uri)
 
 QVector<Artist> Spotify::followedArtists(const QString &offset)
 {
-	auto json = get(QString("me/following?type=artist&limit=50%1")
-		.arg(offset.isEmpty() ? "" : QString("&after=%1").arg(offset)))
-			.object()["artists"].toObject();
+	auto json = getAsObject(
+		QString("me/following?type=artist&limit=50%1")
+			.arg(offset.isEmpty() ? "" : QString("&after=%1").arg(offset)))
+	["artists"].toObject();
 	auto items = json["items"].toArray();
 	QVector<Artist> artists;
 	artists.reserve(items.size());
@@ -548,8 +562,9 @@ QVector<Artist> Spotify::followedArtists(const QString &offset)
 
 QVector<bool> Spotify::isFollowing(FollowType type, const QStringList &ids)
 {
-	auto json = get(QString("me/following/contains?type=%1&ids=%2")
-		.arg(followTypeString(type)).arg(ids.join(','))).array();
+	auto json = getAsArray(
+		QString("me/following/contains?type=%1&ids=%2")
+			.arg(followTypeString(type)).arg(ids.join(',')));
 	QVector<bool> values;
 	for (auto value : json)
 		values.append(value.toBool());

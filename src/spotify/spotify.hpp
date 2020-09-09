@@ -38,7 +38,8 @@ namespace spt
 
 		explicit Spotify(Settings &settings, QObject *parent = nullptr);
 
-		QJsonDocument get(const QString &url);
+		QJsonObject getAsObject(const QString &url);
+		QJsonArray getAsArray(const QString &url);
 		QVector<Playlist> playlists();
 		QVector<Device> devices();
 		QString setDevice(const Device &device);
@@ -102,6 +103,7 @@ namespace spt
 		QString post(const QString &url);
 		QString del(const QString &url, QVariantMap *body);
 		static QString errorMessage(QNetworkReply *reply);
+		QJsonDocument get(const QString &url);
 
 		template <class T>
 		QVector<T> loadItems(const QString &url);

@@ -49,7 +49,7 @@ bool Playlist::loadTracksFromUrl(QVector<Track> &trackList, QString &url, int of
 {
 	// Load tracks from api
 	auto newUrl = url.remove(0, QString("https://api.spotify.com/v1/").length());
-	auto current = spotify.get(newUrl);
+	auto current = spotify.getAsObject(newUrl);
 	// Load from url
 	auto items = current["items"].toArray();
 	for (auto item : items)
