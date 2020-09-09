@@ -35,13 +35,14 @@ void Settings::load()
 	}
 
 	QJsonParseError error;
-	auto json = QJsonDocument::fromJson(data, &error);
+	auto jsonDoc = QJsonDocument::fromJson(data, &error);
 	file.close();
 	if (error.error != QJsonParseError::NoError)
 	{
 		qDebug() << "error while reading json settings:" << error.errorString();
 		return;
 	}
+	auto json = jsonDoc.object();
 
 	QVector<int> hiddenSongHeaders;
 	for (auto val : json["General"].toObject()["hidden_song_headers"].toArray())
@@ -57,7 +58,7 @@ void Settings::load()
 	account.clientSecret = a["client_secret"].toString();
 	account.refreshToken = a["refresh_token"].toString();
 
-	auto g = json["General"];
+	auto g = json["General"].toObject();
 	general.customPlaylistOrder = customPlaylistOrder;
 	general.fallbackIcons = g["fallback_icons"].toBool(false);
 	general.fixedWidthTime = g["fixed_width_time"].toBool(true);
@@ -82,7 +83,7 @@ void Settings::load()
 	general.trayLightIcon = g["tray_light_icon"].toBool(false);
 	general.trayNotifications = g["tray_notifications"].toBool(false);
 
-	auto s = json["Spotify"];
+	auto s = json["Spotify"].toObject();
 	spotify.alwaysStart = s["always_start"].toBool(true);
 	spotify.bitrate = s["bitrate"].toInt(320);
 	spotify.globalConfig = s["global_config"].toBool(false);
