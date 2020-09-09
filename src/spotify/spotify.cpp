@@ -134,7 +134,7 @@ QString Spotify::errorMessage(QNetworkReply *reply)
 	reply->deleteLater();
 	if (replyBody.isEmpty())
 		return QString();
-	auto json = QJsonDocument::fromJson(replyBody);
+	auto json = QJsonDocument::fromJson(replyBody).object();
 	return json["error"].toObject()["message"].toString();
 }
 
