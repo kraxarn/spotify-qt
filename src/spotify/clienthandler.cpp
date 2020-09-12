@@ -53,15 +53,10 @@ QString ClientHandler::start()
 		return "no username provided";
 
 	// Get password from keyring if set
+	KWallet keyring(settings.spotify.username);
 	QString password;
-	if (settings.spotify.keyringPassword)
-	{
-		KWallet keyring(settings.spotify.username);
-		if (keyring.unlock())
-		{
-			password = keyring.readPassword();
-		}
-	}
+	if (settings.spotify.keyringPassword && keyring.unlock())
+		password = keyring.readPassword();
 
 	// Ask for password
 	if (password.isEmpty())
@@ -71,8 +66,12 @@ QString ClientHandler::start()
 			"Enter password",
 			QString("Enter password for Spotify user \"%1\":").arg(username),
 			QLineEdit::Password);
+
 		if (password.isEmpty())
 			return "no password provided";
+
+		if (settings.spotify.keyringPassword)
+			keyring.writePassword(password);
 	}
 
 	// Common arguments

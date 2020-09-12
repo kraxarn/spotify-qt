@@ -75,7 +75,7 @@ bool KWallet::writePassword(const QString &password)
 		walletHandle,
 		appName,
 		username,
-		"password",
+		password,
 		appName
 	});
 
