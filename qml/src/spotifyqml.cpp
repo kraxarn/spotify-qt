@@ -78,6 +78,11 @@ QString SpotifyQml::playTracksWithContext(const QString &track, const QString &c
 	return spotify->playTracks(track, context);
 }
 
+QString SpotifyQml::playTrack(const QString &track)
+{
+	return spotify->playTracks(track, QStringList(track));
+}
+
 void SpotifyQml::requestPlayback()
 {
 	spotify->requestCurrentPlayback();

@@ -28,5 +28,9 @@ function updateItems() {
 }
 
 function clickedItem(id) {
-	console.log(getSelectedType(), ":", id)
+	switch (getSelectedType()) {
+		case "tracks":
+			spotify.playTrack(`spotify:track:${id}`)
+			break
+	}
 }
