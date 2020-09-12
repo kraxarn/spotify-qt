@@ -121,6 +121,15 @@ bool SettingsDialog::applySettings()
 	}
 	settings.general.refreshInterval = interval;
 
+	// librespot has no global config support
+	if (sptGlobal->isChecked() && sptVersion->text() == "librespot")
+	{
+		warning(
+			"librespot",
+			"Global config is not available when using librespot");
+		sptGlobal->setChecked(false);
+	}
+
 	// Spotify global config
 	if (sptGlobal->isChecked() && !sptConfigExists())
 		QMessageBox::warning(
@@ -186,4 +195,9 @@ bool SettingsDialog::sptConfigExists()
 		QString("%1/.config/spotifyd/spotifyd.conf")
 			.arg(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0])).exists()
 		|| QFile("/etc/spotifyd/spotifyd.conf").exists();
+}
+
+void SettingsDialog::warning(const QString &title, const QString &message)
+{
+	QMessageBox::warning(this, title, message);
 }

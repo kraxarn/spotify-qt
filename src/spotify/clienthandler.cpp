@@ -1,3 +1,4 @@
+#include "../mainwindow.hpp"
 #include "clienthandler.hpp"
 
 using namespace spt;
@@ -40,7 +41,7 @@ QString ClientHandler::start()
 		return "file in path does not exist";
 
 	// If using global config, just start
-	if (settings.spotify.globalConfig)
+	if (settings.spotify.globalConfig && clientType == ClientType::Spotifyd)
 	{
 		process->start(path, QStringList());
 		return QString();
@@ -74,16 +75,39 @@ QString ClientHandler::start()
 			return "no password provided";
 	}
 
-	// Attempt to start spotifyd
+	// Common arguments
 	QStringList arguments(
 		{
-			"--no-daemon",
 			"--bitrate", QString::number(settings.spotify.bitrate),
-			"--device-name", "spotify-qt",
 			"--username", username,
 			"--password", password
 		}
 	);
+
+	// librespot specific
+	if (clientType == ClientType::Librespot)
+	{
+		arguments.append(
+			{
+				"--name", "spotify-qt",
+				"--initial-volume", "100",
+				"--autoplay",
+				"--cache", QString("%1/librespot").arg(((MainWindow *) parentWidget)->getCacheLocation())
+			}
+		);
+	}
+
+	// spotifyd specific
+	if (clientType == ClientType::Spotifyd)
+	{
+		arguments.append(
+			{
+				"--no-daemon"
+				"--device-name", "spotify-qt",
+			}
+		);
+	}
+
 	if (supportsPulse())
 		arguments.append(
 			{
@@ -91,7 +115,7 @@ QString ClientHandler::start()
 			}
 		);
 	else
-		qDebug() << "warning: spotifyd was compiled without pulseaudio support";
+		qDebug() << "warning: spotifyd/librespot was compiled without pulseaudio support";
 
 	QProcess::connect(process, &QProcess::readyReadStandardOutput, this, &ClientHandler::readyRead);
 
@@ -107,7 +131,7 @@ QString ClientHandler::clientExec(const QString &path, const QStringList &argume
 		return QString();
 
 	// Check if either client
-	if (file.baseName() != "spotifyd")
+	if (file.baseName() != "spotifyd" && file.baseName() != "librespot")
 		return QString();
 
 	// Prepare process
@@ -123,16 +147,31 @@ QString ClientHandler::clientExec(const QString &path, const QStringList &argume
 
 bool ClientHandler::supportsPulse()
 {
-	return clientExec(path, {
-		"--help"
-	}).contains("pulseaudio");
+	return clientExec(
+		path,
+		clientType == ClientType::Librespot
+		? QStringList(
+			{
+				"--name", "",
+				"--backend", "?"
+			}
+		)
+		: QStringList(
+			{
+				"--help"
+			}
+		)).contains("pulseaudio");
 }
 
 QString ClientHandler::version(const QString &path)
 {
-	return clientExec(path, {
-		"--version"
-	});
+	return
+		path.endsWith("spotifyd")
+		? clientExec(
+			path, {
+				"--version"
+			}) : path.endsWith("librespot")
+				 ? "librespot" : QString();
 }
 
 bool ClientHandler::isRunning()

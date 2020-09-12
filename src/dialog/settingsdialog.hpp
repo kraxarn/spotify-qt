@@ -54,6 +54,7 @@ private:
 	void playlistMove(int steps);
 	void playlistUp();
 	void playlistDown();
+	void warning(const QString &title, const QString &message);
 
 	Settings &settings;
 
