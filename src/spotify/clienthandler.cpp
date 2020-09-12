@@ -148,10 +148,10 @@ float ClientHandler::getVolume()
 {
 	auto sink = getSinkInfo();
 	if (sink.isEmpty())
-		return 1.0;
+		return 1.f;
 	auto i = sink.indexOf("Volume:");
 	if (i < 0)
-		return 1.0;
+		return 1.f;
 
 	bool ok;
 	for (auto &p : sink.right(sink.length() - i).split(' '))
@@ -161,10 +161,10 @@ float ClientHandler::getVolume()
 		auto v = p.left(p.length() - 1).toInt(&ok);
 		if (!ok)
 			continue;
-		return v / 100.0;
+		return v / 100.f;
 	}
 
-	return 1.0;
+	return 1.f;
 }
 
 void ClientHandler::setVolume(float value)
