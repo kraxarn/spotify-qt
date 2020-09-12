@@ -53,7 +53,7 @@ QString ClientHandler::start()
 		return "no username provided";
 
 	// Get password from keyring if set
-	KWallet keyring(settings.spotify.username);
+	KWallet keyring(username);
 	QString password;
 	if (settings.spotify.keyringPassword && keyring.unlock())
 		password = keyring.readPassword();
