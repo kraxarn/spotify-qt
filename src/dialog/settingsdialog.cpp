@@ -132,8 +132,7 @@ bool SettingsDialog::applySettings()
 
 	// Spotify global config
 	if (sptGlobal->isChecked() && !sptConfigExists())
-		QMessageBox::warning(
-			this,
+		warning(
 			"spotifyd config not found",
 			QString("Couldn't find a config file for spotifyd. You may experience issues."));
 	settings.spotify.globalConfig = sptGlobal->isChecked();
@@ -182,8 +181,7 @@ bool SettingsDialog::applySettings()
 
 void SettingsDialog::applyFail(const QString &setting)
 {
-	QMessageBox::warning(
-		this,
+	warning(
 		"Failed to apply settings",
 		QString("Failed to apply setting \"%1\". Check your settings and try again.").arg(setting));
 }
