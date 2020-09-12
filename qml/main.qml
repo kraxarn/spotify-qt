@@ -153,7 +153,7 @@ ApplicationWindow {
 				ToolButton {
 					Layout.fillWidth: true
 					icon.name: "help-about"
-					text: "spotify-qtquick %1".arg(AppVersion)
+					text: "spotify-qt-quick %1".arg(AppVersion)
 					enabled: false
 				}
 				ToolButton {
