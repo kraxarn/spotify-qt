@@ -112,7 +112,7 @@ ApplicationWindow {
 	Drawer {
 		id: drawer
 		Material.background: Material.primary
-		width: inPortrait ? root.width * 0.66 : 400
+		width: inPortrait ? root.width * 0.8 : 400
 		height: root.height - (inPortrait ? 0 : toolBar.height)
 		y: inPortrait ? 0 : toolBar.height
 
