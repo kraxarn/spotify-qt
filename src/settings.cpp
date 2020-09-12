@@ -90,6 +90,7 @@ void Settings::load()
 	spotify.path = s["path"].toString();
 	spotify.startClient = s["start_client"].toBool(false);
 	spotify.username = s["username"].toString();
+	spotify.keyringPassword = s["keyring_password"].toBool(false);
 }
 
 void Settings::save()
@@ -141,9 +142,10 @@ void Settings::save()
 				{"always_start", spotify.alwaysStart},
 				{"bitrate", spotify.bitrate},
 				{"global_config", spotify.globalConfig},
+				{"keyring_password", spotify.keyringPassword},
 				{"path", spotify.path},
 				{"start_client", spotify.startClient},
-				{"username", spotify.username},
+				{"username", spotify.username}
 			})
 		}
 	);

@@ -43,7 +43,7 @@ public:
 
 	typedef struct {
 		QString path, username;
-		bool startClient, globalConfig, alwaysStart;
+		bool startClient, globalConfig, alwaysStart, keyringPassword;
 		int bitrate;
 	} Spotify;
 
