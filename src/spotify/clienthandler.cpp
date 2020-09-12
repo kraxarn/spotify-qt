@@ -9,6 +9,13 @@ ClientHandler::ClientHandler(const Settings &settings, QWidget *parent)
 {
 	path = settings.spotify.path;
 	process = new QProcess(parent);
+	clientType = path.isEmpty()
+				 ? ClientType::None
+				 : path.endsWith("spotifyd")
+				   ? ClientType::Spotifyd
+				   : path.endsWith("librespot")
+					 ? ClientType::Librespot
+					 : ClientType::None;
 }
 
 ClientHandler::~ClientHandler()
@@ -24,8 +31,8 @@ QString ClientHandler::start()
 		return QString();
 
 	// Check if empty
-	if (path.isEmpty())
-		return "path is empty";
+	if (clientType == ClientType::None)
+		return "path is empty or invalid";
 
 	// Check if path exists
 	QFileInfo info(path);
@@ -44,14 +51,28 @@ QString ClientHandler::start()
 	if (username.isEmpty())
 		return "no username provided";
 
+	// Get password from keyring if set
+	QString password;
+	if (settings.spotify.keyringPassword)
+	{
+		KWallet keyring(settings.spotify.username);
+		if (keyring.unlock())
+		{
+			password = keyring.readPassword();
+		}
+	}
+
 	// Ask for password
-	auto password = QInputDialog::getText(
-		parentWidget,
-		"Enter password",
-		QString("Enter password for Spotify user \"%1\":").arg(username),
-		QLineEdit::Password);
 	if (password.isEmpty())
-		return "no password provided";
+	{
+		password = QInputDialog::getText(
+			parentWidget,
+			"Enter password",
+			QString("Enter password for Spotify user \"%1\":").arg(username),
+			QLineEdit::Password);
+		if (password.isEmpty())
+			return "no password provided";
+	}
 
 	// Attempt to start spotifyd
 	QStringList arguments(

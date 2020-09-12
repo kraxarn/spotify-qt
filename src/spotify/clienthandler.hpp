@@ -1,6 +1,8 @@
 #pragma once
 
-#include "src/settings.hpp"
+#include "../enum/clienttype.hpp"
+#include "../keyring/kwallet.hpp"
+#include "../settings.hpp"
 
 #include <QDateTime>
 #include <QDebug>
@@ -33,6 +35,8 @@ namespace spt
 		QString path;
 		static QStringList log;
 		const Settings &settings;
+		ClientType clientType;
+
 		bool supportsPulse();
 		static QString clientExec(const QString &path, const QStringList &arguments);
 		static QString getSinkInfo();
