@@ -37,3 +37,11 @@ void SettingsQml::update(const QString &section, const QJsonObject &value)
 	settings.fromJson(json);
 	settings.save();
 }
+
+void SettingsQml::logOut(const QString &mode)
+{
+	if (mode == "clearAll")
+		settings.removeClient();
+	if (mode == "clearAll" || mode == "logOut")
+		settings.removeTokens();
+}

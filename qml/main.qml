@@ -109,6 +109,48 @@ ApplicationWindow {
 
 	footer: Footer {}
 
+	Dialog {
+		id: dialogLogOut
+		title: "Are you sure?"
+		modal: true
+		anchors.centerIn: parent
+		footer: DialogButtonBox {
+			Button {
+				text: "Clear everything"
+				flat: true
+				DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
+				onClicked: JS.logOut("clearAll")
+			}
+			Button {
+				text: "Only log out"
+				flat: true
+				DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
+				onClicked: JS.logOut("logOut")
+			}
+			Button {
+				text: "Cancel"
+				flat: true
+				DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
+			}
+		}
+		Label {
+			text: "Do you also want to clear your application credentials or only log out?"
+		}
+	}
+
+	Dialog {
+		id: dialogLoggedOut
+		title: "Logged out"
+		modal: true
+		anchors.centerIn: parent
+		standardButtons: Dialog.Ok
+		onAccepted: Qt.quit()
+		onRejected: Qt.quit()
+		Label {
+			text: "You are now logged out, the application will now close"
+		}
+	}
+
 	Drawer {
 		id: drawer
 		Material.background: Material.primary
@@ -158,6 +200,10 @@ ApplicationWindow {
 				}
 				ToolButton {
 					icon.name: "im-user-away"
+					onClicked: {
+						drawer.close()
+						dialogLogOut.open()
+					}
 				}
 			}
 		}

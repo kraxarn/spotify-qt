@@ -13,6 +13,8 @@ Q_OBJECT
 public:
 	explicit SettingsQml(QObject *parent = nullptr);
 
+	Q_INVOKABLE void logOut(const QString &mode);
+
 	QJsonObject getAccount();
 
 	QJsonObject getGeneral();
