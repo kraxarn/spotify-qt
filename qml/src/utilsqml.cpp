@@ -56,8 +56,3 @@ void UtilsQml::aboutQt()
 {
 	QMessageBox::aboutQt(nullptr);
 }
-
-QString UtilsQml::systemInfo()
-{
-	return SystemInfoDialog::systemInfo();
-}

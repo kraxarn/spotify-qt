@@ -83,3 +83,8 @@ void SpotifyQml::requestPlayback()
 	spotify->requestCurrentPlayback();
 	refreshCount = 0;
 }
+
+QString SpotifyQml::systemInfo()
+{
+	return SystemInfoDialog::systemInfo(current);
+}

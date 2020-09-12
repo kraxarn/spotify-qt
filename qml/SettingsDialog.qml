@@ -160,7 +160,7 @@ Drawer {
 					Button {
 						Layout.fillWidth: true
 						text: "System info"
-						onClicked: systemInfo.text = utils.systemInfo()
+						onClicked: systemInfo.text = spotify.systemInfo()
 					}
 				}
 
