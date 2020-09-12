@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../keyring/kwallet.hpp"
 #include "../mainwindow.hpp"
 #include "../settings.hpp"
 #include "../spotify/clienthandler.hpp"
@@ -80,6 +81,7 @@ private:
 	QCheckBox *sptAlways = nullptr;
 	QCheckBox *sptAppStart = nullptr;
 	QCheckBox *sptGlobal = nullptr;
+	QCheckBox *sptKeyring = nullptr;
 	QComboBox *sptBitrate = nullptr;
 	QGroupBox *sptGroup = nullptr;
 	QLabel *sptVersion = nullptr;

@@ -53,6 +53,8 @@ QWidget *SettingsDialog::spotifySettings()
 	sptGroup = new QGroupBox("App specific settings", this);
 	sptGroup->setEnabled(!sptGlobal->isChecked());
 	auto sptLayout = new QGridLayout();
+	sptGroup->setLayout(sptLayout);
+	layout->addWidget(sptGroup);
 
 	// Username
 	sptLayout->addWidget(new QLabel("Username", sptGroup), 0, 0);
@@ -70,20 +72,32 @@ QWidget *SettingsDialog::spotifySettings()
 	auto bitrate = settings.spotify.bitrate;
 	sptBitrate->setCurrentIndex(bitrate == 96 ? 0 : bitrate == 160 ? 1 : 2);
 	sptLayout->addWidget(sptBitrate, 1, 1);
-	sptGroup->setLayout(sptLayout);
-	layout->addWidget(sptGroup);
+
+	// KWallet keyring for password
+	if (KWallet(settings.spotify.username).isEnabled())
+	{
+		sptKeyring = new QCheckBox("Save password in keyring", this);
+		sptKeyring->setToolTip("Store password in keyring (using KWallet)");
+		sptKeyring->setChecked(settings.spotify.keyringPassword);
+		sptLayout->addWidget(sptKeyring, 2, 0);
+	}
+
+	// Other options layout
+	auto otherLayout = new QHBoxLayout();
+	layout->addLayout(otherLayout);
 
 	// Start with app
 	sptAppStart = new QCheckBox("Start with app", this);
 	sptAppStart->setToolTip("Start, and close, spotifyd together with the app (only closes with app config)");
 	sptAppStart->setChecked(settings.spotify.startClient);
-	layout->addWidget(sptAppStart);
+	otherLayout->addWidget(sptAppStart);
 
 	// Always start
 	sptAlways = new QCheckBox("Always start", this);
 	sptAlways->setToolTip("Always start client, even if there are other devices already available");
 	sptAlways->setChecked(settings.spotify.alwaysStart);
-	layout->addWidget(sptAlways);
+	sptAlways->setEnabled(sptAppStart->isChecked());
+	otherLayout->addWidget(sptAlways);
 
 	// Final layout
 	auto widget = new QWidget();
