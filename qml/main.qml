@@ -125,14 +125,12 @@ ApplicationWindow {
 			anchors.fill: parent
 			StackLayout {
 				currentIndex: drawerTabs.currentIndex
-				Layout.bottomMargin: drawerTabs.height
 				SearchView {}
 				LibraryView {}
 				PlaylistsView {}
 			}
 			TabBar {
 				id: drawerTabs
-				Layout.alignment: Qt.AlignBottom
 				Layout.fillWidth: true
 				Layout.leftMargin: 8
 				Layout.rightMargin: 8
