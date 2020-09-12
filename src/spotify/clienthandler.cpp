@@ -101,7 +101,7 @@ QString ClientHandler::start()
 	{
 		arguments.append(
 			{
-				"--no-daemon"
+				"--no-daemon",
 				"--device-name", "spotify-qt",
 			}
 		);
