@@ -95,9 +95,8 @@ QString ClientHandler::start()
 			}
 		);
 	}
-
 	// spotifyd specific
-	if (clientType == ClientType::Spotifyd)
+	else if (clientType == ClientType::Spotifyd)
 	{
 		arguments.append(
 			{
