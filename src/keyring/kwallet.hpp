@@ -17,7 +17,7 @@ private:
 public:
 	explicit KWallet(QString username);
 
-	bool isValid() const;
+	bool isEnabled();
 	bool unlocked() const;
 	bool unlock();
 

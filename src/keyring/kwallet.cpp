@@ -12,9 +12,16 @@ KWallet::KWallet(QString username)
 	appName = QCoreApplication::applicationName();
 }
 
-bool KWallet::isValid() const
+bool KWallet::isEnabled()
 {
-	return dbus.isValid();
+	auto call = dbus.call(QDBus::Block, "isEnabled");
+	if (call.type() != QDBusMessage::ReplyMessage)
+		return false;
+
+	return call
+		.arguments()
+		.at(0)
+		.toBool();
 }
 
 bool KWallet::unlocked() const
@@ -53,7 +60,7 @@ bool KWallet::unlock()
 	if (unlocked())
 		return true;
 
-	if (!isValid())
+	if (!isEnabled())
 		return false;
 
 	return getWallet();
