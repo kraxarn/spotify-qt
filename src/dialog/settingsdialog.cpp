@@ -40,11 +40,6 @@ SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent)
 	resize(440, 340);
 }
 
-void SettingsDialog::globalConfigToggle(int state)
-{
-	sptGroup->setEnabled(state == Qt::Unchecked);
-}
-
 bool SettingsDialog::applySettings()
 {
 	// Set theme
@@ -153,7 +148,8 @@ bool SettingsDialog::applySettings()
 	auto bitrate = sptBitrate->currentIndex();
 	settings.spotify.bitrate = bitrate == 0 ? 96 : bitrate == 1 ? 160 : 320;
 	settings.spotify.alwaysStart = sptAlways->isChecked();
-	settings.spotify.keyringPassword = sptKeyring->isChecked();
+	if (sptKeyring != nullptr)
+		settings.spotify.keyringPassword = sptKeyring->isChecked();
 
 	// Custom playlist order
 	auto playlistOrder = (PlaylistOrder) plOrder->currentIndex();

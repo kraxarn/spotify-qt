@@ -49,6 +49,7 @@ private:
 	static bool sptConfigExists();
 	static bool hasIconTheme();
 	void globalConfigToggle(int state);
+	void startClientToggle(int state);
 	void playlistItemChanged(int index);
 	void playlistMove(int steps);
 	void playlistUp();

@@ -90,6 +90,7 @@ QWidget *SettingsDialog::spotifySettings()
 	sptAppStart = new QCheckBox("Start with app", this);
 	sptAppStart->setToolTip("Start, and close, spotifyd together with the app (only closes with app config)");
 	sptAppStart->setChecked(settings.spotify.startClient);
+	QCheckBox::connect(sptAppStart, &QCheckBox::stateChanged, this, &SettingsDialog::startClientToggle);
 	otherLayout->addWidget(sptAppStart);
 
 	// Always start
@@ -103,4 +104,14 @@ QWidget *SettingsDialog::spotifySettings()
 	auto widget = new QWidget();
 	widget->setLayout(layout);
 	return widget;
+}
+
+void SettingsDialog::globalConfigToggle(int state)
+{
+	sptGroup->setEnabled(state == Qt::Unchecked);
+}
+
+void SettingsDialog::startClientToggle(int state)
+{
+	sptAlways->setEnabled(state == Qt::Checked);
 }
