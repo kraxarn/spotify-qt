@@ -88,3 +88,8 @@ QString SpotifyQml::systemInfo()
 {
 	return SystemInfoDialog::systemInfo(current);
 }
+
+QJsonObject SpotifyQml::search(const QString &query)
+{
+	return spotify->search(query).toJson();
+}

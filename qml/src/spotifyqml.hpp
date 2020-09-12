@@ -20,6 +20,7 @@ public:
 	Q_INVOKABLE QString playTracksWithContext(const QString &track, const QString &context);
 	Q_INVOKABLE void requestPlayback();
 	Q_INVOKABLE QString systemInfo();
+	Q_INVOKABLE QJsonObject search(const QString &query);
 
 signals:
 	void playlistsChanged();

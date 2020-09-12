@@ -14,6 +14,7 @@
         <!-- QML JS -->
         <file>js/main.js</file>
         <file>js/playlistView.js</file>
+        <file>js/searchView.js</file>
         <file>js/settingsDialog.js</file>
         <file>js/setup.js</file>
     </qresource>

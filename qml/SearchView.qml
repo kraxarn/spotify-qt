@@ -2,18 +2,34 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
-Item {
+import "js/searchView.js" as JS
+
+ColumnLayout {
+	id: searchView
 	Layout.fillHeight: true
-	RowLayout {
-		anchors {
-			bottom: parent.bottom
-			left: parent.left
-			right: parent.right
-			margins: 16
+	ListView {
+		id: listSearch
+		Layout.fillHeight: true
+		model: ListModel {
+			id: searchListModel
 		}
+		delegate: Component {
+			Button {
+				height: listItemHeight
+				width: searchView.width
+				text: model.name
+				flat: true
+				onClicked: JS.clickedItem(model.id)
+			}
+		}
+	}
+	RowLayout {
+		id: rowSearch
 		TextField {
+			id: fieldSearch
 			Layout.fillWidth: true
 			placeholderText: "Search query"
+			onAccepted: JS.search(fieldSearch.text)
 		}
 		ToolButton {
 			id: menuSearchSelectedType
@@ -21,7 +37,7 @@ Item {
 			onClicked: menuSearchType.open()
 			Menu {
 				id: menuSearchType
-				onClosed: console.log(menuSearchSelectedType.icon.name)
+				onClosed: JS.updateItems()
 				MenuItem {
 					text: "Tracks"
 					icon.name: "view-media-track"

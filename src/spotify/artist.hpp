@@ -28,6 +28,8 @@ namespace spt
 		QVector<Album> albums(Spotify &spotify) const;
 		QVector<Artist> relatedArtists(Spotify &spotify) const;
 
+		QJsonObject toJson() const;
+
 		int followers, popularity;
 		QStringList genres;
 		QString id, name, image;

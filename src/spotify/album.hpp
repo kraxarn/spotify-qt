@@ -13,6 +13,8 @@ namespace spt
 		Album() = default;
 		explicit Album(const QJsonObject &json);
 
+		QJsonObject toJson() const;
+
 		QString id, albumGroup, image, name, artist;
 		QDateTime releaseDate;
 	};

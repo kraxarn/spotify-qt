@@ -388,31 +388,9 @@ QString Spotify::removeFromPlaylist(const QString &playlistId, const QString &tr
 
 SearchResults Spotify::search(const QString &query)
 {
-	auto json = getAsObject(
-		QString("search?q=%1&type=album,artist,playlist,track&limit=50&market=from_token").arg(query));
-	SearchResults results;
-
-	// Albums
-	results.albums.reserve(json["albums"].toObject()["total"].toInt());
-	for (auto album : json["albums"].toObject()["items"].toArray())
-		results.albums.append(Album(album.toObject()));
-
-	// Artists
-	results.artists.reserve(json["artists"].toObject()["total"].toInt());
-	for (auto artist : json["artists"].toObject()["items"].toArray())
-		results.artists.append(Artist(artist.toObject()));
-
-	// Playlists
-	results.playlists.reserve(json["playlists"].toObject()["total"].toInt());
-	for (auto playlist : json["playlists"].toObject()["items"].toArray())
-		results.playlists.append(playlist.toObject());
-
-	// Tracks
-	results.tracks.reserve(json["tracks"].toObject()["total"].toInt());
-	for (auto track : json["tracks"].toObject()["items"].toArray())
-		results.tracks.append(Track(track.toObject()));
-
-	return results;
+	return SearchResults(getAsObject(
+		QString("search?q=%1&type=album,artist,playlist,track&limit=50&market=from_token")
+			.arg(query)));
 }
 
 template<class T>

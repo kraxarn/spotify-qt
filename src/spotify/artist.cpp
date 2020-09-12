@@ -54,3 +54,21 @@ QVector<Artist> Artist::relatedArtists(Spotify &spotify) const
 		artists.append(Artist(item.toObject()));
 	return artists;
 }
+
+QJsonObject Artist::toJson() const
+{
+	QJsonArray jsonGenres;
+	for (auto &genre : genres)
+		jsonGenres.append(genre);
+
+	return QJsonObject(
+		{
+			QPair<QString, int>("followers", followers),
+			QPair<QString, int>("popularity", popularity),
+			QPair<QString, QJsonArray>("genres", jsonGenres),
+			QPair<QString, QString>("id", id),
+			QPair<QString, QString>("name", name),
+			QPair<QString, QString>("image", image)
+		}
+	);
+}
