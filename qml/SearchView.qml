@@ -47,6 +47,8 @@ ColumnLayout {
 	}
 	RowLayout {
 		id: rowSearch
+		Layout.leftMargin: 16
+		Layout.rightMargin: 16
 		TextField {
 			id: fieldSearch
 			Layout.fillWidth: true
