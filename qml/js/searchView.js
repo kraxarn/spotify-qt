@@ -41,5 +41,9 @@ function clickedItem(id) {
 		case "playlists":
 			root.loadTracks(spotify.getPlaylistTracks(id), `spotify:playlist:${id}`)
 			break
+
+		case "artists":
+			root.loadArtist(id)
+			break
 	}
 }

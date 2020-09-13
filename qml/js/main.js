@@ -39,6 +39,11 @@ function loadTracks(tracks) {
 	}))
 }
 
+function loadArtist(id) {
+	drawer.close()
+	artistDrawer.load(spotify.getArtist(id))
+}
+
 function logOut(mode) {
 	settings.logOut(mode)
 	dialogLoggedOut.open()

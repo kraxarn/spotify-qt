@@ -109,3 +109,39 @@ QJsonObject SpotifyQml::search(const QString &query)
 {
 	return spotify->search(query).toJson();
 }
+
+QJsonObject SpotifyQml::getArtist(const QString &id)
+{
+	return spotify->artist(id).toJson();
+}
+
+QJsonObject SpotifyQml::getArtistPages(const QString &id)
+{
+	auto artist = spotify->artist(id);
+
+	QJsonArray popular;
+	for (auto &track : artist.topTracks(*spotify))
+		popular.append(track.toJson());
+
+	QJsonArray albums, singles;
+	for (auto &album : artist.albums(*spotify))
+	{
+		if (album.albumGroup == "single")
+			singles.append(album.toJson());
+		else
+			albums.append(album.toJson());
+	}
+
+	QJsonArray related;
+	for (auto &item : artist.relatedArtists(*spotify))
+		related.append(item.toJson());
+
+	return QJsonObject(
+		{
+			QPair<QString, QJsonArray>("popular", popular),
+			QPair<QString, QJsonArray>("albums", albums),
+			QPair<QString, QJsonArray>("singles", singles),
+			QPair<QString, QJsonArray>("related", related)
+		}
+	);
+}

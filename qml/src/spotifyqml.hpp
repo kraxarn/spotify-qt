@@ -28,6 +28,8 @@ public:
 	Q_INVOKABLE void requestPlayback();
 	Q_INVOKABLE QString systemInfo();
 	Q_INVOKABLE QJsonObject search(const QString &query);
+	Q_INVOKABLE QJsonObject getArtist(const QString &id);
+	Q_INVOKABLE QJsonObject getArtistPages(const QString &id);
 
 signals:
 	void playlistsChanged();

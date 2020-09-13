@@ -33,6 +33,10 @@ ApplicationWindow {
 		currentContext = context
 	}
 
+	function loadArtist(id) {
+		JS.loadArtist(id)
+	}
+
 	Utils {
 		id: utils
 	}
@@ -217,6 +221,10 @@ ApplicationWindow {
 
 	SettingsDialog {
 		id: settingsDrawer
+	}
+
+	ArtistDialog {
+		id: artistDrawer
 	}
 
 	Component {
