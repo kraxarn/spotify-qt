@@ -16,9 +16,15 @@ public:
 	QJsonArray getPlaylists();
 	QJsonObject getPlayback();
 
+	// Get tracks
 	Q_INVOKABLE QJsonArray getPlaylistTracks(const QString &playlistId);
+	Q_INVOKABLE QJsonArray getAlbumTracks(const QString &albumId);
+
+	// Play tracks
 	Q_INVOKABLE QString playTracksWithContext(const QString &track, const QString &context);
 	Q_INVOKABLE QString playTrack(const QString &track);
+
+	// Other
 	Q_INVOKABLE void requestPlayback();
 	Q_INVOKABLE QString systemInfo();
 	Q_INVOKABLE QJsonObject search(const QString &query);
@@ -36,6 +42,7 @@ private:
 
 	void refresh();
 	void refreshed(const spt::Playback &playback);
+	static QJsonArray tracksToJson(QVector<spt::Track> &tracks);
 };
 
 

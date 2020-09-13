@@ -30,6 +30,15 @@ function playTrack(id) {
 	}
 }
 
+function loadTracks(tracks) {
+	trackListModel.clear()
+	tracks.forEach(track => trackListModel.append({
+		"id": track["id"],
+		"artist": track["artist"],
+		"track": track["name"]
+	}))
+}
+
 function logOut(mode) {
 	settings.logOut(mode)
 	dialogLoggedOut.open()

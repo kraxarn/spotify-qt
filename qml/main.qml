@@ -27,6 +27,12 @@ ApplicationWindow {
 	property string currentContext
 	property string currentTrackId
 
+	function loadTracks(tracks, context) {
+		drawer.close()
+		JS.loadTracks(tracks)
+		currentContext = context
+	}
+
 	Utils {
 		id: utils
 	}

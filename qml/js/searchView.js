@@ -22,7 +22,8 @@ function updateItems() {
 	items.forEach(item => {
 		searchListModel.append({
 			"id": item.id,
-			"name": item.name
+			"title": item.name,
+			"subtitle": item.artist
 		})
 	})
 }
@@ -31,6 +32,10 @@ function clickedItem(id) {
 	switch (getSelectedType()) {
 		case "tracks":
 			spotify.playTrack(`spotify:track:${id}`)
+			break
+
+		case "albums":
+			root.loadTracks(spotify.getAlbumTracks(id), `spotify:album:${id}`)
 			break
 	}
 }

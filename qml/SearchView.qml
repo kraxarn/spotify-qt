@@ -17,9 +17,31 @@ ColumnLayout {
 			Button {
 				height: listItemHeight
 				width: searchView.width
-				text: model.name
 				flat: true
 				onClicked: JS.clickedItem(model.id)
+				Label {
+					anchors {
+						verticalCenter: parent.verticalCenter
+						left: parent.left
+						leftMargin: 16
+					}
+					text: model.title
+				}
+				Label {
+					anchors.verticalCenter: parent.verticalCenter
+					x: parent.width / 2
+					text: model.subtitle
+				}
+				ToolButton {
+					anchors {
+						verticalCenter: parent.verticalCenter
+						right: parent.right
+						rightMargin: 16
+					}
+					icon.name: "overflow-menu"
+					icon.source: icSrc("overflow-menu")
+					flat: true
+				}
 			}
 		}
 	}

@@ -60,9 +60,8 @@ QJsonObject SpotifyQml::getPlayback()
 	return current.toJson();
 }
 
-QJsonArray SpotifyQml::getPlaylistTracks(const QString &playlistId)
+QJsonArray SpotifyQml::tracksToJson(QVector<spt::Track> &tracks)
 {
-	auto tracks = spotify->playlist(playlistId).loadTracks(*spotify);
 	std::sort(tracks.begin(), tracks.end(), [](const spt::Track &t1, const spt::Track &t2) {
 		return t1.artist < t2.artist;
 	});
@@ -71,6 +70,18 @@ QJsonArray SpotifyQml::getPlaylistTracks(const QString &playlistId)
 	for (auto &track : tracks)
 		items.append(track.toJson());
 	return items;
+}
+
+QJsonArray SpotifyQml::getPlaylistTracks(const QString &playlistId)
+{
+	auto tracks = spotify->playlist(playlistId).loadTracks(*spotify);
+	return tracksToJson(tracks);
+}
+
+QJsonArray SpotifyQml::getAlbumTracks(const QString &albumId)
+{
+	auto tracks = spotify->albumTracks(albumId);
+	return tracksToJson(tracks);
 }
 
 QString SpotifyQml::playTracksWithContext(const QString &track, const QString &context)
