@@ -312,10 +312,14 @@ void MainWindow::refreshPlaylists()
 	// Add all playlists
 	playlists->clear();
 	auto i = 0;
+	QTextDocument doc;
 	for (auto &playlist : sptPlaylists)
 	{
 		auto item = new QListWidgetItem(playlist.name, playlists);
-		item->setToolTip(playlist.description);
+
+		doc.setHtml(playlist.description);
+		item->setToolTip(doc.toPlainText());
+
 		item->setData(RolePlaylistId, playlist.id);
 		item->setData(RoleIndex, i++);
 	}
