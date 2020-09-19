@@ -50,10 +50,11 @@ private:
 	static bool hasIconTheme();
 	void globalConfigToggle(int state);
 	void startClientToggle(int state);
-	void playlistItemChanged(int index);
+	void playlistOrderChanged(int index);
 	void playlistMove(int steps);
 	void playlistUp();
 	void playlistDown();
+	void playlistItemChanged(int row);
 	void warning(const QString &title, const QString &message);
 
 	Settings &settings;
@@ -96,4 +97,6 @@ private:
 	QLabel *plHint = nullptr;
 	QListWidget *plList = nullptr;
 	QStringList plHints;
+	QAction *plBtnUp = nullptr;
+	QAction *plBtnDown = nullptr;
 };
