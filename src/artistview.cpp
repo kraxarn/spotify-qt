@@ -10,6 +10,7 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 
 	artist = spotify.artist(artistId);
 	setFeatures(QDockWidget::DockWidgetClosable);
+	setWindowTitle(artist.name);
 	auto layout = new QVBoxLayout();
 	layout->setContentsMargins(-1, 0, -1, 0);
 
