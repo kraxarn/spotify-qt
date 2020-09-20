@@ -1,6 +1,9 @@
 #pragma once
 
-namespace spt { class Track; }
+namespace spt
+{
+	class Track;
+}
 
 #include "../util/utils.hpp"
 

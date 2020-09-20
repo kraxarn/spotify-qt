@@ -7,18 +7,18 @@ Track::Track(const QJsonObject &item)
 	// If album is a string, track is loaded from cache
 	if (item["album"].isString())
 	{
-		id			= item["id"].toString();
-		album		= item["album"].toString();
+		id = item["id"].toString();
+		album = item["album"].toString();
 		albumId = Utils::getProperty(item, {
 			"album_id", "albumId"
 		}).toString();
-		artist		= item["artist"].toString();
+		artist = item["artist"].toString();
 		artistId = Utils::getProperty(item, {
 			"artist_id", "artistId"
 		}).toString();
-		name		= item["name"].toString();
-		duration	= item["duration"].toInt();
-		image		= item["image"].toString();
+		name = item["name"].toString();
+		duration = item["duration"].toInt();
+		image = item["image"].toString();
 		isLocal = Utils::getProperty(item, {
 			"is_local", "isLocal"
 		}).toBool();
@@ -38,7 +38,7 @@ Track::Track(const QJsonObject &item)
 	album = track.contains("album")
 		? track["album"].toObject()["name"].toString()
 		: "(no album)";
-	albumId	= track.contains("album")
+	albumId = track.contains("album")
 		? track["album"].toObject()["id"].toString()
 		: "0";
 	artist = track.contains("artists")
@@ -80,19 +80,17 @@ Track::Track()
 
 QJsonObject Track::toJson() const
 {
-	return QJsonObject(
-		{
-			QPair<QString, QString>("id", id),
-			QPair<QString, QString>("album", album),
-			QPair<QString, QString>("album_id", albumId),
-			QPair<QString, QString>("artist", artist),
-			QPair<QString, QString>("artist_id", artistId),
-			QPair<QString, QString>("name", name),
-			QPair<QString, QString>("image", image),
-			QPair<QString, int>("duration", duration),
-			QPair<QString, bool>("is_local", isLocal),
-			QPair<QString, bool>("is_playable", isPlayable),
-			QPair<QString, QString>("added_at", addedAt.toString())
-		}
-	);
+	return QJsonObject({
+		QPair<QString, QString>("id", id),
+		QPair<QString, QString>("album", album),
+		QPair<QString, QString>("album_id", albumId),
+		QPair<QString, QString>("artist", artist),
+		QPair<QString, QString>("artist_id", artistId),
+		QPair<QString, QString>("name", name),
+		QPair<QString, QString>("image", image),
+		QPair<QString, int>("duration", duration),
+		QPair<QString, bool>("is_local", isLocal),
+		QPair<QString, bool>("is_playable", isPlayable),
+		QPair<QString, QString>("added_at", addedAt.toString())
+	});
 }

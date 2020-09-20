@@ -1,6 +1,9 @@
 #pragma once
 
-namespace spt { class Playlist; }
+namespace spt
+{
+	class Playlist;
+}
 
 #include "../util/utils.hpp"
 #include "spotify.hpp"
@@ -18,13 +21,17 @@ namespace spt
 	public:
 		Playlist() = default;
 		explicit Playlist(const QJsonObject &json);
+
+		QVector<Track> loadTracks(Spotify &spotify) const;
+		QJsonObject toJson(Spotify &spotify) const;
+
 		bool collaborative;
 		QString description, id, image, name, snapshot, ownerId, ownerName;
 		bool isPublic;
-		QVector<Track> loadTracks(Spotify &spotify) const;
-		QJsonObject toJson(Spotify &spotify) const;
+
 	private:
-		QJsonObject tracks;
 		static bool loadTracksFromUrl(QVector<Track> &trackList, QString &url, int offset, Spotify &spotify);
+
+		QJsonObject tracks;
 	};
 }

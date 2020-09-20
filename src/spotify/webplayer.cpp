@@ -2,7 +2,8 @@
 
 using namespace spt;
 
-WebPlayer::WebPlayer(const QString &token) : token(token)
+WebPlayer::WebPlayer(const QString &token)
+	: token(token)
 {
 }
 

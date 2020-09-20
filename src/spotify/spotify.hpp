@@ -1,6 +1,9 @@
 #pragma once
 
-namespace spt { class Spotify; }
+namespace spt
+{
+	class Spotify;
+}
 
 #include "../dialog/deviceselectdialog.hpp"
 #include "artist.hpp"
@@ -25,9 +28,9 @@ namespace spt { class Spotify; }
 
 namespace spt
 {
-	class Spotify : public QObject
+	class Spotify: public QObject
 	{
-		Q_OBJECT
+	Q_OBJECT
 
 	public:
 		enum class FollowType
@@ -88,24 +91,19 @@ namespace spt
 		void gotPlayback(const Playback &playback);
 
 	private:
-		qint64		lastAuth;
-		QString		currentDevice;
-		Settings	&settings;
+		qint64 lastAuth;
+		QString currentDevice;
+		Settings &settings;
 		QNetworkAccessManager *networkManager;
-		/**
-		 * Prepare network request with auth header
-		 */
+
 		QNetworkRequest request(const QString &url);
-		/**
-		 * HTTP PUT request expecting JSON response
-		 */
 		QString put(const QString &url, QVariantMap *body = nullptr);
 		QString post(const QString &url);
 		QString del(const QString &url, QVariantMap *body);
 		static QString errorMessage(QNetworkReply *reply);
 		QJsonDocument get(const QString &url);
 
-		template <class T>
+		template<class T>
 		QVector<T> loadItems(const QString &url);
 
 		QVector<Track> albumTracks(const QString &albumId, const QString &albumName, int offset);

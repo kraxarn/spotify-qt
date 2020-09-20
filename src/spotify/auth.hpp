@@ -20,6 +20,7 @@ namespace spt
 		virtual ~Auth();
 		static QString authUrl(const QString &clientId, const QString &redirect);
 		QString auth(const QString &code, const QString &redirect, const QString &id, const QString &secret);
+
 	private:
 		QNetworkAccessManager *networkManager;
 		Settings &settings;

@@ -10,12 +10,10 @@ spt::Playback::Playback(const QJsonObject &json)
 	isPlaying = json["is_playing"].toBool();
 	repeat = json["repeat_state"].toString();
 	shuffle = json["shuffle_state"].toBool();
-	contextUri =
-		json["context"].isObject()
+	contextUri = json["context"].isObject()
 		? json["context"].toObject()["uri"].toString()
 		: QString();
-	contextType =
-		json["context"].isObject()
+	contextType = json["context"].isObject()
 		? json["context"].toObject()["type"].toString()
 		: QString();
 	device = Device(json["device"].toObject());
@@ -30,18 +28,16 @@ QVariantMap spt::Playback::metadata() const
 	auto itemDuration = isPlaying ? item.duration : 0;
 	QString itemImage(isPlaying ? item.image : "");
 
-	auto metadata = QVariantMap(
-		{
-			{"xesam:title", itemName},
-			{"xesam:artist", itemArtist},
-			{"xesam:album", itemAlbum},
-			{"xesam:albumArtist", itemArtist},
-			{"xesam:url", QString("https://open.spotify.com/track/%1").arg(itemId)},
-			{"mpris:length", (qulonglong) itemDuration * 1000},
-			{"mpris:artUrl", itemImage},
-			{"mpris:trackid", QString("spotify:track:%1").arg(itemId)},
-		}
-	);
+	auto metadata = QVariantMap({
+		{"xesam:title", itemName},
+		{"xesam:artist", itemArtist},
+		{"xesam:album", itemAlbum},
+		{"xesam:albumArtist", itemArtist},
+		{"xesam:url", QString("https://open.spotify.com/track/%1").arg(itemId)},
+		{"mpris:length", (qulonglong) itemDuration * 1000},
+		{"mpris:artUrl", itemImage},
+		{"mpris:trackid", QString("spotify:track:%1").arg(itemId)},
+	});
 	return metadata;
 }
 

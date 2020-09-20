@@ -19,12 +19,15 @@ QNetworkRequest Spotify::request(const QString &url)
 		qDebug() << "access token probably expired, refreshing";
 		refresh();
 	}
+
 	// Prepare request
 	QNetworkRequest request((QUrl("https://api.spotify.com/v1/" + url)));
+
 	// Set header
 	request.setRawHeader(
 		"Authorization",
 		("Bearer " + settings.account.accessToken).toUtf8());
+
 	// Return prepared header
 	return request;
 }
@@ -75,6 +78,7 @@ void Spotify::getLater(const QString &url)
 			reply->deleteLater();
 			emit got(json);
 		});
+
 	networkManager->get(request(url));
 }
 
@@ -83,6 +87,7 @@ QString Spotify::put(const QString &url, QVariantMap *body)
 	// Set in header we're sending json data
 	auto req = request(url);
 	req.setHeader(QNetworkRequest::ContentTypeHeader, QString("application/json"));
+
 	// Send the request, we don't expect any response
 	auto putData = body == nullptr ? nullptr : QJsonDocument::fromVariant(*body).toJson();
 	auto reply = errorMessage(networkManager->put(req, putData));
@@ -147,10 +152,12 @@ bool Spotify::refresh()
 		qWarning() << "warning: attempt to refresh without refresh token";
 		return false;
 	}
+
 	// Create form
 	auto postData = QString("grant_type=refresh_token&refresh_token=%1")
 		.arg(refreshToken)
 		.toUtf8();
+
 	// Create request
 	QNetworkRequest request(QUrl("https://accounts.spotify.com/api/token"));
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
@@ -159,19 +166,23 @@ bool Spotify::refresh()
 		"Basic " + QString("%1:%2")
 			.arg(settings.account.clientId)
 			.arg(settings.account.clientSecret).toUtf8().toBase64());
+
 	// Send request
 	auto reply = networkManager->post(request, postData);
 	while (!reply->isFinished())
 		QCoreApplication::processEvents();
+
 	// Parse json
 	auto json = QJsonDocument::fromJson(reply->readAll()).object();
 	reply->deleteLater();
+
 	// Check if error
 	if (json.contains("error_description"))
 	{
 		qWarning() << "warning: failed to refresh token:" << json["error_description"];
 		return false;
 	}
+
 	// Save as access token
 	lastAuth = QDateTime::currentSecsSinceEpoch();
 	auto accessToken = json["access_token"].toString();
@@ -184,12 +195,15 @@ QVector<Playlist> Spotify::playlists()
 {
 	// Request playlists
 	auto json = getAsObject("me/playlists?limit=50");
+
 	// Parse as playlists
 	auto items = json["items"].toArray();
+
 	// Create list of playlists
 	auto size = json["total"].toInt();
 	QVector<Playlist> playlists;
 	playlists.reserve(size);
+
 	// Loop through all items
 	for (int i = 0; i < items.size(); i++)
 		playlists.insert(i, Playlist(items.at(i).toObject()));
@@ -209,11 +223,9 @@ QVector<Device> Spotify::devices()
 QString Spotify::setDevice(const Device &device)
 {
 	QVariantMap body;
-	body["device_ids"] = QStringList(
-		{
-			device.id
-		}
-	);
+	body["device_ids"] = QStringList({
+		device.id
+	});
 	currentDevice = device.id;
 	return put("me/player", &body);
 }
@@ -222,13 +234,10 @@ QString Spotify::playTracks(int trackIndex, const QString &context)
 {
 	QVariantMap body;
 	body["context_uri"] = context;
-	body["offset"] = QJsonObject(
-		{
-			QPair<QString, int>("position", trackIndex)
-		}
-	);
-	return put(
-		currentDevice == nullptr || currentDevice.isEmpty()
+	body["offset"] = QJsonObject({
+		QPair<QString, int>("position", trackIndex)
+	});
+	return put(currentDevice == nullptr || currentDevice.isEmpty()
 		? QString("me/player/play")
 		: QString("me/player/play?device_id=%1").arg(currentDevice), &body);
 }
@@ -237,13 +246,10 @@ QString Spotify::playTracks(int trackIndex, const QStringList &all)
 {
 	QVariantMap body;
 	body["uris"] = all;
-	body["offset"] = QJsonObject(
-		{
-			QPair<QString, int>("position", trackIndex)
-		}
-	);
-	return put(
-		currentDevice == nullptr || currentDevice.isEmpty()
+	body["offset"] = QJsonObject({
+		QPair<QString, int>("position", trackIndex)
+	});
+	return put(currentDevice == nullptr || currentDevice.isEmpty()
 		? QString("me/player/play")
 		: QString("me/player/play?device_id=%1").arg(currentDevice), &body);
 }
@@ -252,8 +258,7 @@ QString Spotify::playTracks(const QString &context)
 {
 	QVariantMap body;
 	body["context_uri"] = context;
-	return put(
-		currentDevice == nullptr
+	return put(currentDevice == nullptr
 		? QString("me/player/play")
 		: QString("me/player/play?device_id=%1").arg(currentDevice), &body);
 }
@@ -300,11 +305,10 @@ QString Spotify::setRepeat(const QString &state)
 
 AudioFeatures Spotify::trackAudioFeatures(QString trackId)
 {
-	auto json = getAsObject(
-		QString("audio-features/%1")
-			.arg(trackId.startsWith("spotify:track:")
-				 ? trackId.remove(0, QString("spotify:track:").length())
-				 : trackId));
+	auto json = getAsObject(QString("audio-features/%1")
+		.arg(trackId.startsWith("spotify:track:")
+			? trackId.remove(0, QString("spotify:track:").length())
+			: trackId));
 	return AudioFeatures(json);
 }
 
@@ -314,6 +318,7 @@ QVector<Track> Spotify::albumTracks(const QString &albumId, const QString &album
 	auto trackItems = json["items"].toArray();
 	QVector<Track> tracks;
 	tracks.reserve(50);
+
 	// Add all in current page
 	for (auto item : trackItems)
 	{
@@ -322,6 +327,7 @@ QVector<Track> Spotify::albumTracks(const QString &albumId, const QString &album
 		t.album = albumName;
 		tracks.append(t);
 	}
+
 	// Add all in next page
 	if (json.contains("next") && !json["next"].isNull())
 		tracks.append(albumTracks(albumId, albumName, json["offset"].toInt() + json["limit"].toInt()));
@@ -334,6 +340,7 @@ QVector<Track> Spotify::albumTracks(const QString &albumID)
 	auto albumName = json["name"].toString();
 	QVector<Track> tracks;
 	tracks.reserve(json["total_tracks"].toInt());
+
 	// Loop through all items
 	for (auto track : json["tracks"].toObject()["items"].toArray())
 	{
@@ -342,10 +349,12 @@ QVector<Track> Spotify::albumTracks(const QString &albumID)
 		t.album = albumName;
 		tracks.append(t);
 	}
+
 	// Check if we have any more to add
 	auto tracksLimit = json["tracks"].toObject()["limit"].toInt();
 	if (json["tracks"].toObject()["total"].toInt() > tracksLimit)
 		tracks.append(albumTracks(albumID, albumName, tracksLimit));
+
 	// Return final vector
 	return tracks;
 }
@@ -362,28 +371,21 @@ Playlist Spotify::playlist(const QString &playlistId)
 
 QString Spotify::addToPlaylist(const QString &playlistId, const QString &trackId)
 {
-	return post(
-		QString("playlists/%1/tracks?uris=%2")
-			.arg(playlistId).arg(trackId));
+	return post(QString("playlists/%1/tracks?uris=%2")
+		.arg(playlistId).arg(trackId));
 }
 
 QString Spotify::removeFromPlaylist(const QString &playlistId, const QString &trackId, int pos)
 {
 	QVariantMap body;
-	body["tracks"] = QJsonArray(
-		{
-			QJsonObject(
-				{
-					QPair<QString, QString>("uri", trackId),
-					QPair<QString, QJsonArray>("positions", QJsonArray(
-						{
-							pos
-						}
-					))
-				}
-			)
-		}
-	);
+	body["tracks"] = QJsonArray({
+		QJsonObject({
+			QPair<QString, QString>("uri", trackId),
+			QPair<QString, QJsonArray>("positions", QJsonArray({
+				pos
+			}))
+		})
+	});
 	return del(QString("playlists/%1/tracks").arg(playlistId), &body);
 }
 
@@ -392,18 +394,22 @@ SearchResults Spotify::search(const QString &query)
 	auto json = getAsObject(
 		QString("search?q=%1&type=album,artist,playlist,track&limit=50&market=from_token").arg(query));
 	SearchResults results;
+
 	// Albums
 	results.albums.reserve(json["albums"].toObject()["total"].toInt());
 	for (auto album : json["albums"].toObject()["items"].toArray())
 		results.albums.append(Album(album.toObject()));
+
 	// Artists
 	results.artists.reserve(json["artists"].toObject()["total"].toInt());
 	for (auto artist : json["artists"].toObject()["items"].toArray())
 		results.artists.append(Artist(artist.toObject()));
+
 	// Playlists
 	results.playlists.reserve(json["playlists"].toObject()["total"].toInt());
 	for (auto playlist : json["playlists"].toObject()["items"].toArray())
 		results.playlists.append(playlist.toObject());
+
 	// Tracks
 	results.tracks.reserve(json["tracks"].toObject()["total"].toInt());
 	for (auto track : json["tracks"].toObject()["items"].toArray())
@@ -455,9 +461,11 @@ QVector<Track> Spotify::savedTracks(int offset)
 	auto trackItems = json["items"].toArray();
 	QVector<Track> tracks;
 	tracks.reserve(50);
+
 	// Add all in current page
 	for (auto item : trackItems)
 		tracks.append(Track(item.toObject()));
+
 	// Add all in next page
 	if (json.contains("next") && !json["next"].isNull())
 		tracks.append(savedTracks(json["offset"].toInt() + json["limit"].toInt()));
@@ -467,33 +475,28 @@ QVector<Track> Spotify::savedTracks(int offset)
 QString Spotify::addSavedTrack(const QString &trackId)
 {
 	QVariantMap body;
-	body["ids"] = QStringList(
-		{
-			trackId.startsWith("spotify:track")
+	body["ids"] = QStringList({
+		trackId.startsWith("spotify:track")
 			? trackId.right(trackId.length() - QString("spotify:track:").length())
 			: trackId
-		}
-	);
+	});
 	return put("me/tracks", &body);
 }
 
 QString Spotify::removeSavedTrack(const QString &trackId)
 {
 	QVariantMap body;
-	body["ids"] = QStringList(
-		{
-			trackId.startsWith("spotify:track")
+	body["ids"] = QStringList({
+		trackId.startsWith("spotify:track")
 			? trackId.right(trackId.length() - QString("spotify:track:").length())
 			: trackId
-		}
-	);
+	});
 	return del("me/tracks", &body);
 }
 
 QVector<Album> Spotify::newReleases(int offset)
 {
-	auto json = getAsObject(QString("browse/new-releases?limit=50&offset=%1").arg(offset))
-	["albums"].toObject();
+	auto json = getAsObject(QString("browse/new-releases?limit=50&offset=%1").arg(offset))["albums"].toObject();
 	auto albumItems = json["items"].toArray();
 	QVector<Album> albums;
 	albums.reserve(albumItems.size());
@@ -528,14 +531,12 @@ User Spotify::me()
 
 QString Spotify::editPlaylist(const Playlist &playlist)
 {
-	QVariantMap body(
-		{
-			{"name", playlist.name},
-			{"public", playlist.isPublic},
-			{"collaborative", playlist.collaborative},
-			{"description", playlist.description}
-		}
-	);
+	QVariantMap body({
+		{"name", playlist.name},
+		{"public", playlist.isPublic},
+		{"collaborative", playlist.collaborative},
+		{"description", playlist.description}
+	});
 	return put(QString("playlists/%1").arg(playlist.id), &body);
 }
 
@@ -546,10 +547,8 @@ QString Spotify::addToQueue(const QString &uri)
 
 QVector<Artist> Spotify::followedArtists(const QString &offset)
 {
-	auto json = getAsObject(
-		QString("me/following?type=artist&limit=50%1")
-			.arg(offset.isEmpty() ? "" : QString("&after=%1").arg(offset)))
-	["artists"].toObject();
+	auto json = getAsObject(QString("me/following?type=artist&limit=50%1")
+		.arg(offset.isEmpty() ? "" : QString("&after=%1").arg(offset)))["artists"].toObject();
 	auto items = json["items"].toArray();
 	QVector<Artist> artists;
 	artists.reserve(items.size());
@@ -562,9 +561,8 @@ QVector<Artist> Spotify::followedArtists(const QString &offset)
 
 QVector<bool> Spotify::isFollowing(FollowType type, const QStringList &ids)
 {
-	auto json = getAsArray(
-		QString("me/following/contains?type=%1&ids=%2")
-			.arg(followTypeString(type)).arg(ids.join(',')));
+	auto json = getAsArray(QString("me/following/contains?type=%1&ids=%2")
+		.arg(followTypeString(type)).arg(ids.join(',')));
 	QVector<bool> values;
 	for (auto value : json)
 		values.append(value.toBool());
@@ -575,9 +573,11 @@ QString Spotify::followTypeString(FollowType type)
 {
 	switch (type)
 	{
-		case FollowType::Artist: return "artist";
+		case FollowType::Artist:
+			return "artist";
 
-		case FollowType::User: return "user";
+		case FollowType::User:
+			return "user";
 	}
 
 	return QString();
@@ -586,11 +586,11 @@ QString Spotify::followTypeString(FollowType type)
 void Spotify::follow(Spotify::FollowType type, const QStringList &ids)
 {
 	put(QString("me/following?type=%1&ids=%2")
-			.arg(followTypeString(type)).arg(ids.join(',')));
+		.arg(followTypeString(type)).arg(ids.join(',')));
 }
 
 void Spotify::unfollow(Spotify::FollowType type, const QStringList &ids)
 {
 	del(QString("me/following?type=%1&ids=%2")
-			.arg(followTypeString(type)).arg(ids.join(',')), {});
+		.arg(followTypeString(type)).arg(ids.join(',')), {});
 }

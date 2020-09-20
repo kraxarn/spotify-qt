@@ -1,6 +1,9 @@
 #pragma once
 
-namespace spt { class Artist; }
+namespace spt
+{
+	class Artist;
+}
 
 #include "album.hpp"
 #include "spotify.hpp"
@@ -20,12 +23,14 @@ namespace spt
 	public:
 		Artist() = default;
 		explicit Artist(const QJsonObject &json);
-		int followers, popularity;
-		QStringList genres;
-		QString id, name, image;
+
 		QVector<Track> topTracks(Spotify &spotify) const;
 		QVector<Album> albums(Spotify &spotify) const;
 		QVector<Artist> relatedArtists(Spotify &spotify) const;
+
+		int followers, popularity;
+		QStringList genres;
+		QString id, name, image;
 		QVector<QPair<QString, QString>> externalUrls;
 	};
 }

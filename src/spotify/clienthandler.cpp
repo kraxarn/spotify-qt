@@ -11,12 +11,12 @@ ClientHandler::ClientHandler(const Settings &settings, QWidget *parent)
 	path = settings.spotify.path;
 	process = new QProcess(parent);
 	clientType = path.isEmpty()
-				 ? ClientType::None
-				 : path.endsWith("spotifyd")
-				   ? ClientType::Spotifyd
-				   : path.endsWith("librespot")
-					 ? ClientType::Librespot
-					 : ClientType::None;
+		? ClientType::None
+		: path.endsWith("spotifyd")
+			? ClientType::Spotifyd
+			: path.endsWith("librespot")
+				? ClientType::Librespot
+				: ClientType::None;
 }
 
 ClientHandler::~ClientHandler()
@@ -61,8 +61,7 @@ QString ClientHandler::start()
 	// Ask for password
 	if (password.isEmpty())
 	{
-		password = QInputDialog::getText(
-			parentWidget,
+		password = QInputDialog::getText(parentWidget,
 			"Enter password",
 			QString("Enter password for Spotify user \"%1\":").arg(username),
 			QLineEdit::Password);
@@ -75,43 +74,37 @@ QString ClientHandler::start()
 	}
 
 	// Common arguments
-	QStringList arguments(
-		{
-			"--bitrate", QString::number(settings.spotify.bitrate),
-			"--username", username,
-			"--password", password
-		}
-	);
+	QStringList arguments({
+		"--bitrate", QString::number(settings.spotify.bitrate),
+		"--username", username,
+		"--password", password
+	});
 
 	// librespot specific
 	if (clientType == ClientType::Librespot)
 	{
-		arguments.append(
-			{
-				"--name", "spotify-qt",
-				"--initial-volume", "100",
-				"--autoplay",
-				"--cache", QString("%1/librespot").arg(((MainWindow *) parentWidget)->getCacheLocation())
-			}
-		);
+		arguments.append({
+			"--name", "spotify-qt",
+			"--initial-volume", "100",
+			"--autoplay",
+			"--cache", QString("%1/librespot").arg(((MainWindow *) parentWidget)->getCacheLocation())
+		});
 	}
 	// spotifyd specific
 	else if (clientType == ClientType::Spotifyd)
 	{
-		arguments.append(
-			{
-				"--no-daemon",
-				"--device-name", "spotify-qt",
-			}
-		);
+		arguments.append({
+			"--no-daemon",
+			"--device-name", "spotify-qt",
+		});
 	}
 
 	if (supportsPulse())
-		arguments.append(
-			{
-				"--backend", "pulseaudio"
-			}
-		);
+	{
+		arguments.append({
+			"--backend", "pulseaudio"
+		});
+	}
 	else
 		qDebug() << "warning: spotifyd/librespot was compiled without pulseaudio support";
 
@@ -145,37 +138,30 @@ QString ClientHandler::clientExec(const QString &path, const QStringList &argume
 
 bool ClientHandler::supportsPulse()
 {
-	return clientExec(
-		path,
-		clientType == ClientType::Librespot
-		? QStringList(
-			{
-				"--name", "",
-				"--backend", "?"
-			}
-		)
-		: QStringList(
-			{
-				"--help"
-			}
-		)).contains("pulseaudio");
+	return clientExec(path, clientType == ClientType::Librespot
+		? QStringList({
+			"--name", "",
+			"--backend", "?"
+		}) : QStringList({
+			"--help"
+		}))
+		.contains("pulseaudio");
 }
 
 QString ClientHandler::version(const QString &path)
 {
-	return
-		path.endsWith("spotifyd")
-		? clientExec(
-			path, {
-				"--version"
-			}) : path.endsWith("librespot")
-				 ? "librespot" : QString();
+	return path.endsWith("spotifyd")
+		? clientExec(path, {
+			"--version"
+		}) : path.endsWith("librespot")
+			? "librespot" : QString();
 }
 
 bool ClientHandler::isRunning()
 {
 	if (path.isEmpty() || !QFile("/usr/bin/ps").exists())
 		return false;
+
 	QProcess ps;
 	ps.start("/usr/bin/ps", {"aux"});
 	ps.waitForFinished();

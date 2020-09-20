@@ -12,6 +12,7 @@ namespace spt
 	public:
 		explicit AudioFeatures(const QJsonObject &json);
 		QMap<QString, QString> values;
+
 	private:
 		static QString formatStat(double value, const QStringList &stages);
 		static QString formatStat(double value, const QString &low, const QString &high);
