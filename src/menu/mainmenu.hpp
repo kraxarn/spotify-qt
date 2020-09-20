@@ -6,9 +6,9 @@
 #include <QMenu>
 #include <QMessageBox>
 
-class MainMenu : public QMenu
+class MainMenu: public QMenu
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
 	MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent = nullptr);

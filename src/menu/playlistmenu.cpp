@@ -3,12 +3,14 @@
 PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist, QWidget *parent)
 	: parent(parent), playlist(playlist), QMenu(parent)
 {
-	auto window = dynamic_cast<MainWindow*>(parent);
+	auto window = dynamic_cast<MainWindow *>(parent);
 	if (window == nullptr)
 		return;
+
 	auto tracks = window->playlistTracks(playlist.id);
 	if (tracks.isEmpty())
 		tracks = playlist.loadTracks(spotify);
+
 	auto duration = 0;
 	for (auto &track : tracks)
 		duration += track.duration;
@@ -18,17 +20,21 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 			.arg(tracks.length())
 			.arg(minutes >= 60 ? QString("%1 h ").arg(minutes / 60) : QString())
 			.arg(minutes % 60))->setEnabled(false);
+
 	auto isOwner = !playlist.ownerId.isEmpty() && playlist.ownerId == window->getCurrentUser().id;
 	if (!isOwner && !playlist.ownerName.isEmpty())
 		addAction(QString("By %1").arg(playlist.ownerName))->setEnabled(false);
+
 	addSeparator();
 	auto playShuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle play");
-	QAction::connect(playShuffle, &QAction::triggered, [tracks, playlist, &spotify, window](bool checked) {
+	QAction::connect(playShuffle, &QAction::triggered, [tracks, playlist, &spotify, window](bool checked)
+	{
 		if (tracks.isEmpty())
 		{
 			window->setStatus("No tracks found to shuffle", true);
 			return;
 		}
+
 		auto initialIndex = 0;
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
 		initialIndex = QRandomGenerator::global()->bounded(tracks.length());
@@ -40,26 +46,30 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 		if (!status.isEmpty())
 			window->setStatus(status, true);
 	});
+
 	if (isOwner)
 		QAction::connect(addAction(Icon::get("document-edit"), "Edit"), &QAction::triggered,
 			[this, playlist, &spotify, window](bool checked)
-		{
-			if (editDialog != nullptr)
-				delete editDialog;
-			editDialog = new PlaylistEditDialog(&spotify, playlist, -1, parentWidget());
-			if (editDialog->exec() == QDialog::Accepted)
-				window->refreshPlaylists();
-		});
+			{
+				if (editDialog != nullptr)
+					delete editDialog;
+				editDialog = new PlaylistEditDialog(&spotify, playlist, -1, parentWidget());
+				if (editDialog->exec() == QDialog::Accepted)
+					window->refreshPlaylists();
+			});
+
 	auto share = addMenu(Icon::get("document-share"), "Share");
 	auto sharePlaylist = share->addAction("Copy playlist link");
-	QAction::connect(sharePlaylist, &QAction::triggered, [window, playlist](bool checked) {
-		QApplication::clipboard()->setText(
-			QString("https://open.spotify.com/playlist/%1")
-				.arg(QString(playlist.id)));
+	QAction::connect(sharePlaylist, &QAction::triggered, [window, playlist](bool checked)
+	{
+		QApplication::clipboard()->setText(QString("https://open.spotify.com/playlist/%1")
+			.arg(QString(playlist.id)));
 		window->setStatus("Link copied to clipboard");
 	});
+
 	auto shareSongOpen = share->addAction("Open in Spotify");
-	QAction::connect(shareSongOpen, &QAction::triggered, [this](bool checked) {
+	QAction::connect(shareSongOpen, &QAction::triggered, [this](bool checked)
+	{
 		Utils::openUrl(QString("https://open.spotify.com/playlist/%1")
 			.arg(QString(this->playlist.id)), LinkType::Web, this->parent);
 	});

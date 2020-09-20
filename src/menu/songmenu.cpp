@@ -1,7 +1,7 @@
 #include "songmenu.hpp"
 
 SongMenu::SongMenu(const QString &trackId, QString artist, QString name,
-				   const QString &artistId, const QString &albumId, spt::Spotify &spotify, QWidget *parent)
+	const QString &artistId, const QString &albumId, spt::Spotify &spotify, QWidget *parent)
 	: spotify(spotify), trackId(trackId), artist(std::move(artist)), name(std::move(name)), QMenu(parent)
 {
 	this->parent = dynamic_cast<MainWindow *>(parent);
@@ -9,8 +9,7 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name,
 		return;
 	auto mainWindow = (MainWindow *) parent;
 
-	track =
-		trackId.startsWith("spotify:track")
+	track = trackId.startsWith("spotify:track")
 		? QString(trackId).remove(0, QString("spotify:track:").length())
 		: trackId;
 	auto trackFeatures = addAction(Icon::get("view-statistics"), "Audio features");
@@ -23,16 +22,14 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name,
 	auto shareSongLink = share->addAction("Copy song link");
 	QAction::connect(shareSongLink, &QAction::triggered, [this](bool checked)
 	{
-		QApplication::clipboard()->setText(
-			QString("https://open.spotify.com/track/%1").arg(track));
+		QApplication::clipboard()->setText(QString("https://open.spotify.com/track/%1").arg(track));
 		((MainWindow *) this->parent)->setStatus("Link copied to clipboard");
 	});
 
 	auto shareSongOpen = share->addAction("Open in Spotify");
 	QAction::connect(shareSongOpen, &QAction::triggered, [this](bool checked)
 	{
-		Utils::openUrl(
-			QString("https://open.spotify.com/track/%1").arg(track),
+		Utils::openUrl(QString("https://open.spotify.com/track/%1").arg(track),
 			LinkType::Web, this->parent);
 	});
 
@@ -47,8 +44,7 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name,
 			break;
 		}
 
-	auto toggleLiked = addAction(
-		Icon::get(isLiked ? "starred-symbolic" : "non-starred-symbolic"),
+	auto toggleLiked = addAction(Icon::get(isLiked ? "starred-symbolic" : "non-starred-symbolic"),
 		isLiked ? "Dislike" : "Like");
 	QAction::connect(toggleLiked, &QAction::triggered, this, &SongMenu::like);
 
@@ -59,8 +55,7 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name,
 	// Add to playlist
 	addSeparator();
 	auto addPlaylist = addMenu(Icon::get("list-add"), "Add to playlist");
-	currentPlaylist =
-		!mainWindow->hasPlaylistSelected()
+	currentPlaylist = !mainWindow->hasPlaylistSelected()
 		? nullptr
 		: &mainWindow->getSptPlaylists().at(mainWindow->getPlaylistsList()->currentRow());
 	auto currentUserId = mainWindow->getCurrentUser().id;
@@ -96,8 +91,7 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name,
 
 void SongMenu::like(bool)
 {
-	auto status =
-		isLiked
+	auto status = isLiked
 		? spotify.removeSavedTrack(trackId)
 		: spotify.addSavedTrack(trackId);
 	if (!status.isEmpty())
@@ -109,8 +103,7 @@ void SongMenu::like(bool)
 
 void SongMenu::addToQueue(bool)
 {
-	auto status = spotify.addToQueue(
-		trackId.startsWith("spotify:track")
+	auto status = spotify.addToQueue(trackId.startsWith("spotify:track")
 		? trackId
 		: QString("spotify:track:%1").arg(trackId));
 	if (!status.isEmpty())
@@ -127,20 +120,17 @@ void SongMenu::addToPlaylist(QAction *action)
 	{
 		if (trackId.endsWith(item.id))
 		{
-			if (QMessageBox::information(
-				mainWindow,
+			if (QMessageBox::information(mainWindow,
 				"Duplicate",
 				"Track is already in the playlist, do you want to add it anyway?",
-				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes)
-				== QMessageBox::No)
+				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::No)
 				return;
 			break;
 		}
 	}
 
 	// Actually add
-	auto plTrack =
-		trackId.startsWith("spotify:track")
+	auto plTrack = trackId.startsWith("spotify:track")
 		? trackId
 		: QString("spotify:track:%1").arg(trackId);
 	auto result = spotify.addToPlaylist(playlistId, plTrack);
@@ -167,16 +157,19 @@ void SongMenu::remFromPlaylist(bool)
 		mainWindow->setStatus("Failed to remove track, not found in playlist", true);
 		return;
 	}
+
 	// Remove from Spotify
 	auto status = spotify.removeFromPlaylist(
 		currentPlaylist->id, trackId,
 		item->data(0, RoleIndex).toInt());
+
 	// Update status
 	if (!status.isEmpty())
 	{
 		mainWindow->setStatus(QString("Failed to remove track from playlist: %1").arg(status), true);
 		return;
 	}
+
 	// i doesn't necessarily match item index depending on sorting order
 	mainWindow->getSongsTree()->takeTopLevelItem(i);
 	mainWindow->setStatus(

@@ -16,11 +16,10 @@ AlbumMenu::AlbumMenu(spt::Spotify &spotify, const QString &albumId, QWidget *par
 		duration += track.duration;
 	auto minutes = duration / 1000 / 60;
 	if (tracks.length() > 1)
-		addAction(
-			QString("%1 tracks, %2%3 m")
-				.arg(tracks.length())
-				.arg(minutes >= 60 ? QString("%1 h ").arg(minutes / 60) : QString())
-				.arg(minutes % 60))->setEnabled(false);
+		addAction(QString("%1 tracks, %2%3 m")
+			.arg(tracks.length())
+			.arg(minutes >= 60 ? QString("%1 h ").arg(minutes / 60) : QString())
+			.arg(minutes % 60))->setEnabled(false);
 
 	addSeparator();
 	auto playShuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle play");
@@ -56,15 +55,13 @@ void AlbumMenu::shuffle(bool)
 
 void AlbumMenu::shareAlbum(bool)
 {
-	QApplication::clipboard()->setText(
-		QString("https://open.spotify.com/playlist/%1")
-			.arg(QString(albumId)));
+	QApplication::clipboard()->setText(QString("https://open.spotify.com/playlist/%1")
+		.arg(QString(albumId)));
 	((MainWindow *) parent)->setStatus("Link copied to clipboard");
 }
 
 void AlbumMenu::shareOpen(bool)
 {
-	Utils::openUrl(
-		QString("https://open.spotify.com/album/%1")
-			.arg(QString(albumId)), LinkType::Web, this->parent);
+	Utils::openUrl(QString("https://open.spotify.com/album/%1")
+		.arg(QString(albumId)), LinkType::Web, this->parent);
 }
