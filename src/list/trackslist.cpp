@@ -70,14 +70,18 @@ void TracksList::clicked(QTreeWidgetItem *item, int)
 		return;
 	}
 
+	bool indexFound;
+	auto trackIndex = item->data(0, RoleIndex).toInt(&indexFound);
+
 	// If we played from library, we don't have any context
 	auto allTracks = mainWindow->currentTracks();
 	auto status =
 		(mainWindow->getLibraryList()->currentItem() != nullptr
-			|| !this->settings.general.spotifyPlaybackOrder)
+			|| !this->settings.general.spotifyPlaybackOrder
+			|| !indexFound)
 			&& allTracks.count() < 500
 		? this->spotify.playTracks(trackId, allTracks)
-		: this->spotify.playTracks(item->data(0, RoleIndex).toInt(), mainWindow->getSptContext());
+		: this->spotify.playTracks(trackIndex, mainWindow->getSptContext());
 
 	if (!status.isEmpty())
 		mainWindow->setStatus(QString("Failed to start playback: %1").arg(status), true);
