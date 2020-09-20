@@ -12,9 +12,9 @@ class VolumeButton;
 #include <QVBoxLayout>
 #include <QWheelEvent>
 
-class VolumeButton : public QToolButton
+class VolumeButton: public QToolButton
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
 	VolumeButton(Settings &settings, spt::Spotify &spotify, QWidget *parent);

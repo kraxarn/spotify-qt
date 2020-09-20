@@ -5,10 +5,9 @@ LyricsView::LyricsView(const QString &artist, const QString &name, QWidget *pare
 {
 	auto window = (MainWindow *) parent;
 
-	auto reply = window->get(
-		QString("https://lyrics.fandom.com/wiki/%1:%2?action=raw")
-			.arg(format(artist))
-			.arg(format(name)));
+	auto reply = window->get(QString("https://lyrics.fandom.com/wiki/%1:%2?action=raw")
+		.arg(format(artist))
+		.arg(format(name)));
 	if (reply.isEmpty())
 	{
 		window->setStatus("Lyrics not found", true);
@@ -20,10 +19,9 @@ LyricsView::LyricsView(const QString &artist, const QString &name, QWidget *pare
 	auto lyricsStart = html.indexOf("<lyrics>") + 9;
 	html = html.mid(lyricsStart, html.indexOf("</lyrics>") - lyricsStart);
 
-	setWindowTitle(
-		QString("%1 - %2")
-			.arg(artist)
-			.arg(name));
+	setWindowTitle(QString("%1 - %2")
+		.arg(artist)
+		.arg(name));
 	auto lyricsView = new QTextEdit(this);
 	lyricsView->setPlainText(html.trimmed());
 	lyricsView->setReadOnly(true);
@@ -41,7 +39,6 @@ QString LyricsView::format(const QString &word)
 {
 	auto words = word.split(' ');
 	for (auto &w : words)
-		w = w.left(1).toUpper() +
-			w.right(w.length() - 1).toLower();
+		w = w.left(1).toUpper() + w.right(w.length() - 1).toLower();
 	return words.join('_');
 }

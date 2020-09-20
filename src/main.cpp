@@ -11,8 +11,10 @@ int main(int argc, char *argv[])
 	QCoreApplication::setOrganizationName("kraxarn");
 	QCoreApplication::setApplicationName("spotify-qt");
 	QCoreApplication::setApplicationVersion(APP_VERSION);
+
 	// Create Qt application
 	QApplication app(argc, argv);
+
 	// JSON Settings
 	Settings settings;
 	if (!QFile::exists(Settings::fileName()))
@@ -26,12 +28,15 @@ int main(int argc, char *argv[])
 		jsonFile.close();
 		settings.load();
 	}
+
 	// Check fallback icons
 	Icon::useFallbackIcons = settings.general.fallbackIcons;
+
 	// Show version if requested
 	QCommandLineParser parser;
 	parser.addVersionOption();
 	parser.process(app);
+
 	// First setup window
 	if (settings.account.refreshToken.isEmpty())
 	{
@@ -39,8 +44,10 @@ int main(int argc, char *argv[])
 		if (dialog.exec() == QDialog::Rejected)
 			return 0;
 	}
+
 	// Create main window
 	MainWindow w(settings);
+
 	// Show window and run application
 	w.show();
 	return QApplication::exec();

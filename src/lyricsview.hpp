@@ -16,6 +16,7 @@ public:
 	bool lyricsFound() const;
 
 private:
-	bool found;
 	static QString format(const QString &word);
+
+	bool found;
 };

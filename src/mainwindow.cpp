@@ -60,8 +60,7 @@ MainWindow::MainWindow(Settings &settings)
 		sptClient = new spt::ClientHandler(settings, this);
 		auto status = sptClient->start();
 		if (!status.isEmpty())
-			QMessageBox::warning(
-				this,
+			QMessageBox::warning(this,
 				"Client error",
 				QString("Failed to autostart Spotify client: %1").arg(status));
 	}
@@ -117,6 +116,7 @@ void MainWindow::refresh()
 		refreshCount = 0;
 		return;
 	}
+
 	// Assume last refresh was 1 sec ago
 	if (!current.isPlaying)
 		return;
@@ -143,9 +143,12 @@ void MainWindow::refreshed(const spt::Playback &playback)
 	if (nowPlaying->text() != currPlaying)
 	{
 		if (current.isPlaying)
-			setPlayingTrackItem(
-				trackItems.contains(current.item.id)
-				? trackItems[current.item.id] : nullptr);
+		{
+			setPlayingTrackItem(trackItems.contains(current.item.id)
+				? trackItems[current.item.id]
+				: nullptr);
+		}
+
 		nowPlaying->setText(currPlaying);
 		setAlbumImage(current.item.image);
 		setWindowTitle(QString("%1 - %2").arg(current.item.artist).arg(current.item.name));
@@ -155,14 +158,14 @@ void MainWindow::refreshed(const spt::Playback &playback)
 		if (trayIcon != nullptr && settings.general.trayAlbumArt)
 			trayIcon->setPixmap(getAlbum(current.item.image));
 	}
-	mainToolBar->position->setText(
-		QString("%1/%2")
-			.arg(Utils::formatTime(current.progressMs))
-			.arg(Utils::formatTime(current.item.duration)));
+	mainToolBar->position->setText(QString("%1/%2")
+		.arg(Utils::formatTime(current.progressMs))
+		.arg(Utils::formatTime(current.item.duration)));
 	mainToolBar->progress->setValue(current.progressMs);
 	mainToolBar->progress->setMaximum(current.item.duration);
-	mainToolBar->playPause->setIcon(Icon::get(
-		current.isPlaying ? "media-playback-pause" : "media-playback-start"));
+	mainToolBar->playPause->setIcon(Icon::get(current.isPlaying
+		? "media-playback-pause"
+		: "media-playback-start"));
 	mainToolBar->playPause->setText(current.isPlaying ? "Pause" : "Play");
 	if (!settings.general.pulseVolume)
 		mainToolBar->volumeButton->setVolume(current.volume() / 5);
@@ -205,8 +208,8 @@ QWidget *MainWindow::createCentralWidget()
 	contextLayout->addWidget(contextInfo, 1);
 	sidebar->addLayout(contextLayout);
 	contextInfo->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QWidget::connect(
-		contextInfo, &QWidget::customContextMenuRequested, this, &MainWindow::contextInfoMenu);
+	QWidget::connect(contextInfo, &QWidget::customContextMenuRequested,
+		this, &MainWindow::contextInfoMenu);
 
 	// Now playing song
 	auto nowPlayingLayout = new QHBoxLayout();
@@ -270,8 +273,7 @@ QWidget *MainWindow::createCentralWidget()
 	return container;
 }
 
-QMenu *MainWindow::songMenu(
-	const QString &trackId, const QString &artist,
+QMenu *MainWindow::songMenu(const QString &trackId, const QString &artist,
 	const QString &name, const QString &artistId, const QString &albumId)
 {
 	return new SongMenu(trackId, artist, name, artistId, albumId, *spotify, this);
@@ -308,10 +310,8 @@ void MainWindow::openLyrics(const QString &artist, const QString &name)
 
 void MainWindow::refreshPlaylists()
 {
-	auto lastIndex =
-		playlists == nullptr
-		? -1
-		: playlists->currentRow();
+	auto lastIndex = playlists == nullptr
+		? -1 : playlists->currentRow();
 	sptPlaylists = spotify->playlists();
 
 	// Add all playlists
@@ -341,14 +341,12 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 	for (int i = 0; i < tracks.length(); i++)
 	{
 		auto track = tracks.at(i);
-		auto item = new QTreeWidgetItem(
-			{
-				settings.general.trackNumbers ? QString("%1").arg(i + 1, 3) : "",
-				track.name, track.artist, track.album,
-				Utils::formatTime(track.duration),
-				track.addedAt.date().toString(Qt::SystemLocaleShortDate)
-			}
-		);
+		auto item = new QTreeWidgetItem({
+			settings.general.trackNumbers ? QString("%1").arg(i + 1, 3) : "",
+			track.name, track.artist, track.album,
+			Utils::formatTime(track.duration),
+			track.addedAt.date().toString(Qt::SystemLocaleShortDate)
+		});
 		item->setIcon(0, emptyIcon);
 		item->setData(0, RoleTrackId, QString("spotify:track:%1").arg(track.id));
 		item->setData(0, RoleArtistId, track.artistId);
@@ -357,9 +355,7 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 		if (track.isLocal || !track.isPlayable)
 		{
 			item->setDisabled(true);
-			item->setToolTip(
-				1,
-				track.isLocal
+			item->setToolTip(1, track.isLocal
 				? "Local track"
 				: "Unavailable");
 		}
@@ -497,8 +493,7 @@ QByteArray MainWindow::get(const QString &url)
 	while (!reply->isFinished())
 		QCoreApplication::processEvents();
 	reply->deleteLater();
-	return
-		reply->error() == QNetworkReply::NoError
+	return reply->error() == QNetworkReply::NoError
 		? reply->readAll()
 		: QByteArray();
 }
@@ -555,6 +550,7 @@ void MainWindow::cachePlaylist(spt::Playlist &playlist)
 	auto baseFile = QString("%1/playlist/%2").arg(cacheLocation).arg(playlist.id);
 	if (QFileInfo::exists(baseFile))
 		QFile(baseFile).remove();
+
 	// Save new
 	QJsonDocument json(playlist.toJson(*spotify));
 	QFile file(QString("%1.json").arg(baseFile));
@@ -617,13 +613,12 @@ void MainWindow::setFixedWidthTime(bool value)
 
 QIcon MainWindow::currentContextIcon() const
 {
-	return Icon::get(
-		QString("view-media-%1")
-			.arg(current.contextType.isEmpty()
-				 ? "track"
-				 : current.contextType == "album"
-				   ? "album-cover"
-				   : current.contextType));
+	return Icon::get(QString("view-media-%1")
+		.arg(current.contextType.isEmpty()
+			? "track"
+			: current.contextType == "album"
+				? "album-cover"
+				: current.contextType));
 }
 
 void MainWindow::updateContextIcon()
@@ -635,14 +630,13 @@ void MainWindow::updateContextIcon()
 		return;
 	}
 
-	auto currentName =
-		current.contextType.isEmpty() || current.contextUri.isEmpty()
+	auto currentName = current.contextType.isEmpty() || current.contextUri.isEmpty()
 		? "No context"
 		: current.contextType == "album"
-		  ? current.item.album
-		  : current.contextType == "artist"
-			? current.item.artist
-			: getPlaylistName(current.contextUri);
+			? current.item.album
+			: current.contextType == "artist"
+				? current.item.artist
+				: getPlaylistName(current.contextUri);
 
 	contextInfo->setText(currentName);
 	auto size = contextInfo->fontInfo().pixelSize();
@@ -674,8 +668,7 @@ QString MainWindow::getPlaylistName(const QString &id)
 void MainWindow::contextInfoMenu(const QPoint &pos)
 {
 	auto menu = new QMenu(contextInfo);
-	auto open = menu->addAction(
-		currentContextIcon(),
+	auto open = menu->addAction(currentContextIcon(),
 		QString("Open %1").arg(current.contextType));
 	menu->popup(contextInfo->mapToGlobal(pos));
 	QAction::connect(open, &QAction::triggered, this, &MainWindow::contextInfoOpen);
@@ -746,8 +739,8 @@ void MainWindow::orderPlaylists(PlaylistOrder order)
 
 				return
 					t1.length() > 0 && t2.length() > 0
-					? t1.at(latestTrack(t1)).addedAt > t2.at(latestTrack(t2)).addedAt
-					: false;
+						? t1.at(latestTrack(t1)).addedAt > t2.at(latestTrack(t2)).addedAt
+						: false;
 			});
 			break;
 
@@ -762,8 +755,8 @@ void MainWindow::orderPlaylists(PlaylistOrder order)
 
 				return
 					customOrder.contains(id1) && customOrder.contains(id2)
-					? customOrder[id1] < customOrder[id2]
-					: false;
+						? customOrder[id1] < customOrder[id2]
+						: false;
 			});
 			break;
 	}

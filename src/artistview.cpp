@@ -6,7 +6,7 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 	this->parent = dynamic_cast<MainWindow *>(parent);
 	if (this->parent == nullptr)
 		return;
-	auto mainWindow = (MainWindow*) parent;
+	auto mainWindow = (MainWindow *) parent;
 
 	artist = spotify.artist(artistId);
 	setFeatures(QDockWidget::DockWidgetClosable);
@@ -22,18 +22,13 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 	layout->addWidget(coverLabel);
 
 	// Format followers
-	char prefix =
-		artist.followers > 1000000
-		? 'M'
-		: artist.followers > 1000
-		  ? 'k'
-		  : '\0';
+	char prefix = artist.followers > 1000000
+		? 'M' : artist.followers > 1000
+			? 'k' : '\0';
 	auto followers = QString("%1%2 follower%3")
 		.arg(prefix == 'M'
-			 ? artist.followers / 1000000
-			 : prefix == 'k'
-			   ? artist.followers / 1000
-			   : artist.followers)
+			? artist.followers / 1000000 : prefix == 'k'
+				? artist.followers / 1000 : artist.followers)
 		.arg(prefix)
 		.arg(artist.followers == 1 ? "" : "s");
 
@@ -43,11 +38,10 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 	auto title = new QHBoxLayout();
 	followButton = new QPushButton(this);
 	followButton->setIcon(Icon::get(QString("%1starred-symbolic").arg(isFollowing ? "" : "non-")));
-	followButton->setToolTip(
-		QString("%1 artist (%2)")
-			.arg(isFollowing
-				 ? "Unfollow"
-				 : "Follow").arg(followers));
+	followButton->setToolTip(QString("%1 artist (%2)")
+		.arg(isFollowing
+			? "Unfollow"
+			: "Follow").arg(followers));
 	followButton->setFlat(true);
 	QAbstractButton::connect(followButton, &QAbstractButton::clicked, this, &ArtistView::follow);
 	title->addWidget(followButton);
@@ -64,8 +58,7 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 	auto popularityText = QString("%1% popularity").arg(artist.popularity);
 	auto popularity = new QPushButton(this);
 	popularity->setToolTip(popularityText);
-	popularity->setIcon(QIcon(Utils::mask(
-		Icon::get("draw-donut").pixmap(64, 64),
+	popularity->setIcon(QIcon(Utils::mask(Icon::get("draw-donut").pixmap(64, 64),
 		MaskShape::Pie,
 		QVariant(artist.popularity))));
 	popularity->setFlat(true);
@@ -121,19 +114,16 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 		auto parentTab = album.albumGroup == "single" ? singleList : albumList;
 		auto year = album.releaseDate.toString("yyyy");
 		auto item = new QTreeWidgetItem(parentTab, {
-			album.name,
-			year.isEmpty() ? QString() : year
+			album.name, year.isEmpty() ? QString() : year
 		});
 		item->setIcon(0, QIcon(mainWindow->getAlbum(album.image)));
 		item->setData(0, RoleAlbumId, album.id);
 		parentTab->insertTopLevelItem(0, item);
 	}
 
-	QVector<QTreeWidget *> lists(
-		{
-			albumList, singleList
-		}
-	);
+	QVector<QTreeWidget *> lists({
+		albumList, singleList
+	});
 	for (auto list : lists)
 	{
 		QTreeWidget::connect(list, &QTreeWidget::itemClicked, this, &ArtistView::loadAlbumId);
@@ -166,9 +156,9 @@ void ArtistView::follow(bool)
 {
 	auto isFollowing = followButton->toolTip().contains("Unfollow");
 	followButton->setIcon(Icon::get(QString("%1starred-symbolic").arg(isFollowing ? "non-" : "")));
-	followButton->setToolTip(followButton->toolTip().replace(
-		isFollowing ? "Unfollow" : "Follow",
-		isFollowing ? "Follow" : "Unfollow"));
+	followButton->setToolTip(followButton->toolTip()
+		.replace(isFollowing ? "Unfollow" : "Follow",
+			isFollowing ? "Follow" : "Unfollow"));
 	if (isFollowing)
 		spotify.unfollow(spt::Spotify::FollowType::Artist, {artistId});
 	else
@@ -179,7 +169,7 @@ void ArtistView::trackClick(QListWidgetItem *item)
 {
 	auto result = spotify.playTracks(item->data(RoleIndex).toInt(), topTrackIds);
 	if (!result.isEmpty())
-		((MainWindow*) parent)->setStatus(QString("Failed to start playback: %1").arg(result), true);
+		((MainWindow *) parent)->setStatus(QString("Failed to start playback: %1").arg(result), true);
 }
 
 void ArtistView::trackMenu(const QPoint &pos)
@@ -189,13 +179,13 @@ void ArtistView::trackMenu(const QPoint &pos)
 	if (trackId.isEmpty())
 		return;
 	(new SongMenu(trackId, artist.name, item->text(), artist.id,
-				  item->data(RoleAlbumId).toString(), spotify, parent))
+		item->data(RoleAlbumId).toString(), spotify, parent))
 		->popup(topTracksList->mapToGlobal(pos));
 }
 
 void ArtistView::loadAlbumId(QTreeWidgetItem *item)
 {
-	auto mainWindow = (MainWindow*) parent;
+	auto mainWindow = (MainWindow *) parent;
 	if (!mainWindow->loadAlbum(item->data(0, RoleAlbumId).toString(), false))
 		mainWindow->setStatus(QString("Failed to load album"), true);
 }
@@ -203,17 +193,16 @@ void ArtistView::loadAlbumId(QTreeWidgetItem *item)
 void ArtistView::relatedClick(QListWidgetItem *item)
 {
 	relatedList->setEnabled(false);
-	((MainWindow*) parent)->openArtist(item->data(RoleArtistId).toString());
+	((MainWindow *) parent)->openArtist(item->data(RoleArtistId).toString());
 }
 
 void ArtistView::albumMenu(const QPoint &pos)
 {
-	auto list =
-		tabs->currentIndex() == 1
+	auto list = tabs->currentIndex() == 1
 		? albumList
 		: tabs->currentIndex() == 2
-		  ? singleList
-		  : nullptr;
+			? singleList
+			: nullptr;
 	if (list == nullptr)
 		return;
 
@@ -226,7 +215,7 @@ void ArtistView::albumMenu(const QPoint &pos)
 
 void ArtistView::albumDoubleClicked(QTreeWidgetItem *item, int)
 {
-	auto mainWindow = (MainWindow*) parent;
+	auto mainWindow = (MainWindow *) parent;
 	auto result = spotify.playTracks(
 		QString("spotify:album:%1").arg(item->data(0, RoleAlbumId).toString()));
 	if (!result.isEmpty())

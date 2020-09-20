@@ -10,21 +10,23 @@ class TrayIcon;
 #include <QMenu>
 #include <QSystemTrayIcon>
 
-class TrayIcon : private QSystemTrayIcon
+class TrayIcon: private QSystemTrayIcon
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
 	TrayIcon(spt::Spotify *spotify, const Settings &settings, QObject *parent = nullptr);
 	~TrayIcon();
+
 	void message(const QString &message);
 	void setPixmap(const QPixmap &pixmap);
 
 private:
-	spt::Playback	playback();
-	QMenu 			*contextMenu;
-	QAction			*playPause;
-	QAction			*currentTrack;
-	spt::Spotify	*spotify;
-	const Settings	&settings;
+	spt::Playback playback();
+
+	QMenu *contextMenu;
+	QAction *playPause;
+	QAction *currentTrack;
+	spt::Spotify *spotify;
+	const Settings &settings;
 };

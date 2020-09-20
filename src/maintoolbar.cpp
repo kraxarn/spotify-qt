@@ -37,20 +37,18 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, Settings &settings, QWidget *par
 		auto current = mainWindow->getCurrentPlayback();
 		current.isPlaying = !current.isPlaying;
 		mainWindow->refreshed(current);
-		auto status =
-			playPause->iconText() == "Play"
+		auto status = playPause->iconText() == "Play"
 			? this->spotify.pause()
 			: this->spotify.resume();
 		if (!status.isEmpty())
 		{
-			mainWindow->setStatus(
-				QString("Failed to %1 playback: %2")
-					.arg(playPause->iconText() == "Pause" ? "pause" : "resume")
-					.arg(status), true);
+			mainWindow->setStatus(QString("Failed to %1 playback: %2")
+				.arg(playPause->iconText() == "Pause" ? "pause" : "resume")
+				.arg(status), true);
 		}
 	});
 
-	auto next = addAction(Icon::get("media-skip-forward"),  "Next");
+	auto next = addAction(Icon::get("media-skip-forward"), "Next");
 	QAction::connect(previous, &QAction::triggered, [this](bool checked)
 	{
 		auto mainWindow = (MainWindow *) this->parent;

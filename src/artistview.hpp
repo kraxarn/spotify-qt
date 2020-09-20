@@ -13,14 +13,22 @@
 #include <QTreeWidget>
 #include <QVBoxLayout>
 
-class ArtistView : public QDockWidget
+class ArtistView: public QDockWidget
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
 	ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *parent);
 
 private:
+	void follow(bool checked);
+	void trackClick(QListWidgetItem *item);
+	void trackMenu(const QPoint &pos);
+	void loadAlbumId(QTreeWidgetItem *item);
+	void relatedClick(QListWidgetItem *item);
+	void albumMenu(const QPoint &pos);
+	void albumDoubleClicked(QTreeWidgetItem *item, int column);
+
 	QListWidget *relatedList = nullptr;
 	QListWidget *topTracksList = nullptr;
 	QPushButton *followButton = nullptr;
@@ -32,12 +40,4 @@ private:
 	QString artistId;
 	spt::Artist artist;
 	spt::Spotify &spotify;
-
-	void follow(bool checked);
-	void trackClick(QListWidgetItem *item);
-	void trackMenu(const QPoint &pos);
-	void loadAlbumId(QTreeWidgetItem *item);
-	void relatedClick(QListWidgetItem *item);
-	void albumMenu(const QPoint &pos);
-	void albumDoubleClicked(QTreeWidgetItem *item, int column);
 };

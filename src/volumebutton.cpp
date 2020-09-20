@@ -9,7 +9,8 @@ VolumeButton::VolumeButton(Settings &settings, spt::Spotify &spotify, QWidget *p
 	volume->setMinimum(0);
 	volume->setMaximum(20);
 	volume->setValue(settings.general.lastVolume > 0
-		? settings.general.lastVolume : spt::ClientHandler::getVolume() * 20);
+		? settings.general.lastVolume
+		: spt::ClientHandler::getVolume() * 20);
 
 	// Layout for volume slider
 	auto volumeMenu = new QMenu(this);
@@ -23,25 +24,28 @@ VolumeButton::VolumeButton(Settings &settings, spt::Spotify &spotify, QWidget *p
 	setPopupMode(QToolButton::InstantPopup);
 	setMenu(volumeMenu);
 
-	QAbstractSlider::connect(volume, &QAbstractSlider::valueChanged, [this](int value) {
+	QAbstractSlider::connect(volume, &QAbstractSlider::valueChanged, [this](int value)
+	{
 		updateIcon();
 	});
 
 	if (settings.general.pulseVolume)
 	{
 		// If using PulseAudio for volume control, update on every tick
-		QSlider::connect(volume, &QAbstractSlider::valueChanged, [](int value) {
+		QSlider::connect(volume, &QAbstractSlider::valueChanged, [](int value)
+		{
 			spt::ClientHandler::setVolume(value * 0.05);
 		});
 	}
 	else
 	{
 		// If using Spotify for volume control, only update on release
-		QSlider::connect(volume, &QAbstractSlider::sliderReleased, [this]() {
+		QSlider::connect(volume, &QAbstractSlider::sliderReleased, [this]()
+		{
 			auto status = this->spotify.setVolume(volume->value() * 5);
 			if (!status.isEmpty())
 			{
-				auto window = dynamic_cast<MainWindow*>(this->parent());
+				auto window = dynamic_cast<MainWindow *>(this->parent());
 				if (window != nullptr)
 					window->setStatus(QString("Failed to set volume: %1").arg(status), true);
 			}

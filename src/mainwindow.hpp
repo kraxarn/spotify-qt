@@ -2,9 +2,9 @@
 
 #include "main.hpp"
 
-class MainWindow : public QMainWindow
+class MainWindow: public QMainWindow
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
 	explicit MainWindow(Settings &settings);
@@ -83,7 +83,7 @@ private:
 	// Other
 	AudioFeaturesView *audioFeaturesView = nullptr;
 	LyricsView *lyricsView = nullptr;
-	QHash<QString, QTreeWidgetItem*> trackItems;
+	QHash<QString, QTreeWidgetItem *> trackItems;
 	QString cacheLocation;
 	QString sptContext;
 	QVector<spt::Playlist> sptPlaylists;
