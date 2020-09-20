@@ -32,6 +32,11 @@ MainWindow::MainWindow(Settings &settings)
 	spotify = new spt::Spotify(settings, this);
 	network = new QNetworkAccessManager();
 
+	// Empty icon used as replacement for play icon
+	QPixmap emptyPixmap(64, 64);
+	emptyPixmap.fill(Qt::transparent);
+	emptyIcon = QIcon(emptyPixmap);
+
 	// Setup main window
 	setWindowTitle("spotify-qt");
 	setWindowIcon(Icon::get("logo:spotify-qt"));
@@ -332,16 +337,19 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 	songs->clear();
 	trackItems.clear();
 	playingTrackItem = nullptr;
+
 	for (int i = 0; i < tracks.length(); i++)
 	{
 		auto track = tracks.at(i);
 		auto item = new QTreeWidgetItem(
 			{
-				"", track.name, track.artist, track.album,
+				settings.general.trackNumbers ? QString("%1").arg(i + 1, 3) : "",
+				track.name, track.artist, track.album,
 				Utils::formatTime(track.duration),
 				track.addedAt.date().toString(Qt::SystemLocaleShortDate)
 			}
 		);
+		item->setIcon(0, emptyIcon);
 		item->setData(0, RoleTrackId, QString("spotify:track:%1").arg(track.id));
 		item->setData(0, RoleArtistId, track.artistId);
 		item->setData(0, RoleAlbumId, track.albumId);
@@ -582,7 +590,8 @@ void MainWindow::reloadTrayIcon()
 void MainWindow::setPlayingTrackItem(QTreeWidgetItem *item)
 {
 	if (playingTrackItem != nullptr)
-		playingTrackItem->setIcon(0, QIcon());
+		playingTrackItem->setIcon(0, emptyIcon);
+
 	if (item == nullptr)
 	{
 		playingTrackItem = nullptr;

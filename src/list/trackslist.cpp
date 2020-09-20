@@ -15,7 +15,8 @@ TracksList::TracksList(spt::Spotify &spotify, Settings &settings, QWidget *paren
 	setColumnCount(5);
 	setHeaderLabels(
 		{
-			" ", "Title", "Artist", "Album", "Length", "Added"
+			settings.general.trackNumbers ? "#" : "",
+			"Title", "Artist", "Album", "Length", "Added"
 		}
 	);
 	header()->setSectionsMovable(false);
