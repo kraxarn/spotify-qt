@@ -14,7 +14,8 @@ QWidget *SettingsDialog::spotifySettings()
 	auto sptPathBrowse = new QPushButton("...", this);
 	sptPathBrowse->setMaximumWidth(40);
 	sptPathBrowse->setFlat(true);
-	QAbstractButton::connect(sptPathBrowse, &QAbstractButton::clicked, [this](bool checked) {
+	QAbstractButton::connect(sptPathBrowse, &QAbstractButton::clicked, [this](bool checked)
+	{
 		auto filePath = QFileDialog::getOpenFileName(this, "spotifyd path", "/");
 		if (!filePath.isEmpty() && sptPath != nullptr)
 			sptPath->setText(filePath);
@@ -64,11 +65,9 @@ QWidget *SettingsDialog::spotifySettings()
 	// Bitrate
 	sptLayout->addWidget(new QLabel("Quality", sptGroup), 1, 0);
 	sptBitrate = new QComboBox(sptGroup);
-	sptBitrate->addItems(
-		{
-			"Low (96 kbit/s)", "Medium (160 kbit/s)", "High (320 kbit/s)"
-		}
-	);
+	sptBitrate->addItems({
+		"Low (96 kbit/s)", "Medium (160 kbit/s)", "High (320 kbit/s)"
+	});
 	auto bitrate = settings.spotify.bitrate;
 	sptBitrate->setCurrentIndex(bitrate == 96 ? 0 : bitrate == 160 ? 1 : 2);
 	sptLayout->addWidget(sptBitrate, 1, 1);

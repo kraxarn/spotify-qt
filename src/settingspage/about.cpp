@@ -32,17 +32,15 @@ QWidget *SettingsDialog::aboutSettings()
 
 	// User info
 	if (mainWindow != nullptr)
-		layout->addWidget(new QLabel(
-			QString("Hello %1!")
-				.arg(mainWindow->getCurrentUser().displayName)), 0, Qt::AlignHCenter);
+		layout->addWidget(new QLabel(QString("Hello %1!")
+			.arg(mainWindow->getCurrentUser().displayName)), 0, Qt::AlignHCenter);
 
 	// Grid with buttons
 	layout->addSpacing(8);
 	auto options = new QGridLayout();
 
 	// About Qt
-	auto aboutQt = new QPushButton(
-		Icon::get("logo:qt"),
+	auto aboutQt = new QPushButton(Icon::get("logo:qt"),
 		QString("About Qt %1.%2")
 			.arg(QT_VERSION_MAJOR).arg(QT_VERSION_MINOR));
 	aboutQt->setFlat(true);
@@ -62,8 +60,7 @@ QWidget *SettingsDialog::aboutSettings()
 	options->addWidget(generateReport, 0, 1);
 
 	// Open cache directory
-	auto openCache = new QPushButton(
-		Icon::get("folder-temp"),
+	auto openCache = new QPushButton(Icon::get("folder-temp"),
 		QString("Open cache directory (%1M)").arg(cacheSize / 1000 / 1000));
 	openCache->setFlat(true);
 	QAbstractButton::connect(openCache, &QPushButton::clicked, [this, mainWindow](bool checked)

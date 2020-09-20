@@ -11,11 +11,9 @@ QWidget *SettingsDialog::appSettings()
 	appRefreshLabel->setToolTip("How often to refresh playback status from the Spotify servers");
 	appRefreshLayout->addWidget(appRefreshLabel);
 	appRefresh = new QComboBox(this);
-	appRefresh->addItems(
-		{
-			"1", "3", "10"
-		}
-	);
+	appRefresh->addItems({
+		"1", "3", "10"
+	});
 	appRefresh->setEditable(true);
 	appRefresh->setCurrentIndex(-1);
 	appRefresh->setEditText(QString::number(settings.general.refreshInterval));

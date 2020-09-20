@@ -6,23 +6,19 @@ QWidget *SettingsDialog::playlistSettings()
 	layout->setAlignment(Qt::AlignTop);
 	layout->setSpacing(8);
 
-	plHints = QStringList(
-		{
-			"Display in the order they are fetched.",
-			"Display in alphabetical order from A to Z.",
-			"Display in order of most recently edited.",
-			"Display in a custom order defined below."
-		}
-	);
+	plHints = QStringList({
+		"Display in the order they are fetched.",
+		"Display in alphabetical order from A to Z.",
+		"Display in order of most recently edited.",
+		"Display in a custom order defined below."
+	});
 
 	auto typeContainer = new QHBoxLayout();
 	typeContainer->addWidget(new QLabel("Playlist order"));
 	plOrder = new QComboBox(this);
-	plOrder->addItems(
-		{
-			"Default", "Alphabetical", "Recent", "Custom"
-		}
-	);
+	plOrder->addItems({
+		"Default", "Alphabetical", "Recent", "Custom"
+	});
 	plOrder->setCurrentIndex(settings.general.playlistOrder);
 	typeContainer->addWidget(plOrder);
 	layout->addLayout(typeContainer);
@@ -31,8 +27,7 @@ QWidget *SettingsDialog::playlistSettings()
 	plHint->setWordWrap(true);
 	layout->addWidget(plHint);
 
-	QComboBox::connect(
-		plOrder, QOverload<int>::of(&QComboBox::currentIndexChanged),
+	QComboBox::connect(plOrder, QOverload<int>::of(&QComboBox::currentIndexChanged),
 		this, &SettingsDialog::playlistOrderChanged);
 
 	auto mainWindow = dynamic_cast<MainWindow *>(parentWidget());

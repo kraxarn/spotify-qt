@@ -20,9 +20,7 @@ QWidget *SettingsDialog::traySettings()
 	QCheckBox::connect(itfTrayNotify, &QCheckBox::stateChanged, [this](int state)
 	{
 		if (state == Qt::CheckState::Checked && itfTrayIcon != nullptr)
-		{
 			itfTrayIcon->setChecked(true);
-		}
 	});
 
 	// Invert tray icon
