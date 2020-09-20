@@ -160,6 +160,8 @@ void Settings::save()
 	mutex.unlock();
 }
 
+//region Legacy settings for removal in v3.0
+
 QJsonDocument Settings::legacyToJson()
 {
 	if (settings == nullptr)
@@ -370,6 +372,8 @@ bool Settings::fixedWidthTime()
 {
 	return settings->value("FixedWidthTime", false).toBool();
 }
+
+//endregion.0
 
 bool Settings::hasMediaControllerSupport()
 {
