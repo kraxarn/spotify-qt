@@ -38,6 +38,12 @@ QWidget *SettingsDialog::interfaceSettings()
 	itfContextInfo->setChecked(settings.general.showContextInfo);
 	layout->addWidget(itfContextInfo);
 
+	// Track numbers
+	itfTrackNum = new QCheckBox("Show track numbers", this);
+	itfTrackNum->setToolTip("Show track numbers next to tracks in the list");
+	itfTrackNum->setChecked(settings.general.trackNumbers);
+	layout->addWidget(itfTrackNum);
+
 	// Final layout
 	auto widget = new QWidget();
 	widget->setLayout(layout);

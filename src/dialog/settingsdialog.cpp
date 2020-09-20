@@ -142,6 +142,9 @@ bool SettingsDialog::applySettings()
 	settings.general.spotifyPlaybackOrder = appSptOrder->isChecked();
 	settings.general.singleClickPlay = appOneClick->isChecked();
 
+	// Track numbers
+	settings.general.trackNumbers = itfTrackNum->isChecked();
+
 	// Other interface stuff
 	if (itfIcFallback != nullptr)
 		settings.general.fallbackIcons = itfIcFallback->isChecked();
