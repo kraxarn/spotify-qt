@@ -91,6 +91,7 @@ private:
 	int refreshCount = -1;
 	mp::Service *mediaPlayer = nullptr;
 	spt::User currentUser;
+	QIcon emptyIcon;
 
 	// Methods
 	QWidget *createCentralWidget();
