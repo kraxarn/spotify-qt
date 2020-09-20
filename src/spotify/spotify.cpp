@@ -218,13 +218,13 @@ QString Spotify::setDevice(const Device &device)
 	return put("me/player", &body);
 }
 
-QString Spotify::playTracks(const QString &track, const QString &context)
+QString Spotify::playTracks(int trackIndex, const QString &context)
 {
 	QVariantMap body;
 	body["context_uri"] = context;
 	body["offset"] = QJsonObject(
 		{
-			QPair<QString, QJsonValue>("uri", track)
+			QPair<QString, int>("position", trackIndex)
 		}
 	);
 	return put(

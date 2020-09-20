@@ -77,7 +77,7 @@ void TracksList::clicked(QTreeWidgetItem *item, int)
 			|| !this->settings.general.spotifyPlaybackOrder)
 			&& allTracks.count() < 500
 		? this->spotify.playTracks(trackId, allTracks)
-		: this->spotify.playTracks(trackId, mainWindow->getSptContext());
+		: this->spotify.playTracks(item->data(0, RoleIndex).toInt(), mainWindow->getSptContext());
 
 	if (!status.isEmpty())
 		mainWindow->setStatus(QString("Failed to start playback: %1").arg(status), true);
