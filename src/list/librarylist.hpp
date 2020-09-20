@@ -12,7 +12,7 @@ class LibraryList;
 
 class LibraryList: public QTreeWidget
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
 	LibraryList(spt::Spotify &spotify, QWidget *parent);

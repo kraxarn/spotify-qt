@@ -3,52 +3,40 @@
 LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 	: spotify(spotify), parent(parent), QTreeWidget(parent)
 {
-	addTopLevelItems(
-		{
-			Utils::treeItemWithChildren(
-				this,
-				"Recently Played",
-				"Most recently played tracks from any device",
-				QStringList()),
-			Utils::treeItemWithChildren(
-				this,
-				"Liked",
-				"Liked and saved tracks",
-				QStringList()),
-			Utils::treeItemWithChildren(
-				this,
-				"Tracks",
-				"Most played tracks for the past 6 months",
-				QStringList()),
-			Utils::treeItemWithChildren(
-				this,
-				"New Releases",
-				"New albums from artists you listen to",
-				QStringList()),
-			Utils::treeItemWithChildren(
-				this,
-				"Albums",
-				"Liked and saved albums"),
-			Utils::treeItemWithChildren(
-				this,
-				"Artists",
-				"Most played artists for the past 6 months"),
-			Utils::treeItemWithChildren(
-				this,
-				"Following",
-				"Artists you're currently following")
-		}
-	);
+	addTopLevelItems({
+		Utils::treeItemWithChildren(this,
+			"Recently Played",
+			"Most recently played tracks from any device",
+			QStringList()),
+		Utils::treeItemWithChildren(this,
+			"Liked",
+			"Liked and saved tracks",
+			QStringList()),
+		Utils::treeItemWithChildren(this,
+			"Tracks",
+			"Most played tracks for the past 6 months",
+			QStringList()),
+		Utils::treeItemWithChildren(this,
+			"New Releases",
+			"New albums from artists you listen to",
+			QStringList()),
+		Utils::treeItemWithChildren(this,
+			"Albums",
+			"Liked and saved albums"),
+		Utils::treeItemWithChildren(this,
+			"Artists",
+			"Most played artists for the past 6 months"),
+		Utils::treeItemWithChildren(this,
+			"Following",
+			"Artists you're currently following")
+	});
 
 	header()->hide();
 	setCurrentItem(nullptr);
 
-	QTreeWidget::connect(
-		this, &QTreeWidget::itemClicked, this, &LibraryList::clicked);
-	QTreeWidget::connect(
-		this, &QTreeWidget::itemDoubleClicked, this, &LibraryList::doubleClicked);
-	QTreeWidget::connect(
-		this, &QTreeWidget::itemExpanded, this, &LibraryList::expanded);
+	QTreeWidget::connect(this, &QTreeWidget::itemClicked, this, &LibraryList::clicked);
+	QTreeWidget::connect(this, &QTreeWidget::itemDoubleClicked, this, &LibraryList::doubleClicked);
+	QTreeWidget::connect(this, &QTreeWidget::itemExpanded, this, &LibraryList::expanded);
 }
 
 void LibraryList::clicked(QTreeWidgetItem *item, int)
@@ -63,10 +51,12 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 		auto data = item->data(0, 0x100).toString();
 		switch (item->data(0, 0x101).toInt())
 		{
-			case RoleArtistId: mainWindow->openArtist(data);
+			case RoleArtistId:
+				mainWindow->openArtist(data);
 				break;
 
-			case RoleAlbumId: mainWindow->loadAlbum(data, false);
+			case RoleAlbumId:
+				mainWindow->loadAlbum(data, false);
 				break;
 		}
 	}
@@ -115,14 +105,13 @@ void LibraryList::doubleClicked(QTreeWidgetItem *item, int)
 		return;
 
 	// Fetch all tracks in list
-	auto tracks =
-		item->text(0) == "Recently Played"
+	auto tracks = item->text(0) == "Recently Played"
 		? spotify.recentlyPlayed()
 		: item->text(0) == "Liked"
-		  ? spotify.savedTracks()
-		  : item->text(0) == "Tracks"
-			? spotify.topTracks()
-			: QVector<spt::Track>();
+			? spotify.savedTracks()
+			: item->text(0) == "Tracks"
+				? spotify.topTracks()
+				: QVector<spt::Track>();
 
 	// If none were found, don't do anything
 	if (tracks.isEmpty())
@@ -155,8 +144,7 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 		for (auto &artist : spotify.followedArtists())
 			results.append({artist.name, artist.id, RoleArtistId});
 
-	std::sort(
-		results.begin(), results.end(),
+	std::sort(results.begin(), results.end(),
 		[](const QVariantList &x, const QVariantList &y)
 		{
 			return x.first().toString() < y.first().toString();
@@ -172,6 +160,7 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 		item->addChild(child);
 		return;
 	}
+
 	// Add all to the list
 	for (auto &result : results)
 	{

@@ -7,7 +7,7 @@
 
 class TracksList: public QTreeWidget
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
 	TracksList(spt::Spotify &spotify, Settings &settings, QWidget *parent);

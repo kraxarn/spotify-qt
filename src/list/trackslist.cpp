@@ -13,12 +13,10 @@ TracksList::TracksList(spt::Spotify &spotify, Settings &settings, QWidget *paren
 	setRootIsDecorated(false);
 	setAllColumnsShowFocus(true);
 	setColumnCount(5);
-	setHeaderLabels(
-		{
-			settings.general.trackNumbers ? "#" : "",
-			"Title", "Artist", "Album", "Length", "Added"
-		}
-	);
+	setHeaderLabels({
+		settings.general.trackNumbers ? "#" : "",
+		"Title", "Artist", "Album", "Length", "Added"
+	});
 	header()->setSectionsMovable(false);
 	header()->setSectionResizeMode((QHeaderView::ResizeMode) settings.general.songHeaderResizeMode);
 	if (settings.general.songHeaderSortBy > 0)
@@ -50,8 +48,7 @@ void TracksList::menu(const QPoint &pos)
 	if (trackId.isEmpty())
 		return;
 
-	((MainWindow *) parent)->songMenu(
-			trackId, item->text(2), item->text(1),
+	((MainWindow *) parent)->songMenu(trackId, item->text(2), item->text(1),
 			item->data(0, RoleArtistId).toString(),
 			item->data(0, RoleAlbumId).toString())
 		->popup(mapToGlobal(pos));
@@ -78,8 +75,8 @@ void TracksList::clicked(QTreeWidgetItem *item, int)
 		(mainWindow->getLibraryList()->currentItem() != nullptr
 			|| !this->settings.general.spotifyPlaybackOrder)
 			&& allTracks.count() < 500
-		? this->spotify.playTracks(trackIndex, allTracks)
-		: this->spotify.playTracks(trackIndex, mainWindow->getSptContext());
+			? this->spotify.playTracks(trackIndex, allTracks)
+			: this->spotify.playTracks(trackIndex, mainWindow->getSptContext());
 
 	if (!status.isEmpty())
 		mainWindow->setStatus(QString("Failed to start playback: %1").arg(status), true);
@@ -94,11 +91,9 @@ void TracksList::headerMenu(const QPoint &pos)
 	auto menu = new QMenu(header());
 	auto showHeaders = menu->addMenu(Icon::get("visibility"), "Columns to show");
 	auto sortBy = menu->addMenu(Icon::get("view-sort-ascending"), "Default sorting");
-	auto headerTitles = QStringList(
-		{
-			"Title", "Artist", "Album", "Length", "Added"
-		}
-	);
+	auto headerTitles = QStringList({
+		"Title", "Artist", "Album", "Length", "Added"
+	});
 	auto headers = this->settings.general.hiddenSongHeaders;
 	for (int i = 0; i < headerTitles.size(); i++)
 	{
@@ -124,7 +119,7 @@ void TracksList::headerMenu(const QPoint &pos)
 			if (action->isChecked())
 				this->settings.general.hiddenSongHeaders.erase(
 					std::remove(this->settings.general.hiddenSongHeaders.begin(),
-								this->settings.general.hiddenSongHeaders.end(), i));
+						this->settings.general.hiddenSongHeaders.end(), i));
 			else
 				this->settings.general.hiddenSongHeaders.push_back(i);
 			this->settings.save();

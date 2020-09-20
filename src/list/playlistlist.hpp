@@ -8,7 +8,7 @@
 
 class PlaylistList: public QListWidget
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
 	PlaylistList(spt::Spotify &spotify, QWidget *parent);
