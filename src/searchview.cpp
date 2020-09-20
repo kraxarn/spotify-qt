@@ -105,7 +105,7 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent)
 		// Do we want it to continue playing results?
 		auto trackId = QString("spotify:track:%1")
 			.arg(item->data(0, RoleTrackId).toString());
-		auto status = spotify.playTracks(trackId, QStringList(trackId));
+		auto status = spotify.playTracks(0, QStringList(trackId));
 		if (!status.isEmpty())
 			window->setStatus(QString("Failed to play track: %1").arg(status), true);
 	});

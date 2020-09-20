@@ -88,12 +88,14 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 	// Top tracks
 	auto topTracks = artist.topTracks(spotify);
 	topTracksList = new QListWidget(tabs);
+	auto i = 0;
 	for (auto &track : topTracks)
 	{
 		auto item = new QListWidgetItem(track.name, topTracksList);
 		item->setIcon(QIcon(mainWindow->getAlbum(track.image)));
 		item->setData(RoleTrackId, track.id);
 		item->setData(RoleAlbumId, track.albumId);
+		item->setData(RoleIndex, i++);
 		topTrackIds.append(QString("spotify:track:%1").arg(track.id));
 	}
 	QListWidget::connect(topTracksList, &QListWidget::itemClicked, this, &ArtistView::trackClick);
@@ -175,9 +177,7 @@ void ArtistView::follow(bool)
 
 void ArtistView::trackClick(QListWidgetItem *item)
 {
-	auto result = spotify.playTracks(
-		QString("spotify:track:%1").arg(item->data(RoleTrackId).toString()),
-		topTrackIds);
+	auto result = spotify.playTracks(item->data(RoleIndex).toInt(), topTrackIds);
 	if (!result.isEmpty())
 		((MainWindow*) parent)->setStatus(QString("Failed to start playback: %1").arg(result), true);
 }

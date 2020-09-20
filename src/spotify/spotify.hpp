@@ -44,7 +44,7 @@ namespace spt
 		QVector<Device> devices();
 		QString setDevice(const Device &device);
 		QString playTracks(int trackIndex, const QString &context);
-		QString playTracks(const QString &track, const QStringList &all);
+		QString playTracks(int trackIndex, const QStringList &all);
 		QString playTracks(const QString &context);
 		QString setShuffle(bool enabled);
 		QString pause();

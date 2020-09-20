@@ -77,10 +77,9 @@ void TracksList::clicked(QTreeWidgetItem *item, int)
 	auto allTracks = mainWindow->currentTracks();
 	auto status =
 		(mainWindow->getLibraryList()->currentItem() != nullptr
-			|| !this->settings.general.spotifyPlaybackOrder
-			|| !indexFound)
+			|| !this->settings.general.spotifyPlaybackOrder)
 			&& allTracks.count() < 500
-		? this->spotify.playTracks(trackId, allTracks)
+		? this->spotify.playTracks(trackIndex, allTracks)
 		: this->spotify.playTracks(trackIndex, mainWindow->getSptContext());
 
 	if (!status.isEmpty())
