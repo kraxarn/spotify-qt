@@ -46,8 +46,7 @@ bool SettingsDialog::applySettings()
 	auto changeTheme = itfDark->isChecked() != settings.darkTheme();
 	if (changeTheme)
 	{
-		QMessageBox::information(
-			this, "Dark Theme",
+		QMessageBox::information(this, "Dark Theme",
 			"Please restart the application to fully apply selected theme");
 		settings.setDarkTheme(itfDark->isChecked());
 		QApplication::setStyle(settings.general.style);
@@ -58,8 +57,7 @@ bool SettingsDialog::applySettings()
 	if (appMedia != nullptr)
 	{
 		if (appMedia->isChecked() != settings.general.mediaController)
-			QMessageBox::information(
-				this, "Media Controller",
+			QMessageBox::information(this, "Media Controller",
 				"Please restart the application to apply changes");
 		settings.general.mediaController = appMedia->isChecked();
 	}
@@ -85,26 +83,28 @@ bool SettingsDialog::applySettings()
 	if (itfTrayNotify->isChecked() && !itfTrayIcon->isChecked())
 	{
 		itfTrayIcon->setChecked(true);
-		QMessageBox::information(
-			this, "Desktop Notifications",
+		QMessageBox::information(this, "Desktop Notifications",
 			"Desktop notifications requires tray icon to be enabled, so it was enabled");
 	}
+
 	// Check if tray icon needs to be reloaded
 	auto reloadTray = settings.general.trayIcon != itfTrayIcon->isChecked()
 		|| settings.general.trayNotifications != itfTrayNotify->isChecked()
 		|| settings.general.trayLightIcon != itfTrayInvert->isChecked();
+
 	// Apply
 	settings.general.trayIcon = itfTrayIcon->isChecked();
 	settings.general.trayNotifications = itfTrayNotify->isChecked();
 	settings.general.trayLightIcon = itfTrayInvert->isChecked();
 	settings.general.trayAlbumArt = itfTrayAlbum->isChecked();
+
 	// Reload if needed
 	auto window = dynamic_cast<MainWindow *>(parent());
 	if (reloadTray && window != nullptr)
 		window->reloadTrayIcon();
+
 	// Song header resize mode
-	auto resizeMode =
-		itfResizeAuto->isChecked()
+	auto resizeMode = itfResizeAuto->isChecked()
 		? QHeaderView::ResizeToContents
 		: QHeaderView::Interactive;
 	if (resizeMode != settings.general.songHeaderResizeMode && window != nullptr)
@@ -124,16 +124,14 @@ bool SettingsDialog::applySettings()
 	// librespot has no global config support
 	if (sptGlobal->isChecked() && sptVersion->text() == "librespot")
 	{
-		warning(
-			"librespot",
+		warning("librespot",
 			"Global config is not available when using librespot");
 		sptGlobal->setChecked(false);
 	}
 
 	// Spotify global config
 	if (sptGlobal->isChecked() && !sptConfigExists())
-		warning(
-			"spotifyd config not found",
+		warning("spotifyd config not found",
 			QString("Couldn't find a config file for spotifyd. You may experience issues."));
 	settings.spotify.globalConfig = sptGlobal->isChecked();
 
@@ -186,17 +184,15 @@ bool SettingsDialog::applySettings()
 
 void SettingsDialog::applyFail(const QString &setting)
 {
-	warning(
-		"Failed to apply settings",
+	warning("Failed to apply settings",
 		QString("Failed to apply setting \"%1\". Check your settings and try again.").arg(setting));
 }
 
 bool SettingsDialog::sptConfigExists()
 {
 	// Config is either ~/.config/spotifyd/spotifyd.conf or /etc/spotifyd/spotifyd.conf
-	return QFile(
-		QString("%1/.config/spotifyd/spotifyd.conf")
-			.arg(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0])).exists()
+	return QFile(QString("%1/.config/spotifyd/spotifyd.conf")
+		.arg(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0])).exists()
 		|| QFile("/etc/spotifyd/spotifyd.conf").exists();
 }
 

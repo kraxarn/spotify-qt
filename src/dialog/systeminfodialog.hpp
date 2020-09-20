@@ -11,9 +11,9 @@
 #include <QTextEdit>
 #include <QVBoxLayout>
 
-class SystemInfoDialog : public QDialog
+class SystemInfoDialog: public QDialog
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
 	explicit SystemInfoDialog(QWidget *mainWindow, QWidget *parent = nullptr);

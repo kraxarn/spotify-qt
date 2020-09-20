@@ -16,18 +16,18 @@
 #include <QUrl>
 #include <QVBoxLayout>
 
-class SetupDialog : public QDialog
+class SetupDialog: public QDialog
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
-	SetupDialog(Settings &settings, QWidget *parent = nullptr);
+	explicit SetupDialog(Settings &settings, QWidget *parent = nullptr);
 	~SetupDialog() override;
 
 private:
-	spt::Auth	*auth;
-	QTcpServer	*server;
-	QLineEdit	*clientId, *clientSecret;
-	QString		clientIdText, clientSecretText, redirect;
-	Settings	&settings;
+	spt::Auth *auth;
+	QTcpServer *server;
+	QLineEdit *clientId, *clientSecret;
+	QString clientIdText, clientSecretText, redirect;
+	Settings &settings;
 };

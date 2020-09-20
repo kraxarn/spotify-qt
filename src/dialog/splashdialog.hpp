@@ -9,7 +9,7 @@
 
 class SplashDialog: public QSplashScreen
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
 	SplashDialog();

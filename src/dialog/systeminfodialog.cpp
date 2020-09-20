@@ -19,8 +19,7 @@ SystemInfoDialog::SystemInfoDialog(QWidget *mainWindow, QWidget *parent)
 	layout->addWidget(infoAbout);
 
 	auto buttons = new QDialogButtonBox();
-	QPushButton::connect(
-		buttons->addButton(QDialogButtonBox::Ok), &QPushButton::clicked,
+	QPushButton::connect(buttons->addButton(QDialogButtonBox::Ok), &QPushButton::clicked,
 		[this](bool checked)
 		{
 			accept();
@@ -49,7 +48,7 @@ QString SystemInfoDialog::systemInfo()
 	}
 
 	// Device
-	auto device = ((MainWindow*) mainWindow)->getCurrentPlayback().device;
+	auto device = ((MainWindow *) mainWindow)->getCurrentPlayback().device;
 	if (!device.name.isEmpty() && !device.type.isEmpty())
 		info["Device"] = QString("%1 (%2)").arg(device.name).arg(device.type);
 

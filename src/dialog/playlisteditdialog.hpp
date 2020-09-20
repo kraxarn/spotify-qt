@@ -12,16 +12,16 @@
 #include <QTextEdit>
 #include <QVBoxLayout>
 
-class PlaylistEditDialog : public QDialog
+class PlaylistEditDialog: public QDialog
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
 	PlaylistEditDialog(spt::Spotify *spotify, const spt::Playlist &playlist,
 		int selectedIndex, QWidget *parent = nullptr);
 
 private:
-	QLineEdit	*name;
-	QTextEdit	*description;
-	QCheckBox	*isPublic, *isCollaborative;
+	QLineEdit *name;
+	QTextEdit *description;
+	QCheckBox *isPublic, *isCollaborative;
 };

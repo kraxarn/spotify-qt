@@ -12,17 +12,20 @@ DeviceSelectDialog::DeviceSelectDialog(const QVector<spt::Device> &devices, QWid
 		list->addItem(device.name);
 	layout->addWidget(list);
 
-	QListWidget::connect(list, &QListWidget::itemDoubleClicked, [this](QListWidgetItem *item) {
+	QListWidget::connect(list, &QListWidget::itemDoubleClicked, [this](QListWidgetItem *item)
+	{
 		accept();
 	});
 
 	auto buttons = new QDialogButtonBox();
 	auto okButton = buttons->addButton(QDialogButtonBox::Ok);
-	QPushButton::connect(okButton, &QPushButton::clicked, [this](bool checked) {
+	QPushButton::connect(okButton, &QPushButton::clicked, [this](bool checked)
+	{
 		accept();
 	});
 	auto cancelButton = buttons->addButton(QDialogButtonBox::Cancel);
-	QPushButton::connect(cancelButton, &QPushButton::clicked, [this](bool checked) {
+	QPushButton::connect(cancelButton, &QPushButton::clicked, [this](bool checked)
+	{
 		reject();
 	});
 	layout->addWidget(buttons);

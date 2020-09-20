@@ -7,9 +7,9 @@
 #include <QVBoxLayout>
 #include <QtGlobal>
 
-class WhatsNewDialog : public QDialog
+class WhatsNewDialog: public QDialog
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
 	WhatsNewDialog(const QString &tag, Settings &settings, QWidget *parent);

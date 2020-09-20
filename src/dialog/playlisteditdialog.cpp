@@ -7,14 +7,17 @@ PlaylistEditDialog::PlaylistEditDialog(spt::Spotify *spotify, const spt::Playlis
 	setWindowTitle(playlist.name);
 	setModal(true);
 	auto layout = new QVBoxLayout(this);
+
 	// Name
 	layout->addWidget(new QLabel("Name:", this));
 	name = new QLineEdit(playlist.name, this);
 	layout->addWidget(name);
+
 	// Description
 	layout->addWidget(new QLabel("Description:", this));
 	description = new QTextEdit(playlist.description, this);
 	layout->addWidget(description);
+
 	// Toggles
 	auto toggles = new QHBoxLayout();
 	toggles->setAlignment(Qt::AlignLeft);
@@ -25,6 +28,7 @@ PlaylistEditDialog::PlaylistEditDialog(spt::Spotify *spotify, const spt::Playlis
 	isCollaborative->setChecked(playlist.collaborative);
 	toggles->addWidget(isCollaborative);
 	layout->addLayout(toggles);
+
 	// Focus depending on selected index
 	if (selectedIndex < 0)
 		setFocus();
@@ -32,15 +36,17 @@ PlaylistEditDialog::PlaylistEditDialog(spt::Spotify *spotify, const spt::Playlis
 		name->setFocus();
 	else if (selectedIndex == 1)
 		description->setFocus();
+
 	// Dialog buttons
 	auto buttons = new QDialogButtonBox(this);
 	buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-	QDialogButtonBox::connect(buttons, &QDialogButtonBox::accepted, [this, playlist, spotify] {
+	QDialogButtonBox::connect(buttons, &QDialogButtonBox::accepted, [this, playlist, spotify]
+	{
 		auto pl = playlist;
-		pl.name				= name->text();
-		pl.description		= description->toPlainText();
-		pl.isPublic			= isPublic->isChecked();
-		pl.collaborative	= isCollaborative->isChecked();
+		pl.name = name->text();
+		pl.description = description->toPlainText();
+		pl.isPublic = isPublic->isChecked();
+		pl.collaborative = isCollaborative->isChecked();
 		auto result = spotify->editPlaylist(pl);
 		if (result.isEmpty())
 		{
@@ -50,9 +56,12 @@ PlaylistEditDialog::PlaylistEditDialog(spt::Spotify *spotify, const spt::Playlis
 		QMessageBox::warning(this, "Edit failed",
 			QString("Failed to save changes: %1").arg(result));
 	});
-	QDialogButtonBox::connect(buttons, &QDialogButtonBox::rejected, [this] {
+
+	QDialogButtonBox::connect(buttons, &QDialogButtonBox::rejected, [this]
+	{
 		reject();
 	});
+
 	layout->addWidget(buttons);
 	setLayout(layout);
 }

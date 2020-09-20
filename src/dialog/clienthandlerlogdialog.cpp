@@ -15,8 +15,7 @@ ClientHandlerLogDialog::ClientHandlerLogDialog(QWidget *parent)
 	layout->addWidget(logText);
 
 	auto buttons = new QDialogButtonBox();
-	QPushButton::connect(
-		buttons->addButton(QDialogButtonBox::Ok), &QPushButton::clicked,
+	QPushButton::connect(buttons->addButton(QDialogButtonBox::Ok), &QPushButton::clicked,
 		[this](bool checked)
 		{
 			accept();
@@ -32,8 +31,7 @@ ClientHandlerLogDialog::ClientHandlerLogDialog(QWidget *parent)
 
 int ClientHandlerLogDialog::exec()
 {
-	return
-		spt::ClientHandler::getLog().isEmpty()
+	return spt::ClientHandler::getLog().isEmpty()
 		? QMessageBox::information(parentWidget(), "No logs", "No logs found to display")
 		: QDialog::exec();
 }
