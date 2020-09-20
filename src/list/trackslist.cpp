@@ -63,15 +63,13 @@ void TracksList::clicked(QTreeWidgetItem *item, int)
 
 	auto mainWindow = (MainWindow *) this->parent;
 
-	auto trackId = item->data(0, RoleTrackId).toString();
-	if (trackId.isEmpty())
+	bool indexFound;
+	auto trackIndex = item->data(0, RoleIndex).toInt(&indexFound);
+	if (!indexFound)
 	{
 		mainWindow->setStatus("Failed to start playback: track not found", true);
 		return;
 	}
-
-	bool indexFound;
-	auto trackIndex = item->data(0, RoleIndex).toInt(&indexFound);
 
 	// If we played from library, we don't have any context
 	auto allTracks = mainWindow->currentTracks();
