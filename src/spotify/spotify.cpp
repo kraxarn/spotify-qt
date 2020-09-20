@@ -228,7 +228,7 @@ QString Spotify::playTracks(int trackIndex, const QString &context)
 		}
 	);
 	return put(
-		currentDevice == nullptr
+		currentDevice == nullptr || currentDevice.isEmpty()
 		? QString("me/player/play")
 		: QString("me/player/play?device_id=%1").arg(currentDevice), &body);
 }
