@@ -1,6 +1,9 @@
 #pragma once
 
-namespace mp { class MediaPlayerPlayer; }
+namespace mp
+{
+	class MediaPlayerPlayer;
+}
 
 #include "../mainwindow.hpp"
 #include "../spotify/spotify.hpp"
@@ -16,9 +19,10 @@ namespace mp { class MediaPlayerPlayer; }
 
 namespace mp
 {
-	class MediaPlayerPlayer : public QDBusAbstractAdaptor
+	class MediaPlayerPlayer: public QDBusAbstractAdaptor
 	{
-		Q_OBJECT
+	Q_OBJECT
+
 		Q_CLASSINFO("D-Bus Interface", "org.mpris.MediaPlayer2.Player")
 
 		Q_PROPERTY(QString PlaybackStatus READ playbackStatus)
@@ -80,8 +84,8 @@ namespace mp
 		void OpenUri(QString uri) const;
 
 	private:
-		QDBusConnection	dBus;
-		spt::Spotify	*spotify;
+		QDBusConnection dBus;
+		spt::Spotify *spotify;
 
 		spt::Playback currentPlayback() const;
 	};

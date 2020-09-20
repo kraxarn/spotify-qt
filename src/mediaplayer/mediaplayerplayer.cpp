@@ -3,7 +3,7 @@
 using namespace mp;
 
 MediaPlayerPlayer::MediaPlayerPlayer(spt::Spotify *spotify, QObject *parent)
-: spotify(spotify), dBus(QDBusConnection::sessionBus()), QDBusAbstractAdaptor(parent)
+	: spotify(spotify), dBus(QDBusConnection::sessionBus()), QDBusAbstractAdaptor(parent)
 {
 }
 
@@ -54,6 +54,7 @@ bool MediaPlayerPlayer::canControl() const
 {
 	return true;
 }
+
 QMap<QString, QVariant> MediaPlayerPlayer::metadata() const
 {
 	return currentPlayback().metadata();
@@ -161,5 +162,5 @@ void MediaPlayerPlayer::setCurrentPlayback(const spt::Playback &playback)
 
 spt::Playback MediaPlayerPlayer::currentPlayback() const
 {
-	return ((Service*) parent())->currentPlayback();
+	return ((Service *) parent())->currentPlayback();
 }

@@ -13,9 +13,10 @@ class MediaPlayer;
 #include <QDebug>
 #include <QStringList>
 
-class MediaPlayer : public QDBusAbstractAdaptor
+class MediaPlayer: public QDBusAbstractAdaptor
 {
-	Q_OBJECT
+Q_OBJECT
+
 	Q_CLASSINFO("D-Bus Interface", "org.mpris.MediaPlayer2")
 
 	Q_PROPERTY(bool CanQuit READ canQuit)
@@ -40,7 +41,7 @@ public slots:
 	Q_NOREPLY void Raise() const;
 
 private:
-	QDBusConnection		dBus;
-	spt::Spotify		*spotify;
-	QObject				*parent;
+	QDBusConnection dBus;
+	spt::Spotify *spotify;
+	QObject *parent;
 };

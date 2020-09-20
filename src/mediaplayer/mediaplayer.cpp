@@ -1,6 +1,7 @@
 #include "mediaplayer.hpp"
 
-MediaPlayer::MediaPlayer(spt::Spotify *spotify, QObject *parent) : spotify(spotify), parent(parent),
+MediaPlayer::MediaPlayer(spt::Spotify *spotify, QObject *parent)
+	: spotify(spotify), parent(parent),
 	dBus(QDBusConnection::sessionBus()), QDBusAbstractAdaptor(parent)
 {
 }
@@ -13,13 +14,14 @@ void MediaPlayer::Quit() const
 void MediaPlayer::Raise() const
 {
 	if (parent != nullptr)
-		((QWidget*) parent)->raise();
+		((QWidget *) parent)->raise();
 }
 
 bool MediaPlayer::canQuit() const
 {
 	return true;
 }
+
 QString MediaPlayer::identity() const
 {
 	return "spotify-qt";

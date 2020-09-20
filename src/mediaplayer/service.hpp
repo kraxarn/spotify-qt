@@ -1,6 +1,9 @@
 #pragma once
 
-namespace mp { class Service; }
+namespace mp
+{
+	class Service;
+}
 
 #include "../spotify/spotify.hpp"
 #include "mediaplayer.hpp"
@@ -10,7 +13,7 @@ namespace mp { class Service; }
 
 namespace mp
 {
-	class Service : public QObject
+	class Service: public QObject
 	{
 	Q_OBJECT
 
@@ -19,25 +22,17 @@ namespace mp
 		virtual ~Service();
 
 		spt::Playback currentPlayback();
-
-		static void signalPropertiesChange(const QObject* adaptor, const QVariantMap& properties);
-
+		static void signalPropertiesChange(const QObject *adaptor, const QVariantMap &properties);
 		void metadataChanged();
-
 		void currentSourceChanged(const spt::Playback &playback);
-
 		void stateUpdated();
-
 		void seekableChanged();
-
 		void volumeChanged();
-
 		void tick(qint64 newPos);
-
 		bool isValid();
 
 	private:
-		spt::Spotify		*spotify;
-		MediaPlayerPlayer	*playerPlayer;
+		spt::Spotify *spotify;
+		MediaPlayerPlayer *playerPlayer;
 	};
 }

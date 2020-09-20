@@ -5,7 +5,8 @@ using namespace mp;
 #define SERVICE_NAME "org.mpris.MediaPlayer2.spotify-qt"
 #define SERVICE_PATH "/org/mpris/MediaPlayer2"
 
-Service::Service(spt::Spotify *spotify, QObject *parent) : spotify(spotify), playerPlayer(nullptr), QObject(parent)
+Service::Service(spt::Spotify *spotify, QObject *parent)
+	: spotify(spotify), playerPlayer(nullptr), QObject(parent)
 {
 	if (!QDBusConnection::sessionBus().registerService(SERVICE_NAME))
 	{
@@ -20,16 +21,16 @@ Service::Service(spt::Spotify *spotify, QObject *parent) : spotify(spotify), pla
 
 Service::~Service() = default;
 
-void Service::signalPropertiesChange(const QObject* adaptor, const QVariantMap& properties)
+void Service::signalPropertiesChange(const QObject *adaptor, const QVariantMap &properties)
 {
 	QDBusMessage msg = QDBusMessage::createSignal("/org/mpris/MediaPlayer2",
-		"org.freedesktop.DBus.Properties", "PropertiesChanged" );
+		"org.freedesktop.DBus.Properties", "PropertiesChanged");
 
-    msg << adaptor->metaObject()->classInfo(0).value();
-    msg << properties;
-    msg << QStringList();
+	msg << adaptor->metaObject()->classInfo(0).value();
+	msg << properties;
+	msg << QStringList();
 
-    QDBusConnection::sessionBus().send(msg);
+	QDBusConnection::sessionBus().send(msg);
 }
 
 void Service::metadataChanged()
@@ -66,7 +67,7 @@ void Service::tick(qint64 newPos)
 
 spt::Playback Service::currentPlayback()
 {
-	return ((MainWindow*) parent())->currentPlayback();
+	return ((MainWindow *) parent())->currentPlayback();
 }
 
 bool Service::isValid()
