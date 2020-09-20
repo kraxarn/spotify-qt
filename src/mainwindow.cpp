@@ -777,11 +777,9 @@ void MainWindow::toggleTrackNumbers(bool enabled)
 	for (int i = 0; i < songs->topLevelItemCount(); i++)
 	{
 		auto item = songs->topLevelItem(i);
-		if (enabled)
-			item->setText(0, QString("%1")
-				.arg(item->data(0, RoleIndex).toInt() + 1, 3));
-		else
-			item->setText(0, QString());
+		item->setText(0, enabled
+			? QString("%1").arg(item->data(0, RoleIndex).toInt() + 1, 3)
+			: QString());
 	}
 }
 
