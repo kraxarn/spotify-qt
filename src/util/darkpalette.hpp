@@ -2,7 +2,7 @@
 
 #include <QPalette>
 
-class DarkPalette : public QPalette
+class DarkPalette: public QPalette
 {
 public:
 	DarkPalette();

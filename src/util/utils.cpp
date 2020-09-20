@@ -30,13 +30,16 @@ void Utils::applyPalette(Palette palette)
 	QPalette p;
 	switch (palette)
 	{
-		case PaletteApp: p = QApplication::palette();
+		case PaletteApp:
+			p = QApplication::palette();
 			break;
 
-		case PaletteStyle: p = QApplication::style()->standardPalette();
+		case PaletteStyle:
+			p = QApplication::style()->standardPalette();
 			break;
 
-		case PaletteDark: p = DarkPalette();
+		case PaletteDark:
+			p = DarkPalette();
 			break;
 	}
 
@@ -64,40 +67,37 @@ QPixmap Utils::mask(const QPixmap &source, MaskShape shape, const QVariant &data
 	{
 		case MaskShape::App:
 			polygon << QPointF(img.width() / 4.f, 0)
-					<< QPointF(img.width(), 0)
-					<< QPointF(img.width(), (img.height() / 4.f) * 3)
-					<< QPointF((img.width() / 4.f) * 3, img.height())
-					<< QPointF(0, img.height())
-					<< QPointF(0, img.height() / 4.f);
+				<< QPointF(img.width(), 0)
+				<< QPointF(img.width(), (img.height() / 4.f) * 3)
+				<< QPointF((img.width() / 4.f) * 3, img.height())
+				<< QPointF(0, img.height())
+				<< QPointF(0, img.height() / 4.f);
 			break;
 
 		case MaskShape::Pie:
 			switch (data.toInt() / 25)
 			{
 				case 0:
-					polygon = QPolygonF(QRectF(
-						img.width() / 2.f, 0,
+					polygon = QPolygonF(QRectF(img.width() / 2.f, 0,
 						img.width() / 2.f, img.height() / 2.f));
 					break;
 
 				case 1:
-					polygon = QPolygonF(QRectF(
-						img.width() / 2.f, 0,
+					polygon = QPolygonF(QRectF(img.width() / 2.f, 0,
 						img.width() / 2.f, img.height()));
 					break;
 
 				case 2:
 					polygon << QPointF(img.width() / 2.f, 0)
-							<< QPointF(img.width() / 2.f, img.height() / 2.f)
-							<< QPointF(0, img.height() / 2.f)
-							<< QPointF(0, img.height())
-							<< QPointF(img.width(), img.height())
-							<< QPointF(img.width(), 0);
+						<< QPointF(img.width() / 2.f, img.height() / 2.f)
+						<< QPointF(0, img.height() / 2.f)
+						<< QPointF(0, img.height())
+						<< QPointF(img.width(), img.height())
+						<< QPointF(img.width(), 0);
 					break;
 
 				case 3:
-					polygon = QPolygonF(QRectF(
-						0, 0, img.width(), img.height()));
+					polygon = QPolygonF(QRectF(0, 0, img.width(), img.height()));
 					break;
 			}
 			break;
@@ -124,7 +124,7 @@ QString Utils::formatTime(int ms)
 		.arg(duration.second() % 60, 2, 10, QChar('0'));
 }
 
-QGroupBox *Utils::createGroupBox(QVector<QWidget*> &widgets, QWidget *parent)
+QGroupBox *Utils::createGroupBox(QVector<QWidget *> &widgets, QWidget *parent)
 {
 	auto group = new QGroupBox(parent);
 	auto layout = new QVBoxLayout();
