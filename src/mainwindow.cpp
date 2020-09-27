@@ -318,7 +318,8 @@ void MainWindow::openLyrics(const QString &artist, const QString &name)
 void MainWindow::refreshPlaylists()
 {
 	auto lastIndex = playlists == nullptr
-		? -1 : playlists->currentRow();
+		? -1
+		: playlists->currentRow();
 	sptPlaylists = spotify->playlists();
 
 	// Add all playlists
