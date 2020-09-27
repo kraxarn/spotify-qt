@@ -596,3 +596,8 @@ void Spotify::unfollow(Spotify::FollowType type, const QStringList &ids)
 	del(QString("me/following?type=%1&ids=%2")
 		.arg(followTypeString(type)).arg(ids.join(',')), {});
 }
+
+bool Spotify::isValid() const
+{
+	return refreshValid;
+}

@@ -79,6 +79,7 @@ namespace spt
 		QVector<bool> isFollowing(FollowType type, const QStringList &ids);
 		void follow(FollowType type, const QStringList &ids);
 		void unfollow(FollowType type, const QStringList &ids);
+		bool isValid() const;
 
 	public slots:
 		void requestCurrentPlayback();
@@ -95,6 +96,7 @@ namespace spt
 		QString currentDevice;
 		Settings &settings;
 		QNetworkAccessManager *networkManager;
+		bool refreshValid = false;
 
 		QNetworkRequest request(const QString &url);
 		QString put(const QString &url, QVariantMap *body = nullptr);
