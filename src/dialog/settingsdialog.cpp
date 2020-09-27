@@ -141,9 +141,11 @@ bool SettingsDialog::applySettings()
 	settings.general.singleClickPlay = appOneClick->isChecked();
 
 	// Track numbers
-	if (settings.general.trackNumbers != itfTrackNum->isChecked() && window != nullptr)
+	if (window != nullptr)
 		window->toggleTrackNumbers(itfTrackNum->isChecked());
-	settings.general.trackNumbers = itfTrackNum->isChecked();
+	settings.general.trackNumbers = itfTrackNum->isChecked()
+		? ContextAll
+		: ContextNone;
 
 	// Other interface stuff
 	if (itfIcFallback != nullptr)

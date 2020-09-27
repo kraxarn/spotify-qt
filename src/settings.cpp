@@ -78,7 +78,7 @@ void Settings::load()
 	general.spotifyPlaybackOrder = g["spotify_playback_order"].toBool(false);
 	general.style = g["style"].toString();
 	general.stylePalette = (Palette) g["style_palette"].toInt(PaletteApp);
-	general.trackNumbers = g["track_numbers"].toBool(true);
+	general.trackNumbers = (SpotifyContext) g["track_numbers"].toInt(ContextAll);
 	general.trayAlbumArt = g["tray_album_art"].toBool(false);
 	general.trayIcon = g["tray_icon"].toBool(true);
 	general.trayLightIcon = g["tray_light_icon"].toBool(false);

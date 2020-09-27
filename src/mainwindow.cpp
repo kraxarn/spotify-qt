@@ -352,7 +352,9 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 	{
 		auto track = tracks.at(i);
 		auto item = new QTreeWidgetItem({
-			settings.general.trackNumbers ? QString("%1").arg(i + 1, 3) : "",
+			settings.general.trackNumbers == ContextAll
+				? QString("%1").arg(i + 1, 3)
+				: "",
 			track.name, track.artist, track.album,
 			Utils::formatTime(track.duration),
 			track.addedAt.date().toString(Qt::SystemLocaleShortDate)

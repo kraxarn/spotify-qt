@@ -2,6 +2,7 @@
 
 #include "enum/palette.hpp"
 #include "enum/playlistorder.hpp"
+#include "enum/spotifycontext.hpp"
 #include "util/utils.hpp"
 
 #include <QCoreApplication>
@@ -33,13 +34,13 @@ public:
 	typedef struct {
 		QString style, lastPlaylist, lastVersion;
 		bool pulseVolume, mediaController, spotifyPlaybackOrder, trayIcon, trayNotifications, trayLightIcon,
-			showChangelog, fallbackIcons, fixedWidthTime, trayAlbumArt, showContextInfo, singleClickPlay,
-			trackNumbers;
+			showChangelog, fallbackIcons, fixedWidthTime, trayAlbumArt, showContextInfo, singleClickPlay;
 		Palette stylePalette;
 		QVector<int> hiddenSongHeaders;
 		int songHeaderResizeMode, songHeaderSortBy, refreshInterval, lastVolume;
 		PlaylistOrder playlistOrder;
 		QStringList customPlaylistOrder;
+		SpotifyContext trackNumbers;
 	} General;
 
 	typedef struct {
