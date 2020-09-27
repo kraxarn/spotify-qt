@@ -7,7 +7,7 @@ Spotify::Spotify(Settings &settings, QObject *parent)
 {
 	lastAuth = 0;
 	networkManager = new QNetworkAccessManager(this);
-	refresh();
+	refreshValid = refresh();
 }
 
 QNetworkRequest Spotify::request(const QString &url)
@@ -177,9 +177,11 @@ bool Spotify::refresh()
 	reply->deleteLater();
 
 	// Check if error
-	if (json.contains("error_description"))
+	if (json.contains("error_description") || !json.contains("access_token"))
 	{
-		qWarning() << "warning: failed to refresh token:" << json["error_description"];
+		auto error = json["error_description"].toString();
+		qWarning() << "warning: failed to refresh token:"
+			<< (error.isEmpty() ? "no access token" : error);
 		return false;
 	}
 
