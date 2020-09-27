@@ -8,6 +8,7 @@ namespace spt
 #include "../util/utils.hpp"
 #include "spotify.hpp"
 #include "track.hpp"
+#include "user.hpp"
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -24,6 +25,7 @@ namespace spt
 
 		QVector<Track> loadTracks(Spotify &spotify) const;
 		QJsonObject toJson(Spotify &spotify) const;
+		bool isOwner(const User &user) const;
 
 		bool collaborative;
 		QString description, id, image, name, snapshot, ownerId, ownerName;

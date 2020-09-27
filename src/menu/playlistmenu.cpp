@@ -21,7 +21,7 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 			.arg(minutes >= 60 ? QString("%1 h ").arg(minutes / 60) : QString())
 			.arg(minutes % 60))->setEnabled(false);
 
-	auto isOwner = !playlist.ownerId.isEmpty() && playlist.ownerId == window->getCurrentUser().id;
+	auto isOwner = playlist.isOwner(window->getCurrentUser());
 	if (!isOwner && !playlist.ownerName.isEmpty())
 		addAction(QString("By %1").arg(playlist.ownerName))->setEnabled(false);
 

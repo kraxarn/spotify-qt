@@ -87,3 +87,8 @@ QJsonObject Playlist::toJson(Spotify &spotify) const
 		QPair<QString, QString>("owner_name", ownerName)
 	});
 }
+
+bool Playlist::isOwner(const User &user) const
+{
+	return !ownerId.isEmpty() && ownerId == user.id;
+}
