@@ -32,6 +32,16 @@ MainWindow::MainWindow(Settings &settings)
 	spotify = new spt::Spotify(settings, this);
 	network = new QNetworkAccessManager();
 
+	// Check connection
+	stateValid = spotify->isValid();
+	if (!stateValid)
+	{
+		splash->finish(this);
+		QMessageBox::warning(this, "Connection failed",
+			"Failed to connect to Spotify, check your connection and try again");
+		return;
+	}
+
 	// Empty icon used as replacement for play icon
 	QPixmap emptyPixmap(64, 64);
 	emptyPixmap.fill(Qt::transparent);
@@ -836,6 +846,11 @@ spt::Playback &MainWindow::getCurrentPlayback()
 mp::Service *MainWindow::getMediaPlayer()
 {
 	return mediaPlayer;
+}
+
+bool MainWindow::isValid() const
+{
+	return stateValid;
 }
 
 //endregion

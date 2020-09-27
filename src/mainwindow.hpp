@@ -44,6 +44,7 @@ public:
 	void refreshed(const spt::Playback &playback);
 	void orderPlaylists(PlaylistOrder order);
 	void toggleTrackNumbers(bool enabled);
+	bool isValid() const;
 
 	// Getters for private properties
 	QString &getCacheLocation();
@@ -92,6 +93,7 @@ private:
 	mp::Service *mediaPlayer = nullptr;
 	spt::User currentUser;
 	QIcon emptyIcon;
+	bool stateValid = true;
 
 	// Methods
 	QWidget *createCentralWidget();
