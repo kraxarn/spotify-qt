@@ -46,8 +46,8 @@ SetupDialog::SetupDialog(Settings &settings, QWidget *parent)
 	server = nullptr;
 	QAbstractButton::connect(authButton, &QAbstractButton::clicked, [this](bool checked)
 	{
-		clientIdText = clientId->text();
-		clientSecretText = clientSecret->text();
+		clientIdText = clientId->text().trimmed();
+		clientSecretText = clientSecret->text().trimmed();
 		clientId->setDisabled(true);
 		clientSecret->setDisabled(true);
 		redirect = QString("http://localhost:8888");
