@@ -41,8 +41,8 @@ QWidget *SettingsDialog::appSettings()
 #endif
 
 	// Spotify playback order
-	appSptOrder = new QCheckBox("Spotify playback order", this);
-	appSptOrder->setToolTip("Use Spotify playback order instead of app list order");
+	appSptOrder = new QCheckBox("Play in order of track number", this);
+	appSptOrder->setToolTip("Play tracks in order of track number, instead of by order in list.");
 	appSptOrder->setChecked(settings.general.spotifyPlaybackOrder);
 	layout->addWidget(appSptOrder);
 
