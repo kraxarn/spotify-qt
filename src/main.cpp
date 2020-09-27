@@ -49,6 +49,9 @@ int main(int argc, char *argv[])
 	MainWindow w(settings);
 
 	// Show window and run application
+	if (!w.isValid())
+		return 1;
+
 	w.show();
 	return QApplication::exec();
 }
