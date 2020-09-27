@@ -197,8 +197,6 @@ QWidget *MainWindow::createCentralWidget()
 	//region Playlists
 	playlists = new PlaylistList(*spotify, this);
 	refreshPlaylists();
-	if (settings.general.playlistOrder != PlaylistOrderDefault)
-		orderPlaylists(settings.general.playlistOrder);
 
 	auto playlistContainer = Utils::createGroupBox(QVector<QWidget *>() << playlists, this);
 	playlistContainer->setTitle("Playlists");
@@ -339,6 +337,10 @@ void MainWindow::refreshPlaylists()
 	}
 	if (lastIndex >= 0)
 		playlists->setCurrentRow(lastIndex);
+
+	// Sort
+	if (settings.general.playlistOrder != PlaylistOrderDefault)
+		orderPlaylists(settings.general.playlistOrder);
 }
 
 bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
