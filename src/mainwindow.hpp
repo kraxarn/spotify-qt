@@ -35,8 +35,7 @@ public:
 	void saveTracksToCache(const QString &id, const QVector<spt::Track> &tracks);
 	bool loadSongs(const QVector<spt::Track> &tracks);
 	QSet<QString> allArtists();
-	QMenu *songMenu(
-		const QString &trackId, const QString &artist,
+	QMenu *songMenu(const QString &trackId, const QString &artist,
 		const QString &name, const QString &artistId, const QString &albumId);
 	QStringList currentTracks();
 	void setPlayingTrackItem(QTreeWidgetItem *item);

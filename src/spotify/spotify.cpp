@@ -161,11 +161,9 @@ bool Spotify::refresh()
 	// Create request
 	QNetworkRequest request(QUrl("https://accounts.spotify.com/api/token"));
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-	request.setRawHeader(
-		"Authorization",
-		"Basic " + QString("%1:%2")
-			.arg(settings.account.clientId)
-			.arg(settings.account.clientSecret).toUtf8().toBase64());
+	request.setRawHeader("Authorization", "Basic " + QString("%1:%2")
+		.arg(settings.account.clientId)
+		.arg(settings.account.clientSecret).toUtf8().toBase64());
 
 	// Send request
 	auto reply = networkManager->post(request, postData);
