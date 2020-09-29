@@ -71,12 +71,11 @@ void TracksList::clicked(QTreeWidgetItem *item, int)
 
 	// If we played from library, we don't have any context
 	auto allTracks = mainWindow->currentTracks();
-	auto status =
-		(mainWindow->getLibraryList()->currentItem() != nullptr
-			|| !this->settings.general.spotifyPlaybackOrder)
-			&& allTracks.count() < 500
-			? this->spotify.playTracks(trackIndex, allTracks)
-			: this->spotify.playTracks(trackIndex, mainWindow->getSptContext());
+	auto status = (mainWindow->getLibraryList()->currentItem() != nullptr
+		|| !this->settings.general.spotifyPlaybackOrder)
+		&& allTracks.count() < 500
+		? this->spotify.playTracks(trackIndex, allTracks)
+		: this->spotify.playTracks(trackIndex, mainWindow->getSptContext());
 
 	if (!status.isEmpty())
 		mainWindow->setStatus(QString("Failed to start playback: %1").arg(status), true);
@@ -117,9 +116,11 @@ void TracksList::headerMenu(const QPoint &pos)
 		{
 			header()->setSectionHidden(i + 1, !action->isChecked());
 			if (action->isChecked())
-				this->settings.general.hiddenSongHeaders.erase(
-					std::remove(this->settings.general.hiddenSongHeaders.begin(),
+			{
+				this->settings.general.hiddenSongHeaders
+					.erase(std::remove(this->settings.general.hiddenSongHeaders.begin(),
 						this->settings.general.hiddenSongHeaders.end(), i));
+			}
 			else
 				this->settings.general.hiddenSongHeaders.push_back(i);
 			this->settings.save();

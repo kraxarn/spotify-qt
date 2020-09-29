@@ -757,10 +757,9 @@ void MainWindow::orderPlaylists(PlaylistOrder order)
 				auto t1 = playlistTracks(i1->data(DataRole::RolePlaylistId).toString());
 				auto t2 = playlistTracks(i2->data(DataRole::RolePlaylistId).toString());
 
-				return
-					t1.length() > 0 && t2.length() > 0
-						? t1.at(latestTrack(t1)).addedAt > t2.at(latestTrack(t2)).addedAt
-						: false;
+				return t1.length() > 0 && t2.length() > 0
+					? t1.at(latestTrack(t1)).addedAt > t2.at(latestTrack(t2)).addedAt
+					: false;
 			});
 			break;
 
