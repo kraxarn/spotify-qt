@@ -317,9 +317,11 @@ void MainWindow::openLyrics(const QString &artist, const QString &name)
 
 void MainWindow::refreshPlaylists()
 {
-	auto lastIndex = playlists == nullptr
-		? -1
-		: playlists->currentRow();
+	QListWidgetItem *currentItem = nullptr;
+	QString lastItem;
+	if (playlists->currentItem() != nullptr)
+		lastItem = playlists->currentItem()->data(RolePlaylistId).toString();
+
 	sptPlaylists = spotify->playlists();
 
 	// Add all playlists
@@ -335,13 +337,17 @@ void MainWindow::refreshPlaylists()
 
 		item->setData(RolePlaylistId, playlist.id);
 		item->setData(RoleIndex, i++);
+
+		if (playlist.id == lastItem)
+			currentItem = item;
 	}
-	if (lastIndex >= 0)
-		playlists->setCurrentRow(lastIndex);
 
 	// Sort
 	if (settings.general.playlistOrder != PlaylistOrderDefault)
 		orderPlaylists(settings.general.playlistOrder);
+
+	if (currentItem != nullptr)
+		playlists->setCurrentItem(currentItem);
 }
 
 bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
