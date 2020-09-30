@@ -72,7 +72,7 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name,
 
 	// Remove from playlist
 	auto remPlaylist = addAction(Icon::get("list-remove"), "Remove from playlist");
-	remPlaylist->setEnabled(mainWindow->getPlaylistsList()->currentRow() >= 0);
+	remPlaylist->setVisible(mainWindow->getPlaylistsList()->currentRow() >= 0);
 	QAction::connect(remPlaylist, &QAction::triggered, this, &SongMenu::remFromPlaylist);
 
 	addSeparator();
