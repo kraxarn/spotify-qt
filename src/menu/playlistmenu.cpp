@@ -16,10 +16,14 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 		duration += track.duration;
 	auto minutes = duration / 1000 / 60;
 	if (tracks.length() > 1)
+	{
 		addAction(QString("%1 tracks, %2%3 m")
 			.arg(tracks.length())
-			.arg(minutes >= 60 ? QString("%1 h ").arg(minutes / 60) : QString())
+			.arg(minutes >= 60
+				? QString("%1 h ").arg(minutes / 60)
+				: QString())
 			.arg(minutes % 60))->setEnabled(false);
+	}
 
 	auto isOwner = playlist.isOwner(window->getCurrentUser());
 	if (!isOwner && !playlist.ownerName.isEmpty())
