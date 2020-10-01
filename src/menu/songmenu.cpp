@@ -1,12 +1,34 @@
 #include "songmenu.hpp"
 
-SongMenu::SongMenu(const QString &trackId, QString artist, QString name,
-	const QString &artistId, const QString &albumId, spt::Spotify &spotify, QWidget *parent)
-	: spotify(spotify), trackId(trackId), artist(std::move(artist)), name(std::move(name)), QMenu(parent)
+#include <utility>
+
+SongMenu::SongMenu(QTreeWidgetItem *item, spt::Spotify &spotify, QWidget *parent)
+	: SongMenu(item->data(0, RoleTrackId).toString(), item->text(2),
+	item->text(1), item->data(0, RoleArtistId).toString(),
+	item->data(0, RoleAlbumId).toString(),
+	item->data(0, RoleIndex).toInt(), spotify, parent)
+{
+}
+
+SongMenu::SongMenu(QListWidgetItem *item, QString artist, spt::Spotify &spotify, QWidget *parent)
+	: SongMenu(item->data(RoleTrackId).toString(), artist,
+	item->text(), item->data(RoleArtistId).toString(),
+	item->data(RoleAlbumId).toString(),
+	item->data(RoleIndex).toInt(), spotify, parent)
+{
+}
+
+SongMenu::SongMenu(const QString &trackId, QString artist, QString name, const QString &artistId,
+	const QString &albumId, int index, spt::Spotify &spotify, QWidget *parent)
+	: trackId(trackId), artist(std::move(artist)), name(std::move(name)), index(index), spotify(spotify),
+	QMenu(parent)
 {
 	this->parent = dynamic_cast<MainWindow *>(parent);
 	if (this->parent == nullptr)
+	{
+		qDebug() << "warning: parent is not main window, song menu won't function";
 		return;
+	}
 	auto mainWindow = (MainWindow *) parent;
 
 	track = trackId.startsWith("spotify:track")

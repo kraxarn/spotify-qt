@@ -280,12 +280,6 @@ QWidget *MainWindow::createCentralWidget()
 	return container;
 }
 
-QMenu *MainWindow::songMenu(const QString &trackId, const QString &artist,
-	const QString &name, const QString &artistId, const QString &albumId)
-{
-	return new SongMenu(trackId, artist, name, artistId, albumId, *spotify, this);
-}
-
 void MainWindow::openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name)
 {
 	auto view = new AudioFeaturesView(*spotify, trackId, artist, name, this);

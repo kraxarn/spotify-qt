@@ -135,10 +135,7 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent)
 		auto trackId = item->data(0, RoleTrackId).toString();
 		if (trackId.isEmpty())
 			return;
-		(new SongMenu(trackId, item->text(1),
-			item->text(0), item->data(0, RoleArtistId).toString(),
-			item->data(0, RoleAlbumId).toString(), spotify, window))
-			->popup(trackList->mapToGlobal(pos));
+		(new SongMenu(item, spotify, window))->popup(trackList->mapToGlobal(pos));
 	});
 
 	// Playlist context menu

@@ -14,18 +14,21 @@ class SongMenu: public QMenu
 Q_OBJECT
 
 public:
-	SongMenu(
-		const QString &trackId, QString artist, QString name, const QString &artistId,
-		const QString &albumId, spt::Spotify &spotify, QWidget *parent = nullptr);
+	SongMenu(QTreeWidgetItem *item, spt::Spotify &spotify, QWidget *parent = nullptr);
+	SongMenu(QListWidgetItem *item, QString artist, spt::Spotify &spotify, QWidget *parent = nullptr);
 
 private:
+	SongMenu(const QString &trackId, QString artist, QString name, const QString &artistId,
+		const QString &albumId, int index, spt::Spotify &spotify, QWidget *parent = nullptr);
+
 	QWidget *parent;
 	spt::Spotify &spotify;
-	bool isLiked;
+	bool isLiked = false;
 	const QString trackId;
 	const QString artist;
-	const QString name;
-	QString track;
+	const QString name; // TODO: trackName
+	QString track; // TODO: trackUri
+	int index = 0;
 	const spt::Playlist *currentPlaylist = nullptr;
 
 	void like(bool checked);
