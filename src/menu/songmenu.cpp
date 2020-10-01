@@ -134,13 +134,12 @@ void SongMenu::addToPlaylist(QAction *action)
 	// Check if it's already in the playlist
 	auto mainWindow = (MainWindow *) parent;
 	auto playlistId = action->data().toString();
-	auto tracks = mainWindow->playlistTracks(playlistId);
+	auto tracks = spotify.playlist(playlistId).loadTracks(spotify);
 	for (auto &item : tracks)
 	{
 		if (trackId.endsWith(item.id))
 		{
-			if (QMessageBox::information(mainWindow,
-				"Duplicate",
+			if (QMessageBox::information(mainWindow, "Duplicate",
 				"Track is already in the playlist, do you want to add it anyway?",
 				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::No)
 				return;
