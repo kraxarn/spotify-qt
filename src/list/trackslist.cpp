@@ -48,10 +48,7 @@ void TracksList::menu(const QPoint &pos)
 	if (trackId.isEmpty())
 		return;
 
-	((MainWindow *) parent)->songMenu(trackId, item->text(2), item->text(1),
-			item->data(0, RoleArtistId).toString(),
-			item->data(0, RoleAlbumId).toString())
-		->popup(mapToGlobal(pos));
+	(new SongMenu(item, spotify, parent))->popup(mapToGlobal(pos));
 }
 
 void TracksList::clicked(QTreeWidgetItem *item, int)

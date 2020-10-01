@@ -15,10 +15,13 @@ Q_OBJECT
 
 public:
 	SongMenu(QTreeWidgetItem *item, spt::Spotify &spotify, QWidget *parent = nullptr);
+
 	SongMenu(QListWidgetItem *item, QString artist, spt::Spotify &spotify, QWidget *parent = nullptr);
 
+	SongMenu(const spt::Track &track, spt::Spotify &spotify, QWidget *parent = nullptr);
+
 private:
-	SongMenu(const QString &trackId, QString artist, QString name, const QString &artistId,
+	SongMenu(const QString &trackId, QString artist, QString name, QString artistId,
 		const QString &albumId, int index, spt::Spotify &spotify, QWidget *parent = nullptr);
 
 	QWidget *parent;
@@ -26,8 +29,10 @@ private:
 	bool isLiked = false;
 	const QString trackId;
 	const QString artist;
-	const QString name; // TODO: trackName
-	QString track; // TODO: trackUri
+	const QString artistId;
+	const QString albumId;
+	const QString trackName;
+	QString trackUri;
 	int index = 0;
 	const spt::Playlist *currentPlaylist = nullptr;
 
@@ -37,4 +42,6 @@ private:
 	void remFromPlaylist(bool checked);
 	void openTrackFeatures(bool checked);
 	void openLyrics(bool checked);
+	void viewArtist(bool checked);
+	void openAlbum(bool checked);
 };

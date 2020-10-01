@@ -237,8 +237,7 @@ QWidget *MainWindow::createCentralWidget()
 		auto track = current.item;
 		if (track.name.isEmpty() && track.artist.isEmpty())
 			return;
-		songMenu(track.id, track.artist, track.name, track.artistId, track.albumId)
-			->popup(nowPlaying->mapToGlobal(pos));
+		(new SongMenu(track, *spotify))->popup(nowPlaying->mapToGlobal(pos));
 	});
 
 	// Sidebar as widget

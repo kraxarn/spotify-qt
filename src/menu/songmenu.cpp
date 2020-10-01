@@ -1,5 +1,4 @@
 #include "songmenu.hpp"
-
 #include <utility>
 
 SongMenu::SongMenu(QTreeWidgetItem *item, spt::Spotify &spotify, QWidget *parent)
@@ -11,17 +10,22 @@ SongMenu::SongMenu(QTreeWidgetItem *item, spt::Spotify &spotify, QWidget *parent
 }
 
 SongMenu::SongMenu(QListWidgetItem *item, QString artist, spt::Spotify &spotify, QWidget *parent)
-	: SongMenu(item->data(RoleTrackId).toString(), artist,
+	: SongMenu(item->data(RoleTrackId).toString(), std::move(artist),
 	item->text(), item->data(RoleArtistId).toString(),
 	item->data(RoleAlbumId).toString(),
 	item->data(RoleIndex).toInt(), spotify, parent)
 {
 }
 
-SongMenu::SongMenu(const QString &trackId, QString artist, QString name, const QString &artistId,
+SongMenu::SongMenu(const spt::Track &track, spt::Spotify &spotify, QWidget *parent)
+	: SongMenu(track.id, track.artist, track.name, track.artistId, track.albumId, 0, spotify, parent)
+{
+}
+
+SongMenu::SongMenu(const QString &trackId, QString artist, QString name, QString artistId,
 	const QString &albumId, int index, spt::Spotify &spotify, QWidget *parent)
-	: trackId(trackId), artist(std::move(artist)), name(std::move(name)), index(index), spotify(spotify),
-	QMenu(parent)
+	: trackId(trackId), artist(std::move(artist)), trackName(std::move(name)), index(index), spotify(spotify),
+	artistId(std::move(artistId)), QMenu(parent)
 {
 	this->parent = dynamic_cast<MainWindow *>(parent);
 	if (this->parent == nullptr)
@@ -31,7 +35,7 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name, const Q
 	}
 	auto mainWindow = (MainWindow *) parent;
 
-	track = trackId.startsWith("spotify:track")
+	trackUri = trackId.startsWith("spotify:track")
 		? QString(trackId).remove(0, QString("spotify:track:").length())
 		: trackId;
 	auto trackFeatures = addAction(Icon::get("view-statistics"), "Audio features");
@@ -44,14 +48,14 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name, const Q
 	auto shareSongLink = share->addAction("Copy song link");
 	QAction::connect(shareSongLink, &QAction::triggered, [this](bool checked)
 	{
-		QApplication::clipboard()->setText(QString("https://open.spotify.com/track/%1").arg(track));
+		QApplication::clipboard()->setText(QString("https://open.spotify.com/track/%1").arg(trackUri));
 		((MainWindow *) this->parent)->setStatus("Link copied to clipboard");
 	});
 
 	auto shareSongOpen = share->addAction("Open in Spotify");
 	QAction::connect(shareSongOpen, &QAction::triggered, [this](bool checked)
 	{
-		Utils::openUrl(QString("https://open.spotify.com/track/%1").arg(track),
+		Utils::openUrl(QString("https://open.spotify.com/track/%1").arg(trackUri),
 			LinkType::Web, this->parent);
 	});
 
@@ -60,7 +64,7 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name, const Q
 	auto likedTracks = mainWindow->loadTracksFromCache("liked");
 	isLiked = false;
 	for (const auto &likedTrack : likedTracks)
-		if (likedTrack.id == track)
+		if (likedTrack.id == trackUri)
 		{
 			isLiked = true;
 			break;
@@ -99,16 +103,10 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name, const Q
 
 	addSeparator();
 	auto goArtist = addAction(Icon::get("view-media-artist"), "View artist");
-	QAction::connect(goArtist, &QAction::triggered, [mainWindow, artistId](bool checked)
-	{
-		mainWindow->openArtist(artistId);
-	});
+	QAction::connect(goArtist, &QAction::triggered, this, &SongMenu::viewArtist);
 
 	auto goAlbum = addAction(Icon::get("view-media-album-cover"), "Open album");
-	QAction::connect(goAlbum, &QAction::triggered, [mainWindow, albumId](bool checked)
-	{
-		mainWindow->loadAlbum(albumId, false);
-	});
+	QAction::connect(goAlbum, &QAction::triggered, this, &SongMenu::openAlbum);
 }
 
 void SongMenu::like(bool)
@@ -117,10 +115,9 @@ void SongMenu::like(bool)
 		? spotify.removeSavedTrack(trackId)
 		: spotify.addSavedTrack(trackId);
 	if (!status.isEmpty())
-		((MainWindow *) parent)->setStatus(
-			QString("Failed to %1: %2")
-				.arg(isLiked ? "dislike" : "like")
-				.arg(status), true);
+		((MainWindow *) parent)->setStatus(QString("Failed to %1: %2")
+			.arg(isLiked ? "dislike" : "like")
+			.arg(status), true);
 }
 
 void SongMenu::addToQueue(bool)
@@ -162,8 +159,16 @@ void SongMenu::addToPlaylist(QAction *action)
 
 void SongMenu::remFromPlaylist(bool)
 {
-	// Remove from interface
+	// Remove from Spotify
 	auto mainWindow = (MainWindow *) parent;
+	auto status = spotify.removeFromPlaylist(currentPlaylist->id, trackId, index);
+	if (!status.isEmpty())
+	{
+		mainWindow->setStatus(QString("Failed to remove track from playlist: %1").arg(status), true);
+		return;
+	}
+
+	// Remove from interface
 	QTreeWidgetItem *item = nullptr;
 	int i;
 	for (i = 0; i < mainWindow->getSongsTree()->topLevelItemCount(); i++)
@@ -171,40 +176,37 @@ void SongMenu::remFromPlaylist(bool)
 		item = mainWindow->getSongsTree()->topLevelItem(i);
 		if (item->data(0, RoleTrackId).toString() == trackId)
 			break;
-		// Failed to find
 		item = nullptr;
 	}
+
 	if (item == nullptr)
 	{
 		mainWindow->setStatus("Failed to remove track, not found in playlist", true);
 		return;
 	}
 
-	// Remove from Spotify
-	auto status = spotify.removeFromPlaylist(
-		currentPlaylist->id, trackId,
-		item->data(0, RoleIndex).toInt());
-
-	// Update status
-	if (!status.isEmpty())
-	{
-		mainWindow->setStatus(QString("Failed to remove track from playlist: %1").arg(status), true);
-		return;
-	}
-
 	// i doesn't necessarily match item index depending on sorting order
 	mainWindow->getSongsTree()->takeTopLevelItem(i);
-	mainWindow->setStatus(
-		QString(R"(Removed "%1 - %2" from "%3")")
-			.arg(name).arg(artist).arg(currentPlaylist->name));
+	mainWindow->setStatus(QString(R"(Removed "%1 - %2" from "%3")")
+		.arg(trackName).arg(artist).arg(currentPlaylist->name));
 }
 
 void SongMenu::openTrackFeatures(bool)
 {
-	((MainWindow *) parent)->openAudioFeaturesWidget(trackId, artist, name);
+	((MainWindow *) parent)->openAudioFeaturesWidget(trackId, artist, trackName);
 }
 
 void SongMenu::openLyrics(bool)
 {
-	((MainWindow *) parent)->openLyrics(artist, name);
+	((MainWindow *) parent)->openLyrics(artist, trackName);
+}
+
+void SongMenu::viewArtist(bool)
+{
+	((MainWindow *) parent)->openArtist(artistId);
+}
+
+void SongMenu::openAlbum(bool)
+{
+	((MainWindow *) parent)->loadAlbum(albumId, false);
 }
