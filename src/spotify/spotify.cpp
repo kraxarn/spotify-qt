@@ -119,12 +119,11 @@ QString Spotify::post(const QString &url)
 	return errorMessage(networkManager->post(req, QByteArray()));
 }
 
-QString Spotify::del(const QString &url, QVariantMap *body)
+QString Spotify::del(const QString &url, const QJsonDocument &json)
 {
 	auto req = request(url);
-	req.setHeader(QNetworkRequest::ContentTypeHeader, QString("application/json"));
-	auto delData = body == nullptr ? nullptr : QJsonDocument::fromVariant(*body).toJson();
-	return errorMessage(networkManager->sendCustomRequest(req, "DELETE", delData));
+	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+	return errorMessage(networkManager->sendCustomRequest(req, "DELETE", json.toJson()));
 }
 
 QString Spotify::errorMessage(QNetworkReply *reply)
@@ -373,16 +372,18 @@ QString Spotify::addToPlaylist(const QString &playlistId, const QString &trackId
 
 QString Spotify::removeFromPlaylist(const QString &playlistId, const QString &trackId, int pos)
 {
-	QVariantMap body;
-	body["tracks"] = QJsonArray({
-		QJsonObject({
-			QPair<QString, QString>("uri", trackId),
-			QPair<QString, QJsonArray>("positions", QJsonArray({
-				pos
-			}))
-		})
+	QJsonDocument json({
+		QPair<QString, QJsonArray>("tracks", QJsonArray({
+			QJsonObject({
+				QPair<QString, QString>("uri", trackId),
+				QPair<QString, QJsonArray>("positions", QJsonArray({
+					pos
+				}))
+			})
+		}))
 	});
-	return del(QString("playlists/%1/tracks").arg(playlistId), &body);
+
+	return del(QString("playlists/%1/tracks").arg(playlistId), json);
 }
 
 SearchResults Spotify::search(const QString &query)
@@ -481,13 +482,15 @@ QString Spotify::addSavedTrack(const QString &trackId)
 
 QString Spotify::removeSavedTrack(const QString &trackId)
 {
-	QVariantMap body;
-	body["ids"] = QStringList({
-		trackId.startsWith("spotify:track")
-			? trackId.right(trackId.length() - QString("spotify:track:").length())
-			: trackId
+	QJsonDocument json({
+		QPair<QString, QJsonArray>("ids", QJsonArray({
+			trackId.startsWith("spotify:track")
+				? trackId.right(trackId.length() - QString("spotify:track:").length())
+				: trackId
+		}))
 	});
-	return del("me/tracks", &body);
+
+	return del("me/tracks", json);
 }
 
 QVector<Album> Spotify::newReleases(int offset)

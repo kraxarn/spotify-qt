@@ -101,7 +101,7 @@ namespace spt
 		QNetworkRequest request(const QString &url);
 		QString put(const QString &url, QVariantMap *body = nullptr);
 		QString post(const QString &url);
-		QString del(const QString &url, QVariantMap *body);
+		QString del(const QString &url, const QJsonDocument &json);
 		static QString errorMessage(QNetworkReply *reply);
 		QJsonDocument get(const QString &url);
 
