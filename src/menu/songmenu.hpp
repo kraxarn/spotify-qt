@@ -14,15 +14,15 @@ class SongMenu: public QMenu
 Q_OBJECT
 
 public:
-	SongMenu(QTreeWidgetItem *item, spt::Spotify &spotify, QWidget *parent = nullptr);
+	SongMenu(QTreeWidgetItem *item, spt::Spotify &spotify, QWidget *parent);
 
-	SongMenu(QListWidgetItem *item, QString artist, spt::Spotify &spotify, QWidget *parent = nullptr);
+	SongMenu(QListWidgetItem *item, QString artist, spt::Spotify &spotify, QWidget *parent);
 
-	SongMenu(const spt::Track &track, spt::Spotify &spotify, QWidget *parent = nullptr);
+	SongMenu(const spt::Track &track, spt::Spotify &spotify, QWidget *parent);
 
 private:
 	SongMenu(const QString &trackId, QString artist, QString name, QString artistId,
-		const QString &albumId, int index, spt::Spotify &spotify, QWidget *parent = nullptr);
+		const QString &albumId, int index, spt::Spotify &spotify, QWidget *parent);
 
 	QWidget *parent;
 	spt::Spotify &spotify;
