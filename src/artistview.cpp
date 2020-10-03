@@ -1,6 +1,6 @@
 #include "artistview.hpp"
 
-ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *parent)
+ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const Settings &settings, QWidget *parent)
 	: spotify(spotify), artistId(artistId), QDockWidget(parent)
 {
 	this->parent = dynamic_cast<MainWindow *>(parent);
@@ -91,7 +91,10 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, QWidget *
 		item->setData(RoleIndex, i++);
 		topTrackIds.append(QString("spotify:track:%1").arg(track.id));
 	}
-	QListWidget::connect(topTracksList, &QListWidget::itemClicked, this, &ArtistView::trackClick);
+	QListWidget::connect(topTracksList, settings.general.singleClickPlay
+			? &QListWidget::itemClicked
+			: &QListWidget::itemDoubleClicked,
+		this, &ArtistView::trackClick);
 
 	topTracksList->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(topTracksList, &QWidget::customContextMenuRequested, this, &ArtistView::trackMenu);
