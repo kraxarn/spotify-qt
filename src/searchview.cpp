@@ -1,6 +1,6 @@
 #include "searchview.hpp"
 
-SearchView::SearchView(spt::Spotify &spotify, QWidget *parent)
+SearchView::SearchView(spt::Spotify &spotify, Settings &settings, QWidget *parent)
 	: spotify(spotify), parent(parent), QDockWidget(parent)
 {
 	auto window = (MainWindow *) parent;
@@ -116,8 +116,9 @@ SearchView::SearchView(spt::Spotify &spotify, QWidget *parent)
 	});
 
 	// Open track
-	QTreeWidget::connect(trackList, &QTreeWidget::itemClicked,
-		[this, window, &spotify](QTreeWidgetItem *item, int column)
+	QTreeWidget::connect(trackList, settings.general.singleClickPlay
+			? &QTreeWidget::itemClicked : &QTreeWidget::itemDoubleClicked,
+		[window, &spotify](QTreeWidgetItem *item, int column)
 		{
 			// Do we want it to continue playing results?
 			auto trackId = QString("spotify:track:%1")

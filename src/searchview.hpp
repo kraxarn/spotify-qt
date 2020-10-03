@@ -16,7 +16,7 @@ class SearchView: public QDockWidget
 Q_OBJECT
 
 public:
-	explicit SearchView(spt::Spotify &spotify, QWidget *parent = nullptr);
+	explicit SearchView(spt::Spotify &spotify, Settings &settings, QWidget *parent = nullptr);
 
 private:
 	QListWidget *artistList = nullptr;
