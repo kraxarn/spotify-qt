@@ -150,11 +150,14 @@ bool ClientHandler::supportsPulse()
 
 QString ClientHandler::version(const QString &path)
 {
-	return path.endsWith("spotifyd")
+	QFileInfo fileInfo(path);
+
+	return fileInfo.baseName() == "spotifyd"
 		? clientExec(path, {
 			"--version"
-		}) : path.endsWith("librespot")
-			? "librespot" : QString();
+		}) : fileInfo.baseName() == "librespot"
+			? "librespot"
+			: QString();
 }
 
 bool ClientHandler::isRunning()
