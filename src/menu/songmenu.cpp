@@ -81,9 +81,13 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name, QString
 	// Add to playlist
 	addSeparator();
 	auto addPlaylist = addMenu(Icon::get("list-add"), "Add to playlist");
-	currentPlaylist = !mainWindow->hasPlaylistSelected()
-		? nullptr
-		: &mainWindow->getSptPlaylists().at(mainWindow->getPlaylistsList()->currentRow());
+
+	auto playlistItem = mainWindow->getPlaylistsList()->currentItem();
+	if (playlistItem != nullptr)
+	{
+		currentPlaylist = &mainWindow->getSptPlaylists().at(playlistItem->data(RoleIndex).toInt());
+	}
+
 	auto currentUserId = mainWindow->getCurrentUser().id;
 	for (auto &playlist : mainWindow->getSptPlaylists())
 	{
