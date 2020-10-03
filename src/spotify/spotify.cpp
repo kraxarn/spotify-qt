@@ -24,8 +24,7 @@ QNetworkRequest Spotify::request(const QString &url)
 	QNetworkRequest request((QUrl("https://api.spotify.com/v1/" + url)));
 
 	// Set header
-	request.setRawHeader(
-		"Authorization",
+	request.setRawHeader("Authorization",
 		("Bearer " + settings.account.accessToken).toUtf8());
 
 	// Return prepared header
@@ -63,10 +62,7 @@ void Spotify::getLater(const QString &url)
 {
 	// Prepare fetch of request
 	auto context = new QObject();
-	QNetworkAccessManager::connect(
-		networkManager,
-		&QNetworkAccessManager::finished,
-		context,
+	QNetworkAccessManager::connect(networkManager, &QNetworkAccessManager::finished, context,
 		[this, context, url](QNetworkReply *reply)
 		{
 			auto replyUrl = reply->url().toString();
