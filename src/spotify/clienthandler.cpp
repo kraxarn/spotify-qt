@@ -152,12 +152,14 @@ QString ClientHandler::version(const QString &path)
 {
 	QFileInfo fileInfo(path);
 
-	return fileInfo.baseName() == "spotifyd"
-		? clientExec(path, {
-			"--version"
-		}) : fileInfo.baseName() == "librespot"
-			? "librespot"
-			: QString();
+	return !fileInfo.exists()
+		? QString()
+		: fileInfo.baseName() == "spotifyd"
+			? clientExec(path, {
+				"--version"
+			}) : fileInfo.baseName() == "librespot"
+				? "librespot"
+				: QString();
 }
 
 bool ClientHandler::isRunning()
