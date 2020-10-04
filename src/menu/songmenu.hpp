@@ -22,7 +22,7 @@ public:
 
 private:
 	SongMenu(const QString &trackId, QString artist, QString name, QString artistId,
-		const QString &albumId, int index, spt::Spotify &spotify, QWidget *parent);
+		QString albumId, int index, spt::Spotify &spotify, QWidget *parent);
 
 	QWidget *parent;
 	spt::Spotify &spotify;
