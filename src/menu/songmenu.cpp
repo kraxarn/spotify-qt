@@ -110,6 +110,7 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name, QString
 	QAction::connect(goArtist, &QAction::triggered, this, &SongMenu::viewArtist);
 
 	auto goAlbum = addAction(Icon::get("view-media-album-cover"), "Open album");
+	goAlbum->setVisible(this->albumId.length() > 1);
 	QAction::connect(goAlbum, &QAction::triggered, this, &SongMenu::openAlbum);
 }
 
