@@ -25,7 +25,7 @@ SongMenu::SongMenu(const spt::Track &track, spt::Spotify &spotify, QWidget *pare
 SongMenu::SongMenu(const QString &trackId, QString artist, QString name, QString artistId,
 	const QString &albumId, int index, spt::Spotify &spotify, QWidget *parent)
 	: trackId(trackId), artist(std::move(artist)), trackName(std::move(name)), index(index), spotify(spotify),
-	artistId(std::move(artistId)), QMenu(parent)
+	artistId(std::move(artistId)), albumId(albumId), QMenu(parent)
 {
 	this->parent = dynamic_cast<MainWindow *>(parent);
 	if (this->parent == nullptr)
