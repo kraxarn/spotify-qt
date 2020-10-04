@@ -6,13 +6,14 @@ namespace spt
 }
 
 #include "../dialog/deviceselectdialog.hpp"
+#include "../enum/followtype.hpp"
+#include "../settings.hpp"
 #include "artist.hpp"
 #include "audiofeatures.hpp"
 #include "device.hpp"
 #include "playback.hpp"
 #include "playlist.hpp"
 #include "searchresults.hpp"
-#include "../settings.hpp"
 #include "user.hpp"
 
 #include <QCoreApplication>
@@ -33,12 +34,6 @@ namespace spt
 	Q_OBJECT
 
 	public:
-		enum class FollowType
-		{
-			Artist,
-			User
-		};
-
 		explicit Spotify(Settings &settings, QObject *parent = nullptr);
 
 		QJsonObject getAsObject(const QString &url);

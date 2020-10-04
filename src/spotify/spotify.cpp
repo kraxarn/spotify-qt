@@ -582,13 +582,13 @@ QString Spotify::followTypeString(FollowType type)
 	return QString();
 }
 
-void Spotify::follow(Spotify::FollowType type, const QStringList &ids)
+void Spotify::follow(FollowType type, const QStringList &ids)
 {
 	put(QString("me/following?type=%1&ids=%2")
 		.arg(followTypeString(type)).arg(ids.join(',')));
 }
 
-void Spotify::unfollow(Spotify::FollowType type, const QStringList &ids)
+void Spotify::unfollow(FollowType type, const QStringList &ids)
 {
 	del(QString("me/following?type=%1&ids=%2")
 		.arg(followTypeString(type)).arg(ids.join(',')), {});

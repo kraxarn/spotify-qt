@@ -33,7 +33,7 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const Set
 		.arg(artist.followers == 1 ? "" : "s");
 
 	// Artist name title
-	auto follows = spotify.isFollowing(spt::Spotify::FollowType::Artist, {artistId});
+	auto follows = spotify.isFollowing(FollowType::Artist, {artistId});
 	auto isFollowing = follows.isEmpty() ? false : follows[0];
 	auto title = new QHBoxLayout();
 	followButton = new QPushButton(this);
@@ -163,9 +163,9 @@ void ArtistView::follow(bool)
 		.replace(isFollowing ? "Unfollow" : "Follow",
 			isFollowing ? "Follow" : "Unfollow"));
 	if (isFollowing)
-		spotify.unfollow(spt::Spotify::FollowType::Artist, {artistId});
+		spotify.unfollow(FollowType::Artist, {artistId});
 	else
-		spotify.follow(spt::Spotify::FollowType::Artist, {artistId});
+		spotify.follow(FollowType::Artist, {artistId});
 }
 
 void ArtistView::trackClick(QListWidgetItem *item)
