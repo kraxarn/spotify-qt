@@ -25,7 +25,6 @@ public:
 	spt::Playback currentPlayback();
 	void openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name);
 	void openLyrics(const QString &artist, const QString &name);
-	bool hasPlaylistSelected();
 	QVector<spt::Track> playlistTracks(const QString &playlistId);
 	void reloadTrayIcon();
 	spt::User getCurrentUser();

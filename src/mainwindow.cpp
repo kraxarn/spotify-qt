@@ -795,11 +795,6 @@ spt::Playback MainWindow::currentPlayback()
 	return current;
 }
 
-bool MainWindow::hasPlaylistSelected()
-{
-	return playlists->currentRow() >= 0;
-}
-
 spt::User MainWindow::getCurrentUser()
 {
 	return currentUser;
