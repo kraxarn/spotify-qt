@@ -23,8 +23,8 @@ class Utils
 public:
 	static QJsonValue getProperty(const QJsonObject &json, const QStringList &names);
 	static QTreeWidgetItem *treeItemWithChildren(QTreeWidget *tree, const QString &name,
-		const QString &toolTip = QString::Null(),
-		const QStringList &childrenItems = QStringList(QString::Null()));
+		const QString &toolTip = QString(),
+		const QStringList &childrenItems = QStringList(QString()));
 	static QPixmap mask(const QPixmap &source, MaskShape shape = MaskShape::App,
 		const QVariant &data = QVariant());
 	static QWidget *layoutToWidget(QLayout *layout);

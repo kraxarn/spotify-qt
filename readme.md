@@ -15,7 +15,7 @@ Tested: Linux, Windows
 Supported: macOS, *BSD, Haiku, any platform [officially supported](https://doc.qt.io/qt-5/supported-platforms.html) by Qt5
 
 ## Installing/building:
-Make sure you have Qt (5.12+), CMake (3.5+) and various build tools like `make`, `g++` and `git`.
+Make sure you have Qt (5.12+/6.0+), CMake (3.5+) and various build tools like `make`, `g++` and `git`.
 ```
 git clone https://github.com/kraxarn/spotify-qt.git
 cd spotify-qt

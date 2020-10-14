@@ -25,7 +25,6 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <QPushButton>
-#include <QStringRef>
 #include <QStyleFactory>
 #include <QVBoxLayout>
 

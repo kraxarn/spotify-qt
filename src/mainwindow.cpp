@@ -358,7 +358,7 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 				: "",
 			track.name, track.artist, track.album,
 			Utils::formatTime(track.duration),
-			track.addedAt.date().toString(Qt::SystemLocaleShortDate)
+			QLocale().toString(track.addedAt.date(), QLocale::ShortFormat)
 		});
 		item->setIcon(0, emptyIcon);
 		item->setData(0, RoleTrackId, QString("spotify:track:%1").arg(track.id));
