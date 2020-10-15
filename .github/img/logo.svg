@@ -7,9 +7,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="388.97699"
-   height="120.94489"
-   viewBox="0 0 205.83365 64.000005"
+   width="404.18011"
+   height="136.94489"
+   viewBox="0 0 213.87864 72.466668"
    version="1.1"
    id="svg8"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
@@ -23,9 +23,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="2"
-     inkscape:cx="94.176964"
-     inkscape:cy="48.866708"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="186.63581"
+     inkscape:cy="45.934824"
      inkscape:document-units="mm"
      inkscape:current-layer="layer2"
      inkscape:document-rotation="0"
@@ -38,10 +38,10 @@
      viewbox-width="23.63494"
      scale-x="2"
      viewbox-height="7.40833"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0"
+     fit-margin-top="8"
+     fit-margin-left="8"
+     fit-margin-right="8"
+     fit-margin-bottom="8"
      inkscape:pagecheckerboard="true"
      units="px" />
   <metadata
@@ -71,7 +71,8 @@
      inkscape:label="logo"
      inkscape:groupmode="layer"
      id="layer1"
-     style="display:inline">
+     style="display:inline"
+     transform="translate(4.2333334,4.2333334)">
     <g
        id="g853"
        transform="matrix(8.6389202,0,0,8.6389202,-4.5714287,-4.5714287)">
@@ -118,10 +119,11 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="text"
-     style="display:inline">
+     style="display:inline"
+     transform="translate(4.2333334,4.2333334)">
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:29.6333px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.8;stroke-miterlimit:4;stroke-dasharray:none"
+       style="font-style:normal;font-weight:normal;font-size:29.6333px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#4caf50;fill-opacity:1;stroke:none;stroke-width:0.8;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        x="73.603302"
        y="39.778744"
        id="text857"><tspan
@@ -129,6 +131,6 @@
          id="tspan855"
          x="73.603302"
          y="39.778744"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.6333px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';fill:#212121;fill-opacity:1;stroke:#dedede;stroke-width:0.8;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill">spotify-qt</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.6333px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';fill:#4caf50;fill-opacity:1;stroke:none;stroke-width:0.8;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill">spotify-qt</tspan></text>
   </g>
 </svg>
