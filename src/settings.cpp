@@ -20,26 +20,6 @@ QString Settings::filePath()
 
 void Settings::fromJson(const QJsonObject &json)
 {
-	QFile file(fileName());
-	file.open(QIODevice::ReadOnly);
-	auto data = file.readAll();
-	if (data.isEmpty())
-	{
-		qDebug() << "warning: json config in" << fileName() << "is empty";
-		file.close();
-		return;
-	}
-
-	QJsonParseError error{};
-	auto jsonDoc = QJsonDocument::fromJson(data, &error);
-	file.close();
-	if (error.error != QJsonParseError::NoError)
-	{
-		qDebug() << "error while reading json settings:" << error.errorString();
-		return;
-	}
-	auto json = jsonDoc.object();
-
 	QVector<int> hiddenSongHeaders;
 	for (auto val : json["General"].toObject()["hidden_song_headers"].toArray())
 		hiddenSongHeaders.append(val.toInt());

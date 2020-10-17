@@ -3,13 +3,11 @@
 #include "enum/palette.hpp"
 #include "enum/playlistorder.hpp"
 #include "enum/spotifycontext.hpp"
-#include "util/utils.hpp"
 
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
 #include <QFile>
-#include <QHeaderView>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
