@@ -1,0 +1,3 @@
+[submodule "qml"]
+	path = qml
+	url = https://github.com/kraxarn/spotify-qt-quick
