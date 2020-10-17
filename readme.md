@@ -22,7 +22,7 @@ If you want to maintain the package on a system not in the list below, you are v
 | -------- | ------- | ---------- |
 | Arch (or Arch-based) | [AUR](https://aur.archlinux.org/packages/spotify-qt) | [kraxarn](https://github.com/kraxarn) |
 | Haiku | [haikuports](https://github.com/haikuports/haikuports/tree/master/media-sound/spotify_qt) | [Begasus](https://github.com/Begasus) |
-| NetBSD | [pkgsrc](https://mail-index.netbsd.org/pkgsrc-changes/2020/10/11/msg222510.html) | [voidpin](https://github.com/voidpin) |
+| NetBSD | [pkgsrc](https://github.com/NetBSD/pkgsrc/tree/trunk/audio/spotify-qt) | [voidpin](https://github.com/voidpin) |
 
 ## Building from Git
 Make sure you have Qt (5.12+/6.0+), CMake (3.5+) and various build tools like `make`, `g++` and `git`.
