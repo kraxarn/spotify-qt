@@ -1,14 +1,10 @@
 #include "settings.hpp"
 
+#include <QHeaderView>
+
 Settings::Settings()
 {
-	settings = nullptr;
 	load();
-}
-
-Settings::~Settings()
-{
-	delete settings;
 }
 
 QString Settings::fileName()
@@ -186,57 +182,6 @@ void Settings::save()
 	mutex.unlock();
 }
 
-//region Legacy settings for removal in v3.0
-
-QJsonDocument Settings::legacyToJson()
-{
-	if (settings == nullptr)
-		settings = new QSettings();
-
-	QJsonArray jsonHiddenSongHeaders;
-	for (auto &val : hiddenSongHeaders())
-		jsonHiddenSongHeaders.append(val);
-
-	QJsonObject json(
-		{
-			QPair<QString, QJsonObject>("Account", {
-				{"access_token", accessToken()},
-				{"refresh_token", refreshToken()},
-				{"client_id", clientId()},
-				{"client_secret", clientSecret()}
-			}),
-			QPair<QString, QJsonObject>("General", {
-				{"style", style()},
-				{"pulse_volume", pulseVolume()},
-				{"last_playlist", lastPlaylist()},
-				{"style_palette", stylePalette()},
-				{"media_controller", mediaController()},
-				{"spotify_playback_order", sptPlaybackOrder()},
-				{"hidden_song_headers", jsonHiddenSongHeaders},
-				{"tray_icon", trayIcon()},
-				{"tray_notifications", trayNotifications()},
-				{"tray_light_icon", trayLightIcon()},
-				{"song_header_resize_mode", songHeaderResizeMode()},
-				{"song_header_sort_by", songHeaderSortBy()},
-				{"refresh_interval", refreshInterval()},
-				{"last_version", lastVersion()},
-				{"show_changelog", showChangelog()},
-				{"fallback_icons", useFallbackIcons()},
-				{"fixed_width_time", fixedWidthTime()}
-			}),
-			QPair<QString, QJsonObject>("Spotify", {
-				{"path", sptPath()},
-				{"start_client", sptStartClient()},
-				{"username", sptUser()},
-				{"bitrate", sptBitrate()},
-				{"global_config", sptGlobalConfig()}
-			})
-		}
-	);
-
-	return QJsonDocument(json);
-}
-
 void Settings::removeClient()
 {
 	account.clientId = QString();
@@ -247,71 +192,6 @@ void Settings::removeTokens()
 {
 	account.accessToken = QString();
 	account.refreshToken = QString();
-}
-
-QString Settings::accessToken()
-{
-	return settings->value("AccessToken").toString();
-}
-
-QString Settings::refreshToken()
-{
-	return settings->value("RefreshToken").toString();
-}
-
-QString Settings::clientId()
-{
-	return settings->value("ClientId").toString();
-}
-
-QString Settings::clientSecret()
-{
-	return settings->value("ClientSecret").toString();
-}
-
-QString Settings::style()
-{
-	return settings->value("Style").toString();
-}
-
-QString Settings::sptPath()
-{
-	return settings->value("Spotify/Path").toString();
-}
-
-bool Settings::sptStartClient()
-{
-	return settings->value("Spotify/StartClient").toBool();
-}
-
-QString Settings::sptUser()
-{
-	return settings->value("Spotify/Username").toString();
-}
-
-int Settings::sptBitrate()
-{
-	return settings->value("Spotify/Bitrate").toInt();
-}
-
-bool Settings::pulseVolume()
-{
-	return settings->value("PulseVolume").toBool();
-}
-
-QString Settings::lastPlaylist()
-{
-	return settings->value("LastPlaylist").toString();
-}
-
-Palette Settings::stylePalette()
-{
-	return (Palette) settings->value("StylePalette").toInt();
-}
-
-bool Settings::mediaController()
-{
-	return settings->value("MediaController", hasMediaControllerSupport()).toBool();
 }
 
 bool Settings::darkTheme() const
@@ -325,81 +205,6 @@ void Settings::setDarkTheme(bool value)
 	general.style = value ? "Fusion" : QString();
 	general.stylePalette = value ? PaletteDark : PaletteApp;
 }
-
-bool Settings::sptPlaybackOrder()
-{
-	return settings->value("SpotifyPlaybackOrder", false).toBool();
-}
-
-QList<int> Settings::hiddenSongHeaders()
-{
-	QList<int> list;
-	auto headers = settings->value("HiddenSongHeaders").toString();
-	if (!headers.isEmpty())
-	{
-		for (auto &value : headers.split(','))
-			list.append(value.toInt());
-	}
-	return list;
-}
-
-bool Settings::trayIcon()
-{
-	return settings->value("TrayIcon", false).toBool();
-}
-
-bool Settings::trayNotifications()
-{
-	return settings->value("TrayNotifications", false).toBool();
-}
-
-bool Settings::trayLightIcon()
-{
-	return settings->value("TrayLightIcon", false).toBool();
-}
-
-QHeaderView::ResizeMode Settings::songHeaderResizeMode()
-{
-	return (QHeaderView::ResizeMode) settings->value(
-		"SongHeaderResizeMode", QHeaderView::ResizeToContents).toInt();
-}
-
-int Settings::songHeaderSortBy()
-{
-	return settings->value("SongHeaderSortBy", -1).toInt();
-}
-
-int Settings::refreshInterval()
-{
-	return settings->value("RefreshInterval", 3).toInt();
-}
-
-bool Settings::sptGlobalConfig()
-{
-	return settings->value("Spotify/GlobalConfig", false).toBool();
-}
-
-QString Settings::lastVersion()
-{
-	return settings->value("LastVersion").toString();
-}
-
-bool Settings::showChangelog()
-{
-	return settings->value("ShowChangelog", true).toBool();
-}
-
-bool Settings::useFallbackIcons()
-{
-	return settings->value("FallbackIcons", false).toBool();
-}
-
-bool Settings::fixedWidthTime()
-{
-	return settings->value("FixedWidthTime", false).toBool();
-}
-
-//endregion.0
 
 bool Settings::hasMediaControllerSupport()
 {
