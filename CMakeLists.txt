@@ -12,21 +12,16 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Check if we should include Qt Quick
-if(USE_QT_QUICK)
-	set(QT_QUICK_PKG Quick QuickControls2 WebEngine)
-	set(QT_QUICK_LINK Qt5::Quick Qt5::QuickControls2 Qt5::WebEngine)
-	set(QML_RES qml/res.qrc)
-	file(GLOB QML_SRC "qml/src/*.[hc]pp")
-	add_compile_definitions(USE_QT_QUICK)
-endif()
-
 # Find Qt
 find_package(Qt5 COMPONENTS Core Widgets Network Gui Svg DBus ${QT_QUICK_PKG} REQUIRED)
 
 # Glob source files
 file(GLOB MAIN_SRC "src/*.[hc]pp")
 file(GLOB SUB_SRC "src/*/*.[hc]pp")
+
+if (USE_QT_QUICK)
+	set(QML_RES qml/res.qrc)
+endif ()
 
 # Add all source files to main executable
 if(ANDROID)
@@ -62,6 +57,13 @@ if (WIN32)
 	target_link_options(spotify-qt PRIVATE -mwindows)
 endif ()
 
+# Check if we should include Qt Quick
+if (USE_QT_QUICK)
+	add_subdirectory(qml)
+	set(SPOTIFY_QT_QUICK_LIB spotify-qt-quick)
+	add_compile_definitions(USE_QT_QUICK)
+endif ()
+
 # Link Qt/KDE
 target_link_libraries(spotify-qt PRIVATE
 		Qt5::Core
@@ -70,4 +72,4 @@ target_link_libraries(spotify-qt PRIVATE
 		Qt5::Gui
 		Qt5::Svg
 		Qt5::DBus
-		${QT_QUICK_LINK})
+		${SPOTIFY_QT_QUICK_LIB})
