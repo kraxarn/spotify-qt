@@ -26,7 +26,7 @@ jobs:
       run: cmake -E make_directory ${{runner.workspace}}/build
 
     - name: Install Qt
-      uses: jurplel/install-qt-action@v2.9.0
+      run: sudo apt update && sudo apt install build-essential qt5-default libqt5svg5-dev -y
 
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
