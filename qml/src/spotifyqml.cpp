@@ -84,14 +84,14 @@ QJsonArray SpotifyQml::getAlbumTracks(const QString &albumId)
 	return tracksToJson(tracks);
 }
 
-QString SpotifyQml::playTracksWithContext(const QString &track, const QString &context)
+QString SpotifyQml::playTracksWithContext(int trackIndex, const QString &context)
 {
-	return spotify->playTracks(track, context);
+	return spotify->playTracks(trackIndex, context);
 }
 
 QString SpotifyQml::playTrack(const QString &track)
 {
-	return spotify->playTracks(track, QStringList(track));
+	return spotify->playTracks(0, QStringList(track));
 }
 
 void SpotifyQml::requestPlayback()

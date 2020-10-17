@@ -21,7 +21,7 @@ public:
 	Q_INVOKABLE QJsonArray getAlbumTracks(const QString &albumId);
 
 	// Play tracks
-	Q_INVOKABLE QString playTracksWithContext(const QString &track, const QString &context);
+	Q_INVOKABLE QString playTracksWithContext(int trackIndex, const QString &context);
 	Q_INVOKABLE QString playTrack(const QString &track);
 
 	// Other
