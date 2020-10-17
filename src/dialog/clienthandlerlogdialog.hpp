@@ -3,13 +3,14 @@
 #include "../spotify/clienthandler.hpp"
 
 #include <QDialog>
-#include <QLabel>
-#include <QTextEdit>
 #include <QDialogButtonBox>
-#include <QPushButton>
+#include <QLabel>
 #include <QMessageBox>
+#include <QPushButton>
 #include <QScrollBar>
+#include <QTextEdit>
 #include <QTimer>
+#include <QVBoxLayout>
 
 class ClientHandlerLogDialog: public QDialog
 {
