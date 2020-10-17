@@ -5,6 +5,10 @@
 #include <QApplication>
 #include <QCoreApplication>
 
+#ifdef USE_QT_QUICK
+#include "qml/src/qmlmanager.hpp"
+#endif
+
 int main(int argc, char *argv[])
 {
 	// Set name for settings etc.
@@ -15,19 +19,13 @@ int main(int argc, char *argv[])
 	// Create Qt application
 	QApplication app(argc, argv);
 
-	// JSON Settings
+	// Settings
 	Settings settings;
-	if (!QFile::exists(Settings::fileName()))
-	{
-		qDebug() << "no json settings, attempting to convert legacy settings...";
-		QDir::root().mkpath(Settings::filePath());
-		QFile jsonFile(Settings::fileName());
-		jsonFile.open(QIODevice::WriteOnly);
-		auto jsonData = settings.legacyToJson().toJson();
-		jsonFile.write(jsonData);
-		jsonFile.close();
-		settings.load();
-	}
+
+	// Create QML engine if requested
+#ifdef USE_QT_QUICK
+	QmlManager qml(settings);
+#endif
 
 	// Check fallback icons
 	Icon::useFallbackIcons = settings.general.fallbackIcons;
@@ -40,11 +38,19 @@ int main(int argc, char *argv[])
 	// First setup window
 	if (settings.account.refreshToken.isEmpty())
 	{
+#ifdef USE_QT_QUICK
+		if (qml.setup())
+			return 0;
+#else
 		SetupDialog dialog(settings);
 		if (dialog.exec() == QDialog::Rejected)
 			return 0;
+#endif
 	}
 
+#ifdef USE_QT_QUICK
+	qml.main();
+#else
 	// Create main window
 	MainWindow w(settings);
 
@@ -53,5 +59,8 @@ int main(int argc, char *argv[])
 		return 1;
 
 	w.show();
+#endif
+
+	// Run application
 	return QApplication::exec();
 }

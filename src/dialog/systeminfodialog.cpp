@@ -29,6 +29,11 @@ SystemInfoDialog::SystemInfoDialog(QWidget *mainWindow, QWidget *parent)
 
 QString SystemInfoDialog::systemInfo()
 {
+	return systemInfo(((MainWindow *) mainWindow)->getCurrentPlayback());
+}
+
+QString SystemInfoDialog::systemInfo(const spt::Playback &playback)
+{
 	QMap<QString, QString> info;
 
 	// Qt version
@@ -48,7 +53,7 @@ QString SystemInfoDialog::systemInfo()
 	}
 
 	// Device
-	auto device = ((MainWindow *) mainWindow)->getCurrentPlayback().device;
+	auto device = playback.device;
 	if (!device.name.isEmpty() && !device.type.isEmpty())
 		info["Device"] = QString("%1 (%2)").arg(device.name).arg(device.type);
 

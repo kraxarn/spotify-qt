@@ -13,18 +13,22 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Find Qt
-find_package(Qt5 COMPONENTS Core Widgets Network Gui Svg DBus REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets Network Gui Svg DBus ${QT_QUICK_PKG} REQUIRED)
 
 # Glob source files
 file(GLOB MAIN_SRC "src/*.[hc]pp")
 file(GLOB SUB_SRC "src/*/*.[hc]pp")
 
+if (USE_QT_QUICK)
+	set(QML_RES qml/res.qrc)
+endif ()
+
 # Add all source files to main executable
-if(ANDROID)
-    add_library(spotify-qt SHARED ${MAIN_SRC} ${SUB_SRC} res.qrc)
-else()
-    add_executable(spotify-qt ${MAIN_SRC} ${SUB_SRC} ${LIB_SRC} res.qrc)
-endif()
+if (ANDROID)
+	add_library(spotify-qt SHARED ${MAIN_SRC} ${SUB_SRC} ${QML_RES} res.qrc)
+else ()
+	add_executable(spotify-qt ${MAIN_SRC} ${SUB_SRC} ${QML_RES} ${LIB_SRC} res.qrc)
+endif ()
 
 # Get version from Git
 find_package(Git QUIET)
@@ -33,10 +37,10 @@ if (GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
 			WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 			OUTPUT_VARIABLE GIT_TAG
 			OUTPUT_STRIP_TRAILING_WHITESPACE)
-elseif(NOT GIT_TAG)
+elseif (NOT GIT_TAG)
 	message(STATUS "warning: git or source code dir not found")
 	set(GIT_TAG "v0.0")
-endif()
+endif ()
 
 target_compile_definitions(spotify-qt PRIVATE APP_VERSION="${GIT_TAG}")
 
@@ -46,11 +50,18 @@ if (UNIX)
 	# Install icons and desktop shortcut on unix-like
 	install(FILES res/logo/spotify-qt.svg DESTINATION share/icons/hicolor/scalable/apps)
 	install(FILES res/app/spotify-qt.desktop DESTINATION share/applications)
-endif()
+endif ()
 
 # Don't show console window under windows
 if (WIN32)
 	target_link_options(spotify-qt PRIVATE -mwindows)
+endif ()
+
+# Check if we should include Qt Quick
+if (USE_QT_QUICK)
+	add_subdirectory(qml)
+	set(SPOTIFY_QT_QUICK_LIB spotify-qt-quick)
+	add_compile_definitions(USE_QT_QUICK)
 endif ()
 
 # Link Qt/KDE
@@ -60,4 +71,5 @@ target_link_libraries(spotify-qt PRIVATE
 		Qt5::Network
 		Qt5::Gui
 		Qt5::Svg
-		Qt5::DBus)
+		Qt5::DBus
+		${SPOTIFY_QT_QUICK_LIB})

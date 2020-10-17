@@ -17,6 +17,8 @@ namespace spt
 		explicit Playback(const QJsonObject &json);
 
 		QVariantMap metadata() const;
+		QJsonObject toJson() const;
+
 		int volume() const;
 
 		QString contextType;

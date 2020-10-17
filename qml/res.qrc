@@ -1,0 +1,23 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource>
+        <!-- QML -->
+        <file>ArtistDialog.qml</file>
+        <file>Footer.qml</file>
+        <file>LibraryView.qml</file>
+        <file>OpenLinkDialog.qml</file>
+        <file>PlaylistsView.qml</file>
+        <file>SearchView.qml</file>
+        <file>SettingsDialog.qml</file>
+        <file>SettingsLayout.qml</file>
+        <file>main.qml</file>
+        <file>setup.qml</file>
+        <!-- QML JS -->
+        <file>js/artistDialog.js</file>
+        <file>js/main.js</file>
+        <file>js/playlistView.js</file>
+        <file>js/searchView.js</file>
+        <file>js/settingsDialog.js</file>
+        <file>js/setup.js</file>
+    </qresource>
+</RCC>

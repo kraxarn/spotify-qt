@@ -3,13 +3,11 @@
 #include "enum/palette.hpp"
 #include "enum/playlistorder.hpp"
 #include "enum/spotifycontext.hpp"
-#include "util/utils.hpp"
 
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
 #include <QFile>
-#include <QHeaderView>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -21,9 +19,9 @@ class Settings
 {
 public:
 	Settings();
-	virtual ~Settings();
 
-	QJsonDocument legacyToJson();
+	QJsonObject toJson();
+	void fromJson(const QJsonObject &json);
 	void save();
 	void load();
 
@@ -65,33 +63,5 @@ public:
 	static bool hasMediaControllerSupport();
 
 private:
-	QString accessToken();
-	QString refreshToken();
-	QString clientId();
-	QString clientSecret();
-	QString style();
-	bool pulseVolume();
-	QString lastPlaylist();
-	Palette stylePalette();
-	bool mediaController();
-	bool sptPlaybackOrder();
-	QList<int> hiddenSongHeaders();
-	bool trayIcon();
-	bool trayNotifications();
-	bool trayLightIcon();
-	QHeaderView::ResizeMode songHeaderResizeMode();
-	int songHeaderSortBy();
-	int refreshInterval();
-	QString lastVersion();
-	bool showChangelog();
-	bool useFallbackIcons();
-	QString sptPath();
-	bool sptStartClient();
-	QString sptUser();
-	int sptBitrate();
-	bool sptGlobalConfig();
-	bool fixedWidthTime();
-
-	QSettings *settings;
 	QMutex mutex;
 };
