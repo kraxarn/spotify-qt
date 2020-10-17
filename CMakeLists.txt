@@ -24,11 +24,11 @@ if (USE_QT_QUICK)
 endif ()
 
 # Add all source files to main executable
-if(ANDROID)
-    add_library(spotify-qt SHARED ${MAIN_SRC} ${SUB_SRC} ${QML_SRC} ${QML_RES} res.qrc)
-else()
-    add_executable(spotify-qt ${MAIN_SRC} ${SUB_SRC} ${QML_SRC} ${QML_RES} ${LIB_SRC} res.qrc)
-endif()
+if (ANDROID)
+	add_library(spotify-qt SHARED ${MAIN_SRC} ${SUB_SRC} ${QML_RES} res.qrc)
+else ()
+	add_executable(spotify-qt ${MAIN_SRC} ${SUB_SRC} ${QML_RES} ${LIB_SRC} res.qrc)
+endif ()
 
 # Get version from Git
 find_package(Git QUIET)
@@ -37,10 +37,10 @@ if (GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
 			WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 			OUTPUT_VARIABLE GIT_TAG
 			OUTPUT_STRIP_TRAILING_WHITESPACE)
-elseif(NOT GIT_TAG)
+elseif (NOT GIT_TAG)
 	message(STATUS "warning: git or source code dir not found")
 	set(GIT_TAG "v0.0")
-endif()
+endif ()
 
 target_compile_definitions(spotify-qt PRIVATE APP_VERSION="${GIT_TAG}")
 
@@ -50,7 +50,7 @@ if (UNIX)
 	# Install icons and desktop shortcut on unix-like
 	install(FILES res/logo/spotify-qt.svg DESTINATION share/icons/hicolor/scalable/apps)
 	install(FILES res/app/spotify-qt.desktop DESTINATION share/applications)
-endif()
+endif ()
 
 # Don't show console window under windows
 if (WIN32)
