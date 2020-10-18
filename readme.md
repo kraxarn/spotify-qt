@@ -24,7 +24,7 @@ If you want to maintain the package on a system not in the list below, you are v
 | -------- | ------- | ---------- |
 | Arch (or Arch-based) | [AUR](https://aur.archlinux.org/packages/spotify-qt) | [kraxarn](https://github.com/kraxarn) |
 | Haiku | [haikuports](https://github.com/haikuports/haikuports/tree/master/media-sound/spotify_qt) | [Begasus](https://github.com/Begasus) |
-| NetBSD | [pkgsrc](https://github.com/NetBSD/pkgsrc/tree/trunk/audio/spotify-qt) | [voidpin](https://github.com/voidpin) |
+| NetBSD | [pkgsrc](https://pkgsrc.se/audio/spotify-qt) | [voidpin](https://github.com/voidpin) |
 
 Other Linux distributions can download the latest binary from the automated builds [here](https://kraxarn.github.io/latest-artifact?owner=kraxarn&repo=spotify-qt).
 Keep in mind that it's the build currently in development and might be unstable. You also still need to install Qt and is currently only available for x86_64 Linux.
