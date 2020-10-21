@@ -9,7 +9,9 @@ namespace mp
 #include "mediaplayer.hpp"
 #include "mediaplayerplayer.hpp"
 
+#ifdef WITH_DBUS
 #include <QDBusContext>
+#endif
 
 namespace mp
 {

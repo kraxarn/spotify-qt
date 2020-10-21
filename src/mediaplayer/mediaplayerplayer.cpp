@@ -3,7 +3,10 @@
 using namespace mp;
 
 MediaPlayerPlayer::MediaPlayerPlayer(spt::Spotify *spotify, QObject *parent)
-	: spotify(spotify), dBus(QDBusConnection::sessionBus()), QDBusAbstractAdaptor(parent)
+	: spotify(spotify)
+#ifdef WITH_DBUS
+	, dBus(QDBusConnection::sessionBus()), QDBusAbstractAdaptor(parent)
+#endif
 {
 }
 
@@ -40,10 +43,12 @@ void MediaPlayerPlayer::Seek(qint64 offset) const
 	spotify->seek(offset);
 }
 
+#ifdef WITH_DBUS
 void MediaPlayerPlayer::SetPosition(const QDBusObjectPath &trackId, qint64 position) const
 {
 	spotify->seek(position);
 }
+#endif
 
 void MediaPlayerPlayer::Stop() const
 {

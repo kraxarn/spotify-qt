@@ -1,6 +1,8 @@
 #pragma once
 
+#ifdef WITH_DBUS
 #include <QDBusInterface>
+#endif
 #include <QCoreApplication>
 
 class KWallet
@@ -8,7 +10,9 @@ class KWallet
 private:
 	QString walletName;
 	int walletHandle;
+#if WITH_DBUS
 	QDBusInterface dbus;
+#endif
 	QString username;
 	QString appName;
 

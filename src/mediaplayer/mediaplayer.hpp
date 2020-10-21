@@ -6,14 +6,21 @@ class MediaPlayer;
 #include "mediaplayerplayer.hpp"
 
 #include <QCoreApplication>
+#ifdef WITH_DBUS
 #include <QDBusAbstractAdaptor>
 #include <QDBusConnection>
 #include <QDBusError>
 #include <QDBusInterface>
+#endif
 #include <QDebug>
 #include <QStringList>
 
-class MediaPlayer: public QDBusAbstractAdaptor
+class MediaPlayer: public
+#ifdef WITH_DBUS
+QDBusAbstractAdaptor
+#else
+QObject
+#endif
 {
 Q_OBJECT
 
@@ -37,11 +44,15 @@ public:
 	QStringList supportedMimeTypes() const;
 
 public slots:
+#ifdef WITH_DBUS
 	Q_NOREPLY void Quit() const;
 	Q_NOREPLY void Raise() const;
+#endif
 
 private:
+#ifdef WITH_DBUS
 	QDBusConnection dBus;
+#endif
 	spt::Spotify *spotify;
 	QObject *parent;
 };

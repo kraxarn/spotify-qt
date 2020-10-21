@@ -8,21 +8,26 @@ using namespace mp;
 Service::Service(spt::Spotify *spotify, QObject *parent)
 	: spotify(spotify), playerPlayer(nullptr), QObject(parent)
 {
+#ifdef WITH_DBUS
 	if (!QDBusConnection::sessionBus().registerService(SERVICE_NAME))
 	{
 		qWarning() << "warning: failed to register d-bus service, is another instance running?";
 		return;
 	}
+#endif
 	new MediaPlayer(spotify, this);
 	playerPlayer = new MediaPlayerPlayer(spotify, this);
+#ifdef WITH_DBIS
 	if (!QDBusConnection::sessionBus().registerObject(SERVICE_PATH, this, QDBusConnection::ExportAdaptors))
 		qWarning() << "warning: failed to register d-bus object";
+#endif
 }
 
 Service::~Service() = default;
 
 void Service::signalPropertiesChange(const QObject *adaptor, const QVariantMap &properties)
 {
+#ifdef WITH_DBUS
 	QDBusMessage msg = QDBusMessage::createSignal("/org/mpris/MediaPlayer2",
 		"org.freedesktop.DBus.Properties", "PropertiesChanged");
 
@@ -31,6 +36,7 @@ void Service::signalPropertiesChange(const QObject *adaptor, const QVariantMap &
 	msg << QStringList();
 
 	QDBusConnection::sessionBus().send(msg);
+#endif
 }
 
 void Service::metadataChanged()

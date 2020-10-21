@@ -13,7 +13,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Find Qt
-find_package(Qt5 COMPONENTS Core Widgets Network Gui Svg DBus ${QT_QUICK_PKG} REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets Network Gui Svg ${QT_QUICK_PKG} OPTIONAL_COMPONENTS DBus)
 
 # Glob source files
 file(GLOB MAIN_SRC "src/*.[hc]pp")
@@ -71,5 +71,8 @@ target_link_libraries(spotify-qt PRIVATE
 		Qt5::Network
 		Qt5::Gui
 		Qt5::Svg
-		Qt5::DBus
 		${SPOTIFY_QT_QUICK_LIB})
+if (EXISTS "${Qt5Dbus_DIR}")
+	target_compile_definitions(spotify-qt PRIVATE WITH_DBUS)
+	target_link_libraries(spotify-qt PRIVATE Qt5::DBus)
+endif()

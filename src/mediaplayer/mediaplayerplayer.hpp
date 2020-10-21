@@ -10,16 +10,21 @@ namespace mp
 #include "service.hpp"
 
 #include <QCoreApplication>
+#ifdef WITH_DBUS
 #include <QDBusAbstractAdaptor>
 #include <QDBusConnection>
 #include <QDBusError>
 #include <QDBusInterface>
+#endif
 #include <QDebug>
 #include <QVariantMap>
 
 namespace mp
 {
-	class MediaPlayerPlayer: public QDBusAbstractAdaptor
+	class MediaPlayerPlayer : QObject
+#ifdef WITH_DBUS
+	: public QDBusAbstractAdaptor
+#endif
 	{
 	Q_OBJECT
 
@@ -80,11 +85,15 @@ namespace mp
 		void Stop() const;
 		void Play() const;
 		void Seek(qint64 offset) const;
+#ifdef WITH_DBUS
 		void SetPosition(const QDBusObjectPath &trackId, qint64 position) const;
+#endif
 		void OpenUri(QString uri) const;
 
 	private:
+#ifdef WITH_DBUS
 		QDBusConnection dBus;
+#endif
 		spt::Spotify *spotify;
 
 		spt::Playback currentPlayback() const;

@@ -5,20 +5,26 @@
 KWallet::KWallet(QString username)
 	: walletName(),
 	walletHandle(0),
-	username(std::move(username)),
-	dbus("org.kde.kwalletd5", "/modules/kwalletd5",
+	username(std::move(username))
+#ifdef WITH_DBUS
+	, dbus("org.kde.kwalletd5", "/modules/kwalletd5",
 		"org.kde.KWallet", QDBusConnection::sessionBus())
+#endif
 {
 	appName = QCoreApplication::applicationName();
 }
 
 bool KWallet::isEnabled()
 {
+#ifdef WITH_DBUS
 	auto call = dbus.call(QDBus::Block, "isEnabled");
 	if (call.type() != QDBusMessage::ReplyMessage)
 		return false;
 
 	return call.arguments().at(0).toBool();
+#else
+	return false;
+#endif
 }
 
 bool KWallet::unlocked() const
@@ -28,6 +34,7 @@ bool KWallet::unlocked() const
 
 bool KWallet::getWallet()
 {
+#ifdef WITH_DBUS
 	// Wallet name
 	walletName = dbus
 		.call(QDBus::Block, "localWallet")
@@ -45,6 +52,9 @@ bool KWallet::getWallet()
 		}).arguments().at(0).toInt();
 
 	return walletHandle > 0;
+#else
+	return false;
+#endif
 }
 
 bool KWallet::unlock()
@@ -60,6 +70,7 @@ bool KWallet::unlock()
 
 bool KWallet::writePassword(const QString &password)
 {
+#ifdef WITH_DBUS
 	if (!unlocked() && !unlock())
 		return false;
 
@@ -68,10 +79,14 @@ bool KWallet::writePassword(const QString &password)
 	});
 
 	return true;
+#else
+	return false;
+#endif
 }
 
 QString KWallet::readPassword()
 {
+#ifdef WITH_DBUS
 	if (!unlocked() && !unlock())
 		return QString();
 
@@ -79,4 +94,7 @@ QString KWallet::readPassword()
 		.callWithArgumentList(QDBus::Block, "readPassword", {
 			walletHandle, appName, username, appName
 		}).arguments().at(0).toString();
+#else
+	return QString();
+#endif
 }
