@@ -21,9 +21,9 @@ parts:
       - qt5-default
       - libqt5svg5-dev
     override-pull: |
-      - snapcraftctl pull
-      - VERSION="$(git describe --tags --abbrev=0)"
-      - snapcraftctl set-version "${VERSION}"
+      snapcraftctl pull
+      VERSION="$(git describe --tags --abbrev=0)"
+      snapcraftctl set-version "${VERSION}"
 
 apps:
   spotify-qt:
