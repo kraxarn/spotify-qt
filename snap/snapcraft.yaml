@@ -1,0 +1,29 @@
+name: spotify-qt
+summary: Lightweight Spotify client using Qt
+description: A Spotify client using Qt as a simpler, lighter alternative to the official client, inspired by spotify-tui.
+license: GPL-3.0
+grade: stable
+confinement: devmode
+base: core18
+
+parts:
+  spotify-qt:
+    plugin: cmake
+    source: .
+    build-packages:
+      - g++
+      - make
+      - cmake
+      - qt5-default
+      - libqt5svg5-dev
+    stage-packages:
+      - qt5-default
+      - libqt5svg5-dev
+    override-pull: |
+      - snapcraftctl pull
+      - VERSION="$(git describe --tags --abbrev=0)"
+      - snapcraftctl set-version "${VERSION}"
+
+apps:
+  spotify-qt:
+    command: bin/spotify-qt
