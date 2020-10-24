@@ -4,7 +4,7 @@ description: A Spotify client using Qt as a simpler, lighter alternative to the 
 adopt-info: spotify-qt
 license: GPL-3.0
 grade: stable
-confinement: devmode
+confinement: strict
 base: core18
 
 parts:
