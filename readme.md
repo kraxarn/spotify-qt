@@ -25,7 +25,7 @@ If you want to maintain the package on a system not in the list below, you are v
 | Arch (or Arch-based) | [![AUR](https://repology.org/badge/version-for-repo/aur/spotify-qt.svg?header=AUR)](https://aur.archlinux.org/packages/spotify-qt) | [kraxarn](https://github.com/kraxarn) |
 | Haiku | [![HaikuPorts](https://repology.org/badge/version-for-repo/haikuports_master/spotify-qt.svg?header=HaikuPorts)](https://github.com/haikuports/haikuports/tree/master/media-sound/spotify_qt) | [Begasus](https://github.com/Begasus) |
 | NetBSD | [![pkgsrc](https://repology.org/badge/version-for-repo/pkgsrc_current/spotify-qt.svg?header=pkgsrc)](https://pkgsrc.se/audio/spotify-qt) | [voidpin](https://github.com/voidpin) |
-| FreeBSD | [![FreeBSD Ports](https://repology.org/badge/version-for-repo/freebsd/spotify-qt.svg?header=FreeBSD%20Ports)](https://svnweb.freebsd.org/ports/head/audio/spotify-qt) | [ehaupt](https://github.com/ehaupt) |
+| FreeBSD | [![FreeBSD Ports](https://repology.org/badge/version-for-repo/freebsd/spotify-qt.svg?header=FreeBSD%20Ports)](https://www.freshports.org/audio/spotify-qt) | [ehaupt](https://github.com/ehaupt) |
 
 Other Linux distributions can download the latest binary from the automated builds [here](https://kraxarn.github.io/latest-artifact?owner=kraxarn&repo=spotify-qt).
 Keep in mind that it's the build currently in development and might be unstable. You also still need to install Qt and is currently only available for x86_64 Linux.
