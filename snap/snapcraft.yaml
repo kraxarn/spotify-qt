@@ -28,3 +28,8 @@ parts:
 apps:
   spotify-qt:
     command: bin/spotify-qt
+    plugs:
+      - home
+      - opengl
+      - network
+      - network-bind
