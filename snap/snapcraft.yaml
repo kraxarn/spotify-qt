@@ -22,14 +22,12 @@ parts:
       - libqt5svg5-dev
     override-pull: |
       snapcraftctl pull
-      VERSION="$(git describe --tags --abbrev=0)"
-      snapcraftctl set-version "${VERSION}"
+      snapcraftctl set-version "$(git describe --tags --abbrev=0)"
 
 apps:
   spotify-qt:
-    command: bin/spotify-qt
+    command: desktop-launch ${SNAP}/usr/bin/spotify-qt
     plugs:
       - home
       - opengl
       - network
-      - network-bind
