@@ -26,7 +26,9 @@ parts:
 
 apps:
   spotify-qt:
-    command: desktop-launch ${SNAP}/bin/spotify-qt
+    extensions:
+      - kde-neon
+    command: spotify-qt
     plugs:
       - home
       - opengl
