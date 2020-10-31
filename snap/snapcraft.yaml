@@ -26,10 +26,5 @@ parts:
 
 apps:
   spotify-qt:
-    extensions:
-      - kde-neon
-    command: spotify-qt
-    plugs:
-      - home
-      - opengl
-      - network
+    command: desktop-launch spotify-qt
+    plugs: [home, opengl, network, unity7]
