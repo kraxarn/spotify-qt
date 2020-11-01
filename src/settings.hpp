@@ -15,6 +15,10 @@
 #include <QSettings>
 #include <QStandardPaths>
 
+Q_DECLARE_METATYPE(Palette)
+Q_DECLARE_METATYPE(PlaylistOrder)
+Q_DECLARE_METATYPE(SpotifyContext)
+
 class Settings
 {
 public:
