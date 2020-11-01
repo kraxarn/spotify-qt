@@ -51,7 +51,10 @@ public:
 	LibraryList *getLibraryList();
 	QString &getSptContext();
 	spt::Playback &getCurrentPlayback();
+
+#ifdef USE_DBUS
 	mp::Service *getMediaPlayer();
+#endif
 
 private:
 	// Constructor
@@ -86,10 +89,13 @@ private:
 	QVector<spt::Playlist> sptPlaylists;
 	TrayIcon *trayIcon = nullptr;
 	int refreshCount = -1;
-	mp::Service *mediaPlayer = nullptr;
 	spt::User currentUser;
 	QIcon emptyIcon;
 	bool stateValid = true;
+
+#ifdef USE_DBUS
+	mp::Service *mediaPlayer = nullptr;
+#endif
 
 	// Methods
 	QWidget *createCentralWidget();

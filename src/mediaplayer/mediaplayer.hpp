@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_DBUS
+
 class MediaPlayer;
 
 #include "../spotify/spotify.hpp"
@@ -44,3 +46,5 @@ private:
 	spt::Spotify *spotify;
 	QObject *parent;
 };
+
+#endif

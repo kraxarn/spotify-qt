@@ -76,8 +76,11 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, Settings &settings, QWidget *par
 		auto status = this->spotify.seek(progress->value());
 		if (!status.isEmpty())
 			mainWindow->setStatus(QString("Failed to seek: %1").arg(status), true);
+
+#ifdef USE_DBUS
 		if (mainWindow->getMediaPlayer() != nullptr)
 			mainWindow->getMediaPlayer()->stateUpdated();
+#endif
 	});
 
 	addSeparator();

@@ -1,5 +1,7 @@
 #include "service.hpp"
 
+#ifdef USE_DBUS
+
 using namespace mp;
 
 #define SERVICE_NAME "org.mpris.MediaPlayer2.spotify-qt"
@@ -74,3 +76,5 @@ bool Service::isValid()
 {
 	return playerPlayer != nullptr;
 }
+
+#endif

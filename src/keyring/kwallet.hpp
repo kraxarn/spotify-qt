@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_DBUS
+
 #include <QDBusInterface>
 #include <QCoreApplication>
 
@@ -24,3 +26,5 @@ public:
 	bool writePassword(const QString &password);
 	QString readPassword();
 };
+
+#endif

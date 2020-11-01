@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_DBUS
+
 namespace mp
 {
 	class Service;
@@ -36,3 +38,5 @@ namespace mp
 		MediaPlayerPlayer *playerPlayer;
 	};
 }
+
+#endif

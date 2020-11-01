@@ -1,3 +1,5 @@
+#ifdef USE_DBUS
+
 #include "kwallet.hpp"
 
 #include <utility>
@@ -80,3 +82,5 @@ QString KWallet::readPassword()
 			walletHandle, appName, username, appName
 		}).arguments().at(0).toString();
 }
+
+#endif

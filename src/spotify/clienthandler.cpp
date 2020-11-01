@@ -53,10 +53,12 @@ QString ClientHandler::start()
 		return "no username provided";
 
 	// Get password from keyring if set
-	KWallet keyring(username);
 	QString password;
+#ifdef USE_DBUS
+	KWallet keyring(username);
 	if (settings.spotify.keyringPassword && keyring.unlock())
 		password = keyring.readPassword();
+#endif
 
 	// Ask for password
 	if (password.isEmpty())
@@ -69,8 +71,10 @@ QString ClientHandler::start()
 		if (password.isEmpty())
 			return "no password provided";
 
+#ifdef USE_DBUS
 		if (settings.spotify.keyringPassword)
 			keyring.writePassword(password);
+#endif
 	}
 
 	// Common arguments

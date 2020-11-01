@@ -73,6 +73,7 @@ QWidget *SettingsDialog::spotifySettings()
 	sptLayout->addWidget(sptBitrate, 1, 1);
 
 	// KWallet keyring for password
+#ifdef USE_DBUS
 	if (KWallet(settings.spotify.username).isEnabled())
 	{
 		sptKeyring = new QCheckBox("Save password in keyring", this);
@@ -80,6 +81,7 @@ QWidget *SettingsDialog::spotifySettings()
 		sptKeyring->setChecked(settings.spotify.keyringPassword);
 		sptLayout->addWidget(sptKeyring, 2, 0);
 	}
+#endif
 
 	// Other options layout
 	auto otherLayout = new QHBoxLayout();

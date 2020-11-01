@@ -75,6 +75,7 @@ MainWindow::MainWindow(Settings &settings)
 	}
 
 	// Start media controller if specified
+#ifdef USE_DBUS
 	if (settings.general.mediaController)
 	{
 		mediaPlayer = new mp::Service(spotify, this);
@@ -85,6 +86,7 @@ MainWindow::MainWindow(Settings &settings)
 			mediaPlayer = nullptr;
 		}
 	}
+#endif
 
 	// Start listening to current playback responses
 	spt::Spotify::connect(spotify, &spt::Spotify::gotPlayback, [this](const spt::Playback &playback)
@@ -162,8 +164,12 @@ void MainWindow::refreshed(const spt::Playback &playback)
 		setAlbumImage(current.item.image);
 		setWindowTitle(QString("%1 - %2").arg(current.item.artist).arg(current.item.name));
 		updateContextIcon();
+
+#ifdef USE_DBUS
 		if (mediaPlayer != nullptr)
 			mediaPlayer->currentSourceChanged(current);
+#endif
+
 		if (trayIcon != nullptr && settings.general.trayAlbumArt)
 			trayIcon->setPixmap(getAlbum(current.item.image));
 	}
@@ -840,10 +846,12 @@ spt::Playback &MainWindow::getCurrentPlayback()
 	return current;
 }
 
+#ifdef USE_DBUS
 mp::Service *MainWindow::getMediaPlayer()
 {
 	return mediaPlayer;
 }
+#endif
 
 bool MainWindow::isValid() const
 {

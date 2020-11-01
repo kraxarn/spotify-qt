@@ -1,5 +1,7 @@
 #include "mediaplayer.hpp"
 
+#ifdef USE_DBUS
+
 MediaPlayer::MediaPlayer(spt::Spotify *spotify, QObject *parent)
 	: spotify(spotify), parent(parent),
 	dBus(QDBusConnection::sessionBus()), QDBusAbstractAdaptor(parent)
@@ -41,3 +43,5 @@ bool MediaPlayer::hasTrackList() const
 {
 	return false;
 }
+
+#endif

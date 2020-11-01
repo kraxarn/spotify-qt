@@ -1,5 +1,7 @@
 #include "mediaplayerplayer.hpp"
 
+#ifdef USE_DBUS
+
 using namespace mp;
 
 MediaPlayerPlayer::MediaPlayerPlayer(spt::Spotify *spotify, QObject *parent)
@@ -164,3 +166,5 @@ spt::Playback MediaPlayerPlayer::currentPlayback() const
 {
 	return ((Service *) parent())->currentPlayback();
 }
+
+#endif

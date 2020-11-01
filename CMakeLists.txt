@@ -12,8 +12,16 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Optional D-Bus support
+if (NOT DEFINED USE_DBUS)
+	set(USE_DBUS 1)
+endif ()
+
 # Find Qt
-find_package(Qt5 COMPONENTS Core Widgets Network Gui Svg DBus ${QT_QUICK_PKG} REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets Network Gui Svg REQUIRED)
+if (USE_DBUS)
+	find_package(Qt5 OPTIONAL_COMPONENTS DBus QUIET)
+endif ()
 
 # Glob source files
 file(GLOB MAIN_SRC "src/*.[hc]pp")
@@ -57,19 +65,23 @@ if (WIN32)
 	target_link_options(spotify-qt PRIVATE -mwindows)
 endif ()
 
-# Check if we should include Qt Quick
-if (USE_QT_QUICK)
-	add_subdirectory(qml)
-	set(SPOTIFY_QT_QUICK_LIB spotify-qt-quick)
-	add_compile_definitions(USE_QT_QUICK)
-endif ()
-
-# Link Qt/KDE
+# Link Qt
 target_link_libraries(spotify-qt PRIVATE
 		Qt5::Core
 		Qt5::Widgets
 		Qt5::Network
 		Qt5::Gui
-		Qt5::Svg
-		Qt5::DBus
-		${SPOTIFY_QT_QUICK_LIB})
+		Qt5::Svg)
+
+# Check if we should include Qt Quick
+if (USE_QT_QUICK)
+	add_subdirectory(qml)
+	add_compile_definitions(USE_QT_QUICK)
+	target_link_libraries(spotify-qt PRIVATE spotify-qt-quick)
+endif ()
+
+# D-Bus support is optional
+if (Qt5DBus_FOUND)
+	add_compile_definitions(USE_DBUS)
+	target_link_libraries(spotify-qt PRIVATE Qt5::DBus)
+endif ()

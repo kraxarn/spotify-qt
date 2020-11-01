@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_DBUS
+
 namespace mp
 {
 	class MediaPlayerPlayer;
@@ -89,3 +91,5 @@ namespace mp
 		spt::Playback currentPlayback() const;
 	};
 }
+
+#endif
