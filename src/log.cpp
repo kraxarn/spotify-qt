@@ -27,3 +27,8 @@ void Log::error(const QString &message)
 {
 	log(LogType::Error, message);
 }
+
+const QList<LogMessage> &Log::getMessages()
+{
+	return messages;
+}
