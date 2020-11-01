@@ -9,6 +9,7 @@
 #include <QTreeWidget>
 #include <QVBoxLayout>
 #include <QStandardPaths>
+#include <QClipboard>
 
 class LogViewer: public QDialog
 {
@@ -18,5 +19,7 @@ public:
 	explicit LogViewer(QWidget *parent);
 
 private:
+	QString collectLogs();
 	void saveToFile();
+	void copyToClipboard();
 };

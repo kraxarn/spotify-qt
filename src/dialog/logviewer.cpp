@@ -25,6 +25,9 @@ LogViewer::LogViewer(QWidget *parent)
 			accept();
 		});
 
+	QPushButton::connect(buttons->addButton("Copy to clipboard", QDialogButtonBox::ActionRole),
+		&QPushButton::clicked, this, &LogViewer::copyToClipboard);
+
 	QPushButton::connect(buttons->addButton("Save...", QDialogButtonBox::ActionRole),
 		&QPushButton::clicked, this, &LogViewer::saveToFile);
 
@@ -40,6 +43,16 @@ LogViewer::LogViewer(QWidget *parent)
 	}
 }
 
+QString LogViewer::collectLogs()
+{
+	QStringList items;
+	for (auto &message : Log::getMessages())
+	{
+		items.append(QString::fromStdString(message.format()));
+	}
+	return items.join('\n');
+}
+
 void LogViewer::saveToFile()
 {
 	auto fileName = QFileDialog::getSaveFileName(this,
@@ -52,14 +65,13 @@ void LogViewer::saveToFile()
 	if (fileName.isEmpty())
 		return;
 
-	QStringList items;
-	for (auto &message : Log::getMessages())
-	{
-		items.append(QString::fromStdString(message.format()));
-	}
-
 	QFile out(fileName);
 	out.open(QIODevice::WriteOnly);
-	out.write(items.join('\n').toUtf8());
+	out.write(collectLogs().toUtf8());
 	out.close();
+}
+
+void LogViewer::copyToClipboard()
+{
+	QApplication::clipboard()->setText(collectLogs());
 }
