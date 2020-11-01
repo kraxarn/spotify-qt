@@ -11,11 +11,11 @@ public:
 	LogMessage(const QTime &time, LogType logType, const QString &message);
 	LogMessage(LogType logType, const QString &message);
 
-	std::string format();
-	QString logTypeString();
+	std::string format() const;
+	QString logTypeString() const;
 
-	QTime getTime() const;
-	LogType getType() const;
+	QString getTime() const;
+	QString getType() const;
 	QString getMessage() const;
 
 private:

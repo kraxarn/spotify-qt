@@ -10,16 +10,16 @@ LogMessage::LogMessage(LogType logType, const QString &message)
 {
 }
 
-std::string LogMessage::format()
+std::string LogMessage::format() const
 {
 	return QString("[%1] [%2] %3")
-		.arg(QLocale::system().toString(QDateTime::currentDateTime().time(), QLocale::ShortFormat))
+		.arg(getTime())
 		.arg(logTypeString())
 		.arg(message)
 		.toStdString();
 }
 
-QString LogMessage::logTypeString()
+QString LogMessage::logTypeString() const
 {
 	switch (logType)
 	{
@@ -36,14 +36,26 @@ QString LogMessage::logTypeString()
 	return QString();
 }
 
-QTime LogMessage::getTime() const
+QString LogMessage::getTime() const
 {
-	return time;
+	return QLocale::system().toString(time, QLocale::ShortFormat);
 }
 
-LogType LogMessage::getType() const
+QString LogMessage::getType() const
 {
-	return logType;
+	switch (logType)
+	{
+		case LogType::Information:
+			return "Information";
+
+		case LogType::Warning:
+			return "Warning";
+
+		case LogType::Error:
+			return "Error";
+	}
+
+	return QString();
 }
 
 QString LogMessage::getMessage() const
