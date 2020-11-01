@@ -2,12 +2,11 @@
 
 #include "enum/logtype.hpp"
 #include "util/utils.hpp"
+#include "logmessage.hpp"
 
 #include <iostream>
 
-#include <QDebug>
-#include <QDateTime>
-#include <QLocale>
+#include <QString>
 
 class Log
 {
@@ -19,6 +18,7 @@ public:
 private:
 	Log() = default;
 
+	static QList<LogMessage> messages;
+
 	static void log(LogType logType, const QString &message);
-	static QString logTypeString(LogType logType);
 };
