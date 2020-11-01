@@ -1,11 +1,11 @@
 #include "logmessage.hpp"
 
-LogMessage::LogMessage(const QTime &time, LogType logType, const QString &message)
-	: time(time), logType(logType), message(QString(message))
+LogMessage::LogMessage(const QTime &time, LogType logType, const std::string &message)
+	: time(time), logType(logType), message(std::string(message))
 {
 }
 
-LogMessage::LogMessage(LogType logType, const QString &message)
+LogMessage::LogMessage(LogType logType, const std::string &message)
 	: LogMessage(QDateTime::currentDateTime().time(), logType, message)
 {
 }
@@ -15,7 +15,7 @@ std::string LogMessage::format() const
 	return QString("[%1] [%2] %3")
 		.arg(getTime())
 		.arg(logTypeString())
-		.arg(message)
+		.arg(QString::fromStdString(message))
 		.toStdString();
 }
 
@@ -60,5 +60,5 @@ QString LogMessage::getType() const
 
 QString LogMessage::getMessage() const
 {
-	return message;
+	return QString::fromStdString(message);
 }

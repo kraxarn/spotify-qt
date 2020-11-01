@@ -8,8 +8,8 @@
 class LogMessage
 {
 public:
-	LogMessage(const QTime &time, LogType logType, const QString &message);
-	LogMessage(LogType logType, const QString &message);
+	LogMessage(const QTime &time, LogType logType, const std::string &message);
+	LogMessage(LogType logType, const std::string &message);
 
 	std::string format() const;
 	QString logTypeString() const;
@@ -21,5 +21,5 @@ public:
 private:
 	QTime time;
 	LogType logType;
-	QString message;
+	std::string message;
 };
