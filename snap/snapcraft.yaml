@@ -50,8 +50,7 @@ parts:
       - xdg-user-dirs
       - fcitx-frontend-qt5
 
-
 apps:
   spotify-qt:
     command: bin/desktop-launch spotify-qt
-    plugs: [home, opengl, network, unity7]
+    plugs: [home, opengl, network, network-bind, unity7]
