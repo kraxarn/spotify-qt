@@ -17,6 +17,8 @@ public:
 	static void error(const QString &message);
 
 private:
+	Log() = default;
+
 	static void log(LogType logType, const QString &message);
 	static QString logTypeString(LogType logType);
 };
