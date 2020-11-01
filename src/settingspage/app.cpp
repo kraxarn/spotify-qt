@@ -33,7 +33,7 @@ QWidget *SettingsDialog::appSettings()
 	}
 
 	// MPRIS D-Bus
-#ifdef Q_OS_LINUX
+#ifdef USE_DBUS
 	appMedia = new QCheckBox("Media controller", this);
 	appMedia->setChecked(settings.general.mediaController);
 	appMedia->setToolTip("Enable media controller through the MPRIS D-Bus interface");

@@ -216,7 +216,7 @@ void Settings::setDarkTheme(bool value)
 bool Settings::hasMediaControllerSupport()
 {
 	// Currently, only d-bus mpris is supported under Linux
-#ifdef Q_OS_LINUX
+#ifdef USE_DBUS
 	return true;
 #else
 	return false;
