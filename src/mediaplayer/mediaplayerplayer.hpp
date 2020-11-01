@@ -14,7 +14,6 @@ namespace mp
 #include <QDBusConnection>
 #include <QDBusError>
 #include <QDBusInterface>
-#include <QDebug>
 #include <QVariantMap>
 
 namespace mp

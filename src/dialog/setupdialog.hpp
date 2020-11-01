@@ -4,7 +4,6 @@
 #include "openlinkdialog.hpp"
 
 #include <QCoreApplication>
-#include <QDebug>
 #include <QDesktopServices>
 #include <QDialog>
 #include <QHBoxLayout>

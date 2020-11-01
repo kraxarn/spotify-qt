@@ -22,14 +22,11 @@ template<typename T>
 void Settings::setValue(const QJsonObject &json, const QString &key, T &value)
 {
 	if (!json.contains(key))
-	{
-		qDebug() << "warning: settings key" << key << "not found";
 		return;
-	}
 
 	if (!json[key].toVariant().canConvert<T>())
 	{
-		qDebug() << "warning: settings type mismatch for key" << key;
+		Log::warn("Settings type mismatch for key: {}", key.toStdString());
 		return;
 	}
 
@@ -107,7 +104,7 @@ void Settings::load()
 	auto data = file.readAll();
 	if (data.isEmpty())
 	{
-		qDebug() << "warning: json config in" << fileName() << "is empty";
+		Log::warn("JSON config in {} is empty", fileName());
 		file.close();
 		return;
 	}
@@ -117,7 +114,7 @@ void Settings::load()
 	file.close();
 	if (error.error != QJsonParseError::NoError)
 	{
-		qDebug() << "error while reading json settings:" << error.errorString();
+		Log::error("Unable to read JSON settings: {}", error.errorString());
 		return;
 	}
 

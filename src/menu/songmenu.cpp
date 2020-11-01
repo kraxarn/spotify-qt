@@ -30,7 +30,7 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name, QString
 	this->parent = dynamic_cast<MainWindow *>(parent);
 	if (this->parent == nullptr)
 	{
-		qDebug() << "warning: parent is not main window, song menu won't function";
+		Log::warn("Parent is not MainWindow, SongMenu won't work properly");
 		return;
 	}
 	auto mainWindow = (MainWindow *) parent;

@@ -8,6 +8,7 @@
 #include "list/librarylist.hpp"
 #include "list/playlistlist.hpp"
 #include "list/trackslist.hpp"
+#include "log.hpp"
 #include "lyricsview.hpp"
 #include "maintoolbar.hpp"
 #include "mediaplayer/service.hpp"

@@ -5,7 +5,6 @@
 #include "../settings.hpp"
 
 #include <QDateTime>
-#include <QDebug>
 #include <QFileInfo>
 #include <QInputDialog>
 #include <QList>

@@ -3,9 +3,9 @@
 #include "enum/palette.hpp"
 #include "enum/playlistorder.hpp"
 #include "enum/spotifycontext.hpp"
+#include "log.hpp"
 
 #include <QCoreApplication>
-#include <QDebug>
 #include <QDir>
 #include <QFile>
 #include <QJsonArray>

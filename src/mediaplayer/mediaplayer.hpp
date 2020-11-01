@@ -10,7 +10,6 @@ class MediaPlayer;
 #include <QDBusConnection>
 #include <QDBusError>
 #include <QDBusInterface>
-#include <QDebug>
 #include <QStringList>
 
 class MediaPlayer: public QDBusAbstractAdaptor

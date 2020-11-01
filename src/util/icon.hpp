@@ -3,7 +3,6 @@
 #include "../mainwindow.hpp"
 #include "../settings.hpp"
 
-#include <QDebug>
 #include <QIcon>
 #include <QString>
 

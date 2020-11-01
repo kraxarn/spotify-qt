@@ -106,7 +106,7 @@ QString ClientHandler::start()
 		});
 	}
 	else
-		qDebug() << "warning: spotifyd/librespot was compiled without pulseaudio support";
+		Log::warn("Spotifyd/librespot was compiled without PulseAudio support");
 
 	QProcess::connect(process, &QProcess::readyReadStandardOutput, this, &ClientHandler::readyRead);
 

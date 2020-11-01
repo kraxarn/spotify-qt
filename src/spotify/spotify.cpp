@@ -16,7 +16,7 @@ QNetworkRequest Spotify::request(const QString &url)
 	auto lastRefresh = QDateTime::currentSecsSinceEpoch() - lastAuth;
 	if (lastRefresh >= 3600)
 	{
-		qDebug() << "access token probably expired, refreshing";
+		Log::info("Access token probably expired, refreshing");
 		refresh();
 	}
 
@@ -144,7 +144,7 @@ bool Spotify::refresh()
 	auto refreshToken = settings.account.refreshToken;
 	if (refreshToken.isEmpty())
 	{
-		qWarning() << "warning: attempt to refresh without refresh token";
+		Log::warn("Attempt to refresh without refresh token");
 		return false;
 	}
 
@@ -173,8 +173,9 @@ bool Spotify::refresh()
 	if (json.contains("error_description") || !json.contains("access_token"))
 	{
 		auto error = json["error_description"].toString();
-		qWarning() << "warning: failed to refresh token:"
-			<< (error.isEmpty() ? "no access token" : error);
+		Log::warn("Failed to refresh token: {}", error.isEmpty()
+			? "no access token"
+			: error);
 		return false;
 	}
 
