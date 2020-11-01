@@ -19,11 +19,19 @@ SystemInfoDialog::SystemInfoDialog(QWidget *mainWindow, QWidget *parent)
 	layout->addWidget(infoAbout);
 
 	auto buttons = new QDialogButtonBox();
+
+	QPushButton::connect(buttons->addButton("View logs", QDialogButtonBox::HelpRole), &QPushButton::clicked,
+		[this](bool checked)
+		{
+			(new LogViewer(this))->show();
+		});
+
 	QPushButton::connect(buttons->addButton(QDialogButtonBox::Ok), &QPushButton::clicked,
 		[this](bool checked)
 		{
 			accept();
 		});
+
 	layout->addWidget(buttons);
 }
 
