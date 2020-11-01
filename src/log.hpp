@@ -5,45 +5,46 @@
 #include "logmessage.hpp"
 
 #include <iostream>
-
-#include <QString>
+#include <regex>
 
 class Log
 {
 public:
 	template<typename... Args>
-	static void info(const QString &message, Args&... args)
+	static void info(const std::string &message, Args... args)
 	{
 		info(collect(message, args...));
 	}
-	static void info(const QString &message);
+	static void info(const std::string &message);
 
 	template<typename ... Args>
-	static void warn(const QString &message, Args&... args)
+	static void warn(const std::string &message, Args... args)
 	{
 		warn(collect(message, args...));
 	}
-	static void warn(const QString &message);
+	static void warn(const std::string &message);
 
 	template<typename ... Args>
-	static void error(const QString &message, Args&... args)
+	static void error(const std::string &message, Args... args)
 	{
 		error(collect(message, args...));
 	}
-	static void error(const QString &message);
+	static void error(const std::string &message);
 
-	static const QList<LogMessage> &getMessages();
+	static const std::vector<LogMessage> &getMessages();
 
 private:
 	Log() = default;
 
-	static QList<LogMessage> messages;
+	static std::vector<LogMessage> messages;
 
-	static void log(LogType logType, const QString &message);
+	static void log(LogType logType, const std::string &message);
 
 	template<typename T>
-	static QString collect(const QString &message, T &arg)
+	static std::string collect(const std::string &message, T &arg)
 	{
-		return QString(message).arg(arg);
+		return collect(message, std::to_string(arg));
 	}
+	static std::string collect(const std::string &message, std::string &arg);
+	static std::string collect(const std::string &message, QString &arg);
 };
