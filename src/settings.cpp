@@ -18,56 +18,86 @@ QString Settings::filePath()
 	return QFileInfo(fileName()).absolutePath();
 }
 
+template<typename T>
+void Settings::setValue(const QJsonObject &json, const QString &key, T &value)
+{
+	if (!json.contains(key))
+	{
+		qDebug() << "warning: settings key" << key << "not found";
+		return;
+	}
+
+	if (!json[key].toVariant().canConvert<T>())
+	{
+		qDebug() << "warning: settings type mismatch for key" << key;
+		return;
+	}
+
+	value = json[key].toVariant().value<T>();
+}
+
 void Settings::fromJson(const QJsonObject &json)
 {
-	QVector<int> hiddenSongHeaders;
-	for (auto val : json["General"].toObject()["hidden_song_headers"].toArray())
-		hiddenSongHeaders.append(val.toInt());
-
-	QStringList customPlaylistOrder;
-	for (auto val : json["General"].toObject()["custom_playlist_order"].toArray())
-		customPlaylistOrder.append(val.toString());
-
 	auto a = json["Account"].toObject();
-	account.accessToken = a["access_token"].toString();
-	account.clientId = a["client_id"].toString();
-	account.clientSecret = a["client_secret"].toString();
-	account.refreshToken = a["refresh_token"].toString();
-
 	auto g = json["General"].toObject();
-	general.customPlaylistOrder = customPlaylistOrder;
-	general.fallbackIcons = g["fallback_icons"].toBool(false);
-	general.fixedWidthTime = g["fixed_width_time"].toBool(true);
-	general.hiddenSongHeaders = hiddenSongHeaders;
-	general.lastPlaylist = g["last_playlist"].toString();
-	general.lastVersion = g["last_version"].toString();
-	general.lastVolume = g["last_volume"].toInt();
-	general.mediaController = g["media_controller"].toBool(hasMediaControllerSupport());
-	general.playlistOrder = (PlaylistOrder) g["playlist_order"].toInt(PlaylistOrderDefault);
-	general.pulseVolume = g["pulse_volume"].toBool(false);
-	general.refreshInterval = g["refresh_interval"].toInt(3);
-	general.showChangelog = g["show_changelog"].toBool(true);
-	general.showContextInfo = g["show_context_info"].toBool(true);
-	general.singleClickPlay = g["single_click_play"].toBool(false);
-	general.songHeaderResizeMode = g["song_header_resize_mode"].toInt(QHeaderView::ResizeToContents);
-	general.songHeaderSortBy = g["song_header_sort_by"].toInt(-1);
-	general.spotifyPlaybackOrder = g["spotify_playback_order"].toBool(false);
-	general.style = g["style"].toString();
-	general.stylePalette = (Palette) g["style_palette"].toInt(PaletteApp);
-	general.trackNumbers = (SpotifyContext) g["track_numbers"].toInt(ContextAll);
-	general.trayAlbumArt = g["tray_album_art"].toBool(false);
-	general.trayIcon = g["tray_icon"].toBool(true);
-	general.trayLightIcon = g["tray_light_icon"].toBool(false);
-	general.trayNotifications = g["tray_notifications"].toBool(false);
-
 	auto s = json["Spotify"].toObject();
-	spotify.alwaysStart = s["always_start"].toBool(true);
-	spotify.bitrate = s["bitrate"].toInt(320);
-	spotify.globalConfig = s["global_config"].toBool(false);
-	spotify.path = s["path"].toString();
-	spotify.startClient = s["start_client"].toBool(false);
-	spotify.username = s["username"].toString();
-	spotify.keyringPassword = s["keyring_password"].toBool(false);
+
+	// General/HiddenSongHeaders
+	if (g.contains("hidden_song_headers"))
+	{
+		QVector<int> hiddenSongHeaders;
+		for (auto val : g["hidden_song_headers"].toArray())
+			hiddenSongHeaders.append(val.toInt());
+		general.hiddenSongHeaders = hiddenSongHeaders;
+	}
+
+	// General/CustomPlaylistOrder
+	if (g.contains("custom_playlist_order"))
+	{
+		QStringList customPlaylistOrder;
+		for (auto val : g["custom_playlist_order"].toArray())
+			customPlaylistOrder.append(val.toString());
+		general.customPlaylistOrder = customPlaylistOrder;
+	}
+
+	// Account
+	setValue(a, "access_token", account.accessToken);
+	setValue(a, "client_id", account.clientId);
+	setValue(a, "client_secret", account.clientSecret);
+	setValue(a, "refresh_token", account.refreshToken);
+
+	// General
+	setValue(g, "fallback_icons", general.fallbackIcons);
+	setValue(g, "fixed_width_time", general.fixedWidthTime);
+	setValue(g, "last_playlist", general.lastPlaylist);
+	setValue(g, "last_version", general.lastVersion);
+	setValue(g, "last_volume", general.lastVolume);
+	setValue(g, "media_controller", general.mediaController);
+	setValue(g, "playlist_order", general.playlistOrder);
+	setValue(g, "pulse_volume", general.pulseVolume);
+	setValue(g, "refresh_interval", general.refreshInterval);
+	setValue(g, "show_changelog", general.showChangelog);
+	setValue(g, "show_context_info", general.showContextInfo);
+	setValue(g, "single_click_play", general.singleClickPlay);
+	setValue(g, "song_header_resize_mode", general.songHeaderResizeMode);
+	setValue(g, "song_header_sort_by", general.songHeaderSortBy);
+	setValue(g, "spotify_playback_order", general.spotifyPlaybackOrder);
+	setValue(g, "style", general.style);
+	setValue(g, "style_palette", general.stylePalette);
+	setValue(g, "track_numbers", general.trackNumbers);
+	setValue(g, "tray_album_art", general.trayAlbumArt);
+	setValue(g, "tray_icon", general.trayIcon);
+	setValue(g, "tray_light_icon", general.trayLightIcon);
+	setValue(g, "tray_notifications", general.trayNotifications);
+
+	// Spotify
+	setValue(s, "always_start", spotify.alwaysStart);
+	setValue(s, "bitrate", spotify.bitrate);
+	setValue(s, "global_config", spotify.globalConfig);
+	setValue(s, "path", spotify.path);
+	setValue(s, "start_client", spotify.startClient);
+	setValue(s, "username", spotify.username);
+	setValue(s, "keyring_password", spotify.keyringPassword);
 }
 
 void Settings::load()

@@ -25,26 +25,51 @@ public:
 	void save();
 	void load();
 
-	typedef struct {
-		QString accessToken, refreshToken, clientId, clientSecret;
+	typedef struct Account
+	{
+		QString accessToken;
+		QString refreshToken;
+		QString clientId;
+		QString clientSecret;
 	} Account;
 
-	typedef struct {
-		QString style, lastPlaylist, lastVersion;
-		bool pulseVolume, mediaController, spotifyPlaybackOrder, trayIcon, trayNotifications, trayLightIcon,
-			showChangelog, fallbackIcons, fixedWidthTime, trayAlbumArt, showContextInfo, singleClickPlay;
-		Palette stylePalette;
-		QVector<int> hiddenSongHeaders;
-		int songHeaderResizeMode, songHeaderSortBy, refreshInterval, lastVolume;
-		PlaylistOrder playlistOrder;
+	typedef struct General
+	{
+		Palette stylePalette = PaletteApp;
+		PlaylistOrder playlistOrder = PlaylistOrderDefault;
+		QString lastPlaylist;
+		QString lastVersion;
+		QString style;
 		QStringList customPlaylistOrder;
-		SpotifyContext trackNumbers;
+		QVector<int> hiddenSongHeaders;
+		SpotifyContext trackNumbers = ContextAll;
+		bool fallbackIcons = false;
+		bool fixedWidthTime = true;
+		bool mediaController = false;
+		bool pulseVolume = false;
+		bool showChangelog = true;
+		bool showContextInfo = true;
+		bool singleClickPlay = true;
+		bool spotifyPlaybackOrder = true;
+		bool trayAlbumArt = false;
+		bool trayIcon = true;
+		bool trayLightIcon = false;
+		bool trayNotifications = false;
+		int lastVolume = 0;
+		int refreshInterval = 3;
+		int songHeaderResizeMode = 3; // QHeaderView::ResizeToContents
+		int songHeaderSortBy = -1;
 	} General;
 
-	typedef struct {
-		QString path, username;
-		bool startClient, globalConfig, alwaysStart, keyringPassword;
-		int bitrate;
+	typedef struct Spotify
+	{
+		QString path;
+		QString username;
+		bool startClient = false;
+		bool globalConfig = false;
+		bool alwaysStart = true;
+		bool keyringPassword = false;
+		int bitrate = 320;
 	} Spotify;
 
 	Account account;
@@ -64,4 +89,7 @@ public:
 
 private:
 	QMutex mutex;
+
+	template<typename T>
+	void setValue(const QJsonObject &json, const QString &key, T &value);
 };
