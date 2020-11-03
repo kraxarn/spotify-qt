@@ -10,26 +10,38 @@
 class Log
 {
 public:
-	template<typename... Args>
-	static void info(const std::string &message, Args... args)
+	template<typename Format, typename Arg, typename... Args>
+	static void info(const Format &fmt, const Arg &arg, Args&&... args)
 	{
-		info(collect(message, args...));
+		return info(collect(fmt, arg), args...);
 	}
-	static void info(const std::string &message);
+	template<typename Format>
+	static void info(const Format &fmt)
+	{
+		log(LogType::Information, fmt);
+	}
 
-	template<typename ... Args>
-	static void warn(const std::string &message, Args... args)
+	template<typename Format, typename Arg, typename... Args>
+	static void warn(const Format &fmt, const Arg &arg, Args&&... args)
 	{
-		warn(collect(message, args...));
+		return warn(collect(fmt, arg), args...);
 	}
-	static void warn(const std::string &message);
+	template<typename Format>
+	static void warn(const Format &fmt)
+	{
+		log(LogType::Warning, fmt);
+	}
 
-	template<typename ... Args>
-	static void error(const std::string &message, Args... args)
+	template<typename Format, typename Arg, typename... Args>
+	static void error(const Format &fmt, const Arg &arg, Args&&... args)
 	{
-		error(collect(message, args...));
+		return error(collect(fmt, arg), args...);
 	}
-	static void error(const std::string &message);
+	template<typename Format>
+	static void error(const Format &fmt)
+	{
+		log(LogType::Error, fmt);
+	}
 
 	static const std::vector<LogMessage> &getMessages();
 
@@ -40,11 +52,27 @@ private:
 
 	static void log(LogType logType, const std::string &message);
 
-	template<typename T>
-	static std::string collect(const std::string &message, T &arg)
+	template<typename Format>
+	static std::string collect(const Format &fmt, const std::string &arg)
 	{
-		return collect(message, std::to_string(arg));
+		auto str = std::string(fmt);
+		auto index = str.find("{}");
+		if (index == std::string::npos)
+			return str;
+
+		return str.replace(index, 2, arg);
 	}
-	static std::string collect(const std::string &message, std::string &arg);
-	static std::string collect(const std::string &message, QString &arg);
+
+	template<typename Format, typename Arg>
+	static std::string collect(const Format &fmt, const Arg &arg)
+	{
+		return collect(fmt, std::to_string(arg));
+	}
+
+	template<typename Format>
+	static std::string collect(const Format &fmt, const QString &arg)
+	{
+		std::string str = arg.toStdString();
+		return collect(fmt, str);
+	}
 };
