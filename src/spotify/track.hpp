@@ -1,10 +1,5 @@
 #pragma once
 
-namespace spt
-{
-	class Track;
-}
-
 #include "../util/utils.hpp"
 
 #include <QDateTime>
