@@ -15,6 +15,6 @@ namespace spt
 		QString name;
 		QString type;
 		bool isActive = false;
-		int volumePercent;
+		int volumePercent = 0;
 	};
 }

@@ -19,10 +19,13 @@ namespace spt
 	public:
 		Track();
 		explicit Track(const QJsonObject &item);
-		QString id, album, albumId, artist, artistId, name, image;
-		int duration;
-		bool isLocal, isPlayable;
-		QDateTime addedAt;
+
 		QJsonObject toJson() const;
+
+		QString id, album, albumId, artist, artistId, name, image;
+		int duration = 0;
+		bool isLocal = false;
+		bool isPlayable = false;
+		QDateTime addedAt;
 	};
 }

@@ -28,9 +28,9 @@ namespace spt
 		QJsonObject toJson(const QJsonArray &jsonTracks = QJsonArray()) const;
 		bool isOwner(const User &user) const;
 
-		bool collaborative;
 		QString description, id, image, name, snapshot, ownerId, ownerName;
-		bool isPublic;
+		bool collaborative = false;
+		bool isPublic = false;
 
 	private:
 		static bool loadTracksFromUrl(QVector<Track> &trackList, QString &url, int offset, Spotify &spotify);

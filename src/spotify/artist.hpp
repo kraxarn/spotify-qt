@@ -30,7 +30,8 @@ namespace spt
 
 		QJsonObject toJson() const;
 
-		int followers, popularity;
+		int followers = 0;
+		int popularity = 0;
 		QStringList genres;
 		QString id, name, image;
 		QVector<QPair<QString, QString>> externalUrls;
