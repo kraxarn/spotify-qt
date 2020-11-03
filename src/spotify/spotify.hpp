@@ -98,6 +98,7 @@ namespace spt
 		QString post(const QString &url);
 		QString del(const QString &url, const QJsonDocument &json);
 		static QString errorMessage(QNetworkReply *reply);
+		static QString errorMessage(const QJsonDocument &json);
 		QJsonDocument get(const QString &url);
 
 		template<class T>
