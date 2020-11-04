@@ -33,21 +33,8 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const Set
 		.arg(artist.followers == 1 ? "" : "s");
 
 	// Artist name title
-	auto follows = spotify.isFollowing(FollowType::Artist, {artistId});
-	auto isFollowing = follows.isEmpty() ? false : follows[0];
 	auto title = new QHBoxLayout();
-	followButton = new QPushButton(this);
-	followButton->setIcon(Icon::get(QString("%1starred-symbolic").arg(isFollowing ? "" : "non-")));
-	followButton->setToolTip(QString("%1 artist (%2)")
-		.arg(isFollowing
-			? "Unfollow"
-			: "Follow").arg(followers));
-	followButton->setFlat(true);
-	QAbstractButton::connect(followButton, &QAbstractButton::clicked, this, &ArtistView::follow);
-	title->addWidget(followButton);
-
 	auto name = new QLabel(artist.name, this);
-	name->setAlignment(Qt::AlignHCenter);
 	name->setWordWrap(true);
 
 	auto titleFont = name->font();
@@ -55,17 +42,40 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const Set
 	name->setFont(titleFont);
 	title->addWidget(name, 1);
 
-	auto popularityText = QString("%1% popularity").arg(artist.popularity);
-	auto popularity = new QPushButton(this);
-	popularity->setToolTip(popularityText);
-	popularity->setIcon(QIcon(Utils::mask(Icon::get("draw-donut").pixmap(64, 64),
-		MaskShape::Pie,
-		QVariant(artist.popularity))));
-	popularity->setFlat(true);
-	QAbstractButton::connect(popularity, &QAbstractButton::clicked, [popularity, popularityText](bool checked)
-	{
-		QToolTip::showText(QCursor::pos(), popularityText);
+	auto menu = new QMenu(this);
+	menu->addAction(QIcon(Utils::mask(Icon::get("draw-donut").pixmap(64, 64),
+			MaskShape::Pie, QVariant(artist.popularity))),
+			QString("%1% popularity").arg(artist.popularity))
+		->setEnabled(false);
+
+	auto follows = spotify.isFollowing(FollowType::Artist, {
+		artistId
 	});
+	auto isFollowing = follows.isEmpty() ? false : follows[0];
+	QAction::connect(menu->addAction(Icon::get(QString("%1starred-symbolic")
+			.arg(isFollowing ? "" : "non-")),
+		QString("%1 (%2)").arg(isFollowing
+			? "Unfollow"
+			: "Follow").arg(followers)),
+		&QAction::triggered, this, &ArtistView::follow);
+
+	auto menuSearch = menu->addMenu(Icon::get("edit-find"), "Search");
+	QAction::connect(menuSearch->addAction("Wikipedia"), &QAction::triggered,
+		this, &ArtistView::searchWikipedia);
+	QAction::connect(menuSearch->addAction("DuckDuckGo"), &QAction::triggered,
+		this, &ArtistView::searchDuckDuckGo);
+
+	auto shareMenu = menu->addMenu(Icon::get("document-share"), "Share");
+	QAction::connect(shareMenu->addAction("Copy artist link"), &QAction::triggered,
+		this, &ArtistView::copyLink);
+	QAction::connect(shareMenu->addAction("Open in Spotify"), &QAction::triggered,
+		this, &ArtistView::openInSpotify);
+
+	auto popularity = new QToolButton(this);
+	popularity->setIcon(Icon::get("media-playback-start"));
+	popularity->setMenu(menu);
+	popularity->setPopupMode(QToolButton::MenuButtonPopup);
+	QAbstractButton::connect(popularity, &QAbstractButton::clicked, this, &ArtistView::play);
 	title->addWidget(popularity);
 	layout->addLayout(title);
 
@@ -222,4 +232,32 @@ void ArtistView::albumDoubleClicked(QTreeWidgetItem *item, int)
 		QString("spotify:album:%1").arg(item->data(0, RoleAlbumId).toString()));
 	if (!result.isEmpty())
 		mainWindow->setStatus(QString("Failed to start playlist playback: %1").arg(result), true);
+}
+
+void ArtistView::searchWikipedia(bool)
+{
+	Utils::openUrl(QString("https://www.wikipedia.org/search-redirect.php?family=wikipedia&go=Go&search=%1")
+		.arg(artist.name), LinkType::Web, this);
+}
+void ArtistView::searchDuckDuckGo(bool)
+{
+	Utils::openUrl(QString("https://duckduckgo.com/?t=h_&q=%1").arg(artist.name),
+		LinkType::Web, this);
+}
+
+void ArtistView::play(bool)
+{
+	spotify.playTracks(QString("spotify:artist:%1").arg(artistId));
+}
+
+void ArtistView::copyLink(bool)
+{
+	QApplication::clipboard()->setText(QString("https://open.spotify.com/artist/%1").arg(artistId));
+	((MainWindow *) this->parent)->setStatus("Link copied to clipboard");
+}
+
+void ArtistView::openInSpotify(bool)
+{
+	Utils::openUrl(QString("https://open.spotify.com/artist/%1").arg(artistId),
+		LinkType::Web, this->parent);
 }

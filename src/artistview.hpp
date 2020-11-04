@@ -29,6 +29,11 @@ private:
 	void relatedClick(QListWidgetItem *item);
 	void albumMenu(const QPoint &pos);
 	void albumDoubleClicked(QTreeWidgetItem *item, int column);
+	void play(bool checked);
+	void searchWikipedia(bool checked);
+	void searchDuckDuckGo(bool checked);
+	void copyLink(bool checked);
+	void openInSpotify(bool checked);
 
 	QListWidget *relatedList = nullptr;
 	QListWidget *topTracksList = nullptr;
