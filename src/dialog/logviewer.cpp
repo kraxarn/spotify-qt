@@ -6,6 +6,7 @@ LogViewer::LogViewer(QWidget *parent)
 	auto layout = new QVBoxLayout();
 	setLayout(layout);
 	resize(600, 400);
+	setWindowTitle("Logs");
 
 	auto list = new QTreeWidget(this);
 	list->setHeaderLabels({
