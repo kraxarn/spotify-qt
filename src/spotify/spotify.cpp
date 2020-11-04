@@ -44,12 +44,8 @@ QJsonDocument Spotify::get(const QString &url)
 	auto json = QJsonDocument::fromJson(reply->readAll());
 	reply->deleteLater();
 
-	// Check for errors
-	auto error = errorMessage(json);
-	if (!error.isEmpty())
-		Log::error("GET /{} failed: {}", url, error);
-
 	// Return parsed json
+	errorMessage(json, QUrl(url));
 	return json;
 }
 
@@ -140,15 +136,18 @@ QString Spotify::errorMessage(QNetworkReply *reply)
 	if (replyBody.isEmpty())
 		return QString();
 
-	return errorMessage(QJsonDocument::fromJson(replyBody));
+	return errorMessage(QJsonDocument::fromJson(replyBody), reply->url());
 }
 
-QString Spotify::errorMessage(const QJsonDocument &json)
+QString Spotify::errorMessage(const QJsonDocument &json, const QUrl &url)
 {
 	if (!json.isObject() || !json.object().contains("error"))
 		return QString();
 
-	return json.object()["error"].toObject()["message"].toString();
+	auto message = json.object()["error"].toObject()["message"].toString();
+	if (!message.isEmpty())
+		Log::error("{} failed: {}", url.path(), message);
+	return message;
 }
 
 bool Spotify::refresh()
