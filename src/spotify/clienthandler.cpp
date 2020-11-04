@@ -10,13 +10,7 @@ ClientHandler::ClientHandler(const Settings &settings, QWidget *parent)
 {
 	path = settings.spotify.path;
 	process = new QProcess(parent);
-	clientType = path.isEmpty()
-		? ClientType::None
-		: path.endsWith("spotifyd")
-			? ClientType::Spotifyd
-			: path.endsWith("librespot")
-				? ClientType::Librespot
-				: ClientType::None;
+	clientType = getClientType(path);
 }
 
 ClientHandler::~ClientHandler()
@@ -126,7 +120,7 @@ QString ClientHandler::clientExec(const QString &path, const QStringList &argume
 		return QString();
 
 	// Check if either client
-	if (file.baseName() != "spotifyd" && file.baseName() != "librespot")
+	if (getClientType(path) == ClientType::None)
 		return QString();
 
 	// Prepare process
@@ -154,16 +148,14 @@ bool ClientHandler::supportsPulse()
 
 QString ClientHandler::version(const QString &path)
 {
-	QFileInfo fileInfo(path);
+	auto clientType = getClientType(path);
 
-	return !fileInfo.exists()
-		? QString()
-		: fileInfo.baseName() == "spotifyd"
-			? clientExec(path, {
-				"--version"
-			}) : fileInfo.baseName() == "librespot"
-				? "librespot"
-				: QString();
+	return clientType == ClientType::Spotifyd
+		? clientExec(path, {
+			"--version"
+		}) : clientType == ClientType::Librespot
+			? "librespot"
+			: QString();
 }
 
 bool ClientHandler::isRunning()
@@ -252,4 +244,15 @@ void ClientHandler::readyRead() const
 QStringList ClientHandler::getLog()
 {
 	return log;
+}
+
+ClientType ClientHandler::getClientType(const QString &path)
+{
+	auto baseName = QFileInfo(path).baseName().toLower();
+
+	return baseName == "spotifyd"
+		? ClientType::Spotifyd
+		: baseName == "librespot"
+			? ClientType::Librespot
+			: ClientType::None;
 }
