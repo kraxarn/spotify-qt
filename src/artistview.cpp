@@ -52,12 +52,12 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const Set
 		artistId
 	});
 	auto isFollowing = follows.isEmpty() ? false : follows[0];
-	QAction::connect(menu->addAction(Icon::get(QString("%1starred-symbolic")
+	followButton = menu->addAction(Icon::get(QString("%1starred-symbolic")
 			.arg(isFollowing ? "" : "non-")),
 		QString("%1 (%2)").arg(isFollowing
 			? "Unfollow"
-			: "Follow").arg(followers)),
-		&QAction::triggered, this, &ArtistView::follow);
+			: "Follow").arg(followers));
+	QAction::connect(followButton, &QAction::triggered, this, &ArtistView::follow);
 
 	auto menuSearch = menu->addMenu(Icon::get("edit-find"), "Search");
 	QAction::connect(menuSearch->addAction("Wikipedia"), &QAction::triggered,
@@ -167,15 +167,24 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const Set
 
 void ArtistView::follow(bool)
 {
-	auto isFollowing = followButton->toolTip().contains("Unfollow");
+	auto isFollowing = followButton->text().contains("Unfollow");
 	followButton->setIcon(Icon::get(QString("%1starred-symbolic").arg(isFollowing ? "non-" : "")));
-	followButton->setToolTip(followButton->toolTip()
+	followButton->setText(followButton->toolTip()
 		.replace(isFollowing ? "Unfollow" : "Follow",
 			isFollowing ? "Follow" : "Unfollow"));
+
 	if (isFollowing)
-		spotify.unfollow(FollowType::Artist, {artistId});
+	{
+		spotify.unfollow(FollowType::Artist, {
+			artistId
+		});
+	}
 	else
-		spotify.follow(FollowType::Artist, {artistId});
+	{
+		spotify.follow(FollowType::Artist, {
+			artistId
+		});
+	}
 }
 
 void ArtistView::trackClick(QListWidgetItem *item)
