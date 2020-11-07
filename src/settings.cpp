@@ -95,6 +95,16 @@ void Settings::fromJson(const QJsonObject &json)
 	setValue(s, "start_client", spotify.startClient);
 	setValue(s, "username", spotify.username);
 	setValue(s, "keyring_password", spotify.keyringPassword);
+
+	// Validate
+	auto errors = validate();
+
+	for (auto &error : errors)
+		Log::error("One or more invalid {} settings found, restoring defaults", error.first);
+	if (errors.find("General") != errors.end())
+		general = General{};
+	if (errors.find("Spotify") != errors.end())
+		spotify = Spotify{};
 }
 
 void Settings::load()
