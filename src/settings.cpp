@@ -222,3 +222,26 @@ bool Settings::hasMediaControllerSupport()
 	return false;
 #endif
 }
+
+std::map<std::string, std::vector<std::string>> Settings::validate() const
+{
+	std::map<std::string, std::vector<std::string>> errors;
+
+	// Refresh interval needs to be 1-59
+	if (general.refreshInterval < 1 || general.refreshInterval > 59)
+	{
+		errors.insert(std::pair<std::string, std::vector<std::string>>("General", {
+			"refresh_interval"
+		}));
+	}
+
+	// Bitrate needs to be 96/160/320
+	if (spotify.bitrate != 96 && spotify.bitrate != 160 && spotify.bitrate != 320)
+	{
+		errors.insert(std::pair<std::string, std::vector<std::string>>("Spotify", {
+			"bitrate"
+		}));
+	}
+
+	return errors;
+}

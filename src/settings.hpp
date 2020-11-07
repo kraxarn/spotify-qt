@@ -91,6 +91,8 @@ public:
 
 	static bool hasMediaControllerSupport();
 
+	std::map<std::string, std::vector<std::string>> validate() const;
+
 private:
 	QMutex mutex;
 
