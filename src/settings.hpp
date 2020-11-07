@@ -53,7 +53,7 @@ public:
 		bool pulseVolume = false;
 		bool showChangelog = true;
 		bool showContextInfo = true;
-		bool singleClickPlay = true;
+		bool singleClickPlay = false;
 		bool spotifyPlaybackOrder = true;
 		bool trayAlbumArt = false;
 		bool trayIcon = true;
