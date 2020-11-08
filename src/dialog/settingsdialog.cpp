@@ -17,12 +17,6 @@ SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent)
 		new AboutPage(settings, this)
 	});
 
-//		{"window", "Application"},
-//		{"draw-brush", "Interface"}, // Tray icon
-//		{"headphones", "Spotify"},
-//		{"view-media-playlist", "Playlists"},
-//		{"help-about", "About"},
-
 	for (auto &page : pages)
 	{
 		new QListWidgetItem(page->icon(), page->title(), categories);
