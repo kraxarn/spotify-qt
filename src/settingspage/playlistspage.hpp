@@ -3,6 +3,8 @@
 #include "settingspage.hpp"
 #include "../util/icon.hpp"
 
+#include <QComboBox>
+
 class PlaylistsPage: public SettingsPage
 {
 public:

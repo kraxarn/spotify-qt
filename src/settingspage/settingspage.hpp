@@ -20,6 +20,7 @@ protected:
 
 	void warning(const QString &title, const QString &message);
 	void applyFail(const QString &setting);
+	QWidget *findMainWindow();
 
 	QVBoxLayout *layout = nullptr;
 	Settings &settings;

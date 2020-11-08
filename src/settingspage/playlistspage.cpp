@@ -27,7 +27,7 @@ PlaylistsPage::PlaylistsPage(Settings &settings, QWidget *parent)
 	QComboBox::connect(plOrder, QOverload<int>::of(&QComboBox::currentIndexChanged),
 		this, &PlaylistsPage::playlistOrderChanged);
 
-	auto mainWindow = dynamic_cast<MainWindow *>(parentWidget());
+	auto mainWindow = dynamic_cast<MainWindow *>(findMainWindow());
 
 	plListLayout = new QHBoxLayout();
 	plList = new QListWidget(this);
