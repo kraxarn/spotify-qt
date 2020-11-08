@@ -1,0 +1,31 @@
+#pragma once
+
+#include "settingspage.hpp"
+#include "../util/icon.hpp"
+
+class PlaylistsPage: public SettingsPage
+{
+public:
+	PlaylistsPage(Settings &settings, QWidget *parent);
+
+	QIcon icon() override;
+	QString title() override;
+	bool save() override;
+
+private:
+	QComboBox *plOrder = nullptr;
+	QHBoxLayout *plListLayout = nullptr;
+	QLabel *plHint = nullptr;
+	QListWidget *plList = nullptr;
+	QStringList plHints;
+	QAction *plBtnUp = nullptr;
+	QAction *plBtnDown = nullptr;
+
+	void playlistOrderChanged(int index);
+	void playlistMove(int steps);
+	void playlistUp();
+	void playlistDown();
+	void playlistItemChanged(int row);
+};
+
+
