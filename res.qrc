@@ -12,12 +12,14 @@
         <file>res/ic/light/document-edit.svg</file>
         <file>res/ic/light/document-share.svg</file>
         <file>res/ic/light/download.svg</file>
+        <file>res/ic/light/draw-brush.svg</file>
         <file>res/ic/light/draw-donut.svg</file>
         <file>res/ic/light/edit-find.svg</file>
         <file>res/ic/light/folder-temp.svg</file>
         <file>res/ic/light/folder-txt.svg</file>
         <file>res/ic/light/go-down.svg</file>
         <file>res/ic/light/go-up.svg</file>
+        <file>res/ic/light/headphones.svg</file>
         <file>res/ic/light/help-about.svg</file>
         <file>res/ic/light/hint.svg</file>
         <file>res/ic/light/im-user-away.svg</file>
@@ -42,6 +44,7 @@
         <file>res/ic/light/view-sort-ascending.svg</file>
         <file>res/ic/light/view-statistics.svg</file>
         <file>res/ic/light/visibility.svg</file>
+        <file>res/ic/light/window.svg</file>
         <!-- Dark icons -->
         <file>res/ic/dark/application-exit.svg</file>
         <file>res/ic/dark/application-menu.svg</file>
@@ -53,12 +56,14 @@
         <file>res/ic/dark/document-edit.svg</file>
         <file>res/ic/dark/document-share.svg</file>
         <file>res/ic/dark/download.svg</file>
+        <file>res/ic/dark/draw-brush.svg</file>
         <file>res/ic/dark/draw-donut.svg</file>
         <file>res/ic/dark/edit-find.svg</file>
         <file>res/ic/dark/folder-temp.svg</file>
         <file>res/ic/dark/folder-txt.svg</file>
         <file>res/ic/dark/go-down.svg</file>
         <file>res/ic/dark/go-up.svg</file>
+        <file>res/ic/dark/headphones.svg</file>
         <file>res/ic/dark/help-about.svg</file>
         <file>res/ic/dark/hint.svg</file>
         <file>res/ic/dark/im-user-away.svg</file>
@@ -83,6 +88,7 @@
         <file>res/ic/dark/view-sort-ascending.svg</file>
         <file>res/ic/dark/view-statistics.svg</file>
         <file>res/ic/dark/visibility.svg</file>
+        <file>res/ic/dark/window.svg</file>
         <!-- Logos -->
         <file>res/logo/qt.svg</file>
         <file>res/logo/spotify-qt-symbolic-dark.svg</file>
