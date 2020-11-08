@@ -20,12 +20,6 @@ LogViewer::LogViewer(QWidget *parent)
 
 	auto buttons = new QDialogButtonBox();
 
-	QPushButton::connect(buttons->addButton(QDialogButtonBox::Ok), &QPushButton::clicked,
-		[this](bool checked)
-		{
-			accept();
-		});
-
 	QPushButton::connect(buttons->addButton("Copy to clipboard", QDialogButtonBox::ActionRole),
 		&QPushButton::clicked, this, &LogViewer::copyToClipboard);
 
