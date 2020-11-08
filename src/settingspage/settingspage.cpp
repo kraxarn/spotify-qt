@@ -4,6 +4,7 @@ SettingsPage::SettingsPage(Settings &settings, QWidget *parent)
 	: settings(settings), QWidget(parent)
 {
 	layout = new QVBoxLayout();
+	layout->setAlignment(Qt::AlignTop);
 	setLayout(layout);
 }
 
