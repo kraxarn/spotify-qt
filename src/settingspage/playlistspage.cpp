@@ -1,11 +1,8 @@
-#include "../dialog/settingsdialog.hpp"
+#include "playlistspage.hpp"
 
-QWidget *SettingsDialog::playlistSettings()
+PlaylistsPage::PlaylistsPage(Settings &settings, QWidget *parent)
+	: SettingsPage(settings, parent)
 {
-	auto layout = new QVBoxLayout();
-	layout->setAlignment(Qt::AlignTop);
-	layout->setSpacing(8);
-
 	plHints = QStringList({
 		"Display in the order they are fetched.",
 		"Display in alphabetical order from A to Z.",
@@ -28,25 +25,25 @@ QWidget *SettingsDialog::playlistSettings()
 	layout->addWidget(plHint);
 
 	QComboBox::connect(plOrder, QOverload<int>::of(&QComboBox::currentIndexChanged),
-		this, &SettingsDialog::playlistOrderChanged);
+		this, &PlaylistsPage::playlistOrderChanged);
 
 	auto mainWindow = dynamic_cast<MainWindow *>(parentWidget());
 
 	plListLayout = new QHBoxLayout();
 	plList = new QListWidget(this);
 	plListLayout->addWidget(plList, 1);
-	QListWidget::connect(plList, &QListWidget::currentRowChanged, this, &SettingsDialog::playlistItemChanged);
+	QListWidget::connect(plList, &QListWidget::currentRowChanged, this, &PlaylistsPage::playlistItemChanged);
 
 	auto buttons = new QToolBar(this);
 	buttons->setOrientation(Qt::Vertical);
 
 	plBtnUp = buttons->addAction(Icon::get("go-up"), "Up");
 	plBtnUp->setEnabled(false);
-	QAction::connect(plBtnUp, &QAction::triggered, this, &SettingsDialog::playlistUp);
+	QAction::connect(plBtnUp, &QAction::triggered, this, &PlaylistsPage::playlistUp);
 
 	plBtnDown = buttons->addAction(Icon::get("go-down"), "Down");
 	plBtnDown->setEnabled(false);
-	QAction::connect(plBtnDown, &QAction::triggered, this, &SettingsDialog::playlistDown);
+	QAction::connect(plBtnDown, &QAction::triggered, this, &PlaylistsPage::playlistDown);
 
 	plListLayout->addWidget(buttons);
 	layout->addLayout(plListLayout, 1);
@@ -60,14 +57,39 @@ QWidget *SettingsDialog::playlistSettings()
 		listItem->setData(DataRole::RolePlaylistId, mainItem->data(DataRole::RolePlaylistId));
 		plList->addItem(listItem);
 	}
-
-	// Final layout
-	auto widget = new QWidget();
-	widget->setLayout(layout);
-	return widget;
 }
 
-void SettingsDialog::playlistOrderChanged(int index)
+QIcon PlaylistsPage::icon()
+{
+	return Icon::get("view-media-playlist");
+}
+
+QString PlaylistsPage::title()
+{
+	return "Playlists";
+}
+
+bool PlaylistsPage::save()
+{
+	// Custom playlist order
+	auto playlistOrder = (PlaylistOrder) plOrder->currentIndex();
+	if (playlistOrder == PlaylistOrderCustom)
+	{
+		QStringList order;
+		for (auto i = 0; i < plList->count(); i++)
+			order.append(plList->item(i)->data(RolePlaylistId).toString());
+		settings.general.customPlaylistOrder = order;
+	}
+
+	// Playlist stuff
+//	if ((settings.general.playlistOrder != playlistOrder || playlistOrder == PlaylistOrderCustom) && window != nullptr)
+//		window->orderPlaylists(playlistOrder); // TODO
+	settings.general.playlistOrder = playlistOrder;
+
+	return false;
+}
+
+void PlaylistsPage::playlistOrderChanged(int index)
 {
 	for (auto i = 0; i < plListLayout->count(); i++)
 		plListLayout->itemAt(i)->widget()->setEnabled(index == 3);
@@ -75,7 +97,7 @@ void SettingsDialog::playlistOrderChanged(int index)
 	plHint->setText(plHints.at(index));
 }
 
-void SettingsDialog::playlistMove(int steps)
+void PlaylistsPage::playlistMove(int steps)
 {
 	auto row = plList->currentRow();
 	auto item = plList->takeItem(row);
@@ -83,17 +105,17 @@ void SettingsDialog::playlistMove(int steps)
 	plList->setCurrentItem(item);
 }
 
-void SettingsDialog::playlistUp()
+void PlaylistsPage::playlistUp()
 {
 	playlistMove(-1);
 }
 
-void SettingsDialog::playlistDown()
+void PlaylistsPage::playlistDown()
 {
 	playlistMove(1);
 }
 
-void SettingsDialog::playlistItemChanged(int row)
+void PlaylistsPage::playlistItemChanged(int row)
 {
 	plBtnUp->setEnabled(row > 0);
 	plBtnDown->setEnabled(row < plList->count() - 1);

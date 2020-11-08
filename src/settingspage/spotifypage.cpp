@@ -1,11 +1,8 @@
-#include "../dialog/settingsdialog.hpp"
+#include "spotifypage.hpp"
 
-QWidget *SettingsDialog::spotifySettings()
+SpotifyPage::SpotifyPage(Settings &settings, QWidget *parent)
+	: SettingsPage(settings, parent)
 {
-	// Main container for everything
-	auto layout = new QVBoxLayout();
-	layout->setAlignment(Qt::AlignTop);
-
 	// Executable settings
 	auto sptPathLayout = new QHBoxLayout();
 	sptPath = new QLineEdit(settings.spotify.path, this);
@@ -47,7 +44,7 @@ QWidget *SettingsDialog::spotifySettings()
 	sptGlobal = new QCheckBox("Use global config", this);
 	sptGlobal->setToolTip("Use spotifyd.conf file in either ~/.config/spotifyd or /etc/spotifyd only");
 	sptGlobal->setChecked(settings.spotify.globalConfig);
-	QCheckBox::connect(sptGlobal, &QCheckBox::stateChanged, this, &SettingsDialog::globalConfigToggle);
+	QCheckBox::connect(sptGlobal, &QCheckBox::stateChanged, this, &SpotifyPage::globalConfigToggle);
 	layout->addWidget(sptGlobal);
 
 	// Box and layout for all app specific settings
@@ -91,7 +88,7 @@ QWidget *SettingsDialog::spotifySettings()
 	sptAppStart = new QCheckBox("Start with app", this);
 	sptAppStart->setToolTip("Start, and close, spotifyd together with the app (only closes with app config)");
 	sptAppStart->setChecked(settings.spotify.startClient);
-	QCheckBox::connect(sptAppStart, &QCheckBox::stateChanged, this, &SettingsDialog::startClientToggle);
+	QCheckBox::connect(sptAppStart, &QCheckBox::stateChanged, this, &SpotifyPage::startClientToggle);
 	otherLayout->addWidget(sptAppStart);
 
 	// Always start
@@ -100,19 +97,73 @@ QWidget *SettingsDialog::spotifySettings()
 	sptAlways->setChecked(settings.spotify.alwaysStart);
 	sptAlways->setEnabled(sptAppStart->isChecked());
 	otherLayout->addWidget(sptAlways);
-
-	// Final layout
-	auto widget = new QWidget();
-	widget->setLayout(layout);
-	return widget;
 }
 
-void SettingsDialog::globalConfigToggle(int state)
+QIcon SpotifyPage::icon()
+{
+	return Icon::get("headphones");
+}
+
+QString SpotifyPage::title()
+{
+	return "Spotify";
+}
+
+bool SpotifyPage::save()
+{
+	// Check spotify client path
+	if (!sptPath->text().isEmpty())
+	{
+		auto client = spt::ClientHandler::version(sptPath->text());
+		if (client.isEmpty())
+		{
+			applyFail("spotifyd path");
+			return false;
+		}
+		sptVersion->setText(client);
+		settings.spotify.path = sptPath->text();
+	}
+
+	// librespot has no global config support
+	if (sptGlobal->isChecked() && sptVersion->text() == "librespot")
+	{
+		warning("librespot",
+			"Global config is not available when using librespot");
+		sptGlobal->setChecked(false);
+	}
+
+	// Spotify global config
+	if (sptGlobal->isChecked() && !sptConfigExists())
+		warning("spotifyd config not found",
+			QString("Couldn't find a config file for spotifyd. You may experience issues."));
+	settings.spotify.globalConfig = sptGlobal->isChecked();
+
+	// Other Spotify stuff
+	settings.spotify.startClient = sptAppStart->isChecked();
+	settings.spotify.username = sptUsername->text();
+	auto bitrate = sptBitrate->currentIndex();
+	settings.spotify.bitrate = bitrate == 0 ? 96 : bitrate == 1 ? 160 : 320;
+	settings.spotify.alwaysStart = sptAlways->isChecked();
+	if (sptKeyring != nullptr)
+		settings.spotify.keyringPassword = sptKeyring->isChecked();
+
+	return false;
+}
+
+void SpotifyPage::globalConfigToggle(int state)
 {
 	sptGroup->setEnabled(state == Qt::Unchecked);
 }
 
-void SettingsDialog::startClientToggle(int state)
+void SpotifyPage::startClientToggle(int state)
 {
 	sptAlways->setEnabled(state == Qt::Checked);
+}
+
+bool SpotifyPage::sptConfigExists()
+{
+	// Config is either ~/.config/spotifyd/spotifyd.conf or /etc/spotifyd/spotifyd.conf
+	return QFile(QString("%1/.config/spotifyd/spotifyd.conf")
+		.arg(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0])).exists()
+		|| QFile("/etc/spotifyd/spotifyd.conf").exists();
 }

@@ -1,10 +1,8 @@
-#include "../dialog/settingsdialog.hpp"
+#include "interfacepage.hpp"
 
-QWidget *SettingsDialog::interfaceSettings()
+InterfacePage::InterfacePage(Settings &settings, QWidget *parent)
+	: SettingsPage(settings, parent)
 {
-	auto layout = new QVBoxLayout();
-	layout->setAlignment(Qt::AlignTop);
-
 	// Dark theme
 	itfDark = new QCheckBox("Dark theme", this);
 	itfDark->setToolTip("Use custom dark theme");
@@ -43,14 +41,58 @@ QWidget *SettingsDialog::interfaceSettings()
 	itfTrackNum->setToolTip("Show track numbers next to tracks in the list");
 	itfTrackNum->setChecked(settings.general.trackNumbers == ContextAll);
 	layout->addWidget(itfTrackNum);
-
-	// Final layout
-	auto widget = new QWidget();
-	widget->setLayout(layout);
-	return widget;
 }
 
-bool SettingsDialog::hasIconTheme()
+QIcon InterfacePage::icon()
+{
+	return Icon::get("draw-brush");
+}
+
+QString InterfacePage::title()
+{
+	return "Interface";
+}
+
+bool InterfacePage::save()
+{
+	// Set theme
+	auto changeTheme = itfDark->isChecked() != settings.darkTheme();
+	if (changeTheme)
+	{
+		QMessageBox::information(this, "Dark Theme",
+			"Please restart the application to fully apply selected theme");
+		settings.setDarkTheme(itfDark->isChecked());
+		QApplication::setStyle(settings.general.style);
+		Utils::applyPalette(settings.general.stylePalette);
+	}
+
+	// Song header resize mode
+	auto resizeMode = itfResizeAuto->isChecked()
+		? QHeaderView::ResizeToContents
+		: QHeaderView::Interactive;
+//	if (resizeMode != settings.general.songHeaderResizeMode && window != nullptr)
+//		window->getSongsTree()->header()->setSectionResizeMode(resizeMode); // TODO
+	settings.general.songHeaderResizeMode = resizeMode;
+
+	// Track numbers
+//	if (window != nullptr)
+//		window->toggleTrackNumbers(itfTrackNum->isChecked()); // TODO
+	settings.general.trackNumbers = itfTrackNum->isChecked()
+		? ContextAll
+		: ContextNone;
+
+	// Other interface stuff
+	if (itfIcFallback != nullptr)
+		settings.general.fallbackIcons = itfIcFallback->isChecked();
+//	if (window != nullptr)
+//		window->setFixedWidthTime(itfMonoTime->isChecked()); // TODO
+	settings.general.fixedWidthTime = itfMonoTime->isChecked();
+	settings.general.showContextInfo = itfContextInfo->isChecked();
+
+	return false;
+}
+
+bool InterfacePage::hasIconTheme()
 {
 	return !QIcon::fromTheme("media-playback-start").isNull();
 }

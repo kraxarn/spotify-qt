@@ -1,6 +1,7 @@
-#include "../dialog/settingsdialog.hpp"
+#include "aboutpage.hpp"
 
-QWidget *SettingsDialog::aboutSettings()
+AboutPage::AboutPage(Settings &settings, QWidget *parent)
+	: SettingsPage(settings, parent)
 {
 	auto cacheSize = 0u;
 	auto mainWindow = dynamic_cast<MainWindow *>(parentWidget());
@@ -80,7 +81,19 @@ QWidget *SettingsDialog::aboutSettings()
 	});
 	options->addWidget(openConfig);
 	layout->addLayout(options, 1);
+}
 
-	// Final layout
-	return Utils::layoutToWidget(layout);
+QIcon AboutPage::icon()
+{
+	return Icon::get("help-about");
+}
+
+QString AboutPage::title()
+{
+	return "About";
+}
+
+bool AboutPage::save()
+{
+	return false;
 }
