@@ -91,5 +91,5 @@ QString AboutPage::title()
 
 bool AboutPage::save()
 {
-	return false;
+	return true;
 }
