@@ -76,12 +76,12 @@ target_link_libraries(spotify-qt PRIVATE
 # Check if we should include Qt Quick
 if (USE_QT_QUICK)
 	add_subdirectory(qml)
-	add_compile_definitions(USE_QT_QUICK)
+	target_compile_definitions(spotify-qt PRIVATE USE_QT_QUICK)
 	target_link_libraries(spotify-qt PRIVATE spotify-qt-quick)
 endif ()
 
 # D-Bus support is optional
 if (Qt5DBus_FOUND)
-	add_compile_definitions(USE_DBUS)
+	target_compile_definitions(spotify-qt PRIVATE USE_DBUS)
 	target_link_libraries(spotify-qt PRIVATE Qt5::DBus)
 endif ()
