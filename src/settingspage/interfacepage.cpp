@@ -55,6 +55,8 @@ QString InterfacePage::title()
 
 bool InterfacePage::save()
 {
+	auto mainWindow = dynamic_cast<MainWindow*>(findMainWindow());
+
 	// Set theme
 	auto changeTheme = itfDark->isChecked() != settings.darkTheme();
 	if (changeTheme)
@@ -70,13 +72,13 @@ bool InterfacePage::save()
 	auto resizeMode = itfResizeAuto->isChecked()
 		? QHeaderView::ResizeToContents
 		: QHeaderView::Interactive;
-//	if (resizeMode != settings.general.songHeaderResizeMode && window != nullptr)
-//		window->getSongsTree()->header()->setSectionResizeMode(resizeMode); // TODO
+	if (resizeMode != settings.general.songHeaderResizeMode && mainWindow != nullptr)
+		mainWindow->getSongsTree()->header()->setSectionResizeMode(resizeMode);
 	settings.general.songHeaderResizeMode = resizeMode;
 
 	// Track numbers
-//	if (window != nullptr)
-//		window->toggleTrackNumbers(itfTrackNum->isChecked()); // TODO
+	if (mainWindow != nullptr)
+		mainWindow->toggleTrackNumbers(itfTrackNum->isChecked());
 	settings.general.trackNumbers = itfTrackNum->isChecked()
 		? ContextAll
 		: ContextNone;
@@ -84,8 +86,8 @@ bool InterfacePage::save()
 	// Other interface stuff
 	if (itfIcFallback != nullptr)
 		settings.general.fallbackIcons = itfIcFallback->isChecked();
-//	if (window != nullptr)
-//		window->setFixedWidthTime(itfMonoTime->isChecked()); // TODO
+	if (mainWindow != nullptr)
+		mainWindow->setFixedWidthTime(itfMonoTime->isChecked());
 	settings.general.fixedWidthTime = itfMonoTime->isChecked();
 	settings.general.showContextInfo = itfContextInfo->isChecked();
 
