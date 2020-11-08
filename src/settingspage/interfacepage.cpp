@@ -166,7 +166,7 @@ bool InterfacePage::save()
 	if (reloadTray && window != nullptr)
 		window->reloadTrayIcon();
 
-	return false;
+	return true;
 }
 
 bool InterfacePage::hasIconTheme()

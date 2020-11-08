@@ -97,7 +97,7 @@ bool ApplicationPage::save()
 	}
 	settings.general.refreshInterval = interval;
 
-	return false;
+	return true;
 }
 
 bool ApplicationPage::isPulse()

@@ -147,7 +147,7 @@ bool SpotifyPage::save()
 	if (sptKeyring != nullptr)
 		settings.spotify.keyringPassword = sptKeyring->isChecked();
 
-	return false;
+	return true;
 }
 
 void SpotifyPage::globalConfigToggle(int state)

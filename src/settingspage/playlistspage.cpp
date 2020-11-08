@@ -86,7 +86,7 @@ bool PlaylistsPage::save()
 //		window->orderPlaylists(playlistOrder); // TODO
 	settings.general.playlistOrder = playlistOrder;
 
-	return false;
+	return true;
 }
 
 void PlaylistsPage::playlistOrderChanged(int index)
