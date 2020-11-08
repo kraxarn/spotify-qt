@@ -162,7 +162,7 @@ bool InterfacePage::save()
 	settings.general.trayAlbumArt = itfTrayAlbum->isChecked();
 
 	// Reload if needed
-	auto window = dynamic_cast<MainWindow *>(parent());
+	auto window = dynamic_cast<MainWindow *>(findMainWindow());
 	if (reloadTray && window != nullptr)
 		window->reloadTrayIcon();
 

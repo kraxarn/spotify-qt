@@ -82,8 +82,9 @@ bool PlaylistsPage::save()
 	}
 
 	// Playlist stuff
-//	if ((settings.general.playlistOrder != playlistOrder || playlistOrder == PlaylistOrderCustom) && window != nullptr)
-//		window->orderPlaylists(playlistOrder); // TODO
+	auto mainWindow = dynamic_cast<MainWindow*>(findMainWindow());
+	if ((settings.general.playlistOrder != playlistOrder || playlistOrder == PlaylistOrderCustom) && mainWindow != nullptr)
+		mainWindow->orderPlaylists(playlistOrder);
 	settings.general.playlistOrder = playlistOrder;
 
 	return true;
