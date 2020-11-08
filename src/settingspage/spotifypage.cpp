@@ -3,6 +3,18 @@
 SpotifyPage::SpotifyPage(Settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
+	auto tabs = new QTabWidget(this);
+	tabs->addTab(spotify(), "General");
+	tabs->addTab(config(), "Configuration");
+	tabs->addTab(logs(), "Logs");
+	layout->addWidget(tabs);
+}
+
+QWidget *SpotifyPage::spotify()
+{
+	auto content = new QVBoxLayout();
+	content->setAlignment(Qt::AlignTop);
+
 	// Executable settings
 	auto sptPathLayout = new QHBoxLayout();
 	sptPath = new QLineEdit(settings.spotify.path, this);
@@ -18,16 +30,7 @@ SpotifyPage::SpotifyPage(Settings &settings, QWidget *parent)
 			sptPath->setText(filePath);
 	});
 	sptPathLayout->addWidget(sptPathBrowse);
-	auto sptOpenLog = new QPushButton(this);
-	sptOpenLog->setIcon(Icon::get("folder-txt"));
-	sptOpenLog->setToolTip("Open log");
-	sptOpenLog->setFlat(true);
-	QAbstractButton::connect(sptOpenLog, &QAbstractButton::clicked, [this](bool checked)
-	{
-		(new ClientHandlerLogDialog(this->parentWidget()))->show();
-	});
-	sptPathLayout->addWidget(sptOpenLog);
-	layout->addLayout(sptPathLayout);
+	content->addLayout(sptPathLayout);
 
 	// Spotifyd version
 	sptVersion = new QLabel("(no spotifyd provided)", this);
@@ -38,21 +41,43 @@ SpotifyPage::SpotifyPage(Settings &settings, QWidget *parent)
 			sptVersion->setText(client);
 	}
 	sptVersion->setEnabled(false);
-	layout->addWidget(sptVersion);
+	content->addWidget(sptVersion);
+
+	// Start with app
+	sptAppStart = new QCheckBox("Start with app", this);
+	sptAppStart->setToolTip("Start, and close, spotifyd together with the app (only closes with app config)");
+	sptAppStart->setChecked(settings.spotify.startClient);
+	QCheckBox::connect(sptAppStart, &QCheckBox::stateChanged, this, &SpotifyPage::startClientToggle);
+	content->addWidget(sptAppStart);
+
+	// Always start
+	sptAlways = new QCheckBox("Always start", this);
+	sptAlways->setToolTip("Always start client, even if there are other devices already available");
+	sptAlways->setChecked(settings.spotify.alwaysStart);
+	sptAlways->setEnabled(sptAppStart->isChecked());
+	content->addWidget(sptAlways);
+
+	return Utils::layoutToWidget(content);
+}
+
+QWidget *SpotifyPage::config()
+{
+	auto content = new QVBoxLayout();
+	content->setAlignment(Qt::AlignTop);
 
 	// Global config
 	sptGlobal = new QCheckBox("Use global config", this);
 	sptGlobal->setToolTip("Use spotifyd.conf file in either ~/.config/spotifyd or /etc/spotifyd only");
 	sptGlobal->setChecked(settings.spotify.globalConfig);
 	QCheckBox::connect(sptGlobal, &QCheckBox::stateChanged, this, &SpotifyPage::globalConfigToggle);
-	layout->addWidget(sptGlobal);
+	content->addWidget(sptGlobal);
 
 	// Box and layout for all app specific settings
 	sptGroup = new QGroupBox("App specific settings", this);
 	sptGroup->setEnabled(!sptGlobal->isChecked());
 	auto sptLayout = new QGridLayout();
 	sptGroup->setLayout(sptLayout);
-	layout->addWidget(sptGroup);
+	content->addWidget(sptGroup);
 
 	// Username
 	sptLayout->addWidget(new QLabel("Username", sptGroup), 0, 0);
@@ -80,23 +105,12 @@ SpotifyPage::SpotifyPage(Settings &settings, QWidget *parent)
 	}
 #endif
 
-	// Other options layout
-	auto otherLayout = new QHBoxLayout();
-	layout->addLayout(otherLayout);
+	return Utils::layoutToWidget(content);
+}
 
-	// Start with app
-	sptAppStart = new QCheckBox("Start with app", this);
-	sptAppStart->setToolTip("Start, and close, spotifyd together with the app (only closes with app config)");
-	sptAppStart->setChecked(settings.spotify.startClient);
-	QCheckBox::connect(sptAppStart, &QCheckBox::stateChanged, this, &SpotifyPage::startClientToggle);
-	otherLayout->addWidget(sptAppStart);
-
-	// Always start
-	sptAlways = new QCheckBox("Always start", this);
-	sptAlways->setToolTip("Always start client, even if there are other devices already available");
-	sptAlways->setChecked(settings.spotify.alwaysStart);
-	sptAlways->setEnabled(sptAppStart->isChecked());
-	otherLayout->addWidget(sptAlways);
+QWidget *SpotifyPage::logs()
+{
+	return new ClientHandlerLogDialog(findMainWindow());
 }
 
 QIcon SpotifyPage::icon()

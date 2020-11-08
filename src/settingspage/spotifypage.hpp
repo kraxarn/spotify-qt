@@ -28,4 +28,8 @@ private:
 	void globalConfigToggle(int state);
 	void startClientToggle(int state);
 	static bool sptConfigExists();
+
+	QWidget *spotify();
+	QWidget *config();
+	QWidget *logs();
 };

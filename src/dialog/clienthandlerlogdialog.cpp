@@ -6,22 +6,12 @@ ClientHandlerLogDialog::ClientHandlerLogDialog(QWidget *parent)
 	auto layout = new QVBoxLayout();
 	setLayout(layout);
 	setWindowTitle("Spotify client log");
-	setMinimumSize(600, 400);
 
 	logText = new QTextEdit(this);
 	logText->setReadOnly(true);
 	logText->setFont(QFont("monospace"));
 	logText->setWordWrapMode(QTextOption::NoWrap);
 	layout->addWidget(logText);
-
-	auto buttons = new QDialogButtonBox();
-	QPushButton::connect(buttons->addButton(QDialogButtonBox::Ok), &QPushButton::clicked,
-		[this](bool checked)
-		{
-			accept();
-		});
-
-	layout->addWidget(buttons);
 
 	auto timer = new QTimer(this);
 	QTimer::connect(timer, &QTimer::timeout, this, &ClientHandlerLogDialog::refresh);
