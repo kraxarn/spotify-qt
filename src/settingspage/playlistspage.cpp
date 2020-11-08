@@ -3,6 +3,13 @@
 PlaylistsPage::PlaylistsPage(Settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
+	addTab(order(), "Order");
+}
+
+QWidget *PlaylistsPage::order()
+{
+	auto layout = new QVBoxLayout();
+
 	plHints = QStringList({
 		"Display in the order they are fetched.",
 		"Display in alphabetical order from A to Z.",
@@ -57,6 +64,8 @@ PlaylistsPage::PlaylistsPage(Settings &settings, QWidget *parent)
 		listItem->setData(DataRole::RolePlaylistId, mainItem->data(DataRole::RolePlaylistId));
 		plList->addItem(listItem);
 	}
+
+	return Utils::layoutToWidget(layout);
 }
 
 QIcon PlaylistsPage::icon()

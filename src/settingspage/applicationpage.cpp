@@ -3,6 +3,13 @@
 ApplicationPage::ApplicationPage(Settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
+	addTab(app(), "General");
+}
+
+QWidget *ApplicationPage::app()
+{
+	auto layout = tabContent();
+
 	// Refresh interval
 	auto appRefreshLayout = new QHBoxLayout();
 	auto appRefreshLabel = new QLabel("Refresh interval", this);
@@ -60,6 +67,8 @@ ApplicationPage::ApplicationPage(Settings &settings, QWidget *parent)
 	settings.general.showChangelog = appWhatsNew->isChecked();
 	settings.general.spotifyPlaybackOrder = appSptOrder->isChecked();
 	settings.general.singleClickPlay = appOneClick->isChecked();
+
+	return Utils::layoutToWidget(layout);
 }
 
 QIcon ApplicationPage::icon()

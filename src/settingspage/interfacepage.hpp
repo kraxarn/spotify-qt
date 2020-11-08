@@ -13,8 +13,6 @@ public:
 	bool save() override;
 
 private:
-	QTabWidget *tabs;
-
 	// General
 	QCheckBox *itfContextInfo = nullptr;
 	QCheckBox *itfDark = nullptr;

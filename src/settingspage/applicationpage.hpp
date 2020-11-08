@@ -25,6 +25,8 @@ private:
 	QCheckBox *appOneClick = nullptr;
 
 	static bool isPulse();
+
+	QWidget *app();
 };
 
 

@@ -2,11 +2,8 @@
 #include "../mainwindow.hpp"
 
 SettingsPage::SettingsPage(Settings &settings, QWidget *parent)
-	: settings(settings), QWidget(parent)
+	: settings(settings), QTabWidget(parent)
 {
-	layout = new QVBoxLayout();
-	layout->setAlignment(Qt::AlignTop);
-	setLayout(layout);
 }
 
 void SettingsPage::warning(const QString &title, const QString &message)
@@ -26,4 +23,11 @@ QWidget *SettingsPage::findMainWindow()
 	while (ptr != nullptr && dynamic_cast<MainWindow*>(ptr) == nullptr)
 		ptr = ptr->parentWidget();
 	return ptr;
+}
+
+QVBoxLayout *SettingsPage::tabContent()
+{
+	auto layout = new QVBoxLayout(this);
+	layout->setAlignment(Qt::AlignTop);
+	return layout;
 }

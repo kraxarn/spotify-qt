@@ -3,11 +3,9 @@
 AboutPage::AboutPage(Settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
-	auto tabs = new QTabWidget(this);
-	tabs->addTab(about(), "General");
-	tabs->addTab(systemInfo(), "System information");
-	tabs->addTab(appLogs(), "Application logs");
-	layout->addWidget(tabs);
+	addTab(about(), "General");
+	addTab(systemInfo(), "System information");
+	addTab(appLogs(), "Application logs");
 }
 
 QWidget *AboutPage::about()
@@ -19,8 +17,7 @@ QWidget *AboutPage::about()
 			for (auto const &f : QDir(file.absoluteFilePath()).entryInfoList(QDir::Files))
 				cacheSize += f.size();
 
-	auto content = new QVBoxLayout();
-	content->setAlignment(Qt::AlignTop);
+	auto layout = tabContent();
 
 	// Title
 	auto title = new QHBoxLayout();
@@ -28,7 +25,7 @@ QWidget *AboutPage::about()
 	auto titleLogo = new QLabel();
 	titleLogo->setPixmap(Icon::get("logo:spotify-qt").pixmap(64, 64));
 	title->addWidget(titleLogo);
-	content->addLayout(title);
+	layout->addLayout(title);
 	auto titleVersion = new QVBoxLayout();
 	titleVersion->setSpacing(0);
 	titleVersion->setAlignment(Qt::AlignVCenter);
@@ -42,14 +39,14 @@ QWidget *AboutPage::about()
 
 	// User info
 	if (mainWindow != nullptr)
-		content->addWidget(new QLabel(QString("Hello %1!")
+		layout->addWidget(new QLabel(QString("Hello %1!")
 			.arg(mainWindow->getCurrentUser().displayName)), 0, Qt::AlignHCenter);
 
 	// Grid with buttons
-	content->addSpacing(8);
+	layout->addSpacing(8);
 	auto options = new QGridLayout();
-	content->addLayout(options, 1);
-	content->setAlignment(Qt::AlignBottom);
+	layout->addLayout(options, 1);
+	layout->setAlignment(Qt::AlignBottom);
 
 	// Open cache directory
 	auto openCache = new QPushButton(Icon::get("folder-temp"),
@@ -72,7 +69,7 @@ QWidget *AboutPage::about()
 	});
 	options->addWidget(openConfig, 0, 1);
 
-	return Utils::layoutToWidget(content);
+	return Utils::layoutToWidget(layout);
 }
 
 QWidget *AboutPage::systemInfo()

@@ -32,7 +32,7 @@ SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent)
 	mainLayout->addLayout(stackLayout, 1);
 
 	// Stack to show categories
-	stackLayout->addWidget(stack, 1, Qt::AlignTop);
+	stackLayout->addWidget(stack, 1);
 
 	// Buttons
 	auto buttons = new QDialogButtonBox();

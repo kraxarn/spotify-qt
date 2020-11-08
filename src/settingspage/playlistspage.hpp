@@ -28,6 +28,8 @@ private:
 	void playlistUp();
 	void playlistDown();
 	void playlistItemChanged(int row);
+
+	QWidget *order();
 };
 
 

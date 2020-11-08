@@ -5,7 +5,7 @@
 #include <QVBoxLayout>
 #include <QMessageBox>
 
-class SettingsPage: public QWidget
+class SettingsPage: public QTabWidget
 {
 Q_OBJECT
 
@@ -21,7 +21,7 @@ protected:
 	void warning(const QString &title, const QString &message);
 	void applyFail(const QString &setting);
 	QWidget *findMainWindow();
+	QVBoxLayout *tabContent();
 
-	QVBoxLayout *layout = nullptr;
 	Settings &settings;
 };

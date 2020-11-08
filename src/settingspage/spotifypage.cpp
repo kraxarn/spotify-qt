@@ -3,11 +3,9 @@
 SpotifyPage::SpotifyPage(Settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
-	auto tabs = new QTabWidget(this);
-	tabs->addTab(spotify(), "General");
-	tabs->addTab(config(), "Configuration");
-	tabs->addTab(logs(), "Logs");
-	layout->addWidget(tabs);
+	addTab(spotify(), "General");
+	addTab(config(), "Configuration");
+	addTab(logs(), "Logs");
 }
 
 QWidget *SpotifyPage::spotify()
