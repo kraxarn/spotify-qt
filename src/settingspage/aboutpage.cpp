@@ -3,6 +3,15 @@
 AboutPage::AboutPage(Settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
+	auto tabs = new QTabWidget(this);
+	tabs->addTab(about(), "General");
+	tabs->addTab(systemInfo(), "System information");
+	tabs->addTab(appLogs(), "Application logs");
+	layout->addWidget(tabs);
+}
+
+QWidget *AboutPage::about()
+{
 	auto cacheSize = 0u;
 	auto mainWindow = dynamic_cast<MainWindow *>(findMainWindow());
 	if (mainWindow != nullptr)
@@ -10,13 +19,16 @@ AboutPage::AboutPage(Settings &settings, QWidget *parent)
 			for (auto const &f : QDir(file.absoluteFilePath()).entryInfoList(QDir::Files))
 				cacheSize += f.size();
 
+	auto content = new QVBoxLayout(this);
+	content->setAlignment(Qt::AlignTop);
+
 	// Title
 	auto title = new QHBoxLayout();
 	title->setAlignment(Qt::AlignHCenter);
 	auto titleLogo = new QLabel();
 	titleLogo->setPixmap(Icon::get("logo:spotify-qt").pixmap(64, 64));
 	title->addWidget(titleLogo);
-	layout->addLayout(title);
+	content->addLayout(title);
 	auto titleVersion = new QVBoxLayout();
 	titleVersion->setSpacing(0);
 	titleVersion->setAlignment(Qt::AlignVCenter);
@@ -25,37 +37,19 @@ AboutPage::AboutPage(Settings &settings, QWidget *parent)
 	appNameFont.setPointSize(appNameFont.pointSizeF() * 1.5);
 	titleAppName->setFont(appNameFont);
 	titleVersion->addWidget(titleAppName);
-	titleVersion->addWidget(new QLabel(APP_VERSION));
+	titleVersion->addWidget(new QLabel(QString("%1, built using Qt %2").arg(APP_VERSION).arg(QT_VERSION_STR)));
 	title->addLayout(titleVersion);
 
 	// User info
 	if (mainWindow != nullptr)
-		layout->addWidget(new QLabel(QString("Hello %1!")
+		content->addWidget(new QLabel(QString("Hello %1!")
 			.arg(mainWindow->getCurrentUser().displayName)), 0, Qt::AlignHCenter);
 
 	// Grid with buttons
-	layout->addSpacing(8);
+	content->addSpacing(8);
 	auto options = new QGridLayout();
-
-	// About Qt
-	auto aboutQt = new QPushButton(Icon::get("logo:qt"),
-		QString("About Qt %1.%2")
-			.arg(QT_VERSION_MAJOR).arg(QT_VERSION_MINOR));
-	aboutQt->setFlat(true);
-	QAbstractButton::connect(aboutQt, &QPushButton::clicked, [this](bool checked)
-	{
-		QMessageBox::aboutQt(this);
-	});
-	options->addWidget(aboutQt);
-
-	// Generate report
-	auto generateReport = new QPushButton(Icon::get("description"), "System info", this);
-	generateReport->setFlat(true);
-	QAbstractButton::connect(generateReport, &QPushButton::clicked, [this, mainWindow](bool checked)
-	{
-		(new SystemInfoDialog(mainWindow, this))->show();
-	});
-	options->addWidget(generateReport, 0, 1);
+	content->addLayout(options, 1);
+	content->setAlignment(Qt::AlignBottom);
 
 	// Open cache directory
 	auto openCache = new QPushButton(Icon::get("folder-temp"),
@@ -67,7 +61,7 @@ AboutPage::AboutPage(Settings &settings, QWidget *parent)
 			return;
 		Utils::openUrl(mainWindow->getCacheLocation(), LinkType::Web, this);
 	});
-	options->addWidget(openCache);
+	options->addWidget(openCache, 0, 0);
 
 	// Open config file
 	auto openConfig = new QPushButton(Icon::get("folder-txt"), "Open config file");
@@ -76,7 +70,19 @@ AboutPage::AboutPage(Settings &settings, QWidget *parent)
 	{
 		Utils::openUrl(Settings::fileName(), LinkType::Path, this);
 	});
-	options->addWidget(openConfig);
+	options->addWidget(openConfig, 0, 1);
+
+	return Utils::layoutToWidget(content);
+}
+
+QWidget *AboutPage::systemInfo()
+{
+	return new SystemInfoDialog(findMainWindow(), this);
+}
+
+QWidget *AboutPage::appLogs()
+{
+	return new LogViewer(this);
 }
 
 QIcon AboutPage::icon()
