@@ -68,31 +68,6 @@ SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent)
 
 bool SettingsDialog::applySettings()
 {
-
-	// Desktop notifications and tray icon
-	if (itfTrayNotify->isChecked() && !itfTrayIcon->isChecked())
-	{
-		itfTrayIcon->setChecked(true);
-		QMessageBox::information(this, "Desktop Notifications",
-			"Desktop notifications requires tray icon to be enabled, so it was enabled");
-	}
-
-	// Check if tray icon needs to be reloaded
-	auto reloadTray = settings.general.trayIcon != itfTrayIcon->isChecked()
-		|| settings.general.trayNotifications != itfTrayNotify->isChecked()
-		|| settings.general.trayLightIcon != itfTrayInvert->isChecked();
-
-	// Apply
-	settings.general.trayIcon = itfTrayIcon->isChecked();
-	settings.general.trayNotifications = itfTrayNotify->isChecked();
-	settings.general.trayLightIcon = itfTrayInvert->isChecked();
-	settings.general.trayAlbumArt = itfTrayAlbum->isChecked();
-
-	// Reload if needed
-	auto window = dynamic_cast<MainWindow *>(parent());
-	if (reloadTray && window != nullptr)
-		window->reloadTrayIcon();
-
 	// Check all pages
 	for (auto &page : pages)
 	{

@@ -52,10 +52,4 @@ private:
 	QStackedWidget *stack = nullptr;
 
 	QList<SettingsPage*> pages;
-
-	// Tray icon settings
-	QCheckBox *itfTrayAlbum = nullptr;
-	QCheckBox *itfTrayIcon = nullptr;
-	QCheckBox *itfTrayInvert = nullptr;
-	QCheckBox *itfTrayNotify = nullptr;
 };
