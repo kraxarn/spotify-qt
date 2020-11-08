@@ -17,5 +17,3 @@ private:
 	QWidget *systemInfo();
 	QWidget *appLogs();
 };
-
-
