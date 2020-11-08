@@ -237,8 +237,8 @@ std::map<std::string, std::vector<std::string>> Settings::validate() const
 {
 	std::map<std::string, std::vector<std::string>> errors;
 
-	// Refresh interval needs to be 1-59
-	if (general.refreshInterval < 1 || general.refreshInterval > 59)
+	// Refresh interval needs to be 1-60
+	if (general.refreshInterval < 1 || general.refreshInterval > 60)
 	{
 		errors["General"] = {
 			"refresh_interval"
