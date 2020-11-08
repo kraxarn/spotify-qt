@@ -1,10 +1,8 @@
-#include "../dialog/settingsdialog.hpp"
+#include "applicationpage.hpp"
 
-QWidget *SettingsDialog::appSettings()
+ApplicationPage::ApplicationPage(Settings &settings, QWidget *parent)
+	: SettingsPage(settings, parent)
 {
-	auto layout = new QVBoxLayout();
-	layout->setAlignment(Qt::AlignTop);
-
 	// Refresh interval
 	auto appRefreshLayout = new QHBoxLayout();
 	auto appRefreshLabel = new QLabel("Refresh interval", this);
@@ -58,13 +56,51 @@ QWidget *SettingsDialog::appSettings()
 	appOneClick->setChecked(settings.general.singleClickPlay);
 	layout->addWidget(appOneClick);
 
-	// Final layout
-	auto widget = new QWidget();
-	widget->setLayout(layout);
-	return widget;
+	// Other application stuff
+	settings.general.showChangelog = appWhatsNew->isChecked();
+	settings.general.spotifyPlaybackOrder = appSptOrder->isChecked();
+	settings.general.singleClickPlay = appOneClick->isChecked();
 }
 
-bool SettingsDialog::isPulse()
+QIcon ApplicationPage::icon()
+{
+	return Icon::get("window");
+}
+
+QString ApplicationPage::title()
+{
+	return "Application";
+}
+
+bool ApplicationPage::save()
+{
+	// Media controller
+	if (appMedia != nullptr)
+	{
+		if (appMedia->isChecked() != settings.general.mediaController)
+			QMessageBox::information(this, "Media Controller",
+				"Please restart the application to apply changes");
+		settings.general.mediaController = appMedia->isChecked();
+	}
+
+	// PulseAudio volume
+	if (appPulse != nullptr)
+		settings.general.pulseVolume = appPulse->isChecked();
+
+	// Refresh interval
+	auto ok = false;
+	auto interval = appRefresh->currentText().toInt(&ok);
+	if (!ok || interval <= 0 || interval > 60)
+	{
+		applyFail("refresh interval");
+		return false;
+	}
+	settings.general.refreshInterval = interval;
+
+	return false;
+}
+
+bool ApplicationPage::isPulse()
 {
 	// Assume /usr/bin/pactl
 	return QFileInfo("/usr/bin/pactl").isExecutable();
