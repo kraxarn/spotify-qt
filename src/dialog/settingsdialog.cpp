@@ -30,6 +30,7 @@ SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent)
 	}
 	categories->setCurrentRow(0);
 	categories->setMaximumWidth(160);
+	QListWidget::connect(categories, &QListWidget::currentRowChanged, this, &SettingsDialog::categoryChanged);
 	mainLayout->addWidget(categories);
 
 	// Side layout
@@ -105,4 +106,9 @@ bool SettingsDialog::applySettings()
 	// Everything is fine
 	settings.save();
 	return true;
+}
+
+void SettingsDialog::categoryChanged(int row)
+{
+	stack->setCurrentIndex(row);
 }

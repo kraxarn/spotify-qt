@@ -43,6 +43,7 @@ public:
 	explicit SettingsDialog(Settings &settings, QWidget *parent = nullptr);
 
 private:
+	void categoryChanged(int row);
 	bool applySettings();
 
 	Settings &settings;
