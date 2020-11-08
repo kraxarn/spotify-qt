@@ -4,14 +4,11 @@ AboutPage::AboutPage(Settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
 	auto cacheSize = 0u;
-	auto mainWindow = dynamic_cast<MainWindow *>(parentWidget());
+	auto mainWindow = dynamic_cast<MainWindow *>(findMainWindow());
 	if (mainWindow != nullptr)
 		for (auto const &file : QDir(mainWindow->getCacheLocation()).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
 			for (auto const &f : QDir(file.absoluteFilePath()).entryInfoList(QDir::Files))
 				cacheSize += f.size();
-
-	auto layout = new QVBoxLayout();
-	layout->setAlignment(Qt::AlignTop);
 
 	// Title
 	auto title = new QHBoxLayout();
@@ -80,7 +77,6 @@ AboutPage::AboutPage(Settings &settings, QWidget *parent)
 		Utils::openUrl(Settings::fileName(), LinkType::Path, this);
 	});
 	options->addWidget(openConfig);
-	layout->addLayout(options, 1);
 }
 
 QIcon AboutPage::icon()
