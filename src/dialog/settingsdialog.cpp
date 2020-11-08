@@ -4,15 +4,40 @@ SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent)
 	: settings(settings), QDialog(parent)
 {
 	// Main layout
-	auto mainLayout = new QVBoxLayout();
-	auto tabs = new QTabWidget();
-	tabs->addTab(appSettings(), "Application");
-	tabs->addTab(interfaceSettings(), "Interface");
-	tabs->addTab(traySettings(), "Tray icon");
-	tabs->addTab(spotifySettings(), "Spotify");
-	tabs->addTab(playlistSettings(), "Playlists");
-	tabs->addTab(aboutSettings(), "About");
-	mainLayout->addWidget(tabs, 1);
+	auto mainLayout = new QHBoxLayout();
+
+	// List of categories
+	stack = new QStackedWidget(this);
+	categories = new QListWidget(this);
+	pages = QList<SettingsPage*>({
+		new ApplicationPage(settings, this),
+		new InterfacePage(settings, this),
+		new SpotifyPage(settings, this),
+		new PlaylistsPage(settings, this),
+		new AboutPage(settings, this)
+	});
+
+//		{"window", "Application"},
+//		{"draw-brush", "Interface"}, // Tray icon
+//		{"headphones", "Spotify"},
+//		{"view-media-playlist", "Playlists"},
+//		{"help-about", "About"},
+
+	for (auto &page : pages)
+	{
+		new QListWidgetItem(page->icon(), page->title(), categories);
+		stack->addWidget(page);
+	}
+	categories->setCurrentRow(0);
+	categories->setMaximumWidth(160);
+	mainLayout->addWidget(categories);
+
+	// Side layout
+	auto stackLayout = new QVBoxLayout();
+	mainLayout->addLayout(stackLayout, 1);
+
+	// Stack to show categories
+	stackLayout->addWidget(stack, 1, Qt::AlignTop);
 
 	// Buttons
 	auto buttons = new QDialogButtonBox();
@@ -32,52 +57,16 @@ SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent)
 	{
 		accept();
 	});
-	mainLayout->addWidget(buttons);
+	stackLayout->addWidget(buttons);
 
 	// Set layout
 	setWindowTitle("Settings");
 	setLayout(mainLayout);
-	resize(440, 340);
+	resize(520, 360);
 }
 
 bool SettingsDialog::applySettings()
 {
-	// Set theme
-	auto changeTheme = itfDark->isChecked() != settings.darkTheme();
-	if (changeTheme)
-	{
-		QMessageBox::information(this, "Dark Theme",
-			"Please restart the application to fully apply selected theme");
-		settings.setDarkTheme(itfDark->isChecked());
-		QApplication::setStyle(settings.general.style);
-		Utils::applyPalette(settings.general.stylePalette);
-	}
-
-	// Media controller
-	if (appMedia != nullptr)
-	{
-		if (appMedia->isChecked() != settings.general.mediaController)
-			QMessageBox::information(this, "Media Controller",
-				"Please restart the application to apply changes");
-		settings.general.mediaController = appMedia->isChecked();
-	}
-
-	// PulseAudio volume
-	if (appPulse != nullptr)
-		settings.general.pulseVolume = appPulse->isChecked();
-
-	// Check spotify client path
-	if (!sptPath->text().isEmpty())
-	{
-		auto client = spt::ClientHandler::version(sptPath->text());
-		if (client.isEmpty())
-		{
-			applyFail("spotifyd path");
-			return false;
-		}
-		sptVersion->setText(client);
-		settings.spotify.path = sptPath->text();
-	}
 
 	// Desktop notifications and tray icon
 	if (itfTrayNotify->isChecked() && !itfTrayIcon->isChecked())
@@ -103,102 +92,17 @@ bool SettingsDialog::applySettings()
 	if (reloadTray && window != nullptr)
 		window->reloadTrayIcon();
 
-	// Song header resize mode
-	auto resizeMode = itfResizeAuto->isChecked()
-		? QHeaderView::ResizeToContents
-		: QHeaderView::Interactive;
-	if (resizeMode != settings.general.songHeaderResizeMode && window != nullptr)
-		window->getSongsTree()->header()->setSectionResizeMode(resizeMode);
-	settings.general.songHeaderResizeMode = resizeMode;
-
-	// Refresh interval
-	auto ok = false;
-	auto interval = appRefresh->currentText().toInt(&ok);
-	if (!ok || interval <= 0 || interval > 60)
+	// Check all pages
+	for (auto &page : pages)
 	{
-		applyFail("refresh interval");
-		return false;
+		if (!page->save())
+		{
+			Log::error("Failed to save: {}", page->title());
+			return false;
+		}
 	}
-	settings.general.refreshInterval = interval;
-
-	// librespot has no global config support
-	if (sptGlobal->isChecked() && sptVersion->text() == "librespot")
-	{
-		warning("librespot",
-			"Global config is not available when using librespot");
-		sptGlobal->setChecked(false);
-	}
-
-	// Spotify global config
-	if (sptGlobal->isChecked() && !sptConfigExists())
-		warning("spotifyd config not found",
-			QString("Couldn't find a config file for spotifyd. You may experience issues."));
-	settings.spotify.globalConfig = sptGlobal->isChecked();
-
-	// Other application stuff
-	settings.general.showChangelog = appWhatsNew->isChecked();
-	settings.general.spotifyPlaybackOrder = appSptOrder->isChecked();
-	settings.general.singleClickPlay = appOneClick->isChecked();
-
-	// Track numbers
-	if (window != nullptr)
-		window->toggleTrackNumbers(itfTrackNum->isChecked());
-	settings.general.trackNumbers = itfTrackNum->isChecked()
-		? ContextAll
-		: ContextNone;
-
-	// Other interface stuff
-	if (itfIcFallback != nullptr)
-		settings.general.fallbackIcons = itfIcFallback->isChecked();
-	if (window != nullptr)
-		window->setFixedWidthTime(itfMonoTime->isChecked());
-	settings.general.fixedWidthTime = itfMonoTime->isChecked();
-	settings.general.showContextInfo = itfContextInfo->isChecked();
-
-	// Other Spotify stuff
-	settings.spotify.startClient = sptAppStart->isChecked();
-	settings.spotify.username = sptUsername->text();
-	auto bitrate = sptBitrate->currentIndex();
-	settings.spotify.bitrate = bitrate == 0 ? 96 : bitrate == 1 ? 160 : 320;
-	settings.spotify.alwaysStart = sptAlways->isChecked();
-	if (sptKeyring != nullptr)
-		settings.spotify.keyringPassword = sptKeyring->isChecked();
-
-	// Custom playlist order
-	auto playlistOrder = (PlaylistOrder) plOrder->currentIndex();
-	if (playlistOrder == PlaylistOrderCustom)
-	{
-		QStringList order;
-		for (auto i = 0; i < plList->count(); i++)
-			order.append(plList->item(i)->data(RolePlaylistId).toString());
-		settings.general.customPlaylistOrder = order;
-	}
-
-	// Playlist stuff
-	if ((settings.general.playlistOrder != playlistOrder || playlistOrder == PlaylistOrderCustom) && window != nullptr)
-		window->orderPlaylists(playlistOrder);
-	settings.general.playlistOrder = playlistOrder;
 
 	// Everything is fine
 	settings.save();
 	return true;
-}
-
-void SettingsDialog::applyFail(const QString &setting)
-{
-	warning("Failed to apply settings",
-		QString("Failed to apply setting \"%1\". Check your settings and try again.").arg(setting));
-}
-
-bool SettingsDialog::sptConfigExists()
-{
-	// Config is either ~/.config/spotifyd/spotifyd.conf or /etc/spotifyd/spotifyd.conf
-	return QFile(QString("%1/.config/spotifyd/spotifyd.conf")
-		.arg(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0])).exists()
-		|| QFile("/etc/spotifyd/spotifyd.conf").exists();
-}
-
-void SettingsDialog::warning(const QString &title, const QString &message)
-{
-	QMessageBox::warning(this, title, message);
 }
