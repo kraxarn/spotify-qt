@@ -19,7 +19,7 @@ QWidget *AboutPage::about()
 			for (auto const &f : QDir(file.absoluteFilePath()).entryInfoList(QDir::Files))
 				cacheSize += f.size();
 
-	auto content = new QVBoxLayout(this);
+	auto content = new QVBoxLayout();
 	content->setAlignment(Qt::AlignTop);
 
 	// Title
