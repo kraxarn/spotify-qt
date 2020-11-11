@@ -41,6 +41,7 @@ public:
 	void orderPlaylists(PlaylistOrder order);
 	void toggleTrackNumbers(bool enabled);
 	bool isValid() const;
+	void setSearchVisible(bool visible);
 
 	// Getters for private properties
 	QString &getCacheLocation();

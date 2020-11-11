@@ -857,3 +857,12 @@ bool MainWindow::isValid() const
 }
 
 //endregion
+
+void MainWindow::setSearchVisible(bool visible)
+{
+	auto panel = dynamic_cast<SidePanel*>(sidePanel);
+	if (visible)
+		panel->openSearch();
+	else
+		panel->closeSearch();
+}

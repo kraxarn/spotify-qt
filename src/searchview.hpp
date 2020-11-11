@@ -11,12 +11,12 @@
 #include <QTreeWidgetItem>
 #include <QVBoxLayout>
 
-class SearchView: public QDockWidget
+class SearchView: public QWidget
 {
 Q_OBJECT
 
 public:
-	explicit SearchView(spt::Spotify &spotify, Settings &settings, QWidget *parent = nullptr);
+	explicit SearchView(spt::Spotify &spotify, const Settings &settings, QWidget *parent = nullptr);
 
 private:
 	QListWidget *artistList = nullptr;
@@ -28,4 +28,8 @@ private:
 
 	QTreeWidget *defaultTree(const QStringList &headers);
 	void albumMenu(const QPoint &pos);
+
+protected:
+	void showEvent(QShowEvent *event) override;
+	void hideEvent(QHideEvent *event) override;
 };

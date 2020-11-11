@@ -31,3 +31,18 @@ void SidePanel::tabRemoved(int index)
 	if (count() <= 0)
 		setVisible(false);
 }
+
+void SidePanel::openSearch()
+{
+	if (searchView == nullptr)
+	{
+		searchView = new SearchView(spotify, settings, parent);
+	}
+	addTab(searchView, Icon::get("edit-find"), "Search");
+	setVisible(true);
+}
+
+void SidePanel::closeSearch()
+{
+	searchView->close();
+}

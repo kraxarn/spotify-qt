@@ -1,13 +1,14 @@
 #include "searchview.hpp"
 
-SearchView::SearchView(spt::Spotify &spotify, Settings &settings, QWidget *parent)
-	: spotify(spotify), parent(parent), QDockWidget(parent)
+SearchView::SearchView(spt::Spotify &spotify, const Settings &settings, QWidget *parent)
+	: spotify(spotify), parent(parent), QWidget(parent)
 {
 	auto window = (MainWindow *) parent;
 	auto layout = new QVBoxLayout();
 	layout->setContentsMargins(-1, 0, -1, 0);
 	auto searchBox = new QLineEdit(this);
 	layout->addWidget(searchBox);
+	setLayout(layout);
 
 	// Tabs
 	auto tabs = new QTabWidget(this);
@@ -147,17 +148,18 @@ SearchView::SearchView(spt::Spotify &spotify, Settings &settings, QWidget *paren
 		(new PlaylistMenu(spotify, item->data(RolePlaylistId).toString(), window))
 			->popup(playlistList->mapToGlobal(pos));
 	});
+}
 
-	// Setup dock
-	setWindowTitle("Search");
-	setWidget(Utils::layoutToWidget(layout));
-	setFixedWidth(320);
+void SearchView::showEvent(QShowEvent *event)
+{
+	QWidget::showEvent(event);
+	dynamic_cast<MainWindow*>(parent)->getSearchAction()->setChecked(true);
+}
 
-	// Uncheck search when closing
-	QDockWidget::connect(this, &QDockWidget::visibilityChanged, [window](bool visible)
-	{
-		window->getSearchAction()->setChecked(visible);
-	});
+void SearchView::hideEvent(QHideEvent *event)
+{
+	QWidget::hideEvent(event);
+	dynamic_cast<MainWindow*>(parent)->getSearchAction()->setChecked(false);
 }
 
 QTreeWidget *SearchView::defaultTree(const QStringList &headers)

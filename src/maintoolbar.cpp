@@ -19,13 +19,7 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, Settings &settings, QWidget *par
 	// Search
 	search = addAction(Icon::get("edit-find"), "Search");
 	search->setCheckable(true);
-	searchView = new SearchView(spotify, settings, mainWindow);
-	mainWindow->addDockWidget(Qt::RightDockWidgetArea, searchView);
-	searchView->hide();
-	QAction::connect(search, &QAction::triggered, [this](bool checked)
-	{
-		searchView->setHidden(!checked);
-	});
+	QAction::connect(search, &QAction::triggered, mainWindow, &MainWindow::setSearchVisible);
 
 	// Media controls
 	addSeparator();

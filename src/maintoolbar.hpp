@@ -19,7 +19,6 @@ public:
 	MainToolBar(spt::Spotify &spotify, Settings &settings, QWidget *parent);
 
 	QAction *search = nullptr;
-	QDockWidget *searchView = nullptr;
 	QAction *playPause = nullptr;
 	QWidget *parent = nullptr;
 	QSlider *progress = nullptr;
