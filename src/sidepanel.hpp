@@ -28,4 +28,5 @@ private:
 	QWidget *audioFeatures = nullptr;
 
 	void tabRemoved(int index) override;
+	void addAndSelect(QWidget *widget, const QString &icon, const QString &title);
 };

@@ -21,8 +21,7 @@ void SidePanel::openArtist(const QString &artistId)
 		artistView->deleteLater();
 	}
 	artistView = view;
-	addTab(artistView, Icon::get("view-media-artist"), artistView->windowTitle());
-	setVisible(true);
+	addAndSelect(artistView, "view-media-artist", artistView->windowTitle());
 }
 
 void SidePanel::tabRemoved(int index)
@@ -38,8 +37,7 @@ void SidePanel::openSearch()
 	{
 		searchView = new SearchView(spotify, settings, parent);
 	}
-	addTab(searchView, Icon::get("edit-find"), "Search");
-	setVisible(true);
+	addAndSelect(searchView, "edit-find", "Search");
 }
 
 void SidePanel::closeSearch()
@@ -56,8 +54,13 @@ void SidePanel::openAudioFeatures(const QString &trackId, const QString &artist,
 		audioFeatures->deleteLater();
 	}
 	audioFeatures = view;
-	addTab(audioFeatures, Icon::get("view-media-track"), QString("%1 - %2")
+	addAndSelect(audioFeatures, "view-media-track", QString("%1 - %2")
 		.arg(artist)
 		.arg(name));
+}
+
+void SidePanel::addAndSelect(QWidget *widget, const QString &icon, const QString &title)
+{
+	setCurrentIndex(addTab(widget, Icon::get(icon), title));
 	setVisible(true);
 }
