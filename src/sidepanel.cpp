@@ -44,5 +44,5 @@ void SidePanel::openSearch()
 
 void SidePanel::closeSearch()
 {
-	searchView->close();
+	removeTab(indexOf(searchView));
 }
