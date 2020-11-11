@@ -46,3 +46,18 @@ void SidePanel::closeSearch()
 {
 	removeTab(indexOf(searchView));
 }
+
+void SidePanel::openAudioFeatures(const QString &trackId, const QString &artist, const QString &name)
+{
+	auto view = new AudioFeaturesView(spotify, trackId, this);
+	if (audioFeatures != nullptr)
+	{
+		audioFeatures->close();
+		audioFeatures->deleteLater();
+	}
+	audioFeatures = view;
+	addTab(audioFeatures, Icon::get("view-media-track"), QString("%1 - %2")
+		.arg(artist)
+		.arg(name));
+	setVisible(true);
+}

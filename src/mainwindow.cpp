@@ -292,14 +292,7 @@ QWidget *MainWindow::createCentralWidget()
 
 void MainWindow::openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name)
 {
-	auto view = new AudioFeaturesView(*spotify, trackId, artist, name, this);
-	if (audioFeaturesView != nullptr)
-	{
-		audioFeaturesView->close();
-		audioFeaturesView->deleteLater();
-	}
-	audioFeaturesView = view;
-	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, audioFeaturesView);
+	dynamic_cast<SidePanel*>(sidePanel)->openAudioFeatures(trackId, artist, name);
 }
 
 void MainWindow::openLyrics(const QString &artist, const QString &name)

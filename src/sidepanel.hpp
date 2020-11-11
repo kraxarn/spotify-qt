@@ -2,6 +2,7 @@
 
 #include "artistview.hpp"
 #include "searchview.hpp"
+#include "audiofeaturesview.hpp"
 
 #include <QTabWidget>
 
@@ -13,6 +14,7 @@ public:
 	explicit SidePanel(spt::Spotify &spotify, const Settings &settings, QWidget *parent);
 
 	void openArtist(const QString &artistId);
+	void openAudioFeatures(const QString &trackId, const QString &artist, const QString &name);
 	void openSearch();
 	void closeSearch();
 
@@ -23,6 +25,7 @@ private:
 
 	QWidget *artistView = nullptr;
 	QWidget *searchView = nullptr;
+	QWidget *audioFeatures = nullptr;
 
 	void tabRemoved(int index) override;
 };
