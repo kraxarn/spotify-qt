@@ -1,6 +1,5 @@
 #pragma once
 
-#include "artistview.hpp"
 #include "audiofeaturesview.hpp"
 #include "dialog/settingsdialog.hpp"
 #include "dialog/splashdialog.hpp"
@@ -16,6 +15,7 @@
 #include "menu/playlistmenu.hpp"
 #include "menu/songmenu.hpp"
 #include "searchview.hpp"
+#include "sidepanel.hpp"
 #include "spotify/audiofeatures.hpp"
 #include "spotify/clienthandler.hpp"
 #include "spotify/playback.hpp"

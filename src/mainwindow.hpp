@@ -61,7 +61,6 @@ private:
 	Settings &settings;
 
 	// Qt Widgets
-	QDockWidget *artistView = nullptr;
 	QLabel *nowAlbum = nullptr;
 	QLabel *nowPlaying = nullptr;
 	QListWidget *playlists = nullptr;
@@ -92,6 +91,7 @@ private:
 	spt::User currentUser;
 	QIcon emptyIcon;
 	bool stateValid = true;
+	QWidget *sidePanel = nullptr;
 
 #ifdef USE_DBUS
 	mp::Service *mediaPlayer = nullptr;

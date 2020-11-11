@@ -1,18 +1,21 @@
 #include "artistview.hpp"
 
 ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const Settings &settings, QWidget *parent)
-	: spotify(spotify), artistId(artistId), QDockWidget(parent)
+	: spotify(spotify), artistId(artistId), QWidget(parent)
 {
 	this->parent = dynamic_cast<MainWindow *>(parent);
 	if (this->parent == nullptr)
+	{
+		Log::error("Parent is not MainWindow");
 		return;
+	}
 	auto mainWindow = (MainWindow *) parent;
 
 	artist = spotify.artist(artistId);
-	setFeatures(QDockWidget::DockWidgetClosable);
 	setWindowTitle(artist.name);
 	auto layout = new QVBoxLayout();
 	layout->setContentsMargins(-1, 0, -1, 0);
+	setLayout(layout);
 
 	// Get cover image (320x320 -> 320x160)
 	QPixmap cover;
@@ -159,10 +162,6 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const Set
 	}
 	QListWidget::connect(relatedList, &QListWidget::itemClicked, this, &ArtistView::relatedClick);
 	tabs->addTab(relatedList, "Related");
-
-	// Rest of dock
-	setWidget(Utils::layoutToWidget(layout));
-	setFixedWidth(320);
 }
 
 void ArtistView::follow(bool)

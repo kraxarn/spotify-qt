@@ -14,7 +14,7 @@
 #include <QTreeWidget>
 #include <QVBoxLayout>
 
-class ArtistView: public QDockWidget
+class ArtistView: public QWidget
 {
 Q_OBJECT
 

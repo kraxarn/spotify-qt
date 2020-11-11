@@ -282,6 +282,11 @@ QWidget *MainWindow::createCentralWidget()
 
 	// Add to main thing
 	container->addWidget(songs);
+
+	// Side panel
+	sidePanel = new SidePanel(*spotify, settings, this);
+	container->addWidget(sidePanel);
+
 	return container;
 }
 
@@ -553,14 +558,7 @@ QPixmap MainWindow::getAlbum(const QString &url)
 
 void MainWindow::openArtist(const QString &artistId)
 {
-	auto view = new ArtistView(*spotify, artistId, settings, this);
-	if (artistView != nullptr)
-	{
-		artistView->close();
-		artistView->deleteLater();
-	}
-	artistView = view;
-	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, artistView);
+	dynamic_cast<SidePanel*>(sidePanel)->openArtist(artistId);
 }
 
 void MainWindow::cachePlaylist(spt::Playlist &playlist)
