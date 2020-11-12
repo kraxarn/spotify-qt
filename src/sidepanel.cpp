@@ -41,7 +41,7 @@ void SidePanel::closeSearch()
 void SidePanel::openAudioFeatures(const QString &trackId, const QString &artist, const QString &name)
 {
 	auto view = new AudioFeaturesView(spotify, trackId, this);
-	addAndSelect(view, "view-media-track", QString("%1 - %2")
+	addAndSelect(view, "view-statistics", QString("%1 - %2")
 		.arg(artist)
 		.arg(name));
 }
