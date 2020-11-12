@@ -22,10 +22,7 @@ private:
 	QWidget *parent = nullptr;
 	spt::Spotify &spotify;
 	const Settings &settings;
-
-	QWidget *artistView = nullptr;
 	QWidget *searchView = nullptr;
-	QWidget *audioFeatures = nullptr;
 
 	void tabRemoved(int index) override;
 	void addAndSelect(QWidget *widget, const QString &icon, const QString &title);

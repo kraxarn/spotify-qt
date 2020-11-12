@@ -15,13 +15,7 @@ SidePanel::SidePanel(spt::Spotify &spotify, const Settings &settings, QWidget *p
 void SidePanel::openArtist(const QString &artistId)
 {
 	auto view = new ArtistView(spotify, artistId, settings, parent);
-	if (artistView != nullptr)
-	{
-		artistView->close();
-		artistView->deleteLater();
-	}
-	artistView = view;
-	addAndSelect(artistView, "view-media-artist", artistView->windowTitle());
+	addAndSelect(view, "view-media-artist", view->windowTitle());
 }
 
 void SidePanel::tabRemoved(int index)
@@ -48,13 +42,7 @@ void SidePanel::closeSearch()
 void SidePanel::openAudioFeatures(const QString &trackId, const QString &artist, const QString &name)
 {
 	auto view = new AudioFeaturesView(spotify, trackId, this);
-	if (audioFeatures != nullptr)
-	{
-		audioFeatures->close();
-		audioFeatures->deleteLater();
-	}
-	audioFeatures = view;
-	addAndSelect(audioFeatures, "view-media-track", QString("%1 - %2")
+	addAndSelect(view, "view-media-track", QString("%1 - %2")
 		.arg(artist)
 		.arg(name));
 }

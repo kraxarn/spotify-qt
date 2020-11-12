@@ -214,6 +214,7 @@ void ArtistView::relatedClick(QListWidgetItem *item)
 {
 	relatedList->setEnabled(false);
 	((MainWindow *) parent)->openArtist(item->data(RoleArtistId).toString());
+	relatedList->setEnabled(true);
 }
 
 void ArtistView::albumMenu(const QPoint &pos)
