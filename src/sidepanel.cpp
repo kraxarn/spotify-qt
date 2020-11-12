@@ -5,7 +5,6 @@ SidePanel::SidePanel(spt::Spotify &spotify, const Settings &settings, QWidget *p
 {
 	setMovable(true);
 	setTabsClosable(true);
-	setTabPosition(QTabWidget::South);
 	setVisible(false);
 	setFixedWidth(320);
 
