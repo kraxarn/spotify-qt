@@ -291,7 +291,7 @@ QWidget *MainWindow::createCentralWidget()
 
 void MainWindow::openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name)
 {
-	dynamic_cast<SidePanel*>(sidePanel)->openAudioFeatures(trackId, artist, name);
+	dynamic_cast<SidePanel *>(sidePanel)->openAudioFeatures(trackId, artist, name);
 }
 
 void MainWindow::openLyrics(const QString &artist, const QString &name)
@@ -551,7 +551,7 @@ QPixmap MainWindow::getAlbum(const QString &url)
 
 void MainWindow::openArtist(const QString &artistId)
 {
-	dynamic_cast<SidePanel*>(sidePanel)->openArtist(artistId);
+	dynamic_cast<SidePanel *>(sidePanel)->openArtist(artistId);
 }
 
 void MainWindow::cachePlaylist(spt::Playlist &playlist)
@@ -853,7 +853,7 @@ bool MainWindow::isValid() const
 
 void MainWindow::setSearchVisible(bool visible)
 {
-	auto panel = dynamic_cast<SidePanel*>(sidePanel);
+	auto panel = dynamic_cast<SidePanel *>(sidePanel);
 	if (visible)
 		panel->openSearch();
 	else
