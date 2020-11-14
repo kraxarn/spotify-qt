@@ -38,7 +38,7 @@ namespace spt
 
 		QJsonObject getAsObject(const QString &url);
 		QJsonArray getAsArray(const QString &url);
-		QVector<Playlist> playlists();
+		QVector<Playlist> playlists(int offset = 0);
 		QVector<Device> devices();
 		QString setDevice(const Device &device);
 		QString playTracks(int trackIndex, const QString &context);

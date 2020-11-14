@@ -199,10 +199,10 @@ bool Spotify::refresh()
 	return true;
 }
 
-QVector<Playlist> Spotify::playlists()
+QVector<Playlist> Spotify::playlists(int offset)
 {
 	// Request playlists
-	auto json = getAsObject("me/playlists?limit=50");
+	auto json = getAsObject(QString("me/playlists?limit=50&offset=%1").arg(offset));
 
 	// Parse as playlists
 	auto items = json["items"].toArray();
@@ -215,6 +215,11 @@ QVector<Playlist> Spotify::playlists()
 	// Loop through all items
 	for (int i = 0; i < items.size(); i++)
 		playlists.insert(i, Playlist(items.at(i).toObject()));
+
+	// Paging
+	if (json.contains("next") && !json["next"].isNull())
+		playlists.append(this->playlists(json["offset"].toInt() + json["limit"].toInt()));
+
 	return playlists;
 }
 
