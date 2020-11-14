@@ -142,52 +142,50 @@ QJsonObject Settings::toJson()
 	for (auto &val : general.customPlaylistOrder)
 		jsonCustomPlaylistOrder.append(val);
 
-	return QJsonObject(
-		{
-			QPair<QString, QJsonObject>("Account", {
-				{"access_token", account.accessToken},
-				{"client_id", account.clientId},
-				{"client_secret", account.clientSecret},
-				{"refresh_token", account.refreshToken}
-			}),
-			QPair<QString, QJsonObject>("General", {
-				{"custom_playlist_order", jsonCustomPlaylistOrder},
-				{"fallback_icons", general.fallbackIcons},
-				{"fixed_width_time", general.fixedWidthTime},
-				{"hidden_song_headers", jsonHiddenSongHeaders},
-				{"last_playlist", general.lastPlaylist},
-				{"last_version", general.lastVersion},
-				{"last_volume", general.lastVolume},
-				{"media_controller", general.mediaController},
-				{"playlist_order", general.playlistOrder},
-				{"pulse_volume", general.pulseVolume},
-				{"refresh_interval", general.refreshInterval},
-				{"show_changelog", general.showChangelog},
-				{"show_context_info", general.showContextInfo},
-				{"single_click_play", general.singleClickPlay},
-				{"song_header_resize_mode", general.songHeaderResizeMode},
-				{"song_header_sort_by", general.songHeaderSortBy},
-				{"spotify_playback_order", general.spotifyPlaybackOrder},
-				{"style", general.style},
-				{"style_palette", general.stylePalette},
-				{"track_numbers", general.trackNumbers},
-				{"tray_album_art", general.trayAlbumArt},
-				{"tray_icon", general.trayIcon},
-				{"tray_light_icon", general.trayLightIcon},
-				{"tray_notifications", general.trayNotifications}
-			}),
-			QPair<QString, QJsonObject>("Spotify", {
-				{"always_start", spotify.alwaysStart},
-				{"backend", spotify.backend},
-				{"bitrate", spotify.bitrate},
-				{"global_config", spotify.globalConfig},
-				{"keyring_password", spotify.keyringPassword},
-				{"path", spotify.path},
-				{"start_client", spotify.startClient},
-				{"username", spotify.username}
-			})
-		}
-	);
+	return QJsonObject({
+		QPair<QString, QJsonObject>("Account", {
+			{"access_token", account.accessToken},
+			{"client_id", account.clientId},
+			{"client_secret", account.clientSecret},
+			{"refresh_token", account.refreshToken}
+		}),
+		QPair<QString, QJsonObject>("General", {
+			{"custom_playlist_order", jsonCustomPlaylistOrder},
+			{"fallback_icons", general.fallbackIcons},
+			{"fixed_width_time", general.fixedWidthTime},
+			{"hidden_song_headers", jsonHiddenSongHeaders},
+			{"last_playlist", general.lastPlaylist},
+			{"last_version", general.lastVersion},
+			{"last_volume", general.lastVolume},
+			{"media_controller", general.mediaController},
+			{"playlist_order", general.playlistOrder},
+			{"pulse_volume", general.pulseVolume},
+			{"refresh_interval", general.refreshInterval},
+			{"show_changelog", general.showChangelog},
+			{"show_context_info", general.showContextInfo},
+			{"single_click_play", general.singleClickPlay},
+			{"song_header_resize_mode", general.songHeaderResizeMode},
+			{"song_header_sort_by", general.songHeaderSortBy},
+			{"spotify_playback_order", general.spotifyPlaybackOrder},
+			{"style", general.style},
+			{"style_palette", general.stylePalette},
+			{"track_numbers", general.trackNumbers},
+			{"tray_album_art", general.trayAlbumArt},
+			{"tray_icon", general.trayIcon},
+			{"tray_light_icon", general.trayLightIcon},
+			{"tray_notifications", general.trayNotifications}
+		}),
+		QPair<QString, QJsonObject>("Spotify", {
+			{"always_start", spotify.alwaysStart},
+			{"backend", spotify.backend},
+			{"bitrate", spotify.bitrate},
+			{"global_config", spotify.globalConfig},
+			{"keyring_password", spotify.keyringPassword},
+			{"path", spotify.path},
+			{"start_client", spotify.startClient},
+			{"username", spotify.username}
+		})
+	});
 }
 
 void Settings::save()
