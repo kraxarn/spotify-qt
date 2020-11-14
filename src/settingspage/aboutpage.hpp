@@ -2,7 +2,7 @@
 
 #include "../appversion.hpp"
 #include "../util/icon.hpp"
-#include "cacheview.hpp"
+#include "../view/cacheview.hpp"
 #include "settingspage.hpp"
 
 class AboutPage: public SettingsPage
