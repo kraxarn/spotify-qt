@@ -82,18 +82,17 @@ QString ClientHandler::start()
 	if (clientType == ClientType::Librespot)
 	{
 		arguments.append({
-			"--name", "spotify-qt",
+			"--name", "spotify-qt (librespot)",
 			"--initial-volume", "100",
 			"--autoplay",
 			"--cache", QString("%1/librespot").arg(((MainWindow *) parentWidget)->getCacheLocation())
 		});
 	}
-	// spotifyd specific
 	else if (clientType == ClientType::Spotifyd)
 	{
 		arguments.append({
 			"--no-daemon",
-			"--device-name", "spotify-qt",
+			"--device-name", "spotify-qt (spotifyd)",
 		});
 	}
 
