@@ -42,6 +42,8 @@ namespace spt
 		static QString clientExec(const QString &path, const QStringList &arguments);
 		static QString getSinkInfo();
 		void readyRead() const;
+		void readyError() const;
+		void logOutput(const QByteArray &output) const;
 		static ClientType getClientType(const QString &path);
 	};
 }

@@ -106,6 +106,7 @@ QString ClientHandler::start()
 	});
 
 	QProcess::connect(process, &QProcess::readyReadStandardOutput, this, &ClientHandler::readyRead);
+	QProcess::connect(process, &QProcess::readyReadStandardError, this, &ClientHandler::readyError);
 
 	process->start(path, arguments);
 	return QString();
@@ -271,9 +272,9 @@ void ClientHandler::setVolume(float value)
 	process.waitForFinished();
 }
 
-void ClientHandler::readyRead() const
+void ClientHandler::logOutput(const QByteArray &output) const
 {
-	for (auto &line : QString(process->readAllStandardOutput()).split('\n'))
+	for (auto &line : QString(output).split('\n'))
 	{
 		if (line.isEmpty())
 			continue;
@@ -281,6 +282,16 @@ void ClientHandler::readyRead() const
 			.arg(QDateTime::currentDateTime().toString("hh:mm:ss"))
 			.arg(line);
 	}
+}
+
+void ClientHandler::readyRead() const
+{
+	logOutput(process->readAllStandardOutput());
+}
+
+void ClientHandler::readyError() const
+{
+	logOutput(process->readAllStandardError());
 }
 
 QStringList ClientHandler::getLog()
