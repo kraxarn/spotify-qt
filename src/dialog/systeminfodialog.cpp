@@ -12,19 +12,27 @@ SystemInfoDialog::SystemInfoDialog(QWidget *mainWindow, QWidget *parent)
 	textInfo->setReadOnly(true);
 	layout->addWidget(textInfo);
 
+	auto infoLayout = new QHBoxLayout();
+
 	auto infoAbout = new QLabel(
 		"This information could be useful when reporting bugs. "
 		"Additional information, depending on the type of issue, may be more helpful.", this);
 	infoAbout->setWordWrap(true);
-	layout->addWidget(infoAbout);
+	infoLayout->addWidget(infoAbout, 1);
+
+	auto copy = new QPushButton("Copy to clipboard", this);
+	QPushButton::connect(copy, &QPushButton::clicked, this, &SystemInfoDialog::copyToClipboard);
+	infoLayout->addWidget(copy);
+
+	layout->addLayout(infoLayout);
 }
 
-QString SystemInfoDialog::systemInfo()
+QString SystemInfoDialog::systemInfo(bool html)
 {
-	return systemInfo(((MainWindow *) mainWindow)->getCurrentPlayback());
+	return systemInfo(((MainWindow *) mainWindow)->getCurrentPlayback(), html);
 }
 
-QString SystemInfoDialog::systemInfo(const spt::Playback &playback)
+QString SystemInfoDialog::systemInfo(const spt::Playback &playback, bool html)
 {
 	QMap<QString, QString> info;
 
@@ -63,12 +71,22 @@ QString SystemInfoDialog::systemInfo(const spt::Playback &playback)
 	// Build ABI
 	info["ABI"] = QSysInfo::buildAbi();
 
-	QString systemInfo("<table>");
+	QString systemInfo(html ? "<table>" : "");
 	QMapIterator<QString, QString> i(info);
 	while (i.hasNext())
 	{
 		i.next();
-		systemInfo += QString("<tr><td>%1:</td> <td>%2</td></tr>").arg(i.key()).arg(i.value());
+		systemInfo += QString(html
+			? "<tr><td>%1:</td> <td>%2</td></tr>"
+			: "%1: %2\n")
+			.arg(i.key()).arg(i.value());
 	}
-	return systemInfo + "</table>";
+	return html
+		? systemInfo + "</table>"
+		: systemInfo;
+}
+
+void SystemInfoDialog::copyToClipboard(bool)
+{
+	QApplication::clipboard()->setText(systemInfo(false));
 }

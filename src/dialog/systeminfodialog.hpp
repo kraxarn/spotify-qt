@@ -18,10 +18,11 @@ Q_OBJECT
 
 public:
 	explicit SystemInfoDialog(QWidget *mainWindow, QWidget *parent = nullptr);
-	static QString systemInfo(const spt::Playback &playback);
+	static QString systemInfo(const spt::Playback &playback, bool html = true);
 
 private:
-	QString systemInfo();
+	QString systemInfo(bool html = true);
+	void copyToClipboard(bool checked);
 
 	QWidget *mainWindow = nullptr;
 };
