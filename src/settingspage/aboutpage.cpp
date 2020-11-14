@@ -11,14 +11,9 @@ AboutPage::AboutPage(Settings &settings, QWidget *parent)
 
 QWidget *AboutPage::about()
 {
-	auto cacheSize = 0u;
 	auto mainWindow = dynamic_cast<MainWindow *>(findMainWindow());
-	if (mainWindow != nullptr)
-		for (auto const &file : QDir(mainWindow->getCacheLocation()).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
-			for (auto const &f : QDir(file.absoluteFilePath()).entryInfoList(QDir::Files))
-				cacheSize += f.size();
-
 	auto layout = tabContent();
+	layout->setAlignment(Qt::AlignCenter);
 
 	// Version
 #ifdef GIT_COMMIT
@@ -29,55 +24,35 @@ QWidget *AboutPage::about()
 		.arg(APP_VERSION).arg(QT_VERSION_STR);
 #endif
 
-	// Title
-	auto title = new QHBoxLayout();
-	title->setAlignment(Qt::AlignHCenter);
+	// Logo
 	auto titleLogo = new QLabel();
-	titleLogo->setPixmap(Icon::get("logo:spotify-qt").pixmap(64, 64));
-	title->addWidget(titleLogo);
-	layout->addLayout(title);
-	auto titleVersion = new QVBoxLayout();
-	titleVersion->setSpacing(0);
-	titleVersion->setAlignment(Qt::AlignVCenter);
-	auto titleAppName = new QLabel("spotify-qt");
+	titleLogo->setPixmap(Icon::get("logo:spotify-qt").pixmap(96, 96));
+	layout->addWidget(titleLogo, 0, Qt::AlignHCenter);
+
+	// Title
+	auto titleAppName = new QLabel(QString("spotify-qt %1").arg(APP_VERSION));
 	auto appNameFont = titleAppName->font();
 	appNameFont.setPointSize(appNameFont.pointSizeF() * 1.5);
 	titleAppName->setFont(appNameFont);
-	titleVersion->addWidget(titleAppName);
-	titleVersion->addWidget(new QLabel(version));
-	title->addLayout(titleVersion);
+	layout->addWidget(titleAppName, 0, Qt::AlignHCenter);
+
+	// Qt version
+	layout->addWidget(new QLabel(QString("Built using Qt %1").arg(QT_VERSION_STR), this),
+		0, Qt::AlignHCenter);
+
+	// Build info
+#ifdef GIT_COMMIT
+	layout->addWidget(new QLabel(QString("Commit %1, development build").arg(GIT_COMMIT), this),
+		0, Qt::AlignHCenter);
+#endif
 
 	// User info
 	if (mainWindow != nullptr)
+	{
+		layout->addSpacing(16);
 		layout->addWidget(new QLabel(QString("Hello %1!")
 			.arg(mainWindow->getCurrentUser().displayName)), 0, Qt::AlignHCenter);
-
-	// Grid with buttons
-	layout->addSpacing(8);
-	auto options = new QGridLayout();
-	layout->addLayout(options, 1);
-	layout->setAlignment(Qt::AlignBottom);
-
-	// Open cache directory
-	auto openCache = new QPushButton(Icon::get("folder-temp"),
-		QString("Open cache directory (%1M)").arg(cacheSize / 1000 / 1000));
-	openCache->setFlat(true);
-	QAbstractButton::connect(openCache, &QPushButton::clicked, [this, mainWindow](bool checked)
-	{
-		if (mainWindow == nullptr)
-			return;
-		Utils::openUrl(mainWindow->getCacheLocation(), LinkType::Web, this);
-	});
-	options->addWidget(openCache, 0, 0);
-
-	// Open config file
-	auto openConfig = new QPushButton(Icon::get("folder-txt"), "Open config file");
-	openConfig->setFlat(true);
-	QAbstractButton::connect(openConfig, &QPushButton::clicked, [this](bool checked)
-	{
-		Utils::openUrl(Settings::fileName(), LinkType::Path, this);
-	});
-	options->addWidget(openConfig, 0, 1);
+	}
 
 	return Utils::layoutToWidget(layout);
 }
@@ -89,7 +64,7 @@ QWidget *AboutPage::systemInfo()
 
 QWidget *AboutPage::cacheInfo()
 {
-	return new CacheView(dynamic_cast<MainWindow*>(findMainWindow())->getCacheLocation(), this);
+	return new CacheView(dynamic_cast<MainWindow *>(findMainWindow())->getCacheLocation(), this);
 }
 
 QWidget *AboutPage::configPreview()
