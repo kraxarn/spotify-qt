@@ -92,6 +92,14 @@ QWidget *SpotifyPage::config()
 	sptBitrate->setCurrentIndex(bitrate == 96 ? 0 : bitrate == 160 ? 1 : 2);
 	sptLayout->addWidget(sptBitrate, 1, 1);
 
+	// Backend
+	sptLayout->addWidget(new QLabel("Backend", sptGroup), 2, 0);
+	sptBackend = new QComboBox(sptGroup);
+	sptBackend->addItem("Auto");
+	sptBackend->addItems(backends());
+	sptBackend->setCurrentText(settings.spotify.backend);
+	sptLayout->addWidget(sptBackend, 2, 1);
+
 	// KWallet keyring for password
 #ifdef USE_DBUS
 	if (KWallet(settings.spotify.username).isEnabled())
@@ -99,7 +107,7 @@ QWidget *SpotifyPage::config()
 		sptKeyring = new QCheckBox("Save password in keyring", this);
 		sptKeyring->setToolTip("Store password in keyring (using KWallet)");
 		sptKeyring->setChecked(settings.spotify.keyringPassword);
-		sptLayout->addWidget(sptKeyring, 2, 0);
+		sptLayout->addWidget(sptKeyring, 3, 0);
 	}
 #endif
 
@@ -150,6 +158,11 @@ bool SpotifyPage::save()
 			QString("Couldn't find a config file for spotifyd. You may experience issues."));
 	settings.spotify.globalConfig = sptGlobal->isChecked();
 
+	// Backend
+	settings.spotify.backend = sptBackend->currentIndex() == 0
+		? QString()
+		: sptBackend->currentText();
+
 	// Other Spotify stuff
 	settings.spotify.startClient = sptAppStart->isChecked();
 	settings.spotify.username = sptUsername->text();
@@ -178,4 +191,9 @@ bool SpotifyPage::sptConfigExists()
 	return QFile(QString("%1/.config/spotifyd/spotifyd.conf")
 		.arg(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0])).exists()
 		|| QFile("/etc/spotifyd/spotifyd.conf").exists();
+}
+
+QStringList SpotifyPage::backends()
+{
+	return spt::ClientHandler(settings, this).availableBackends();
 }

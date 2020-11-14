@@ -67,12 +67,13 @@ public:
 
 	typedef struct Spotify
 	{
+		QString backend;
 		QString path;
 		QString username;
-		bool startClient = false;
-		bool globalConfig = false;
 		bool alwaysStart = true;
+		bool globalConfig = false;
 		bool keyringPassword = false;
+		bool startClient = false;
 		int bitrate = 320;
 	} Spotify;
 

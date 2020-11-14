@@ -89,12 +89,13 @@ void Settings::fromJson(const QJsonObject &json)
 
 	// Spotify
 	setValue(s, "always_start", spotify.alwaysStart);
+	setValue(s, "backend", spotify.backend);
 	setValue(s, "bitrate", spotify.bitrate);
 	setValue(s, "global_config", spotify.globalConfig);
+	setValue(s, "keyring_password", spotify.keyringPassword);
 	setValue(s, "path", spotify.path);
 	setValue(s, "start_client", spotify.startClient);
 	setValue(s, "username", spotify.username);
-	setValue(s, "keyring_password", spotify.keyringPassword);
 
 	// Validate
 	auto errors = validate();
@@ -177,6 +178,7 @@ QJsonObject Settings::toJson()
 			}),
 			QPair<QString, QJsonObject>("Spotify", {
 				{"always_start", spotify.alwaysStart},
+				{"backend", spotify.backend},
 				{"bitrate", spotify.bitrate},
 				{"global_config", spotify.globalConfig},
 				{"keyring_password", spotify.keyringPassword},

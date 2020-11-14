@@ -21,13 +21,15 @@ namespace spt
 		explicit ClientHandler(const Settings &settings, QWidget *parent = nullptr);
 		~ClientHandler() override;
 
-		static QString version(const QString &path);
 		QString start();
-		QProcess *process = nullptr;
+		QStringList availableBackends();
 		bool isRunning();
+		static QString version(const QString &path);
+		static QStringList getLog();
 		static float getVolume();
 		static void setVolume(float value);
-		static QStringList getLog();
+
+		QProcess *process = nullptr;
 
 	private:
 		QWidget *parentWidget = nullptr;

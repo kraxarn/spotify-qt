@@ -19,6 +19,7 @@ private:
 	QCheckBox *sptAppStart = nullptr;
 	QCheckBox *sptGlobal = nullptr;
 	QCheckBox *sptKeyring = nullptr;
+	QComboBox *sptBackend = nullptr;
 	QComboBox *sptBitrate = nullptr;
 	QGroupBox *sptGroup = nullptr;
 	QLabel *sptVersion = nullptr;
@@ -28,6 +29,7 @@ private:
 	void globalConfigToggle(int state);
 	void startClientToggle(int state);
 	static bool sptConfigExists();
+	QStringList backends();
 
 	QWidget *spotify();
 	QWidget *config();

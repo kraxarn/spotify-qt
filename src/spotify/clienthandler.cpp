@@ -97,14 +97,14 @@ QString ClientHandler::start()
 		});
 	}
 
-	if (supportsPulse())
+	auto backend = settings.spotify.backend;
+	if (backend.isEmpty() && supportsPulse())
 	{
-		arguments.append({
-			"--backend", "pulseaudio"
-		});
+		backend = "pulseaudio";
 	}
-	else
-		Log::warn("Spotifyd/librespot was compiled without PulseAudio support");
+	arguments.append({
+		"--backend", backend
+	});
 
 	QProcess::connect(process, &QProcess::readyReadStandardOutput, this, &ClientHandler::readyRead);
 
@@ -132,6 +132,49 @@ QString ClientHandler::clientExec(const QString &path, const QStringList &argume
 
 	// Entire stdout is version
 	return process.readAllStandardOutput().trimmed();
+}
+
+QStringList ClientHandler::availableBackends()
+{
+	QStringList items;
+
+	if (clientType == ClientType::Librespot)
+	{
+		auto result = clientExec(path, QStringList({
+			"--name", "",
+			"--backend", "?"
+		}));
+
+		for (auto &line : result.split('\n'))
+		{
+			if (!line.startsWith("-"))
+				continue;
+			items.append(line.right(line.length() - 2)
+				.remove("(default)")
+				.trimmed());
+		}
+	}
+	else if (clientType == ClientType::Spotifyd)
+	{
+		auto result = clientExec(path, QStringList({
+			"--help",
+		}));
+
+		for (auto &line : result.split('\n'))
+		{
+			if (!line.contains("audio backend"))
+				continue;
+
+			items.append(line.right(line.length() - line.indexOf('[') - 1)
+				.remove("possible values: ")
+				.remove(']')
+				.trimmed()
+				.split(", "));
+			break;
+		}
+	}
+
+	return items;
 }
 
 bool ClientHandler::supportsPulse()
