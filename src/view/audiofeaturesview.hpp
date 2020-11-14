@@ -1,7 +1,7 @@
 #pragma once
 
-#include "spotify/spotify.hpp"
-#include "util/utils.hpp"
+#include "../spotify/spotify.hpp"
+#include "../util/utils.hpp"
 
 #include <QAbstractItemView>
 #include <QDockWidget>

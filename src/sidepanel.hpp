@@ -1,8 +1,8 @@
 #pragma once
 
-#include "artistview.hpp"
-#include "searchview.hpp"
-#include "audiofeaturesview.hpp"
+#include "view/artistview.hpp"
+#include "view/searchview.hpp"
+#include "view/audiofeaturesview.hpp"
 
 #include <QTabWidget>
 

@@ -81,7 +81,6 @@ private:
 	QNetworkAccessManager *network = nullptr;
 
 	// Other
-	AudioFeaturesView *audioFeaturesView = nullptr;
 	LyricsView *lyricsView = nullptr;
 	QHash<QString, QTreeWidgetItem *> trackItems;
 	QString cacheLocation;

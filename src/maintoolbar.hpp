@@ -2,7 +2,6 @@
 
 #include "mainwindow.hpp"
 #include "menu/mainmenu.hpp"
-#include "searchview.hpp"
 #include "settings.hpp"
 #include "spotify/spotify.hpp"
 #include "util/icon.hpp"

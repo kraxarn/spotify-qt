@@ -2,7 +2,7 @@
 
 class LyricsView;
 
-#include "mainwindow.hpp"
+#include "../mainwindow.hpp"
 
 #include <QDockWidget>
 

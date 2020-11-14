@@ -4,6 +4,7 @@
 #include "../util/icon.hpp"
 
 #include <QComboBox>
+#include <QListWidget>
 
 class PlaylistsPage: public SettingsPage
 {

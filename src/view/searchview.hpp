@@ -1,7 +1,7 @@
 #pragma once
 
-#include "mainwindow.hpp"
-#include "spotify/spotify.hpp"
+#include "../mainwindow.hpp"
+#include "../spotify/spotify.hpp"
 
 #include <QDockWidget>
 #include <QLineEdit>
