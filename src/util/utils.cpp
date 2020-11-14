@@ -156,3 +156,18 @@ void Utils::openUrl(const QString &url, LinkType linkType, QWidget *parent)
 	if (!QDesktopServices::openUrl(QUrl(url)))
 		OpenLinkDialog(url, linkType, parent).exec();
 }
+
+QString Utils::formatSize(unsigned int size)
+{
+	// gb
+	if (size > 1000000000)
+		return QString("%1 GB").arg(size / 1000000000);
+	// mb
+	if (size > 1000000)
+		return QString("%1 MB").arg(size / 1000000);
+	// kb
+	if (size > 1000)
+		return QString("%1 kB").arg(size / 1000);
+	// b
+	return QString("%1 B").arg(size);
+}

@@ -5,6 +5,7 @@ AboutPage::AboutPage(Settings &settings, QWidget *parent)
 {
 	addTab(about(), "General");
 	addTab(systemInfo(), "System information");
+	addTab(cacheInfo(), "Cache");
 }
 
 QWidget *AboutPage::about()
@@ -83,6 +84,11 @@ QWidget *AboutPage::about()
 QWidget *AboutPage::systemInfo()
 {
 	return new SystemInfoDialog(findMainWindow(), this);
+}
+
+QWidget *AboutPage::cacheInfo()
+{
+	return new CacheView(dynamic_cast<MainWindow*>(findMainWindow())->getCacheLocation(), this);
 }
 
 QIcon AboutPage::icon()

@@ -2,6 +2,7 @@
 
 #include "../appversion.hpp"
 #include "../util/icon.hpp"
+#include "cacheview.hpp"
 #include "settingspage.hpp"
 
 class AboutPage: public SettingsPage
@@ -16,4 +17,5 @@ public:
 private:
 	QWidget *about();
 	QWidget *systemInfo();
+	QWidget *cacheInfo();
 };
