@@ -25,7 +25,7 @@ namespace spt
 		QStringList availableBackends();
 		bool isRunning();
 		static QString version(const QString &path);
-		static QStringList getLog();
+		static QList<QPair<QDateTime, QString>> getLog();
 		static float getVolume();
 		static void setVolume(float value);
 
@@ -34,7 +34,7 @@ namespace spt
 	private:
 		QWidget *parentWidget = nullptr;
 		QString path;
-		static QStringList log;
+		static QList<QPair<QDateTime, QString>> log;
 		const Settings &settings;
 		ClientType clientType;
 

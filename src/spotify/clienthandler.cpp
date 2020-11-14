@@ -3,7 +3,7 @@
 
 using namespace spt;
 
-QStringList ClientHandler::log;
+QList<QPair<QDateTime, QString>> ClientHandler::log;
 
 ClientHandler::ClientHandler(const Settings &settings, QWidget *parent)
 	: settings(settings), parentWidget(parent), QObject(parent)
@@ -278,9 +278,7 @@ void ClientHandler::logOutput(const QByteArray &output) const
 	{
 		if (line.isEmpty())
 			continue;
-		log << QString("[%1] %2")
-			.arg(QDateTime::currentDateTime().toString("hh:mm:ss"))
-			.arg(line);
+		log << QPair<QDateTime, QString>(QDateTime::currentDateTime(), line);
 	}
 }
 
@@ -294,7 +292,7 @@ void ClientHandler::readyError() const
 	logOutput(process->readAllStandardError());
 }
 
-QStringList ClientHandler::getLog()
+QList<QPair<QDateTime, QString>> ClientHandler::getLog()
 {
 	return log;
 }

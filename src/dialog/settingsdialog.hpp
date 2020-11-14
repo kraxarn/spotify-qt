@@ -11,7 +11,7 @@
 #include "../settingspage/spotifypage.hpp"
 #include "../spotify/clienthandler.hpp"
 #include "../util/utils.hpp"
-#include "clienthandlerlogdialog.hpp"
+#include "../view/clienthandlerlogview.hpp"
 #include "openlinkdialog.hpp"
 #include "systeminfodialog.hpp"
 
