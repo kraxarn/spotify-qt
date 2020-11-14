@@ -351,13 +351,14 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 	songs->clear();
 	trackItems.clear();
 	playingTrackItem = nullptr;
+	auto fieldWidth = QString::number(tracks.length()).length();
 
 	for (int i = 0; i < tracks.length(); i++)
 	{
 		auto track = tracks.at(i);
 		auto item = new QTreeWidgetItem({
 			settings.general.trackNumbers == ContextAll
-				? QString("%1").arg(i + 1, 3)
+				? QString("%1").arg(i + 1, fieldWidth)
 				: "",
 			track.name, track.artist, track.album,
 			Utils::formatTime(track.duration),
