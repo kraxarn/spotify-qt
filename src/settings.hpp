@@ -24,7 +24,7 @@ class Settings
 public:
 	Settings();
 
-	QJsonObject toJson();
+	QJsonObject toJson() const;
 	void fromJson(const QJsonObject &json);
 	void save();
 	void load();

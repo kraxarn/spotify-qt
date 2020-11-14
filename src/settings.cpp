@@ -132,7 +132,7 @@ void Settings::load()
 	fromJson(json.object());
 }
 
-QJsonObject Settings::toJson()
+QJsonObject Settings::toJson() const
 {
 	QJsonArray jsonHiddenSongHeaders;
 	for (auto &val : general.hiddenSongHeaders)
