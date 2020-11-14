@@ -57,7 +57,7 @@ SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent)
 	// Set layout
 	setWindowTitle("Settings");
 	setLayout(mainLayout);
-	resize(580, 360);
+	resize(620, 400);
 }
 
 bool SettingsDialog::applySettings()
