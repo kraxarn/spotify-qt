@@ -16,22 +16,22 @@ QWidget *SpotifyPage::spotify()
 	// Executable settings
 	auto sptPathLayout = new QHBoxLayout();
 	sptPath = new QLineEdit(settings.spotify.path, this);
-	sptPath->setPlaceholderText("spotifyd path");
+	sptPath->setPlaceholderText("Client path");
 	sptPathLayout->addWidget(sptPath, 1);
 	auto sptPathBrowse = new QPushButton("...", this);
 	sptPathBrowse->setMaximumWidth(40);
 	sptPathBrowse->setFlat(true);
 	QAbstractButton::connect(sptPathBrowse, &QAbstractButton::clicked, [this](bool checked)
 	{
-		auto filePath = QFileDialog::getOpenFileName(this, "spotifyd path", "/");
+		auto filePath = QFileDialog::getOpenFileName(this, "Client path", "/");
 		if (!filePath.isEmpty() && sptPath != nullptr)
 			sptPath->setText(filePath);
 	});
 	sptPathLayout->addWidget(sptPathBrowse);
 	content->addLayout(sptPathLayout);
 
-	// Spotifyd version
-	sptVersion = new QLabel("(no spotifyd provided)", this);
+	// Client version
+	sptVersion = new QLabel("(no client provided)", this);
 	if (!settings.spotify.path.isEmpty())
 	{
 		auto client = spt::ClientHandler::version(settings.spotify.path);
@@ -43,7 +43,7 @@ QWidget *SpotifyPage::spotify()
 
 	// Start with app
 	sptAppStart = new QCheckBox("Start with app", this);
-	sptAppStart->setToolTip("Start, and close, spotifyd together with the app (only closes with app config)");
+	sptAppStart->setToolTip("Start, and close, spotify client together with the app (only closes when using app config)");
 	sptAppStart->setChecked(settings.spotify.startClient);
 	QCheckBox::connect(sptAppStart, &QCheckBox::stateChanged, this, &SpotifyPage::startClientToggle);
 	content->addWidget(sptAppStart);
