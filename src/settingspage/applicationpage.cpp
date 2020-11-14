@@ -4,6 +4,7 @@ ApplicationPage::ApplicationPage(Settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
 	addTab(app(), "General");
+	addTab(appLogs(), "Logs");
 }
 
 QWidget *ApplicationPage::app()
@@ -69,6 +70,11 @@ QWidget *ApplicationPage::app()
 	settings.general.singleClickPlay = appOneClick->isChecked();
 
 	return Utils::layoutToWidget(layout);
+}
+
+QWidget *ApplicationPage::appLogs()
+{
+	return new LogViewer(this);
 }
 
 QIcon ApplicationPage::icon()

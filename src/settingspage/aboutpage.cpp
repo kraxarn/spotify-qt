@@ -5,7 +5,6 @@ AboutPage::AboutPage(Settings &settings, QWidget *parent)
 {
 	addTab(about(), "General");
 	addTab(systemInfo(), "System information");
-	addTab(appLogs(), "Application logs");
 }
 
 QWidget *AboutPage::about()
@@ -84,11 +83,6 @@ QWidget *AboutPage::about()
 QWidget *AboutPage::systemInfo()
 {
 	return new SystemInfoDialog(findMainWindow(), this);
-}
-
-QWidget *AboutPage::appLogs()
-{
-	return new LogViewer(this);
 }
 
 QIcon AboutPage::icon()

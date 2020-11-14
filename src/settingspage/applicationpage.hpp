@@ -27,6 +27,7 @@ private:
 	static bool isPulse();
 
 	QWidget *app();
+	QWidget *appLogs();
 };
 
 
