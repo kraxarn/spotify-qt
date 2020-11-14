@@ -75,4 +75,10 @@ private:
 		std::string str = arg.toStdString();
 		return collect(fmt, str);
 	}
+
+	template<typename Format>
+	static std::string collect(const Format &fmt, const char *arg)
+	{
+		return collect(fmt, std::string(arg));
+	}
 };

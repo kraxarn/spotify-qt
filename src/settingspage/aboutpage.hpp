@@ -1,7 +1,8 @@
 #pragma once
 
-#include "settingspage.hpp"
+#include "../appversion.hpp"
 #include "../util/icon.hpp"
+#include "settingspage.hpp"
 
 class AboutPage: public SettingsPage
 {

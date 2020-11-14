@@ -41,16 +41,12 @@ endif ()
 # Get version from Git
 find_package(Git QUIET)
 if (GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
-	execute_process(COMMAND ${GIT_EXECUTABLE} describe --abbrev=0 --tags
+	execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
 			WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-			OUTPUT_VARIABLE GIT_TAG
+			OUTPUT_VARIABLE GIT_COMMIT
 			OUTPUT_STRIP_TRAILING_WHITESPACE)
-elseif (NOT GIT_TAG)
-	message(STATUS "warning: git or source code dir not found")
-	set(GIT_TAG "v0.0")
+	target_compile_definitions(spotify-qt PRIVATE GIT_COMMIT="${GIT_COMMIT}")
 endif ()
-
-target_compile_definitions(spotify-qt PRIVATE APP_VERSION="${GIT_TAG}")
 
 # Set install targets for 'make install'
 install(TARGETS spotify-qt RUNTIME DESTINATION bin)

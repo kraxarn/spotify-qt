@@ -32,7 +32,12 @@ QString SystemInfoDialog::systemInfo(const spt::Playback &playback)
 	info["Qt version"] = QT_VERSION_STR;
 
 	// spotify-qt version
+#ifdef GIT_COMMIT
+	info["App version"] = QString("%1-dev (%2)")
+		.arg(APP_VERSION).arg(GIT_COMMIT);
+#else
 	info["App version"] = APP_VERSION;
+#endif
 
 	// Desktop environment
 	if (qEnvironmentVariableIsSet("XDG_CURRENT_DESKTOP"))

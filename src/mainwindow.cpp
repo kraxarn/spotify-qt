@@ -100,8 +100,7 @@ MainWindow::MainWindow(Settings &settings)
 
 	// If new version has been detected, show what's new dialog
 	if (settings.general.showChangelog
-		&& settings.general.lastVersion != APP_VERSION
-		&& APP_VERSION != QString("v0.0"))
+		&& settings.general.lastVersion != APP_VERSION)
 		(new WhatsNewDialog(APP_VERSION, settings, this))->open();
 	settings.general.lastVersion = APP_VERSION;
 	settings.save();

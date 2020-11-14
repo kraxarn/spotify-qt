@@ -19,6 +19,15 @@ QWidget *AboutPage::about()
 
 	auto layout = tabContent();
 
+	// Version
+#ifdef GIT_COMMIT
+	auto version = QString("%1-%2, built using Qt %3\nDevelopment build")
+		.arg(APP_VERSION).arg(GIT_COMMIT).arg(QT_VERSION_STR);
+#else
+	auto version = QString("%1, built using Qt %2")
+		.arg(APP_VERSION).arg(QT_VERSION_STR);
+#endif
+
 	// Title
 	auto title = new QHBoxLayout();
 	title->setAlignment(Qt::AlignHCenter);
@@ -34,7 +43,7 @@ QWidget *AboutPage::about()
 	appNameFont.setPointSize(appNameFont.pointSizeF() * 1.5);
 	titleAppName->setFont(appNameFont);
 	titleVersion->addWidget(titleAppName);
-	titleVersion->addWidget(new QLabel(QString("%1, built using Qt %2").arg(APP_VERSION).arg(QT_VERSION_STR)));
+	titleVersion->addWidget(new QLabel(version));
 	title->addLayout(titleVersion);
 
 	// User info

@@ -1,3 +1,4 @@
+#include "appversion.hpp"
 #include "dialog/setupdialog.hpp"
 #include "mainwindow.hpp"
 #include "util/icon.hpp"
