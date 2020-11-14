@@ -71,9 +71,10 @@ void CacheView::menu(const QPoint &pos)
 		return;
 
 	auto menu = new QMenu(this);
-	QAction::connect(menu->addAction("Open folder"), &QAction::triggered, [this, folder](bool)
-	{
-		Utils::openUrl(folder, LinkType::Path, this);
-	});
+	QAction::connect(menu->addAction(Icon::get("folder-temp"), "Open folder"),
+		&QAction::triggered, [this, folder](bool)
+		{
+			Utils::openUrl(folder, LinkType::Path, this);
+		});
 	menu->popup(mapToGlobal(pos));
 }
