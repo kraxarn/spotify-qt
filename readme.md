@@ -14,7 +14,7 @@ Check out the [spotify-qt-quick](https://github.com/kraxarn/spotify-qt-quick) re
 ## Supported platforms
 Tested: Linux, Windows
 
-Supported: macOS, *BSD, Haiku, any platform [officially supported](https://doc.qt.io/qt-5/supported-platforms.html) by Qt5
+Supported: macOS, *BSD, Haiku, any platform [officially supported](https://en.wikipedia.org/wiki/List_of_platforms_supported_by_Qt) by Qt
 
 ## Installing
 spotify-qt is available from some package managers. If there are any package issues, or the version is out of date, contact the respective package maintainers, not me, unless I'm the package maintainer.
