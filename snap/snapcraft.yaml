@@ -17,9 +17,11 @@ parts:
       - cmake
       - qt5-default
       - libqt5svg5-dev
+      - libqt5waylandclient5-dev
     stage-packages:
       - qt5-default
       - libqt5svg5-dev
+      - libqt5waylandclient5-dev
     override-pull: |
       snapcraftctl pull
       snapcraftctl set-version "$(git describe --tags --abbrev=0)"
