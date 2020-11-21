@@ -55,4 +55,4 @@ parts:
 apps:
   spotify-qt:
     command: bin/desktop-launch spotify-qt
-    plugs: [home, opengl, network, network-bind, unity7]
+    plugs: [home, opengl, network, network-bind, unity7, wayland]
