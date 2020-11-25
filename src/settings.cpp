@@ -93,6 +93,7 @@ void Settings::fromJson(const QJsonObject &json)
 	setValue(s, "bitrate", spotify.bitrate);
 	setValue(s, "global_config", spotify.globalConfig);
 	setValue(s, "keyring_password", spotify.keyringPassword);
+	setValue(s, "max_queue", spotify.maxQueue);
 	setValue(s, "path", spotify.path);
 	setValue(s, "start_client", spotify.startClient);
 	setValue(s, "username", spotify.username);
