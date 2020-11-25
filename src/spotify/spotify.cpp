@@ -257,8 +257,17 @@ QString Spotify::playTracks(int trackIndex, const QString &context)
 
 QString Spotify::playTracks(int trackIndex, const QStringList &all)
 {
+	auto maxQueue = settings.spotify.maxQueue;
+	QStringList items = all;
+	if (all.length() > maxQueue)
+	{
+		Log::warn("Attempting to queue {} tracks, but only {} allowed", all.length(), maxQueue);
+		items = all.mid(trackIndex, maxQueue);
+		trackIndex = 0;
+	}
+
 	QVariantMap body;
-	body["uris"] = all;
+	body["uris"] = items;
 	body["offset"] = QJsonObject({
 		QPair<QString, int>("position", trackIndex)
 	});
