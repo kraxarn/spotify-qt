@@ -75,6 +75,7 @@ public:
 		bool keyringPassword = false;
 		bool startClient = false;
 		int bitrate = 320;
+		int maxQueue = 500;
 	} Spotify;
 
 	Account account;

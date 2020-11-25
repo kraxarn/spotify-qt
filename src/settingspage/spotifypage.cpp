@@ -41,6 +41,22 @@ QWidget *SpotifyPage::spotify()
 	sptVersion->setEnabled(false);
 	content->addWidget(sptVersion);
 
+	// Max queue
+	auto maxQueueLayout = new QHBoxLayout();
+	auto maxQueueLabel = new QLabel("Queue limit", this);
+	maxQueueLabel->setToolTip("Maximum amount of items allowed to be queued at once");
+	maxQueueLayout->addWidget(maxQueueLabel);
+	sptMaxQueue = new QComboBox(this);
+	sptMaxQueue->setEditable(true);
+	sptMaxQueue->setValidator(new QIntValidator(1, 1000, this));
+	sptMaxQueue->addItems({
+		"100", "250", "500"
+	});
+	sptMaxQueue->setCurrentText(QString::number(settings.spotify.maxQueue));
+	maxQueueLayout->addWidget(sptMaxQueue);
+	maxQueueLayout->addWidget(new QLabel("tracks", this));
+	content->addLayout(maxQueueLayout);
+
 	// Start with app
 	sptAppStart = new QCheckBox("Start with app", this);
 	sptAppStart->setToolTip("Start, and close, spotify client together with the app (only closes when using app config)");
@@ -143,6 +159,16 @@ bool SpotifyPage::save()
 		sptVersion->setText(client);
 		settings.spotify.path = sptPath->text();
 	}
+
+	// Max queue
+	auto ok = false;
+	auto maxQueue = sptMaxQueue->currentText().toInt(&ok);
+	if (!ok || maxQueue <= 0 || maxQueue > 1000)
+	{
+		applyFail("queue limit");
+		return false;
+	}
+	settings.spotify.maxQueue = maxQueue;
 
 	// librespot has no global config support
 	if (sptGlobal->isChecked() && sptVersion->text() == "librespot")

@@ -181,6 +181,7 @@ QJsonObject Settings::toJson() const
 			{"bitrate", spotify.bitrate},
 			{"global_config", spotify.globalConfig},
 			{"keyring_password", spotify.keyringPassword},
+			{"max_queue", spotify.maxQueue},
 			{"path", spotify.path},
 			{"start_client", spotify.startClient},
 			{"username", spotify.username}
