@@ -69,6 +69,9 @@ target_link_libraries(spotify-qt PRIVATE
 		Qt5::Gui
 		Qt5::Svg)
 
+# spotify-qt-lib
+add_subdirectory(lib)
+
 # Check if we should include Qt Quick
 if (USE_QT_QUICK)
 	add_subdirectory(qml)
