@@ -1,7 +1,7 @@
 #pragma once
 
 #include "settingspage.hpp"
-#include "../settings.hpp"
+#include "lib/settings.hpp"
 #include "../util/icon.hpp"
 
 #include <QLabel>
@@ -10,7 +10,7 @@
 class ApplicationPage: public SettingsPage
 {
 public:
-	ApplicationPage(Settings &settings, QWidget *parent);
+	ApplicationPage(lib::Settings &settings, QWidget *parent);
 
 	QIcon icon() override;
 	QString title() override;

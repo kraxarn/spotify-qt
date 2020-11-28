@@ -1,6 +1,6 @@
 #include "setupdialog.hpp"
 
-SetupDialog::SetupDialog(Settings &settings, QWidget *parent)
+SetupDialog::SetupDialog(lib::Settings &settings, QWidget *parent)
 	: settings(settings), QDialog(parent)
 {
 	// Auth
@@ -20,12 +20,12 @@ SetupDialog::SetupDialog(Settings &settings, QWidget *parent)
 	mainLayout->addWidget(welcomeText);
 
 	// Client ID
-	clientId = new QLineEdit(settings.account.clientId, this);
+	clientId = new QLineEdit(QString::fromStdString(settings.account.clientId), this);
 	clientId->setPlaceholderText("Client ID");
 	mainLayout->addWidget(clientId);
 
 	// Client secret
-	clientSecret = new QLineEdit(settings.account.clientSecret, this);
+	clientSecret = new QLineEdit(QString::fromStdString(settings.account.clientSecret), this);
 	clientSecret->setPlaceholderText("Client secret");
 	mainLayout->addWidget(clientSecret);
 
@@ -95,8 +95,8 @@ SetupDialog::SetupDialog(Settings &settings, QWidget *parent)
 				// Close it all down if ok
 				if (status.isEmpty())
 				{
-					this->settings.account.clientId = clientIdText;
-					this->settings.account.clientSecret = clientSecretText;
+					this->settings.account.clientId = clientIdText.toStdString();
+					this->settings.account.clientSecret = clientSecretText.toStdString();
 					this->settings.save();
 					server->close();
 					delete server;

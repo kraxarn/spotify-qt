@@ -1,6 +1,6 @@
 #include "settingsdialog.hpp"
 
-SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent)
+SettingsDialog::SettingsDialog(lib::Settings &settings, QWidget *parent)
 	: settings(settings), QDialog(parent)
 {
 	// Main layout

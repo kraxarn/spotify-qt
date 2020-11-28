@@ -1,6 +1,6 @@
 #include "playlistspage.hpp"
 
-PlaylistsPage::PlaylistsPage(Settings &settings, QWidget *parent)
+PlaylistsPage::PlaylistsPage(lib::Settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
 	addTab(order(), "Order");
@@ -81,18 +81,20 @@ QString PlaylistsPage::title()
 bool PlaylistsPage::save()
 {
 	// Custom playlist order
-	auto playlistOrder = (PlaylistOrder) plOrder->currentIndex();
-	if (playlistOrder == PlaylistOrderCustom)
+	auto playlistOrder = (lib::PlaylistOrder) plOrder->currentIndex();
+	if (playlistOrder == lib::PlaylistOrderCustom)
 	{
-		QStringList order;
+		std::vector<std::string> order;
 		for (auto i = 0; i < plList->count(); i++)
-			order.append(plList->item(i)->data(RolePlaylistId).toString());
+			order.push_back(plList->item(i)->data(RolePlaylistId).toString().toStdString());
 		settings.general.customPlaylistOrder = order;
 	}
 
 	// Playlist stuff
-	auto mainWindow = dynamic_cast<MainWindow*>(findMainWindow());
-	if ((settings.general.playlistOrder != playlistOrder || playlistOrder == PlaylistOrderCustom) && mainWindow != nullptr)
+	auto mainWindow = dynamic_cast<MainWindow *>(findMainWindow());
+	if ((settings.general.playlistOrder != playlistOrder
+		|| playlistOrder == lib::PlaylistOrderCustom)
+		&& mainWindow != nullptr)
 		mainWindow->orderPlaylists(playlistOrder);
 	settings.general.playlistOrder = playlistOrder;
 

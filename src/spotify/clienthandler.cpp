@@ -5,10 +5,10 @@ using namespace spt;
 
 QList<QPair<QDateTime, QString>> ClientHandler::log;
 
-ClientHandler::ClientHandler(const Settings &settings, QWidget *parent)
+ClientHandler::ClientHandler(const lib::Settings &settings, QWidget *parent)
 	: settings(settings), parentWidget(parent), QObject(parent)
 {
-	path = settings.spotify.path;
+	path = QString::fromStdString(settings.spotify.path);
 	process = new QProcess(parent);
 	clientType = getClientType(path);
 }
@@ -42,7 +42,7 @@ QString ClientHandler::start()
 	}
 
 	// Check if username exists
-	auto username = settings.spotify.username;
+	auto username = QString::fromStdString(settings.spotify.username);
 	if (username.isEmpty())
 		return "no username provided";
 
@@ -97,12 +97,12 @@ QString ClientHandler::start()
 	}
 
 	auto backend = settings.spotify.backend;
-	if (backend.isEmpty() && supportsPulse())
+	if (backend.empty() && supportsPulse())
 	{
 		backend = "pulseaudio";
 	}
 	arguments.append({
-		"--backend", backend
+		"--backend", QString::fromStdString(backend)
 	});
 
 	QProcess::connect(process, &QProcess::readyReadStandardOutput, this, &ClientHandler::readyRead);

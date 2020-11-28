@@ -1,6 +1,6 @@
 #include "searchview.hpp"
 
-SearchView::SearchView(spt::Spotify &spotify, const Settings &settings, QWidget *parent)
+SearchView::SearchView(spt::Spotify &spotify, const lib::Settings &settings, QWidget *parent)
 	: spotify(spotify), parent(parent), QWidget(parent)
 {
 	auto window = (MainWindow *) parent;

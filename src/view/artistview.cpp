@@ -1,6 +1,6 @@
 #include "artistview.hpp"
 
-ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const Settings &settings, QWidget *parent)
+ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const lib::Settings &settings, QWidget *parent)
 	: spotify(spotify), artistId(artistId), QWidget(parent)
 {
 	this->parent = dynamic_cast<MainWindow *>(parent);

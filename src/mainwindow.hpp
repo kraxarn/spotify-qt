@@ -7,7 +7,7 @@ class MainWindow: public QMainWindow
 Q_OBJECT
 
 public:
-	explicit MainWindow(Settings &settings);
+	explicit MainWindow(lib::Settings &settings);
 
 protected:
 	void closeEvent(QCloseEvent *event) override;
@@ -59,7 +59,7 @@ public:
 
 private:
 	// Constructor
-	Settings &settings;
+	lib::Settings &settings;
 
 	// Qt Widgets
 	QLabel *nowAlbum = nullptr;

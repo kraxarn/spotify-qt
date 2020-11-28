@@ -1,6 +1,6 @@
 #include "volumebutton.hpp"
 
-VolumeButton::VolumeButton(Settings &settings, spt::Spotify &spotify, QWidget *parent)
+VolumeButton::VolumeButton(lib::Settings &settings, spt::Spotify &spotify, QWidget *parent)
 	: settings(settings), spotify(spotify), volume(new QSlider(this)), QToolButton(parent)
 {
 	// Volume slider

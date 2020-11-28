@@ -6,11 +6,11 @@ namespace spt
 }
 
 #include "../dialog/deviceselectdialog.hpp"
-#include "../enum/followtype.hpp"
-#include "../settings.hpp"
 #include "artist.hpp"
 #include "audiofeatures.hpp"
 #include "device.hpp"
+#include "lib/enum/followtype.hpp"
+#include "lib/settings.hpp"
 #include "playback.hpp"
 #include "playlist.hpp"
 #include "searchresults.hpp"
@@ -34,7 +34,7 @@ namespace spt
 	Q_OBJECT
 
 	public:
-		explicit Spotify(Settings &settings, QObject *parent = nullptr);
+		explicit Spotify(lib::Settings &settings, QObject *parent = nullptr);
 
 		QJsonObject getAsObject(const QString &url);
 		QJsonArray getAsArray(const QString &url);
@@ -89,7 +89,7 @@ namespace spt
 	private:
 		qint64 lastAuth;
 		QString currentDevice;
-		Settings &settings;
+		lib::Settings &settings;
 		QNetworkAccessManager *networkManager;
 		bool refreshValid = false;
 

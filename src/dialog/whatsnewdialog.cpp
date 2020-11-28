@@ -1,6 +1,6 @@
 #include "whatsnewdialog.hpp"
 
-WhatsNewDialog::WhatsNewDialog(const QString &tag, Settings &settings, QWidget *parent)
+WhatsNewDialog::WhatsNewDialog(const QString &tag, lib::Settings &settings, QWidget *parent)
 	: QDialog(parent)
 {
 	auto window = dynamic_cast<MainWindow *>(parent);

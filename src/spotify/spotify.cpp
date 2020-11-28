@@ -2,7 +2,7 @@
 
 using namespace spt;
 
-Spotify::Spotify(Settings &settings, QObject *parent)
+Spotify::Spotify(lib::Settings &settings, QObject *parent)
 	: settings(settings), QObject(parent)
 {
 	lastAuth = 0;
@@ -25,7 +25,7 @@ QNetworkRequest Spotify::request(const QString &url)
 
 	// Set header
 	request.setRawHeader("Authorization",
-		("Bearer " + settings.account.accessToken).toUtf8());
+		QString::fromStdString("Bearer " + settings.account.accessToken).toUtf8());
 
 	// Return prepared header
 	return request;
@@ -154,7 +154,7 @@ bool Spotify::refresh()
 {
 	// Make sure we have a refresh token
 	auto refreshToken = settings.account.refreshToken;
-	if (refreshToken.isEmpty())
+	if (refreshToken.empty())
 	{
 		Log::warn("Attempt to refresh without refresh token");
 		return false;
@@ -162,15 +162,16 @@ bool Spotify::refresh()
 
 	// Create form
 	auto postData = QString("grant_type=refresh_token&refresh_token=%1")
-		.arg(refreshToken)
+		.arg(QString::fromStdString(refreshToken))
 		.toUtf8();
 
 	// Create request
 	QNetworkRequest request(QUrl("https://accounts.spotify.com/api/token"));
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 	request.setRawHeader("Authorization", "Basic " + QString("%1:%2")
-		.arg(settings.account.clientId)
-		.arg(settings.account.clientSecret).toUtf8().toBase64());
+		.arg(QString::fromStdString(settings.account.clientId))
+		.arg(QString::fromStdString(settings.account.clientSecret))
+		.toUtf8().toBase64());
 
 	// Send request
 	auto reply = networkManager->post(request, postData);
@@ -194,7 +195,7 @@ bool Spotify::refresh()
 	// Save as access token
 	lastAuth = QDateTime::currentSecsSinceEpoch();
 	auto accessToken = json["access_token"].toString();
-	settings.account.accessToken = accessToken;
+	settings.account.accessToken = accessToken.toStdString();
 	settings.save();
 	return true;
 }

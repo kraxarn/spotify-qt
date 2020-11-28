@@ -1,6 +1,6 @@
 #include "trayicon.hpp"
 
-TrayIcon::TrayIcon(spt::Spotify *spotify, const Settings &settings, QObject *parent)
+TrayIcon::TrayIcon(spt::Spotify *spotify, const lib::Settings &settings, QObject *parent)
 	: spotify(spotify), settings(settings), QSystemTrayIcon(parent)
 {
 	contextMenu = new QMenu();

@@ -1,6 +1,6 @@
 #include "spotifypage.hpp"
 
-SpotifyPage::SpotifyPage(Settings &settings, QWidget *parent)
+SpotifyPage::SpotifyPage(lib::Settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
 	addTab(spotify(), "General");
@@ -15,7 +15,7 @@ QWidget *SpotifyPage::spotify()
 
 	// Executable settings
 	auto sptPathLayout = new QHBoxLayout();
-	sptPath = new QLineEdit(settings.spotify.path, this);
+	sptPath = new QLineEdit(QString::fromStdString(settings.spotify.path), this);
 	sptPath->setPlaceholderText("Client path");
 	sptPathLayout->addWidget(sptPath, 1);
 	auto sptPathBrowse = new QPushButton("...", this);
@@ -32,9 +32,9 @@ QWidget *SpotifyPage::spotify()
 
 	// Client version
 	sptVersion = new QLabel("(no client provided)", this);
-	if (!settings.spotify.path.isEmpty())
+	if (!settings.spotify.path.empty())
 	{
-		auto client = spt::ClientHandler::version(settings.spotify.path);
+		auto client = spt::ClientHandler::version(QString::fromStdString(settings.spotify.path));
 		if (sptVersion != nullptr)
 			sptVersion->setText(client);
 	}
@@ -95,7 +95,7 @@ QWidget *SpotifyPage::config()
 
 	// Username
 	sptLayout->addWidget(new QLabel("Username", sptGroup), 0, 0);
-	sptUsername = new QLineEdit(settings.spotify.username, sptGroup);
+	sptUsername = new QLineEdit(QString::fromStdString(settings.spotify.username), sptGroup);
 	sptLayout->addWidget(sptUsername, 0, 1);
 
 	// Bitrate
@@ -113,12 +113,12 @@ QWidget *SpotifyPage::config()
 	sptBackend = new QComboBox(sptGroup);
 	sptBackend->addItem("Auto");
 	sptBackend->addItems(backends());
-	sptBackend->setCurrentText(settings.spotify.backend);
+	sptBackend->setCurrentText(QString::fromStdString(settings.spotify.backend));
 	sptLayout->addWidget(sptBackend, 2, 1);
 
 	// KWallet keyring for password
 #ifdef USE_DBUS
-	if (KWallet(settings.spotify.username).isEnabled())
+	if (KWallet(QString::fromStdString(settings.spotify.username)).isEnabled())
 	{
 		sptKeyring = new QCheckBox("Save password in keyring", this);
 		sptKeyring->setToolTip("Store password in keyring (using KWallet)");
@@ -157,7 +157,7 @@ bool SpotifyPage::save()
 			return false;
 		}
 		sptVersion->setText(client);
-		settings.spotify.path = sptPath->text();
+		settings.spotify.path = sptPath->text().toStdString();
 	}
 
 	// Max queue
@@ -186,12 +186,12 @@ bool SpotifyPage::save()
 
 	// Backend
 	settings.spotify.backend = sptBackend->currentIndex() == 0
-		? QString()
-		: sptBackend->currentText();
+		? std::string()
+		: sptBackend->currentText().toStdString();
 
 	// Other Spotify stuff
 	settings.spotify.startClient = sptAppStart->isChecked();
-	settings.spotify.username = sptUsername->text();
+	settings.spotify.username = sptUsername->text().toStdString();
 	auto bitrate = sptBitrate->currentIndex();
 	settings.spotify.bitrate = bitrate == 0 ? 96 : bitrate == 1 ? 160 : 320;
 	settings.spotify.alwaysStart = sptAlways->isChecked();

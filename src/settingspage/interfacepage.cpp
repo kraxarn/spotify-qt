@@ -1,6 +1,6 @@
 #include "interfacepage.hpp"
 
-InterfacePage::InterfacePage(Settings &settings, QWidget *parent)
+InterfacePage::InterfacePage(lib::Settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
 	addTab(interface(), "General");
@@ -112,7 +112,7 @@ bool InterfacePage::save()
 		QMessageBox::information(this, "Dark Theme",
 			"Please restart the application to fully apply selected theme");
 		settings.setDarkTheme(itfDark->isChecked());
-		QApplication::setStyle(settings.general.style);
+		QApplication::setStyle(QString::fromStdString(settings.general.style));
 		Utils::applyPalette(settings.general.stylePalette);
 	}
 

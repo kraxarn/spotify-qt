@@ -10,7 +10,7 @@ class TracksList: public QTreeWidget
 Q_OBJECT
 
 public:
-	TracksList(spt::Spotify &spotify, Settings &settings, QWidget *parent);
+	TracksList(spt::Spotify &spotify, lib::Settings &settings, QWidget *parent);
 
 private:
 	void menu(const QPoint &pos);
@@ -18,6 +18,6 @@ private:
 	void headerMenu(const QPoint &pos);
 
 	spt::Spotify &spotify;
-	Settings &settings;
+	lib::Settings &settings;
 	QWidget *parent;
 };

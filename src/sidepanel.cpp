@@ -1,6 +1,6 @@
 #include "sidepanel.hpp"
 
-SidePanel::SidePanel(spt::Spotify &spotify, const Settings &settings, QWidget *parent)
+SidePanel::SidePanel(spt::Spotify &spotify, const lib::Settings &settings, QWidget *parent)
 	: spotify(spotify), settings(settings), parent(parent), QTabWidget(parent)
 {
 	setMovable(true);

@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 
 	// Settings
-	Settings settings;
+	lib::Settings settings;
 
 	// Create QML engine if requested
 #ifdef USE_QT_QUICK
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 	parser.process(app);
 
 	// First setup window
-	if (settings.account.refreshToken.isEmpty())
+	if (settings.account.refreshToken.empty())
 	{
 #ifdef USE_QT_QUICK
 		if (qml.setup())

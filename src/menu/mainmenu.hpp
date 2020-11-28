@@ -11,12 +11,12 @@ class MainMenu: public QMenu
 Q_OBJECT
 
 public:
-	MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent = nullptr);
+	MainMenu(spt::Spotify &spotify, lib::Settings &settings, QWidget *parent = nullptr);
 
 private:
 	QWidget *parent;
 	spt::Spotify &spotify;
-	Settings &settings;
+	lib::Settings &settings;
 	QAction *about;
 	QMenu *deviceMenu;
 	void refreshDevices();

@@ -4,11 +4,12 @@
 #include "../util/icon.hpp"
 
 #include <QComboBox>
+#include <QGroupBox>
 
 class SpotifyPage: public SettingsPage
 {
 public:
-	SpotifyPage(Settings &settings, QWidget *parent);
+	SpotifyPage(lib::Settings &settings, QWidget *parent);
 
 	QIcon icon() override;
 	QString title() override;

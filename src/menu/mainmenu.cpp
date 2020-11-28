@@ -1,6 +1,6 @@
 #include "mainmenu.hpp"
 
-MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
+MainMenu::MainMenu(spt::Spotify &spotify, lib::Settings &settings, QWidget *parent)
 	: settings(settings), parent(parent), spotify(spotify), QMenu(parent)
 {
 	// Update notifier

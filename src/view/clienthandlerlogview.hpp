@@ -2,6 +2,7 @@
 
 #include "../spotify/clienthandler.hpp"
 
+#include <QApplication>
 #include <QClipboard>
 #include <QHeaderView>
 #include <QMenu>

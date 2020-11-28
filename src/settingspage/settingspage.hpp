@@ -1,9 +1,10 @@
 #pragma once
 
-#include "../settings.hpp"
+#include "lib/settings.hpp"
 
-#include <QVBoxLayout>
 #include <QMessageBox>
+#include <QTabWidget>
+#include <QVBoxLayout>
 
 class SettingsPage: public QTabWidget
 {
@@ -16,12 +17,12 @@ public:
 	virtual bool save() = 0;
 
 protected:
-	explicit SettingsPage(Settings &settings, QWidget *parent);
+	explicit SettingsPage(lib::Settings &settings, QWidget *parent);
 
 	void warning(const QString &title, const QString &message);
 	void applyFail(const QString &setting);
 	QWidget *findMainWindow();
 	QVBoxLayout *tabContent();
 
-	Settings &settings;
+	lib::Settings &settings;
 };

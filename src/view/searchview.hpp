@@ -16,7 +16,7 @@ class SearchView: public QWidget
 Q_OBJECT
 
 public:
-	explicit SearchView(spt::Spotify &spotify, const Settings &settings, QWidget *parent = nullptr);
+	explicit SearchView(spt::Spotify &spotify, const lib::Settings &settings, QWidget *parent = nullptr);
 
 private:
 	QListWidget *artistList = nullptr;

@@ -1,6 +1,6 @@
 #include "mainwindow.hpp"
 
-MainWindow::MainWindow(Settings &settings)
+MainWindow::MainWindow(lib::Settings &settings)
 	: settings(settings), QMainWindow()
 {
 	// Splash
@@ -19,7 +19,7 @@ MainWindow::MainWindow(Settings &settings)
 	cacheDir.mkdir("tracks");
 
 	// Apply selected style and palette
-	QApplication::setStyle(settings.general.style);
+	QApplication::setStyle(QString::fromStdString(settings.general.style));
 	Utils::applyPalette(settings.general.stylePalette);
 
 	// Check for dark background
@@ -261,10 +261,10 @@ QWidget *MainWindow::createCentralWidget()
 		// If no playlists were found
 		// TODO: Load something from library here
 	}
-	else if (playlistId.isEmpty())
+	else if (playlistId.empty())
 	{
 		// Default to first in list
-		playlistId = playlists->item(0)->data(RolePlaylistId).toString();
+		playlistId = playlists->item(0)->data(RolePlaylistId).toString().toStdString();
 	}
 
 	// Find playlist in list
@@ -272,7 +272,7 @@ QWidget *MainWindow::createCentralWidget()
 	{
 		auto item = playlists->item(i);
 
-		if (item->data(RolePlaylistId).toString().endsWith(playlistId))
+		if (item->data(RolePlaylistId).toString().endsWith(QString::fromStdString(playlistId)))
 		{
 			playlists->setCurrentRow(i);
 			loadPlaylist(sptPlaylists[item->data(RoleIndex).toInt()]);
@@ -435,7 +435,7 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 {
 	if (!getPlaylistNameFromSaved(playlist.id).isEmpty())
 	{
-		settings.general.lastPlaylist = playlist.id;
+		settings.general.lastPlaylist = playlist.id.toStdString();
 		settings.save();
 	}
 	if (loadPlaylistFromCache(playlist))
@@ -756,7 +756,7 @@ void MainWindow::orderPlaylists(PlaylistOrder order)
 		case PlaylistOrderCustom:
 			i = 0;
 			for (auto &playlist : settings.general.customPlaylistOrder)
-				customOrder[playlist] = i++;
+				customOrder[QString::fromStdString(playlist)] = i++;
 			std::sort(items.begin(), items.end(), [customOrder](QListWidgetItem *i1, QListWidgetItem *i2)
 			{
 				auto id1 = i1->data(DataRole::RolePlaylistId).toString();

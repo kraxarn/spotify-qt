@@ -4,12 +4,13 @@
 #include "../util/icon.hpp"
 #include "../view/cacheview.hpp"
 #include "../view/configview.hpp"
+#include "lib/settings.hpp"
 #include "settingspage.hpp"
 
 class AboutPage: public SettingsPage
 {
 public:
-	AboutPage(Settings &settings, QWidget *parent);
+	AboutPage(lib::Settings &settings, QWidget *parent);
 
 	QIcon icon() override;
 	QString title() override;

@@ -19,7 +19,7 @@ class ArtistView: public QWidget
 Q_OBJECT
 
 public:
-	ArtistView(spt::Spotify &spotify, const QString &artistId, const Settings &settings, QWidget *parent);
+	ArtistView(spt::Spotify &spotify, const QString &artistId, const lib::Settings &settings, QWidget *parent);
 
 private:
 	void follow(bool checked);

@@ -1,6 +1,6 @@
 #include "configview.hpp"
 
-ConfigView::ConfigView(const Settings &settings, QWidget *parent)
+ConfigView::ConfigView(const lib::Settings &settings, QWidget *parent)
 	: QTreeWidget(parent)
 {
 	setHeaderLabels({
@@ -8,18 +8,16 @@ ConfigView::ConfigView(const Settings &settings, QWidget *parent)
 		"Value"
 	});
 
-	auto json = settings.toJson();
-	for (auto &key : json.keys())
+	for (auto &i : settings.toJson().items())
 	{
 		auto item = new QTreeWidgetItem(this);
-		item->setText(0, key);
+		item->setText(0, QString::fromStdString(std::string(i.key())));
 
-		auto obj = json[key].toObject();
-		for (auto &subKey : obj.keys())
+		for (auto &ii : i.value().items())
 		{
 			auto child = new QTreeWidgetItem(item);
-			child->setText(0, subKey);
-			child->setText(1, obj[subKey].toVariant().toString());
+			child->setText(0, QString::fromStdString(std::string(ii.key())));
+			child->setText(1, QString::fromStdString(std::string(ii.value())));
 		}
 	}
 
@@ -36,7 +34,7 @@ void ConfigView::menu(const QPoint &pos)
 	QAction::connect(menu->addAction(Icon::get("folder-txt"), "Open in external editor"),
 		&QAction::triggered,[this](bool)
 	{
-		Utils::openUrl(Settings::fileName(), LinkType::Path, this);
+		Utils::openUrl(QString::fromStdString(lib::Settings::fileName()), LinkType::Path, this);
 	});
 	menu->popup(mapToGlobal(pos));
 }

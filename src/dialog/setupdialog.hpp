@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../spotify/auth.hpp"
+#include "lib/settings.hpp"
 #include "openlinkdialog.hpp"
 
 #include <QCoreApplication>
@@ -20,7 +21,7 @@ class SetupDialog: public QDialog
 Q_OBJECT
 
 public:
-	explicit SetupDialog(Settings &settings, QWidget *parent = nullptr);
+	explicit SetupDialog(lib::Settings &settings, QWidget *parent = nullptr);
 	~SetupDialog() override;
 
 private:
@@ -28,5 +29,5 @@ private:
 	QTcpServer *server;
 	QLineEdit *clientId, *clientSecret;
 	QString clientIdText, clientSecretText, redirect;
-	Settings &settings;
+	lib::Settings &settings;
 };

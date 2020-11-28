@@ -1,6 +1,6 @@
 #include "applicationpage.hpp"
 
-ApplicationPage::ApplicationPage(Settings &settings, QWidget *parent)
+ApplicationPage::ApplicationPage(lib::Settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
 	addTab(app(), "General");
