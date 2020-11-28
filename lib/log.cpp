@@ -1,5 +1,7 @@
 #include "log.hpp"
 
+using namespace lib;
+
 std::vector<LogMessage> Log::messages = std::vector<LogMessage>();
 
 void Log::log(LogType logType, const std::string &message)
