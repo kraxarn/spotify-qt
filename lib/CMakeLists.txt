@@ -8,6 +8,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(GLOB MAIN_SRC "*.[hc]pp")
 add_library(spotify-qt-lib STATIC ${MAIN_SRC})
 
+# Temporary for C++17 filesystem for use in Settings
+target_link_libraries(spotify-qt-lib PRIVATE stdc++fs)
+
 # Currently, Qt is still required
 find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 target_link_libraries(spotify-qt-lib PRIVATE

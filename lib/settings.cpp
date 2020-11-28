@@ -1,59 +1,60 @@
 #include "settings.hpp"
 
-#include <QHeaderView>
+using namespace lib;
 
 Settings::Settings()
 {
 	load();
 }
 
-QString Settings::fileName()
+std::string Settings::fileName()
 {
-	return QString("%1.json").arg(QStandardPaths::writableLocation(
-		QStandardPaths::AppConfigLocation));
+	return fmt::format("{}/spotify-qt.json", filePath());
 }
 
-QString Settings::filePath()
+std::string Settings::filePath()
 {
-	return QFileInfo(fileName()).absolutePath();
+	// TODO: Very temporary
+	return fmt::format("{}/.config/kraxarn", std::getenv("HOME"));
 }
 
 template<typename T>
-void Settings::setValue(const QJsonObject &json, const QString &key, T &value)
+void Settings::setValue(const json &json, const std::string &key, T &value)
 {
 	if (!json.contains(key))
 		return;
 
-	if (!json[key].toVariant().canConvert<T>())
+	try
 	{
-		Log::warn("Settings type mismatch for key: {}", key.toStdString());
-		return;
+		value = json[key].get<T>();
 	}
-
-	value = json[key].toVariant().value<T>();
+	catch (const json::exception &e)
+	{
+		Log::warn("Failed to parse settings for key: {} ({})", key, e.what());
+	}
 }
 
-void Settings::fromJson(const QJsonObject &json)
+void Settings::fromJson(const json &json)
 {
-	auto a = json["Account"].toObject();
-	auto g = json["General"].toObject();
-	auto s = json["Spotify"].toObject();
+	auto a = json["Account"].object();
+	auto g = json["General"].object();
+	auto s = json["Spotify"].object();
 
 	// General/HiddenSongHeaders
 	if (g.contains("hidden_song_headers"))
 	{
-		QVector<int> hiddenSongHeaders;
-		for (auto val : g["hidden_song_headers"].toArray())
-			hiddenSongHeaders.append(val.toInt());
+		std::vector<int> hiddenSongHeaders;
+		for (auto val : g["hidden_song_headers"].items())
+			hiddenSongHeaders.push_back(val.value().get<int>());
 		general.hiddenSongHeaders = hiddenSongHeaders;
 	}
 
 	// General/CustomPlaylistOrder
 	if (g.contains("custom_playlist_order"))
 	{
-		QStringList customPlaylistOrder;
-		for (auto val : g["custom_playlist_order"].toArray())
-			customPlaylistOrder.append(val.toString());
+		std::vector<std::string> customPlaylistOrder;
+		for (auto val : g["custom_playlist_order"].items())
+			customPlaylistOrder.push_back(val.value().get<std::string>());
 		general.customPlaylistOrder = customPlaylistOrder;
 	}
 
@@ -111,50 +112,47 @@ void Settings::fromJson(const QJsonObject &json)
 
 void Settings::load()
 {
-	QFile file(fileName());
-	file.open(QIODevice::ReadOnly);
-	auto data = file.readAll();
-	if (data.isEmpty())
+	auto path = fileName();
+
+	std::ifstream file(path);
+	if (!file.is_open())
 	{
-		Log::warn("JSON config in {} is empty", fileName());
-		file.close();
+		Log::warn("Failed to load settings: \"{}\" not found", path);
 		return;
 	}
 
-	QJsonParseError error;
-	auto json = QJsonDocument::fromJson(data, &error);
+	auto data = std::string(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
+	if (data.empty())
+	{
+		Log::warn("Failed to load settings: \"{}\" is empty", path);
+	}
+
+	try
+	{
+		fromJson(json::parse(data));
+	}
+	catch (const json::exception &e)
+	{
+		Log::error("Failed to load settings: {}", e.what());
+	}
+
 	file.close();
-	if (error.error != QJsonParseError::NoError)
-	{
-		Log::error("Unable to read JSON settings: {}", error.errorString());
-		return;
-	}
-
-	fromJson(json.object());
 }
 
-QJsonObject Settings::toJson() const
+json Settings::toJson() const
 {
-	QJsonArray jsonHiddenSongHeaders;
-	for (auto &val : general.hiddenSongHeaders)
-		jsonHiddenSongHeaders.append(val);
-
-	QJsonArray jsonCustomPlaylistOrder;
-	for (auto &val : general.customPlaylistOrder)
-		jsonCustomPlaylistOrder.append(val);
-
-	return QJsonObject({
-		QPair<QString, QJsonObject>("Account", {
+	return {
+		{"Account", {
 			{"access_token", account.accessToken},
 			{"client_id", account.clientId},
 			{"client_secret", account.clientSecret},
 			{"refresh_token", account.refreshToken}
-		}),
-		QPair<QString, QJsonObject>("General", {
-			{"custom_playlist_order", jsonCustomPlaylistOrder},
+		}},
+		{"General", {
+			{"custom_playlist_order", general.customPlaylistOrder},
 			{"fallback_icons", general.fallbackIcons},
 			{"fixed_width_time", general.fixedWidthTime},
-			{"hidden_song_headers", jsonHiddenSongHeaders},
+			{"hidden_song_headers", general.hiddenSongHeaders},
 			{"last_playlist", general.lastPlaylist},
 			{"last_version", general.lastVersion},
 			{"last_volume", general.lastVolume},
@@ -175,8 +173,8 @@ QJsonObject Settings::toJson() const
 			{"tray_icon", general.trayIcon},
 			{"tray_light_icon", general.trayLightIcon},
 			{"tray_notifications", general.trayNotifications}
-		}),
-		QPair<QString, QJsonObject>("Spotify", {
+		}},
+		{"Spotify", {
 			{"always_start", spotify.alwaysStart},
 			{"backend", spotify.backend},
 			{"bitrate", spotify.bitrate},
@@ -186,31 +184,36 @@ QJsonObject Settings::toJson() const
 			{"path", spotify.path},
 			{"start_client", spotify.startClient},
 			{"username", spotify.username}
-		})
-	});
+		}}
+	};
 }
 
 void Settings::save()
 {
 	mutex.lock();
-	QDir::root().mkpath(Settings::filePath());
-	QFile file(fileName());
-	file.open(QIODevice::WriteOnly);
-	file.write(QJsonDocument(toJson()).toJson(QJsonDocument::Indented));
+
+	auto path = filePath();
+
+	if (!std::experimental::filesystem::exists(path))
+		std::experimental::filesystem::create_directories(path);
+
+	std::ofstream file(fileName());
+	file << toJson().dump(4);
 	file.close();
+
 	mutex.unlock();
 }
 
 void Settings::removeClient()
 {
-	account.clientId = QString();
-	account.clientSecret = QString();
+	account.clientId = std::string();
+	account.clientSecret = std::string();
 }
 
 void Settings::removeTokens()
 {
-	account.accessToken = QString();
-	account.refreshToken = QString();
+	account.accessToken = std::string();
+	account.refreshToken = std::string();
 }
 
 bool Settings::darkTheme() const
@@ -221,7 +224,7 @@ bool Settings::darkTheme() const
 void Settings::setDarkTheme(bool value)
 {
 	// When enabling dark theme, also set style to fusion to match better
-	general.style = value ? "Fusion" : QString();
+	general.style = value ? "Fusion" : std::string();
 	general.stylePalette = value ? PaletteDark : PaletteApp;
 }
 
