@@ -8,16 +8,17 @@ ConfigView::ConfigView(const lib::Settings &settings, QWidget *parent)
 		"Value"
 	});
 
-	for (auto &i : settings.toJson().items())
+	auto items = settings.toJson();
+	for (auto &i : items.items())
 	{
 		auto item = new QTreeWidgetItem(this);
-		item->setText(0, QString::fromStdString(std::string(i.key())));
+		item->setText(0, QString::fromStdString(i.key()));
 
 		for (auto &ii : i.value().items())
 		{
 			auto child = new QTreeWidgetItem(item);
-			child->setText(0, QString::fromStdString(std::string(ii.key())));
-			child->setText(1, QString::fromStdString(std::string(ii.value())));
+			child->setText(0, QString::fromStdString(ii.key()));
+			child->setText(1, QString::fromStdString(ii.value().dump()));
 		}
 	}
 
