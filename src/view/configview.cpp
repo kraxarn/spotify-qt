@@ -33,9 +33,9 @@ void ConfigView::menu(const QPoint &pos)
 {
 	auto menu = new QMenu(this);
 	QAction::connect(menu->addAction(Icon::get("folder-txt"), "Open in external editor"),
-		&QAction::triggered,[this](bool)
-	{
-		Utils::openUrl(QString::fromStdString(lib::Settings::fileName()), LinkType::Path, this);
-	});
+		&QAction::triggered, [this](bool)
+		{
+			Utils::openUrl(QString::fromStdString(lib::Settings::fileName()), LinkType::Path, this);
+		});
 	menu->popup(mapToGlobal(pos));
 }
