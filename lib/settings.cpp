@@ -26,7 +26,7 @@ void Settings::setValue(const nlohmann::json &json, const std::string &key, T &v
 
 	try
 	{
-		value = json[key].get<T>();
+		json.at(key).get_to(value);
 	}
 	catch (const nlohmann::json::exception &e)
 	{
@@ -36,9 +36,9 @@ void Settings::setValue(const nlohmann::json &json, const std::string &key, T &v
 
 void Settings::fromJson(const nlohmann::json &json)
 {
-	auto a = json["Account"].object();
-	auto g = json["General"].object();
-	auto s = json["Spotify"].object();
+	auto a = json.at("Account");
+	auto g = json.at("General");
+	auto s = json.at("Spotify");
 
 	// General/HiddenSongHeaders
 	if (g.contains("hidden_song_headers"))
@@ -121,15 +121,11 @@ void Settings::load()
 		return;
 	}
 
-	auto data = std::string(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
-	if (data.empty())
-	{
-		Log::warn("Failed to load settings: \"{}\" is empty", path);
-	}
-
 	try
 	{
-		fromJson(json::parse(data));
+		nlohmann::json json;
+		file >> json;
+		fromJson(json);
 	}
 	catch (const nlohmann::json::exception &e)
 	{
@@ -198,7 +194,7 @@ void Settings::save()
 		std::experimental::filesystem::create_directories(path);
 
 	std::ofstream file(fileName());
-	file << toJson().dump(4);
+	file << std::setw(4) << toJson();
 	file.close();
 
 	mutex.unlock();
