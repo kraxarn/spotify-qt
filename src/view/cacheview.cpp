@@ -1,6 +1,6 @@
 #include "cacheview.hpp"
 
-#include "../log.hpp"
+#include "lib/log.hpp"
 
 CacheView::CacheView(const QString &cachePath, QWidget *parent)
 	: QTreeWidget(parent)

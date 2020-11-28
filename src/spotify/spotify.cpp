@@ -16,7 +16,7 @@ QNetworkRequest Spotify::request(const QString &url)
 	auto lastRefresh = QDateTime::currentSecsSinceEpoch() - lastAuth;
 	if (lastRefresh >= 3600)
 	{
-		Log::info("Access token probably expired, refreshing");
+		lib::Log::info("Access token probably expired, refreshing");
 		refresh();
 	}
 
@@ -146,7 +146,7 @@ QString Spotify::errorMessage(const QJsonDocument &json, const QUrl &url)
 
 	auto message = json.object()["error"].toObject()["message"].toString();
 	if (!message.isEmpty())
-		Log::error("{} failed: {}", url.path(), message);
+		lib::Log::error("{} failed: {}", url.path().toStdString(), message.toStdString());
 	return message;
 }
 
@@ -156,7 +156,7 @@ bool Spotify::refresh()
 	auto refreshToken = settings.account.refreshToken;
 	if (refreshToken.empty())
 	{
-		Log::warn("Attempt to refresh without refresh token");
+		lib::Log::warn("Attempt to refresh without refresh token");
 		return false;
 	}
 
@@ -186,9 +186,9 @@ bool Spotify::refresh()
 	if (json.contains("error_description") || !json.contains("access_token"))
 	{
 		auto error = json["error_description"].toString();
-		Log::warn("Failed to refresh token: {}", error.isEmpty()
+		lib::Log::warn("Failed to refresh token: {}", error.isEmpty()
 			? "no access token"
-			: error);
+			: error.toStdString());
 		return false;
 	}
 
@@ -262,7 +262,7 @@ QString Spotify::playTracks(int trackIndex, const QStringList &all)
 	QStringList items = all;
 	if (all.length() > maxQueue)
 	{
-		Log::warn("Attempting to queue {} tracks, but only {} allowed", all.length(), maxQueue);
+		lib::Log::warn("Attempting to queue {} tracks, but only {} allowed", all.length(), maxQueue);
 		items = all.mid(trackIndex, maxQueue);
 		trackIndex = 0;
 	}

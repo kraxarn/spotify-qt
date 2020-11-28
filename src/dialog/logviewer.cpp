@@ -28,10 +28,12 @@ LogViewer::LogViewer(QWidget *parent)
 
 	layout->addWidget(buttons);
 
-	for (auto &message : Log::getMessages())
+	for (auto &message : lib::Log::getMessages())
 	{
 		auto item = new QTreeWidgetItem({
-			message.getTime(), message.getType(), message.getMessage()
+			QString::fromStdString(message.getTime()),
+			QString::fromStdString(message.getType()),
+			QString::fromStdString(message.getMessage())
 		});
 
 		list->addTopLevelItem(item);
@@ -41,7 +43,7 @@ LogViewer::LogViewer(QWidget *parent)
 QString LogViewer::collectLogs()
 {
 	QStringList items;
-	for (auto &message : Log::getMessages())
+	for (auto &message : lib::Log::getMessages())
 	{
 		items.append(QString::fromStdString(message.format()));
 	}

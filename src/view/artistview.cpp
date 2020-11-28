@@ -6,7 +6,7 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const lib
 	this->parent = dynamic_cast<MainWindow *>(parent);
 	if (this->parent == nullptr)
 	{
-		Log::error("Parent is not MainWindow");
+		lib::Log::error("Parent is not MainWindow");
 		return;
 	}
 	auto mainWindow = (MainWindow *) parent;
