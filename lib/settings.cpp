@@ -40,24 +40,6 @@ void Settings::fromJson(const nlohmann::json &json)
 	auto g = json.at("General");
 	auto s = json.at("Spotify");
 
-	// General/HiddenSongHeaders
-	if (g.contains("hidden_song_headers"))
-	{
-		std::vector<int> hiddenSongHeaders;
-		for (auto val : g["hidden_song_headers"].items())
-			hiddenSongHeaders.push_back(val.value().get<int>());
-		general.hiddenSongHeaders = hiddenSongHeaders;
-	}
-
-	// General/CustomPlaylistOrder
-	if (g.contains("custom_playlist_order"))
-	{
-		std::vector<std::string> customPlaylistOrder;
-		for (auto val : g["custom_playlist_order"].items())
-			customPlaylistOrder.push_back(val.value().get<std::string>());
-		general.customPlaylistOrder = customPlaylistOrder;
-	}
-
 	// Account
 	setValue(a, "access_token", account.accessToken);
 	setValue(a, "client_id", account.clientId);
@@ -65,8 +47,10 @@ void Settings::fromJson(const nlohmann::json &json)
 	setValue(a, "refresh_token", account.refreshToken);
 
 	// General
+	setValue(g, "custom_playlist_order", general.customPlaylistOrder);
 	setValue(g, "fallback_icons", general.fallbackIcons);
 	setValue(g, "fixed_width_time", general.fixedWidthTime);
+	setValue(g, "hidden_song_headers", general.hiddenSongHeaders);
 	setValue(g, "last_playlist", general.lastPlaylist);
 	setValue(g, "last_version", general.lastVersion);
 	setValue(g, "last_volume", general.lastVolume);
