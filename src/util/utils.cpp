@@ -25,20 +25,20 @@ QTreeWidgetItem *Utils::treeItemWithChildren(
 	return item;
 }
 
-void Utils::applyPalette(Palette palette)
+void Utils::applyPalette(lib::Palette palette)
 {
 	QPalette p;
 	switch (palette)
 	{
-		case PaletteApp:
+		case lib::PaletteApp:
 			p = QApplication::palette();
 			break;
 
-		case PaletteStyle:
+		case lib::PaletteStyle:
 			p = QApplication::style()->standardPalette();
 			break;
 
-		case PaletteDark:
+		case lib::PaletteDark:
 			p = DarkPalette();
 			break;
 	}

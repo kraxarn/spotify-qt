@@ -71,9 +71,9 @@ namespace spt
 		QString editPlaylist(const Playlist &playlist);
 		QString addToQueue(const QString &uri);
 		QVector<Artist> followedArtists(const QString &offset = QString());
-		QVector<bool> isFollowing(FollowType type, const QStringList &ids);
-		void follow(FollowType type, const QStringList &ids);
-		void unfollow(FollowType type, const QStringList &ids);
+		QVector<bool> isFollowing(lib::FollowType type, const QStringList &ids);
+		void follow(lib::FollowType type, const QStringList &ids);
+		void unfollow(lib::FollowType type, const QStringList &ids);
 		bool isValid() const;
 
 	public slots:
@@ -107,6 +107,6 @@ namespace spt
 		QVector<Track> albumTracks(const QString &albumId, const QString &albumName, int offset);
 
 		bool refresh();
-		static QString followTypeString(FollowType type);
+		static QString followTypeString(lib::FollowType type);
 	};
 }

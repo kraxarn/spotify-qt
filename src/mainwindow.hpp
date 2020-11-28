@@ -38,7 +38,7 @@ public:
 	void setPlayingTrackItem(QTreeWidgetItem *item);
 	void refresh();
 	void refreshed(const spt::Playback &playback);
-	void orderPlaylists(PlaylistOrder order);
+	void orderPlaylists(lib::PlaylistOrder order);
 	void toggleTrackNumbers(bool enabled);
 	bool isValid() const;
 	void setSearchVisible(bool visible);

@@ -339,7 +339,7 @@ void MainWindow::refreshPlaylists()
 	}
 
 	// Sort
-	if (settings.general.playlistOrder != PlaylistOrderDefault)
+	if (settings.general.playlistOrder != lib::PlaylistOrderDefault)
 		orderPlaylists(settings.general.playlistOrder);
 
 	if (currentItem != nullptr)
@@ -357,7 +357,7 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 	{
 		auto track = tracks.at(i);
 		auto item = new QTreeWidgetItem({
-			settings.general.trackNumbers == ContextAll
+			settings.general.trackNumbers == lib::ContextAll
 				? QString("%1").arg(i + 1, fieldWidth)
 				: "",
 			track.name, track.artist, track.album,
@@ -713,7 +713,7 @@ int latestTrack(const QVector<spt::Track> &tracks)
 	return latest;
 }
 
-void MainWindow::orderPlaylists(PlaylistOrder order)
+void MainWindow::orderPlaylists(lib::PlaylistOrder order)
 {
 	QList<QListWidgetItem *> items;
 	items.reserve(playlists->count());
@@ -726,21 +726,21 @@ void MainWindow::orderPlaylists(PlaylistOrder order)
 
 	switch (order)
 	{
-		case PlaylistOrderDefault:
+		case lib::PlaylistOrderDefault:
 			std::sort(items.begin(), items.end(), [](QListWidgetItem *i1, QListWidgetItem *i2)
 			{
 				return i1->data(RoleIndex).toInt() < i2->data(RoleIndex).toInt();
 			});
 			break;
 
-		case PlaylistOrderAlphabetical:
+		case lib::PlaylistOrderAlphabetical:
 			std::sort(items.begin(), items.end(), [](QListWidgetItem *i1, QListWidgetItem *i2)
 			{
 				return i1->text() < i2->text();
 			});
 			break;
 
-		case PlaylistOrderRecent:
+		case lib::PlaylistOrderRecent:
 			// TODO: Currently sorts by when tracks where added, not when playlist was last played
 			std::sort(items.begin(), items.end(), [this](QListWidgetItem *i1, QListWidgetItem *i2)
 			{
@@ -753,7 +753,7 @@ void MainWindow::orderPlaylists(PlaylistOrder order)
 			});
 			break;
 
-		case PlaylistOrderCustom:
+		case lib::PlaylistOrderCustom:
 			i = 0;
 			for (auto &playlist : settings.general.customPlaylistOrder)
 				customOrder[QString::fromStdString(playlist)] = i++;

@@ -26,7 +26,7 @@ QString ClientHandler::start()
 		return QString();
 
 	// Check if empty
-	if (clientType == ClientType::None)
+	if (clientType == lib::ClientType::None)
 		return "path is empty or invalid";
 
 	// Check if path exists
@@ -35,7 +35,7 @@ QString ClientHandler::start()
 		return "file in path does not exist";
 
 	// If using global config, just start
-	if (settings.spotify.globalConfig && clientType == ClientType::Spotifyd)
+	if (settings.spotify.globalConfig && clientType == lib::ClientType::Spotifyd)
 	{
 		process->start(path, QStringList());
 		return QString();
@@ -79,7 +79,7 @@ QString ClientHandler::start()
 	});
 
 	// librespot specific
-	if (clientType == ClientType::Librespot)
+	if (clientType == lib::ClientType::Librespot)
 	{
 		arguments.append({
 			"--name", "spotify-qt (librespot)",
@@ -88,7 +88,7 @@ QString ClientHandler::start()
 			"--cache", QString("%1/librespot").arg(((MainWindow *) parentWidget)->getCacheLocation())
 		});
 	}
-	else if (clientType == ClientType::Spotifyd)
+	else if (clientType == lib::ClientType::Spotifyd)
 	{
 		arguments.append({
 			"--no-daemon",
@@ -120,7 +120,7 @@ QString ClientHandler::clientExec(const QString &path, const QStringList &argume
 		return QString();
 
 	// Check if either client
-	if (getClientType(path) == ClientType::None)
+	if (getClientType(path) == lib::ClientType::None)
 		return QString();
 
 	// Prepare process
@@ -138,7 +138,7 @@ QStringList ClientHandler::availableBackends()
 {
 	QStringList items;
 
-	if (clientType == ClientType::Librespot)
+	if (clientType == lib::ClientType::Librespot)
 	{
 		auto result = clientExec(path, QStringList({
 			"--name", "",
@@ -154,7 +154,7 @@ QStringList ClientHandler::availableBackends()
 				.trimmed());
 		}
 	}
-	else if (clientType == ClientType::Spotifyd)
+	else if (clientType == lib::ClientType::Spotifyd)
 	{
 		auto result = clientExec(path, QStringList({
 			"--help",
@@ -179,7 +179,7 @@ QStringList ClientHandler::availableBackends()
 
 bool ClientHandler::supportsPulse()
 {
-	return clientExec(path, clientType == ClientType::Librespot
+	return clientExec(path, clientType == lib::ClientType::Librespot
 		? QStringList({
 			"--name", "",
 			"--backend", "?"
@@ -193,10 +193,10 @@ QString ClientHandler::version(const QString &path)
 {
 	auto clientType = getClientType(path);
 
-	return clientType == ClientType::Spotifyd
+	return clientType == lib::ClientType::Spotifyd
 		? clientExec(path, {
 			"--version"
-		}) : clientType == ClientType::Librespot
+		}) : clientType == lib::ClientType::Librespot
 			? "librespot"
 			: QString();
 }
@@ -297,13 +297,13 @@ QList<QPair<QDateTime, QString>> ClientHandler::getLog()
 	return log;
 }
 
-ClientType ClientHandler::getClientType(const QString &path)
+lib::ClientType ClientHandler::getClientType(const QString &path)
 {
 	auto baseName = QFileInfo(path).baseName().toLower();
 
 	return baseName == "spotifyd"
-		? ClientType::Spotifyd
+		? lib::ClientType::Spotifyd
 		: baseName == "librespot"
-			? ClientType::Librespot
-			: ClientType::None;
+			? lib::ClientType::Librespot
+			: lib::ClientType::None;
 }

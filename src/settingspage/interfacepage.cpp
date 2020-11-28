@@ -47,7 +47,7 @@ QWidget *InterfacePage::interface()
 	// Track numbers
 	itfTrackNum = new QCheckBox("Show track numbers", this);
 	itfTrackNum->setToolTip("Show track numbers next to tracks in the list");
-	itfTrackNum->setChecked(settings.general.trackNumbers == ContextAll);
+	itfTrackNum->setChecked(settings.general.trackNumbers == lib::ContextAll);
 	layout->addWidget(itfTrackNum);
 
 	return Utils::layoutToWidget(layout);
@@ -128,8 +128,8 @@ bool InterfacePage::save()
 	if (mainWindow != nullptr)
 		mainWindow->toggleTrackNumbers(itfTrackNum->isChecked());
 	settings.general.trackNumbers = itfTrackNum->isChecked()
-		? ContextAll
-		: ContextNone;
+		? lib::ContextAll
+		: lib::ContextNone;
 
 	// Other interface stuff
 	if (itfIcFallback != nullptr)

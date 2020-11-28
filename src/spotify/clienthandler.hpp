@@ -44,6 +44,6 @@ namespace spt
 		void readyRead() const;
 		void readyError() const;
 		void logOutput(const QByteArray &output) const;
-		static ClientType getClientType(const QString &path);
+		static lib::ClientType getClientType(const QString &path);
 	};
 }

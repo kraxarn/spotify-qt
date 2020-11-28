@@ -51,7 +51,7 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const lib
 			QString("%1% popularity").arg(artist.popularity))
 		->setEnabled(false);
 
-	auto follows = spotify.isFollowing(FollowType::Artist, {
+	auto follows = spotify.isFollowing(lib::FollowType::Artist, {
 		artistId
 	});
 	auto isFollowing = follows.isEmpty() ? false : follows[0];
@@ -174,13 +174,13 @@ void ArtistView::follow(bool)
 
 	if (isFollowing)
 	{
-		spotify.unfollow(FollowType::Artist, {
+		spotify.unfollow(lib::FollowType::Artist, {
 			artistId
 		});
 	}
 	else
 	{
-		spotify.follow(FollowType::Artist, {
+		spotify.follow(lib::FollowType::Artist, {
 			artistId
 		});
 	}

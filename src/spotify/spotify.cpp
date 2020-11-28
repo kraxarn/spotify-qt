@@ -564,7 +564,7 @@ QVector<Artist> Spotify::followedArtists(const QString &offset)
 	return artists;
 }
 
-QVector<bool> Spotify::isFollowing(FollowType type, const QStringList &ids)
+QVector<bool> Spotify::isFollowing(lib::FollowType type, const QStringList &ids)
 {
 	auto json = getAsArray(QString("me/following/contains?type=%1&ids=%2")
 		.arg(followTypeString(type)).arg(ids.join(',')));
@@ -574,27 +574,27 @@ QVector<bool> Spotify::isFollowing(FollowType type, const QStringList &ids)
 	return values;
 }
 
-QString Spotify::followTypeString(FollowType type)
+QString Spotify::followTypeString(lib::FollowType type)
 {
 	switch (type)
 	{
-		case FollowType::Artist:
+		case lib::FollowType::Artist:
 			return "artist";
 
-		case FollowType::User:
+		case lib::FollowType::User:
 			return "user";
 	}
 
 	return QString();
 }
 
-void Spotify::follow(FollowType type, const QStringList &ids)
+void Spotify::follow(lib::FollowType type, const QStringList &ids)
 {
 	put(QString("me/following?type=%1&ids=%2")
 		.arg(followTypeString(type)).arg(ids.join(',')));
 }
 
-void Spotify::unfollow(FollowType type, const QStringList &ids)
+void Spotify::unfollow(lib::FollowType type, const QStringList &ids)
 {
 	del(QString("me/following?type=%1&ids=%2")
 		.arg(followTypeString(type)).arg(ids.join(',')), {});
