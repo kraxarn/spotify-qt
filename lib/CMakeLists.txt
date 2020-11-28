@@ -11,9 +11,3 @@ add_library(spotify-qt-lib STATIC ${MAIN_SRC} ${SUB_SRC})
 
 # Temporary for C++17 filesystem for use in Settings
 target_link_libraries(spotify-qt-lib PRIVATE stdc++fs)
-
-# Currently, Qt is still required
-find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
-target_link_libraries(spotify-qt-lib PRIVATE
-		Qt5::Core
-		Qt5::Widgets)
