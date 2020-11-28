@@ -6,7 +6,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Add source files
 file(GLOB MAIN_SRC "*.[hc]pp")
-add_library(spotify-qt-lib STATIC ${MAIN_SRC})
+file(GLOB SUB_SRC "*/*.[hc]pp")
+add_library(spotify-qt-lib STATIC ${MAIN_SRC} ${SUB_SRC})
 
 # Temporary for C++17 filesystem for use in Settings
 target_link_libraries(spotify-qt-lib PRIVATE stdc++fs)
