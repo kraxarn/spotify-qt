@@ -2,8 +2,6 @@
 
 using namespace lib::spt;
 
-#define DATE_FORMAT "%Y-%m-%d"
-
 Album::Album(const nlohmann::json &json)
 {
 	json.at("id").get_to(id);
@@ -12,8 +10,8 @@ Album::Album(const nlohmann::json &json)
 	json.at("name").get_to(name);
 	json.at("artists").at(0).at("name").get_to(artist);
 
-	std::stringstream(json.at("release_date").get<std::string>())
-		>> std::get_time(releaseDate, DATE_FORMAT);
+	DateFormat::parse(json.at("release_date").get<std::string>(),
+	    DateFormat::Format::IsoDate, releaseDate);
 }
 
 nlohmann::json Album::toJson() const
@@ -24,6 +22,6 @@ nlohmann::json Album::toJson() const
 		{"image", image},
 		{"name", name},
 		{"artist", artist},
-		{"release_date", DATE_FORMAT},
+		{"release_date", DateFormat::format(DateFormat::Format::IsoDate, releaseDate)},
 	};
 }
