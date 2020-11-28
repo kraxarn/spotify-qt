@@ -17,11 +17,9 @@ parts:
       - cmake
       - qt5-default
       - libqt5svg5-dev
-      - qtwayland5
     stage-packages:
       - qt5-default
       - libqt5svg5-dev
-      - qtwayland5
     override-pull: |
       snapcraftctl pull
       snapcraftctl set-version "$(git describe --tags --abbrev=0)"
@@ -55,4 +53,6 @@ parts:
 apps:
   spotify-qt:
     command: bin/desktop-launch spotify-qt
-    plugs: [home, opengl, network, network-bind, unity7, wayland]
+    environment:
+      DISABLE_WAYLAND: 1
+    plugs: [home, opengl, network, network-bind, unity7]
