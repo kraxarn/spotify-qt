@@ -5,7 +5,7 @@ adopt-info: spotify-qt
 license: GPL-3.0
 grade: stable
 confinement: strict
-base: core20
+base: core18
 
 parts:
   spotify-qt:
