@@ -19,7 +19,7 @@ std::string Settings::filePath()
 }
 
 template<typename T>
-void Settings::setValue(const json &json, const std::string &key, T &value)
+void Settings::setValue(const nlohmann::json &json, const std::string &key, T &value)
 {
 	if (!json.contains(key))
 		return;
@@ -28,13 +28,13 @@ void Settings::setValue(const json &json, const std::string &key, T &value)
 	{
 		value = json[key].get<T>();
 	}
-	catch (const json::exception &e)
+	catch (const nlohmann::json::exception &e)
 	{
 		Log::warn("Failed to parse settings for key: {} ({})", key, e.what());
 	}
 }
 
-void Settings::fromJson(const json &json)
+void Settings::fromJson(const nlohmann::json &json)
 {
 	auto a = json["Account"].object();
 	auto g = json["General"].object();
@@ -131,7 +131,7 @@ void Settings::load()
 	{
 		fromJson(json::parse(data));
 	}
-	catch (const json::exception &e)
+	catch (const nlohmann::json::exception &e)
 	{
 		Log::error("Failed to load settings: {}", e.what());
 	}
@@ -139,7 +139,7 @@ void Settings::load()
 	file.close();
 }
 
-json Settings::toJson() const
+nlohmann::json Settings::toJson() const
 {
 	return {
 		{"Account", {

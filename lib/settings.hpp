@@ -13,8 +13,6 @@
 #include "lib/json.hpp"
 #include "log.hpp"
 
-using json = nlohmann::json;
-
 namespace lib
 {
 	class Settings
@@ -22,8 +20,8 @@ namespace lib
 	public:
 		Settings();
 
-		json toJson() const;
-		void fromJson(const json &json);
+		nlohmann::json toJson() const;
+		void fromJson(const nlohmann::json &json);
 		void save();
 		void load();
 
@@ -97,6 +95,6 @@ namespace lib
 		std::mutex mutex;
 
 		template<typename T>
-		void setValue(const json &json, const std::string &key, T &value);
+		void setValue(const nlohmann::json &json, const std::string &key, T &value);
 	};
 }
