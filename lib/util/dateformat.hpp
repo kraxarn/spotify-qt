@@ -7,11 +7,14 @@
 namespace lib
 {
 	/**
-	 * Basic date formatter and parser
+	 * Date formatter and parser
 	 */
-	class DateFormat
+	class date
 	{
 	public:
+		/**
+		 * Date format
+		 */
 		enum class Format
 		{
 			/**
