@@ -6,7 +6,10 @@
 
 namespace lib
 {
-	namespace fmt
+	/**
+	 * Formatting utilities
+	 */
+	class fmt
 	{
 		template<typename Format>
 		static std::string collect(const Format &fmt, const std::string &arg)
