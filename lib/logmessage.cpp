@@ -36,9 +36,7 @@ std::string LogMessage::logTypeString() const
 
 std::string LogMessage::getTime() const
 {
-	char buffer[64];
-	std::strftime(buffer, sizeof(buffer), "%X", std::localtime(&time));
-	return std::string(buffer);
+	return date::format(date::Format::LocalTime, std::localtime(&time));
 }
 
 std::string LogMessage::getType() const

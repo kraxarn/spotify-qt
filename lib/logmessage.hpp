@@ -2,6 +2,7 @@
 
 #include "enum/logtype.hpp"
 #include "format.hpp"
+#include "util/dateformat.hpp"
 
 #include <string>
 #include <chrono>
