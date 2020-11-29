@@ -2,9 +2,9 @@
 
 using namespace lib;
 
-std::vector<LogMessage> Log::messages = std::vector<LogMessage>();
+std::vector<LogMessage> log::messages = std::vector<LogMessage>();
 
-void Log::log(LogType logType, const std::string &message)
+void log::message(LogType logType, const std::string &message)
 {
 	LogMessage msg(logType, message);
 	messages.push_back(msg);
@@ -15,7 +15,7 @@ void Log::log(LogType logType, const std::string &message)
 		std::cerr << msg.format() << std::endl;
 }
 
-const std::vector<LogMessage> &Log::getMessages()
+const std::vector<LogMessage> &log::getMessages()
 {
 	return messages;
 }

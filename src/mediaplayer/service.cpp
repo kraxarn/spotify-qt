@@ -12,13 +12,13 @@ Service::Service(spt::Spotify *spotify, QObject *parent)
 {
 	if (!QDBusConnection::sessionBus().registerService(SERVICE_NAME))
 	{
-		lib::Log::warn("Failed to register D-Bus service, is another instance running?");
+		lib::log::warn("Failed to register D-Bus service, is another instance running?");
 		return;
 	}
 	new MediaPlayer(spotify, this);
 	playerPlayer = new MediaPlayerPlayer(spotify, this);
 	if (!QDBusConnection::sessionBus().registerObject(SERVICE_PATH, this, QDBusConnection::ExportAdaptors))
-		lib::Log::warn("Failed to register D-Bus object");
+		lib::log::warn("Failed to register D-Bus object");
 }
 
 Service::~Service() = default;

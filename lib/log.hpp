@@ -8,7 +8,7 @@
 
 namespace lib
 {
-	class Log
+	class log
 	{
 	public:
 		template<typename Format, typename Arg, typename... Args>
@@ -19,7 +19,7 @@ namespace lib
 		template<typename Format>
 		static void info(const Format &fmt)
 		{
-			log(LogType::Information, fmt);
+			message(LogType::Information, fmt);
 		}
 
 		template<typename Format, typename Arg, typename... Args>
@@ -30,7 +30,7 @@ namespace lib
 		template<typename Format>
 		static void warn(const Format &fmt)
 		{
-			log(LogType::Warning, fmt);
+			message(LogType::Warning, fmt);
 		}
 
 		template<typename Format, typename Arg, typename... Args>
@@ -41,16 +41,16 @@ namespace lib
 		template<typename Format>
 		static void error(const Format &fmt)
 		{
-			log(LogType::Error, fmt);
+			message(LogType::Error, fmt);
 		}
 
 		static const std::vector<LogMessage> &getMessages();
 
 	private:
-		Log() = default;
+		log() = default;
 
 		static std::vector<LogMessage> messages;
 
-		static void log(LogType logType, const std::string &message);
+		static void message(LogType logType, const std::string &message);
 	};
 }

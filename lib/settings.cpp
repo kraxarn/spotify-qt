@@ -30,7 +30,7 @@ void Settings::setValue(const nlohmann::json &json, const std::string &key, T &v
 	}
 	catch (const nlohmann::json::exception &e)
 	{
-		Log::warn("Failed to parse settings for key: {} ({})", key, e.what());
+		log::warn("Failed to parse settings for key: {} ({})", key, e.what());
 	}
 }
 
@@ -87,7 +87,7 @@ void Settings::fromJson(const nlohmann::json &json)
 	auto errors = validate();
 
 	for (auto &error : errors)
-		Log::error("One or more invalid {} settings found, restoring defaults", error.first);
+		log::error("One or more invalid {} settings found, restoring defaults", error.first);
 	if (errors.find("General") != errors.end())
 		general = General{};
 	if (errors.find("Spotify") != errors.end())
@@ -101,7 +101,7 @@ void Settings::load()
 	std::ifstream file(path);
 	if (!file.is_open())
 	{
-		Log::warn("Failed to load settings: \"{}\" not found", path);
+		log::warn("Failed to load settings: \"{}\" not found", path);
 		return;
 	}
 
@@ -113,7 +113,7 @@ void Settings::load()
 	}
 	catch (const nlohmann::json::exception &e)
 	{
-		Log::error("Failed to load settings: {}", e.what());
+		log::error("Failed to load settings: {}", e.what());
 	}
 
 	file.close();

@@ -539,7 +539,7 @@ QPixmap MainWindow::getImage(const QString &type, const QString &url)
 		// Download image and save to cache
 		img.loadFromData(get(url), "jpeg");
 		if (!img.save(cachePath, "jpeg"))
-			lib::Log::error("Failed to save album cache to {}", cachePath.toStdString());
+			lib::log::error("Failed to save album cache to {}", cachePath.toStdString());
 	}
 	return img;
 }
