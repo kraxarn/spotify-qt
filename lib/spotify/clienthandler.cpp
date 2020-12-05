@@ -1,53 +1,42 @@
-#include "../mainwindow.hpp"
 #include "clienthandler.hpp"
 
-using namespace spt;
+using namespace lib::spt;
 
-QList<QPair<QDateTime, QString>> ClientHandler::log;
-
-ClientHandler::ClientHandler(const lib::Settings &settings, QWidget *parent)
-	: settings(settings), parentWidget(parent), QObject(parent)
+ClientHandler::ClientHandler(const lib::Settings &settings)
+	: settings(settings)
 {
-	path = QString::fromStdString(settings.spotify.path);
-	process = new QProcess(parent);
-	clientType = getClientType(path);
 }
 
-ClientHandler::~ClientHandler()
-{
-	if (process != nullptr)
-		process->close();
-}
-
-QString ClientHandler::start()
+std::string ClientHandler::start()
 {
 	// Don't start if already running
 	if (isRunning())
-		return QString();
+		return std::string();
 
 	// Check if empty
+	auto clientType = client_type();
 	if (clientType == lib::ClientType::None)
 		return "path is empty or invalid";
 
 	// Check if path exists
-	QFileInfo info(path);
-	if (!info.exists())
+	if (!file::exists(path()))
 		return "file in path does not exist";
 
 	// If using global config, just start
-	if (settings.spotify.globalConfig && clientType == lib::ClientType::Spotifyd)
+	if (settings.spotify.globalConfig
+		&& clientType == lib::ClientType::Spotifyd)
 	{
-		process->start(path, QStringList());
-		return QString();
+		std::system(path().c_str());
+		return std::string();
 	}
 
 	// Check if username exists
-	auto username = QString::fromStdString(settings.spotify.username);
-	if (username.isEmpty())
+	auto username = settings.spotify.username;
+	if (username.empty())
 		return "no username provided";
 
 	// Get password from keyring if set
-	QString password;
+	std::string password;
 #ifdef USE_DBUS
 	KWallet keyring(username);
 	if (settings.spotify.keyringPassword && keyring.unlock())
@@ -55,15 +44,16 @@ QString ClientHandler::start()
 #endif
 
 	// Ask for password
-	if (password.isEmpty())
+	if (password.empty())
 	{
-		password = QInputDialog::getText(parentWidget,
-			"Enter password",
-			QString("Enter password for Spotify user \"%1\":").arg(username),
-			QLineEdit::Password);
-
-		if (password.isEmpty())
-			return "no password provided";
+		// TODO: D-bus is currently not supported (nor is password entry)
+//		password = QInputDialog::getText(parentWidget,
+//			"Enter password",
+//			QString("Enter password for Spotify user \"%1\":").arg(username),
+//			QLineEdit::Password);
+//
+//		if (password.isEmpty())
+		return "no password provided";
 
 #ifdef USE_DBUS
 		if (settings.spotify.keyringPassword)
@@ -72,25 +62,25 @@ QString ClientHandler::start()
 	}
 
 	// Common arguments
-	QStringList arguments({
-		"--bitrate", QString::number(settings.spotify.bitrate),
+	std::vector<std::string> arguments = {
+		"--bitrate", std::to_string(settings.spotify.bitrate),
 		"--username", username,
 		"--password", password
-	});
+	};
 
 	// librespot specific
 	if (clientType == lib::ClientType::Librespot)
 	{
-		arguments.append({
+		vector::append(arguments, {
 			"--name", "spotify-qt (librespot)",
 			"--initial-volume", "100",
 			"--autoplay",
-			"--cache", QString("%1/librespot").arg(((MainWindow *) parentWidget)->getCacheLocation())
+			"--cache", fmt::format("{}/librespot", path::cache())
 		});
 	}
 	else if (clientType == lib::ClientType::Spotifyd)
 	{
-		arguments.append({
+		vector::append(arguments, {
 			"--no-daemon",
 			"--device-name", "spotify-qt (spotifyd)",
 		});
@@ -101,55 +91,54 @@ QString ClientHandler::start()
 	{
 		backend = "pulseaudio";
 	}
-	arguments.append({
-		"--backend", QString::fromStdString(backend)
+
+	vector::append(arguments, {
+		"--backend", backend
 	});
 
-	QProcess::connect(process, &QProcess::readyReadStandardOutput, this, &ClientHandler::readyRead);
-	QProcess::connect(process, &QProcess::readyReadStandardError, this, &ClientHandler::readyError);
-
-	process->start(path, arguments);
-	return QString();
+	std::system(fmt::format("{} {} > {}", path(),
+		join_args(arguments), log_path()).c_str());
+	return std::string();
 }
 
-QString ClientHandler::clientExec(const QString &path, const QStringList &arguments)
+std::string ClientHandler::exec(const std::vector<std::string> &arguments)
 {
 	// Check if it exists
-	QFileInfo file(path);
-	if (!file.exists())
-		return QString();
+	if (!file::exists(path()))
+		return std::string();
 
 	// Check if either client
-	if (getClientType(path) == lib::ClientType::None)
-		return QString();
+	if (client_type() == lib::ClientType::None)
+		return std::string();
 
-	// Prepare process
-	QProcess process;
+	// Start process and output to file
+	auto filePath = fmt::format("{}.tmp", log_path());
+	std::system(fmt::format("{} {} > {}", path(),
+		join_args(arguments), filePath).c_str());
 
-	// Get version info
-	process.start(file.absoluteFilePath(), arguments);
-	process.waitForFinished();
-
-	// Entire stdout is version
-	return process.readAllStandardOutput().trimmed();
+	// Read from file
+	std::ifstream file(filePath);
+	auto data = file::read_all(file);
+	return strings::trim(data);
 }
 
-QStringList ClientHandler::availableBackends()
+std::vector<std::string> ClientHandler::available_backends()
 {
-	QStringList items;
+	auto clientType = client_type();
+	std::vector<std::string> items;
 
 	if (clientType == lib::ClientType::Librespot)
 	{
-		auto result = clientExec(path, QStringList({
+		auto result = exec({
 			"--name", "",
 			"--backend", "?"
-		}));
+		});
 
-		for (auto &line : result.split('\n'))
+		for (auto &line : strings::split(result, '\n'))
 		{
-			if (!line.startsWith("-"))
+			if (!strings::starts_with(line, "-"))
 				continue;
-			items.append(line.right(line.length() - 2)
+			items.push_back(line.substr(line.length() - 2)
 				.remove("(default)")
 				.trimmed());
 		}
@@ -211,6 +200,11 @@ bool ClientHandler::isRunning()
 	ps.waitForFinished();
 	auto out = ps.readAllStandardOutput();
 	return QString(out).contains(path);
+}
+
+std::string ClientHandler::join_args(const std::vector<std::string> &args)
+{
+	return strings::join(args, " ");
 }
 
 QString ClientHandler::getSinkInfo()
