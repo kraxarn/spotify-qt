@@ -26,10 +26,12 @@ DebugView::DebugView(const Settings &settings, QWidget *parent)
 
 	jsonRequest = new QTextEdit(this);
 	jsonRequest->setFontFamily("monospace");
+	jsonRequest->setWordWrapMode(QTextOption::NoWrap);
 
 	jsonResponse = new QTextEdit(this);
 	jsonResponse->setReadOnly(true);
 	jsonResponse->setFontFamily("monospace");
+	jsonResponse->setWordWrapMode(QTextOption::NoWrap);
 
 	tabs = new QTabWidget();
 	tabs->addTab(jsonRequest, "Request");
