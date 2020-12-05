@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
 	// Show version if requested
 	QCommandLineParser parser;
 	parser.addVersionOption();
+	parser.addHelpOption();
 	parser.process(app);
 
 	// First setup window
