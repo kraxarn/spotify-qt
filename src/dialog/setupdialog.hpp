@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../spotify/auth.hpp"
 #include "openlinkdialog.hpp"
+#include "spotify/auth.hpp"
 
 #include <QCoreApplication>
 #include <QDesktopServices>

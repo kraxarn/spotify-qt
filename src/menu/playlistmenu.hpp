@@ -2,7 +2,7 @@
 
 #include "../dialog/playlisteditdialog.hpp"
 #include "../mainwindow.hpp"
-#include "../spotify/playlist.hpp"
+#include "spotify/playlist.hpp"
 
 #include <QInputDialog>
 #include <QMenu>

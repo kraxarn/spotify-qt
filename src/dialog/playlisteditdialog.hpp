@@ -1,12 +1,13 @@
 #pragma once
 
-#include "../spotify/playlist.hpp"
+#include "spotify/playlist.hpp"
 
 #include <QCheckBox>
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QLineEdit>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QTextEdit>

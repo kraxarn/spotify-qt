@@ -4,8 +4,8 @@ class LibraryList;
 
 #include "../enum/datarole.hpp"
 #include "../mainwindow.hpp"
-#include "../spotify/spotify.hpp"
 #include "../util/utils.hpp"
+#include "spotify/spotify.hpp"
 
 #include <QTreeWidget>
 #include <QHeaderView>

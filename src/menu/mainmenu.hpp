@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../mainwindow.hpp"
-#include "../spotify/spotify.hpp"
+#include "spotify/spotify.hpp"
 
 #include <QMenu>
 #include <QMessageBox>

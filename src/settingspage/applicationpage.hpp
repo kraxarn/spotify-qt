@@ -1,8 +1,8 @@
 #pragma once
 
-#include "settingspage.hpp"
-#include "../settings.hpp"
 #include "../util/icon.hpp"
+#include "settings.hpp"
+#include "settingspage.hpp"
 
 #include <QLabel>
 #include <QComboBox>

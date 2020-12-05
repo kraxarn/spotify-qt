@@ -8,8 +8,8 @@ namespace mp
 }
 
 #include "../mainwindow.hpp"
-#include "../spotify/spotify.hpp"
 #include "service.hpp"
+#include "spotify/spotify.hpp"
 
 #include <QCoreApplication>
 #include <QDBusAbstractAdaptor>
