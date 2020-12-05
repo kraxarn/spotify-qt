@@ -8,6 +8,7 @@ DebugView::DebugView(const Settings &settings, QWidget *parent)
 	setLayout(layout);
 
 	urlPath = new QLineEdit(this);
+	urlPath->setPlaceholderText("https://api.spotify.com/v1/");
 	layout->addWidget(urlPath);
 
 	auto urlLayout = new QHBoxLayout();
