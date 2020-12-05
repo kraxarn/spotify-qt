@@ -1,6 +1,6 @@
 #pragma once
 
-#include "src/settings.hpp"
+#include "settings.hpp"
 
 #include <QCoreApplication>
 #include <QJsonDocument>

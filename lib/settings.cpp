@@ -1,7 +1,5 @@
 #include "settings.hpp"
 
-#include <QHeaderView>
-
 Settings::Settings()
 {
 	load();
