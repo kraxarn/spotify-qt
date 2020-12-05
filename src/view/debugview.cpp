@@ -7,18 +7,16 @@ DebugView::DebugView(const Settings &settings, QWidget *parent)
 	layout->setAlignment(Qt::AlignTop);
 	setLayout(layout);
 
+	urlPath = new QLineEdit(this);
+	layout->addWidget(urlPath);
+
 	auto urlLayout = new QHBoxLayout();
 
 	requestType = new QComboBox(this);
 	requestType->addItems({
 		"GET", "PUT", "POST", "DELETE"
 	});
-	urlLayout->addWidget(requestType);
-
-	urlLayout->addWidget(new QLabel("https://api.spotify.com/v1/"));
-
-	urlPath = new QLineEdit(this);
-	urlLayout->addWidget(urlPath, 1);
+	urlLayout->addWidget(requestType, 1);
 
 	auto sendButton = new QPushButton("Send", this);
 	QPushButton::connect(sendButton, &QPushButton::clicked, this, &DebugView::sendRequest);
