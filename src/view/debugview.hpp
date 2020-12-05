@@ -11,6 +11,7 @@
 #include <QTextEdit>
 #include <QTabWidget>
 #include <QPushButton>
+#include <QMessageBox>
 
 class DebugView: public QWidget
 {

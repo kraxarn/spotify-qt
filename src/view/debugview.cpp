@@ -44,6 +44,14 @@ void DebugView::sendRequest(bool)
 {
 	// Similar to Spotify, but without refresh handling etc.
 
+	QJsonParseError jsonParseError{};
+	auto jsonBody = QJsonDocument::fromJson(jsonRequest->toPlainText().toUtf8(), &jsonParseError);
+	if (jsonParseError.error != QJsonParseError::NoError)
+	{
+		QMessageBox::warning(this, "JSON parse error", jsonParseError.errorString());
+		return;
+	}
+
 	if (networkManager == nullptr)
 		networkManager = new QNetworkAccessManager(this);
 
@@ -53,7 +61,7 @@ void DebugView::sendRequest(bool)
 
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 	auto reply = networkManager->sendCustomRequest(request, requestType->currentText().toUtf8(),
-		jsonRequest->toPlainText().toUtf8());
+		jsonBody.toJson());
 
 	while (!reply->isFinished())
 		QCoreApplication::processEvents();
@@ -66,7 +74,6 @@ void DebugView::sendRequest(bool)
 		return;
 	}
 
-	QJsonParseError jsonParseError{};
 	auto json = QJsonDocument::fromJson(replyBody, &jsonParseError);
 
 	jsonResponse->setPlainText(jsonParseError.error == QJsonParseError::NoError
