@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <string>
+#include <iterator>
 
 namespace lib
 {
@@ -14,5 +15,12 @@ namespace lib
 		 * @return File exists
 		 */
 		static bool exists(const std::string &path);
+
+		/**
+		 * Read entire content of file to a string
+		 * @param file File to read from
+		 * @return File content
+		 */
+		static std::string read_all(std::ifstream &file);
 	};
 }
