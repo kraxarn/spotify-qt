@@ -4,6 +4,7 @@
 #include "../util/icon.hpp"
 
 #include <QComboBox>
+#include <QGroupBox>
 
 class SpotifyPage: public SettingsPage
 {
