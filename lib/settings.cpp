@@ -14,8 +14,7 @@ std::string Settings::fileName()
 
 std::string Settings::filePath()
 {
-	// TODO: Very temporary
-	return fmt::format("{}/.config/kraxarn", std::getenv("HOME"));
+	return path::config();
 }
 
 template<typename T>

@@ -12,6 +12,7 @@
 #include "enum/spotifycontext.hpp"
 #include "lib/json.hpp"
 #include "log.hpp"
+#include "util/path.hpp"
 
 namespace lib
 {
