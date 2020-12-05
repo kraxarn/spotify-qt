@@ -22,6 +22,7 @@ namespace spt
 #include <QProcessEnvironment>
 #include <QSettings>
 #include <QString>
+#include <QVector>
 #include <QtNetwork>
 
 namespace spt
