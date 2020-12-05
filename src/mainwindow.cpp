@@ -859,3 +859,10 @@ void MainWindow::setSearchVisible(bool visible)
 	else
 		panel->closeSearch();
 }
+
+void MainWindow::addSidePanelTab(QWidget *widget, const QString &title)
+{
+	sidePanel->addTab(widget, title);
+	sidePanel->setCurrentWidget(widget);
+	sidePanel->show();
+}

@@ -35,7 +35,13 @@ int main(int argc, char *argv[])
 	QCommandLineParser parser;
 	parser.addVersionOption();
 	parser.addHelpOption();
+	parser.addOptions({
+		{"debug", "Enable debug menu for troubleshooting issues."}
+	});
 	parser.process(app);
+
+	if (parser.isSet("debug"))
+		MainMenu::showDebugMenu = true;
 
 	// First setup window
 	if (settings.account.refreshToken.isEmpty())

@@ -42,6 +42,7 @@ public:
 	void toggleTrackNumbers(bool enabled);
 	bool isValid() const;
 	void setSearchVisible(bool visible);
+	void addSidePanelTab(QWidget *widget, const QString &title);
 
 	// Getters for private properties
 	QString &getCacheLocation();
@@ -91,7 +92,7 @@ private:
 	spt::User currentUser;
 	QIcon emptyIcon;
 	bool stateValid = true;
-	QWidget *sidePanel = nullptr;
+	QTabWidget *sidePanel = nullptr;
 
 #ifdef USE_DBUS
 	mp::Service *mediaPlayer = nullptr;

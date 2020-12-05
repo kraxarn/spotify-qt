@@ -7,9 +7,6 @@ AboutPage::AboutPage(Settings &settings, QWidget *parent)
 	addTab(systemInfo(), "System information");
 	addTab(cacheInfo(), "Cache");
 	addTab(configPreview(), "Config preview");
-#ifdef GIT_COMMIT
-	addTab(debug(), "Debug");
-#endif
 }
 
 QWidget *AboutPage::about()
@@ -73,11 +70,6 @@ QWidget *AboutPage::cacheInfo()
 QWidget *AboutPage::configPreview()
 {
 	return new ConfigView(settings, this);
-}
-
-QWidget *AboutPage::debug()
-{
-	return new DebugView(settings, this);
 }
 
 QIcon AboutPage::icon()

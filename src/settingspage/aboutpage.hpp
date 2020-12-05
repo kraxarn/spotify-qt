@@ -21,5 +21,4 @@ private:
 	QWidget *systemInfo();
 	QWidget *cacheInfo();
 	QWidget *configPreview();
-	QWidget *debug();
 };

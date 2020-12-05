@@ -1,5 +1,7 @@
 #include "mainmenu.hpp"
 
+bool MainMenu::showDebugMenu = false;
+
 MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
 	: settings(settings), parent(parent), spotify(spotify), QMenu(parent)
 {
@@ -46,6 +48,19 @@ MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
 		dialog.exec();
 	});
 	addAction(openSettings);
+
+	// Debug options if enabled
+	if (showDebugMenu)
+	{
+		auto debugMenu = new QMenu("Debug", this);
+		debugMenu->setIcon(Icon::get("folder-txt"));
+		QAction::connect(debugMenu->addAction("Test API requests"), &QAction::triggered, [this]()
+		{
+			auto mainWindow = dynamic_cast<MainWindow *>(this->parent);
+			mainWindow->addSidePanelTab(new DebugView(this->settings, mainWindow), "API request");
+		});
+		addMenu(debugMenu);
+	}
 
 	// Log out and quit
 	addSeparator();
