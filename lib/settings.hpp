@@ -14,6 +14,7 @@
 #include <QMutex>
 #include <QSettings>
 #include <QStandardPaths>
+#include <QVector>
 
 Q_DECLARE_METATYPE(Palette)
 Q_DECLARE_METATYPE(PlaylistOrder)
