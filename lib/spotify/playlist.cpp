@@ -11,11 +11,11 @@ Playlist::Playlist(const QJsonObject &json)
 		? json["image"].toString()
 		: json["images"].toArray()[0].toObject()["url"].toString();
 	name = json["name"].toString();
-	isPublic = Utils::getProperty(json, {
+	isPublic = JsonUtils::getProperty(json, {
 		"is_public", "public"
 	}).toBool();
 	tracks = json["tracks"].toObject();
-	snapshot = Utils::getProperty(json, {
+	snapshot = JsonUtils::getProperty(json, {
 		"snapshot", "snapshot_id"
 	}).toString();
 	ownerId = json.contains("owner_id")

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../util/utils.hpp"
+#include "../util/jsonutils.hpp"
 
 #include <QDateTime>
 #include <QJsonArray>

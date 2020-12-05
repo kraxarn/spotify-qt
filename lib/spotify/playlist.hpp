@@ -5,7 +5,7 @@ namespace spt
 	class Playlist;
 }
 
-#include "../util/utils.hpp"
+#include "../util/jsonutils.hpp"
 #include "spotify.hpp"
 #include "track.hpp"
 #include "user.hpp"

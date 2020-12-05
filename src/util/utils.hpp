@@ -21,7 +21,6 @@ class Utils
 {
 
 public:
-	static QJsonValue getProperty(const QJsonObject &json, const QStringList &names);
 	static QTreeWidgetItem *treeItemWithChildren(QTreeWidget *tree, const QString &name,
 		const QString &toolTip = QString(),
 		const QStringList &childrenItems = QStringList(QString()));

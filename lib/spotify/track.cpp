@@ -9,20 +9,20 @@ Track::Track(const QJsonObject &item)
 	{
 		id = item["id"].toString();
 		album = item["album"].toString();
-		albumId = Utils::getProperty(item, {
+		albumId = JsonUtils::getProperty(item, {
 			"album_id", "albumId"
 		}).toString();
 		artist = item["artist"].toString();
-		artistId = Utils::getProperty(item, {
+		artistId = JsonUtils::getProperty(item, {
 			"artist_id", "artistId"
 		}).toString();
 		name = item["name"].toString();
 		duration = item["duration"].toInt();
 		image = item["image"].toString();
-		isLocal = Utils::getProperty(item, {
+		isLocal = JsonUtils::getProperty(item, {
 			"is_local", "isLocal"
 		}).toBool();
-		addedAt = QDateTime::fromString(Utils::getProperty(item, {
+		addedAt = QDateTime::fromString(JsonUtils::getProperty(item, {
 			"added_at", "addedAt"
 		}).toString());
 		isPlayable = item["is_playable"].toBool(true);
