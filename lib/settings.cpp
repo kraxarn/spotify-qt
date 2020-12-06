@@ -71,6 +71,7 @@ void Settings::fromJson(const QJsonObject &json)
 	setValue(g, "playlist_order", general.playlistOrder);
 	setValue(g, "pulse_volume", general.pulseVolume);
 	setValue(g, "refresh_interval", general.refreshInterval);
+	setValue(g, "relative_added", general.relativeAdded);
 	setValue(g, "show_changelog", general.showChangelog);
 	setValue(g, "show_context_info", general.showContextInfo);
 	setValue(g, "single_click_play", general.singleClickPlay);
@@ -160,6 +161,7 @@ QJsonObject Settings::toJson() const
 			{"playlist_order", general.playlistOrder},
 			{"pulse_volume", general.pulseVolume},
 			{"refresh_interval", general.refreshInterval},
+			{"relative_added", general.relativeAdded},
 			{"show_changelog", general.showChangelog},
 			{"show_context_info", general.showContextInfo},
 			{"single_click_play", general.singleClickPlay},

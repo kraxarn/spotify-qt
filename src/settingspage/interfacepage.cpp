@@ -50,6 +50,12 @@ QWidget *InterfacePage::interface()
 	itfTrackNum->setChecked(settings.general.trackNumbers == ContextAll);
 	layout->addWidget(itfTrackNum);
 
+	// Relative added date
+	itfRelativeAdded = new QCheckBox("Relative added dates", this);
+	itfRelativeAdded->setToolTip("Relative added dates compared to current date, for example \"... ago\"");
+	itfRelativeAdded->setChecked(settings.general.relativeAdded);
+	layout->addWidget(itfRelativeAdded);
+
 	return Utils::layoutToWidget(layout);
 }
 
@@ -138,6 +144,7 @@ bool InterfacePage::save()
 		mainWindow->setFixedWidthTime(itfMonoTime->isChecked());
 	settings.general.fixedWidthTime = itfMonoTime->isChecked();
 	settings.general.showContextInfo = itfContextInfo->isChecked();
+	settings.general.relativeAdded = itfRelativeAdded->isChecked();
 
 	// Desktop notifications and tray icon
 	if (itfTrayNotify->isChecked() && !itfTrayIcon->isChecked())

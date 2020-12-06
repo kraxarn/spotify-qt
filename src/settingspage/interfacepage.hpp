@@ -18,6 +18,7 @@ private:
 	QCheckBox *itfDark = nullptr;
 	QCheckBox *itfIcFallback = nullptr;
 	QCheckBox *itfMonoTime = nullptr;
+	QCheckBox *itfRelativeAdded = nullptr;
 	QCheckBox *itfResizeAuto = nullptr;
 	QCheckBox *itfTrackNum = nullptr;
 

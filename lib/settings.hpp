@@ -52,6 +52,7 @@ public:
 		bool fixedWidthTime = true;
 		bool mediaController = false;
 		bool pulseVolume = false;
+		bool relativeAdded = true;
 		bool showChangelog = true;
 		bool showContextInfo = true;
 		bool singleClickPlay = false;
