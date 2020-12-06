@@ -10,12 +10,13 @@ ApplicationPage::ApplicationPage(Settings &settings, QWidget *parent)
 QWidget *ApplicationPage::app()
 {
 	auto layout = tabContent();
+	auto comboBoxLayout = new QGridLayout();
 
 	// Refresh interval
-	auto appRefreshLayout = new QHBoxLayout();
 	auto appRefreshLabel = new QLabel("Refresh interval", this);
 	appRefreshLabel->setToolTip("How often to refresh playback status from the Spotify servers");
-	appRefreshLayout->addWidget(appRefreshLabel);
+	comboBoxLayout->addWidget(appRefreshLabel, 0, 0);
+
 	appRefresh = new QComboBox(this);
 	appRefresh->addItems({
 		"1", "3", "10"
@@ -24,9 +25,25 @@ QWidget *ApplicationPage::app()
 	appRefresh->setCurrentIndex(-1);
 	appRefresh->setEditText(QString::number(settings.general.refreshInterval));
 	appRefresh->setValidator(new QIntValidator(1, 60, this));
-	appRefreshLayout->addWidget(appRefresh);
-	appRefreshLayout->addWidget(new QLabel("seconds"));
-	layout->addLayout(appRefreshLayout);
+	comboBoxLayout->addWidget(appRefresh, 0, 1);
+	comboBoxLayout->addWidget(new QLabel("seconds"), 0, 2);
+
+	// Max queue
+	auto maxQueueLabel = new QLabel("Queue limit", this);
+	maxQueueLabel->setToolTip("Maximum amount of items allowed to be queued at once");
+	comboBoxLayout->addWidget(maxQueueLabel, 1, 0);
+
+	appMaxQueue = new QComboBox(this);
+	appMaxQueue->setEditable(true);
+	appMaxQueue->setValidator(new QIntValidator(1, 1000, this));
+	appMaxQueue->addItems({
+		"100", "250", "500"
+	});
+	appMaxQueue->setCurrentText(QString::number(settings.spotify.maxQueue));
+	comboBoxLayout->addWidget(appMaxQueue, 1, 1);
+	comboBoxLayout->addWidget(new QLabel("tracks", this), 1, 2);
+
+	layout->addLayout(comboBoxLayout);
 
 	// PulseAudio volume control
 	if (isPulse())
@@ -111,6 +128,15 @@ bool ApplicationPage::save()
 		return false;
 	}
 	settings.general.refreshInterval = interval;
+
+	// Max queue
+	auto maxQueue = appMaxQueue->currentText().toInt(&ok);
+	if (!ok || maxQueue <= 0 || maxQueue > 1000)
+	{
+		applyFail("queue limit");
+		return false;
+	}
+	settings.spotify.maxQueue = maxQueue;
 
 	return true;
 }

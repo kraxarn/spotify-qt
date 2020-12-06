@@ -22,7 +22,6 @@ private:
 	QCheckBox *sptKeyring = nullptr;
 	QComboBox *sptBackend = nullptr;
 	QComboBox *sptBitrate = nullptr;
-	QComboBox *sptMaxQueue = nullptr;
 	QGroupBox *sptGroup = nullptr;
 	QLabel *sptVersion = nullptr;
 	QLineEdit *sptPath = nullptr;
