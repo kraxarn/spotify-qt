@@ -7,7 +7,6 @@
 #include "list/playlistlist.hpp"
 #include "list/trackslist.hpp"
 #include "log.hpp"
-#include "view/lyricsview.hpp"
 #include "maintoolbar.hpp"
 #include "mediaplayer/service.hpp"
 #include "menu/mainmenu.hpp"
@@ -23,8 +22,10 @@
 #include "spotify/webplayer.hpp"
 #include "trayicon.hpp"
 #include "util/darkpalette.hpp"
+#include "util/dateutils.hpp"
 #include "util/icon.hpp"
 #include "util/utils.hpp"
+#include "view/lyricsview.hpp"
 #include "volumebutton.hpp"
 
 #include <QAction>
