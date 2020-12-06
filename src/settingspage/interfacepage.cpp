@@ -109,7 +109,7 @@ QString InterfacePage::title()
 
 bool InterfacePage::save()
 {
-	auto mainWindow = dynamic_cast<MainWindow*>(findMainWindow());
+	auto mainWindow = dynamic_cast<MainWindow *>(findMainWindow());
 
 	// Set theme
 	auto changeTheme = itfDark->isChecked() != settings.darkTheme();
