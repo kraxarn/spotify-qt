@@ -48,7 +48,7 @@ void DebugView::sendRequest(bool)
 	QJsonParseError jsonParseError{};
 	QByteArray jsonData;
 
-	if (!jsonResponse->toPlainText().isEmpty())
+	if (!jsonRequest->toPlainText().isEmpty())
 	{
 		auto jsonBody = QJsonDocument::fromJson(jsonRequest->toPlainText().toUtf8(), &jsonParseError);
 		if (jsonParseError.error != QJsonParseError::NoError)
