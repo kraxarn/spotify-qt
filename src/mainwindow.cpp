@@ -356,7 +356,7 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 	for (int i = 0; i < tracks.length(); i++)
 	{
 		auto track = tracks.at(i);
-		auto item = new QTreeWidgetItem({
+		auto item = new TrackListItem({
 			settings.general.trackNumbers == ContextAll
 				? QString("%1").arg(i + 1, fieldWidth)
 				: "",
@@ -367,24 +367,15 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 				: settings.general.relativeAdded
 				? DateUtils::toRelative(track.addedAt)
 				: QLocale().toString(track.addedAt.date(), QLocale::ShortFormat)
-		});
-		item->setIcon(0, emptyIcon);
-		item->setData(0, RoleTrackId, QString("spotify:track:%1").arg(track.id));
-		item->setData(0, RoleArtistId, track.artistId);
-		item->setData(0, RoleAlbumId, track.albumId);
-		item->setData(0, RoleIndex, i);
-		if (track.isLocal || !track.isPlayable)
-		{
-			item->setDisabled(true);
-			item->setToolTip(1, track.isLocal
-				? "Local track"
-				: "Unavailable");
-		}
-		else if (track.id == current.item.id)
+		}, track, emptyIcon, i);
+
+		if (track.id == current.item.id)
 			setPlayingTrackItem(item);
+
 		songs->insertTopLevelItem(i, item);
 		trackItems[track.id] = item;
 	}
+
 	return true;
 }
 

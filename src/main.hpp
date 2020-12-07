@@ -5,6 +5,7 @@
 #include "dialog/whatsnewdialog.hpp"
 #include "list/librarylist.hpp"
 #include "list/playlistlist.hpp"
+#include "list/tracklistitem.hpp"
 #include "list/trackslist.hpp"
 #include "log.hpp"
 #include "maintoolbar.hpp"
