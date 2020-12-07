@@ -362,7 +362,9 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 				: "",
 			track.name, track.artist, track.album,
 			Utils::formatTime(track.duration),
-			settings.general.relativeAdded
+			DateUtils::isEmpty(track.addedAt)
+				? QString()
+				: settings.general.relativeAdded
 				? DateUtils::toRelative(track.addedAt)
 				: QLocale().toString(track.addedAt.date(), QLocale::ShortFormat)
 		});
