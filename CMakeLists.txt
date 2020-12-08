@@ -18,10 +18,12 @@ if (NOT DEFINED USE_DBUS)
 endif ()
 
 # Find Qt
-find_package(Qt5 COMPONENTS Core Widgets Network Gui Svg REQUIRED)
+find_package(QT NAMES Qt5 Qt6 COMPONENTS Core Widgets Network Gui Svg REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Widgets Network Gui Svg REQUIRED)
 if (USE_DBUS)
-	find_package(Qt5 OPTIONAL_COMPONENTS DBus QUIET)
+	find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS DBus QUIET)
 endif ()
+message(STATUS "Using Qt ${QT_VERSION_MAJOR}")
 
 # Glob source files
 file(GLOB MAIN_SRC "src/*.[hc]pp")
@@ -66,11 +68,11 @@ endif ()
 
 # Link Qt
 target_link_libraries(spotify-qt PRIVATE
-		Qt5::Core
-		Qt5::Widgets
-		Qt5::Network
-		Qt5::Gui
-		Qt5::Svg)
+		Qt${QT_VERSION_MAJOR}::Core
+		Qt${QT_VERSION_MAJOR}::Widgets
+		Qt${QT_VERSION_MAJOR}::Network
+		Qt${QT_VERSION_MAJOR}::Gui
+		Qt${QT_VERSION_MAJOR}::Svg)
 
 # spotify-qt-lib
 add_subdirectory(lib)
