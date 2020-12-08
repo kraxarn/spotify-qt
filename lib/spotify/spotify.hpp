@@ -40,7 +40,7 @@ namespace spt
 		QVector<Device> devices();
 		QString setDevice(const Device &device);
 		QString playTracks(int trackIndex, const QString &context);
-		QString playTracks(int trackIndex, const QStringList &all);
+		QString playTracks(int trackIndex, const QList<QString> &all);
 		QString playTracks(const QString &context);
 		QString setShuffle(bool enabled);
 		QString pause();
@@ -69,9 +69,9 @@ namespace spt
 		QString editPlaylist(const Playlist &playlist);
 		QString addToQueue(const QString &uri);
 		QVector<Artist> followedArtists(const QString &offset = QString());
-		QVector<bool> isFollowing(FollowType type, const QStringList &ids);
-		void follow(FollowType type, const QStringList &ids);
-		void unfollow(FollowType type, const QStringList &ids);
+		QVector<bool> isFollowing(FollowType type, const QList<QString> &ids);
+		void follow(FollowType type, const QList<QString> &ids);
+		void unfollow(FollowType type, const QList<QString> &ids);
 		bool isValid() const;
 
 	public slots:

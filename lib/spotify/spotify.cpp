@@ -242,7 +242,7 @@ QString Spotify::playTracks(int trackIndex, const QString &context)
 		: QString("me/player/play?device_id=%1").arg(currentDevice), &body);
 }
 
-QString Spotify::playTracks(int trackIndex, const QStringList &all)
+QString Spotify::playTracks(int trackIndex, const QList<QString> &all)
 {
 	auto maxQueue = settings.spotify.maxQueue;
 	QStringList items = all;
@@ -550,7 +550,7 @@ QVector<Artist> Spotify::followedArtists(const QString &offset)
 	return artists;
 }
 
-QVector<bool> Spotify::isFollowing(FollowType type, const QStringList &ids)
+QVector<bool> Spotify::isFollowing(FollowType type, const QList<QString> &ids)
 {
 	auto json = getAsArray(QString("me/following/contains?type=%1&ids=%2")
 		.arg(followTypeString(type)).arg(ids.join(',')));
@@ -574,13 +574,13 @@ QString Spotify::followTypeString(FollowType type)
 	return QString();
 }
 
-void Spotify::follow(FollowType type, const QStringList &ids)
+void Spotify::follow(FollowType type, const QList<QString> &ids)
 {
 	put(QString("me/following?type=%1&ids=%2")
 		.arg(followTypeString(type)).arg(ids.join(',')));
 }
 
-void Spotify::unfollow(FollowType type, const QStringList &ids)
+void Spotify::unfollow(FollowType type, const QList<QString> &ids)
 {
 	del(QString("me/following?type=%1&ids=%2")
 		.arg(followTypeString(type)).arg(ids.join(',')), {});
