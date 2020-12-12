@@ -4,10 +4,20 @@ project(spotify-qt-lib LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Add source files
+# Glob source files
 file(GLOB MAIN_SRC "*.[hc]pp")
-file(GLOB SUB_SRC "*/*.[hc]pp")
-add_library(spotify-qt-lib STATIC ${MAIN_SRC} ${SUB_SRC})
+file(GLOB ENUM_SRC "enum/*.[hc]pp")
+file(GLOB SPOTIFY_SRC "spotify/*.[hc]pp")
+file(GLOB SPOTIFY_CORE_SRC "spotify/core/*.[hc]pp")
+file(GLOB UTIL_SRC "util/*.[hc]pp")
+
+# Add source files
+add_library(spotify-qt-lib STATIC
+		${MAIN_SRC}
+		${ENUM_SRC}
+		${SPOTIFY_SRC}
+		${SPOTIFY_CORE_SRC}
+		${UTIL_SRC})
 
 # Temporary for C++17 filesystem for use in Settings
 target_link_libraries(spotify-qt-lib PRIVATE stdc++fs)
