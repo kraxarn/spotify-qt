@@ -66,7 +66,7 @@ namespace lib
 			std::string id;
 
 			/**
-			 * Coner image for the playlist
+			 * Cover image for the playlist
 			 */
 			std::string image;
 
