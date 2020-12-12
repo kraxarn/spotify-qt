@@ -5,13 +5,13 @@
 #include "lib/httplib.h"
 #include "playlists.hpp"
 #include "lib/base64.h"
-#include "result.hpp"
+#include "spotify/core/result.hpp"
 
 namespace lib
 {
 	namespace spt
 	{
-		namespace core
+		namespace api
 		{
 			/**
 			 * Core functionality of the Spotify API, basically an API wrapper with
@@ -32,9 +32,24 @@ namespace lib
 				explicit api(Settings &settings);
 
 			private:
+				/**
+				 * Time of last authentication, used for checking if we should refresh
+				 */
 				std::chrono::system_clock::time_point last_auth;
+
+				/**
+				 * Successful refresh has been made at initialization
+				 */
 				bool refresh_valid = false;
+
+				/**
+				 * Local settings instance with api keys
+				 */
 				Settings &settings;
+
+				/**
+				 * HTTP client used for requests
+				 */
 				httplib::Client http_client;
 
 				/**
@@ -48,7 +63,7 @@ namespace lib
 				 * Refresh access token
 				 * @return If successful
 				 */
-				result refresh();
+				core::result refresh();
 			};
 		}
 	}

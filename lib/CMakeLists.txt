@@ -9,6 +9,7 @@ file(GLOB MAIN_SRC "*.[hc]pp")
 file(GLOB ENUM_SRC "enum/*.[hc]pp")
 file(GLOB SPOTIFY_SRC "spotify/*.[hc]pp")
 file(GLOB SPOTIFY_CORE_SRC "spotify/core/*.[hc]pp")
+file(GLOB SPOTIFY_API_SRC "spotify/core/api/*.[hc]pp")
 file(GLOB UTIL_SRC "util/*.[hc]pp")
 
 # Add source files
@@ -17,6 +18,7 @@ add_library(spotify-qt-lib STATIC
 		${ENUM_SRC}
 		${SPOTIFY_SRC}
 		${SPOTIFY_CORE_SRC}
+		${SPOTIFY_API_SRC}
 		${UTIL_SRC})
 
 # Temporary for C++17 filesystem for use in Settings

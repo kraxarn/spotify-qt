@@ -6,7 +6,7 @@ namespace lib
 {
 	namespace spt
 	{
-		namespace core
+		namespace api
 		{
 			/**
 			 * Wrapper around /playlists/ endpoints

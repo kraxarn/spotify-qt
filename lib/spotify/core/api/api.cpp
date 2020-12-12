@@ -1,21 +1,21 @@
 #include "api.hpp"
 
-using namespace lib::spt::core;
+using namespace lib::spt;
 
-api::api(lib::Settings &settings)
+api::api::api(lib::Settings &settings)
 	: settings(settings),
 	http_client("https://api.spotify.com"),
 	last_auth(std::chrono::system_clock::time_point::min())
 {
 }
 
-result api::refresh()
+core::result api::api::refresh()
 {
 	// Make sure we have a refresh token
 	auto refreshToken = settings.account.refreshToken;
 	if (refreshToken.empty())
 	{
-		return result::err("No refresh token found");
+		return core::result::err("No refresh token found");
 	}
 
 	// Create request
@@ -36,7 +36,7 @@ result api::refresh()
 
 	if (response.error() != httplib::Error::Success)
 	{
-		return result::err(fmt::format("Failed to refresh token: err {}", response.error()));
+		return core::result::err(fmt::format("Failed to refresh token: err {}", response.error()));
 	}
 
 	// Parse json
@@ -46,7 +46,7 @@ result api::refresh()
 	if (json.contains("error_description") || !json.contains("access_token"))
 	{
 		auto error = json.at("error_description").get<std::string>();
-		return result::err(fmt::format("Failed to refresh token: {}", error.empty()
+		return core::result::err(fmt::format("Failed to refresh token: {}", error.empty()
 			? "no access token"
 			: error));
 	}
@@ -56,5 +56,5 @@ result api::refresh()
 	settings.account.accessToken = json.at("access_token").get<std::string>();
 	settings.save();
 
-	return result::ok();
+	return core::result::ok();
 }
