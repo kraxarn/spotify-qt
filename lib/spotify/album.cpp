@@ -10,8 +10,7 @@ Album::Album(const nlohmann::json &json)
 	json.at("name").get_to(name);
 	json.at("artists").at(0).at("name").get_to(artist);
 
-	DateFormat::parse(json.at("release_date").get<std::string>(),
-	    DateFormat::Format::IsoDate, releaseDate);
+	releaseDate = date::parse(json.at("release_date").get<std::string>());
 }
 
 nlohmann::json Album::toJson() const
@@ -22,6 +21,6 @@ nlohmann::json Album::toJson() const
 		{"image", image},
 		{"name", name},
 		{"artist", artist},
-		{"release_date", DateFormat::format(DateFormat::Format::IsoDate, releaseDate)},
+		{"release_date", releaseDate.to_iso_date()},
 	};
 }
