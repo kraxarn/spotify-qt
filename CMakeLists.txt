@@ -17,8 +17,15 @@ if (NOT DEFINED USE_DBUS)
 	set(USE_DBUS 1)
 endif ()
 
+# Optional Qy 6 support
+if (DEFINED USE_QT6)
+	set(QT_VERSION_MAJOR 6)
+else()
+	set(QT_VERSION_MAJOR 5)
+endif()
+
 # Find Qt
-find_package(QT NAMES Qt5 COMPONENTS Core Widgets Network Gui Svg REQUIRED)
+find_package(QT NAMES Qt${QT_VERSION_MAJOR} COMPONENTS Core Widgets Network Gui Svg REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Widgets Network Gui Svg REQUIRED)
 if (USE_DBUS)
 	find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS DBus QUIET)
