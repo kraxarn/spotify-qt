@@ -1,4 +1,5 @@
 #include "date.hpp"
+#include "log.hpp"
 
 using namespace lib;
 
