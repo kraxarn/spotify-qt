@@ -1,17 +1,17 @@
 #include "settings.hpp"
 
-Settings::Settings()
+Settings::Settings(lib::paths &paths)
+	: paths(paths)
 {
 	load();
 }
 
-QString Settings::fileName()
+QString Settings::fileName() const
 {
-	return QString("%1.json").arg(QStandardPaths::writableLocation(
-		QStandardPaths::AppConfigLocation));
+	return QString::fromStdString(paths.config_file());
 }
 
-QString Settings::filePath()
+QString Settings::filePath() const
 {
 	return QFileInfo(fileName()).absolutePath();
 }

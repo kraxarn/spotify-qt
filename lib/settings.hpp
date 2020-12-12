@@ -4,6 +4,7 @@
 #include "enum/playlistorder.hpp"
 #include "enum/spotifycontext.hpp"
 #include "log.hpp"
+#include "paths/paths.hpp"
 
 #include <QCoreApplication>
 #include <QDir>
@@ -23,7 +24,7 @@ Q_DECLARE_METATYPE(SpotifyContext)
 class Settings
 {
 public:
-	Settings();
+	explicit Settings(lib::paths &paths);
 
 	QJsonObject toJson() const;
 	void fromJson(const QJsonObject &json);
@@ -90,14 +91,15 @@ public:
 	bool darkTheme() const;
 	void setDarkTheme(bool value);
 
-	static QString fileName();
-	static QString filePath();
+	QString fileName() const;
+	QString filePath() const;
 
 	static bool hasMediaControllerSupport();
 
 	std::map<std::string, std::vector<std::string>> validate() const;
 
 private:
+	lib::paths &paths;
 	QMutex mutex;
 
 	template<typename T>

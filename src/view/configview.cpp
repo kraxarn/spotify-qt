@@ -1,7 +1,7 @@
 #include "configview.hpp"
 
 ConfigView::ConfigView(const Settings &settings, QWidget *parent)
-	: QTreeWidget(parent)
+	: settings(settings), QTreeWidget(parent)
 {
 	setHeaderLabels({
 		"Key",
@@ -36,7 +36,7 @@ void ConfigView::menu(const QPoint &pos)
 	QAction::connect(menu->addAction(Icon::get("folder-txt"), "Open in external editor"),
 		&QAction::triggered,[this](bool)
 	{
-		Utils::openUrl(Settings::fileName(), LinkType::Path, this);
+		Utils::openUrl(this->settings.fileName(), LinkType::Path, this);
 	});
 	menu->popup(mapToGlobal(pos));
 }

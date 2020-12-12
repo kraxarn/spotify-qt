@@ -13,5 +13,7 @@ public:
 	ConfigView(const Settings &settings, QWidget *parent);
 
 private:
+	const Settings &settings;
+
 	void menu(const QPoint &pos);
 };
