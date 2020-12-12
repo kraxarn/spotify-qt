@@ -24,6 +24,11 @@ else()
 	set(QT_VERSION_MAJOR 5)
 endif()
 
+# Prefer new OpenGL
+if(POLICY CMP0072)
+  cmake_policy(SET CMP0072 NEW)
+endif()
+
 # Find Qt
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Widgets Network Gui Svg REQUIRED)
 if (USE_DBUS)
