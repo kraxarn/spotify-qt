@@ -24,7 +24,9 @@ Playback::Playback(const nlohmann::json &json)
 nlohmann::json Playback::metadata() const
 {
 	std::string itemName(isPlaying ? item.name : "");
-	std::vector<std::string> itemArtist(isPlaying ? item.artist : "");
+	std::vector<std::string> itemArtist({
+		isPlaying ? item.artist : ""
+	});
 	std::string itemAlbum(isPlaying ? item.album : "");
 	std::string itemId(isPlaying ? item.id : "");
 	auto itemDuration = isPlaying ? item.duration : 0;
