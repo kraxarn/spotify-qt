@@ -1,11 +1,13 @@
 #pragma once
 
+#include "lib/base64.h"
+#include "lib/httplib.h"
 #include "lib/json.hpp"
 #include "settings.hpp"
-#include "lib/httplib.h"
-#include "playlists.hpp"
-#include "lib/base64.h"
 #include "spotify/core/result.hpp"
+#include "spotify/track.hpp"
+#include "spotify/artist.hpp"
+#include "spotify/album.hpp"
 
 namespace lib
 {
@@ -21,15 +23,12 @@ namespace lib
 			{
 			public:
 				/**
-				 * Playlist related API calls
-				 */
-				playlists playlists;
-
-				/**
 				 * Construct a new core object
 				 * @param settings Settings for getting and updating authentication details
 				 */
 				explicit api(Settings &settings);
+
+				//region generic
 
 				/**
 				 * GET request
@@ -37,6 +36,33 @@ namespace lib
 				 * @return JSON response
 				 */
 				nlohmann::json get(const std::string &url);
+
+				//endregion
+
+				//region artist
+
+				/**
+				 * Get most popular tracks for artist
+				 * @param artist Artist
+				 * @return Top tracks
+				 */
+				std::vector<track> top_tracks(const artist &artist);
+
+				/**
+				 * Get all albums by specified artist
+				 * @param artist Artist
+				 * @return Albums
+				 */
+				std::vector<Album> albums(const artist &artist);
+
+				/**
+				 * Get other artists related to the specified one
+				 * @param artist Artist
+				 * @return Artists
+				 */
+				std::vector<artist> related_artists(const artist &artist);
+
+				//endregion
 
 			private:
 				/**
