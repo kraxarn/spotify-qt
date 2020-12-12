@@ -120,7 +120,7 @@ void Settings::load()
 		return;
 	}
 
-	QJsonParseError error;
+	QJsonParseError error{};
 	auto json = QJsonDocument::fromJson(data, &error);
 	file.close();
 	if (error.error != QJsonParseError::NoError)
