@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../lib/json.hpp"
-#include "util/dateformat.hpp"
+#include "util/date.hpp"
 
 #include <iomanip>
 #include <sstream>
@@ -23,7 +23,7 @@ namespace lib
 			std::string id;
 			std::string image;
 			std::string name;
-			std::tm *releaseDate = nullptr;
+			date releaseDate;
 		};
 	}
 }
