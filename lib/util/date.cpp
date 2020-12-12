@@ -23,6 +23,24 @@ date date::parse(const std::string &value)
 		log::warn("Failed to parse \"{}\" as a date")
 }
 
+date date::now()
+{
+	date date;
+	auto time = std::time(nullptr);
+	date.tm = std::localtime(&time);
+
+	return date;
+}
+
+date date::now_utc()
+{
+	date date;
+	auto time = std::time(nullptr);
+	date.tm = std::gmtime(&time);
+
+	return date;
+}
+
 bool date::is_valid() const
 {
 	return tm != nullptr;
@@ -47,7 +65,6 @@ std::string date::to_iso_date() const
 {
 	return format(ISO_DATE_FORMAT);
 }
-
 
 std::string date::to_iso_date_time() const
 {

@@ -27,6 +27,18 @@ namespace lib
 		static date parse(const std::string &value);
 
 		/**
+		 * Current date and time in local time
+		 * @return Current date
+		 */
+		static date now();
+
+		/**
+		 * Current date and time in UTC format
+		 * @return Current UTC date
+		 */
+		static date now_utc();
+
+		/**
 		 * If the current instance represents a valid date
 		 * @return Date is valid
 		 */
