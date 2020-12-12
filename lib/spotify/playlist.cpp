@@ -2,7 +2,7 @@
 
 using namespace lib::spt;
 
-Playlist::Playlist(const nlohmann::json &json)
+playlist::playlist(const nlohmann::json &json)
 {
 	json.at("collaborative").get_to(collaborative);
 	json.at("description").get_to(description);
@@ -16,7 +16,7 @@ Playlist::Playlist(const nlohmann::json &json)
 
 	lib::json::get_property(json, {
 		"is_public", "public"
-	}).get_to(isPublic);
+	}).get_to(is_public);
 
 	lib::json::get_property(json, {
 		"snapshot", "snapshot_id"
@@ -26,7 +26,7 @@ Playlist::Playlist(const nlohmann::json &json)
 		? json.at("owner_id")
 		: json.contains("ownerId")
 			? json.at("ownerId")
-			: json.at("owner").at("id")).get_to(ownerId);
+			: json.at("owner").at("id")).get_to(owner_id);
 
 	(json.contains("owner_name")
 		? json.at("owner_name")
@@ -35,7 +35,7 @@ Playlist::Playlist(const nlohmann::json &json)
 			: json.at("owner").at("display_name")).get_to(ownerName);
 }
 
-std::vector<Track> Playlist::loadTracks(Spotify &spotify) const
+std::vector<Track> playlist::load_tracks(spotify &spotify) const
 {
 	// Allocate memory for all tracks
 	std::vector<Track> trackList;
@@ -51,7 +51,7 @@ std::vector<Track> Playlist::loadTracks(Spotify &spotify) const
 	return trackList;
 }
 
-bool Playlist::loadTracksFromUrl(std::vector<Track> &trackList, std::string &url, int offset, Spotify &spotify)
+bool playlist::loadTracksFromUrl(std::vector<Track> &trackList, std::string &url, int offset, spotify &spotify)
 {
 	// Load tracks from api
 	auto newUrl = url.erase(0, std::string("https://api.spotify.com/v1/").length());
@@ -70,22 +70,17 @@ bool Playlist::loadTracksFromUrl(std::vector<Track> &trackList, std::string &url
 	return true;
 }
 
-nlohmann::json Playlist::toJson(Spotify &spotify) const
+nlohmann::json playlist::to_json(spotify &spotify) const
 {
 	// Load tracks to put in JSON
 	auto jsonTracks = nlohmann::json::array();
-	for (auto &track : loadTracks(spotify))
+	for (auto &track : load_tracks(spotify))
 		jsonTracks.push_back(track.toJson());
 
-	return toJson(jsonTracks);
+	return to_json(jsonTracks);
 }
 
-bool Playlist::isOwner(const User &user) const
-{
-	return !ownerId.empty() && ownerId == user.id;
-}
-
-nlohmann::json Playlist::toJson(const nlohmann::json &jsonTracks) const
+nlohmann::json playlist::to_json(const nlohmann::json &jsonTracks) const
 {
 	return {
 		{"collaborative", collaborative},
@@ -93,10 +88,16 @@ nlohmann::json Playlist::toJson(const nlohmann::json &jsonTracks) const
 		{"id", id},
 		{"image", image},
 		{"name", name},
-		{"is_public", isPublic},
+		{"is_public", is_public},
 		{"total", jsonTracks.size()},
 		{"tracks", jsonTracks},
 		{"snapshot", snapshot},
-		{"owner_id", ownerId},
+		{"owner_id", owner_id},
 		{"owner_name", ownerName}
 	};
+}
+
+bool playlist::is_owner(const user &user) const
+{
+	return !owner_id.empty() && owner_id == user.id;
+}

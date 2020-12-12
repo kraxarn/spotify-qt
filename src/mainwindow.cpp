@@ -441,7 +441,7 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 	if (loadPlaylistFromCache(playlist))
 		return true;
 	songs->setEnabled(false);
-	auto result = loadSongs(playlist.loadTracks(*spotify));
+	auto result = loadSongs(playlist.load_tracks(*spotify));
 	songs->setEnabled(true);
 	sptContext = QString("spotify:playlist:%1").arg(playlist.id);
 	if (result)
@@ -482,7 +482,7 @@ QVector<spt::Track> MainWindow::playlistTracks(const QString &playlistId)
 void MainWindow::refreshPlaylist(spt::Playlist &playlist)
 {
 	auto newPlaylist = spotify->playlist(playlist.id);
-	auto tracks = newPlaylist.loadTracks(*spotify);
+	auto tracks = newPlaylist.load_tracks(*spotify);
 	if (sptContext.endsWith(playlist.id))
 		loadSongs(tracks);
 	cachePlaylist(newPlaylist);

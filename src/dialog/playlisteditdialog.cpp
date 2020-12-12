@@ -22,7 +22,7 @@ PlaylistEditDialog::PlaylistEditDialog(spt::Spotify *spotify, const spt::Playlis
 	auto toggles = new QHBoxLayout();
 	toggles->setAlignment(Qt::AlignLeft);
 	isPublic = new QCheckBox("Public", this);
-	isPublic->setChecked(playlist.isPublic);
+	isPublic->setChecked(playlist.is_public);
 	toggles->addWidget(isPublic);
 	isCollaborative = new QCheckBox("Collaborative", this);
 	isCollaborative->setChecked(playlist.collaborative);
@@ -45,7 +45,7 @@ PlaylistEditDialog::PlaylistEditDialog(spt::Spotify *spotify, const spt::Playlis
 		auto pl = playlist;
 		pl.name = name->text();
 		pl.description = description->toPlainText();
-		pl.isPublic = isPublic->isChecked();
+		pl.is_public = isPublic->isChecked();
 		pl.collaborative = isCollaborative->isChecked();
 		auto result = spotify->editPlaylist(pl);
 		if (result.isEmpty())

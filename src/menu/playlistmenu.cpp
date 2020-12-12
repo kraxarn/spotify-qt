@@ -9,7 +9,7 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 
 	auto tracks = window->playlistTracks(playlist.id);
 	if (tracks.isEmpty())
-		tracks = playlist.loadTracks(spotify);
+		tracks = playlist.load_tracks(spotify);
 
 	auto duration = 0;
 	for (auto &track : tracks)

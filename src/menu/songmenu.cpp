@@ -91,7 +91,7 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name, QString
 	auto currentUserId = mainWindow->getCurrentUser().id;
 	for (auto &playlist : mainWindow->getSptPlaylists())
 	{
-		if (!playlist.collaborative && playlist.ownerId != currentUserId)
+		if (!playlist.collaborative && playlist.owner_id != currentUserId)
 			continue;
 
 		// Create main action
@@ -139,7 +139,7 @@ void SongMenu::addToPlaylist(QAction *action)
 	// Check if it's already in the playlist
 	auto mainWindow = (MainWindow *) parent;
 	auto playlistId = action->data().toString();
-	auto tracks = spotify.playlist(playlistId).loadTracks(spotify);
+	auto tracks = spotify.playlist(playlistId).load_tracks(spotify);
 	for (auto &item : tracks)
 	{
 		if (trackId.endsWith(item.id))
