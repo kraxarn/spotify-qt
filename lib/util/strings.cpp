@@ -55,7 +55,9 @@ bool strings::starts_with(const std::string &str, const std::string &start)
 
 std::string strings::remove(std::string &str, const std::string &substr)
 {
-	str.erase(std::remove(str.begin(), str.end(), substr), str.end());
+	auto pos = str.find(substr);
+	if (pos != std::string::npos)
+		str.erase(pos, substr.length());
 	return str;
 }
 
