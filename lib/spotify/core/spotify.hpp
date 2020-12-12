@@ -1,8 +1,8 @@
 #pragma once
 
 #include "api/api.hpp"
-#include "settings.hpp"
 #include "lib/json.hpp"
+#include "settings.hpp"
 
 namespace lib
 {

@@ -4,10 +4,10 @@
 #include "lib/httplib.h"
 #include "lib/json.hpp"
 #include "settings.hpp"
+#include "spotify/album.hpp"
+#include "spotify/artist.hpp"
 #include "spotify/core/result.hpp"
 #include "spotify/track.hpp"
-#include "spotify/artist.hpp"
-#include "spotify/album.hpp"
 
 namespace lib
 {
@@ -90,6 +90,21 @@ namespace lib
 				 * @return If successful
 				 */
 				core::result refresh();
+
+				/**
+				 * Get all items to a vector by using the default constructor
+				 * @tparam Result Type of item to collect
+				 * @param array JSON array with items
+				 * @return Vector with collected items
+				 */
+				template<typename Result>
+				std::vector<Result> get_to_vector(const nlohmann::json &array)
+				{
+					std::vector<Result> items;
+					for (auto &item : array.items())
+						items.push_back(Result(item.value()));
+					return items;
+				}
 			};
 		}
 	}

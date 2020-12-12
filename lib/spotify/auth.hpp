@@ -1,6 +1,6 @@
 #pragma once
 
-#include "settings.hpp"
+#include "../settings.hpp"
 #include "util/strings.hpp"
 
 #include "lib/base64.h"

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "album.hpp"
-#include "core/spotify.hpp"
 #include "track.hpp"
 
 namespace lib
@@ -24,21 +23,6 @@ namespace lib
 			 * @param json JSON
 			 */
 			explicit artist(const nlohmann::json &json);
-
-			/**
-			 * @deprecated Use spotify::artist::top_tracks instead
-			 */
-			std::vector<track> topTracks(spotify &spotify) const;
-
-			/**
-			 * @deprecate Use spotify::artist::albums instead
-			 */
-			std::vector<Album> albums(spotify &spotify) const;
-
-			/**
-			 * @deprecated Use spotify::artist::related_artists instead
-			 */
-			std::vector<artist> relatedArtists(spotify &spotify) const;
 
 			/**
 			 * Format the current artist as a json object

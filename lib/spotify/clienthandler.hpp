@@ -1,6 +1,6 @@
 #pragma once
 
-#include "enum/clienttype.hpp"
+#include "../enum/clienttype.hpp"
 #include "format.hpp"
 #include "settings.hpp"
 #include "util/date.hpp"

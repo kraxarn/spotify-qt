@@ -22,7 +22,7 @@ SearchResults::SearchResults(const nlohmann::json &json)
 	// Tracks
 	tracks.reserve(json.at("tracks").at("total").get<int>());
 	for (auto &track : json.at("tracks").at("items").items())
-		tracks.emplace_back(track(track.value()));
+		tracks.emplace_back(track.value());
 }
 
 nlohmann::json SearchResults::toJson() const
