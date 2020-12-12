@@ -1,7 +1,7 @@
 #pragma once
 
 #include "album.hpp"
-#include "spotify.hpp"
+#include "core/spotify.hpp"
 #include "track.hpp"
 
 namespace lib
