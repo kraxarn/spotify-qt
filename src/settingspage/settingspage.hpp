@@ -1,10 +1,9 @@
 #pragma once
 
-#include "settings.hpp"
+#include "../settings.hpp"
 
-#include <QMessageBox>
-#include <QTabWidget>
 #include <QVBoxLayout>
+#include <QMessageBox>
 
 class SettingsPage: public QTabWidget
 {

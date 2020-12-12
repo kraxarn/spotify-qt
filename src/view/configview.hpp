@@ -1,7 +1,7 @@
 #pragma once
 
+#include "../settings.hpp"
 #include "../util/icon.hpp"
-#include "settings.hpp"
 
 #include <QTreeWidget>
 #include <QHeaderView>

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../mainwindow.hpp"
+#include "../spotify/spotify.hpp"
 #include "logviewer.hpp"
-#include "spotify/spotify.hpp"
 
 #include <QDialog>
 #include <QDialogButtonBox>

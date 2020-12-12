@@ -4,8 +4,8 @@
 
 class MediaPlayer;
 
+#include "../spotify/spotify.hpp"
 #include "mediaplayerplayer.hpp"
-#include "spotify/spotify.hpp"
 
 #include <QCoreApplication>
 #include <QDBusAbstractAdaptor>

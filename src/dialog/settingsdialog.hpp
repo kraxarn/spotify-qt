@@ -2,6 +2,7 @@
 
 #include "../keyring/kwallet.hpp"
 #include "../mainwindow.hpp"
+#include "../settings.hpp"
 #include "../settingspage/aboutpage.hpp"
 #include "../settingspage/applicationpage.hpp"
 #include "../settingspage/interfacepage.hpp"
@@ -12,7 +13,6 @@
 #include "../util/utils.hpp"
 #include "../view/clienthandlerlogview.hpp"
 #include "openlinkdialog.hpp"
-#include "settings.hpp"
 #include "systeminfodialog.hpp"
 
 #include <QAction>

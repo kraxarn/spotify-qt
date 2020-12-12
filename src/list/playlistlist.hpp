@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../mainwindow.hpp"
+#include "../spotify/spotify.hpp"
 #include "playlistlist.hpp"
-#include "spotify/spotify.hpp"
 
 #include <QListWidget>
 

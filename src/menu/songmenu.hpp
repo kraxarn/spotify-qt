@@ -3,8 +3,8 @@
 #include <utility>
 
 #include "../mainwindow.hpp"
+#include "../spotify/spotify.hpp"
 #include "../util/icon.hpp"
-#include "spotify/spotify.hpp"
 
 #include <QDesktopServices>
 #include <QMenu>

@@ -1,8 +1,8 @@
 #pragma once
 
+#include "../enum/clienttype.hpp"
 #include "../keyring/kwallet.hpp"
-#include "enum/clienttype.hpp"
-#include "settings.hpp"
+#include "../settings.hpp"
 
 #include <QDateTime>
 #include <QFileInfo>

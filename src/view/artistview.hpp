@@ -1,10 +1,10 @@
 #pragma once
 
+#include "../enum/followtype.hpp"
 #include "../mainwindow.hpp"
 #include "../menu/albummenu.hpp"
 #include "../menu/songmenu.hpp"
-#include "enum/followtype.hpp"
-#include "spotify/spotify.hpp"
+#include "../spotify/spotify.hpp"
 
 #include <QDockWidget>
 #include <QLabel>

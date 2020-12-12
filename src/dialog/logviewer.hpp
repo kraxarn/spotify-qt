@@ -1,16 +1,15 @@
 #pragma once
 
-#include "log.hpp"
+#include "../log.hpp"
 
-#include <QApplication>
-#include <QClipboard>
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QFileDialog>
 #include <QPushButton>
-#include <QStandardPaths>
 #include <QTreeWidget>
 #include <QVBoxLayout>
+#include <QStandardPaths>
+#include <QClipboard>
 
 class LogViewer: public QDialog
 {
