@@ -6,23 +6,23 @@ SearchResults::SearchResults(const nlohmann::json &json)
 {
 	// Albums
 	albums.reserve(json.at("albums").at("total").get<int>());
-	for (auto album : json.at("albums").at("items").items())
-		albums.push_back(Album(album.value()));
+	for (auto &album : json.at("albums").at("items").items())
+		albums.emplace_back(album.value());
 
 	// Artists
 	artists.reserve(json.at("artists").at("total").get<int>());
-	for (auto artist : json.at("artists").at("items").items())
-		artists.push_back(artist(artist.value()));
+	for (auto &artist : json.at("artists").at("items").items())
+		artists.emplace_back(artist.value());
 
 	// Playlists
 	playlists.reserve(json.at("playlists").at("total").get<int>());
-	for (auto playlist : json.at("playlists").at("items").items())
-		playlists.push_back(playlist.value());
+	for (auto &playlist : json.at("playlists").at("items").items())
+		playlists.emplace_back(playlist.value());
 
 	// Tracks
 	tracks.reserve(json.at("tracks").at("total").get<int>());
-	for (auto track : json.at("tracks").at("items").items())
-		tracks.append(Track(track.value()));
+	for (auto &track : json.at("tracks").at("items").items())
+		tracks.emplace_back(Track(track.value()));
 }
 
 nlohmann::json SearchResults::toJson() const
