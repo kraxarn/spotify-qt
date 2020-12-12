@@ -1,7 +1,5 @@
 #pragma once
 
-#include "log.hpp"
-
 #include <string>
 #include <iomanip>
 #include <sstream>
