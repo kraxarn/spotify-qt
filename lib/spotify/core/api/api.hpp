@@ -31,6 +31,13 @@ namespace lib
 				 */
 				explicit api(Settings &settings);
 
+				/**
+				 * GET request
+				 * @param url URL to get
+				 * @return JSON response
+				 */
+				nlohmann::json get(const std::string &url);
+
 			private:
 				/**
 				 * Time of last authentication, used for checking if we should refresh
@@ -51,13 +58,6 @@ namespace lib
 				 * HTTP client used for requests
 				 */
 				httplib::Client http_client;
-
-				/**
-				 * GET request
-				 * @param url URL to get
-				 * @return JSON response
-				 */
-				nlohmann::json get(const std::string &url);
 
 				/**
 				 * Refresh access token
