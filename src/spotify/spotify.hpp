@@ -5,6 +5,7 @@ namespace spt
 	class Spotify;
 }
 
+#include "../dialog/deviceselectdialog.hpp"
 #include "../enum/followtype.hpp"
 #include "../settings.hpp"
 #include "artist.hpp"
@@ -17,6 +18,8 @@ namespace spt
 
 #include <QCoreApplication>
 #include <QDateTime>
+#include <QDesktopServices>
+#include <QInputDialog>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QProcessEnvironment>

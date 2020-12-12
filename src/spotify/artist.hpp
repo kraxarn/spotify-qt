@@ -11,6 +11,7 @@ namespace spt
 
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QPixmap>
 #include <QString>
 #include <QStringList>
 #include <QVector>
