@@ -14,7 +14,7 @@ date::date(const date &date)
 
 date date::parse(const std::string &value)
 {
-	lib::date date;
+	date date;
 
 	// First try to parse as full date and time
 	date.parse(value, ISO_DATE_TIME_FORMAT);
@@ -25,7 +25,9 @@ date date::parse(const std::string &value)
 
 	// If it's still invalid, something is wrong
 	if (!date.is_valid())
-		log::warn("Failed to parse \"{}\" as a date")
+		log::warn("Failed to parse \"{}\" as a date");
+
+	return date;
 }
 
 date date::now()
