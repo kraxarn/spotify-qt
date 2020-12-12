@@ -40,6 +40,9 @@ else ()
 	add_executable(spotify-qt ${MAIN_SRC} ${SUB_SRC} ${QML_RES} ${LIB_SRC} res.qrc)
 endif ()
 
+# Include headers from spotify-qt-lib
+target_include_directories(spotify-qt PRIVATE "lib")
+
 # Get version from Git
 find_package(Git QUIET)
 if (GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
@@ -70,6 +73,10 @@ target_link_libraries(spotify-qt PRIVATE
 		Qt${QT_VERSION_MAJOR}::Network
 		Qt${QT_VERSION_MAJOR}::Gui
 		Qt${QT_VERSION_MAJOR}::Svg)
+
+# spotify-qt-lib
+add_subdirectory(lib)
+target_link_libraries(spotify-qt PRIVATE spotify-qt-lib)
 
 # Check if we should include Qt Quick
 if (USE_QT_QUICK)
