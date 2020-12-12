@@ -15,7 +15,7 @@ namespace lib
 		/**
 		 * Manages Spotify client
 		 */
-		class ClientHandler
+		class client_handler
 		{
 		public:
 			/**
@@ -23,7 +23,7 @@ namespace lib
 			 * (does not start the client)
 			 * @param settings Settings for path etc.
 			 */
-			explicit ClientHandler(const lib::Settings &settings);
+			explicit client_handler(const lib::Settings &settings);
 
 			/**
 			 * Start the client
@@ -41,7 +41,7 @@ namespace lib
 			 * Check if the client is already running, accuracy not guaranteed
 			 * @return If the client is running
 			 */
-			bool isRunning();
+			bool is_running();
 
 			/**
 			 * Get version of spotifyd, just "librespot" or any empty string, depending on the client used
@@ -79,7 +79,7 @@ namespace lib
 			 * Backend was compiled with Pulseaudio support
 			 * @return Pulseaudio support
 			 */
-			bool supportsPulse();
+			bool supports_pulse();
 
 			/**
 			 * Start client and get output
@@ -98,7 +98,7 @@ namespace lib
 			 * Get type of client in path
 			 * @return Type of client
 			 */
-			static lib::ClientType client_type();
+			lib::ClientType client_type();
 
 			/**
 			 * Get path to client
@@ -108,6 +108,7 @@ namespace lib
 
 			/**
 			 * Get path to file where output from Spotify client is saved
+			 * @deprecated No longer logs to file
 			 * @return Log path
 			 */
 			std::string log_path();
@@ -117,7 +118,7 @@ namespace lib
 			 * @param args Arguments
 			 * @return Joined arguments
 			 */
-			 std::string join_args(const std::vector<std::string> &args);
+			 static std::string join_args(const std::vector<std::string> &args);
 		};
 	}
 }

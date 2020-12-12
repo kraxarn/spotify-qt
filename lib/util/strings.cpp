@@ -52,3 +52,52 @@ bool strings::starts_with(const std::string &str, const std::string &start)
 {
 	return str.find(start, 0) == 0;
 }
+
+std::string strings::remove(std::string &str, const std::string &substr)
+{
+	str.erase(std::remove(str.begin(), str.end(), substr), str.end());
+	return str;
+}
+
+bool strings::ends_with(const std::string &str, const std::string &end)
+{
+	return str.length() < end.length()
+		? false
+		: str.compare(str.length() - end.length(), end.length(), end) == 0;
+}
+
+bool strings::try_to_int(const std::string &str, int &value)
+{
+	try
+	{
+		value = std::stoi(str);
+		return true;
+	}
+	catch (std::invalid_argument &)
+	{
+		return false;
+	}
+}
+
+std::string strings::left(const std::string &str, size_t n)
+{
+	return str.length() < n
+		? str
+		: str.substr(0, n);
+}
+
+std::string strings::right(const std::string &str, size_t n)
+{
+	return str.length() < n
+		? str
+		: str.substr(str.length() - n);
+}
+
+std::string strings::to_lower(std::string &str)
+{
+	std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c)
+	{
+		return std::tolower(c);
+	});
+	return str;
+}

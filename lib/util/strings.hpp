@@ -57,6 +57,53 @@ public:
 	 */
 	static bool starts_with(const std::string &str, const std::string &start);
 
+	/**
+	 * Remove specified characters from a string
+	 * @param str String to remove from
+	 * @param substr String to remove
+	 * @return Same as str
+	 */
+	static std::string remove(std::string &str, const std::string &substr);
+
+	/**
+	 * Check if a string ends with another string
+	 * @param str String to check
+	 * @param end String it should end with
+	 * @return str ends with end
+	 */
+	static bool ends_with(const std::string &str, const std::string &end);
+
+	/**
+	 * Try to parse the specified string as an int
+	 * @param str String to parse
+	 * @param value Value to write the result to
+	 * @return If conversion was successful
+	 */
+	static bool try_to_int(const std::string &str, int &value);
+
+	/**
+	 * Get the n-leftmost characters of string
+	 * @param str String to get from
+	 * @param n Number of characters to get
+	 * @return Substring of string with specified characters
+	 */
+	static std::string left(const std::string &str, size_t n);
+
+	/**
+	 * Get the n-rightmost characters of string
+	 * @param str String to get from
+	 * @param n Number of characters to get
+	 * @return Substring of string with specified characters
+	 */
+	static std::string right(const std::string &str, size_t n);
+
+	/**
+	 * Get strings as all lowercase
+	 * @param str String to transform
+	 * @return String is all lowercase, same as str
+	 */
+	static std::string to_lower(std::string &str);
+
 private:
 	/**
 	 * Trim beginning of string

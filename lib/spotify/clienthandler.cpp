@@ -2,15 +2,15 @@
 
 using namespace lib::spt;
 
-ClientHandler::ClientHandler(const lib::Settings &settings)
+client_handler::client_handler(const lib::Settings &settings)
 	: settings(settings)
 {
 }
 
-std::string ClientHandler::start()
+std::string client_handler::start()
 {
 	// Don't start if already running
-	if (isRunning())
+	if (is_running())
 		return std::string();
 
 	// Check if empty
@@ -87,7 +87,7 @@ std::string ClientHandler::start()
 	}
 
 	auto backend = settings.spotify.backend;
-	if (backend.empty() && supportsPulse())
+	if (backend.empty() && supports_pulse())
 	{
 		backend = "pulseaudio";
 	}
@@ -101,7 +101,7 @@ std::string ClientHandler::start()
 	return std::string();
 }
 
-std::string ClientHandler::exec(const std::vector<std::string> &arguments)
+std::string client_handler::exec(const std::vector<std::string> &arguments)
 {
 	// Check if it exists
 	if (!file::exists(path()))
@@ -122,7 +122,7 @@ std::string ClientHandler::exec(const std::vector<std::string> &arguments)
 	return strings::trim(data);
 }
 
-std::vector<std::string> ClientHandler::available_backends()
+std::vector<std::string> client_handler::available_backends()
 {
 	auto clientType = client_type();
 	std::vector<std::string> items;
@@ -138,27 +138,28 @@ std::vector<std::string> ClientHandler::available_backends()
 		{
 			if (!strings::starts_with(line, "-"))
 				continue;
-			items.push_back(line.substr(line.length() - 2)
-				.remove("(default)")
-				.trimmed());
+			auto item = line.substr(line.length() - 2);
+			strings::remove(item, "(default)");
+			items.push_back(strings::trim(item));
 		}
 	}
 	else if (clientType == lib::ClientType::Spotifyd)
 	{
-		auto result = clientExec(path, QStringList({
+		auto result = exec({
 			"--help",
-		}));
+		});
 
-		for (auto &line : result.split('\n'))
+		for (auto &line : strings::split(result, '\n'))
 		{
-			if (!line.contains("audio backend"))
+			if (!strings::contains(line, "audio backend"))
 				continue;
 
-			items.append(line.right(line.length() - line.indexOf('[') - 1)
-				.remove("possible values: ")
-				.remove(']')
-				.trimmed()
-				.split(", "));
+			auto item = strings::right(line, line.length() - line.find('[') - 1);
+			strings::remove(item, "possible values: ");
+			strings::remove(item, "]");
+			strings::trim(item);
+			for (auto &i : strings::split(item, ','))
+				items.push_back(strings::trim(i));
 			break;
 		}
 	}
@@ -166,138 +167,135 @@ std::vector<std::string> ClientHandler::available_backends()
 	return items;
 }
 
-bool ClientHandler::supportsPulse()
+bool client_handler::supports_pulse()
 {
-	return clientExec(path, clientType == lib::ClientType::Librespot
-		? QStringList({
+	return strings::contains(client_type() == ClientType::Librespot
+		? exec({
 			"--name", "",
 			"--backend", "?"
-		}) : QStringList({
+		})
+		: exec({
 			"--help"
-		}))
-		.contains("pulseaudio");
+		}), "pulseaudio");
 }
 
-QString ClientHandler::version(const QString &path)
+std::string client_handler::version()
 {
-	auto clientType = getClientType(path);
-
-	return clientType == lib::ClientType::Spotifyd
-		? clientExec(path, {
+	return client_type() == lib::ClientType::Spotifyd
+		? exec({
 			"--version"
-		}) : clientType == lib::ClientType::Librespot
+		})
+		: client_type() == lib::ClientType::Librespot
 			? "librespot"
-			: QString();
+			: std::string();
 }
 
-bool ClientHandler::isRunning()
+bool client_handler::is_running()
 {
-	if (path.isEmpty() || !QFile("/usr/bin/ps").exists())
+	if (path().empty() || !file::exists("/usr/bin/ps"))
 		return false;
 
-	QProcess ps;
-	ps.start("/usr/bin/ps", {"aux"});
-	ps.waitForFinished();
-	auto out = ps.readAllStandardOutput();
-	return QString(out).contains(path);
+	throw std::logic_error("not implemented");
+
+//	QProcess ps;
+//	ps.start("/usr/bin/ps", {"aux"});
+//	ps.waitForFinished();
+//	auto out = ps.readAllStandardOutput();
+//	return QString(out).contains(path);
 }
 
-std::string ClientHandler::join_args(const std::vector<std::string> &args)
+std::string client_handler::join_args(const std::vector<std::string> &args)
 {
 	return strings::join(args, " ");
 }
 
-QString ClientHandler::getSinkInfo()
+std::string client_handler::sink_info()
 {
-	if (!QFileInfo::exists("/usr/bin/pactl"))
-		return QString();
-	QProcess process;
+	if (!file::exists(("/usr/bin/pactl")))
+		return std::string();
 
-	// Find what sink to use
-	process.start("/usr/bin/pactl", {
-		"list", "sink-inputs"
-	});
-	process.waitForFinished();
-	auto sinks = QString(process.readAllStandardOutput()).split("Sink Input #");
-	for (auto &sink : sinks)
-		if (sink.contains("Spotify"))
-			return sink;
+	throw std::logic_error("not implemented");
 
-	return QString();
+//	QProcess process;
+//
+//	// Find what sink to use
+//	process.start("/usr/bin/pactl", {
+//		"list", "sink-inputs"
+//	});
+//	process.waitForFinished();
+//	auto sinks = QString(process.readAllStandardOutput()).split("Sink Input #");
+//	for (auto &sink : sinks)
+//		if (sink.contains("Spotify"))
+//			return sink;
+//
+//	return QString();
 }
 
-float ClientHandler::getVolume()
+float client_handler::get_volume()
 {
-	auto sink = getSinkInfo();
-	if (sink.isEmpty())
+	auto sink = sink_info();
+	if (sink.empty())
 		return 1.f;
-	auto i = sink.indexOf("Volume:");
+	auto i = sink.find("Volume:");
 	if (i < 0)
 		return 1.f;
 
-	bool ok;
-	for (auto &p : sink.right(sink.length() - i).split(' '))
+	int v;
+	for (auto &p : strings::split(strings::right(sink, sink.length() - i), ' '))
 	{
-		if (!p.endsWith('%'))
+		if (!strings::ends_with(p, "%"))
 			continue;
-		auto v = p.left(p.length() - 1).toInt(&ok);
-		if (!ok)
+		if (!strings::try_to_int(strings::left(p, p.length() - 1), v))
 			continue;
-		return v / 100.f;
+		return (float)v / 100.f;
 	}
 
 	return 1.f;
 }
 
-void ClientHandler::setVolume(float value)
+void client_handler::set_volume(float value)
 {
-	auto sink = getSinkInfo();
-	if (sink.isEmpty())
+	auto sink = sink_info();
+	if (sink.empty())
 		return;
 
+	throw std::logic_error("not implemented");
+
 	// Sink was found, get id
-	auto left = sink.left(sink.indexOf('\n'));
-	auto sinkId = left.right(left.length() - left.lastIndexOf('#') - 1);
-	QProcess process;
-	process.start("/usr/bin/pactl", {
-		"set-sink-input-volume", sinkId, QString::number(value, 'f', 2)
-	});
-
-	process.waitForFinished();
+//	auto left = strings::left(sink, sink.find('\n'));
+//	auto sinkId = left.right(left.length() - left.lastIndexOf('#') - 1);
+//	QProcess process;
+//	process.start("/usr/bin/pactl", {
+//		"set-sink-input-volume", sinkId, QString::number(value, 'f', 2)
+//	});
+//
+//	process.waitForFinished();
 }
 
-void ClientHandler::logOutput(const QByteArray &output) const
+std::vector<std::pair<lib::date, std::string>> log()
 {
-	for (auto &line : QString(output).split('\n'))
-	{
-		if (line.isEmpty())
-			continue;
-		log << QPair<QDateTime, QString>(QDateTime::currentDateTime(), line);
-	}
+	return std::vector<std::pair<lib::date, std::string>>();
 }
 
-void ClientHandler::readyRead() const
+lib::ClientType client_handler::client_type()
 {
-	logOutput(process->readAllStandardOutput());
-}
+	auto name = strings::right(path(), path().rfind('/'));
+	name = strings::left(name, name.find('.'));
+	strings::to_lower(name);
 
-void ClientHandler::readyError() const
-{
-	logOutput(process->readAllStandardError());
-}
-
-QList<QPair<QDateTime, QString>> ClientHandler::getLog()
-{
-	return log;
-}
-
-lib::ClientType ClientHandler::getClientType(const QString &path)
-{
-	auto baseName = QFileInfo(path).baseName().toLower();
-
-	return baseName == "spotifyd"
+	return name == "spotifyd"
 		? lib::ClientType::Spotifyd
-		: baseName == "librespot"
+		: name == "librespot"
 			? lib::ClientType::Librespot
 			: lib::ClientType::None;
+}
+
+std::string client_handler::path()
+{
+	return settings.spotify.path;
+}
+
+std::string client_handler::log_path()
+{
+	return std::string();
 }
