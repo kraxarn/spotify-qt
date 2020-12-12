@@ -10,7 +10,6 @@
 #include "searchresults.hpp"
 #include "user.hpp"
 
-
 namespace spt
 {
 	class Spotify

@@ -1,12 +1,12 @@
 #pragma once
 
 #include "../enum/clienttype.hpp"
-#include "format.hpp"
-#include "settings.hpp"
-#include "util/date.hpp"
-#include "util/file.hpp"
-#include "util/strings.hpp"
-#include "util/vector.hpp"
+#include "../format.hpp"
+#include "../settings.hpp"
+#include "../util/date.hpp"
+#include "../util/file.hpp"
+#include "../util/strings.hpp"
+#include "../util/vector.hpp"
 
 namespace lib
 {

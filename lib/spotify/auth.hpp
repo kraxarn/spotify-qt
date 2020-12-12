@@ -1,11 +1,10 @@
 #pragma once
 
+#include "../lib/base64.h"
+#include "../lib/httplib.h"
+#include "../lib/json.hpp"
 #include "../settings.hpp"
-#include "util/strings.hpp"
-
-#include "lib/base64.h"
-#include "lib/httplib.h"
-#include "lib/json.hpp"
+#include "../util/strings.hpp"
 
 namespace lib
 {

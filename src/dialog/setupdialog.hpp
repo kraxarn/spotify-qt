@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../spotify/auth.hpp"
+#include "lib/spotify/auth.hpp"
 #include "lib/settings.hpp"
 #include "openlinkdialog.hpp"
 

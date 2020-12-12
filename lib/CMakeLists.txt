@@ -8,8 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(GLOB MAIN_SRC "*.[hc]pp")
 file(GLOB ENUM_SRC "enum/*.[hc]pp")
 file(GLOB SPOTIFY_SRC "spotify/*.[hc]pp")
-file(GLOB SPOTIFY_CORE_SRC "spotify/core/*.[hc]pp")
-file(GLOB SPOTIFY_API_SRC "spotify/core/api/*.[hc]pp")
+file(GLOB SPOTIFY_API_SRC "spotify/api/*.[hc]pp")
 file(GLOB UTIL_SRC "util/*.[hc]pp")
 
 # Add source files

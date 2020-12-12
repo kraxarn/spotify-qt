@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/spotify.hpp"
+#include "api/spotify.hpp"
 #include "track.hpp"
 #include "user.hpp"
 #include "util/strings.hpp"

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "lib/base64.h"
-#include "lib/httplib.h"
-#include "lib/json.hpp"
+#include "../../lib/base64.h"
+#include "../../lib/httplib.h"
+#include "../../lib/json.hpp"
 #include "settings.hpp"
 #include "spotify/album.hpp"
 #include "spotify/artist.hpp"
-#include "spotify/core/result.hpp"
+#include "spotify/api/result.hpp"
 #include "spotify/track.hpp"
 
 namespace lib

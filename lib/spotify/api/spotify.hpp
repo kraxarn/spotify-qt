@@ -1,6 +1,6 @@
 #pragma once
 
-#include "api/api.hpp"
+#include "api.hpp"
 #include "lib/json.hpp"
 #include "settings.hpp"
 
