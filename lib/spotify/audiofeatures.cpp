@@ -19,7 +19,7 @@ AudioFeatures::AudioFeatures(const nlohmann::json &json)
 	values["Mode"] = json.at("mode").get<int>() == 1 ? "Major" : "Minor";
 	values["Speechiness"] = formatStat(json.at("speechiness").get<double>(), "spoken words");
 	values["Tempo"] = fmt::format("{} BPM", json.at("tempo").get<double>());
-	values["Time signature"] = fmt::format("{}", json.at("time_signature"));
+	values["Time signature"] = fmt::format("{}", json.at("time_signature").get<int>());
 	values["Valence"] = formatStat(json.at("valence").get<double>(), "negative", "positive");
 }
 
