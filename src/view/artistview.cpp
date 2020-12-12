@@ -100,7 +100,7 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const lib
 		auto item = new QListWidgetItem(track.name, topTracksList);
 		item->setIcon(QIcon(mainWindow->getAlbum(track.image)));
 		item->setData(RoleTrackId, track.id);
-		item->setData(RoleAlbumId, track.albumId);
+		item->setData(RoleAlbumId, track.album_id);
 		item->setData(RoleIndex, i++);
 		topTrackIds.append(QString("spotify:track:%1").arg(track.id));
 	}

@@ -18,7 +18,7 @@ SongMenu::SongMenu(QListWidgetItem *item, QString artist, spt::Spotify &spotify,
 }
 
 SongMenu::SongMenu(const spt::Track &track, spt::Spotify &spotify, QWidget *parent)
-	: SongMenu(track.id, track.artist, track.name, track.artistId, track.albumId, 0, spotify, parent)
+	: SongMenu(track.id, track.artist, track.name, track.artist_id, track.album_id, 0, spotify, parent)
 {
 }
 

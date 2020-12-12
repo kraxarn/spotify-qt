@@ -84,7 +84,7 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 				if (all.contains(album.artist))
 					for (auto &track : spotify.albumTracks(album.id))
 					{
-						track.addedAt = album.releaseDate;
+						track.added_at = album.releaseDate;
 						tracks << track;
 					}
 		}

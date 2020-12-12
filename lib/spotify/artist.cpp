@@ -13,14 +13,14 @@ artist::artist(const nlohmann::json &json)
 	json.at("external_urls").get_to(external_urls);
 }
 
-std::vector<Track> artist::topTracks(spotify &spotify) const
+std::vector<track> artist::topTracks(spotify &spotify) const
 {
 	auto json = spotify.getAsObject(QString("artists/%1/top-tracks?country=from_token").arg(id));
 	auto items = json["tracks"].toArray();
 	QVector<Track> tracks;
 	tracks.reserve(items.size());
 	for (auto item : items)
-		tracks.append(Track(item.toObject()));
+		tracks.append(track(item.toObject()));
 	return tracks;
 }
 

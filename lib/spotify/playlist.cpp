@@ -35,10 +35,10 @@ playlist::playlist(const nlohmann::json &json)
 			: json.at("owner").at("display_name")).get_to(ownerName);
 }
 
-std::vector<Track> playlist::load_tracks(spotify &spotify) const
+std::vector<track> playlist::load_tracks(spotify &spotify) const
 {
 	// Allocate memory for all tracks
-	std::vector<Track> trackList;
+	std::vector<track> trackList;
 	trackList.reserve(tracks.at("total").get<int>());
 
 	// Load tracks
@@ -51,7 +51,7 @@ std::vector<Track> playlist::load_tracks(spotify &spotify) const
 	return trackList;
 }
 
-bool playlist::loadTracksFromUrl(std::vector<Track> &trackList, std::string &url, int offset, spotify &spotify)
+bool playlist::loadTracksFromUrl(std::vector<track> &trackList, std::string &url, int offset, spotify &spotify)
 {
 	// Load tracks from api
 	auto newUrl = url.erase(0, std::string("https://api.spotify.com/v1/").length());
@@ -75,7 +75,7 @@ nlohmann::json playlist::to_json(spotify &spotify) const
 	// Load tracks to put in JSON
 	auto jsonTracks = nlohmann::json::array();
 	for (auto &track : load_tracks(spotify))
-		jsonTracks.push_back(track.toJson());
+		jsonTracks.push_back(track.to_json());
 
 	return to_json(jsonTracks);
 }

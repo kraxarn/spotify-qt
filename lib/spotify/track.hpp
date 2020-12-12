@@ -9,13 +9,13 @@ namespace lib
 {
 	namespace spt
 	{
-		class Track
+		class track
 		{
 		public:
-			Track() = default;
-			explicit Track(const nlohmann::json &item);
+			track() = default;
+			explicit track(const nlohmann::json &item);
 
-			nlohmann::json toJson() const;
+			nlohmann::json to_json() const;
 
 			/**
 			 * ID of track
@@ -30,7 +30,7 @@ namespace lib
 			/**
 			 * ID of album
 			 */
-			std::string albumId;
+			std::string album_id;
 
 			/**
 			 * Name of artist
@@ -40,7 +40,7 @@ namespace lib
 			/**
 			 * ID of artist
 			 */
-			std::string artistId;
+			std::string artist_id;
 
 			/**
 			 * Name of track
@@ -60,17 +60,17 @@ namespace lib
 			/**
 			 * Local track
 			 */
-			bool isLocal = false;
+			bool is_local = false;
 
 			/**
 			 * Is playable (for example in current region)
 			 */
-			bool isPlayable = false;
+			bool is_playable = false;
 
 			/**
 			 * Added to current context at (for example playlist)
 			 */
-			date addedAt;
+			date added_at;
 		};
 	}
 }

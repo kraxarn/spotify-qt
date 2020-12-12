@@ -8,7 +8,7 @@ Playback::Playback(const nlohmann::json &json)
 		return;
 
 	json.at("progress_ms").get_to(progressMs);
-	item = Track(json.at("item"));
+	item = track(json.at("item"));
 	json.at("is_playing").get_to(isPlaying);
 	json.at("repeat_state").get_to(repeat);
 	json.at("shuffle_state").get_to(shuffle);
@@ -48,7 +48,7 @@ nlohmann::json Playback::toJson() const
 {
 	return {
 		{"progress_ms", progressMs},
-		{"item", item.toJson()},
+		{"item", item.to_json()},
 		{"is_playing", isPlaying},
 		{"repeat", repeat},
 		{"shuffle", shuffle}

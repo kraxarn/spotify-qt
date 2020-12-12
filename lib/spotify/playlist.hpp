@@ -32,7 +32,7 @@ namespace lib
 			/**
 			 * @deprecated Use spotify::playlist::load_tracks
 			 */
-			std::vector<Track> load_tracks(spotify &spotify) const;
+			std::vector<track> load_tracks(spotify &spotify) const;
 
 			/**
 			 * Format playlist as JSON
@@ -104,7 +104,7 @@ namespace lib
 			/**
 			 * @deprecated
 			 */
-			static bool loadTracksFromUrl(std::vector<Track> &trackList,
+			static bool loadTracksFromUrl(std::vector<track> &trackList,
 				std::string &url,
 				int offset,
 				spotify &spotify);

@@ -362,17 +362,17 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 				: "",
 			track.name, track.artist, track.album,
 			Utils::formatTime(track.duration),
-			QLocale().toString(track.addedAt.date(), QLocale::ShortFormat)
+			QLocale().toString(track.added_at.date(), QLocale::ShortFormat)
 		});
 		item->setIcon(0, emptyIcon);
 		item->setData(0, RoleTrackId, QString("spotify:track:%1").arg(track.id));
-		item->setData(0, RoleArtistId, track.artistId);
-		item->setData(0, RoleAlbumId, track.albumId);
+		item->setData(0, RoleArtistId, track.artist_id);
+		item->setData(0, RoleAlbumId, track.album_id);
 		item->setData(0, RoleIndex, i);
-		if (track.isLocal || !track.isPlayable)
+		if (track.is_local || !track.is_playable)
 		{
 			item->setDisabled(true);
-			item->setToolTip(1, track.isLocal
+			item->setToolTip(1, track.is_local
 				? "Local track"
 				: "Unavailable");
 		}
@@ -707,7 +707,7 @@ int latestTrack(const QVector<spt::Track> &tracks)
 	auto latest = 0;
 	for (int i = 0; i < tracks.length(); i++)
 	{
-		if (tracks[i].addedAt > tracks[latest].addedAt)
+		if (tracks[i].added_at > tracks[latest].added_at)
 			latest = i;
 	}
 	return latest;
@@ -748,7 +748,7 @@ void MainWindow::orderPlaylists(lib::PlaylistOrder order)
 				auto t2 = playlistTracks(i2->data(DataRole::RolePlaylistId).toString());
 
 				return t1.length() > 0 && t2.length() > 0
-					? t1.at(latestTrack(t1)).addedAt > t2.at(latestTrack(t2)).addedAt
+					? t1.at(latestTrack(t1)).added_at > t2.at(latestTrack(t2)).added_at
 					: false;
 			});
 			break;

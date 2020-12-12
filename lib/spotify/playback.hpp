@@ -27,7 +27,7 @@ namespace lib
 			std::string contextType;
 			std::string contextUri;
 			std::string repeat = "off";
-			Track item = Track();
+			track item = track();
 			bool isPlaying = false;
 			bool shuffle = false;
 			int progressMs = 0;

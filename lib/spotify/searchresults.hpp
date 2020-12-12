@@ -20,7 +20,7 @@ namespace lib
 
 			std::vector<Album> albums;
 			std::vector<artist> artists;
-			std::vector<Track> tracks;
+			std::vector<track> tracks;
 
 			// For playlists, we need more complex information later
 			std::vector<nlohmann::json> playlists;

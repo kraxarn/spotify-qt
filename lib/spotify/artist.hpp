@@ -28,7 +28,7 @@ namespace lib
 			/**
 			 * @deprecated Use spotify::artist::top_tracks instead
 			 */
-			std::vector<Track> topTracks(spotify &spotify) const;
+			std::vector<track> topTracks(spotify &spotify) const;
 
 			/**
 			 * @deprecate Use spotify::artist::albums instead

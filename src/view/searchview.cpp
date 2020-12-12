@@ -80,8 +80,8 @@ SearchView::SearchView(spt::Spotify &spotify, const lib::Settings &settings, QWi
 				track.name, track.artist
 			});
 			item->setData(0, RoleTrackId, track.id);
-			item->setData(0, RoleArtistId, track.artistId);
-			item->setData(0, RoleAlbumId, track.albumId);
+			item->setData(0, RoleArtistId, track.artist_id);
+			item->setData(0, RoleAlbumId, track.album_id);
 		}
 
 		// Search done
