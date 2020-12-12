@@ -55,16 +55,16 @@ bool playlist::loadTracksFromUrl(std::vector<Track> &trackList, std::string &url
 {
 	// Load tracks from api
 	auto newUrl = url.erase(0, std::string("https://api.spotify.com/v1/").length());
-	auto current = spotify.getAsObject(newUrl);
+	auto current = spotify.get(newUrl);
 
 	// Load from url
 	auto items = current.at("items");
-	for (auto item : items.items)
-		trackList.push_back(Track(item.toObject()));
+	for (auto &item : items.items())
+		trackList.emplace_back(item);
 
 	// Check if there's a next page
 	auto nextPage = current.at("next").get<std::string>();
-	if (!nextPage.is_empty())
+	if (!nextPage.empty())
 		loadTracksFromUrl(trackList, nextPage, offset + items.size(), spotify);
 
 	return true;
