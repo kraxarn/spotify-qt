@@ -20,6 +20,12 @@ namespace lib
 		date() = default;
 
 		/**
+		 * Construct a date from another date
+		 * @param date A new copy of date
+		 */
+		date(const date &date);
+
+		/**
 		 * Try to parse a date from a string
 		 * @param value ISO date
 		 * @return A date, invalid if parsing failed

@@ -7,6 +7,11 @@ using namespace lib;
 #define ISO_DATE_FORMAT "%Y-%m-%d"
 #define ISO_DATE_TIME_FORMAT "%Y-%m-%dT%H:%M:%SZ"
 
+date::date(const date &date)
+{
+	tm = date.tm;
+}
+
 date date::parse(const std::string &value)
 {
 	lib::date date;
