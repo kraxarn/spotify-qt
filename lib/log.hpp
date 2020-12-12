@@ -1,7 +1,7 @@
 #pragma once
 
 #include "enum/logtype.hpp"
-#include "logmessage.hpp"
+#include "log_message.hpp"
 
 #include <iostream>
 #include <regex>

@@ -31,9 +31,9 @@ LogViewer::LogViewer(QWidget *parent)
 	for (auto &message : lib::log::getMessages())
 	{
 		auto item = new QTreeWidgetItem({
-			QString::fromStdString(message.getTime()),
-			QString::fromStdString(message.getType()),
-			QString::fromStdString(message.getMessage())
+			QString::fromStdString(message.get_time()),
+			QString::fromStdString(message.get_type()),
+			QString::fromStdString(message.get_message())
 		});
 
 		list->addTopLevelItem(item);
