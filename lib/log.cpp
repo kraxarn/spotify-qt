@@ -15,7 +15,7 @@ void log::message(LogType logType, const std::string &message)
 		std::cerr << msg.format() << std::endl;
 }
 
-const std::vector<LogMessage> &log::getMessages()
+const std::vector<LogMessage> &log::get_messages()
 {
 	return messages;
 }
