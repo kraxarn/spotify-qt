@@ -12,7 +12,7 @@ SearchResults::SearchResults(const nlohmann::json &json)
 	// Artists
 	artists.reserve(json.at("artists").at("total").get<int>());
 	for (auto artist : json.at("artists").at("items").items())
-		artists.push_back(Artist(artist.value()));
+		artists.push_back(artist(artist.value()));
 
 	// Playlists
 	playlists.reserve(json.at("playlists").at("total").get<int>());
@@ -33,7 +33,7 @@ nlohmann::json SearchResults::toJson() const
 
 	nlohmann::json jsonArtists;
 	for (auto &artist : artists)
-		jsonArtists.push_back(artist.toJson());
+		jsonArtists.push_back(artist.to_json());
 
 	nlohmann::json jsonTracks;
 	for (auto &track : tracks)

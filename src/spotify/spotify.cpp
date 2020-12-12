@@ -86,7 +86,7 @@ QString Spotify::put(const QString &url, QVariantMap *body)
 	req.setHeader(QNetworkRequest::ContentTypeHeader, QString("application/json"));
 
 	// Send the request, we don't expect any response
-	auto putData = body == nullptr ? nullptr : QJsonDocument::fromVariant(*body).toJson();
+	auto putData = body == nullptr ? nullptr : QJsonDocument::fromVariant(*body).to_json();
 	auto reply = errorMessage(networkManager->put(req, putData));
 	if (reply.contains("No active device found"))
 	{
@@ -124,7 +124,7 @@ QString Spotify::del(const QString &url, const QJsonDocument &json)
 {
 	auto req = request(url);
 	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-	return errorMessage(networkManager->sendCustomRequest(req, "DELETE", json.toJson()));
+	return errorMessage(networkManager->sendCustomRequest(req, "DELETE", json.to_json()));
 }
 
 QString Spotify::errorMessage(QNetworkReply *reply)

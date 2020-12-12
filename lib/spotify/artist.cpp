@@ -2,7 +2,7 @@
 
 using namespace lib::spt;
 
-Artist::Artist(const nlohmann::json &json)
+artist::artist(const nlohmann::json &json)
 {
 	json.at("id").get_to(id);
 	json.at("followers").get_to(followers);
@@ -10,10 +10,10 @@ Artist::Artist(const nlohmann::json &json)
 	json.at("genres").get_to(genres);
 	json.at("name").get_to(name);
 	json.at("images").at(1).at("url").get_to(image);
-	json.at("external_urls").get_to(externalUrls);
+	json.at("external_urls").get_to(external_urls);
 }
 
-std::vector<Track> Artist::topTracks(Spotify &spotify) const
+std::vector<Track> artist::topTracks(spotify &spotify) const
 {
 	auto json = spotify.getAsObject(QString("artists/%1/top-tracks?country=from_token").arg(id));
 	auto items = json["tracks"].toArray();
@@ -24,7 +24,7 @@ std::vector<Track> Artist::topTracks(Spotify &spotify) const
 	return tracks;
 }
 
-std::vector<Album> Artist::albums(Spotify &spotify) const
+std::vector<Album> artist::albums(spotify &spotify) const
 {
 	auto json = spotify.getAsObject(QString("artists/%1/albums?country=from_token").arg(id));
 	auto items = json["items"].toArray();
@@ -35,18 +35,18 @@ std::vector<Album> Artist::albums(Spotify &spotify) const
 	return albums;
 }
 
-std::vector<Artist> Artist::relatedArtists(Spotify &spotify) const
+std::vector<artist> artist::relatedArtists(spotify &spotify) const
 {
 	auto json = spotify.getAsObject(QString("artists/%1/related-artists").arg(id));
 	auto items = json["artists"].toArray();
-	QVector<Artist> artists;
+	QVector<artist> artists;
 	artists.reserve(items.size());
 	for (auto item : items)
-		artists.append(Artist(item.toObject()));
+		artists.append(artist(item.toObject()));
 	return artists;
 }
 
-nlohmann::json Artist::toJson() const
+nlohmann::json artist::to_json() const
 {
 	return {
 		{"followers", followers},

@@ -425,7 +425,7 @@ void MainWindow::saveTracksToCache(const QString &id, const QVector<spt::Track> 
 {
 	QJsonArray json;
 	for (auto &track : tracks)
-		json.append(track.toJson());
+		json.append(track.to_json());
 	QFile file(QString("%1/tracks/%2.json").arg(cacheLocation).arg(id));
 	file.open(QIODevice::WriteOnly);
 	file.write(QJsonDocument(json).toJson());
@@ -562,7 +562,7 @@ void MainWindow::cachePlaylist(spt::Playlist &playlist)
 		QFile(baseFile).remove();
 
 	// Save new
-	QJsonDocument json(playlist.toJson(*spotify));
+	QJsonDocument json(playlist.to_json(*spotify));
 	QFile file(QString("%1.json").arg(baseFile));
 	file.open(QIODevice::WriteOnly);
 	file.write(json.toJson());

@@ -19,7 +19,7 @@ namespace lib
 			nlohmann::json toJson() const;
 
 			std::vector<Album> albums;
-			std::vector<Artist> artists;
+			std::vector<artist> artists;
 			std::vector<Track> tracks;
 
 			// For playlists, we need more complex information later
