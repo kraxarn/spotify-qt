@@ -1,5 +1,6 @@
 
 ## [json](https://github.com/nlohmann/json)
+v3.9.1, used for parsing settings and responses from the Spotify API.
 ```
 MIT License 
 
@@ -25,6 +26,7 @@ SOFTWARE.
 ```
 
 ## [cpp-httplib](https://github.com/yhirose/cpp-httplib)
+v0.7.16, used for sending and receiving calls from the Spotify API.
 ```
 The MIT License (MIT)
 
@@ -50,6 +52,7 @@ SOFTWARE.
 ```
 
 ## [cpp-base64](https://github.com/kraxarn/cpp-base64)
+v2.rc.07, used for encoding authentication details to the Spotify API.
 ```
 Copyright © 2004-2017 by René Nyffenegger
 
