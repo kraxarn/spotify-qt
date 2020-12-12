@@ -53,7 +53,7 @@ namespace lib
 			 * Get log from client
 			 * @return Log as list with date and message
 			 */
-			static std::vector<std::pait<date, std::string>> log();
+			static std::vector<std::pair<date, std::string>> log();
 
 			/**
 			 * Get current volume
