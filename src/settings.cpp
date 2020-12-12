@@ -1,14 +1,14 @@
 #include "settings.hpp"
 
-Settings::Settings(lib::paths &paths)
-	: paths(paths)
+Settings::Settings()
 {
 	load();
 }
 
 QString Settings::fileName() const
 {
-	return QString::fromStdString(paths.config_file());
+	return QString("%1.json")
+		.arg(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation));
 }
 
 QString Settings::filePath() const
