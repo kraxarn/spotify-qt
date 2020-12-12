@@ -1,38 +1,20 @@
 #pragma once
 
-namespace spt
-{
-	class Spotify;
-}
-
-#include "../dialog/deviceselectdialog.hpp"
 #include "artist.hpp"
 #include "audiofeatures.hpp"
 #include "device.hpp"
-#include "lib/enum/followtype.hpp"
-#include "lib/settings.hpp"
+#include "enum/followtype.hpp"
+#include "settings.hpp"
 #include "playback.hpp"
 #include "playlist.hpp"
 #include "searchresults.hpp"
 #include "user.hpp"
 
-#include <QCoreApplication>
-#include <QDateTime>
-#include <QDesktopServices>
-#include <QInputDialog>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QProcessEnvironment>
-#include <QSettings>
-#include <QString>
-#include <QtNetwork>
 
 namespace spt
 {
-	class Spotify: public QObject
+	class Spotify
 	{
-	Q_OBJECT
-
 	public:
 		explicit Spotify(lib::Settings &settings, QObject *parent = nullptr);
 
