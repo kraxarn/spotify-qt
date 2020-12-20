@@ -36,7 +36,8 @@ int main(int argc, char *argv[])
 	parser.addVersionOption();
 	parser.addHelpOption();
 	parser.addOptions({
-		{"debug", "Enable debug menu for troubleshooting issues."}
+		{"debug", "Enable debug menu for troubleshooting issues."},
+		{"reset-credentials", "Allows providing new Spotify credentials."}
 	});
 	parser.process(app);
 
@@ -44,7 +45,7 @@ int main(int argc, char *argv[])
 		MainMenu::showDebugMenu = true;
 
 	// First setup window
-	if (settings.account.refreshToken.isEmpty())
+	if (settings.account.refreshToken.isEmpty() || parser.isSet("reset-credentials"))
 	{
 #ifdef USE_QT_QUICK
 		if (qml.setup())
