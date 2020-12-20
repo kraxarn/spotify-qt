@@ -17,7 +17,7 @@ if (NOT DEFINED USE_DBUS)
 	set(USE_DBUS 1)
 endif ()
 
-# Optional Qy 6 support
+# Optional Qt 6 support
 if (DEFINED USE_QT6)
 	set(QT_VERSION_MAJOR 6)
 else()
