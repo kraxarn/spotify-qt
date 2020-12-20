@@ -11,6 +11,8 @@ Much like spotify-tui, you need an actual Spotify client running, for example [s
 
 Check out the [spotify-qt-quick](https://github.com/kraxarn/spotify-qt-quick) repo if you're interested in a Qt Quick UI.
 
+#### Contributions are very welcome!
+
 ## Supported platforms
 Tested: Linux, Windows
 
