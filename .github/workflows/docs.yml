@@ -15,6 +15,14 @@ jobs:
       - uses: actions/checkout@v2
 
       # Build documentation
-      - uses: mattnotmitt/doxygen-action@v1
+      - name: Build
+        uses: mattnotmitt/doxygen-action@v1
         with:
           working-directory: 'docs/'
+
+      # Deploy documentation to Pages
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: 'docs/public'
