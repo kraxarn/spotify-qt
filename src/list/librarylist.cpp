@@ -2,34 +2,35 @@
 
 #include "../mainwindow.hpp"
 
+#define FOLLOWED_ARTISTS "Followed Artists"
+#define NEW_RELEASES "New Releases"
+#define RECENTLY_PLAYED "Recently Played"
+#define SAVED_ALBUMS "Liked Albums"
+#define SAVED_TRACKS "Liked Tracks"
+#define TOP_ARTISTS "Popular Artists"
+#define TOP_TRACKS "Popular Tracks"
+
 LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 	: spotify(spotify), parent(parent), QTreeWidget(parent)
 {
 	addTopLevelItems({
-		Utils::treeItemWithChildren(this,
-			"Recently Played",
+		Utils::treeItemWithChildren(this, RECENTLY_PLAYED,
 			"Most recently played tracks from any device",
 			QStringList()),
-		Utils::treeItemWithChildren(this,
-			"Liked",
+		Utils::treeItemWithChildren(this, SAVED_TRACKS,
 			"Liked and saved tracks",
 			QStringList()),
-		Utils::treeItemWithChildren(this,
-			"Tracks",
+		Utils::treeItemWithChildren(this,TOP_TRACKS,
 			"Most played tracks for the past 6 months",
 			QStringList()),
-		Utils::treeItemWithChildren(this,
-			"New Releases",
+		Utils::treeItemWithChildren(this,NEW_RELEASES,
 			"New albums from artists you listen to",
 			QStringList()),
-		Utils::treeItemWithChildren(this,
-			"Albums",
+		Utils::treeItemWithChildren(this,SAVED_ALBUMS,
 			"Liked and saved albums"),
-		Utils::treeItemWithChildren(this,
-			"Artists",
+		Utils::treeItemWithChildren(this,TOP_ARTISTS,
 			"Most played artists for the past 6 months"),
-		Utils::treeItemWithChildren(this,
-			"Following",
+		Utils::treeItemWithChildren(this,FOLLOWED_ARTISTS,
 			"Artists you're currently following")
 	});
 
@@ -72,13 +73,13 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 			mainWindow->loadSongs(cacheTracks);
 
 		QVector<spt::Track> tracks;
-		if (item->text(0) == "Recently Played")
+		if (item->text(0) == RECENTLY_PLAYED)
 			tracks = spotify.recentlyPlayed();
-		else if (item->text(0) == "Liked")
+		else if (item->text(0) == SAVED_TRACKS)
 			tracks = spotify.savedTracks();
-		else if (item->text(0) == "Tracks")
+		else if (item->text(0) == TOP_TRACKS)
 			tracks = spotify.topTracks();
-		else if (item->text(0) == "New Releases")
+		else if (item->text(0) == NEW_RELEASES)
 		{
 			auto all = mainWindow->allArtists();
 			auto releases = spotify.newReleases();
@@ -107,11 +108,11 @@ void LibraryList::doubleClicked(QTreeWidgetItem *item, int)
 		return;
 
 	// Fetch all tracks in list
-	auto tracks = item->text(0) == "Recently Played"
+	auto tracks = item->text(0) == RECENTLY_PLAYED
 		? spotify.recentlyPlayed()
-		: item->text(0) == "Liked"
+		: item->text(0) == SAVED_TRACKS
 			? spotify.savedTracks()
-			: item->text(0) == "Tracks"
+			: item->text(0) == TOP_TRACKS
 				? spotify.topTracks()
 				: QVector<spt::Track>();
 
@@ -136,13 +137,13 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 	QVector<QVariantList> results;
 	item->takeChildren();
 
-	if (item->text(0) == "Artists")
+	if (item->text(0) == TOP_ARTISTS)
 		for (auto &artist : spotify.topArtists())
 			results.append({artist.name, artist.id, RoleArtistId});
-	else if (item->text(0) == "Albums")
+	else if (item->text(0) == SAVED_ALBUMS)
 		for (auto &album : spotify.savedAlbums())
 			results.append({album.name, album.id, RoleAlbumId});
-	else if (item->text(0) == "Following")
+	else if (item->text(0) == FOLLOWED_ARTISTS)
 		for (auto &artist : spotify.followedArtists())
 			results.append({artist.name, artist.id, RoleArtistId});
 
