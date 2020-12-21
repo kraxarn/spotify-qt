@@ -28,29 +28,34 @@ public:
 	QVector<spt::Track> playlistTracks(const QString &playlistId);
 	void reloadTrayIcon();
 	spt::User getCurrentUser();
-	void refreshPlaylists();
 	void setFixedWidthTime(bool value);
 	QVector<spt::Track> loadTracksFromCache(const QString &id);
 	void saveTracksToCache(const QString &id, const QVector<spt::Track> &tracks);
 	bool loadSongs(const QVector<spt::Track> &tracks);
-	QSet<QString> allArtists();
 	QStringList currentTracks();
 	void setPlayingTrackItem(QTreeWidgetItem *item);
 	void refresh();
 	void refreshed(const spt::Playback &playback);
-	void orderPlaylists(PlaylistOrder order);
 	void toggleTrackNumbers(bool enabled);
 	bool isValid() const;
 	void setSearchVisible(bool visible);
 	void addSidePanelTab(QWidget *widget, const QString &title);
+	void refreshPlaylists();
+	QTreeWidgetItem *getCurrentLibraryItem();
+	void setCurrentLibraryItem(QTreeWidgetItem *item);
+	spt::Playlist &getPlaylist(int index);
+	void setCurrentPlaylistItem(int index);
+	QSet<QString> allArtists();
+	QListWidgetItem *getCurrentPlaylistItem();
+	QVector<spt::Playlist> &getPlaylists();
+	int getPlaylistItemCount();
+	QListWidgetItem *getPlaylistItem(int index);
+	void orderPlaylists(PlaylistOrder order);
 
 	// Getters for private properties
 	QString &getCacheLocation();
-	QVector<spt::Playlist> &getSptPlaylists();
-	QListWidget *getPlaylistsList();
 	QAction *getSearchAction();
 	QTreeWidget *getSongsTree();
-	LibraryList *getLibraryList();
 	QString &getSptContext();
 	spt::Playback &getCurrentPlayback();
 
@@ -63,20 +68,14 @@ private:
 	Settings &settings;
 
 	// Qt Widgets
-	QLabel *nowAlbum = nullptr;
-	QLabel *nowPlaying = nullptr;
-	QListWidget *playlists = nullptr;
-	LibraryList *libraryList = nullptr;
 	QTreeWidget *songs = nullptr;
 	QTreeWidgetItem *playingTrackItem = nullptr;
 	QToolBar *toolBar = nullptr;
-	QLabel *contextIcon = nullptr;
-	QLabel *contextInfo = nullptr;
 
 	// spt
 	spt::ClientHandler *sptClient = nullptr;
-	spt::Playback current;
 	spt::Spotify *spotify = nullptr;
+	spt::Current current;
 
 	// Non-Widget Qt
 	QNetworkAccessManager *network = nullptr;
@@ -85,14 +84,13 @@ private:
 	LyricsView *lyricsView = nullptr;
 	QHash<QString, QTreeWidgetItem *> trackItems;
 	QString cacheLocation;
-	QString sptContext;
-	QVector<spt::Playlist> sptPlaylists;
 	TrayIcon *trayIcon = nullptr;
 	int refreshCount = -1;
 	spt::User currentUser;
 	QIcon emptyIcon;
 	bool stateValid = true;
 	QTabWidget *sidePanel = nullptr;
+	LeftSidePanel *leftSidePanel = nullptr;
 
 #ifdef USE_DBUS
 	mp::Service *mediaPlayer = nullptr;
@@ -103,10 +101,4 @@ private:
 	void setAlbumImage(const QString &url);
 	void cachePlaylist(spt::Playlist &playlist);
 	bool loadPlaylistFromCache(spt::Playlist &playlist);
-	void updateContextIcon();
-	QString getPlaylistName(const QString &id);
-	QString getPlaylistNameFromSaved(const QString &id);
-	void contextInfoMenu(const QPoint &pos);
-	void contextInfoOpen(bool checked);
-	QIcon currentContextIcon() const;
 };

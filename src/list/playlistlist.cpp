@@ -1,5 +1,7 @@
 #include "playlistlist.hpp"
 
+#include "../mainwindow.hpp"
+
 PlaylistList::PlaylistList(spt::Spotify &spotify, QWidget *parent)
 	: spotify(spotify), QListWidget(parent)
 {
@@ -28,16 +30,16 @@ void PlaylistList::clicked(QListWidgetItem *item)
 {
 	auto mainWindow = (MainWindow *) parent;
 	if (item != nullptr)
-		mainWindow->getLibraryList()->setCurrentItem(nullptr);
+		mainWindow->setCurrentLibraryItem(nullptr);
 
-	auto currentPlaylist = mainWindow->getSptPlaylists().at(getItemIndex(item));
+	auto currentPlaylist = mainWindow->getPlaylist(getItemIndex(item));
 	mainWindow->loadPlaylist(currentPlaylist);
 }
 
 void PlaylistList::doubleClicked(QListWidgetItem *item)
 {
 	auto mainWindow = (MainWindow *) parent;
-	auto currentPlaylist = mainWindow->getSptPlaylists().at(getItemIndex(item));
+	auto currentPlaylist = mainWindow->getPlaylist(getItemIndex(item));
 	mainWindow->loadPlaylist(currentPlaylist);
 
 	auto result = spotify.playTracks(
@@ -50,7 +52,7 @@ void PlaylistList::menu(const QPoint &pos)
 {
 	auto mainWindow = (MainWindow *) parent;
 	(new PlaylistMenu(spotify,
-		mainWindow->getSptPlaylists().at(getItemIndex(itemAt(pos))), parent))
+		mainWindow->getPlaylist(getItemIndex(itemAt(pos))), parent))
 		->popup(mapToGlobal(pos));
 }
 

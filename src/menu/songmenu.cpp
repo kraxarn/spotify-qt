@@ -82,14 +82,14 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name, QString
 	addSeparator();
 	auto addPlaylist = addMenu(Icon::get("list-add"), "Add to playlist");
 
-	auto playlistItem = mainWindow->getPlaylistsList()->currentItem();
+	auto playlistItem = mainWindow->getCurrentPlaylistItem();
 	if (playlistItem != nullptr)
 	{
-		currentPlaylist = &mainWindow->getSptPlaylists().at(playlistItem->data(RoleIndex).toInt());
+		currentPlaylist = &mainWindow->getPlaylist(playlistItem->data(RoleIndex).toInt());
 	}
 
 	auto currentUserId = mainWindow->getCurrentUser().id;
-	for (auto &playlist : mainWindow->getSptPlaylists())
+	for (auto &playlist : mainWindow->getPlaylists())
 	{
 		if (!playlist.collaborative && playlist.ownerId != currentUserId)
 			continue;
@@ -102,7 +102,7 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name, QString
 
 	// Remove from playlist
 	auto remPlaylist = addAction(Icon::get("list-remove"), "Remove from playlist");
-	remPlaylist->setVisible(mainWindow->getPlaylistsList()->currentRow() >= 0);
+	remPlaylist->setVisible(mainWindow->getCurrentPlaylistItem() != nullptr);
 	QAction::connect(remPlaylist, &QAction::triggered, this, &SongMenu::remFromPlaylist);
 
 	addSeparator();

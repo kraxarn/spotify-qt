@@ -1,9 +1,6 @@
 #pragma once
 
-class LibraryList;
-
 #include "../enum/datarole.hpp"
-#include "../mainwindow.hpp"
 #include "../spotify/spotify.hpp"
 #include "../util/utils.hpp"
 
@@ -25,5 +22,3 @@ private:
 	void doubleClicked(QTreeWidgetItem *item, int column);
 	void expanded(QTreeWidgetItem *item);
 };
-
-

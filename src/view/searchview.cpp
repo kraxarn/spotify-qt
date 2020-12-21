@@ -113,7 +113,7 @@ SearchView::SearchView(spt::Spotify &spotify, const Settings &settings, QWidget 
 		if (!window->loadPlaylist(playlist))
 			window->setStatus(QString("Failed to load playlist"), true);
 		else
-			window->getPlaylistsList()->setCurrentRow(-1);
+			window->setCurrentPlaylistItem(-1);
 	});
 
 	// Open track

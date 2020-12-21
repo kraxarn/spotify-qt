@@ -1,5 +1,7 @@
 #include "librarylist.hpp"
 
+#include "../mainwindow.hpp"
+
 LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 	: spotify(spotify), parent(parent), QTreeWidget(parent)
 {
@@ -45,7 +47,7 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 	if (mainWindow == nullptr || item == nullptr)
 		return;
 
-	mainWindow->getPlaylistsList()->setCurrentRow(-1);
+	mainWindow->setCurrentPlaylistItem(-1);
 	if (item->parent() != nullptr)
 	{
 		auto data = item->data(0, 0x100).toString();

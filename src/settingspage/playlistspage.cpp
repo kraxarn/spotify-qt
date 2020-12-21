@@ -56,10 +56,9 @@ QWidget *PlaylistsPage::order()
 	layout->addLayout(plListLayout, 1);
 	playlistOrderChanged(plOrder->currentIndex());
 
-	auto mainList = mainWindow->getPlaylistsList();
-	for (auto i = 0; i < mainList->count(); i++)
+	for (auto i = 0; i < mainWindow->getPlaylistItemCount(); i++)
 	{
-		auto mainItem = mainList->item(i);
+		auto mainItem = mainWindow->getPlaylistItem(i);
 		auto listItem = new QListWidgetItem(mainItem->text());
 		listItem->setData(DataRole::RolePlaylistId, mainItem->data(DataRole::RolePlaylistId));
 		plList->addItem(listItem);
