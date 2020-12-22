@@ -11,7 +11,9 @@
 #define TOP_TRACKS "Popular Tracks"
 
 LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
-	: spotify(spotify), parent(parent), QTreeWidget(parent)
+	: spotify(spotify),
+	parent(parent),
+	QTreeWidget(parent)
 {
 	addTopLevelItems({
 		Utils::treeItemWithChildren(this, RECENTLY_PLAYED,
