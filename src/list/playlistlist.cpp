@@ -46,8 +46,8 @@ void PlaylistList::doubleClicked(QListWidgetItem *item)
 
 void PlaylistList::menu(const QPoint &pos)
 {
-	(new PlaylistMenu(spotify,
-		mainWindow->getPlaylist(getItemIndex(itemAt(pos))), parentWidget()))
+	auto mainWindow = MainWindow::find(parentWidget());
+	(new PlaylistMenu(spotify, mainWindow->getPlaylist(getItemIndex(itemAt(pos))), mainWindow))
 		->popup(mapToGlobal(pos));
 }
 
