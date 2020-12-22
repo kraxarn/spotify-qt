@@ -133,6 +133,8 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const Set
 		});
 		item->setIcon(0, QIcon(mainWindow->getAlbum(album.image)));
 		item->setData(0, RoleAlbumId, album.id);
+		item->setToolTip(1, QLocale::system()
+			.toString(album.releaseDate.date(), QLocale::FormatType::ShortFormat));
 		parentTab->insertTopLevelItem(0, item);
 	}
 
