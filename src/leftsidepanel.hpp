@@ -10,6 +10,8 @@
 
 class LeftSidePanel: public QWidget
 {
+Q_OBJECT
+
 public:
 	explicit LeftSidePanel(spt::Spotify &spotify, Settings &settings, spt::Current &current, QWidget *parent = nullptr);
 
