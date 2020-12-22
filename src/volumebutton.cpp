@@ -34,7 +34,7 @@ VolumeButton::VolumeButton(Settings &settings, spt::Spotify &spotify, QWidget *p
 		// If using PulseAudio for volume control, update on every tick
 		QSlider::connect(volume, &QAbstractSlider::valueChanged, [](int value)
 		{
-			spt::ClientHandler::setVolume(value * 0.05);
+			spt::ClientHandler::setVolume((float)value * 0.05f);
 		});
 	}
 	else
