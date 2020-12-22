@@ -534,7 +534,7 @@ void MainWindow::toggleTrackNumbers(bool enabled)
 
 //region Getters
 
-spt::Playback MainWindow::currentPlayback()
+spt::Playback MainWindow::currentPlayback() const
 {
 	return current.playback;
 }

@@ -24,7 +24,7 @@ public:
 	QPixmap getImage(const QString &type, const QString &url);
 	void refreshPlaylist(spt::Playlist &playlist);
 	bool loadPlaylist(spt::Playlist &playlist);
-	spt::Playback currentPlayback();
+	spt::Playback currentPlayback() const;
 	void openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name);
 	void openLyrics(const QString &artist, const QString &name);
 	QVector<spt::Track> playlistTracks(const QString &playlistId);
