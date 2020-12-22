@@ -12,7 +12,6 @@
 
 LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 	: spotify(spotify),
-	parent(parent),
 	QTreeWidget(parent)
 {
 	addTopLevelItems({
@@ -46,7 +45,7 @@ LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 
 void LibraryList::clicked(QTreeWidgetItem *item, int)
 {
-	auto mainWindow = dynamic_cast<MainWindow *>(parent);
+	auto mainWindow = MainWindow::find(parentWidget());
 	if (mainWindow == nullptr || item == nullptr)
 		return;
 
@@ -105,7 +104,7 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 
 void LibraryList::doubleClicked(QTreeWidgetItem *item, int)
 {
-	auto mainWindow = dynamic_cast<MainWindow *>(parent);
+	auto mainWindow = MainWindow::find(parentWidget());
 	if (mainWindow == nullptr)
 		return;
 

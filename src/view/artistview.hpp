@@ -42,7 +42,6 @@ private:
 	QTabWidget *tabs = nullptr;
 	QTreeWidget *albumList = nullptr;
 	QTreeWidget *singleList = nullptr;
-	QWidget *parent = nullptr;
 	QString artistId;
 	spt::Artist artist;
 	spt::Spotify &spotify;

@@ -1,9 +1,11 @@
 #include "playlistmenu.hpp"
 
 PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist, QWidget *parent)
-	: parent(parent), playlist(playlist), QMenu(parent)
+	: parent(parent),
+	playlist(playlist),
+	QMenu(parent)
 {
-	auto window = dynamic_cast<MainWindow *>(parent);
+	auto window = MainWindow::find(parent);
 	if (window == nullptr)
 		return;
 

@@ -3,13 +3,12 @@
 ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const Settings &settings, QWidget *parent)
 	: spotify(spotify), artistId(artistId), QWidget(parent)
 {
-	this->parent = dynamic_cast<MainWindow *>(parent);
-	if (this->parent == nullptr)
+	auto mainWindow = MainWindow::find(parentWidget());
+	if (mainWindow == nullptr)
 	{
 		Log::error("Parent is not MainWindow");
 		return;
 	}
-	auto mainWindow = (MainWindow *) parent;
 
 	artist = spotify.artist(artistId);
 	setWindowTitle(artist.name);
@@ -190,7 +189,8 @@ void ArtistView::trackClick(QListWidgetItem *item)
 {
 	auto result = spotify.playTracks(item->data(RoleIndex).toInt(), topTrackIds);
 	if (!result.isEmpty())
-		((MainWindow *) parent)->setStatus(QString("Failed to start playback: %1").arg(result), true);
+		MainWindow::find(parentWidget())
+			->setStatus(QString("Failed to start playback: %1").arg(result), true);
 }
 
 void ArtistView::trackMenu(const QPoint &pos)
@@ -199,13 +199,13 @@ void ArtistView::trackMenu(const QPoint &pos)
 	auto trackId = item->data(RoleTrackId).toString();
 	if (trackId.isEmpty())
 		return;
-	(new SongMenu(item, artist.name, spotify, parent))
+	(new SongMenu(item, artist.name, spotify, parentWidget()))
 		->popup(topTracksList->mapToGlobal(pos));
 }
 
 void ArtistView::loadAlbumId(QTreeWidgetItem *item)
 {
-	auto mainWindow = (MainWindow *) parent;
+	auto mainWindow = MainWindow::find(parentWidget());
 	if (!mainWindow->loadAlbum(item->data(0, RoleAlbumId).toString(), false))
 		mainWindow->setStatus(QString("Failed to load album"), true);
 }
@@ -213,7 +213,7 @@ void ArtistView::loadAlbumId(QTreeWidgetItem *item)
 void ArtistView::relatedClick(QListWidgetItem *item)
 {
 	relatedList->setEnabled(false);
-	((MainWindow *) parent)->openArtist(item->data(RoleArtistId).toString());
+	MainWindow::find(parentWidget())->openArtist(item->data(RoleArtistId).toString());
 	relatedList->setEnabled(true);
 }
 
@@ -231,12 +231,12 @@ void ArtistView::albumMenu(const QPoint &pos)
 	auto albumId = item->data(0, RoleAlbumId).toString();
 	if (albumId.isEmpty())
 		return;
-	(new AlbumMenu(spotify, albumId, parent))->popup(list->mapToGlobal(pos));
+	(new AlbumMenu(spotify, albumId, parentWidget()))->popup(list->mapToGlobal(pos));
 }
 
 void ArtistView::albumDoubleClicked(QTreeWidgetItem *item, int)
 {
-	auto mainWindow = (MainWindow *) parent;
+	auto mainWindow = MainWindow::find(parentWidget());
 	auto result = spotify.playTracks(
 		QString("spotify:album:%1").arg(item->data(0, RoleAlbumId).toString()));
 	if (!result.isEmpty())
@@ -262,11 +262,11 @@ void ArtistView::play(bool)
 void ArtistView::copyLink(bool)
 {
 	QApplication::clipboard()->setText(QString("https://open.spotify.com/artist/%1").arg(artistId));
-	((MainWindow *) this->parent)->setStatus("Link copied to clipboard");
+	MainWindow::find(parentWidget())->setStatus("Link copied to clipboard");
 }
 
 void ArtistView::openInSpotify(bool)
 {
 	Utils::openUrl(QString("https://open.spotify.com/artist/%1").arg(artistId),
-		LinkType::Web, this->parent);
+		LinkType::Web, MainWindow::find(parentWidget()));
 }

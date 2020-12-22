@@ -116,7 +116,7 @@ QWidget *SpotifyPage::config()
 
 QWidget *SpotifyPage::logs()
 {
-	return new ClientHandlerLogView(findMainWindow());
+	return new ClientHandlerLogView(MainWindow::find(parentWidget()));
 }
 
 QIcon SpotifyPage::icon()

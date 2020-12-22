@@ -45,7 +45,7 @@ VolumeButton::VolumeButton(Settings &settings, spt::Spotify &spotify, QWidget *p
 			auto status = this->spotify.setVolume(volume->value() * 5);
 			if (!status.isEmpty())
 			{
-				auto window = dynamic_cast<MainWindow *>(this->parent());
+				auto window = MainWindow::find(parentWidget());
 				if (window != nullptr)
 					window->setStatus(QString("Failed to set volume: %1").arg(status), true);
 			}

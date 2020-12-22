@@ -34,7 +34,7 @@ QWidget *PlaylistsPage::order()
 	QComboBox::connect(plOrder, QOverload<int>::of(&QComboBox::currentIndexChanged),
 		this, &PlaylistsPage::playlistOrderChanged);
 
-	auto mainWindow = dynamic_cast<MainWindow *>(findMainWindow());
+	auto mainWindow = MainWindow::find(parentWidget());
 
 	plListLayout = new QHBoxLayout();
 	plList = new QListWidget(this);
@@ -90,7 +90,7 @@ bool PlaylistsPage::save()
 	}
 
 	// Playlist stuff
-	auto mainWindow = dynamic_cast<MainWindow*>(findMainWindow());
+	auto mainWindow = MainWindow::find(parentWidget());
 	if ((settings.general.playlistOrder != playlistOrder || playlistOrder == PlaylistOrderCustom) && mainWindow != nullptr)
 		mainWindow->orderPlaylists(playlistOrder);
 	settings.general.playlistOrder = playlistOrder;

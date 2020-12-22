@@ -11,7 +11,7 @@ AboutPage::AboutPage(Settings &settings, QWidget *parent)
 
 QWidget *AboutPage::about()
 {
-	auto mainWindow = dynamic_cast<MainWindow *>(findMainWindow());
+	auto mainWindow = MainWindow::find(parentWidget());
 	auto layout = tabContent();
 	layout->setAlignment(Qt::AlignCenter);
 
@@ -59,12 +59,12 @@ QWidget *AboutPage::about()
 
 QWidget *AboutPage::systemInfo()
 {
-	return new SystemInfoDialog(findMainWindow(), this);
+	return new SystemInfoDialog(MainWindow::find(parentWidget()), this);
 }
 
 QWidget *AboutPage::cacheInfo()
 {
-	return new CacheView(dynamic_cast<MainWindow *>(findMainWindow())->getCacheLocation(), this);
+	return new CacheView(MainWindow::find(parentWidget())->getCacheLocation(), this);
 }
 
 QWidget *AboutPage::configPreview()

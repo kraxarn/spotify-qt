@@ -5,10 +5,6 @@
 PlaylistList::PlaylistList(spt::Spotify &spotify, QWidget *parent)
 	: spotify(spotify), QListWidget(parent)
 {
-	this->parent = dynamic_cast<MainWindow *>(parent);
-	if (this->parent == nullptr)
-		return;
-
 	// Set default selected playlist
 	setCurrentRow(0);
 
@@ -28,7 +24,7 @@ int PlaylistList::getItemIndex(QListWidgetItem *item)
 
 void PlaylistList::clicked(QListWidgetItem *item)
 {
-	auto mainWindow = (MainWindow *) parent;
+	auto mainWindow = MainWindow::find(parentWidget());
 	if (item != nullptr)
 		mainWindow->setCurrentLibraryItem(nullptr);
 
@@ -38,7 +34,7 @@ void PlaylistList::clicked(QListWidgetItem *item)
 
 void PlaylistList::doubleClicked(QListWidgetItem *item)
 {
-	auto mainWindow = (MainWindow *) parent;
+	auto mainWindow = MainWindow::find(parentWidget());
 	auto currentPlaylist = mainWindow->getPlaylist(getItemIndex(item));
 	mainWindow->loadPlaylist(currentPlaylist);
 
@@ -50,9 +46,8 @@ void PlaylistList::doubleClicked(QListWidgetItem *item)
 
 void PlaylistList::menu(const QPoint &pos)
 {
-	auto mainWindow = (MainWindow *) parent;
 	(new PlaylistMenu(spotify,
-		mainWindow->getPlaylist(getItemIndex(itemAt(pos))), parent))
+		mainWindow->getPlaylist(getItemIndex(itemAt(pos))), parentWidget()))
 		->popup(mapToGlobal(pos));
 }
 

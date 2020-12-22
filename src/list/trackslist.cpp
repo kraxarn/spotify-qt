@@ -1,12 +1,10 @@
 #include "trackslist.hpp"
 
 TracksList::TracksList(spt::Spotify &spotify, Settings &settings, QWidget *parent)
-	: spotify(spotify), settings(settings), parent(parent), QTreeWidget(parent)
+	: spotify(spotify),
+	settings(settings),
+	QTreeWidget(parent)
 {
-	auto mainWindow = dynamic_cast<MainWindow *>(parent);
-	if (mainWindow == nullptr)
-		return;
-
 	setEditTriggers(QAbstractItemView::NoEditTriggers);
 	setSelectionBehavior(QAbstractItemView::SelectRows);
 	setSortingEnabled(true);
@@ -48,7 +46,7 @@ void TracksList::menu(const QPoint &pos)
 	if (trackId.isEmpty())
 		return;
 
-	(new SongMenu(item, spotify, parent))->popup(mapToGlobal(pos));
+	(new SongMenu(item, spotify, parentWidget()))->popup(mapToGlobal(pos));
 }
 
 void TracksList::clicked(QTreeWidgetItem *item, int)
@@ -56,7 +54,7 @@ void TracksList::clicked(QTreeWidgetItem *item, int)
 	if (item->isDisabled())
 		return;
 
-	auto mainWindow = (MainWindow *) this->parent;
+	auto mainWindow = MainWindow::find(parentWidget());
 
 	bool indexFound;
 	auto trackIndex = item->data(0, RoleIndex).toInt(&indexFound);

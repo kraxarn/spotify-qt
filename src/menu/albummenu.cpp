@@ -1,9 +1,12 @@
 #include "albummenu.hpp"
 
 AlbumMenu::AlbumMenu(spt::Spotify &spotify, const QString &albumId, QWidget *parent)
-	: parent(parent), albumId(albumId), spotify(spotify), QMenu(parent)
+	: parent(parent),
+	albumId(albumId),
+	spotify(spotify),
+	QMenu(parent)
 {
-	auto mainWindow = dynamic_cast<MainWindow *>(parent);
+	auto mainWindow = MainWindow::find(parent);
 	if (mainWindow == nullptr)
 		return;
 

@@ -14,7 +14,6 @@ public:
 
 private:
 	spt::Spotify &spotify;
-	QWidget *parent;
 
 	int getItemIndex(QListWidgetItem *item);
 	void clicked(QListWidgetItem *item);

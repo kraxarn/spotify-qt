@@ -17,14 +17,6 @@ void SettingsPage::applyFail(const QString &setting)
 		QString("Failed to apply setting \"%1\". Check your settings and try again.").arg(setting));
 }
 
-QWidget *SettingsPage::findMainWindow()
-{
-	auto ptr = parentWidget();
-	while (ptr != nullptr && dynamic_cast<MainWindow*>(ptr) == nullptr)
-		ptr = ptr->parentWidget();
-	return ptr;
-}
-
 QVBoxLayout *SettingsPage::tabContent()
 {
 	auto layout = new QVBoxLayout(this);

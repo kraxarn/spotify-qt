@@ -109,7 +109,7 @@ QString InterfacePage::title()
 
 bool InterfacePage::save()
 {
-	auto mainWindow = dynamic_cast<MainWindow *>(findMainWindow());
+	auto mainWindow = MainWindow::find(parentWidget());
 
 	// Set theme
 	auto changeTheme = itfDark->isChecked() != settings.darkTheme();
@@ -166,9 +166,8 @@ bool InterfacePage::save()
 	settings.general.trayAlbumArt = itfTrayAlbum->isChecked();
 
 	// Reload if needed
-	auto window = dynamic_cast<MainWindow *>(findMainWindow());
-	if (reloadTray && window != nullptr)
-		window->reloadTrayIcon();
+	if (reloadTray && mainWindow != nullptr)
+		mainWindow->reloadTrayIcon();
 
 	return true;
 }

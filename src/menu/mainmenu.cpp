@@ -56,7 +56,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
 		debugMenu->setIcon(Icon::get("folder-txt"));
 		QAction::connect(debugMenu->addAction("Test API requests"), &QAction::triggered, [this]()
 		{
-			auto mainWindow = dynamic_cast<MainWindow *>(this->parent);
+			auto mainWindow = MainWindow::find(parentWidget());
 			mainWindow->addSidePanelTab(new DebugView(this->settings, mainWindow), "API request");
 		});
 		addMenu(debugMenu);

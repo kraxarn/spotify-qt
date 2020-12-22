@@ -122,7 +122,7 @@ void LeftSidePanel::contextInfoMenu(const QPoint &pos)
 
 void LeftSidePanel::contextInfoOpen(bool)
 {
-	auto mainWindow = dynamic_cast<MainWindow *>(parentWidget());
+	auto mainWindow = MainWindow::find(parentWidget());
 	auto type = current.playback.contextType;
 	auto uri = current.playback.contextUri.split(':').last();
 
@@ -141,11 +141,10 @@ void LeftSidePanel::contextInfoOpen(bool)
 
 QSet<QString> LeftSidePanel::allArtists()
 {
-	auto mainWindow = dynamic_cast<MainWindow *>(parentWidget());
-
 	QSet<QString> artists;
 	for (auto i = 0; i < playlists->count(); i++)
-		for (auto &track : mainWindow->playlistTracks(playlists->item(i)->data(RolePlaylistId).toString()))
+		for (auto &track : MainWindow::find(parentWidget())
+			->playlistTracks(playlists->item(i)->data(RolePlaylistId).toString()))
 			artists << track.artist;
 	return artists;
 }
@@ -237,7 +236,7 @@ void LeftSidePanel::orderPlaylists(PlaylistOrder order)
 
 		case PlaylistOrderRecent:
 			// TODO: Currently sorts by when tracks where added, not when playlist was last played
-			mainWindow = dynamic_cast<MainWindow *>(parentWidget());
+			mainWindow = MainWindow::find(parentWidget());
 			if (mainWindow == nullptr)
 			{
 				Log::error("Failed to order playlist: MainWindow not found");

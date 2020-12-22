@@ -19,5 +19,4 @@ private:
 
 	spt::Spotify &spotify;
 	Settings &settings;
-	QWidget *parent;
 };
