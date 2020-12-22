@@ -24,7 +24,6 @@ private:
 	SongMenu(const QString &trackId, QString artist, QString name, QString artistId,
 		QString albumId, int index, spt::Spotify &spotify, QWidget *parent);
 
-	QWidget *parent;
 	spt::Spotify &spotify;
 	bool isLiked = false;
 	const QString trackId;

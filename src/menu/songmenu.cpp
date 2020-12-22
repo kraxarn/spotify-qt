@@ -27,13 +27,12 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name, QString
 	: trackId(trackId), artist(std::move(artist)), trackName(std::move(name)), index(index), spotify(spotify),
 	artistId(std::move(artistId)), albumId(std::move(albumId)), QMenu(parent)
 {
-	this->parent = dynamic_cast<MainWindow *>(parent);
-	if (this->parent == nullptr)
+	auto mainWindow = MainWindow::find(parent);
+	if (mainWindow == nullptr)
 	{
 		Log::warn("Parent is not MainWindow, SongMenu won't work properly");
 		return;
 	}
-	auto mainWindow = (MainWindow *) parent;
 
 	trackUri = trackId.startsWith("spotify:track")
 		? QString(trackId).remove(0, QString("spotify:track:").length())
@@ -46,17 +45,17 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name, QString
 
 	auto share = addMenu(Icon::get("document-share"), "Share");
 	auto shareSongLink = share->addAction("Copy song link");
-	QAction::connect(shareSongLink, &QAction::triggered, [this](bool checked)
+	QAction::connect(shareSongLink, &QAction::triggered, [this, mainWindow](bool checked)
 	{
 		QApplication::clipboard()->setText(QString("https://open.spotify.com/track/%1").arg(trackUri));
-		((MainWindow *) this->parent)->setStatus("Link copied to clipboard");
+		mainWindow->setStatus("Link copied to clipboard");
 	});
 
 	auto shareSongOpen = share->addAction("Open in Spotify");
-	QAction::connect(shareSongOpen, &QAction::triggered, [this](bool checked)
+	QAction::connect(shareSongOpen, &QAction::triggered, [this, mainWindow](bool checked)
 	{
 		Utils::openUrl(QString("https://open.spotify.com/track/%1").arg(trackUri),
-			LinkType::Web, this->parent);
+			LinkType::Web, mainWindow);
 	});
 
 	// Add/remove liked
@@ -120,7 +119,7 @@ void SongMenu::like(bool)
 		? spotify.removeSavedTrack(trackId)
 		: spotify.addSavedTrack(trackId);
 	if (!status.isEmpty())
-		((MainWindow *) parent)->setStatus(QString("Failed to %1: %2")
+		MainWindow::find(parentWidget())->setStatus(QString("Failed to %1: %2")
 			.arg(isLiked ? "dislike" : "like")
 			.arg(status), true);
 }
@@ -131,13 +130,13 @@ void SongMenu::addToQueue(bool)
 		? trackId
 		: QString("spotify:track:%1").arg(trackId));
 	if (!status.isEmpty())
-		((MainWindow *) parent)->setStatus(status, true);
+		MainWindow::find(parentWidget())->setStatus(status, true);
 }
 
 void SongMenu::addToPlaylist(QAction *action)
 {
 	// Check if it's already in the playlist
-	auto mainWindow = (MainWindow *) parent;
+	auto mainWindow = MainWindow::find(parentWidget());
 	auto playlistId = action->data().toString();
 	auto tracks = spotify.playlist(playlistId).loadTracks(spotify);
 	for (auto &item : tracks)
@@ -164,7 +163,7 @@ void SongMenu::addToPlaylist(QAction *action)
 void SongMenu::remFromPlaylist(bool)
 {
 	// Remove from Spotify
-	auto mainWindow = (MainWindow *) parent;
+	auto mainWindow = MainWindow::find(parentWidget());
 	auto status = spotify.removeFromPlaylist(currentPlaylist->id, trackId, index);
 	if (!status.isEmpty())
 	{
@@ -197,20 +196,20 @@ void SongMenu::remFromPlaylist(bool)
 
 void SongMenu::openTrackFeatures(bool)
 {
-	((MainWindow *) parent)->openAudioFeaturesWidget(trackId, artist, trackName);
+	MainWindow::find(parentWidget())->openAudioFeaturesWidget(trackId, artist, trackName);
 }
 
 void SongMenu::openLyrics(bool)
 {
-	((MainWindow *) parent)->openLyrics(artist, trackName);
+	MainWindow::find(parentWidget())->openLyrics(artist, trackName);
 }
 
 void SongMenu::viewArtist(bool)
 {
-	((MainWindow *) parent)->openArtist(artistId);
+	MainWindow::find(parentWidget())->openArtist(artistId);
 }
 
 void SongMenu::openAlbum(bool)
 {
-	((MainWindow *) parent)->loadAlbum(albumId, false);
+	MainWindow::find(parentWidget())->loadAlbum(albumId, false);
 }

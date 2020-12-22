@@ -53,13 +53,15 @@ LeftSidePanel::LeftSidePanel(spt::Spotify &spotify, Settings &settings, spt::Cur
 
 	// Show menu when clicking now playing
 	nowPlaying->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QLabel::connect(nowPlaying, &QWidget::customContextMenuRequested, [this](const QPoint &pos)
-	{
-		auto track = this->current.playback.item;
-		if (track.name.isEmpty() && track.artist.isEmpty())
-			return;
-		(new SongMenu(track, this->spotify, this))->popup(nowPlaying->mapToGlobal(pos));
-	});
+	QLabel::connect(nowPlaying, &QWidget::customContextMenuRequested, this, &LeftSidePanel::popupSongMenu);
+}
+
+void LeftSidePanel::popupSongMenu(const QPoint &pos)
+{
+	auto track = current.playback.item;
+	if (track.name.isEmpty() && track.artist.isEmpty())
+		return;
+	(new SongMenu(track, spotify, parentWidget()))->popup(nowPlaying->mapToGlobal(pos));
 }
 
 int LeftSidePanel::latestTrack(const QVector<spt::Track> &tracks)

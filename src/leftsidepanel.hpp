@@ -63,6 +63,7 @@ private:
 	void contextInfoMenu(const QPoint &pos);
 	void contextInfoOpen(bool checked);
 	QIcon currentContextIcon() const;
-
 	QString getPlaylistName(const QString &id);
+
+	void popupSongMenu(const QPoint &pos);
 };
