@@ -653,3 +653,11 @@ void MainWindow::orderPlaylists(PlaylistOrder order)
 {
 	leftSidePanel->orderPlaylists(order);
 }
+
+MainWindow *MainWindow::find(QWidget *from)
+{
+	auto w = from;
+	while (w != nullptr && typeid(*w) != typeid(MainWindow))
+		w = w->parentWidget();
+	return dynamic_cast<MainWindow *>(w);
+}

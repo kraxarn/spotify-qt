@@ -9,6 +9,8 @@ Q_OBJECT
 public:
 	explicit MainWindow(Settings &settings);
 
+	static MainWindow *find(QWidget *from);
+
 protected:
 	void closeEvent(QCloseEvent *event) override;
 
