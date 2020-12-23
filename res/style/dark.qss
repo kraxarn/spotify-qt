@@ -17,6 +17,17 @@ QPushButton {
   padding: 8px 16px;
   border-radius: 4px; }
 
+QListWidget, QTreeWidget {
+  background-color: #121212; }
+  QListWidget QHeaderView, QTreeWidget QHeaderView {
+    background-color: #181818;
+    color: #b3b3b3; }
+  QListWidget QScrollBar, QTreeWidget QScrollBar {
+    background-color: #121212; }
+
+QTabWidget, QTabWidget QTabBar {
+  background-color: #181818; }
+
 MainWindow {
   background-color: #000000; }
   MainWindow MainToolBar {
@@ -36,19 +47,12 @@ LeftSidePanel LibraryList, LeftSidePanel PlaylistList {
   LeftSidePanel LibraryList QScrollBar, LeftSidePanel PlaylistList QScrollBar {
     background-color: #000000; }
 
-QListWidget, QTreeWidget {
-  background-color: #121212; }
-  QListWidget QHeaderView, QTreeWidget QHeaderView {
-    background-color: #181818;
-    color: #b3b3b3; }
-  QListWidget QScrollBar, QTreeWidget QScrollBar {
-    background-color: #121212; }
-
 SettingsDialog {
   background-color: #121212; }
   SettingsDialog QListWidget {
     background-color: #000000; }
-  SettingsDialog QTabWidget {
-    background-color: #181818; }
-    SettingsDialog QTabWidget QTabBar {
-      background-color: #181818; }
+
+ArtistView QToolButton, ArtistView QToolButton::menu-button {
+  border-style: none;
+  padding: 8px 16px;
+  border-radius: 4px; }

@@ -29,6 +29,12 @@ $slider-foreground-color: $sidebar-foreground-color;
 // Slider handle
 $slider-handle-color: #ffffff;
 
+@mixin button-style() {
+	border-style: none;
+	padding: 8px 16px;
+	border-radius: 4px;
+}
+
 QWidget {
 	selection-background-color: $highlight-color;
 	color: $foreground-color;
@@ -50,9 +56,26 @@ QPushButton, QComboBox {
 }
 
 QPushButton {
-	border-style: none;
-	padding: 8px 16px;
-	border-radius: 4px;
+	@include button-style();
+}
+
+QListWidget, QTreeWidget {
+	background-color: $background-color;
+
+	QHeaderView {
+		background-color: $header-background-color;
+		color: $sidebar-foreground-color;
+	}
+
+	QScrollBar {
+		background-color: $background-color;
+	}
+}
+
+QTabWidget {
+	&, QTabBar {
+		background-color: $header-background-color;
+	}
 }
 
 MainWindow {
@@ -86,31 +109,18 @@ LeftSidePanel {
 	}
 }
 
-QListWidget, QTreeWidget {
-	background-color: $background-color;
-
-	QHeaderView {
-		background-color: $header-background-color;
-		color: $sidebar-foreground-color;
-	}
-
-	QScrollBar {
-		background-color: $background-color;
-	}
-}
-
 SettingsDialog {
 	background-color: $background-color;
 
 	QListWidget {
 		background-color: $sidebar-background-color;
 	}
+}
 
-	QTabWidget {
-		background-color: $header-background-color;
-
-		QTabBar {
-			background-color: $header-background-color;
+ArtistView {
+	QToolButton {
+		&, &::menu-button {
+			@include button-style();
 		}
 	}
 }
