@@ -25,6 +25,7 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, Settings &settings, QWidget *par
 	addSeparator();
 	auto previous = addAction(Icon::get("media-skip-backward"), "Previous");
 	playPause = addAction(Icon::get("media-playback-start"), "Play");
+	playPause->setShortcut(QKeySequence("Space"));
 	QAction::connect(playPause, &QAction::triggered, [this](bool checked)
 	{
 		auto mainWindow = (MainWindow *) this->parent;
