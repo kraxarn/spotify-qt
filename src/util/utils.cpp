@@ -31,8 +31,8 @@ void Utils::applyPalette(Palette palette)
 			break;
 
 		case PaletteDark:
-			p = DarkPalette();
-			break;
+			// Dark palette currently gets applied manually from qss
+			return;
 	}
 
 	QApplication::setPalette(p);

@@ -22,6 +22,15 @@ MainWindow::MainWindow(Settings &settings)
 	QApplication::setStyle(settings.general.style);
 	Utils::applyPalette(settings.general.stylePalette);
 
+	// Custom dark theme
+	if (settings.general.stylePalette == PaletteDark)
+	{
+		QFile styleFile(":/res/style/dark.qss");
+		styleFile.open(QFile::ReadOnly | QFile::Text);
+		setStyleSheet(QString::fromUtf8(styleFile.readAll()));
+		styleFile.close();
+	}
+
 	// Check for dark background
 	auto bg = palette().color(backgroundRole());
 	if (((bg.red() + bg.green() + bg.blue()) / 3) < 128)

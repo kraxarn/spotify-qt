@@ -23,7 +23,6 @@
 #include "spotify/spotify.hpp"
 #include "spotify/user.hpp"
 #include "trayicon.hpp"
-#include "util/darkpalette.hpp"
 #include "util/dateutils.hpp"
 #include "util/icon.hpp"
 #include "util/utils.hpp"

@@ -94,5 +94,7 @@
         <file>res/logo/spotify-qt-symbolic-dark.svg</file>
         <file>res/logo/spotify-qt-symbolic-light.svg</file>
         <file>res/logo/spotify-qt.svg</file>
+        <!-- QSS -->
+        <file>res/style/dark.qss</file>
     </qresource>
 </RCC>

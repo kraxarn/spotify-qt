@@ -3,7 +3,6 @@
 #include "../enum/linktype.hpp"
 #include "../enum/maskshape.hpp"
 #include "../enum/palette.hpp"
-#include "darkpalette.hpp"
 
 #include <QAction>
 #include <QApplication>
