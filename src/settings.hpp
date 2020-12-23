@@ -55,7 +55,6 @@ public:
 		bool relativeAdded = true;
 		bool showChangelog = true;
 		bool showContextInfo = true;
-		bool singleClickPlay = false;
 		bool spotifyPlaybackOrder = true;
 		bool trayAlbumArt = false;
 		bool trayIcon = true;

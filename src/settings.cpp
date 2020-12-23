@@ -74,7 +74,6 @@ void Settings::fromJson(const QJsonObject &json)
 	setValue(g, "relative_added", general.relativeAdded);
 	setValue(g, "show_changelog", general.showChangelog);
 	setValue(g, "show_context_info", general.showContextInfo);
-	setValue(g, "single_click_play", general.singleClickPlay);
 	setValue(g, "song_header_resize_mode", general.songHeaderResizeMode);
 	setValue(g, "song_header_sort_by", general.songHeaderSortBy);
 	setValue(g, "spotify_playback_order", general.spotifyPlaybackOrder);
@@ -164,7 +163,6 @@ QJsonObject Settings::toJson() const
 			{"relative_added", general.relativeAdded},
 			{"show_changelog", general.showChangelog},
 			{"show_context_info", general.showContextInfo},
-			{"single_click_play", general.singleClickPlay},
 			{"song_header_resize_mode", general.songHeaderResizeMode},
 			{"song_header_sort_by", general.songHeaderSortBy},
 			{"spotify_playback_order", general.spotifyPlaybackOrder},
