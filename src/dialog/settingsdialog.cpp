@@ -1,8 +1,11 @@
 #include "settingsdialog.hpp"
 
 SettingsDialog::SettingsDialog(Settings &settings, QWidget *parent)
-	: settings(settings), QDialog(parent)
+	: settings(settings),
+	QDialog(parent)
 {
+	setStyleSheet(parent->styleSheet());
+
 	// Main layout
 	auto mainLayout = new QHBoxLayout();
 

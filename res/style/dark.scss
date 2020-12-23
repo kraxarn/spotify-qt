@@ -4,6 +4,8 @@ $background-color: #121212;
 $secondary-background-color: #282828;
 // Header background color for list titles etc.
 $header-background-color: #181818;
+// Background color for buttons or other selectable items
+$button-background-color: #333333;
 
 // Background for handle in scrollbars
 $scrollbar-handle-color: #4d4d4d;
@@ -43,12 +45,22 @@ QScrollBar {
 	}
 }
 
+QPushButton, QComboBox {
+	background-color: $button-background-color;
+}
+
+QPushButton {
+	border-style: none;
+	padding: 8px 16px;
+	border-radius: 4px;
+}
+
 MainWindow {
 	background-color: $sidebar-background-color;
 
 	MainToolBar {
 		background-color: $secondary-background-color;
-		border: 0;
+		border-style: none;
 
 		QSlider {
 			selection-background-color: $theme-color;
@@ -74,7 +86,7 @@ LeftSidePanel {
 	}
 }
 
-TracksList {
+QListWidget, QTreeWidget {
 	background-color: $background-color;
 
 	QHeaderView {
@@ -84,5 +96,21 @@ TracksList {
 
 	QScrollBar {
 		background-color: $background-color;
+	}
+}
+
+SettingsDialog {
+	background-color: $background-color;
+
+	QListWidget {
+		background-color: $sidebar-background-color;
+	}
+
+	QTabWidget {
+		background-color: $header-background-color;
+
+		QTabBar {
+			background-color: $header-background-color;
+		}
 	}
 }

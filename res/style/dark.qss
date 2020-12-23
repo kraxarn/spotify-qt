@@ -9,11 +9,19 @@ QScrollBar::add-line, QScrollBar::sub-line {
   width: 0px;
   height: 0px; }
 
+QPushButton, QComboBox {
+  background-color: #333333; }
+
+QPushButton {
+  border-style: none;
+  padding: 8px 16px;
+  border-radius: 4px; }
+
 MainWindow {
   background-color: #000000; }
   MainWindow MainToolBar {
     background-color: #282828;
-    border: 0; }
+    border-style: none; }
     MainWindow MainToolBar QSlider {
       selection-background-color: #1db954; }
       MainWindow MainToolBar QSlider::handle {
@@ -28,10 +36,19 @@ LeftSidePanel LibraryList, LeftSidePanel PlaylistList {
   LeftSidePanel LibraryList QScrollBar, LeftSidePanel PlaylistList QScrollBar {
     background-color: #000000; }
 
-TracksList {
+QListWidget, QTreeWidget {
   background-color: #121212; }
-  TracksList QHeaderView {
+  QListWidget QHeaderView, QTreeWidget QHeaderView {
     background-color: #181818;
     color: #b3b3b3; }
-  TracksList QScrollBar {
+  QListWidget QScrollBar, QTreeWidget QScrollBar {
     background-color: #121212; }
+
+SettingsDialog {
+  background-color: #121212; }
+  SettingsDialog QListWidget {
+    background-color: #000000; }
+  SettingsDialog QTabWidget {
+    background-color: #181818; }
+    SettingsDialog QTabWidget QTabBar {
+      background-color: #181818; }
