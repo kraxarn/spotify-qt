@@ -50,10 +50,7 @@ SearchView::SearchView(spt::Spotify &spotify, const Settings &settings, QWidget 
 	QListWidget::connect(playlistList, &QListWidget::itemClicked, this, &SearchView::playlistClick);
 
 	// Open track
-	QTreeWidget::connect(trackList, settings.general.singleClickPlay
-			? &QTreeWidget::itemClicked
-			: &QTreeWidget::itemDoubleClicked,
-		this, &SearchView::trackClick);
+	QTreeWidget::connect(trackList, &QTreeWidget::itemActivated, this, &SearchView::trackClick);
 
 	// Track context menu
 	trackList->setContextMenuPolicy(Qt::CustomContextMenu);

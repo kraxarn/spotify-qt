@@ -75,16 +75,9 @@ QWidget *ApplicationPage::app()
 	appWhatsNew->setChecked(settings.general.showChangelog);
 	layout->addWidget(appWhatsNew);
 
-	// Single click to play tracks
-	appOneClick = new QCheckBox("Single click to play tracks", this);
-	appOneClick->setToolTip("Play tracks, instead of selecting only, from single click");
-	appOneClick->setChecked(settings.general.singleClickPlay);
-	layout->addWidget(appOneClick);
-
 	// Other application stuff
 	settings.general.showChangelog = appWhatsNew->isChecked();
 	settings.general.spotifyPlaybackOrder = appSptOrder->isChecked();
-	settings.general.singleClickPlay = appOneClick->isChecked();
 
 	return Utils::layoutToWidget(layout);
 }

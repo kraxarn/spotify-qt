@@ -22,7 +22,6 @@ private:
 	QCheckBox *appSptOrder = nullptr;
 	QCheckBox *appWhatsNew = nullptr;
 	QComboBox *appRefresh = nullptr;
-	QCheckBox *appOneClick = nullptr;
 	QComboBox *appMaxQueue = nullptr;
 
 	static bool isPulse();
