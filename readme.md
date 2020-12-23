@@ -31,9 +31,11 @@ If you want to maintain the package on a system not in the list below, you are v
 
 You can also get it as a [snap](https://snapcraft.io/spotify-qt), or just run `snap install spotify-qt`, if that's your thing.
 
-## Building from Git
+## Building yourself
 Make sure you have Qt (5.12+/6.0+), CMake (3.5+) and various build tools like `make`, `g++` and `git`.
+Keep in mind that the master branch is considered unstable at all times.
 ```
+// Or go to releases and download an archive for the latest release and extract it somewhere.
 git clone https://github.com/kraxarn/spotify-qt.git
 cd spotify-qt
 mkdir build
