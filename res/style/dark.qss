@@ -28,11 +28,22 @@ QListWidget, QTreeWidget {
 QTabWidget, QTabWidget QTabBar {
   background-color: #181818; }
 
+QMenu {
+  background-color: #282828; }
+  QMenu::separator {
+    background-color: #282828; }
+  QMenu::item::selected {
+    background-color: #3e3e3e; }
+  QMenu::item::disabled {
+    color: #aba398; }
+
 MainWindow {
   background-color: #000000; }
   MainWindow MainToolBar {
     background-color: #282828;
     border-style: none; }
+    MainWindow MainToolBar::separator {
+      background-color: #282828; }
     MainWindow MainToolBar QSlider {
       selection-background-color: #1db954; }
       MainWindow MainToolBar QSlider::handle {
