@@ -43,6 +43,12 @@ QLineEdit {
   QLineEdit::disabled {
     color: #aba398; }
 
+QCheckBox {
+  background-color: transparent; }
+  QCheckBox::indicator::unchecked {
+    border: 1px solid #b2b2b2;
+    border-radius: 14px; }
+
 MainWindow {
   background-color: #000000; }
   MainWindow MainToolBar {
