@@ -66,7 +66,7 @@ QPushButton {
 	@include button-style();
 }
 
-QListWidget, QTreeWidget {
+QListWidget, QTreeWidget, QTextEdit {
 	background-color: $background-color;
 
 	QHeaderView {
@@ -152,4 +152,8 @@ ArtistView {
 			@include button-style();
 		}
 	}
+}
+
+WhatsNewDialog {
+	background-color: $sidebar-background-color;
 }

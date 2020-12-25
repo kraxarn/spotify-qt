@@ -17,12 +17,12 @@ QPushButton {
   padding: 8px 16px;
   border-radius: 4px; }
 
-QListWidget, QTreeWidget {
+QListWidget, QTreeWidget, QTextEdit {
   background-color: #121212; }
-  QListWidget QHeaderView, QTreeWidget QHeaderView {
+  QListWidget QHeaderView, QTreeWidget QHeaderView, QTextEdit QHeaderView {
     background-color: #181818;
     color: #b3b3b3; }
-  QListWidget QScrollBar, QTreeWidget QScrollBar {
+  QListWidget QScrollBar, QTreeWidget QScrollBar, QTextEdit QScrollBar {
     background-color: #121212; }
 
 QTabWidget, QTabWidget QTabBar {
@@ -67,3 +67,6 @@ ArtistView QToolButton, ArtistView QToolButton::menu-button {
   border-style: none;
   padding: 8px 16px;
   border-radius: 4px; }
+
+WhatsNewDialog {
+  background-color: #000000; }
