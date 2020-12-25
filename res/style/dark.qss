@@ -63,6 +63,16 @@ MainWindow {
         width: 12px;
         height: 12px;
         border-radius: 6px; }
+    MainWindow MainToolBar QToolButton {
+      border: 1px solid transparent;
+      padding: 2px; }
+      MainWindow MainToolBar QToolButton::hover {
+        background-color: #3e3e3e;
+        border-radius: 4px; }
+      MainWindow MainToolBar QToolButton::checked {
+        background-color: #282828;
+        border-bottom-color: #1db954;
+        border-radius: 0px; }
 
 LeftSidePanel LibraryList, LeftSidePanel PlaylistList {
   color: #b3b3b3;

@@ -30,7 +30,7 @@ $input-secondary-background-color: #b2b2b2;
 // Main font color
 $foreground-color: #f5f5f5;
 // Color of selected items etc.
-$highlight-color: #282828;
+$highlight-color: $secondary-background-color;
 // Main Spotify green color
 $theme-color: #1db954;
 // Color for disabled text etc.
@@ -149,6 +149,22 @@ MainWindow {
 				width: 12px;
 				height: 12px;
 				border-radius: 6px;
+			}
+		}
+
+		QToolButton {
+			border: 1px solid transparent;
+			padding: 2px;
+
+			&::hover {
+				background-color: $menu-hover-background-color;
+				border-radius: 4px;
+			}
+
+			&::checked {
+				background-color: $secondary-background-color;
+				border-bottom-color: $theme-color;
+				border-radius: 0px;
 			}
 		}
 	}
