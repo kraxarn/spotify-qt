@@ -32,7 +32,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
 	}
 
 	// Device selection
-	deviceMenu = new QMenu("Device");
+	deviceMenu = new QMenu("Device", this);
 	deviceMenu->setIcon(Icon::get("speaker"));
 	QMenu::connect(deviceMenu, &QMenu::aboutToShow, [this]()
 	{
