@@ -37,6 +37,12 @@ QMenu {
   QMenu::item::disabled {
     color: #aba398; }
 
+QLineEdit {
+  background-color: #ffffff;
+  color: #000000; }
+  QLineEdit::disabled {
+    color: #aba398; }
+
 MainWindow {
   background-color: #000000; }
   MainWindow MainToolBar {
