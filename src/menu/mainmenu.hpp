@@ -16,7 +16,6 @@ public:
 	static bool showDebugMenu;
 
 private:
-	QWidget *parent;
 	spt::Spotify &spotify;
 	Settings &settings;
 	QAction *about;

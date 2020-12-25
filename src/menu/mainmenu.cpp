@@ -3,7 +3,9 @@
 bool MainMenu::showDebugMenu = false;
 
 MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
-	: settings(settings), parent(parent), spotify(spotify), QMenu(parent)
+	: settings(settings),
+	spotify(spotify),
+	QMenu(parent)
 {
 	// Update notifier
 	about = addAction(Icon::get("help-about"), QString("Checking for updates..."));
@@ -26,7 +28,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
 			{
 				Utils::openUrl(
 					"https://github.com/kraxarn/spotify-qt/releases/latest",
-					LinkType::Web, this->parent);
+					LinkType::Web, MainWindow::find(this->parentWidget()));
 			});
 		}
 	}
@@ -44,7 +46,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
 	auto openSettings = Utils::createMenuAction("configure", "Settings...", QKeySequence::Preferences);
 	QAction::connect(openSettings, &QAction::triggered, [this]()
 	{
-		SettingsDialog dialog(this->settings, this->parent);
+		SettingsDialog dialog(this->settings, MainWindow::find(parentWidget()));
 		dialog.exec();
 	});
 	addAction(openSettings);
@@ -99,7 +101,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
 		if (result == clearAll || result == logOut)
 			this->settings.removeTokens();
 		this->settings.save();
-		QMessageBox::information(this->parent,
+		QMessageBox::information(MainWindow::find(parentWidget()),
 			"Logged out",
 			"You are now logged out, the application will now close");
 
@@ -112,7 +114,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
 
 void MainMenu::refreshDevices()
 {
-	auto window = (MainWindow *) parent;
+	auto window = MainWindow::find(parentWidget());
 
 	// Set status and get devices
 	window->setStatus("Refreshing devices...");
