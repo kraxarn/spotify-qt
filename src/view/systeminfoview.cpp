@@ -1,7 +1,8 @@
-#include "systeminfodialog.hpp"
+#include "systeminfoview.hpp"
 
-SystemInfoDialog::SystemInfoDialog(QWidget *mainWindow, QWidget *parent)
-	: mainWindow(mainWindow), QDialog(parent)
+SystemInfoView::SystemInfoView(QWidget *mainWindow, QWidget *parent)
+	: mainWindow(mainWindow),
+	QWidget(parent)
 {
 	auto layout = new QVBoxLayout();
 	setLayout(layout);
@@ -21,18 +22,18 @@ SystemInfoDialog::SystemInfoDialog(QWidget *mainWindow, QWidget *parent)
 	infoLayout->addWidget(infoAbout, 1);
 
 	auto copy = new QPushButton("Copy to clipboard", this);
-	QPushButton::connect(copy, &QPushButton::clicked, this, &SystemInfoDialog::copyToClipboard);
+	QPushButton::connect(copy, &QPushButton::clicked, this, &SystemInfoView::copyToClipboard);
 	infoLayout->addWidget(copy);
 
 	layout->addLayout(infoLayout);
 }
 
-QString SystemInfoDialog::systemInfo(bool html)
+QString SystemInfoView::systemInfo(bool html)
 {
 	return systemInfo(((MainWindow *) mainWindow)->getCurrentPlayback(), html);
 }
 
-QString SystemInfoDialog::systemInfo(const spt::Playback &playback, bool html)
+QString SystemInfoView::systemInfo(const spt::Playback &playback, bool html)
 {
 	QMap<QString, QString> info;
 
@@ -86,7 +87,7 @@ QString SystemInfoDialog::systemInfo(const spt::Playback &playback, bool html)
 		: systemInfo;
 }
 
-void SystemInfoDialog::copyToClipboard(bool)
+void SystemInfoView::copyToClipboard(bool)
 {
 	QApplication::clipboard()->setText(systemInfo(false));
 }

@@ -59,7 +59,7 @@ QWidget *AboutPage::about()
 
 QWidget *AboutPage::systemInfo()
 {
-	return new SystemInfoDialog(MainWindow::find(parentWidget()), this);
+	return new SystemInfoView(MainWindow::find(parentWidget()), this);
 }
 
 QWidget *AboutPage::cacheInfo()

@@ -1,7 +1,7 @@
-#include "logviewer.hpp"
+#include "logview.hpp"
 
-LogViewer::LogViewer(QWidget *parent)
-	: QDialog(parent)
+LogView::LogView(QWidget *parent)
+	: QWidget(parent)
 {
 	auto layout = new QVBoxLayout();
 	setLayout(layout);
@@ -21,10 +21,10 @@ LogViewer::LogViewer(QWidget *parent)
 	auto buttons = new QDialogButtonBox();
 
 	QPushButton::connect(buttons->addButton("Copy to clipboard", QDialogButtonBox::ActionRole),
-		&QPushButton::clicked, this, &LogViewer::copyToClipboard);
+		&QPushButton::clicked, this, &LogView::copyToClipboard);
 
 	QPushButton::connect(buttons->addButton("Save...", QDialogButtonBox::ActionRole),
-		&QPushButton::clicked, this, &LogViewer::saveToFile);
+		&QPushButton::clicked, this, &LogView::saveToFile);
 
 	layout->addWidget(buttons);
 
@@ -38,7 +38,7 @@ LogViewer::LogViewer(QWidget *parent)
 	}
 }
 
-QString LogViewer::collectLogs()
+QString LogView::collectLogs()
 {
 	QStringList items;
 	for (auto &message : Log::getMessages())
@@ -48,7 +48,7 @@ QString LogViewer::collectLogs()
 	return items.join('\n');
 }
 
-void LogViewer::saveToFile()
+void LogView::saveToFile()
 {
 	auto fileName = QFileDialog::getSaveFileName(this,
 		"Select location",
@@ -66,7 +66,7 @@ void LogViewer::saveToFile()
 	out.close();
 }
 
-void LogViewer::copyToClipboard()
+void LogView::copyToClipboard()
 {
 	QApplication::clipboard()->setText(collectLogs());
 }

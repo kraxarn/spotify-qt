@@ -13,7 +13,7 @@
 #include "../util/utils.hpp"
 #include "../view/clienthandlerlogview.hpp"
 #include "openlinkdialog.hpp"
-#include "systeminfodialog.hpp"
+#include "systeminfoview.hpp"
 
 #include <QAction>
 #include <QApplication>

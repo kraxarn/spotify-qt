@@ -3,8 +3,6 @@
 #include "../spotify/playlist.hpp"
 
 #include <QCheckBox>
-#include <QDialog>
-#include <QDialogButtonBox>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMessageBox>
@@ -12,12 +10,12 @@
 #include <QTextEdit>
 #include <QVBoxLayout>
 
-class PlaylistEditDialog: public QDialog
+class PlaylistEditView: public QWidget
 {
 Q_OBJECT
 
 public:
-	PlaylistEditDialog(spt::Spotify *spotify, const spt::Playlist &playlist,
+	PlaylistEditView(spt::Spotify *spotify, const spt::Playlist &playlist,
 		int selectedIndex, QWidget *parent = nullptr);
 
 private:

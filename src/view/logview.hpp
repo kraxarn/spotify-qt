@@ -2,8 +2,6 @@
 
 #include "../log.hpp"
 
-#include <QDialog>
-#include <QDialogButtonBox>
 #include <QFileDialog>
 #include <QPushButton>
 #include <QTreeWidget>
@@ -11,12 +9,12 @@
 #include <QStandardPaths>
 #include <QClipboard>
 
-class LogViewer: public QDialog
+class LogView: public QWidget
 {
 Q_OBJECT
 
 public:
-	explicit LogViewer(QWidget *parent);
+	explicit LogView(QWidget *parent);
 
 private:
 	QString collectLogs();

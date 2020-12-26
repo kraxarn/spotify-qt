@@ -84,7 +84,7 @@ QWidget *ApplicationPage::app()
 
 QWidget *ApplicationPage::appLogs()
 {
-	return new LogViewer(this);
+	return new LogView(this);
 }
 
 QIcon ApplicationPage::icon()

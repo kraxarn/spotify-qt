@@ -2,22 +2,20 @@
 
 #include "../mainwindow.hpp"
 #include "../spotify/spotify.hpp"
-#include "logviewer.hpp"
+#include "logview.hpp"
 
-#include <QDialog>
-#include <QDialogButtonBox>
 #include <QFile>
 #include <QLabel>
 #include <QPushButton>
 #include <QTextEdit>
 #include <QVBoxLayout>
 
-class SystemInfoDialog: public QDialog
+class SystemInfoView: public QWidget
 {
 Q_OBJECT
 
 public:
-	explicit SystemInfoDialog(QWidget *mainWindow, QWidget *parent = nullptr);
+	explicit SystemInfoView(QWidget *mainWindow, QWidget *parent = nullptr);
 	static QString systemInfo(const spt::Playback &playback, bool html = true);
 
 private:
