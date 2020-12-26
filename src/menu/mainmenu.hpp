@@ -14,7 +14,7 @@ Q_OBJECT
 public:
 	MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent = nullptr);
 
-	static bool showDebugMenu;
+	static bool showDeveloperMenu;
 
 private:
 	spt::Spotify &spotify;

@@ -36,13 +36,13 @@ int main(int argc, char *argv[])
 	parser.addVersionOption();
 	parser.addHelpOption();
 	parser.addOptions({
-		{"debug", "Enable debug menu for troubleshooting issues."},
+		{"dev", "Enable developer menu for troubleshooting issues."},
 		{"reset-credentials", "Allows providing new Spotify credentials."}
 	});
 	parser.process(app);
 
-	if (parser.isSet("debug"))
-		MainMenu::showDebugMenu = true;
+	if (parser.isSet("dev"))
+		MainMenu::showDeveloperMenu = true;
 
 	// First setup window
 	if (settings.account.refreshToken.isEmpty() || parser.isSet("reset-credentials"))

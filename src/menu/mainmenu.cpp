@@ -1,6 +1,6 @@
 #include "mainmenu.hpp"
 
-bool MainMenu::showDebugMenu = false;
+bool MainMenu::showDeveloperMenu = false;
 
 MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
 	: settings(settings),
@@ -52,7 +52,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
 	addAction(openSettings);
 
 	// Debug options if enabled
-	if (showDebugMenu)
+	if (showDeveloperMenu)
 		addMenu(new DeveloperMenu(settings, this));
 
 	// Log out and quit
