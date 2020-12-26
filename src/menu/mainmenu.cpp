@@ -53,25 +53,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
 
 	// Debug options if enabled
 	if (showDebugMenu)
-	{
-		auto debugMenu = new QMenu("Debug", this);
-		debugMenu->setIcon(Icon::get("folder-txt"));
-
-		QAction::connect(debugMenu->addAction("Test API requests"), &QAction::triggered, [this]()
-		{
-			auto mainWindow = MainWindow::find(parentWidget());
-			mainWindow->addSidePanelTab(new DebugView(this->settings, mainWindow), "API request");
-		});
-
-		QAction::connect(debugMenu->addAction("Show \"What's new\" dialog"), &QAction::triggered,
-			[this]()
-			{
-				(new WhatsNewDialog(APP_VERSION, this->settings, MainWindow::find(parentWidget())))
-					->open();
-			});
-
-		addMenu(debugMenu);
-	}
+		addMenu(new DeveloperMenu(settings, this));
 
 	// Log out and quit
 	addSeparator();
