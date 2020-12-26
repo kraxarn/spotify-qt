@@ -5,8 +5,6 @@ LogView::LogView(QWidget *parent)
 {
 	auto layout = new QVBoxLayout();
 	setLayout(layout);
-	resize(600, 400);
-	setWindowTitle("Logs");
 
 	auto list = new QTreeWidget(this);
 	list->setHeaderLabels({
@@ -18,15 +16,18 @@ LogView::LogView(QWidget *parent)
 	list->setAllColumnsShowFocus(true);
 	layout->addWidget(list, 1);
 
-	auto buttons = new QDialogButtonBox();
+	auto buttons = new QHBoxLayout();
+	buttons->setAlignment(Qt::AlignRight);
 
-	QPushButton::connect(buttons->addButton("Copy to clipboard", QDialogButtonBox::ActionRole),
-		&QPushButton::clicked, this, &LogView::copyToClipboard);
+	auto copyToClipboard = new QPushButton("Copy to clipboard", this);
+	buttons->addWidget(copyToClipboard);
+	QPushButton::connect(copyToClipboard, &QPushButton::clicked, this, &LogView::copyToClipboard);
 
-	QPushButton::connect(buttons->addButton("Save...", QDialogButtonBox::ActionRole),
-		&QPushButton::clicked, this, &LogView::saveToFile);
+	auto save = new QPushButton("Save...", this);
+	buttons->addWidget(save);
+	QPushButton::connect(save, &QPushButton::clicked, this, &LogView::saveToFile);
 
-	layout->addWidget(buttons);
+	layout->addLayout(buttons);
 
 	for (auto &message : Log::getMessages())
 	{
