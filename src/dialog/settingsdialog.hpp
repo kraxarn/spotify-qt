@@ -12,8 +12,8 @@
 #include "../spotify/clienthandler.hpp"
 #include "../util/utils.hpp"
 #include "../view/clienthandlerlogview.hpp"
+#include "../view/systeminfoview.hpp"
 #include "openlinkdialog.hpp"
-#include "systeminfoview.hpp"
 
 #include <QAction>
 #include <QApplication>
