@@ -59,7 +59,7 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 			[this, playlist, &spotify, window](bool checked)
 			{
 				delete editDialog;
-				editDialog = new PlaylistEditView(&spotify, playlist, -1, parentWidget());
+				editDialog = new PlaylistEditDialog(&spotify, playlist, -1, parentWidget());
 				if (editDialog->exec() == QDialog::Accepted)
 					window->refreshPlaylists();
 			});

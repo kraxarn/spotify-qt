@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../view/playlisteditview.hpp"
+#include "../dialog/playlisteditdialog.hpp"
 #include "../mainwindow.hpp"
 #include "../spotify/playlist.hpp"
 
@@ -22,7 +22,7 @@ public:
 	PlaylistMenu(spt::Spotify &spotify, const QString &playlistId, QWidget *parent = nullptr);
 
 private:
-	PlaylistEditView *editDialog = nullptr;
+	PlaylistEditDialog *editDialog = nullptr;
 	QWidget *parent = nullptr;
 	const spt::Playlist playlist;
 };
