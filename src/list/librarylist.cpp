@@ -39,7 +39,7 @@ LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 	setCurrentItem(nullptr);
 
 	QTreeWidget::connect(this, &QTreeWidget::itemClicked, this, &LibraryList::clicked);
-	QTreeWidget::connect(this, &QTreeWidget::itemActivated, this, &LibraryList::doubleClicked);
+	QTreeWidget::connect(this, &QTreeWidget::itemDoubleClicked, this, &LibraryList::doubleClicked);
 	QTreeWidget::connect(this, &QTreeWidget::itemExpanded, this, &LibraryList::expanded);
 }
 
