@@ -4,11 +4,11 @@
 
 #define FOLLOWED_ARTISTS "Followed Artists"
 #define NEW_RELEASES "New Releases"
-#define RECENTLY_PLAYED "Recently Played"
+#define RECENTLY_PLAYED "History"
 #define SAVED_ALBUMS "Liked Albums"
 #define SAVED_TRACKS "Liked Tracks"
-#define TOP_ARTISTS "Popular Artists"
-#define TOP_TRACKS "Popular Tracks"
+#define TOP_ARTISTS "Top Artists"
+#define TOP_TRACKS "Top Tracks"
 
 LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 	: spotify(spotify),
