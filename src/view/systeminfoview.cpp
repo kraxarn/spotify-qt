@@ -72,6 +72,13 @@ QString SystemInfoView::systemInfo(const spt::Playback &playback, bool html)
 	// Build ABI
 	info["ABI"] = QSysInfo::buildAbi();
 
+	// Qt D-Bus support
+#ifdef USE_DBUS
+	info["D-Bus support"] = "Yes";
+#else
+	info["D-Bus support"] = "No";
+#endif
+
 	QString systemInfo(html ? "<table>" : "");
 	QMapIterator<QString, QString> i(info);
 	while (i.hasNext())
