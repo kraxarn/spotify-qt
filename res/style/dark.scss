@@ -119,17 +119,6 @@ QLineEdit {
 	}
 }
 
-QCheckBox {
-	background-color: transparent;
-
-	&::indicator {
-		&::unchecked {
-			border: 1px solid $input-secondary-background-color;
-			border-radius: 14px;
-		}
-	}
-}
-
 MainWindow {
 	background-color: $sidebar-background-color;
 
