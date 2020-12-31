@@ -55,4 +55,4 @@ apps:
     command: bin/desktop-launch spotify-qt
     environment:
       DISABLE_WAYLAND: 1
-    plugs: [home, opengl, network, network-bind, unity7]
+    plugs: [home, opengl, network, network-bind, unity7, dbus]
