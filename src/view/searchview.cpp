@@ -139,7 +139,7 @@ void SearchView::search()
 		|| searchText.startsWith("https://open.spotify.com/"))
 	{
 		auto parts = searchText.startsWith("https://open.spotify.com/")
-			? searchText.right(searchText.length() - 7).split('/')
+			? searchText.right(searchText.length() - 8).split('/')
 			: searchText.split(':');
 
 		if (parts.length() >= 3)
