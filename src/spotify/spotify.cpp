@@ -603,3 +603,13 @@ bool Spotify::isValid() const
 {
 	return refreshValid;
 }
+
+spt::Track Spotify::getTrack(const QString &id)
+{
+	return spt::Track(getAsObject(QString("tracks/%1").arg(id)));
+}
+
+spt::Album Spotify::getAlbum(const QString &id)
+{
+	return spt::Album(getAsObject(QString("albums/%1").arg(id)));
+}

@@ -75,6 +75,9 @@ namespace spt
 		QVector<bool> isFollowing(FollowType type, const QList<QString> &ids);
 		void follow(FollowType type, const QList<QString> &ids);
 		void unfollow(FollowType type, const QList<QString> &ids);
+		spt::Track getTrack(const QString &id);
+		spt::Album getAlbum(const QString &id);
+
 		bool isValid() const;
 
 	public slots:
