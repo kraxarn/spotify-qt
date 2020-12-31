@@ -409,6 +409,9 @@ void MainWindow::refreshPlaylist(spt::Playlist &playlist)
 
 void MainWindow::setStatus(const QString &message, bool important)
 {
+	if (message.isNull() || message.isEmpty())
+		return;
+
 	if (trayIcon != nullptr && settings.general.trayNotifications)
 	{
 		if (important)
