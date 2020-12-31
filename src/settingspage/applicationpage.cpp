@@ -99,8 +99,10 @@ bool ApplicationPage::save()
 	if (appMedia != nullptr)
 	{
 		if (appMedia->isChecked() != settings.general.mediaController)
+		{
 			QMessageBox::information(this, "Media Controller",
 				"Please restart the application to apply changes");
+		}
 		settings.general.mediaController = appMedia->isChecked();
 	}
 
