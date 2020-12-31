@@ -12,6 +12,13 @@ DeveloperMenu::DeveloperMenu(Settings &settings, QWidget *parent)
 		mainWindow->addSidePanelTab(new DebugView(this->settings, mainWindow), "API request");
 	});
 
+	QAction::connect(addAction("Current playback"), &QAction::triggered, [this]()
+	{
+		auto mainWindow = MainWindow::find(parentWidget());
+		QMessageBox::information(mainWindow, "Playback",
+			QJsonDocument(mainWindow->currentPlayback().toJson()).toJson(QJsonDocument::Indented));
+	});
+
 	addMenu(dialogMenu());
 }
 
