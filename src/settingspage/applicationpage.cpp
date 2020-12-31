@@ -75,10 +75,6 @@ QWidget *ApplicationPage::app()
 	appWhatsNew->setChecked(settings.general.showChangelog);
 	layout->addWidget(appWhatsNew);
 
-	// Other application stuff
-	settings.general.showChangelog = appWhatsNew->isChecked();
-	settings.general.spotifyPlaybackOrder = appSptOrder->isChecked();
-
 	return Utils::layoutToWidget(layout);
 }
 
@@ -130,6 +126,10 @@ bool ApplicationPage::save()
 		return false;
 	}
 	settings.spotify.maxQueue = maxQueue;
+
+	// Other application stuff
+	settings.general.showChangelog = appWhatsNew->isChecked();
+	settings.general.spotifyPlaybackOrder = appSptOrder->isChecked();
 
 	return true;
 }
