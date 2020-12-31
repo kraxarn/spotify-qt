@@ -23,7 +23,8 @@ MainWindow::MainWindow(Settings &settings)
 	Utils::applyPalette(settings.general.stylePalette);
 
 	// Custom dark theme
-	if (settings.general.stylePalette == PaletteDark)
+	if (settings.general.stylePalette == PaletteDark
+		&& MainMenu::showDeveloperMenu)
 	{
 		QFile styleFile(":/res/style/dark.qss");
 		styleFile.open(QFile::ReadOnly | QFile::Text);
