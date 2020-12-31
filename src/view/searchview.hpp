@@ -19,6 +19,7 @@ public:
 	explicit SearchView(spt::Spotify &spotify, const Settings &settings, QWidget *parent = nullptr);
 
 private:
+	QTabWidget *tabs = nullptr;
 	QLineEdit *searchBox = nullptr;
 	QListWidget *artistList = nullptr;
 	QListWidget *playlistList = nullptr;

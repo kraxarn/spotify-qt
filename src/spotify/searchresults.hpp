@@ -17,6 +17,8 @@ namespace spt
 	class SearchResults
 	{
 	public:
+		SearchResults() = default;
+
 		explicit SearchResults(const QJsonObject &json);
 
 		QJsonObject toJson() const;

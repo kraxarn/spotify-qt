@@ -11,7 +11,7 @@ SearchView::SearchView(spt::Spotify &spotify, const Settings &settings, QWidget 
 	setLayout(layout);
 
 	// Tabs
-	auto tabs = new QTabWidget(this);
+	tabs = new QTabWidget(this);
 	layout->addWidget(tabs);
 
 	// All lists
@@ -128,9 +128,55 @@ void SearchView::search()
 	albumList->clear();
 	playlistList->clear();
 
-	// Get new results
+	// Disable search box while searching
 	searchBox->setEnabled(false);
-	auto results = spotify.search(searchBox->text());
+
+	// Check if spotify uri
+	auto searchText = searchBox->text();
+	spt::SearchResults results;
+
+	if (searchText.startsWith("spotify:")
+		|| searchText.startsWith("https://open.spotify.com/"))
+	{
+		auto parts = searchText.startsWith("https://open.spotify.com/")
+			? searchText.right(searchText.length() - 7).split('/')
+			: searchText.split(':');
+
+		if (parts.length() >= 3)
+		{
+			auto i = tabs->currentIndex();
+			auto cat = parts[1];
+			auto id = parts[2];
+
+			if (cat == "track")
+			{
+				results.tracks.append(spotify.getTrack(id));
+				i = 0;
+			}
+			else if (cat == "artist")
+			{
+				results.artists.append(spotify.artist(id));
+				i = 1;
+			}
+			else if (cat == "album")
+			{
+				results.albums.append(spotify.getAlbum(id));
+				i = 2;
+			}
+			else if (cat == "playlist")
+			{
+				results.playlists.append(spotify.playlist(id).toJson());
+				i = 3;
+			}
+
+			tabs->setCurrentIndex(i);
+		}
+	}
+	else
+	{
+		// Get search results
+		results = spotify.search(searchText);
+	}
 
 	// Albums
 	for (auto &album : results.albums)
