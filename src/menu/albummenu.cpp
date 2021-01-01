@@ -58,7 +58,7 @@ void AlbumMenu::shuffle(bool)
 
 void AlbumMenu::shareAlbum(bool)
 {
-	QApplication::clipboard()->setText(QString("https://open.spotify.com/playlist/%1")
+	QApplication::clipboard()->setText(QString("https://open.spotify.com/album/%1")
 		.arg(QString(albumId)));
 	((MainWindow *) parent)->setStatus("Link copied to clipboard");
 }
