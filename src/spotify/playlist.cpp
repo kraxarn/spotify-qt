@@ -30,10 +30,9 @@ Playlist::Playlist(const QJsonObject &json)
 			: json["owner"].toObject()["display_name"].toString();
 }
 
-QVector<Track> Playlist::loadTracks(Spotify &spotify) const
+bool Playlist::loadTracks(Spotify &spotify, QVector<Track> &trackList) const
 {
 	// Allocate memory for all tracks
-	QVector<Track> trackList;
 	trackList.reserve(tracks["total"].toInt());
 
 	// Load tracks
@@ -41,9 +40,14 @@ QVector<Track> Playlist::loadTracks(Spotify &spotify) const
 	auto href = QString("%1%2market=from_token")
 		.arg(tracksHref)
 		.arg(tracksHref.contains('?') ? '&' : '?');
-	loadTracksFromUrl(trackList, href, 0, spotify);
 
-	// Return final track list
+	return loadTracksFromUrl(trackList, href, 0, spotify);
+}
+
+QVector<spt::Track> Playlist::loadTracks(Spotify &spotify) const
+{
+	QVector<spt::Track> trackList;
+	loadTracks(spotify, trackList);
 	return trackList;
 }
 
@@ -52,6 +56,10 @@ bool Playlist::loadTracksFromUrl(QVector<Track> &trackList, QString &url, int of
 	// Load tracks from api
 	auto newUrl = url.remove(0, QString("https://api.spotify.com/v1/").length());
 	auto current = spotify.getAsObject(newUrl);
+
+	// No items, request probably failed
+	if (!current.contains("items"))
+		return false;
 
 	// Load from url
 	auto items = current["items"].toArray();

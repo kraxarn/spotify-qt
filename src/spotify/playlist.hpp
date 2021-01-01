@@ -23,7 +23,8 @@ namespace spt
 		Playlist() = default;
 		explicit Playlist(const QJsonObject &json);
 
-		QVector<Track> loadTracks(Spotify &spotify) const;
+		QVector<spt::Track> loadTracks(Spotify &spotify) const;
+		bool loadTracks(Spotify &spotify, QVector<Track> &trackList) const;
 		QJsonObject toJson(Spotify &spotify) const;
 		QJsonObject toJson(const QJsonArray &jsonTracks = QJsonArray()) const;
 		bool isOwner(const User &user) const;
