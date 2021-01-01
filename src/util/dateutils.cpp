@@ -5,6 +5,7 @@
 #define SECS_IN_WEEK 604800
 #define SECS_IN_DAY 86400
 #define SECS_IN_HOUR 3600
+#define SECS_IN_MINUTE 60
 
 QString DateUtils::toRelative(const QDateTime &date)
 {
@@ -35,6 +36,11 @@ QString DateUtils::toRelative(const QDateTime &date)
 	{
 		amount /= SECS_IN_HOUR;
 		unit = "hour";
+	}
+	else if (amount >= SECS_IN_MINUTE)
+	{
+		amount /= SECS_IN_MINUTE;
+		unit = "minute";
 	}
 
 	return QString("%1 %2%3 ago")
