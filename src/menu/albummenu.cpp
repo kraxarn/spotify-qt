@@ -29,7 +29,7 @@ AlbumMenu::AlbumMenu(spt::Spotify &spotify, const QString &albumId, QWidget *par
 	QAction::connect(playShuffle, &QAction::triggered, this, &AlbumMenu::shuffle);
 
 	auto share = addMenu(Icon::get("document-share"), "Share");
-	auto sharePlaylist = share->addAction("Copy playlist link");
+	auto sharePlaylist = share->addAction("Copy album link");
 	QAction::connect(sharePlaylist, &QAction::triggered, this, &AlbumMenu::shareAlbum);
 
 	auto shareSongOpen = share->addAction("Open in Spotify");
