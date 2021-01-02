@@ -50,9 +50,16 @@ parts:
       - xdg-user-dirs
       - fcitx-frontend-qt5
 
+slots:
+  dbus-mpris:
+    interface: dbus
+    bus: session
+    name: org.mpris.MediaPlayer2.spotify-qt
+
 apps:
   spotify-qt:
     command: bin/desktop-launch spotify-qt
     environment:
       DISABLE_WAYLAND: 1
-    plugs: [home, opengl, network, network-bind, unity7, dbus]
+    plugs: [home, opengl, network, network-bind, unity7]
+    slots: [dbus-mpris]
