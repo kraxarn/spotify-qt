@@ -59,7 +59,7 @@ QJsonArray Spotify::getAsArray(const QString &url)
 	return get(url).array();
 }
 
-void Spotify::getLater(const QString &url,
+void Spotify::get(const QString &url,
 	const std::function<void(const QJsonDocument &json)> &callback)
 {
 	// Prepare fetch of request
@@ -514,7 +514,7 @@ QVector<Album> Spotify::newReleases(int offset)
 
 void Spotify::currentPlayback(const std::function<void(const spt::Playback &playback)> &callback)
 {
-	getLater("me/player", [callback](const QJsonDocument &json)
+	get("me/player", [callback](const QJsonDocument &json)
 	{
 		callback(Playback(json.object()));
 	});

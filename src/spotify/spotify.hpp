@@ -94,8 +94,13 @@ namespace spt
 		QString del(const QString &url, const QJsonDocument &json);
 		static QString errorMessage(QNetworkReply *reply);
 		static QString errorMessage(const QJsonDocument &json, const QUrl &url);
+
+		/**
+		 * @deprecated Use get with callback instead
+		 */
 		QJsonDocument get(const QString &url);
-		void getLater(const QString &url,
+
+		void get(const QString &url,
 			const std::function<void(const QJsonDocument &json)> &callback);
 
 		template<class T>
