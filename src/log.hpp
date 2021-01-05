@@ -11,7 +11,7 @@ class Log
 {
 public:
 	template<typename Format, typename Arg, typename... Args>
-	static void info(const Format &fmt, const Arg &arg, Args&&... args)
+	static void info(const Format &fmt, const Arg &arg, Args &&... args)
 	{
 		return info(collect(fmt, arg), args...);
 	}
@@ -22,7 +22,7 @@ public:
 	}
 
 	template<typename Format, typename Arg, typename... Args>
-	static void warn(const Format &fmt, const Arg &arg, Args&&... args)
+	static void warn(const Format &fmt, const Arg &arg, Args &&... args)
 	{
 		return warn(collect(fmt, arg), args...);
 	}
@@ -33,7 +33,7 @@ public:
 	}
 
 	template<typename Format, typename Arg, typename... Args>
-	static void error(const Format &fmt, const Arg &arg, Args&&... args)
+	static void error(const Format &fmt, const Arg &arg, Args &&... args)
 	{
 		return error(collect(fmt, arg), args...);
 	}
@@ -80,5 +80,11 @@ private:
 	static std::string collect(const Format &fmt, const char *arg)
 	{
 		return collect(fmt, std::string(arg));
+	}
+
+	template<typename Format>
+	static std::string collect(const Format &fmt, const bool arg)
+	{
+		return collect(fmt, arg ? "true" : "false");
 	}
 };
