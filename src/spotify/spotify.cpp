@@ -387,6 +387,14 @@ Artist Spotify::artist(const QString &artistId)
 	return Artist(getAsObject(QString("artists/%1").arg(artistId)));
 }
 
+void Spotify::artist(const QString &artistId, const std::function<void(const spt::Artist &artist)> &callback)
+{
+	get(QString("artists/%1").arg(artistId), [callback](const QJsonDocument &json)
+	{
+		callback(Artist(json.object()));
+	});
+}
+
 Playlist Spotify::playlist(const QString &playlistId)
 {
 	return Playlist(getAsObject(QString("playlists/%1").arg(playlistId)));
@@ -561,14 +569,37 @@ QVector<Artist> Spotify::followedArtists(const QString &offset)
 	return artists;
 }
 
-QVector<bool> Spotify::isFollowing(FollowType type, const QList<QString> &ids)
+void Spotify::isFollowing(FollowType type,
+	const QList<QString> &ids,
+	const std::function<void(const std::vector<bool> &)> &callback)
 {
-	auto json = getAsArray(QString("me/following/contains?type=%1&ids=%2")
-		.arg(followTypeString(type)).arg(ids.join(',')));
-	QVector<bool> values;
-	for (auto value : json)
-		values.append(value.toBool());
-	return values;
+	get(QString("me/following/contains?type=%1&ids=%2")
+		.arg(followTypeString(type))
+		.arg(ids.join(',')), [callback](const QJsonDocument &json)
+	{
+		std::vector<bool> values;
+		for (auto value : json.array())
+			values.push_back(value.toBool());
+		callback(values);
+	});
+}
+
+void Spotify::topTracks(const spt::Artist &artist,
+	const std::function<void(const std::vector<spt::Track> &tracks)> &callback)
+{
+	get<spt::Track>(QString("artists/%1/top-tracks?country=from_token").arg(artist.id), callback);
+}
+
+void Spotify::albums(const spt::Artist &artist,
+	const std::function<void(const std::vector<spt::Album> &albums)> &callback)
+{
+	get<spt::Album>(QString("artists/%1/albums?country=from_token").arg(artist.id), callback);
+}
+
+void Spotify::relatedArtists(const spt::Artist &artist,
+	const std::function<void(const std::vector<spt::Artist> &artists)> &callback)
+{
+	get<spt::Artist>(QString("artists/%1/related-artists").arg(artist.id), callback);
 }
 
 QString Spotify::followTypeString(FollowType type)
