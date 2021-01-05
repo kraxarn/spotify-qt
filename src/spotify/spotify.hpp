@@ -77,18 +77,9 @@ namespace spt
 		void unfollow(FollowType type, const QList<QString> &ids);
 		spt::Track getTrack(const QString &id);
 		spt::Album getAlbum(const QString &id);
+		void currentPlayback(const std::function<void(const spt::Playback &playback)> &callback);
 
 		bool isValid() const;
-
-	public slots:
-		void requestCurrentPlayback();
-
-	private slots:
-		void getLater(const QString &url);
-
-	signals:
-		void got(const QJsonDocument &json);
-		void gotPlayback(const Playback &playback);
 
 	private:
 		qint64 lastAuth;
@@ -104,6 +95,8 @@ namespace spt
 		static QString errorMessage(QNetworkReply *reply);
 		static QString errorMessage(const QJsonDocument &json, const QUrl &url);
 		QJsonDocument get(const QString &url);
+		void getLater(const QString &url,
+			const std::function<void(const QJsonDocument &json)> &callback);
 
 		template<class T>
 		QVector<T> loadItems(const QString &url);

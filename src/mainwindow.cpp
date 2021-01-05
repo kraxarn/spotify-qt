@@ -98,12 +98,6 @@ MainWindow::MainWindow(Settings &settings)
 	}
 #endif
 
-	// Start listening to current playback responses
-	spt::Spotify::connect(spotify, &spt::Spotify::gotPlayback, [this](const spt::Playback &playback)
-	{
-		refreshed(playback);
-	});
-
 	// Create tray icon if specified
 	if (settings.general.trayIcon)
 		trayIcon = new TrayIcon(spotify, settings, this);
@@ -132,7 +126,10 @@ void MainWindow::refresh()
 		|| ++refreshCount >= settings.general.refreshInterval
 		|| current.playback.progressMs + 1000 > current.playback.item.duration)
 	{
-		spotify->requestCurrentPlayback();
+		spotify->currentPlayback([this](const spt::Playback &playback)
+		{
+			refreshed(playback);
+		});
 		refreshCount = 0;
 		return;
 	}

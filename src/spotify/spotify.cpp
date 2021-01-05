@@ -59,12 +59,13 @@ QJsonArray Spotify::getAsArray(const QString &url)
 	return get(url).array();
 }
 
-void Spotify::getLater(const QString &url)
+void Spotify::getLater(const QString &url,
+	const std::function<void(const QJsonDocument &json)> &callback)
 {
 	// Prepare fetch of request
 	auto context = new QObject();
 	QNetworkAccessManager::connect(networkManager, &QNetworkAccessManager::finished, context,
-		[this, context, url](QNetworkReply *reply)
+		[context, url, callback](QNetworkReply *reply)
 		{
 			auto replyUrl = reply->url().toString();
 			if (replyUrl.right(replyUrl.length() - 27) != url)
@@ -73,7 +74,7 @@ void Spotify::getLater(const QString &url)
 			// Parse reply as json
 			auto json = QJsonDocument::fromJson(reply->readAll());
 			reply->deleteLater();
-			emit got(json);
+			callback(json);
 		});
 
 	networkManager->get(request(url));
@@ -511,15 +512,12 @@ QVector<Album> Spotify::newReleases(int offset)
 	return albums;
 }
 
-void Spotify::requestCurrentPlayback()
+void Spotify::currentPlayback(const std::function<void(const spt::Playback &playback)> &callback)
 {
-	auto context = new QObject();
-	Spotify::connect(this, &Spotify::got, context, [this, context](const QJsonDocument &json)
+	getLater("me/player", [callback](const QJsonDocument &json)
 	{
-		delete context;
-		emit gotPlayback(Playback(json.object()));
+		callback(Playback(json.object()));
 	});
-	getLater("me/player");
 }
 
 User Spotify::me()
