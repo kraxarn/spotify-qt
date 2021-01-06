@@ -4,6 +4,7 @@
 #include "../settings.hpp"
 #include "../spotify/track.hpp"
 #include "../util/utils.hpp"
+#include "../util/dateutils.hpp"
 
 #include <QTreeWidgetItem>
 

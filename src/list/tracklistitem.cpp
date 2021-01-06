@@ -18,6 +18,12 @@ TrackListItem::TrackListItem(const QStringList &strings, const spt::Track &track
 			? "Local track"
 			: "Unavailable");
 	}
+
+	if (!DateUtils::isEmpty(track.addedAt))
+	{
+		setToolTip(strings.length() - 1,
+			QLocale().toString(track.addedAt.date()));
+	}
 }
 
 bool TrackListItem::operator<(const QTreeWidgetItem &item) const
