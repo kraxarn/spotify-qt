@@ -39,13 +39,22 @@ private:
 ```
 
 ### Enums
-Same style for both `enum` and `enum class`.
+Same style for both `enum` and `enum class`. The last line ends with a comma.
 ```c++
 enum class log_type
 {
+	// enum classes don't use any prefix
 	information,
 	warning,
 	error,
+};
+
+enum log_type
+{
+	// enums use a simplified version of the name of the enum
+	log_information,
+	log_warning,
+	log_error,
 };
 ```
 
