@@ -33,10 +33,28 @@ ConfigView::ConfigView(const Settings &settings, QWidget *parent)
 void ConfigView::menu(const QPoint &pos)
 {
 	auto menu = new QMenu(this);
-	QAction::connect(menu->addAction(Icon::get("folder-txt"), "Open in external editor"),
-		&QAction::triggered,[this](bool)
+	auto item = itemAt(pos);
+
+	if (item != nullptr)
 	{
-		Utils::openUrl(this->settings.fileName(), LinkType::Path, this);
-	});
+		QAction::connect(menu->addAction("Copy key"), &QAction::triggered, [item](bool)
+		{
+			QApplication::clipboard()->setText(item->text(0));
+		});
+
+		QAction::connect(menu->addAction("Copy value"), &QAction::triggered, [item](bool)
+		{
+			QApplication::clipboard()->setText(item->text(1));
+		});
+
+		menu->addSeparator();
+	}
+
+	QAction::connect(menu->addAction(Icon::get("folder-txt"), "Open in external editor"),
+		&QAction::triggered, [this](bool)
+		{
+			Utils::openUrl(this->settings.fileName(), LinkType::Path, this);
+		});
+
 	menu->popup(mapToGlobal(pos));
 }
