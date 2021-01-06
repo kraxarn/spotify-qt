@@ -1,42 +1,28 @@
 #include "artistview.hpp"
 
 ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const Settings &settings, QWidget *parent)
-	: spotify(spotify), artistId(artistId), QWidget(parent)
+	: spotify(spotify),
+	artistId(artistId),
+	QWidget(parent)
 {
-	auto mainWindow = MainWindow::find(parentWidget());
-	if (mainWindow == nullptr)
+	spotify.artist(artistId, [this](const spt::Artist &loadedArtist)
 	{
-		Log::error("Parent is not MainWindow");
-		return;
-	}
+		artistLoaded(loadedArtist);
+	});
 
-	artist = spotify.artist(artistId);
-	setWindowTitle(artist.name);
-	auto layout = new QVBoxLayout();
+	setWindowTitle("...");
+	layout = new QVBoxLayout();
 	layout->setContentsMargins(-1, 0, -1, 0);
 	setLayout(layout);
 
-	// Get cover image (320x320 -> 320x160)
-	QPixmap cover;
-	cover.loadFromData(mainWindow->get(artist.image), "jpeg");
-	auto coverLabel = new QLabel(this);
-	coverLabel->setPixmap(cover.copy(0, 80, 320, 160));
+	// Placeholder for cover  image
+	coverLabel = new QLabel(this);
+	coverLabel->setMinimumHeight(160);
 	layout->addWidget(coverLabel);
 
-	// Format followers
-	char prefix = artist.followers > 1000000
-		? 'M' : artist.followers > 1000
-			? 'k' : '\0';
-	auto followers = QString("%1%2 follower%3")
-		.arg(prefix == 'M'
-			? artist.followers / 1000000 : prefix == 'k'
-				? artist.followers / 1000 : artist.followers)
-		.arg(prefix)
-		.arg(artist.followers == 1 ? "" : "s");
-
 	// Artist name title
-	auto title = new QHBoxLayout();
-	auto name = new QLabel(artist.name, this);
+	title = new QHBoxLayout();
+	name = new QLabel("Loading...", this);
 	name->setWordWrap(true);
 
 	auto titleFont = name->font();
@@ -44,22 +30,8 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const Set
 	name->setFont(titleFont);
 	title->addWidget(name, 1);
 
-	auto menu = new QMenu(this);
-	menu->addAction(QIcon(Utils::mask(Icon::get("draw-donut").pixmap(64, 64),
-			MaskShape::Pie, QVariant(artist.popularity))),
-			QString("%1% popularity").arg(artist.popularity))
-		->setEnabled(false);
-
-	auto follows = spotify.isFollowing(FollowType::Artist, {
-		artistId
-	});
-	auto isFollowing = follows.isEmpty() ? false : follows[0];
-	followButton = menu->addAction(Icon::get(QString("%1starred-symbolic")
-			.arg(isFollowing ? "" : "non-")),
-		QString("%1 (%2)").arg(isFollowing
-			? "Unfollow"
-			: "Follow").arg(followers));
-	QAction::connect(followButton, &QAction::triggered, this, &ArtistView::follow);
+	// Context menu
+	menu = new QMenu(this);
 
 	auto menuSearch = menu->addMenu(Icon::get("edit-find"), "Search");
 	QAction::connect(menuSearch->addAction("Wikipedia"), &QAction::triggered,
@@ -73,16 +45,17 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const Set
 	QAction::connect(shareMenu->addAction("Open in Spotify"), &QAction::triggered,
 		this, &ArtistView::openInSpotify);
 
-	auto popularity = new QToolButton(this);
-	popularity->setIcon(Icon::get("media-playback-start"));
-	popularity->setMenu(menu);
-	popularity->setPopupMode(QToolButton::MenuButtonPopup);
-	QAbstractButton::connect(popularity, &QAbstractButton::clicked, this, &ArtistView::play);
-	title->addWidget(popularity);
+	context = new QToolButton(this);
+	context->setEnabled(false);
+	context->setIcon(Icon::get("media-playback-start"));
+	context->setMenu(menu);
+	context->setPopupMode(QToolButton::MenuButtonPopup);
+	QAbstractButton::connect(context, &QAbstractButton::clicked, this, &ArtistView::play);
+	title->addWidget(context);
 	layout->addLayout(title);
 
 	// Genres
-	auto genres = new QLabel(artist.genres.join(", "));
+	genres = new QLabel(QString(), this);
 	genres->setWordWrap(true);
 	layout->addWidget(genres);
 
@@ -91,58 +64,28 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const Set
 	layout->addWidget(tabs);
 
 	// Top tracks
-	auto topTracks = artist.topTracks(spotify);
 	topTracksList = new QListWidget(tabs);
-	auto i = 0;
-	for (auto &track : topTracks)
-	{
-		auto item = new QListWidgetItem(track.name, topTracksList);
-		item->setIcon(QIcon(mainWindow->getAlbum(track.image)));
-		item->setData(RoleTrackId, track.id);
-		item->setData(RoleAlbumId, track.albumId);
-		item->setData(RoleIndex, i++);
-		topTrackIds.append(QString("spotify:track:%1").arg(track.id));
-	}
-	QListWidget::connect(topTracksList, &QListWidget::itemActivated, this, &ArtistView::trackClick);
-
+	topTracksList->setEnabled(false);
 	topTracksList->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+	QListWidget::connect(topTracksList, &QListWidget::itemActivated, this, &ArtistView::trackClick);
 	QWidget::connect(topTracksList, &QWidget::customContextMenuRequested, this, &ArtistView::trackMenu);
 	tabs->addTab(topTracksList, "Popular");
 
 	// Albums
-	auto albums = artist.albums(spotify);
 	albumList = new QTreeWidget(tabs);
 	singleList = new QTreeWidget(tabs);
+
 	for (auto &list : {albumList, singleList})
 	{
+		list->setEnabled(false);
 		list->setColumnCount(2);
 		list->header()->hide();
 		list->setRootIsDecorated(false);
 		list->header()->resizeSection(0, 235);
 		list->header()->resizeSection(1, 1);
-	}
-	for (auto &album : albums)
-	{
-		auto parentTab = album.albumGroup == "single" ? singleList : albumList;
-		auto year = album.releaseDate.toString("yyyy");
-		auto item = new QTreeWidgetItem(parentTab, {
-			album.name, year.isEmpty() ? QString() : year
-		});
-		item->setIcon(0, QIcon(mainWindow->getAlbum(album.image)));
-		item->setData(0, RoleAlbumId, album.id);
-		item->setToolTip(1, QLocale::system()
-			.toString(album.releaseDate.date(), QLocale::FormatType::ShortFormat));
-		parentTab->insertTopLevelItem(0, item);
-	}
-
-	QVector<QTreeWidget *> lists({
-		albumList, singleList
-	});
-	for (auto list : lists)
-	{
-		QTreeWidget::connect(list, &QTreeWidget::itemClicked, this, &ArtistView::loadAlbumId);
-
 		list->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+
+		QTreeWidget::connect(list, &QTreeWidget::itemClicked, this, &ArtistView::loadAlbumId);
 		QWidget::connect(list, &QWidget::customContextMenuRequested, this, &ArtistView::albumMenu);
 		QTreeWidget::connect(list, &QTreeWidget::itemDoubleClicked, this, &ArtistView::albumDoubleClicked);
 	}
@@ -151,24 +94,147 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const Set
 	tabs->addTab(singleList, "Singles");
 
 	// Related artists
-	auto relatedArtists = artist.relatedArtists(spotify);
 	relatedList = new QListWidget(tabs);
-	for (auto &related : relatedArtists)
+	relatedList->setEnabled(false);
+	QListWidget::connect(relatedList, &QListWidget::itemClicked, this, &ArtistView::relatedClick);
+	tabs->addTab(relatedList, "Related");
+}
+
+void ArtistView::artistLoaded(const spt::Artist &loadedArtist)
+{
+	artist = loadedArtist;
+	auto mainWindow = MainWindow::find(parentWidget());
+
+	// TODO: Doesn't actually do anything
+	setWindowTitle(artist.name);
+
+	// Get cover image (320x320 -> 320x160)
+	QPixmap cover;
+	cover.loadFromData(mainWindow->get(artist.image), "jpeg");
+	coverLabel->setPixmap(cover.copy(0, 80, 320, 160));
+
+	// Format followers
+	char prefix = artist.followers > 1000000
+		? 'M' : artist.followers > 1000
+			? 'k' : '\0';
+	auto followers = QString("%1%2 follower%3")
+		.arg(prefix == 'M'
+			? artist.followers / 1000000 : prefix == 'k'
+				? artist.followers / 1000 : artist.followers)
+		.arg(prefix)
+		.arg(artist.followers == 1 ? "" : "s");
+
+	// Artist name title
+	name->setText(artist.name);
+
+	// Menu actions
+	menu->addAction(QIcon(Utils::mask(Icon::get("draw-donut").pixmap(64, 64),
+			MaskShape::Pie, QVariant(artist.popularity))),
+			QString("%1% popularity").arg(artist.popularity))
+		->setEnabled(false);
+
+	followButton = menu->addAction(Icon::get("non-starred-symbolic"),
+		QString("Follow (%2)").arg(followers));
+	followButton->setEnabled(false);
+	QAction::connect(followButton, &QAction::triggered, this, &ArtistView::follow);
+
+	spotify.isFollowing(FollowType::Artist, {
+		artistId
+	}, [this](const std::vector<bool> &follows)
+	{
+		updateFollow(follows.empty() ? false : follows[0]);
+		this->followButton->setEnabled(true);
+	});
+
+	// Artist is loaded now at least
+	context->setEnabled(true);
+
+	// Genres
+	genres->setText(artist.genres.join(", "));
+
+	// Top tracks
+	spotify.topTracks(artist, [this](const std::vector<spt::Track> &tracks)
+	{
+		topTracksLoaded(tracks);
+	});
+
+	// Albums
+	spotify.albums(artist, [this](const std::vector<spt::Album> &albums)
+	{
+		albumsLoaded(albums);
+	});
+
+	// Related artists
+	spotify.relatedArtists(artist, [this](const std::vector<spt::Artist> &artists)
+	{
+		relatedArtistsLoaded(artists);
+	});
+}
+
+void ArtistView::topTracksLoaded(const std::vector<spt::Track> &tracks)
+{
+	auto mainWindow = MainWindow::find(parentWidget());
+	auto i = 0;
+
+	for (auto &track : tracks)
+	{
+		auto item = new QListWidgetItem(track.name, topTracksList);
+		item->setIcon(QIcon(mainWindow->getAlbum(track.image)));
+		item->setData(RoleTrackId, track.id);
+		item->setData(RoleAlbumId, track.albumId);
+		item->setData(RoleIndex, i++);
+		topTrackIds.append(QString("spotify:track:%1").arg(track.id));
+	}
+
+	topTracksList->setEnabled(true);
+}
+
+void ArtistView::albumsLoaded(const std::vector<spt::Album> &albums)
+{
+	auto mainWindow = MainWindow::find(parentWidget());
+
+	for (auto &album : albums)
+	{
+		auto parentTab = album.albumGroup == "single" ? singleList : albumList;
+		auto year = album.releaseDate.toString("yyyy");
+		auto item = new QTreeWidgetItem(parentTab, {
+			album.name, year.isEmpty() ? QString() : year
+		});
+
+		item->setIcon(0, QIcon(mainWindow->getAlbum(album.image)));
+		item->setData(0, RoleAlbumId, album.id);
+		item->setToolTip(1, QLocale::system()
+			.toString(album.releaseDate.date(), QLocale::FormatType::ShortFormat));
+		parentTab->insertTopLevelItem(0, item);
+	}
+
+	albumList->setEnabled(true);
+	singleList->setEnabled(true);
+}
+
+void ArtistView::relatedArtistsLoaded(const std::vector<spt::Artist> &artists)
+{
+	for (auto &related : artists)
 	{
 		auto item = new QListWidgetItem(related.name, relatedList);
 		item->setData(RoleArtistId, related.id);
 	}
-	QListWidget::connect(relatedList, &QListWidget::itemClicked, this, &ArtistView::relatedClick);
-	tabs->addTab(relatedList, "Related");
+
+	relatedList->setEnabled(true);
+}
+
+void ArtistView::updateFollow(bool isFollowing)
+{
+	followButton->setIcon(Icon::get(QString("%1starred-symbolic").arg(isFollowing ? "non-" : "")));
+	followButton->setText(QString("%1%2")
+		.arg(isFollowing ? "Unfollow" : "Follow")
+		.arg(followButton->text().right(followButton->text().length() - followButton->text().indexOf(' '))));
 }
 
 void ArtistView::follow(bool)
 {
 	auto isFollowing = followButton->text().contains("Unfollow");
-	followButton->setIcon(Icon::get(QString("%1starred-symbolic").arg(isFollowing ? "non-" : "")));
-	followButton->setText(followButton->toolTip()
-		.replace(isFollowing ? "Unfollow" : "Follow",
-			isFollowing ? "Follow" : "Unfollow"));
+	updateFollow(isFollowing);
 
 	if (isFollowing)
 	{

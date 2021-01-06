@@ -22,6 +22,12 @@ public:
 	ArtistView(spt::Spotify &spotify, const QString &artistId, const Settings &settings, QWidget *parent);
 
 private:
+	void artistLoaded(const spt::Artist &loadedArtist);
+	void topTracksLoaded(const std::vector<spt::Track> &tracks);
+	void albumsLoaded(const std::vector<spt::Album> &albums);
+	void relatedArtistsLoaded(const std::vector<spt::Artist> &artists);
+
+	void updateFollow(bool isFollowing);
 	void follow(bool checked);
 	void trackClick(QListWidgetItem *item);
 	void trackMenu(const QPoint &pos);
@@ -34,6 +40,14 @@ private:
 	void searchDuckDuckGo(bool checked);
 	void copyLink(bool checked);
 	void openInSpotify(bool checked);
+
+	QVBoxLayout *layout = nullptr;
+	QHBoxLayout *title = nullptr;
+	QLabel *coverLabel = nullptr;
+	QLabel *name = nullptr;
+	QMenu *menu = nullptr;
+	QToolButton *context = nullptr;
+	QLabel *genres = nullptr;
 
 	QListWidget *relatedList = nullptr;
 	QListWidget *topTracksList = nullptr;
