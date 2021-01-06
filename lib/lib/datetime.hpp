@@ -9,38 +9,38 @@ namespace lib
 	/**
 	 * Date and time
 	 */
-	class date
+	class date_time
 	{
 	public:
 		/**
 		 * Construct a new empty and invalid date
 		 */
-		date() = default;
+		date_time() = default;
 
 		/**
 		 * Construct a date from another date
 		 * @param date A new copy of date
 		 */
-		date(const date &date);
+		date_time(const date_time &date);
 
 		/**
 		 * Try to parse a date from a string
 		 * @param value ISO date
 		 * @return A date, invalid if parsing failed
 		 */
-		static date parse(const std::string &value);
+		static date_time parse(const std::string &value);
 
 		/**
 		 * Current date and time in local time
 		 * @return Current date
 		 */
-		static date now();
+		static date_time now();
 
 		/**
 		 * Current date and time in UTC to_string
 		 * @return Current UTC date
 		 */
-		static date now_utc();
+		static date_time now_utc();
 
 		/**
 		 * If the current instance represents a valid date

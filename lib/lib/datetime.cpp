@@ -1,5 +1,5 @@
-#include "date.hpp"
-#include "fmt/log.hpp"
+#include "datetime.hpp"
+#include "log/log.hpp"
 
 using namespace lib;
 
@@ -8,14 +8,14 @@ using namespace lib;
 #define ISO_DATE_FORMAT "%Y-%m-%d"
 #define ISO_DATE_TIME_FORMAT "%Y-%m-%dT%H:%M:%SZ"
 
-date::date(const date &date)
+date_time::date_time(const date_time &date)
 {
 	tm = date.tm;
 }
 
-date date::parse(const std::string &value)
+date_time date_time::parse(const std::string &value)
 {
-	date date;
+	date_time date;
 
 	// First try to parse as full date and time
 	date.parse(value, ISO_DATE_TIME_FORMAT);
@@ -31,55 +31,55 @@ date date::parse(const std::string &value)
 	return date;
 }
 
-date date::now()
+date_time date_time::now()
 {
-	date date;
+	date_time date;
 	auto time = std::time(nullptr);
 	date.tm = std::localtime(&time);
 
 	return date;
 }
 
-date date::now_utc()
+date_time date_time::now_utc()
 {
-	date date;
+	date_time date;
 	auto time = std::time(nullptr);
 	date.tm = std::gmtime(&time);
 
 	return date;
 }
 
-bool date::is_valid() const
+bool date_time::is_valid() const
 {
 	return tm != nullptr;
 }
 
-void date::parse(const std::string &value, const char *format)
+void date_time::parse(const std::string &value, const char *format)
 {
 	std::stringstream(value) >> std::get_time(tm, format);
 }
 
-std::string date::to_time() const
+std::string date_time::to_time() const
 {
 	return format(LOCAL_TIME_FORMAT);
 }
 
-std::string date::to_date() const
+std::string date_time::to_date() const
 {
 	return format(LOCALE_DATE_FORMAT);
 }
 
-std::string date::to_iso_date() const
+std::string date_time::to_iso_date() const
 {
 	return format(ISO_DATE_FORMAT);
 }
 
-std::string date::to_iso_date_time() const
+std::string date_time::to_iso_date_time() const
 {
 	return format(ISO_DATE_TIME_FORMAT);
 }
 
-std::string date::format(const char *format) const
+std::string date_time::format(const char *format) const
 {
 	if (tm == nullptr)
 		return std::string();
@@ -89,7 +89,7 @@ std::string date::format(const char *format) const
 	return std::string(buffer);
 }
 
-bool date::is_empty() const
+bool date_time::is_empty() const
 {
 	return tm == nullptr
 		|| (tm->tm_year <= 70
