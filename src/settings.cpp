@@ -59,6 +59,7 @@ void Settings::fromJson(const QJsonObject &json)
 	setValue(a, "access_token", account.accessToken);
 	setValue(a, "client_id", account.clientId);
 	setValue(a, "client_secret", account.clientSecret);
+	setValue(a, "last_refresh", account.lastRefresh);
 	setValue(a, "refresh_token", account.refreshToken);
 
 	// General
@@ -146,7 +147,8 @@ QJsonObject Settings::toJson() const
 			{"access_token", account.accessToken},
 			{"client_id", account.clientId},
 			{"client_secret", account.clientSecret},
-			{"refresh_token", account.refreshToken}
+			{"last_refresh", (qint64) account.lastRefresh},
+			{"refresh_token", account.refreshToken},
 		}),
 		QPair<QString, QJsonObject>("General", {
 			{"custom_playlist_order", jsonCustomPlaylistOrder},
@@ -172,7 +174,7 @@ QJsonObject Settings::toJson() const
 			{"tray_album_art", general.trayAlbumArt},
 			{"tray_icon", general.trayIcon},
 			{"tray_light_icon", general.trayLightIcon},
-			{"tray_notifications", general.trayNotifications}
+			{"tray_notifications", general.trayNotifications},
 		}),
 		QPair<QString, QJsonObject>("Spotify", {
 			{"always_start", spotify.alwaysStart},
@@ -183,7 +185,7 @@ QJsonObject Settings::toJson() const
 			{"max_queue", spotify.maxQueue},
 			{"path", spotify.path},
 			{"start_client", spotify.startClient},
-			{"username", spotify.username}
+			{"username", spotify.username},
 		})
 	});
 }

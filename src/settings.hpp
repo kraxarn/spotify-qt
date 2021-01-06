@@ -36,6 +36,7 @@ public:
 		QString refreshToken;
 		QString clientId;
 		QString clientSecret;
+		long lastRefresh = 0;
 	} Account;
 
 	typedef struct General

@@ -7,13 +7,22 @@ Spotify::Spotify(Settings &settings, QObject *parent)
 {
 	lastAuth = 0;
 	networkManager = new QNetworkAccessManager(this);
+
+	if (secondsSinceEpoch() - settings.account.lastRefresh < 3600)
+	{
+		Log::info("Last refresh was less than an hour ago, not refreshing access token");
+		lastAuth = settings.account.lastRefresh;
+		refreshValid = true;
+		return;
+	}
+
 	refreshValid = refresh();
 }
 
 QNetworkRequest Spotify::request(const QString &url)
 {
 	// See when last refresh was
-	auto lastRefresh = QDateTime::currentSecsSinceEpoch() - lastAuth;
+	auto lastRefresh = secondsSinceEpoch() - lastAuth;
 	if (lastRefresh >= 3600)
 	{
 		Log::info("Access token probably expired, refreshing");
@@ -193,8 +202,9 @@ bool Spotify::refresh()
 	}
 
 	// Save as access token
-	lastAuth = QDateTime::currentSecsSinceEpoch();
+	lastAuth = secondsSinceEpoch();
 	auto accessToken = json["access_token"].toString();
+	settings.account.lastRefresh = lastAuth;
 	settings.account.accessToken = accessToken;
 	settings.save();
 	return true;
@@ -641,4 +651,9 @@ spt::Track Spotify::getTrack(const QString &id)
 spt::Album Spotify::getAlbum(const QString &id)
 {
 	return spt::Album(getAsObject(QString("albums/%1").arg(id)));
+}
+
+long Spotify::secondsSinceEpoch()
+{
+	return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 }

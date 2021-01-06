@@ -137,5 +137,6 @@ namespace spt
 
 		bool refresh();
 		static QString followTypeString(FollowType type);
+		static long secondsSinceEpoch();
 	};
 }
