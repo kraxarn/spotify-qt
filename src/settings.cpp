@@ -223,16 +223,6 @@ void Settings::setDarkTheme(bool value)
 	general.stylePalette = value ? PaletteDark : PaletteApp;
 }
 
-bool Settings::hasMediaControllerSupport()
-{
-	// Currently, only d-bus mpris is supported under Linux
-#ifdef USE_DBUS
-	return true;
-#else
-	return false;
-#endif
-}
-
 std::map<std::string, std::vector<std::string>> Settings::validate() const
 {
 	std::map<std::string, std::vector<std::string>> errors;

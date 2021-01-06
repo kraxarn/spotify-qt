@@ -92,8 +92,6 @@ public:
 	QString fileName() const;
 	QString filePath() const;
 
-	static bool hasMediaControllerSupport();
-
 	std::map<std::string, std::vector<std::string>> validate() const;
 
 private:
