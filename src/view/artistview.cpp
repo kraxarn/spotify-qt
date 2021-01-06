@@ -10,7 +10,6 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const Set
 		artistLoaded(loadedArtist);
 	});
 
-	setWindowTitle("...");
 	layout = new QVBoxLayout();
 	layout->setContentsMargins(-1, 0, -1, 0);
 	setLayout(layout);
@@ -103,10 +102,11 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const Set
 void ArtistView::artistLoaded(const spt::Artist &loadedArtist)
 {
 	artist = loadedArtist;
-	auto mainWindow = MainWindow::find(parentWidget());
 
-	// TODO: Doesn't actually do anything
-	setWindowTitle(artist.name);
+	if (onArtistLoaded)
+		onArtistLoaded(loadedArtist);
+
+	auto mainWindow = MainWindow::find(parentWidget());
 
 	// Get cover image (320x320 -> 320x160)
 	QPixmap cover;

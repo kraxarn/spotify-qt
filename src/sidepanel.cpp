@@ -14,7 +14,14 @@ SidePanel::SidePanel(spt::Spotify &spotify, const Settings &settings, QWidget *p
 void SidePanel::openArtist(const QString &artistId)
 {
 	auto view = new ArtistView(spotify, artistId, settings, parent);
-	addAndSelect(view, "view-media-artist", view->windowTitle());
+	view->onArtistLoaded = [this, view](const spt::Artist &artist)
+	{
+		auto index = indexOf(view);
+		if (index < 0)
+			return;
+		setTabText(index, artist.name);
+	};
+	addAndSelect(view, "view-media-artist", "...");
 }
 
 void SidePanel::tabRemoved(int index)

@@ -21,6 +21,8 @@ Q_OBJECT
 public:
 	ArtistView(spt::Spotify &spotify, const QString &artistId, const Settings &settings, QWidget *parent);
 
+	std::function<void(const spt::Artist &artist)> onArtistLoaded;
+
 private:
 	void artistLoaded(const spt::Artist &loadedArtist);
 	void topTracksLoaded(const std::vector<spt::Track> &tracks);
