@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['cache_0',['cache',['../classlib_1_1paths.html#a3effd5cda94810a74392dd30765d663a',1,'lib::paths']]],
-  ['config_5ffile_1',['config_file',['../classlib_1_1paths.html#a2c77312bf587b48fbb581e93730bec86',1,'lib::paths']]],
-  ['changelog_2',['changelog',['../md__github_workspace_lib_changelog.html',1,'']]]
+  ['_5fis_5fbasic_5fstring_0',['_is_basic_string',['../structghc_1_1filesystem_1_1path_1_1__is__basic__string.html',1,'ghc::filesystem::path']]],
+  ['_5fis_5fbasic_5fstring_3c_20std_3a_3abasic_5fstring_3c_20chart_2c_20traits_2c_20alloc_20_3e_20_3e_1',['_is_basic_string&lt; std::basic_string&lt; CharT, Traits, Alloc &gt; &gt;',['../structghc_1_1filesystem_1_1path_1_1__is__basic__string_3_01std_1_1basic__string_3_01CharT_00_01Traits_00_01Alloc_01_4_01_4.html',1,'ghc::filesystem::path']]]
 ];
