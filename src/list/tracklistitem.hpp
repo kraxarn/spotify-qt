@@ -2,6 +2,7 @@
 
 #include "../enum/datarole.hpp"
 #include "../spotify/track.hpp"
+#include "../util/dateutils.hpp"
 #include "../util/utils.hpp"
 #include "lib/settings.hpp"
 
