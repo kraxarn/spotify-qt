@@ -85,7 +85,7 @@ void settings::load()
 	std::ifstream file(name);
 	if (!file.is_open())
 	{
-		log::warn("Failed to load settings: \"{}\" not found", path);
+		log::warn("Failed to load settings: \"{}\" not found", name);
 		return;
 	}
 

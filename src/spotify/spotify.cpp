@@ -201,7 +201,7 @@ bool Spotify::refresh()
 		auto error = json["error_description"].toString();
 		lib::log::warn("Failed to refresh token: {}", error.isEmpty()
 			? "no access token"
-			: error);
+			: error.toStdString());
 		return false;
 	}
 
