@@ -2,6 +2,7 @@
 #include "dialog/setupdialog.hpp"
 #include "mainwindow.hpp"
 #include "util/icon.hpp"
+#include "lib/qtpaths.hpp"
 
 #include <QApplication>
 #include <QCoreApplication>
@@ -21,7 +22,7 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 
 	// Settings
-	Settings settings;
+	lib::settings settings(QtPaths(nullptr));
 
 	// Create QML engine if requested
 #ifdef USE_QT_QUICK
