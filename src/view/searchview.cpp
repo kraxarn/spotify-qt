@@ -1,6 +1,6 @@
 #include "searchview.hpp"
 
-SearchView::SearchView(spt::Spotify &spotify, const Settings &settings, QWidget *parent)
+SearchView::SearchView(spt::Spotify &spotify, const lib::settings &settings, QWidget *parent)
 	: spotify(spotify),
 	QWidget(parent)
 {

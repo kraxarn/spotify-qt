@@ -19,7 +19,8 @@ class ArtistView: public QWidget
 Q_OBJECT
 
 public:
-	ArtistView(spt::Spotify &spotify, const QString &artistId, const Settings &settings, QWidget *parent);
+	ArtistView(spt::Spotify &spotify, const QString &artistId, const lib::settings &settings,
+		QWidget	*parent);
 
 	std::function<void(const spt::Artist &artist)> onArtistLoaded;
 

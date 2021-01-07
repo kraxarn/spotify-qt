@@ -6,7 +6,7 @@
 class InterfacePage: public SettingsPage
 {
 public:
-	InterfacePage(Settings &settings, QWidget *parent);
+	InterfacePage(lib::settings &settings, QWidget *parent);
 
 	QIcon icon() override;
 	QString title() override;

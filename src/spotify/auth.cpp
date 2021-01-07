@@ -2,7 +2,7 @@
 
 using namespace spt;
 
-Auth::Auth(Settings &settings)
+Auth::Auth(lib::settings &settings)
 	: settings(settings)
 {
 	networkManager = new QNetworkAccessManager();

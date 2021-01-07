@@ -1,8 +1,9 @@
 #include "settingspage.hpp"
 #include "../mainwindow.hpp"
 
-SettingsPage::SettingsPage(Settings &settings, QWidget *parent)
-	: settings(settings), QTabWidget(parent)
+SettingsPage::SettingsPage(lib::settings &settings, QWidget *parent)
+	: settings(settings),
+	QTabWidget(parent)
 {
 }
 

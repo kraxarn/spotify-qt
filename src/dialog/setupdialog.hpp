@@ -20,7 +20,7 @@ class SetupDialog: public QDialog
 Q_OBJECT
 
 public:
-	explicit SetupDialog(Settings &settings, QWidget *parent = nullptr);
+	explicit SetupDialog(lib::settings &settings, QWidget *parent = nullptr);
 	~SetupDialog() override;
 
 private:
@@ -28,5 +28,5 @@ private:
 	QTcpServer *server;
 	QLineEdit *clientId, *clientSecret;
 	QString clientIdText, clientSecretText, redirect;
-	Settings &settings;
+	lib::settings &settings;
 };

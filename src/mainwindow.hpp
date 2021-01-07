@@ -7,7 +7,7 @@ class MainWindow: public QMainWindow
 Q_OBJECT
 
 public:
-	explicit MainWindow(Settings &settings);
+	explicit MainWindow(lib::settings &settings);
 
 	static MainWindow *find(QWidget *from);
 
@@ -67,7 +67,7 @@ public:
 
 private:
 	// Constructor
-	Settings &settings;
+	lib::settings &settings;
 
 	// Qt Widgets
 	QTreeWidget *songs = nullptr;

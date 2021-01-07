@@ -13,7 +13,8 @@ class LeftSidePanel: public QWidget
 Q_OBJECT
 
 public:
-	explicit LeftSidePanel(spt::Spotify &spotify, Settings &settings, spt::Current &current, QWidget *parent = nullptr);
+	explicit LeftSidePanel(spt::Spotify &spotify, lib::settings &settings,
+		spt::Current &current, QWidget *parent);
 
 	QSet<QString> allArtists();
 	void updateContextIcon();
@@ -49,7 +50,7 @@ public:
 private:
 	spt::Spotify &spotify;
 	spt::Current &current;
-	Settings &settings;
+	lib::settings &settings;
 	LibraryList *libraryList;
 	PlaylistList *playlists;
 	QVector<spt::Playlist> sptPlaylists;

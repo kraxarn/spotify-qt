@@ -2,7 +2,7 @@
 
 bool MainMenu::showDeveloperMenu = false;
 
-MainMenu::MainMenu(spt::Spotify &spotify, Settings &settings, QWidget *parent)
+MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings, QWidget *parent)
 	: settings(settings),
 	spotify(spotify),
 	QMenu(parent)

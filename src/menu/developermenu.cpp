@@ -1,6 +1,6 @@
 #include "developermenu.hpp"
 
-DeveloperMenu::DeveloperMenu(Settings &settings, QWidget *parent)
+DeveloperMenu::DeveloperMenu(lib::settings &settings, QWidget *parent)
 	: settings(settings),
 	QMenu("Developer", parent)
 {

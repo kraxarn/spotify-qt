@@ -5,7 +5,7 @@ using namespace spt;
 
 QList<QPair<QDateTime, QString>> ClientHandler::log;
 
-ClientHandler::ClientHandler(const Settings &settings, QWidget *parent)
+ClientHandler::ClientHandler(const lib::settings &settings, QWidget *parent)
 	: settings(settings), parentWidget(parent), QObject(parent)
 {
 	path = settings.spotify.path;

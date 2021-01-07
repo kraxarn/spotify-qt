@@ -9,7 +9,7 @@
 class PlaylistsPage: public SettingsPage
 {
 public:
-	PlaylistsPage(Settings &settings, QWidget *parent);
+	PlaylistsPage(lib::settings &settings, QWidget *parent);
 
 	QIcon icon() override;
 	QString title() override;

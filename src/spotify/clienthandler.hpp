@@ -2,7 +2,7 @@
 
 #include "../enum/clienttype.hpp"
 #include "../keyring/kwallet.hpp"
-#include "../settings.hpp"
+#include "lib/settings.hpp"
 
 #include <QDateTime>
 #include <QFileInfo>
@@ -18,7 +18,7 @@ namespace spt
 	Q_OBJECT
 
 	public:
-		explicit ClientHandler(const Settings &settings, QWidget *parent = nullptr);
+		explicit ClientHandler(const lib::settings &settings, QWidget *parent = nullptr);
 		~ClientHandler() override;
 
 		QString start();
@@ -35,7 +35,7 @@ namespace spt
 		QWidget *parentWidget = nullptr;
 		QString path;
 		static QList<QPair<QDateTime, QString>> log;
-		const Settings &settings;
+		const lib::settings &settings;
 		ClientType clientType;
 
 		bool supportsPulse();

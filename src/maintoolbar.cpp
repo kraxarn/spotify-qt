@@ -1,7 +1,10 @@
 #include "maintoolbar.hpp"
 
-MainToolBar::MainToolBar(spt::Spotify &spotify, Settings &settings, QWidget *parent)
-	: parent(parent), spotify(spotify), settings(settings), QToolBar("Media controls", parent)
+MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget *parent)
+	: parent(parent),
+	spotify(spotify),
+	settings(settings),
+	QToolBar("Media controls", parent)
 {
 	auto mainWindow = dynamic_cast<MainWindow *>(parent);
 	if (mainWindow == nullptr)

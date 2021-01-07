@@ -10,7 +10,7 @@
 class AboutPage: public SettingsPage
 {
 public:
-	AboutPage(Settings &settings, QWidget *parent);
+	AboutPage(lib::settings &settings, QWidget *parent);
 
 	QIcon icon() override;
 	QString title() override;

@@ -18,7 +18,7 @@ class DebugView: public QWidget
 Q_OBJECT
 
 public:
-	explicit DebugView(const Settings &settings, QWidget *parent);
+	explicit DebugView(const lib::settings &settings, QWidget *parent);
 
 private:
 	QComboBox *requestType = nullptr;
@@ -28,7 +28,7 @@ private:
 	QTextEdit *jsonResponse = nullptr;
 	QTabWidget *tabs = nullptr;
 
-	const Settings &settings;
+	const lib::settings &settings;
 
 	void sendRequest(bool checked);
 };

@@ -9,7 +9,7 @@
 class SpotifyPage: public SettingsPage
 {
 public:
-	SpotifyPage(Settings &settings, QWidget *parent);
+	SpotifyPage(lib::settings &settings, QWidget *parent);
 
 	QIcon icon() override;
 	QString title() override;

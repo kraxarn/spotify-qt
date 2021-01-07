@@ -1,6 +1,6 @@
 #include "trackslist.hpp"
 
-TracksList::TracksList(spt::Spotify &spotify, Settings &settings, QWidget *parent)
+TracksList::TracksList(spt::Spotify &spotify, lib::settings &settings, QWidget *parent)
 	: spotify(spotify),
 	settings(settings),
 	QTreeWidget(parent)

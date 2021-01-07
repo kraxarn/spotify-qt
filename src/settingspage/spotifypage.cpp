@@ -1,6 +1,6 @@
 #include "spotifypage.hpp"
 
-SpotifyPage::SpotifyPage(Settings &settings, QWidget *parent)
+SpotifyPage::SpotifyPage(lib::settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
 	addTab(spotify(), "General");

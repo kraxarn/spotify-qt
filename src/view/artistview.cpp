@@ -1,6 +1,7 @@
 #include "artistview.hpp"
 
-ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId, const Settings &settings, QWidget *parent)
+ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId,
+	const lib::settings &settings, QWidget *parent)
 	: spotify(spotify),
 	artistId(artistId),
 	QWidget(parent)

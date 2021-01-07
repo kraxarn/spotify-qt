@@ -1,6 +1,6 @@
 #include "mainwindow.hpp"
 
-MainWindow::MainWindow(Settings &settings)
+MainWindow::MainWindow(lib::settings &settings)
 	: settings(settings), QMainWindow()
 {
 	// Splash

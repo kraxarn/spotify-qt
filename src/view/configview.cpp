@@ -1,7 +1,8 @@
 #include "configview.hpp"
 
-ConfigView::ConfigView(const Settings &settings, QWidget *parent)
-	: settings(settings), QTreeWidget(parent)
+ConfigView::ConfigView(const lib::settings &settings, QWidget *parent)
+	: settings(settings),
+	QTreeWidget(parent)
 {
 	setHeaderLabels({
 		"Key",

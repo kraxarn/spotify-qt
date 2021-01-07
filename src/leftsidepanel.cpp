@@ -2,7 +2,8 @@
 
 #include "mainwindow.hpp"
 
-LeftSidePanel::LeftSidePanel(spt::Spotify &spotify, Settings &settings, spt::Current &current, QWidget *parent)
+LeftSidePanel::LeftSidePanel(spt::Spotify &spotify, lib::settings &settings,
+	spt::Current &current, QWidget *parent)
 	: spotify(spotify),
 	settings(settings),
 	current(current),

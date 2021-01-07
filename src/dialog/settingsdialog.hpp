@@ -2,7 +2,6 @@
 
 #include "../keyring/kwallet.hpp"
 #include "../mainwindow.hpp"
-#include "../settings.hpp"
 #include "../settingspage/aboutpage.hpp"
 #include "../settingspage/applicationpage.hpp"
 #include "../settingspage/interfacepage.hpp"
@@ -13,6 +12,7 @@
 #include "../util/utils.hpp"
 #include "../view/clienthandlerlogview.hpp"
 #include "../view/systeminfoview.hpp"
+#include "lib/settings.hpp"
 #include "openlinkdialog.hpp"
 
 #include <QAction>
@@ -41,13 +41,13 @@ class SettingsDialog: public QDialog
 Q_OBJECT
 
 public:
-	explicit SettingsDialog(Settings &settings, QWidget *parent = nullptr);
+	explicit SettingsDialog(lib::settings &settings, QWidget *parent = nullptr);
 
 private:
 	void categoryChanged(int row);
 	bool applySettings();
 
-	Settings &settings;
+	lib::settings &settings;
 
 	QListWidget *categories = nullptr;
 	QStackedWidget *stack = nullptr;

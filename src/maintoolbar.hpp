@@ -1,8 +1,8 @@
 #pragma once
 
+#include "lib/settings.hpp"
 #include "mainwindow.hpp"
 #include "menu/mainmenu.hpp"
-#include "settings.hpp"
 #include "spotify/spotify.hpp"
 #include "util/icon.hpp"
 #include "volumebutton.hpp"
@@ -15,7 +15,7 @@ class MainToolBar: public QToolBar
 Q_OBJECT
 
 public:
-	MainToolBar(spt::Spotify &spotify, Settings &settings, QWidget *parent);
+	MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget *parent);
 
 	QAction *search = nullptr;
 	QAction *playPause = nullptr;
@@ -28,5 +28,5 @@ public:
 
 private:
 	spt::Spotify &spotify;
-	Settings &settings;
+	lib::settings &settings;
 };

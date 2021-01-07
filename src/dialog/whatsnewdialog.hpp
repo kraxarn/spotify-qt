@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../mainwindow.hpp"
-#include "../settings.hpp"
+#include "lib/settings.hpp"
 
 #include <QDialog>
 #include <QVBoxLayout>
@@ -12,5 +12,5 @@ class WhatsNewDialog: public QDialog
 Q_OBJECT
 
 public:
-	WhatsNewDialog(const QString &tag, Settings &settings, QWidget *parent);
+	WhatsNewDialog(const QString &tag, lib::settings &settings, QWidget *parent);
 };

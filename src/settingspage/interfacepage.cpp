@@ -1,6 +1,6 @@
 #include "interfacepage.hpp"
 
-InterfacePage::InterfacePage(Settings &settings, QWidget *parent)
+InterfacePage::InterfacePage(lib::settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
 	addTab(interface(), "General");

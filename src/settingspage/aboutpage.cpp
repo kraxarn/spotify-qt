@@ -1,6 +1,6 @@
 #include "aboutpage.hpp"
 
-AboutPage::AboutPage(Settings &settings, QWidget *parent)
+AboutPage::AboutPage(lib::settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
 	addTab(about(), "General");

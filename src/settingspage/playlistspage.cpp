@@ -1,6 +1,6 @@
 #include "playlistspage.hpp"
 
-PlaylistsPage::PlaylistsPage(Settings &settings, QWidget *parent)
+PlaylistsPage::PlaylistsPage(lib::settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
 	addTab(order(), "Order");

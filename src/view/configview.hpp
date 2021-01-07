@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../settings.hpp"
+#include "lib/settings.hpp"
 #include "../util/icon.hpp"
 
 #include <QTreeWidget>
@@ -10,10 +10,10 @@
 class ConfigView: public QTreeWidget
 {
 public:
-	ConfigView(const Settings &settings, QWidget *parent);
+	ConfigView(const lib::settings &settings, QWidget *parent);
 
 private:
-	const Settings &settings;
+	const lib::settings &settings;
 
 	void menu(const QPoint &pos);
 };

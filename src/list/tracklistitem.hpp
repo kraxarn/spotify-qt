@@ -1,10 +1,9 @@
 #pragma once
 
 #include "../enum/datarole.hpp"
-#include "../settings.hpp"
 #include "../spotify/track.hpp"
 #include "../util/utils.hpp"
-#include "../util/dateutils.hpp"
+#include "lib/settings.hpp"
 
 #include <QTreeWidgetItem>
 
