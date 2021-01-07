@@ -10,13 +10,10 @@ class QtPaths: public QObject, public lib::paths
 public:
 	explicit QtPaths(QObject *parent);
 
-	[[nodiscard]]
 	std::string config_file() const override;
-
-	[[nodiscard]]
 	std::string cache() const override;
 
 private:
-	QString configFile;
-	QString cachePath;
+	std::string configFile;
+	std::string cachePath;
 };
