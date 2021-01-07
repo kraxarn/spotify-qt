@@ -352,7 +352,8 @@ AudioFeatures Spotify::trackAudioFeatures(QString trackId)
 
 QVector<Track> Spotify::albumTracks(const QString &albumId, const QString &albumName, int offset)
 {
-	auto json = getAsObject(QString("albums/%1/tracks?limit=50&offset=%2").arg(albumId).arg(offset));
+	auto json = getAsObject(QString("albums/%1/tracks?limit=50&offset=%2")
+		.arg(albumId).arg(offset));
 	auto trackItems = json["items"].toArray();
 	QVector<Track> tracks;
 	tracks.reserve(50);
@@ -368,7 +369,8 @@ QVector<Track> Spotify::albumTracks(const QString &albumId, const QString &album
 
 	// Add all in next page
 	if (json.contains("next") && !json["next"].isNull())
-		tracks.append(albumTracks(albumId, albumName, json["offset"].toInt() + json["limit"].toInt()));
+		tracks.append(albumTracks(albumId, albumName,
+			json["offset"].toInt() + json["limit"].toInt()));
 	return tracks;
 }
 
@@ -402,7 +404,8 @@ Artist Spotify::artist(const QString &artistId)
 	return Artist(getAsObject(QString("artists/%1").arg(artistId)));
 }
 
-void Spotify::artist(const QString &artistId, const std::function<void(const spt::Artist &artist)> &callback)
+void Spotify::artist(const QString &artistId,
+	const std::function<void(const spt::Artist &artist)> &callback)
 {
 	get(QString("artists/%1").arg(artistId), [callback](const QJsonDocument &json)
 	{
@@ -524,7 +527,8 @@ QString Spotify::removeSavedTrack(const QString &trackId)
 
 QVector<Album> Spotify::newReleases(int offset)
 {
-	auto json = getAsObject(QString("browse/new-releases?limit=50&offset=%1").arg(offset))["albums"].toObject();
+	auto json = getAsObject(QString("browse/new-releases?limit=50&offset=%1").arg(offset))["albums"]
+		.toObject();
 	auto albumItems = json["items"].toArray();
 	QVector<Album> albums;
 	albums.reserve(albumItems.size());

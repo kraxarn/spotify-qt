@@ -68,7 +68,8 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId,
 	topTracksList->setEnabled(false);
 	topTracksList->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QListWidget::connect(topTracksList, &QListWidget::itemActivated, this, &ArtistView::trackClick);
-	QWidget::connect(topTracksList, &QWidget::customContextMenuRequested, this, &ArtistView::trackMenu);
+	QWidget::connect(topTracksList, &QWidget::customContextMenuRequested,
+		this, &ArtistView::trackMenu);
 	tabs->addTab(topTracksList, "Popular");
 
 	// Albums
@@ -87,7 +88,8 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId,
 
 		QTreeWidget::connect(list, &QTreeWidget::itemClicked, this, &ArtistView::loadAlbumId);
 		QWidget::connect(list, &QWidget::customContextMenuRequested, this, &ArtistView::albumMenu);
-		QTreeWidget::connect(list, &QTreeWidget::itemDoubleClicked, this, &ArtistView::albumDoubleClicked);
+		QTreeWidget::connect(list, &QTreeWidget::itemDoubleClicked,
+			this, &ArtistView::albumDoubleClicked);
 	}
 
 	tabs->addTab(albumList, "Albums");
@@ -229,7 +231,8 @@ void ArtistView::updateFollow(bool isFollowing)
 	followButton->setIcon(Icon::get(QString("%1starred-symbolic").arg(isFollowing ? "non-" : "")));
 	followButton->setText(QString("%1%2")
 		.arg(isFollowing ? "Unfollow" : "Follow")
-		.arg(followButton->text().right(followButton->text().length() - followButton->text().indexOf(' '))));
+		.arg(followButton->text()
+			.right(followButton->text().length() - followButton->text().indexOf(' '))));
 }
 
 void ArtistView::follow(bool)
@@ -311,7 +314,8 @@ void ArtistView::albumDoubleClicked(QTreeWidgetItem *item, int)
 
 void ArtistView::searchWikipedia(bool)
 {
-	Utils::openUrl(QString("https://www.wikipedia.org/search-redirect.php?family=wikipedia&go=Go&search=%1")
+	Utils::openUrl(QString
+		("https://www.wikipedia.org/search-redirect.php?family=wikipedia&go=Go&search=%1")
 		.arg(artist.name), LinkType::Web, this);
 }
 void ArtistView::searchDuckDuckGo(bool)

@@ -15,7 +15,8 @@ void SettingsPage::warning(const QString &title, const QString &message)
 void SettingsPage::applyFail(const QString &setting)
 {
 	warning("Failed to apply settings",
-		QString("Failed to apply setting \"%1\". Check your settings and try again.").arg(setting));
+		QString("Failed to apply setting \"%1\". Check your settings and try again.")
+			.arg(setting));
 }
 
 QVBoxLayout *SettingsPage::tabContent()

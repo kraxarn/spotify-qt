@@ -39,7 +39,8 @@ QWidget *PlaylistsPage::order()
 	plListLayout = new QHBoxLayout();
 	plList = new QListWidget(this);
 	plListLayout->addWidget(plList, 1);
-	QListWidget::connect(plList, &QListWidget::currentRowChanged, this, &PlaylistsPage::playlistItemChanged);
+	QListWidget::connect(plList, &QListWidget::currentRowChanged, this,
+		&PlaylistsPage::playlistItemChanged);
 
 	auto buttons = new QToolBar(this);
 	buttons->setOrientation(Qt::Vertical);
