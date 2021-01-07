@@ -15,7 +15,7 @@ QWidget *SpotifyPage::spotify()
 
 	// Executable settings
 	auto sptPathLayout = new QHBoxLayout();
-	sptPath = new QLineEdit(settings.spotify.path, this);
+	sptPath = new QLineEdit(QString::fromStdString(settings.spotify.path), this);
 	sptPath->setPlaceholderText("Client path");
 	sptPathLayout->addWidget(sptPath, 1);
 	auto sptPathBrowse = new QPushButton("...", this);
@@ -32,9 +32,9 @@ QWidget *SpotifyPage::spotify()
 
 	// Client version
 	sptVersion = new QLabel("(no client provided)", this);
-	if (!settings.spotify.path.isEmpty())
+	if (!settings.spotify.path.empty())
 	{
-		auto client = spt::ClientHandler::version(settings.spotify.path);
+		auto client = spt::ClientHandler::version(QString::fromStdString(settings.spotify.path));
 		if (sptVersion != nullptr)
 			sptVersion->setText(client);
 	}
@@ -44,14 +44,14 @@ QWidget *SpotifyPage::spotify()
 	// Start with app
 	sptAppStart = new QCheckBox("Start with app", this);
 	sptAppStart->setToolTip("Start, and close, spotify client together with the app (only closes when using app config)");
-	sptAppStart->setChecked(settings.spotify.startClient);
+	sptAppStart->setChecked(settings.spotify.start_client);
 	QCheckBox::connect(sptAppStart, &QCheckBox::stateChanged, this, &SpotifyPage::startClientToggle);
 	content->addWidget(sptAppStart);
 
 	// Always start
 	sptAlways = new QCheckBox("Always start", this);
 	sptAlways->setToolTip("Always start client, even if there are other devices already available");
-	sptAlways->setChecked(settings.spotify.alwaysStart);
+	sptAlways->setChecked(settings.spotify.always_start);
 	sptAlways->setEnabled(sptAppStart->isChecked());
 	content->addWidget(sptAlways);
 
@@ -66,7 +66,7 @@ QWidget *SpotifyPage::config()
 	// Global config
 	sptGlobal = new QCheckBox("Use global config", this);
 	sptGlobal->setToolTip("Use spotifyd.conf file in either ~/.config/spotifyd or /etc/spotifyd only");
-	sptGlobal->setChecked(settings.spotify.globalConfig);
+	sptGlobal->setChecked(settings.spotify.global_config);
 	QCheckBox::connect(sptGlobal, &QCheckBox::stateChanged, this, &SpotifyPage::globalConfigToggle);
 	content->addWidget(sptGlobal);
 
@@ -79,7 +79,7 @@ QWidget *SpotifyPage::config()
 
 	// Username
 	sptLayout->addWidget(new QLabel("Username", sptGroup), 0, 0);
-	sptUsername = new QLineEdit(settings.spotify.username, sptGroup);
+	sptUsername = new QLineEdit(QString::fromStdString(settings.spotify.username), sptGroup);
 	sptLayout->addWidget(sptUsername, 0, 1);
 
 	// Bitrate
@@ -97,16 +97,16 @@ QWidget *SpotifyPage::config()
 	sptBackend = new QComboBox(sptGroup);
 	sptBackend->addItem("Auto");
 	sptBackend->addItems(backends());
-	sptBackend->setCurrentText(settings.spotify.backend);
+	sptBackend->setCurrentText(QString::fromStdString(settings.spotify.backend));
 	sptLayout->addWidget(sptBackend, 2, 1);
 
 	// KWallet keyring for password
 #ifdef USE_DBUS
-	if (KWallet(settings.spotify.username).isEnabled())
+	if (KWallet(QString::fromStdString(settings.spotify.username)).isEnabled())
 	{
 		sptKeyring = new QCheckBox("Save password in keyring", this);
 		sptKeyring->setToolTip("Store password in keyring (using KWallet)");
-		sptKeyring->setChecked(settings.spotify.keyringPassword);
+		sptKeyring->setChecked(settings.spotify.keyring_password);
 		sptLayout->addWidget(sptKeyring, 3, 0);
 	}
 #endif
@@ -141,7 +141,7 @@ bool SpotifyPage::save()
 			return false;
 		}
 		sptVersion->setText(client);
-		settings.spotify.path = sptPath->text();
+		settings.spotify.path = sptPath->text().toStdString();
 	}
 
 	// librespot has no global config support
@@ -156,21 +156,21 @@ bool SpotifyPage::save()
 	if (sptGlobal->isChecked() && !sptConfigExists())
 		warning("spotifyd config not found",
 			QString("Couldn't find a config file for spotifyd. You may experience issues."));
-	settings.spotify.globalConfig = sptGlobal->isChecked();
+	settings.spotify.global_config = sptGlobal->isChecked();
 
 	// Backend
 	settings.spotify.backend = sptBackend->currentIndex() == 0
-		? QString()
-		: sptBackend->currentText();
+		? std::string()
+		: sptBackend->currentText().toStdString();
 
 	// Other Spotify stuff
-	settings.spotify.startClient = sptAppStart->isChecked();
-	settings.spotify.username = sptUsername->text();
+	settings.spotify.start_client = sptAppStart->isChecked();
+	settings.spotify.username = sptUsername->text().toStdString();
 	auto bitrate = sptBitrate->currentIndex();
 	settings.spotify.bitrate = bitrate == 0 ? 96 : bitrate == 1 ? 160 : 320;
-	settings.spotify.alwaysStart = sptAlways->isChecked();
+	settings.spotify.always_start = sptAlways->isChecked();
 	if (sptKeyring != nullptr)
-		settings.spotify.keyringPassword = sptKeyring->isChecked();
+		settings.spotify.keyring_password = sptKeyring->isChecked();
 
 	return true;
 }

@@ -16,12 +16,12 @@ TracksList::TracksList(spt::Spotify &spotify, lib::settings &settings, QWidget *
 		"Title", "Artist", "Album", "Length", "Added"
 	});
 	header()->setSectionsMovable(false);
-	header()->setSectionResizeMode((QHeaderView::ResizeMode) settings.general.songHeaderResizeMode);
-	if (settings.general.songHeaderSortBy > 0)
-		header()->setSortIndicator(settings.general.songHeaderSortBy + 1, Qt::AscendingOrder);
+	header()->setSectionResizeMode((QHeaderView::ResizeMode) settings.general.song_header_resize_mode);
+	if (settings.general.song_header_sort_by > 0)
+		header()->setSortIndicator(settings.general.song_header_sort_by + 1, Qt::AscendingOrder);
 
 	// Hide specified columns
-	for (auto &value : settings.general.hiddenSongHeaders)
+	for (auto &value : settings.general.hidden_song_headers)
 		header()->setSectionHidden(value + 1, true);
 
 	// Play tracks on click or enter/special key
@@ -64,7 +64,7 @@ void TracksList::clicked(QTreeWidgetItem *item, int)
 	// If we played from library, we don't have any context
 	auto allTracks = mainWindow->currentTracks();
 	auto status = mainWindow->getCurrentLibraryItem() != nullptr
-		|| !this->settings.general.spotifyPlaybackOrder
+		|| !this->settings.general.spotify_playback_order
 		? this->spotify.playTracks(currentIndex().row(), allTracks)
 		: this->spotify.playTracks(trackIndex, mainWindow->getSptContext());
 
@@ -84,7 +84,7 @@ void TracksList::headerMenu(const QPoint &pos)
 	auto headerTitles = QStringList({
 		"Title", "Artist", "Album", "Length", "Added"
 	});
-	auto headers = this->settings.general.hiddenSongHeaders;
+	auto headers = this->settings.general.hidden_song_headers;
 	for (int i = 0; i < headerTitles.size(); i++)
 	{
 		auto showTitle = showHeaders->addAction(headerTitles.at(i));
@@ -94,7 +94,7 @@ void TracksList::headerMenu(const QPoint &pos)
 
 		auto sortTitle = sortBy->addAction(headerTitles.at(i));
 		sortTitle->setCheckable(true);
-		sortTitle->setChecked(i == this->settings.general.songHeaderSortBy);
+		sortTitle->setChecked(i == this->settings.general.song_header_sort_by);
 		sortTitle->setData(QVariant(100 + i));
 	}
 
@@ -108,21 +108,21 @@ void TracksList::headerMenu(const QPoint &pos)
 			header()->setSectionHidden(i + 1, !action->isChecked());
 			if (action->isChecked())
 			{
-				this->settings.general.hiddenSongHeaders
-					.erase(std::remove(this->settings.general.hiddenSongHeaders.begin(),
-						this->settings.general.hiddenSongHeaders.end(), i));
+				this->settings.general.hidden_song_headers
+					.erase(std::remove(this->settings.general.hidden_song_headers.begin(),
+						this->settings.general.hidden_song_headers.end(), i));
 			}
 			else
-				this->settings.general.hiddenSongHeaders.push_back(i);
+				this->settings.general.hidden_song_headers.push_back(i);
 			this->settings.save();
 			return;
 		}
 
 		// Sort by
 		i -= 100;
-		if (this->settings.general.songHeaderSortBy != i)
+		if (this->settings.general.song_header_sort_by != i)
 			header()->setSortIndicator(i + 1, Qt::AscendingOrder);
-		this->settings.general.songHeaderSortBy = this->settings.general.songHeaderSortBy == i ? -1 : i;
+		this->settings.general.song_header_sort_by = this->settings.general.song_header_sort_by == i ? -1 : i;
 		this->settings.save();
 	});
 

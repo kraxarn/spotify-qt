@@ -74,10 +74,10 @@ QString Auth::auth(const QString &code, const QString &redirect, const QString &
 		return jsonData["error_description"].toString();
 
 	// Save access/refresh token to settings
-	auto accessToken = jsonData["access_token"].toString();
-	auto refreshToken = jsonData["refresh_token"].toString();
-	settings.account.accessToken = accessToken;
-	settings.account.refreshToken = refreshToken;
+	auto accessToken = jsonData["access_token"].toString().toStdString();
+	auto refreshToken = jsonData["refresh_token"].toString().toStdString();
+	settings.account.access_token = accessToken;
+	settings.account.refresh_token = refreshToken;
 	settings.save();
 
 	// Everything hopefully went fine

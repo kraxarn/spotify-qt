@@ -8,7 +8,7 @@ QList<QPair<QDateTime, QString>> ClientHandler::log;
 ClientHandler::ClientHandler(const lib::settings &settings, QWidget *parent)
 	: settings(settings), parentWidget(parent), QObject(parent)
 {
-	path = settings.spotify.path;
+	path = QString::fromStdString(settings.spotify.path);
 	process = new QProcess(parent);
 	clientType = getClientType(path);
 }
@@ -35,14 +35,14 @@ QString ClientHandler::start()
 		return "file in path does not exist";
 
 	// If using global config, just start
-	if (settings.spotify.globalConfig && clientType == ClientType::Spotifyd)
+	if (settings.spotify.global_config && clientType == ClientType::Spotifyd)
 	{
 		process->start(path, QStringList());
 		return QString();
 	}
 
 	// Check if username exists
-	auto username = settings.spotify.username;
+	auto username = QString::fromStdString(settings.spotify.username);
 	if (username.isEmpty())
 		return "no username provided";
 
@@ -50,7 +50,7 @@ QString ClientHandler::start()
 	QString password;
 #ifdef USE_DBUS
 	KWallet keyring(username);
-	if (settings.spotify.keyringPassword && keyring.unlock())
+	if (settings.spotify.keyring_password && keyring.unlock())
 		password = keyring.readPassword();
 #endif
 
@@ -66,7 +66,7 @@ QString ClientHandler::start()
 			return "no password provided";
 
 #ifdef USE_DBUS
-		if (settings.spotify.keyringPassword)
+		if (settings.spotify.keyring_password)
 			keyring.writePassword(password);
 #endif
 	}
@@ -96,7 +96,7 @@ QString ClientHandler::start()
 		});
 	}
 
-	auto backend = settings.spotify.backend;
+	auto backend = QString::fromStdString(settings.spotify.backend);
 	if (backend.isEmpty() && supportsPulse())
 	{
 		backend = "pulseaudio";

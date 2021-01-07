@@ -88,7 +88,7 @@ QIcon LeftSidePanel::currentContextIcon() const
 
 void LeftSidePanel::updateContextIcon()
 {
-	if (!settings.general.showContextInfo)
+	if (!settings.general.show_context_info)
 	{
 		contextIcon->setVisible(false);
 		contextInfo->setVisible(false);

@@ -20,7 +20,7 @@ QWidget *InterfacePage::interface()
 	// Song header resize mode
 	itfResizeAuto = new QCheckBox("Auto resize track list headers", this);
 	itfResizeAuto->setToolTip("Automatically resize track list headers to fit content");
-	itfResizeAuto->setChecked(settings.general.songHeaderResizeMode == QHeaderView::ResizeToContents);
+	itfResizeAuto->setChecked(settings.general.song_header_resize_mode == QHeaderView::ResizeToContents);
 	layout->addWidget(itfResizeAuto);
 
 	// Always use fallback icons (if system icons are an option)
@@ -28,20 +28,20 @@ QWidget *InterfacePage::interface()
 	{
 		itfIcFallback = new QCheckBox("Always use fallback icons", this);
 		itfIcFallback->setToolTip("Always use bundled fallback icons, even if system icons are available");
-		itfIcFallback->setChecked(settings.general.fallbackIcons);
+		itfIcFallback->setChecked(settings.general.fallback_icons);
 		layout->addWidget(itfIcFallback);
 	}
 
 	// Monospace remaining time
 	itfMonoTime = new QCheckBox("Fixed width remaining time", this);
 	itfMonoTime->setToolTip("Use a fixed width for remaining time to avoid resizing");
-	itfMonoTime->setChecked(settings.general.fixedWidthTime);
+	itfMonoTime->setChecked(settings.general.fixed_width_time);
 	layout->addWidget(itfMonoTime);
 
 	// Context info
 	itfContextInfo = new QCheckBox("Show context information", this);
 	itfContextInfo->setToolTip("Show what context music is currently playing from above current track");
-	itfContextInfo->setChecked(settings.general.showContextInfo);
+	itfContextInfo->setChecked(settings.general.show_context_info);
 	layout->addWidget(itfContextInfo);
 
 	// Track numbers
@@ -53,7 +53,7 @@ QWidget *InterfacePage::interface()
 	// Relative added date
 	itfRelativeAdded = new QCheckBox("Relative added dates", this);
 	itfRelativeAdded->setToolTip("Relative added dates compared to current date, for example \"... ago\"");
-	itfRelativeAdded->setChecked(settings.general.relativeAdded);
+	itfRelativeAdded->setChecked(settings.general.relative_added);
 	layout->addWidget(itfRelativeAdded);
 
 	return Utils::layoutToWidget(layout);
@@ -68,13 +68,13 @@ QWidget *InterfacePage::trayIcon()
 	// Tray icon settings
 	itfTrayIcon = new QCheckBox("Enabled", this);
 	itfTrayIcon->setToolTip("Add an icon to the system tray for quick access");
-	itfTrayIcon->setChecked(settings.general.trayIcon);
+	itfTrayIcon->setChecked(settings.general.tray_icon);
 	content->addWidget(itfTrayIcon);
 
 	// Desktop notifications
 	itfTrayNotify = new QCheckBox("Desktop notifications", this);
 	itfTrayNotify->setToolTip("Replace status bar with desktop notifications (suppresses any non-error messages)");
-	itfTrayNotify->setChecked(settings.general.trayNotifications);
+	itfTrayNotify->setChecked(settings.general.tray_notifications);
 	content->addWidget(itfTrayNotify);
 	QCheckBox::connect(itfTrayNotify, &QCheckBox::stateChanged, [this](int state)
 	{
@@ -85,13 +85,13 @@ QWidget *InterfacePage::trayIcon()
 	// Invert tray icon
 	itfTrayInvert = new QCheckBox("Invert icon", this);
 	itfTrayInvert->setToolTip("Invert colors in tray icon to be visible on light backgrounds");
-	itfTrayInvert->setChecked(settings.general.trayLightIcon);
+	itfTrayInvert->setChecked(settings.general.tray_light_icon);
 	content->addWidget(itfTrayInvert);
 
 	// Album art in tray
 	itfTrayAlbum = new QCheckBox("Album art as icon", this);
 	itfTrayAlbum->setToolTip("Show album art of current track in tray icon");
-	itfTrayAlbum->setChecked(settings.general.trayAlbumArt);
+	itfTrayAlbum->setChecked(settings.general.tray_album_art);
 	content->addWidget(itfTrayAlbum);
 
 	return Utils::layoutToWidget(content);
@@ -126,9 +126,9 @@ bool InterfacePage::save()
 	auto resizeMode = itfResizeAuto->isChecked()
 		? QHeaderView::ResizeToContents
 		: QHeaderView::Interactive;
-	if (resizeMode != settings.general.songHeaderResizeMode && mainWindow != nullptr)
+	if (resizeMode != settings.general.song_header_resize_mode && mainWindow != nullptr)
 		mainWindow->getSongsTree()->header()->setSectionResizeMode(resizeMode);
-	settings.general.songHeaderResizeMode = resizeMode;
+	settings.general.song_header_resize_mode = resizeMode;
 
 	// Track numbers
 	if (mainWindow != nullptr)
@@ -139,12 +139,12 @@ bool InterfacePage::save()
 
 	// Other interface stuff
 	if (itfIcFallback != nullptr)
-		settings.general.fallbackIcons = itfIcFallback->isChecked();
+		settings.general.fallback_icons = itfIcFallback->isChecked();
 	if (mainWindow != nullptr)
 		mainWindow->setFixedWidthTime(itfMonoTime->isChecked());
-	settings.general.fixedWidthTime = itfMonoTime->isChecked();
-	settings.general.showContextInfo = itfContextInfo->isChecked();
-	settings.general.relativeAdded = itfRelativeAdded->isChecked();
+	settings.general.fixed_width_time = itfMonoTime->isChecked();
+	settings.general.show_context_info = itfContextInfo->isChecked();
+	settings.general.relative_added = itfRelativeAdded->isChecked();
 
 	// Desktop notifications and tray icon
 	if (itfTrayNotify->isChecked() && !itfTrayIcon->isChecked())
@@ -155,15 +155,15 @@ bool InterfacePage::save()
 	}
 
 	// Check if tray icon needs to be reloaded
-	auto reloadTray = settings.general.trayIcon != itfTrayIcon->isChecked()
-		|| settings.general.trayNotifications != itfTrayNotify->isChecked()
-		|| settings.general.trayLightIcon != itfTrayInvert->isChecked();
+	auto reloadTray = settings.general.tray_icon != itfTrayIcon->isChecked()
+		|| settings.general.tray_notifications != itfTrayNotify->isChecked()
+		|| settings.general.tray_light_icon != itfTrayInvert->isChecked();
 
 	// Apply
-	settings.general.trayIcon = itfTrayIcon->isChecked();
-	settings.general.trayNotifications = itfTrayNotify->isChecked();
-	settings.general.trayLightIcon = itfTrayInvert->isChecked();
-	settings.general.trayAlbumArt = itfTrayAlbum->isChecked();
+	settings.general.tray_icon = itfTrayIcon->isChecked();
+	settings.general.tray_notifications = itfTrayNotify->isChecked();
+	settings.general.tray_light_icon = itfTrayInvert->isChecked();
+	settings.general.tray_album_art = itfTrayAlbum->isChecked();
 
 	// Reload if needed
 	if (reloadTray && mainWindow != nullptr)

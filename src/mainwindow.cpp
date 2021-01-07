@@ -19,8 +19,8 @@ MainWindow::MainWindow(lib::settings &settings)
 	cacheDir.mkdir("tracks");
 
 	// Apply selected style and palette
-	QApplication::setStyle(settings.general.style);
-	Utils::applyPalette(settings.general.stylePalette);
+	QApplication::setStyle(QString::fromStdString(settings.general.style));
+	Utils::applyPalette(settings.general.style_palette);
 
 	// Custom dark theme
 	if (settings.general.style_palette == lib::palette_dark
@@ -74,8 +74,8 @@ MainWindow::MainWindow(lib::settings &settings)
 	splash->showMessage("Welcome!");
 
 	// Check if should start client
-	if (settings.spotify.startClient
-		&& (settings.spotify.alwaysStart || spotify->devices().isEmpty()))
+	if (settings.spotify.start_client
+		&& (settings.spotify.always_start || spotify->devices().isEmpty()))
 	{
 		sptClient = new spt::ClientHandler(settings, this);
 		auto status = sptClient->start();
@@ -86,7 +86,7 @@ MainWindow::MainWindow(lib::settings &settings)
 
 	// Start media controller if specified
 #ifdef USE_DBUS
-	if (settings.general.mediaController)
+	if (settings.general.media_controller)
 	{
 		mediaPlayer = new mp::Service(spotify, this);
 		// Check if something went wrong during init
@@ -99,14 +99,14 @@ MainWindow::MainWindow(lib::settings &settings)
 #endif
 
 	// Create tray icon if specified
-	if (settings.general.trayIcon)
+	if (settings.general.tray_icon)
 		trayIcon = new TrayIcon(spotify, settings, this);
 
 	// If new version has been detected, show what's new dialog
-	if (settings.general.showChangelog
-		&& settings.general.lastVersion != APP_VERSION)
+	if (settings.general.show_changelog
+		&& settings.general.last_version != APP_VERSION)
 		(new WhatsNewDialog(APP_VERSION, settings, this))->open();
-	settings.general.lastVersion = APP_VERSION;
+	settings.general.last_version = APP_VERSION;
 	settings.save();
 
 	// Welcome
@@ -123,7 +123,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::refresh()
 {
 	if (refreshCount < 0
-		|| ++refreshCount >= settings.general.refreshInterval
+		|| ++refreshCount >= settings.general.refresh_interval
 		|| current.playback.progressMs + 1000 > current.playback.item.duration)
 	{
 		spotify->currentPlayback([this](const spt::Playback &playback)
@@ -178,7 +178,7 @@ void MainWindow::refreshed(const spt::Playback &playback)
 			mediaPlayer->currentSourceChanged(current.playback);
 #endif
 
-		if (trayIcon != nullptr && settings.general.trayAlbumArt)
+		if (trayIcon != nullptr && settings.general.tray_album_art)
 			trayIcon->setPixmap(getAlbum(current.playback.item.image));
 	}
 	mainToolBar->position->setText(QString("%1/%2")
@@ -190,7 +190,7 @@ void MainWindow::refreshed(const spt::Playback &playback)
 		? "media-playback-pause"
 		: "media-playback-start"));
 	mainToolBar->playPause->setText(current.playback.isPlaying ? "Pause" : "Play");
-	if (!settings.general.pulseVolume)
+	if (!settings.general.pulse_volume)
 		mainToolBar->volumeButton->setVolume(current.playback.volume() / 5);
 	mainToolBar->repeat->setChecked(current.playback.repeat != "off");
 	mainToolBar->shuffle->setChecked(current.playback.shuffle);
@@ -209,7 +209,7 @@ QWidget *MainWindow::createCentralWidget()
 	//endregion
 
 	// Load tracks in playlist
-	auto playlistId = settings.general.lastPlaylist;
+	auto playlistId = QString::fromStdString(settings.general.last_playlist);
 	if (leftSidePanel->playlistCount() <= 0)
 	{
 		// If no playlists were found
@@ -285,7 +285,7 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 			Utils::formatTime(track.duration),
 			DateUtils::isEmpty(track.addedAt)
 				? QString()
-				: settings.general.relativeAdded
+				: settings.general.relative_added
 				? DateUtils::toRelative(track.addedAt)
 				: QLocale().toString(track.addedAt.date(), QLocale::ShortFormat)
 		}, track, emptyIcon, i);
@@ -351,7 +351,7 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 {
 	if (!leftSidePanel->getPlaylistNameFromSaved(playlist.id).isEmpty())
 	{
-		settings.general.lastPlaylist = playlist.id;
+		settings.general.last_playlist = playlist.id.toStdString();
 		settings.save();
 	}
 	if (loadPlaylistFromCache(playlist))
@@ -419,7 +419,7 @@ void MainWindow::setStatus(const QString &message, bool important)
 	if (message.isNull() || message.isEmpty())
 		return;
 
-	if (trayIcon != nullptr && settings.general.trayNotifications)
+	if (trayIcon != nullptr && settings.general.tray_notifications)
 	{
 		if (important)
 			trayIcon->message(message);
@@ -518,7 +518,7 @@ void MainWindow::reloadTrayIcon()
 		delete trayIcon;
 		trayIcon = nullptr;
 	}
-	if (settings.general.trayIcon)
+	if (settings.general.tray_icon)
 		trayIcon = new TrayIcon(spotify, settings, this);
 }
 

@@ -23,7 +23,7 @@ QWidget *ApplicationPage::app()
 	});
 	appRefresh->setEditable(true);
 	appRefresh->setCurrentIndex(-1);
-	appRefresh->setEditText(QString::number(settings.general.refreshInterval));
+	appRefresh->setEditText(QString::number(settings.general.refresh_interval));
 	appRefresh->setValidator(new QIntValidator(1, 60, this));
 	comboBoxLayout->addWidget(appRefresh, 0, 1);
 	comboBoxLayout->addWidget(new QLabel("seconds"), 0, 2);
@@ -39,7 +39,7 @@ QWidget *ApplicationPage::app()
 	appMaxQueue->addItems({
 		"100", "250", "500"
 	});
-	appMaxQueue->setCurrentText(QString::number(settings.spotify.maxQueue));
+	appMaxQueue->setCurrentText(QString::number(settings.spotify.max_queue));
 	comboBoxLayout->addWidget(appMaxQueue, 1, 1);
 	comboBoxLayout->addWidget(new QLabel("tracks", this), 1, 2);
 
@@ -51,14 +51,14 @@ QWidget *ApplicationPage::app()
 		appPulse = new QCheckBox("PulseAudio volume control", this);
 		appPulse->setToolTip(
 			"Use PulseAudio for volume control instead, only works if listening on same device");
-		appPulse->setChecked(settings.general.pulseVolume);
+		appPulse->setChecked(settings.general.pulse_volume);
 		layout->addWidget(appPulse);
 	}
 
 	// MPRIS D-Bus
 #ifdef USE_DBUS
 	appMedia = new QCheckBox("Media controller", this);
-	appMedia->setChecked(settings.general.mediaController);
+	appMedia->setChecked(settings.general.media_controller);
 	appMedia->setToolTip("Enable media controller through the MPRIS D-Bus interface");
 	layout->addWidget(appMedia);
 #endif
@@ -66,13 +66,13 @@ QWidget *ApplicationPage::app()
 	// Spotify playback order
 	appSptOrder = new QCheckBox("Play in order of track number", this);
 	appSptOrder->setToolTip("Play tracks in order of track number, instead of by order in list.");
-	appSptOrder->setChecked(settings.general.spotifyPlaybackOrder);
+	appSptOrder->setChecked(settings.general.spotify_playback_order);
 	layout->addWidget(appSptOrder);
 
 	// What's new dialog
 	appWhatsNew = new QCheckBox("Show what's new on start", this);
 	appWhatsNew->setToolTip("Show what's new in the latest version after the app has been updated");
-	appWhatsNew->setChecked(settings.general.showChangelog);
+	appWhatsNew->setChecked(settings.general.show_changelog);
 	layout->addWidget(appWhatsNew);
 
 	return Utils::layoutToWidget(layout);
@@ -98,17 +98,17 @@ bool ApplicationPage::save()
 	// Media controller
 	if (appMedia != nullptr)
 	{
-		if (appMedia->isChecked() != settings.general.mediaController)
+		if (appMedia->isChecked() != settings.general.media_controller)
 		{
 			QMessageBox::information(this, "Media Controller",
 				"Please restart the application to apply changes");
 		}
-		settings.general.mediaController = appMedia->isChecked();
+		settings.general.media_controller = appMedia->isChecked();
 	}
 
 	// PulseAudio volume
 	if (appPulse != nullptr)
-		settings.general.pulseVolume = appPulse->isChecked();
+		settings.general.pulse_volume = appPulse->isChecked();
 
 	// Refresh interval
 	auto ok = false;
@@ -118,7 +118,7 @@ bool ApplicationPage::save()
 		applyFail("refresh interval");
 		return false;
 	}
-	settings.general.refreshInterval = interval;
+	settings.general.refresh_interval = interval;
 
 	// Max queue
 	auto maxQueue = appMaxQueue->currentText().toInt(&ok);
@@ -127,11 +127,11 @@ bool ApplicationPage::save()
 		applyFail("queue limit");
 		return false;
 	}
-	settings.spotify.maxQueue = maxQueue;
+	settings.spotify.max_queue = maxQueue;
 
 	// Other application stuff
-	settings.general.showChangelog = appWhatsNew->isChecked();
-	settings.general.spotifyPlaybackOrder = appSptOrder->isChecked();
+	settings.general.show_changelog = appWhatsNew->isChecked();
+	settings.general.spotify_playback_order = appSptOrder->isChecked();
 
 	return true;
 }

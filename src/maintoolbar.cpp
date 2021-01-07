@@ -85,7 +85,7 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 	addWidget(progress);
 	addSeparator();
 	position = new QLabel("0:00/0:00", this);
-	if (settings.general.fixedWidthTime)
+	if (settings.general.fixed_width_time)
 		position->setFont(QFont("monospace"));
 	addWidget(position);
 	addSeparator();

@@ -9,7 +9,7 @@ Spotify::Spotify(lib::settings &settings, QObject *parent)
 	lastAuth = 0;
 	networkManager = new QNetworkAccessManager(this);
 
-	if (secondsSinceEpoch() - settings.account.lastRefresh < 3600)
+	if (secondsSinceEpoch() - settings.account.last_refresh < 3600)
 	{
 		lib::log::info("Last refresh was less than an hour ago, not refreshing access token");
 		lastAuth = settings.account.last_refresh;
@@ -35,7 +35,9 @@ QNetworkRequest Spotify::request(const QString &url)
 
 	// Set header
 	request.setRawHeader("Authorization",
-		("Bearer " + settings.account.accessToken).toUtf8());
+		QString("Bearer %1")
+			.arg(QString::fromStdString(settings.account.access_token))
+			.toUtf8());
 
 	// Return prepared header
 	return request;
@@ -164,8 +166,8 @@ QString Spotify::errorMessage(const QJsonDocument &json, const QUrl &url)
 bool Spotify::refresh()
 {
 	// Make sure we have a refresh token
-	auto refreshToken = settings.account.refreshToken;
-	if (refreshToken.isEmpty())
+	auto refreshToken = settings.account.refresh_token;
+	if (refreshToken.empty())
 	{
 		lib::log::warn("Attempt to refresh without refresh token");
 		return false;
@@ -173,15 +175,16 @@ bool Spotify::refresh()
 
 	// Create form
 	auto postData = QString("grant_type=refresh_token&refresh_token=%1")
-		.arg(refreshToken)
+		.arg(QString::fromStdString(refreshToken))
 		.toUtf8();
 
 	// Create request
 	QNetworkRequest request(QUrl("https://accounts.spotify.com/api/token"));
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 	request.setRawHeader("Authorization", "Basic " + QString("%1:%2")
-		.arg(settings.account.clientId)
-		.arg(settings.account.clientSecret).toUtf8().toBase64());
+		.arg(QString::fromStdString(settings.account.client_id))
+		.arg(QString::fromStdString(settings.account.client_secret))
+		.toUtf8().toBase64());
 
 	// Send request
 	auto reply = networkManager->post(request, postData);
@@ -204,9 +207,9 @@ bool Spotify::refresh()
 
 	// Save as access token
 	lastAuth = secondsSinceEpoch();
-	auto accessToken = json["access_token"].toString();
-	settings.account.lastRefresh = lastAuth;
-	settings.account.accessToken = accessToken;
+	auto accessToken = json["access_token"].toString().toStdString();
+	settings.account.last_refresh = lastAuth;
+	settings.account.access_token = accessToken;
 	settings.save();
 	return true;
 }
@@ -269,7 +272,7 @@ QString Spotify::playTracks(int trackIndex, const QString &context)
 
 QString Spotify::playTracks(int trackIndex, const QList<QString> &all)
 {
-	auto maxQueue = settings.spotify.maxQueue;
+	auto maxQueue = settings.spotify.max_queue;
 	QStringList items = all;
 	if (all.length() > maxQueue)
 	{

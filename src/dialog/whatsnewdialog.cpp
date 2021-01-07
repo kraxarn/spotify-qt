@@ -33,7 +33,7 @@ WhatsNewDialog::WhatsNewDialog(const QString &tag, lib::settings &settings, QWid
 	QPushButton::connect(buttons->addButton("Don't show again", QDialogButtonBox::RejectRole),
 		&QPushButton::clicked, [this, &settings](bool checked)
 		{
-			settings.general.showChangelog = false;
+			settings.general.show_changelog = false;
 			settings.save();
 			reject();
 		});

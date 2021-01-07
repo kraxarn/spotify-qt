@@ -23,7 +23,7 @@ QWidget *PlaylistsPage::order()
 	plOrder->addItems({
 		"Default", "Alphabetical", "Recent", "Custom"
 	});
-	plOrder->setCurrentIndex(settings.general.playlistOrder);
+	plOrder->setCurrentIndex(settings.general.playlist_order);
 	typeContainer->addWidget(plOrder);
 	layout->addLayout(typeContainer);
 
@@ -95,7 +95,7 @@ bool PlaylistsPage::save()
 		|| playlistOrder == lib::playlist_order_custom)
 		&& mainWindow != nullptr)
 		mainWindow->orderPlaylists(playlistOrder);
-	settings.general.playlistOrder = playlistOrder;
+	settings.general.playlist_order = playlistOrder;
 
 	return true;
 }

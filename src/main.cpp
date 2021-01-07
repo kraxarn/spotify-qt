@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 #endif
 
 	// Check fallback icons
-	Icon::useFallbackIcons = settings.general.fallbackIcons;
+	Icon::useFallbackIcons = settings.general.fallback_icons;
 
 	// Show version if requested
 	QCommandLineParser parser;
@@ -45,7 +45,8 @@ int main(int argc, char *argv[])
 		MainMenu::showDeveloperMenu = true;
 
 	// First setup window
-	if (settings.account.refreshToken.isEmpty() || parser.isSet("reset-credentials"))
+	if (settings.account.refresh_token.empty()
+	|| parser.isSet("reset-credentials"))
 	{
 #ifdef USE_QT_QUICK
 		if (qml.setup())
