@@ -32,7 +32,9 @@ LogView::LogView(QWidget *parent)
 	for (auto &message : lib::log::get_messages())
 	{
 		auto item = new QTreeWidgetItem({
-			message.getTime(), message.getType(), message.getMessage()
+			QString::fromStdString(message.get_time()),
+			QString::fromStdString(message.get_type()),
+			QString::fromStdString(message.get_message())
 		});
 
 		list->addTopLevelItem(item);
@@ -44,7 +46,7 @@ QString LogView::collectLogs()
 	QStringList items;
 	for (auto &message : lib::log::get_messages())
 	{
-		items.append(QString::fromStdString(message.format()));
+		items.append(QString::fromStdString(message.to_string()));
 	}
 	return items.join('\n');
 }
