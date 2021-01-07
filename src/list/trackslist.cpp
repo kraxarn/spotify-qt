@@ -12,7 +12,7 @@ TracksList::TracksList(spt::Spotify &spotify, lib::settings &settings, QWidget *
 	setAllColumnsShowFocus(true);
 	setColumnCount(5);
 	setHeaderLabels({
-		settings.general.trackNumbers == ContextAll ? "#" : "",
+		settings.general.track_numbers == lib::context_all ? "#" : "",
 		"Title", "Artist", "Album", "Length", "Added"
 	});
 	header()->setSectionsMovable(false);

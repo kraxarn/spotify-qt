@@ -80,8 +80,8 @@ QString PlaylistsPage::title()
 bool PlaylistsPage::save()
 {
 	// Custom playlist order
-	auto playlistOrder = (PlaylistOrder) plOrder->currentIndex();
-	if (playlistOrder == PlaylistOrderCustom)
+	auto playlistOrder = (lib::playlist_order) plOrder->currentIndex();
+	if (playlistOrder == lib::playlist_order_custom)
 	{
 		QStringList order;
 		for (auto i = 0; i < plList->count(); i++)
@@ -91,7 +91,9 @@ bool PlaylistsPage::save()
 
 	// Playlist stuff
 	auto mainWindow = MainWindow::find(parentWidget());
-	if ((settings.general.playlistOrder != playlistOrder || playlistOrder == PlaylistOrderCustom) && mainWindow != nullptr)
+	if ((settings.general.playlist_order != playlistOrder
+		|| playlistOrder == lib::playlist_order_custom)
+		&& mainWindow != nullptr)
 		mainWindow->orderPlaylists(playlistOrder);
 	settings.general.playlistOrder = playlistOrder;
 

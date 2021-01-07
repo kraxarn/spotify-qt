@@ -35,7 +35,7 @@ public:
 	spt::Playlist &playlist(size_t index);
 	QString getPlaylistNameFromSaved(const QString &id);
 	QVector<spt::Playlist> &getPlaylists();
-	void orderPlaylists(PlaylistOrder order);
+	void orderPlaylists(lib::playlist_order order);
 
 	//endregion
 

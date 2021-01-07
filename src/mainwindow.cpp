@@ -23,7 +23,7 @@ MainWindow::MainWindow(lib::settings &settings)
 	Utils::applyPalette(settings.general.stylePalette);
 
 	// Custom dark theme
-	if (settings.general.stylePalette == PaletteDark
+	if (settings.general.style_palette == lib::palette_dark
 		&& MainMenu::showDeveloperMenu)
 	{
 		QFile styleFile(":/res/style/dark.qss");
@@ -278,7 +278,7 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 	{
 		auto track = tracks.at(i);
 		auto item = new TrackListItem({
-			settings.general.trackNumbers == ContextAll
+			settings.general.track_numbers == lib::context_all
 				? QString("%1").arg(i + 1, fieldWidth)
 				: "",
 			track.name, track.artist, track.album,
@@ -669,7 +669,7 @@ QListWidgetItem *MainWindow::getPlaylistItem(int index)
 	return leftSidePanel->playlistItem(index);
 }
 
-void MainWindow::orderPlaylists(PlaylistOrder order)
+void MainWindow::orderPlaylists(lib::playlist_order order)
 {
 	leftSidePanel->orderPlaylists(order);
 }

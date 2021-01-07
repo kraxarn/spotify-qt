@@ -200,14 +200,14 @@ void LeftSidePanel::refreshPlaylists()
 	}
 
 	// Sort
-	if (settings.general.playlistOrder != PlaylistOrderDefault)
-		orderPlaylists(settings.general.playlistOrder);
+	if (settings.general.playlist_order != lib::playlist_order_default)
+		orderPlaylists(settings.general.playlist_order);
 
 	if (currentItem != nullptr)
 		playlists->setCurrentItem(currentItem);
 }
 
-void LeftSidePanel::orderPlaylists(PlaylistOrder order)
+void LeftSidePanel::orderPlaylists(lib::playlist_order order)
 {
 	QList<QListWidgetItem *> items;
 	items.reserve(playlists->count());
@@ -221,21 +221,21 @@ void LeftSidePanel::orderPlaylists(PlaylistOrder order)
 
 	switch (order)
 	{
-		case PlaylistOrderDefault:
+		case lib::playlist_order_default:
 			std::sort(items.begin(), items.end(), [](QListWidgetItem *i1, QListWidgetItem *i2)
 			{
 				return i1->data(RoleIndex).toInt() < i2->data(RoleIndex).toInt();
 			});
 			break;
 
-		case PlaylistOrderAlphabetical:
+		case lib::playlist_order_alphabetical:
 			std::sort(items.begin(), items.end(), [](QListWidgetItem *i1, QListWidgetItem *i2)
 			{
 				return i1->text() < i2->text();
 			});
 			break;
 
-		case PlaylistOrderRecent:
+		case lib::playlist_order_recent:
 			// TODO: Currently sorts by when tracks where added, not when playlist was last played
 			mainWindow = MainWindow::find(parentWidget());
 			if (mainWindow == nullptr)
@@ -255,10 +255,10 @@ void LeftSidePanel::orderPlaylists(PlaylistOrder order)
 			});
 			break;
 
-		case PlaylistOrderCustom:
+		case lib::playlist_order_custom:
 			i = 0;
-			for (auto &playlist : settings.general.customPlaylistOrder)
-				customOrder[playlist] = i++;
+			for (auto &playlist : settings.general.custom_playlist_order)
+				customOrder[QString::fromStdString(playlist)] = i++;
 			std::sort(items.begin(), items.end(), [customOrder](QListWidgetItem *i1, QListWidgetItem *i2)
 			{
 				auto id1 = i1->data(DataRole::RolePlaylistId).toString();

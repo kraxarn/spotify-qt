@@ -47,7 +47,7 @@ QWidget *InterfacePage::interface()
 	// Track numbers
 	itfTrackNum = new QCheckBox("Show track numbers", this);
 	itfTrackNum->setToolTip("Show track numbers next to tracks in the list");
-	itfTrackNum->setChecked(settings.general.trackNumbers == ContextAll);
+	itfTrackNum->setChecked(settings.general.track_numbers == lib::context_all);
 	layout->addWidget(itfTrackNum);
 
 	// Relative added date
@@ -133,9 +133,9 @@ bool InterfacePage::save()
 	// Track numbers
 	if (mainWindow != nullptr)
 		mainWindow->toggleTrackNumbers(itfTrackNum->isChecked());
-	settings.general.trackNumbers = itfTrackNum->isChecked()
-		? ContextAll
-		: ContextNone;
+	settings.general.track_numbers = itfTrackNum->isChecked()
+		? lib::context_all
+		: lib::context_none;
 
 	// Other interface stuff
 	if (itfIcFallback != nullptr)

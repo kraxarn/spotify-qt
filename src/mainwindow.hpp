@@ -52,7 +52,7 @@ public:
 	QVector<spt::Playlist> &getPlaylists();
 	int getPlaylistItemCount();
 	QListWidgetItem *getPlaylistItem(int index);
-	void orderPlaylists(PlaylistOrder order);
+	void orderPlaylists(lib::playlist_order order);
 
 	// Getters for private properties
 	QString &getCacheLocation();

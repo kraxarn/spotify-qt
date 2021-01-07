@@ -2,7 +2,7 @@
 
 #include "../enum/linktype.hpp"
 #include "../enum/maskshape.hpp"
-#include "../enum/palette.hpp"
+#include "lib/enum/palette.hpp"
 #include "darkpalette.hpp"
 
 #include <QAction>
@@ -27,7 +27,7 @@ public:
 	static QPixmap mask(const QPixmap &source, MaskShape shape = MaskShape::App,
 		const QVariant &data = QVariant());
 	static QWidget *layoutToWidget(QLayout *layout);
-	static void applyPalette(Palette palette);
+	static void applyPalette(lib::palette palette);
 	static QString formatTime(int ms);
 	static QGroupBox *createGroupBox(QVector<QWidget *> &widgets, QWidget *parent);
 	static QAction *createMenuAction(
