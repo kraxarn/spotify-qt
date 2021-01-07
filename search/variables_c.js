@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['refresh_5finterval_855',['refresh_interval',['../structlib_1_1General.html#a848644ecdee61a57e5daeda37aa915b7',1,'lib::General']]],
-  ['refresh_5ftoken_856',['refresh_token',['../structlib_1_1Account.html#a2e5b045af0a6f19e8b10a0e76ad2846e',1,'lib::Account']]],
-  ['relative_5fadded_857',['relative_added',['../structlib_1_1General.html#a9f32659e0b7613dac8fce58d642ec6a0',1,'lib::General']]]
+  ['track_5fnumbers_159',['track_numbers',['../structlib_1_1general.html#aa104e8357fe420dd951710f488d9b2b1',1,'lib::general']]],
+  ['tray_5falbum_5fart_160',['tray_album_art',['../structlib_1_1general.html#adc2a17428c326eb01fbd8bb87027b3de',1,'lib::general']]],
+  ['tray_5ficon_161',['tray_icon',['../structlib_1_1general.html#a1e2b6bc045cc4c044a8f6f53b47b11b8',1,'lib::general']]],
+  ['tray_5flight_5ficon_162',['tray_light_icon',['../structlib_1_1general.html#a146290096a4f4c5dc4fc2b415f18589a',1,'lib::general']]],
+  ['tray_5fnotifications_163',['tray_notifications',['../structlib_1_1general.html#a71aec1921f5492ae91f68526b1c472b1',1,'lib::general']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['has_5fsubtype_704',['has_subtype',['../classnlohmann_1_1byte__container__with__subtype.html#a9fc42fb07003bf7048c2f1fc79478e02',1,'nlohmann::byte_container_with_subtype']]],
-  ['hash_705',['hash',['../namespacenlohmann_1_1detail.html#a679e5e522ac6afa5d5923292fab450b8',1,'nlohmann::detail']]]
+  ['now_107',['now',['../classlib_1_1date__time.html#a58276fb2ee0f2433991c66686cfa04d6',1,'lib::date_time']]],
+  ['now_5futc_108',['now_utc',['../classlib_1_1date__time.html#a225d35e8bea79838cdc174b6ed6cc2e7',1,'lib::date_time']]]
 ];

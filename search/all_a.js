@@ -1,12 +1,10 @@
 var searchData=
 [
-  ['json_248',['json',['../namespacenlohmann.html#a2bfd99e845a2e5cd90aeaf1b1431f474',1,'nlohmann']]],
-  ['json_5fpointer_249',['json_pointer',['../classnlohmann_1_1json__pointer.html',1,'nlohmann::json_pointer&lt; BasicJsonType &gt;'],['../classnlohmann_1_1basic__json.html#aa8f1f93b32da01b42413643be32b2c27',1,'nlohmann::basic_json::json_pointer()'],['../classnlohmann_1_1json__pointer.html#a7f32d7c62841f0c4a6784cf741a6e4f8',1,'nlohmann::json_pointer::json_pointer()']]],
-  ['json_5fref_250',['json_ref',['../classnlohmann_1_1detail_1_1json__ref.html',1,'nlohmann::detail']]],
-  ['json_5freverse_5fiterator_251',['json_reverse_iterator',['../classnlohmann_1_1detail_1_1json__reverse__iterator.html',1,'nlohmann::detail::json_reverse_iterator&lt; Base &gt;'],['../classnlohmann_1_1detail_1_1json__reverse__iterator.html#a0246de16ece16293f2917dfa5d96e278',1,'nlohmann::detail::json_reverse_iterator::json_reverse_iterator(const typename base_iterator::iterator_type &amp;it) noexcept'],['../classnlohmann_1_1detail_1_1json__reverse__iterator.html#a6c2d025530114ed989188e8adfc8467e',1,'nlohmann::detail::json_reverse_iterator::json_reverse_iterator(const base_iterator &amp;it) noexcept']]],
-  ['json_5fsax_252',['json_sax',['../structnlohmann_1_1json__sax.html',1,'nlohmann']]],
-  ['json_5fsax_5facceptor_253',['json_sax_acceptor',['../classnlohmann_1_1detail_1_1json__sax__acceptor.html',1,'nlohmann::detail']]],
-  ['json_5fsax_5fdom_5fcallback_5fparser_254',['json_sax_dom_callback_parser',['../classnlohmann_1_1detail_1_1json__sax__dom__callback__parser.html',1,'nlohmann::detail']]],
-  ['json_5fsax_5fdom_5fparser_255',['json_sax_dom_parser',['../classnlohmann_1_1detail_1_1json__sax__dom__parser.html',1,'nlohmann::detail::json_sax_dom_parser&lt; BasicJsonType &gt;'],['../classnlohmann_1_1detail_1_1json__sax__dom__parser.html#afc50fee0a92ce84afb84041ebbdfba80',1,'nlohmann::detail::json_sax_dom_parser::json_sax_dom_parser()']]],
-  ['json_5fsax_5ft_256',['json_sax_t',['../classnlohmann_1_1basic__json.html#a164b1094a1a9feb54e400d8510bb0b12',1,'nlohmann::basic_json']]]
+  ['last_5fplaylist_32',['last_playlist',['../structlib_1_1general.html#ac07390337a6e545a0e971ff7a715063f',1,'lib::general']]],
+  ['last_5frefresh_33',['last_refresh',['../structlib_1_1account.html#a1e9c682afc514d2d828c5f36494b05f1',1,'lib::account']]],
+  ['last_5fversion_34',['last_version',['../structlib_1_1general.html#a55dad3ad4642eacfbf64bbf974eeaece',1,'lib::general']]],
+  ['last_5fvolume_35',['last_volume',['../structlib_1_1general.html#a8777cfef1572f092616178b583119aa0',1,'lib::general']]],
+  ['load_36',['load',['../classlib_1_1settings.html#a66e0f3dfd04e6f4c80b901a59b40def9',1,'lib::settings']]],
+  ['log_37',['log',['../classlib_1_1log.html',1,'lib']]],
+  ['log_5fmessage_38',['log_message',['../classlib_1_1log__message.html',1,'lib::log_message'],['../classlib_1_1log__message.html#a84664b9e8430dcc757cd8fd0096384c3',1,'lib::log_message::log_message(const date_time &amp;time, log_type log_type, const std::string &amp;message)'],['../classlib_1_1log__message.html#ad397f185f8fd8ca52198315ede8992da',1,'lib::log_message::log_message(log_type log_type, const std::string &amp;message)']]]
 ];

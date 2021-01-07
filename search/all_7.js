@@ -1,28 +1,4 @@
 var searchData=
 [
-  ['general_117',['General',['../structlib_1_1General.html',1,'lib::General'],['../classlib_1_1settings.html#ae4db62716bd6363ae0db8780423fb83c',1,'lib::settings::general()']]],
-  ['generic_5fformat_118',['generic_format',['../classghc_1_1filesystem_1_1path.html#a653db4113e2ef7e029ff07d8ef93beb8ae0cd6ab50119a6418438aa1f1374dec1',1,'ghc::filesystem::path']]],
-  ['get_119',['get',['../classnlohmann_1_1basic__json.html#a0c42bdda2432e4027f4b63ef20ae74e6',1,'nlohmann::basic_json::get() const'],['../classnlohmann_1_1basic__json.html#a642213bf5f206f13d2447098b737bee7',1,'nlohmann::basic_json::get() const'],['../classnlohmann_1_1basic__json.html#a91198163e5ffd34d361d2db77cb1f112',1,'nlohmann::basic_json::get() const noexcept(noexcept(JSONSerializer&lt; ValueType &gt;::from_json(std::declval&lt; const basic_json_t &amp; &gt;(), std::declval&lt; ValueType &amp; &gt;())))'],['../classnlohmann_1_1basic__json.html#ad7c84027412c32e6dac101de144abf91',1,'nlohmann::basic_json::get() const noexcept(noexcept(JSONSerializer&lt; ValueType &gt;::from_json(std::declval&lt; const basic_json_t &amp; &gt;())))'],['../classnlohmann_1_1basic__json.html#a826e180d2457d114ed4c51f4b0737df8',1,'nlohmann::basic_json::get() noexcept -&gt; decltype(std::declval&lt; basic_json_t &amp; &gt;().template get_ptr&lt; PointerType &gt;())'],['../classnlohmann_1_1basic__json.html#a014a9be80fef74c22b54d92c2cbd90c6',1,'nlohmann::basic_json::get() const noexcept -&gt; decltype(std::declval&lt; const basic_json_t &amp; &gt;().template get_ptr&lt; PointerType &gt;())']]],
-  ['get_5fallocator_120',['get_allocator',['../classnlohmann_1_1basic__json.html#afc55e7dca1a243b0d5011564824c0267',1,'nlohmann::basic_json']]],
-  ['get_5fbinary_121',['get_binary',['../classnlohmann_1_1basic__json.html#aab19a246f6bcd27c195bed376cf5e138',1,'nlohmann::basic_json::get_binary()'],['../classnlohmann_1_1basic__json.html#abbfa5532931abd2d9040cbf4d18a2ca7',1,'nlohmann::basic_json::get_binary() const']]],
-  ['get_5fcached_5fpower_5ffor_5fbinary_5fexponent_122',['get_cached_power_for_binary_exponent',['../namespacenlohmann_1_1detail_1_1dtoa__impl.html#adbf329a18c5cf854a3477327afd2200b',1,'nlohmann::detail::dtoa_impl']]],
-  ['get_5fdark_5ftheme_123',['get_dark_theme',['../classlib_1_1settings.html#a0e332074d3ab9f37e480812d4cfac2a0',1,'lib::settings']]],
-  ['get_5ferror_5fmessage_124',['get_error_message',['../classnlohmann_1_1detail_1_1lexer.html#a9848a0ed22f53ec29fcfd1fd04c0cd37',1,'nlohmann::detail::lexer']]],
-  ['get_5fmessage_125',['get_message',['../classlib_1_1log__message.html#a5d69ae00a61def7e711561a770a94e5e',1,'lib::log_message']]],
-  ['get_5fmessages_126',['get_messages',['../classlib_1_1log.html#a770172b496d07b555b8656f2ea0dfc77',1,'lib::log']]],
-  ['get_5fnumber_5ffloat_127',['get_number_float',['../classnlohmann_1_1detail_1_1lexer.html#adb1a71f6a3e65ed32c452a318967b61e',1,'nlohmann::detail::lexer']]],
-  ['get_5fnumber_5finteger_128',['get_number_integer',['../classnlohmann_1_1detail_1_1lexer.html#a9535d0c72adbe9fe149853ebad5faee8',1,'nlohmann::detail::lexer']]],
-  ['get_5fnumber_5funsigned_129',['get_number_unsigned',['../classnlohmann_1_1detail_1_1lexer.html#abfc85ff04fcb1a5a8d8ea299a4c479e5',1,'nlohmann::detail::lexer']]],
-  ['get_5fposition_130',['get_position',['../classnlohmann_1_1detail_1_1lexer.html#a948c80b8bd8a3095b544e4655e1ca37e',1,'nlohmann::detail::lexer']]],
-  ['get_5fptr_131',['get_ptr',['../classnlohmann_1_1basic__json.html#a85222410e03d8f5c8ff9c78cf9f6b1b6',1,'nlohmann::basic_json::get_ptr() noexcept -&gt; decltype(std::declval&lt; basic_json_t &amp; &gt;().get_impl_ptr(std::declval&lt; PointerType &gt;()))'],['../classnlohmann_1_1basic__json.html#afd99a3902a2bb09a306fb854540ae1dd',1,'nlohmann::basic_json::get_ptr() const noexcept -&gt; decltype(std::declval&lt; const basic_json_t &amp; &gt;().get_impl_ptr(std::declval&lt; PointerType &gt;()))']]],
-  ['get_5fref_132',['get_ref',['../classnlohmann_1_1basic__json.html#a14ddc6e0f6d70296bc81f810254076c5',1,'nlohmann::basic_json::get_ref()'],['../classnlohmann_1_1basic__json.html#a7f0889072c54f1b899689ed6246238e7',1,'nlohmann::basic_json::get_ref() const']]],
-  ['get_5fstring_133',['get_string',['../classnlohmann_1_1detail_1_1lexer.html#a76875bb49a480763f6c48b8586f7e60e',1,'nlohmann::detail::lexer']]],
-  ['get_5ftime_134',['get_time',['../classlib_1_1log__message.html#acc4fb5100c286fcbd514d21655314c8b',1,'lib::log_message']]],
-  ['get_5fto_135',['get_to',['../classnlohmann_1_1basic__json.html#aa1cbe06eb6b15f76e41c7c85081d2638',1,'nlohmann::basic_json']]],
-  ['get_5ftoken_5fstring_136',['get_token_string',['../classnlohmann_1_1detail_1_1lexer.html#ae000b7571480e528dee4b281f63d5b15',1,'nlohmann::detail::lexer']]],
-  ['get_5ftype_137',['get_type',['../classlib_1_1log__message.html#ac63130af5dd44691e0ae3ac58ffb876b',1,'lib::log_message']]],
-  ['get_5ftype_5fshort_138',['get_type_short',['../classlib_1_1log__message.html#a793e1be2ed176b3cd37ffd9b970ba2b7',1,'lib::log_message']]],
-  ['global_5fconfig_139',['global_config',['../structlib_1_1Spotify.html#a8b42d3a03f9d7a967c065d35936ed644',1,'lib::Spotify']]],
-  ['grisu2_140',['grisu2',['../namespacenlohmann_1_1detail_1_1dtoa__impl.html#a05b681dcb8569b9784c6dccfadb01633',1,'nlohmann::detail::dtoa_impl::grisu2(char *buf, int &amp;len, int &amp;decimal_exponent, diyfp m_minus, diyfp v, diyfp m_plus)'],['../namespacenlohmann_1_1detail_1_1dtoa__impl.html#aab7a9670a4f4704a5d0347ad7588576b',1,'nlohmann::detail::dtoa_impl::grisu2(char *buf, int &amp;len, int &amp;decimal_exponent, FloatType value)']]],
-  ['grisu2_5fdigit_5fgen_141',['grisu2_digit_gen',['../namespacenlohmann_1_1detail_1_1dtoa__impl.html#a9b899c72b0e1e3dd46d75c2b4e6bcdfb',1,'nlohmann::detail::dtoa_impl']]]
+  ['hidden_5fsong_5fheaders_27',['hidden_song_headers',['../structlib_1_1general.html#a7c4d02f73b5db3de21f2cd8100ca0dff',1,'lib::general']]]
 ];

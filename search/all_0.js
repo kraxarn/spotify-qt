@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['_5fis_5fbasic_5fstring_0',['_is_basic_string',['../structghc_1_1filesystem_1_1path_1_1__is__basic__string.html',1,'ghc::filesystem::path']]],
-  ['_5fis_5fbasic_5fstring_3c_20std_3a_3abasic_5fstring_3c_20chart_2c_20traits_2c_20alloc_20_3e_20_3e_1',['_is_basic_string&lt; std::basic_string&lt; CharT, Traits, Alloc &gt; &gt;',['../structghc_1_1filesystem_1_1path_1_1__is__basic__string_3_01std_1_1basic__string_3_01CharT_00_01Traits_00_01Alloc_01_4_01_4.html',1,'ghc::filesystem::path']]]
+  ['access_5ftoken_0',['access_token',['../structlib_1_1account.html#a019267600d8f89895f58b17d18dce164',1,'lib::account']]],
+  ['account_1',['account',['../structlib_1_1account.html',1,'lib::account'],['../classlib_1_1settings.html#a722ffc8a9eba3391319258946b2a716d',1,'lib::settings::account()']]],
+  ['always_5fstart_2',['always_start',['../structlib_1_1spotify.html#a1079ffad8acdbd38563a92742cf76ebb',1,'lib::spotify']]]
 ];

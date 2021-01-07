@@ -1,7 +1,12 @@
 var searchData=
 [
-  ['path_851',['path',['../structlib_1_1Spotify.html#a3723d64355a28ec4eb47cec8647e55f5',1,'lib::Spotify']]],
-  ['playlist_5forder_852',['playlist_order',['../structlib_1_1General.html#a687277dbe2dfc7b0cd45677dd81d2060',1,'lib::General']]],
-  ['primitive_5fiterator_853',['primitive_iterator',['../structnlohmann_1_1detail_1_1internal__iterator.html#a2b3bb45f968210e42c282017eeeb63a8',1,'nlohmann::detail::internal_iterator']]],
-  ['pulse_5fvolume_854',['pulse_volume',['../structlib_1_1General.html#aa58f614f2358a8aa2a3cfda3ab49d468',1,'lib::General']]]
+  ['show_5fchangelog_150',['show_changelog',['../structlib_1_1general.html#ad886ace3d589e77a923d1aa94e4491b0',1,'lib::general']]],
+  ['show_5fcontext_5finfo_151',['show_context_info',['../structlib_1_1general.html#a06fd82e7266b82308d04d1dbd0efa063',1,'lib::general']]],
+  ['song_5fheader_5fresize_5fmode_152',['song_header_resize_mode',['../structlib_1_1general.html#a686a952d1307c558dc95aea31d56ba5a',1,'lib::general']]],
+  ['song_5fheader_5fsort_5fby_153',['song_header_sort_by',['../structlib_1_1general.html#a68c68d2d46fe9fec00978a2badc920d6',1,'lib::general']]],
+  ['spotify_154',['spotify',['../classlib_1_1settings.html#a6d90103cadadf220b8cad569b3d65216',1,'lib::settings']]],
+  ['spotify_5fplayback_5forder_155',['spotify_playback_order',['../structlib_1_1general.html#a4ecb3ef570d73f1429f4bc64cfeefa59',1,'lib::general']]],
+  ['start_5fclient_156',['start_client',['../structlib_1_1spotify.html#a8065dcd155e5472ee131074665ee649e',1,'lib::spotify']]],
+  ['style_157',['style',['../structlib_1_1general.html#ac6365a32cccfa72af7f032a4743437b8',1,'lib::general']]],
+  ['style_5fpalette_158',['style_palette',['../structlib_1_1general.html#ac0b74a4c972a54296dbae56092939692',1,'lib::general']]]
 ];
