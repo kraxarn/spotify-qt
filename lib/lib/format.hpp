@@ -31,9 +31,7 @@ namespace lib
 		 * @return Formatted string
 		 */
 		template<typename Format, typename Arg, typename... Args>
-		static std::string format(const Format &fmt,
-			const Arg &arg,
-			Args &&... args)
+		static std::string format(const Format &fmt, const Arg &arg, Args &&... args)
 		{
 			return format(collect(fmt, arg), args...);
 		}
