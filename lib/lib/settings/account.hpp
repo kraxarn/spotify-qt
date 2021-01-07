@@ -7,7 +7,7 @@ namespace lib
 	/**
 	 * Account related settings
 	 */
-	typedef struct Account
+	typedef struct account
 	{
 		/**
 		 * Access token used for Spotify API requests
@@ -33,5 +33,5 @@ namespace lib
 		 * When access token was lsat refreshed in unix time
 		 */
 		long last_refresh = 0;
-	} Account;
+	} account;
 }

@@ -73,9 +73,9 @@ void settings::from_json(const nlohmann::json &json)
 		log::error("One or more invalid {} settings found, restoring defaults",
 			error.first);
 	if (errors.find("General") != errors.end())
-		general = General{};
+		general = lib::general{};
 	if (errors.find("Spotify") != errors.end())
-		spotify = Spotify{};
+		spotify = lib::spotify{};
 }
 
 void settings::load()
