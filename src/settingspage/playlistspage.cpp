@@ -83,10 +83,10 @@ bool PlaylistsPage::save()
 	auto playlistOrder = (lib::playlist_order) plOrder->currentIndex();
 	if (playlistOrder == lib::playlist_order_custom)
 	{
-		QStringList order;
+		std::vector<std::string> order;
 		for (auto i = 0; i < plList->count(); i++)
-			order.append(plList->item(i)->data(RolePlaylistId).toString());
-		settings.general.customPlaylistOrder = order;
+			order.push_back(plList->item(i)->data(RolePlaylistId).toString().toStdString());
+		settings.general.custom_playlist_order = order;
 	}
 
 	// Playlist stuff
