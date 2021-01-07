@@ -14,7 +14,7 @@ QWidget *InterfacePage::interface()
 	// Dark theme
 	itfDark = new QCheckBox("Dark theme", this);
 	itfDark->setToolTip("Use custom dark theme");
-	itfDark->setChecked(settings.darkTheme());
+	itfDark->setChecked(settings.get_dark_theme());
 	layout->addWidget(itfDark);
 
 	// Song header resize mode
@@ -112,14 +112,14 @@ bool InterfacePage::save()
 	auto mainWindow = MainWindow::find(parentWidget());
 
 	// Set theme
-	auto changeTheme = itfDark->isChecked() != settings.darkTheme();
+	auto changeTheme = itfDark->isChecked() != settings.get_dark_theme();
 	if (changeTheme)
 	{
 		QMessageBox::information(this, "Dark Theme",
 			"Please restart the application to fully apply selected theme");
-		settings.setDarkTheme(itfDark->isChecked());
-		QApplication::setStyle(settings.general.style);
-		Utils::applyPalette(settings.general.stylePalette);
+		settings.set_dark_theme(itfDark->isChecked());
+		QApplication::setStyle(QString::fromStdString(settings.general.style));
+		Utils::applyPalette(settings.general.style_palette);
 	}
 
 	// Song header resize mode

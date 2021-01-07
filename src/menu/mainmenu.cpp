@@ -77,11 +77,11 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings, QWidget *pare
 
 		// Clear client secret/id if clearAll
 		if (result == clearAll)
-			this->settings.removeClient();
+			this->settings.remove_client();
 
 		// Clear login if cleatAll/logOut
 		if (result == clearAll || result == logOut)
-			this->settings.removeTokens();
+			this->settings.remove_tokens();
 		this->settings.save();
 		QMessageBox::information(MainWindow::find(parentWidget()),
 			"Logged out",
