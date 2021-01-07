@@ -405,7 +405,8 @@ void MainWindow::refreshPlaylist(spt::Playlist &playlist)
 	auto result = newPlaylist.loadTracks(*spotify, tracks);
 	if (!result)
 	{
-		Log::error("Failed to refresh playlist \"{}\" ({})", playlist.name, playlist.id);
+		lib::log::error("Failed to refresh playlist \"{}\" ({})",
+			playlist.name.toStdString(), playlist.id.toStdString());
 		return;
 	}
 	if (current.context.endsWith(playlist.id))
@@ -467,7 +468,7 @@ QPixmap MainWindow::getImage(const QString &type, const QString &url)
 		// Download image and save to cache
 		img.loadFromData(get(url), "jpeg");
 		if (!img.save(cachePath, "jpeg"))
-			Log::error("Failed to save album cache to {}", cachePath);
+			lib::log::error("Failed to save album cache to {}", cachePath);
 	}
 	return img;
 }

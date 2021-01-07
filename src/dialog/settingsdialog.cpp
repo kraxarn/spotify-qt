@@ -70,7 +70,7 @@ bool SettingsDialog::applySettings()
 	{
 		if (!page->save())
 		{
-			Log::error("Failed to save: {}", page->title());
+			lib::log::error("Failed to save: {}", page->title());
 			return false;
 		}
 	}

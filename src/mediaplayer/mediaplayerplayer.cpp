@@ -85,7 +85,7 @@ QString MediaPlayerPlayer::playbackStatus() const
 void MediaPlayerPlayer::OpenUri(QString uri) const
 {
 	// TODO
-	Log::warn("Tried to open \"{}\", but not implemented yet", uri);
+	lib::log::warn("Tried to open \"{}\", but not implemented yet", uri.toStdString());
 }
 
 double MediaPlayerPlayer::playbackRate() const
@@ -95,7 +95,7 @@ double MediaPlayerPlayer::playbackRate() const
 
 void MediaPlayerPlayer::setPlaybackRate(double value) const
 {
-	Log::warn("Changing playback rate is not supported");
+	lib::log::warn("Changing playback rate is not supported");
 }
 
 bool MediaPlayerPlayer::shuffle() const

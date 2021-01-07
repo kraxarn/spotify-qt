@@ -240,7 +240,7 @@ void LeftSidePanel::orderPlaylists(PlaylistOrder order)
 			mainWindow = MainWindow::find(parentWidget());
 			if (mainWindow == nullptr)
 			{
-				Log::error("Failed to order playlist: MainWindow not found");
+				lib::log::error("Failed to order playlist: MainWindow not found");
 				break;
 			}
 

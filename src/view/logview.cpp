@@ -29,7 +29,7 @@ LogView::LogView(QWidget *parent)
 
 	layout->addLayout(buttons);
 
-	for (auto &message : Log::getMessages())
+	for (auto &message : lib::log::get_messages())
 	{
 		auto item = new QTreeWidgetItem({
 			message.getTime(), message.getType(), message.getMessage()
@@ -42,7 +42,7 @@ LogView::LogView(QWidget *parent)
 QString LogView::collectLogs()
 {
 	QStringList items;
-	for (auto &message : Log::getMessages())
+	for (auto &message : lib::log::get_messages())
 	{
 		items.append(QString::fromStdString(message.format()));
 	}

@@ -1,6 +1,7 @@
 #include "qtpaths.hpp"
 
 #include <QDebug>
+#include "lib/log/log.hpp"
 
 QtPaths::QtPaths(QObject *parent)
 	: QObject(parent)

@@ -11,8 +11,8 @@ Spotify::Spotify(lib::settings &settings, QObject *parent)
 
 	if (secondsSinceEpoch() - settings.account.lastRefresh < 3600)
 	{
-		Log::info("Last refresh was less than an hour ago, not refreshing access token");
-		lastAuth = settings.account.lastRefresh;
+		lib::log::info("Last refresh was less than an hour ago, not refreshing access token");
+		lastAuth = settings.account.last_refresh;
 		refreshValid = true;
 		return;
 	}
@@ -26,7 +26,7 @@ QNetworkRequest Spotify::request(const QString &url)
 	auto lastRefresh = secondsSinceEpoch() - lastAuth;
 	if (lastRefresh >= 3600)
 	{
-		Log::info("Access token probably expired, refreshing");
+		lib::log::info("Access token probably expired, refreshing");
 		refresh();
 	}
 
@@ -157,7 +157,7 @@ QString Spotify::errorMessage(const QJsonDocument &json, const QUrl &url)
 
 	auto message = json.object()["error"].toObject()["message"].toString();
 	if (!message.isEmpty())
-		Log::error("{} failed: {}", url.path(), message);
+		lib::log::error("{} failed: {}", url.path().toStdString(), message.toStdString());
 	return message;
 }
 
@@ -167,7 +167,7 @@ bool Spotify::refresh()
 	auto refreshToken = settings.account.refreshToken;
 	if (refreshToken.isEmpty())
 	{
-		Log::warn("Attempt to refresh without refresh token");
+		lib::log::warn("Attempt to refresh without refresh token");
 		return false;
 	}
 
@@ -196,7 +196,7 @@ bool Spotify::refresh()
 	if (json.contains("error_description") || !json.contains("access_token"))
 	{
 		auto error = json["error_description"].toString();
-		Log::warn("Failed to refresh token: {}", error.isEmpty()
+		lib::log::warn("Failed to refresh token: {}", error.isEmpty()
 			? "no access token"
 			: error);
 		return false;
@@ -273,7 +273,8 @@ QString Spotify::playTracks(int trackIndex, const QList<QString> &all)
 	QStringList items = all;
 	if (all.length() > maxQueue)
 	{
-		Log::warn("Attempting to queue {} tracks, but only {} allowed", all.length(), maxQueue);
+		lib::log::warn("Attempting to queue {} tracks, but only {} allowed",
+			all.length(), maxQueue);
 		items = all.mid(trackIndex, maxQueue);
 		trackIndex = 0;
 	}

@@ -30,7 +30,7 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name, QString
 	auto mainWindow = MainWindow::find(parent);
 	if (mainWindow == nullptr)
 	{
-		Log::warn("Parent is not MainWindow, SongMenu won't work properly");
+		lib::log::warn("Parent is not MainWindow, SongMenu won't work properly");
 		return;
 	}
 
