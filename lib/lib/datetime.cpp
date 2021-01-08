@@ -26,7 +26,7 @@ date_time date_time::parse(const std::string &value)
 
 	// If it's still invalid, something is wrong
 	if (!date.is_valid())
-		log::warn("Failed to parse \"{}\" as a date");
+		log::warn("Failed to parse \"{}\" as a date", value);
 
 	return date;
 }
