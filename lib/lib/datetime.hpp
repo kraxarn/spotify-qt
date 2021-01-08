@@ -72,6 +72,36 @@ namespace lib
 		 */
 		std::string to_iso_date_time() const;
 
+		/**
+		 * Second, 0-60
+		 */
+		int get_second() const;
+
+		/**
+		 * Minute, 0-59
+		 */
+		int get_minute() const;
+
+		/**
+		 * Hour, 0-23
+		 */
+		int get_hour() const;
+
+		/**
+		 * Day in month, 1-31
+		 */
+		int get_day() const;
+
+		/**
+		 * Month, 1-12
+		 */
+		int get_month() const;
+
+		/**
+		 * Full year, 1900-
+		 */
+		int get_year() const;
+
 	private:
 		/**
 		 * Parse a string as a date using the specified to_string

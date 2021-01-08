@@ -93,3 +93,44 @@ std::string date_time::format(const char *format) const
 	return std::string(buffer);
 }
 
+int date_time::get_second() const
+{
+	return is_valid()
+		? tm.tm_sec
+		: 0;
+}
+
+int date_time::get_minute() const
+{
+	return is_valid()
+		? tm.tm_min
+		: 0;
+}
+
+int date_time::get_hour() const
+{
+	return is_valid()
+		? tm.tm_hour
+		: 0;
+}
+
+int date_time::get_day() const
+{
+	return is_valid()
+		? tm.tm_mday
+		: 0;
+}
+
+int date_time::get_month() const
+{
+	return 1 + (is_valid()
+		? tm.tm_mon
+		: 0);
+}
+
+int date_time::get_year() const
+{
+	return 1900 + (is_valid()
+		? tm.tm_year
+		: 0);
+}
