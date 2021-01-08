@@ -86,8 +86,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aae8cc8e5d522197539645a3c2a78a29a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad52ddcec2d891444a9744f0bcbbe4065"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1date__time.html#ad52ddcec2d891444a9744f0bcbbe4065">is_valid</a> () const</td></tr>
 <tr class="separator:ad52ddcec2d891444a9744f0bcbbe4065"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1a3c4e7bf3e2fd15135040dac4b4f86"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1date__time.html#ab1a3c4e7bf3e2fd15135040dac4b4f86">is_empty</a> () const</td></tr>
-<tr class="separator:ab1a3c4e7bf3e2fd15135040dac4b4f86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0dcf76d96ecad345fd151d9affc900b5"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1date__time.html#a0dcf76d96ecad345fd151d9affc900b5">to_time</a> () const</td></tr>
 <tr class="separator:a0dcf76d96ecad345fd151d9affc900b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab819700b6db5d91e61ef5a71a0c35be6"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1date__time.html#ab819700b6db5d91e61ef5a71a0c35be6">to_date</a> () const</td></tr>
@@ -96,6 +94,18 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae54cf105d609090f69177f4e2df85b4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2a1a2564ea9970fed3680e87141bf29"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1date__time.html#ad2a1a2564ea9970fed3680e87141bf29">to_iso_date_time</a> () const</td></tr>
 <tr class="separator:ad2a1a2564ea9970fed3680e87141bf29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a390d98aeac816251b6b440cd287c70a1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1date__time.html#a390d98aeac816251b6b440cd287c70a1">get_second</a> () const</td></tr>
+<tr class="separator:a390d98aeac816251b6b440cd287c70a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afaf8291cdece371332060ce84bb0a580"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1date__time.html#afaf8291cdece371332060ce84bb0a580">get_minute</a> () const</td></tr>
+<tr class="separator:afaf8291cdece371332060ce84bb0a580"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abed2f8ac243db90fdb71aa3c1d0f9fbd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1date__time.html#abed2f8ac243db90fdb71aa3c1d0f9fbd">get_hour</a> () const</td></tr>
+<tr class="separator:abed2f8ac243db90fdb71aa3c1d0f9fbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a964880f8921a18fe59befd8cfb07a6ef"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1date__time.html#a964880f8921a18fe59befd8cfb07a6ef">get_day</a> () const</td></tr>
+<tr class="separator:a964880f8921a18fe59befd8cfb07a6ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69d5ccfc5353e73194eaa7a3f34503bb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1date__time.html#a69d5ccfc5353e73194eaa7a3f34503bb">get_month</a> () const</td></tr>
+<tr class="separator:a69d5ccfc5353e73194eaa7a3f34503bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1d007e3037636800c597a610f3cb0b7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1date__time.html#ad1d007e3037636800c597a610f3cb0b7">get_year</a> () const</td></tr>
+<tr class="separator:ad1d007e3037636800c597a610f3cb0b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -160,21 +170,111 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ab1a3c4e7bf3e2fd15135040dac4b4f86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab1a3c4e7bf3e2fd15135040dac4b4f86">&#9670;&nbsp;</a></span>is_empty()</h2>
+<a id="a964880f8921a18fe59befd8cfb07a6ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a964880f8921a18fe59befd8cfb07a6ef">&#9670;&nbsp;</a></span>get_day()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool date_time::is_empty </td>
+          <td class="memname">int date_time::get_day </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Date is 1970-01-01 or invalid </p><dl class="section return"><dt>Returns</dt><dd>Date is empty </dd></dl>
+<p>Day in month, 1-31 </p>
+
+</div>
+</div>
+<a id="abed2f8ac243db90fdb71aa3c1d0f9fbd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abed2f8ac243db90fdb71aa3c1d0f9fbd">&#9670;&nbsp;</a></span>get_hour()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int date_time::get_hour </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Hour, 0-23 </p>
+
+</div>
+</div>
+<a id="afaf8291cdece371332060ce84bb0a580"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afaf8291cdece371332060ce84bb0a580">&#9670;&nbsp;</a></span>get_minute()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int date_time::get_minute </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Minute, 0-59 </p>
+
+</div>
+</div>
+<a id="a69d5ccfc5353e73194eaa7a3f34503bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69d5ccfc5353e73194eaa7a3f34503bb">&#9670;&nbsp;</a></span>get_month()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int date_time::get_month </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Month, 1-12 </p>
+
+</div>
+</div>
+<a id="a390d98aeac816251b6b440cd287c70a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a390d98aeac816251b6b440cd287c70a1">&#9670;&nbsp;</a></span>get_second()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int date_time::get_second </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Second, 0-60 </p>
+
+</div>
+</div>
+<a id="ad1d007e3037636800c597a610f3cb0b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1d007e3037636800c597a610f3cb0b7">&#9670;&nbsp;</a></span>get_year()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int date_time::get_year </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Full year, 1900- </p>
 
 </div>
 </div>

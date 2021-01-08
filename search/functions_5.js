@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['info_102',['info',['../classlib_1_1log.html#afe551f6a31aee9f7cb1a14b40e50daa4',1,'lib::log::info(const Format &amp;fmt, const Arg &amp;arg, Args &amp;&amp;... args)'],['../classlib_1_1log.html#a7cf72a4b661e07ea524f08a006324964',1,'lib::log::info(const Format &amp;fmt)']]],
-  ['is_5fempty_103',['is_empty',['../classlib_1_1date__time.html#ab1a3c4e7bf3e2fd15135040dac4b4f86',1,'lib::date_time']]],
-  ['is_5fvalid_104',['is_valid',['../classlib_1_1date__time.html#ad52ddcec2d891444a9744f0bcbbe4065',1,'lib::date_time']]]
+  ['info_113',['info',['../classlib_1_1log.html#afe551f6a31aee9f7cb1a14b40e50daa4',1,'lib::log::info(const Format &amp;fmt, const Arg &amp;arg, Args &amp;&amp;... args)'],['../classlib_1_1log.html#a7cf72a4b661e07ea524f08a006324964',1,'lib::log::info(const Format &amp;fmt)']]],
+  ['is_5fvalid_114',['is_valid',['../classlib_1_1date__time.html#ad52ddcec2d891444a9744f0bcbbe4065',1,'lib::date_time']]]
 ];
