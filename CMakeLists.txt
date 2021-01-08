@@ -98,3 +98,8 @@ if (Qt5DBus_FOUND)
 	target_compile_definitions(spotify-qt PRIVATE USE_DBUS)
 	target_link_libraries(spotify-qt PRIVATE Qt5::DBus)
 endif ()
+
+# Unit testing
+if (USE_TESTS)
+	add_subdirectory(lib/test)
+endif ()
