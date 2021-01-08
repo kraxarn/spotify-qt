@@ -3,7 +3,7 @@
 
 using namespace lib;
 
-#define LOCAL_TIME_FORMAT "%X"
+#define LOCALE_TIME_FORMAT "%X"
 #define LOCALE_DATE_FORMAT "%x"
 #define ISO_DATE_FORMAT "%Y-%m-%d"
 #define ISO_DATE_TIME_FORMAT "%Y-%m-%dT%H:%M:%SZ"
@@ -64,7 +64,7 @@ void date_time::parse(const std::string &value, const char *format)
 
 std::string date_time::to_time() const
 {
-	return format(LOCAL_TIME_FORMAT);
+	return format(LOCALE_TIME_FORMAT);
 }
 
 std::string date_time::to_date() const
