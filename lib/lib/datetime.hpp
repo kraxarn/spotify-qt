@@ -121,10 +121,5 @@ namespace lib
 		 * Internal date structure
 		 */
 		std::tm tm = {0};
-
-		/**
-		 * Last parse succeeded
-		 */
-		bool good = false;
 	};
 }

@@ -36,7 +36,6 @@ date_time date_time::now()
 	date_time date;
 	auto time = std::time(nullptr);
 	date.tm = *std::localtime(&time);
-	date.good = true;
 
 	return date;
 }
@@ -46,21 +45,21 @@ date_time date_time::now_utc()
 	date_time date;
 	auto time = std::time(nullptr);
 	date.tm = *std::gmtime(&time);
-	date.good = true;
 
 	return date;
 }
 
 bool date_time::is_valid() const
 {
-	return good;
+	return tm.tm_year > 0
+		|| tm.tm_mon > 0
+		|| tm.tm_mday > 0;
 }
 
 void date_time::parse(const std::string &value, const char *format)
 {
 	std::istringstream ss(value);
 	ss >> std::get_time(&tm, format);
-	good = ss.good();
 }
 
 std::string date_time::to_time() const
