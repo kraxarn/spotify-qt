@@ -49,12 +49,6 @@ namespace lib
 		bool is_valid() const;
 
 		/**
-		 * Date is 1970-01-01 or invalid
-		 * @return Date is empty
-		 */
-		bool is_empty() const;
-
-		/**
 		 * Get locale dependent time
 		 * @return Time
 		 */
@@ -96,6 +90,11 @@ namespace lib
 		/**
 		 * Internal date structure
 		 */
-		std::tm *tm = nullptr;
+		std::tm tm = {0};
+
+		/**
+		 * Last parse succeeded
+		 */
+		bool good = false;
 	};
 }

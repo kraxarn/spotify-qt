@@ -35,7 +35,8 @@ date_time date_time::now()
 {
 	date_time date;
 	auto time = std::time(nullptr);
-	date.tm = std::localtime(&time);
+	date.tm = *std::localtime(&time);
+	date.good = true;
 
 	return date;
 }
@@ -44,19 +45,22 @@ date_time date_time::now_utc()
 {
 	date_time date;
 	auto time = std::time(nullptr);
-	date.tm = std::gmtime(&time);
+	date.tm = *std::gmtime(&time);
+	date.good = true;
 
 	return date;
 }
 
 bool date_time::is_valid() const
 {
-	return tm != nullptr;
+	return good;
 }
 
 void date_time::parse(const std::string &value, const char *format)
 {
-	std::stringstream(value) >> std::get_time(tm, format);
+	std::istringstream ss(value);
+	ss >> std::get_time(&tm, format);
+	good = ss.good();
 }
 
 std::string date_time::to_time() const
@@ -81,18 +85,11 @@ std::string date_time::to_iso_date_time() const
 
 std::string date_time::format(const char *format) const
 {
-	if (tm == nullptr)
+	if (!is_valid())
 		return std::string();
 
 	char buffer[64];
-	std::strftime(buffer, sizeof(buffer), format, tm);
+	std::strftime(buffer, sizeof(buffer), format, &tm);
 	return std::string(buffer);
 }
 
-bool date_time::is_empty() const
-{
-	return tm == nullptr
-		|| (tm->tm_year <= 70
-			&& tm->tm_mon == 0
-			&& tm->tm_mday == 0);
-}
