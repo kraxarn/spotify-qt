@@ -1,6 +1,4 @@
 #include "lib/datetime.hpp"
-
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "thirdparty/doctest.h"
 
 TEST_CASE("date_time tests")
