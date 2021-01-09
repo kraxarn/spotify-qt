@@ -48,12 +48,12 @@ TEST_CASE("date_time::parse")
 	SUBCASE("iso date time")
 	{
 		date_time = lib::date_time::parse("2001-02-03T14:15:16Z");
-		validate_date(2001, 02, 03, 14, 15, 16);
+		validate_date(2001, 2, 3, 14, 15, 16);
 	}
 
 	SUBCASE("iso date")
 	{
 		date_time = lib::date_time::parse("2002-03-04");
-		validate_date(2002, 03, 04);
+		validate_date(2002, 3, 4);
 	}
 }
