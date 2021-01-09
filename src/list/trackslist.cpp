@@ -119,9 +119,10 @@ void TracksList::headerMenu(const QPoint &pos)
 
 		// Sort by
 		i -= 100;
-		if (this->settings.general.song_header_sort_by != i)
-			header()->setSortIndicator(i + 1, Qt::AscendingOrder);
-		this->settings.general.song_header_sort_by = this->settings.general.song_header_sort_by == i ? -1 : i;
+		if (this->settings.general.song_header_sort_by == i)
+			i = -1;
+		header()->setSortIndicator(i + 1, Qt::AscendingOrder);
+		this->settings.general.song_header_sort_by = i;
 		this->settings.save();
 	});
 
