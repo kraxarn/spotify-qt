@@ -57,3 +57,20 @@ TEST_CASE("date_time::parse")
 		validate_date(2002, 3, 4);
 	}
 }
+
+TEST_CASE("date_time::to_iso_date(_time)")
+{
+	lib::date_time date_time;
+
+	SUBCASE("iso date")
+	{
+		date_time = lib::date_time(2005, 6, 7, 0, 0, 0);
+		CHECK_EQ(date_time.to_iso_date(), "2005-06-07");
+	}
+
+	SUBCASE("iso date time")
+	{
+		date_time = lib::date_time(2008, 9, 10, 11, 12, 14);
+		CHECK_EQ(date_time.to_iso_date_time(), "2008-09-10T11:12:14Z");
+	}
+}
