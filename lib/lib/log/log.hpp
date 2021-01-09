@@ -75,6 +75,17 @@ namespace lib
 		 */
 		static const std::vector<log_message> &get_messages();
 
+		/**
+		 * Clears all messages in the log
+		 */
+		static void clear();
+
+		/**
+		 * Enable or disable logging to standard output/error,
+		 * enabled by default
+		 */
+		static void set_log_to_stdout(bool value);
+
 	private:
 		/**
 		 * Private constructor, this is a static class
@@ -85,6 +96,11 @@ namespace lib
 		 * History of all messages
 		 */
 		static std::vector<log_message> messages;
+
+		/**
+		 * Also print to stdout/stderr
+		 */
+		static bool log_to_stdout;
 
 		/**
 		 * Log a message with the specified type
