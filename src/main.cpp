@@ -1,6 +1,4 @@
 #include "appversion.hpp"
-#include "dialog/setupdialog.hpp"
-#include "mainwindow.hpp"
 #include "util/icon.hpp"
 #include "lib/qtpaths.hpp"
 
@@ -9,6 +7,9 @@
 
 #ifdef USE_QT_QUICK
 #include "qml/src/qmlmanager.hpp"
+#else
+#include "mainwindow.hpp"
+#include "dialog/setupdialog.hpp"
 #endif
 
 int main(int argc, char *argv[])
