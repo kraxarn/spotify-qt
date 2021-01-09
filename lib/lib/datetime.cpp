@@ -13,6 +13,16 @@ date_time::date_time(const date_time &date)
 	tm = date.tm;
 }
 
+date_time::date_time(int year, int month, int day, int hour, int minute, int second)
+{
+	tm.tm_year = year - 1900;
+	tm.tm_mon = month - 1;
+	tm.tm_mday = day;
+	tm.tm_hour = hour;
+	tm.tm_min = minute;
+	tm.tm_sec = second;
+}
+
 date_time date_time::parse(const std::string &value)
 {
 	date_time date;

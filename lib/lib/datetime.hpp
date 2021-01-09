@@ -18,6 +18,17 @@ namespace lib
 		date_time() = default;
 
 		/**
+		 * Construct a new date from a set date
+		 * @param year Year, 1900-
+		 * @param month Month, 1-12
+		 * @param day Day, 1-31
+		 * @param hour Hour, 0-23
+		 * @param minute Minute, 0-59
+		 * @param second Second, 0-60
+		 */
+		date_time(int year, int month, int day, int hour, int minute, int second);
+
+		/**
 		 * Construct a date from another date
 		 * @param date A new copy of date
 		 */
