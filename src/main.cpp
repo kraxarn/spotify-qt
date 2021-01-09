@@ -1,6 +1,7 @@
 #include "appversion.hpp"
 #include "util/icon.hpp"
 #include "lib/qtpaths.hpp"
+#include "lib/locale.hpp"
 
 #include <QApplication>
 #include <QCoreApplication>
@@ -21,6 +22,13 @@ int main(int argc, char *argv[])
 
 	// Create Qt application
 	QApplication app(argc, argv);
+
+	// Set C++ locale from Qt
+	if (!lib::locale::set(QLocale::system().name().toStdString()))
+	{
+		lib::log::warn("Failed to set locale to {}",
+			QLocale::system().name().toStdString());
+	}
 
 	// Settings
 	QtPaths paths(nullptr);
