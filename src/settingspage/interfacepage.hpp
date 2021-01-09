@@ -28,7 +28,7 @@ private:
 	QCheckBox *itfTrayInvert = nullptr;
 	QCheckBox *itfTrayNotify = nullptr;
 
-	QWidget *interface();
+	QWidget *general();
 	QWidget *trayIcon();
 
 	static bool hasIconTheme();

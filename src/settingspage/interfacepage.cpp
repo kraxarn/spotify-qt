@@ -3,11 +3,11 @@
 InterfacePage::InterfacePage(lib::settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
-	addTab(interface(), "General");
+	addTab(general(), "General");
 	addTab(trayIcon(), "Tray icon");
 }
 
-QWidget *InterfacePage::interface()
+QWidget *InterfacePage::general()
 {
 	auto layout = tabContent();
 
