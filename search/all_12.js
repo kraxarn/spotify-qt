@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['validate_82',['validate',['../classlib_1_1settings.html#a041a743b7ab53f5cd0fa671162556c7e',1,'lib::settings']]]
+  ['username_97',['username',['../structlib_1_1spotify.html#a2a7f9d7fbc1fdec80b799330a264d43e',1,'lib::spotify']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['remove_5fclient_121',['remove_client',['../classlib_1_1settings.html#a5444968f3d5ae6890866906e3c0d5c58',1,'lib::settings']]],
-  ['remove_5ftokens_122',['remove_tokens',['../classlib_1_1settings.html#a6758eedb1130246712f81aebd9023881',1,'lib::settings']]]
+  ['parse_142',['parse',['../classlib_1_1date__time.html#a3182f00a4165be7ce3ef74336008bb2c',1,'lib::date_time']]],
+  ['paths_143',['paths',['../classlib_1_1paths.html#a46e8c35ee6f51938d7af982e532acbb2',1,'lib::paths']]]
 ];

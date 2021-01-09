@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['refresh_5finterval_53',['refresh_interval',['../structlib_1_1general.html#ac29f48354982b356e216ee5284857eed',1,'lib::general']]],
-  ['refresh_5ftoken_54',['refresh_token',['../structlib_1_1account.html#a54ff40f72501427d566532e69c26f246',1,'lib::account']]],
-  ['relative_5fadded_55',['relative_added',['../structlib_1_1general.html#a9d562110a26d275c83ffff75b012381c',1,'lib::general']]],
-  ['remove_5fclient_56',['remove_client',['../classlib_1_1settings.html#a5444968f3d5ae6890866906e3c0d5c58',1,'lib::settings']]],
-  ['remove_5ftokens_57',['remove_tokens',['../classlib_1_1settings.html#a6758eedb1130246712f81aebd9023881',1,'lib::settings']]]
+  ['parse_54',['parse',['../classlib_1_1date__time.html#a3182f00a4165be7ce3ef74336008bb2c',1,'lib::date_time']]],
+  ['path_55',['path',['../structlib_1_1spotify.html#ab55773967bf5f3a9387399609563eeeb',1,'lib::spotify']]],
+  ['paths_56',['paths',['../classlib_1_1paths.html',1,'lib::paths'],['../classlib_1_1paths.html#a46e8c35ee6f51938d7af982e532acbb2',1,'lib::paths::paths()']]],
+  ['playlist_5forder_57',['playlist_order',['../structlib_1_1general.html#a776753bb725b72deb2f81a53ab9f5e21',1,'lib::general']]],
+  ['pulse_5fvolume_58',['pulse_volume',['../structlib_1_1general.html#a611931a69b467a6c972d287996753968',1,'lib::general']]]
 ];

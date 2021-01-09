@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['parse_48',['parse',['../classlib_1_1date__time.html#a3182f00a4165be7ce3ef74336008bb2c',1,'lib::date_time']]],
-  ['path_49',['path',['../structlib_1_1spotify.html#ab55773967bf5f3a9387399609563eeeb',1,'lib::spotify']]],
-  ['paths_50',['paths',['../classlib_1_1paths.html',1,'lib::paths'],['../classlib_1_1paths.html#a46e8c35ee6f51938d7af982e532acbb2',1,'lib::paths::paths()']]],
-  ['playlist_5forder_51',['playlist_order',['../structlib_1_1general.html#a776753bb725b72deb2f81a53ab9f5e21',1,'lib::general']]],
-  ['pulse_5fvolume_52',['pulse_volume',['../structlib_1_1general.html#a611931a69b467a6c972d287996753968',1,'lib::general']]]
+  ['now_52',['now',['../classlib_1_1date__time.html#a58276fb2ee0f2433991c66686cfa04d6',1,'lib::date_time']]],
+  ['now_5futc_53',['now_utc',['../classlib_1_1date__time.html#a225d35e8bea79838cdc174b6ed6cc2e7',1,'lib::date_time']]]
 ];

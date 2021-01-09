@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['now_46',['now',['../classlib_1_1date__time.html#a58276fb2ee0f2433991c66686cfa04d6',1,'lib::date_time']]],
-  ['now_5futc_47',['now_utc',['../classlib_1_1date__time.html#a225d35e8bea79838cdc174b6ed6cc2e7',1,'lib::date_time']]]
+  ['max_5fqueue_50',['max_queue',['../structlib_1_1spotify.html#ad4af58b9e1362621024b55db4d0371cd',1,'lib::spotify']]],
+  ['media_5fcontroller_51',['media_controller',['../structlib_1_1general.html#a5333404404489ecab3114dd5103c0f18',1,'lib::general']]]
 ];

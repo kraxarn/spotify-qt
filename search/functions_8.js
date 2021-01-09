@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['parse_119',['parse',['../classlib_1_1date__time.html#a3182f00a4165be7ce3ef74336008bb2c',1,'lib::date_time']]],
-  ['paths_120',['paths',['../classlib_1_1paths.html#a46e8c35ee6f51938d7af982e532acbb2',1,'lib::paths']]]
+  ['now_140',['now',['../classlib_1_1date__time.html#a58276fb2ee0f2433991c66686cfa04d6',1,'lib::date_time']]],
+  ['now_5futc_141',['now_utc',['../classlib_1_1date__time.html#a225d35e8bea79838cdc174b6ed6cc2e7',1,'lib::date_time']]]
 ];

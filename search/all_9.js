@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['keyring_5fpassword_36',['keyring_password',['../structlib_1_1spotify.html#acf5b0369ee590c1f302423a223e8b20e',1,'lib::spotify']]]
+  ['join_39',['join',['../classlib_1_1strings.html#a6be3b8782a090bea36a372cc33b49f36',1,'lib::strings']]]
 ];
