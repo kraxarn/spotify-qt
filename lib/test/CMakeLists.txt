@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.9)
 
 project(spotify-qt-lib-test)
-include(GoogleTest)
 
 add_executable(spotify-qt-lib-test
-		test/datetime.cpp)
+		test/datetimetests.cpp)
 
-target_link_libraries(spotify-qt-lib-test PRIVATE gtest gtest_main spotify-qt-lib)
+target_include_directories(spotify-qt-lib-test PRIVATE "../thirdparty")
+
+target_link_libraries(spotify-qt-lib-test PRIVATE spotify-qt-lib)
