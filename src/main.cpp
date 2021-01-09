@@ -22,7 +22,8 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 
 	// Settings
-	lib::settings settings(QtPaths(nullptr));
+	QtPaths paths(nullptr);
+	lib::settings settings(paths);
 
 	// Create QML engine if requested
 #ifdef USE_QT_QUICK
