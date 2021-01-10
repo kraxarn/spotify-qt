@@ -31,6 +31,8 @@ $input-secondary-background-color: #b2b2b2;
 $foreground-color: #f5f5f5;
 // Color of selected items etc.
 $highlight-color: $secondary-background-color;
+// Font color of selected items etc.
+$highlight-foreground-color: $foreground-color;
 // Main Spotify green color
 $theme-color: #1db954;
 // Color for disabled text etc.
@@ -50,8 +52,15 @@ $slider-handle-color: #ffffff;
 }
 
 QWidget {
-	selection-background-color: $highlight-color;
 	color: $foreground-color;
+
+	// Both selection[...] and &::item::selected{...} are needed for different OS
+	selection-background-color: $highlight-color;
+	selection-color: $highlight-foreground-color;
+	&::item::selected {
+		background-color: $highlight-color;
+		color: $highlight-foreground-color;
+	}
 }
 
 QScrollBar {
