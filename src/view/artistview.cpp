@@ -33,6 +33,13 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId,
 	// Context menu
 	menu = new QMenu(this);
 
+	popularity = menu->addAction(Icon::get("draw-donut"), "popularity");
+	popularity->setEnabled(false);
+
+	followButton = menu->addAction(Icon::get("non-starred-symbolic"), "Follow");
+	followButton->setEnabled(false);
+	QAction::connect(followButton, &QAction::triggered, this, &ArtistView::follow);
+
 	auto menuSearch = menu->addMenu(Icon::get("edit-find"), "Search");
 	QAction::connect(menuSearch->addAction("Wikipedia"), &QAction::triggered,
 		this, &ArtistView::searchWikipedia);
@@ -131,15 +138,11 @@ void ArtistView::artistLoaded(const spt::Artist &loadedArtist)
 	name->setText(artist.name);
 
 	// Menu actions
-	menu->addAction(QIcon(Utils::mask(Icon::get("draw-donut").pixmap(64, 64),
-			MaskShape::Pie, QVariant(artist.popularity))),
-			QString("%1% popularity").arg(artist.popularity))
-		->setEnabled(false);
+	popularity->setIcon(QIcon(Utils::mask(Icon::get("draw-donut")
+		.pixmap(64, 64), MaskShape::Pie, QVariant(artist.popularity))));
+	popularity->setText(QString("%1% popularity").arg(artist.popularity));
 
-	followButton = menu->addAction(Icon::get("non-starred-symbolic"),
-		QString("Follow (%2)").arg(followers));
-	followButton->setEnabled(false);
-	QAction::connect(followButton, &QAction::triggered, this, &ArtistView::follow);
+	followButton->setText(QString("Follow (%2)").arg(followers));
 
 	spotify.isFollowing(FollowType::Artist, {
 		artistId
