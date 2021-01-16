@@ -241,7 +241,7 @@ void ArtistView::updateFollow(bool isFollowing)
 void ArtistView::follow(bool)
 {
 	auto isFollowing = followButton->text().contains("Unfollow");
-	updateFollow(isFollowing);
+	updateFollow(!isFollowing);
 
 	if (isFollowing)
 	{
