@@ -52,6 +52,7 @@ private:
 	QToolButton *context = nullptr;
 	QLabel *genres = nullptr;
 
+	QAction *popularity = nullptr;
 	QListWidget *relatedList = nullptr;
 	QListWidget *topTracksList = nullptr;
 	QAction *followButton = nullptr;
