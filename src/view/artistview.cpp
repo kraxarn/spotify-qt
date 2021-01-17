@@ -278,7 +278,7 @@ void ArtistView::trackMenu(const QPoint &pos)
 void ArtistView::loadAlbumId(QTreeWidgetItem *item)
 {
 	auto mainWindow = MainWindow::find(parentWidget());
-	if (!mainWindow->loadAlbum(item->data(0, RoleAlbumId).toString(), false))
+	if (!mainWindow->loadAlbum(item->data(0, RoleAlbumId).toString()))
 		mainWindow->setStatus(QString("Failed to load album"), true);
 }
 

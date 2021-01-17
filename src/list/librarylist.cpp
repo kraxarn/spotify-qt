@@ -60,7 +60,7 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 				break;
 
 			case RoleAlbumId:
-				mainWindow->loadAlbum(data, false);
+				mainWindow->loadAlbum(data);
 				break;
 		}
 	}

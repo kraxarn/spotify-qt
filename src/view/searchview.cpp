@@ -97,7 +97,7 @@ void SearchView::albumMenu(const QPoint &pos)
 void SearchView::albumClick(QTreeWidgetItem *item, int)
 {
 	auto mainWindow = MainWindow::find(parentWidget());
-	if (!mainWindow->loadAlbum(item->data(0, RoleAlbumId).toString(), false))
+	if (!mainWindow->loadAlbum(item->data(0, RoleAlbumId).toString()))
 		mainWindow->setStatus(QString("Failed to load album"), true);
 }
 
