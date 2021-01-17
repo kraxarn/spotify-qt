@@ -18,7 +18,7 @@ public:
 	QByteArray get(const QString &url);
 	QJsonDocument getJson(const QString &url);
 	void setStatus(const QString &message, bool important = false);
-	bool loadAlbum(const QString &albumId, bool ignoreEmpty = true);
+	bool loadAlbum(const QString &albumId, const QString &trackId = QString());
 	void openArtist(const QString &artistId);
 	QPixmap getAlbum(const QString &url);
 	QPixmap getImage(const QString &type, const QString &url);

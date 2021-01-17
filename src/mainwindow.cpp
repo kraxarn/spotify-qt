@@ -303,7 +303,7 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks, const QString &sel
 	return true;
 }
 
-bool MainWindow::loadAlbum(const QString &albumId, bool ignoreEmpty)
+bool MainWindow::loadAlbum(const QString &albumId, const QString &trackId)
 {
 	auto tracks = loadTracksFromCache(albumId);
 	if (tracks.isEmpty())
@@ -316,7 +316,7 @@ bool MainWindow::loadAlbum(const QString &albumId, bool ignoreEmpty)
 		leftSidePanel->setCurrentPlaylistItem(-1);
 		leftSidePanel->setCurrentLibraryItem(nullptr);
 		current.context = QString("spotify:album:%1").arg(albumId);
-		loadSongs(tracks);
+		loadSongs(tracks, trackId);
 		saveTracksToCache(albumId, tracks);
 	}
 
