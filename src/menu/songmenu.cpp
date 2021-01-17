@@ -18,14 +18,27 @@ SongMenu::SongMenu(QListWidgetItem *item, QString artist, spt::Spotify &spotify,
 }
 
 SongMenu::SongMenu(const spt::Track &track, spt::Spotify &spotify, QWidget *parent)
-	: SongMenu(track.id, track.artist, track.name, track.artistId, track.albumId, 0, spotify, parent)
+	: SongMenu(track.id,
+	track.artist,
+	track.name,
+	track.artistId,
+	track.albumId,
+	0,
+	spotify,
+	parent)
 {
 }
 
 SongMenu::SongMenu(const QString &trackId, QString artist, QString name, QString artistId,
 	QString albumId, int index, spt::Spotify &spotify, QWidget *parent)
-	: trackId(trackId), artist(std::move(artist)), trackName(std::move(name)), index(index), spotify(spotify),
-	artistId(std::move(artistId)), albumId(std::move(albumId)), QMenu(parent)
+	: trackId(trackId),
+	artist(std::move(artist)),
+	trackName(std::move(name)),
+	index(index),
+	spotify(spotify),
+	artistId(std::move(artistId)),
+	albumId(std::move(albumId)),
+	QMenu(parent)
 {
 	auto mainWindow = MainWindow::find(parent);
 	if (mainWindow == nullptr)
@@ -47,7 +60,8 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name, QString
 	auto shareSongLink = share->addAction("Copy song link");
 	QAction::connect(shareSongLink, &QAction::triggered, [this, mainWindow](bool checked)
 	{
-		QApplication::clipboard()->setText(QString("https://open.spotify.com/track/%1").arg(trackUri));
+		QApplication::clipboard()
+			->setText(QString("https://open.spotify.com/track/%1").arg(trackUri));
 		mainWindow->setStatus("Link copied to clipboard");
 	});
 
@@ -168,7 +182,8 @@ void SongMenu::remFromPlaylist(bool)
 	auto status = spotify.removeFromPlaylist(currentPlaylist->id, trackId, index);
 	if (!status.isEmpty())
 	{
-		mainWindow->setStatus(QString("Failed to remove track from playlist: %1").arg(status), true);
+		mainWindow->setStatus(QString("Failed to remove track from playlist: %1")
+			.arg(status), true);
 		return;
 	}
 
