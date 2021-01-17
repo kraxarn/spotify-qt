@@ -33,7 +33,7 @@ public:
 	void setFixedWidthTime(bool value);
 	QVector<spt::Track> loadTracksFromCache(const QString &id);
 	void saveTracksToCache(const QString &id, const QVector<spt::Track> &tracks);
-	bool loadSongs(const QVector<spt::Track> &tracks);
+	bool loadSongs(const QVector<spt::Track> &tracks, const QString &selectedId = QString());
 	QStringList currentTracks();
 	void setPlayingTrackItem(QTreeWidgetItem *item);
 	void refresh();

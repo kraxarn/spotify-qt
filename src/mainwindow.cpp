@@ -267,7 +267,7 @@ void MainWindow::openLyrics(const QString &artist, const QString &name)
 	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, lyricsView);
 }
 
-bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
+bool MainWindow::loadSongs(const QVector<spt::Track> &tracks, const QString &selectedId)
 {
 	songs->clear();
 	trackItems.clear();
@@ -295,6 +295,9 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks)
 
 		songs->insertTopLevelItem(i, item);
 		trackItems[track.id] = item;
+
+		if (track.id == selectedId)
+			songs->setCurrentItem(item);
 	}
 
 	return true;
