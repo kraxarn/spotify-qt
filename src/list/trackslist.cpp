@@ -19,6 +19,9 @@ TracksList::TracksList(spt::Spotify &spotify, lib::settings &settings, QWidget *
 	header()->setSectionResizeMode((QHeaderView::ResizeMode) settings.general.song_header_resize_mode);
 	header()->setSortIndicator(settings.general.song_header_sort_by + 1, Qt::AscendingOrder);
 
+	if (settings.general.song_header_resize_mode == QHeaderView::ResizeToContents)
+		header()->setMaximumSectionSize(250);
+
 	// Hide specified columns
 	for (auto &value : settings.general.hidden_song_headers)
 		header()->setSectionHidden(value + 1, true);
