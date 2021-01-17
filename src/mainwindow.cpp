@@ -306,8 +306,8 @@ bool MainWindow::loadAlbum(const QString &albumId, bool ignoreEmpty)
 	if (tracks.isEmpty())
 		tracks = spotify->albumTracks(albumId);
 
-	if (ignoreEmpty && tracks.length() <= 1)
-		setStatus("Album only contains one song or is empty", true);
+	if (tracks.length() <= 0)
+		setStatus("Album is empty", true);
 	else
 	{
 		leftSidePanel->setCurrentPlaylistItem(-1);
