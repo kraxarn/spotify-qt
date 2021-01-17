@@ -227,5 +227,8 @@ void SongMenu::viewArtist(bool)
 
 void SongMenu::openAlbum(bool)
 {
-	MainWindow::find(parentWidget())->loadAlbum(albumId, false);
+	MainWindow::find(parentWidget())->loadAlbum(albumId,
+		trackId.startsWith("spotify:track:")
+			? trackId.right(trackId.length() - 14)
+			: trackId);
 }
