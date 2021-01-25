@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['now_140',['now',['../classlib_1_1date__time.html#a58276fb2ee0f2433991c66686cfa04d6',1,'lib::date_time']]],
-  ['now_5futc_141',['now_utc',['../classlib_1_1date__time.html#a225d35e8bea79838cdc174b6ed6cc2e7',1,'lib::date_time']]]
+  ['left_141',['left',['../classlib_1_1strings.html#a32086d92ea26beef172835b39ded5f7e',1,'lib::strings']]],
+  ['load_142',['load',['../classlib_1_1settings.html#a66e0f3dfd04e6f4c80b901a59b40def9',1,'lib::settings']]],
+  ['log_5fmessage_143',['log_message',['../classlib_1_1log__message.html#a84664b9e8430dcc757cd8fd0096384c3',1,'lib::log_message::log_message(const date_time &amp;time, log_type log_type, const std::string &amp;message)'],['../classlib_1_1log__message.html#ad397f185f8fd8ca52198315ede8992da',1,'lib::log_message::log_message(log_type log_type, const std::string &amp;message)']]]
 ];

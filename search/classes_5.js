@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['paths_107',['paths',['../classlib_1_1paths.html',1,'lib']]]
+  ['locale_107',['locale',['../classlib_1_1locale.html',1,'lib']]],
+  ['log_108',['log',['../classlib_1_1log.html',1,'lib']]],
+  ['log_5fmessage_109',['log_message',['../classlib_1_1log__message.html',1,'lib']]]
 ];

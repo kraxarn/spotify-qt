@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['remove_144',['remove',['../classlib_1_1strings.html#ace979c512c9807e4ec0c09feab77b2e8',1,'lib::strings']]],
-  ['remove_5fclient_145',['remove_client',['../classlib_1_1settings.html#a5444968f3d5ae6890866906e3c0d5c58',1,'lib::settings']]],
-  ['remove_5ftokens_146',['remove_tokens',['../classlib_1_1settings.html#a6758eedb1130246712f81aebd9023881',1,'lib::settings']]],
-  ['right_147',['right',['../classlib_1_1strings.html#a2b6420a57909607d92feb8d11ad5f0d4',1,'lib::strings']]]
+  ['parse_146',['parse',['../classlib_1_1date__time.html#a3182f00a4165be7ce3ef74336008bb2c',1,'lib::date_time']]],
+  ['paths_147',['paths',['../classlib_1_1paths.html#a46e8c35ee6f51938d7af982e532acbb2',1,'lib::paths']]]
 ];
