@@ -3,6 +3,7 @@
 #include "../dialog/deviceselectdialog.hpp"
 #include "../dialog/openlinkdialog.hpp"
 #include "../dialog/setupdialog.hpp"
+#include "../dialog/trackscachedialog.hpp"
 #include "../dialog/whatsnewdialog.hpp"
 #include "../util/icon.hpp"
 #include "lib/settings.hpp"

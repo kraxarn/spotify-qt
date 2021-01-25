@@ -31,6 +31,7 @@ QMenu *DeveloperMenu::dialogMenu()
 		new DeviceSelectDialog(QVector<spt::Device>(), mainWindow),
 		new OpenLinkDialog("/", LinkType::Path, mainWindow),
 		new SetupDialog(settings, mainWindow),
+		new TracksCacheDialog(mainWindow),
 		new WhatsNewDialog(APP_VERSION, settings, mainWindow),
 	};
 
