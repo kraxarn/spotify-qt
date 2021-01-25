@@ -80,8 +80,10 @@ MainWindow::MainWindow(lib::settings &settings)
 		sptClient = new spt::ClientHandler(settings, this);
 		auto status = sptClient->start();
 		if (!status.isEmpty())
+		{
 			QMessageBox::warning(this, "Client error",
 				QString("Failed to autostart Spotify client: %1").arg(status));
+		}
 	}
 
 	// Start media controller if specified
