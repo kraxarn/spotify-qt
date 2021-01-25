@@ -15,7 +15,7 @@ OpenLinkDialog::OpenLinkDialog(const QString &link, LinkType linkType, QWidget *
 	textLink->setReadOnly(true);
 	layout->addWidget(textLink);
 
-	auto buttons = new QDialogButtonBox();
+	auto buttons = new QDialogButtonBox(this);
 	QPushButton::connect(buttons->addButton("Copy to clipboard", QDialogButtonBox::ActionRole),
 		&QPushButton::clicked, [link](bool checked)
 		{
