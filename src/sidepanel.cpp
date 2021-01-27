@@ -1,14 +1,18 @@
 #include "sidepanel.hpp"
 
 SidePanel::SidePanel(spt::Spotify &spotify, const lib::settings &settings, QWidget *parent)
-	: spotify(spotify), settings(settings), parent(parent), QTabWidget(parent)
+	: spotify(spotify),
+	settings(settings),
+	parent(parent),
+	QTabWidget(parent)
 {
 	setMovable(true);
 	setTabsClosable(true);
 	setVisible(false);
 	setFixedWidth(320);
 
-	QTabWidget::connect(this, &QTabWidget::tabCloseRequested, this, &SidePanel::removeTab);
+	QTabWidget::connect(this, &QTabWidget::tabCloseRequested,
+		this, &SidePanel::removeTab);
 }
 
 void SidePanel::openArtist(const QString &artistId)
@@ -34,9 +38,7 @@ void SidePanel::tabRemoved(int index)
 void SidePanel::openSearch()
 {
 	if (searchView == nullptr)
-	{
 		searchView = new SearchView(spotify, settings, parent);
-	}
 	addAndSelect(searchView, "edit-find", "Search");
 }
 
@@ -45,7 +47,8 @@ void SidePanel::closeSearch()
 	removeTab(indexOf(searchView));
 }
 
-void SidePanel::openAudioFeatures(const QString &trackId, const QString &artist, const QString &name)
+void SidePanel::openAudioFeatures(const QString &trackId,
+	const QString &artist, const QString &name)
 {
 	auto view = new AudioFeaturesView(spotify, trackId, this);
 	addAndSelect(view, "view-statistics", QString("%1 - %2")
