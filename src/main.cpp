@@ -24,13 +24,6 @@ int main(int argc, char *argv[])
 	QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 	QApplication app(argc, argv);
 
-	// Set C++ locale from Qt
-	if (!lib::locale::set(QLocale::system().name().toStdString()))
-	{
-		lib::log::warn("Failed to set locale to {}",
-			QLocale::system().name().toStdString());
-	}
-
 	// Settings
 	QtPaths paths(nullptr);
 	lib::settings settings(paths);
