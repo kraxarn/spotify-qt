@@ -1,7 +1,6 @@
 #include "appversion.hpp"
 #include "util/icon.hpp"
 #include "lib/qtpaths.hpp"
-#include "lib/locale.hpp"
 
 #include <QApplication>
 #include <QCoreApplication>
