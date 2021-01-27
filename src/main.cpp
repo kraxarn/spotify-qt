@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 
 	// First setup window
 	if (settings.account.refresh_token.empty()
-	|| parser.isSet("reset-credentials"))
+		|| parser.isSet("reset-credentials"))
 	{
 #ifdef USE_QT_QUICK
 		if (qml.setup())
