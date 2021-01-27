@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
 	QCoreApplication::setApplicationVersion(APP_VERSION);
 
 	// Create Qt application
+	QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 	QApplication app(argc, argv);
 
 	// Set C++ locale from Qt
