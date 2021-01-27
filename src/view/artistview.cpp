@@ -22,8 +22,9 @@ ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId,
 
 	// Artist name title
 	title = new QHBoxLayout();
-	name = new QLabel("Loading...", this);
+	name = new QLabel("...", this);
 	name->setWordWrap(true);
+	new Loader(name);
 
 	auto titleFont = name->font();
 	titleFont.setPointSize(24);
