@@ -8,6 +8,10 @@
 
 namespace lib
 {
+	/**
+	 * Library locale
+	 * @deprecated Locale dependent stuff is expected to be handled by the UI toolkit
+	 */
 	class locale
 	{
 	public:

@@ -8,6 +8,7 @@ namespace lib
 {
 	/**
 	 * Date and time
+	 * @deprecated Unreliable and inconsistent, dates should be represented as ISO dates instead
 	 */
 	class date_time
 	{
