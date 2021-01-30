@@ -6,6 +6,7 @@
  */
 
 #include <string>
+#include <vector>
 
 namespace lib
 {
@@ -22,6 +23,7 @@ namespace lib
 		 */
 		static std::string encode(const std::string &str)
 		{
+			auto charset = get_charset();
 			std::string out;
 			int val = 0;
 			int val_b = -6;
@@ -49,11 +51,12 @@ namespace lib
 		 */
 		static std::string decode(const std::string &str)
 		{
+			auto charset = get_charset();
 			std::string out;
 			std::vector<int> T(256, -1);
 			for (int i = 0; i < 64; i++)
 				T[charset[i]] = i;
-			int val = 0:
+			int val = 0;
 			int val_b = -8;
 			for (unsigned char c : str)
 			{
@@ -76,7 +79,12 @@ namespace lib
 		 */
 		base64() = default;
 
-		static const char *charset =
-			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+		/**
+		 * Get Base64 charset (64 chars)
+		 */
+		static std::string get_charset()
+		{
+			return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+		}
 	};
 }
