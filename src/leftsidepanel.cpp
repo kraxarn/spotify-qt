@@ -54,7 +54,8 @@ LeftSidePanel::LeftSidePanel(spt::Spotify &spotify, lib::settings &settings,
 
 	// Show menu when clicking now playing
 	nowPlaying->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QLabel::connect(nowPlaying, &QWidget::customContextMenuRequested, this, &LeftSidePanel::popupSongMenu);
+	QLabel::connect(nowPlaying, &QWidget::customContextMenuRequested,
+		this, &LeftSidePanel::popupSongMenu);
 }
 
 void LeftSidePanel::popupSongMenu(const QPoint &pos)
@@ -95,7 +96,8 @@ void LeftSidePanel::updateContextIcon()
 		return;
 	}
 
-	auto currentName = current.playback.contextType.isEmpty() || current.playback.contextUri.isEmpty()
+	auto currentName = current.playback.contextType.isEmpty()
+		|| current.playback.contextUri.isEmpty()
 		? "No context"
 		: current.playback.contextType == "album"
 			? current.playback.item.album
@@ -252,30 +254,34 @@ void LeftSidePanel::orderPlaylists(lib::playlist_order order)
 				break;
 			}
 
-			std::sort(items.begin(), items.end(), [mainWindow](QListWidgetItem *i1, QListWidgetItem *i2)
-			{
-				auto t1 = mainWindow->playlistTracks(i1->data(DataRole::RolePlaylistId).toString());
-				auto t2 = mainWindow->playlistTracks(i2->data(DataRole::RolePlaylistId).toString());
+			std::sort(items.begin(), items.end(),
+				[mainWindow](QListWidgetItem *i1, QListWidgetItem *i2)
+				{
+					auto t1 = mainWindow->playlistTracks(i1
+						->data(DataRole::RolePlaylistId).toString());
+					auto t2 = mainWindow->playlistTracks(i2
+						->data(DataRole::RolePlaylistId).toString());
 
-				return t1.length() > 0 && t2.length() > 0
-					? t1.at(latestTrack(t1)).addedAt > t2.at(latestTrack(t2)).addedAt
-					: false;
-			});
+					return t1.length() > 0 && t2.length() > 0
+						? t1.at(latestTrack(t1)).addedAt > t2.at(latestTrack(t2)).addedAt
+						: false;
+				});
 			break;
 
 		case lib::playlist_order_custom:
 			i = 0;
 			for (auto &playlist : settings.general.custom_playlist_order)
 				customOrder[QString::fromStdString(playlist)] = i++;
-			std::sort(items.begin(), items.end(), [customOrder](QListWidgetItem *i1, QListWidgetItem *i2)
-			{
-				auto id1 = i1->data(DataRole::RolePlaylistId).toString();
-				auto id2 = i2->data(DataRole::RolePlaylistId).toString();
+			std::sort(items.begin(), items.end(),
+				[customOrder](QListWidgetItem *i1, QListWidgetItem *i2)
+				{
+					auto id1 = i1->data(DataRole::RolePlaylistId).toString();
+					auto id2 = i2->data(DataRole::RolePlaylistId).toString();
 
-				return customOrder.contains(id1) && customOrder.contains(id2)
-					? customOrder[id1] < customOrder[id2]
-					: false;
-			});
+					return customOrder.contains(id1) && customOrder.contains(id2)
+						? customOrder[id1] < customOrder[id2]
+						: false;
+				});
 			break;
 	}
 
