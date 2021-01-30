@@ -32,7 +32,7 @@ namespace lib
 			std::string client_secret;
 
 			/**
-			 * When access token was lsat refreshed in unix time
+			 * When access token was last refreshed in unix time
 			 */
 			long last_refresh = 0;
 		} account;
