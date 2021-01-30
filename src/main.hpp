@@ -24,6 +24,7 @@
 #include "spotify/user.hpp"
 #include "trayicon.hpp"
 #include "util/dateutils.hpp"
+#include "util/developermode.hpp"
 #include "util/icon.hpp"
 #include "util/utils.hpp"
 #include "view/lyricsview.hpp"

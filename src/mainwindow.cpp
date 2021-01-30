@@ -24,7 +24,7 @@ MainWindow::MainWindow(lib::settings &settings)
 
 	// Custom dark theme
 	if (settings.general.style_palette == lib::palette_dark
-		&& MainMenu::showDeveloperMenu)
+		&& DeveloperMode::enabled)
 	{
 		QFile styleFile(":/res/style/dark.qss");
 		styleFile.open(QFile::ReadOnly | QFile::Text);

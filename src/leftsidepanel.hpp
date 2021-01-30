@@ -5,6 +5,7 @@
 #include "spotify/current.hpp"
 #include "spotify/spotify.hpp"
 #include "util/utils.hpp"
+#include "util/developermode.hpp"
 
 #include <QVBoxLayout>
 

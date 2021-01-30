@@ -40,13 +40,13 @@ int main(int argc, char *argv[])
 	parser.addVersionOption();
 	parser.addHelpOption();
 	parser.addOptions({
-		{"dev", "Enable developer menu for troubleshooting issues."},
+		{"dev", "Enable developer mode for troubleshooting issues."},
 		{"reset-credentials", "Allows providing new Spotify credentials."}
 	});
 	parser.process(app);
 
 	if (parser.isSet("dev"))
-		MainMenu::showDeveloperMenu = true;
+		DeveloperMode::enabled = true;
 
 	// First setup window
 	if (settings.account.refresh_token.empty()
