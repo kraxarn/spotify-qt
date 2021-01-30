@@ -4,55 +4,58 @@
 
 namespace lib
 {
-	/**
-	 * Spotify client settings
-	 */
-	typedef struct spotify
+	namespace set
 	{
 		/**
-		 * Name of backend to use
+		 * Spotify client settings
 		 */
-		std::string backend;
+		typedef struct spotify
+		{
+			/**
+			 * Name of backend to use
+			 */
+			std::string backend;
 
-		/**
-		 * Path to Spotify client
-		 */
-		std::string path;
+			/**
+			 * Path to Spotify client
+			 */
+			std::string path;
 
-		/**
-		 * Spotify username
-		 */
-		std::string username;
+			/**
+			 * Spotify username
+			 */
+			std::string username;
 
-		/**
-		 * Always start Spotify client on application start
-		 */
-		bool always_start = true;
+			/**
+			 * Always start Spotify client on application start
+			 */
+			bool always_start = true;
 
-		/**
-		 * Use global config instead of config in settings
-		 */
-		bool global_config = false;
+			/**
+			 * Use global config instead of config in settings
+			 */
+			bool global_config = false;
 
-		/**
-		 * Save password in system keyring
-		 */
-		bool keyring_password = false;
+			/**
+			 * Save password in system keyring
+			 */
+			bool keyring_password = false;
 
-		/**
-		 * Start Spotify client on application start
-		 */
-		bool start_client = false;
+			/**
+			 * Start Spotify client on application start
+			 */
+			bool start_client = false;
 
-		/**
-		 * Bitrate for Spotify client
-		 * @note Required to be 96, 160 or 320
-		 */
-		int bitrate = 320;
+			/**
+			 * Bitrate for Spotify client
+			 * @note Required to be 96, 160 or 320
+			 */
+			int bitrate = 320;
 
-		/**
-		 * Max items allowed to be queued
-		 */
-		int max_queue = 500;
-	} spotify;
+			/**
+			 * Max items allowed to be queued
+			 */
+			int max_queue = 500;
+		} spotify;
+	}
 }
