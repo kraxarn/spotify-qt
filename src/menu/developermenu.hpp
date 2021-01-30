@@ -21,4 +21,5 @@ private:
 	lib::settings &settings;
 
 	QMenu *dialogMenu();
+	QMenu *infoMenu();
 };
