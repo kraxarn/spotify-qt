@@ -30,6 +30,7 @@ namespace lib
 
 		/**
 		 * Get all tracks saved in cache
+		 * @note Will soon return std::map<std::string, std::vector<spt::track>>
 		 * @return Map as id: tracks
 		 */
 		std::map<std::string, nlohmann::json> all_tracks();
