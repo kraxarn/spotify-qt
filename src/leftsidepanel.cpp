@@ -115,10 +115,18 @@ void LeftSidePanel::updateContextIcon()
 void LeftSidePanel::contextInfoMenu(const QPoint &pos)
 {
 	auto menu = new QMenu(contextInfo);
+
+	if (MainMenu::showDeveloperMenu)
+	{
+		auto devContext = menu->addAction(current.context);
+		devContext->setEnabled(false);
+	}
+
 	auto open = menu->addAction(currentContextIcon(),
 		QString("Open %1").arg(current.playback.contextType));
-	menu->popup(contextInfo->mapToGlobal(pos));
 	QAction::connect(open, &QAction::triggered, this, &LeftSidePanel::contextInfoOpen);
+
+	menu->popup(contextInfo->mapToGlobal(pos));
 }
 
 void LeftSidePanel::contextInfoOpen(bool)
