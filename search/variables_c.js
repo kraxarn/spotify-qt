@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['track_5fnumbers_206',['track_numbers',['../structlib_1_1general.html#aa104e8357fe420dd951710f488d9b2b1',1,'lib::general']]],
-  ['tray_5falbum_5fart_207',['tray_album_art',['../structlib_1_1general.html#adc2a17428c326eb01fbd8bb87027b3de',1,'lib::general']]],
-  ['tray_5ficon_208',['tray_icon',['../structlib_1_1general.html#a1e2b6bc045cc4c044a8f6f53b47b11b8',1,'lib::general']]],
-  ['tray_5flight_5ficon_209',['tray_light_icon',['../structlib_1_1general.html#a146290096a4f4c5dc4fc2b415f18589a',1,'lib::general']]],
-  ['tray_5fnotifications_210',['tray_notifications',['../structlib_1_1general.html#a71aec1921f5492ae91f68526b1c472b1',1,'lib::general']]]
+  ['track_5fnumbers_213',['track_numbers',['../structlib_1_1set_1_1general.html#afd3de3fb0ed3421c136389c4499339b4',1,'lib::set::general']]],
+  ['tray_5falbum_5fart_214',['tray_album_art',['../structlib_1_1set_1_1general.html#a3d15097fac2780644328d9ad58efd613',1,'lib::set::general']]],
+  ['tray_5ficon_215',['tray_icon',['../structlib_1_1set_1_1general.html#a8346e12c7fb2b9ab4f43155eb62fedec',1,'lib::set::general']]],
+  ['tray_5flight_5ficon_216',['tray_light_icon',['../structlib_1_1set_1_1general.html#a901e80bebbedc24c90ed26fc9ff70856',1,'lib::set::general']]],
+  ['tray_5fnotifications_217',['tray_notifications',['../structlib_1_1set_1_1general.html#a07195f25c45a1e5b982b668b67f04f3c',1,'lib::set::general']]]
 ];

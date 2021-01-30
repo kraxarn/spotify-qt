@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['cache_6',['cache',['../classlib_1_1cache.html#a5863aa2f8a8179cc7d08fe8dfbe26077',1,'lib::cache::cache()'],['../classlib_1_1paths.html#a3effd5cda94810a74392dd30765d663a',1,'lib::paths::cache()'],['../classlib_1_1cache.html',1,'lib::cache']]],
-  ['clear_7',['clear',['../classlib_1_1log.html#a1f670df82a0b45f18d50519964bfb17d',1,'lib::log']]],
-  ['client_5fid_8',['client_id',['../structlib_1_1account.html#a5b285e53063147b46d5d8a9c361b9d32',1,'lib::account']]],
-  ['client_5fsecret_9',['client_secret',['../structlib_1_1account.html#a41ace848a702c00545c5b78e086dbdef',1,'lib::account']]],
-  ['config_5ffile_10',['config_file',['../classlib_1_1paths.html#a2c77312bf587b48fbb581e93730bec86',1,'lib::paths']]],
-  ['contains_11',['contains',['../classlib_1_1strings.html#ad6bb089dfe2793c7e01c1859e8c2b681',1,'lib::strings']]],
-  ['custom_5fplaylist_5forder_12',['custom_playlist_order',['../structlib_1_1general.html#ae360d43c32ffcb4c36155e243c29738d',1,'lib::general']]]
+  ['cache_7',['cache',['../classlib_1_1cache.html#a5863aa2f8a8179cc7d08fe8dfbe26077',1,'lib::cache::cache()'],['../classlib_1_1paths.html#a3effd5cda94810a74392dd30765d663a',1,'lib::paths::cache()'],['../classlib_1_1cache.html',1,'lib::cache']]],
+  ['clear_8',['clear',['../classlib_1_1log.html#a1f670df82a0b45f18d50519964bfb17d',1,'lib::log']]],
+  ['client_5fid_9',['client_id',['../structlib_1_1set_1_1account.html#a71a7b7b8c7766af3bbe3a18d72ee1b73',1,'lib::set::account']]],
+  ['client_5fsecret_10',['client_secret',['../structlib_1_1set_1_1account.html#a8f71cdb24407039c179b3208f3140b4e',1,'lib::set::account']]],
+  ['config_5ffile_11',['config_file',['../classlib_1_1paths.html#a2c77312bf587b48fbb581e93730bec86',1,'lib::paths']]],
+  ['contains_12',['contains',['../classlib_1_1strings.html#ad6bb089dfe2793c7e01c1859e8c2b681',1,'lib::strings']]],
+  ['custom_5fplaylist_5forder_13',['custom_playlist_order',['../structlib_1_1set_1_1general.html#ae369f9a24d410c8e1113fa9c3a495f7f',1,'lib::set::general']]]
 ];

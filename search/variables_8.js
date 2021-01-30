@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['max_5fqueue_189',['max_queue',['../structlib_1_1spotify.html#ad4af58b9e1362621024b55db4d0371cd',1,'lib::spotify']]],
-  ['media_5fcontroller_190',['media_controller',['../structlib_1_1general.html#a5333404404489ecab3114dd5103c0f18',1,'lib::general']]]
+  ['max_5fqueue_196',['max_queue',['../structlib_1_1set_1_1spotify.html#a85004b11863196329d84c24841be16d7',1,'lib::set::spotify']]],
+  ['media_5fcontroller_197',['media_controller',['../structlib_1_1set_1_1general.html#aa0aeb913a3cf2cb58cb545eb16ed0413',1,'lib::set::general']]]
 ];

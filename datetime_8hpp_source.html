@@ -79,52 +79,52 @@ $(function() {
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>lib</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;{</div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classlib_1_1date__time.html">   12</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classlib_1_1date__time.html">date_time</a></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classlib_1_1date__time.html#a9a9097c65dacf644b2f6fcc12b61bd80">   18</a></span>&#160;        <a class="code" href="classlib_1_1date__time.html#a9a9097c65dacf644b2f6fcc12b61bd80">date_time</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <a class="code" href="classlib_1_1date__time.html#a9a9097c65dacf644b2f6fcc12b61bd80">date_time</a>(<span class="keywordtype">int</span> year, <span class="keywordtype">int</span> month, <span class="keywordtype">int</span> day, <span class="keywordtype">int</span> hour, <span class="keywordtype">int</span> minute, <span class="keywordtype">int</span> second);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <a class="code" href="classlib_1_1date__time.html#a9a9097c65dacf644b2f6fcc12b61bd80">date_time</a>(<span class="keyword">const</span> <a class="code" href="classlib_1_1date__time.html">date_time</a> &amp;date);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">static</span> <a class="code" href="classlib_1_1date__time.html">date_time</a> <a class="code" href="classlib_1_1date__time.html#a3182f00a4165be7ce3ef74336008bb2c">parse</a>(<span class="keyword">const</span> std::string &amp;value);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keyword">static</span> <a class="code" href="classlib_1_1date__time.html">date_time</a> <a class="code" href="classlib_1_1date__time.html#a58276fb2ee0f2433991c66686cfa04d6">now</a>();</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keyword">static</span> <a class="code" href="classlib_1_1date__time.html">date_time</a> <a class="code" href="classlib_1_1date__time.html#a225d35e8bea79838cdc174b6ed6cc2e7">now_utc</a>();</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classlib_1_1date__time.html#ad52ddcec2d891444a9744f0bcbbe4065">is_valid</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        std::string <a class="code" href="classlib_1_1date__time.html#a0dcf76d96ecad345fd151d9affc900b5">to_time</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        std::string <a class="code" href="classlib_1_1date__time.html#ab819700b6db5d91e61ef5a71a0c35be6">to_date</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        std::string <a class="code" href="classlib_1_1date__time.html#ae54cf105d609090f69177f4e2df85b4c">to_iso_date</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        std::string <a class="code" href="classlib_1_1date__time.html#ad2a1a2564ea9970fed3680e87141bf29">to_iso_date_time</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classlib_1_1date__time.html#a390d98aeac816251b6b440cd287c70a1">get_second</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classlib_1_1date__time.html#afaf8291cdece371332060ce84bb0a580">get_minute</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classlib_1_1date__time.html#abed2f8ac243db90fdb71aa3c1d0f9fbd">get_hour</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classlib_1_1date__time.html#a964880f8921a18fe59befd8cfb07a6ef">get_day</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classlib_1_1date__time.html#a69d5ccfc5353e73194eaa7a3f34503bb">get_month</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classlib_1_1date__time.html#ad1d007e3037636800c597a610f3cb0b7">get_year</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classlib_1_1date__time.html#a3182f00a4165be7ce3ef74336008bb2c">parse</a>(<span class="keyword">const</span> std::string &amp;value, <span class="keyword">const</span> <span class="keywordtype">char</span>* format);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        std::string format(<span class="keyword">const</span> <span class="keywordtype">char</span>* format) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        std::tm tm = {0};</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    };</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;}</div>
-<div class="ttc" id="aclasslib_1_1date__time_html"><div class="ttname"><a href="classlib_1_1date__time.html">lib::date_time</a></div><div class="ttdef"><b>Definition:</b> datetime.hpp:13</div></div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classlib_1_1date__time.html">   13</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classlib_1_1date__time.html">date_time</a></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classlib_1_1date__time.html#a9a9097c65dacf644b2f6fcc12b61bd80">   19</a></span>&#160;        <a class="code" href="classlib_1_1date__time.html#a9a9097c65dacf644b2f6fcc12b61bd80">date_time</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <a class="code" href="classlib_1_1date__time.html#a9a9097c65dacf644b2f6fcc12b61bd80">date_time</a>(<span class="keywordtype">int</span> year, <span class="keywordtype">int</span> month, <span class="keywordtype">int</span> day, <span class="keywordtype">int</span> hour, <span class="keywordtype">int</span> minute, <span class="keywordtype">int</span> second);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <a class="code" href="classlib_1_1date__time.html#a9a9097c65dacf644b2f6fcc12b61bd80">date_time</a>(<span class="keyword">const</span> <a class="code" href="classlib_1_1date__time.html">date_time</a> &amp;date);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">static</span> <a class="code" href="classlib_1_1date__time.html">date_time</a> <a class="code" href="classlib_1_1date__time.html#a3182f00a4165be7ce3ef74336008bb2c">parse</a>(<span class="keyword">const</span> std::string &amp;value);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">static</span> <a class="code" href="classlib_1_1date__time.html">date_time</a> <a class="code" href="classlib_1_1date__time.html#a58276fb2ee0f2433991c66686cfa04d6">now</a>();</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keyword">static</span> <a class="code" href="classlib_1_1date__time.html">date_time</a> <a class="code" href="classlib_1_1date__time.html#a225d35e8bea79838cdc174b6ed6cc2e7">now_utc</a>();</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classlib_1_1date__time.html#ad52ddcec2d891444a9744f0bcbbe4065">is_valid</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        std::string <a class="code" href="classlib_1_1date__time.html#a0dcf76d96ecad345fd151d9affc900b5">to_time</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        std::string <a class="code" href="classlib_1_1date__time.html#ab819700b6db5d91e61ef5a71a0c35be6">to_date</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        std::string <a class="code" href="classlib_1_1date__time.html#ae54cf105d609090f69177f4e2df85b4c">to_iso_date</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        std::string <a class="code" href="classlib_1_1date__time.html#ad2a1a2564ea9970fed3680e87141bf29">to_iso_date_time</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classlib_1_1date__time.html#a390d98aeac816251b6b440cd287c70a1">get_second</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classlib_1_1date__time.html#afaf8291cdece371332060ce84bb0a580">get_minute</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classlib_1_1date__time.html#abed2f8ac243db90fdb71aa3c1d0f9fbd">get_hour</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classlib_1_1date__time.html#a964880f8921a18fe59befd8cfb07a6ef">get_day</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classlib_1_1date__time.html#a69d5ccfc5353e73194eaa7a3f34503bb">get_month</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classlib_1_1date__time.html#ad1d007e3037636800c597a610f3cb0b7">get_year</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classlib_1_1date__time.html#a3182f00a4165be7ce3ef74336008bb2c">parse</a>(<span class="keyword">const</span> std::string &amp;value, <span class="keyword">const</span> <span class="keywordtype">char</span>* format);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        std::string format(<span class="keyword">const</span> <span class="keywordtype">char</span>* format) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        std::tm tm = {0};</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    };</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;}</div>
+<div class="ttc" id="aclasslib_1_1date__time_html"><div class="ttname"><a href="classlib_1_1date__time.html">lib::date_time</a></div><div class="ttdef"><b>Definition:</b> datetime.hpp:14</div></div>
 <div class="ttc" id="aclasslib_1_1date__time_html_a0dcf76d96ecad345fd151d9affc900b5"><div class="ttname"><a href="classlib_1_1date__time.html#a0dcf76d96ecad345fd151d9affc900b5">lib::date_time::to_time</a></div><div class="ttdeci">std::string to_time() const</div><div class="ttdef"><b>Definition:</b> datetime.cpp:75</div></div>
 <div class="ttc" id="aclasslib_1_1date__time_html_a225d35e8bea79838cdc174b6ed6cc2e7"><div class="ttname"><a href="classlib_1_1date__time.html#a225d35e8bea79838cdc174b6ed6cc2e7">lib::date_time::now_utc</a></div><div class="ttdeci">static date_time now_utc()</div><div class="ttdef"><b>Definition:</b> datetime.cpp:53</div></div>
 <div class="ttc" id="aclasslib_1_1date__time_html_a3182f00a4165be7ce3ef74336008bb2c"><div class="ttname"><a href="classlib_1_1date__time.html#a3182f00a4165be7ce3ef74336008bb2c">lib::date_time::parse</a></div><div class="ttdeci">static date_time parse(const std::string &amp;value)</div><div class="ttdef"><b>Definition:</b> datetime.cpp:26</div></div>

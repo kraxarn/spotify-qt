@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['general_181',['general',['../classlib_1_1settings.html#a5af0328aa5a7827d1bc8a3b05f17353c',1,'lib::settings']]],
-  ['global_5fconfig_182',['global_config',['../structlib_1_1spotify.html#aac6e257f675a4fb2cce10e8c03cedafe',1,'lib::spotify']]]
+  ['general_188',['general',['../classlib_1_1settings.html#a30c2df27038669eb9e3b7621c65f7505',1,'lib::settings']]],
+  ['global_5fconfig_189',['global_config',['../structlib_1_1set_1_1spotify.html#ac1f298d75d5872d23fdbe4b0696a091f',1,'lib::set::spotify']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>spotify-qt-lib: lib::locale Class Reference</title>
+<title>spotify-qt-lib: lib::base64 Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -63,30 +63,32 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>lib</b></li><li class="navelem"><a class="el" href="classlib_1_1locale.html">locale</a></li>  </ul>
+<li class="navelem"><b>lib</b></li><li class="navelem"><a class="el" href="classlib_1_1base64.html">base64</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="classlib_1_1locale-members.html">List of all members</a>  </div>
+<a href="classlib_1_1base64-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">lib::locale Class Reference</div>  </div>
+<div class="title">lib::base64 Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="locale_8hpp_source.html">locale.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="base64_8hpp_source.html">base64.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ae6983072b9a7817c13cbf6cc012ed468"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1locale.html#ae6983072b9a7817c13cbf6cc012ed468">set</a> (const std::string &amp;<a class="el" href="classlib_1_1locale.html">locale</a>, bool force=false)</td></tr>
-<tr class="separator:ae6983072b9a7817c13cbf6cc012ed468"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5dfb220d8028805107f9e9f36bb83004"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1base64.html#a5dfb220d8028805107f9e9f36bb83004">encode</a> (const std::string &amp;str)</td></tr>
+<tr class="separator:a5dfb220d8028805107f9e9f36bb83004"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae42ec5dcbc7448282b4f64909e95f31a"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1base64.html#ae42ec5dcbc7448282b4f64909e95f31a">decode</a> (const std::string &amp;str)</td></tr>
+<tr class="separator:ae42ec5dcbc7448282b4f64909e95f31a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Library locale </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000002">Deprecated:</a></b></dt><dd>Locale dependent stuff is expected to be handled by the UI toolkit </dd></dl>
+<div class="textblock"><p>Base64 encoding and decoding </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ae6983072b9a7817c13cbf6cc012ed468"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6983072b9a7817c13cbf6cc012ed468">&#9670;&nbsp;</a></span>set()</h2>
+<a id="ae42ec5dcbc7448282b4f64909e95f31a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae42ec5dcbc7448282b4f64909e95f31a">&#9670;&nbsp;</a></span>decode()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -95,43 +97,64 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool lib::locale::set </td>
+          <td class="memname">static std::string lib::base64::decode </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>locale</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>str</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>force</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Set global locale if none is set </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Decode string from <a class="el" href="classlib_1_1base64.html">base64</a> </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">locale</td><td>Locale to set </td></tr>
-    <tr><td class="paramname">force</td><td>Force set locale, even if it's already valid </td></tr>
+    <tr><td class="paramname">str</td><td>String to decode </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>If successful </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Decoded string </dd></dl>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following files:<ul>
-<li>/github/workspace/lib/lib/<a class="el" href="locale_8hpp_source.html">locale.hpp</a></li>
-<li>/github/workspace/lib/lib/locale.cpp</li>
+<a id="a5dfb220d8028805107f9e9f36bb83004"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5dfb220d8028805107f9e9f36bb83004">&#9670;&nbsp;</a></span>encode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::string lib::base64::encode </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Encode string as <a class="el" href="classlib_1_1base64.html">base64</a> </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>String to encode </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Encoded string </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>/github/workspace/lib/lib/<a class="el" href="base64_8hpp_source.html">base64.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

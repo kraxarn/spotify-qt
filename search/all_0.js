@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['access_5ftoken_0',['access_token',['../structlib_1_1account.html#a019267600d8f89895f58b17d18dce164',1,'lib::account']]],
-  ['account_1',['account',['../classlib_1_1settings.html#a722ffc8a9eba3391319258946b2a716d',1,'lib::settings::account()'],['../structlib_1_1account.html',1,'lib::account']]],
+  ['access_5ftoken_0',['access_token',['../structlib_1_1set_1_1account.html#a6eaa8f37fbaf7754c5df5c24c20f2c21',1,'lib::set::account']]],
+  ['account_1',['account',['../classlib_1_1settings.html#a90c77aeeafb6c9d23acbe854cc9963bd',1,'lib::settings::account()'],['../structlib_1_1set_1_1account.html',1,'lib::set::account']]],
   ['all_5ftracks_2',['all_tracks',['../classlib_1_1cache.html#a144e0b3f6b8b1564055d8c6cb3b9f1dd',1,'lib::cache']]],
-  ['always_5fstart_3',['always_start',['../structlib_1_1spotify.html#a1079ffad8acdbd38563a92742cf76ebb',1,'lib::spotify']]]
+  ['always_5fstart_3',['always_start',['../structlib_1_1set_1_1spotify.html#a0a38a1677430b7636c2d0aaaeecdd650',1,'lib::set::spotify']]]
 ];

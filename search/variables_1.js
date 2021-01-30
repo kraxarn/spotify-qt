@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['backend_174',['backend',['../structlib_1_1spotify.html#a8ef91af559ad856b861a85f83f9b650a',1,'lib::spotify']]],
-  ['bitrate_175',['bitrate',['../structlib_1_1spotify.html#a133f46bab7a313433db0afb5f4375008',1,'lib::spotify']]]
+  ['backend_181',['backend',['../structlib_1_1set_1_1spotify.html#a31c356dde78981f894eed236918aad1d',1,'lib::set::spotify']]],
+  ['bitrate_182',['bitrate',['../structlib_1_1set_1_1spotify.html#aebccb2064d9930f86594866ea6d10150',1,'lib::set::spotify']]]
 ];
