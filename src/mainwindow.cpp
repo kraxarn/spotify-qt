@@ -158,7 +158,9 @@ void MainWindow::refreshed(const spt::Playback &playback)
 		mainToolBar->playPause->setText("Play");
 		return;
 	}
-	auto currPlaying = QString("%1\n%2").arg(current.playback.item.name).arg(current.playback.item.artist);
+	auto currPlaying = QString("%1\n%2")
+		.arg(current.playback.item.name)
+		.arg(current.playback.item.artist);
 	if (leftSidePanel->getCurrentlyPlaying() != currPlaying)
 	{
 		if (current.playback.isPlaying)
@@ -247,7 +249,8 @@ QWidget *MainWindow::createCentralWidget()
 	return container;
 }
 
-void MainWindow::openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name)
+void MainWindow::openAudioFeaturesWidget(const QString &trackId,
+	const QString &artist, const QString &name)
 {
 	dynamic_cast<SidePanel *>(sidePanel)->openAudioFeatures(trackId, artist, name);
 }
@@ -460,7 +463,10 @@ QPixmap MainWindow::getImage(const QString &type, const QString &url)
 	if (url.isEmpty())
 		return img;
 	// Check if cache exists
-	auto cachePath = QString("%1/%2/%3").arg(cacheLocation).arg(type).arg(QFileInfo(url).baseName());
+	auto cachePath = QString("%1/%2/%3")
+		.arg(cacheLocation)
+		.arg(type)
+		.arg(QFileInfo(url).baseName());
 	if (QFileInfo::exists(cachePath))
 	{
 		// Read file from cache
