@@ -24,7 +24,7 @@ Track::Track(const QJsonObject &item)
 		}).toBool();
 		addedAt = QDateTime::fromString(JsonUtils::getProperty(item, {
 			"added_at", "addedAt"
-		}).toString());
+		}).toString(), Qt::ISODate);
 		isPlayable = item["is_playable"].toBool(true);
 		return;
 	}
