@@ -43,8 +43,10 @@ QMenu {
     color: #aba398; }
 
 QLineEdit {
-  background-color: #ffffff;
-  color: #000000; }
+  background-color: #3e3e3e;
+  color: #ffffff;
+  border-radius: 4px;
+  padding: 4px; }
   QLineEdit::disabled {
     color: #aba398; }
 

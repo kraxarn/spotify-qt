@@ -21,9 +21,9 @@ $menu-background-color: $secondary-background-color;
 $menu-hover-background-color: #3e3e3e;
 
 // Input background color for text inputs etc.
-$input-background-color: #ffffff;
+$input-background-color: #3e3e3e;
 // Input foreground color
-$input-foreground-color: #000000;
+$input-foreground-color: #ffffff;
 // Input border colors etc.
 $input-secondary-background-color: #b2b2b2;
 
@@ -130,6 +130,8 @@ QMenu {
 QLineEdit {
 	background-color: $input-background-color;
 	color: $input-foreground-color;
+	border-radius: 4px;
+	padding: 4px;
 
 	&::disabled {
 		color: $disabled-color;
