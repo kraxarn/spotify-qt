@@ -41,6 +41,9 @@ TracksList::TracksList(spt::Spotify &spotify, lib::settings &settings, QWidget *
 void TracksList::menu(const QPoint &pos)
 {
 	auto item = itemAt(pos);
+	if (item == nullptr)
+		return;
+
 	auto trackId = item->data(0, RoleTrackId).toString();
 	if (trackId.isEmpty())
 		return;
