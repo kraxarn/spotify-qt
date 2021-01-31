@@ -91,6 +91,6 @@ QJsonObject Track::toJson() const
 		QPair<QString, int>("duration", duration),
 		QPair<QString, bool>("is_local", isLocal),
 		QPair<QString, bool>("is_playable", isPlayable),
-		QPair<QString, QString>("added_at", addedAt.toString())
+		QPair<QString, QString>("added_at", addedAt.toString(Qt::DateFormat::ISODate))
 	});
 }
