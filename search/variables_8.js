@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['max_5fqueue_196',['max_queue',['../structlib_1_1set_1_1spotify.html#a85004b11863196329d84c24841be16d7',1,'lib::set::spotify']]],
-  ['media_5fcontroller_197',['media_controller',['../structlib_1_1set_1_1general.html#aa0aeb913a3cf2cb58cb545eb16ed0413',1,'lib::set::general']]]
+  ['last_5fplaylist_198',['last_playlist',['../structlib_1_1set_1_1general.html#a3aba1519c851ec5c59fff5ab16b5b9db',1,'lib::set::general']]],
+  ['last_5frefresh_199',['last_refresh',['../structlib_1_1set_1_1account.html#a4e36640164a5e9e26d13f546932ac725',1,'lib::set::account']]],
+  ['last_5fversion_200',['last_version',['../structlib_1_1set_1_1general.html#a1a327f112ae6f518b7789c0c2215e2d2',1,'lib::set::general']]],
+  ['last_5fvolume_201',['last_volume',['../structlib_1_1set_1_1general.html#ab5885f46cbd5822e12152d1caa90ef7b',1,'lib::set::general']]]
 ];
