@@ -3,7 +3,8 @@ QWidget {
   selection-background-color: #282828;
   selection-color: #f5f5f5; }
   QWidget::item::selected {
-    background-color: #282828;
+    background-color: #282828; }
+  QWidget::item::selected {
     color: #f5f5f5; }
 
 QScrollBar::handle {
@@ -74,14 +75,21 @@ MainWindow {
 
 LeftSidePanel LibraryList, LeftSidePanel PlaylistList {
   color: #b3b3b3;
-  background-color: #000000; }
+  background-color: #000000;
+  selection-color: #b3b3b3; }
+  LeftSidePanel LibraryList::item::selected, LeftSidePanel PlaylistList::item::selected {
+    color: #b3b3b3; }
   LeftSidePanel LibraryList QScrollBar, LeftSidePanel PlaylistList QScrollBar {
     background-color: #000000; }
 
 SettingsDialog {
   background-color: #121212; }
   SettingsDialog QListWidget {
-    background-color: #000000; }
+    color: #f5f5f5;
+    background-color: #000000;
+    selection-color: #f5f5f5; }
+    SettingsDialog QListWidget::item::selected {
+      color: #f5f5f5; }
 
 ArtistView QToolButton, ArtistView QToolButton::menu-button {
   border-style: none;
