@@ -260,6 +260,8 @@ QString Spotify::setDevice(const Device &device)
 
 QString Spotify::playTracks(int trackIndex, const QString &context)
 {
+	lib::log::dev("Playing track {} from {}", trackIndex, context.toStdString());
+
 	QVariantMap body;
 	body["context_uri"] = context;
 	body["offset"] = QJsonObject({
@@ -272,6 +274,8 @@ QString Spotify::playTracks(int trackIndex, const QString &context)
 
 QString Spotify::playTracks(int trackIndex, const QList<QString> &all)
 {
+	lib::log::dev("Playing track {} ({} total)", trackIndex, all.length());
+
 	auto maxQueue = settings.spotify.max_queue;
 	QStringList items = all;
 	if (all.length() > maxQueue)
@@ -294,6 +298,8 @@ QString Spotify::playTracks(int trackIndex, const QList<QString> &all)
 
 QString Spotify::playTracks(const QString &context)
 {
+	lib::log::dev("Playing track from {}", context.toStdString());
+
 	QVariantMap body;
 	body["context_uri"] = context;
 	return put(currentDevice == nullptr
