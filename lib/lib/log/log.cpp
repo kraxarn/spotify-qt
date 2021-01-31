@@ -14,7 +14,7 @@ void log::message(log_type log_type, const std::string &message)
 	if (!log_to_stdout)
 		return;
 
-	if (log_type == log_type::information)
+	if (log_type == log_type::information || log_type == log_type::verbose)
 		std::cout << msg.to_string() << std::endl;
 	else
 		std::cerr << msg.to_string() << std::endl;
