@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 	parser.process(app);
 
 	if (parser.isSet("dev"))
-		DeveloperMode::enabled = true;
+		lib::developer_mode::enabled = true;
 
 	// First setup window
 	if (settings.account.refresh_token.empty()

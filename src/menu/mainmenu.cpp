@@ -50,7 +50,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings, QWidget *pare
 	addAction(openSettings);
 
 	// Debug options if enabled
-	if (DeveloperMode::enabled)
+	if (lib::developer_mode::enabled)
 		addMenu(new DeveloperMenu(settings, this));
 
 	// Log out and quit

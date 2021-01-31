@@ -83,7 +83,7 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 			.arg(QString(this->playlist.id)), LinkType::Web, this->parent);
 	});
 
-	if (DeveloperMode::enabled)
+	if (lib::developer_mode::enabled)
 	{
 		auto devMenu = addMenu(Icon::get("folder-txt"), "Developer");
 		devMenu->addAction(playlist.id)->setEnabled(false);

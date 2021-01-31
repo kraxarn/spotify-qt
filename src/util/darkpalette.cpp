@@ -11,7 +11,7 @@ DarkPalette::DarkPalette()
 	QColor brightText(0xb00020);
 
 	// Colors that better match custom dark theme
-	if (DeveloperMode::enabled)
+	if (lib::developer_mode::enabled)
 	{
 		base = QColor(0x282828);
 		highlight = QColor(0x1db954);

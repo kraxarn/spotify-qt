@@ -118,7 +118,7 @@ void LeftSidePanel::contextInfoMenu(const QPoint &pos)
 {
 	auto menu = new QMenu(contextInfo);
 
-	if (DeveloperMode::enabled)
+	if (lib::developer_mode::enabled)
 	{
 		auto devContext = menu->addAction(current.context);
 		devContext->setEnabled(false);
