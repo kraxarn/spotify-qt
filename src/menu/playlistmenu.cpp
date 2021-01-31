@@ -13,6 +13,9 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 	if (tracks.isEmpty())
 		playlist.loadTracks(spotify, tracks);
 
+	if (DeveloperMode::enabled)
+		addAction(playlist.id)->setEnabled(false);
+
 	auto duration = 0;
 	for (auto &track : tracks)
 		duration += track.duration;
