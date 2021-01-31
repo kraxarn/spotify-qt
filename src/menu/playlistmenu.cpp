@@ -13,9 +13,6 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 	if (tracks.isEmpty())
 		playlist.loadTracks(spotify, tracks);
 
-	if (DeveloperMode::enabled)
-		addAction(playlist.id)->setEnabled(false);
-
 	auto duration = 0;
 	for (auto &track : tracks)
 		duration += track.duration;
@@ -85,6 +82,19 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 		Utils::openUrl(QString("https://open.spotify.com/playlist/%1")
 			.arg(QString(this->playlist.id)), LinkType::Web, this->parent);
 	});
+
+	if (DeveloperMode::enabled)
+	{
+		auto devMenu = addMenu(Icon::get("folder-txt"), "Developer");
+		devMenu->addAction(playlist.id)->setEnabled(false);
+		QAction::connect(devMenu->addAction("As JSON"), &QAction::triggered,
+			[this](bool checked)
+			{
+				QMessageBox::information(this->parent, "JSON",
+					QJsonDocument(this->playlist.toJson(QJsonArray()))
+						.toJson(QJsonDocument::Indented));
+			});
+	}
 }
 
 PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const QString &playlistId, QWidget *parent)
