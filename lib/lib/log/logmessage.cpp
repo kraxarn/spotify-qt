@@ -33,6 +33,9 @@ std::string log_message::get_type_short() const
 
 		case log_type::error:
 			return "err ";
+
+		case log_type::verbose:
+			return "dev ";
 	}
 
 	return std::string();
@@ -55,6 +58,9 @@ std::string log_message::get_type() const
 
 		case log_type::error:
 			return "Error";
+
+		case log_type::verbose:
+			return "Developer";
 	}
 
 	return std::string();

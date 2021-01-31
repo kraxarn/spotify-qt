@@ -20,6 +20,11 @@ namespace lib
 		/**
 		 * Critical error, something is wrong
 		 */
-		error
+		error,
+
+		/**
+		 * Verbose logging, not shown by default
+		 */
+		verbose
 	};
 }

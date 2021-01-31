@@ -3,6 +3,7 @@
 #include "lib/enum/logtype.hpp"
 #include "lib/format.hpp"
 #include "lib/log/logmessage.hpp"
+#include "lib/developermode.hpp"
 
 #include <iostream>
 #include <regex>
@@ -67,6 +68,29 @@ namespace lib
 		static void error(const Format &fmt)
 		{
 			message(log_type::error, fmt);
+		}
+
+		/**
+		 * Log verbose message with formatting
+		 * @note developer_mode needs to be enabled
+		 */
+		template<typename Format, typename Arg, typename... Args>
+		static void dev(const Format &fmt, const Arg &arg, Args &&... args)
+		{
+			return dev(fmt::format(fmt, arg, args...));
+		}
+
+		/**
+		 * Log verbose message
+		 * @note developer_mode needs to be enabled
+		 */
+		template<typename Format>
+		static void dev(const Format &fmt)
+		{
+			if (!developer_mode::enabled)
+				return;
+
+			message(log_type::verbose, fmt);
 		}
 
 		/**
