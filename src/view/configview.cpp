@@ -2,38 +2,35 @@
 
 ConfigView::ConfigView(const lib::settings &settings, QWidget *parent)
 	: settings(settings),
-	QTreeWidget(parent)
+	QWidget(parent)
 {
-	setHeaderLabels({
+	auto layout = new QVBoxLayout(this);
+
+	onlyNonDefault = new QCheckBox("Only show non-default settings", this);
+	onlyNonDefault->setToolTip("Only show settings manually changed by the user, "
+							   "can be used to troubleshoot issues");
+	onlyNonDefault->setChecked(false);
+	layout->addWidget(onlyNonDefault);
+
+	tree = new QTreeWidget(this);
+	layout->addWidget(tree, 1);
+
+	tree->setHeaderLabels({
 		"Key",
 		"Value"
 	});
 
-	auto json = settings.to_json();
-	for (auto &i : json.items())
-	{
-		auto item = new QTreeWidgetItem(this);
-		item->setText(0, QString::fromStdString(i.key()));
+	tree->header()->setSectionsMovable(false);
+	tree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-		for (auto &ii : i.value().items())
-		{
-			auto child = new QTreeWidgetItem(item);
-			child->setText(0, QString::fromStdString(ii.key()));
-			child->setText(1, QString::fromStdString(ii.value().dump()));
-		}
-	}
-
-	header()->setSectionsMovable(false);
-	header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-
-	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QWidget::connect(this, &QWidget::customContextMenuRequested, this, &ConfigView::menu);
+	tree->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+	QWidget::connect(tree, &QWidget::customContextMenuRequested, this, &ConfigView::menu);
 }
 
 void ConfigView::menu(const QPoint &pos)
 {
 	auto menu = new QMenu(this);
-	auto item = itemAt(pos);
+	auto item = tree->itemAt(pos);
 
 	if (item != nullptr)
 	{
@@ -58,4 +55,29 @@ void ConfigView::menu(const QPoint &pos)
 		});
 
 	menu->popup(mapToGlobal(pos));
+}
+
+void ConfigView::reload()
+{
+	lib::log::dev("reloading...");
+	tree->clear();
+
+	auto json = settings.to_json();
+	for (auto &i : json.items())
+	{
+		auto item = new QTreeWidgetItem(tree);
+		item->setText(0, QString::fromStdString(i.key()));
+
+		for (auto &ii : i.value().items())
+		{
+			auto child = new QTreeWidgetItem(item);
+			child->setText(0, QString::fromStdString(ii.key()));
+			child->setText(1, QString::fromStdString(ii.value().dump()));
+		}
+	}
+}
+
+void ConfigView::showEvent(QShowEvent*)
+{
+	reload();
 }
