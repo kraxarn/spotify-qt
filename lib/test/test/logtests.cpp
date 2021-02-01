@@ -1,5 +1,6 @@
 #include "thirdparty/doctest.h"
 #include "lib/log/log.hpp"
+#include "lib/developermode.hpp"
 
 TEST_CASE("log")
 {
@@ -39,6 +40,20 @@ TEST_CASE("log")
 		init_log();
 		lib::log::error("hello world");
 		lib::log::error("hello {}", "world");
+		verify_messages();
+	}
+
+	SUBCASE("dev")
+	{
+		init_log();
+
+		lib::log::dev("hello world");
+		lib::log::dev("hello {}", "world");
+		CHECK_EQ(lib::log::get_messages().size(), 0);
+
+		lib::developer_mode::enabled = true;
+		lib::log::dev("hello world");
+		lib::log::dev("hello {}", "world");
 		verify_messages();
 	}
 }
