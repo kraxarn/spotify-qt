@@ -1,7 +1,8 @@
 #include "cacheview.hpp"
 
 CacheView::CacheView(const QString &cachePath, QWidget *parent)
-	: QTreeWidget(parent)
+	: cachePath(cachePath),
+	QTreeWidget(parent)
 {
 	setHeaderLabels({
 		"Folder",
@@ -10,24 +11,8 @@ CacheView::CacheView(const QString &cachePath, QWidget *parent)
 	});
 	setRootIsDecorated(false);
 
-	for (auto &dir : QDir(cachePath).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
-	{
-		auto item = new QTreeWidgetItem(this);
-		item->setText(0, fullName(dir.baseName()));
-
-		auto count = 0u;
-		auto size = 0u;
-		folderSize(dir.absoluteFilePath(), &count, &size);
-
-		item->setData(0, 0x100, dir.absoluteFilePath());
-		item->setText(1, QString::number(count));
-		item->setText(2, Utils::formatSize(size));
-	}
-
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested, this, &CacheView::menu);
-
-	header()->resizeSections(QHeaderView::ResizeToContents);
 }
 
 QString CacheView::fullName(const QString &folderName)
@@ -75,4 +60,30 @@ void CacheView::menu(const QPoint &pos)
 			Utils::openUrl(folder, LinkType::Path, this);
 		});
 	menu->popup(mapToGlobal(pos));
+}
+
+void CacheView::reload()
+{
+	clear();
+
+	for (auto &dir : QDir(cachePath).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
+	{
+		auto item = new QTreeWidgetItem(this);
+		item->setText(0, fullName(dir.baseName()));
+
+		auto count = 0u;
+		auto size = 0u;
+		folderSize(dir.absoluteFilePath(), &count, &size);
+
+		item->setData(0, 0x100, dir.absoluteFilePath());
+		item->setText(1, QString::number(count));
+		item->setText(2, Utils::formatSize(size));
+	}
+
+	header()->resizeSections(QHeaderView::ResizeToContents);
+}
+
+void CacheView::showEvent(QShowEvent *)
+{
+	reload();
 }

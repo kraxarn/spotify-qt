@@ -14,7 +14,11 @@ public:
 	CacheView(const QString &cachePath, QWidget *parent);
 
 private:
+	const QString &cachePath;
+
 	static QString fullName(const QString &folderName);
 	static void folderSize(const QString &path, unsigned int *count, unsigned int *size);
 	void menu(const QPoint &pos);
+	void reload();
+	void showEvent(QShowEvent *event) override;
 };
