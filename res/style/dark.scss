@@ -72,6 +72,16 @@ QWidget {
 }
 
 QScrollBar {
+	$size: 12px;
+
+	&:horizontal {
+		height: $size;
+	}
+
+	&:vertical {
+		width: $size;
+	}
+
 	&::handle {
 		background-color: $scrollbar-handle-color;
 	}

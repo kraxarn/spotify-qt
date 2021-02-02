@@ -7,6 +7,12 @@ QWidget {
   QWidget::item::selected {
     color: #f5f5f5; }
 
+QScrollBar:horizontal {
+  height: 12px; }
+
+QScrollBar:vertical {
+  width: 12px; }
+
 QScrollBar::handle {
   background-color: #4d4d4d; }
 
