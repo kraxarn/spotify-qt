@@ -18,14 +18,19 @@ QWidget *InterfacePage::general()
 						"(Fusion is recommended when using the custom dark theme)");
 	comboBoxLayout->addWidget(styleLabel, 0, 0);
 
+	auto styles = QStyleFactory::keys();
+
 	itfStyle = new QComboBox(this);
-	itfStyle->addItems(QStyleFactory::keys());
+	itfStyle->addItem("Default");
+	itfStyle->addItems(styles);
 	comboBoxLayout->addWidget(itfStyle, 0, 1);
 
-	if (QStyleFactory::keys().contains(QString::fromStdString(settings.general.style)))
+	if (styles.contains(QString::fromStdString(settings.general.style)))
 		itfStyle->setCurrentText(QString::fromStdString(settings.general.style));
-	else
+	else if (styles.contains(QApplication::style()->objectName()))
 		itfStyle->setCurrentText(QApplication::style()->objectName());
+	else
+		itfStyle->setCurrentIndex(0);
 
 	layout->addLayout(comboBoxLayout);
 
@@ -201,7 +206,10 @@ bool InterfacePage::hasIconTheme()
 	return !QIcon::fromTheme("media-playback-start").isNull();
 }
 
-void InterfacePage::darkThemeToggle(bool)
+void InterfacePage::darkThemeToggle(bool checked)
 {
-	itfStyle->setCurrentText("Fusion");
+	if (checked)
+		itfStyle->setCurrentText("Fusion");
+	else
+		itfStyle->setCurrentIndex(0);
 }
