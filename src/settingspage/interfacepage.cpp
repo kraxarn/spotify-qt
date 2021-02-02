@@ -131,14 +131,19 @@ bool InterfacePage::save()
 	auto mainWindow = MainWindow::find(parentWidget());
 
 	// Set theme
-	auto changeTheme = itfDark->isChecked() != settings.get_dark_theme();
-	if (changeTheme)
+	if (itfDark->isChecked() != settings.get_dark_theme())
 	{
 		QMessageBox::information(this, "Dark Theme",
 			"Please restart the application to fully apply selected theme");
 		settings.set_dark_theme(itfDark->isChecked());
-		QApplication::setStyle(QString::fromStdString(settings.general.style));
 		Utils::applyPalette(settings.general.style_palette);
+	}
+
+	// Set style
+	if (itfStyle->currentText() != QString::fromStdString(settings.general.style))
+	{
+		QApplication::setStyle(itfStyle->currentText());
+		settings.general.style = itfStyle->currentText().toStdString();
 	}
 
 	// Song header resize mode
