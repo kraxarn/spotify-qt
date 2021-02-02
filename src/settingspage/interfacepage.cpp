@@ -15,7 +15,7 @@ QWidget *InterfacePage::general()
 	// Style
 	auto styleLabel = new QLabel("Style", this);
 	styleLabel->setToolTip("Qt style to use "
-						"(Fusion is recommended when using the custom dark theme)");
+						   "(Fusion is recommended when using the custom dark theme)");
 	comboBoxLayout->addWidget(styleLabel, 0, 0);
 
 	auto styles = QStyleFactory::keys();
@@ -44,7 +44,8 @@ QWidget *InterfacePage::general()
 	// Song header resize mode
 	itfResizeAuto = new QCheckBox("Auto resize track list headers", this);
 	itfResizeAuto->setToolTip("Automatically resize track list headers to fit content");
-	itfResizeAuto->setChecked(settings.general.song_header_resize_mode == QHeaderView::ResizeToContents);
+	itfResizeAuto->setChecked(settings.general
+		.song_header_resize_mode == QHeaderView::ResizeToContents);
 	layout->addWidget(itfResizeAuto);
 
 	// Always use fallback icons (if system icons are an option)
@@ -64,7 +65,8 @@ QWidget *InterfacePage::general()
 
 	// Context info
 	itfContextInfo = new QCheckBox("Show context information", this);
-	itfContextInfo->setToolTip("Show what context music is currently playing from above current track");
+	itfContextInfo->setToolTip("Show what context music is currently playing from "
+							   "above current track");
 	itfContextInfo->setChecked(settings.general.show_context_info);
 	layout->addWidget(itfContextInfo);
 
@@ -76,7 +78,8 @@ QWidget *InterfacePage::general()
 
 	// Relative added date
 	itfRelativeAdded = new QCheckBox("Relative added dates", this);
-	itfRelativeAdded->setToolTip("Relative added dates compared to current date, for example \"... ago\"");
+	itfRelativeAdded->setToolTip("Relative added dates compared to current date, "
+								 "for example \"... ago\"");
 	itfRelativeAdded->setChecked(settings.general.relative_added);
 	layout->addWidget(itfRelativeAdded);
 
@@ -97,7 +100,8 @@ QWidget *InterfacePage::trayIcon()
 
 	// Desktop notifications
 	itfTrayNotify = new QCheckBox("Desktop notifications", this);
-	itfTrayNotify->setToolTip("Replace status bar with desktop notifications (suppresses any non-error messages)");
+	itfTrayNotify->setToolTip("Replace status bar with desktop notifications "
+							  "(suppresses any non-error messages)");
 	itfTrayNotify->setChecked(settings.general.tray_notifications);
 	content->addWidget(itfTrayNotify);
 	QCheckBox::connect(itfTrayNotify, &QCheckBox::stateChanged, [this](int state)
