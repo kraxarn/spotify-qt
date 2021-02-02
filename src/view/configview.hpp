@@ -8,15 +8,12 @@
 #include <QMenu>
 #include <QCheckBox>
 
-class ConfigView: public QWidget
+class ConfigView: public QTreeWidget
 {
 public:
 	ConfigView(const lib::settings &settings, QWidget *parent);
 
 private:
-	QTreeWidget *tree = nullptr;
-	QCheckBox *onlyNonDefault = nullptr;
-
 	const lib::settings &settings;
 
 	void showEvent(QShowEvent *event) override;

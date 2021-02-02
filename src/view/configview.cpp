@@ -2,39 +2,24 @@
 
 ConfigView::ConfigView(const lib::settings &settings, QWidget *parent)
 	: settings(settings),
-	QWidget(parent)
+	QTreeWidget(parent)
 {
-	auto layout = new QVBoxLayout(this);
-
-	onlyNonDefault = new QCheckBox("Only show non-default settings", this);
-	onlyNonDefault->setToolTip("Only show settings manually changed by the user, "
-							   "can be used to troubleshoot issues");
-	onlyNonDefault->setChecked(false);
-	layout->addWidget(onlyNonDefault);
-	QCheckBox::connect(onlyNonDefault, &QCheckBox::stateChanged, [this](int)
-	{
-		this->reload();
-	});
-
-	tree = new QTreeWidget(this);
-	layout->addWidget(tree, 1);
-
-	tree->setHeaderLabels({
+	setHeaderLabels({
 		"Key",
 		"Value"
 	});
 
-	tree->header()->setSectionsMovable(false);
-	tree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+	header()->setSectionsMovable(false);
+	header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-	tree->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QWidget::connect(tree, &QWidget::customContextMenuRequested, this, &ConfigView::menu);
+	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+	QWidget::connect(this, &QWidget::customContextMenuRequested, this, &ConfigView::menu);
 }
 
 void ConfigView::menu(const QPoint &pos)
 {
 	auto menu = new QMenu(this);
-	auto item = tree->itemAt(pos);
+	auto item = itemAt(pos);
 
 	if (item != nullptr)
 	{
@@ -63,12 +48,12 @@ void ConfigView::menu(const QPoint &pos)
 
 void ConfigView::reload()
 {
-	tree->clear();
+	clear();
 
 	auto json = settings.to_json();
 	for (auto &i : json.items())
 	{
-		auto item = new QTreeWidgetItem(tree);
+		auto item = new QTreeWidgetItem(this);
 		item->setText(0, QString::fromStdString(i.key()));
 
 		for (auto &ii : i.value().items())
