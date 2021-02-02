@@ -11,6 +11,10 @@ ConfigView::ConfigView(const lib::settings &settings, QWidget *parent)
 							   "can be used to troubleshoot issues");
 	onlyNonDefault->setChecked(false);
 	layout->addWidget(onlyNonDefault);
+	QCheckBox::connect(onlyNonDefault, &QCheckBox::stateChanged, [this](int)
+	{
+		this->reload();
+	});
 
 	tree = new QTreeWidget(this);
 	layout->addWidget(tree, 1);
@@ -59,7 +63,6 @@ void ConfigView::menu(const QPoint &pos)
 
 void ConfigView::reload()
 {
-	lib::log::dev("reloading...");
 	tree->clear();
 
 	auto json = settings.to_json();
