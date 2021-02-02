@@ -26,8 +26,8 @@ QWidget *InterfacePage::general()
 	// Always use fallback icons (if system icons are an option)
 	if (hasIconTheme())
 	{
-		itfIcFallback = new QCheckBox("Always use fallback icons", this);
-		itfIcFallback->setToolTip("Always use bundled fallback icons, even if system icons are available");
+		itfIcFallback = new QCheckBox("Always use built-in icons", this);
+		itfIcFallback->setToolTip("Always use bundled icons, even if system icons are available");
 		itfIcFallback->setChecked(settings.general.fallback_icons);
 		layout->addWidget(itfIcFallback);
 	}
