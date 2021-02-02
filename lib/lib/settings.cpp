@@ -185,8 +185,6 @@ bool settings::get_dark_theme() const
 
 void settings::set_dark_theme(bool value)
 {
-	// When enabling dark theme, also set style to fusion to match better
-	general.style = value ? "Fusion" : std::string();
 	general.style_palette = value ? palette_dark : palette_app;
 }
 

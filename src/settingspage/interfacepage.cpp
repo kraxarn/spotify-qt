@@ -10,6 +10,24 @@ InterfacePage::InterfacePage(lib::settings &settings, QWidget *parent)
 QWidget *InterfacePage::general()
 {
 	auto layout = tabContent();
+	auto comboBoxLayout = new QGridLayout();
+
+	// Style
+	auto styleLabel = new QLabel("Style", this);
+	styleLabel->setToolTip("Qt style to use "
+						"(Fusion is recommended when using the custom dark theme)");
+	comboBoxLayout->addWidget(styleLabel, 0, 0);
+
+	itfStyle = new QComboBox(this);
+	itfStyle->addItems(QStyleFactory::keys());
+	comboBoxLayout->addWidget(itfStyle, 0, 1);
+
+	if (QStyleFactory::keys().contains(QString::fromStdString(settings.general.style)))
+		itfStyle->setCurrentText(QString::fromStdString(settings.general.style));
+	else
+		itfStyle->setCurrentText(QApplication::style()->objectName());
+
+	layout->addLayout(comboBoxLayout);
 
 	// Dark theme
 	itfDark = new QCheckBox("Dark theme", this);
