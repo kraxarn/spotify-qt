@@ -5,18 +5,10 @@
 DarkPalette::DarkPalette()
 {
 	QColor background(0x212121);
-	QColor base(0x212121);
-	QColor highlight(0x388e3c);
+	QColor base(0x282828);
+	QColor highlight(0x1db954);
 	QColor text(0xf5f5f5);
-	QColor brightText(0xb00020);
-
-	// Colors that better match custom dark theme
-	if (lib::developer_mode::enabled)
-	{
-		base = QColor(0x282828);
-		highlight = QColor(0x1db954);
-		brightText = QColor(0xffffff);
-	}
+	QColor brightText(0xffffff);
 
 	// Set colors
 	setColor(QPalette::Window, background);
