@@ -33,6 +33,7 @@ private:
 	QWidget *trayIcon();
 
 	static bool hasIconTheme();
+	void darkThemeToggle(bool checked);
 };
 
 

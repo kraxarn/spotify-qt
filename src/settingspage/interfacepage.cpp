@@ -33,6 +33,7 @@ QWidget *InterfacePage::general()
 	itfDark = new QCheckBox("Dark theme", this);
 	itfDark->setToolTip("Use custom dark theme");
 	itfDark->setChecked(settings.get_dark_theme());
+	QCheckBox::connect(itfDark, &QCheckBox::toggled, this, &InterfacePage::darkThemeToggle);
 	layout->addWidget(itfDark);
 
 	// Song header resize mode
@@ -193,4 +194,9 @@ bool InterfacePage::save()
 bool InterfacePage::hasIconTheme()
 {
 	return !QIcon::fromTheme("media-playback-start").isNull();
+}
+
+void InterfacePage::darkThemeToggle(bool)
+{
+	itfStyle->setCurrentText("Fusion");
 }
