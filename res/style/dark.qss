@@ -8,10 +8,10 @@ QWidget {
     color: #f5f5f5; }
 
 QScrollBar:horizontal {
-  height: 12px; }
+  max-height: 12px; }
 
 QScrollBar:vertical {
-  width: 12px; }
+  max-width: 12px; }
 
 QScrollBar::handle {
   background-color: #4d4d4d; }
@@ -35,6 +35,8 @@ QListWidget, QTreeWidget, QTextEdit {
     color: #b3b3b3; }
   QListWidget QScrollBar, QTreeWidget QScrollBar, QTextEdit QScrollBar {
     background-color: #121212; }
+  QListWidget::item, QTreeWidget::item, QTextEdit::item {
+    min-height: 28px; }
 
 QTabWidget, QTabWidget QTabBar {
   background-color: #181818; }
@@ -60,7 +62,8 @@ MainWindow {
   background-color: #000000; }
   MainWindow MainToolBar {
     background-color: #282828;
-    border-style: none; }
+    border-style: none;
+    min-height: 42px; }
     MainWindow MainToolBar::separator {
       background-color: #282828; }
     MainWindow MainToolBar QSlider {
@@ -98,6 +101,8 @@ SettingsDialog {
     selection-color: #f5f5f5; }
     SettingsDialog QListWidget::item::selected {
       color: #f5f5f5; }
+    SettingsDialog QListWidget::item {
+      min-height: 32px; }
 
 ArtistView QToolButton, ArtistView QToolButton::menu-button {
   border-style: none;

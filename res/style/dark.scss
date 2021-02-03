@@ -75,11 +75,11 @@ QScrollBar {
 	$size: 12px;
 
 	&:horizontal {
-		height: $size;
+		max-height: $size;
 	}
 
 	&:vertical {
-		width: $size;
+		max-width: $size;
 	}
 
 	&::handle {
@@ -110,6 +110,10 @@ QListWidget, QTreeWidget, QTextEdit {
 
 	QScrollBar {
 		background-color: $background-color;
+	}
+
+	&::item {
+		min-height: 28px;
 	}
 }
 
@@ -154,6 +158,7 @@ MainWindow {
 	MainToolBar {
 		background-color: $secondary-background-color;
 		border-style: none;
+		min-height: 42px;
 
 		&::separator {
 			background-color: $secondary-background-color;
@@ -207,6 +212,10 @@ SettingsDialog {
 		color: $foreground-color;
 		background-color: $sidebar-background-color;
 		@include selection-foreground($foreground-color);
+
+		&::item {
+			min-height: 32px;
+		}
 	}
 }
 
