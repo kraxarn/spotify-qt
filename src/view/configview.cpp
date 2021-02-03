@@ -23,15 +23,17 @@ void ConfigView::menu(const QPoint &pos)
 
 	if (item != nullptr)
 	{
-		QAction::connect(menu->addAction("Copy key"), &QAction::triggered, [item](bool)
-		{
-			QApplication::clipboard()->setText(item->text(0));
-		});
+		QAction::connect(menu->addAction("Copy key"), &QAction::triggered,
+			[item](bool)
+			{
+				QApplication::clipboard()->setText(item->text(0));
+			});
 
-		QAction::connect(menu->addAction("Copy value"), &QAction::triggered, [item](bool)
-		{
-			QApplication::clipboard()->setText(item->text(1));
-		});
+		QAction::connect(menu->addAction("Copy value"), &QAction::triggered,
+			[item](bool)
+			{
+				QApplication::clipboard()->setText(item->text(1));
+			});
 
 		menu->addSeparator();
 	}
@@ -65,7 +67,7 @@ void ConfigView::reload()
 	}
 }
 
-void ConfigView::showEvent(QShowEvent*)
+void ConfigView::showEvent(QShowEvent *)
 {
 	reload();
 }
