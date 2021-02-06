@@ -114,6 +114,9 @@ QString ClientHandler::start()
 	QProcess::connect(process, &QProcess::readyReadStandardOutput, this, &ClientHandler::readyRead);
 	QProcess::connect(process, &QProcess::readyReadStandardError, this, &ClientHandler::readyError);
 
+	lib::log::dev("starting: {} {}", path.toStdString(),
+		arguments.join(' ').toStdString());
+
 	process->start(path, arguments);
 	return QString();
 }
