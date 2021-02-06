@@ -59,6 +59,7 @@ void settings::from_json(const nlohmann::json &json)
 	setValue(s, "always_start", spotify.always_start);
 	setValue(s, "backend", spotify.backend);
 	setValue(s, "bitrate", spotify.bitrate);
+	setValue(s, "disable_discovery", spotify.disable_discovery);
 	setValue(s, "global_config", spotify.global_config);
 	setValue(s, "keyring_password", spotify.keyring_password);
 	setValue(s, "max_queue", spotify.max_queue);
@@ -143,6 +144,7 @@ nlohmann::json settings::to_json() const
 			{"always_start", spotify.always_start},
 			{"backend", spotify.backend},
 			{"bitrate", spotify.bitrate},
+			{"disable_discovery", spotify.disable_discovery},
 			{"global_config", spotify.global_config},
 			{"keyring_password", spotify.keyring_password},
 			{"max_queue", spotify.max_queue},

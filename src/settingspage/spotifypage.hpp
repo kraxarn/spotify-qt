@@ -26,6 +26,7 @@ private:
 	QLabel *sptVersion = nullptr;
 	QLineEdit *sptPath = nullptr;
 	QLineEdit *sptUsername = nullptr;
+	QCheckBox *sptDiscovery = nullptr;
 
 	void globalConfigToggle(int state);
 	void startClientToggle(int state);

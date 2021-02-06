@@ -47,6 +47,12 @@ namespace lib
 			bool start_client = false;
 
 			/**
+			 * Disable discovery mode
+			 * @note librespot only
+			 */
+			bool disable_discovery = false;
+
+			/**
 			 * Bitrate for Spotify client
 			 * @note Required to be 96, 160 or 320
 			 */

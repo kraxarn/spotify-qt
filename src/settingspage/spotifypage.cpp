@@ -111,6 +111,12 @@ QWidget *SpotifyPage::config()
 	}
 #endif
 
+	// librespot discovery
+	sptDiscovery = new QCheckBox("Enable discovery");
+	sptDiscovery->setToolTip("Enable discovery mode (librespot only)");
+	sptDiscovery->setChecked(!settings.spotify.disable_discovery);
+	sptLayout->addWidget(sptDiscovery, 4, 0);
+
 	return Utils::layoutToWidget(content);
 }
 
@@ -171,6 +177,7 @@ bool SpotifyPage::save()
 	settings.spotify.always_start = sptAlways->isChecked();
 	if (sptKeyring != nullptr)
 		settings.spotify.keyring_password = sptKeyring->isChecked();
+	settings.spotify.disable_discovery = !sptDiscovery->isChecked();
 
 	return true;
 }
