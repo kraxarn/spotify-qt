@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['general_194',['general',['../classlib_1_1settings.html#a30c2df27038669eb9e3b7621c65f7505',1,'lib::settings']]],
-  ['global_5fconfig_195',['global_config',['../structlib_1_1set_1_1spotify.html#ac1f298d75d5872d23fdbe4b0696a091f',1,'lib::set::spotify']]]
+  ['fallback_5ficons_194',['fallback_icons',['../structlib_1_1set_1_1general.html#a8df3de7b4e501432a5c73585f79ceb5d',1,'lib::set::general']]],
+  ['fixed_5fwidth_5ftime_195',['fixed_width_time',['../structlib_1_1set_1_1general.html#a7cd2767319f0046d265c26a22d99e6ae',1,'lib::set::general']]]
 ];

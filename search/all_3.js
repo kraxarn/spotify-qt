@@ -4,5 +4,6 @@ var searchData=
   ['decode_15',['decode',['../classlib_1_1base64.html#a981b5e8aeb81fe4cf3a7601eab3bc6a8',1,'lib::base64']]],
   ['deprecated_20list_16',['Deprecated List',['../deprecated.html',1,'']]],
   ['dev_17',['dev',['../classlib_1_1log.html#a6faeebb4fdad6162e122a5941e8ae323',1,'lib::log::dev(const Format &amp;fmt, const Arg &amp;arg, Args &amp;&amp;... args)'],['../classlib_1_1log.html#af971c261aeceb74c0e806a9ea3e5867e',1,'lib::log::dev(const Format &amp;fmt)']]],
-  ['developer_5fmode_18',['developer_mode',['../classlib_1_1developer__mode.html',1,'lib']]]
+  ['developer_5fmode_18',['developer_mode',['../classlib_1_1developer__mode.html',1,'lib']]],
+  ['disable_5fdiscovery_19',['disable_discovery',['../structlib_1_1set_1_1spotify.html#a040e69daab18b62fa518d921364a6d92',1,'lib::set::spotify']]]
 ];

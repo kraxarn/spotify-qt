@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['enabled_191',['enabled',['../classlib_1_1developer__mode.html#a4e7ebe8ced9b779470c4b03ae1f7192d',1,'lib::developer_mode']]]
+  ['disable_5fdiscovery_192',['disable_discovery',['../structlib_1_1set_1_1spotify.html#a040e69daab18b62fa518d921364a6d92',1,'lib::set::spotify']]]
 ];
