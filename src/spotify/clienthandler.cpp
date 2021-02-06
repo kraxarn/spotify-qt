@@ -105,6 +105,11 @@ QString ClientHandler::start()
 		"--backend", backend
 	});
 
+	if (clientType == ClientType::Librespot && settings.spotify.disable_discovery)
+	{
+		arguments.append("--disable-discovery");
+	}
+
 	QProcess::connect(process, &QProcess::readyReadStandardOutput, this, &ClientHandler::readyRead);
 	QProcess::connect(process, &QProcess::readyReadStandardError, this, &ClientHandler::readyError);
 
