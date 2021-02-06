@@ -36,7 +36,7 @@ QListWidget, QTreeWidget, QTextEdit {
   QListWidget QScrollBar, QTreeWidget QScrollBar, QTextEdit QScrollBar {
     background-color: #121212; }
   QListWidget::item, QTreeWidget::item, QTextEdit::item {
-    min-height: 28px; }
+    min-height: 22px; }
 
 QTabWidget, QTabWidget QTabBar {
   background-color: #181818; }
