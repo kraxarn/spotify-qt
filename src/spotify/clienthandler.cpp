@@ -85,7 +85,8 @@ QString ClientHandler::start()
 			"--name", "spotify-qt (librespot)",
 			"--initial-volume", "100",
 			"--autoplay",
-			"--cache", QString("%1/librespot").arg(((MainWindow *) parentWidget)->getCacheLocation())
+			"--cache", QString("%1/librespot")
+				.arg(((MainWindow *) parentWidget)->getCacheLocation())
 		});
 	}
 	else if (clientType == ClientType::Spotifyd)
