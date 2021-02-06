@@ -67,7 +67,8 @@ QWidget *SpotifyPage::config()
 
 	// Global config
 	sptGlobal = new QCheckBox("Use global config", this);
-	sptGlobal->setToolTip("Use spotifyd.conf file in either ~/.config/spotifyd or /etc/spotifyd only");
+	sptGlobal->setToolTip("Use spotifyd.conf file in ~/.config/spotifyd, /etc or "
+						  "/etc/xdg/spotifyd (spotifyd only)");
 	sptGlobal->setChecked(settings.spotify.global_config);
 	QCheckBox::connect(sptGlobal, &QCheckBox::stateChanged, this, &SpotifyPage::globalConfigToggle);
 	content->addWidget(sptGlobal);
