@@ -1,0 +1,39 @@
+name: spotify-qt-quick
+
+#
+# This is temporarily here until it's possible to build spotify-qt-quick from its own repository
+#
+
+on: [push]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Create Build Environment
+      run: cmake -E make_directory ${{runner.workspace}}/build
+
+    - name: Install Dependencies
+      run: sudo apt update && sudo apt install build-essential qtquickcontrols2-5-dev -y
+
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{runner.workspace}}/build
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_QT_QUICK=ON
+
+    - name: Build
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: cmake --build . --config $BUILD_TYPE
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: spotify-qt
+        path: ${{runner.workspace}}/build/spotify-qt-quick
