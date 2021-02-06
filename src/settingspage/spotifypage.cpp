@@ -43,9 +43,11 @@ QWidget *SpotifyPage::spotify()
 
 	// Start with app
 	sptAppStart = new QCheckBox("Start with app", this);
-	sptAppStart->setToolTip("Start, and close, spotify client together with the app (only closes when using app config)");
+	sptAppStart->setToolTip("Start, and close, spotify client together with the app "
+							"(only closes when using app config)");
 	sptAppStart->setChecked(settings.spotify.start_client);
-	QCheckBox::connect(sptAppStart, &QCheckBox::stateChanged, this, &SpotifyPage::startClientToggle);
+	QCheckBox::connect(sptAppStart, &QCheckBox::stateChanged,
+		this, &SpotifyPage::startClientToggle);
 	content->addWidget(sptAppStart);
 
 	// Always start
