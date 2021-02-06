@@ -91,6 +91,7 @@ if (USE_QT_QUICK)
 	add_subdirectory(qml)
 	target_compile_definitions(spotify-qt PRIVATE USE_QT_QUICK)
 	target_link_libraries(spotify-qt PRIVATE spotify-qt-quick)
+	set_target_properties(spotify-qt PROPERTIES OUTPUT_NAME spotify-qt-quick)
 endif ()
 
 # D-Bus support is optional
