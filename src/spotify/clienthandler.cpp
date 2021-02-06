@@ -22,7 +22,7 @@ ClientHandler::~ClientHandler()
 QString ClientHandler::start()
 {
 	// Don't start if already running
-	if (isRunning())
+	if (!settings.spotify.always_start && isRunning())
 		return QString();
 
 	// Check if empty
