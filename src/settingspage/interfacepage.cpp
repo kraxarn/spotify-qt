@@ -215,7 +215,9 @@ void InterfacePage::darkThemeToggle(bool checked)
 	if (checked)
 	{
 		itfStyle->setCurrentText("Fusion");
-		itfIcFallback->setChecked(true);
+
+		if (itfIcFallback != nullptr)
+			itfIcFallback->setChecked(true);
 	}
 	else
 	{
