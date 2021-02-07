@@ -10,6 +10,7 @@ LeftSidePanel::LeftSidePanel(spt::Spotify &spotify, lib::settings &settings,
 	QWidget(parent)
 {
 	auto layout = new QVBoxLayout(this);
+	setMaximumWidth(250); // TODO: ?
 
 	// Library
 	libraryList = new LibraryList(spotify, parent);
