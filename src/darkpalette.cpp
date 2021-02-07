@@ -1,7 +1,5 @@
 #include "darkpalette.hpp"
 
-#include "../menu/mainmenu.hpp"
-
 DarkPalette::DarkPalette()
 {
 	QColor background(0x212121);
