@@ -71,6 +71,12 @@ QWidget {
 	@include selection-foreground($highlight-foreground-color);
 }
 
+QToolTip {
+	border: 1px solid $secondary-background-color;
+	background-color: $background-color;
+	color: $foreground-color;
+}
+
 QScrollBar {
 	$size: 12px;
 

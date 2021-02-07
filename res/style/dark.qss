@@ -7,6 +7,11 @@ QWidget {
   QWidget::item::selected {
     color: #f5f5f5; }
 
+QToolTip {
+  border: 1px solid #282828;
+  background-color: #121212;
+  color: #f5f5f5; }
+
 QScrollBar:horizontal {
   max-height: 12px; }
 
