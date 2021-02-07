@@ -213,7 +213,12 @@ bool InterfacePage::hasIconTheme()
 void InterfacePage::darkThemeToggle(bool checked)
 {
 	if (checked)
+	{
 		itfStyle->setCurrentText("Fusion");
+		itfIcFallback->setChecked(true);
+	}
 	else
+	{
 		itfStyle->setCurrentIndex(0);
+	}
 }
