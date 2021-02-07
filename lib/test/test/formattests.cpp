@@ -33,4 +33,13 @@ TEST_CASE("fmt::format")
 		CHECK_NOTHROW(lib::fmt::format("float: {}", std::numeric_limits<float>::max()));
 		CHECK_NOTHROW(lib::fmt::format("double: {}", std::numeric_limits<double>::max()));
 	}
+
+	SUBCASE("time")
+	{
+		CHECK_EQ(lib::fmt::time(0), "0:00");
+		CHECK_EQ(lib::fmt::time(999), "0:00");
+		CHECK_EQ(lib::fmt::time(5000), "0:05");
+		CHECK_EQ(lib::fmt::time(60 * 1000), "1:00");
+		CHECK_EQ(lib::fmt::time(65 * 1000), "1:05");
+	}
 }
