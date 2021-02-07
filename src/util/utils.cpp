@@ -108,14 +108,6 @@ QWidget *Utils::layoutToWidget(QLayout *layout)
 	return widget;
 }
 
-QString Utils::formatTime(int ms)
-{
-	auto duration = QTime(0, 0).addMSecs(ms);
-	return QString("%1:%2")
-		.arg(duration.minute())
-		.arg(duration.second() % 60, 2, 10, QChar('0'));
-}
-
 QGroupBox *Utils::createGroupBox(QVector<QWidget *> &widgets, QWidget *parent)
 {
 	auto group = new QGroupBox(parent);

@@ -28,7 +28,6 @@ public:
 		const QVariant &data = QVariant());
 	static QWidget *layoutToWidget(QLayout *layout);
 	static void applyPalette(lib::palette palette);
-	static QString formatTime(int ms);
 	static QGroupBox *createGroupBox(QVector<QWidget *> &widgets, QWidget *parent);
 	static QAction *createMenuAction(
 		const QString &iconName, const QString &text,

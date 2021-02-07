@@ -36,6 +36,12 @@ namespace lib
 			return format(collect(fmt, arg), args...);
 		}
 
+		/**
+		 * Format time as M:SS
+		 * @param ms Milliseconds
+		 */
+		static std::string time(int ms);
+
 	private:
 		/**
 		 * Format string into another string
