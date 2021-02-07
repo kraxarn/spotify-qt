@@ -77,7 +77,7 @@ void CacheView::reload()
 
 		item->setData(0, 0x100, dir.absoluteFilePath());
 		item->setText(1, QString::number(count));
-		item->setText(2, Utils::formatSize(size));
+		item->setText(2, QString::fromStdString(lib::fmt::size(size)));
 	}
 
 	header()->resizeSections(QHeaderView::ResizeToContents);
