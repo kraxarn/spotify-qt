@@ -14,7 +14,7 @@ QWidget *InterfacePage::general()
 
 	// Style
 	auto styleLabel = new QLabel("Style", this);
-	styleLabel->setToolTip("Qt style to use "
+	styleLabel->setToolTip("Qt style to use\n"
 						   "(Fusion is recommended when using the custom dark theme)");
 	comboBoxLayout->addWidget(styleLabel, 0, 0);
 
@@ -65,7 +65,7 @@ QWidget *InterfacePage::general()
 
 	// Context info
 	itfContextInfo = new QCheckBox("Show context information", this);
-	itfContextInfo->setToolTip("Show what context music is currently playing from "
+	itfContextInfo->setToolTip("Show what context music is currently playing from\n"
 							   "above current track");
 	itfContextInfo->setChecked(settings.general.show_context_info);
 	layout->addWidget(itfContextInfo);
@@ -78,7 +78,7 @@ QWidget *InterfacePage::general()
 
 	// Relative added date
 	itfRelativeAdded = new QCheckBox("Relative added dates", this);
-	itfRelativeAdded->setToolTip("Relative added dates compared to current date, "
+	itfRelativeAdded->setToolTip("Relative added dates compared to current date,\n"
 								 "for example \"... ago\"");
 	itfRelativeAdded->setChecked(settings.general.relative_added);
 	layout->addWidget(itfRelativeAdded);
@@ -100,7 +100,7 @@ QWidget *InterfacePage::trayIcon()
 
 	// Desktop notifications
 	itfTrayNotify = new QCheckBox("Desktop notifications", this);
-	itfTrayNotify->setToolTip("Replace status bar with desktop notifications "
+	itfTrayNotify->setToolTip("Replace status bar with desktop notifications\n"
 							  "(suppresses any non-error messages)");
 	itfTrayNotify->setChecked(settings.general.tray_notifications);
 	content->addWidget(itfTrayNotify);
