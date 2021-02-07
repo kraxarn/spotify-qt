@@ -12,3 +12,17 @@ std::string fmt::time(int ms)
 	return format("{}:{}", m,
 		format("{}{}", s < 10 ? "0" : "", s % 60));
 }
+
+std::string fmt::size(unsigned int bytes)
+{
+	if (bytes >= 1000000000)
+		return format("{} GB", bytes / 1000000000);
+
+	if (bytes >= 1000000)
+		return format("{} MB", bytes / 1000000);
+
+	if (bytes >= 1000)
+		return format("{} kB", bytes / 1000);
+
+	return format("{} B", bytes);
+}

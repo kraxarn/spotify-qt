@@ -42,4 +42,12 @@ TEST_CASE("fmt::format")
 		CHECK_EQ(lib::fmt::time(60 * 1000), "1:00");
 		CHECK_EQ(lib::fmt::time(65 * 1000), "1:05");
 	}
+
+	SUBCASE("size")
+	{
+		CHECK_EQ(lib::fmt::size(1), "1 B");
+		CHECK_EQ(lib::fmt::size(1000), "1 kB");
+		CHECK_EQ(lib::fmt::size(1000000), "1 MB");
+		CHECK_EQ(lib::fmt::size(1000000000), "1 GB");
+	}
 }

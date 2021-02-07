@@ -42,6 +42,12 @@ namespace lib
 		 */
 		static std::string time(int ms);
 
+		/**
+		 * Format size as B, kB, MB or GB (bytes)
+		 * @param bytes Bytes
+		 */
+		static std::string size(unsigned int bytes);
+
 	private:
 		/**
 		 * Format string into another string
