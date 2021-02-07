@@ -192,17 +192,21 @@ void MainWindow::refreshed(const spt::Playback &playback)
 		if (trayIcon != nullptr && settings.general.tray_album_art)
 			trayIcon->setPixmap(getAlbum(current.playback.item.image));
 	}
+
 	mainToolBar->position->setText(QString("%1/%2")
-		.arg(Utils::formatTime(current.playback.progressMs))
-		.arg(Utils::formatTime(current.playback.item.duration)));
+		.arg(QString::fromStdString(lib::fmt::time(current.playback.progressMs)))
+		.arg(QString::fromStdString(lib::fmt::time(current.playback.item.duration))));
+
 	mainToolBar->progress->setValue(current.playback.progressMs);
 	mainToolBar->progress->setMaximum(current.playback.item.duration);
 	mainToolBar->playPause->setIcon(Icon::get(current.playback.isPlaying
 		? "media-playback-pause"
 		: "media-playback-start"));
 	mainToolBar->playPause->setText(current.playback.isPlaying ? "Pause" : "Play");
+
 	if (!settings.general.pulse_volume)
 		mainToolBar->volumeButton->setVolume(current.playback.volume() / 5);
+
 	mainToolBar->repeat->setChecked(current.playback.repeat != "off");
 	mainToolBar->shuffle->setChecked(current.playback.shuffle);
 }
@@ -294,7 +298,7 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks, const QString &sel
 				? QString("%1").arg(i + 1, fieldWidth)
 				: "",
 			track.name, track.artist, track.album,
-			Utils::formatTime(track.duration),
+			QString::fromStdString(lib::fmt::time(track.duration)),
 			DateUtils::isEmpty(track.addedAt)
 				? QString()
 				: settings.general.relative_added
