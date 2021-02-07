@@ -3,11 +3,13 @@
 WhatsNewDialog::WhatsNewDialog(const QString &tag, lib::settings &settings, QWidget *parent)
 	: QDialog(parent)
 {
-	auto window = dynamic_cast<MainWindow *>(parent);
+	auto window = MainWindow::find(parentWidget());
 	if (window == nullptr)
 		return;
+
 	auto json = window->getJson(
-		QString("https://api.github.com/repos/kraxarn/spotify-qt/releases/tags/%1").arg(tag)).object();
+		QString("https://api.github.com/repos/kraxarn/spotify-qt/releases/tags/%1")
+			.arg(tag)).object();
 	auto body = json["body"].toString();
 	if (body.isEmpty())
 		return;
