@@ -49,4 +49,11 @@ WhatsNewDialog::WhatsNewDialog(const QString &tag, lib::settings &settings, QWid
 	setLayout(layout);
 	resize(500, 400);
 	setWindowTitle(QString("spotify-qt %1").arg(tag));
+
+	success = true;
+}
+
+bool WhatsNewDialog::isValid() const
+{
+	return success;
 }

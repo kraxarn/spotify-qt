@@ -106,7 +106,15 @@ MainWindow::MainWindow(lib::settings &settings)
 	// If new version has been detected, show what's new dialog
 	if (settings.general.show_changelog
 		&& settings.general.last_version != APP_VERSION)
-		(new WhatsNewDialog(APP_VERSION, settings, this))->open();
+	{
+		auto dialog = new WhatsNewDialog(APP_VERSION, settings, this);
+
+		if (dialog->isValid())
+			dialog->open();
+		else
+			lib::log::error("Failed to fetch what's new in \"{}\"", APP_VERSION);
+	}
+
 	settings.general.last_version = APP_VERSION;
 	settings.save();
 

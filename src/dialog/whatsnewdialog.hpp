@@ -13,4 +13,9 @@ Q_OBJECT
 
 public:
 	WhatsNewDialog(const QString &tag, lib::settings &settings, QWidget *parent);
+
+	bool isValid() const;
+
+private:
+	bool success = false;
 };
