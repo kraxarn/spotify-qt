@@ -19,9 +19,9 @@ private:
 	QCheckBox *itfIcFallback = nullptr;
 	QCheckBox *itfMonoTime = nullptr;
 	QCheckBox *itfRelativeAdded = nullptr;
-	QCheckBox *itfResizeAuto = nullptr;
 	QCheckBox *itfTrackNum = nullptr;
 	QComboBox *itfStyle = nullptr;
+	QComboBox *itfResizeMode = nullptr;
 
 	// Tray icon
 	QCheckBox *itfTrayAlbum = nullptr;

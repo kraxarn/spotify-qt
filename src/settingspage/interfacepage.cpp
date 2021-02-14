@@ -34,19 +34,29 @@ QWidget *InterfacePage::general()
 
 	layout->addLayout(comboBoxLayout);
 
+	// Column resize
+	auto resizeLabel = new QLabel("Track column resize", this);
+	resizeLabel->setToolTip("How to resize the columns in the track list\n"
+							"Fit width (default): Adjust column width to fill width of list\n"
+							"Fit content: Adjust column width to show all content\n"
+							"Custom: No auto resize");
+	comboBoxLayout->addWidget(resizeLabel, 1, 0);
+
+	itfResizeMode = new QComboBox(this);
+	itfResizeMode->addItems({
+		"Fit width",
+		"Fit content",
+		"Custom",
+	});
+	itfResizeMode->setCurrentIndex(settings.general.track_list_resize_mode);
+	comboBoxLayout->addWidget(itfResizeMode, 1, 1);
+
 	// Dark theme
 	itfDark = new QCheckBox("Dark theme", this);
 	itfDark->setToolTip("Use custom dark theme");
 	itfDark->setChecked(settings.get_dark_theme());
 	QCheckBox::connect(itfDark, &QCheckBox::toggled, this, &InterfacePage::darkThemeToggle);
 	layout->addWidget(itfDark);
-
-	// Song header resize mode
-	itfResizeAuto = new QCheckBox("Auto resize track list headers", this);
-	itfResizeAuto->setToolTip("Automatically resize track list headers to fit content");
-	itfResizeAuto->setChecked(settings.general
-		.song_header_resize_mode == QHeaderView::ResizeToContents);
-	layout->addWidget(itfResizeAuto);
 
 	// Always use fallback icons (if system icons are an option)
 	if (hasIconTheme())
@@ -155,13 +165,17 @@ bool InterfacePage::save()
 		settings.general.style = itfStyle->currentText().toStdString();
 	}
 
-	// Song header resize mode
-	auto resizeMode = itfResizeAuto->isChecked()
-		? QHeaderView::ResizeToContents
-		: QHeaderView::Interactive;
-	if (resizeMode != settings.general.song_header_resize_mode && mainWindow != nullptr)
+	// Track list resize mode
+	if (mainWindow != nullptr
+		&& itfResizeMode->currentIndex() != settings.general.track_list_resize_mode)
+	{
+		auto resizeMode = itfResizeMode->currentIndex() == lib::resize_fit_content
+			? QHeaderView::ResizeToContents
+			: QHeaderView::Custom;
 		mainWindow->getSongsTree()->header()->setSectionResizeMode(resizeMode);
-	settings.general.song_header_resize_mode = resizeMode;
+	}
+	settings.general.track_list_resize_mode =
+		static_cast<lib::resize_mode>(itfResizeMode->currentIndex());
 
 	// Track numbers
 	if (mainWindow != nullptr)

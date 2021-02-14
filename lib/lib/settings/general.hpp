@@ -3,6 +3,7 @@
 #include "lib/enum/palette.hpp"
 #include "lib/enum/playlistorder.hpp"
 #include "lib/enum/spotifycontext.hpp"
+#include "lib/enum/resizemode.hpp"
 
 #include <string>
 #include <vector>
@@ -129,9 +130,8 @@ namespace lib
 
 			/**
 			 * How to resize track list headers
-			 * @note QHeaderView::ResizeToContents by default in Qt
 			 */
-			int song_header_resize_mode = 3;
+			resize_mode track_list_resize_mode = resize_auto;
 
 			/**
 			 * Which column to sort by in track list
