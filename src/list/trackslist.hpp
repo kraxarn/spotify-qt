@@ -12,6 +12,9 @@ Q_OBJECT
 public:
 	TracksList(spt::Spotify &spotify, lib::settings &settings, QWidget *parent);
 
+protected:
+	void resizeEvent(QResizeEvent *event) override;
+
 private:
 	void menu(const QPoint &pos);
 	void clicked(QTreeWidgetItem *item, int column);
