@@ -12,6 +12,11 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, QWidget *parent)
 		mainWindow->addSidePanelTab(new DebugView(this->settings, mainWindow), "API request");
 	});
 
+	QAction::connect(addAction("Reset size"), &QAction::triggered, [this]()
+	{
+		MainWindow::find(parentWidget())->resize(1280, 720);
+	});
+
 	addMenu(infoMenu());
 	addMenu(dialogMenu());
 }
