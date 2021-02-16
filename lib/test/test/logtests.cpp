@@ -1,5 +1,5 @@
 #include "thirdparty/doctest.h"
-#include "lib/log/log.hpp"
+#include "lib/log.hpp"
 #include "lib/developermode.hpp"
 
 TEST_CASE("log")
