@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>spotify-qt-lib: /github/workspace/lib/lib/log/log.hpp Source File</title>
+<title>spotify-qt-lib: /github/workspace/lib/include/lib/log.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -63,7 +63,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_50f304ad28d896dc96a9607121c95770.html">lib</a></li><li class="navelem"><a class="el" href="dir_eaa1b760a7fa81ad042b25c86d7ae83b.html">log</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_5a30104352ef4255dc24354b02eb2d20.html">include</a></li><li class="navelem"><a class="el" href="dir_c53bd60cb90dff279e5851ca30089ecf.html">lib</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -75,7 +75,7 @@ $(function() {
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;lib/enum/logtype.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;lib/format.hpp&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;lib/log/logmessage.hpp&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;lib/logmessage.hpp&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;lib/developermode.hpp&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -140,11 +140,11 @@ $(function() {
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            message(log_type::verbose, <a class="code" href="classlib_1_1fmt.html">fmt</a>);</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        }</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> std::vector&lt;log_message&gt; &amp;<a class="code" href="classlib_1_1log.html#a770172b496d07b555b8656f2ea0dfc77">get_messages</a>();</div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="classlib_1_1log.html#a231101ae3058d7f333f1a39519e7bcd9">  100</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> std::vector&lt;log_message&gt; &amp;<a class="code" href="classlib_1_1log.html#a231101ae3058d7f333f1a39519e7bcd9">get_messages</a>();</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1log.html#a1f670df82a0b45f18d50519964bfb17d">clear</a>();</div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="classlib_1_1log.html#aac5793c9eb61c61b83bf738a75d90919">  105</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1log.html#aac5793c9eb61c61b83bf738a75d90919">clear</a>();</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1log.html#aa3d7b8f59bbea0b2ef69ab3a0fa9f2cd">set_log_to_stdout</a>(<span class="keywordtype">bool</span> value);</div>
+<div class="line"><a name="l00111"></a><span class="lineno"><a class="line" href="classlib_1_1log.html#a7372d15a115a450ddcf7b22ad3c2232a">  111</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1log.html#a7372d15a115a450ddcf7b22ad3c2232a">set_log_to_stdout</a>(<span class="keywordtype">bool</span> value);</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <a class="code" href="classlib_1_1log.html">log</a>() = <span class="keywordflow">default</span>;</div>
@@ -160,13 +160,13 @@ $(function() {
 <div class="ttc" id="aclasslib_1_1fmt_html"><div class="ttname"><a href="classlib_1_1fmt.html">lib::fmt</a></div><div class="ttdef"><b>Definition:</b> format.hpp:13</div></div>
 <div class="ttc" id="aclasslib_1_1fmt_html_ae7622b4dbd5bd42aed59939aace7bddc"><div class="ttname"><a href="classlib_1_1fmt.html#ae7622b4dbd5bd42aed59939aace7bddc">lib::fmt::format</a></div><div class="ttdeci">static std::string format(const Format &amp;fmt)</div><div class="ttdef"><b>Definition:</b> format.hpp:21</div></div>
 <div class="ttc" id="aclasslib_1_1log_html"><div class="ttname"><a href="classlib_1_1log.html">lib::log</a></div><div class="ttdef"><b>Definition:</b> log.hpp:17</div></div>
-<div class="ttc" id="aclasslib_1_1log_html_a1f670df82a0b45f18d50519964bfb17d"><div class="ttname"><a href="classlib_1_1log.html#a1f670df82a0b45f18d50519964bfb17d">lib::log::clear</a></div><div class="ttdeci">static void clear()</div><div class="ttdef"><b>Definition:</b> log.cpp:28</div></div>
+<div class="ttc" id="aclasslib_1_1log_html_a231101ae3058d7f333f1a39519e7bcd9"><div class="ttname"><a href="classlib_1_1log.html#a231101ae3058d7f333f1a39519e7bcd9">lib::log::get_messages</a></div><div class="ttdeci">static const std::vector&lt; log_message &gt; &amp; get_messages()</div></div>
 <div class="ttc" id="aclasslib_1_1log_html_a3b352feba3bddb212d53a40db6e69b75"><div class="ttname"><a href="classlib_1_1log.html#a3b352feba3bddb212d53a40db6e69b75">lib::log::warn</a></div><div class="ttdeci">static void warn(const Format &amp;fmt)</div><div class="ttdef"><b>Definition:</b> log.hpp:50</div></div>
 <div class="ttc" id="aclasslib_1_1log_html_a6faeebb4fdad6162e122a5941e8ae323"><div class="ttname"><a href="classlib_1_1log.html#a6faeebb4fdad6162e122a5941e8ae323">lib::log::dev</a></div><div class="ttdeci">static void dev(const Format &amp;fmt, const Arg &amp;arg, Args &amp;&amp;... args)</div><div class="ttdef"><b>Definition:</b> log.hpp:78</div></div>
-<div class="ttc" id="aclasslib_1_1log_html_a770172b496d07b555b8656f2ea0dfc77"><div class="ttname"><a href="classlib_1_1log.html#a770172b496d07b555b8656f2ea0dfc77">lib::log::get_messages</a></div><div class="ttdeci">static const std::vector&lt; log_message &gt; &amp; get_messages()</div><div class="ttdef"><b>Definition:</b> log.cpp:23</div></div>
+<div class="ttc" id="aclasslib_1_1log_html_a7372d15a115a450ddcf7b22ad3c2232a"><div class="ttname"><a href="classlib_1_1log.html#a7372d15a115a450ddcf7b22ad3c2232a">lib::log::set_log_to_stdout</a></div><div class="ttdeci">static void set_log_to_stdout(bool value)</div></div>
 <div class="ttc" id="aclasslib_1_1log_html_a7cf72a4b661e07ea524f08a006324964"><div class="ttname"><a href="classlib_1_1log.html#a7cf72a4b661e07ea524f08a006324964">lib::log::info</a></div><div class="ttdeci">static void info(const Format &amp;fmt)</div><div class="ttdef"><b>Definition:</b> log.hpp:32</div></div>
 <div class="ttc" id="aclasslib_1_1log_html_aa35725a2fb8ba920c940cc019167f35a"><div class="ttname"><a href="classlib_1_1log.html#aa35725a2fb8ba920c940cc019167f35a">lib::log::error</a></div><div class="ttdeci">static void error(const Format &amp;fmt)</div><div class="ttdef"><b>Definition:</b> log.hpp:68</div></div>
-<div class="ttc" id="aclasslib_1_1log_html_aa3d7b8f59bbea0b2ef69ab3a0fa9f2cd"><div class="ttname"><a href="classlib_1_1log.html#aa3d7b8f59bbea0b2ef69ab3a0fa9f2cd">lib::log::set_log_to_stdout</a></div><div class="ttdeci">static void set_log_to_stdout(bool value)</div><div class="ttdef"><b>Definition:</b> log.cpp:33</div></div>
+<div class="ttc" id="aclasslib_1_1log_html_aac5793c9eb61c61b83bf738a75d90919"><div class="ttname"><a href="classlib_1_1log.html#aac5793c9eb61c61b83bf738a75d90919">lib::log::clear</a></div><div class="ttdeci">static void clear()</div></div>
 <div class="ttc" id="aclasslib_1_1log_html_ad6c8f913d62cc4d89bbfa27a3369a89b"><div class="ttname"><a href="classlib_1_1log.html#ad6c8f913d62cc4d89bbfa27a3369a89b">lib::log::warn</a></div><div class="ttdeci">static void warn(const Format &amp;fmt, const Arg &amp;arg, Args &amp;&amp;... args)</div><div class="ttdef"><b>Definition:</b> log.hpp:41</div></div>
 <div class="ttc" id="aclasslib_1_1log_html_af971c261aeceb74c0e806a9ea3e5867e"><div class="ttname"><a href="classlib_1_1log.html#af971c261aeceb74c0e806a9ea3e5867e">lib::log::dev</a></div><div class="ttdeci">static void dev(const Format &amp;fmt)</div><div class="ttdef"><b>Definition:</b> log.hpp:88</div></div>
 <div class="ttc" id="aclasslib_1_1log_html_afe551f6a31aee9f7cb1a14b40e50daa4"><div class="ttname"><a href="classlib_1_1log.html#afe551f6a31aee9f7cb1a14b40e50daa4">lib::log::info</a></div><div class="ttdeci">static void info(const Format &amp;fmt, const Arg &amp;arg, Args &amp;&amp;... args)</div><div class="ttdef"><b>Definition:</b> log.hpp:23</div></div>

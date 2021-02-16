@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>spotify-qt-lib: /github/workspace/lib/lib/cache.hpp Source File</title>
+<title>spotify-qt-lib: /github/workspace/lib/include/lib/cache.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -63,7 +63,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_50f304ad28d896dc96a9607121c95770.html">lib</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_5a30104352ef4255dc24354b02eb2d20.html">include</a></li><li class="navelem"><a class="el" href="dir_c53bd60cb90dff279e5851ca30089ecf.html">lib</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -77,27 +77,27 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;thirdparty/json.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;paths/paths.hpp&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;format.hpp&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;log/log.hpp&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;log.hpp&quot;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span>lib</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
 <div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html">   14</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classlib_1_1cache.html">cache</a></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    {</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classlib_1_1cache.html#a5863aa2f8a8179cc7d08fe8dfbe26077">cache</a>(<span class="keyword">const</span> <a class="code" href="classlib_1_1paths.html">paths</a> &amp;<a class="code" href="classlib_1_1paths.html">paths</a>);</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#a5863aa2f8a8179cc7d08fe8dfbe26077">   21</a></span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classlib_1_1cache.html#a5863aa2f8a8179cc7d08fe8dfbe26077">cache</a>(<span class="keyword">const</span> <a class="code" href="classlib_1_1paths.html">paths</a> &amp;<a class="code" href="classlib_1_1paths.html">paths</a>);</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        nlohmann::json <a class="code" href="classlib_1_1cache.html#a2b581922d5b8d1dcd2545696c8b82250">tracks</a>(<span class="keyword">const</span> std::string &amp;<span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#a2b581922d5b8d1dcd2545696c8b82250">   29</a></span>&#160;        nlohmann::json <a class="code" href="classlib_1_1cache.html#a2b581922d5b8d1dcd2545696c8b82250">tracks</a>(<span class="keyword">const</span> std::string &amp;<span class="keywordtype">id</span>);</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        std::map&lt;std::string, nlohmann::json&gt; <a class="code" href="classlib_1_1cache.html#a144e0b3f6b8b1564055d8c6cb3b9f1dd">all_tracks</a>();</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#ada5c2661b2c1f673e262129091fbf807">   36</a></span>&#160;        std::map&lt;std::string, nlohmann::json&gt; <a class="code" href="classlib_1_1cache.html#ada5c2661b2c1f673e262129091fbf807">all_tracks</a>();</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">const</span> <a class="code" href="classlib_1_1paths.html">lib::paths</a> &amp;<a class="code" href="classlib_1_1paths.html">paths</a>;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    };</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
 <div class="ttc" id="aclasslib_1_1cache_html"><div class="ttname"><a href="classlib_1_1cache.html">lib::cache</a></div><div class="ttdef"><b>Definition:</b> cache.hpp:15</div></div>
-<div class="ttc" id="aclasslib_1_1cache_html_a144e0b3f6b8b1564055d8c6cb3b9f1dd"><div class="ttname"><a href="classlib_1_1cache.html#a144e0b3f6b8b1564055d8c6cb3b9f1dd">lib::cache::all_tracks</a></div><div class="ttdeci">std::map&lt; std::string, nlohmann::json &gt; all_tracks()</div><div class="ttdef"><b>Definition:</b> cache.cpp:24</div></div>
-<div class="ttc" id="aclasslib_1_1cache_html_a2b581922d5b8d1dcd2545696c8b82250"><div class="ttname"><a href="classlib_1_1cache.html#a2b581922d5b8d1dcd2545696c8b82250">lib::cache::tracks</a></div><div class="ttdeci">nlohmann::json tracks(const std::string &amp;id)</div><div class="ttdef"><b>Definition:</b> cache.cpp:8</div></div>
-<div class="ttc" id="aclasslib_1_1cache_html_a5863aa2f8a8179cc7d08fe8dfbe26077"><div class="ttname"><a href="classlib_1_1cache.html#a5863aa2f8a8179cc7d08fe8dfbe26077">lib::cache::cache</a></div><div class="ttdeci">cache(const paths &amp;paths)</div><div class="ttdef"><b>Definition:</b> cache.cpp:3</div></div>
+<div class="ttc" id="aclasslib_1_1cache_html_a2b581922d5b8d1dcd2545696c8b82250"><div class="ttname"><a href="classlib_1_1cache.html#a2b581922d5b8d1dcd2545696c8b82250">lib::cache::tracks</a></div><div class="ttdeci">nlohmann::json tracks(const std::string &amp;id)</div></div>
+<div class="ttc" id="aclasslib_1_1cache_html_a5863aa2f8a8179cc7d08fe8dfbe26077"><div class="ttname"><a href="classlib_1_1cache.html#a5863aa2f8a8179cc7d08fe8dfbe26077">lib::cache::cache</a></div><div class="ttdeci">cache(const paths &amp;paths)</div></div>
+<div class="ttc" id="aclasslib_1_1cache_html_ada5c2661b2c1f673e262129091fbf807"><div class="ttname"><a href="classlib_1_1cache.html#ada5c2661b2c1f673e262129091fbf807">lib::cache::all_tracks</a></div><div class="ttdeci">std::map&lt; std::string, nlohmann::json &gt; all_tracks()</div></div>
 <div class="ttc" id="aclasslib_1_1paths_html"><div class="ttname"><a href="classlib_1_1paths.html">lib::paths</a></div><div class="ttdef"><b>Definition:</b> paths.hpp:12</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
