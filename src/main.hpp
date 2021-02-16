@@ -5,7 +5,7 @@
 #include "dialog/whatsnewdialog.hpp"
 #include "leftsidepanel.hpp"
 #include "lib/developermode.hpp"
-#include "lib/log/log.hpp"
+#include "lib/log.hpp"
 #include "list/librarylist.hpp"
 #include "list/playlistlist.hpp"
 #include "list/tracklistitem.hpp"

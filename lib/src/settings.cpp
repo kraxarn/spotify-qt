@@ -1,4 +1,4 @@
-#include "settings.hpp"
+#include "lib/settings.hpp"
 
 using namespace lib;
 

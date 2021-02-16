@@ -1,4 +1,4 @@
-#include "locale.hpp"
+#include "lib/locale.hpp"
 
 bool lib::locale::set(const std::string &locale, bool force)
 {

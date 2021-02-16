@@ -3,7 +3,7 @@
 #include "enum/palette.hpp"
 #include "enum/playlistorder.hpp"
 #include "enum/spotifycontext.hpp"
-#include "log/log.hpp"
+#include "log.hpp"
 #include "paths/paths.hpp"
 #include "thirdparty/json.hpp"
 #include "thirdparty/filesystem.hpp"

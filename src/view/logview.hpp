@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/log/log.hpp"
+#include "lib/log.hpp"
 
 #include <QApplication>
 #include <QClipboard>

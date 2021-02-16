@@ -4,7 +4,7 @@
 #include "thirdparty/json.hpp"
 #include "paths/paths.hpp"
 #include "format.hpp"
-#include "log/log.hpp"
+#include "log.hpp"
 
 namespace lib
 {

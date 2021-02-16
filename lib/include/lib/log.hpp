@@ -2,7 +2,7 @@
 
 #include "lib/enum/logtype.hpp"
 #include "lib/format.hpp"
-#include "lib/log/logmessage.hpp"
+#include "lib/logmessage.hpp"
 #include "lib/developermode.hpp"
 
 #include <iostream>

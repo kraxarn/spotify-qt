@@ -1,4 +1,4 @@
-#include "logmessage.hpp"
+#include "lib/logmessage.hpp"
 
 using namespace lib;
 

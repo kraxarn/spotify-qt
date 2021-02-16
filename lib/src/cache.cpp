@@ -1,4 +1,4 @@
-#include "cache.hpp"
+#include "lib/cache.hpp"
 
 lib::cache::cache(const lib::paths &paths)
 	: paths(paths)
