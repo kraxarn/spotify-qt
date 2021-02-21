@@ -14,10 +14,10 @@ class DeviceSelectDialog : public QDialog
 	Q_OBJECT
 
 public:
-	DeviceSelectDialog(const QVector<spt::Device> &devices, QWidget *parent = nullptr);
+	DeviceSelectDialog(const std::vector<spt::Device> &devices, QWidget *parent = nullptr);
 	spt::Device selectedDevice();
 
 private:
-	QVector<spt::Device> devices;
+	std::vector<spt::Device> devices;
 	QListWidget *list;
 };
