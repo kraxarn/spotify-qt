@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
 
 	// Create Qt application
 	QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+	QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 	QApplication app(argc, argv);
 
 	// Settings
