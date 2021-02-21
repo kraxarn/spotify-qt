@@ -37,9 +37,11 @@ spt::Device DeviceSelectDialog::selectedDevice()
 	if (list->selectedItems().isEmpty())
 		return spt::Device();
 
-	for (auto &device :devices)
+	for (auto &device : devices)
+	{
 		if (device.name == list->selectedItems().first()->text())
 			return device;
+	}
 
 	return spt::Device();
 }

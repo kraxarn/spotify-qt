@@ -13,7 +13,8 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings, QWidget *pare
 	auto mainWindow = dynamic_cast<MainWindow *>(parent);
 	if (mainWindow != nullptr)
 	{
-		auto json = mainWindow->getJson("https://api.github.com/repos/kraxarn/spotify-qt/releases/latest");
+		auto json = mainWindow
+			->getJson("https://api.github.com/repos/kraxarn/spotify-qt/releases/latest");
 		auto latest = json.object()["tag_name"].toString();
 		auto isLatest = latest.isEmpty() || latest == APP_VERSION;
 		if (latest.isEmpty() || isLatest)
@@ -24,8 +25,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings, QWidget *pare
 			about->setText(QString("Update found: %1").arg(latest));
 			QAction::connect(about, &QAction::triggered, [this]()
 			{
-				Utils::openUrl(
-					"https://github.com/kraxarn/spotify-qt/releases/latest",
+				Utils::openUrl("https://github.com/kraxarn/spotify-qt/releases/latest",
 					LinkType::Web, MainWindow::find(this->parentWidget()));
 			});
 		}
@@ -41,7 +41,8 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings, QWidget *pare
 	addMenu(deviceMenu);
 
 	// Refresh and settings
-	auto openSettings = Utils::createMenuAction("configure", "Settings...", QKeySequence::Preferences);
+	auto openSettings = Utils::createMenuAction("configure",
+		"Settings...", QKeySequence::Preferences);
 	QAction::connect(openSettings, &QAction::triggered, [this]()
 	{
 		SettingsDialog dialog(this->settings, MainWindow::find(parentWidget()));
@@ -58,11 +59,13 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings, QWidget *pare
 	auto quitAction = Utils::createMenuAction("application-exit", "Quit", QKeySequence::Quit);
 	QAction::connect(quitAction, &QAction::triggered, QCoreApplication::quit);
 	auto logOutAction = Utils::createMenuAction("im-user-away", "Log out");
+
 	QAction::connect(logOutAction, &QAction::triggered, [this]()
 	{
 		QMessageBox box(QMessageBox::Icon::Question,
 			"Are you sure?",
 			"Do you also want to clear your application credentials or only log out?");
+
 		auto clearAll = box.addButton("Clear everything", QMessageBox::ButtonRole::AcceptRole);
 		auto logOut = box.addButton("Only log out", QMessageBox::ButtonRole::AcceptRole);
 		auto cancel = box.addButton("Cancel", QMessageBox::ButtonRole::RejectRole);
@@ -87,6 +90,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings, QWidget *pare
 
 		QCoreApplication::quit();
 	});
+
 	addActions({
 		logOutAction, quitAction
 	});
