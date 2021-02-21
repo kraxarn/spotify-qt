@@ -299,9 +299,9 @@ void Spotify::setDevice(const QString &deviceId,
 	const std::function<void(const QString &status)> &callback)
 {
 	QVariantMap body;
-	body["device_ids"] = {
+	body["device_ids"] = QStringList({
 		deviceId
-	};
+	});
 	currentDevice = deviceId;
 	put("me/player", &body, callback);
 }
