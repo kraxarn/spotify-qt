@@ -94,45 +94,51 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings, QWidget *pare
 
 void MainMenu::refreshDevices()
 {
-	auto window = MainWindow::find(parentWidget());
-
-	// Set status and get devices
-	window->setStatus("Refreshing devices...");
-	auto devices = spotify.devices();
-
-	// Probably left menu before it loaded
-	if (deviceMenu == nullptr)
-		return;
-
-	// Clear all entries
-	for (auto &action : deviceMenu->actions())
-		deviceMenu->removeAction(action);
-
-	// Check if empty
-	if (devices.isEmpty())
+	spotify.devices([this](const std::vector<spt::Device> &devices)
 	{
-		deviceMenu->addAction("No devices found")->setDisabled(true);
-		return;
-	}
+		// Probably left menu before it loaded
+		if (this->deviceMenu == nullptr)
+			return;
 
-	// Update devices
-	window->setStatus(QString("Found %1 device(s)").arg(devices.length()));
-	for (auto &device : devices)
-	{
-		auto action = deviceMenu->addAction(device.name);
-		action->setCheckable(true);
-		action->setChecked(device.isActive);
-		action->setDisabled(device.isActive);
-		QAction::connect(action, &QAction::triggered, [=](bool triggered)
+		// Clear all entries
+		for (auto &action : deviceMenu->actions())
+			deviceMenu->removeAction(action);
+
+		// Check if empty
+		if (devices.empty())
 		{
-			auto status = spotify.setDevice(device);
-			if (!status.isEmpty())
-			{
-				action->setChecked(false);
-				window->setStatus(QString("Failed to set device: %1").arg(status), true);
-			}
-			else
-				action->setDisabled(true);
-		});
-	}
+			deviceMenu->addAction("No devices found")->setDisabled(true);
+			return;
+		}
+
+		// Update devices
+		for (auto &device : devices)
+		{
+			auto action = deviceMenu->addAction(device.name);
+			action->setCheckable(true);
+			action->setChecked(device.isActive);
+			action->setDisabled(device.isActive);
+			action->setData(device.id);
+
+			QAction::connect(action, &QAction::triggered,
+				[this, device, action](bool triggered)
+				{
+					this->spotify.setDevice(device.id, [this, action](const QString &status)
+					{
+						if (!status.isEmpty())
+						{
+							action->setChecked(false);
+							auto window = MainWindow::find(this->parentWidget());
+							if (window != nullptr)
+							{
+								window->setStatus(QString("Failed to set device: %1")
+									.arg(status), true);
+							}
+						}
+						else
+							action->setDisabled(true);
+					});
+				});
+		}
+	});
 }
