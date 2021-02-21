@@ -103,27 +103,77 @@ QString Spotify::put(const QString &url, QVariantMap *body)
 	auto reply = errorMessage(networkManager->put(req, putData));
 	if (reply.contains("No active device found"))
 	{
-		auto d = devices();
-		if (d.length() == 1)
+		devices([this, url, body](const std::vector<spt::Device> &devices)
 		{
-			setDevice(devices().at(0));
-			return put(url, body);
-		}
-		else if (d.length() > 1)
-		{
-			DeviceSelectDialog dialog(d);
-			if (dialog.exec() == QDialog::Accepted)
+			if (devices.size() == 1)
 			{
-				auto selected = dialog.selectedDevice();
-				if (!selected.id.isEmpty())
+				this->setDevice(devices.at(0).id,
+					[this, url, body](const QString &status)
+					{
+						// TODO: This result needs to be handled
+						this->put(url, body);
+					});
+			}
+			else if (devices.size() > 1)
+			{
+				DeviceSelectDialog dialog(devices);
+				if (dialog.exec() == QDialog::Accepted)
 				{
-					setDevice(selected);
-					return put(url, body);
+					auto selected = dialog.selectedDevice();
+					if (!selected.id.isEmpty())
+					{
+						setDevice(selected.id, [this, url, body](const QString &status)
+						{
+							// TODO: This result needs to be handled
+							this->put(url, body);
+						});
+					}
 				}
 			}
-		}
+		});
 	}
 	return reply;
+}
+
+void Spotify::put(const QString &url, QVariantMap *body,
+	const std::function<void(const QString &result)> &callback)
+{
+	// Set in header we're sending json data
+	auto req = request(url);
+	req.setHeader(QNetworkRequest::ContentTypeHeader, QString("application/json"));
+
+	// Send the request, we don't expect any response
+	auto putData = body == nullptr ? nullptr : QJsonDocument::fromVariant(*body).toJson();
+	auto reply = errorMessage(networkManager->put(req, putData));
+	if (reply.contains("No active device found"))
+	{
+		devices([this, url, body, callback](const std::vector<spt::Device> &devices)
+		{
+			if (devices.size() == 1)
+			{
+				this->setDevice(devices.at(0).id,
+					[this, url, body, callback](const QString &status)
+					{
+						this->put(url, body, callback);
+					});
+			}
+			else if (devices.size() > 1)
+			{
+				DeviceSelectDialog dialog(devices);
+				if (dialog.exec() == QDialog::Accepted)
+				{
+					auto selected = dialog.selectedDevice();
+					if (!selected.id.isEmpty())
+					{
+						setDevice(selected.id, [this, url, body, callback](const QString &status)
+						{
+							this->put(url, body, callback);
+						});
+					}
+				}
+			}
+		});
+	}
 }
 
 QString Spotify::post(const QString &url)
@@ -238,24 +288,27 @@ QVector<Playlist> Spotify::playlists(int offset)
 	return playlists;
 }
 
-QVector<Device> Spotify::devices()
+void Spotify::devices(const std::function<void(const std::vector<Device> &devices)> &callback)
 {
-	auto json = getAsObject("me/player/devices");
-	auto items = json["devices"].toArray();
-	QVector<Device> devices(items.size());
-	for (int i = 0; i < items.size(); i++)
-		devices[i] = Device(items.at(i).toObject());
-	return devices;
+	get("me/player/devices", [callback](const QJsonDocument &json)
+	{
+		auto items = json["devices"].toArray();
+		std::vector<Device> devices(items.size());
+		for (auto i = 0; i < items.size(); i++)
+			devices[i] = Device(items.at(i).toObject());
+		callback(devices);
+	});
 }
 
-QString Spotify::setDevice(const Device &device)
+void Spotify::setDevice(const QString &deviceId,
+	const std::function<void(const QString &status)> &callback)
 {
 	QVariantMap body;
-	body["device_ids"] = QStringList({
-		device.id
-	});
-	currentDevice = device.id;
-	return put("me/player", &body);
+	body["device_ids"] = {
+		deviceId
+	};
+	currentDevice = deviceId;
+	put("me/player", &body, callback);
 }
 
 QString Spotify::playTracks(int trackIndex, const QString &context)

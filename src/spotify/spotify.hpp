@@ -40,8 +40,9 @@ namespace spt
 		QJsonObject getAsObject(const QString &url);
 		QJsonArray getAsArray(const QString &url);
 		QVector<Playlist> playlists(int offset = 0);
-		QVector<Device> devices();
-		QString setDevice(const Device &device);
+		void devices(const std::function<void(const std::vector<Device> &devices)> &callback);
+		void setDevice(const QString &deviceId,
+			const std::function<void(const QString &status)> &callback);
 		QString playTracks(int trackIndex, const QString &context);
 		QString playTracks(int trackIndex, const QList<QString> &all);
 		QString playTracks(const QString &context);
@@ -98,7 +99,6 @@ namespace spt
 		bool refreshValid = false;
 
 		QNetworkRequest request(const QString &url);
-		QString put(const QString &url, QVariantMap *body = nullptr);
 		QString post(const QString &url);
 		QString del(const QString &url, const QJsonDocument &json);
 		static QString errorMessage(QNetworkReply *reply);
@@ -111,6 +111,14 @@ namespace spt
 
 		void get(const QString &url,
 			const std::function<void(const QJsonDocument &json)> &callback);
+
+		/**
+		 * @deprecated Use put with callback instead
+		 */
+		QString put(const QString &url, QVariantMap *body = nullptr);
+
+		void put(const QString &url, QVariantMap *body,
+			const std::function<void(const QString &result)> &callback);
 
 		template<typename T>
 		QVector<T> loadItems(const QString &url);

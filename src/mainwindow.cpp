@@ -73,15 +73,27 @@ MainWindow::MainWindow(lib::settings &settings)
 	splash->showMessage("Welcome!");
 
 	// Check if should start client
-	if (settings.spotify.start_client
-		&& (settings.spotify.always_start || spotify->devices().isEmpty()))
+	if (settings.spotify.start_client)
 	{
-		sptClient = new spt::ClientHandler(settings, this);
-		auto status = sptClient->start();
-		if (!status.isEmpty())
+		auto startClient = [this]()
 		{
-			QMessageBox::warning(this, "Client error",
-				QString("Failed to autostart Spotify client: %1").arg(status));
+			this->sptClient = new spt::ClientHandler(this->settings, this);
+			auto status = sptClient->start();
+			if (!status.isEmpty())
+			{
+				QMessageBox::warning(this, "Client error",
+					QString("Failed to autostart Spotify client: %1").arg(status));
+			}
+		};
+		if (settings.spotify.always_start)
+			startClient();
+		else
+		{
+			spotify->devices([startClient](const std::vector<spt::Device> &devices)
+			{
+				if (devices.empty())
+					startClient();
+			});
 		}
 	}
 
