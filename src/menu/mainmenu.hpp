@@ -19,5 +19,7 @@ private:
 	lib::settings &settings;
 	QAction *about;
 	QMenu *deviceMenu;
+
 	void refreshDevices();
+	void deviceSelected(QAction *action);
 };

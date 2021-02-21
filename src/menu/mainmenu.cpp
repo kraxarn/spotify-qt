@@ -36,8 +36,9 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings, QWidget *pare
 	deviceMenu->setIcon(Icon::get("speaker"));
 	QMenu::connect(deviceMenu, &QMenu::aboutToShow, [this]()
 	{
-		refreshDevices();
+		this->refreshDevices();
 	});
+	QMenu::connect(deviceMenu, &QMenu::triggered, this, &MainMenu::deviceSelected);
 	addMenu(deviceMenu);
 
 	// Refresh and settings
@@ -123,26 +124,25 @@ void MainMenu::refreshDevices()
 			action->setChecked(device.isActive);
 			action->setDisabled(device.isActive);
 			action->setData(device.id);
-
-			QAction::connect(action, &QAction::triggered,
-				[this, device, action](bool triggered)
-				{
-					this->spotify.setDevice(device.id, [this, action](const QString &status)
-					{
-						if (!status.isEmpty())
-						{
-							action->setChecked(false);
-							auto window = MainWindow::find(this->parentWidget());
-							if (window != nullptr)
-							{
-								window->setStatus(QString("Failed to set device: %1")
-									.arg(status), true);
-							}
-						}
-						else
-							action->setDisabled(true);
-					});
-				});
 		}
+	});
+}
+
+void MainMenu::deviceSelected(QAction *action)
+{
+	spotify.setDevice(action->data().toString(), [this, action](const QString &status)
+	{
+		if (!status.isEmpty())
+		{
+			action->setChecked(false);
+			auto window = MainWindow::find(this->parentWidget());
+			if (window != nullptr)
+			{
+				window->setStatus(QString("Failed to set device: %1")
+					.arg(status), true);
+			}
+		}
+		else
+			action->setDisabled(true);
 	});
 }
