@@ -66,11 +66,6 @@ QJsonObject Spotify::getAsObject(const QString &url)
 	return get(url).object();
 }
 
-QJsonArray Spotify::getAsArray(const QString &url)
-{
-	return get(url).array();
-}
-
 void Spotify::get(const QString &url,
 	const std::function<void(const QJsonDocument &json)> &callback)
 {

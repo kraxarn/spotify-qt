@@ -38,7 +38,6 @@ namespace spt
 		explicit Spotify(lib::settings &settings, QObject *parent = nullptr);
 
 		QJsonObject getAsObject(const QString &url);
-		QJsonArray getAsArray(const QString &url);
 		QVector<Playlist> playlists(int offset = 0);
 		void devices(const std::function<void(const std::vector<Device> &devices)> &callback);
 		void setDevice(const QString &deviceId,
