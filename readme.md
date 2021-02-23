@@ -35,7 +35,7 @@ You can also get it as a [snap](https://snapcraft.io/spotify-qt), or just run `s
 Make sure you have Qt (5.12+/6.0+), CMake (3.5+) and various build tools like `make`, `g++` and `git`.
 Keep in mind that the master branch is considered unstable at all times.
 Therefore, it's recommended to use the stable branch, which is updated after each new stable release,
-unless you wanted to try out new features.
+only including important bug fixes, unless you wanted to try out new features.
 ```
 git clone --branch stable https://github.com/kraxarn/spotify-qt.git
 cd spotify-qt
