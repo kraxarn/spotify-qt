@@ -8,4 +8,5 @@ enum DataRole
 	RoleIndex = 0x0103,      // 259
 	RolePlaylistId = 0x0104, // 260
 	RoleAddedDate = 0x105,   // 261
+	RoleLength = 0x106,      // 262
 };

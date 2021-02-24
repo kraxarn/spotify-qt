@@ -10,6 +10,7 @@ TrackListItem::TrackListItem(const QStringList &strings, const spt::Track &track
 	setData(0, RoleAlbumId, track.albumId);
 	setData(0, RoleIndex, index);
 	setData(0, RoleAddedDate, track.addedAt);
+	setData(0, RoleLength, track.duration);
 
 	if (track.isLocal || !track.isPlayable)
 	{
@@ -34,6 +35,12 @@ bool TrackListItem::operator<(const QTreeWidgetItem &item) const
 	if (column == 0)
 	{
 		return data(0, RoleIndex).toInt() < item.data(0, RoleIndex).toInt();
+	}
+
+	// Length
+	if (column == 4)
+	{
+		return data(0, RoleLength).toInt() < item.data(0, RoleLength).toInt();
 	}
 
 	// Added
