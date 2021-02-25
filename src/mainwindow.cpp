@@ -130,6 +130,12 @@ MainWindow::MainWindow(lib::settings &settings)
 	settings.general.last_version = APP_VERSION;
 	settings.save();
 
+	// Get current user
+	spotify->me([this](const spt::User &user)
+	{
+		this->currentUser = user;
+	});
+
 	// Welcome
 	setStatus("Welcome to spotify-qt!");
 	splash->finish(this);
@@ -164,9 +170,6 @@ void MainWindow::refresh()
 
 void MainWindow::refreshed(const spt::Playback &playback)
 {
-	// Just so it doesn't make the app startup slower for now
-	if (currentUser.id.isEmpty())
-		currentUser = spotify->me();
 	current.playback = playback;
 
 	auto mainToolBar = dynamic_cast<MainToolBar *>(toolBar);
