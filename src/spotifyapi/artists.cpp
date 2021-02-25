@@ -3,12 +3,6 @@
 // Currently unavailable:
 // artists
 
-// Deprecated
-Artist Spotify::artist(const QString &artistId)
-{
-	return Artist(getAsObject(QString("artists/%1").arg(artistId)));
-}
-
 void Spotify::artist(const QString &artistId,
 	const std::function<void(const spt::Artist &artist)> &callback)
 {

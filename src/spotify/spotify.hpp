@@ -49,11 +49,6 @@ namespace spt
 
 		//region Artists
 
-		/**
-		 * @deprecated Use asynchronous version
-		 */
-		Artist artist(const QString &artistId);
-
 		void artist(const QString &artistId,
 			const std::function<void(const spt::Artist &artist)> &callback);
 

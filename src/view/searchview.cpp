@@ -155,7 +155,10 @@ void SearchView::search()
 			}
 			else if (cat == "artist")
 			{
-				results.artists.append(spotify.artist(id));
+				spotify.artist(id, [this](const spt::Artist &artist)
+				{
+					this->addArtist(artist);
+				});
 				i = 1;
 			}
 			else if (cat == "album")
@@ -191,10 +194,7 @@ void SearchView::search()
 
 	// Artists
 	for (auto &artist : results.artists)
-	{
-		auto item = new QListWidgetItem(artist.name, artistList);
-		item->setData(RoleArtistId, artist.id);
-	}
+		addArtist(artist);
 
 	// Playlists
 	for (auto &json : results.playlists)
@@ -244,4 +244,10 @@ void SearchView::playlistMenu(const QPoint &pos)
 	auto item = playlistList->itemAt(pos);
 	(new PlaylistMenu(spotify, item->data(RolePlaylistId).toString(), parentWidget()))
 		->popup(playlistList->mapToGlobal(pos));
+}
+
+void SearchView::addArtist(const spt::Artist &artist)
+{
+	auto item = new QListWidgetItem(artist.name, artistList);
+	item->setData(RoleArtistId, artist.id);
 }
