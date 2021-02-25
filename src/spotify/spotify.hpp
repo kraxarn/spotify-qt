@@ -37,57 +37,148 @@ namespace spt
 	public:
 		explicit Spotify(lib::settings &settings, QObject *parent = nullptr);
 
-		QJsonObject getAsObject(const QString &url);
-		QVector<Playlist> playlists(int offset = 0);
-		void devices(const std::function<void(const std::vector<Device> &devices)> &callback);
-		void setDevice(const QString &deviceId,
-			const std::function<void(const QString &status)> &callback);
-		QString playTracks(int trackIndex, const QString &context);
-		QString playTracks(int trackIndex, const QList<QString> &all);
-		QString playTracks(const QString &context);
-		QString setShuffle(bool enabled);
-		QString pause();
-		QString resume();
-		QString seek(int position);
-		QString next();
-		QString previous();
-		QString setVolume(int volume);
-		QString setRepeat(const QString &state);
-		AudioFeatures trackAudioFeatures(QString trackId);
+		//region Albums
+
 		QVector<Track> albumTracks(const QString &albumID);
-		Artist artist(const QString &artistId);
-		Playlist playlist(const QString &playlistId);
-		QString addToPlaylist(const QString &playlistId, const QString &trackId);
-		QString removeFromPlaylist(const QString &playlistId, const QString &trackId, int pos);
-		SearchResults search(const QString &query);
-		QVector<Artist> topArtists();
-		QVector<Track> topTracks();
-		QVector<Album> savedAlbums();
-		QVector<Track> savedTracks(int offset = 0);
-		QString addSavedTrack(const QString &trackId);
-		QString removeSavedTrack(const QString &trackId);
-		QVector<Track> recentlyPlayed();
-		QVector<Album> newReleases(int offset = 0);
-		User me();
-		QString editPlaylist(const Playlist &playlist);
-		QString addToQueue(const QString &uri);
-		QVector<Artist> followedArtists(const QString &offset = QString());
-		void follow(FollowType type, const QList<QString> &ids);
-		void unfollow(FollowType type, const QList<QString> &ids);
-		spt::Track getTrack(const QString &id);
+
 		spt::Album getAlbum(const QString &id);
 
-		void currentPlayback(const std::function<void(const spt::Playback &playback)> &callback);
-		void artist(const QString &artistId, const std::function<void(const spt::Artist &artist)> &callback);
-		void isFollowing(FollowType type, const QList<QString> &ids,
-			const std::function<void(const std::vector<bool> &follows)> &callback);
+		QVector<Track> albumTracks(const QString &albumId, const QString &albumName, int offset);
+
+		//endregion
+
+		//region Artists
+
+		/**
+		 * @deprecated Use asynchronous version
+		 */
+		Artist artist(const QString &artistId);
+
+		void artist(const QString &artistId,
+			const std::function<void(const spt::Artist &artist)> &callback);
+
 		void topTracks(const spt::Artist &artist,
 			const std::function<void(const std::vector<spt::Track> &tracks)> &callback);
-		void albums(const spt::Artist &artist,
-			const std::function<void(const std::vector<spt::Album> &albums)> &callback);
+
 		void relatedArtists(const spt::Artist &artist,
 			const std::function<void(const std::vector<spt::Artist> &artists)> &callback);
 
+		void albums(const spt::Artist &artist,
+			const std::function<void(const std::vector<spt::Album> &albums)> &callback);
+
+		//endregion
+
+		//region Browse
+
+		QVector<Album> newReleases(int offset = 0);
+
+		//endregion
+
+		//region Follow
+
+		QVector<Artist> followedArtists(const QString &offset = QString());
+
+		void follow(FollowType type, const QList<QString> &ids);
+
+		void unfollow(FollowType type, const QList<QString> &ids);
+
+		void isFollowing(FollowType type, const QList<QString> &ids,
+			const std::function<void(const std::vector<bool> &follows)> &callback);
+
+		//endregion
+
+		//region Library
+
+		QVector<Album> savedAlbums();
+
+		QVector<Track> savedTracks(int offset = 0);
+
+		QString addSavedTrack(const QString &trackId);
+
+		QString removeSavedTrack(const QString &trackId);
+
+		//endregion
+
+		//region Personalization
+
+		QVector<Artist> topArtists();
+
+		QVector<Track> topTracks();
+
+		//endregion
+
+		//region Player
+
+		void currentPlayback(const std::function<void(const spt::Playback &playback)> &callback);
+
+		void setDevice(const QString &deviceId,
+			const std::function<void(const QString &status)> &callback);
+
+		void devices(const std::function<void(const std::vector<Device> &devices)> &callback);
+
+		QString playTracks(int trackIndex, const QString &context);
+
+		QString playTracks(int trackIndex, const QList<QString> &all);
+
+		QString playTracks(const QString &context);
+
+		QString resume();
+
+		QString pause();
+
+		QString next();
+
+		QString previous();
+
+		QString seek(int position);
+
+		QString setRepeat(const QString &state);
+
+		QString setVolume(int volume);
+
+		QString setShuffle(bool enabled);
+
+		QVector<Track> recentlyPlayed();
+
+		QString addToQueue(const QString &uri);
+
+		//endregion
+
+		//region Playlists
+
+		QVector<Playlist> playlists(int offset = 0);
+
+		Playlist playlist(const QString &playlistId);
+
+		QString editPlaylist(const Playlist &playlist);
+
+		QString addToPlaylist(const QString &playlistId, const QString &trackId);
+
+		QString removeFromPlaylist(const QString &playlistId, const QString &trackId, int pos);
+
+		//endregion
+
+		//region Search
+
+		SearchResults search(const QString &query);
+
+		//endregion
+
+		//region Tracks
+
+		spt::Track getTrack(const QString &id);
+
+		AudioFeatures trackAudioFeatures(QString trackId);
+
+		//endregion
+
+		//region User Profile
+
+		User me();
+
+		//endregion
+
+		QJsonObject getAsObject(const QString &url);
 		bool isValid() const;
 
 	private:
@@ -120,10 +211,19 @@ namespace spt
 			const std::function<void(const QString &result)> &callback);
 
 		template<typename T>
-		QVector<T> loadItems(const QString &url);
+		QVector<T> loadItems(const QString &url)
+		{
+			auto items = getAsObject(url)["items"].toArray();
+			QVector<T> result;
+			result.reserve(items.count());
+			for (auto item : items)
+				result.append(T(item.toObject()));
+			return result;
+		}
 
 		template<typename T>
-		void get(const QString &url, const std::function<void(const std::vector<T> &items)> &callback)
+		void get(const QString &url,
+			const std::function<void(const std::vector<T> &items)> &callback)
 		{
 			get(url, [this, callback](const QJsonDocument &json)
 			{
@@ -139,8 +239,6 @@ namespace spt
 				callback(result);
 			});
 		}
-
-		QVector<Track> albumTracks(const QString &albumId, const QString &albumName, int offset);
 
 		bool refresh();
 		static QString followTypeString(FollowType type);
