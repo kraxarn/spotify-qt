@@ -53,6 +53,7 @@ public:
 	int getPlaylistItemCount();
 	QListWidgetItem *getPlaylistItem(int index);
 	void orderPlaylists(lib::playlist_order order);
+	QString playPause();
 
 	// Getters for private properties
 	QString &getCacheLocation();

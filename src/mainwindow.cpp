@@ -136,6 +136,8 @@ MainWindow::MainWindow(lib::settings &settings)
 		this->currentUser = user;
 	});
 
+	new TcpController(this);
+
 	// Welcome
 	setStatus("Welcome to spotify-qt!");
 	splash->finish(this);
@@ -654,6 +656,15 @@ void MainWindow::addSidePanelTab(QWidget *widget, const QString &title)
 	sidePanel->addTab(widget, title);
 	sidePanel->setCurrentWidget(widget);
 	sidePanel->show();
+}
+
+QString MainWindow::playPause()
+{
+	current.playback.isPlaying = !current.playback.isPlaying;
+	refreshed(current.playback);
+	return current.playback.isPlaying
+		? spotify->resume()
+		: spotify->pause();
 }
 
 void MainWindow::refreshPlaylists()
