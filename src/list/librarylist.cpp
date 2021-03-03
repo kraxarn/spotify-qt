@@ -21,17 +21,17 @@ LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 		Utils::treeItemWithChildren(this, SAVED_TRACKS,
 			"Liked and saved tracks",
 			QStringList()),
-		Utils::treeItemWithChildren(this,TOP_TRACKS,
+		Utils::treeItemWithChildren(this, TOP_TRACKS,
 			"Most played tracks for the past 6 months",
 			QStringList()),
-		Utils::treeItemWithChildren(this,NEW_RELEASES,
+		Utils::treeItemWithChildren(this, NEW_RELEASES,
 			"New albums from artists you listen to",
 			QStringList()),
-		Utils::treeItemWithChildren(this,SAVED_ALBUMS,
+		Utils::treeItemWithChildren(this, SAVED_ALBUMS,
 			"Liked and saved albums"),
-		Utils::treeItemWithChildren(this,TOP_ARTISTS,
+		Utils::treeItemWithChildren(this, TOP_ARTISTS,
 			"Most played artists for the past 6 months"),
-		Utils::treeItemWithChildren(this,FOLLOWED_ARTISTS,
+		Utils::treeItemWithChildren(this, FOLLOWED_ARTISTS,
 			"Artists you're currently following")
 	});
 

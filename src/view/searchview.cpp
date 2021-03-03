@@ -58,7 +58,8 @@ SearchView::SearchView(spt::Spotify &spotify, const lib::settings &settings, QWi
 
 	// Playlist context menu
 	playlistList->setContextMenuPolicy(Qt::CustomContextMenu);
-	QWidget::connect(playlistList, &QWidget::customContextMenuRequested, this, &SearchView::playlistMenu);
+	QWidget::connect(playlistList, &QWidget::customContextMenuRequested,
+		this, &SearchView::playlistMenu);
 }
 
 void SearchView::showEvent(QShowEvent *event)
