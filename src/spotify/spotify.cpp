@@ -46,17 +46,9 @@ QNetworkRequest Spotify::request(const QString &url)
 void Spotify::await(QNetworkReply *reply,
 	const std::function<void(const QByteArray &response)> &callback)
 {
-	auto context = new QObject();
-	auto url = reply->url().toString();
-
-	QNetworkAccessManager::connect(networkManager, &QNetworkAccessManager::finished, context,
-		[context, url, callback](QNetworkReply *reply)
+	QNetworkReply::connect(reply, &QNetworkReply::finished, this,
+		[reply, callback]()
 		{
-			auto replyUrl = reply->url().toString();
-			if (replyUrl.right(replyUrl.length() - 27) != url)
-				return;
-			delete context;
-
 			callback(reply->readAll());
 			reply->deleteLater();
 		});
