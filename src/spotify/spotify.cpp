@@ -100,22 +100,12 @@ QJsonObject Spotify::getAsObject(const QString &url)
 void Spotify::get(const QString &url,
 	const std::function<void(const QJsonDocument &json)> &callback)
 {
-	// Prepare fetch of request
-	auto context = new QObject();
-	QNetworkAccessManager::connect(networkManager, &QNetworkAccessManager::finished, context,
-		[context, url, callback](QNetworkReply *reply)
+	await(networkManager->get(request(url)),
+		[callback](const QByteArray &data)
 		{
-			auto replyUrl = reply->url().toString();
-			if (replyUrl.right(replyUrl.length() - 27) != url)
-				return;
-			delete context;
 			// Parse reply as json
-			auto json = QJsonDocument::fromJson(reply->readAll());
-			reply->deleteLater();
-			callback(json);
+			callback(QJsonDocument::fromJson(data));
 		});
-
-	networkManager->get(request(url));
 }
 
 QString Spotify::put(const QString &url, QVariantMap *body)
@@ -168,38 +158,46 @@ void Spotify::put(const QString &url, QVariantMap *body,
 	auto req = request(url);
 	req.setHeader(QNetworkRequest::ContentTypeHeader, QString("application/json"));
 
-	// Send the request, we don't expect any response
-	auto putData = body == nullptr ? nullptr : QJsonDocument::fromVariant(*body).toJson();
-	auto reply = errorMessage(networkManager->put(req, putData));
-	if (reply.contains("No active device found"))
-	{
-		devices([this, url, body, callback](const std::vector<spt::Device> &devices)
+	auto putData = body == nullptr
+		? nullptr
+		: QJsonDocument::fromVariant(*body).toJson();
+
+	await(networkManager->put(req, putData),
+		[this, url, body, callback](const QByteArray &data)
 		{
-			if (devices.size() == 1)
+			auto error = errorMessage(url, data);
+
+			if (error.contains("No active device found"))
 			{
-				this->setDevice(devices.at(0).id,
-					[this, url, body, callback](const QString &status)
-					{
-						this->put(url, body, callback);
-					});
-			}
-			else if (devices.size() > 1)
-			{
-				DeviceSelectDialog dialog(devices);
-				if (dialog.exec() == QDialog::Accepted)
+				devices([this, url, body, callback](const std::vector<spt::Device> &devices)
 				{
-					auto selected = dialog.selectedDevice();
-					if (!selected.id.isEmpty())
+					if (devices.size() == 1)
 					{
-						setDevice(selected.id, [this, url, body, callback](const QString &status)
-						{
-							this->put(url, body, callback);
-						});
+						this->setDevice(devices.at(0).id,
+							[this, url, body, callback](const QString &status)
+							{
+								this->put(url, body, callback);
+							});
 					}
-				}
+					else if (devices.size() > 1)
+					{
+						DeviceSelectDialog dialog(devices);
+						if (dialog.exec() == QDialog::Accepted)
+						{
+							auto selected = dialog.selectedDevice();
+							if (!selected.id.isEmpty())
+							{
+								setDevice(selected.id,
+									[this, url, body, callback](const QString &status)
+									{
+										this->put(url, body, callback);
+									});
+							}
+						}
+					}
+				});
 			}
 		});
-	}
 }
 
 QString Spotify::post(const QString &url)
