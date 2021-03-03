@@ -108,12 +108,22 @@ QJsonObject Spotify::getAsObject(const QString &url)
 void Spotify::get(const QString &url,
 	const std::function<void(const QJsonDocument &json)> &callback)
 {
-	await(networkManager->get(request(url)),
-		[callback](const QByteArray &data)
+	// Prepare fetch of request
+	auto context = new QObject();
+	QNetworkAccessManager::connect(networkManager, &QNetworkAccessManager::finished, context,
+		[context, url, callback](QNetworkReply *reply)
 		{
+			auto replyUrl = reply->url().toString();
+			if (replyUrl.right(replyUrl.length() - 27) != url)
+				return;
+			delete context;
 			// Parse reply as json
-			callback(QJsonDocument::fromJson(data));
+			auto json = QJsonDocument::fromJson(reply->readAll());
+			reply->deleteLater();
+			callback(json);
 		});
+
+	networkManager->get(request(url));
 }
 
 QString Spotify::put(const QString &url, QVariantMap *body)
