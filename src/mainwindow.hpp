@@ -22,8 +22,8 @@ public:
 	void openArtist(const QString &artistId);
 	QPixmap getAlbum(const QString &url);
 	QPixmap getImage(const QString &type, const QString &url);
-	void refreshPlaylist(spt::Playlist &playlist);
-	bool loadPlaylist(spt::Playlist &playlist);
+	void refreshPlaylist(const spt::Playlist &playlist);
+	bool loadPlaylist(const spt::Playlist &playlist);
 	spt::Playback currentPlayback() const;
 	void openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name);
 	void openLyrics(const QString &artist, const QString &name);
@@ -101,6 +101,6 @@ private:
 	// Methods
 	QWidget *createCentralWidget();
 	void setAlbumImage(const QString &url);
-	void cachePlaylist(spt::Playlist &playlist);
-	bool loadPlaylistFromCache(spt::Playlist &playlist);
+	void cachePlaylist(const spt::Playlist &playlist);
+	bool loadPlaylistFromCache(const spt::Playlist &playlist);
 };

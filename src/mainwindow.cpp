@@ -381,7 +381,7 @@ void MainWindow::saveTracksToCache(const QString &id, const QVector<spt::Track> 
 	file.write(QJsonDocument(json).toJson());
 }
 
-bool MainWindow::loadPlaylist(spt::Playlist &playlist)
+bool MainWindow::loadPlaylist(const spt::Playlist &playlist)
 {
 	if (!leftSidePanel->getPlaylistNameFromSaved(playlist.id).isEmpty())
 	{
@@ -402,7 +402,7 @@ bool MainWindow::loadPlaylist(spt::Playlist &playlist)
 	return result;
 }
 
-bool MainWindow::loadPlaylistFromCache(spt::Playlist &playlist)
+bool MainWindow::loadPlaylistFromCache(const spt::Playlist &playlist)
 {
 	auto tracks = playlistTracks(playlist.id);
 	if (tracks.isEmpty())
@@ -432,7 +432,7 @@ QVector<spt::Track> MainWindow::playlistTracks(const QString &playlistId)
 	return tracks;
 }
 
-void MainWindow::refreshPlaylist(spt::Playlist &playlist)
+void MainWindow::refreshPlaylist(const spt::Playlist &playlist)
 {
 	auto newPlaylist = spotify->playlist(playlist.id);
 	QVector<spt::Track> tracks;
@@ -520,7 +520,7 @@ void MainWindow::openArtist(const QString &artistId)
 	dynamic_cast<SidePanel *>(sidePanel)->openArtist(artistId);
 }
 
-void MainWindow::cachePlaylist(spt::Playlist &playlist)
+void MainWindow::cachePlaylist(const spt::Playlist &playlist)
 {
 	// Remove old format if needed before caching
 	auto baseFile = QString("%1/playlist/%2").arg(cacheLocation).arg(playlist.id);
