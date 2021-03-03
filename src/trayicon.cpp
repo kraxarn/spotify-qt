@@ -38,14 +38,15 @@ TrayIcon::TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QObject
 	setContextMenu(contextMenu);
 	show();
 
-	QSystemTrayIcon::connect(this, &QSystemTrayIcon::activated, [this](ActivationReason reason)
-	{
-		if (reason != ActivationReason::Trigger)
-			return;
-		auto window = dynamic_cast<QWidget *>(this->parent());
-		if (window != nullptr)
-			window->setVisible(!window->isVisible());
-	});
+	QSystemTrayIcon::connect(this, &QSystemTrayIcon::activated,
+		[this](ActivationReason reason)
+		{
+			if (reason != ActivationReason::Trigger)
+				return;
+			auto window = dynamic_cast<QWidget *>(this->parent());
+			if (window != nullptr)
+				window->setVisible(!window->isVisible());
+		});
 
 	QMenu::connect(contextMenu, &QMenu::aboutToShow, [this]()
 	{
@@ -54,7 +55,9 @@ TrayIcon::TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QObject
 			.arg(current.item.artist)
 			.arg(current.item.name));
 		auto isPlaying = current.isPlaying;
-		playPause->setIcon(Icon::get(isPlaying ? "media-playback-pause" : "media-playback-start"));
+		playPause->setIcon(Icon::get(isPlaying
+			? "media-playback-pause"
+			: "media-playback-start"));
 		playPause->setText(isPlaying ? "Pause" : "Play");
 	});
 }

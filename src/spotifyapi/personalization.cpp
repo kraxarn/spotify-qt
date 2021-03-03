@@ -1,11 +1,11 @@
 #include "spotifyapi.hpp"
 
-QVector<Artist> Spotify::topArtists()
+void Spotify::topArtists(const std::function<void(const std::vector<Artist> &artists)> &callback)
 {
-	return loadItems<Artist>("me/top/artists?limit=10");
+	get("me/top/artists?limit=10", callback);
 }
 
-QVector<Track> Spotify::topTracks()
+void Spotify::topTracks(const std::function<void(const std::vector<Track> &tracks)> &callback)
 {
-	return loadItems<Track>("me/top/tracks?limit=50");
+	get("me/top/tracks?limit=50", callback);
 }

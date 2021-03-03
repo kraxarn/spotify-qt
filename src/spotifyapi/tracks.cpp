@@ -5,16 +5,23 @@
 // audio-features
 // audio-analysis/{id}
 
-spt::Track Spotify::getTrack(const QString &id)
+void Spotify::getTrack(const QString &id,
+	const std::function<void(const Track &track)> &callback)
 {
-	return spt::Track(getAsObject(QString("tracks/%1").arg(id)));
+	get(QString("tracks/%1").arg(id), [callback](const QJsonDocument &json)
+	{
+		callback(Track(json.object()));
+	});
 }
 
-AudioFeatures Spotify::trackAudioFeatures(QString trackId)
+void Spotify::trackAudioFeatures(const QString &trackId,
+	const std::function<void(const AudioFeatures &features)> &callback)
 {
-	auto json = getAsObject(QString("audio-features/%1")
+	get(QString("audio-features/%1")
 		.arg(trackId.startsWith("spotify:track:")
-			? trackId.remove(0, QString("spotify:track:").length())
-			: trackId));
-	return AudioFeatures(json);
+			? trackId.right(trackId.length() - QString("spotify:track:").length())
+			: trackId), [callback](const QJsonDocument &json)
+	{
+		callback(AudioFeatures(json.object()));
+	});
 }

@@ -130,13 +130,21 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name, QString
 
 void SongMenu::like(bool)
 {
-	auto status = isLiked
-		? spotify.removeSavedTrack(trackId)
-		: spotify.addSavedTrack(trackId);
-	if (!status.isEmpty())
-		MainWindow::find(parentWidget())->setStatus(QString("Failed to %1: %2")
-			.arg(isLiked ? "dislike" : "like")
-			.arg(status), true);
+	auto callback = [this](const QString &status)
+	{
+		if (!status.isEmpty())
+		{
+			auto mainWindow = MainWindow::find(this->parentWidget());
+			mainWindow->setStatus(QString("Failed to %1: %2")
+				.arg(isLiked ? "dislike" : "like")
+				.arg(status), true);
+		}
+	};
+
+	if (isLiked)
+		spotify.removeSavedTrack(trackId, callback);
+	else
+		spotify.addSavedTrack(trackId, callback);
 }
 
 void SongMenu::addToQueue(bool)

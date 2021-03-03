@@ -35,34 +35,50 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 		auto current = mainWindow->getCurrentPlayback();
 		current.isPlaying = !current.isPlaying;
 		mainWindow->refreshed(current);
-		auto status = playPause->iconText() == "Play"
-			? this->spotify.pause()
-			: this->spotify.resume();
-		if (!status.isEmpty())
+
+		auto callback = [this, mainWindow](const QString &status)
 		{
+			if (status.isEmpty())
+				return;
+
 			mainWindow->setStatus(QString("Failed to %1 playback: %2")
-				.arg(playPause->iconText() == "Pause" ? "pause" : "resume")
+				.arg(this->playPause->iconText() == "Pause" ? "pause" : "resume")
 				.arg(status), true);
-		}
+		};
+
+		if (playPause->iconText() == "Play")
+			this->spotify.pause(callback);
+		else
+			this->spotify.resume(callback);
 	});
 
 	auto next = addAction(Icon::get("media-skip-forward"), "Next");
 	QAction::connect(previous, &QAction::triggered, [this](bool checked)
 	{
-		auto mainWindow = (MainWindow *) this->parent;
-		auto status = this->spotify.previous();
-		if (!status.isEmpty())
-			mainWindow->setStatus(QString("Failed to go to previous track: %1").arg(status), true);
-		mainWindow->refresh();
+		this->spotify.previous([this](const QString &status)
+		{
+			auto mainWindow = (MainWindow *) this->parent;
+			if (!status.isEmpty())
+			{
+				mainWindow->setStatus(QString("Failed to go to previous track: %1")
+					.arg(status), true);
+			}
+			mainWindow->refresh();
+		});
 	});
 
 	QAction::connect(next, &QAction::triggered, [this](bool checked)
 	{
-		auto mainWindow = (MainWindow *) this->parent;
-		auto status = this->spotify.next();
-		if (!status.isEmpty())
-			mainWindow->setStatus(QString("Failed to go to next track: %1").arg(status), true);
-		mainWindow->refresh();
+		this->spotify.next([this](const QString &status)
+		{
+			auto mainWindow = (MainWindow *) this->parent;
+			if (!status.isEmpty())
+			{
+				mainWindow->setStatus(QString("Failed to go to next track: %1")
+					.arg(status), true);
+			}
+			mainWindow->refresh();
+		});
 	});
 
 	// Progress
@@ -70,15 +86,19 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 	progress->setOrientation(Qt::Orientation::Horizontal);
 	QSlider::connect(progress, &QAbstractSlider::sliderReleased, this, [this]()
 	{
-		auto mainWindow = (MainWindow *) this->parent;
-		auto status = this->spotify.seek(progress->value());
-		if (!status.isEmpty())
-			mainWindow->setStatus(QString("Failed to seek: %1").arg(status), true);
-
+		this->spotify.seek(progress->value(), [this](const QString &status)
+		{
+			auto mainWindow = (MainWindow *) this->parent;
+			if (!status.isEmpty())
+			{
+				mainWindow->setStatus(QString("Failed to seek: %1")
+					.arg(status), true);
+			}
 #ifdef USE_DBUS
-		if (mainWindow->getMediaPlayer() != nullptr)
-			mainWindow->getMediaPlayer()->stateUpdated();
+			if (mainWindow->getMediaPlayer() != nullptr)
+				mainWindow->getMediaPlayer()->stateUpdated();
 #endif
+		});
 	});
 
 	addSeparator();
@@ -99,9 +119,14 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 		auto current = mainWindow->getCurrentPlayback();
 		current.shuffle = !current.shuffle;
 		mainWindow->refreshed(current);
-		auto status = this->spotify.setShuffle(checked);
-		if (!status.isEmpty())
-			mainWindow->setStatus(QString("Failed to toggle shuffle: %1").arg(status), true);
+
+		this->spotify.setShuffle(checked, [mainWindow](const QString &status)
+		{
+			if (status.isEmpty())
+				return;
+			mainWindow->setStatus(QString("Failed to toggle shuffle: %1")
+				.arg(status), true);
+		});
 	});
 
 	repeat = addAction(Icon::get("media-playlist-repeat"), "Repeat");
@@ -113,9 +138,14 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 		auto repeatMode = QString(checked ? "context" : "off");
 		current.repeat = repeatMode;
 		mainWindow->refreshed(current);
-		auto status = this->spotify.setRepeat(repeatMode);
-		if (!status.isEmpty())
-			mainWindow->setStatus(QString("Failed to toggle repeat: %1").arg(status), true);
+
+		this->spotify.setRepeat(repeatMode, [mainWindow](const QString &status)
+		{
+			if (status.isEmpty())
+				return;
+			mainWindow->setStatus(QString("Failed to toggle repeat: %1")
+				.arg(status), true);
+		});
 	});
 
 	// Volume

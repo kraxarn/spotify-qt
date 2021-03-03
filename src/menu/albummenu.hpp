@@ -20,6 +20,11 @@ private:
 	QString albumId;
 	spt::Spotify &spotify;
 
+	QAction *trackCount = nullptr;
+	QAction *playShuffle = nullptr;
+
+	void tracksLoaded(const QVector<spt::Track> &result);
+
 	void shuffle(bool checked);
 	void shareAlbum(bool checked);
 	void shareOpen(bool checked);

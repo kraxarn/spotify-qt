@@ -7,35 +7,51 @@
 // me/shows
 // me/shows/contains
 
-QVector<Album> Spotify::savedAlbums()
+void Spotify::savedAlbums(const std::function<void(const std::vector<Album> &albums)> &callback)
 {
-	auto json = getAsObject("me/albums");
-	auto albumItems = json["items"].toArray();
-	QVector<Album> albums;
-	albums.reserve(10);
-	for (auto item : albumItems)
-		albums.append(Album(item.toObject()["album"].toObject()));
-	return albums;
+	get("me/albums?limit=50", [callback](const QJsonDocument &json)
+	{
+		auto albumItems = json["items"].toArray();
+		std::vector<Album> albums;
+		for (auto item : albumItems)
+			albums.emplace_back(item.toObject()["album"].toObject());
+		callback(albums);
+	});
 }
 
-QVector<Track> Spotify::savedTracks(int offset)
+void Spotify::savedTracks(int offset,
+	const std::function<void(const std::vector<Track> &albums)> &callback)
 {
-	auto json = getAsObject(QString("me/tracks?limit=50&offset=%1").arg(offset));
-	auto trackItems = json["items"].toArray();
-	QVector<Track> tracks;
-	tracks.reserve(50);
+	get(QString("me/tracks?limit=50&offset=%1").arg(offset),
+		[this, callback](const QJsonDocument &json)
+		{
+			auto trackItems = json["items"].toArray();
+			std::vector<Track> tracks;
+			tracks.reserve(50);
 
-	// Add all in current page
-	for (auto item : trackItems)
-		tracks.append(Track(item.toObject()));
+			// Add all in current page
+			for (auto item : trackItems)
+				tracks.emplace_back(item.toObject());
 
-	// Add all in next page
-	if (json.contains("next") && !json["next"].isNull())
-		tracks.append(savedTracks(json["offset"].toInt() + json["limit"].toInt()));
-	return tracks;
+			// Add all in next page
+			if (json.object().contains("next") && !json["next"].isNull())
+			{
+				this->savedTracks(json["offset"].toInt() + json["limit"].toInt(),
+					[tracks, callback](const std::vector<Track> &result)
+					{
+						callback(lib::vector::combine(tracks, result));
+					});
+			}
+		});
 }
 
-QString Spotify::addSavedTrack(const QString &trackId)
+void Spotify::savedTracks(const std::function<void(const std::vector<Track> &)> &callback)
+{
+	savedTracks(0, callback);
+}
+
+void Spotify::addSavedTrack(const QString &trackId,
+	const std::function<void(const QString &result)> &callback)
 {
 	QVariantMap body;
 	body["ids"] = QStringList({
@@ -43,10 +59,12 @@ QString Spotify::addSavedTrack(const QString &trackId)
 			? trackId.right(trackId.length() - QString("spotify:track:").length())
 			: trackId
 	});
-	return put("me/tracks", &body);
+
+	put("me/tracks", &body, callback);
 }
 
-QString Spotify::removeSavedTrack(const QString &trackId)
+void Spotify::removeSavedTrack(const QString &trackId,
+	const std::function<void(const QString &result)> &callback)
 {
 	QJsonDocument json({
 		QPair<QString, QJsonArray>("ids", QJsonArray({
@@ -56,5 +74,5 @@ QString Spotify::removeSavedTrack(const QString &trackId)
 		}))
 	});
 
-	return del("me/tracks", json);
+	del("me/tracks", json, callback);
 }

@@ -8,36 +8,53 @@
 // playlists/{playlist_id}/tracks
 // playlists/{playlist_id}/images
 
-QVector<Playlist> Spotify::playlists(int offset)
+void Spotify::playlists(int offset,
+	const std::function<void(const std::vector<Playlist> &playlists)> &callback)
 {
 	// Request playlists
-	auto json = getAsObject(QString("me/playlists?limit=50&offset=%1").arg(offset));
+	get(QString("me/playlists?limit=50&offset=%1").arg(offset),
+		[this, callback](const QJsonDocument &json)
+		{
+			// Parse as playlists
+			auto items = json["items"].toArray();
 
-	// Parse as playlists
-	auto items = json["items"].toArray();
+			// Create list of playlists
+			auto size = json["total"].toInt();
+			std::vector<Playlist> playlists;
 
-	// Create list of playlists
-	auto size = json["total"].toInt();
-	QVector<Playlist> playlists;
-	playlists.reserve(size);
+			// Loop through all items
+			for (auto item : items)
+				playlists.emplace_back(item.toObject());
 
-	// Loop through all items
-	for (int i = 0; i < items.size(); i++)
-		playlists.insert(i, Playlist(items.at(i).toObject()));
-
-	// Paging
-	if (json.contains("next") && !json["next"].isNull())
-		playlists.append(this->playlists(json["offset"].toInt() + json["limit"].toInt()));
-
-	return playlists;
+			// Paging
+			if (json.object().contains("next") && !json["next"].isNull())
+			{
+				this->playlists(json["offset"].toInt() + json["limit"].toInt(),
+					[callback, playlists](const std::vector<Playlist> &result)
+					{
+						callback(lib::vector::combine(playlists, result));
+					});
+			}
+		});
 }
 
-Playlist Spotify::playlist(const QString &playlistId)
+void Spotify::playlists(const std::function<void(const std::vector<Playlist> &playlists)> &callback)
 {
-	return Playlist(getAsObject(QString("playlists/%1").arg(playlistId)));
+	playlists(0, callback);
 }
 
-QString Spotify::editPlaylist(const Playlist &playlist)
+void Spotify::playlist(const QString &playlistId,
+	const std::function<void(const Playlist &playlist)> &callback)
+{
+	get(QString("playlists/%1").arg(playlistId),
+		[callback](const QJsonDocument &json)
+		{
+			callback(Playlist(json.object()));
+		});
+}
+
+void Spotify::editPlaylist(const Playlist &playlist,
+	const std::function<void(const QString &result)> &callback)
 {
 	QVariantMap body({
 		{"name", playlist.name},
@@ -45,16 +62,19 @@ QString Spotify::editPlaylist(const Playlist &playlist)
 		{"collaborative", playlist.collaborative},
 		{"description", playlist.description}
 	});
-	return put(QString("playlists/%1").arg(playlist.id), &body);
+
+	put(QString("playlists/%1").arg(playlist.id), &body, callback);
 }
 
-QString Spotify::addToPlaylist(const QString &playlistId, const QString &trackId)
+void Spotify::addToPlaylist(const QString &playlistId, const QString &trackId,
+	const std::function<void(const QString &result)> &callback)
 {
-	return post(QString("playlists/%1/tracks?uris=%2")
-		.arg(playlistId).arg(trackId));
+	post(QString("playlists/%1/tracks?uris=%2")
+		.arg(playlistId).arg(trackId), callback);
 }
 
-QString Spotify::removeFromPlaylist(const QString &playlistId, const QString &trackId, int pos)
+void Spotify::removeFromPlaylist(const QString &playlistId, const QString &trackId, int pos,
+	const std::function<void(const QString &result)> &callback)
 {
 	QJsonDocument json({
 		QPair<QString, QJsonArray>("tracks", QJsonArray({
@@ -67,5 +87,5 @@ QString Spotify::removeFromPlaylist(const QString &playlistId, const QString &tr
 		}))
 	});
 
-	return del(QString("playlists/%1/tracks").arg(playlistId), json);
+	del(QString("playlists/%1/tracks").arg(playlistId), json, callback);
 }

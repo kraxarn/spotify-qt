@@ -21,17 +21,17 @@ LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 		Utils::treeItemWithChildren(this, SAVED_TRACKS,
 			"Liked and saved tracks",
 			QStringList()),
-		Utils::treeItemWithChildren(this,TOP_TRACKS,
+		Utils::treeItemWithChildren(this, TOP_TRACKS,
 			"Most played tracks for the past 6 months",
 			QStringList()),
-		Utils::treeItemWithChildren(this,NEW_RELEASES,
+		Utils::treeItemWithChildren(this, NEW_RELEASES,
 			"New albums from artists you listen to",
 			QStringList()),
-		Utils::treeItemWithChildren(this,SAVED_ALBUMS,
+		Utils::treeItemWithChildren(this, SAVED_ALBUMS,
 			"Liked and saved albums"),
-		Utils::treeItemWithChildren(this,TOP_ARTISTS,
+		Utils::treeItemWithChildren(this, TOP_ARTISTS,
 			"Most played artists for the past 6 months"),
-		Utils::treeItemWithChildren(this,FOLLOWED_ARTISTS,
+		Utils::treeItemWithChildren(this, FOLLOWED_ARTISTS,
 			"Artists you're currently following")
 	});
 
@@ -73,32 +73,55 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 		else
 			mainWindow->loadSongs(cacheTracks);
 
-		QVector<spt::Track> tracks;
+		auto callback = [mainWindow, id](const std::vector<spt::Track> &tracks)
+		{
+			if (!tracks.empty())
+			{
+				auto qTracks = QVector<spt::Track>(tracks.begin(), tracks.end());
+				mainWindow->saveTracksToCache(id, qTracks);
+				mainWindow->loadSongs(qTracks);
+			}
+			mainWindow->getSongsTree()->setEnabled(true);
+		};
+
 		if (item->text(0) == RECENTLY_PLAYED)
-			tracks = spotify.recentlyPlayed();
+			spotify.recentlyPlayed(callback);
 		else if (item->text(0) == SAVED_TRACKS)
-			tracks = spotify.savedTracks();
+			spotify.savedTracks(callback);
 		else if (item->text(0) == TOP_TRACKS)
-			tracks = spotify.topTracks();
+			spotify.topTracks(callback);
 		else if (item->text(0) == NEW_RELEASES)
 		{
-			auto all = mainWindow->allArtists();
-			auto releases = spotify.newReleases();
-			for (auto &album : releases)
-				if (all.contains(album.artist))
-					for (auto &track : spotify.albumTracks(album.id))
-					{
-						track.addedAt = album.releaseDate;
-						tracks << track;
-					}
-		}
+			spotify.newReleases([this, mainWindow, callback]
+				(const std::vector<spt::Album> &releases)
+			{
+				auto all = mainWindow->allArtists();
+				std::vector<spt::Track> tracks;
+				auto count = releases.size();
 
-		if (!tracks.isEmpty())
-		{
-			mainWindow->saveTracksToCache(id, tracks);
-			mainWindow->loadSongs(tracks);
+				for (auto &album : releases)
+				{
+					if (all.contains(album.artist))
+					{
+						this->spotify.albumTracks(album.id, [&tracks, album, &count, callback]
+							(const std::vector<spt::Track> &results)
+						{
+							for (auto &result : results)
+							{
+								spt::Track track(result);
+								track.addedAt = album.releaseDate;
+								tracks.push_back(track);
+							}
+
+							if (--count <= 0)
+							{
+								callback(tracks);
+							}
+						});
+					}
+				}
+			});
 		}
-		mainWindow->getSongsTree()->setEnabled(true);
 	}
 }
 
@@ -108,69 +131,110 @@ void LibraryList::doubleClicked(QTreeWidgetItem *item, int)
 	if (mainWindow == nullptr)
 		return;
 
+	auto callback = [this, mainWindow](const std::vector<spt::Track> &tracks)
+	{
+		// If none were found, don't do anything
+		if (tracks.empty())
+			return;
+
+		// Get id of all tracks
+		QStringList trackIds;
+		for (auto &track : tracks)
+			trackIds.append(QString("spotify:track:%1").arg(track.id));
+
+		// Play in context of all tracks
+		this->spotify.playTracks(0, trackIds, [mainWindow](const QString &status)
+		{
+			if (!status.isEmpty())
+				mainWindow->setStatus(QString("Failed to start playback: %1")
+					.arg(status), true);
+		});
+	};
+
 	// Fetch all tracks in list
-	auto tracks = item->text(0) == RECENTLY_PLAYED
-		? spotify.recentlyPlayed()
-		: item->text(0) == SAVED_TRACKS
-			? spotify.savedTracks()
-			: item->text(0) == TOP_TRACKS
-				? spotify.topTracks()
-				: QVector<spt::Track>();
-
-	// If none were found, don't do anything
-	if (tracks.isEmpty())
-		return;
-
-	// Get id of all tracks
-	QStringList trackIds;
-	tracks.reserve(tracks.length());
-	for (auto &track : tracks)
-		trackIds.append(QString("spotify:track:%1").arg(track.id));
-
-	// Play in context of all tracks
-	auto status = spotify.playTracks(0, trackIds);
-	if (!status.isEmpty())
-		mainWindow->setStatus(QString("Failed to start playback: %1").arg(status), true);
+	if (item->text(0) == RECENTLY_PLAYED)
+		spotify.recentlyPlayed(callback);
+	else if (item->text(0) == SAVED_TRACKS)
+		spotify.savedTracks(callback);
+	else if (item->text(0) == TOP_TRACKS)
+		spotify.topTracks(callback);
 }
 
 void LibraryList::expanded(QTreeWidgetItem *item)
 {
+	auto callback = [item](const QVector<QVariantList> &results)
+	{
+		item->takeChildren();
+
+		std::sort(results.begin(), results.end(),
+			[](const QVariantList &x, const QVariantList &y)
+			{
+				return x.first().toString() < y.first().toString();
+			}
+		);
+
+		// No results
+		if (results.isEmpty())
+		{
+			auto child = new QTreeWidgetItem(item, {"No results"});
+			child->setDisabled(true);
+			child->setToolTip(0, "If they should be here, try logging out and back in");
+			item->addChild(child);
+			return;
+		}
+
+		// Add all to the list
+		for (auto &result : results)
+		{
+			auto child = new QTreeWidgetItem(item, {result[0].toString()});
+			child->setData(0, 0x100, result[1]);
+			child->setData(0, 0x101, result[2]);
+			item->addChild(child);
+		}
+	};
+
 	QVector<QVariantList> results;
-	item->takeChildren();
 
 	if (item->text(0) == TOP_ARTISTS)
-		for (auto &artist : spotify.topArtists())
-			results.append({artist.name, artist.id, RoleArtistId});
-	else if (item->text(0) == SAVED_ALBUMS)
-		for (auto &album : spotify.savedAlbums())
-			results.append({album.name, album.id, RoleAlbumId});
-	else if (item->text(0) == FOLLOWED_ARTISTS)
-		for (auto &artist : spotify.followedArtists())
-			results.append({artist.name, artist.id, RoleArtistId});
-
-	std::sort(results.begin(), results.end(),
-		[](const QVariantList &x, const QVariantList &y)
+	{
+		spotify.topArtists([callback](const std::vector<spt::Artist> &artists)
 		{
-			return x.first().toString() < y.first().toString();
-		}
-	);
-
-	// No results
-	if (results.isEmpty())
-	{
-		auto child = new QTreeWidgetItem(item, {"No results"});
-		child->setDisabled(true);
-		child->setToolTip(0, "If they should be here, try logging out and back in");
-		item->addChild(child);
-		return;
+			QVector<QVariantList> results;
+			for (auto &artist : artists)
+			{
+				results.append({
+					artist.name, artist.id, RoleArtistId
+				});
+			}
+			callback(results);
+		});
 	}
-
-	// Add all to the list
-	for (auto &result : results)
+	else if (item->text(0) == SAVED_ALBUMS)
 	{
-		auto child = new QTreeWidgetItem(item, {result[0].toString()});
-		child->setData(0, 0x100, result[1]);
-		child->setData(0, 0x101, result[2]);
-		item->addChild(child);
+		spotify.savedAlbums([callback](const std::vector<spt::Album> &albums)
+		{
+			QVector<QVariantList> results;
+			for (auto &album : albums)
+			{
+				results.append({
+					album.name, album.id, RoleAlbumId
+				});
+			}
+			callback(results);
+		});
+	}
+	else if (item->text(0) == FOLLOWED_ARTISTS)
+	{
+		spotify.followedArtists([callback](const std::vector<spt::Artist> &artists)
+		{
+			QVector<QVariantList> results;
+			for (auto &artist : artists)
+			{
+				results.append({
+					artist.name, artist.id, RoleArtistId
+				});
+			}
+			callback(results);
+		});
 	}
 }

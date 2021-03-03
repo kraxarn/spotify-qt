@@ -336,20 +336,31 @@ bool MainWindow::loadSongs(const QVector<spt::Track> &tracks, const QString &sel
 
 bool MainWindow::loadAlbum(const QString &albumId, const QString &trackId)
 {
-	auto tracks = loadTracksFromCache(albumId);
-	if (tracks.isEmpty())
-		tracks = spotify->albumTracks(albumId);
-
-	if (tracks.length() <= 0)
-		setStatus("Album is empty", true);
-	else
+	auto loaded = [this, albumId, trackId](const QVector<spt::Track> &tracks)
 	{
-		leftSidePanel->setCurrentPlaylistItem(-1);
-		leftSidePanel->setCurrentLibraryItem(nullptr);
-		current.context = QString("spotify:album:%1").arg(albumId);
-		loadSongs(tracks, trackId);
-		saveTracksToCache(albumId, tracks);
+		if (tracks.length() <= 0)
+			this->setStatus("Album is empty", true);
+		else
+		{
+			this->leftSidePanel->setCurrentPlaylistItem(-1);
+			this->leftSidePanel->setCurrentLibraryItem(nullptr);
+			this->current.context = QString("spotify:album:%1").arg(albumId);
+			this->loadSongs(tracks, trackId);
+			this->saveTracksToCache(albumId, tracks);
+		}
+	};
+
+	auto tracks = loadTracksFromCache(albumId);
+	if (!tracks.empty())
+	{
+		loaded(tracks);
+		return true;
 	}
+
+	spotify->albumTracks(albumId, [&loaded](const std::vector<spt::Track> &tracks)
+	{
+		loaded(QVector<spt::Track>(tracks.begin(), tracks.end()));
+	});
 
 	return true;
 }
@@ -434,18 +445,20 @@ QVector<spt::Track> MainWindow::playlistTracks(const QString &playlistId)
 
 void MainWindow::refreshPlaylist(const spt::Playlist &playlist)
 {
-	auto newPlaylist = spotify->playlist(playlist.id);
-	QVector<spt::Track> tracks;
-	auto result = newPlaylist.loadTracks(*spotify, tracks);
-	if (!result)
+	spotify->playlist(playlist.id, [this, playlist](const spt::Playlist &newPlaylist)
 	{
-		lib::log::error("Failed to refresh playlist \"{}\" ({})",
-			playlist.name.toStdString(), playlist.id.toStdString());
-		return;
-	}
-	if (current.context.endsWith(playlist.id))
-		loadSongs(tracks);
-	cachePlaylist(newPlaylist);
+		QVector<spt::Track> tracks;
+		auto result = newPlaylist.loadTracks(*this->spotify, tracks);
+		if (!result)
+		{
+			lib::log::error("Failed to refresh playlist \"{}\" ({})",
+				playlist.name.toStdString(), playlist.id.toStdString());
+			return;
+		}
+		if (this->current.context.endsWith(playlist.id))
+			this->loadSongs(tracks);
+		this->cachePlaylist(newPlaylist);
+	});
 }
 
 void MainWindow::setStatus(const QString &message, bool important)

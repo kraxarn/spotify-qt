@@ -47,14 +47,17 @@ PlaylistEditDialog::PlaylistEditDialog(spt::Spotify *spotify, const spt::Playlis
 		pl.description = description->toPlainText();
 		pl.isPublic = isPublic->isChecked();
 		pl.collaborative = isCollaborative->isChecked();
-		auto result = spotify->editPlaylist(pl);
-		if (result.isEmpty())
+
+		spotify->editPlaylist(pl, [this](const QString &result)
 		{
-			accept();
-			return;
-		}
-		QMessageBox::warning(this, "Edit failed",
-			QString("Failed to save changes: %1").arg(result));
+			if (result.isEmpty())
+			{
+				this->accept();
+				return;
+			}
+			QMessageBox::warning(this, "Edit failed",
+				QString("Failed to save changes: %1").arg(result));
+		});
 	});
 
 	QDialogButtonBox::connect(buttons, &QDialogButtonBox::rejected, [this]

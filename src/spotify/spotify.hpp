@@ -8,6 +8,7 @@ namespace spt
 #include "../dialog/deviceselectdialog.hpp"
 #include "../enum/followtype.hpp"
 #include "lib/settings.hpp"
+#include "lib/vector.hpp"
 #include "artist.hpp"
 #include "audiofeatures.hpp"
 #include "device.hpp"
@@ -39,11 +40,14 @@ namespace spt
 
 		//region Albums
 
-		QVector<Track> albumTracks(const QString &albumID);
+		void albumTracks(const QString &albumId,
+			const std::function<void(const std::vector<Track> &tracks)> &callback);
 
-		spt::Album getAlbum(const QString &id);
+		void getAlbum(const QString &id,
+			const std::function<void(const Album &album)> &callback);
 
-		QVector<Track> albumTracks(const QString &albumId, const QString &albumName, int offset);
+		void albumTracks(const QString &albumId, const QString &albumName, int offset,
+			const std::function<void(const std::vector<Track> &tracks)> &callback);
 
 		//endregion
 
@@ -65,17 +69,25 @@ namespace spt
 
 		//region Browse
 
-		QVector<Album> newReleases(int offset = 0);
+		void newReleases(int offset,
+			const std::function<void(const std::vector<Album> &albums)> &callback);
+
+		void newReleases(const std::function<void(const std::vector<Album> &albums)> &callback);
 
 		//endregion
 
 		//region Follow
 
-		QVector<Artist> followedArtists(const QString &offset = QString());
+		void followedArtists(const QString &offset,
+			const std::function<void(const std::vector<Artist> &artists)> &callback);
 
-		void follow(FollowType type, const QList<QString> &ids);
+		void followedArtists(const std::function<void(const std::vector<Artist> &artists)> &callback);
 
-		void unfollow(FollowType type, const QList<QString> &ids);
+		void follow(FollowType type, const QList<QString> &ids,
+			const std::function<void(const QString &status)> &callback);
+
+		void unfollow(FollowType type, const QList<QString> &ids,
+			const std::function<void(const QString &status)> &callback);
 
 		void isFollowing(FollowType type, const QList<QString> &ids,
 			const std::function<void(const std::vector<bool> &follows)> &callback);
@@ -84,21 +96,26 @@ namespace spt
 
 		//region Library
 
-		QVector<Album> savedAlbums();
+		void savedAlbums(const std::function<void(const std::vector<Album> &albums)> &callback);
 
-		QVector<Track> savedTracks(int offset = 0);
+		void savedTracks(const std::function<void(const std::vector<Track> &albums)> &callback);
 
-		QString addSavedTrack(const QString &trackId);
+		void savedTracks(int offset,
+			const std::function<void(const std::vector<Track> &albums)> &callback);
 
-		QString removeSavedTrack(const QString &trackId);
+		void addSavedTrack(const QString &trackId,
+			const std::function<void(const QString &result)> &callback);
+
+		void removeSavedTrack(const QString &trackId,
+			const std::function<void(const QString &result)> &callback);
 
 		//endregion
 
 		//region Personalization
 
-		QVector<Artist> topArtists();
+		void topArtists(const std::function<void(const std::vector<Artist> &artists)> &callback);
 
-		QVector<Track> topTracks();
+		void topTracks(const std::function<void(const std::vector<Track> &tracks)> &callback);
 
 		//endregion
 
@@ -111,59 +128,77 @@ namespace spt
 
 		void devices(const std::function<void(const std::vector<Device> &devices)> &callback);
 
-		QString playTracks(int trackIndex, const QString &context);
+		void playTracks(int trackIndex, const QString &context,
+			const std::function<void(const QString &result)> &callback);
 
-		QString playTracks(int trackIndex, const QList<QString> &all);
+		void playTracks(int trackIndex, const QList<QString> &all,
+			const std::function<void(const QString &result)> &callback);
 
-		QString playTracks(const QString &context);
+		void playTracks(const QString &context,
+			const std::function<void(const QString &result)> &callback);
 
-		QString resume();
+		void resume(const std::function<void(const QString &result)> &callback);
 
-		QString pause();
+		void pause(const std::function<void(const QString &result)> &callback);
 
-		QString next();
+		void next(const std::function<void(const QString &result)> &callback);
 
-		QString previous();
+		void previous(const std::function<void(const QString &result)> &callback);
 
-		QString seek(int position);
+		void seek(int position,
+			const std::function<void(const QString &result)> &callback);
 
-		QString setRepeat(const QString &state);
+		void setRepeat(const QString &state,
+			const std::function<void(const QString &result)> &callback);
 
-		QString setVolume(int volume);
+		void setVolume(int volume,
+			const std::function<void(const QString &result)> &callback);
 
-		QString setShuffle(bool enabled);
+		void setShuffle(bool enabled,
+			const std::function<void(const QString &result)> &callback);
 
-		QVector<Track> recentlyPlayed();
+		void recentlyPlayed(const std::function<void(const std::vector<Track> &tracks)> &callback);
 
-		QString addToQueue(const QString &uri);
+		void addToQueue(const QString &uri,
+			const std::function<void(const QString &result)> &callback);
 
 		//endregion
 
 		//region Playlists
 
-		QVector<Playlist> playlists(int offset = 0);
+		void playlists(int offset,
+			const std::function<void(const std::vector<Playlist> &playlists)> &callback);
 
-		Playlist playlist(const QString &playlistId);
+		void playlists(const std::function<void(const std::vector<Playlist> &playlists)> &callback);
 
-		QString editPlaylist(const Playlist &playlist);
+		void playlist(const QString &playlistId,
+			const std::function<void(const Playlist &playlist)> &callback);
 
-		QString addToPlaylist(const QString &playlistId, const QString &trackId);
+		void editPlaylist(const Playlist &playlist,
+			const std::function<void(const QString &result)> &callback);
 
-		QString removeFromPlaylist(const QString &playlistId, const QString &trackId, int pos);
+		void addToPlaylist(const QString &playlistId, const QString &trackId,
+			const std::function<void(const QString &result)> &callback);
+
+		void removeFromPlaylist(const QString &playlistId, const QString &trackId, int pos,
+			const std::function<void(const QString &result)> &callback);
 
 		//endregion
 
 		//region Search
 
-		SearchResults search(const QString &query);
+		void search(const QString &query,
+			const std::function<void(const SearchResults &results)> &callback);
 
 		//endregion
 
 		//region Tracks
 
-		spt::Track getTrack(const QString &id);
+		void getTrack(const QString &id,
+			const std::function<void(const Track &track)> &callback);
 
-		AudioFeatures trackAudioFeatures(QString trackId);
+		void trackAudioFeatures(const QString &trackId,
+			const std::function<void(const AudioFeatures &features)> &callback);
 
 		//endregion
 
@@ -173,7 +208,6 @@ namespace spt
 
 		//endregion
 
-		QJsonObject getAsObject(const QString &url);
 		bool isValid() const;
 
 	private:
@@ -184,37 +218,32 @@ namespace spt
 		bool refreshValid = false;
 
 		QNetworkRequest request(const QString &url);
-		QString post(const QString &url);
-		QString del(const QString &url, const QJsonDocument &json);
-		static QString errorMessage(QNetworkReply *reply);
-		static QString errorMessage(const QJsonDocument &json, const QUrl &url);
+		bool refresh();
+		static QString followTypeString(FollowType type);
+		static long secondsSinceEpoch();
 
-		/**
-		 * @deprecated Use get with callback instead
-		 */
-		QJsonDocument get(const QString &url);
+		static QString errorMessage(const QUrl &url, const QByteArray &data);
+
+		void await(QNetworkReply *reply,
+			const std::function<void(const QByteArray &response)> &callback);
+
+		void post(const QString &url,
+			const std::function<void(const QString &result)> &callback);
 
 		void get(const QString &url,
 			const std::function<void(const QJsonDocument &json)> &callback);
 
-		/**
-		 * @deprecated Use put with callback instead
-		 */
-		QString put(const QString &url, QVariantMap *body = nullptr);
-
 		void put(const QString &url, QVariantMap *body,
 			const std::function<void(const QString &result)> &callback);
 
-		template<typename T>
-		QVector<T> loadItems(const QString &url)
-		{
-			auto items = getAsObject(url)["items"].toArray();
-			QVector<T> result;
-			result.reserve(items.count());
-			for (auto item : items)
-				result.append(T(item.toObject()));
-			return result;
-		}
+		void put(const QString &url,
+			const std::function<void(const QString &result)> &callback);
+
+		void del(const QString &url, const QJsonDocument &json,
+			const std::function<void(const QString &result)> &callback);
+
+		void del(const QString &url,
+			const std::function<void(const QString &result)> &callback);
 
 		template<typename T>
 		void get(const QString &url,
@@ -234,9 +263,5 @@ namespace spt
 				callback(result);
 			});
 		}
-
-		bool refresh();
-		static QString followTypeString(FollowType type);
-		static long secondsSinceEpoch();
 	};
 }

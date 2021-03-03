@@ -43,34 +43,12 @@ QNetworkRequest Spotify::request(const QString &url)
 	return request;
 }
 
-QJsonDocument Spotify::get(const QString &url)
+void Spotify::await(QNetworkReply *reply,
+	const std::function<void(const QByteArray &response)> &callback)
 {
-	// Send request
-	auto reply = networkManager->get(request(url));
-
-	// Wait for request to finish
-	while (!reply->isFinished())
-		QCoreApplication::processEvents();
-
-	// Parse reply as json
-	auto json = QJsonDocument::fromJson(reply->readAll());
-	reply->deleteLater();
-
-	// Return parsed json
-	errorMessage(json, QUrl(url));
-	return json;
-}
-
-QJsonObject Spotify::getAsObject(const QString &url)
-{
-	return get(url).object();
-}
-
-void Spotify::get(const QString &url,
-	const std::function<void(const QJsonDocument &json)> &callback)
-{
-	// Prepare fetch of request
 	auto context = new QObject();
+	auto url = reply->url().toString();
+
 	QNetworkAccessManager::connect(networkManager, &QNetworkAccessManager::finished, context,
 		[context, url, callback](QNetworkReply *reply)
 		{
@@ -78,133 +56,125 @@ void Spotify::get(const QString &url,
 			if (replyUrl.right(replyUrl.length() - 27) != url)
 				return;
 			delete context;
-			// Parse reply as json
-			auto json = QJsonDocument::fromJson(reply->readAll());
-			reply->deleteLater();
-			callback(json);
-		});
 
-	networkManager->get(request(url));
+			callback(reply->readAll());
+			reply->deleteLater();
+		});
 }
 
-QString Spotify::put(const QString &url, QVariantMap *body)
+void Spotify::get(const QString &url,
+	const std::function<void(const QJsonDocument &json)> &callback)
 {
-	// Set in header we're sending json data
-	auto req = request(url);
-	req.setHeader(QNetworkRequest::ContentTypeHeader, QString("application/json"));
-
-	// Send the request, we don't expect any response
-	auto putData = body == nullptr ? nullptr : QJsonDocument::fromVariant(*body).toJson();
-	auto reply = errorMessage(networkManager->put(req, putData));
-	if (reply.contains("No active device found"))
-	{
-		devices([this, url, body](const std::vector<spt::Device> &devices)
+	await(networkManager->get(request(url)),
+		[callback](const QByteArray &data)
 		{
-			if (devices.size() == 1)
-			{
-				this->setDevice(devices.at(0).id,
-					[this, url, body](const QString &status)
-					{
-						// TODO: This result needs to be handled
-						this->put(url, body);
-					});
-			}
-			else if (devices.size() > 1)
-			{
-				DeviceSelectDialog dialog(devices);
-				if (dialog.exec() == QDialog::Accepted)
-				{
-					auto selected = dialog.selectedDevice();
-					if (!selected.id.isEmpty())
-					{
-						setDevice(selected.id, [this, url, body](const QString &status)
-						{
-							// TODO: This result needs to be handled
-							this->put(url, body);
-						});
-					}
-				}
-			}
+			// Parse reply as json
+			callback(QJsonDocument::fromJson(data));
 		});
-	}
-	return reply;
 }
 
 void Spotify::put(const QString &url, QVariantMap *body,
 	const std::function<void(const QString &result)> &callback)
 {
-	// Set in header we're sending json data
 	auto req = request(url);
 	req.setHeader(QNetworkRequest::ContentTypeHeader, QString("application/json"));
 
-	// Send the request, we don't expect any response
-	auto putData = body == nullptr ? nullptr : QJsonDocument::fromVariant(*body).toJson();
-	auto reply = errorMessage(networkManager->put(req, putData));
-	if (reply.contains("No active device found"))
-	{
-		devices([this, url, body, callback](const std::vector<spt::Device> &devices)
+	auto putData = body == nullptr
+		? nullptr
+		: QJsonDocument::fromVariant(*body).toJson();
+
+	await(networkManager->put(req, putData),
+		[this, url, body, callback](const QByteArray &data)
 		{
-			if (devices.size() == 1)
+			auto error = errorMessage(url, data);
+
+			if (error.contains("No active device found"))
 			{
-				this->setDevice(devices.at(0).id,
-					[this, url, body, callback](const QString &status)
-					{
-						this->put(url, body, callback);
-					});
-			}
-			else if (devices.size() > 1)
-			{
-				DeviceSelectDialog dialog(devices);
-				if (dialog.exec() == QDialog::Accepted)
+				devices([this, url, body, callback](const std::vector<spt::Device> &devices)
 				{
-					auto selected = dialog.selectedDevice();
-					if (!selected.id.isEmpty())
+					if (devices.size() == 1)
 					{
-						setDevice(selected.id, [this, url, body, callback](const QString &status)
-						{
-							this->put(url, body, callback);
-						});
+						this->setDevice(devices.at(0).id,
+							[this, url, body, callback](const QString &status)
+							{
+								this->put(url, body, callback);
+							});
 					}
-				}
+					else if (devices.size() > 1)
+					{
+						DeviceSelectDialog dialog(devices);
+						if (dialog.exec() == QDialog::Accepted)
+						{
+							auto selected = dialog.selectedDevice();
+							if (!selected.id.isEmpty())
+							{
+								setDevice(selected.id,
+									[this, url, body, callback](const QString &status)
+									{
+										this->put(url, body, callback);
+									});
+							}
+						}
+					}
+				});
 			}
 		});
-	}
 }
 
-QString Spotify::post(const QString &url)
+void Spotify::put(const QString &url,
+	const std::function<void(const QString &)> &callback)
+{
+	put(url, nullptr, callback);
+}
+
+void Spotify::post(const QString &url,
+	const std::function<void(const QString &result)> &callback)
 {
 	auto req = request(url);
 	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-	return errorMessage(networkManager->post(req, QByteArray()));
+
+	await(networkManager->post(req, QByteArray()),
+		[url, callback](const QByteArray &data)
+		{
+			callback(errorMessage(url, data));
+		});
 }
 
-QString Spotify::del(const QString &url, const QJsonDocument &json)
+void Spotify::del(const QString &url, const QJsonDocument &json,
+	const std::function<void(const QString &result)> &callback)
 {
 	auto req = request(url);
 	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-	return errorMessage(networkManager->sendCustomRequest(req, "DELETE", json.toJson()));
+
+	await(networkManager->sendCustomRequest(req, "DELETE", json.toJson()),
+		[url, callback](const QByteArray &data)
+		{
+			callback(errorMessage(url, data));
+		});
 }
 
-QString Spotify::errorMessage(QNetworkReply *reply)
+void Spotify::del(const QString &url, const std::function<void(const QString &)> &callback)
 {
-	while (!reply->isFinished())
-		QCoreApplication::processEvents();
-	auto replyBody = reply->readAll();
-	reply->deleteLater();
-	if (replyBody.isEmpty())
+	del(url, {}, callback);
+}
+
+QString Spotify::errorMessage(const QUrl &url, const QByteArray &data)
+{
+	QJsonParseError error{};
+	auto json = QJsonDocument::fromJson(data, &error);
+	if (error.error != QJsonParseError::NoError)
+	{
+		// No response, so probably no error
 		return QString();
+	}
 
-	return errorMessage(QJsonDocument::fromJson(replyBody), reply->url());
-}
-
-QString Spotify::errorMessage(const QJsonDocument &json, const QUrl &url)
-{
 	if (!json.isObject() || !json.object().contains("error"))
 		return QString();
 
 	auto message = json.object()["error"].toObject()["message"].toString();
 	if (!message.isEmpty())
 		lib::log::error("{} failed: {}", url.path().toStdString(), message.toStdString());
+
 	return message;
 }
 

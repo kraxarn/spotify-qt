@@ -37,7 +37,7 @@ VolumeButton::VolumeButton(lib::settings &settings, spt::Spotify &spotify, QWidg
 		// If using PulseAudio for volume control, update on every tick
 		QSlider::connect(volume, &QAbstractSlider::valueChanged, [](int value)
 		{
-			spt::ClientHandler::setVolume((float)value * 0.05f);
+			spt::ClientHandler::setVolume((float) value * 0.05f);
 		});
 	}
 	else
@@ -45,13 +45,17 @@ VolumeButton::VolumeButton(lib::settings &settings, spt::Spotify &spotify, QWidg
 		// If using Spotify for volume control, only update on release
 		QSlider::connect(volume, &QAbstractSlider::sliderReleased, [this]()
 		{
-			auto status = this->spotify.setVolume(volume->value() * 5);
-			if (!status.isEmpty())
-			{
-				auto window = MainWindow::find(parentWidget());
-				if (window != nullptr)
-					window->setStatus(QString("Failed to set volume: %1").arg(status), true);
-			}
+			this->spotify.setVolume(volume->value() * 5,
+				[this](const QString &status)
+				{
+					if (status.isEmpty())
+						return;
+
+					auto window = MainWindow::find(this->parentWidget());
+					if (window != nullptr)
+						window->setStatus(QString("Failed to set volume: %1")
+							.arg(status), true);
+				});
 		});
 	}
 }

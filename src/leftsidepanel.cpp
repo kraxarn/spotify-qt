@@ -138,11 +138,23 @@ void LeftSidePanel::contextInfoOpen(bool)
 	auto uri = current.playback.contextUri.split(':').last();
 
 	if (type == "album")
+	{
 		mainWindow->loadAlbum(uri);
+	}
 	else if (type == "artist")
+	{
 		mainWindow->openArtist(uri);
+	}
 	else if (type == "playlist")
 	{
+		spotify.playlist(uri, [this](const spt::Playlist &playlist)
+		{
+			auto mainWindow = MainWindow::find(this->parentWidget());
+			this->libraryList->setCurrentItem(nullptr);
+			this->playlists->setCurrentRow(-1);
+			mainWindow->loadPlaylist(playlist);
+		});
+
 		auto playlist = spotify.playlist(uri);
 		libraryList->setCurrentItem(nullptr);
 		playlists->setCurrentRow(-1);

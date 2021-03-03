@@ -10,22 +10,12 @@ AlbumMenu::AlbumMenu(spt::Spotify &spotify, const QString &albumId, QWidget *par
 	if (mainWindow == nullptr)
 		return;
 
-	tracks = mainWindow->loadTracksFromCache(albumId);
-	if (tracks.isEmpty())
-		tracks = spotify.albumTracks(albumId);
-
-	auto duration = 0;
-	for (auto &track : tracks)
-		duration += track.duration;
-	auto minutes = duration / 1000 / 60;
-	if (tracks.length() > 1)
-		addAction(QString("%1 tracks, %2%3 m")
-			.arg(tracks.length())
-			.arg(minutes >= 60 ? QString("%1 h ").arg(minutes / 60) : QString())
-			.arg(minutes % 60))->setEnabled(false);
+	trackCount = addAction("... tracks");
+	trackCount->setEnabled(false);
 
 	addSeparator();
-	auto playShuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle play");
+	playShuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle play");
+	playShuffle->setEnabled(false);
 	QAction::connect(playShuffle, &QAction::triggered, this, &AlbumMenu::shuffle);
 
 	auto share = addMenu(Icon::get("document-share"), "Share");
@@ -34,6 +24,34 @@ AlbumMenu::AlbumMenu(spt::Spotify &spotify, const QString &albumId, QWidget *par
 
 	auto shareSongOpen = share->addAction("Open in Spotify");
 	QAction::connect(shareSongOpen, &QAction::triggered, this, &AlbumMenu::shareOpen);
+
+	tracksLoaded(mainWindow->loadTracksFromCache(albumId));
+	if (tracks.empty())
+	{
+		spotify.albumTracks(albumId, [this](const std::vector<spt::Track> &result)
+		{
+			this->tracksLoaded(QVector<spt::Track>(result.begin(), result.end()));
+		});
+	}
+}
+
+void AlbumMenu::tracksLoaded(const QVector<spt::Track> &result)
+{
+	if (result.empty())
+		return;
+	tracks = result;
+
+	playShuffle->setEnabled(true);
+
+	auto duration = 0;
+	for (auto &track : tracks)
+		duration += track.duration;
+	auto minutes = duration / 1000 / 60;
+
+	trackCount->setText(QString("%1 tracks, %2%3 m")
+		.arg(tracks.length())
+		.arg(minutes >= 60 ? QString("%1 h ").arg(minutes / 60) : QString())
+		.arg(minutes % 60));
 }
 
 void AlbumMenu::shuffle(bool)

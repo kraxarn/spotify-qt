@@ -9,47 +9,59 @@ MediaPlayerPlayer::MediaPlayerPlayer(spt::Spotify *spotify, QObject *parent)
 {
 }
 
+std::function<void(const QString &)> MediaPlayerPlayer::getCallback(const QString &name) const
+{
+	return [name](const QString &status)
+	{
+		if (status.isEmpty())
+			return;
+
+		lib::log::error("MediaPlayerPlayer.{} failed: {}",
+			name.toStdString(), status.toStdString());
+	};
+}
+
 void MediaPlayerPlayer::Next() const
 {
-	spotify->next();
+	spotify->next(getCallback("Next"));
 }
 
 void MediaPlayerPlayer::Pause() const
 {
-	spotify->pause();
+	spotify->pause(getCallback("Pause"));
 }
 
 void MediaPlayerPlayer::Play() const
 {
-	spotify->resume();
+	spotify->resume(getCallback("Play"));
 }
 
 void MediaPlayerPlayer::PlayPause() const
 {
 	if (currentPlayback().isPlaying)
-		spotify->pause();
+		spotify->pause(getCallback("PlayPause"));
 	else
-		spotify->resume();
+		spotify->resume(getCallback("PlayPause"));
 }
 
 void MediaPlayerPlayer::Previous() const
 {
-	spotify->previous();
+	spotify->previous(getCallback("Previous"));
 }
 
 void MediaPlayerPlayer::Seek(qint64 offset) const
 {
-	spotify->seek(offset);
+	spotify->seek(offset, getCallback("Seek"));
 }
 
 void MediaPlayerPlayer::SetPosition(const QDBusObjectPath &trackId, qint64 position) const
 {
-	spotify->seek(position);
+	spotify->seek(position, getCallback("SetPosition"));
 }
 
 void MediaPlayerPlayer::Stop() const
 {
-	spotify->pause();
+	spotify->pause(getCallback("Stop"));
 }
 
 bool MediaPlayerPlayer::canControl() const
@@ -69,7 +81,8 @@ double MediaPlayerPlayer::getVolume() const
 
 void MediaPlayerPlayer::setVolume(double value) const
 {
-	spotify->setVolume((int) (value * 100));
+	spotify->setVolume((int) (value * 100),
+		getCallback("setVolume"));
 }
 
 qint64 MediaPlayerPlayer::position() const
@@ -105,7 +118,7 @@ bool MediaPlayerPlayer::shuffle() const
 
 void MediaPlayerPlayer::setShuffle(bool value) const
 {
-	spotify->setShuffle(value);
+	spotify->setShuffle(value, getCallback("setShuffle"));
 }
 
 void MediaPlayerPlayer::emitMetadataChange() const

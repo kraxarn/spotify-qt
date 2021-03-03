@@ -89,6 +89,8 @@ namespace mp
 		spt::Spotify *spotify;
 
 		spt::Playback currentPlayback() const;
+
+		std::function<void(const QString &status)> getCallback(const QString &name) const;
 	};
 }
 
