@@ -173,8 +173,13 @@ namespace spt
 
 		//endregion
 
-		QJsonObject getAsObject(const QString &url);
 		bool isValid() const;
+
+		/**
+		 * @note Calls should not be done directly
+		 * @deprecated
+		 */
+		QJsonObject getAsObject(const QString &url);
 
 	private:
 		qint64 lastAuth;
@@ -184,27 +189,59 @@ namespace spt
 		bool refreshValid = false;
 
 		QNetworkRequest request(const QString &url);
-		QString post(const QString &url);
-		QString del(const QString &url, const QJsonDocument &json);
-		static QString errorMessage(QNetworkReply *reply);
-		static QString errorMessage(const QJsonDocument &json, const QUrl &url);
 
-		/**
-		 * @deprecated Use get with callback instead
-		 */
-		QJsonDocument get(const QString &url);
+		//region New asynchronous
+
+		void await(QNetworkReply *reply,
+			const std::function<void(const QByteArray &response)> &callback);
 
 		void get(const QString &url,
 			const std::function<void(const QJsonDocument &json)> &callback);
 
-		/**
-		 * @deprecated Use put with callback instead
-		 */
-		QString put(const QString &url, QVariantMap *body = nullptr);
-
 		void put(const QString &url, QVariantMap *body,
 			const std::function<void(const QString &result)> &callback);
 
+		//endregion
+
+		//region Old synchronous
+
+		/**
+		 * @note Old synchronous method
+		 */
+		QString post(const QString &url);
+
+		/**
+		 * @note Old synchronous method
+		 */
+		QString del(const QString &url, const QJsonDocument &json);
+
+		/**
+		 * @deprecated
+		 */
+		QJsonDocument get(const QString &url);
+
+		/**
+		 * @deprecated
+		 */
+		QString put(const QString &url, QVariantMap *body = nullptr);
+
+		//endregion
+
+		/**
+		 * @deprecated
+		 */
+		static QString errorMessage(QNetworkReply *reply);
+
+		/**
+		 * @deprecated
+		 */
+		static QString errorMessage(const QJsonDocument &json, const QUrl &url);
+
+		static QString errorMessage(const QUrl &url, const QByteArray &data);
+
+		/**
+		 * @deprecated
+		 */
 		template<typename T>
 		QVector<T> loadItems(const QString &url)
 		{

@@ -43,6 +43,45 @@ QNetworkRequest Spotify::request(const QString &url)
 	return request;
 }
 
+void Spotify::await(QNetworkReply *reply,
+	const std::function<void(const QByteArray &response)> &callback)
+{
+	auto context = new QObject();
+	auto url = reply->url().toString();
+
+	QNetworkAccessManager::connect(networkManager, &QNetworkAccessManager::finished, context,
+		[context, url, callback](QNetworkReply *reply)
+		{
+			auto replyUrl = reply->url().toString();
+			if (replyUrl.right(replyUrl.length() - 27) != url)
+				return;
+			delete context;
+
+			callback(reply->readAll());
+			reply->deleteLater();
+		});
+}
+
+QString Spotify::errorMessage(const QUrl &url, const QByteArray &data)
+{
+	QJsonParseError error{};
+	auto json = QJsonDocument::fromJson(data, &error);
+	if (error.error != QJsonParseError::NoError)
+	{
+		// No response, so probably no error
+		return QString();
+	}
+
+	if (!json.isObject() || !json.object().contains("error"))
+		return QString();
+
+	auto message = json.object()["error"].toObject()["message"].toString();
+	if (!message.isEmpty())
+		lib::log::error("{} failed: {}", url.path().toStdString(), message.toStdString());
+
+	return message;
+}
+
 QJsonDocument Spotify::get(const QString &url)
 {
 	// Send request
@@ -69,22 +108,12 @@ QJsonObject Spotify::getAsObject(const QString &url)
 void Spotify::get(const QString &url,
 	const std::function<void(const QJsonDocument &json)> &callback)
 {
-	// Prepare fetch of request
-	auto context = new QObject();
-	QNetworkAccessManager::connect(networkManager, &QNetworkAccessManager::finished, context,
-		[context, url, callback](QNetworkReply *reply)
+	await(networkManager->get(request(url)),
+		[callback](const QByteArray &data)
 		{
-			auto replyUrl = reply->url().toString();
-			if (replyUrl.right(replyUrl.length() - 27) != url)
-				return;
-			delete context;
 			// Parse reply as json
-			auto json = QJsonDocument::fromJson(reply->readAll());
-			reply->deleteLater();
-			callback(json);
+			callback(QJsonDocument::fromJson(data));
 		});
-
-	networkManager->get(request(url));
 }
 
 QString Spotify::put(const QString &url, QVariantMap *body)
