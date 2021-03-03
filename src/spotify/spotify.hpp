@@ -111,11 +111,14 @@ namespace spt
 
 		void devices(const std::function<void(const std::vector<Device> &devices)> &callback);
 
-		QString playTracks(int trackIndex, const QString &context);
+		void playTracks(int trackIndex, const QString &context,
+			const std::function<void(const QString &result)> &callback);
 
-		QString playTracks(int trackIndex, const QList<QString> &all);
+		void playTracks(int trackIndex, const QList<QString> &all,
+			const std::function<void(const QString &result)> &callback);
 
-		QString playTracks(const QString &context);
+		void playTracks(const QString &context,
+			const std::function<void(const QString &result)> &callback);
 
 		QString resume();
 
