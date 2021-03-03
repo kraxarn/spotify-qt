@@ -128,9 +128,14 @@ void LibraryList::doubleClicked(QTreeWidgetItem *item, int)
 		trackIds.append(QString("spotify:track:%1").arg(track.id));
 
 	// Play in context of all tracks
-	auto status = spotify.playTracks(0, trackIds);
-	if (!status.isEmpty())
-		mainWindow->setStatus(QString("Failed to start playback: %1").arg(status), true);
+	spotify.playTracks(0, trackIds, [mainWindow](const QString &status)
+	{
+		if (!status.isEmpty())
+		{
+			mainWindow->setStatus(QString("Failed to start playback: %1")
+				.arg(status), true);
+		}
+	});
 }
 
 void LibraryList::expanded(QTreeWidgetItem *item)

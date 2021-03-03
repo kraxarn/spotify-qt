@@ -48,12 +48,17 @@ void AlbumMenu::shuffle(bool)
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
 	initialIndex = QRandomGenerator::global()->bounded(0, tracks.length());
 #endif
-	auto status = spotify.playTracks(initialIndex, QString("spotify:album:%1").arg(albumId));
 
-	if (status.isEmpty())
-		status = spotify.setShuffle(true);
-	if (!status.isEmpty())
-		((MainWindow *) parent)->setStatus(status, true);
+	spotify.playTracks(initialIndex, QString("spotify:album:%1").arg(albumId),
+		[this](const QString &status)
+		{
+			auto newStatus = status.isEmpty()
+				? spotify.setShuffle(true)
+				: status;
+
+			if (!newStatus.isEmpty())
+				((MainWindow *) parent)->setStatus(newStatus, true);
+		});
 }
 
 void AlbumMenu::shareAlbum(bool)

@@ -224,10 +224,16 @@ void SearchView::trackClick(QTreeWidgetItem *item, int)
 	// Do we want it to continue playing results?
 	auto trackId = QString("spotify:track:%1")
 		.arg(item->data(0, RoleTrackId).toString());
-	auto status = spotify.playTracks(0, QStringList(trackId));
-	if (!status.isEmpty())
-		MainWindow::find(parentWidget())
-			->setStatus(QString("Failed to play track: %1").arg(status), true);
+
+	spotify.playTracks(0, QStringList(trackId), [this](const QString &status)
+	{
+		if (!status.isEmpty())
+		{
+			auto mainWindow = MainWindow::find(this->parentWidget());
+			mainWindow->setStatus(QString("Failed to play track: %1")
+				.arg(status), true);
+		}
+	});
 }
 
 void SearchView::trackMenu(const QPoint &pos)

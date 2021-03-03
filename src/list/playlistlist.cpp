@@ -38,10 +38,15 @@ void PlaylistList::doubleClicked(QListWidgetItem *item)
 	auto currentPlaylist = mainWindow->getPlaylist(getItemIndex(item));
 	mainWindow->loadPlaylist(currentPlaylist);
 
-	auto result = spotify.playTracks(
-		QString("spotify:playlist:%1").arg(currentPlaylist.id));
-	if (!result.isEmpty())
-		mainWindow->setStatus(QString("Failed to start playlist playback: %1").arg(result), true);
+	spotify.playTracks(QString("spotify:playlist:%1").arg(currentPlaylist.id),
+		[mainWindow](const QString &result)
+		{
+			if (!result.isEmpty())
+			{
+				mainWindow->setStatus(QString("Failed to start playlist playback: %1")
+					.arg(result), true);
+			}
+		});
 }
 
 void PlaylistList::menu(const QPoint &pos)

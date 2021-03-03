@@ -46,13 +46,17 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
 			initialIndex = QRandomGenerator::global()->bounded(0, tracks.length());
 #endif
-			auto status = spotify.playTracks(initialIndex,
-				QString("spotify:playlist:%1").arg(playlist.id));
 
-			if (status.isEmpty())
-				status = spotify.setShuffle(true);
-			if (!status.isEmpty())
-				window->setStatus(status, true);
+			spotify.playTracks(initialIndex, QString("spotify:playlist:%1")
+				.arg(playlist.id), [&spotify, window](const QString &status)
+			{
+				auto newStatus = status.isEmpty()
+					? spotify.setShuffle(true)
+					: status;
+
+				if (!newStatus.isEmpty())
+					window->setStatus(status, true);
+			});
 		});
 
 	if (isOwner)

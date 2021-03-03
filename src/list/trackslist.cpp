@@ -64,19 +64,28 @@ void TracksList::clicked(QTreeWidgetItem *item, int)
 		return;
 	}
 
+	auto callback = [mainWindow, item](const QString &status)
+	{
+		if (!status.isEmpty())
+		{
+			mainWindow->setStatus(QString("Failed to start playback: %1")
+				.arg(status), true);
+		}
+		else
+			mainWindow->setPlayingTrackItem(item);
+
+		mainWindow->refresh();
+	};
+
 	// If we played from library, we don't have any context
 	auto allTracks = mainWindow->currentTracks();
-	auto status = mainWindow->getCurrentLibraryItem() != nullptr
-		|| !this->settings.general.spotify_playback_order
-		? this->spotify.playTracks(currentIndex().row(), allTracks)
-		: this->spotify.playTracks(trackIndex, mainWindow->getSptContext());
-
-	if (!status.isEmpty())
-		mainWindow->setStatus(QString("Failed to start playback: %1").arg(status), true);
+	if (mainWindow->getCurrentLibraryItem() != nullptr
+		|| !this->settings.general.spotify_playback_order)
+	{
+		this->spotify.playTracks(currentIndex().row(), allTracks, callback);
+	}
 	else
-		mainWindow->setPlayingTrackItem(item);
-
-	mainWindow->refresh();
+		this->spotify.playTracks(trackIndex, mainWindow->getSptContext(), callback);
 }
 
 void TracksList::headerMenu(const QPoint &pos)
