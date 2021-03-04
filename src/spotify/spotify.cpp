@@ -151,18 +151,14 @@ QString Spotify::put(const QString &url, QVariantMap *body)
 	return reply;
 }
 
-void Spotify::put(const QString &url, QVariantMap *body,
+void Spotify::put(const QString &url, const QJsonDocument &body,
 	const std::function<void(const QString &result)> &callback)
 {
 	// Set in header we're sending json data
 	auto req = request(url);
 	req.setHeader(QNetworkRequest::ContentTypeHeader, QString("application/json"));
 
-	auto putData = body == nullptr
-		? nullptr
-		: QJsonDocument::fromVariant(*body).toJson();
-
-	await(networkManager->put(req, putData),
+	await(networkManager->put(req, body.toJson()),
 		[this, url, body, callback](const QByteArray &data)
 		{
 			auto error = errorMessage(url, data);

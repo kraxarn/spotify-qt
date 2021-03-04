@@ -1,4 +1,5 @@
 #include "spotifyapi.hpp"
+#include "../util/jsonutils.hpp"
 
 // Currently unavailable:
 // me/player/currently-playing
@@ -14,12 +15,13 @@ void Spotify::currentPlayback(const std::function<void(const spt::Playback &play
 void Spotify::setDevice(const QString &deviceId,
 	const std::function<void(const QString &status)> &callback)
 {
-	QVariantMap body;
-	body["device_ids"] = QStringList({
-		deviceId
+	QJsonDocument body({
+		QPair<QString, QJsonArray>("device_ids", {
+			deviceId
+		}),
 	});
 	currentDevice = deviceId;
-	put("me/player", &body, callback);
+	put("me/player", body, callback);
 }
 
 void Spotify::devices(const std::function<void(const std::vector<Device> &devices)> &callback)
@@ -39,16 +41,17 @@ void Spotify::playTracks(int trackIndex, const QString &context,
 {
 	lib::log::dev("Playing track {} from {}", trackIndex, context.toStdString());
 
-	QVariantMap body;
-	body["context_uri"] = context;
-	body["offset"] = QJsonObject({
-		QPair<QString, int>("position", trackIndex)
+	QJsonDocument body({
+		QPair<QString, QString>("context_uri", context),
+		QPair<QString, QJsonObject>("offset", QJsonObject({
+			QPair<QString, int>("position", trackIndex)
+		}))
 	});
 
 	put(currentDevice == nullptr || currentDevice.isEmpty()
 		? QString("me/player/play")
 		: QString("me/player/play?device_id=%1")
-			.arg(currentDevice), &body, callback);
+			.arg(currentDevice), body, callback);
 }
 
 void Spotify::playTracks(int trackIndex, const QList<QString> &all,
@@ -66,16 +69,17 @@ void Spotify::playTracks(int trackIndex, const QList<QString> &all,
 		trackIndex = 0;
 	}
 
-	QVariantMap body;
-	body["uris"] = items;
-	body["offset"] = QJsonObject({
-		QPair<QString, int>("position", trackIndex)
+	QJsonDocument body({
+		QPair<QString, QJsonArray>("uris", JsonUtils::toJsonArray(items)),
+		QPair<QString, QJsonObject>("offset", QJsonObject({
+			QPair<QString, int>("position", trackIndex)
+		}))
 	});
 
 	put(currentDevice == nullptr || currentDevice.isEmpty()
 		? QString("me/player/play")
 		: QString("me/player/play?device_id=%1")
-			.arg(currentDevice), &body, callback);
+			.arg(currentDevice), body, callback);
 }
 
 void Spotify::playTracks(const QString &context,
@@ -83,13 +87,14 @@ void Spotify::playTracks(const QString &context,
 {
 	lib::log::dev("Playing track from {}", context.toStdString());
 
-	QVariantMap body;
-	body["context_uri"] = context;
+	QJsonDocument body({
+		QPair<QString, QString>("context_uri", context),
+	});
 
 	put(currentDevice == nullptr
 		? QString("me/player/play")
 		: QString("me/player/play?device_id=%1")
-			.arg(currentDevice), &body, callback);
+			.arg(currentDevice), body, callback);
 }
 
 QString Spotify::resume()
