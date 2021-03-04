@@ -16,7 +16,7 @@ Q_OBJECT
 
 public:
 	TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QObject *parent = nullptr);
-	~TrayIcon();
+	~TrayIcon() override;
 
 	void message(const QString &message);
 	void setPixmap(const QPixmap &pixmap);

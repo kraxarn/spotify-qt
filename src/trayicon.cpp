@@ -68,7 +68,7 @@ TrayIcon::TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QObject
 
 TrayIcon::~TrayIcon()
 {
-	delete contextMenu;
+	contextMenu->deleteLater();
 }
 
 void TrayIcon::message(const QString &message)
