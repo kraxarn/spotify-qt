@@ -52,12 +52,17 @@ void AlbumMenu::shuffle(bool)
 	spotify.playTracks(initialIndex, QString("spotify:album:%1").arg(albumId),
 		[this](const QString &status)
 		{
-			auto newStatus = status.isEmpty()
-				? spotify.setShuffle(true)
-				: status;
+			auto mainWindow = (MainWindow *) parent;
+			if (!status.isEmpty())
+			{
+				mainWindow->setStatus(status, true);
+				return;
+			}
 
-			if (!newStatus.isEmpty())
-				((MainWindow *) parent)->setStatus(newStatus, true);
+			spotify.setShuffle(true, [mainWindow](const QString &status)
+			{
+				mainWindow->setStatus(status, true);
+			});
 		});
 }
 

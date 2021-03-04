@@ -1,32 +1,39 @@
 #include "trayicon.hpp"
 
 TrayIcon::TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QObject *parent)
-	: spotify(spotify), settings(settings), QSystemTrayIcon(parent)
+	: spotify(spotify),
+	settings(settings),
+	QSystemTrayIcon(parent)
 {
+	callback = [this](const QString &result)
+	{
+		this->message(result);
+	};
+
 	contextMenu = new QMenu();
 	currentTrack = contextMenu->addAction("-");
 	currentTrack->setEnabled(false);
 	contextMenu->addSeparator();
 
 	auto previous = contextMenu->addAction(Icon::get("media-skip-backward"), "Previous");
-	QAction::connect(previous, &QAction::triggered, [spotify]()
+	QAction::connect(previous, &QAction::triggered, [this, spotify]()
 	{
-		spotify->previous();
+		spotify->previous(this->callback);
 	});
 
 	playPause = contextMenu->addAction(Icon::get("media-playback-start"), "Play");
 	QAction::connect(playPause, &QAction::triggered, [this](bool checked)
 	{
 		if (playback().isPlaying)
-			this->spotify->pause();
+			this->spotify->pause(this->callback);
 		else
-			this->spotify->resume();
+			this->spotify->resume(this->callback);
 	});
 
 	auto next = contextMenu->addAction(Icon::get("media-skip-forward"), "Next");
-	QAction::connect(next, &QAction::triggered, [spotify]()
+	QAction::connect(next, &QAction::triggered, [this, spotify]()
 	{
-		spotify->next();
+		spotify->next(this->callback);
 	});
 
 	contextMenu->addSeparator();

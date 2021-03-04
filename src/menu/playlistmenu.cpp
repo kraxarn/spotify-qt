@@ -50,12 +50,16 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 			spotify.playTracks(initialIndex, QString("spotify:playlist:%1")
 				.arg(playlist.id), [&spotify, window](const QString &status)
 			{
-				auto newStatus = status.isEmpty()
-					? spotify.setShuffle(true)
-					: status;
-
-				if (!newStatus.isEmpty())
+				if (!status.isEmpty())
+				{
 					window->setStatus(status, true);
+					return;
+				}
+
+				spotify.setShuffle(true, [window](const QString &status)
+				{
+					window->setStatus(status, true);
+				});
 			});
 		});
 

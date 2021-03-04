@@ -29,4 +29,6 @@ private:
 	QAction *currentTrack;
 	spt::Spotify *spotify;
 	const lib::settings &settings;
+
+	std::function<void(const QString &result)> callback;
 };

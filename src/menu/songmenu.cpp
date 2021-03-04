@@ -141,11 +141,15 @@ void SongMenu::like(bool)
 
 void SongMenu::addToQueue(bool)
 {
-	auto status = spotify.addToQueue(trackId.startsWith("spotify:track")
+	auto uri = trackId.startsWith("spotify:track")
 		? trackId
-		: QString("spotify:track:%1").arg(trackId));
-	if (!status.isEmpty())
-		MainWindow::find(parentWidget())->setStatus(status, true);
+		: QString("spotify:track:%1").arg(trackId);
+
+	spotify.addToQueue(uri, [this](const QString &status)
+	{
+		if (!status.isEmpty())
+			MainWindow::find(this->parentWidget())->setStatus(status, true);
+	});
 }
 
 void SongMenu::addToPlaylist(QAction *action)
