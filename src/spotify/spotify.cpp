@@ -187,7 +187,7 @@ void Spotify::put(const QString &url, QVariantMap *body,
 							auto selected = dialog.selectedDevice();
 							if (!selected.id.isEmpty())
 							{
-								setDevice(selected.id,
+								this->setDevice(selected.id,
 									[this, url, body, callback](const QString &status)
 									{
 										this->put(url, body, callback);
@@ -196,7 +196,10 @@ void Spotify::put(const QString &url, QVariantMap *body,
 						}
 					}
 				});
+				return;
 			}
+
+			callback(error);
 		});
 }
 
