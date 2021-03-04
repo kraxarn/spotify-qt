@@ -120,25 +120,30 @@ namespace spt
 		void playTracks(const QString &context,
 			const std::function<void(const QString &result)> &callback);
 
-		QString resume();
+		void resume(const std::function<void(const QString &result)> &callback);
 
-		QString pause();
+		void pause(const std::function<void(const QString &result)> &callback);
 
-		QString next();
+		void next(const std::function<void(const QString &result)> &callback);
 
-		QString previous();
+		void previous(const std::function<void(const QString &result)> &callback);
 
-		QString seek(int position);
+		void seek(int position,
+			const std::function<void(const QString &result)> &callback);
 
-		QString setRepeat(const QString &state);
+		void setRepeat(const QString &state,
+			const std::function<void(const QString &result)> &callback);
 
-		QString setVolume(int volume);
+		void setVolume(int volume,
+			const std::function<void(const QString &result)> &callback);
 
-		QString setShuffle(bool enabled);
+		void setShuffle(bool enabled,
+			const std::function<void(const QString &result)> &callback);
 
 		QVector<Track> recentlyPlayed();
 
-		QString addToQueue(const QString &uri);
+		void addToQueue(const QString &uri,
+			const std::function<void(const QString &result)> &callback);
 
 		//endregion
 
