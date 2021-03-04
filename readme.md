@@ -32,8 +32,8 @@ If you want to maintain the package on a system not in the list below, you are v
 You can also get it as a [snap](https://snapcraft.io/spotify-qt), or just run `snap install spotify-qt`, if that's your thing.
 
 ## Building yourself
-Make sure you have Qt (5.12+/6.0+), CMake (3.5+) and various build tools like `make`, `g++` and `git`.
-Keep in mind that the master branch is considered unstable at all times.
+Make sure you have Qt (5.12+/6.0+) with SVG support, CMake (3.5+) and various build tools like 
+`make`, `g++` and `git`. Keep in mind that the master branch is considered unstable at all times.
 Therefore, it's recommended to use the stable branch, which is updated after each new stable release,
 only including important bug fixes, unless you wanted to try out new features.
 ```
