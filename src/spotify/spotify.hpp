@@ -204,12 +204,18 @@ namespace spt
 		void put(const QString &url, const QJsonDocument &body,
 			const std::function<void(const QString &result)> &callback);
 
+		void put(const QString &url,
+			const std::function<void(const QString &result)> &callback);
+
+		void post(const QString &url,
+			const std::function<void(const QString &result)> &callback);
+
 		//endregion
 
 		//region Old synchronous
 
 		/**
-		 * @note Old synchronous method
+		 * @deprecated
 		 */
 		QString post(const QString &url);
 

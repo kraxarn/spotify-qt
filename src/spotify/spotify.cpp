@@ -199,6 +199,26 @@ void Spotify::put(const QString &url, const QJsonDocument &body,
 		});
 }
 
+void Spotify::put(const QString &url,
+	const std::function<void(const QString &result)> &callback)
+{
+	put(url, QJsonDocument(), callback);
+}
+
+void Spotify::post(const QString &url,
+	const std::function<void(const QString &result)> &callback)
+{
+	auto req = request(url);
+	req.setHeader(QNetworkRequest::ContentTypeHeader,
+		"application/x-www-form-urlencoded");
+
+	await(networkManager->post(req, QByteArray()),
+		[url, callback](const QByteArray &data)
+		{
+			callback(errorMessage(url, data));
+		});
+}
+
 QString Spotify::post(const QString &url)
 {
 	auto req = request(url);
