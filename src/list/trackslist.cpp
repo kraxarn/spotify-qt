@@ -143,14 +143,14 @@ void TracksList::headerMenu(const QPoint &pos)
 
 void TracksList::resizeEvent(QResizeEvent *event)
 {
+	if (settings.general.track_list_resize_mode != lib::resize_auto)
+		return;
+
 	resizeHeaders(event->size());
 }
 
 void TracksList::resizeHeaders(const QSize &newSize)
 {
-	if (settings.general.track_list_resize_mode != lib::resize_auto)
-		return;
-
 	const int indexSize = 60;
 	const int lengthSize = 70;
 	const int addedSize = 140;
