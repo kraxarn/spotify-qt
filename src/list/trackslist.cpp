@@ -150,7 +150,7 @@ void TracksList::resizeEvent(QResizeEvent *event)
 	const int indexSize = 60;
 	const int lengthSize = 70;
 	const int addedSize = 140;
-	auto size = (event->size().width() - indexSize - lengthSize - addedSize) / 3;
+	auto size = (event->size().width() - indexSize - lengthSize - addedSize) / 7;
 
 	if (size < 60)
 		size = 60;
@@ -158,11 +158,11 @@ void TracksList::resizeEvent(QResizeEvent *event)
 	// #
 	header()->resizeSection(0, indexSize);
 	// Title
-	header()->resizeSection(1, size);
+	header()->resizeSection(1, size * 3);
 	// Artist
-	header()->resizeSection(2, size);
+	header()->resizeSection(2, size * 2);
 	// Album
-	header()->resizeSection(3, size);
+	header()->resizeSection(3, size * 2);
 	// Length
 	header()->resizeSection(4, lengthSize);
 	// Added
