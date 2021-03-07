@@ -172,7 +172,7 @@ bool InterfacePage::save()
 	{
 		auto tracksList = dynamic_cast<TracksList *>(mainWindow->getSongsTree());
 		if (tracksList != nullptr)
-			tracksList->updateResizeMode(newResizeMode);
+			tracksList->updateResizeMode(resizeMode);
 	}
 	settings.general.track_list_resize_mode = resizeMode;
 
