@@ -25,7 +25,10 @@ TrackListItem::TrackListItem(const QStringList &strings,
 
 	// Title, artist album
 	for (auto i = 1; i < strings.length() - 2; i++)
-		setToolTip(i, strings.at(i));
+	{
+		if (toolTip(i).isEmpty())
+			setToolTip(i, strings.at(i));
+	}
 
 	// Length
 	auto length = strings.at(strings.length() - 2).split(':');
