@@ -1,6 +1,9 @@
 #include "tracklistitem.hpp"
 
-TrackListItem::TrackListItem(const QStringList &strings, const spt::Track &track, const QIcon &icon, int index)
+TrackListItem::TrackListItem(const QStringList &strings,
+	const spt::Track &track,
+	const QIcon &icon,
+	int index)
 	: QTreeWidgetItem(strings)
 {
 	setIcon(0, icon);
@@ -20,6 +23,19 @@ TrackListItem::TrackListItem(const QStringList &strings, const spt::Track &track
 			: "Unavailable");
 	}
 
+	// Title, artist album
+	for (auto i = 1; i < strings.length() - 2; i++)
+		setToolTip(i, strings.at(i));
+
+	// Length
+	auto length = strings.at(strings.length() - 2).split(':');
+	setToolTip(strings.length() - 2,
+		QString("%1m %2s (%3s total)")
+			.arg(length.at(0))
+			.arg(length.at(1))
+			.arg(track.duration / 1000));
+
+	// Added
 	if (!DateUtils::isEmpty(track.addedAt))
 	{
 		setToolTip(strings.length() - 1,
