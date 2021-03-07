@@ -1,7 +1,8 @@
 #include "mainwindow.hpp"
 
 MainWindow::MainWindow(lib::settings &settings)
-	: settings(settings), QMainWindow()
+	: settings(settings),
+	QMainWindow()
 {
 	// Splash
 	auto splash = new SplashDialog();
