@@ -27,9 +27,9 @@ LeftSidePanel::LeftSidePanel(spt::Spotify &spotify, lib::settings &settings,
 
 	// Current context info
 	auto contextLayout = new QHBoxLayout();
-	contextIcon = new QLabel();
+	contextIcon = new QLabel(this);
 	contextIcon->setVisible(false);
-	contextInfo = new QLabel();
+	contextInfo = new QLabel(this);
 	contextInfo->setToolTip("Currently playing from");
 	contextInfo->setVisible(false);
 	contextLayout->addSpacing(16);
