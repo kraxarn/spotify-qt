@@ -16,9 +16,9 @@ TracksList::TracksList(spt::Spotify &spotify, lib::settings &settings, QWidget *
 		"Title", "Artist", "Album", "Length", "Added"
 	});
 	header()->setSectionsMovable(false);
-	if (settings.general.track_list_resize_mode == lib::resize_fit_content)
-		header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 	header()->setSortIndicator(settings.general.song_header_sort_by + 1, Qt::AscendingOrder);
+
+	updateResizeMode(settings.general.track_list_resize_mode);
 
 	// Hide specified columns
 	for (auto &value : settings.general.hidden_song_headers)
@@ -143,13 +143,18 @@ void TracksList::headerMenu(const QPoint &pos)
 
 void TracksList::resizeEvent(QResizeEvent *event)
 {
+	resizeHeaders(event->size());
+}
+
+void TracksList::resizeHeaders(const QSize &newSize)
+{
 	if (settings.general.track_list_resize_mode != lib::resize_auto)
 		return;
 
 	const int indexSize = 60;
 	const int lengthSize = 70;
 	const int addedSize = 140;
-	auto size = (event->size().width() - indexSize - lengthSize - addedSize) / 7;
+	auto size = (newSize.width() - indexSize - lengthSize - addedSize) / 7;
 
 	if (size < 60)
 		size = 60;
@@ -166,4 +171,31 @@ void TracksList::resizeEvent(QResizeEvent *event)
 	header()->resizeSection(4, lengthSize);
 	// Added
 	header()->resizeSection(5, addedSize);
+}
+
+void TracksList::updateResizeMode(lib::resize_mode mode)
+{
+	QHeaderView::ResizeMode resizeMode;
+
+	switch (mode)
+	{
+		case lib::resize_auto:
+			resizeMode = QHeaderView::Fixed;
+			break;
+
+		case lib::resize_fit_content:
+			resizeMode = QHeaderView::ResizeToContents;
+			break;
+
+		case lib::resize_custom:
+			resizeMode = QHeaderView::Interactive;
+			break;
+
+		default:
+			resizeMode = header()->sectionResizeMode(0);
+			break;
+	}
+
+	header()->setSectionResizeMode(resizeMode);
+	resizeHeaders(size());
 }

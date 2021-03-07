@@ -166,16 +166,15 @@ bool InterfacePage::save()
 	}
 
 	// Track list resize mode
+	auto resizeMode = static_cast<lib::resize_mode>(itfResizeMode->currentIndex());
 	if (mainWindow != nullptr
-		&& itfResizeMode->currentIndex() != settings.general.track_list_resize_mode)
+		&& settings.general.track_list_resize_mode != resizeMode)
 	{
-		auto resizeMode = itfResizeMode->currentIndex() == lib::resize_fit_content
-			? QHeaderView::ResizeToContents
-			: QHeaderView::Custom;
-		mainWindow->getSongsTree()->header()->setSectionResizeMode(resizeMode);
+		auto tracksList = dynamic_cast<TracksList *>(mainWindow->getSongsTree());
+		if (tracksList != nullptr)
+			tracksList->updateResizeMode(newResizeMode);
 	}
-	settings.general.track_list_resize_mode =
-		static_cast<lib::resize_mode>(itfResizeMode->currentIndex());
+	settings.general.track_list_resize_mode = resizeMode;
 
 	// Track numbers
 	if (mainWindow != nullptr)
