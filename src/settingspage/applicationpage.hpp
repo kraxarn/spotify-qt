@@ -19,7 +19,6 @@ public:
 private:
 	QCheckBox *appMedia = nullptr;
 	QCheckBox *appPulse = nullptr;
-	QCheckBox *appSptOrder = nullptr;
 	QCheckBox *appWhatsNew = nullptr;
 	QComboBox *appRefresh = nullptr;
 	QComboBox *appMaxQueue = nullptr;

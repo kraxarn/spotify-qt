@@ -63,12 +63,6 @@ QWidget *ApplicationPage::app()
 	layout->addWidget(appMedia);
 #endif
 
-	// Spotify playback order
-	appSptOrder = new QCheckBox("Play in order of track number", this);
-	appSptOrder->setToolTip("Play tracks in order of track number, instead of by order in list.");
-	appSptOrder->setChecked(settings.general.spotify_playback_order);
-	layout->addWidget(appSptOrder);
-
 	// What's new dialog
 	appWhatsNew = new QCheckBox("Show what's new on start", this);
 	appWhatsNew->setToolTip("Show what's new in the latest version after the app has been updated");
@@ -131,7 +125,6 @@ bool ApplicationPage::save()
 
 	// Other application stuff
 	settings.general.show_changelog = appWhatsNew->isChecked();
-	settings.general.spotify_playback_order = appSptOrder->isChecked();
 
 	return true;
 }

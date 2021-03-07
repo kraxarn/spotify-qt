@@ -45,7 +45,6 @@ void settings::from_json(const nlohmann::json &json)
 	setValue(g, "show_changelog", general.show_changelog);
 	setValue(g, "show_context_info", general.show_context_info);
 	setValue(g, "song_header_sort_by", general.song_header_sort_by);
-	setValue(g, "spotify_playback_order", general.spotify_playback_order);
 	setValue(g, "style", general.style);
 	setValue(g, "style_palette", general.style_palette);
 	setValue(g, "track_list_resize_mode", general.track_list_resize_mode);
@@ -130,7 +129,6 @@ nlohmann::json settings::to_json() const
 			{"show_changelog", general.show_changelog},
 			{"show_context_info", general.show_context_info},
 			{"song_header_sort_by", general.song_header_sort_by},
-			{"spotify_playback_order", general.spotify_playback_order},
 			{"style", general.style},
 			{"style_palette", general.style_palette},
 			{"track_list_resize_mode", general.track_list_resize_mode},

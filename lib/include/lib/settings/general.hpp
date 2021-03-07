@@ -93,11 +93,6 @@ namespace lib
 			bool show_context_info = true;
 
 			/**
-			 * Play tracks in Spotify order instead of queueing all items
-			 */
-			bool spotify_playback_order = true;
-
-			/**
 			 * Show album art in tray icon
 			 */
 			bool tray_album_art = false;
