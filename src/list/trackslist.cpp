@@ -78,9 +78,9 @@ void TracksList::clicked(QTreeWidgetItem *item, int)
 	};
 
 	// If we played from library, we don't have any context
-	auto allTracks = mainWindow->currentTracks();
 	if (mainWindow->getCurrentLibraryItem() != nullptr)
 	{
+		auto allTracks = mainWindow->currentTracks();
 		this->spotify.playTracks(currentIndex().row(), allTracks, callback);
 	}
 	else
