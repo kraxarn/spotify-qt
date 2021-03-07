@@ -190,6 +190,8 @@ void SearchView::search()
 		});
 		item->setIcon(0, mainWindow->getAlbum(album.image));
 		item->setData(0, RoleAlbumId, album.id);
+		item->setToolTip(0, album.name);
+		item->setToolTip(1, album.artist);
 		albumList->addTopLevelItem(item);
 	}
 
@@ -203,6 +205,7 @@ void SearchView::search()
 		spt::Playlist playlist(json);
 		auto item = new QListWidgetItem(playlist.name, playlistList);
 		item->setData(RolePlaylistId, playlist.id);
+		item->setToolTip(playlist.name);
 	}
 
 	// Tracks
@@ -214,6 +217,8 @@ void SearchView::search()
 		item->setData(0, RoleTrackId, track.id);
 		item->setData(0, RoleArtistId, track.artistId);
 		item->setData(0, RoleAlbumId, track.albumId);
+		item->setToolTip(0, track.name);
+		item->setToolTip(1, track.artist);
 	}
 
 	// Search done
@@ -257,4 +262,5 @@ void SearchView::addArtist(const spt::Artist &artist)
 {
 	auto item = new QListWidgetItem(artist.name, artistList);
 	item->setData(RoleArtistId, artist.id);
+	item->setToolTip(artist.name);
 }
