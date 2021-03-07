@@ -29,11 +29,14 @@ TrackListItem::TrackListItem(const QStringList &strings,
 
 	// Length
 	auto length = strings.at(strings.length() - 2).split(':');
-	setToolTip(strings.length() - 2,
-		QString("%1m %2s (%3s total)")
-			.arg(length.at(0))
-			.arg(length.at(1))
-			.arg(track.duration / 1000));
+	if (length.length() >= 2)
+	{
+		setToolTip(strings.length() - 2,
+			QString("%1m %2s (%3s total)")
+				.arg(length.at(0))
+				.arg(length.at(1))
+				.arg(track.duration / 1000));
+	}
 
 	// Added
 	if (!DateUtils::isEmpty(track.addedAt))
