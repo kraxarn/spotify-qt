@@ -18,14 +18,8 @@ SongMenu::SongMenu(QListWidgetItem *item, QString artist, spt::Spotify &spotify,
 }
 
 SongMenu::SongMenu(const spt::Track &track, spt::Spotify &spotify, QWidget *parent)
-	: SongMenu(track.id,
-	track.artist,
-	track.name,
-	track.artistId,
-	track.albumId,
-	0,
-	spotify,
-	parent)
+	: SongMenu(track.id, track.artist, track.name, track.artistId, track.albumId, 0,
+	spotify, parent)
 {
 }
 
@@ -83,7 +77,8 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name, QString
 			break;
 		}
 
-	auto toggleLiked = addAction(Icon::get(isLiked ? "starred-symbolic" : "non-starred-symbolic"),
+	auto toggleLiked = addAction(Icon::get(isLiked
+			? "starred-symbolic" : "non-starred-symbolic"),
 		isLiked ? "Dislike" : "Like");
 	QAction::connect(toggleLiked, &QAction::triggered, this, &SongMenu::like);
 
@@ -176,7 +171,10 @@ void SongMenu::addToPlaylist(QAction *action)
 		: QString("spotify:track:%1").arg(trackId);
 	auto result = spotify.addToPlaylist(playlistId, plTrack);
 	if (!result.isEmpty())
-		mainWindow->setStatus(QString("Failed to add track to playlist: %1").arg(result), true);
+	{
+		mainWindow->setStatus(QString("Failed to add track to playlist: %1")
+			.arg(result), true);
+	}
 }
 
 void SongMenu::remFromPlaylist(bool)
