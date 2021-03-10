@@ -73,6 +73,9 @@ TrayIcon::~TrayIcon()
 
 void TrayIcon::message(const QString &message)
 {
+	if (message.isNull() || message.isEmpty())
+		return;
+
 	showMessage("spotify-qt", message);
 }
 
