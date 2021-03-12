@@ -6,6 +6,7 @@
 #include "spotify/spotify.hpp"
 #include "util/icon.hpp"
 #include "volumebutton.hpp"
+#include "view/clickableslider.hpp"
 
 #include <QToolBar>
 #include <QToolButton>

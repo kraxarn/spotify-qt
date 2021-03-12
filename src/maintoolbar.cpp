@@ -82,8 +82,7 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 	});
 
 	// Progress
-	progress = new QSlider(this);
-	progress->setOrientation(Qt::Orientation::Horizontal);
+	progress = new ClickableSlider(Qt::Horizontal, this);
 	QSlider::connect(progress, &QAbstractSlider::sliderReleased, this, [this]()
 	{
 		this->spotify.seek(progress->value(), [this](const QString &status)
