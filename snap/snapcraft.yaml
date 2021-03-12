@@ -49,17 +49,33 @@ parts:
       - locales-all
       - xdg-user-dirs
       - fcitx-frontend-qt5
+      - qt5-gtk-platformtheme #Platform themes plugin
 
 slots:
   dbus-mpris:
     interface: dbus
     bus: session
     name: org.mpris.MediaPlayer2.spotify-qt
+    
+plugs:
+  gsettings:
+  gtk-3-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes
+  icon-themes:
+    interface: content
+    target: $SNAP/data-dir/icons
+    default-provider: gtk-common-themes
+  sound-themes:
+    interface: content
+    target: $SNAP/data-dir/sounds
+    default-provider: gtk-common-themes
 
 apps:
   spotify-qt:
     command: bin/desktop-launch spotify-qt
     environment:
       DISABLE_WAYLAND: 1
-    plugs: [home, opengl, network, network-bind, unity7]
+    plugs: [home, opengl, network, network-bind, unity7, gsettings, desktop]
     slots: [dbus-mpris]
