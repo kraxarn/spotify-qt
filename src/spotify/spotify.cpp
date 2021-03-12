@@ -192,6 +192,7 @@ void Spotify::put(const QString &url, const QJsonDocument &body,
 							{
 								this->put(url, body, callback);
 							});
+						return;
 					}
 					else if (devices.size() > 1)
 					{
@@ -206,11 +207,11 @@ void Spotify::put(const QString &url, const QJsonDocument &body,
 									{
 										this->put(url, body, callback);
 									});
+								return;
 							}
 						}
 					}
 				});
-				return;
 			}
 
 			callback(error);
