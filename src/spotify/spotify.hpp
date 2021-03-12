@@ -203,11 +203,17 @@ namespace spt
 		void await(QNetworkReply *reply,
 			const std::function<void(const QByteArray &response)> &callback);
 
+		/**
+		 * @note Consider using callback with QJsonObject/QJsonArray instead
+		 */
 		void get(const QString &url,
 			const std::function<void(const QJsonDocument &json)> &callback);
 
 		void get(const QString &url,
 			const std::function<void(const QJsonObject &json)> &callback);
+
+		void get(const QString &url,
+			const std::function<void(const QJsonArray &json)> &callback);
 
 		void put(const QString &url, const QJsonDocument &body,
 			const std::function<void(const QString &result)> &callback);
