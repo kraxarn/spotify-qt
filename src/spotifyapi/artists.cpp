@@ -6,9 +6,9 @@
 void Spotify::artist(const QString &artistId,
 	const std::function<void(const spt::Artist &artist)> &callback)
 {
-	get(QString("artists/%1").arg(artistId), [callback](const QJsonDocument &json)
+	get(QString("artists/%1").arg(artistId), [callback](const QJsonObject &json)
 	{
-		callback(Artist(json.object()));
+		callback(Artist(json));
 	});
 }
 

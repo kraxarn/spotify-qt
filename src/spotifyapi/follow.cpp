@@ -37,10 +37,10 @@ void Spotify::isFollowing(FollowType type,
 {
 	get(QString("me/following/contains?type=%1&ids=%2")
 		.arg(followTypeString(type))
-		.arg(ids.join(',')), [callback](const QJsonDocument &json)
+		.arg(ids.join(',')), [callback](const QJsonArray &json)
 	{
 		std::vector<bool> values;
-		for (auto value : json.array())
+		for (auto value : json)
 			values.push_back(value.toBool());
 		callback(values);
 	});
