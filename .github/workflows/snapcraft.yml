@@ -8,9 +8,9 @@ on:
 
 jobs:
   build:
-    runs-on: snapcraft/xenial-amd64
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: snapcraft-docker
+      run: docker build . --file Dockerfile --tag snapcraft/xenial-amd64
