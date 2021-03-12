@@ -1,14 +1,13 @@
 #include "spotifyapi.hpp"
-#include "../util/jsonutils.hpp"
 
 // Currently unavailable:
 // me/player/currently-playing
 
 void Spotify::currentPlayback(const std::function<void(const spt::Playback &playback)> &callback)
 {
-	get("me/player", [callback](const QJsonDocument &json)
+	get("me/player", [callback](const QJsonObject &json)
 	{
-		callback(Playback(json.object()));
+		callback(Playback(json));
 	});
 }
 

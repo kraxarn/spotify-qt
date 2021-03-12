@@ -280,12 +280,11 @@ namespace spt
 		void get(const QString &url,
 			const std::function<void(const std::vector<T> &items)> &callback)
 		{
-			get(url, [this, callback](const QJsonDocument &json)
+			get(url, [this, callback](const QJsonObject &json)
 			{
-				auto object = json.object();
-				auto items = object[object.contains("tracks")
+				auto items = json[json.contains("tracks")
 					? "tracks"
-					: object.contains("artists")
+					: json.contains("artists")
 						? "artists"
 						: "items"].toArray();
 				std::vector<T> result;
