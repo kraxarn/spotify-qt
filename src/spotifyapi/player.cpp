@@ -28,7 +28,7 @@ void Spotify::devices(const std::function<void(const std::vector<Device> &device
 {
 	get("me/player/devices", [callback](const QJsonDocument &json)
 	{
-		auto items = json["devices"].toArray();
+		auto items = json.object()["devices"].toArray();
 		std::vector<Device> devices(items.size());
 		for (auto i = 0; i < items.size(); i++)
 			devices[i] = Device(items.at(i).toObject());
