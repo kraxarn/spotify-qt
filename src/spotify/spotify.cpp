@@ -108,6 +108,15 @@ void Spotify::get(const QString &url,
 		});
 }
 
+void Spotify::get(const QString &url,
+	const std::function<void(const QJsonObject &json)> &callback)
+{
+	get(url, [callback](const QJsonDocument &json)
+	{
+		callback(json.object());
+	});
+}
+
 QString Spotify::put(const QString &url, QVariantMap *body)
 {
 	// Set in header we're sending json data

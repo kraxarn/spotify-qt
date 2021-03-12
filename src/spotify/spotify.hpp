@@ -206,6 +206,9 @@ namespace spt
 		void get(const QString &url,
 			const std::function<void(const QJsonDocument &json)> &callback);
 
+		void get(const QString &url,
+			const std::function<void(const QJsonObject &json)> &callback);
+
 		void put(const QString &url, const QJsonDocument &body,
 			const std::function<void(const QString &result)> &callback);
 
