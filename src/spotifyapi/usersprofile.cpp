@@ -5,7 +5,7 @@
 
 void Spotify::me(const std::function<void(const User &user)> &callback)
 {
-	get("me", [callback](const QJsonDocument &json)
+	get("me", [callback](const QJsonObject &json)
 	{
 		User user;
 		user.displayName = json["display_name"].toString();
