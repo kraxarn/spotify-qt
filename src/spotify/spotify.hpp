@@ -52,17 +52,14 @@ namespace spt
 
 		//region Artists
 
-		void artist(const QString &artistId,
-			const std::function<void(const spt::Artist &artist)> &callback);
+		void artist(const QString &artistId, callback<spt::Artist> &callback);
 
-		void topTracks(const spt::Artist &artist,
-			const std::function<void(const std::vector<spt::Track> &tracks)> &callback);
+		void topTracks(const spt::Artist &artist, callback<std::vector<spt::Track>> &callback);
 
 		void relatedArtists(const spt::Artist &artist,
-			const std::function<void(const std::vector<spt::Artist> &artists)> &callback);
+			callback<std::vector<spt::Artist>> &callback);
 
-		void albums(const spt::Artist &artist,
-			const std::function<void(const std::vector<spt::Album> &albums)> &callback);
+		void albums(const spt::Artist &artist, callback<std::vector<spt::Album>> &callback);
 
 		//endregion
 
