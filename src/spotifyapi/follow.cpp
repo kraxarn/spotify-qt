@@ -31,9 +31,8 @@ void Spotify::unfollow(FollowType type, const QList<QString> &ids)
 		.arg(followTypeString(type)).arg(ids.join(',')), {});
 }
 
-void Spotify::isFollowing(FollowType type,
-	const QList<QString> &ids,
-	const std::function<void(const std::vector<bool> &)> &callback)
+void Spotify::isFollowing(FollowType type, const QList<QString> &ids,
+	callback<std::vector<bool>> &callback)
 {
 	get(QString("me/following/contains?type=%1&ids=%2")
 		.arg(followTypeString(type))

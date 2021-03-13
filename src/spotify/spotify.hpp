@@ -78,7 +78,7 @@ namespace spt
 		void unfollow(FollowType type, const QList<QString> &ids);
 
 		void isFollowing(FollowType type, const QList<QString> &ids,
-			const std::function<void(const std::vector<bool> &follows)> &callback);
+			callback<std::vector<bool>> &callback);
 
 		//endregion
 
