@@ -3,7 +3,7 @@
 // Currently unavailable:
 // me/player/currently-playing
 
-void Spotify::currentPlayback(const std::function<void(const spt::Playback &playback)> &callback)
+void Spotify::currentPlayback(callback<spt::Playback> &callback)
 {
 	get("me/player", [callback](const QJsonObject &json)
 	{
@@ -11,8 +11,7 @@ void Spotify::currentPlayback(const std::function<void(const spt::Playback &play
 	});
 }
 
-void Spotify::setDevice(const QString &deviceId,
-	const std::function<void(const QString &status)> &callback)
+void Spotify::setDevice(const QString &deviceId, callback<QString> &callback)
 {
 	QJsonDocument body({
 		QPair<QString, QJsonArray>("device_ids", {
@@ -23,7 +22,7 @@ void Spotify::setDevice(const QString &deviceId,
 	put("me/player", body, callback);
 }
 
-void Spotify::devices(const std::function<void(const std::vector<Device> &devices)> &callback)
+void Spotify::devices(callback<std::vector<Device>> &callback)
 {
 	get("me/player/devices", [callback](const QJsonObject &json)
 	{
@@ -35,8 +34,7 @@ void Spotify::devices(const std::function<void(const std::vector<Device> &device
 	});
 }
 
-void Spotify::playTracks(int trackIndex, const QString &context,
-	const std::function<void(const QString &result)> &callback)
+void Spotify::playTracks(int trackIndex, const QString &context, callback<QString> &callback)
 {
 	lib::log::dev("Playing track {} from {}", trackIndex, context.toStdString());
 
@@ -53,8 +51,7 @@ void Spotify::playTracks(int trackIndex, const QString &context,
 			.arg(currentDevice), body, callback);
 }
 
-void Spotify::playTracks(int trackIndex, const QList<QString> &all,
-	const std::function<void(const QString &result)> &callback)
+void Spotify::playTracks(int trackIndex, const QList<QString> &all, callback<QString> &callback)
 {
 	lib::log::dev("Playing track {} ({} total)", trackIndex, all.length());
 
@@ -81,8 +78,7 @@ void Spotify::playTracks(int trackIndex, const QList<QString> &all,
 			.arg(currentDevice), body, callback);
 }
 
-void Spotify::playTracks(const QString &context,
-	const std::function<void(const QString &result)> &callback)
+void Spotify::playTracks(const QString &context, callback<QString> &callback)
 {
 	lib::log::dev("Playing track from {}", context.toStdString());
 
@@ -96,49 +92,45 @@ void Spotify::playTracks(const QString &context,
 			.arg(currentDevice), body, callback);
 }
 
-void Spotify::resume(const std::function<void(const QString &result)> &callback)
+void Spotify::resume(callback<QString> &callback)
 {
 	put("me/player/play", callback);
 }
 
-void Spotify::pause(const std::function<void(const QString &result)> &callback)
+void Spotify::pause(callback<QString> &callback)
 {
 	put("me/player/pause", callback);
 }
 
-void Spotify::next(const std::function<void(const QString &result)> &callback)
+void Spotify::next(callback<QString> &callback)
 {
 	post("me/player/next", callback);
 }
 
-void Spotify::previous(const std::function<void(const QString &result)> &callback)
+void Spotify::previous(callback<QString> &callback)
 {
 	post("me/player/previous", callback);
 }
 
-void Spotify::seek(int position,
-	const std::function<void(const QString &result)> &callback)
+void Spotify::seek(int position, callback<QString> &callback)
 {
 	put(QString("me/player/seek?position_ms=%1")
 		.arg(position), callback);
 }
 
-void Spotify::setRepeat(const QString &state,
-	const std::function<void(const QString &result)> &callback)
+void Spotify::setRepeat(const QString &state, callback<QString> &callback)
 {
 	put(QString("me/player/repeat?state=%1")
 		.arg(state), callback);
 }
 
-void Spotify::setVolume(int volume,
-	const std::function<void(const QString &result)> &callback)
+void Spotify::setVolume(int volume, callback<QString> &callback)
 {
 	put(QString("me/player/volume?volume_percent=%1")
 		.arg(volume), callback);
 }
 
-void Spotify::setShuffle(bool enabled,
-	const std::function<void(const QString &result)> &callback)
+void Spotify::setShuffle(bool enabled, callback<QString> &callback)
 {
 	put(QString("me/player/shuffle?state=%1")
 		.arg(enabled ? "true" : "false"), callback);
@@ -149,8 +141,7 @@ QVector<Track> Spotify::recentlyPlayed()
 	return loadItems<Track>("me/player/recently-played?limit=50");
 }
 
-void Spotify::addToQueue(const QString &uri,
-	const std::function<void(const QString &result)> &callback)
+void Spotify::addToQueue(const QString &uri, callback<QString> &callback)
 {
 	post(QString("me/player/queue?uri=%1").arg(uri),
 		callback);

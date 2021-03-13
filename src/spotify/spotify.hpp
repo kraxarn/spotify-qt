@@ -104,46 +104,37 @@ namespace spt
 
 		//region Player
 
-		void currentPlayback(const std::function<void(const spt::Playback &playback)> &callback);
+		void currentPlayback(callback<spt::Playback> &callback);
 
-		void setDevice(const QString &deviceId,
-			const std::function<void(const QString &status)> &callback);
+		void setDevice(const QString &deviceId, callback<QString> &callback);
 
-		void devices(const std::function<void(const std::vector<Device> &devices)> &callback);
+		void devices(callback<std::vector<Device>> &callback);
 
-		void playTracks(int trackIndex, const QString &context,
-			const std::function<void(const QString &result)> &callback);
+		void playTracks(int trackIndex, const QString &context, callback<QString> &callback);
 
-		void playTracks(int trackIndex, const QList<QString> &all,
-			const std::function<void(const QString &result)> &callback);
+		void playTracks(int trackIndex, const QList<QString> &all, callback<QString> &callback);
 
-		void playTracks(const QString &context,
-			const std::function<void(const QString &result)> &callback);
+		void playTracks(const QString &context, callback<QString> &callback);
 
-		void resume(const std::function<void(const QString &result)> &callback);
+		void resume(callback<QString> &callback);
 
-		void pause(const std::function<void(const QString &result)> &callback);
+		void pause(callback<QString> &callback);
 
-		void next(const std::function<void(const QString &result)> &callback);
+		void next(callback<QString> &callback);
 
-		void previous(const std::function<void(const QString &result)> &callback);
+		void previous(callback<QString> &callback);
 
-		void seek(int position,
-			const std::function<void(const QString &result)> &callback);
+		void seek(int position, callback<QString> &callback);
 
-		void setRepeat(const QString &state,
-			const std::function<void(const QString &result)> &callback);
+		void setRepeat(const QString &state, callback<QString> &callback);
 
-		void setVolume(int volume,
-			const std::function<void(const QString &result)> &callback);
+		void setVolume(int volume, callback<QString> &callback);
 
-		void setShuffle(bool enabled,
-			const std::function<void(const QString &result)> &callback);
+		void setShuffle(bool enabled, callback<QString> &callback);
 
 		QVector<Track> recentlyPlayed();
 
-		void addToQueue(const QString &uri,
-			const std::function<void(const QString &result)> &callback);
+		void addToQueue(const QString &uri, callback<QString> &callback);
 
 		//endregion
 
