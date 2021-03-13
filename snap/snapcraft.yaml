@@ -6,6 +6,7 @@ license: GPL-3.0
 grade: stable
 confinement: strict
 base: core18
+icon: snap/gui/icon.png
 
 parts:
   spotify-qt:
@@ -23,6 +24,11 @@ parts:
     override-pull: |
       snapcraftctl pull
       snapcraftctl set-version "$(git describe --tags --abbrev=0)"
+    override-build: |
+            snapcraftctl build
+            sed -i 's|Icon=.*|Icon=${SNAP}/meta/gui/icon.png|g' ${SNAPCRAFT_PART_SRC}/res/app/spotify-qt.desktop
+            mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/
+            cp -rf ${SNAPCRAFT_PART_SRC}/res/app/spotify-qt.desktop ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/spotify-qt.desktop
     after: [desktop-qt5]
   # Snapcraft Qt5 desktop launcher
   desktop-qt5:
@@ -77,5 +83,6 @@ apps:
     command: bin/desktop-launch spotify-qt
     environment:
       DISABLE_WAYLAND: 1
-    plugs: [home, opengl, network, network-bind, unity7, gsettings, desktop]
+    desktop: usr/share/applications/spotify-qt.desktop
+    plugs: [home, opengl, network, network-bind, unity7, gsettings, desktop, audio-playback]
     slots: [dbus-mpris]
