@@ -43,8 +43,7 @@ QNetworkRequest Spotify::request(const QString &url)
 	return request;
 }
 
-void Spotify::await(QNetworkReply *reply,
-	const std::function<void(const QByteArray &response)> &callback)
+void Spotify::await(QNetworkReply *reply, callback<QByteArray> &callback)
 {
 	QNetworkReply::connect(reply, &QNetworkReply::finished, this,
 		[reply, callback]()
@@ -97,8 +96,7 @@ QJsonObject Spotify::getAsObject(const QString &url)
 	return get(url).object();
 }
 
-void Spotify::get(const QString &url,
-	const std::function<void(const QJsonDocument &json)> &callback)
+void Spotify::get(const QString &url, callback<QJsonDocument> &callback)
 {
 	await(networkManager->get(request(url)),
 		[callback](const QByteArray &data)
@@ -108,8 +106,7 @@ void Spotify::get(const QString &url,
 		});
 }
 
-void Spotify::get(const QString &url,
-	const std::function<void(const QJsonObject &json)> &callback)
+void Spotify::get(const QString &url, callback<QJsonObject> &callback)
 {
 	get(url, [callback](const QJsonDocument &json)
 	{
@@ -117,8 +114,7 @@ void Spotify::get(const QString &url,
 	});
 }
 
-void Spotify::get(const QString &url,
-	const std::function<void(const QJsonArray &json)> &callback)
+void Spotify::get(const QString &url, callback<QJsonArray> &callback)
 {
 	get(url, [callback](const QJsonDocument &json)
 	{
@@ -169,8 +165,7 @@ QString Spotify::put(const QString &url, QVariantMap *body)
 	return reply;
 }
 
-void Spotify::put(const QString &url, const QJsonDocument &body,
-	const std::function<void(const QString &result)> &callback)
+void Spotify::put(const QString &url, const QJsonDocument &body, callback<QString> &callback)
 {
 	// Set in header we're sending json data
 	auto req = request(url);
@@ -218,14 +213,12 @@ void Spotify::put(const QString &url, const QJsonDocument &body,
 		});
 }
 
-void Spotify::put(const QString &url,
-	const std::function<void(const QString &result)> &callback)
+void Spotify::put(const QString &url, callback<QString> &callback)
 {
 	put(url, QJsonDocument(), callback);
 }
 
-void Spotify::post(const QString &url,
-	const std::function<void(const QString &result)> &callback)
+void Spotify::post(const QString &url, callback<QString> &callback)
 {
 	auto req = request(url);
 	req.setHeader(QNetworkRequest::ContentTypeHeader,

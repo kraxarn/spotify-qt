@@ -30,6 +30,9 @@ namespace spt
 
 namespace spt
 {
+	template<typename T>
+	using callback = const std::function<void(const T &)>;
+
 	class Spotify: public QObject
 	{
 	Q_OBJECT
@@ -200,29 +203,22 @@ namespace spt
 
 		//region New asynchronous
 
-		void await(QNetworkReply *reply,
-			const std::function<void(const QByteArray &response)> &callback);
+		void await(QNetworkReply *reply, callback<QByteArray> &callback);
 
 		/**
 		 * @note Consider using callback with QJsonObject/QJsonArray instead
 		 */
-		void get(const QString &url,
-			const std::function<void(const QJsonDocument &json)> &callback);
+		void get(const QString &url, callback<QJsonDocument> &callback);
 
-		void get(const QString &url,
-			const std::function<void(const QJsonObject &json)> &callback);
+		void get(const QString &url, callback<QJsonObject> &callback);
 
-		void get(const QString &url,
-			const std::function<void(const QJsonArray &json)> &callback);
+		void get(const QString &url, callback<QJsonArray> &callback);
 
-		void put(const QString &url, const QJsonDocument &body,
-			const std::function<void(const QString &result)> &callback);
+		void put(const QString &url, const QJsonDocument &body, callback<QString> &callback);
 
-		void put(const QString &url,
-			const std::function<void(const QString &result)> &callback);
+		void put(const QString &url, callback<QString> &callback);
 
-		void post(const QString &url,
-			const std::function<void(const QString &result)> &callback);
+		void post(const QString &url, callback<QString> &callback);
 
 		//endregion
 
@@ -277,8 +273,7 @@ namespace spt
 		}
 
 		template<typename T>
-		void get(const QString &url,
-			const std::function<void(const std::vector<T> &items)> &callback)
+		void get(const QString &url, callback<std::vector<T>> &callback)
 		{
 			get(url, [this, callback](const QJsonObject &json)
 			{
