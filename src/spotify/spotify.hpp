@@ -168,7 +168,7 @@ namespace spt
 
 		//region User Profile
 
-		void me(const std::function<void(const User &user)> &callback);
+		void me(callback<User> &callback);
 
 		//endregion
 
