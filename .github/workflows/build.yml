@@ -12,7 +12,9 @@ jobs:
     # well on Windows or Mac.  You can convert this to a matrix build if you need
     # cross-platform coverage.
     # See: https://docs.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow#configuring-a-build-matrix
-    runs-on: ubuntu-latest
+    # Ubuntu 18.04 is supported until April 2023
+    # See: https://wiki.ubuntu.com/Releases
+    runs-on: ubuntu-18.04
 
     steps:
     - uses: actions/checkout@v2
