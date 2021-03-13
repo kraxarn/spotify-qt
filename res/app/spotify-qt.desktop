@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Name=Spotify-qt
+Name=spotify-qt
 GenericName=Music Player
 Icon=spotify-qt
 Exec=spotify-qt
