@@ -92,6 +92,9 @@ namespace spt
 
 		QString removeSavedTrack(const QString &trackId);
 
+		void isSavedTrack(const QStringList &trackIds,
+			callback<std::vector<bool>> &callback);
+
 		//endregion
 
 		//region Personalization
