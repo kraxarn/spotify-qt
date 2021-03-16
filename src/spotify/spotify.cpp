@@ -178,16 +178,21 @@ void Spotify::put(const QString &url, const QJsonDocument &body, callback<QStrin
 
 			if (error.contains("No active device found"))
 			{
-				devices([this, url, body, callback](const std::vector<spt::Device> &devices)
+				devices([this, url, body, error, callback]
+					(const std::vector<spt::Device> &devices)
 				{
-					if (devices.size() == 1)
+					if (devices.empty())
+					{
+						if (callback)
+							callback(error);
+					}
+					else if (devices.size() == 1)
 					{
 						this->setDevice(devices.at(0).id,
 							[this, url, body, callback](const QString &status)
 							{
 								this->put(url, body, callback);
 							});
-						return;
 					}
 					else if (devices.size() > 1)
 					{
@@ -202,11 +207,12 @@ void Spotify::put(const QString &url, const QJsonDocument &body, callback<QStrin
 									{
 										this->put(url, body, callback);
 									});
-								return;
 							}
 						}
 					}
 				});
+
+				return;
 			}
 
 			if (callback)
