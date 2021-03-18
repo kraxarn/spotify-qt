@@ -221,12 +221,11 @@ void Spotify::put(const QString &url, const QJsonDocument &body, callback<QStrin
 						}
 					}
 				});
-
-				return;
 			}
-
-			if (callback)
+			else if (callback)
+			{
 				callback(error);
+			}
 		});
 }
 
