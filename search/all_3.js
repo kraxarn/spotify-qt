@@ -5,5 +5,6 @@ var searchData=
   ['deprecated_20list_19',['Deprecated List',['../deprecated.html',1,'']]],
   ['dev_20',['dev',['../classlib_1_1log.html#a6faeebb4fdad6162e122a5941e8ae323',1,'lib::log::dev(const Format &amp;fmt, const Arg &amp;arg, Args &amp;&amp;... args)'],['../classlib_1_1log.html#af971c261aeceb74c0e806a9ea3e5867e',1,'lib::log::dev(const Format &amp;fmt)']]],
   ['developer_5fmode_21',['developer_mode',['../classlib_1_1developer__mode.html',1,'lib']]],
-  ['disable_5fdiscovery_22',['disable_discovery',['../structlib_1_1set_1_1spotify.html#a040e69daab18b62fa518d921364a6d92',1,'lib::set::spotify']]]
+  ['device_22',['device',['../classlib_1_1spt_1_1device.html',1,'lib::spt']]],
+  ['disable_5fdiscovery_23',['disable_discovery',['../structlib_1_1set_1_1spotify.html#a040e69daab18b62fa518d921364a6d92',1,'lib::set::spotify']]]
 ];
