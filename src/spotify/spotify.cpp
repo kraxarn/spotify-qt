@@ -122,6 +122,16 @@ void Spotify::get(const QString &url, callback<QJsonArray> &callback)
 	});
 }
 
+void Spotify::get(const std::string &url, callback<nlohmann::json> &callback)
+{
+	await(networkManager->get(request(QString::fromStdString(url))),
+		[callback](const QByteArray &data)
+		{
+			// Parse reply as json
+			callback(nlohmann::json(data.toStdString()));
+		});
+}
+
 QString Spotify::put(const QString &url, QVariantMap *body)
 {
 	// Set in header we're sending json data

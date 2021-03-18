@@ -16,6 +16,8 @@ namespace spt
 #include "searchresults.hpp"
 #include "user.hpp"
 
+#include "thirdparty/json.hpp"
+
 #include <QCoreApplication>
 #include <QDateTime>
 #include <QDesktopServices>
@@ -197,13 +199,21 @@ namespace spt
 		void await(QNetworkReply *reply, callback<QByteArray> &callback);
 
 		/**
-		 * @note Consider using callback with QJsonObject/QJsonArray instead
+		 * @deprecated Use callback with json instead
 		 */
 		void get(const QString &url, callback<QJsonDocument> &callback);
 
+		/**
+		 * @deprecated Use callback with json instead
+		 */
 		void get(const QString &url, callback<QJsonObject> &callback);
 
+		/**
+		 * @deprecated Use callback with json instead
+		 */
 		void get(const QString &url, callback<QJsonArray> &callback);
+
+		void get(const std::string &url, callback<nlohmann::json> &callback);
 
 		void put(const QString &url, const QJsonDocument &body, callback<QString> &callback);
 
