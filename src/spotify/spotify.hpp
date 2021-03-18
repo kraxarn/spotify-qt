@@ -10,12 +10,11 @@ namespace spt
 #include "lib/settings.hpp"
 #include "artist.hpp"
 #include "audiofeatures.hpp"
-#include "device.hpp"
+#include "lib/spotify/device.hpp"
 #include "playback.hpp"
 #include "playlist.hpp"
 #include "searchresults.hpp"
 #include "user.hpp"
-
 #include "thirdparty/json.hpp"
 
 #include <QCoreApplication>
@@ -113,7 +112,7 @@ namespace spt
 
 		void setDevice(const QString &deviceId, callback<QString> &callback);
 
-		void devices(callback<std::vector<Device>> &callback);
+		void devices(callback<std::vector<lib::spt::device>> &callback);
 
 		void playTracks(int trackIndex, const QString &context, callback<QString> &callback);
 

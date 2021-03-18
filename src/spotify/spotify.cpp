@@ -150,11 +150,11 @@ QString Spotify::put(const QString &url, QVariantMap *body)
 	auto reply = errorMessage(networkManager->put(req, putData));
 	if (reply.contains("No active device found"))
 	{
-		devices([this, url, body](const std::vector<spt::Device> &devices)
+		devices([this, url, body](const std::vector<lib::spt::device> &devices)
 		{
 			if (devices.size() == 1)
 			{
-				this->setDevice(devices.at(0).id,
+				this->setDevice(QString::fromStdString(devices.at(0).id),
 					[this, url, body](const QString &status)
 					{
 						// TODO: This result needs to be handled
@@ -167,13 +167,14 @@ QString Spotify::put(const QString &url, QVariantMap *body)
 				if (dialog.exec() == QDialog::Accepted)
 				{
 					auto selected = dialog.selectedDevice();
-					if (!selected.id.isEmpty())
+					if (!selected.id.empty())
 					{
-						setDevice(selected.id, [this, url, body](const QString &status)
-						{
-							// TODO: This result needs to be handled
-							this->put(url, body);
-						});
+						setDevice(QString::fromStdString(selected.id),
+							[this, url, body](const QString &status)
+							{
+								// TODO: This result needs to be handled
+								this->put(url, body);
+							});
 					}
 				}
 			}
@@ -196,7 +197,7 @@ void Spotify::put(const QString &url, const QJsonDocument &body, callback<QStrin
 			if (error.contains("No active device found"))
 			{
 				devices([this, url, body, error, callback]
-					(const std::vector<spt::Device> &devices)
+					(const std::vector<lib::spt::device> &devices)
 				{
 					if (devices.empty())
 					{
@@ -205,7 +206,7 @@ void Spotify::put(const QString &url, const QJsonDocument &body, callback<QStrin
 					}
 					else if (devices.size() == 1)
 					{
-						this->setDevice(devices.at(0).id,
+						this->setDevice(QString::fromStdString(devices.at(0).id),
 							[this, url, body, callback](const QString &status)
 							{
 								this->put(url, body, callback);
@@ -217,9 +218,9 @@ void Spotify::put(const QString &url, const QJsonDocument &body, callback<QStrin
 						if (dialog.exec() == QDialog::Accepted)
 						{
 							auto selected = dialog.selectedDevice();
-							if (!selected.id.isEmpty())
+							if (!selected.id.empty())
 							{
-								this->setDevice(selected.id,
+								this->setDevice(QString::fromStdString(selected.id),
 									[this, url, body, callback](const QString &status)
 									{
 										this->put(url, body, callback);

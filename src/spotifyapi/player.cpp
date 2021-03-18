@@ -22,15 +22,11 @@ void Spotify::setDevice(const QString &deviceId, callback<QString> &callback)
 	put("me/player", body, callback);
 }
 
-void Spotify::devices(callback<std::vector<Device>> &callback)
+void Spotify::devices(callback<std::vector<lib::spt::device>> &callback)
 {
-	get("me/player/devices", [callback](const QJsonObject &json)
+	get("me/player/devices", [callback](const nlohmann::json &json)
 	{
-		auto items = json["devices"].toArray();
-		std::vector<Device> devices(items.size());
-		for (auto i = 0; i < items.size(); i++)
-			devices[i] = Device(items.at(i).toObject());
-		callback(devices);
+		callback(json.at("devices").get<std::vector<lib::spt::device>>());
 	});
 }
 

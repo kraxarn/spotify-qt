@@ -99,7 +99,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings, QWidget *pare
 
 void MainMenu::refreshDevices()
 {
-	spotify.devices([this](const std::vector<spt::Device> &devices)
+	spotify.devices([this](const std::vector<lib::spt::device> &devices)
 	{
 		// Probably left menu before it loaded
 		if (this->deviceMenu == nullptr)
@@ -119,11 +119,11 @@ void MainMenu::refreshDevices()
 		// Update devices
 		for (auto &device : devices)
 		{
-			auto action = deviceMenu->addAction(device.name);
+			auto action = deviceMenu->addAction(QString::fromStdString(device.name));
 			action->setCheckable(true);
-			action->setChecked(device.isActive);
-			action->setDisabled(device.isActive);
-			action->setData(device.id);
+			action->setChecked(device.is_active);
+			action->setDisabled(device.is_active);
+			action->setData(QString::fromStdString(device.id));
 		}
 	});
 }

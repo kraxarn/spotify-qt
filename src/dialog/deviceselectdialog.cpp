@@ -1,6 +1,7 @@
 #include "deviceselectdialog.hpp"
 
-DeviceSelectDialog::DeviceSelectDialog(const std::vector<spt::Device> &devices, QWidget *parent)
+DeviceSelectDialog::DeviceSelectDialog(const std::vector<lib::spt::device> &devices,
+	QWidget *parent)
 	: devices(devices),
 	QDialog(parent)
 {
@@ -10,7 +11,7 @@ DeviceSelectDialog::DeviceSelectDialog(const std::vector<spt::Device> &devices, 
 
 	list = new QListWidget(this);
 	for (auto &device : devices)
-		list->addItem(device.name);
+		list->addItem(QString::fromStdString(device.name));
 	layout->addWidget(list);
 
 	QListWidget::connect(list, &QListWidget::itemDoubleClicked, [this](QListWidgetItem *item)
@@ -32,16 +33,16 @@ DeviceSelectDialog::DeviceSelectDialog(const std::vector<spt::Device> &devices, 
 	layout->addWidget(buttons);
 }
 
-spt::Device DeviceSelectDialog::selectedDevice()
+lib::spt::device DeviceSelectDialog::selectedDevice()
 {
 	if (list->selectedItems().isEmpty())
-		return spt::Device();
+		return lib::spt::device();
 
 	for (auto &device : devices)
 	{
-		if (device.name == list->selectedItems().first()->text())
+		if (device.name == list->selectedItems().first()->text().toStdString())
 			return device;
 	}
 
-	return spt::Device();
+	return lib::spt::device();
 }

@@ -16,7 +16,8 @@ spt::Playback::Playback(const QJsonObject &json)
 	contextType = json["context"].isObject()
 		? json["context"].toObject()["type"].toString()
 		: QString();
-	device = Device(json["device"].toObject());
+
+	JsonUtils::toJson(json["device"]).get_to(device);
 }
 
 QVariantMap spt::Playback::metadata() const
@@ -56,5 +57,5 @@ QJsonObject spt::Playback::toJson() const
 
 int spt::Playback::volume() const
 {
-	return device.volumePercent;
+	return device.volume_percent;
 }

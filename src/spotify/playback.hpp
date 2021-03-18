@@ -1,7 +1,7 @@
 #pragma once
 
 #include "track.hpp"
-#include "device.hpp"
+#include "lib/spotify/device.hpp"
 
 #include <QJsonObject>
 #include <QMap>
@@ -28,6 +28,6 @@ namespace spt
 		bool isPlaying = false;
 		bool shuffle = false;
 		int progressMs = 0;
-		spt::Device device;
+		lib::spt::device device;
 	};
 }

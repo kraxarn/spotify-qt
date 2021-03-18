@@ -60,8 +60,11 @@ QString SystemInfoView::systemInfo(const spt::Playback &playback, bool html)
 
 	// Device
 	auto device = playback.device;
-	if (!device.name.isEmpty() && !device.type.isEmpty())
-		info["Device"] = QString("%1 (%2)").arg(device.name).arg(device.type);
+	if (!device.name.empty() && !device.type.empty())
+	{
+		info["Device"] = QString::fromStdString(lib::fmt::format("{} ({})",
+			device.name, device.type));
+	}
 
 	// Kernel
 	info["Kernel"] = QString("%1 %2").arg(QSysInfo::kernelType()).arg(QSysInfo::kernelVersion());

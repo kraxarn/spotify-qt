@@ -90,7 +90,7 @@ MainWindow::MainWindow(lib::settings &settings)
 			startClient();
 		else
 		{
-			spotify->devices([startClient](const std::vector<spt::Device> &devices)
+			spotify->devices([startClient](const std::vector<lib::spt::device> &devices)
 			{
 				if (devices.empty())
 					startClient();
