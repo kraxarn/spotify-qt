@@ -60,7 +60,6 @@ MainWindow::MainWindow(lib::settings &settings)
 	// Setup main window
 	setWindowTitle("spotify-qt");
 	setWindowIcon(Icon::get("logo:spotify-qt"));
-	resize(1280, 720);
 	setCentralWidget(createCentralWidget());
 	toolBar = new MainToolBar(*spotify, settings, this);
 	addToolBar(Qt::ToolBarArea::TopToolBarArea, toolBar);
