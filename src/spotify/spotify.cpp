@@ -125,10 +125,17 @@ void Spotify::get(const QString &url, callback<QJsonArray> &callback)
 void Spotify::get(const std::string &url, callback<nlohmann::json> &callback)
 {
 	await(networkManager->get(request(QString::fromStdString(url))),
-		[callback](const QByteArray &data)
+		[url, callback](const QByteArray &data)
 		{
-			// Parse reply as json
-			callback(nlohmann::json(data.toStdString()));
+			try
+			{
+				// Parse reply as json
+				callback(nlohmann::json::parse(data.toStdString()));
+			}
+			catch (const std::exception &e)
+			{
+				lib::log::error("{} failed: {}", url, e.what());
+			}
 		});
 }
 
