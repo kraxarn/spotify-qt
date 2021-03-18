@@ -1,9 +1,12 @@
 #pragma once
 
+#include "thirdparty/json.hpp"
+
 #include <QJsonValue>
 #include <QStringList>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QJsonDocument>
 
 class JsonUtils
 {
@@ -18,6 +21,8 @@ public:
 			array.append(item);
 		return array;
 	}
+
+	static nlohmann::json toJson(const QJsonValue &json);
 
 private:
 	JsonUtils() = default;

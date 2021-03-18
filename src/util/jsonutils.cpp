@@ -8,3 +8,14 @@ QJsonValue JsonUtils::getProperty(const QJsonObject &json, const QStringList &na
 
 	return QJsonValue();
 }
+
+nlohmann::json JsonUtils::toJson(const QJsonValue &json)
+{
+	auto document = json.isObject()
+		? QJsonDocument(json.toObject())
+		: json.isArray()
+			? QJsonDocument(json.toArray())
+			: QJsonDocument();
+
+	return nlohmann::json::parse(document.toJson().toStdString());
+}
