@@ -34,7 +34,7 @@ public:
 	QVector<spt::Track> loadTracksFromCache(const QString &id);
 	void saveTracksToCache(const QString &id, const QVector<spt::Track> &tracks);
 	bool loadSongs(const QVector<spt::Track> &tracks, const QString &selectedId = QString());
-	QStringList currentTracks();
+	std::vector<std::string> currentTracks();
 	void setPlayingTrackItem(QTreeWidgetItem *item);
 	void refresh();
 	void refreshed(const spt::Playback &playback);

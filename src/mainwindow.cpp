@@ -43,7 +43,7 @@ MainWindow::MainWindow(lib::settings &settings)
 	network = new QNetworkAccessManager();
 
 	// Check connection
-	stateValid = spotify->isValid();
+	stateValid = spotify->is_valid();
 	if (!stateValid)
 	{
 		splash->finish(this);
@@ -535,16 +535,16 @@ void MainWindow::cachePlaylist(const spt::Playlist &playlist)
 	file.write(json.toJson());
 }
 
-QStringList MainWindow::currentTracks()
+std::vector<std::string> MainWindow::currentTracks()
 {
-	QStringList tracks;
-	tracks.reserve(songs->topLevelItemCount());
+	std::vector<std::string> tracks;
 	for (int i = 0; i < songs->topLevelItemCount(); i++)
 	{
-		auto trackId = songs->topLevelItem(i)->data(0, RoleTrackId).toString();
+		auto trackId = songs->topLevelItem(i)->data(0, RoleTrackId)
+			.toString().toStdString();
 		// spotify:track: = 14
 		if (trackId.length() > 14)
-			tracks.append(trackId);
+			tracks.push_back(trackId);
 	}
 	return tracks;
 }

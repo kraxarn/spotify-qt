@@ -122,10 +122,10 @@ void LibraryList::doubleClicked(QTreeWidgetItem *item, int)
 		return;
 
 	// Get id of all tracks
-	QStringList trackIds;
+	std::vector<std::string> trackIds;
 	tracks.reserve(tracks.length());
 	for (auto &track : tracks)
-		trackIds.append(QString("spotify:track:%1").arg(track.id));
+		trackIds.push_back(lib::fmt::format("spotify:track:{}", track.id.toStdString()));
 
 	// Play in context of all tracks
 	spotify.playTracks(0, trackIds, [mainWindow](const QString &status)

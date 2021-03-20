@@ -57,7 +57,7 @@ private:
 	QListWidget *relatedList = nullptr;
 	QListWidget *topTracksList = nullptr;
 	QAction *followButton = nullptr;
-	QStringList topTrackIds;
+	std::vector<std::string> topTrackIds;
 	QTabWidget *tabs = nullptr;
 	QTreeWidget *albumList = nullptr;
 	QTreeWidget *singleList = nullptr;

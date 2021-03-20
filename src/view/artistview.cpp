@@ -190,7 +190,8 @@ void ArtistView::topTracksLoaded(const std::vector<spt::Track> &tracks)
 		item->setData(RoleTrackId, track.id);
 		item->setData(RoleAlbumId, track.albumId);
 		item->setData(RoleIndex, i++);
-		topTrackIds.append(QString("spotify:track:%1").arg(track.id));
+		topTrackIds.push_back(lib::fmt::format("spotify:track:{}",
+			track.id.toStdString()));
 	}
 
 	topTracksList->setEnabled(true);
