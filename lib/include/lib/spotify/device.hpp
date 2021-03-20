@@ -42,8 +42,14 @@ namespace lib
 			int volume_percent = 0;
 		};
 
+		/**
+		 * device -> json
+		 */
 		void to_json(nlohmann::json &j, const device &d);
 
+		/**
+		 * json -> device
+		 */
 		void from_json(const nlohmann::json &j, device &d);
 	}
 }

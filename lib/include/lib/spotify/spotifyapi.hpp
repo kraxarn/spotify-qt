@@ -109,11 +109,11 @@ namespace lib
 			bool refresh_valid = false;
 
 			/**
-			 *
-			 * @param post_data
-			 * @param authorization
+			 * Send request to refresh access token
+			 * @param post_data POST form data
+			 * @param authorization Authorization header
 			 * @note Only required until networking is properly implemented
-			 * @return
+			 * @return JSON response with (maybe) new access token
 			 */
 			virtual std::string refresh(const std::string &post_data,
 				const std::string &authorization) = 0;

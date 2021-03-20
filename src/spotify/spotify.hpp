@@ -192,6 +192,8 @@ namespace spt
 
 		void await(QNetworkReply *reply, lib::callback<QByteArray> &callback);
 
+		//region GET
+
 		/**
 		 * @deprecated Use callback with json instead
 		 */
@@ -209,15 +211,25 @@ namespace spt
 
 		void get(const std::string &url, lib::callback<nlohmann::json> &callback);
 
+		//endregion
+
+		//region PUT
+
 		void put(const QString &url, const nlohmann::json &body, lib::callback<QString> &callback);
 
 		void put(const QString &url, lib::callback<QString> &callback);
+
+		//endregion
+
+		//region POST
 
 		void post(const QString &url, lib::callback<QString> &callback);
 
 		//endregion
 
-		//region Old synchronous
+		//endregion
+
+		//region Old synchronous (deprecated)
 
 		/**
 		 * @deprecated
