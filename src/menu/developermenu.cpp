@@ -1,7 +1,9 @@
 #include "developermenu.hpp"
 
-DeveloperMenu::DeveloperMenu(lib::settings &settings, QWidget *parent)
-	: settings(settings),
+DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::spotify_api &spotify,
+	QWidget *parent)
+	: spotify(spotify),
+	settings(settings),
 	QMenu("Developer", parent)
 {
 	setIcon(Icon::get("folder-txt"));
@@ -15,6 +17,22 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, QWidget *parent)
 	QAction::connect(addAction("Reset size"), &QAction::triggered, [this]()
 	{
 		MainWindow::find(parentWidget())->resize(1280, 720);
+	});
+
+	QAction::connect(addAction("Refresh access token"), &QAction::triggered, [this]()
+	{
+		if (this->spotify.refresh())
+		{
+			QMessageBox::information(this, "Success",
+				QString::fromStdString(lib::fmt::format(
+					"Successfully refreshed access token:\n{}",
+					this->settings.account.refresh_token)));
+		}
+		else
+		{
+			QMessageBox::critical(this, "Error",
+				"Refresh failed, check the log for details");
+		}
 	});
 
 	addMenu(infoMenu());

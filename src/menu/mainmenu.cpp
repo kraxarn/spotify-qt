@@ -53,7 +53,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings, QWidget *pare
 
 	// Debug options if enabled
 	if (lib::developer_mode::enabled)
-		addMenu(new DeveloperMenu(settings, this));
+		addMenu(new DeveloperMenu(settings, spotify, this));
 
 	// Log out and quit
 	addSeparator();
