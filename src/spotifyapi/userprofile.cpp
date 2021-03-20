@@ -3,7 +3,7 @@
 // Currently unavailable:
 // users/{user_id}
 
-void Spotify::me(callback<User> &callback)
+void Spotify::me(lib::callback<User> &callback)
 {
 	get("me", [callback](const QJsonObject &json)
 	{

@@ -60,7 +60,7 @@ QString Spotify::removeSavedTrack(const QString &trackId)
 }
 
 void Spotify::isSavedTrack(const QStringList &trackIds,
-	callback<std::vector<bool>> &callback)
+	lib::callback<std::vector<bool>> &callback)
 {
 	get(QString("me/tracks/contains?ids=%1")
 		.arg(trackIds.join(',')), [callback](const QJsonArray &json)

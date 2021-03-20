@@ -16,6 +16,7 @@ namespace spt
 #include "searchresults.hpp"
 #include "user.hpp"
 #include "thirdparty/json.hpp"
+#include "lib/spotify/spotifyapi.hpp"
 
 #include <QCoreApplication>
 #include <QDateTime>
@@ -31,10 +32,7 @@ namespace spt
 
 namespace spt
 {
-	template<typename T>
-	using callback = const std::function<void(const T &)>;
-
-	class Spotify: public QObject
+	class Spotify: public QObject, public lib::spt::spotify_api
 	{
 	Q_OBJECT
 
@@ -53,14 +51,14 @@ namespace spt
 
 		//region Artists
 
-		void artist(const QString &artistId, callback<spt::Artist> &callback);
+		void artist(const QString &artistId, lib::callback<spt::Artist> &callback);
 
-		void topTracks(const spt::Artist &artist, callback<std::vector<spt::Track>> &callback);
+		void topTracks(const spt::Artist &artist, lib::callback<std::vector<spt::Track>> &callback);
 
 		void relatedArtists(const spt::Artist &artist,
-			callback<std::vector<spt::Artist>> &callback);
+			lib::callback<std::vector<spt::Artist>> &callback);
 
-		void albums(const spt::Artist &artist, callback<std::vector<spt::Album>> &callback);
+		void albums(const spt::Artist &artist, lib::callback<std::vector<spt::Album>> &callback);
 
 		//endregion
 
@@ -79,7 +77,7 @@ namespace spt
 		void unfollow(FollowType type, const QList<QString> &ids);
 
 		void isFollowing(FollowType type, const QList<QString> &ids,
-			callback<std::vector<bool>> &callback);
+			lib::callback<std::vector<bool>> &callback);
 
 		//endregion
 
@@ -94,7 +92,7 @@ namespace spt
 		QString removeSavedTrack(const QString &trackId);
 
 		void isSavedTrack(const QStringList &trackIds,
-			callback<std::vector<bool>> &callback);
+			lib::callback<std::vector<bool>> &callback);
 
 		//endregion
 
@@ -108,37 +106,40 @@ namespace spt
 
 		//region Player
 
-		void currentPlayback(callback<spt::Playback> &callback);
+		void currentPlayback(lib::callback<spt::Playback> &callback);
 
-		void setDevice(const QString &deviceId, callback<QString> &callback);
+		void setDevice(const std::string &deviceId, lib::callback<QString> &callback);
 
-		void devices(callback<std::vector<lib::spt::device>> &callback);
+		void setDevice(const lib::spt::device &device, lib::callback<QString> &callback);
 
-		void playTracks(int trackIndex, const QString &context, callback<QString> &callback);
+		void devices(lib::callback<std::vector<lib::spt::device>> &callback);
 
-		void playTracks(int trackIndex, const QList<QString> &all, callback<QString> &callback);
+		void playTracks(int trackIndex, const QString &context, lib::callback<QString> &callback);
 
-		void playTracks(const QString &context, callback<QString> &callback);
+		void playTracks(int trackIndex, const std::vector<std::string> &all,
+			lib::callback<QString> &callback);
 
-		void resume(callback<QString> &callback);
+		void playTracks(const QString &context, lib::callback<QString> &callback);
 
-		void pause(callback<QString> &callback);
+		void resume(lib::callback<QString> &callback);
 
-		void next(callback<QString> &callback);
+		void pause(lib::callback<QString> &callback);
 
-		void previous(callback<QString> &callback);
+		void next(lib::callback<QString> &callback);
 
-		void seek(int position, callback<QString> &callback);
+		void previous(lib::callback<QString> &callback);
 
-		void setRepeat(const QString &state, callback<QString> &callback);
+		void seek(int position, lib::callback<QString> &callback);
 
-		void setVolume(int volume, callback<QString> &callback);
+		void setRepeat(const QString &state, lib::callback<QString> &callback);
 
-		void setShuffle(bool enabled, callback<QString> &callback);
+		void setVolume(int volume, lib::callback<QString> &callback);
+
+		void setShuffle(bool enabled, lib::callback<QString> &callback);
 
 		QVector<Track> recentlyPlayed();
 
-		void addToQueue(const QString &uri, callback<QString> &callback);
+		void addToQueue(const QString &uri, lib::callback<QString> &callback);
 
 		//endregion
 
@@ -172,11 +173,9 @@ namespace spt
 
 		//region User Profile
 
-		void me(callback<User> &callback);
+		void me(lib::callback<User> &callback);
 
 		//endregion
-
-		bool isValid() const;
 
 		/**
 		 * @note Calls should not be done directly
@@ -185,40 +184,36 @@ namespace spt
 		QJsonObject getAsObject(const QString &url);
 
 	private:
-		qint64 lastAuth;
-		QString currentDevice;
-		lib::settings &settings;
 		QNetworkAccessManager *networkManager;
-		bool refreshValid = false;
 
 		QNetworkRequest request(const QString &url);
 
 		//region New asynchronous
 
-		void await(QNetworkReply *reply, callback<QByteArray> &callback);
+		void await(QNetworkReply *reply, lib::callback<QByteArray> &callback);
 
 		/**
 		 * @deprecated Use callback with json instead
 		 */
-		void get(const QString &url, callback<QJsonDocument> &callback);
+		void get(const QString &url, lib::callback<QJsonDocument> &callback);
 
 		/**
 		 * @deprecated Use callback with json instead
 		 */
-		void get(const QString &url, callback<QJsonObject> &callback);
+		void get(const QString &url, lib::callback<QJsonObject> &callback);
 
 		/**
 		 * @deprecated Use callback with json instead
 		 */
-		void get(const QString &url, callback<QJsonArray> &callback);
+		void get(const QString &url, lib::callback<QJsonArray> &callback);
 
-		void get(const std::string &url, callback<nlohmann::json> &callback);
+		void get(const std::string &url, lib::callback<nlohmann::json> &callback);
 
-		void put(const QString &url, const QJsonDocument &body, callback<QString> &callback);
+		void put(const QString &url, const nlohmann::json &body, lib::callback<QString> &callback);
 
-		void put(const QString &url, callback<QString> &callback);
+		void put(const QString &url, lib::callback<QString> &callback);
 
-		void post(const QString &url, callback<QString> &callback);
+		void post(const QString &url, lib::callback<QString> &callback);
 
 		//endregion
 
@@ -273,7 +268,7 @@ namespace spt
 		}
 
 		template<typename T>
-		void get(const QString &url, callback<std::vector<T>> &callback)
+		void get(const QString &url, lib::callback<std::vector<T>> &callback)
 		{
 			get(url, [this, callback](const QJsonObject &json)
 			{
@@ -289,8 +284,9 @@ namespace spt
 			});
 		}
 
-		bool refresh();
 		static QString followTypeString(FollowType type);
-		static long secondsSinceEpoch();
+
+		std::string refresh(const std::string &post_data,
+			const std::string &authorization) override;
 	};
 }
