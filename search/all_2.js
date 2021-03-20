@@ -8,5 +8,6 @@ var searchData=
   ['combine_13',['combine',['../classlib_1_1vector.html#a9fbc23ff2283212ee4fb8676c7f30391',1,'lib::vector']]],
   ['config_5ffile_14',['config_file',['../classlib_1_1paths.html#a2c77312bf587b48fbb581e93730bec86',1,'lib::paths']]],
   ['contains_15',['contains',['../classlib_1_1strings.html#ad6bb089dfe2793c7e01c1859e8c2b681',1,'lib::strings']]],
-  ['custom_5fplaylist_5forder_16',['custom_playlist_order',['../structlib_1_1set_1_1general.html#ae369f9a24d410c8e1113fa9c3a495f7f',1,'lib::set::general']]]
+  ['current_5fdevice_16',['current_device',['../classlib_1_1spt_1_1spotify__api.html#ae985c3bdb98cc5b5a55af95845523ab8',1,'lib::spt::spotify_api']]],
+  ['custom_5fplaylist_5forder_17',['custom_playlist_order',['../structlib_1_1set_1_1general.html#ae369f9a24d410c8e1113fa9c3a495f7f',1,'lib::set::general']]]
 ];
