@@ -34,5 +34,25 @@ namespace lib
 		{
 			vec.insert(vec.end(), append.begin(), append.end());
 		}
+
+		/**
+		 * Create a new sub-vector from another vector
+		 * @param vec Vector to take from
+		 * @param pos Starting index
+		 * @param len Number of elements (-1 to include rest of items)
+		 */
+		template<typename T>
+		static std::vector<T> sub(const std::vector<T> &vec, size_t pos, size_t len)
+		{
+			// If pos is larger than element count, return an empty vector
+			if (pos > vec.size())
+				return std::vector<T>();
+
+			// If size+len is larger than element count, stop as last element
+			if (len < 0 || pos + len > vec.size())
+				len = vec.size() - pos - 1;
+
+			return std::vector<T>(vec.cbegin() + pos, vec.cbegin() + len);
+		}
 	};
 }
