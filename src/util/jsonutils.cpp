@@ -11,11 +11,13 @@ QJsonValue JsonUtils::getProperty(const QJsonObject &json, const QStringList &na
 
 nlohmann::json JsonUtils::toJson(const QJsonValue &json)
 {
-	auto document = json.isObject()
+	auto document = (json.isObject()
 		? QJsonDocument(json.toObject())
 		: json.isArray()
 			? QJsonDocument(json.toArray())
-			: QJsonDocument();
+			: QJsonDocument()).toJson().toStdString();
 
-	return nlohmann::json::parse(document.toJson().toStdString());
+	return document.empty()
+		? nlohmann::json()
+		: nlohmann::json::parse(document);
 }
