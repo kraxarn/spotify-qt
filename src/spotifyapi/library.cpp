@@ -18,45 +18,45 @@ QVector<Album> Spotify::savedAlbums()
 	return albums;
 }
 
-QVector<Track> Spotify::savedTracks(int offset)
+std::vector<lib::spt::track> Spotify::savedTracks(int offset)
 {
-	auto json = getAsObject(QString("me/tracks?limit=50&offset=%1").arg(offset));
-	auto trackItems = json["items"].toArray();
-	QVector<Track> tracks;
-	tracks.reserve(50);
+	auto json = getAsJson(QString("me/tracks?limit=50&offset=%1").arg(offset));
+	auto trackItems = json["items"].items();
+	std::vector<lib::spt::track> tracks;
 
 	// Add all in current page
-	for (auto item : trackItems)
-		tracks.append(Track(item.toObject()));
+	for (auto &item : trackItems)
+		tracks.push_back(item.value().get<lib::spt::track>());
 
 	// Add all in next page
-	if (json.contains("next") && !json["next"].isNull())
-		tracks.append(savedTracks(json["offset"].toInt() + json["limit"].toInt()));
+	if (json.contains("next") && !json["next"].is_null())
+	{
+		lib::vector::append(tracks,
+			savedTracks(json["offset"].get<int>() + json["limit"].get<int>()));
+	}
 	return tracks;
 }
 
-QString Spotify::addSavedTrack(const QString &trackId)
+void Spotify::addSavedTrack(const std::string &trackId, lib::callback<QString> &callback)
 {
-	QVariantMap body;
-	body["ids"] = QStringList({
-		trackId.startsWith("spotify:track")
-			? trackId.right(trackId.length() - QString("spotify:track:").length())
-			: trackId
-	});
-	return put("me/tracks", &body);
+	put("me/tracks", {
+		{"ids", {
+			lib::strings::starts_with(trackId, "spotify:track:")
+				? trackId.substr(0, std::string("spotify:track").size())
+				: trackId
+		}}
+	}, callback);
 }
 
-QString Spotify::removeSavedTrack(const QString &trackId)
+void Spotify::removeSavedTrack(const std::string &trackId, lib::callback<QString> &callback)
 {
-	QJsonDocument json({
-		QPair<QString, QJsonArray>("ids", QJsonArray({
-			trackId.startsWith("spotify:track")
-				? trackId.right(trackId.length() - QString("spotify:track:").length())
+	del("me/tracks", {
+		{"ids", {
+			lib::strings::starts_with(trackId, "spotify:track:")
+				? trackId.substr(0, std::string("spotify:track").size())
 				: trackId
-		}))
-	});
-
-	return del("me/tracks", json);
+		}}
+	}, callback);
 }
 
 void Spotify::isSavedTrack(const QStringList &trackIds,
