@@ -57,9 +57,7 @@ TrayIcon::TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QObject
 	QMenu::connect(contextMenu, &QMenu::aboutToShow, [this]()
 	{
 		auto current = playback();
-		currentTrack->setText(QString("%1 - %2")
-			.arg(current.item.artist)
-			.arg(current.item.name));
+		currentTrack->setText(QString::fromStdString(current.item.title()));
 		auto isPlaying = current.isPlaying;
 		playPause->setIcon(Icon::get(isPlaying ? "media-playback-pause" : "media-playback-start"));
 		playPause->setText(isPlaying ? "Pause" : "Play");
