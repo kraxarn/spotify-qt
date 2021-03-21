@@ -54,6 +54,23 @@ namespace lib
 		}
 
 		/**
+		 * Load and parse JSON from file
+		 * @param path Path to json file, including extension
+		 * @return JSON object, or null object on failure
+		 */
+		static nlohmann::json load_json(const ghc::filesystem::path &path);
+
+		template<typename T>
+		static std::vector<T> load_items(const nlohmann::json &json)
+		{
+			if (json.is_array())
+				return json.get<std::vector<T>>();
+
+			throw std::runtime_error(lib::fmt::format(
+				"wrong type, expected array, but was {}", json.type_name()));
+		}
+
+		/**
 		 * Load a vector of items from a json file
 		 * @param path Path to json file, including extension
 		 * @return Vector of items on success, or an empty vector on failure
