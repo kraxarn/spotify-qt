@@ -343,7 +343,7 @@ namespace spt
 
 		static QString followTypeString(FollowType type);
 
-		std::string refresh(const std::string &post_data,
+		std::string request_refresh(const std::string &post_data,
 			const std::string &authorization) override;
 	};
 }

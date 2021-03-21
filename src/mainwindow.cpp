@@ -44,7 +44,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	network = new QNetworkAccessManager();
 
 	// Check connection
-	stateValid = spotify->is_valid();
+	stateValid = spotify->refresh();
 	if (!stateValid)
 	{
 		splash->finish(this);

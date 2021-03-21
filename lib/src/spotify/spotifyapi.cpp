@@ -5,19 +5,17 @@ using namespace lib::spt;
 spotify_api::spotify_api(lib::settings &settings)
 	: settings(settings)
 {
-	if (seconds_since_epoch() - settings.account.last_refresh < 3600)
+}
+
+bool spotify_api::refresh(bool force)
+{
+	if (!force && seconds_since_epoch() - settings.account.last_refresh < 3600)
 	{
 		lib::log::info("Last refresh was less than an hour ago, not refreshing access token");
 		last_auth = settings.account.last_refresh;
-		refresh_valid = true;
-		return;
+		return true;
 	}
 
-	refresh_valid = refresh();
-}
-
-bool spotify_api::refresh()
-{
 	// Make sure we have a refresh token
 	auto refresh_token = settings.account.refresh_token;
 	if (refresh_token.empty())
@@ -36,7 +34,7 @@ bool spotify_api::refresh()
 			settings.account.client_id, settings.account.client_secret)));
 
 	// Send request
-	auto reply = refresh(post_data, auth_header);
+	auto reply = request_refresh(post_data, auth_header);
 
 	// Parse as JSON
 	nlohmann::json json;
@@ -72,9 +70,4 @@ long spotify_api::seconds_since_epoch()
 {
 	return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now()
 		.time_since_epoch()).count();
-}
-
-bool spotify_api::is_valid() const
-{
-	return refresh_valid;
 }

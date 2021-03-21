@@ -309,7 +309,7 @@ QString Spotify::errorMessage(const QJsonDocument &json, const QUrl &url)
 	return message;
 }
 
-std::string Spotify::refresh(const std::string &post_data, const std::string &authorization)
+std::string Spotify::request_refresh(const std::string &post_data, const std::string &authorization)
 {
 	// Create request
 	QNetworkRequest request(QUrl("https://accounts.spotify.com/api/token"));

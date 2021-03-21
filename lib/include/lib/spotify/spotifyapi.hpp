@@ -71,15 +71,10 @@ namespace lib
 			//endregion
 
 			/**
-			 * If the current instance is in a valid state
-			 */
-			bool is_valid() const;
-
-			/**
 			 * Refresh access token with refresh token
 			 * @return Refresh was successful
 			 */
-			bool refresh();
+			bool refresh(bool force = false);
 
 		protected:
 			/**
@@ -104,18 +99,13 @@ namespace lib
 
 		private:
 			/**
-			 * Initial refresh was successful
-			 */
-			bool refresh_valid = false;
-
-			/**
 			 * Send request to refresh access token
 			 * @param post_data POST form data
 			 * @param authorization Authorization header
 			 * @note Only required until networking is properly implemented
 			 * @return JSON response with (maybe) new access token
 			 */
-			virtual std::string refresh(const std::string &post_data,
+			virtual std::string request_refresh(const std::string &post_data,
 				const std::string &authorization) = 0;
 		};
 	}
