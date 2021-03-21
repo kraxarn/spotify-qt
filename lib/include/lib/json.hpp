@@ -2,6 +2,7 @@
 
 #include "thirdparty/json.hpp"
 #include "lib/log.hpp"
+#include "thirdparty/filesystem.hpp"
 
 #include <fstream>
 
@@ -58,24 +59,15 @@ namespace lib
 		 * @return Vector of items on success, or an empty vector on failure
 		 */
 		template<typename T>
-		static std::vector<T> load_items(const std::string &path)
+		static std::vector<T> load_items(const ghc::filesystem::path &path)
 		{
-			std::ifstream file(path);
-			if (!file.is_open() || file.bad())
-			{
-				// File not found errors fail silently
-				return std::vector<T>();
-			}
-
 			try
 			{
-				nlohmann::json json;
-				file >> json;
-				return json.get<std::vector<T>>();
+				return load_items<T>(load_json(path));
 			}
 			catch (const std::exception &e)
 			{
-				log::warn("Failed to load items from \"{}\": {}", path, e.what());
+				log::warn("Failed to load items from \"{}\": {}", path.string(), e.what());
 			}
 
 			return std::vector<T>();
