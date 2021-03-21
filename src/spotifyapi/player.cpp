@@ -34,12 +34,13 @@ void Spotify::devices(lib::callback<std::vector<lib::spt::device>> &callback)
 	});
 }
 
-void Spotify::playTracks(int trackIndex, const QString &context, lib::callback<QString> &callback)
+void Spotify::playTracks(int trackIndex, const std::string &context,
+	lib::callback<QString> &callback)
 {
-	lib::log::dev("Playing track {} from {}", trackIndex, context.toStdString());
+	lib::log::dev("Playing track {} from {}", trackIndex, context);
 
 	nlohmann::json body = {
-		{"context_uri", context.toStdString()},
+		{"context_uri", context},
 		{"offset", {
 			{"position", trackIndex}
 		}}
@@ -137,13 +138,12 @@ void Spotify::setShuffle(bool enabled, lib::callback<QString> &callback)
 		.arg(enabled ? "true" : "false"), callback);
 }
 
-QVector<Track> Spotify::recentlyPlayed()
+std::vector<lib::spt::track> Spotify::recentlyPlayed()
 {
-	return loadItems<Track>("me/player/recently-played?limit=50");
+	return loadItemsAsJson<lib::spt::track>("me/player/recently-played?limit=50");
 }
 
-void Spotify::addToQueue(const QString &uri, lib::callback<QString> &callback)
+void Spotify::addToQueue(const std::string &uri, lib::callback<std::string> &callback)
 {
-	post(QString("me/player/queue?uri=%1").arg(uri),
-		callback);
+	post(lib::fmt::format("me/player/queue?uri={}", uri), callback);
 }
