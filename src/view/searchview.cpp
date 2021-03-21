@@ -92,19 +92,25 @@ void SearchView::albumMenu(const QPoint &pos)
 	auto albumId = item->data(0, RoleAlbumId).toString();
 	if (albumId.isEmpty())
 		return;
-	(new AlbumMenu(spotify, albumId, parentWidget()))->popup(albumList->mapToGlobal(pos));
+
+	auto albumMenu = new AlbumMenu(spotify, albumId.toStdString(), parentWidget());
+	albumMenu->popup(albumList->mapToGlobal(pos));
 }
 
 void SearchView::albumClick(QTreeWidgetItem *item, int)
 {
 	auto mainWindow = MainWindow::find(parentWidget());
-	if (!mainWindow->loadAlbum(item->data(0, RoleAlbumId).toString()))
+	if (!mainWindow->loadAlbum(item->data(0, RoleAlbumId)
+		.toString().toStdString()))
+	{
 		mainWindow->setStatus(QString("Failed to load album"), true);
+	}
 }
 
 void SearchView::artistClick(QListWidgetItem *item)
 {
-	MainWindow::find(parentWidget())->openArtist(item->data(RoleArtistId).toString());
+	auto mainWindow = MainWindow::find(parentWidget());
+	mainWindow->openArtist(item->data(RoleArtistId).toString().toStdString());
 	close();
 }
 
@@ -151,7 +157,7 @@ void SearchView::search()
 
 			if (cat == "track")
 			{
-				results.tracks.append(spotify.getTrack(id));
+				results.tracks.append(spotify.getTrack(id.toStdString()));
 				i = 0;
 			}
 			else if (cat == "artist")
@@ -211,14 +217,16 @@ void SearchView::search()
 	// Tracks
 	for (auto &track : results.tracks)
 	{
+		auto trackName = QString::fromStdString(track.name);
+		auto trackArtist = QString::fromStdString(track.artist);
 		auto item = new QTreeWidgetItem(trackList, {
-			track.name, track.artist
+			trackName, trackArtist
 		});
-		item->setData(0, RoleTrackId, track.id);
-		item->setData(0, RoleArtistId, track.artistId);
-		item->setData(0, RoleAlbumId, track.albumId);
-		item->setToolTip(0, track.name);
-		item->setToolTip(1, track.artist);
+		item->setData(0, RoleTrackId, QString::fromStdString(track.id));
+		item->setData(0, RoleArtistId, QString::fromStdString(track.artist_id));
+		item->setData(0, RoleAlbumId, QString::fromStdString(track.album_id));
+		item->setToolTip(0, trackName);
+		item->setToolTip(1, trackArtist);
 	}
 
 	// Search done
