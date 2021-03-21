@@ -22,7 +22,20 @@ public:
 		return array;
 	}
 
+	/**
+	 * Qt JSON -> C++ JSON
+	 */
 	static nlohmann::json toJson(const QJsonValue &json);
+
+	/**
+	 * C++ JSON item -> Qt JSON
+	 */
+	template<typename T>
+	static QJsonDocument toQtJson(const T &item)
+	{
+		nlohmann::json json = item;
+		return QJsonDocument::fromJson(QByteArray::fromStdString(json.dump()));
+	}
 
 private:
 	JsonUtils() = default;
