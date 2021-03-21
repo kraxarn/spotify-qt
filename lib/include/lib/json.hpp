@@ -37,20 +37,16 @@ namespace lib
 		}
 
 		/**
-		 * Get item from JSON with fallback
+		 * Get item from JSON if found
 		 * @param json JSON to find item in
 		 * @param key Key to try and find
-		 * @param fallback Fallback value if key wasn't found
 		 * @param item Item to set value to
 		 */
 		template<typename T>
-		static void get(const nlohmann::json &json, const std::string &key, const T &fallback,
-			T &item)
+		static void get(const nlohmann::json &json, const std::string &key, T &item)
 		{
 			if (json.contains(key))
 				json.at(key).get_to(item);
-			else
-				item = fallback;
 		}
 
 		/**

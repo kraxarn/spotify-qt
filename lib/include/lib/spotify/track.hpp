@@ -40,29 +40,29 @@ namespace lib
 			/**
 			 * Name of album
 			 */
-			std::string album;
+			std::string album = "(no album)";
 
 			/**
 			 * ID of album
 			 */
-			std::string album_id;
+			std::string album_id = "0";
 
 			/**
 			 * Name of artist
 			 * @todo Add support for multiple artists
 			 */
-			std::string artist;
+			std::string artist = "(no artist)";
 
 			/**
 			 * ID of artist
 			 * @todo Add support for multiple artists
 			 */
-			std::string artist_id;
+			std::string artist_id = "0";
 
 			/**
 			 * ID of track
 			 */
-			std::string id;
+			std::string id = "0";
 
 			/**
 			 * URL to cover of album
@@ -72,7 +72,7 @@ namespace lib
 			/**
 			 * Name of track
 			 */
-			std::string name;
+			std::string name = "(no name)";
 
 			/**
 			 * Format track as "{name} - {artist}"

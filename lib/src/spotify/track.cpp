@@ -47,11 +47,11 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 		? j.at("track")
 		: j;
 
-	lib::json::get(track, "id", std::string("0"), t.id);
-	lib::json::get(track, "name", std::string("(no name)"), t.name);
-	lib::json::get(track, "duration_ms", 0, t.duration);
-	lib::json::get(track, "is_local", false, t.is_local);
-	lib::json::get(track, "is_playable", true, t.is_playable);
+	lib::json::get(track, "id", t.id);
+	lib::json::get(track, "name", t.name);
+	lib::json::get(track, "duration_ms", t.duration);
+	lib::json::get(track, "is_local", t.is_local);
+	lib::json::get(track, "is_playable", t.is_playable);
 
 	if (track.contains("artists"))
 	{
