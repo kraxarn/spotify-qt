@@ -18,22 +18,29 @@ public:
 	QByteArray get(const QString &url);
 	QJsonDocument getJson(const QString &url);
 	void setStatus(const QString &message, bool important = false);
-	bool loadAlbum(const QString &albumId, const QString &trackId = QString());
-	void openArtist(const QString &artistId);
+	void status(const std::string &message, bool important = false);
+	bool loadAlbum(const std::string &albumId, const std::string &trackId = std::string());
+	void openArtist(const std::string &artistId);
+	/**
+	 * @deprecated Use with url as std::string instead
+	 */
 	QPixmap getAlbum(const QString &url);
+	QPixmap getAlbum(const std::string &url);
 	QPixmap getImage(const QString &type, const QString &url);
 	void refreshPlaylist(const spt::Playlist &playlist);
 	bool loadPlaylist(const spt::Playlist &playlist);
 	spt::Playback currentPlayback() const;
-	void openAudioFeaturesWidget(const QString &trackId, const QString &artist, const QString &name);
-	void openLyrics(const QString &artist, const QString &name);
-	QVector<spt::Track> playlistTracks(const QString &playlistId);
+	void openAudioFeaturesWidget(const std::string &trackId,
+		const std::string &artist, const std::string &name);
+	void openLyrics(const std::string &artist, const std::string &name);
+	std::vector<lib::spt::track> playlistTracks(const std::string &playlistId);
 	void reloadTrayIcon();
 	spt::User getCurrentUser();
 	void setFixedWidthTime(bool value);
-	QVector<spt::Track> loadTracksFromCache(const QString &id);
-	void saveTracksToCache(const QString &id, const QVector<spt::Track> &tracks);
-	bool loadSongs(const QVector<spt::Track> &tracks, const QString &selectedId = QString());
+	std::vector<lib::spt::track> loadTracksFromCache(const std::string &id);
+	void saveTracksToCache(const std::string &id, const std::vector<lib::spt::track> &tracks);
+	bool loadSongs(const std::vector<lib::spt::track> &tracks,
+		const std::string &selectedId = std::string());
 	std::vector<std::string> currentTracks();
 	void setPlayingTrackItem(QTreeWidgetItem *item);
 	void refresh();
@@ -47,7 +54,7 @@ public:
 	void setCurrentLibraryItem(QTreeWidgetItem *item);
 	spt::Playlist &getPlaylist(int index);
 	void setCurrentPlaylistItem(int index);
-	QSet<QString> allArtists();
+	std::unordered_set<std::string> allArtists();
 	QListWidgetItem *getCurrentPlaylistItem();
 	QVector<spt::Playlist> &getPlaylists();
 	int getPlaylistItemCount();
@@ -58,7 +65,7 @@ public:
 	QString &getCacheLocation();
 	QAction *getSearchAction();
 	QTreeWidget *getSongsTree();
-	QString &getSptContext();
+	std::string getSptContext();
 	spt::Playback &getCurrentPlayback();
 
 #ifdef USE_DBUS
@@ -84,7 +91,7 @@ private:
 
 	// Other
 	LyricsView *lyricsView = nullptr;
-	QHash<QString, QTreeWidgetItem *> trackItems;
+	std::unordered_map<std::string, QTreeWidgetItem *> trackItems;
 	QString cacheLocation;
 	TrayIcon *trayIcon = nullptr;
 	int refreshCount = -1;
