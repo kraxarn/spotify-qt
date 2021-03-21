@@ -13,8 +13,9 @@ Q_OBJECT
 public:
 	explicit SidePanel(spt::Spotify &spotify, const lib::settings &settings, QWidget *parent);
 
-	void openArtist(const QString &artistId);
-	void openAudioFeatures(const QString &trackId, const QString &artist, const QString &name);
+	void openArtist(const std::string &artistId);
+	void openAudioFeatures(const std::string &trackId, const std::string &artist,
+		const std::string &name);
 	void openSearch();
 	void closeSearch();
 

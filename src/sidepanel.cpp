@@ -15,7 +15,7 @@ SidePanel::SidePanel(spt::Spotify &spotify, const lib::settings &settings, QWidg
 		this, &SidePanel::removeTab);
 }
 
-void SidePanel::openArtist(const QString &artistId)
+void SidePanel::openArtist(const std::string &artistId)
 {
 	auto view = new ArtistView(spotify, artistId, settings, parent);
 	view->onArtistLoaded = [this, view](const spt::Artist &artist)
@@ -47,13 +47,13 @@ void SidePanel::closeSearch()
 	removeTab(indexOf(searchView));
 }
 
-void SidePanel::openAudioFeatures(const QString &trackId,
-	const QString &artist, const QString &name)
+void SidePanel::openAudioFeatures(const std::string &trackId,
+	const std::string &artist, const std::string &name)
 {
 	auto view = new AudioFeaturesView(spotify, trackId, this);
 	addAndSelect(view, "view-statistics", QString("%1 - %2")
-		.arg(artist)
-		.arg(name));
+		.arg(QString::fromStdString(artist))
+		.arg(QString::fromStdString(name)));
 }
 
 void SidePanel::addAndSelect(QWidget *widget, const QString &icon, const QString &title)
