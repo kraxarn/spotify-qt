@@ -33,7 +33,18 @@ ghc::filesystem::path lib::cache::path(const std::string &type, const std::strin
 
 std::vector<lib::spt::track> lib::cache::get_playlist_tracks(const std::string &id)
 {
-	return lib::json::load_items<lib::spt::track>(path("playlist", id));
+	// TODO: Playlists are a bit weird right now as they aren't lib types yet
+	try
+	{
+		auto json = json::load_json(path("playlist", id));
+		return json::load_items<lib::spt::track>(json.at("tracks"));
+	}
+	catch (const std::exception &e)
+	{
+		log::warn("Failed to load playlist tracks from cache: {}", e.what());
+	}
+
+	return std::vector<lib::spt::track>();
 }
 
 void lib::cache::set_playlist_tracks(const std::string &id,
