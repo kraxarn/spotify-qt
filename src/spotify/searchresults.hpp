@@ -8,7 +8,7 @@ namespace spt
 #include "album.hpp"
 #include "artist.hpp"
 #include "playlist.hpp"
-#include "track.hpp"
+#include "lib/spotify/track.hpp"
 
 #include <QString>
 
@@ -25,7 +25,7 @@ namespace spt
 
 		QVector<Album> albums;
 		QVector<Artist> artists;
-		QVector<Track> tracks;
+		QVector<lib::spt::track> tracks;
 
 		// For playlists, we need more complex information later
 		QVector<QJsonObject> playlists;

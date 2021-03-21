@@ -22,7 +22,7 @@ SearchResults::SearchResults(const QJsonObject &json)
 	// Tracks
 	tracks.reserve(json["tracks"].toObject()["total"].toInt());
 	for (auto track : json["tracks"].toObject()["items"].toArray())
-		tracks.append(Track(track.toObject()));
+		tracks.append(JsonUtils::toJson(track).get<lib::spt::track>());
 }
 
 QJsonObject SearchResults::toJson() const
@@ -37,7 +37,7 @@ QJsonObject SearchResults::toJson() const
 
 	QJsonArray jsonTracks;
 	for (auto &track : tracks)
-		jsonTracks.append(track.toJson());
+		jsonTracks.append(JsonUtils::toQtJson(track).object());
 
 	QJsonArray jsonPlaylists;
 	for (auto &playlist : playlists)
