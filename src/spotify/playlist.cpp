@@ -30,7 +30,7 @@ Playlist::Playlist(const QJsonObject &json)
 			: json["owner"].toObject()["display_name"].toString();
 }
 
-bool Playlist::loadTracks(Spotify &spotify, QVector<Track> &trackList) const
+bool Playlist::loadTracks(Spotify &spotify, std::vector<lib::spt::track> &trackList) const
 {
 	// Allocate memory for all tracks
 	trackList.reserve(tracks["total"].toInt());
@@ -44,32 +44,36 @@ bool Playlist::loadTracks(Spotify &spotify, QVector<Track> &trackList) const
 	return loadTracksFromUrl(trackList, href, 0, spotify);
 }
 
-QVector<spt::Track> Playlist::loadTracks(Spotify &spotify) const
+std::vector<lib::spt::track> Playlist::loadTracks(Spotify &spotify) const
 {
-	QVector<spt::Track> trackList;
+	std::vector<lib::spt::track> trackList;
 	loadTracks(spotify, trackList);
 	return trackList;
 }
 
-bool Playlist::loadTracksFromUrl(QVector<Track> &trackList, QString &url, int offset, Spotify &spotify)
+bool Playlist::loadTracksFromUrl(std::vector<lib::spt::track> &trackList, QString &url, int offset,
+	Spotify &spotify)
 {
 	// Load tracks from api
 	auto newUrl = url.remove(0, QString("https://api.spotify.com/v1/").length());
-	auto current = spotify.getAsObject(newUrl);
+	auto current = spotify.getAsJson(newUrl);
 
 	// No items, request probably failed
 	if (!current.contains("items"))
 		return false;
 
 	// Load from url
-	auto items = current["items"].toArray();
-	for (auto item : items)
-		trackList.append(Track(item.toObject()));
+	auto items = current["items"];
+	for (auto &item : items)
+		trackList.push_back(item.get<lib::spt::track>());
 
 	// Check if there's a next page
-	auto nextPage = current["next"].toString();
-	if (!nextPage.isEmpty())
-		loadTracksFromUrl(trackList, nextPage, offset + items.size(), spotify);
+	auto nextPage = current["next"].get<std::string>();
+	if (!nextPage.empty())
+	{
+		auto nextPageUrl = QString::fromStdString(nextPage);
+		loadTracksFromUrl(trackList, nextPageUrl, offset + items.size(), spotify);
+	}
 
 	return true;
 }
@@ -79,7 +83,7 @@ QJsonObject Playlist::toJson(Spotify &spotify) const
 	// Load tracks to put in JSON
 	QJsonArray jsonTracks;
 	for (auto &track : loadTracks(spotify))
-		jsonTracks.append(track.toJson());
+		jsonTracks.append(QString::fromStdString(nlohmann::json(track).dump()));
 
 	return toJson(jsonTracks);
 }
