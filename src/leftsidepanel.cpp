@@ -61,18 +61,21 @@ LeftSidePanel::LeftSidePanel(spt::Spotify &spotify, lib::settings &settings,
 void LeftSidePanel::popupSongMenu(const QPoint &pos)
 {
 	auto track = current.playback.item;
-	if (track.name.isEmpty() && track.artist.isEmpty())
+	if (track.name.empty() && track.artist.empty())
 		return;
 	(new SongMenu(track, spotify, parentWidget()))->popup(nowPlaying->mapToGlobal(pos));
 }
 
-int LeftSidePanel::latestTrack(const QVector<spt::Track> &tracks)
+int LeftSidePanel::latestTrack(const std::vector<lib::spt::track> &tracks)
 {
 	auto latest = 0;
-	for (int i = 0; i < tracks.length(); i++)
+	for (int i = 0; i < tracks.size(); i++)
 	{
-		if (tracks[i].addedAt > tracks[latest].addedAt)
+		if (DateUtils::fromIso(tracks[i].added_at)
+			> DateUtils::fromIso(tracks[latest].added_at))
+		{
 			latest = i;
+		}
 	}
 	return latest;
 }
@@ -105,7 +108,7 @@ void LeftSidePanel::updateContextIcon()
 				? current.playback.item.artist
 				: getPlaylistName(current.playback.contextUri);
 
-	contextInfo->setText(currentName);
+	contextInfo->setText(QString::fromStdString(currentName));
 	auto size = contextInfo->fontInfo().pixelSize();
 	contextIcon->setPixmap(currentContextIcon().pixmap(size, size));
 
@@ -135,7 +138,7 @@ void LeftSidePanel::contextInfoOpen(bool)
 {
 	auto mainWindow = MainWindow::find(parentWidget());
 	auto type = current.playback.contextType;
-	auto uri = current.playback.contextUri.split(':').last();
+	auto uri = current.playback.contextUri.split(':').last().toStdString();
 
 	if (type == "album")
 		mainWindow->loadAlbum(uri);
@@ -143,20 +146,24 @@ void LeftSidePanel::contextInfoOpen(bool)
 		mainWindow->openArtist(uri);
 	else if (type == "playlist")
 	{
-		auto playlist = spotify.playlist(uri);
+		auto playlist = spotify.playlist(QString::fromStdString(uri));
 		libraryList->setCurrentItem(nullptr);
 		playlists->setCurrentRow(-1);
 		mainWindow->loadPlaylist(playlist);
 	}
 }
 
-QSet<QString> LeftSidePanel::allArtists()
+std::unordered_set<std::string> LeftSidePanel::allArtists()
 {
-	QSet<QString> artists;
+	std::unordered_set<std::string> artists;
 	for (auto i = 0; i < playlists->count(); i++)
-		for (auto &track : MainWindow::find(parentWidget())
-			->playlistTracks(playlists->item(i)->data(RolePlaylistId).toString()))
-			artists << track.artist;
+	{
+		auto mainWindow = MainWindow::find(parentWidget());
+		auto playlistId = playlists->item(i)->data(RolePlaylistId).toString().toStdString();
+
+		for (auto &track : mainWindow->playlistTracks(playlistId))
+			artists.insert(track.artist);
+	}
 	return artists;
 }
 
@@ -257,13 +264,15 @@ void LeftSidePanel::orderPlaylists(lib::playlist_order order)
 			std::sort(items.begin(), items.end(),
 				[mainWindow](QListWidgetItem *i1, QListWidgetItem *i2)
 				{
-					auto t1 = mainWindow->playlistTracks(i1
-						->data(DataRole::RolePlaylistId).toString());
-					auto t2 = mainWindow->playlistTracks(i2
-						->data(DataRole::RolePlaylistId).toString());
+					auto id1 = i1->data(DataRole::RolePlaylistId).toString().toStdString();
+					auto id2 = i2->data(DataRole::RolePlaylistId).toString().toStdString();
 
-					return t1.length() > 0 && t2.length() > 0
-						? t1.at(latestTrack(t1)).addedAt > t2.at(latestTrack(t2)).addedAt
+					auto t1 = mainWindow->playlistTracks(id1);
+					auto t2 = mainWindow->playlistTracks(id2);
+
+					return !t1.empty() && !t2.empty()
+						? DateUtils::fromIso(t1.at(latestTrack(t1)).added_at)
+							> DateUtils::fromIso(t2.at(latestTrack(t2)).added_at)
 						: false;
 				});
 			break;
@@ -324,12 +333,12 @@ void LeftSidePanel::setAlbumImage(const QPixmap &pixmap)
 	nowAlbum->setPixmap(pixmap);
 }
 
-QString LeftSidePanel::getPlaylistName(const QString &id)
+std::string LeftSidePanel::getPlaylistName(const QString &id)
 {
 	auto name = getPlaylistNameFromSaved(id);
 	if (!name.isEmpty())
-		return name;
-	return spotify.playlist(id.split(':').last()).name;
+		return name.toStdString();
+	return spotify.playlist(id.split(':').last()).name.toStdString();
 }
 
 QTreeWidgetItem *LeftSidePanel::getCurrentLibraryItem()

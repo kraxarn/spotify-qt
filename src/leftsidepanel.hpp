@@ -6,6 +6,9 @@
 #include "spotify/spotify.hpp"
 #include "util/utils.hpp"
 #include "lib/developermode.hpp"
+#include "util/dateutils.hpp"
+
+#include <unordered_set>
 
 #include <QVBoxLayout>
 
@@ -17,7 +20,7 @@ public:
 	explicit LeftSidePanel(spt::Spotify &spotify, lib::settings &settings,
 		spt::Current &current, QWidget *parent);
 
-	QSet<QString> allArtists();
+	std::unordered_set<std::string> allArtists();
 	void updateContextIcon();
 
 	QString getCurrentlyPlaying();
@@ -45,7 +48,6 @@ public:
 	void setCurrentLibraryItem(QTreeWidgetItem *item);
 	QTreeWidgetItem *getCurrentLibraryItem();
 
-
 	//endregion
 
 private:
@@ -61,11 +63,11 @@ private:
 	QLabel *nowAlbum = nullptr;
 	QLabel *nowPlaying = nullptr;
 
-	static int latestTrack(const QVector<spt::Track> &tracks);
+	static int latestTrack(const std::vector<lib::spt::track> &tracks);
 	void contextInfoMenu(const QPoint &pos);
 	void contextInfoOpen(bool checked);
 	QIcon currentContextIcon() const;
-	QString getPlaylistName(const QString &id);
+	std::string getPlaylistName(const QString &id);
 
 	void popupSongMenu(const QPoint &pos);
 };
