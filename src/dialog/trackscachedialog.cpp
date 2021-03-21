@@ -42,14 +42,12 @@ void TracksCacheDialog::open()
 
 	for (const auto &pair : cache.all_tracks())
 	{
-		auto json = pair.second;
-		for (auto &item : json.items())
+		for (auto &track : pair.second)
 		{
-			auto track = item.value();
 			new QTreeWidgetItem(tree, {
-				QString::fromStdString(track.at("name").get<std::string>()),
-				QString::fromStdString(track.at("artist").get<std::string>()),
-				QString::fromStdString(track.at("album").get<std::string>()),
+				QString::fromStdString(track.name),
+				QString::fromStdString(track.artist),
+				QString::fromStdString(track.album),
 			});
 		}
 	}
