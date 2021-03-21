@@ -5,7 +5,7 @@ QVector<Artist> Spotify::topArtists()
 	return loadItems<Artist>("me/top/artists?limit=10");
 }
 
-QVector<Track> Spotify::topTracks()
+std::vector<lib::spt::track> Spotify::topTracks()
 {
-	return loadItems<Track>("me/top/tracks?limit=50");
+	return loadItemsAsJson<lib::spt::track>("me/top/tracks?limit=50");
 }
