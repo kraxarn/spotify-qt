@@ -55,7 +55,7 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 	mainWindow->setCurrentPlaylistItem(-1);
 	if (item->parent() != nullptr)
 	{
-		auto data = item->data(0, 0x100).toString();
+		auto data = item->data(0, 0x100).toString().toStdString();
 		switch (item->data(0, 0x101).toInt())
 		{
 			case RoleArtistId:
@@ -69,14 +69,14 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 	}
 	else
 	{
-		auto id = item->text(0).toLower().replace(' ', '_');
+		auto id = item->text(0).toLower().replace(' ', '_').toStdString();
 		auto cacheTracks = mainWindow->loadTracksFromCache(id);
-		if (cacheTracks.isEmpty())
+		if (cacheTracks.empty())
 			mainWindow->getSongsTree()->setEnabled(false);
 		else
 			mainWindow->loadSongs(cacheTracks);
 
-		QVector<spt::Track> tracks;
+		std::vector<lib::spt::track> tracks;
 		if (item->text(0) == RECENTLY_PLAYED)
 			tracks = spotify.recentlyPlayed();
 		else if (item->text(0) == SAVED_TRACKS)
@@ -88,15 +88,20 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 			auto all = mainWindow->allArtists();
 			auto releases = spotify.newReleases();
 			for (auto &album : releases)
-				if (all.contains(album.artist))
-					for (auto &track : spotify.albumTracks(album.id))
+			{
+				if (all.find(album.artist.toStdString()) != all.end())
+				{
+					for (auto &track : spotify.albumTracks(album.id.toStdString()))
 					{
-						track.addedAt = album.releaseDate;
-						tracks << track;
+						track.added_at = album.releaseDate
+							.toString(Qt::ISODate).toStdString();
+						tracks.push_back(track);
 					}
+				}
+			}
 		}
 
-		if (!tracks.isEmpty())
+		if (!tracks.empty())
 		{
 			mainWindow->saveTracksToCache(id, tracks);
 			mainWindow->loadSongs(tracks);
@@ -118,17 +123,16 @@ void LibraryList::doubleClicked(QTreeWidgetItem *item, int)
 			? spotify.savedTracks()
 			: item->text(0) == TOP_TRACKS
 				? spotify.topTracks()
-				: QVector<spt::Track>();
+				: std::vector<lib::spt::track>();
 
 	// If none were found, don't do anything
-	if (tracks.isEmpty())
+	if (tracks.empty())
 		return;
 
 	// Get id of all tracks
 	std::vector<std::string> trackIds;
-	tracks.reserve(tracks.length());
 	for (auto &track : tracks)
-		trackIds.push_back(lib::fmt::format("spotify:track:{}", track.id.toStdString()));
+		trackIds.push_back(lib::fmt::format("spotify:track:{}", track.id));
 
 	// Play in context of all tracks
 	spotify.playTracks(0, trackIds, [mainWindow](const QString &status)
