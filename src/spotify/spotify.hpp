@@ -233,9 +233,18 @@ namespace spt
 
 		//region POST
 
+		/**
+		 * @deprecated
+		 */
 		void post(const QString &url, lib::callback<QString> &callback);
 
+		void post(const std::string &url, lib::callback<std::string> &callback);
+
 		//endregion
+
+		//region DELETE
+
+		void del(const QString &url, const nlohmann::json &json, lib::callback<QString> &callback);
 
 		//endregion
 
@@ -247,7 +256,7 @@ namespace spt
 		QString post(const QString &url);
 
 		/**
-		 * @note Old synchronous method
+		 * @deprecated
 		 */
 		QString del(const QString &url, const QJsonDocument &json);
 

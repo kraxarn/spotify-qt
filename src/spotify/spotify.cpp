@@ -252,6 +252,26 @@ void Spotify::post(const QString &url, lib::callback<QString> &callback)
 		});
 }
 
+void Spotify::post(const std::string &url, lib::callback<std::string> &callback)
+{
+	post(QString::fromStdString(url), [callback](const QString &result)
+	{
+		callback(result.toStdString());
+	});
+}
+
+void Spotify::del(const QString &url, const nlohmann::json &json, lib::callback<QString> &callback)
+{
+	auto req = request(url);
+	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+	await(networkManager->sendCustomRequest(req, "DELETE",
+		QByteArray::fromStdString(json.dump())), [url, callback](const QByteArray &data)
+	{
+		callback(errorMessage(url, data));
+	});
+}
+
 QString Spotify::post(const QString &url)
 {
 	auto req = request(url);
