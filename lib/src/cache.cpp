@@ -47,12 +47,6 @@ std::vector<lib::spt::track> lib::cache::get_playlist_tracks(const std::string &
 	return std::vector<lib::spt::track>();
 }
 
-void lib::cache::set_playlist_tracks(const std::string &id,
-	const std::vector<lib::spt::track> &tracks)
-{
-	lib::json::save_items(path("playlist", id), tracks);
-}
-
 //endregion
 
 //region tracks

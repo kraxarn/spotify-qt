@@ -35,9 +35,6 @@ namespace lib
 		 */
 		std::vector<lib::spt::track> get_playlist_tracks(const std::string &id);
 
-		void set_playlist_tracks(const std::string &id,
-			const std::vector<lib::spt::track> &tracks);
-
 		//endregion
 
 		//region tracks
