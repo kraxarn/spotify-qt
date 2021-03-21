@@ -80,7 +80,8 @@ QMenu *DeveloperMenu::infoMenu()
 	QAction::connect(menu->addAction("Context"), &QAction::triggered,
 		[mainWindow]()
 		{
-			QMessageBox::information(mainWindow, "Context", mainWindow->getSptContext());
+			QMessageBox::information(mainWindow, "Context",
+				QString::fromStdString(mainWindow->getSptContext()));
 		});
 
 	return menu;
