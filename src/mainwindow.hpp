@@ -65,7 +65,7 @@ public:
 	QString &getCacheLocation();
 	QAction *getSearchAction();
 	QTreeWidget *getSongsTree();
-	std::string getSptContext();
+	std::string getSptContext() const;
 	spt::Playback &getCurrentPlayback();
 
 #ifdef USE_DBUS

@@ -603,7 +603,7 @@ QTreeWidget *MainWindow::getSongsTree()
 	return songs;
 }
 
-std::string MainWindow::getSptContext()
+std::string MainWindow::getSptContext() const
 {
 	return current.context.toStdString();
 }
