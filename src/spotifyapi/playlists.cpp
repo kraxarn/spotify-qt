@@ -48,18 +48,19 @@ QString Spotify::editPlaylist(const Playlist &playlist)
 	return put(QString("playlists/%1").arg(playlist.id), &body);
 }
 
-QString Spotify::addToPlaylist(const QString &playlistId, const QString &trackId)
+QString Spotify::addToPlaylist(const QString &playlistId, const std::string &trackId)
 {
 	return post(QString("playlists/%1/tracks?uris=%2")
-		.arg(playlistId).arg(trackId));
+		.arg(playlistId)
+		.arg(QString::fromStdString(trackId)));
 }
 
-QString Spotify::removeFromPlaylist(const QString &playlistId, const QString &trackId, int pos)
+QString Spotify::removeFromPlaylist(const QString &playlistId, const std::string &trackId, int pos)
 {
 	QJsonDocument json({
 		QPair<QString, QJsonArray>("tracks", QJsonArray({
 			QJsonObject({
-				QPair<QString, QString>("uri", trackId),
+				QPair<QString, QString>("uri", QString::fromStdString(trackId)),
 				QPair<QString, QJsonArray>("positions", QJsonArray({
 					pos
 				}))
