@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 	qml.main();
 #else
 	// Create main window
-	MainWindow w(settings);
+	MainWindow w(settings, paths);
 
 	// Show window and run application
 	if (!w.isValid())

@@ -1,8 +1,8 @@
 #include "mainwindow.hpp"
 
-MainWindow::MainWindow(lib::settings &settings)
+MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	: settings(settings),
-	cache(QtPaths(this)),
+	cache(paths),
 	QMainWindow()
 {
 	// Splash

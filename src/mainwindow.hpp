@@ -7,7 +7,7 @@ class MainWindow: public QMainWindow
 Q_OBJECT
 
 public:
-	explicit MainWindow(lib::settings &settings);
+	MainWindow(lib::settings &settings, lib::paths &paths);
 
 	static MainWindow *find(QWidget *from);
 
