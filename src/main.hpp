@@ -29,6 +29,7 @@
 #include "util/utils.hpp"
 #include "view/lyricsview.hpp"
 #include "volumebutton.hpp"
+#include "lib/cache.hpp"
 
 #include <QAction>
 #include <QApplication>

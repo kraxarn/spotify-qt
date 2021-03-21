@@ -75,6 +75,7 @@ public:
 private:
 	// Constructor
 	lib::settings &settings;
+	lib::cache cache;
 
 	// Qt Widgets
 	QTreeWidget *songs = nullptr;

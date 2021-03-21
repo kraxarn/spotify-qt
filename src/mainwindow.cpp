@@ -2,6 +2,7 @@
 
 MainWindow::MainWindow(lib::settings &settings)
 	: settings(settings),
+	cache(QtPaths(this)),
 	QMainWindow()
 {
 	// Splash
@@ -358,31 +359,15 @@ bool MainWindow::loadAlbum(const std::string &albumId, const std::string &trackI
 	return true;
 }
 
-QVector<spt::Track> MainWindow::loadTracksFromCache(const QString &id)
+std::vector<lib::spt::track> MainWindow::loadTracksFromCache(const std::string &id)
 {
-	QVector<spt::Track> tracks;
-	auto filePath = QString("%1/tracks/%2.json").arg(cacheLocation).arg(id);
-	if (!QFileInfo::exists(filePath))
-		return tracks;
-	QFile file(filePath);
-	file.open(QIODevice::ReadOnly);
-	auto json = QJsonDocument::fromJson(file.readAll());
-	file.close();
-	if (json.isNull())
-		return tracks;
-	for (auto track : json.array())
-		tracks.append(spt::Track(track.toObject()));
-	return tracks;
+	return cache.tracks(id);
 }
 
-void MainWindow::saveTracksToCache(const QString &id, const QVector<spt::Track> &tracks)
+void MainWindow::saveTracksToCache(const std::string &id,
+	const std::vector<lib::spt::track> &tracks)
 {
-	QJsonArray json;
-	for (auto &track : tracks)
-		json.append(track.toJson());
-	QFile file(QString("%1/tracks/%2.json").arg(cacheLocation).arg(id));
-	file.open(QIODevice::WriteOnly);
-	file.write(QJsonDocument(json).toJson());
+	cache.tracks(id, tracks);
 }
 
 bool MainWindow::loadPlaylist(const spt::Playlist &playlist)
@@ -419,21 +404,9 @@ bool MainWindow::loadPlaylistFromCache(const spt::Playlist &playlist)
 	return result;
 }
 
-QVector<spt::Track> MainWindow::playlistTracks(const QString &playlistId)
+std::vector<lib::spt::track> MainWindow::playlistTracks(const std::string &playlistId)
 {
-	QVector<spt::Track> tracks;
-	auto filePath = QString("%1/playlist/%2.json").arg(cacheLocation).arg(playlistId);
-	if (!QFileInfo::exists(filePath))
-		return tracks;
-	QFile file(filePath);
-	file.open(QIODevice::ReadOnly);
-	auto json = QJsonDocument::fromJson(file.readAll());
-	file.close();
-	if (json.isNull())
-		return tracks;
-	for (auto track : json.object()["tracks"].toArray())
-		tracks.append(spt::Track(track.toObject()));
-	return tracks;
+	return cache.get_playlist_tracks(playlistId);
 }
 
 void MainWindow::refreshPlaylist(const spt::Playlist &playlist)
