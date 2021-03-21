@@ -1,25 +1,24 @@
 #include "spotifyapi.hpp"
 
-QVector<Track> Spotify::albumTracks(const QString &albumID)
+std::vector<lib::spt::track> Spotify::albumTracks(const std::string &albumId)
 {
-	auto json = getAsObject(QString("albums/%1").arg(albumID));
-	auto albumName = json["name"].toString();
-	QVector<Track> tracks;
-	tracks.reserve(json["total_tracks"].toInt());
+	auto json = getAsJson(QString("albums/%1").arg(QString::fromStdString(albumId)));
+	auto albumName = json.at("name").get<std::string>();
+	std::vector<lib::spt::track> tracks;
 
 	// Loop through all items
-	for (auto track : json["tracks"].toObject()["items"].toArray())
+	for (auto &track : json.at("tracks").at("items").items())
 	{
-		auto t = Track(track.toObject());
+		auto t = track.value().get<lib::spt::track>();
 		// Album name is not included, so we have to set it manually
 		t.album = albumName;
-		tracks.append(t);
+		tracks.push_back(t);
 	}
 
 	// Check if we have any more to add
-	auto tracksLimit = json["tracks"].toObject()["limit"].toInt();
-	if (json["tracks"].toObject()["total"].toInt() > tracksLimit)
-		tracks.append(albumTracks(albumID, albumName, tracksLimit));
+	auto tracksLimit = json.at("tracks").at("limit").get<int>();
+	if (json.at("tracks").at("total").get<int>() > tracksLimit)
+		lib::vector::append(tracks, albumTracks(albumId, albumName, tracksLimit));
 
 	// Return final vector
 	return tracks;
@@ -30,26 +29,29 @@ spt::Album Spotify::getAlbum(const QString &id)
 	return spt::Album(getAsObject(QString("albums/%1").arg(id)));
 }
 
-QVector<Track> Spotify::albumTracks(const QString &albumId, const QString &albumName, int offset)
+std::vector<lib::spt::track> Spotify::albumTracks(const std::string &albumId,
+	const std::string &albumName, int offset)
 {
-	auto json = getAsObject(QString("albums/%1/tracks?limit=50&offset=%2")
-		.arg(albumId).arg(offset));
-	auto trackItems = json["items"].toArray();
-	QVector<Track> tracks;
-	tracks.reserve(50);
+	auto json = getAsJson(QString("albums/%1/tracks?limit=50&offset=%2")
+		.arg(QString::fromStdString(albumId))
+		.arg(offset));
+	auto trackItems = json["items"].items();
+	std::vector<lib::spt::track> tracks;
 
 	// Add all in current page
-	for (auto item : trackItems)
+	for (auto &item : trackItems)
 	{
-		auto t = Track(item.toObject());
+		auto t = item.value().get<lib::spt::track>();
 		// Album name is not included, so we have to set it manually
 		t.album = albumName;
-		tracks.append(t);
+		tracks.push_back(t);
 	}
 
 	// Add all in next page
-	if (json.contains("next") && !json["next"].isNull())
-		tracks.append(albumTracks(albumId, albumName,
-			json["offset"].toInt() + json["limit"].toInt()));
+	if (json.contains("next") && !json.at("next").is_null())
+	{
+		lib::vector::append(tracks, albumTracks(albumId, albumName,
+			json["offset"].get<int>() + json["limit"].get<int>()));
+	}
 	return tracks;
 }
