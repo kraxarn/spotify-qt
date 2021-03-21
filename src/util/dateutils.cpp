@@ -49,6 +49,11 @@ QString DateUtils::toRelative(const QDateTime &date)
 		.arg(amount == 1 ? "" : "s");
 }
 
+QString DateUtils::toRelative(const std::string &date)
+{
+	return toRelative(fromIso(date));
+}
+
 bool DateUtils::isEmpty(const QDateTime &date)
 {
 	return date.toSecsSinceEpoch() <= 0;

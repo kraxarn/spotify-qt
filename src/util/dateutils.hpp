@@ -8,6 +8,8 @@ class DateUtils
 public:
 	static QString toRelative(const QDateTime &date);
 
+	static QString toRelative(const std::string &date);
+
 	static bool isEmpty(const QDateTime &date);
 
 	static QDateTime fromIso(const QString &date);
