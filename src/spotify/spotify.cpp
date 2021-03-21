@@ -85,6 +85,14 @@ QJsonObject Spotify::getAsObject(const QString &url)
 	return get(url).object();
 }
 
+nlohmann::json Spotify::getAsJson(const QString &url)
+{
+	auto response = get(url).toJson().toStdString();
+	return response.empty()
+		? nlohmann::json()
+		: nlohmann::json::parse(response);
+}
+
 void Spotify::get(const QString &url, lib::callback<QJsonDocument> &callback)
 {
 	await(networkManager->get(request(url)),

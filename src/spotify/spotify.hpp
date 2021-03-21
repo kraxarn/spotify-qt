@@ -17,6 +17,7 @@ namespace spt
 #include "user.hpp"
 #include "thirdparty/json.hpp"
 #include "lib/spotify/spotifyapi.hpp"
+#include "lib/strings.hpp"
 
 #include <QCoreApplication>
 #include <QDateTime>
@@ -183,6 +184,12 @@ namespace spt
 		 */
 		QJsonObject getAsObject(const QString &url);
 
+		/**
+		 * @note Calls should not be done directly
+		 * @deprecated
+		 */
+		nlohmann::json getAsJson(const QString &url);
+
 	private:
 		QNetworkAccessManager *networkManager;
 
@@ -279,6 +286,18 @@ namespace spt
 			return result;
 		}
 
+		/**
+		 * @deprecated
+		 */
+		template<typename T>
+		std::vector<T> loadItemsAsJson(const QString &url)
+		{
+			return getAsJson(url).at("items").get<std::vector<T>>();
+		}
+
+		/**
+		 * @deprecated
+		 */
 		template<typename T>
 		void get(const QString &url, lib::callback<std::vector<T>> &callback)
 		{
@@ -293,6 +312,20 @@ namespace spt
 				for (auto item : items)
 					result.emplace_back(item.toObject());
 				callback(result);
+			});
+		}
+
+		template<typename T>
+		void get(const std::string &url, lib::callback<std::vector<T>> &callback)
+		{
+			get(url, [this, callback](const nlohmann::json &json)
+			{
+				auto items = json[json.contains("tracks")
+					? "tracks"
+					: json.contains("artists")
+						? "artists"
+						: "items"];
+				callback(items.get<std::vector<T>>());
 			});
 		}
 
