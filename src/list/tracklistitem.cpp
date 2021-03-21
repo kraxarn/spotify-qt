@@ -1,24 +1,28 @@
 #include "tracklistitem.hpp"
 
 TrackListItem::TrackListItem(const QStringList &strings,
-	const spt::Track &track,
+	const lib::spt::track &track,
 	const QIcon &icon,
 	int index)
 	: QTreeWidgetItem(strings)
 {
 	setIcon(0, icon);
 
-	setData(0, RoleTrackId, QString("spotify:track:%1").arg(track.id));
-	setData(0, RoleArtistId, track.artistId);
-	setData(0, RoleAlbumId, track.albumId);
+	auto addedAt = QDateTime::fromString(QString::fromStdString(track.added_at),
+		Qt::DateFormat::ISODate);
+
+	setData(0, RoleTrackId,
+		QString::fromStdString(lib::fmt::format("spotify:track:{}", track.id)));
+	setData(0, RoleArtistId, QString::fromStdString(track.artist_id));
+	setData(0, RoleAlbumId, QString::fromStdString(track.album_id));
 	setData(0, RoleIndex, index);
-	setData(0, RoleAddedDate, track.addedAt);
+	setData(0, RoleAddedDate, addedAt);
 	setData(0, RoleLength, track.duration);
 
-	if (track.isLocal || !track.isPlayable)
+	if (track.is_local || !track.is_playable)
 	{
 		setDisabled(true);
-		setToolTip(1, track.isLocal
+		setToolTip(1, track.is_local
 			? "Local track"
 			: "Unavailable");
 	}
@@ -42,10 +46,10 @@ TrackListItem::TrackListItem(const QStringList &strings,
 	}
 
 	// Added
-	if (!DateUtils::isEmpty(track.addedAt))
+	if (!DateUtils::isEmpty(addedAt))
 	{
 		setToolTip(strings.length() - 1,
-			QLocale().toString(track.addedAt.date()));
+			QLocale().toString(addedAt.date()));
 	}
 }
 

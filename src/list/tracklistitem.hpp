@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../enum/datarole.hpp"
-#include "../spotify/track.hpp"
+#include "lib/spotify/track.hpp"
 #include "../util/dateutils.hpp"
 #include "../util/utils.hpp"
 #include "lib/settings.hpp"
@@ -11,7 +11,8 @@
 class TrackListItem: public QTreeWidgetItem
 {
 public:
-	TrackListItem(const QStringList &strings, const spt::Track &track, const QIcon &icon, int index);
+	TrackListItem(const QStringList &strings, const lib::spt::track &track, const QIcon &icon,
+		int index);
 
 private:
 	bool operator<(const QTreeWidgetItem &item) const override;
