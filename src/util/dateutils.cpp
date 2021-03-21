@@ -53,3 +53,13 @@ bool DateUtils::isEmpty(const QDateTime &date)
 {
 	return date.toSecsSinceEpoch() <= 0;
 }
+
+QDateTime DateUtils::fromIso(const QString &date)
+{
+	return QDateTime::fromString(date, Qt::ISODate);
+}
+
+QDateTime DateUtils::fromIso(const std::string &date)
+{
+	return fromIso(QString::fromStdString(date));
+}
