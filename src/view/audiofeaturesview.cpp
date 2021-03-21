@@ -1,6 +1,7 @@
 #include "audiofeaturesview.hpp"
 
-AudioFeaturesView::AudioFeaturesView(spt::Spotify &spotify, const QString &trackId, QWidget *parent)
+AudioFeaturesView::AudioFeaturesView(spt::Spotify &spotify, const std::string &trackId,
+	QWidget *parent)
 	: QTreeWidget(parent)
 {
 	auto features = spotify.trackAudioFeatures(trackId);

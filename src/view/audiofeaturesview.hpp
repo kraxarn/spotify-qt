@@ -13,5 +13,5 @@ class AudioFeaturesView: public QTreeWidget
 Q_OBJECT
 
 public:
-	AudioFeaturesView(spt::Spotify &spotify, const QString &trackId, QWidget *parent);
+	AudioFeaturesView(spt::Spotify &spotify, const std::string &trackId, QWidget *parent);
 };
