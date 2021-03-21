@@ -49,7 +49,6 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 
 	lib::json::get(track, "id", std::string("0"), t.id);
 	lib::json::get(track, "album", std::string("(no album)"), t.album);
-	lib::json::get(track, "name", std::string("(no name)"), t.name);
 	lib::json::get(track, "duration_ms", 0, t.duration);
 	lib::json::get(track, "is_local", false, t.is_local);
 	lib::json::get(track, "is_playable", true, t.is_playable);
@@ -67,7 +66,12 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 	}
 
 	if (track.contains("album"))
-		track.at("album").at("images").back().at("url").get_to(t.image);
+	{
+		auto album = track.at("album");
+		album.at("id").get_to(t.album_id);
+		album.at("name").get_to(t.album);
+		album.at("images").back().at("url").get_to(t.image);
+	}
 
 	if (track.contains("added_at"))
 		track.at("added_at").get_to(t.added_at);
