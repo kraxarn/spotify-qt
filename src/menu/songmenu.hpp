@@ -5,6 +5,7 @@
 #include "../mainwindow.hpp"
 #include "../spotify/spotify.hpp"
 #include "../util/icon.hpp"
+#include "lib/strings.hpp"
 
 #include <QDesktopServices>
 #include <QMenu>
@@ -16,21 +17,21 @@ Q_OBJECT
 public:
 	SongMenu(QTreeWidgetItem *item, spt::Spotify &spotify, QWidget *parent);
 
-	SongMenu(QListWidgetItem *item, QString artist, spt::Spotify &spotify, QWidget *parent);
+	SongMenu(QListWidgetItem *item, std::string artist, spt::Spotify &spotify, QWidget *parent);
 
-	SongMenu(const spt::Track &track, spt::Spotify &spotify, QWidget *parent);
+	SongMenu(const lib::spt::track &track, spt::Spotify &spotify, QWidget *parent);
 
 private:
-	SongMenu(const QString &trackId, QString artist, QString name, QString artistId,
-		QString albumId, int index, spt::Spotify &spotify, QWidget *parent);
+	SongMenu(const std::string &trackId, std::string artist, std::string name, std::string artistId,
+		std::string albumId, int index, spt::Spotify &spotify, QWidget *parent);
 
 	spt::Spotify &spotify;
 	bool isLiked = false;
-	const QString trackId;
-	const QString artist;
-	const QString artistId;
-	const QString albumId;
-	const QString trackName;
+	const std::string trackId;
+	const std::string artist;
+	const std::string artistId;
+	const std::string albumId;
+	const std::string trackName;
 	QString trackUri;
 	int index = 0;
 	const spt::Playlist *currentPlaylist = nullptr;

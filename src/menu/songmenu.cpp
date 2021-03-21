@@ -2,29 +2,31 @@
 #include <utility>
 
 SongMenu::SongMenu(QTreeWidgetItem *item, spt::Spotify &spotify, QWidget *parent)
-	: SongMenu(item->data(0, RoleTrackId).toString(), item->text(2),
-	item->text(1), item->data(0, RoleArtistId).toString(),
-	item->data(0, RoleAlbumId).toString(),
+	: SongMenu(item->data(0, RoleTrackId).toString().toStdString(),
+	item->text(2).toStdString(), item->text(1).toStdString(),
+	item->data(0, RoleArtistId).toString().toStdString(),
+	item->data(0, RoleAlbumId).toString().toStdString(),
 	item->data(0, RoleIndex).toInt(), spotify, parent)
 {
 }
 
-SongMenu::SongMenu(QListWidgetItem *item, QString artist, spt::Spotify &spotify, QWidget *parent)
-	: SongMenu(item->data(RoleTrackId).toString(), std::move(artist),
-	item->text(), item->data(RoleArtistId).toString(),
-	item->data(RoleAlbumId).toString(),
+SongMenu::SongMenu(QListWidgetItem *item, std::string artist, spt::Spotify &spotify,
+	QWidget *parent)
+	: SongMenu(item->data(RoleTrackId).toString().toStdString(), std::move(artist),
+	item->text().toStdString(), item->data(RoleArtistId).toString().toStdString(),
+	item->data(RoleAlbumId).toString().toStdString(),
 	item->data(RoleIndex).toInt(), spotify, parent)
 {
 }
 
-SongMenu::SongMenu(const spt::Track &track, spt::Spotify &spotify, QWidget *parent)
-	: SongMenu(track.id, track.artist, track.name, track.artistId, track.albumId, 0,
+SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify, QWidget *parent)
+	: SongMenu(track.id, track.artist, track.name, track.artist_id, track.album_id, 0,
 	spotify, parent)
 {
 }
 
-SongMenu::SongMenu(const QString &trackId, QString artist, QString name, QString artistId,
-	QString albumId, int index, spt::Spotify &spotify, QWidget *parent)
+SongMenu::SongMenu(const std::string &trackId, std::string artist, std::string name,
+	std::string artistId, std::string albumId, int index, spt::Spotify &spotify, QWidget *parent)
 	: trackId(trackId),
 	artist(std::move(artist)),
 	trackName(std::move(name)),
@@ -41,9 +43,9 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name, QString
 		return;
 	}
 
-	trackUri = trackId.startsWith("spotify:track")
-		? QString(trackId).remove(0, QString("spotify:track:").length())
-		: trackId;
+	trackUri = lib::strings::starts_with(trackId, "spotify:track:")
+		? QString::fromStdString(trackId).remove(0, QString("spotify:track:").length())
+		: QString::fromStdString(trackId);
 	auto trackFeatures = addAction(Icon::get("view-statistics"), "Audio features");
 	QAction::connect(trackFeatures, &QAction::triggered, this, &SongMenu::openTrackFeatures);
 
@@ -71,7 +73,7 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name, QString
 	auto likedTracks = mainWindow->loadTracksFromCache("liked");
 	isLiked = false;
 	for (const auto &likedTrack : likedTracks)
-		if (likedTrack.id == trackUri)
+		if (likedTrack.id == trackUri.toStdString())
 		{
 			isLiked = true;
 			break;
@@ -125,25 +127,33 @@ SongMenu::SongMenu(const QString &trackId, QString artist, QString name, QString
 
 void SongMenu::like(bool)
 {
-	auto status = isLiked
-		? spotify.removeSavedTrack(trackId)
-		: spotify.addSavedTrack(trackId);
-	if (!status.isEmpty())
-		MainWindow::find(parentWidget())->setStatus(QString("Failed to %1: %2")
-			.arg(isLiked ? "dislike" : "like")
-			.arg(status), true);
+	auto callback = [this](const QString &status)
+	{
+		if (!status.isEmpty())
+		{
+			auto mainWindow = MainWindow::find(this->parentWidget());
+			mainWindow->setStatus(QString("Failed to %1: %2")
+				.arg(isLiked ? "dislike" : "like")
+				.arg(status), true);
+		}
+	};
+
+	if (isLiked)
+		spotify.removeSavedTrack(trackId, callback);
+	else
+		spotify.addSavedTrack(trackId, callback);
 }
 
 void SongMenu::addToQueue(bool)
 {
-	auto uri = trackId.startsWith("spotify:track")
+	auto uri = lib::strings::starts_with(trackId, "spotify:track")
 		? trackId
-		: QString("spotify:track:%1").arg(trackId);
+		: lib::fmt::format("spotify:track:{}", trackId);
 
-	spotify.addToQueue(uri, [this](const QString &status)
+	spotify.addToQueue(uri, [this](const std::string &status)
 	{
-		if (!status.isEmpty())
-			MainWindow::find(this->parentWidget())->setStatus(status, true);
+		if (!status.empty())
+			MainWindow::find(this->parentWidget())->status(status, true);
 	});
 }
 
@@ -155,20 +165,22 @@ void SongMenu::addToPlaylist(QAction *action)
 	auto tracks = spotify.playlist(playlistId).loadTracks(spotify);
 	for (auto &item : tracks)
 	{
-		if (trackId.endsWith(item.id))
+		if (lib::strings::ends_with(trackId, item.id))
 		{
 			if (QMessageBox::information(mainWindow, "Duplicate",
 				"Track is already in the playlist, do you want to add it anyway?",
 				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::No)
+			{
 				return;
+			}
 			break;
 		}
 	}
 
 	// Actually add
-	auto plTrack = trackId.startsWith("spotify:track")
+	auto plTrack = lib::strings::starts_with(trackId, "spotify:track")
 		? trackId
-		: QString("spotify:track:%1").arg(trackId);
+		: lib::fmt::format("spotify:track:{}", trackId);
 	auto result = spotify.addToPlaylist(playlistId, plTrack);
 	if (!result.isEmpty())
 	{
@@ -195,7 +207,7 @@ void SongMenu::remFromPlaylist(bool)
 	for (i = 0; i < mainWindow->getSongsTree()->topLevelItemCount(); i++)
 	{
 		item = mainWindow->getSongsTree()->topLevelItem(i);
-		if (item->data(0, RoleTrackId).toString() == trackId)
+		if (item->data(0, RoleTrackId).toString().toStdString() == trackId)
 			break;
 		item = nullptr;
 	}
@@ -208,8 +220,8 @@ void SongMenu::remFromPlaylist(bool)
 
 	// i doesn't necessarily match item index depending on sorting order
 	mainWindow->getSongsTree()->takeTopLevelItem(i);
-	mainWindow->setStatus(QString(R"(Removed "%1 - %2" from "%3")")
-		.arg(trackName).arg(artist).arg(currentPlaylist->name));
+	mainWindow->status(lib::fmt::format("Removed {} - {} from \"{}\"",
+		trackName, artist, currentPlaylist->name.toStdString()));
 }
 
 void SongMenu::openTrackFeatures(bool)
@@ -229,8 +241,8 @@ void SongMenu::viewArtist(bool)
 
 void SongMenu::openAlbum(bool)
 {
-	MainWindow::find(parentWidget())->loadAlbum(albumId,
-		trackId.startsWith("spotify:track:")
-			? trackId.right(trackId.length() - 14)
-			: trackId);
+	auto mainWindow = MainWindow::find(parentWidget());
+	mainWindow->loadAlbum(albumId, lib::strings::starts_with(trackId, "spotify:track:")
+		? trackId.substr(std::string("spotify:track:").size())
+		: trackId);
 }
