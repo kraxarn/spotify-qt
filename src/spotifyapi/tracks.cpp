@@ -5,16 +5,17 @@
 // audio-features
 // audio-analysis/{id}
 
-spt::Track Spotify::getTrack(const QString &id)
+lib::spt::track Spotify::getTrack(const std::string &id)
 {
-	return spt::Track(getAsObject(QString("tracks/%1").arg(id)));
+	return getAsJson(QString("tracks/%1").arg(QString::fromStdString(id)))
+		.get<lib::spt::track>();
 }
 
-AudioFeatures Spotify::trackAudioFeatures(QString trackId)
+AudioFeatures Spotify::trackAudioFeatures(const std::string &trackId)
 {
-	auto json = getAsObject(QString("audio-features/%1")
-		.arg(trackId.startsWith("spotify:track:")
-			? trackId.remove(0, QString("spotify:track:").length())
-			: trackId));
+	auto json = getAsObject(QString::fromStdString(lib::fmt::format("audio-features/{}",
+		lib::strings::starts_with(trackId, "spotify:track:")
+			? trackId.substr(0, std::string("spotify:track:").length())
+			: trackId)));
 	return AudioFeatures(json);
 }
