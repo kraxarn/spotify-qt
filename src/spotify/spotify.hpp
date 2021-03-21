@@ -42,11 +42,12 @@ namespace spt
 
 		//region Albums
 
-		QVector<Track> albumTracks(const QString &albumID);
+		std::vector<lib::spt::track> albumTracks(const std::string &albumId);
 
 		spt::Album getAlbum(const QString &id);
 
-		QVector<Track> albumTracks(const QString &albumId, const QString &albumName, int offset);
+		std::vector<lib::spt::track> albumTracks(const std::string &albumId,
+			const std::string &albumName, int offset);
 
 		//endregion
 
@@ -54,7 +55,8 @@ namespace spt
 
 		void artist(const QString &artistId, lib::callback<spt::Artist> &callback);
 
-		void topTracks(const spt::Artist &artist, lib::callback<std::vector<spt::Track>> &callback);
+		void topTracks(const spt::Artist &artist,
+			lib::callback<std::vector<lib::spt::track>> &callback);
 
 		void relatedArtists(const spt::Artist &artist,
 			lib::callback<std::vector<spt::Artist>> &callback);
@@ -86,11 +88,11 @@ namespace spt
 
 		QVector<Album> savedAlbums();
 
-		QVector<Track> savedTracks(int offset = 0);
+		std::vector<lib::spt::track> savedTracks(int offset = 0);
 
-		QString addSavedTrack(const QString &trackId);
+		void addSavedTrack(const std::string &trackId, lib::callback<QString> &callback);
 
-		QString removeSavedTrack(const QString &trackId);
+		void removeSavedTrack(const std::string &trackId, lib::callback<QString> &callback);
 
 		void isSavedTrack(const QStringList &trackIds,
 			lib::callback<std::vector<bool>> &callback);
@@ -101,7 +103,7 @@ namespace spt
 
 		QVector<Artist> topArtists();
 
-		QVector<Track> topTracks();
+		std::vector<lib::spt::track> topTracks();
 
 		//endregion
 
@@ -115,7 +117,8 @@ namespace spt
 
 		void devices(lib::callback<std::vector<lib::spt::device>> &callback);
 
-		void playTracks(int trackIndex, const QString &context, lib::callback<QString> &callback);
+		void playTracks(int trackIndex, const std::string &context,
+			lib::callback<QString> &callback);
 
 		void playTracks(int trackIndex, const std::vector<std::string> &all,
 			lib::callback<QString> &callback);
@@ -138,9 +141,9 @@ namespace spt
 
 		void setShuffle(bool enabled, lib::callback<QString> &callback);
 
-		QVector<Track> recentlyPlayed();
+		std::vector<lib::spt::track> recentlyPlayed();
 
-		void addToQueue(const QString &uri, lib::callback<QString> &callback);
+		void addToQueue(const std::string &uri, lib::callback<std::string> &callback);
 
 		//endregion
 
@@ -152,9 +155,9 @@ namespace spt
 
 		QString editPlaylist(const Playlist &playlist);
 
-		QString addToPlaylist(const QString &playlistId, const QString &trackId);
+		QString addToPlaylist(const QString &playlistId, const std::string &trackId);
 
-		QString removeFromPlaylist(const QString &playlistId, const QString &trackId, int pos);
+		QString removeFromPlaylist(const QString &playlistId, const std::string &trackId, int pos);
 
 		//endregion
 
@@ -166,9 +169,9 @@ namespace spt
 
 		//region Tracks
 
-		spt::Track getTrack(const QString &id);
+		lib::spt::track getTrack(const std::string &id);
 
-		AudioFeatures trackAudioFeatures(QString trackId);
+		AudioFeatures trackAudioFeatures(const std::string &trackId);
 
 		//endregion
 
