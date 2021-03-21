@@ -20,14 +20,14 @@ class ArtistView: public QWidget
 Q_OBJECT
 
 public:
-	ArtistView(spt::Spotify &spotify, const QString &artistId, const lib::settings &settings,
+	ArtistView(spt::Spotify &spotify, const std::string &artistId, const lib::settings &settings,
 		QWidget	*parent);
 
 	std::function<void(const spt::Artist &artist)> onArtistLoaded;
 
 private:
 	void artistLoaded(const spt::Artist &loadedArtist);
-	void topTracksLoaded(const std::vector<spt::Track> &tracks);
+	void topTracksLoaded(const std::vector<lib::spt::track> &tracks);
 	void albumsLoaded(const std::vector<spt::Album> &albums);
 	void relatedArtistsLoaded(const std::vector<spt::Artist> &artists);
 

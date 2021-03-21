@@ -1,12 +1,12 @@
 #include "artistview.hpp"
 
-ArtistView::ArtistView(spt::Spotify &spotify, const QString &artistId,
+ArtistView::ArtistView(spt::Spotify &spotify, const std::string &artistId,
 	const lib::settings &settings, QWidget *parent)
 	: spotify(spotify),
-	artistId(artistId),
+	artistId(QString::fromStdString(artistId)),
 	QWidget(parent)
 {
-	spotify.artist(artistId, [this](const spt::Artist &loadedArtist)
+	spotify.artist(this->artistId, [this](const spt::Artist &loadedArtist)
 	{
 		artistLoaded(loadedArtist);
 	});
@@ -160,7 +160,7 @@ void ArtistView::artistLoaded(const spt::Artist &loadedArtist)
 	genres->setText(artist.genres.join(", "));
 
 	// Top tracks
-	spotify.topTracks(artist, [this](const std::vector<spt::Track> &tracks)
+	spotify.topTracks(artist, [this](const std::vector<lib::spt::track> &tracks)
 	{
 		topTracksLoaded(tracks);
 	});
@@ -178,20 +178,19 @@ void ArtistView::artistLoaded(const spt::Artist &loadedArtist)
 	});
 }
 
-void ArtistView::topTracksLoaded(const std::vector<spt::Track> &tracks)
+void ArtistView::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
 {
 	auto mainWindow = MainWindow::find(parentWidget());
 	auto i = 0;
 
 	for (auto &track : tracks)
 	{
-		auto item = new QListWidgetItem(track.name, topTracksList);
+		auto item = new QListWidgetItem(QString::fromStdString(track.name), topTracksList);
 		item->setIcon(QIcon(mainWindow->getAlbum(track.image)));
-		item->setData(RoleTrackId, track.id);
-		item->setData(RoleAlbumId, track.albumId);
+		item->setData(RoleTrackId, QString::fromStdString(track.id));
+		item->setData(RoleAlbumId, QString::fromStdString(track.album_id));
 		item->setData(RoleIndex, i++);
-		topTrackIds.push_back(lib::fmt::format("spotify:track:{}",
-			track.id.toStdString()));
+		topTrackIds.push_back(lib::fmt::format("spotify:track:{}", track.id));
 	}
 
 	topTracksList->setEnabled(true);
@@ -279,21 +278,25 @@ void ArtistView::trackMenu(const QPoint &pos)
 	auto trackId = item->data(RoleTrackId).toString();
 	if (trackId.isEmpty())
 		return;
-	(new SongMenu(item, artist.name, spotify, parentWidget()))
+	(new SongMenu(item, artist.name.toStdString(), spotify, parentWidget()))
 		->popup(topTracksList->mapToGlobal(pos));
 }
 
 void ArtistView::loadAlbumId(QTreeWidgetItem *item)
 {
 	auto mainWindow = MainWindow::find(parentWidget());
-	if (!mainWindow->loadAlbum(item->data(0, RoleAlbumId).toString()))
+	if (!mainWindow->loadAlbum(item->data(0, RoleAlbumId)
+		.toString().toStdString()))
+	{
 		mainWindow->setStatus(QString("Failed to load album"), true);
+	}
 }
 
 void ArtistView::relatedClick(QListWidgetItem *item)
 {
 	relatedList->setEnabled(false);
-	MainWindow::find(parentWidget())->openArtist(item->data(RoleArtistId).toString());
+	MainWindow::find(parentWidget())->openArtist(item->data(RoleArtistId)
+		.toString().toStdString());
 	relatedList->setEnabled(true);
 }
 
@@ -311,7 +314,9 @@ void ArtistView::albumMenu(const QPoint &pos)
 	auto albumId = item->data(0, RoleAlbumId).toString();
 	if (albumId.isEmpty())
 		return;
-	(new AlbumMenu(spotify, albumId, parentWidget()))->popup(list->mapToGlobal(pos));
+
+	auto albumMenu = new AlbumMenu(spotify, albumId.toStdString(), parentWidget());
+	albumMenu->popup(list->mapToGlobal(pos));
 }
 
 void ArtistView::albumDoubleClicked(QTreeWidgetItem *item, int)
