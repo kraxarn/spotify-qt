@@ -73,7 +73,7 @@ namespace lib
 				file >> json;
 				return json.get<std::vector<T>>();
 			}
-			catch (const nlohmann::json::exception &e)
+			catch (const std::exception &e)
 			{
 				log::warn("Failed to load items from \"{}\": {}", path, e.what());
 			}
@@ -96,7 +96,7 @@ namespace lib
 				nlohmann::json json = items;
 				file << std::setw(4) << json;
 			}
-			catch (const nlohmann::json::exception &e)
+			catch (const std::exception &e)
 			{
 				log::warn("Failed to save items to \"{}\": {}", path, e.what());
 			}
