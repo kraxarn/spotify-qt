@@ -26,7 +26,7 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 		return;
 
 	// If album is a string, track is loaded from cache
-	if (j.at("album").is_string())
+	if (j.contains("album") && j.at("album").is_string())
 	{
 		j.at("id").get_to(t.id);
 		j.at("album").get_to(t.album);
