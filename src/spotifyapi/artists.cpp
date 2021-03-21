@@ -11,10 +11,11 @@ void Spotify::artist(const QString &artistId, lib::callback<spt::Artist> &callba
 	});
 }
 
-void Spotify::topTracks(const spt::Artist &artist, lib::callback<std::vector<spt::Track>> &callback)
+void Spotify::topTracks(const spt::Artist &artist,
+	lib::callback<std::vector<lib::spt::track>> &callback)
 {
-	get<spt::Track>(QString("artists/%1/top-tracks?country=from_token")
-		.arg(artist.id), callback);
+	get<lib::spt::track>(lib::fmt::format("artists/{}/top-tracks?country=from_token",
+		artist.id.toStdString()), callback);
 }
 
 void Spotify::relatedArtists(const spt::Artist &artist,
