@@ -11,7 +11,7 @@ class LyricsView: public QDockWidget
 Q_OBJECT
 
 public:
-	LyricsView(const QString &artist, const QString &name, QWidget *parent);
+	LyricsView(const std::string &artist, const std::string &name, QWidget *parent);
 
 	bool lyricsFound() const;
 

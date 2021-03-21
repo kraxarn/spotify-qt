@@ -1,13 +1,13 @@
 #include "lyricsview.hpp"
 
-LyricsView::LyricsView(const QString &artist, const QString &name, QWidget *parent)
+LyricsView::LyricsView(const std::string &artist, const std::string &name, QWidget *parent)
 	: QDockWidget(parent)
 {
 	auto window = (MainWindow *) parent;
 
 	auto reply = window->get(QString("https://lyrics.fandom.com/wiki/%1:%2?action=raw")
-		.arg(format(artist))
-		.arg(format(name)));
+		.arg(format(QString::fromStdString(artist)))
+		.arg(format(QString::fromStdString(name))));
 	if (reply.isEmpty())
 	{
 		window->setStatus("Lyrics not found", true);
@@ -19,9 +19,8 @@ LyricsView::LyricsView(const QString &artist, const QString &name, QWidget *pare
 	auto lyricsStart = html.indexOf("<lyrics>") + 9;
 	html = html.mid(lyricsStart, html.indexOf("</lyrics>") - lyricsStart);
 
-	setWindowTitle(QString("%1 - %2")
-		.arg(artist)
-		.arg(name));
+	setWindowTitle(QString::fromStdString(lib::fmt::format("{} - {}",
+		artist, name)));
 	auto lyricsView = new QTextEdit(this);
 	lyricsView->setPlainText(html.trimmed());
 	lyricsView->setReadOnly(true);
