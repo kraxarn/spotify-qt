@@ -1,7 +1,8 @@
 #pragma once
 
-#include "track.hpp"
+#include "lib/spotify/track.hpp"
 #include "lib/spotify/device.hpp"
+#include "../util/jsonutils.hpp"
 
 #include <QJsonObject>
 #include <QMap>
@@ -24,7 +25,7 @@ namespace spt
 		QString contextType;
 		QString contextUri;
 		QString repeat = "off";
-		Track item = Track();
+		lib::spt::track item = lib::spt::track();
 		bool isPlaying = false;
 		bool shuffle = false;
 		int progressMs = 0;

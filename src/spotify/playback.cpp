@@ -6,7 +6,7 @@ spt::Playback::Playback(const QJsonObject &json)
 		return;
 
 	progressMs = json["progress_ms"].toInt();
-	item = Track(json["item"].toObject());
+	JsonUtils::toJson(json["item"]).get_to(item);
 	isPlaying = json["is_playing"].toBool();
 	repeat = json["repeat_state"].toString();
 	shuffle = json["shuffle_state"].toBool();
@@ -22,12 +22,22 @@ spt::Playback::Playback(const QJsonObject &json)
 
 QVariantMap spt::Playback::metadata() const
 {
-	QString itemName(isPlaying ? item.name : "");
-	QStringList itemArtist(isPlaying ? item.artist : "");
-	QString itemAlbum(isPlaying ? item.album : "");
-	QString itemId(isPlaying ? item.id : "");
+	QString itemName(isPlaying
+		? QString::fromStdString(item.name)
+		: QString());
+	QStringList itemArtist(isPlaying
+		? QString::fromStdString(item.artist)
+		: QString());
+	QString itemAlbum(isPlaying
+		? QString::fromStdString(item.album)
+		: QString());
+	QString itemId(isPlaying
+		? QString::fromStdString(item.id)
+		: QString());
 	auto itemDuration = isPlaying ? item.duration : 0;
-	QString itemImage(isPlaying ? item.image : "");
+	QString itemImage(isPlaying
+		? QString::fromStdString(item.image)
+		: QString());
 
 	auto metadata = QVariantMap({
 		{"xesam:title", itemName},
@@ -47,7 +57,7 @@ QJsonObject spt::Playback::toJson() const
 	return QJsonObject(
 		{
 			QPair<QString, int>("progress_ms", progressMs),
-			QPair<QString, QJsonObject>("item", item.toJson()),
+			QPair<QString, QJsonObject>("item", JsonUtils::toQtJson(item).object()),
 			QPair<QString, bool>("is_playing", isPlaying),
 			QPair<QString, QString>("repeat", repeat),
 			QPair<QString, bool>("shuffle", shuffle)
