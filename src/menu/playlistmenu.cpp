@@ -9,18 +9,18 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 	if (window == nullptr)
 		return;
 
-	auto tracks = window->playlistTracks(playlist.id);
-	if (tracks.isEmpty())
+	auto tracks = window->playlistTracks(playlist.id.toStdString());
+	if (tracks.empty())
 		playlist.loadTracks(spotify, tracks);
 
 	auto duration = 0;
 	for (auto &track : tracks)
 		duration += track.duration;
 	auto minutes = duration / 1000 / 60;
-	if (tracks.length() > 1)
+	if (tracks.size() > 1)
 	{
 		addAction(QString("%1 tracks, %2%3 m")
-			.arg(tracks.length())
+			.arg(tracks.size())
 			.arg(minutes >= 60
 				? QString("%1 h ").arg(minutes / 60)
 				: QString())
@@ -36,7 +36,7 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 	QAction::connect(playShuffle, &QAction::triggered,
 		[tracks, playlist, &spotify, window](bool checked)
 		{
-			if (tracks.isEmpty())
+			if (tracks.empty())
 			{
 				window->setStatus("No tracks found to shuffle", true);
 				return;
@@ -44,11 +44,11 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 
 			auto initialIndex = 0;
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-			initialIndex = QRandomGenerator::global()->bounded(0, tracks.length());
+			initialIndex = QRandomGenerator::global()->bounded(0, tracks.size());
 #endif
 
-			spotify.playTracks(initialIndex, QString("spotify:playlist:%1")
-				.arg(playlist.id), [&spotify, window](const QString &status)
+			spotify.playTracks(initialIndex, lib::fmt::format("spotify:playlist:{}",
+				playlist.id.toStdString()), [&spotify, window](const QString &status)
 			{
 				if (!status.isEmpty())
 				{
