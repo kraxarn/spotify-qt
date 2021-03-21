@@ -466,6 +466,11 @@ void MainWindow::setStatus(const QString &message, bool important)
 		statusBar()->showMessage(message, 5000);
 }
 
+void MainWindow::status(const std::string &message, bool important)
+{
+	setStatus(QString::fromStdString(message), important);
+}
+
 void MainWindow::setAlbumImage(const QString &url)
 {
 	leftSidePanel->setAlbumImage(Utils::mask(getAlbum(url)));
@@ -519,7 +524,12 @@ QPixmap MainWindow::getAlbum(const QString &url)
 	return getImage("album", url);
 }
 
-void MainWindow::openArtist(const QString &artistId)
+QPixmap MainWindow::getAlbum(const std::string &url)
+{
+	return getAlbum(QString::fromStdString(url));
+}
+
+void MainWindow::openArtist(const std::string &artistId)
 {
 	dynamic_cast<SidePanel *>(sidePanel)->openArtist(artistId);
 }
