@@ -46,10 +46,10 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 				.arg(status), true);
 		};
 
-		if (playPause->iconText() == "Play")
-			this->spotify.pause(callback);
-		else
+		if (current.isPlaying)
 			this->spotify.resume(callback);
+		else
+			this->spotify.pause(callback);
 	});
 
 	auto next = addAction(Icon::get("media-skip-forward"), "Next");

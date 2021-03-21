@@ -186,7 +186,11 @@ void Spotify::put(const QString &url, const nlohmann::json &body,
 	auto req = request(url);
 	req.setHeader(QNetworkRequest::ContentTypeHeader, QString("application/json"));
 
-	await(networkManager->put(req, QByteArray::fromStdString(body.dump())),
+	auto data = body.is_null()
+		? QByteArray()
+		: QByteArray::fromStdString(body.dump());
+
+	await(networkManager->put(req, data),
 		[this, url, body, callback](const QByteArray &data)
 		{
 			auto error = errorMessage(url, data);
