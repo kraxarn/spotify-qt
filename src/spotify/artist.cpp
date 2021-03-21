@@ -22,14 +22,13 @@ Artist::Artist(const QJsonObject &json)
 	}
 }
 
-QVector<Track> Artist::topTracks(Spotify &spotify) const
+QVector<lib::spt::track> Artist::topTracks(Spotify &spotify) const
 {
-	auto json = spotify.getAsObject(QString("artists/%1/top-tracks?country=from_token").arg(id));
-	auto items = json["tracks"].toArray();
-	QVector<Track> tracks;
-	tracks.reserve(items.size());
+	auto json = spotify.getAsJson(QString("artists/%1/top-tracks?country=from_token").arg(id));
+	auto items = json["tracks"];
+	QVector<lib::spt::track> tracks;
 	for (auto item : items)
-		tracks.append(Track(item.toObject()));
+		tracks.append(item.get<lib::spt::track>());
 	return tracks;
 }
 

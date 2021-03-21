@@ -7,7 +7,7 @@ namespace spt
 
 #include "album.hpp"
 #include "spotify.hpp"
-#include "track.hpp"
+#include "lib/spotify/track.hpp"
 
 #include <QJsonArray>
 #include <QJsonObject>
@@ -24,7 +24,7 @@ namespace spt
 		Artist() = default;
 		explicit Artist(const QJsonObject &json);
 
-		QVector<Track> topTracks(Spotify &spotify) const;
+		QVector<lib::spt::track> topTracks(Spotify &spotify) const;
 		QVector<Album> albums(Spotify &spotify) const;
 		QVector<Artist> relatedArtists(Spotify &spotify) const;
 
