@@ -1,6 +1,6 @@
 #include "albummenu.hpp"
 
-AlbumMenu::AlbumMenu(spt::Spotify &spotify, const QString &albumId, QWidget *parent)
+AlbumMenu::AlbumMenu(spt::Spotify &spotify, const std::string &albumId, QWidget *parent)
 	: parent(parent),
 	albumId(albumId),
 	spotify(spotify),
@@ -11,16 +11,16 @@ AlbumMenu::AlbumMenu(spt::Spotify &spotify, const QString &albumId, QWidget *par
 		return;
 
 	tracks = mainWindow->loadTracksFromCache(albumId);
-	if (tracks.isEmpty())
+	if (tracks.empty())
 		tracks = spotify.albumTracks(albumId);
 
 	auto duration = 0;
 	for (auto &track : tracks)
 		duration += track.duration;
 	auto minutes = duration / 1000 / 60;
-	if (tracks.length() > 1)
+	if (tracks.size() > 1)
 		addAction(QString("%1 tracks, %2%3 m")
-			.arg(tracks.length())
+			.arg(tracks.size())
 			.arg(minutes >= 60 ? QString("%1 h ").arg(minutes / 60) : QString())
 			.arg(minutes % 60))->setEnabled(false);
 
@@ -38,7 +38,7 @@ AlbumMenu::AlbumMenu(spt::Spotify &spotify, const QString &albumId, QWidget *par
 
 void AlbumMenu::shuffle(bool)
 {
-	if (tracks.isEmpty())
+	if (tracks.empty())
 	{
 		((MainWindow *) parent)->setStatus("No tracks found to shuffle", true);
 		return;
@@ -46,10 +46,10 @@ void AlbumMenu::shuffle(bool)
 
 	auto initialIndex = 0;
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-	initialIndex = QRandomGenerator::global()->bounded(0, tracks.length());
+	initialIndex = QRandomGenerator::global()->bounded(0, tracks.size());
 #endif
 
-	spotify.playTracks(initialIndex, QString("spotify:album:%1").arg(albumId),
+	spotify.playTracks(initialIndex, lib::fmt::format("spotify:album:{}", albumId),
 		[this](const QString &status)
 		{
 			auto mainWindow = (MainWindow *) parent;
@@ -69,12 +69,12 @@ void AlbumMenu::shuffle(bool)
 void AlbumMenu::shareAlbum(bool)
 {
 	QApplication::clipboard()->setText(QString("https://open.spotify.com/album/%1")
-		.arg(QString(albumId)));
+		.arg(QString::fromStdString(albumId)));
 	MainWindow::find(parentWidget())->setStatus("Link copied to clipboard");
 }
 
 void AlbumMenu::shareOpen(bool)
 {
 	Utils::openUrl(QString("https://open.spotify.com/album/%1")
-		.arg(QString(albumId)), LinkType::Web, this->parent);
+		.arg(QString::fromStdString(albumId)), LinkType::Web, this->parent);
 }

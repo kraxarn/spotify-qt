@@ -12,12 +12,12 @@ class AlbumMenu: public QMenu
 Q_OBJECT
 
 public:
-	AlbumMenu(spt::Spotify &spotify, const QString &albumId, QWidget *parent);
+	AlbumMenu(spt::Spotify &spotify, const std::string &albumId, QWidget *parent);
 
 private:
 	QWidget *parent = nullptr;
-	QVector<spt::Track> tracks;
-	QString albumId;
+	std::vector<lib::spt::track> tracks;
+	std::string albumId;
 	spt::Spotify &spotify;
 
 	void shuffle(bool checked);
