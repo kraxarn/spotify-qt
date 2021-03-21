@@ -68,7 +68,9 @@ bool Playlist::loadTracksFromUrl(std::vector<lib::spt::track> &trackList, QStrin
 		trackList.push_back(item.get<lib::spt::track>());
 
 	// Check if there's a next page
-	auto nextPage = current["next"].get<std::string>();
+	auto nextPage = current.contains("next")
+		? current.at("next").get<std::string>()
+		: std::string();
 	if (!nextPage.empty())
 	{
 		auto nextPageUrl = QString::fromStdString(nextPage);
