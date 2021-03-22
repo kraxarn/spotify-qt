@@ -133,7 +133,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	settings.save();
 
 	// Get current user
-	spotify->me([this](const spt::User &user)
+	spotify->me([this](const lib::spt::user &user)
 	{
 		this->currentUser = user;
 	});
@@ -583,7 +583,7 @@ lib::spt::playback MainWindow::currentPlayback() const
 	return current.playback;
 }
 
-spt::User MainWindow::getCurrentUser()
+lib::spt::user MainWindow::getCurrentUser()
 {
 	return currentUser;
 }

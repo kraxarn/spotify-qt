@@ -90,9 +90,9 @@ QJsonObject Playlist::toJson(Spotify &spotify) const
 	return toJson(jsonTracks);
 }
 
-bool Playlist::isOwner(const User &user) const
+bool Playlist::isOwner(const lib::spt::user &user) const
 {
-	return !ownerId.isEmpty() && ownerId == user.id;
+	return !ownerId.isEmpty() && ownerId.toStdString() == user.id;
 }
 
 QJsonObject Playlist::toJson(const QJsonArray &jsonTracks) const

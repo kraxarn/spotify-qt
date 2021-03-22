@@ -51,7 +51,8 @@ QWidget *AboutPage::about()
 	{
 		layout->addSpacing(16);
 		layout->addWidget(new QLabel(QString("Hello %1!")
-			.arg(mainWindow->getCurrentUser().displayName)), 0, Qt::AlignHCenter);
+				.arg(QString::fromStdString(mainWindow->getCurrentUser().display_name))),
+			0, Qt::AlignHCenter);
 	}
 
 	return Utils::layoutToWidget(layout);

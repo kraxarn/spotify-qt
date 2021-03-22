@@ -22,7 +22,7 @@
 #include "lib/spotify/playback.hpp"
 #include "spotify/playlist.hpp"
 #include "spotify/spotify.hpp"
-#include "spotify/user.hpp"
+#include "lib/spotify/user.hpp"
 #include "trayicon.hpp"
 #include "util/dateutils.hpp"
 #include "util/icon.hpp"

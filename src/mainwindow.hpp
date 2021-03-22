@@ -35,7 +35,7 @@ public:
 	void openLyrics(const std::string &artist, const std::string &name);
 	std::vector<lib::spt::track> playlistTracks(const std::string &playlistId);
 	void reloadTrayIcon();
-	spt::User getCurrentUser();
+	lib::spt::user getCurrentUser();
 	void setFixedWidthTime(bool value);
 	std::vector<lib::spt::track> loadTracksFromCache(const std::string &id);
 	void saveTracksToCache(const std::string &id, const std::vector<lib::spt::track> &tracks);
@@ -96,7 +96,7 @@ private:
 	QString cacheLocation;
 	TrayIcon *trayIcon = nullptr;
 	int refreshCount = -1;
-	spt::User currentUser;
+	lib::spt::user currentUser;
 	QIcon emptyIcon;
 	bool stateValid = true;
 	QTabWidget *sidePanel = nullptr;

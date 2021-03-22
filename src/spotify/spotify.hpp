@@ -14,7 +14,7 @@ namespace spt
 #include "lib/spotify/playback.hpp"
 #include "playlist.hpp"
 #include "searchresults.hpp"
-#include "user.hpp"
+#include "lib/spotify/user.hpp"
 #include "thirdparty/json.hpp"
 #include "lib/spotify/spotifyapi.hpp"
 #include "lib/strings.hpp"
@@ -177,7 +177,7 @@ namespace spt
 
 		//region User Profile
 
-		void me(lib::callback<User> &callback);
+		void me(lib::callback<lib::spt::user> &callback);
 
 		//endregion
 

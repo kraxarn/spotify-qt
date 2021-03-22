@@ -101,7 +101,7 @@ SongMenu::SongMenu(const std::string &trackId, std::string artist, std::string n
 	auto currentUserId = mainWindow->getCurrentUser().id;
 	for (auto &playlist : mainWindow->getPlaylists())
 	{
-		if (!playlist.collaborative && playlist.ownerId != currentUserId)
+		if (!playlist.collaborative && playlist.ownerId.toStdString() != currentUserId)
 			continue;
 
 		// Create main action
