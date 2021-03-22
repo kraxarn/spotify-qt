@@ -127,7 +127,9 @@ void Spotify::get(const std::string &url, lib::callback<nlohmann::json> &callbac
 			try
 			{
 				// Parse reply as json
-				callback(nlohmann::json::parse(data.toStdString()));
+				callback(data.isEmpty()
+					? nlohmann::json()
+					: nlohmann::json::parse(data.toStdString()));
 			}
 			catch (const std::exception &e)
 			{
