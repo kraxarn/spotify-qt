@@ -110,6 +110,9 @@ $(function() {
 <li>client_secret
 : <a class="el" href="structlib_1_1set_1_1account.html#a8f71cdb24407039c179b3208f3140b4e">lib::set::account</a>
 </li>
+<li>context
+: <a class="el" href="classlib_1_1spt_1_1playback.html#ab80dbe821d37e348298beeb56cde4c87">lib::spt::playback</a>
+</li>
 <li>current_device
 : <a class="el" href="classlib_1_1spt_1_1spotify__api.html#ae985c3bdb98cc5b5a55af95845523ab8">lib::spt::spotify_api</a>
 </li>
@@ -120,8 +123,14 @@ $(function() {
 
 
 <h3><a id="index_d"></a>- d -</h3><ul>
+<li>device
+: <a class="el" href="classlib_1_1spt_1_1playback.html#a347a1f37e20750a9ffaaf42cf93780bd">lib::spt::playback</a>
+</li>
 <li>disable_discovery
 : <a class="el" href="structlib_1_1set_1_1spotify.html#a040e69daab18b62fa518d921364a6d92">lib::set::spotify</a>
+</li>
+<li>display_name
+: <a class="el" href="classlib_1_1spt_1_1user.html#a015858a71b0d9e7ea1c5fbf4739cea9e">lib::spt::user</a>
 </li>
 <li>duration
 : <a class="el" href="classlib_1_1spt_1_1track.html#a95db80e3f3255ceebda0e1d3a213166b">lib::spt::track</a>
@@ -167,9 +176,11 @@ $(function() {
 <li>id
 : <a class="el" href="classlib_1_1spt_1_1device.html#ae5c5717d6589850d59f4de10447eb763">lib::spt::device</a>
 , <a class="el" href="classlib_1_1spt_1_1track.html#ac6ee4f50dc8cd0b4e2ef04fe522e606d">lib::spt::track</a>
+, <a class="el" href="classlib_1_1spt_1_1user.html#a3a903d10830bfb230995f5799318bdc1">lib::spt::user</a>
 </li>
 <li>image
 : <a class="el" href="classlib_1_1spt_1_1track.html#a970f630528e6390e1820cac419e31a50">lib::spt::track</a>
+, <a class="el" href="classlib_1_1spt_1_1user.html#ab3268fbf2cf6d5412033c552d494b331">lib::spt::user</a>
 </li>
 <li>is_active
 : <a class="el" href="classlib_1_1spt_1_1device.html#a49f9a8bc672e50a80d6ae29a8441ff88">lib::spt::device</a>
@@ -179,6 +190,12 @@ $(function() {
 </li>
 <li>is_playable
 : <a class="el" href="classlib_1_1spt_1_1track.html#ad752f55bc9254da0e20cc4aba182c946">lib::spt::track</a>
+</li>
+<li>is_playing
+: <a class="el" href="classlib_1_1spt_1_1playback.html#ad3425f946100fb132fd503069e2cbf35">lib::spt::playback</a>
+</li>
+<li>item
+: <a class="el" href="classlib_1_1spt_1_1playback.html#ae6c4262236734fcaf6c7c8fecc417bab">lib::spt::playback</a>
 </li>
 </ul>
 
@@ -234,6 +251,12 @@ $(function() {
 <li>playlist_order
 : <a class="el" href="structlib_1_1set_1_1general.html#aec194d65dd812da135f7ffe6cfa263e2">lib::set::general</a>
 </li>
+<li>product
+: <a class="el" href="classlib_1_1spt_1_1user.html#a3e7bbe3f42657f4eb0a43bd38881deff">lib::spt::user</a>
+</li>
+<li>progress_ms
+: <a class="el" href="classlib_1_1spt_1_1playback.html#a3b8abad8cc302c24f0a07b4b3bca9146">lib::spt::playback</a>
+</li>
 <li>pulse_volume
 : <a class="el" href="structlib_1_1set_1_1general.html#a8cea9267dea0ed7cbe858deda0b56c21">lib::set::general</a>
 </li>
@@ -250,6 +273,9 @@ $(function() {
 <li>relative_added
 : <a class="el" href="structlib_1_1set_1_1general.html#a99a37f55058916c3bf61cc0ca5310b7b">lib::set::general</a>
 </li>
+<li>repeat
+: <a class="el" href="classlib_1_1spt_1_1playback.html#a58f3824073103d918fc6aa1fb854d2b2">lib::spt::playback</a>
+</li>
 </ul>
 
 
@@ -262,6 +288,9 @@ $(function() {
 </li>
 <li>show_context_info
 : <a class="el" href="structlib_1_1set_1_1general.html#ac2cc3867b8fbd6d1a17cad5f0daca00f">lib::set::general</a>
+</li>
+<li>shuffle
+: <a class="el" href="classlib_1_1spt_1_1playback.html#a593d145ce768c35439952a27ab29294d">lib::spt::playback</a>
 </li>
 <li>song_header_sort_by
 : <a class="el" href="structlib_1_1set_1_1general.html#a9031c2f69122ed43a1ebaa7903105eb5">lib::set::general</a>
@@ -301,12 +330,16 @@ $(function() {
 : <a class="el" href="structlib_1_1set_1_1general.html#a07195f25c45a1e5b982b668b67f04f3c">lib::set::general</a>
 </li>
 <li>type
-: <a class="el" href="classlib_1_1spt_1_1device.html#aeb916c1ee10bf9814dfb294b1a55132d">lib::spt::device</a>
+: <a class="el" href="classlib_1_1spt_1_1context.html#a3da85d5a0e71c4a58b6e5e0868accefe">lib::spt::context</a>
+, <a class="el" href="classlib_1_1spt_1_1device.html#aeb916c1ee10bf9814dfb294b1a55132d">lib::spt::device</a>
 </li>
 </ul>
 
 
 <h3><a id="index_u"></a>- u -</h3><ul>
+<li>uri
+: <a class="el" href="classlib_1_1spt_1_1context.html#a9d23cd4d63d8d0d402c2642d96a4f45e">lib::spt::context</a>
+</li>
 <li>username
 : <a class="el" href="structlib_1_1set_1_1spotify.html#a43880013a377b780d4845edbde9fb2fa">lib::set::spotify</a>
 </li>

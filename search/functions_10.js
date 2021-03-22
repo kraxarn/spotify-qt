@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['xor_5fstrings_244',['xor_strings',['../classlib_1_1cipher.html#a2969f1466e8e60524b8df4d53b9530c1',1,'lib::cipher']]]
+  ['warn_263',['warn',['../classlib_1_1log.html#ad6c8f913d62cc4d89bbfa27a3369a89b',1,'lib::log::warn(const Format &amp;fmt, const Arg &amp;arg, Args &amp;&amp;... args)'],['../classlib_1_1log.html#a3b352feba3bddb212d53a40db6e69b75',1,'lib::log::warn(const Format &amp;fmt)']]]
 ];

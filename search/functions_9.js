@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['now_209',['now',['../classlib_1_1date__time.html#a35238f87e42b79876f44422f6ff3ccce',1,'lib::date_time']]],
-  ['now_5futc_210',['now_utc',['../classlib_1_1date__time.html#a5c1660614a8ff0a51e19fe94a3271a87',1,'lib::date_time']]]
+  ['metadata_226',['metadata',['../classlib_1_1spt_1_1playback.html#a1a9234a8f4bb7b37c06e7e79fb8c4e0b',1,'lib::spt::playback']]]
 ];
