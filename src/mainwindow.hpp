@@ -29,7 +29,7 @@ public:
 	QPixmap getImage(const QString &type, const QString &url);
 	void refreshPlaylist(const spt::Playlist &playlist);
 	bool loadPlaylist(const spt::Playlist &playlist);
-	spt::Playback currentPlayback() const;
+	lib::spt::playback currentPlayback() const;
 	void openAudioFeaturesWidget(const std::string &trackId,
 		const std::string &artist, const std::string &name);
 	void openLyrics(const std::string &artist, const std::string &name);
@@ -44,7 +44,7 @@ public:
 	std::vector<std::string> currentTracks();
 	void setPlayingTrackItem(QTreeWidgetItem *item);
 	void refresh();
-	void refreshed(const spt::Playback &playback);
+	void refreshed(const lib::spt::playback &playback);
 	void toggleTrackNumbers(bool enabled);
 	bool isValid() const;
 	void setSearchVisible(bool visible);
@@ -66,7 +66,7 @@ public:
 	QAction *getSearchAction();
 	QTreeWidget *getSongsTree();
 	std::string getSptContext() const;
-	spt::Playback &getCurrentPlayback();
+	lib::spt::playback &getCurrentPlayback();
 
 #ifdef USE_DBUS
 	mp::Service *getMediaPlayer();

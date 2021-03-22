@@ -33,7 +33,7 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 	{
 		auto mainWindow = (MainWindow *) this->parent;
 		auto current = mainWindow->getCurrentPlayback();
-		current.isPlaying = !current.isPlaying;
+		current.is_playing = !current.is_playing;
 		mainWindow->refreshed(current);
 
 		auto callback = [this, mainWindow](const QString &status)
@@ -46,7 +46,7 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 				.arg(status), true);
 		};
 
-		if (current.isPlaying)
+		if (current.is_playing)
 			this->spotify.resume(callback);
 		else
 			this->spotify.pause(callback);
@@ -137,7 +137,7 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 		auto mainWindow = (MainWindow *) this->parent;
 		auto current = mainWindow->getCurrentPlayback();
 		auto repeatMode = QString(checked ? "context" : "off");
-		current.repeat = repeatMode;
+		current.repeat = repeatMode.toStdString();
 		mainWindow->refreshed(current);
 
 		this->spotify.setRepeat(repeatMode, [mainWindow](const QString &status)

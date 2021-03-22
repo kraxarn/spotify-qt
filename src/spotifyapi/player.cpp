@@ -3,11 +3,11 @@
 // Currently unavailable:
 // me/player/currently-playing
 
-void Spotify::currentPlayback(lib::callback<spt::Playback> &callback)
+void Spotify::currentPlayback(lib::callback<lib::spt::playback> &callback)
 {
-	get("me/player", [callback](const QJsonObject &json)
+	get("me/player", [callback](const nlohmann::json &json)
 	{
-		callback(Playback(json));
+		callback(json);
 	});
 }
 

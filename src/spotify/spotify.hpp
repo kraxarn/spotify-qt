@@ -11,7 +11,7 @@ namespace spt
 #include "artist.hpp"
 #include "audiofeatures.hpp"
 #include "lib/spotify/device.hpp"
-#include "playback.hpp"
+#include "lib/spotify/playback.hpp"
 #include "playlist.hpp"
 #include "searchresults.hpp"
 #include "user.hpp"
@@ -109,7 +109,7 @@ namespace spt
 
 		//region Player
 
-		void currentPlayback(lib::callback<spt::Playback> &callback);
+		void currentPlayback(lib::callback<lib::spt::playback> &callback);
 
 		void setDevice(const std::string &deviceId, lib::callback<QString> &callback);
 
@@ -151,7 +151,7 @@ namespace spt
 
 		QVector<Playlist> playlists(int offset = 0);
 
-		Playlist playlist(const QString &playlistId);
+		Playlist playlist(const std::string &playlistId);
 
 		QString editPlaylist(const Playlist &playlist);
 

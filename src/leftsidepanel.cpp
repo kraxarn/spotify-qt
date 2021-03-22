@@ -83,11 +83,11 @@ int LeftSidePanel::latestTrack(const std::vector<lib::spt::track> &tracks)
 QIcon LeftSidePanel::currentContextIcon() const
 {
 	return Icon::get(QString("view-media-%1")
-		.arg(current.playback.contextType.isEmpty()
+		.arg(current.playback.context.type.empty()
 			? "track"
-			: current.playback.contextType == "album"
+			: current.playback.context.type == "album"
 				? "album-cover"
-				: current.playback.contextType));
+				: QString::fromStdString(current.playback.context.type)));
 }
 
 void LeftSidePanel::updateContextIcon()
@@ -99,14 +99,14 @@ void LeftSidePanel::updateContextIcon()
 		return;
 	}
 
-	auto currentName = current.playback.contextType.isEmpty()
-		|| current.playback.contextUri.isEmpty()
+	auto currentName = current.playback.context.type.empty()
+		|| current.playback.context.uri.empty()
 		? "No context"
-		: current.playback.contextType == "album"
+		: current.playback.context.type == "album"
 			? current.playback.item.album
-			: current.playback.contextType == "artist"
+			: current.playback.context.type == "artist"
 				? current.playback.item.artist
-				: getPlaylistName(current.playback.contextUri);
+				: getPlaylistName(current.playback.context.uri);
 
 	contextInfo->setText(QString::fromStdString(currentName));
 	auto size = contextInfo->fontInfo().pixelSize();
@@ -127,8 +127,8 @@ void LeftSidePanel::contextInfoMenu(const QPoint &pos)
 		devContext->setEnabled(false);
 	}
 
-	auto open = menu->addAction(currentContextIcon(),
-		QString("Open %1").arg(current.playback.contextType));
+	auto open = menu->addAction(currentContextIcon(), QString("Open %1")
+		.arg(QString::fromStdString(current.playback.context.type)));
 	QAction::connect(open, &QAction::triggered, this, &LeftSidePanel::contextInfoOpen);
 
 	menu->popup(contextInfo->mapToGlobal(pos));
@@ -137,8 +137,8 @@ void LeftSidePanel::contextInfoMenu(const QPoint &pos)
 void LeftSidePanel::contextInfoOpen(bool)
 {
 	auto mainWindow = MainWindow::find(parentWidget());
-	auto type = current.playback.contextType;
-	auto uri = current.playback.contextUri.split(':').last().toStdString();
+	auto type = current.playback.context.type;
+	auto uri = lib::strings::split(current.playback.context.uri, ':').back();
 
 	if (type == "album")
 		mainWindow->loadAlbum(uri);
@@ -146,7 +146,7 @@ void LeftSidePanel::contextInfoOpen(bool)
 		mainWindow->openArtist(uri);
 	else if (type == "playlist")
 	{
-		auto playlist = spotify.playlist(QString::fromStdString(uri));
+		auto playlist = spotify.playlist(uri);
 		libraryList->setCurrentItem(nullptr);
 		playlists->setCurrentRow(-1);
 		mainWindow->loadPlaylist(playlist);
@@ -308,11 +308,11 @@ spt::Playlist &LeftSidePanel::playlist(size_t index)
 	return sptPlaylists[index];
 }
 
-QString LeftSidePanel::getPlaylistNameFromSaved(const QString &id)
+QString LeftSidePanel::getPlaylistNameFromSaved(const std::string &id)
 {
 	for (auto &playlist : sptPlaylists)
 	{
-		if (id.endsWith(playlist.id))
+		if (lib::strings::ends_with(id, playlist.id.toStdString()))
 			return playlist.name;
 	}
 	return QString();
@@ -333,12 +333,12 @@ void LeftSidePanel::setAlbumImage(const QPixmap &pixmap)
 	nowAlbum->setPixmap(pixmap);
 }
 
-std::string LeftSidePanel::getPlaylistName(const QString &id)
+std::string LeftSidePanel::getPlaylistName(const std::string &id)
 {
 	auto name = getPlaylistNameFromSaved(id);
 	if (!name.isEmpty())
 		return name.toStdString();
-	return spotify.playlist(id.split(':').last()).name.toStdString();
+	return spotify.playlist(lib::strings::split(id, ':').back()).name.toStdString();
 }
 
 QTreeWidgetItem *LeftSidePanel::getCurrentLibraryItem()

@@ -19,7 +19,7 @@
 #include "spotify/audiofeatures.hpp"
 #include "spotify/clienthandler.hpp"
 #include "spotify/current.hpp"
-#include "spotify/playback.hpp"
+#include "lib/spotify/playback.hpp"
 #include "spotify/playlist.hpp"
 #include "spotify/spotify.hpp"
 #include "spotify/user.hpp"

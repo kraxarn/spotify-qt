@@ -32,7 +32,7 @@ void MediaPlayerPlayer::Play() const
 
 void MediaPlayerPlayer::PlayPause() const
 {
-	if (currentPlayback().isPlaying)
+	if (currentPlayback().is_playing)
 		spotify->pause(callback);
 	else
 		spotify->resume(callback);
@@ -65,7 +65,7 @@ bool MediaPlayerPlayer::canControl() const
 
 QMap<QString, QVariant> MediaPlayerPlayer::metadata() const
 {
-	return currentPlayback().metadata();
+	return JsonUtils::toQtJson(currentPlayback().metadata()).object().toVariantMap();
 }
 
 double MediaPlayerPlayer::getVolume() const
@@ -80,12 +80,12 @@ void MediaPlayerPlayer::setVolume(double value) const
 
 qint64 MediaPlayerPlayer::position() const
 {
-	return currentPlayback().progressMs * 1000;
+	return currentPlayback().progress_ms * 1000;
 }
 
 QString MediaPlayerPlayer::playbackStatus() const
 {
-	return currentPlayback().isPlaying ? "Playing" : "Paused";
+	return currentPlayback().is_playing ? "Playing" : "Paused";
 }
 
 void MediaPlayerPlayer::OpenUri(QString uri) const
@@ -117,15 +117,15 @@ void MediaPlayerPlayer::setShuffle(bool value) const
 void MediaPlayerPlayer::emitMetadataChange() const
 {
 	QVariantMap properties;
-	properties["Metadata"] = currentPlayback().metadata();
+	properties["Metadata"] = JsonUtils::toQtJson(currentPlayback().metadata());
 	Service::signalPropertiesChange(this, properties);
 }
 
 void MediaPlayerPlayer::currentSourceChanged() const
 {
 	QVariantMap properties;
-	properties["Metadata"] = currentPlayback().metadata();
-	properties["PlaybackStatus"] = currentPlayback().isPlaying ? "Playing" : "Paused";
+	properties["Metadata"] = JsonUtils::toQtJson(currentPlayback().metadata());
+	properties["PlaybackStatus"] = currentPlayback().is_playing ? "Playing" : "Paused";
 	//properties["CanSeek"] = true;
 	Service::signalPropertiesChange(this, properties);
 }
@@ -133,7 +133,7 @@ void MediaPlayerPlayer::currentSourceChanged() const
 void MediaPlayerPlayer::stateUpdated() const
 {
 	QVariantMap properties;
-	properties["PlaybackStatus"] = currentPlayback().isPlaying ? "Playing" : "Paused";
+	properties["PlaybackStatus"] = currentPlayback().is_playing ? "Playing" : "Paused";
 	//properties["CanPause"] = true;
 	Service::signalPropertiesChange(this, properties);
 }
@@ -141,7 +141,7 @@ void MediaPlayerPlayer::stateUpdated() const
 void MediaPlayerPlayer::totalTimeChanged() const
 {
 	QVariantMap properties;
-	properties["Metadata"] = currentPlayback().metadata();
+	properties["Metadata"] = JsonUtils::toQtJson(currentPlayback().metadata());
 	Service::signalPropertiesChange(this, properties);
 }
 
@@ -164,11 +164,11 @@ void MediaPlayerPlayer::tick(qint64 newPos)
 	emit Seeked(newPos * 1000);
 }
 
-void MediaPlayerPlayer::setCurrentPlayback(const spt::Playback &playback)
+void MediaPlayerPlayer::setCurrentPlayback(const lib::spt::playback &playback)
 {
 }
 
-spt::Playback MediaPlayerPlayer::currentPlayback() const
+lib::spt::playback MediaPlayerPlayer::currentPlayback() const
 {
 	return ((Service *) parent())->currentPlayback();
 }

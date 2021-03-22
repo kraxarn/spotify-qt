@@ -41,7 +41,7 @@ void Service::metadataChanged()
 	emit playerPlayer->emitMetadataChange();
 }
 
-void Service::currentSourceChanged(const spt::Playback &playback)
+void Service::currentSourceChanged(const lib::spt::playback &playback)
 {
 	playerPlayer->setCurrentPlayback(playback);
 	emit playerPlayer->currentSourceChanged();
@@ -68,7 +68,7 @@ void Service::tick(qint64 newPos)
 	emit playerPlayer->tick(newPos);
 }
 
-spt::Playback Service::currentPlayback()
+lib::spt::playback Service::currentPlayback()
 {
 	return ((MainWindow *) parent())->currentPlayback();
 }

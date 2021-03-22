@@ -116,7 +116,8 @@ void SearchView::artistClick(QListWidgetItem *item)
 
 void SearchView::playlistClick(QListWidgetItem *item)
 {
-	spt::Playlist playlist(spotify.playlist(item->data(RolePlaylistId).toString()));
+	spt::Playlist playlist(spotify.playlist(item->data(RolePlaylistId)
+		.toString().toStdString()));
 	auto mainWindow = MainWindow::find(parentWidget());
 
 	if (!mainWindow->loadPlaylist(playlist))
@@ -175,7 +176,7 @@ void SearchView::search()
 			}
 			else if (cat == "playlist")
 			{
-				results.playlists.append(spotify.playlist(id).toJson());
+				results.playlists.append(spotify.playlist(id.toStdString()).toJson());
 				i = 3;
 			}
 

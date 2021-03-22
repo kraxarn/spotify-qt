@@ -72,9 +72,9 @@ QMenu *DeveloperMenu::infoMenu()
 	QAction::connect(menu->addAction("Playback"), &QAction::triggered,
 		[mainWindow]()
 		{
+			nlohmann::json json = mainWindow->currentPlayback();
 			QMessageBox::information(mainWindow, "Playback",
-				QJsonDocument(mainWindow->currentPlayback().toJson())
-					.toJson(QJsonDocument::Indented));
+				QString::fromStdString(json.dump(4)));
 		});
 
 	QAction::connect(menu->addAction("Context"), &QAction::triggered,

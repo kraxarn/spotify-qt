@@ -162,7 +162,7 @@ void SongMenu::addToPlaylist(QAction *action)
 	// Check if it's already in the playlist
 	auto mainWindow = MainWindow::find(parentWidget());
 	auto playlistId = action->data().toString();
-	auto tracks = spotify.playlist(playlistId).loadTracks(spotify);
+	auto tracks = spotify.playlist(playlistId.toStdString()).loadTracks(spotify);
 	for (auto &item : tracks)
 	{
 		if (lib::strings::ends_with(trackId, item.id))

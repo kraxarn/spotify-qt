@@ -3,7 +3,7 @@
 class TrayIcon;
 
 #include "mainwindow.hpp"
-#include "spotify/playback.hpp"
+#include "lib/spotify/playback.hpp"
 #include "spotify/spotify.hpp"
 #include "util/icon.hpp"
 
@@ -22,7 +22,7 @@ public:
 	void setPixmap(const QPixmap &pixmap);
 
 private:
-	spt::Playback playback();
+	lib::spt::playback playback();
 
 	QMenu *contextMenu;
 	QAction *playPause;

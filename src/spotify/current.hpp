@@ -1,6 +1,6 @@
 #pragma once
 
-#include "playback.hpp"
+#include "lib/spotify/playback.hpp"
 
 #include <QString>
 
@@ -8,7 +8,7 @@ namespace spt
 {
 	struct Current
 	{
-		spt::Playback playback;
+		lib::spt::playback playback;
 		QString context;
 	};
 }

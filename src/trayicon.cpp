@@ -24,7 +24,7 @@ TrayIcon::TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QObject
 	playPause = contextMenu->addAction(Icon::get("media-playback-start"), "Play");
 	QAction::connect(playPause, &QAction::triggered, [this](bool checked)
 	{
-		if (playback().isPlaying)
+		if (playback().is_playing)
 			this->spotify->pause(this->callback);
 		else
 			this->spotify->resume(this->callback);
@@ -58,7 +58,7 @@ TrayIcon::TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QObject
 	{
 		auto current = playback();
 		currentTrack->setText(QString::fromStdString(current.item.title()));
-		auto isPlaying = current.isPlaying;
+		auto isPlaying = current.is_playing;
 		playPause->setIcon(Icon::get(isPlaying ? "media-playback-pause" : "media-playback-start"));
 		playPause->setText(isPlaying ? "Pause" : "Play");
 	});
@@ -77,11 +77,11 @@ void TrayIcon::message(const QString &message)
 	showMessage("spotify-qt", message);
 }
 
-spt::Playback TrayIcon::playback()
+lib::spt::playback TrayIcon::playback()
 {
 	auto mainWindow = dynamic_cast<MainWindow *>(this->parent());
 	if (mainWindow == nullptr)
-		return spt::Playback();
+		return lib::spt::playback();
 	return mainWindow->currentPlayback();
 }
 

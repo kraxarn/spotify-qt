@@ -16,7 +16,7 @@ Q_OBJECT
 
 public:
 	explicit SystemInfoView(QWidget *mainWindow, QWidget *parent = nullptr);
-	static QString systemInfo(const spt::Playback &playback, bool html = true);
+	static QString systemInfo(const lib::spt::playback &playback, bool html = true);
 
 private:
 	QString systemInfo(bool html = true);

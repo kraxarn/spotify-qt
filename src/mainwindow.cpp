@@ -153,9 +153,9 @@ void MainWindow::refresh()
 {
 	if (refreshCount < 0
 		|| ++refreshCount >= settings.general.refresh_interval
-		|| current.playback.progressMs + 1000 > current.playback.item.duration)
+		|| current.playback.progress_ms + 1000 > current.playback.item.duration)
 	{
-		spotify->currentPlayback([this](const spt::Playback &playback)
+		spotify->currentPlayback([this](const lib::spt::playback &playback)
 		{
 			refreshed(playback);
 		});
@@ -164,19 +164,19 @@ void MainWindow::refresh()
 	}
 
 	// Assume last refresh was 1 sec ago
-	if (!current.playback.isPlaying)
+	if (!current.playback.is_playing)
 		return;
-	current.playback.progressMs += 1000;
+	current.playback.progress_ms += 1000;
 	refreshed(current.playback);
 }
 
-void MainWindow::refreshed(const spt::Playback &playback)
+void MainWindow::refreshed(const lib::spt::playback &playback)
 {
 	current.playback = playback;
 
 	auto mainToolBar = dynamic_cast<MainToolBar *>(toolBar);
 
-	if (!current.playback.isPlaying && current.playback.item.name == "(no name)")
+	if (!current.playback.is_playing && current.playback.item.name == "(no name)")
 	{
 		mainToolBar->playPause->setIcon(Icon::get("media-playback-start"));
 		mainToolBar->playPause->setText("Play");
@@ -186,7 +186,7 @@ void MainWindow::refreshed(const spt::Playback &playback)
 		current.playback.item.name, current.playback.item.artist));
 	if (leftSidePanel->getCurrentlyPlaying() != currPlaying)
 	{
-		if (current.playback.isPlaying)
+		if (current.playback.is_playing)
 		{
 			auto itemId = current.playback.item.id;
 			setPlayingTrackItem(trackItems.find(itemId) != trackItems.end()
@@ -209,15 +209,15 @@ void MainWindow::refreshed(const spt::Playback &playback)
 	}
 
 	mainToolBar->position->setText(QString("%1/%2")
-		.arg(QString::fromStdString(lib::fmt::time(current.playback.progressMs)))
+		.arg(QString::fromStdString(lib::fmt::time(current.playback.progress_ms)))
 		.arg(QString::fromStdString(lib::fmt::time(current.playback.item.duration))));
 
-	mainToolBar->progress->setValue(current.playback.progressMs);
+	mainToolBar->progress->setValue(current.playback.progress_ms);
 	mainToolBar->progress->setMaximum(current.playback.item.duration);
-	mainToolBar->playPause->setIcon(Icon::get(current.playback.isPlaying
+	mainToolBar->playPause->setIcon(Icon::get(current.playback.is_playing
 		? "media-playback-pause"
 		: "media-playback-start"));
-	mainToolBar->playPause->setText(current.playback.isPlaying ? "Pause" : "Play");
+	mainToolBar->playPause->setText(current.playback.is_playing ? "Pause" : "Play");
 
 	if (!settings.general.pulse_volume)
 		mainToolBar->volumeButton->setVolume(current.playback.volume() / 5);
@@ -372,7 +372,7 @@ void MainWindow::saveTracksToCache(const std::string &id,
 
 bool MainWindow::loadPlaylist(const spt::Playlist &playlist)
 {
-	if (!leftSidePanel->getPlaylistNameFromSaved(playlist.id).isEmpty())
+	if (!leftSidePanel->getPlaylistNameFromSaved(playlist.id.toStdString()).isEmpty())
 	{
 		settings.general.last_playlist = playlist.id.toStdString();
 		settings.save();
@@ -411,7 +411,7 @@ std::vector<lib::spt::track> MainWindow::playlistTracks(const std::string &playl
 
 void MainWindow::refreshPlaylist(const spt::Playlist &playlist)
 {
-	auto newPlaylist = spotify->playlist(playlist.id);
+	auto newPlaylist = spotify->playlist(playlist.id.toStdString());
 	std::vector<lib::spt::track> tracks;
 	auto result = newPlaylist.loadTracks(*spotify, tracks);
 	if (!result)
@@ -578,7 +578,7 @@ void MainWindow::toggleTrackNumbers(bool enabled)
 
 //region Getters
 
-spt::Playback MainWindow::currentPlayback() const
+lib::spt::playback MainWindow::currentPlayback() const
 {
 	return current.playback;
 }
@@ -608,7 +608,7 @@ std::string MainWindow::getSptContext() const
 	return current.context.toStdString();
 }
 
-spt::Playback &MainWindow::getCurrentPlayback()
+lib::spt::playback &MainWindow::getCurrentPlayback()
 {
 	return current.playback;
 }

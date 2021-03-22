@@ -37,7 +37,7 @@ public:
 	void refreshPlaylists();
 	int playlistCount() const;
 	spt::Playlist &playlist(size_t index);
-	QString getPlaylistNameFromSaved(const QString &id);
+	QString getPlaylistNameFromSaved(const std::string &id);
 	QVector<spt::Playlist> &getPlaylists();
 	void orderPlaylists(lib::playlist_order order);
 
@@ -67,7 +67,7 @@ private:
 	void contextInfoMenu(const QPoint &pos);
 	void contextInfoOpen(bool checked);
 	QIcon currentContextIcon() const;
-	std::string getPlaylistName(const QString &id);
+	std::string getPlaylistName(const std::string &id);
 
 	void popupSongMenu(const QPoint &pos);
 };

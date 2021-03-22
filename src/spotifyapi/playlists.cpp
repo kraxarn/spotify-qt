@@ -32,9 +32,10 @@ QVector<Playlist> Spotify::playlists(int offset)
 	return playlists;
 }
 
-Playlist Spotify::playlist(const QString &playlistId)
+Playlist Spotify::playlist(const std::string &playlistId)
 {
-	return Playlist(getAsObject(QString("playlists/%1").arg(playlistId)));
+	return Playlist(getAsObject(QString::fromStdString(lib::fmt::format(
+		"playlists/{}", playlistId))));
 }
 
 QString Spotify::editPlaylist(const Playlist &playlist)

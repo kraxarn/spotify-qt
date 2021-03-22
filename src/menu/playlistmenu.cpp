@@ -102,6 +102,6 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 }
 
 PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const QString &playlistId, QWidget *parent)
-	: PlaylistMenu(spotify, spotify.playlist(playlistId), parent)
+	: PlaylistMenu(spotify, spotify.playlist(playlistId.toStdString()), parent)
 {
 }

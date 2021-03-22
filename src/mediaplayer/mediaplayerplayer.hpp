@@ -60,7 +60,7 @@ namespace mp
 		bool shuffle() const;
 		void setShuffle(bool value) const;
 
-		void setCurrentPlayback(const spt::Playback &playback);
+		void setCurrentPlayback(const lib::spt::playback &playback);
 
 		void emitMetadataChange() const;
 		void currentSourceChanged() const;
@@ -89,7 +89,7 @@ namespace mp
 		spt::Spotify *spotify;
 		std::function<void(const QString &result)> callback;
 
-		spt::Playback currentPlayback() const;
+		lib::spt::playback currentPlayback() const;
 	};
 }
 

@@ -33,7 +33,7 @@ QString SystemInfoView::systemInfo(bool html)
 	return systemInfo(((MainWindow *) mainWindow)->getCurrentPlayback(), html);
 }
 
-QString SystemInfoView::systemInfo(const spt::Playback &playback, bool html)
+QString SystemInfoView::systemInfo(const lib::spt::playback &playback, bool html)
 {
 	QMap<QString, QString> info;
 

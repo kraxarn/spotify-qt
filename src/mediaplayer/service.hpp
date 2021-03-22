@@ -23,10 +23,10 @@ namespace mp
 		Service(spt::Spotify *spotify, QObject *parent);
 		virtual ~Service();
 
-		spt::Playback currentPlayback();
+		lib::spt::playback currentPlayback();
 		static void signalPropertiesChange(const QObject *adaptor, const QVariantMap &properties);
 		void metadataChanged();
-		void currentSourceChanged(const spt::Playback &playback);
+		void currentSourceChanged(const lib::spt::playback &playback);
 		void stateUpdated();
 		void seekableChanged();
 		void volumeChanged();
