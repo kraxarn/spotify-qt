@@ -44,11 +44,7 @@ void AlbumMenu::shuffle(bool)
 		return;
 	}
 
-	auto initialIndex = 0;
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-	initialIndex = QRandomGenerator::global()->bounded(0, tracks.size());
-#endif
-
+	auto initialIndex = lib::random().next_int(0, tracks.size());
 	spotify.playTracks(initialIndex, lib::fmt::format("spotify:album:{}", albumId),
 		[this](const QString &status)
 		{

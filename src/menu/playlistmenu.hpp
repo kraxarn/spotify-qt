@@ -3,14 +3,11 @@
 #include "../dialog/playlisteditdialog.hpp"
 #include "../mainwindow.hpp"
 #include "../spotify/playlist.hpp"
+#include "lib/random.hpp"
 
 #include <QInputDialog>
 #include <QMenu>
 #include <QUrl>
-
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-#include <QRandomGenerator>
-#endif
 
 class PlaylistMenu: public QMenu
 {
