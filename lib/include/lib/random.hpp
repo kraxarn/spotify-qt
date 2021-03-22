@@ -25,6 +25,8 @@ namespace lib
 			return distribution(rng);
 		}
 
+		int next_int(int min, int max);
+
 	private:
 		std::random_device device;
 		std::mt19937 rng;
