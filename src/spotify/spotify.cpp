@@ -62,6 +62,28 @@ QString Spotify::errorMessage(const QUrl &url, const QByteArray &data)
 	return message;
 }
 
+std::string Spotify::error_message(const std::string &url, const std::string &data)
+{
+	nlohmann::json json;
+	try
+	{
+		json = nlohmann::json::parse(data);
+	}
+	catch (const std::exception &)
+	{
+		// No response, so probably no error
+		return std::string();
+	}
+
+	if (json.is_null() || !json.is_object() || !json.contains("error"))
+		return std::string();
+
+	auto message = json.at("error").at("message").get<std::string>();
+	if (!message.empty())
+		lib::log::error("{} failed: {}", url, message);
+	return message;
+}
+
 QJsonDocument Spotify::get(const QString &url)
 {
 	// Send request
@@ -245,6 +267,20 @@ void Spotify::put(const QString &url, lib::callback<QString> &callback)
 	put(url, nlohmann::json(), callback);
 }
 
+void Spotify::put(const std::string &url, const nlohmann::json &body,
+	lib::callback<std::string> &callback)
+{
+	put(QString::fromStdString(url), body, [callback](const QString &result)
+	{
+		callback(result.toStdString());
+	});
+}
+
+void Spotify::put(const std::string &url, lib::callback<std::string> &callback)
+{
+	put(url, nlohmann::json(), callback);
+}
+
 void Spotify::post(const QString &url, lib::callback<QString> &callback)
 {
 	auto req = request(url);
@@ -276,6 +312,23 @@ void Spotify::del(const QString &url, const nlohmann::json &json, lib::callback<
 	{
 		callback(errorMessage(url, data));
 	});
+}
+
+void Spotify::del(const std::string &url, const nlohmann::json &json,
+	lib::callback<std::string> &callback)
+{
+	auto req = request(QString::fromStdString(url));
+	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+	auto data = json.is_null()
+		? QByteArray()
+		: QByteArray::fromStdString(json.dump());
+
+	await(networkManager->sendCustomRequest(req, "DELETE", data),
+		[url, callback](const QByteArray &data)
+		{
+			callback(error_message(url, data.toStdString()));
+		});
 }
 
 QString Spotify::post(const QString &url)

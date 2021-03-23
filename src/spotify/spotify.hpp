@@ -12,7 +12,7 @@ namespace spt
 #include "audiofeatures.hpp"
 #include "lib/spotify/device.hpp"
 #include "lib/spotify/playback.hpp"
-#include "playlist.hpp"
+#include "lib/spotify/playlist.hpp"
 #include "searchresults.hpp"
 #include "lib/spotify/user.hpp"
 #include "thirdparty/json.hpp"
@@ -149,15 +149,17 @@ namespace spt
 
 		//region Playlists
 
-		QVector<Playlist> playlists(int offset = 0);
+		std::vector<lib::spt::playlist> playlists(int offset = 0);
 
-		Playlist playlist(const std::string &playlistId);
+		lib::spt::playlist playlist(const std::string &playlistId);
 
-		QString editPlaylist(const Playlist &playlist);
+		void editPlaylist(const lib::spt::playlist &playlist,
+			lib::callback<std::string> &callback);
 
-		QString addToPlaylist(const QString &playlistId, const std::string &trackId);
+		QString addToPlaylist(const std::string &playlistId, const std::string &trackId);
 
-		QString removeFromPlaylist(const QString &playlistId, const std::string &trackId, int pos);
+		void removeFromPlaylist(const std::string &playlistId, const std::string &trackId,
+			int pos, lib::callback<std::string> &callback);
 
 		//endregion
 
@@ -225,9 +227,20 @@ namespace spt
 
 		//region PUT
 
+		/**
+		 * @deprecated
+		 */
 		void put(const QString &url, const nlohmann::json &body, lib::callback<QString> &callback);
 
+		/**
+		 * @deprecated
+		 */
 		void put(const QString &url, lib::callback<QString> &callback);
+
+		void put(const std::string &url, const nlohmann::json &body,
+			lib::callback<std::string> &callback);
+
+		void put(const std::string &url, lib::callback<std::string> &callback);
 
 		//endregion
 
@@ -244,7 +257,13 @@ namespace spt
 
 		//region DELETE
 
+		/**
+		 * @deprecated
+		 */
 		void del(const QString &url, const nlohmann::json &json, lib::callback<QString> &callback);
+
+		void del(const std::string &url, const nlohmann::json &json,
+			lib::callback<std::string> &callback);
 
 		//endregion
 
@@ -282,7 +301,13 @@ namespace spt
 		 */
 		static QString errorMessage(const QJsonDocument &json, const QUrl &url);
 
+		/**
+		 * @deprecated
+		 */
 		static QString errorMessage(const QUrl &url, const QByteArray &data);
+
+		static std::string error_message(const std::string &url,
+			const std::string &data);
 
 		/**
 		 * @deprecated
