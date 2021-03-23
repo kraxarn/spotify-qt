@@ -87,6 +87,28 @@ namespace lib
 		}
 
 		/**
+		 * Load a single item from a json file
+		 * @param path Path to json file, including extension
+		 * @return Item on success, or default on failure
+		 */
+		template<typename T>
+		static T load(const ghc::filesystem::path &path)
+		{
+			try
+			{
+				return load_json(path);
+			}
+			catch (const std::exception &e)
+			{
+				log::warn("Failed to load item from \"{}\": {}", path.string(), e.what());
+			}
+
+			return T();
+		}
+
+		static void save_json(const ghc::filesystem::path &path, const nlohmann::json &json);
+
+		/**
 		 * Save a vector of items to a json file
 		 * @param path Path to json file, including extension
 		 * @param items Items to save
@@ -94,16 +116,27 @@ namespace lib
 		template<typename T>
 		static void save_items(const std::string &path, const std::vector<T> &items)
 		{
-			std::ofstream file(path);
-
 			try
 			{
-				nlohmann::json json = items;
-				file << std::setw(4) << json;
+				save_json(path, items);
 			}
 			catch (const std::exception &e)
 			{
 				log::warn("Failed to save items to \"{}\": {}", path, e.what());
+			}
+		}
+
+		template<typename T>
+		static void save(const ghc::filesystem::path &path, const T &item)
+		{
+			try
+			{
+				save_json(path, item);
+			}
+			catch (const std::exception &e)
+			{
+				log::warn("Failed to save items to \"{}\": {}",
+					path.string(), e.what());
 			}
 		}
 

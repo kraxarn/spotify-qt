@@ -13,3 +13,9 @@ nlohmann::json lib::json::load_json(const ghc::filesystem::path &path)
 	file >> json;
 	return json;
 }
+
+void lib::json::save_json(const ghc::filesystem::path &path, const nlohmann::json &json)
+{
+	std::ofstream file(path);
+	file << std::setw(4) << json;
+}
