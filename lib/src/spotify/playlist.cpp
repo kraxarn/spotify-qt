@@ -30,10 +30,12 @@ void lib::spt::from_json(const nlohmann::json &j, playlist &p)
 	lib::json::get_property(j, {
 		"is_public", "public"
 	}, p.is_public);
-	j.at("tracks").get_to(p.tracks);
 	lib::json::get_property(j, {
 		"snapshot", "snapshot_id"
 	}, p.snapshot);
+
+	if (j.contains("tracks") && j.at("tracks").is_array())
+		j.at("tracks").get_to(p.tracks);
 
 	if (j.contains("image"))
 		j.at("image").get_to(p.image);
