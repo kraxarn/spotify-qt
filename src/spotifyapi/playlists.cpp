@@ -8,66 +8,59 @@
 // playlists/{playlist_id}/tracks
 // playlists/{playlist_id}/images
 
-QVector<Playlist> Spotify::playlists(int offset)
+std::vector<lib::spt::playlist> Spotify::playlists(int offset)
 {
 	// Request playlists
-	auto json = getAsObject(QString("me/playlists?limit=50&offset=%1").arg(offset));
+	auto json = getAsJson(QString("me/playlists?limit=50&offset=%1").arg(offset));
 
 	// Parse as playlists
-	auto items = json["items"].toArray();
+	auto items = json["items"].items();
 
 	// Create list of playlists
-	auto size = json["total"].toInt();
-	QVector<Playlist> playlists;
-	playlists.reserve(size);
+	std::vector<lib::spt::playlist> playlists;
 
 	// Loop through all items
-	for (int i = 0; i < items.size(); i++)
-		playlists.insert(i, Playlist(items.at(i).toObject()));
+	for (auto &item : items)
+		playlists.push_back(item.value());
 
 	// Paging
-	if (json.contains("next") && !json["next"].isNull())
-		playlists.append(this->playlists(json["offset"].toInt() + json["limit"].toInt()));
+	if (json.contains("next") && !json["next"].is_null())
+	{
+		lib::vector::append(playlists,
+			this->playlists(json["offset"].get<int>() + json["limit"].get<int>()));
+	}
 
 	return playlists;
 }
 
-Playlist Spotify::playlist(const std::string &playlistId)
+lib::spt::playlist Spotify::playlist(const std::string &playlistId)
 {
-	return Playlist(getAsObject(QString::fromStdString(lib::fmt::format(
-		"playlists/{}", playlistId))));
+	return getAsJson(QString::fromStdString(lib::fmt::format("playlists/{}",
+		playlistId)));
 }
 
-QString Spotify::editPlaylist(const Playlist &playlist)
+void Spotify::editPlaylist(const lib::spt::playlist &playlist,
+	lib::callback<std::string> &callback)
 {
-	QVariantMap body({
-		{"name", playlist.name},
-		{"public", playlist.isPublic},
-		{"collaborative", playlist.collaborative},
-		{"description", playlist.description}
-	});
-	return put(QString("playlists/%1").arg(playlist.id), &body);
+	put(lib::fmt::format("playlists/%1", playlist.id), playlist, callback);
 }
 
-QString Spotify::addToPlaylist(const QString &playlistId, const std::string &trackId)
+QString Spotify::addToPlaylist(const std::string &playlistId, const std::string &trackId)
 {
 	return post(QString("playlists/%1/tracks?uris=%2")
-		.arg(playlistId)
+		.arg(QString::fromStdString(playlistId))
 		.arg(QString::fromStdString(trackId)));
 }
 
-QString Spotify::removeFromPlaylist(const QString &playlistId, const std::string &trackId, int pos)
+void Spotify::removeFromPlaylist(const std::string &playlistId, const std::string &trackId,
+	int pos, lib::callback<std::string> &callback)
 {
-	QJsonDocument json({
-		QPair<QString, QJsonArray>("tracks", QJsonArray({
-			QJsonObject({
-				QPair<QString, QString>("uri", QString::fromStdString(trackId)),
-				QPair<QString, QJsonArray>("positions", QJsonArray({
-					pos
-				}))
-			})
-		}))
-	});
-
-	return del(QString("playlists/%1/tracks").arg(playlistId), json);
+	del(lib::fmt::format("playlists/%1/tracks", playlistId), {
+		{"tracks", {
+			{"uri", trackId},
+			{"position", {
+				pos
+			}}
+		}}
+	}, callback);
 }

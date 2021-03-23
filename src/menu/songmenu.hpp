@@ -34,7 +34,7 @@ private:
 	const std::string trackName;
 	QString trackUri;
 	int index = 0;
-	const spt::Playlist *currentPlaylist = nullptr;
+	const lib::spt::playlist *currentPlaylist = nullptr;
 
 	void like(bool checked);
 	void addToQueue(bool checked);

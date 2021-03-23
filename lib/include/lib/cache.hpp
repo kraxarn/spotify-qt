@@ -7,6 +7,7 @@
 #include "lib/log.hpp"
 #include "lib/json.hpp"
 #include "lib/spotify/track.hpp"
+#include "lib/spotify/playlist.hpp"
 
 namespace lib
 {
@@ -33,7 +34,13 @@ namespace lib
 		 * @param id Playlist ID
 		 * @return Tracks or an empty vector on failure
 		 */
-		std::vector<lib::spt::track> get_playlist_tracks(const std::string &id);
+		lib::spt::playlist get_playlist(const std::string &id);
+
+		/**
+		 * Save playlist to cache
+		 * @param playlist Playlist to save
+		 */
+		void set_playlist(const spt::playlist &playlist);
 
 		//endregion
 

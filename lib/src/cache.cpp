@@ -31,20 +31,23 @@ ghc::filesystem::path lib::cache::path(const std::string &type, const std::strin
 
 //region playlist
 
-std::vector<lib::spt::track> lib::cache::get_playlist_tracks(const std::string &id)
+lib::spt::playlist lib::cache::get_playlist(const std::string &id)
 {
-	// TODO: Playlists are a bit weird right now as they aren't lib types yet
 	try
 	{
-		auto json = json::load_json(path("playlist", id));
-		return json::load_items<lib::spt::track>(json.at("tracks"));
+		return json::load<lib::spt::playlist>(path("playlist", id));
 	}
 	catch (const std::exception &e)
 	{
-		log::warn("Failed to load playlist tracks from cache: {}", e.what());
+		log::warn("Failed to load playlist from cache: {}", e.what());
 	}
 
-	return std::vector<lib::spt::track>();
+	return lib::spt::playlist();
+}
+
+void lib::cache::set_playlist(const spt::playlist &playlist)
+{
+	lib::json::save(path("playlist", playlist.id), playlist);
 }
 
 //endregion
@@ -63,8 +66,7 @@ std::vector<lib::spt::track> lib::cache::tracks(const std::string &id)
 
 void lib::cache::tracks(const std::string &id, const std::vector<lib::spt::track> &tracks)
 {
-	auto file_path = path("tracks", id);
-	lib::json::save_items(file_path, tracks);
+	lib::json::save_items(path("tracks", id), tracks);
 }
 
 std::map<std::string, std::vector<lib::spt::track>> lib::cache::all_tracks()

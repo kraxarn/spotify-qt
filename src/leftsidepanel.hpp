@@ -36,9 +36,9 @@ public:
 	QListWidgetItem *currentPlaylist();
 	void refreshPlaylists();
 	int playlistCount() const;
-	spt::Playlist &playlist(size_t index);
-	QString getPlaylistNameFromSaved(const std::string &id);
-	QVector<spt::Playlist> &getPlaylists();
+	lib::spt::playlist &playlist(size_t index);
+	std::string getPlaylistNameFromSaved(const std::string &id);
+	std::vector<lib::spt::playlist> &getPlaylists();
 	void orderPlaylists(lib::playlist_order order);
 
 	//endregion
@@ -56,7 +56,7 @@ private:
 	lib::settings &settings;
 	LibraryList *libraryList;
 	PlaylistList *playlists;
-	QVector<spt::Playlist> sptPlaylists;
+	std::vector<lib::spt::playlist> sptPlaylists;
 
 	QLabel *contextIcon = nullptr;
 	QLabel *contextInfo = nullptr;

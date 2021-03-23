@@ -204,15 +204,15 @@ void LeftSidePanel::refreshPlaylists()
 	QTextDocument doc;
 	for (auto &playlist : sptPlaylists)
 	{
-		auto item = new QListWidgetItem(playlist.name, playlists);
+		auto item = new QListWidgetItem(QString::fromStdString(playlist.name), playlists);
 
-		doc.setHtml(playlist.description);
+		doc.setHtml(QString::fromStdString(playlist.description));
 		item->setToolTip(doc.toPlainText());
 
-		item->setData(RolePlaylistId, playlist.id);
+		item->setData(RolePlaylistId, QString::fromStdString(playlist.id));
 		item->setData(RoleIndex, i++);
 
-		if (playlist.id == lastItem)
+		if (playlist.id == lastItem.toStdString())
 			currentItem = item;
 	}
 
@@ -300,22 +300,22 @@ void LeftSidePanel::orderPlaylists(lib::playlist_order order)
 
 int LeftSidePanel::playlistCount() const
 {
-	return sptPlaylists.length();
+	return sptPlaylists.size();
 }
 
-spt::Playlist &LeftSidePanel::playlist(size_t index)
+lib::spt::playlist &LeftSidePanel::playlist(size_t index)
 {
 	return sptPlaylists[index];
 }
 
-QString LeftSidePanel::getPlaylistNameFromSaved(const std::string &id)
+std::string LeftSidePanel::getPlaylistNameFromSaved(const std::string &id)
 {
 	for (auto &playlist : sptPlaylists)
 	{
-		if (lib::strings::ends_with(id, playlist.id.toStdString()))
+		if (lib::strings::ends_with(id, playlist.id))
 			return playlist.name;
 	}
-	return QString();
+	return std::string();
 }
 
 QString LeftSidePanel::getCurrentlyPlaying()
@@ -336,9 +336,9 @@ void LeftSidePanel::setAlbumImage(const QPixmap &pixmap)
 std::string LeftSidePanel::getPlaylistName(const std::string &id)
 {
 	auto name = getPlaylistNameFromSaved(id);
-	if (!name.isEmpty())
-		return name.toStdString();
-	return spotify.playlist(lib::strings::split(id, ':').back()).name.toStdString();
+	if (!name.empty())
+		return name;
+	return spotify.playlist(lib::strings::split(id, ':').back()).name;
 }
 
 QTreeWidgetItem *LeftSidePanel::getCurrentLibraryItem()
@@ -351,7 +351,7 @@ void LeftSidePanel::setCurrentLibraryItem(QTreeWidgetItem *item)
 	libraryList->setCurrentItem(item);
 }
 
-QVector<spt::Playlist> &LeftSidePanel::getPlaylists()
+std::vector<lib::spt::playlist> &LeftSidePanel::getPlaylists()
 {
 	return sptPlaylists;
 }

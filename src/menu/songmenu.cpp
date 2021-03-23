@@ -101,12 +101,12 @@ SongMenu::SongMenu(const std::string &trackId, std::string artist, std::string n
 	auto currentUserId = mainWindow->getCurrentUser().id;
 	for (auto &playlist : mainWindow->getPlaylists())
 	{
-		if (!playlist.collaborative && playlist.ownerId.toStdString() != currentUserId)
+		if (!playlist.collaborative && playlist.owner_id != currentUserId)
 			continue;
 
 		// Create main action
-		auto action = addPlaylist->addAction(playlist.name);
-		action->setData(playlist.id);
+		auto action = addPlaylist->addAction(QString::fromStdString(playlist.name));
+		action->setData(QString::fromStdString(playlist.id));
 	}
 	QMenu::connect(addPlaylist, &QMenu::triggered, this, &SongMenu::addToPlaylist);
 
@@ -161,8 +161,8 @@ void SongMenu::addToPlaylist(QAction *action)
 {
 	// Check if it's already in the playlist
 	auto mainWindow = MainWindow::find(parentWidget());
-	auto playlistId = action->data().toString();
-	auto tracks = spotify.playlist(playlistId.toStdString()).loadTracks(spotify);
+	auto playlistId = action->data().toString().toStdString();
+	auto tracks = spotify.playlist(playlistId).tracks;
 	for (auto &item : tracks)
 	{
 		if (lib::strings::ends_with(trackId, item.id))
@@ -191,37 +191,41 @@ void SongMenu::addToPlaylist(QAction *action)
 
 void SongMenu::remFromPlaylist(bool)
 {
-	// Remove from Spotify
-	auto mainWindow = MainWindow::find(parentWidget());
-	auto status = spotify.removeFromPlaylist(currentPlaylist->id, trackId, index);
-	if (!status.isEmpty())
-	{
-		mainWindow->setStatus(QString("Failed to remove track from playlist: %1")
-			.arg(status), true);
-		return;
-	}
+	spotify.removeFromPlaylist(currentPlaylist->id, trackId, index,
+		[this](const std::string &status)
+		{
+			// Remove from Spotify
+			auto mainWindow = MainWindow::find(this->parentWidget());
 
-	// Remove from interface
-	QTreeWidgetItem *item = nullptr;
-	int i;
-	for (i = 0; i < mainWindow->getSongsTree()->topLevelItemCount(); i++)
-	{
-		item = mainWindow->getSongsTree()->topLevelItem(i);
-		if (item->data(0, RoleTrackId).toString().toStdString() == trackId)
-			break;
-		item = nullptr;
-	}
+			if (!status.empty())
+			{
+				mainWindow->status(lib::fmt::format(
+					"Failed to remove track from playlist: {}", status), true);
+				return;
+			}
 
-	if (item == nullptr)
-	{
-		mainWindow->setStatus("Failed to remove track, not found in playlist", true);
-		return;
-	}
+			// Remove from interface
+			QTreeWidgetItem *item = nullptr;
+			int i;
+			for (i = 0; i < mainWindow->getSongsTree()->topLevelItemCount(); i++)
+			{
+				item = mainWindow->getSongsTree()->topLevelItem(i);
+				if (item->data(0, RoleTrackId).toString().toStdString() == trackId)
+					break;
+				item = nullptr;
+			}
 
-	// i doesn't necessarily match item index depending on sorting order
-	mainWindow->getSongsTree()->takeTopLevelItem(i);
-	mainWindow->status(lib::fmt::format("Removed {} - {} from \"{}\"",
-		trackName, artist, currentPlaylist->name.toStdString()));
+			if (item == nullptr)
+			{
+				mainWindow->setStatus("Failed to remove track, not found in playlist", true);
+				return;
+			}
+
+			// i doesn't necessarily match item index depending on sorting order
+			mainWindow->getSongsTree()->takeTopLevelItem(i);
+			mainWindow->status(lib::fmt::format("Removed {} - {} from \"{}\"",
+				trackName, artist, currentPlaylist->name));
+		});
 }
 
 void SongMenu::openTrackFeatures(bool)

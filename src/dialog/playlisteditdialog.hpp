@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../spotify/playlist.hpp"
+#include "lib/spotify/playlist.hpp"
+#include "../spotify/spotify.hpp"
 
 #include <QCheckBox>
 #include <QDialog>
@@ -17,7 +18,7 @@ class PlaylistEditDialog: public QDialog
 Q_OBJECT
 
 public:
-	PlaylistEditDialog(spt::Spotify *spotify, const spt::Playlist &playlist,
+	PlaylistEditDialog(spt::Spotify *spotify, const lib::spt::playlist &playlist,
 		int selectedIndex, QWidget *parent = nullptr);
 
 private:

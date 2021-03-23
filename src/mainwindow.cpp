@@ -370,58 +370,57 @@ void MainWindow::saveTracksToCache(const std::string &id,
 	cache.tracks(id, tracks);
 }
 
-bool MainWindow::loadPlaylist(const spt::Playlist &playlist)
+bool MainWindow::loadPlaylist(const lib::spt::playlist &playlist)
 {
-	if (!leftSidePanel->getPlaylistNameFromSaved(playlist.id.toStdString()).isEmpty())
+	if (!leftSidePanel->getPlaylistNameFromSaved(playlist.id).empty())
 	{
-		settings.general.last_playlist = playlist.id.toStdString();
+		settings.general.last_playlist = playlist.id;
 		settings.save();
 	}
 	if (loadPlaylistFromCache(playlist))
 		return true;
 	songs->setEnabled(false);
-	std::vector<lib::spt::track> tracks;
-	auto result = playlist.loadTracks(*spotify, tracks);
-	if (result)
-		loadSongs(tracks);
+	auto result = spotify->playlist(playlist.id);
+	if (!result.is_null())
+		loadSongs(result.tracks);
 	songs->setEnabled(true);
-	current.context = QString("spotify:playlist:%1").arg(playlist.id);
-	if (result)
+	current.context = QString("spotify:playlist:%1")
+		.arg(QString::fromStdString(playlist.id));
+	if (!result.is_null())
 		cachePlaylist(playlist);
-	return result;
+	return !result.is_null();
 }
 
-bool MainWindow::loadPlaylistFromCache(const spt::Playlist &playlist)
+bool MainWindow::loadPlaylistFromCache(const lib::spt::playlist &playlist)
 {
-	auto tracks = playlistTracks(playlist.id.toStdString());
+	auto tracks = playlistTracks(playlist.id);
 	if (tracks.empty())
 		return false;
 	songs->setEnabled(false);
 	auto result = loadSongs(tracks);
 	songs->setEnabled(true);
-	current.context = QString("spotify:playlist:%1").arg(playlist.id);
+	current.context = QString("spotify:playlist:%1")
+		.arg(QString::fromStdString(playlist.id));
 	refreshPlaylist(playlist);
 	return result;
 }
 
 std::vector<lib::spt::track> MainWindow::playlistTracks(const std::string &playlistId)
 {
-	return cache.get_playlist_tracks(playlistId);
+	return cache.get_playlist(playlistId).tracks;
 }
 
-void MainWindow::refreshPlaylist(const spt::Playlist &playlist)
+void MainWindow::refreshPlaylist(const lib::spt::playlist &playlist)
 {
-	auto newPlaylist = spotify->playlist(playlist.id.toStdString());
-	std::vector<lib::spt::track> tracks;
-	auto result = newPlaylist.loadTracks(*spotify, tracks);
-	if (!result)
+	auto newPlaylist = spotify->playlist(playlist.id);
+	if (newPlaylist.is_null())
 	{
 		lib::log::error("Failed to refresh playlist \"{}\" ({})",
-			playlist.name.toStdString(), playlist.id.toStdString());
+			playlist.name, playlist.id);
 		return;
 	}
-	if (current.context.endsWith(playlist.id))
-		loadSongs(tracks);
+	if (current.context.endsWith(QString::fromStdString(playlist.id)))
+		loadSongs(newPlaylist.tracks);
 	cachePlaylist(newPlaylist);
 }
 
@@ -507,18 +506,9 @@ void MainWindow::openArtist(const std::string &artistId)
 	dynamic_cast<SidePanel *>(sidePanel)->openArtist(artistId);
 }
 
-void MainWindow::cachePlaylist(const spt::Playlist &playlist)
+void MainWindow::cachePlaylist(const lib::spt::playlist &playlist)
 {
-	// Remove old format if needed before caching
-	auto baseFile = QString("%1/playlist/%2").arg(cacheLocation).arg(playlist.id);
-	if (QFileInfo::exists(baseFile))
-		QFile(baseFile).remove();
-
-	// Save new
-	QJsonDocument json(playlist.toJson(*spotify));
-	QFile file(QString("%1.json").arg(baseFile));
-	file.open(QIODevice::WriteOnly);
-	file.write(json.toJson());
+	cache.set_playlist(playlist);
 }
 
 std::vector<std::string> MainWindow::currentTracks()
@@ -658,7 +648,7 @@ QTreeWidgetItem *MainWindow::getCurrentLibraryItem()
 	return leftSidePanel->getCurrentLibraryItem();
 }
 
-spt::Playlist &MainWindow::getPlaylist(int index)
+lib::spt::playlist &MainWindow::getPlaylist(int index)
 {
 	return leftSidePanel->playlist(index);
 }
@@ -678,7 +668,7 @@ QListWidgetItem *MainWindow::getCurrentPlaylistItem()
 	return leftSidePanel->currentPlaylist();
 }
 
-QVector<spt::Playlist> &MainWindow::getPlaylists()
+std::vector<lib::spt::playlist> &MainWindow::getPlaylists()
 {
 	return leftSidePanel->getPlaylists();
 }

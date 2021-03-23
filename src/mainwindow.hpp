@@ -27,8 +27,8 @@ public:
 	QPixmap getAlbum(const QString &url);
 	QPixmap getAlbum(const std::string &url);
 	QPixmap getImage(const QString &type, const QString &url);
-	void refreshPlaylist(const spt::Playlist &playlist);
-	bool loadPlaylist(const spt::Playlist &playlist);
+	void refreshPlaylist(const lib::spt::playlist &playlist);
+	bool loadPlaylist(const lib::spt::playlist &playlist);
 	lib::spt::playback currentPlayback() const;
 	void openAudioFeaturesWidget(const std::string &trackId,
 		const std::string &artist, const std::string &name);
@@ -52,11 +52,11 @@ public:
 	void refreshPlaylists();
 	QTreeWidgetItem *getCurrentLibraryItem();
 	void setCurrentLibraryItem(QTreeWidgetItem *item);
-	spt::Playlist &getPlaylist(int index);
+	lib::spt::playlist &getPlaylist(int index);
 	void setCurrentPlaylistItem(int index);
 	std::unordered_set<std::string> allArtists();
 	QListWidgetItem *getCurrentPlaylistItem();
-	QVector<spt::Playlist> &getPlaylists();
+	std::vector<lib::spt::playlist> &getPlaylists();
 	int getPlaylistItemCount();
 	QListWidgetItem *getPlaylistItem(int index);
 	void orderPlaylists(lib::playlist_order order);
@@ -109,6 +109,6 @@ private:
 	// Methods
 	QWidget *createCentralWidget();
 	void setAlbumImage(const QString &url);
-	void cachePlaylist(const spt::Playlist &playlist);
-	bool loadPlaylistFromCache(const spt::Playlist &playlist);
+	void cachePlaylist(const lib::spt::playlist &playlist);
+	bool loadPlaylistFromCache(const lib::spt::playlist &playlist);
 };

@@ -1,6 +1,7 @@
 #include "playlistmenu.hpp"
 
-PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist, QWidget *parent)
+PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &playlist,
+	QWidget *parent)
 	: parent(parent),
 	playlist(playlist),
 	QMenu(parent)
@@ -9,9 +10,9 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 	if (window == nullptr)
 		return;
 
-	auto tracks = window->playlistTracks(playlist.id.toStdString());
+	auto tracks = window->playlistTracks(playlist.id);
 	if (tracks.empty())
-		playlist.loadTracks(spotify, tracks);
+		tracks = spotify.playlist(playlist.id).tracks;
 
 	auto duration = 0;
 	for (auto &track : tracks)
@@ -27,9 +28,13 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 			.arg(minutes % 60))->setEnabled(false);
 	}
 
-	auto isOwner = playlist.isOwner(window->getCurrentUser());
-	if (!isOwner && !playlist.ownerName.isEmpty())
-		addAction(QString("By %1").arg(playlist.ownerName))->setEnabled(false);
+	auto isOwner = playlist.is_owner(window->getCurrentUser());
+	if (!isOwner && !playlist.owner_name.empty())
+	{
+		auto action = addAction(QString("By %1")
+			.arg(QString::fromStdString(playlist.owner_name)));
+		action->setEnabled(false);
+	}
 
 	addSeparator();
 	auto playShuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle play");
@@ -44,7 +49,7 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 
 			auto initialIndex = lib::random().next_int(0, tracks.size());
 			spotify.playTracks(initialIndex, lib::fmt::format("spotify:playlist:{}",
-				playlist.id.toStdString()), [&spotify, window](const QString &status)
+				playlist.id), [&spotify, window](const QString &status)
 			{
 				if (!status.isEmpty())
 				{
@@ -76,7 +81,7 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 	QAction::connect(sharePlaylist, &QAction::triggered, [window, playlist](bool checked)
 	{
 		QApplication::clipboard()->setText(QString("https://open.spotify.com/playlist/%1")
-			.arg(QString(playlist.id)));
+			.arg(QString::fromStdString(playlist.id)));
 		window->setStatus("Link copied to clipboard");
 	});
 
@@ -84,19 +89,20 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const spt::Playlist &playlist,
 	QAction::connect(shareSongOpen, &QAction::triggered, [this](bool checked)
 	{
 		Utils::openUrl(QString("https://open.spotify.com/playlist/%1")
-			.arg(QString(this->playlist.id)), LinkType::Web, this->parent);
+				.arg(QString::fromStdString(this->playlist.id)),
+			LinkType::Web, this->parent);
 	});
 
 	if (lib::developer_mode::enabled)
 	{
 		auto devMenu = addMenu(Icon::get("folder-txt"), "Developer");
-		devMenu->addAction(playlist.id)->setEnabled(false);
+		devMenu->addAction(QString::fromStdString(playlist.id))->setEnabled(false);
 		QAction::connect(devMenu->addAction("As JSON"), &QAction::triggered,
 			[this](bool checked)
 			{
+				nlohmann::json json = this->playlist;
 				QMessageBox::information(this->parent, "JSON",
-					QJsonDocument(this->playlist.toJson(QJsonArray()))
-						.toJson(QJsonDocument::Indented));
+					QString::fromStdString(json.dump(4)));
 			});
 	}
 }

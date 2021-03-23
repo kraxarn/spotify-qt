@@ -116,7 +116,7 @@ void SearchView::artistClick(QListWidgetItem *item)
 
 void SearchView::playlistClick(QListWidgetItem *item)
 {
-	spt::Playlist playlist(spotify.playlist(item->data(RolePlaylistId)
+	lib::spt::playlist playlist(spotify.playlist(item->data(RolePlaylistId)
 		.toString().toStdString()));
 	auto mainWindow = MainWindow::find(parentWidget());
 
@@ -176,7 +176,7 @@ void SearchView::search()
 			}
 			else if (cat == "playlist")
 			{
-				results.playlists.append(spotify.playlist(id.toStdString()).toJson());
+				results.playlists.append(spotify.playlist(id.toStdString()));
 				i = 3;
 			}
 
@@ -209,10 +209,13 @@ void SearchView::search()
 	// Playlists
 	for (auto &json : results.playlists)
 	{
-		spt::Playlist playlist(json);
-		auto item = new QListWidgetItem(playlist.name, playlistList);
-		item->setData(RolePlaylistId, playlist.id);
-		item->setToolTip(playlist.name);
+		lib::spt::playlist playlist(json);
+		auto playlistName = QString::fromStdString(playlist.name);
+		auto playlistId = QString::fromStdString(playlist.id);
+
+		auto item = new QListWidgetItem(playlistName, playlistList);
+		item->setData(RolePlaylistId, playlistId);
+		item->setToolTip(playlistName);
 	}
 
 	// Tracks

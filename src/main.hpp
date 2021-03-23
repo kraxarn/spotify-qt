@@ -20,7 +20,7 @@
 #include "spotify/clienthandler.hpp"
 #include "spotify/current.hpp"
 #include "lib/spotify/playback.hpp"
-#include "spotify/playlist.hpp"
+#include "lib/spotify/playlist.hpp"
 #include "spotify/spotify.hpp"
 #include "lib/spotify/user.hpp"
 #include "trayicon.hpp"

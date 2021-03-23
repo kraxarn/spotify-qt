@@ -38,7 +38,8 @@ void PlaylistList::doubleClicked(QListWidgetItem *item)
 	auto currentPlaylist = mainWindow->getPlaylist(getItemIndex(item));
 	mainWindow->loadPlaylist(currentPlaylist);
 
-	spotify.playTracks(QString("spotify:playlist:%1").arg(currentPlaylist.id),
+	spotify.playTracks(QString("spotify:playlist:%1")
+			.arg(QString::fromStdString(currentPlaylist.id)),
 		[mainWindow](const QString &result)
 		{
 			if (!result.isEmpty())

@@ -1,28 +1,31 @@
 #include "playlisteditdialog.hpp"
 
-PlaylistEditDialog::PlaylistEditDialog(spt::Spotify *spotify, const spt::Playlist &playlist,
+PlaylistEditDialog::PlaylistEditDialog(spt::Spotify *spotify, const lib::spt::playlist &playlist,
 	int selectedIndex, QWidget *parent)
 	: QDialog(parent)
 {
-	setWindowTitle(playlist.name);
+	auto playlistName = QString::fromStdString(playlist.name);
+	auto playlistDescription = QString::fromStdString(playlist.description);
+
+	setWindowTitle(playlistName);
 	setModal(true);
 	auto layout = new QVBoxLayout(this);
 
 	// Name
 	layout->addWidget(new QLabel("Name:", this));
-	name = new QLineEdit(playlist.name, this);
+	name = new QLineEdit(playlistName, this);
 	layout->addWidget(name);
 
 	// Description
 	layout->addWidget(new QLabel("Description:", this));
-	description = new QTextEdit(playlist.description, this);
+	description = new QTextEdit(playlistDescription, this);
 	layout->addWidget(description);
 
 	// Toggles
 	auto toggles = new QHBoxLayout();
 	toggles->setAlignment(Qt::AlignLeft);
 	isPublic = new QCheckBox("Public", this);
-	isPublic->setChecked(playlist.isPublic);
+	isPublic->setChecked(playlist.is_public);
 	toggles->addWidget(isPublic);
 	isCollaborative = new QCheckBox("Collaborative", this);
 	isCollaborative->setChecked(playlist.collaborative);
@@ -43,18 +46,23 @@ PlaylistEditDialog::PlaylistEditDialog(spt::Spotify *spotify, const spt::Playlis
 	QDialogButtonBox::connect(buttons, &QDialogButtonBox::accepted, [this, playlist, spotify]
 	{
 		auto pl = playlist;
-		pl.name = name->text();
-		pl.description = description->toPlainText();
-		pl.isPublic = isPublic->isChecked();
+		pl.name = name->text().toStdString();
+		pl.description = description->toPlainText().toStdString();
+		pl.is_public = isPublic->isChecked();
 		pl.collaborative = isCollaborative->isChecked();
-		auto result = spotify->editPlaylist(pl);
-		if (result.isEmpty())
+
+		spotify->editPlaylist(pl, [this](const std::string &result)
 		{
-			accept();
-			return;
-		}
-		QMessageBox::warning(this, "Edit failed",
-			QString("Failed to save changes: %1").arg(result));
+			if (result.empty())
+			{
+				accept();
+				return;
+			}
+
+			QMessageBox::warning(this, "Edit failed",
+				QString("Failed to save changes: %1")
+					.arg(QString::fromStdString(result)));
+		});
 	});
 
 	QDialogButtonBox::connect(buttons, &QDialogButtonBox::rejected, [this]
