@@ -45,6 +45,56 @@ void Spotify::editPlaylist(const lib::spt::playlist &playlist,
 	put(lib::fmt::format("playlists/%1", playlist.id), playlist, callback);
 }
 
+bool Spotify::playlistTracks(const lib::spt::playlist &playlist,
+	std::vector<lib::spt::track> &trackList)
+{
+	if (playlist.tracks_href.empty())
+	{
+		lib::log::warn("Attempting to load tracks without href");
+		return false;
+	}
+
+	// Load tracks
+	auto href = lib::fmt::format("{}{}market=from_token",
+		playlist.tracks_href,
+		lib::strings::contains(playlist.tracks_href, '?') ? '&' : '?');
+
+	return playlistTracks(playlist, trackList, href, 0);
+}
+
+std::vector<lib::spt::track> Spotify::playlistTracks(const lib::spt::playlist &playlist)
+{
+	std::vector<lib::spt::track> trackList;
+	playlistTracks(playlist, trackList);
+	return trackList;
+}
+
+bool Spotify::playlistTracks(const lib::spt::playlist &playlist,
+	std::vector<lib::spt::track> &trackList, const std::string &url, int offset)
+{
+	// Load tracks from api
+	auto newUrl = url.substr(0, std::string("https://api.spotify.com/v1/").size());
+	auto current = getAsJson(newUrl);
+
+	// No items, request probably failed
+	if (!current.contains("items"))
+		return false;
+
+	// Load from url
+	auto items = current["items"];
+	for (auto &item : items)
+		trackList.push_back(item.get<lib::spt::track>());
+
+	// Check if there's a next page
+	auto nextPage = current.contains("next") && !current.at("next").is_null()
+		? current.at("next").get<std::string>()
+		: std::string();
+	if (!nextPage.empty())
+		playlistTracks(playlist, trackList, nextPage, offset + items.size());
+
+	return true;
+}
+
 QString Spotify::addToPlaylist(const std::string &playlistId, const std::string &trackId)
 {
 	return post(QString("playlists/%1/tracks?uris=%2")
