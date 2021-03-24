@@ -65,7 +65,7 @@ bool MediaPlayerPlayer::canControl() const
 
 QMap<QString, QVariant> MediaPlayerPlayer::metadata() const
 {
-	return JsonUtils::toQtJson(currentPlayback().metadata()).object().toVariantMap();
+	return JsonUtils::toVariantMap(currentPlayback().metadata());
 }
 
 double MediaPlayerPlayer::getVolume() const
@@ -117,14 +117,14 @@ void MediaPlayerPlayer::setShuffle(bool value) const
 void MediaPlayerPlayer::emitMetadataChange() const
 {
 	QVariantMap properties;
-	properties["Metadata"] = JsonUtils::toQtJson(currentPlayback().metadata());
+	properties["Metadata"] = JsonUtils::toVariantMap(currentPlayback().metadata());
 	Service::signalPropertiesChange(this, properties);
 }
 
 void MediaPlayerPlayer::currentSourceChanged() const
 {
 	QVariantMap properties;
-	properties["Metadata"] = JsonUtils::toQtJson(currentPlayback().metadata());
+	properties["Metadata"] = JsonUtils::toVariantMap(currentPlayback().metadata());
 	properties["PlaybackStatus"] = currentPlayback().is_playing ? "Playing" : "Paused";
 	//properties["CanSeek"] = true;
 	Service::signalPropertiesChange(this, properties);
@@ -141,7 +141,7 @@ void MediaPlayerPlayer::stateUpdated() const
 void MediaPlayerPlayer::totalTimeChanged() const
 {
 	QVariantMap properties;
-	properties["Metadata"] = JsonUtils::toQtJson(currentPlayback().metadata());
+	properties["Metadata"] = JsonUtils::toVariantMap(currentPlayback().metadata());
 	Service::signalPropertiesChange(this, properties);
 }
 

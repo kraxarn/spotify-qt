@@ -37,6 +37,12 @@ public:
 		return QJsonDocument::fromJson(QByteArray::fromStdString(json.dump()));
 	}
 
+	template<typename T>
+	static QVariantMap toVariantMap(const T &item)
+	{
+		return toQtJson(item).object().toVariantMap();
+	}
+
 private:
 	JsonUtils() = default;
 };
