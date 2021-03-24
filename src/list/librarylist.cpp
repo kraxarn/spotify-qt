@@ -71,10 +71,12 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 	{
 		auto id = item->text(0).toLower().replace(' ', '_').toStdString();
 		auto cacheTracks = mainWindow->loadTracksFromCache(id);
+		auto songs = mainWindow->getSongsTree();
+
 		if (cacheTracks.empty())
-			mainWindow->getSongsTree()->setEnabled(false);
+			songs->setEnabled(false);
 		else
-			mainWindow->loadSongs(cacheTracks);
+			songs->load(cacheTracks);
 
 		std::vector<lib::spt::track> tracks;
 		if (item->text(0) == RECENTLY_PLAYED)
@@ -104,7 +106,7 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 		if (!tracks.empty())
 		{
 			mainWindow->saveTracksToCache(id, tracks);
-			mainWindow->loadSongs(tracks);
+			songs->load(tracks);
 		}
 		mainWindow->getSongsTree()->setEnabled(true);
 	}
