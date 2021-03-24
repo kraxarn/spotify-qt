@@ -31,14 +31,14 @@ void PlaylistList::clicked(QListWidgetItem *item)
 		mainWindow->setCurrentLibraryItem(nullptr);
 
 	auto currentPlaylist = mainWindow->getPlaylist(getItemIndex(item));
-	mainWindow->loadPlaylist(currentPlaylist);
+	mainWindow->getSongsTree()->load(currentPlaylist);
 }
 
 void PlaylistList::doubleClicked(QListWidgetItem *item)
 {
 	auto mainWindow = MainWindow::find(parentWidget());
 	auto currentPlaylist = mainWindow->getPlaylist(getItemIndex(item));
-	mainWindow->loadPlaylist(currentPlaylist);
+	mainWindow->getSongsTree()->load(currentPlaylist);
 
 	spotify.playTracks(QString("spotify:playlist:%1")
 			.arg(QString::fromStdString(currentPlaylist.id)),
