@@ -94,9 +94,19 @@ template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a35f5ae6f425a65b3bcbace4e7f22d819"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a35f5ae6f425a65b3bcbace4e7f22d819"><td class="memTemplItemLeft" align="right" valign="top">static std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1json.html#a35f5ae6f425a65b3bcbace4e7f22d819">load_items</a> (const ghc::filesystem::path &amp;path)</td></tr>
 <tr class="separator:a35f5ae6f425a65b3bcbace4e7f22d819"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9da6bd2edc82e34e964a5c6c9bbc746f"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a9da6bd2edc82e34e964a5c6c9bbc746f"><td class="memTemplItemLeft" align="right" valign="top">static T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1json.html#a9da6bd2edc82e34e964a5c6c9bbc746f">load</a> (const ghc::filesystem::path &amp;path)</td></tr>
+<tr class="separator:a9da6bd2edc82e34e964a5c6c9bbc746f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2291e85799e0b0f63a2ed0416006a5d"><td class="memItemLeft" align="right" valign="top"><a id="ae2291e85799e0b0f63a2ed0416006a5d"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><b>save_json</b> (const ghc::filesystem::path &amp;path, const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>)</td></tr>
+<tr class="separator:ae2291e85799e0b0f63a2ed0416006a5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae81ba0a8faf74f0d7cde3eff185dc94e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ae81ba0a8faf74f0d7cde3eff185dc94e"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1json.html#ae81ba0a8faf74f0d7cde3eff185dc94e">save_items</a> (const std::string &amp;path, const std::vector&lt; T &gt; &amp;items)</td></tr>
 <tr class="separator:ae81ba0a8faf74f0d7cde3eff185dc94e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2660b5b112fe5f5069ac9f9deb2386a8"><td class="memTemplParams" colspan="2"><a id="a2660b5b112fe5f5069ac9f9deb2386a8"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a2660b5b112fe5f5069ac9f9deb2386a8"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>save</b> (const ghc::filesystem::path &amp;path, const T &amp;item)</td></tr>
+<tr class="separator:a2660b5b112fe5f5069ac9f9deb2386a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>JSON utilities </p>
@@ -203,6 +213,41 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>If an item was found </dd></dl>
+
+</div>
+</div>
+<a id="a9da6bd2edc82e34e964a5c6c9bbc746f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9da6bd2edc82e34e964a5c6c9bbc746f">&#9670;&nbsp;</a></span>load()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static T lib::json::load </td>
+          <td>(</td>
+          <td class="paramtype">const ghc::filesystem::path &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Load a single item from a json file </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>Path to json file, including extension </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Item on success, or default on failure </dd></dl>
 
 </div>
 </div>

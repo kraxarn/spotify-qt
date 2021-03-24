@@ -81,8 +81,10 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a5863aa2f8a8179cc7d08fe8dfbe26077"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#a5863aa2f8a8179cc7d08fe8dfbe26077">cache</a> (const <a class="el" href="classlib_1_1paths.html">paths</a> &amp;<a class="el" href="classlib_1_1paths.html">paths</a>)</td></tr>
 <tr class="separator:a5863aa2f8a8179cc7d08fe8dfbe26077"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a138024c2c6977cdf0444e15256d02a1a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#a138024c2c6977cdf0444e15256d02a1a">get_playlist_tracks</a> (const std::string &amp;id)</td></tr>
-<tr class="separator:a138024c2c6977cdf0444e15256d02a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48298f2fc223e08d85e078b95743d5a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#a48298f2fc223e08d85e078b95743d5a1">get_playlist</a> (const std::string &amp;id)</td></tr>
+<tr class="separator:a48298f2fc223e08d85e078b95743d5a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f77c8b44adbc78582a02fdda4d43794"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#a7f77c8b44adbc78582a02fdda4d43794">set_playlist</a> (const <a class="el" href="classlib_1_1spt_1_1playlist.html">spt::playlist</a> &amp;playlist)</td></tr>
+<tr class="separator:a7f77c8b44adbc78582a02fdda4d43794"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36be8a8bd16420aeacf4016bb70ce346"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#a36be8a8bd16420aeacf4016bb70ce346">tracks</a> (const std::string &amp;id)</td></tr>
 <tr class="separator:a36be8a8bd16420aeacf4016bb70ce346"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5fae6af26cda1d25439f1a9ee42bdd44"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#a5fae6af26cda1d25439f1a9ee42bdd44">tracks</a> (const std::string &amp;id, const std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &amp;tracks)</td></tr>
@@ -144,14 +146,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a138024c2c6977cdf0444e15256d02a1a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a138024c2c6977cdf0444e15256d02a1a">&#9670;&nbsp;</a></span>get_playlist_tracks()</h2>
+<a id="a48298f2fc223e08d85e078b95743d5a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48298f2fc223e08d85e078b95743d5a1">&#9670;&nbsp;</a></span>get_playlist()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a>&gt; lib::cache::get_playlist_tracks </td>
+          <td class="memname"><a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> lib::cache::get_playlist </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>id</em></td><td>)</td>
@@ -166,6 +168,30 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Tracks or an empty vector on failure </dd></dl>
+
+</div>
+</div>
+<a id="a7f77c8b44adbc78582a02fdda4d43794"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f77c8b44adbc78582a02fdda4d43794">&#9670;&nbsp;</a></span>set_playlist()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::cache::set_playlist </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classlib_1_1spt_1_1playlist.html">spt::playlist</a> &amp;&#160;</td>
+          <td class="paramname"><em>playlist</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Save playlist to cache </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">playlist</td><td>Playlist to save </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

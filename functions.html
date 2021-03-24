@@ -123,6 +123,9 @@ $(function() {
 <li>client_secret
 : <a class="el" href="structlib_1_1set_1_1account.html#a8f71cdb24407039c179b3208f3140b4e">lib::set::account</a>
 </li>
+<li>collaborative
+: <a class="el" href="classlib_1_1spt_1_1playlist.html#aa0f4ab3aa888669049dc17805a9402e5">lib::spt::playlist</a>
+</li>
 <li>combine()
 : <a class="el" href="classlib_1_1vector.html#a9fbc23ff2283212ee4fb8676c7f30391">lib::vector</a>
 </li>
@@ -150,6 +153,9 @@ $(function() {
 </li>
 <li>decode()
 : <a class="el" href="classlib_1_1base64.html#ae42ec5dcbc7448282b4f64909e95f31a">lib::base64</a>
+</li>
+<li>description
+: <a class="el" href="classlib_1_1spt_1_1playlist.html#af058c4eb3226f7b4d8cd270acdfa2514">lib::spt::playlist</a>
 </li>
 <li>dev()
 : <a class="el" href="classlib_1_1log.html#a6faeebb4fdad6162e122a5941e8ae323">lib::log</a>
@@ -235,8 +241,8 @@ $(function() {
 <li>get_month()
 : <a class="el" href="classlib_1_1date__time.html#af8964b55f339927d4ddc69064274e2d3">lib::date_time</a>
 </li>
-<li>get_playlist_tracks()
-: <a class="el" href="classlib_1_1cache.html#a138024c2c6977cdf0444e15256d02a1a">lib::cache</a>
+<li>get_playlist()
+: <a class="el" href="classlib_1_1cache.html#a48298f2fc223e08d85e078b95743d5a1">lib::cache</a>
 </li>
 <li>get_property()
 : <a class="el" href="classlib_1_1json.html#a9df42886b214032c5945d25e65542228">lib::json</a>
@@ -272,11 +278,13 @@ $(function() {
 <h3><a id="index_i"></a>- i -</h3><ul>
 <li>id
 : <a class="el" href="classlib_1_1spt_1_1device.html#ae5c5717d6589850d59f4de10447eb763">lib::spt::device</a>
+, <a class="el" href="classlib_1_1spt_1_1playlist.html#a61ec336efa5f592e85068abdf59ca72b">lib::spt::playlist</a>
 , <a class="el" href="classlib_1_1spt_1_1track.html#ac6ee4f50dc8cd0b4e2ef04fe522e606d">lib::spt::track</a>
 , <a class="el" href="classlib_1_1spt_1_1user.html#a3a903d10830bfb230995f5799318bdc1">lib::spt::user</a>
 </li>
 <li>image
-: <a class="el" href="classlib_1_1spt_1_1track.html#a970f630528e6390e1820cac419e31a50">lib::spt::track</a>
+: <a class="el" href="classlib_1_1spt_1_1playlist.html#a54d2e594389dd4ae20588b7a28a6745e">lib::spt::playlist</a>
+, <a class="el" href="classlib_1_1spt_1_1track.html#a970f630528e6390e1820cac419e31a50">lib::spt::track</a>
 , <a class="el" href="classlib_1_1spt_1_1user.html#ab3268fbf2cf6d5412033c552d494b331">lib::spt::user</a>
 </li>
 <li>info()
@@ -288,11 +296,20 @@ $(function() {
 <li>is_local
 : <a class="el" href="classlib_1_1spt_1_1track.html#a49999656e64cc5c72573cdf89093449a">lib::spt::track</a>
 </li>
+<li>is_null()
+: <a class="el" href="classlib_1_1spt_1_1playlist.html#abff5a2bb08a4b609901f42112ca449a5">lib::spt::playlist</a>
+</li>
+<li>is_owner()
+: <a class="el" href="classlib_1_1spt_1_1playlist.html#a91864e2eeb7163201ddeba671905fb32">lib::spt::playlist</a>
+</li>
 <li>is_playable
 : <a class="el" href="classlib_1_1spt_1_1track.html#ad752f55bc9254da0e20cc4aba182c946">lib::spt::track</a>
 </li>
 <li>is_playing
 : <a class="el" href="classlib_1_1spt_1_1playback.html#ad3425f946100fb132fd503069e2cbf35">lib::spt::playback</a>
+</li>
+<li>is_public
+: <a class="el" href="classlib_1_1spt_1_1playlist.html#a0324054ae36cc088df2e6b79ca34956b">lib::spt::playlist</a>
 </li>
 <li>is_valid()
 : <a class="el" href="classlib_1_1date__time.html#a42b0ed33b23ddcb3449a49439951d36b">lib::date_time</a>
@@ -337,7 +354,8 @@ $(function() {
 : <a class="el" href="classlib_1_1strings.html#afe1fc802718af72329c6363229996c20">lib::strings</a>
 </li>
 <li>load()
-: <a class="el" href="classlib_1_1settings.html#aed35e74bc89643703e679f0850844da5">lib::settings</a>
+: <a class="el" href="classlib_1_1json.html#a9da6bd2edc82e34e964a5c6c9bbc746f">lib::json</a>
+, <a class="el" href="classlib_1_1settings.html#aed35e74bc89643703e679f0850844da5">lib::settings</a>
 </li>
 <li>load_items()
 : <a class="el" href="classlib_1_1json.html#a35f5ae6f425a65b3bcbace4e7f22d819">lib::json</a>
@@ -367,6 +385,7 @@ $(function() {
 <h3><a id="index_n"></a>- n -</h3><ul>
 <li>name
 : <a class="el" href="classlib_1_1spt_1_1device.html#a125cf05de56ecb26be42cc6e40b5c1c8">lib::spt::device</a>
+, <a class="el" href="classlib_1_1spt_1_1playlist.html#af3c7ea64e6fa3fc9c1d9f6ee6e764b1e">lib::spt::playlist</a>
 , <a class="el" href="classlib_1_1spt_1_1track.html#a507f463aa5ac512471de37ff8e4da014">lib::spt::track</a>
 </li>
 <li>next()
@@ -377,6 +396,16 @@ $(function() {
 </li>
 <li>now_utc()
 : <a class="el" href="classlib_1_1date__time.html#a5c1660614a8ff0a51e19fe94a3271a87">lib::date_time</a>
+</li>
+</ul>
+
+
+<h3><a id="index_o"></a>- o -</h3><ul>
+<li>owner_id
+: <a class="el" href="classlib_1_1spt_1_1playlist.html#a59f10ebad47330939b4759c3f0a982ea">lib::spt::playlist</a>
+</li>
+<li>owner_name
+: <a class="el" href="classlib_1_1spt_1_1playlist.html#a9af238a93a7984167540d3b406ca3b86">lib::spt::playlist</a>
 </li>
 </ul>
 
@@ -456,6 +485,9 @@ $(function() {
 <li>set_log_to_stdout()
 : <a class="el" href="classlib_1_1log.html#a7372d15a115a450ddcf7b22ad3c2232a">lib::log</a>
 </li>
+<li>set_playlist()
+: <a class="el" href="classlib_1_1cache.html#a7f77c8b44adbc78582a02fdda4d43794">lib::cache</a>
+</li>
 <li>settings()
 : <a class="el" href="classlib_1_1settings.html#adb2eacf4134e51934d779cb6d933c6a9">lib::settings</a>
 , <a class="el" href="classlib_1_1spt_1_1spotify__api.html#a62afd59011d3c1bbfe8e21a32bc6f90c">lib::spt::spotify_api</a>
@@ -471,6 +503,9 @@ $(function() {
 </li>
 <li>size()
 : <a class="el" href="classlib_1_1fmt.html#af388b7f2f3b09a114f8b488b20ac11be">lib::fmt</a>
+</li>
+<li>snapshot
+: <a class="el" href="classlib_1_1spt_1_1playlist.html#ae2eff6fa44f518622c1df2ecfe677f62">lib::spt::playlist</a>
 </li>
 <li>song_header_sort_by
 : <a class="el" href="structlib_1_1set_1_1general.html#a9031c2f69122ed43a1ebaa7903105eb5">lib::set::general</a>
@@ -538,6 +573,10 @@ $(function() {
 </li>
 <li>tracks()
 : <a class="el" href="classlib_1_1cache.html#a36be8a8bd16420aeacf4016bb70ce346">lib::cache</a>
+, <a class="el" href="classlib_1_1spt_1_1playlist.html#af31fb77d7316d524020f52b99eeae675">lib::spt::playlist</a>
+</li>
+<li>tracks_href
+: <a class="el" href="classlib_1_1spt_1_1playlist.html#a6bd3cca9afe5a1584d71d0e4d880cf14">lib::spt::playlist</a>
 </li>
 <li>tray_album_art
 : <a class="el" href="structlib_1_1set_1_1general.html#a3d15097fac2780644328d9ad58efd613">lib::set::general</a>
