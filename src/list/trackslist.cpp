@@ -256,8 +256,12 @@ void TracksList::load(const std::vector<lib::spt::track> &tracks)
 
 void TracksList::load(const lib::spt::playlist &playlist)
 {
-	if (!playlist.tracks.empty())
-		load(playlist.tracks);
+	auto tracks = playlist.tracks.empty()
+		? cache.get_playlist(playlist.id).tracks
+		: playlist.tracks;
+
+	if (!tracks.empty())
+		load(tracks);
 	else
 		setEnabled(false);
 
