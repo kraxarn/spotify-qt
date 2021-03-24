@@ -24,10 +24,10 @@ std::vector<lib::spt::playlist> Spotify::playlists(int offset)
 		playlists.push_back(item.value());
 
 	// Paging
-	if (json.contains("next") && !json["next"].is_null())
+	if (json.contains("next") && !json.at("next").is_null())
 	{
 		lib::vector::append(playlists,
-			this->playlists(json["offset"].get<int>() + json["limit"].get<int>()));
+			this->playlists(json.at("offset").get<int>() + json["limit"].get<int>()));
 	}
 
 	return playlists;
