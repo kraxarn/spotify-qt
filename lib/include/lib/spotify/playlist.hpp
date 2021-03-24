@@ -69,6 +69,11 @@ namespace lib
 			std::vector<lib::spt::track> tracks;
 
 			/**
+			 * URL to load tracks from
+			 */
+			std::string tracks_href;
+
+			/**
 			 * Specified user is the owner of this playlist
 			 */
 			bool is_owner(const lib::spt::user &user) const;

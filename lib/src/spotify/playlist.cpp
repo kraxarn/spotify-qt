@@ -34,8 +34,14 @@ void lib::spt::from_json(const nlohmann::json &j, playlist &p)
 		"snapshot", "snapshot_id"
 	}, p.snapshot);
 
-	if (j.contains("tracks") && j.at("tracks").is_array())
-		j.at("tracks").get_to(p.tracks);
+	if (j.contains("tracks"))
+	{
+		auto tracks = j.at("tracks");
+		if (tracks.is_array())
+			tracks.get_to(p.tracks);
+		else if (tracks.is_object())
+			tracks.at("href").get_to(p.tracks_href);
+	}
 
 	if (j.contains("image"))
 		j.at("image").get_to(p.image);
