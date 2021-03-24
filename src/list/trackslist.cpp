@@ -263,7 +263,7 @@ void TracksList::load(const lib::spt::playlist &playlist)
 
 	auto newPlaylist = spotify.playlist(playlist.id);
 	newPlaylist.tracks = spotify.playlistTracks(newPlaylist);
-	load(spotify.playlistTracks(playlist));
+	load(newPlaylist.tracks);
 	setEnabled(true);
 	cache.set_playlist(newPlaylist);
 }
