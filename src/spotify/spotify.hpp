@@ -156,6 +156,14 @@ namespace spt
 		void editPlaylist(const lib::spt::playlist &playlist,
 			lib::callback<std::string> &callback);
 
+		bool playlistTracks(const lib::spt::playlist &playlist,
+			std::vector<lib::spt::track> &trackList);
+
+		std::vector<lib::spt::track> playlistTracks(const lib::spt::playlist &playlist);
+
+		bool playlistTracks(const lib::spt::playlist &playlist,
+			std::vector<lib::spt::track> &trackList, const std::string &url, int offset);
+
 		QString addToPlaylist(const std::string &playlistId, const std::string &trackId);
 
 		void removeFromPlaylist(const std::string &playlistId, const std::string &trackId,
@@ -194,6 +202,12 @@ namespace spt
 		 * @deprecated
 		 */
 		nlohmann::json getAsJson(const QString &url);
+
+		/**
+		 * @note Calls should not be done directly
+		 * @deprecated
+		 */
+		nlohmann::json getAsJson(const std::string &url);
 
 	private:
 		QNetworkAccessManager *networkManager;

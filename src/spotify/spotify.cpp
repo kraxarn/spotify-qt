@@ -115,6 +115,11 @@ nlohmann::json Spotify::getAsJson(const QString &url)
 		: nlohmann::json::parse(response);
 }
 
+nlohmann::json Spotify::getAsJson(const std::string &url)
+{
+	return getAsJson(QString::fromStdString(url));
+}
+
 void Spotify::get(const QString &url, lib::callback<QJsonDocument> &callback)
 {
 	await(networkManager->get(request(url)),
@@ -169,7 +174,8 @@ QString Spotify::put(const QString &url, QVariantMap *body)
 	// Send the request, we don't expect any response
 	auto putData = body == nullptr ? nullptr : QJsonDocument::fromVariant(*body).toJson();
 	auto reply = errorMessage(networkManager->put(req, putData));
-	if (reply.contains("No active device found"))
+	if (reply.contains("No active device found")
+		|| reply.contains("Device not found"))
 	{
 		devices([this, url, body](const std::vector<lib::spt::device> &devices)
 		{
