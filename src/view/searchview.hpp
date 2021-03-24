@@ -16,7 +16,8 @@ class SearchView: public QWidget
 Q_OBJECT
 
 public:
-	explicit SearchView(spt::Spotify &spotify, const lib::settings &settings, QWidget *parent);
+	explicit SearchView(spt::Spotify &spotify, const lib::settings &settings, lib::cache &cache,
+		QWidget *parent);
 
 private:
 	QTabWidget *tabs = nullptr;
@@ -26,6 +27,7 @@ private:
 	QTreeWidget *albumList = nullptr;
 	QTreeWidget *trackList = nullptr;
 	spt::Spotify &spotify;
+	lib::cache &cache;
 
 	QTreeWidget *defaultTree(const QStringList &headers);
 	void albumClick(QTreeWidgetItem *item, int column);

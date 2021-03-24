@@ -11,7 +11,8 @@ class SidePanel: public QTabWidget
 Q_OBJECT
 
 public:
-	explicit SidePanel(spt::Spotify &spotify, const lib::settings &settings, QWidget *parent);
+	explicit SidePanel(spt::Spotify &spotify, const lib::settings &settings, lib::cache &cache,
+		QWidget *parent);
 
 	void openArtist(const std::string &artistId);
 	void openAudioFeatures(const std::string &trackId, const std::string &artist,
@@ -24,6 +25,7 @@ private:
 	spt::Spotify &spotify;
 	const lib::settings &settings;
 	QWidget *searchView = nullptr;
+	lib::cache &cache;
 
 	void tabRemoved(int index) override;
 	void addAndSelect(QWidget *widget, const QString &icon, const QString &title);

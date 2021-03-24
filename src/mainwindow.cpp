@@ -215,7 +215,7 @@ QWidget *MainWindow::createCentralWidget()
 	auto container = new QSplitter();
 
 	// Left side panel with library and playlists
-	leftSidePanel = new LeftSidePanel(*spotify, settings, current, this);
+	leftSidePanel = new LeftSidePanel(*spotify, settings, current, cache, this);
 	container->addWidget(leftSidePanel);
 
 	//region Songs
@@ -245,7 +245,7 @@ QWidget *MainWindow::createCentralWidget()
 		if (item->data(RolePlaylistId).toString().endsWith(playlistId))
 		{
 			leftSidePanel->setCurrentPlaylistItem(i);
-			loadPlaylist(leftSidePanel->playlist(item->data(RoleIndex).toInt()));
+			songs->load(leftSidePanel->playlist(item->data(RoleIndex).toInt()));
 		}
 	}
 
@@ -253,7 +253,7 @@ QWidget *MainWindow::createCentralWidget()
 	container->addWidget(songs);
 
 	// Side panel
-	sidePanel = new SidePanel(*spotify, settings, this);
+	sidePanel = new SidePanel(*spotify, settings, cache, this);
 	container->addWidget(sidePanel);
 
 	return container;

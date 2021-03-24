@@ -3,10 +3,11 @@
 #include "mainwindow.hpp"
 
 LeftSidePanel::LeftSidePanel(spt::Spotify &spotify, lib::settings &settings,
-	spt::Current &current, QWidget *parent)
+	spt::Current &current, lib::cache &cache, QWidget *parent)
 	: spotify(spotify),
 	settings(settings),
 	current(current),
+	cache(cache),
 	QWidget(parent)
 {
 	auto layout = new QVBoxLayout(this);
@@ -19,7 +20,7 @@ LeftSidePanel::LeftSidePanel(spt::Spotify &spotify, lib::settings &settings,
 	layout->addWidget(library);
 
 	// Playlists
-	playlists = new PlaylistList(spotify, parent);
+	playlists = new PlaylistList(spotify, cache, parent);
 	refreshPlaylists();
 	auto playlistContainer = Utils::createGroupBox(QVector<QWidget *>() << playlists, parent);
 	playlistContainer->setTitle("Playlists");
@@ -149,7 +150,7 @@ void LeftSidePanel::contextInfoOpen(bool)
 		auto playlist = spotify.playlist(uri);
 		libraryList->setCurrentItem(nullptr);
 		playlists->setCurrentRow(-1);
-		mainWindow->loadPlaylist(playlist);
+		mainWindow->getSongsTree()->load(playlist);
 	}
 }
 
@@ -158,10 +159,8 @@ std::unordered_set<std::string> LeftSidePanel::allArtists()
 	std::unordered_set<std::string> artists;
 	for (auto i = 0; i < playlists->count(); i++)
 	{
-		auto mainWindow = MainWindow::find(parentWidget());
 		auto playlistId = playlists->item(i)->data(RolePlaylistId).toString().toStdString();
-
-		for (auto &track : mainWindow->playlistTracks(playlistId))
+		for (auto &track : cache.get_playlist(playlistId).tracks)
 			artists.insert(track.artist);
 	}
 	return artists;
@@ -262,13 +261,13 @@ void LeftSidePanel::orderPlaylists(lib::playlist_order order)
 			}
 
 			std::sort(items.begin(), items.end(),
-				[mainWindow](QListWidgetItem *i1, QListWidgetItem *i2)
+				[this](QListWidgetItem *i1, QListWidgetItem *i2)
 				{
 					auto id1 = i1->data(DataRole::RolePlaylistId).toString().toStdString();
 					auto id2 = i2->data(DataRole::RolePlaylistId).toString().toStdString();
 
-					auto t1 = mainWindow->playlistTracks(id1);
-					auto t2 = mainWindow->playlistTracks(id2);
+					auto t1 = this->cache.get_playlist(id1).tracks;
+					auto t2 = this->cache.get_playlist(id2).tracks;
 
 					return !t1.empty() && !t2.empty()
 						? DateUtils::fromIso(t1.at(latestTrack(t1)).added_at)

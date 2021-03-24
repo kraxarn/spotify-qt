@@ -7,6 +7,7 @@
 #include "util/utils.hpp"
 #include "lib/developermode.hpp"
 #include "util/dateutils.hpp"
+#include "lib/cache.hpp"
 
 #include <unordered_set>
 
@@ -18,7 +19,7 @@ Q_OBJECT
 
 public:
 	explicit LeftSidePanel(spt::Spotify &spotify, lib::settings &settings,
-		spt::Current &current, QWidget *parent);
+		spt::Current &current, lib::cache &cache, QWidget *parent);
 
 	std::unordered_set<std::string> allArtists();
 	void updateContextIcon();
@@ -57,6 +58,7 @@ private:
 	LibraryList *libraryList;
 	PlaylistList *playlists;
 	std::vector<lib::spt::playlist> sptPlaylists;
+	lib::cache &cache;
 
 	QLabel *contextIcon = nullptr;
 	QLabel *contextInfo = nullptr;

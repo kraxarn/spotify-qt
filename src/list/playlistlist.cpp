@@ -2,8 +2,10 @@
 
 #include "../mainwindow.hpp"
 
-PlaylistList::PlaylistList(spt::Spotify &spotify, QWidget *parent)
-	: spotify(spotify), QListWidget(parent)
+PlaylistList::PlaylistList(spt::Spotify &spotify, lib::cache &cache, QWidget *parent)
+	: spotify(spotify),
+	cache(cache),
+	QListWidget(parent)
 {
 	// Set default selected playlist
 	setCurrentRow(0);
@@ -53,6 +55,7 @@ void PlaylistList::doubleClicked(QListWidgetItem *item)
 void PlaylistList::menu(const QPoint &pos)
 {
 	auto mainWindow = MainWindow::find(parentWidget());
-	(new PlaylistMenu(spotify, mainWindow->getPlaylist(getItemIndex(itemAt(pos))), mainWindow))
-		->popup(mapToGlobal(pos));
+	auto playlist = mainWindow->getPlaylist(getItemIndex(itemAt(pos)));
+	auto menu = new PlaylistMenu(spotify, playlist, cache, mainWindow);
+	menu->popup(mapToGlobal(pos));
 }

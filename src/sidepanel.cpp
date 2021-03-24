@@ -1,9 +1,11 @@
 #include "sidepanel.hpp"
 
-SidePanel::SidePanel(spt::Spotify &spotify, const lib::settings &settings, QWidget *parent)
+SidePanel::SidePanel(spt::Spotify &spotify, const lib::settings &settings, lib::cache &cache,
+	QWidget *parent)
 	: spotify(spotify),
 	settings(settings),
 	parent(parent),
+	cache(cache),
 	QTabWidget(parent)
 {
 	setMovable(true);
@@ -38,7 +40,7 @@ void SidePanel::tabRemoved(int index)
 void SidePanel::openSearch()
 {
 	if (searchView == nullptr)
-		searchView = new SearchView(spotify, settings, parent);
+		searchView = new SearchView(spotify, settings, cache, parent);
 	addAndSelect(searchView, "edit-find", "Search");
 }
 

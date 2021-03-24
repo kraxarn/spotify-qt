@@ -2,6 +2,7 @@
 
 #include "../spotify/spotify.hpp"
 #include "playlistlist.hpp"
+#include "lib/cache.hpp"
 
 #include <QListWidget>
 
@@ -10,10 +11,11 @@ class PlaylistList: public QListWidget
 Q_OBJECT
 
 public:
-	PlaylistList(spt::Spotify &spotify, QWidget *parent);
+	PlaylistList(spt::Spotify &spotify, lib::cache &cache, QWidget *parent);
 
 private:
 	spt::Spotify &spotify;
+	lib::cache &cache;
 
 	int getItemIndex(QListWidgetItem *item);
 	void clicked(QListWidgetItem *item);

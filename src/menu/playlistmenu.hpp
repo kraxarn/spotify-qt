@@ -14,10 +14,11 @@ class PlaylistMenu: public QMenu
 Q_OBJECT
 
 public:
-	PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &playlist,
+	PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &playlist, lib::cache &cache,
 		QWidget *parent = nullptr);
 
-	PlaylistMenu(spt::Spotify &spotify, const QString &playlistId, QWidget *parent = nullptr);
+	PlaylistMenu(spt::Spotify &spotify, const std::string &playlistId, lib::cache &cache,
+		QWidget *parent = nullptr);
 
 private:
 	PlaylistEditDialog *editDialog = nullptr;

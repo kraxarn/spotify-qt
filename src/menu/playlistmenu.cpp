@@ -1,7 +1,7 @@
 #include "playlistmenu.hpp"
 
 PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &playlist,
-	QWidget *parent)
+	lib::cache &cache, QWidget *parent)
 	: parent(parent),
 	playlist(playlist),
 	QMenu(parent)
@@ -10,7 +10,7 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &play
 	if (window == nullptr)
 		return;
 
-	auto tracks = window->playlistTracks(playlist.id);
+	auto tracks = cache.get_playlist(playlist.id).tracks;
 	if (tracks.empty())
 		tracks = spotify.playlist(playlist.id).tracks;
 
@@ -107,7 +107,8 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &play
 	}
 }
 
-PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const QString &playlistId, QWidget *parent)
-	: PlaylistMenu(spotify, spotify.playlist(playlistId.toStdString()), parent)
+PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const std::string &playlistId,
+	lib::cache &cache, QWidget *parent)
+	: PlaylistMenu(spotify, spotify.playlist(playlistId), cache, parent)
 {
 }

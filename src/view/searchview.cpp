@@ -1,7 +1,9 @@
 #include "searchview.hpp"
 
-SearchView::SearchView(spt::Spotify &spotify, const lib::settings &settings, QWidget *parent)
+SearchView::SearchView(spt::Spotify &spotify, const lib::settings &settings, lib::cache &cache,
+	QWidget *parent)
 	: spotify(spotify),
+	cache(cache),
 	QWidget(parent)
 {
 	auto layout = new QVBoxLayout();
@@ -119,11 +121,7 @@ void SearchView::playlistClick(QListWidgetItem *item)
 	lib::spt::playlist playlist(spotify.playlist(item->data(RolePlaylistId)
 		.toString().toStdString()));
 	auto mainWindow = MainWindow::find(parentWidget());
-
-	if (!mainWindow->loadPlaylist(playlist))
-		mainWindow->setStatus(QString("Failed to load playlist"), true);
-	else
-		mainWindow->setCurrentPlaylistItem(-1);
+	mainWindow->getSongsTree()->load(playlist);
 }
 
 void SearchView::search()
@@ -266,8 +264,9 @@ void SearchView::trackMenu(const QPoint &pos)
 void SearchView::playlistMenu(const QPoint &pos)
 {
 	auto item = playlistList->itemAt(pos);
-	(new PlaylistMenu(spotify, item->data(RolePlaylistId).toString(), parentWidget()))
-		->popup(playlistList->mapToGlobal(pos));
+	auto playlistId = item->data(RolePlaylistId).toString().toStdString();
+	auto menu = new PlaylistMenu(spotify, playlistId, cache, parentWidget());
+	menu->popup(playlistList->mapToGlobal(pos));
 }
 
 void SearchView::addArtist(const spt::Artist &artist)
