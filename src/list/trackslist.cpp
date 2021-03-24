@@ -1,10 +1,19 @@
 #include "trackslist.hpp"
 
-TracksList::TracksList(spt::Spotify &spotify, lib::settings &settings, QWidget *parent)
+#include "../mainwindow.hpp"
+
+TracksList::TracksList(spt::Spotify &spotify, lib::settings &settings, lib::cache &cache,
+	QWidget *parent)
 	: spotify(spotify),
 	settings(settings),
+	cache(cache),
 	QTreeWidget(parent)
 {
+	// Empty icon used as replacement for play icon
+	QPixmap emptyPixmap(64, 64);
+	emptyPixmap.fill(Qt::transparent);
+	emptyIcon = QIcon(emptyPixmap);
+
 	setEditTriggers(QAbstractItemView::NoEditTriggers);
 	setSelectionBehavior(QAbstractItemView::SelectRows);
 	setSortingEnabled(true);
@@ -64,7 +73,7 @@ void TracksList::clicked(QTreeWidgetItem *item, int)
 		return;
 	}
 
-	auto callback = [mainWindow, item](const QString &status)
+	auto callback = [this, mainWindow, item](const QString &status)
 	{
 		if (!status.isEmpty())
 		{
@@ -72,7 +81,7 @@ void TracksList::clicked(QTreeWidgetItem *item, int)
 				.arg(status), true);
 		}
 		else
-			mainWindow->setPlayingTrackItem(item);
+			this->setPlayingTrackItem(item);
 
 		mainWindow->refresh();
 	};
@@ -121,7 +130,8 @@ void TracksList::headerMenu(const QPoint &pos)
 			{
 				this->settings.general.hidden_song_headers
 					.erase(std::remove(this->settings.general.hidden_song_headers.begin(),
-						this->settings.general.hidden_song_headers.end(), i));
+						this->settings.general.hidden_song_headers.end(), i),
+						this->settings.general.hidden_song_headers.end());
 			}
 			else
 				this->settings.general.hidden_song_headers.push_back(i);
@@ -198,4 +208,89 @@ void TracksList::updateResizeMode(lib::resize_mode mode)
 
 	header()->setSectionResizeMode(resizeMode);
 	resizeHeaders(size());
+}
+
+void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::string &selectedId)
+{
+	clear();
+	trackItems.clear();
+	playingTrackItem = nullptr;
+	auto fieldWidth = std::to_string(tracks.size()).size();
+	auto current = getCurrent();
+
+	for (int i = 0; i < tracks.size(); i++)
+	{
+		const auto &track = tracks.at(i);
+
+		auto item = new TrackListItem({
+			settings.general.track_numbers == lib::context_all
+				? QString("%1").arg(i + 1, fieldWidth)
+				: QString(),
+			QString::fromStdString(track.name),
+			QString::fromStdString(track.artist),
+			QString::fromStdString(track.album),
+			QString::fromStdString(lib::fmt::time(track.duration)),
+			track.added_at.empty()
+				? QString()
+				: settings.general.relative_added
+				? DateUtils::toRelative(track.added_at)
+				: QLocale().toString(DateUtils::fromIso(track.added_at).date(),
+					QLocale::ShortFormat)
+		}, track, emptyIcon, i);
+
+		if (track.id == current.playback.item.id)
+			setPlayingTrackItem(item);
+
+		insertTopLevelItem(i, item);
+		trackItems[track.id] = item;
+
+		if (!selectedId.empty() && track.id == selectedId)
+			setCurrentItem(item);
+	}
+}
+
+void TracksList::load(const std::vector<lib::spt::track> &tracks)
+{
+	load(tracks, std::string());
+}
+
+void TracksList::load(const lib::spt::playlist &playlist)
+{
+	if (!playlist.tracks.empty())
+		load(playlist.tracks);
+	else
+		setEnabled(false);
+
+	auto newPlaylist = spotify.playlist(playlist.id);
+	newPlaylist.tracks = spotify.playlistTracks(newPlaylist);
+	load(spotify.playlistTracks(playlist));
+	setEnabled(true);
+	cache.set_playlist(newPlaylist);
+}
+
+void TracksList::setPlayingTrackItem(QTreeWidgetItem *item)
+{
+	if (playingTrackItem != nullptr)
+		playingTrackItem->setIcon(0, emptyIcon);
+
+	if (item == nullptr)
+	{
+		playingTrackItem = nullptr;
+		return;
+	}
+	item->setIcon(0, Icon::get("media-playback-start"));
+	playingTrackItem = item;
+}
+
+void TracksList::setPlayingTrackItem(const std::string &itemId)
+{
+	setPlayingTrackItem(trackItems.find(itemId) != trackItems.end()
+		? trackItems[itemId]
+		: nullptr);
+}
+
+const spt::Current &TracksList::getCurrent()
+{
+	auto mainWindow = MainWindow::find(parentWidget());
+	return mainWindow->getCurrent();
 }
