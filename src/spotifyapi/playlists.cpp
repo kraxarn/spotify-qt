@@ -57,7 +57,7 @@ bool Spotify::playlistTracks(const lib::spt::playlist &playlist,
 	// Load tracks
 	auto href = lib::fmt::format("{}{}market=from_token",
 		playlist.tracks_href,
-		lib::strings::contains(playlist.tracks_href, '?') ? '&' : '?');
+		lib::strings::contains(playlist.tracks_href, '?') ? "&" : "?");
 
 	return playlistTracks(playlist, trackList, href, 0);
 }
@@ -73,7 +73,7 @@ bool Spotify::playlistTracks(const lib::spt::playlist &playlist,
 	std::vector<lib::spt::track> &trackList, const std::string &url, int offset)
 {
 	// Load tracks from api
-	auto newUrl = url.substr(0, std::string("https://api.spotify.com/v1/").size());
+	auto newUrl = url.substr(std::string("https://api.spotify.com/v1/").size());
 	auto current = getAsJson(newUrl);
 
 	// No items, request probably failed
