@@ -1,5 +1,7 @@
 #include "volumebutton.hpp"
 
+#include "mainwindow.hpp"
+
 VolumeButton::VolumeButton(lib::settings &settings, spt::Spotify &spotify, QWidget *parent)
 	: settings(settings),
 	spotify(spotify),

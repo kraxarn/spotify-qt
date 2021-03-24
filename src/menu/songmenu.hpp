@@ -1,11 +1,11 @@
 #pragma once
 
-#include <utility>
-
-#include "../mainwindow.hpp"
 #include "../spotify/spotify.hpp"
 #include "../util/icon.hpp"
 #include "lib/strings.hpp"
+#include "enum/datarole.hpp"
+
+#include <utility>
 
 #include <QDesktopServices>
 #include <QMenu>

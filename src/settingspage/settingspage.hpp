@@ -5,6 +5,9 @@
 #include <QVBoxLayout>
 #include <QMessageBox>
 #include <QTabWidget>
+#include <QComboBox>
+#include <QLabel>
+#include <QCheckBox>
 
 class SettingsPage: public QTabWidget
 {

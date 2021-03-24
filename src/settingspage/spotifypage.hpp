@@ -2,9 +2,14 @@
 
 #include "settingspage.hpp"
 #include "../util/icon.hpp"
+#include "spotify/clienthandler.hpp"
+#include "view/clienthandlerlogview.hpp"
 
 #include <QComboBox>
 #include <QGroupBox>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QFileDialog>
 
 class SpotifyPage: public SettingsPage
 {

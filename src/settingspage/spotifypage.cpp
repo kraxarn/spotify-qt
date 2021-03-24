@@ -1,5 +1,7 @@
 #include "spotifypage.hpp"
 
+#include "mainwindow.hpp"
+
 SpotifyPage::SpotifyPage(lib::settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {

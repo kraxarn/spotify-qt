@@ -1,4 +1,5 @@
 #include "aboutpage.hpp"
+#include "mainwindow.hpp"
 
 AboutPage::AboutPage(lib::settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)

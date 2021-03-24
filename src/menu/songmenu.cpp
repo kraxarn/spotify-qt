@@ -1,5 +1,6 @@
 #include "songmenu.hpp"
-#include <utility>
+
+#include "mainwindow.hpp"
 
 SongMenu::SongMenu(QTreeWidgetItem *item, spt::Spotify &spotify, QWidget *parent)
 	: SongMenu(item->data(0, RoleTrackId).toString().toStdString(),

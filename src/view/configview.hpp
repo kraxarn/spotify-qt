@@ -7,6 +7,7 @@
 #include <QHeaderView>
 #include <QMenu>
 #include <QCheckBox>
+#include <QClipboard>
 
 class ConfigView: public QTreeWidget
 {

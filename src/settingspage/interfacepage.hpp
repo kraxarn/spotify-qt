@@ -3,6 +3,8 @@
 #include "settingspage.hpp"
 #include "../util/icon.hpp"
 
+#include <QStyleFactory>
+
 class InterfacePage: public SettingsPage
 {
 public:

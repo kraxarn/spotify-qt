@@ -1,4 +1,5 @@
 #include "playlistspage.hpp"
+#include "mainwindow.hpp"
 
 PlaylistsPage::PlaylistsPage(lib::settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)

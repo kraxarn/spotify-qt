@@ -3,9 +3,7 @@
 #include "../util/icon.hpp"
 #include "lib/settings.hpp"
 #include "settingspage.hpp"
-
-#include <QLabel>
-#include <QComboBox>
+#include "view/logview.hpp"
 
 class ApplicationPage: public SettingsPage
 {

@@ -16,10 +16,10 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QVBoxLayout>
+#include <QDesktopServices>
 
 class Utils
 {
-
 public:
 	static QTreeWidgetItem *treeItemWithChildren(QTreeWidget *tree, const QString &name,
 		const QString &toolTip = QString(),
