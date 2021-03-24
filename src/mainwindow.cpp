@@ -314,60 +314,6 @@ void MainWindow::saveTracksToCache(const std::string &id,
 	cache.tracks(id, tracks);
 }
 
-bool MainWindow::loadPlaylist(const lib::spt::playlist &playlist)
-{
-	if (!leftSidePanel->getPlaylistNameFromSaved(playlist.id).empty())
-	{
-		settings.general.last_playlist = playlist.id;
-		settings.save();
-	}
-	if (loadPlaylistFromCache(playlist))
-		return true;
-	songs->setEnabled(false);
-	auto result = spotify->playlist(playlist.id);
-	if (!result.is_null())
-		songs->load(result.tracks);
-	songs->setEnabled(true);
-	current.context = QString("spotify:playlist:%1")
-		.arg(QString::fromStdString(playlist.id));
-	if (!result.is_null())
-		cachePlaylist(playlist);
-	return !result.is_null();
-}
-
-bool MainWindow::loadPlaylistFromCache(const lib::spt::playlist &playlist)
-{
-	auto tracks = playlistTracks(playlist.id);
-	if (tracks.empty())
-		return false;
-	songs->setEnabled(false);
-	songs->load(tracks);
-	songs->setEnabled(true);
-	current.context = QString("spotify:playlist:%1")
-		.arg(QString::fromStdString(playlist.id));
-	refreshPlaylist(playlist);
-	return true;
-}
-
-std::vector<lib::spt::track> MainWindow::playlistTracks(const std::string &playlistId)
-{
-	return cache.get_playlist(playlistId).tracks;
-}
-
-void MainWindow::refreshPlaylist(const lib::spt::playlist &playlist)
-{
-	auto newPlaylist = spotify->playlist(playlist.id);
-	if (newPlaylist.is_null())
-	{
-		lib::log::error("Failed to refresh playlist \"{}\" ({})",
-			playlist.name, playlist.id);
-		return;
-	}
-	if (current.context.endsWith(QString::fromStdString(playlist.id)))
-		songs->load(newPlaylist.tracks);
-	cachePlaylist(newPlaylist);
-}
-
 void MainWindow::setStatus(const QString &message, bool important)
 {
 	if (message.isNull() || message.isEmpty())
@@ -448,11 +394,6 @@ QPixmap MainWindow::getAlbum(const std::string &url)
 void MainWindow::openArtist(const std::string &artistId)
 {
 	dynamic_cast<SidePanel *>(sidePanel)->openArtist(artistId);
-}
-
-void MainWindow::cachePlaylist(const lib::spt::playlist &playlist)
-{
-	cache.set_playlist(playlist);
 }
 
 std::vector<std::string> MainWindow::currentTracks()

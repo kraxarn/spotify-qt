@@ -24,13 +24,10 @@ public:
 	QPixmap getAlbum(const QString &url);
 	QPixmap getAlbum(const std::string &url);
 	QPixmap getImage(const QString &type, const QString &url);
-	void refreshPlaylist(const lib::spt::playlist &playlist);
-	bool loadPlaylist(const lib::spt::playlist &playlist);
 	lib::spt::playback currentPlayback() const;
 	void openAudioFeaturesWidget(const std::string &trackId,
 		const std::string &artist, const std::string &name);
 	void openLyrics(const std::string &artist, const std::string &name);
-	std::vector<lib::spt::track> playlistTracks(const std::string &playlistId);
 	void reloadTrayIcon();
 	lib::spt::user getCurrentUser();
 	void setFixedWidthTime(bool value);
@@ -101,6 +98,4 @@ private:
 	// Methods
 	QWidget *createCentralWidget();
 	void setAlbumImage(const QString &url);
-	void cachePlaylist(const lib::spt::playlist &playlist);
-	bool loadPlaylistFromCache(const lib::spt::playlist &playlist);
 };
