@@ -53,11 +53,6 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 		return;
 	}
 
-	// Empty icon used as replacement for play icon
-	QPixmap emptyPixmap(64, 64);
-	emptyPixmap.fill(Qt::transparent);
-	emptyIcon = QIcon(emptyPixmap);
-
 	// Setup main window
 	setWindowTitle("spotify-qt");
 	setWindowIcon(Icon::get("logo:spotify-qt"));
@@ -187,12 +182,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 	if (leftSidePanel->getCurrentlyPlaying() != currPlaying)
 	{
 		if (current.playback.is_playing)
-		{
-			auto itemId = current.playback.item.id;
-			setPlayingTrackItem(trackItems.find(itemId) != trackItems.end()
-				? trackItems[itemId]
-				: nullptr);
-		}
+			songs->setPlayingTrackItem(current.playback.item.id);
 
 		leftSidePanel->setCurrentlyPlaying(currPlaying);
 		setAlbumImage(QString::fromStdString(current.playback.item.image));
@@ -235,7 +225,7 @@ QWidget *MainWindow::createCentralWidget()
 	container->addWidget(leftSidePanel);
 
 	//region Songs
-	songs = new TracksList(*spotify, settings, this);
+	songs = new TracksList(*spotify, settings, cache, this);
 	//endregion
 
 	// Load tracks in playlist
@@ -298,46 +288,6 @@ void MainWindow::openLyrics(const std::string &artist, const std::string &name)
 	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, lyricsView);
 }
 
-bool MainWindow::loadSongs(const std::vector<lib::spt::track> &tracks,
-	const std::string &selectedId)
-{
-	songs->clear();
-	trackItems.clear();
-	playingTrackItem = nullptr;
-	auto fieldWidth = QString::number(tracks.size()).length();
-
-	for (int i = 0; i < tracks.size(); i++)
-	{
-		const auto &track = tracks.at(i);
-		auto item = new TrackListItem({
-			settings.general.track_numbers == lib::context_all
-				? QString("%1").arg(i + 1, fieldWidth)
-				: "",
-			QString::fromStdString(track.name),
-			QString::fromStdString(track.artist),
-			QString::fromStdString(track.album),
-			QString::fromStdString(lib::fmt::time(track.duration)),
-			track.added_at.empty()
-				? QString()
-				: settings.general.relative_added
-				? DateUtils::toRelative(track.added_at)
-				: QLocale().toString(DateUtils::fromIso(track.added_at).date(),
-					QLocale::ShortFormat)
-		}, track, emptyIcon, i);
-
-		if (track.id == current.playback.item.id)
-			setPlayingTrackItem(item);
-
-		songs->insertTopLevelItem(i, item);
-		trackItems[track.id] = item;
-
-		if (track.id == selectedId)
-			songs->setCurrentItem(item);
-	}
-
-	return true;
-}
-
 bool MainWindow::loadAlbum(const std::string &albumId, const std::string &trackId)
 {
 	auto tracks = loadTracksFromCache(albumId);
@@ -352,7 +302,7 @@ bool MainWindow::loadAlbum(const std::string &albumId, const std::string &trackI
 		leftSidePanel->setCurrentLibraryItem(nullptr);
 		current.context = QString::fromStdString(lib::fmt::format(
 			"spotify:album:{}", albumId));
-		loadSongs(tracks, trackId);
+		songs->load(tracks, trackId);
 		saveTracksToCache(albumId, tracks);
 	}
 
@@ -382,7 +332,7 @@ bool MainWindow::loadPlaylist(const lib::spt::playlist &playlist)
 	songs->setEnabled(false);
 	auto result = spotify->playlist(playlist.id);
 	if (!result.is_null())
-		loadSongs(result.tracks);
+		songs->load(result.tracks);
 	songs->setEnabled(true);
 	current.context = QString("spotify:playlist:%1")
 		.arg(QString::fromStdString(playlist.id));
@@ -397,12 +347,12 @@ bool MainWindow::loadPlaylistFromCache(const lib::spt::playlist &playlist)
 	if (tracks.empty())
 		return false;
 	songs->setEnabled(false);
-	auto result = loadSongs(tracks);
+	songs->load(tracks);
 	songs->setEnabled(true);
 	current.context = QString("spotify:playlist:%1")
 		.arg(QString::fromStdString(playlist.id));
 	refreshPlaylist(playlist);
-	return result;
+	return true;
 }
 
 std::vector<lib::spt::track> MainWindow::playlistTracks(const std::string &playlistId)
@@ -420,7 +370,7 @@ void MainWindow::refreshPlaylist(const lib::spt::playlist &playlist)
 		return;
 	}
 	if (current.context.endsWith(QString::fromStdString(playlist.id)))
-		loadSongs(newPlaylist.tracks);
+		songs->load(newPlaylist.tracks);
 	cachePlaylist(newPlaylist);
 }
 
@@ -536,20 +486,6 @@ void MainWindow::reloadTrayIcon()
 		trayIcon = new TrayIcon(spotify, settings, this);
 }
 
-void MainWindow::setPlayingTrackItem(QTreeWidgetItem *item)
-{
-	if (playingTrackItem != nullptr)
-		playingTrackItem->setIcon(0, emptyIcon);
-
-	if (item == nullptr)
-	{
-		playingTrackItem = nullptr;
-		return;
-	}
-	item->setIcon(0, Icon::get("media-playback-start"));
-	playingTrackItem = item;
-}
-
 void MainWindow::setFixedWidthTime(bool value)
 {
 	((MainToolBar *) toolBar)->position->setFont(value ? QFont("monospace") : QFont());
@@ -588,7 +524,7 @@ QAction *MainWindow::getSearchAction()
 	return ((MainToolBar *) toolBar)->search;
 }
 
-QTreeWidget *MainWindow::getSongsTree()
+TracksList *MainWindow::getSongsTree()
 {
 	return songs;
 }
@@ -601,6 +537,11 @@ std::string MainWindow::getSptContext() const
 lib::spt::playback &MainWindow::getCurrentPlayback()
 {
 	return current.playback;
+}
+
+const spt::Current &MainWindow::getCurrent()
+{
+	return current;
 }
 
 #ifdef USE_DBUS

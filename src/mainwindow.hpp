@@ -39,10 +39,7 @@ public:
 	void setFixedWidthTime(bool value);
 	std::vector<lib::spt::track> loadTracksFromCache(const std::string &id);
 	void saveTracksToCache(const std::string &id, const std::vector<lib::spt::track> &tracks);
-	bool loadSongs(const std::vector<lib::spt::track> &tracks,
-		const std::string &selectedId = std::string());
 	std::vector<std::string> currentTracks();
-	void setPlayingTrackItem(QTreeWidgetItem *item);
 	void refresh();
 	void refreshed(const lib::spt::playback &playback);
 	void toggleTrackNumbers(bool enabled);
@@ -64,9 +61,10 @@ public:
 	// Getters for private properties
 	QString &getCacheLocation();
 	QAction *getSearchAction();
-	QTreeWidget *getSongsTree();
+	TracksList *getSongsTree();
 	std::string getSptContext() const;
 	lib::spt::playback &getCurrentPlayback();
+	const spt::Current &getCurrent();
 
 #ifdef USE_DBUS
 	mp::Service *getMediaPlayer();
@@ -78,8 +76,7 @@ private:
 	lib::cache cache;
 
 	// Qt Widgets
-	QTreeWidget *songs = nullptr;
-	QTreeWidgetItem *playingTrackItem = nullptr;
+	TracksList *songs = nullptr;
 	QToolBar *toolBar = nullptr;
 
 	// spt
@@ -92,12 +89,10 @@ private:
 
 	// Other
 	LyricsView *lyricsView = nullptr;
-	std::unordered_map<std::string, QTreeWidgetItem *> trackItems;
 	QString cacheLocation;
 	TrayIcon *trayIcon = nullptr;
 	int refreshCount = -1;
 	lib::spt::user currentUser;
-	QIcon emptyIcon;
 	bool stateValid = true;
 	QTabWidget *sidePanel = nullptr;
 	LeftSidePanel *leftSidePanel = nullptr;
