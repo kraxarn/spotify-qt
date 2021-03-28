@@ -77,7 +77,7 @@ namespace lib
 			 * Number of tracks in playlist
 			 * @note Prefer using track_count()
 			 */
-			int tracks_count = -1;
+			int tracks_total = -1;
 
 			/**
 			 * Specified user is the owner of this playlist

@@ -42,7 +42,7 @@ void lib::spt::from_json(const nlohmann::json &j, playlist &p)
 		else if (tracks.is_object())
 		{
 			tracks.at("href").get_to(p.tracks_href);
-			tracks.at("count").get_to(p.tracks_count);
+			tracks.at("total").get_to(p.tracks_total);
 		}
 	}
 
@@ -78,7 +78,7 @@ bool lib::spt::playlist::is_null() const
 
 int lib::spt::playlist::track_count()
 {
-	return tracks_count >= 0
-		? tracks_count
+	return tracks_total >= 0
+		? tracks_total
 		: tracks.size();
 }
