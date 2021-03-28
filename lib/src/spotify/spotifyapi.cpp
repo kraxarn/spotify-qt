@@ -71,3 +71,15 @@ long spotify_api::seconds_since_epoch()
 	return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now()
 		.time_since_epoch()).count();
 }
+
+std::string spotify_api::to_uri(const std::string &type, const std::string &id)
+{
+	return lib::strings::starts_with(id, "spotify:")
+		? id
+		: lib::fmt::format("spotify:{}:{}", type, id);
+}
+
+std::string spotify_api::to_id(const std::string &id)
+{
+	return lib::strings::split(id, ':').back();
+}

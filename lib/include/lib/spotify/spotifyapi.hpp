@@ -3,6 +3,7 @@
 #include "lib/settings.hpp"
 #include "lib/base64.hpp"
 #include "lib/vector.hpp"
+#include "lib/strings.hpp"
 
 namespace lib
 {
@@ -75,6 +76,25 @@ namespace lib
 			 * @return Refresh was successful
 			 */
 			bool refresh(bool force = false);
+
+			/**
+			 * Spotify ID (4uLU6hMCjMI75M1A2tKUQC) to Spotify URI
+			 * (spotify:track:4uLU6hMCjMI75M1A2tKUQC)
+			 * @param type URI type, for example artist, album, track, etc.
+			 * @param id Spotify ID
+			 * @note Returns result if already an URI
+			 * @return Spotify URI
+			 */
+			static std::string to_uri(const std::string &type, const std::string &id);
+
+			/**
+			 * Spotify URI (spotify:track:4uLU6hMCjMI75M1A2tKUQC) to Spotify ID
+			 * (4uLU6hMCjMI75M1A2tKUQC)
+			 * @param id Spotify ID
+			 * @note Returns result if already an ID
+			 * @return Spotify ID
+			 */
+			static std::string to_id(const std::string &id);
 
 		protected:
 			/**
