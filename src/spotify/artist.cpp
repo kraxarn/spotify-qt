@@ -43,17 +43,6 @@ std::vector<lib::spt::album> Artist::albums(Spotify &spotify) const
 	return albums;
 }
 
-QVector<Artist> Artist::relatedArtists(Spotify &spotify) const
-{
-	auto json = spotify.getAsObject(QString("artists/%1/related-artists").arg(id));
-	auto items = json["artists"].toArray();
-	QVector<Artist> artists;
-	artists.reserve(items.size());
-	for (auto item : items)
-		artists.append(Artist(item.toObject()));
-	return artists;
-}
-
 QJsonObject Artist::toJson() const
 {
 	QJsonArray jsonGenres;

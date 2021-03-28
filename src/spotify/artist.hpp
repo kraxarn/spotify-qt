@@ -26,7 +26,6 @@ namespace spt
 
 		QVector<lib::spt::track> topTracks(Spotify &spotify) const;
 		std::vector<lib::spt::album> albums(Spotify &spotify) const;
-		QVector<Artist> relatedArtists(Spotify &spotify) const;
 
 		QJsonObject toJson() const;
 
