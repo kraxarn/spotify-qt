@@ -22,27 +22,6 @@ Artist::Artist(const QJsonObject &json)
 	}
 }
 
-QVector<lib::spt::track> Artist::topTracks(Spotify &spotify) const
-{
-	auto json = spotify.getAsJson(QString("artists/%1/top-tracks?country=from_token").arg(id));
-	auto items = json["tracks"];
-	QVector<lib::spt::track> tracks;
-	for (auto item : items)
-		tracks.append(item.get<lib::spt::track>());
-	return tracks;
-}
-
-std::vector<lib::spt::album> Artist::albums(Spotify &spotify) const
-{
-	auto json = spotify.getAsJson(lib::fmt::format("artists/{}/albums?country=from_token",
-		id.toStdString()));
-	auto items = json.at("items");
-	std::vector<lib::spt::album> albums;
-	for (auto &item : items)
-		albums.push_back(item.get<lib::spt::album>());
-	return albums;
-}
-
 QJsonObject Artist::toJson() const
 {
 	QJsonArray jsonGenres;

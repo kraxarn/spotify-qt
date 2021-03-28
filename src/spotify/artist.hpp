@@ -24,9 +24,6 @@ namespace spt
 		Artist() = default;
 		explicit Artist(const QJsonObject &json);
 
-		QVector<lib::spt::track> topTracks(Spotify &spotify) const;
-		std::vector<lib::spt::album> albums(Spotify &spotify) const;
-
 		QJsonObject toJson() const;
 
 		int followers = 0;
