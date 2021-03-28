@@ -107,62 +107,7 @@ namespace spt
 
 		//endregion
 
-		//region Player
-
-		void currentPlayback(lib::callback<lib::spt::playback> &callback);
-
-		void setDevice(const std::string &deviceId, lib::callback<QString> &callback);
-
-		void setDevice(const lib::spt::device &device, lib::callback<QString> &callback);
-
-		void devices(lib::callback<std::vector<lib::spt::device>> &callback);
-
-		void playTracks(int trackIndex, const std::string &context,
-			lib::callback<QString> &callback);
-
-		void play_tracks(int track_index, const std::vector<std::string> &all,
-			lib::callback<std::string> &callback);
-
-		/**
-		 * Convenience method for play_tracks with std::vector
-		 */
-		void play_tracks(int track_index, const std::initializer_list<std::string> &all,
-			lib::callback<std::string> &callback);
-
-		/**
-		 * @deprecated
-		 */
-		void playTracks(int trackIndex, const std::vector<std::string> &all,
-			lib::callback<QString> &callback);
-
-		void play_tracks(const std::string &context, lib::callback<std::string> &callback);
-
-		/**
-		 * @deprecated
-		 */
-		void playTracks(const QString &context, lib::callback<QString> &callback);
-
-		void resume(lib::callback<QString> &callback);
-
-		void pause(lib::callback<QString> &callback);
-
-		void next(lib::callback<QString> &callback);
-
-		void previous(lib::callback<QString> &callback);
-
-		void seek(int position, lib::callback<QString> &callback);
-
-		void setRepeat(const QString &state, lib::callback<QString> &callback);
-
-		void setVolume(int volume, lib::callback<QString> &callback);
-
-		void setShuffle(bool enabled, lib::callback<QString> &callback);
-
-		std::vector<lib::spt::track> recentlyPlayed();
-
-		void addToQueue(const std::string &uri, lib::callback<std::string> &callback);
-
-		//endregion
+		// Player (moved to lib)
 
 		//region Playlists
 

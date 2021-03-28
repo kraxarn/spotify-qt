@@ -4,6 +4,10 @@
 #include "lib/base64.hpp"
 #include "lib/vector.hpp"
 #include "lib/strings.hpp"
+#include "lib/spotify/playback.hpp"
+#include "lib/enum/repeatstate.hpp"
+
+#include "thirdparty/json.hpp"
 
 namespace lib
 {
@@ -52,6 +56,110 @@ namespace lib
 			//endregion
 
 			//region Player
+
+			/**
+			 * Get what's currently playing
+			 */
+			void current_playback(lib::callback<lib::spt::playback> &callback);
+
+			/**
+			 * Set current active device by device ID
+			 */
+			void set_device(const std::string &deviceId, lib::callback<std::string> &callback);
+
+			/**
+			 * Set current active device
+			 */
+			void set_device(const lib::spt::device &device, lib::callback<std::string> &callback);
+
+			/**
+			 * Get all available devices
+			 */
+			void devices(lib::callback<std::vector<lib::spt::device>> &callback);
+
+			/**
+			 * Play track from specific context
+			 * @param track_index Index to start playback from
+			 * @param context Context to play from
+			 */
+			void play_tracks(int track_index, const std::string &context,
+				lib::callback<std::string> &callback);
+
+			/**
+			 * Play track from specified set of tracks
+			 * @param track_index Index to start playback from
+			 * @param all IDs of all tracks
+			 */
+			void play_tracks(int track_index, const std::vector<std::string> &all,
+				lib::callback<std::string> &callback);
+
+			/**
+			 * Convenience method for playing specified set of tracks
+			 */
+			void play_tracks(int track_index, const std::initializer_list<std::string> &all,
+				lib::callback<std::string> &callback);
+
+			/**
+			 * Play track from specific context
+			 * @param context Context to play from
+			 * @note If shuffle is enabled, a random track is chosen to start playback from
+			 */
+			void play_tracks(const std::string &context, lib::callback<std::string> &callback);
+
+			/**
+			 * Resume playback
+			 */
+			void resume(lib::callback<std::string> &callback);
+
+			/**
+			 * Pause playback
+			 */
+			void pause(lib::callback<std::string> &callback);
+
+			/**
+			 * Skip to next track
+			 */
+			void next(lib::callback<std::string> &callback);
+
+			/**
+			 * Go to previous track, or restart current
+			 */
+			void previous(lib::callback<std::string> &callback);
+
+			/**
+			 * Seek in current track
+			 * @param position Position to seek to in milliseconds
+			 */
+			void seek(int position, lib::callback<std::string> &callback);
+
+			/**
+			 * Change repeat mode
+			 * @param state New repeat mode
+			 */
+			void set_repeat(const lib::repeat_state state, lib::callback<std::string> &callback);
+
+			/**
+			 * Change player volume
+			 * @param volume Player volume, from 0%-100%
+			 */
+			void set_volume(int volume, lib::callback<std::string> &callback);
+
+			/**
+			 * Change shuffle mode
+			 * @param enabled Shuffle mode is enabled
+			 */
+			void set_shuffle(bool enabled, lib::callback<std::string> &callback);
+
+			/**
+			 * Get all recently played tracks
+			 */
+			void recently_played(lib::callback<std::vector<lib::spt::track>> &callback);
+
+			/**
+			 * Add specified track to play next
+			 * @param uri URI of track to add
+			 */
+			void add_to_queue(const std::string &uri, lib::callback<std::string> &callback);
 
 			//endregion
 
