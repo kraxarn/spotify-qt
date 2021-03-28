@@ -5,6 +5,7 @@
 #include "lib/spotify/device.hpp"
 #include "lib/format.hpp"
 #include "lib/spotify/context.hpp"
+#include "lib/enum/repeatstate.hpp"
 
 namespace lib
 {
@@ -33,7 +34,7 @@ namespace lib
 			/**
 			 * Repeat mode
 			 */
-			std::string repeat = "off";
+			lib::repeat_state repeat = lib::repeat_state::off;
 
 			/**
 			 * Current playing track

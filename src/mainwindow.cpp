@@ -206,7 +206,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 	if (!settings.general.pulse_volume)
 		mainToolBar->volumeButton->setVolume(current.playback.volume() / 5);
 
-	mainToolBar->repeat->setChecked(current.playback.repeat != "off");
+	mainToolBar->repeat->setChecked(current.playback.repeat != lib::repeat_state::off);
 	mainToolBar->shuffle->setChecked(current.playback.shuffle);
 }
 

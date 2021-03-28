@@ -8,10 +8,16 @@ void lib::spt::from_json(const nlohmann::json &j, playback &p)
 	j.at("progress_ms").get_to(p.progress_ms);
 	j.at("item").get_to(p.item);
 	j.at("is_playing").get_to(p.is_playing);
-	j.at("repeat_state").get_to(p.repeat);
 	j.at("shuffle_state").get_to(p.shuffle);
 	j.at("context").get_to(p.context);
 	j.at("device").get_to(p.device);
+
+	auto repeat_state = j.at("repeat_state").get<std::string>();
+	p.repeat = repeat_state == "track"
+		? lib::repeat_state::track
+		: repeat_state == "context"
+			? lib::repeat_state::context
+			: lib::repeat_state::off;
 }
 
 void lib::spt::to_json(nlohmann::json &j, const playback &p)

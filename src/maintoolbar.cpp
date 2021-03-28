@@ -136,8 +136,10 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 	{
 		auto mainWindow = (MainWindow *) this->parent;
 		auto current = mainWindow->getCurrentPlayback();
-		auto repeatMode = QString(checked ? "context" : "off");
-		current.repeat = repeatMode.toStdString();
+		auto repeatMode = checked
+			? lib::repeat_state::context
+			: lib::repeat_state::off;
+		current.repeat = repeatMode;
 		mainWindow->refreshed(current);
 
 		this->spotify.setRepeat(repeatMode, [mainWindow](const QString &status)
