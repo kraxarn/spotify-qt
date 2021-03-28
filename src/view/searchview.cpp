@@ -241,13 +241,13 @@ void SearchView::trackClick(QTreeWidgetItem *item, int)
 	auto trackId = lib::fmt::format("spotify:track:{}",
 		item->data(0, RoleTrackId).toString().toStdString());
 
-	spotify.playTracks(0, {trackId}, [this](const QString &status)
+	spotify.play_tracks(0, {trackId}, [this](const std::string &status)
 	{
-		if (!status.isEmpty())
+		if (!status.empty())
 		{
 			auto mainWindow = MainWindow::find(this->parentWidget());
-			mainWindow->setStatus(QString("Failed to play track: %1")
-				.arg(status), true);
+			mainWindow->status(lib::fmt::format("Failed to play track: {}",
+				status), true);
 		}
 	});
 }
