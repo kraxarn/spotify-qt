@@ -44,7 +44,7 @@ namespace spt
 
 		std::vector<lib::spt::track> albumTracks(const std::string &albumId);
 
-		spt::Album getAlbum(const QString &id);
+		void getAlbum(const std::string &id, lib::callback<lib::spt::album> &callback);
 
 		std::vector<lib::spt::track> albumTracks(const std::string &albumId,
 			const std::string &albumName, int offset);
@@ -61,13 +61,14 @@ namespace spt
 		void relatedArtists(const spt::Artist &artist,
 			lib::callback<std::vector<spt::Artist>> &callback);
 
-		void albums(const spt::Artist &artist, lib::callback<std::vector<spt::Album>> &callback);
+		void albums(const spt::Artist &artist,
+			lib::callback<std::vector<lib::spt::album>> &callback);
 
 		//endregion
 
 		//region Browse
 
-		QVector<Album> newReleases(int offset = 0);
+		std::vector<lib::spt::album> newReleases(int offset = 0);
 
 		//endregion
 
@@ -86,7 +87,7 @@ namespace spt
 
 		//region Library
 
-		QVector<Album> savedAlbums();
+		std::vector<lib::spt::album> savedAlbums();
 
 		std::vector<lib::spt::track> savedTracks(int offset = 0);
 

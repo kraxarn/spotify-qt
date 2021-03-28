@@ -24,9 +24,9 @@ std::vector<lib::spt::track> Spotify::albumTracks(const std::string &albumId)
 	return tracks;
 }
 
-spt::Album Spotify::getAlbum(const QString &id)
+void Spotify::getAlbum(const std::string &id, lib::callback<lib::spt::album> &callback)
 {
-	return spt::Album(getAsObject(QString("albums/%1").arg(id)));
+	get(lib::fmt::format("albums/{}"), callback);
 }
 
 std::vector<lib::spt::track> Spotify::albumTracks(const std::string &albumId,

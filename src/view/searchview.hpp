@@ -45,4 +45,5 @@ protected:
 
 private:
 	void addArtist(const spt::Artist &artist);
+	void addAlbum(const lib::spt::album &album);
 };

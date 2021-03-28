@@ -28,7 +28,7 @@ public:
 private:
 	void artistLoaded(const spt::Artist &loadedArtist);
 	void topTracksLoaded(const std::vector<lib::spt::track> &tracks);
-	void albumsLoaded(const std::vector<spt::Album> &albums);
+	void albumsLoaded(const std::vector<lib::spt::album> &albums);
 	void relatedArtistsLoaded(const std::vector<spt::Artist> &artists);
 
 	void updateFollow(bool isFollowing);

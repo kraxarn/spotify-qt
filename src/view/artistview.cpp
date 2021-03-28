@@ -166,7 +166,7 @@ void ArtistView::artistLoaded(const spt::Artist &loadedArtist)
 	});
 
 	// Albums
-	spotify.albums(artist, [this](const std::vector<spt::Album> &albums)
+	spotify.albums(artist, [this](const std::vector<lib::spt::album> &albums)
 	{
 		albumsLoaded(albums);
 	});
@@ -196,22 +196,27 @@ void ArtistView::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
 	topTracksList->setEnabled(true);
 }
 
-void ArtistView::albumsLoaded(const std::vector<spt::Album> &albums)
+void ArtistView::albumsLoaded(const std::vector<lib::spt::album> &albums)
 {
 	auto mainWindow = MainWindow::find(parentWidget());
 
 	for (auto &album : albums)
 	{
-		auto parentTab = album.albumGroup == "single" ? singleList : albumList;
-		auto year = album.releaseDate.toString("yyyy");
+		auto releaseDate = QDateTime::fromString(QString::fromStdString(album.release_date),
+			Qt::ISODate);
+		auto parentTab = album.album_group == lib::album_group::single
+			? singleList
+			: albumList;
+		auto year = releaseDate.toString("yyyy");
 		auto item = new QTreeWidgetItem(parentTab, {
-			album.name, year.isEmpty() ? QString() : year
+			QString::fromStdString(album.name),
+			year.isEmpty() ? QString() : year
 		});
 
 		item->setIcon(0, QIcon(mainWindow->getAlbum(album.image)));
-		item->setData(0, RoleAlbumId, album.id);
+		item->setData(0, RoleAlbumId, QString::fromStdString(album.id));
 		item->setToolTip(1, QLocale::system()
-			.toString(album.releaseDate.date(), QLocale::FormatType::ShortFormat));
+			.toString(releaseDate.date(), QLocale::FormatType::ShortFormat));
 		parentTab->insertTopLevelItem(0, item);
 	}
 

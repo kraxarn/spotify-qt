@@ -5,7 +5,7 @@ namespace spt
 	class SearchResults;
 }
 
-#include "album.hpp"
+#include "lib/spotify/album.hpp"
 #include "artist.hpp"
 #include "lib/spotify/playlist.hpp"
 #include "lib/spotify/track.hpp"
@@ -24,7 +24,7 @@ namespace spt
 
 		QJsonObject toJson() const;
 
-		QVector<Album> albums;
+		QVector<lib::spt::album> albums;
 		QVector<Artist> artists;
 		QVector<lib::spt::track> tracks;
 		QVector<lib::spt::playlist> playlists;

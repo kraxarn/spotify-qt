@@ -25,8 +25,9 @@ void Spotify::relatedArtists(const spt::Artist &artist,
 		.arg(artist.id), callback);
 }
 
-void Spotify::albums(const spt::Artist &artist, lib::callback<std::vector<spt::Album>> &callback)
+void Spotify::albums(const spt::Artist &artist,
+	lib::callback<std::vector<lib::spt::album>> &callback)
 {
-	get<spt::Album>(QString("artists/%1/albums?country=from_token")
-		.arg(artist.id), callback);
+	get<lib::spt::album>(lib::fmt::format("artists/{}/albums?country=from_token",
+		artist.id.toStdString()), "items", callback);
 }

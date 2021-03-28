@@ -32,14 +32,14 @@ QVector<lib::spt::track> Artist::topTracks(Spotify &spotify) const
 	return tracks;
 }
 
-QVector<Album> Artist::albums(Spotify &spotify) const
+std::vector<lib::spt::album> Artist::albums(Spotify &spotify) const
 {
-	auto json = spotify.getAsObject(QString("artists/%1/albums?country=from_token").arg(id));
-	auto items = json["items"].toArray();
-	QVector<Album> albums;
-	albums.reserve(items.size());
-	for (auto item : items)
-		albums.append(Album(item.toObject()));
+	auto json = spotify.getAsJson(lib::fmt::format("artists/{}/albums?country=from_token",
+		id.toStdString()));
+	auto items = json.at("items");
+	std::vector<lib::spt::album> albums;
+	for (auto &item : items)
+		albums.push_back(item.get<lib::spt::album>());
 	return albums;
 }
 

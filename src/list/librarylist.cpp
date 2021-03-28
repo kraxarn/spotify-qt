@@ -97,12 +97,11 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 
 			for (auto &album : releases)
 			{
-				if (all.find(album.artist.toStdString()) != all.end())
+				if (all.find(album.artist) != all.end())
 				{
-					for (auto &track : spotify.albumTracks(album.id.toStdString()))
+					for (auto &track : spotify.albumTracks(album.id))
 					{
-						track.added_at = album.releaseDate
-							.toString(Qt::ISODate).toStdString();
+						track.added_at = album.release_date;
 						tracks.push_back(track);
 					}
 				}
@@ -172,7 +171,8 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 			results.append({artist.name, artist.id, RoleArtistId});
 	else if (item->text(0) == SAVED_ALBUMS)
 		for (auto &album : spotify.savedAlbums())
-			results.append({album.name, album.id, RoleAlbumId});
+			results.append({QString::fromStdString(album.name),
+				QString::fromStdString(album.id), RoleAlbumId});
 	else if (item->text(0) == FOLLOWED_ARTISTS)
 		for (auto &artist : spotify.followedArtists())
 			results.append({artist.name, artist.id, RoleArtistId});

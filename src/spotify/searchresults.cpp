@@ -7,7 +7,7 @@ SearchResults::SearchResults(const QJsonObject &json)
 	// Albums
 	albums.reserve(json["albums"].toObject()["total"].toInt());
 	for (auto album : json["albums"].toObject()["items"].toArray())
-		albums.append(Album(album.toObject()));
+		albums.append(JsonUtils::toJson(album).get<lib::spt::album>());
 
 	// Artists
 	artists.reserve(json["artists"].toObject()["total"].toInt());
@@ -29,7 +29,7 @@ QJsonObject SearchResults::toJson() const
 {
 	QJsonArray jsonAlbums;
 	for (auto &album : albums)
-		jsonAlbums.append(album.toJson());
+		jsonAlbums.append(JsonUtils::toQtJson(album).object());
 
 	QJsonArray jsonArtists;
 	for (auto &artist : artists)

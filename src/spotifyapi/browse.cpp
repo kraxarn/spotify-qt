@@ -8,17 +8,19 @@
 // recommendations
 // recommendations/available-genre-seeds
 
-QVector<Album> Spotify::newReleases(int offset)
+std::vector<lib::spt::album> Spotify::newReleases(int offset)
 {
-	auto json = getAsObject(QString("browse/new-releases?limit=50&offset=%1")
-		.arg(offset))["albums"]
-		.toObject();
-	auto albumItems = json["items"].toArray();
-	QVector<Album> albums;
+	auto json = getAsJson(lib::fmt::format("browse/new-releases?limit=50&offset={}",
+		offset)).at("albums");
+	auto albumItems = json["items"];
+	std::vector<lib::spt::album> albums;
 	albums.reserve(albumItems.size());
-	for (auto item : albumItems)
-		albums.append(Album(item.toObject()));
-	if (json.contains("next") && !json["next"].isNull())
-		albums << newReleases(json["offset"].toInt() + json["limit"].toInt());
+	for (auto &item : albumItems)
+		albums.push_back(item.get<lib::spt::album>());
+	if (json.contains("next") && !json["next"].is_null())
+	{
+		lib::vector::append(albums,
+			newReleases(json["offset"].get<int>() + json["limit"].get<int>()));
+	}
 	return albums;
 }

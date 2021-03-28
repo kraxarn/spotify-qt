@@ -7,14 +7,14 @@
 // me/shows
 // me/shows/contains
 
-QVector<Album> Spotify::savedAlbums()
+std::vector<lib::spt::album> Spotify::savedAlbums()
 {
-	auto json = getAsObject("me/albums");
-	auto albumItems = json["items"].toArray();
-	QVector<Album> albums;
+	auto json = getAsJson(std::string("me/albums"));
+	auto albumItems = json["items"];
+	std::vector<lib::spt::album> albums;
 	albums.reserve(10);
-	for (auto item : albumItems)
-		albums.append(Album(item.toObject()["album"].toObject()));
+	for (auto &item : albumItems)
+		albums.push_back(item.get<lib::spt::album>());
 	return albums;
 }
 

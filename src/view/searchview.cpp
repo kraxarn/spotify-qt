@@ -169,7 +169,10 @@ void SearchView::search()
 			}
 			else if (cat == "album")
 			{
-				results.albums.append(spotify.getAlbum(id));
+				spotify.getAlbum(id.toStdString(), [this](const lib::spt::album &album)
+				{
+					this->addAlbum(album);
+				});
 				i = 2;
 			}
 			else if (cat == "playlist")
@@ -189,16 +192,7 @@ void SearchView::search()
 
 	// Albums
 	for (auto &album : results.albums)
-	{
-		auto item = new QTreeWidgetItem({
-			album.name, album.artist
-		});
-		item->setIcon(0, mainWindow->getAlbum(album.image));
-		item->setData(0, RoleAlbumId, album.id);
-		item->setToolTip(0, album.name);
-		item->setToolTip(1, album.artist);
-		albumList->addTopLevelItem(item);
-	}
+		addAlbum(album);
 
 	// Artists
 	for (auto &artist : results.artists)
@@ -274,4 +268,22 @@ void SearchView::addArtist(const spt::Artist &artist)
 	auto item = new QListWidgetItem(artist.name, artistList);
 	item->setData(RoleArtistId, artist.id);
 	item->setToolTip(artist.name);
+}
+
+void SearchView::addAlbum(const lib::spt::album &album)
+{
+	auto id = QString::fromStdString(album.id);
+	auto name = QString::fromStdString(album.name);
+	auto artist = QString::fromStdString(album.artist);
+
+	auto item = new QTreeWidgetItem({
+		name, artist
+	});
+
+	auto mainWindow = MainWindow::find(parentWidget());
+	item->setIcon(0, mainWindow->getAlbum(album.image));
+	item->setData(0, RoleAlbumId, id);
+	item->setToolTip(0, name);
+	item->setToolTip(1, artist);
+	albumList->addTopLevelItem(item);
 }
