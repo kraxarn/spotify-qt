@@ -383,19 +383,7 @@ namespace spt
 			});
 		}
 
-		template<typename T>
-		void get(const std::string &url, lib::callback<std::vector<T>> &callback)
-		{
-			get(url, [this, callback](const nlohmann::json &json)
-			{
-				auto items = json[json.contains("tracks")
-					? "tracks"
-					: json.contains("artists")
-						? "artists"
-						: "items"];
-				callback(items.get<std::vector<T>>());
-			});
-		}
+
 
 		static QString followTypeString(FollowType type);
 

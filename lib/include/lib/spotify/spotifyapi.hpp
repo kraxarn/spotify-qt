@@ -127,6 +127,59 @@ namespace lib
 			 */
 			virtual std::string request_refresh(const std::string &post_data,
 				const std::string &authorization) = 0;
+
+			/**
+			 * GET request
+			 * @param url URL to request
+			 * @param callback Response as JSON
+			 */
+			virtual void get(const std::string &url, lib::callback<nlohmann::json> &callback) = 0;
+
+			/**
+			 * GET a collection of items
+			 * @param url URL to request
+			 * @param key Key to collection
+			 */
+			template<typename T>
+			void get(const std::string &url, const std::string &key,
+				lib::callback<std::vector<T>> &callback)
+			{
+				get(url, [this, key, callback](const nlohmann::json &json)
+				{
+					auto items = json.at(key);
+					callback(items.get<std::vector<T>>());
+				});
+			}
+
+			/**
+			 * PUT request
+			 * @param url URL to request
+			 * @param body JSON body or null if no body
+			 * @param callback Error message, or empty if none
+			 */
+			virtual void put(const std::string &url, const nlohmann::json &body,
+				lib::callback<std::string> &callback) = 0;
+
+			/**
+			 * Convenience method for PUT request with no body
+			 */
+			virtual void put(const std::string &url, lib::callback<std::string> &callback) = 0;
+
+			/**
+			 * POST request
+			 * @param url URL to request
+			 * @param callback Error message, or empty if none
+			 */
+			virtual void post(const std::string &url, lib::callback<std::string> &callback) = 0;
+
+			/**
+			 * DELETE request
+			 * @param url URL to request
+			 * @param json JSON body or null if no body
+			 * @param callback Error message, or empty if none
+			 */
+			virtual void del(const std::string &url, const nlohmann::json &json,
+				lib::callback<std::string> &callback) = 0;
 		};
 	}
 }
