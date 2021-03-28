@@ -76,7 +76,7 @@ bool lib::spt::playlist::is_null() const
 	return id.empty();
 }
 
-int lib::spt::playlist::track_count()
+size_t lib::spt::playlist::track_count() const
 {
 	return tracks_total >= 0
 		? tracks_total

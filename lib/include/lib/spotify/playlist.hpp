@@ -92,7 +92,7 @@ namespace lib
 			/**
 			 * Get the number of tracks in playlist
 			 */
-			int track_count();
+			size_t track_count() const;
 		};
 
 		void to_json(nlohmann::json &j, const playlist &p);
