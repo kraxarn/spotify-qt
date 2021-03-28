@@ -84,6 +84,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a91864e2eeb7163201ddeba671905fb32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abff5a2bb08a4b609901f42112ca449a5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1playlist.html#abff5a2bb08a4b609901f42112ca449a5">is_null</a> () const</td></tr>
 <tr class="separator:abff5a2bb08a4b609901f42112ca449a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1049b8b66bb5e127bb8fbfcb7b1b5e0d"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1playlist.html#a1049b8b66bb5e127bb8fbfcb7b1b5e0d">track_count</a> () const</td></tr>
+<tr class="separator:a1049b8b66bb5e127bb8fbfcb7b1b5e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -109,6 +111,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:af31fb77d7316d524020f52b99eeae675"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6bd3cca9afe5a1584d71d0e4d880cf14"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1playlist.html#a6bd3cca9afe5a1584d71d0e4d880cf14">tracks_href</a></td></tr>
 <tr class="separator:a6bd3cca9afe5a1584d71d0e4d880cf14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc4dec5cee51165c5f02460b429e14b9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1playlist.html#abc4dec5cee51165c5f02460b429e14b9">tracks_total</a> = -1</td></tr>
+<tr class="separator:abc4dec5cee51165c5f02460b429e14b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Playlist </p>
@@ -147,6 +151,24 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Specified user is the owner of this playlist </p>
+
+</div>
+</div>
+<a id="a1049b8b66bb5e127bb8fbfcb7b1b5e0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1049b8b66bb5e127bb8fbfcb7b1b5e0d">&#9670;&nbsp;</a></span>track_count()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t lib::spt::playlist::track_count </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the number of tracks in playlist </p>
 
 </div>
 </div>
@@ -313,6 +335,21 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>URL to load tracks from </p>
+
+</div>
+</div>
+<a id="abc4dec5cee51165c5f02460b429e14b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc4dec5cee51165c5f02460b429e14b9">&#9670;&nbsp;</a></span>tracks_total</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int lib::spt::playlist::tracks_total = -1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Number of tracks in playlist </p><dl class="section note"><dt>Note</dt><dd>Prefer using <a class="el" href="classlib_1_1spt_1_1playlist.html#a1049b8b66bb5e127bb8fbfcb7b1b5e0d">track_count()</a> </dd></dl>
 
 </div>
 </div>
