@@ -74,6 +74,12 @@ namespace lib
 			std::string tracks_href;
 
 			/**
+			 * Number of tracks in playlist
+			 * @note Prefer using track_count()
+			 */
+			int tracks_count = -1;
+
+			/**
 			 * Specified user is the owner of this playlist
 			 */
 			bool is_owner(const lib::spt::user &user) const;
@@ -82,6 +88,11 @@ namespace lib
 			 * If no playlist has been parsed (invalid ID)
 			 */
 			bool is_null() const;
+
+			/**
+			 * Get the number of tracks in playlist
+			 */
+			int track_count();
 		};
 
 		void to_json(nlohmann::json &j, const playlist &p);

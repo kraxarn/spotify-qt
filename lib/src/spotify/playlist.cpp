@@ -40,7 +40,10 @@ void lib::spt::from_json(const nlohmann::json &j, playlist &p)
 		if (tracks.is_array())
 			tracks.get_to(p.tracks);
 		else if (tracks.is_object())
+		{
 			tracks.at("href").get_to(p.tracks_href);
+			tracks.at("count").get_to(p.tracks_count);
+		}
 	}
 
 	if (j.contains("image"))
@@ -71,4 +74,11 @@ bool lib::spt::playlist::is_owner(const lib::spt::user &user) const
 bool lib::spt::playlist::is_null() const
 {
 	return id.empty();
+}
+
+int lib::spt::playlist::track_count()
+{
+	return tracks_count >= 0
+		? tracks_count
+		: tracks.size();
 }
