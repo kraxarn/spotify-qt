@@ -27,7 +27,7 @@ namespace lib
 		{
 			for (auto &name : names)
 			{
-				if (json.contains(name))
+				if (json.contains(name) && !json.at(name).is_null())
 				{
 					json.at(name).get_to(item);
 					return true;
