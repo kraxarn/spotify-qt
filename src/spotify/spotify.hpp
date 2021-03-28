@@ -120,9 +120,26 @@ namespace spt
 		void playTracks(int trackIndex, const std::string &context,
 			lib::callback<QString> &callback);
 
+		void play_tracks(int track_index, const std::vector<std::string> &all,
+			lib::callback<std::string> &callback);
+
+		/**
+		 * Convenience method for play_tracks with std::vector
+		 */
+		void play_tracks(int track_index, const std::initializer_list<std::string> &all,
+			lib::callback<std::string> &callback);
+
+		/**
+		 * @deprecated
+		 */
 		void playTracks(int trackIndex, const std::vector<std::string> &all,
 			lib::callback<QString> &callback);
 
+		void play_tracks(const std::string &context, lib::callback<std::string> &callback);
+
+		/**
+		 * @deprecated
+		 */
 		void playTracks(const QString &context, lib::callback<QString> &callback);
 
 		void resume(lib::callback<QString> &callback);

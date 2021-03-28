@@ -55,7 +55,16 @@ void Spotify::playTracks(int trackIndex, const std::string &context,
 void Spotify::playTracks(int trackIndex, const std::vector<std::string> &all,
 	lib::callback<QString> &callback)
 {
-	lib::log::dev("Playing track {} ({} total)", trackIndex, all.size());
+	play_tracks(trackIndex, all, [callback](const std::string &result)
+	{
+		callback(QString::fromStdString(result));
+	});
+}
+
+void Spotify::play_tracks(int track_index, const std::vector<std::string> &all,
+	lib::callback<std::string> &callback)
+{
+	lib::log::dev("Playing track {} ({} total)", track_index, all.size());
 
 	auto maxQueue = settings.spotify.max_queue;
 	std::vector<std::string> items = all;
@@ -63,34 +72,48 @@ void Spotify::playTracks(int trackIndex, const std::vector<std::string> &all,
 	{
 		lib::log::warn("Attempting to queue {} tracks, but only {} allowed",
 			all.size(), maxQueue);
-		items = lib::vector::sub(all, trackIndex, maxQueue);
-		trackIndex = 0;
+		items = lib::vector::sub(all, track_index, maxQueue);
+		track_index = 0;
 	}
 
 	nlohmann::json body = {
 		{"uris", items},
 		{"offset", {
-			{"position", trackIndex}
+			{"position", track_index}
 		}}
 	};
 
-	put(QString::fromStdString(current_device.empty()
+	put(current_device.empty()
 			? "me/player/play"
-			: lib::fmt::format("me/player/play?device_id={}", current_device)),
+			: lib::fmt::format("me/player/play?device_id={}", current_device),
 		body, callback);
+}
+
+void Spotify::play_tracks(int track_index, const std::initializer_list<std::string> &all,
+	lib::callback<std::string> &callback)
+{
+	play_tracks(track_index, std::vector<std::string>(all), callback);
 }
 
 void Spotify::playTracks(const QString &context, lib::callback<QString> &callback)
 {
-	lib::log::dev("Playing track from {}", context.toStdString());
+	put(context.toStdString(), [callback](const std::string &result)
+	{
+		callback(QString::fromStdString(result));
+	});
+}
+
+void Spotify::play_tracks(const std::string &context, lib::callback<std::string> &callback)
+{
+	lib::log::dev("Playing track from {}", context);
 
 	nlohmann::json body = {
-		{"context_uri", context.toStdString()}
+		{"context_uri", context}
 	};
 
-	put(QString::fromStdString(current_device.empty()
+	put(current_device.empty()
 			? "me/player/play"
-			: lib::fmt::format("me/player/play?device_id={}", current_device)),
+			: lib::fmt::format("me/player/play?device_id={}", current_device),
 		body, callback);
 }
 
