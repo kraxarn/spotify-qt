@@ -87,7 +87,7 @@ namespace mp
 	private:
 		QDBusConnection dBus;
 		spt::Spotify *spotify;
-		std::function<void(const QString &result)> callback;
+		std::function<void(const std::string &result)> callback;
 
 		lib::spt::playback currentPlayback() const;
 	};

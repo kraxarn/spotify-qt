@@ -47,16 +47,16 @@ VolumeButton::VolumeButton(lib::settings &settings, spt::Spotify &spotify, QWidg
 		// If using Spotify for volume control, only update on release
 		QSlider::connect(volume, &QAbstractSlider::sliderReleased, [this]()
 		{
-			this->spotify.setVolume(volume->value() * 5,
-				[this](const QString &status)
+			this->spotify.set_volume(volume->value() * 5,
+				[this](const std::string &status)
 				{
-					if (!status.isEmpty())
+					if (!status.empty())
 					{
 						auto window = MainWindow::find(parentWidget());
 						if (window != nullptr)
 						{
-							window->setStatus(QString("Failed to set volume: %1")
-								.arg(status), true);
+							window->status(lib::fmt::format("Failed to set volume: {}",
+								status), true);
 						}
 					}
 				});

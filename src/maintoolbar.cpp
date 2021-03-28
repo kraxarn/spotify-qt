@@ -36,14 +36,14 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 		current.is_playing = !current.is_playing;
 		mainWindow->refreshed(current);
 
-		auto callback = [this, mainWindow](const QString &status)
+		auto callback = [this, mainWindow](const std::string &status)
 		{
-			if (status.isEmpty())
+			if (status.empty())
 				return;
 
-			mainWindow->setStatus(QString("Failed to %1 playback: %2")
-				.arg(this->playPause->iconText() == "Pause" ? "pause" : "resume")
-				.arg(status), true);
+			mainWindow->status(lib::fmt::format("Failed to {} playback: {}",
+				this->playPause->iconText() == "Pause" ? "pause" : "resume",
+				status), true);
 		};
 
 		if (current.is_playing)
@@ -55,13 +55,13 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 	auto next = addAction(Icon::get("media-skip-forward"), "Next");
 	QAction::connect(previous, &QAction::triggered, [this](bool checked)
 	{
-		this->spotify.previous([this](const QString &status)
+		this->spotify.previous([this](const std::string &status)
 		{
-			auto mainWindow = (MainWindow *) this->parent;
-			if (!status.isEmpty())
+			auto mainWindow = MainWindow::find(this->parent);
+			if (!status.empty())
 			{
-				mainWindow->setStatus(QString("Failed to go to previous track: %1")
-					.arg(status), true);
+				mainWindow->status(lib::fmt::format("Failed to go to previous track: {}",
+					status), true);
 			}
 			mainWindow->refresh();
 		});
@@ -69,13 +69,13 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 
 	QAction::connect(next, &QAction::triggered, [this](bool checked)
 	{
-		this->spotify.next([this](const QString &status)
+		this->spotify.next([this](const std::string &status)
 		{
-			auto mainWindow = (MainWindow *) this->parent;
-			if (!status.isEmpty())
+			auto mainWindow = MainWindow::find(this->parent);
+			if (!status.empty())
 			{
-				mainWindow->setStatus(QString("Failed to go to next track: %1")
-					.arg(status), true);
+				mainWindow->status(lib::fmt::format("Failed to go to next track: {}",
+					status), true);
 			}
 			mainWindow->refresh();
 		});
@@ -85,13 +85,13 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 	progress = new ClickableSlider(Qt::Horizontal, this);
 	QSlider::connect(progress, &QAbstractSlider::sliderReleased, this, [this]()
 	{
-		this->spotify.seek(progress->value(), [this](const QString &status)
+		this->spotify.seek(progress->value(), [this](const std::string &status)
 		{
-			auto mainWindow = (MainWindow *) this->parent;
-			if (!status.isEmpty())
+			auto mainWindow = MainWindow::find(this->parent);
+			if (!status.empty())
 			{
-				mainWindow->setStatus(QString("Failed to seek: %1")
-					.arg(status), true);
+				mainWindow->status(lib::fmt::format("Failed to seek: {}",
+					status), true);
 			}
 
 #ifdef USE_DBUS
@@ -120,12 +120,12 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 		current.shuffle = !current.shuffle;
 		mainWindow->refreshed(current);
 
-		this->spotify.setShuffle(checked, [mainWindow](const QString &status)
+		this->spotify.set_shuffle(checked, [mainWindow](const std::string &status)
 		{
-			if (!status.isEmpty())
+			if (!status.empty())
 			{
-				mainWindow->setStatus(QString("Failed to toggle shuffle: %1")
-					.arg(status), true);
+				mainWindow->status(lib::fmt::format("Failed to toggle shuffle: {}",
+					status), true);
 			}
 		});
 	});
@@ -142,12 +142,12 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 		current.repeat = repeatMode;
 		mainWindow->refreshed(current);
 
-		this->spotify.setRepeat(repeatMode, [mainWindow](const QString &status)
+		this->spotify.set_repeat(repeatMode, [mainWindow](const std::string &status)
 		{
-			if (!status.isEmpty())
+			if (!status.empty())
 			{
-				mainWindow->setStatus(QString("Failed to toggle repeat: %1")
-					.arg(status), true);
+				mainWindow->status(lib::fmt::format("Failed to toggle repeat: {}",
+					status), true);
 			}
 		});
 	});

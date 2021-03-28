@@ -9,7 +9,7 @@ MediaPlayerPlayer::MediaPlayerPlayer(spt::Spotify *spotify, QObject *parent)
 	dBus(QDBusConnection::sessionBus()),
 	QDBusAbstractAdaptor(parent)
 {
-	callback = [](const QString &result)
+	callback = [](const std::string &result)
 	{
 		// We trust that the error message has already been logged somewhere
 	};
@@ -75,7 +75,7 @@ double MediaPlayerPlayer::getVolume() const
 
 void MediaPlayerPlayer::setVolume(double value) const
 {
-	spotify->setVolume((int) (value * 100), callback);
+	spotify->set_volume((int) (value * 100), callback);
 }
 
 qint64 MediaPlayerPlayer::position() const
@@ -111,7 +111,7 @@ bool MediaPlayerPlayer::shuffle() const
 
 void MediaPlayerPlayer::setShuffle(bool value) const
 {
-	spotify->setShuffle(value, callback);
+	spotify->set_shuffle(value, callback);
 }
 
 void MediaPlayerPlayer::emitMetadataChange() const

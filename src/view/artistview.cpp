@@ -260,15 +260,15 @@ void ArtistView::follow(bool)
 
 void ArtistView::trackClick(QListWidgetItem *item)
 {
-	spotify.playTracks(item->data(RoleIndex).toInt(), topTrackIds,
-		[this](const QString &result)
+	spotify.play_tracks(item->data(RoleIndex).toInt(), topTrackIds,
+		[this](const std::string &result)
 		{
-			if (result.isEmpty())
+			if (result.empty())
 				return;
 
 			auto mainWindow = MainWindow::find(this->parentWidget());
-			mainWindow->setStatus(QString("Failed to start playback: %1")
-				.arg(result), true);
+			mainWindow->status(lib::fmt::format("Failed to start playback: {}",
+				result), true);
 		});
 }
 
@@ -321,16 +321,16 @@ void ArtistView::albumMenu(const QPoint &pos)
 
 void ArtistView::albumDoubleClicked(QTreeWidgetItem *item, int)
 {
-	spotify.playTracks(QString("spotify:album:%1")
-			.arg(item->data(0, RoleAlbumId).toString()),
-		[this](const QString &result)
+	spotify.play_tracks(lib::spt::spotify_api::to_uri("album",
+		item->data(0, RoleAlbumId).toString().toStdString()),
+		[this](const std::string &result)
 		{
-			if (result.isEmpty())
+			if (result.empty())
 				return;
 
 			auto mainWindow = MainWindow::find(this->parentWidget());
-			mainWindow->setStatus(QString("Failed to start playback: %1")
-				.arg(result), true);
+			mainWindow->status(lib::fmt::format("Failed to start playback: {}",
+				result), true);
 		});
 }
 
@@ -348,7 +348,8 @@ void ArtistView::searchDuckDuckGo(bool)
 
 void ArtistView::play(bool)
 {
-	spotify.playTracks(QString("spotify:artist:%1").arg(artistId), {});
+	spotify.play_tracks(lib::spt::spotify_api::to_uri("artist",
+		artistId.toStdString()), {});
 }
 
 void ArtistView::copyLink(bool)

@@ -73,12 +73,12 @@ void TracksList::clicked(QTreeWidgetItem *item, int)
 		return;
 	}
 
-	auto callback = [this, mainWindow, item](const QString &status)
+	auto callback = [this, mainWindow, item](const std::string &status)
 	{
-		if (!status.isEmpty())
+		if (!status.empty())
 		{
-			mainWindow->setStatus(QString("Failed to start playback: %1")
-				.arg(status), true);
+			mainWindow->status(lib::fmt::format("Failed to start playback: {}",
+				status), true);
 		}
 		else
 			this->setPlayingTrackItem(item);
@@ -90,10 +90,10 @@ void TracksList::clicked(QTreeWidgetItem *item, int)
 	if (mainWindow->getCurrentLibraryItem() != nullptr)
 	{
 		auto allTracks = mainWindow->currentTracks();
-		this->spotify.playTracks(currentIndex().row(), allTracks, callback);
+		this->spotify.play_tracks(currentIndex().row(), allTracks, callback);
 	}
 	else
-		this->spotify.playTracks(trackIndex, mainWindow->getSptContext(), callback);
+		this->spotify.play_tracks(trackIndex, mainWindow->getSptContext(), callback);
 }
 
 void TracksList::headerMenu(const QPoint &pos)

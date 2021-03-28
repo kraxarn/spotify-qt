@@ -181,8 +181,8 @@ QString Spotify::put(const QString &url, QVariantMap *body)
 		{
 			if (devices.size() == 1)
 			{
-				this->setDevice(devices.at(0),
-					[this, url, body](const QString &status)
+				this->set_device(devices.at(0),
+					[this, url, body](const std::string &status)
 					{
 						// TODO: This result needs to be handled
 						this->put(url, body);
@@ -196,7 +196,7 @@ QString Spotify::put(const QString &url, QVariantMap *body)
 					auto selected = dialog.selectedDevice();
 					if (!selected.id.empty())
 					{
-						setDevice(selected, [this, url, body](const QString &status)
+						set_device(selected, [this, url, body](const std::string &status)
 						{
 							// TODO: This result needs to be handled
 							this->put(url, body);
@@ -237,8 +237,8 @@ void Spotify::put(const QString &url, const nlohmann::json &body,
 					}
 					else if (devices.size() == 1)
 					{
-						this->setDevice(devices.at(0),
-							[this, url, body, callback](const QString &status)
+						this->set_device(devices.at(0),
+							[this, url, body, callback](const std::string &status)
 							{
 								this->put(url, body, callback);
 							});
@@ -251,8 +251,8 @@ void Spotify::put(const QString &url, const nlohmann::json &body,
 							auto selected = dialog.selectedDevice();
 							if (!selected.id.empty())
 							{
-								this->setDevice(selected,
-									[this, url, body, callback](const QString &status)
+								this->set_device(selected,
+									[this, url, body, callback](const std::string &status)
 									{
 										this->put(url, body, callback);
 									});

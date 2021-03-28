@@ -15,7 +15,7 @@ void Spotify::topTracks(const spt::Artist &artist,
 	lib::callback<std::vector<lib::spt::track>> &callback)
 {
 	get<lib::spt::track>(lib::fmt::format("artists/{}/top-tracks?country=from_token",
-		artist.id.toStdString()), callback);
+		artist.id.toStdString()), "tracks", callback);
 }
 
 void Spotify::relatedArtists(const spt::Artist &artist,

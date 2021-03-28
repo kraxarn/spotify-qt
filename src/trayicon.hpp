@@ -30,5 +30,5 @@ private:
 	spt::Spotify *spotify;
 	const lib::settings &settings;
 
-	std::function<void(const QString &result)> callback;
+	std::function<void(const std::string &result)> callback;
 };

@@ -78,17 +78,23 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 		else
 			songs->load(cacheTracks);
 
-		std::vector<lib::spt::track> tracks;
+		auto callback = [this, id](const std::vector<lib::spt::track> &tracks)
+		{
+			this->tracksLoaded(id, tracks);
+		};
+
 		if (item->text(0) == RECENTLY_PLAYED)
-			tracks = spotify.recentlyPlayed();
+			spotify.recently_played(callback);
 		else if (item->text(0) == SAVED_TRACKS)
-			tracks = spotify.savedTracks();
+			callback(spotify.savedTracks());
 		else if (item->text(0) == TOP_TRACKS)
-			tracks = spotify.topTracks();
+			callback(spotify.topTracks());
 		else if (item->text(0) == NEW_RELEASES)
 		{
 			auto all = mainWindow->allArtists();
 			auto releases = spotify.newReleases();
+			std::vector<lib::spt::track> tracks;
+
 			for (auto &album : releases)
 			{
 				if (all.find(album.artist.toStdString()) != all.end())
@@ -101,15 +107,21 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 					}
 				}
 			}
+			callback(tracks);
 		}
-
-		if (!tracks.empty())
-		{
-			mainWindow->saveTracksToCache(id, tracks);
-			songs->load(tracks);
-		}
-		mainWindow->getSongsTree()->setEnabled(true);
 	}
+}
+
+void LibraryList::tracksLoaded(const std::string &id, const std::vector<lib::spt::track> &tracks)
+{
+	auto mainWindow = MainWindow::find(parentWidget());
+
+	if (!tracks.empty())
+	{
+		mainWindow->saveTracksToCache(id, tracks);
+		mainWindow->getSongsTree()->load(tracks);
+	}
+	mainWindow->getSongsTree()->setEnabled(true);
 }
 
 void LibraryList::doubleClicked(QTreeWidgetItem *item, int)
@@ -118,33 +130,36 @@ void LibraryList::doubleClicked(QTreeWidgetItem *item, int)
 	if (mainWindow == nullptr)
 		return;
 
-	// Fetch all tracks in list
-	auto tracks = item->text(0) == RECENTLY_PLAYED
-		? spotify.recentlyPlayed()
-		: item->text(0) == SAVED_TRACKS
-			? spotify.savedTracks()
-			: item->text(0) == TOP_TRACKS
-				? spotify.topTracks()
-				: std::vector<lib::spt::track>();
-
-	// If none were found, don't do anything
-	if (tracks.empty())
-		return;
-
-	// Get id of all tracks
-	std::vector<std::string> trackIds;
-	for (auto &track : tracks)
-		trackIds.push_back(lib::fmt::format("spotify:track:{}", track.id));
-
-	// Play in context of all tracks
-	spotify.playTracks(0, trackIds, [mainWindow](const QString &status)
+	auto callback = [this, mainWindow](const std::vector<lib::spt::track> &tracks)
 	{
-		if (!status.isEmpty())
-		{
-			mainWindow->setStatus(QString("Failed to start playback: %1")
-				.arg(status), true);
-		}
-	});
+		// If none were found, don't do anything
+		if (tracks.empty())
+			return;
+
+		// Get id of all tracks
+		std::vector<std::string> trackIds;
+		for (auto &track : tracks)
+			trackIds.push_back(lib::spt::spotify_api::to_uri("track", track.id));
+
+		// Play in context of all tracks
+		this->spotify.play_tracks(0, trackIds,
+			[mainWindow](const std::string &status)
+			{
+				if (!status.empty())
+				{
+					mainWindow->status(lib::fmt::format("Failed to start playback: {}",
+						status), true);
+				}
+			});
+	};
+
+	// Fetch all tracks in list
+	if (item->text(0) == RECENTLY_PLAYED)
+		spotify.recently_played(callback);
+	else if (item->text(0) == SAVED_TRACKS)
+		callback(spotify.savedTracks());
+	else if (item->text(0) == TOP_TRACKS)
+		callback(spotify.topTracks());
 }
 
 void LibraryList::expanded(QTreeWidgetItem *item)

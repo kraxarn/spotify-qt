@@ -5,9 +5,9 @@ TrayIcon::TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QObject
 	settings(settings),
 	QSystemTrayIcon(parent)
 {
-	callback = [this](const QString &result)
+	callback = [this](const std::string &result)
 	{
-		this->message(result);
+		this->message(QString::fromStdString(result));
 	};
 
 	contextMenu = new QMenu();

@@ -20,4 +20,6 @@ private:
 	void clicked(QTreeWidgetItem *item, int column);
 	void doubleClicked(QTreeWidgetItem *item, int column);
 	void expanded(QTreeWidgetItem *item);
+
+	void tracksLoaded(const std::string &id, const std::vector<lib::spt::track> &tracks);
 };

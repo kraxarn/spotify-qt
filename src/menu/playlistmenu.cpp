@@ -48,18 +48,18 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &play
 			}
 
 			auto initialIndex = lib::random().next_int(0, tracks.size());
-			spotify.playTracks(initialIndex, lib::fmt::format("spotify:playlist:{}",
-				playlist.id), [&spotify, window](const QString &status)
+			spotify.play_tracks(initialIndex, lib::fmt::format("spotify:playlist:{}",
+				playlist.id), [&spotify, window](const std::string &status)
 			{
-				if (!status.isEmpty())
+				if (!status.empty())
 				{
-					window->setStatus(status, true);
+					window->status(status, true);
 					return;
 				}
 
-				spotify.setShuffle(true, [window](const QString &status)
+				spotify.set_shuffle(true, [window](const std::string &status)
 				{
-					window->setStatus(status, true);
+					window->status(status, true);
 				});
 			});
 		});

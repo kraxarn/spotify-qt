@@ -151,10 +151,9 @@ void SongMenu::addToQueue(bool)
 		? trackId
 		: lib::fmt::format("spotify:track:{}", trackId);
 
-	spotify.addToQueue(uri, [this](const std::string &status)
+	spotify.add_to_queue(uri, [this](const std::string &status)
 	{
-		if (!status.empty())
-			MainWindow::find(this->parentWidget())->status(status, true);
+		MainWindow::find(this->parentWidget())->status(status, true);
 	});
 }
 

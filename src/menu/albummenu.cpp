@@ -45,19 +45,19 @@ void AlbumMenu::shuffle(bool)
 	}
 
 	auto initialIndex = lib::random().next_int(0, tracks.size());
-	spotify.playTracks(initialIndex, lib::fmt::format("spotify:album:{}", albumId),
-		[this](const QString &status)
+	spotify.play_tracks(initialIndex, lib::fmt::format("spotify:album:{}", albumId),
+		[this](const std::string &status)
 		{
-			auto mainWindow = (MainWindow *) parent;
-			if (!status.isEmpty())
+			auto mainWindow = MainWindow::find(this->parent);
+			if (!status.empty())
 			{
-				mainWindow->setStatus(status, true);
+				mainWindow->status(status, true);
 				return;
 			}
 
-			spotify.setShuffle(true, [mainWindow](const QString &status)
+			spotify.set_shuffle(true, [mainWindow](const std::string &status)
 			{
-				mainWindow->setStatus(status, true);
+				mainWindow->status(status, true);
 			});
 		});
 }
