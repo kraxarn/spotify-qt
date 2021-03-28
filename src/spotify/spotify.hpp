@@ -197,7 +197,7 @@ namespace spt
 		 */
 		void get(const QString &url, lib::callback<QJsonArray> &callback);
 
-		void get(const std::string &url, lib::callback<nlohmann::json> &callback);
+		void get(const std::string &url, lib::callback<nlohmann::json> &callback) override;
 
 		//endregion
 
@@ -214,9 +214,9 @@ namespace spt
 		void put(const QString &url, lib::callback<QString> &callback);
 
 		void put(const std::string &url, const nlohmann::json &body,
-			lib::callback<std::string> &callback);
+			lib::callback<std::string> &callback) override;
 
-		void put(const std::string &url, lib::callback<std::string> &callback);
+		void put(const std::string &url, lib::callback<std::string> &callback) override;
 
 		//endregion
 
@@ -227,7 +227,7 @@ namespace spt
 		 */
 		void post(const QString &url, lib::callback<QString> &callback);
 
-		void post(const std::string &url, lib::callback<std::string> &callback);
+		void post(const std::string &url, lib::callback<std::string> &callback) override;
 
 		//endregion
 
@@ -239,7 +239,7 @@ namespace spt
 		void del(const QString &url, const nlohmann::json &json, lib::callback<QString> &callback);
 
 		void del(const std::string &url, const nlohmann::json &json,
-			lib::callback<std::string> &callback);
+			lib::callback<std::string> &callback) override;
 
 		//endregion
 
