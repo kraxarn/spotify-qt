@@ -29,9 +29,9 @@ TEST_CASE("vector")
 		};
 
 		auto v3 = lib::vector::combine(v1, v2);
-		verify_eq(v3, {
+		CHECK(verify_eq(v3, {
 			1, 2, 3, 4, 5, 6
-		});
+		}));
 	}
 
 	SUBCASE("append")
@@ -44,8 +44,8 @@ TEST_CASE("vector")
 		};
 
 		lib::vector::append(v1, v2);
-		verify_eq(v1, {
+		CHECK(verify_eq(v1, {
 			1, 2, 3, 4, 5, 6
-		});
+		}));
 	}
 }
