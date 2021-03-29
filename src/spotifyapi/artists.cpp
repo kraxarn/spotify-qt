@@ -3,31 +3,28 @@
 // Currently unavailable:
 // artists
 
-void Spotify::artist(const QString &artistId, lib::callback<spt::Artist> &callback)
+void Spotify::artist(const std::string &artistId, lib::callback<lib::spt::artist> &callback)
 {
-	get(QString("artists/%1").arg(artistId), [callback](const QJsonObject &json)
-	{
-		callback(Artist(json));
-	});
+	get(lib::fmt::format("artists/{}", artistId), callback);
 }
 
-void Spotify::topTracks(const spt::Artist &artist,
+void Spotify::topTracks(const lib::spt::artist &artist,
 	lib::callback<std::vector<lib::spt::track>> &callback)
 {
 	get<lib::spt::track>(lib::fmt::format("artists/{}/top-tracks?country=from_token",
-		artist.id.toStdString()), "tracks", callback);
+		artist.id), "tracks", callback);
 }
 
-void Spotify::relatedArtists(const spt::Artist &artist,
-	lib::callback<std::vector<spt::Artist>> &callback)
+void Spotify::relatedArtists(const lib::spt::artist &artist,
+	lib::callback<std::vector<lib::spt::artist>> &callback)
 {
-	get<spt::Artist>(QString("artists/%1/related-artists")
-		.arg(artist.id), callback);
+	get<lib::spt::artist>(lib::fmt::format("artists/{}/related-artists", artist.id),
+		"artists", callback);
 }
 
-void Spotify::albums(const spt::Artist &artist,
+void Spotify::albums(const lib::spt::artist &artist,
 	lib::callback<std::vector<lib::spt::album>> &callback)
 {
 	get<lib::spt::album>(lib::fmt::format("artists/{}/albums?country=from_token",
-		artist.id.toStdString()), "items", callback);
+		artist.id), "items", callback);
 }

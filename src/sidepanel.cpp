@@ -20,12 +20,12 @@ SidePanel::SidePanel(spt::Spotify &spotify, const lib::settings &settings, lib::
 void SidePanel::openArtist(const std::string &artistId)
 {
 	auto view = new ArtistView(spotify, artistId, settings, parent);
-	view->onArtistLoaded = [this, view](const spt::Artist &artist)
+	view->onArtistLoaded = [this, view](const lib::spt::artist &artist)
 	{
 		auto index = indexOf(view);
 		if (index < 0)
 			return;
-		setTabText(index, artist.name);
+		setTabText(index, QString::fromStdString(artist.name));
 	};
 	addAndSelect(view, "view-media-artist", "...");
 }

@@ -8,7 +8,7 @@ namespace spt
 #include "../dialog/deviceselectdialog.hpp"
 #include "lib/enum/followtype.hpp"
 #include "lib/settings.hpp"
-#include "artist.hpp"
+#include "lib/spotify/artist.hpp"
 #include "audiofeatures.hpp"
 #include "lib/spotify/device.hpp"
 #include "lib/spotify/playback.hpp"
@@ -53,15 +53,15 @@ namespace spt
 
 		//region Artists
 
-		void artist(const QString &artistId, lib::callback<spt::Artist> &callback);
+		void artist(const std::string &artistId, lib::callback<lib::spt::artist> &callback);
 
-		void topTracks(const spt::Artist &artist,
+		void topTracks(const lib::spt::artist &artist,
 			lib::callback<std::vector<lib::spt::track>> &callback);
 
-		void relatedArtists(const spt::Artist &artist,
-			lib::callback<std::vector<spt::Artist>> &callback);
+		void relatedArtists(const lib::spt::artist &artist,
+			lib::callback<std::vector<lib::spt::artist>> &callback);
 
-		void albums(const spt::Artist &artist,
+		void albums(const lib::spt::artist &artist,
 			lib::callback<std::vector<lib::spt::album>> &callback);
 
 		//endregion
@@ -74,13 +74,15 @@ namespace spt
 
 		//region Follow
 
-		QVector<Artist> followedArtists(const QString &offset = QString());
+		std::vector<lib::spt::artist> followedArtists(const std::string &offset = std::string());
 
-		void follow(FollowType type, const QList<QString> &ids);
+		void follow(lib::follow_type type, const std::vector<std::string> &ids,
+			lib::callback<std::string> &callback);
 
-		void unfollow(FollowType type, const QList<QString> &ids);
+		void unfollow(lib::follow_type type, const std::vector<std::string> &ids,
+			lib::callback<std::string> &callback);
 
-		void isFollowing(FollowType type, const QList<QString> &ids,
+		void isFollowing(lib::follow_type type, const std::vector<std::string> &ids,
 			lib::callback<std::vector<bool>> &callback);
 
 		//endregion
@@ -102,7 +104,7 @@ namespace spt
 
 		//region Personalization
 
-		QVector<Artist> topArtists();
+		std::vector<lib::spt::artist> topArtists();
 
 		std::vector<lib::spt::track> topTracks();
 

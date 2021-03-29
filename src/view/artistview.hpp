@@ -23,13 +23,13 @@ public:
 	ArtistView(spt::Spotify &spotify, const std::string &artistId, const lib::settings &settings,
 		QWidget	*parent);
 
-	std::function<void(const spt::Artist &artist)> onArtistLoaded;
+	std::function<void(const lib::spt::artist &artist)> onArtistLoaded;
 
 private:
-	void artistLoaded(const spt::Artist &loadedArtist);
+	void artistLoaded(const lib::spt::artist &loadedArtist);
 	void topTracksLoaded(const std::vector<lib::spt::track> &tracks);
 	void albumsLoaded(const std::vector<lib::spt::album> &albums);
-	void relatedArtistsLoaded(const std::vector<spt::Artist> &artists);
+	void relatedArtistsLoaded(const std::vector<lib::spt::artist> &artists);
 
 	void updateFollow(bool isFollowing);
 	void follow(bool checked);
@@ -61,7 +61,7 @@ private:
 	QTabWidget *tabs = nullptr;
 	QTreeWidget *albumList = nullptr;
 	QTreeWidget *singleList = nullptr;
-	QString artistId;
-	spt::Artist artist;
+	std::string artistId;
+	lib::spt::artist artist;
 	spt::Spotify &spotify;
 };

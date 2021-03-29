@@ -44,6 +44,6 @@ protected:
 	void hideEvent(QHideEvent *event) override;
 
 private:
-	void addArtist(const spt::Artist &artist);
+	void addArtist(const lib::spt::artist &artist);
 	void addAlbum(const lib::spt::album &album);
 };

@@ -152,16 +152,16 @@ void SearchView::search()
 		{
 			auto i = tabs->currentIndex();
 			auto cat = parts[1];
-			auto id = parts[2];
+			auto id = parts[2].toStdString();
 
 			if (cat == "track")
 			{
-				results.tracks.append(spotify.getTrack(id.toStdString()));
+				results.tracks.append(spotify.getTrack(id));
 				i = 0;
 			}
 			else if (cat == "artist")
 			{
-				spotify.artist(id, [this](const spt::Artist &artist)
+				spotify.artist(id, [this](const lib::spt::artist &artist)
 				{
 					this->addArtist(artist);
 				});
@@ -169,7 +169,7 @@ void SearchView::search()
 			}
 			else if (cat == "album")
 			{
-				spotify.getAlbum(id.toStdString(), [this](const lib::spt::album &album)
+				spotify.getAlbum(id, [this](const lib::spt::album &album)
 				{
 					this->addAlbum(album);
 				});
@@ -177,7 +177,7 @@ void SearchView::search()
 			}
 			else if (cat == "playlist")
 			{
-				results.playlists.append(spotify.playlist(id.toStdString()));
+				results.playlists.append(spotify.playlist(id));
 				i = 3;
 			}
 
@@ -263,11 +263,14 @@ void SearchView::playlistMenu(const QPoint &pos)
 	menu->popup(playlistList->mapToGlobal(pos));
 }
 
-void SearchView::addArtist(const spt::Artist &artist)
+void SearchView::addArtist(const lib::spt::artist &artist)
 {
-	auto item = new QListWidgetItem(artist.name, artistList);
-	item->setData(RoleArtistId, artist.id);
-	item->setToolTip(artist.name);
+	auto name = QString::fromStdString(artist.name);
+	auto id = QString::fromStdString(artist.id);
+
+	auto item = new QListWidgetItem(name, artistList);
+	item->setData(RoleArtistId, id);
+	item->setToolTip(name);
 }
 
 void SearchView::addAlbum(const lib::spt::album &album)

@@ -1,8 +1,8 @@
 #include "spotifyapi.hpp"
 
-QVector<Artist> Spotify::topArtists()
+std::vector<lib::spt::artist> Spotify::topArtists()
 {
-	return loadItems<Artist>("me/top/artists?limit=10");
+	return loadItemsAsJson<lib::spt::artist>("me/top/artists?limit=10");
 }
 
 std::vector<lib::spt::track> Spotify::topTracks()
