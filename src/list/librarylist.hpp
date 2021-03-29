@@ -3,6 +3,7 @@
 #include "../enum/datarole.hpp"
 #include "../spotify/spotify.hpp"
 #include "../util/utils.hpp"
+#include "libraryitem.hpp"
 
 #include <QTreeWidget>
 #include <QHeaderView>

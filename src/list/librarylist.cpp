@@ -163,31 +163,38 @@ void LibraryList::doubleClicked(QTreeWidgetItem *item, int)
 
 void LibraryList::expanded(QTreeWidgetItem *item)
 {
-	QVector<QVariantList> results;
+	std::vector<LibraryItem> results;
 	item->takeChildren();
 
 	if (item->text(0) == TOP_ARTISTS)
+	{
 		for (auto &artist : spotify.topArtists())
-			results.append({artist.name, artist.id, RoleArtistId});
+			results.emplace_back(artist.name, artist.id, RoleArtistId);
+	}
 	else if (item->text(0) == SAVED_ALBUMS)
+	{
 		for (auto &album : spotify.savedAlbums())
-			results.append({QString::fromStdString(album.name),
-				QString::fromStdString(album.id), RoleAlbumId});
+			results.emplace_back(album.name, album.id, RoleAlbumId);
+	}
 	else if (item->text(0) == FOLLOWED_ARTISTS)
+	{
 		for (auto &artist : spotify.followedArtists())
-			results.append({artist.name, artist.id, RoleArtistId});
+			results.emplace_back(artist.name, artist.id, RoleArtistId);
+	}
 
 	std::sort(results.begin(), results.end(),
-		[](const QVariantList &x, const QVariantList &y)
+		[](const LibraryItem &x, const LibraryItem &y)
 		{
-			return x.first().toString() < y.first().toString();
+			return x.name < y.name;
 		}
 	);
 
 	// No results
-	if (results.isEmpty())
+	if (results.empty())
 	{
-		auto child = new QTreeWidgetItem(item, {"No results"});
+		auto child = new QTreeWidgetItem(item, {
+			"No results"
+		});
 		child->setDisabled(true);
 		child->setToolTip(0, "If they should be here, try logging out and back in");
 		item->addChild(child);
@@ -197,9 +204,11 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 	// Add all to the list
 	for (auto &result : results)
 	{
-		auto child = new QTreeWidgetItem(item, {result[0].toString()});
-		child->setData(0, 0x100, result[1]);
-		child->setData(0, 0x101, result[2]);
+		auto child = new QTreeWidgetItem(item, {
+			QString::fromStdString(result.name)
+		});
+		child->setData(0, 0x100, QString::fromStdString(result.id));
+		child->setData(0, 0x101, result.role);
 		item->addChild(child);
 	}
 }
