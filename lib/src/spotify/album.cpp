@@ -51,7 +51,18 @@ void lib::spt::from_json(const nlohmann::json &j, album &a)
 	j.at("release_date").get_to(a.release_date);
 
 	if (j.contains("album_group"))
-		j.at("album_group").get_to(a.album_group);
+	{
+		auto album_group = j.at("album_group").get<std::string>();
+		a.album_group = album_group == "album"
+			? lib::album_group::album
+			: album_group == "single"
+				? lib::album_group::single
+				: album_group == "compilation"
+					? lib::album_group::compilation
+					: album_group == "appears_on"
+						? lib::album_group::appears_on
+						: lib::album_group::none;
+	}
 
 	if (j.contains("images"))
 		j.at("images").back().at("name").get_to(a.image);
