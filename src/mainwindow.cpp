@@ -466,7 +466,10 @@ TracksList *MainWindow::getSongsTree()
 
 std::string MainWindow::getSptContext() const
 {
-	return current.context.toStdString();
+	return lib::spt::spotify_api::to_uri("playlist",
+		(leftSidePanel->currentPlaylist() != nullptr
+			? leftSidePanel->currentPlaylist()->data(RolePlaylistId).toString()
+			: current.context).toStdString());
 }
 
 lib::spt::playback &MainWindow::getCurrentPlayback()

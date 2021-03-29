@@ -30,6 +30,7 @@
 #include "view/lyricsview.hpp"
 #include "volumebutton.hpp"
 #include "lib/cache.hpp"
+#include "lib/spotify/spotifyapi.hpp"
 
 #include <QAction>
 #include <QApplication>
