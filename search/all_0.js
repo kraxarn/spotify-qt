@@ -10,6 +10,6 @@ var searchData=
   ['all_5ftracks_7',['all_tracks',['../classlib_1_1cache.html#afd1c259fc2880c291199da9bc7514aa5',1,'lib::cache']]],
   ['always_5fstart_8',['always_start',['../structlib_1_1set_1_1spotify.html#a0a38a1677430b7636c2d0aaaeecdd650',1,'lib::set::spotify']]],
   ['append_9',['append',['../classlib_1_1vector.html#abd6f4bb72d24e728392a4fb104e3b22c',1,'lib::vector']]],
-  ['artist_10',['artist',['../classlib_1_1spt_1_1album.html#a9213de387c38199a913fc9d3ba2a450e',1,'lib::spt::album::artist()'],['../classlib_1_1spt_1_1track.html#a30c7e4ccd8a22ed74d58674538fa090d',1,'lib::spt::track::artist()']]],
+  ['artist_10',['artist',['../classlib_1_1spt_1_1album.html#a9213de387c38199a913fc9d3ba2a450e',1,'lib::spt::album::artist()'],['../classlib_1_1spt_1_1track.html#a30c7e4ccd8a22ed74d58674538fa090d',1,'lib::spt::track::artist()'],['../classlib_1_1spt_1_1artist.html',1,'lib::spt::artist']]],
   ['artist_5fid_11',['artist_id',['../classlib_1_1spt_1_1track.html#a82603b8b461cf85bf7309e137d0785c9',1,'lib::spt::track']]]
 ];
