@@ -145,7 +145,7 @@ void ArtistView::artistLoaded(const spt::Artist &loadedArtist)
 
 	followButton->setText(QString("Follow (%2)").arg(followers));
 
-	spotify.isFollowing(FollowType::Artist, {
+	spotify.isFollowing(lib::follow_type::artist, {
 		artistId
 	}, [this](const std::vector<bool> &follows)
 	{
@@ -251,13 +251,13 @@ void ArtistView::follow(bool)
 
 	if (isFollowing)
 	{
-		spotify.unfollow(FollowType::Artist, {
+		spotify.unfollow(lib::follow_type::artist, {
 			artistId
 		});
 	}
 	else
 	{
-		spotify.follow(FollowType::Artist, {
+		spotify.follow(lib::follow_type::artist, {
 			artistId
 		});
 	}

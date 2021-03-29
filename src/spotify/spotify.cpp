@@ -396,17 +396,21 @@ std::string Spotify::request_refresh(const std::string &post_data, const std::st
 	return reply->readAll().toStdString();
 }
 
-QString Spotify::followTypeString(FollowType type)
+QString Spotify::followTypeString(lib::follow_type type)
+{
+	return QString::fromStdString(follow_type_string(type));
+}
+
+std::string Spotify::follow_type_string(lib::follow_type type)
 {
 	switch (type)
 	{
-		case FollowType::Artist:
+		case lib::follow_type::artist:
 			return "artist";
 
-		case FollowType::User:
+		case lib::follow_type::user:
 			return "user";
 	}
 
-	return QString();
+	return std::string();
 }
-

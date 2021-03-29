@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../enum/followtype.hpp"
+#include "lib/enum/followtype.hpp"
 #include "../mainwindow.hpp"
 #include "../menu/albummenu.hpp"
 #include "../menu/songmenu.hpp"
