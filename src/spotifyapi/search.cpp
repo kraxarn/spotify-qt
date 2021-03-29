@@ -1,8 +1,7 @@
 #include "spotifyapi.hpp"
 
-SearchResults Spotify::search(const QString &query)
+void Spotify::search(const std::string &query, lib::callback<lib::spt::search_results> &callback)
 {
-	return SearchResults(getAsObject(
-		QString("search?q=%1&type=album,artist,playlist,track&limit=50&market=from_token")
-			.arg(query)));
+	get(lib::fmt::format("search?q={}&type=album,artist,playlist,track&limit=50&market=from_token",
+		query), callback);
 }

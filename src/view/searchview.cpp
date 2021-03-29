@@ -137,7 +137,6 @@ void SearchView::search()
 
 	// Check if spotify uri
 	auto searchText = searchBox->text();
-	spt::SearchResults results;
 
 	if (searchText.startsWith("spotify:")
 		|| searchText.startsWith("https://open.spotify.com/"))
@@ -154,7 +153,7 @@ void SearchView::search()
 
 			if (cat == "track")
 			{
-				results.tracks.append(spotify.getTrack(id));
+				addTrack(spotify.getTrack(id));
 				i = 0;
 			}
 			else if (cat == "artist")
@@ -175,7 +174,7 @@ void SearchView::search()
 			}
 			else if (cat == "playlist")
 			{
-				results.playlists.append(spotify.playlist(id));
+				addPlaylist(spotify.playlist(id));
 				i = 3;
 			}
 
@@ -185,46 +184,12 @@ void SearchView::search()
 	else
 	{
 		// Get search results
-		results = spotify.search(searchText);
+		spotify.search(searchText.toStdString(),
+			[this](const lib::spt::search_results &results)
+			{
+				this->resultsLoaded(results);
+			});
 	}
-
-	// Albums
-	for (auto &album : results.albums)
-		addAlbum(album);
-
-	// Artists
-	for (auto &artist : results.artists)
-		addArtist(artist);
-
-	// Playlists
-	for (auto &json : results.playlists)
-	{
-		lib::spt::playlist playlist(json);
-		auto playlistName = QString::fromStdString(playlist.name);
-		auto playlistId = QString::fromStdString(playlist.id);
-
-		auto item = new QListWidgetItem(playlistName, playlistList);
-		item->setData(RolePlaylistId, playlistId);
-		item->setToolTip(playlistName);
-	}
-
-	// Tracks
-	for (auto &track : results.tracks)
-	{
-		auto trackName = QString::fromStdString(track.name);
-		auto trackArtist = QString::fromStdString(track.artist);
-		auto item = new QTreeWidgetItem(trackList, {
-			trackName, trackArtist
-		});
-		item->setData(0, RoleTrackId, QString::fromStdString(track.id));
-		item->setData(0, RoleArtistId, QString::fromStdString(track.artist_id));
-		item->setData(0, RoleAlbumId, QString::fromStdString(track.album_id));
-		item->setToolTip(0, trackName);
-		item->setToolTip(1, trackArtist);
-	}
-
-	// Search done
-	searchBox->setEnabled(true);
 }
 
 void SearchView::trackClick(QTreeWidgetItem *item, int)
@@ -287,4 +252,50 @@ void SearchView::addAlbum(const lib::spt::album &album)
 	item->setToolTip(0, name);
 	item->setToolTip(1, artist);
 	albumList->addTopLevelItem(item);
+}
+
+void SearchView::addPlaylist(const lib::spt::playlist &playlist)
+{
+	auto playlistName = QString::fromStdString(playlist.name);
+	auto playlistId = QString::fromStdString(playlist.id);
+
+	auto item = new QListWidgetItem(playlistName, playlistList);
+	item->setData(RolePlaylistId, playlistId);
+	item->setToolTip(playlistName);
+}
+
+void SearchView::addTrack(const lib::spt::track &track)
+{
+	auto trackName = QString::fromStdString(track.name);
+	auto trackArtist = QString::fromStdString(track.artist);
+	auto item = new QTreeWidgetItem(trackList, {
+		trackName, trackArtist
+	});
+	item->setData(0, RoleTrackId, QString::fromStdString(track.id));
+	item->setData(0, RoleArtistId, QString::fromStdString(track.artist_id));
+	item->setData(0, RoleAlbumId, QString::fromStdString(track.album_id));
+	item->setToolTip(0, trackName);
+	item->setToolTip(1, trackArtist);
+}
+
+void SearchView::resultsLoaded(const lib::spt::search_results &results)
+{
+	// Albums
+	for (auto &album : results.albums)
+		addAlbum(album);
+
+	// Artists
+	for (auto &artist : results.artists)
+		addArtist(artist);
+
+	// Playlists
+	for (auto &playlist : results.playlists)
+		addPlaylist(playlist);
+
+	// Tracks
+	for (auto &track : results.tracks)
+		addTrack(track);
+
+	// Search done
+	searchBox->setEnabled(true);
 }

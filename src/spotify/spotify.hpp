@@ -13,7 +13,7 @@ namespace spt
 #include "lib/spotify/device.hpp"
 #include "lib/spotify/playback.hpp"
 #include "lib/spotify/playlist.hpp"
-#include "searchresults.hpp"
+#include "lib/spotify/searchresults.hpp"
 #include "lib/spotify/user.hpp"
 #include "thirdparty/json.hpp"
 #include "lib/spotify/spotifyapi.hpp"
@@ -138,7 +138,7 @@ namespace spt
 
 		//region Search
 
-		SearchResults search(const QString &query);
+		void search(const std::string &query, lib::callback<lib::spt::search_results> &callback);
 
 		//endregion
 

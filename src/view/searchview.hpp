@@ -46,4 +46,8 @@ protected:
 private:
 	void addArtist(const lib::spt::artist &artist);
 	void addAlbum(const lib::spt::album &album);
+	void addPlaylist(const lib::spt::playlist &playlist);
+	void addTrack(const lib::spt::track &track);
+
+	void resultsLoaded(const lib::spt::search_results &results);
 };
