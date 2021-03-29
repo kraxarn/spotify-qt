@@ -270,9 +270,8 @@ void LeftSidePanel::orderPlaylists(lib::playlist_order order)
 					auto t2 = this->cache.get_playlist(id2).tracks;
 
 					return !t1.empty() && !t2.empty()
-						? DateUtils::fromIso(t1.at(latestTrack(t1)).added_at)
-							> DateUtils::fromIso(t2.at(latestTrack(t2)).added_at)
-						: false;
+						&& DateUtils::fromIso(t1.at(latestTrack(t1)).added_at)
+							> DateUtils::fromIso(t2.at(latestTrack(t2)).added_at);
 				});
 			break;
 
@@ -287,8 +286,7 @@ void LeftSidePanel::orderPlaylists(lib::playlist_order order)
 					auto id2 = i2->data(DataRole::RolePlaylistId).toString();
 
 					return customOrder.contains(id1) && customOrder.contains(id2)
-						? customOrder[id1] < customOrder[id2]
-						: false;
+						&& customOrder[id1] < customOrder[id2];
 				});
 			break;
 	}
