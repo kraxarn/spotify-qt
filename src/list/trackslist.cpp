@@ -270,6 +270,13 @@ void TracksList::load(const lib::spt::playlist &playlist)
 	load(newPlaylist.tracks);
 	setEnabled(true);
 	cache.set_playlist(newPlaylist);
+
+	auto mainWindow = MainWindow::find(parentWidget());
+	if (mainWindow != nullptr)
+	{
+		mainWindow->setSptContext(lib::spt::spotify_api::to_uri("playlist",
+			playlist.id));
+	}
 }
 
 void TracksList::setPlayingTrackItem(QTreeWidgetItem *item)
