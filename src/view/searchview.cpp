@@ -126,8 +126,6 @@ void SearchView::playlistClick(QListWidgetItem *item)
 
 void SearchView::search()
 {
-	auto mainWindow = MainWindow::find(parentWidget());
-
 	// Empty all previous results
 	trackList->clear();
 	artistList->clear();
