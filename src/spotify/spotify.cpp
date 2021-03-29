@@ -337,6 +337,11 @@ void Spotify::del(const std::string &url, const nlohmann::json &json,
 		});
 }
 
+void Spotify::del(const std::string &url, lib::callback<std::string> &callback)
+{
+	del(url, nlohmann::json(), callback);
+}
+
 QString Spotify::post(const QString &url)
 {
 	auto req = request(url);

@@ -288,6 +288,11 @@ namespace lib
 			 */
 			virtual void del(const std::string &url, const nlohmann::json &json,
 				lib::callback<std::string> &callback) = 0;
+
+			/**
+			 * Convenience method for DELETE request with no body
+			 */
+			virtual void del(const std::string &url, lib::callback<std::string> &callback) = 0;
 		};
 	}
 }

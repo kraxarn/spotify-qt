@@ -242,6 +242,8 @@ namespace spt
 		void del(const std::string &url, const nlohmann::json &json,
 			lib::callback<std::string> &callback) override;
 
+		void del(const std::string &url, lib::callback<std::string> &callback) override;
+
 		//endregion
 
 		//region Old synchronous (deprecated)
