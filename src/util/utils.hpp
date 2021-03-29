@@ -35,6 +35,7 @@ public:
 	static QTreeWidgetItem *treeItem(
 		QTreeWidget *tree, const QString &key, const QString &value);
 	static void openUrl(const QString &url, LinkType linkType, QWidget *parent);
+	static void openUrl(const std::string &url, LinkType linkType, QWidget *parent);
 
 	static bool darkBackground;
 

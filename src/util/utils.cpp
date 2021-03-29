@@ -140,3 +140,8 @@ void Utils::openUrl(const QString &url, LinkType linkType, QWidget *parent)
 	if (!QDesktopServices::openUrl(QUrl(url)))
 		OpenLinkDialog(url, linkType, parent).exec();
 }
+
+void Utils::openUrl(const std::string &url, LinkType linkType, QWidget *parent)
+{
+	openUrl(QString::fromStdString(url), linkType, parent);
+}
