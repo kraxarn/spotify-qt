@@ -65,7 +65,7 @@ void lib::spt::from_json(const nlohmann::json &j, album &a)
 	}
 
 	if (j.contains("images"))
-		j.at("images").back().at("name").get_to(a.image);
+		j.at("images").back().at("url").get_to(a.image);
 	else if (j.contains("image"))
 		j.at("image").get_to(a.image);
 
