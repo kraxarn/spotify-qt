@@ -138,6 +138,12 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	splash->finish(this);
 }
 
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+	delete trayIcon;
+	event->accept();
+}
+
 void MainWindow::refresh()
 {
 	if (refreshCount < 0
