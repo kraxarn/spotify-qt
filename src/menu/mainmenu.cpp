@@ -25,7 +25,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings, QWidget *pare
 			about->setText(QString("Update found: %1").arg(latest));
 			QAction::connect(about, &QAction::triggered, [this]()
 			{
-				Utils::openUrl("https://github.com/kraxarn/spotify-qt/releases/latest",
+				Utils::openUrl(QString("https://github.com/kraxarn/spotify-qt/releases/latest"),
 					LinkType::Web, MainWindow::find(this->parentWidget()));
 			});
 		}
