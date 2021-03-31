@@ -1,8 +1,8 @@
 Versions use major.minor scheming. New versions are released together with spotify-qt.
 
-Major releases contain breaking changes and may require changes to be made.
-Minor releases contain minor changes and bug fixes and should never require changes to be made.
-Pre-release and beta releases may contain breaking changes, even if it's a minor release.
+* Major releases contain breaking changes and may require changes to be made.
+* Minor releases contain minor changes and bug fixes and should never require changes to be made.
+* Pre-release and beta releases may contain breaking changes, even if it's a minor release.
 
 ### v0.4 (spotify-qt v3.6)
 * Added enums: `album_group`, `follow_type`, `repeat_state`.
