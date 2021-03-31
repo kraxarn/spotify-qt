@@ -29,6 +29,49 @@ ghc::filesystem::path lib::cache::path(const std::string &type, const std::strin
 
 //endregion
 
+//region playlists
+
+std::vector<lib::spt::playlist> lib::cache::get_playlists()
+{
+	std::vector<lib::spt::playlist> playlists;
+
+	try
+	{
+		auto ids = json::load<std::vector<std::string>>(path("playlist", "playlists"));
+		for (auto &id : ids)
+		{
+			auto playlist = get_playlist(id);
+			// If id is empty, load probably failed and we ignore it
+			if (!playlist.id.empty())
+				playlists.push_back(playlist);
+		}
+	}
+	catch (const std::exception &e)
+	{
+		log::warn("Failed to load playlists from cache: {}", e.what());
+	}
+
+	return playlists;
+}
+
+void lib::cache::set_playlists(const std::vector<spt::playlist> &playlists)
+{
+	std::vector<std::string> ids;
+
+	for (auto &playlist : playlists)
+	{
+		// Cache playlist if it has tracks loaded
+		if (!playlist.tracks.empty())
+			set_playlist(playlist);
+		// Cache id
+		ids.push_back(playlist.id);
+	}
+
+	lib::json::save(path("playlist", "playlists"), ids);
+}
+
+//endregion
+
 //region playlist
 
 lib::spt::playlist lib::cache::get_playlist(const std::string &id)

@@ -27,6 +27,20 @@ namespace lib
 
 		//endregion
 
+		//region playlists
+
+		/**
+		 * Get list of user's playlists
+		 */
+		std::vector<lib::spt::playlist> get_playlists();
+
+		/**
+		 * Set list of user's playlists
+		 */
+		void set_playlists(const std::vector<spt::playlist> &playlists);
+
+		//endregion
+
 		//region playlist
 
 		/**
