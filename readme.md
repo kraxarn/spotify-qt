@@ -12,21 +12,26 @@ an actual Spotify client running, for example [spotifyd](https://github.com/Spot
 which can be configured from within the app. Also like other clients, controlling music playback
 requires Spotify Premium.
 
-**Note that the project is currently under a major refactoring, which means that the 
-master branch may be buggier than usual, and using the stable branch is highly recommended!**
+**Note that the project is currently under a major refactoring, which means that the master branch
+may be buggier than usual, and using the stable branch is highly recommended!**
 
-Check out the [spotify-qt-quick](https://github.com/kraxarn/spotify-qt-quick) repo if you're interested in a Qt Quick UI.
+Check out the [spotify-qt-quick](https://github.com/kraxarn/spotify-qt-quick) repo if you're
+interested in a Qt Quick UI.
 
 #### Contributions are very welcome!
 
 ## Supported platforms
 Tested: Linux, Windows
 
-Supported: macOS, *BSD, Haiku, any platform [officially supported](https://en.wikipedia.org/wiki/List_of_platforms_supported_by_Qt) by Qt
+Supported: macOS, *BSD, Haiku, any
+platform [officially supported](https://en.wikipedia.org/wiki/List_of_platforms_supported_by_Qt) by
+Qt
 
 ## Installing
-spotify-qt is available from some package managers. If there are any package issues, or the version is out of date, contact the respective package maintainers, not me, unless I'm the package maintainer.
-If you want to maintain the package on a system not in the list below, you are very much free to. Just please open an issue, or get in contact with me, so I can add it to the list.
+spotify-qt is available from some package managers. If there are any package issues, or the version
+is out of date, contact the respective package maintainers, not me, unless I'm the package
+maintainer. If you want to maintain the package on a system not in the list below, you are very much
+free to, just please open an issue, or get in contact with me, so I can add it to the list.
 
 | Platform | Package | Maintainer |
 | -------- | ------- | ---------- |
@@ -35,13 +40,15 @@ If you want to maintain the package on a system not in the list below, you are v
 | NetBSD | [![pkgsrc](https://repology.org/badge/version-for-repo/pkgsrc_current/spotify-qt.svg?header=pkgsrc)](https://pkgsrc.se/audio/spotify-qt) | [voidpin](https://github.com/voidpin) |
 | FreeBSD | [![FreeBSD Ports](https://repology.org/badge/version-for-repo/freebsd/spotify-qt.svg?header=FreeBSD%20Ports)](https://www.freshports.org/audio/spotify-qt) | [ehaupt](https://github.com/ehaupt) |
 
-You can also get it as a [snap](https://snapcraft.io/spotify-qt), or just run `snap install spotify-qt`, if that's your thing.
+You can also get it as a [snap](https://snapcraft.io/spotify-qt), or just
+run `snap install spotify-qt`, if that's your thing.
 
 ## Building yourself
-Make sure you have Qt (5.12+/6.0+) with SVG support, CMake (3.5+) and various build tools like 
+Make sure you have Qt (5.12+/6.0+) with SVG support, CMake (3.5+) and various build tools like
 `make`, `g++` and `git`. Keep in mind that the master branch is considered unstable at all times.
-Therefore, it's recommended to use the stable branch, which is updated after each new stable release,
-only including important bug fixes, unless you wanted to try out new features.
+Therefore, it's recommended to use the stable branch, which is updated after each new stable
+release, only including important bug fixes, unless you wanted to try out new features.
+
 ```
 git clone --branch stable https://github.com/kraxarn/spotify-qt.git
 cd spotify-qt
