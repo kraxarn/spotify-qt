@@ -6,8 +6,11 @@
 
 ![Build Status](https://github.com/kraxarn/spotify-qt/workflows/CMake/badge.svg)
 
-A Spotify client using Qt as a simpler, lighter alternative to the official client, inspired by [spotify-tui](https://github.com/Rigellute/spotify-tui).
-Much like spotify-tui, you need an actual Spotify client running, for example [spotifyd](https://github.com/Spotifyd/spotifyd), which can be configured from within the app. Also like other clients, controlling music playback requires Spotify Premium.
+An unofficial Spotify client using Qt as a simpler, lighter alternative to the official client,
+inspired by [spotify-tui](https://github.com/Rigellute/spotify-tui). Much like spotify-tui, you need
+an actual Spotify client running, for example [spotifyd](https://github.com/Spotifyd/spotifyd),
+which can be configured from within the app. Also like other clients, controlling music playback
+requires Spotify Premium.
 
 **Note that the project is currently under a major refactoring, which means that the 
 master branch may be buggier than usual, and using the stable branch is highly recommended!**
