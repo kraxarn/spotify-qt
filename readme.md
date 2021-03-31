@@ -21,6 +21,7 @@ interested in a Qt Quick UI.
 #### Contributions are very welcome!
 
 ## Supported platforms
+
 Tested: Linux, Windows
 
 Supported: macOS, *BSD, Haiku, any
@@ -28,6 +29,7 @@ platform [officially supported](https://en.wikipedia.org/wiki/List_of_platforms_
 Qt
 
 ## Installing
+
 spotify-qt is available from some package managers. If there are any package issues, or the version
 is out of date, contact the respective package maintainers, not me, unless I'm the package
 maintainer. If you want to maintain the package on a system not in the list below, you are very much
@@ -39,11 +41,13 @@ free to, just please open an issue, or get in contact with me, so I can add it t
 | Haiku | [![HaikuPorts](https://repology.org/badge/version-for-repo/haikuports_master/spotify-qt.svg?header=HaikuPorts)](https://github.com/haikuports/haikuports/tree/master/media-sound/spotify_qt) | [Begasus](https://github.com/Begasus) |
 | NetBSD | [![pkgsrc](https://repology.org/badge/version-for-repo/pkgsrc_current/spotify-qt.svg?header=pkgsrc)](https://pkgsrc.se/audio/spotify-qt) | [voidpin](https://github.com/voidpin) |
 | FreeBSD | [![FreeBSD Ports](https://repology.org/badge/version-for-repo/freebsd/spotify-qt.svg?header=FreeBSD%20Ports)](https://www.freshports.org/audio/spotify-qt) | [ehaupt](https://github.com/ehaupt) |
+| Other (Linux) | [![Snapcraft](https://snapcraft.io//spotify-qt/badge.svg)](https://snapcraft.io/spotify-qt) | [kraxarn](https://github.com/kraxarn) |
 
-You can also get it as a [snap](https://snapcraft.io/spotify-qt), or just
-run `snap install spotify-qt`, if that's your thing.
+The snap version can be installed by simply running  `snap install spotify-qt`, 
+if that's your thing.
 
 ## Building yourself
+
 Make sure you have Qt (5.12+/6.0+) with SVG support, CMake (3.5+) and various build tools like
 `make`, `g++` and `git`. Keep in mind that the master branch is considered unstable at all times.
 Therefore, it's recommended to use the stable branch, which is updated after each new stable
