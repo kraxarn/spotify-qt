@@ -240,11 +240,6 @@ namespace spt
 
 		//region DELETE
 
-		/**
-		 * @deprecated
-		 */
-		void del(const QString &url, const nlohmann::json &json, lib::callback<QString> &callback);
-
 		void del(const std::string &url, const nlohmann::json &json,
 			lib::callback<std::string> &callback) override;
 
@@ -258,11 +253,6 @@ namespace spt
 		 * @deprecated
 		 */
 		QString post(const QString &url);
-
-		/**
-		 * @deprecated
-		 */
-		QString del(const QString &url, const QJsonDocument &json);
 
 		/**
 		 * @deprecated

@@ -308,18 +308,6 @@ void Spotify::post(const std::string &url, lib::callback<std::string> &callback)
 	});
 }
 
-void Spotify::del(const QString &url, const nlohmann::json &json, lib::callback<QString> &callback)
-{
-	auto req = request(url);
-	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-	await(networkManager->sendCustomRequest(req, "DELETE",
-		QByteArray::fromStdString(json.dump())), [url, callback](const QByteArray &data)
-	{
-		callback(errorMessage(url, data));
-	});
-}
-
 void Spotify::del(const std::string &url, const nlohmann::json &json,
 	lib::callback<std::string> &callback)
 {
@@ -347,13 +335,6 @@ QString Spotify::post(const QString &url)
 	auto req = request(url);
 	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 	return errorMessage(networkManager->post(req, QByteArray()));
-}
-
-QString Spotify::del(const QString &url, const QJsonDocument &json)
-{
-	auto req = request(url);
-	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-	return errorMessage(networkManager->sendCustomRequest(req, "DELETE", json.toJson()));
 }
 
 QString Spotify::errorMessage(QNetworkReply *reply)
