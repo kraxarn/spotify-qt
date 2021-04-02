@@ -20,7 +20,7 @@ LeftSidePanel::LeftSidePanel(spt::Spotify &spotify, lib::settings &settings,
 	layout->addWidget(library);
 
 	// Playlists
-	playlists = new PlaylistList(spotify, cache, parent);
+	playlists = new PlaylistList(spotify, settings, cache, parent);
 	refreshPlaylists();
 	auto playlistContainer = Utils::createGroupBox(QVector<QWidget *>() << playlists, parent);
 	playlistContainer->setTitle("Playlists");
@@ -65,20 +65,6 @@ void LeftSidePanel::popupSongMenu(const QPoint &pos)
 	if (track.name.empty() && track.artist.empty())
 		return;
 	(new SongMenu(track, spotify, parentWidget()))->popup(nowPlaying->mapToGlobal(pos));
-}
-
-int LeftSidePanel::latestTrack(const std::vector<lib::spt::track> &tracks)
-{
-	auto latest = 0;
-	for (int i = 0; i < tracks.size(); i++)
-	{
-		if (DateUtils::fromIso(tracks[i].added_at)
-			> DateUtils::fromIso(tracks[latest].added_at))
-		{
-			latest = i;
-		}
-	}
-	return latest;
 }
 
 QIcon LeftSidePanel::currentContextIcon() const
@@ -190,124 +176,27 @@ QListWidgetItem *LeftSidePanel::currentPlaylist()
 
 void LeftSidePanel::refreshPlaylists()
 {
-	QListWidgetItem *currentItem = nullptr;
-	QString lastItem;
-	if (currentPlaylist() != nullptr)
-		lastItem = currentPlaylist()->data(RolePlaylistId).toString();
-
-	sptPlaylists = spotify.playlists();
-
-	// Add all playlists
-	playlists->clear();
-	auto i = 0;
-	QTextDocument doc;
-	for (auto &playlist : sptPlaylists)
-	{
-		auto item = new QListWidgetItem(QString::fromStdString(playlist.name), playlists);
-
-		doc.setHtml(QString::fromStdString(playlist.description));
-		item->setToolTip(doc.toPlainText());
-
-		item->setData(RolePlaylistId, QString::fromStdString(playlist.id));
-		item->setData(RoleIndex, i++);
-
-		if (playlist.id == lastItem.toStdString())
-			currentItem = item;
-	}
-
-	// Sort
-	if (settings.general.playlist_order != lib::playlist_order_default)
-		orderPlaylists(settings.general.playlist_order);
-
-	if (currentItem != nullptr)
-		playlists->setCurrentItem(currentItem);
+	playlists->refresh();
 }
 
 void LeftSidePanel::orderPlaylists(lib::playlist_order order)
 {
-	QList<QListWidgetItem *> items;
-	items.reserve(playlists->count());
-
-	auto i = 0;
-	while (playlists->item(0) != nullptr)
-		items.insert(i, playlists->takeItem(0));
-
-	QMap<QString, int> customOrder;
-	MainWindow *mainWindow;
-
-	switch (order)
-	{
-		case lib::playlist_order_default:
-			std::sort(items.begin(), items.end(), [](QListWidgetItem *i1, QListWidgetItem *i2)
-			{
-				return i1->data(RoleIndex).toInt() < i2->data(RoleIndex).toInt();
-			});
-			break;
-
-		case lib::playlist_order_alphabetical:
-			std::sort(items.begin(), items.end(), [](QListWidgetItem *i1, QListWidgetItem *i2)
-			{
-				return i1->text() < i2->text();
-			});
-			break;
-
-		case lib::playlist_order_recent:
-			// TODO: Currently sorts by when tracks where added, not when playlist was last played
-			mainWindow = MainWindow::find(parentWidget());
-			if (mainWindow == nullptr)
-			{
-				lib::log::error("Failed to order playlist: MainWindow not found");
-				break;
-			}
-
-			std::sort(items.begin(), items.end(),
-				[this](QListWidgetItem *i1, QListWidgetItem *i2)
-				{
-					auto id1 = i1->data(DataRole::RolePlaylistId).toString().toStdString();
-					auto id2 = i2->data(DataRole::RolePlaylistId).toString().toStdString();
-
-					auto t1 = this->cache.get_playlist(id1).tracks;
-					auto t2 = this->cache.get_playlist(id2).tracks;
-
-					return !t1.empty() && !t2.empty()
-						&& DateUtils::fromIso(t1.at(latestTrack(t1)).added_at)
-							> DateUtils::fromIso(t2.at(latestTrack(t2)).added_at);
-				});
-			break;
-
-		case lib::playlist_order_custom:
-			i = 0;
-			for (auto &playlist : settings.general.custom_playlist_order)
-				customOrder[QString::fromStdString(playlist)] = i++;
-			std::sort(items.begin(), items.end(),
-				[customOrder](QListWidgetItem *i1, QListWidgetItem *i2)
-				{
-					auto id1 = i1->data(DataRole::RolePlaylistId).toString();
-					auto id2 = i2->data(DataRole::RolePlaylistId).toString();
-
-					return customOrder.contains(id1) && customOrder.contains(id2)
-						&& customOrder[id1] < customOrder[id2];
-				});
-			break;
-	}
-
-	for (auto item : items)
-		playlists->addItem(item);
+	playlists->order(order);
 }
 
 int LeftSidePanel::playlistCount() const
 {
-	return sptPlaylists.size();
+	return playlists->getPlaylists().size();
 }
 
 lib::spt::playlist &LeftSidePanel::playlist(size_t index)
 {
-	return sptPlaylists[index];
+	return playlists->getPlaylists().at(index);
 }
 
 std::string LeftSidePanel::getPlaylistNameFromSaved(const std::string &id)
 {
-	for (auto &playlist : sptPlaylists)
+	for (auto &playlist : playlists->getPlaylists())
 	{
 		if (lib::strings::ends_with(id, playlist.id))
 			return playlist.name;
@@ -350,7 +239,7 @@ void LeftSidePanel::setCurrentLibraryItem(QTreeWidgetItem *item)
 
 std::vector<lib::spt::playlist> &LeftSidePanel::getPlaylists()
 {
-	return sptPlaylists;
+	return playlists->getPlaylists();
 }
 
 //endregion

@@ -57,7 +57,6 @@ private:
 	lib::settings &settings;
 	LibraryList *libraryList;
 	PlaylistList *playlists;
-	std::vector<lib::spt::playlist> sptPlaylists;
 	lib::cache &cache;
 
 	QLabel *contextIcon = nullptr;
@@ -65,7 +64,6 @@ private:
 	QLabel *nowAlbum = nullptr;
 	QLabel *nowPlaying = nullptr;
 
-	static int latestTrack(const std::vector<lib::spt::track> &tracks);
 	void contextInfoMenu(const QPoint &pos);
 	void contextInfoOpen(bool checked);
 	QIcon currentContextIcon() const;
