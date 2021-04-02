@@ -168,7 +168,7 @@ void spotify_api::set_shuffle(bool enabled, lib::callback<std::string> &callback
 
 void spotify_api::recently_played(lib::callback<std::vector<lib::spt::track>> &callback)
 {
-	get<lib::spt::track>("me/player/recently-played?limit=50", "items", callback);
+	get("me/player/recently-played?limit=50", "items", callback);
 }
 
 void spotify_api::add_to_queue(const std::string &uri, lib::callback<std::string> &callback)
