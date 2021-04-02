@@ -99,97 +99,29 @@ $(function() {
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        }</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#a301b8eb203e2c032ef1ab73fdc3dfe21">   46</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1json.html#a301b8eb203e2c032ef1ab73fdc3dfe21">get</a>(<span class="keyword">const</span> nlohmann::json &amp;<a class="code" href="classlib_1_1json.html">json</a>, <span class="keyword">const</span> std::string &amp;key, T &amp;item)</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="classlib_1_1json.html">json</a>.contains(key))</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                <a class="code" href="classlib_1_1json.html">json</a>.at(key).get_to(item);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        }</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#a2ff6a5521b127fc6faa679814b96cc66">   57</a></span>&#160;        <span class="keyword">static</span> nlohmann::json <a class="code" href="classlib_1_1json.html#a2ff6a5521b127fc6faa679814b96cc66">load_json</a>(<span class="keyword">const</span> ghc::filesystem::path &amp;path);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keyword">static</span> std::vector&lt;T&gt; load_items(<span class="keyword">const</span> nlohmann::json &amp;<a class="code" href="classlib_1_1json.html">json</a>)</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        {</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="classlib_1_1json.html">json</a>.is_array())</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                <span class="keywordflow">return</span> <a class="code" href="classlib_1_1json.html">json</a>.<a class="code" href="classlib_1_1json.html#a301b8eb203e2c032ef1ab73fdc3dfe21">get</a>&lt;std::vector&lt;T&gt;&gt;();</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="keywordflow">throw</span> std::runtime_error(<a class="code" href="classlib_1_1fmt.html#ae7622b4dbd5bd42aed59939aace7bddc">lib::fmt::format</a>(</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                <span class="stringliteral">&quot;wrong type, expected array, but was {}&quot;</span>, <a class="code" href="classlib_1_1json.html">json</a>.type_name()));</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#a35f5ae6f425a65b3bcbace4e7f22d819">   75</a></span>&#160;        <span class="keyword">static</span> std::vector&lt;T&gt; <a class="code" href="classlib_1_1json.html#a35f5ae6f425a65b3bcbace4e7f22d819">load_items</a>(<span class="keyword">const</span> ghc::filesystem::path &amp;path)</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        {</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <span class="keywordflow">try</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            {</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                <span class="keywordflow">return</span> load_items&lt;T&gt;(<a class="code" href="classlib_1_1json.html#a2ff6a5521b127fc6faa679814b96cc66">load_json</a>(path));</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            }</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception &amp;e)</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            {</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                <a class="code" href="classlib_1_1log.html#ad6c8f913d62cc4d89bbfa27a3369a89b">log::warn</a>(<span class="stringliteral">&quot;Failed to load items from \&quot;{}\&quot;: {}&quot;</span>, path.string(), e.what());</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            }</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            <span class="keywordflow">return</span> std::vector&lt;T&gt;();</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#a9da6bd2edc82e34e964a5c6c9bbc746f">   95</a></span>&#160;        <span class="keyword">static</span> T <a class="code" href="classlib_1_1json.html#a9da6bd2edc82e34e964a5c6c9bbc746f">load</a>(<span class="keyword">const</span> ghc::filesystem::path &amp;path)</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        {</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <span class="keywordflow">try</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            {</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                <span class="keywordflow">return</span> <a class="code" href="classlib_1_1json.html#a2ff6a5521b127fc6faa679814b96cc66">load_json</a>(path);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            }</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception &amp;e)</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            {</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;                <a class="code" href="classlib_1_1log.html#ad6c8f913d62cc4d89bbfa27a3369a89b">log::warn</a>(<span class="stringliteral">&quot;Failed to load item from \&quot;{}\&quot;: {}&quot;</span>, path.string(), e.what());</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            }</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            <span class="keywordflow">return</span> T();</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        }</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> save_json(<span class="keyword">const</span> ghc::filesystem::path &amp;path, <span class="keyword">const</span> nlohmann::json &amp;<a class="code" href="classlib_1_1json.html">json</a>);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00117"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#ae81ba0a8faf74f0d7cde3eff185dc94e">  117</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1json.html#ae81ba0a8faf74f0d7cde3eff185dc94e">save_items</a>(<span class="keyword">const</span> std::string &amp;path, <span class="keyword">const</span> std::vector&lt;T&gt; &amp;items)</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        {</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            <span class="keywordflow">try</span></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;            {</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;                save_json(path, items);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            }</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception &amp;e)</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            {</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;                <a class="code" href="classlib_1_1log.html#ad6c8f913d62cc4d89bbfa27a3369a89b">log::warn</a>(<span class="stringliteral">&quot;Failed to save items to \&quot;{}\&quot;: {}&quot;</span>, path, e.what());</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            }</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        }</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> save(<span class="keyword">const</span> ghc::filesystem::path &amp;path, <span class="keyword">const</span> T &amp;item)</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        {</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;            <span class="keywordflow">try</span></div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;            {</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;                save_json(path, item);</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;            }</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;            <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception &amp;e)</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            {</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;                <a class="code" href="classlib_1_1log.html#ad6c8f913d62cc4d89bbfa27a3369a89b">log::warn</a>(<span class="stringliteral">&quot;Failed to save items to \&quot;{}\&quot;: {}&quot;</span>,</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;                    path.string(), e.what());</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;            }</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        }</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        json() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    };</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;}</div>
-<div class="ttc" id="aclasslib_1_1fmt_html_ae7622b4dbd5bd42aed59939aace7bddc"><div class="ttname"><a href="classlib_1_1fmt.html#ae7622b4dbd5bd42aed59939aace7bddc">lib::fmt::format</a></div><div class="ttdeci">static std::string format(const Format &amp;fmt)</div><div class="ttdef"><b>Definition:</b> format.hpp:21</div></div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#a4e21143b9ac2e5b2996ee8439a7a55af">   45</a></span>&#160;        <span class="keyword">static</span> nlohmann::json <a class="code" href="classlib_1_1json.html#a4e21143b9ac2e5b2996ee8439a7a55af">combine</a>(<span class="keyword">const</span> nlohmann::json &amp;item1, <span class="keyword">const</span> nlohmann::json &amp;item2);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#a301b8eb203e2c032ef1ab73fdc3dfe21">   54</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1json.html#a301b8eb203e2c032ef1ab73fdc3dfe21">get</a>(<span class="keyword">const</span> nlohmann::json &amp;<a class="code" href="classlib_1_1json.html">json</a>, <span class="keyword">const</span> std::string &amp;key, T &amp;item)</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        {</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="classlib_1_1json.html">json</a>.contains(key))</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                <a class="code" href="classlib_1_1json.html">json</a>.at(key).get_to(item);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#a6e87385d0fc627db70a1b800b368559b">   65</a></span>&#160;        <span class="keyword">static</span> nlohmann::json <a class="code" href="classlib_1_1json.html#a6e87385d0fc627db70a1b800b368559b">load</a>(<span class="keyword">const</span> ghc::filesystem::path &amp;path);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#aa45d39432785ccca3c0157b8e01439b3">   72</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1json.html#aa45d39432785ccca3c0157b8e01439b3">save</a>(<span class="keyword">const</span> ghc::filesystem::path &amp;path, <span class="keyword">const</span> nlohmann::json &amp;<a class="code" href="classlib_1_1json.html">json</a>);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="classlib_1_1json.html">json</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    };</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}</div>
 <div class="ttc" id="aclasslib_1_1json_html"><div class="ttname"><a href="classlib_1_1json.html">lib::json</a></div><div class="ttdef"><b>Definition:</b> json.hpp:15</div></div>
-<div class="ttc" id="aclasslib_1_1json_html_a2ff6a5521b127fc6faa679814b96cc66"><div class="ttname"><a href="classlib_1_1json.html#a2ff6a5521b127fc6faa679814b96cc66">lib::json::load_json</a></div><div class="ttdeci">static nlohmann::json load_json(const ghc::filesystem::path &amp;path)</div></div>
-<div class="ttc" id="aclasslib_1_1json_html_a301b8eb203e2c032ef1ab73fdc3dfe21"><div class="ttname"><a href="classlib_1_1json.html#a301b8eb203e2c032ef1ab73fdc3dfe21">lib::json::get</a></div><div class="ttdeci">static void get(const nlohmann::json &amp;json, const std::string &amp;key, T &amp;item)</div><div class="ttdef"><b>Definition:</b> json.hpp:46</div></div>
-<div class="ttc" id="aclasslib_1_1json_html_a35f5ae6f425a65b3bcbace4e7f22d819"><div class="ttname"><a href="classlib_1_1json.html#a35f5ae6f425a65b3bcbace4e7f22d819">lib::json::load_items</a></div><div class="ttdeci">static std::vector&lt; T &gt; load_items(const ghc::filesystem::path &amp;path)</div><div class="ttdef"><b>Definition:</b> json.hpp:75</div></div>
-<div class="ttc" id="aclasslib_1_1json_html_a9da6bd2edc82e34e964a5c6c9bbc746f"><div class="ttname"><a href="classlib_1_1json.html#a9da6bd2edc82e34e964a5c6c9bbc746f">lib::json::load</a></div><div class="ttdeci">static T load(const ghc::filesystem::path &amp;path)</div><div class="ttdef"><b>Definition:</b> json.hpp:95</div></div>
+<div class="ttc" id="aclasslib_1_1json_html_a301b8eb203e2c032ef1ab73fdc3dfe21"><div class="ttname"><a href="classlib_1_1json.html#a301b8eb203e2c032ef1ab73fdc3dfe21">lib::json::get</a></div><div class="ttdeci">static void get(const nlohmann::json &amp;json, const std::string &amp;key, T &amp;item)</div><div class="ttdef"><b>Definition:</b> json.hpp:54</div></div>
+<div class="ttc" id="aclasslib_1_1json_html_a4e21143b9ac2e5b2996ee8439a7a55af"><div class="ttname"><a href="classlib_1_1json.html#a4e21143b9ac2e5b2996ee8439a7a55af">lib::json::combine</a></div><div class="ttdeci">static nlohmann::json combine(const nlohmann::json &amp;item1, const nlohmann::json &amp;item2)</div></div>
+<div class="ttc" id="aclasslib_1_1json_html_a6e87385d0fc627db70a1b800b368559b"><div class="ttname"><a href="classlib_1_1json.html#a6e87385d0fc627db70a1b800b368559b">lib::json::load</a></div><div class="ttdeci">static nlohmann::json load(const ghc::filesystem::path &amp;path)</div></div>
 <div class="ttc" id="aclasslib_1_1json_html_a9df42886b214032c5945d25e65542228"><div class="ttname"><a href="classlib_1_1json.html#a9df42886b214032c5945d25e65542228">lib::json::get_property</a></div><div class="ttdeci">static bool get_property(const nlohmann::json &amp;json, const std::initializer_list&lt; std::string &gt; &amp;names, T &amp;item)</div><div class="ttdef"><b>Definition:</b> json.hpp:25</div></div>
-<div class="ttc" id="aclasslib_1_1json_html_ae81ba0a8faf74f0d7cde3eff185dc94e"><div class="ttname"><a href="classlib_1_1json.html#ae81ba0a8faf74f0d7cde3eff185dc94e">lib::json::save_items</a></div><div class="ttdeci">static void save_items(const std::string &amp;path, const std::vector&lt; T &gt; &amp;items)</div><div class="ttdef"><b>Definition:</b> json.hpp:117</div></div>
-<div class="ttc" id="aclasslib_1_1log_html_ad6c8f913d62cc4d89bbfa27a3369a89b"><div class="ttname"><a href="classlib_1_1log.html#ad6c8f913d62cc4d89bbfa27a3369a89b">lib::log::warn</a></div><div class="ttdeci">static void warn(const Format &amp;fmt, const Arg &amp;arg, Args &amp;&amp;... args)</div><div class="ttdef"><b>Definition:</b> log.hpp:41</div></div>
+<div class="ttc" id="aclasslib_1_1json_html_aa45d39432785ccca3c0157b8e01439b3"><div class="ttname"><a href="classlib_1_1json.html#aa45d39432785ccca3c0157b8e01439b3">lib::json::save</a></div><div class="ttdeci">static void save(const ghc::filesystem::path &amp;path, const nlohmann::json &amp;json)</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

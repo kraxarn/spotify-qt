@@ -82,35 +82,63 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a9df42886b214032c5945d25e65542228"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a9df42886b214032c5945d25e65542228"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1json.html#a9df42886b214032c5945d25e65542228">get_property</a> (const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>, const std::initializer_list&lt; std::string &gt; &amp;names, T &amp;item)</td></tr>
 <tr class="separator:a9df42886b214032c5945d25e65542228"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e21143b9ac2e5b2996ee8439a7a55af"><td class="memItemLeft" align="right" valign="top">static nlohmann::json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1json.html#a4e21143b9ac2e5b2996ee8439a7a55af">combine</a> (const nlohmann::json &amp;item1, const nlohmann::json &amp;item2)</td></tr>
+<tr class="separator:a4e21143b9ac2e5b2996ee8439a7a55af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a301b8eb203e2c032ef1ab73fdc3dfe21"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a301b8eb203e2c032ef1ab73fdc3dfe21"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1json.html#a301b8eb203e2c032ef1ab73fdc3dfe21">get</a> (const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>, const std::string &amp;key, T &amp;item)</td></tr>
 <tr class="separator:a301b8eb203e2c032ef1ab73fdc3dfe21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ff6a5521b127fc6faa679814b96cc66"><td class="memItemLeft" align="right" valign="top">static nlohmann::json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1json.html#a2ff6a5521b127fc6faa679814b96cc66">load_json</a> (const ghc::filesystem::path &amp;path)</td></tr>
-<tr class="separator:a2ff6a5521b127fc6faa679814b96cc66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adaa1cc2e41a6857f2753c02c8e978bd2"><td class="memTemplParams" colspan="2"><a id="adaa1cc2e41a6857f2753c02c8e978bd2"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:adaa1cc2e41a6857f2753c02c8e978bd2"><td class="memTemplItemLeft" align="right" valign="top">static std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>load_items</b> (const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>)</td></tr>
-<tr class="separator:adaa1cc2e41a6857f2753c02c8e978bd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35f5ae6f425a65b3bcbace4e7f22d819"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a35f5ae6f425a65b3bcbace4e7f22d819"><td class="memTemplItemLeft" align="right" valign="top">static std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1json.html#a35f5ae6f425a65b3bcbace4e7f22d819">load_items</a> (const ghc::filesystem::path &amp;path)</td></tr>
-<tr class="separator:a35f5ae6f425a65b3bcbace4e7f22d819"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9da6bd2edc82e34e964a5c6c9bbc746f"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a9da6bd2edc82e34e964a5c6c9bbc746f"><td class="memTemplItemLeft" align="right" valign="top">static T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1json.html#a9da6bd2edc82e34e964a5c6c9bbc746f">load</a> (const ghc::filesystem::path &amp;path)</td></tr>
-<tr class="separator:a9da6bd2edc82e34e964a5c6c9bbc746f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2291e85799e0b0f63a2ed0416006a5d"><td class="memItemLeft" align="right" valign="top"><a id="ae2291e85799e0b0f63a2ed0416006a5d"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>save_json</b> (const ghc::filesystem::path &amp;path, const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>)</td></tr>
-<tr class="separator:ae2291e85799e0b0f63a2ed0416006a5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae81ba0a8faf74f0d7cde3eff185dc94e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ae81ba0a8faf74f0d7cde3eff185dc94e"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1json.html#ae81ba0a8faf74f0d7cde3eff185dc94e">save_items</a> (const std::string &amp;path, const std::vector&lt; T &gt; &amp;items)</td></tr>
-<tr class="separator:ae81ba0a8faf74f0d7cde3eff185dc94e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2660b5b112fe5f5069ac9f9deb2386a8"><td class="memTemplParams" colspan="2"><a id="a2660b5b112fe5f5069ac9f9deb2386a8"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a2660b5b112fe5f5069ac9f9deb2386a8"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>save</b> (const ghc::filesystem::path &amp;path, const T &amp;item)</td></tr>
-<tr class="separator:a2660b5b112fe5f5069ac9f9deb2386a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e87385d0fc627db70a1b800b368559b"><td class="memItemLeft" align="right" valign="top">static nlohmann::json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1json.html#a6e87385d0fc627db70a1b800b368559b">load</a> (const ghc::filesystem::path &amp;path)</td></tr>
+<tr class="separator:a6e87385d0fc627db70a1b800b368559b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa45d39432785ccca3c0157b8e01439b3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1json.html#aa45d39432785ccca3c0157b8e01439b3">save</a> (const ghc::filesystem::path &amp;path, const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>)</td></tr>
+<tr class="separator:aa45d39432785ccca3c0157b8e01439b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>JSON utilities </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a4e21143b9ac2e5b2996ee8439a7a55af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e21143b9ac2e5b2996ee8439a7a55af">&#9670;&nbsp;</a></span>combine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static nlohmann::json lib::json::combine </td>
+          <td>(</td>
+          <td class="paramtype">const nlohmann::json &amp;&#160;</td>
+          <td class="paramname"><em>item1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const nlohmann::json &amp;&#160;</td>
+          <td class="paramname"><em>item2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Combine two JSON arrays </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">item1</td><td>First array </td></tr>
+    <tr><td class="paramname">item2</td><td>Second array </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Combined array, or an empty one on failure </dd></dl>
+
+</div>
+</div>
 <a id="a301b8eb203e2c032ef1ab73fdc3dfe21"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a301b8eb203e2c032ef1ab73fdc3dfe21">&#9670;&nbsp;</a></span>get()</h2>
 
@@ -216,78 +244,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a9da6bd2edc82e34e964a5c6c9bbc746f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9da6bd2edc82e34e964a5c6c9bbc746f">&#9670;&nbsp;</a></span>load()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static T lib::json::load </td>
-          <td>(</td>
-          <td class="paramtype">const ghc::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Load a single item from a json file </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td>Path to json file, including extension </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Item on success, or default on failure </dd></dl>
-
-</div>
-</div>
-<a id="a35f5ae6f425a65b3bcbace4e7f22d819"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35f5ae6f425a65b3bcbace4e7f22d819">&#9670;&nbsp;</a></span>load_items()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static std::vector&lt;T&gt; lib::json::load_items </td>
-          <td>(</td>
-          <td class="paramtype">const ghc::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Load a vector of items from a json file </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td>Path to json file, including extension </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Vector of items on success, or an empty vector on failure </dd></dl>
-
-</div>
-</div>
-<a id="a2ff6a5521b127fc6faa679814b96cc66"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ff6a5521b127fc6faa679814b96cc66">&#9670;&nbsp;</a></span>load_json()</h2>
+<a id="a6e87385d0fc627db70a1b800b368559b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e87385d0fc627db70a1b800b368559b">&#9670;&nbsp;</a></span>load()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -296,7 +254,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static nlohmann::json lib::json::load_json </td>
+          <td class="memname">static nlohmann::json lib::json::load </td>
           <td>(</td>
           <td class="paramtype">const ghc::filesystem::path &amp;&#160;</td>
           <td class="paramname"><em>path</em></td><td>)</td>
@@ -319,28 +277,26 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="ae81ba0a8faf74f0d7cde3eff185dc94e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae81ba0a8faf74f0d7cde3eff185dc94e">&#9670;&nbsp;</a></span>save_items()</h2>
+<a id="aa45d39432785ccca3c0157b8e01439b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa45d39432785ccca3c0157b8e01439b3">&#9670;&nbsp;</a></span>save()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void lib::json::save_items </td>
+          <td class="memname">static void lib::json::save </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramtype">const ghc::filesystem::path &amp;&#160;</td>
           <td class="paramname"><em>path</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::vector&lt; T &gt; &amp;&#160;</td>
-          <td class="paramname"><em>items</em>&#160;</td>
+          <td class="paramtype">const nlohmann::json &amp;&#160;</td>
+          <td class="paramname"><em>json</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -350,14 +306,14 @@ template&lt;typename T &gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Save a vector of items to a json file </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Save specified item to a json file </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">path</td><td>Path to json file, including extension </td></tr>
-    <tr><td class="paramname">items</td><td>Items to save </td></tr>
+    <tr><td class="paramname">item</td><td>Item to save </td></tr>
   </table>
   </dd>
 </dl>
