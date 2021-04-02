@@ -8,29 +8,29 @@
 // playlists/{playlist_id}/tracks
 // playlists/{playlist_id}/images
 
-std::vector<lib::spt::playlist> Spotify::playlists(int offset)
+void Spotify::playlists(int offset, lib::callback<std::vector<lib::spt::playlist>> &callback)
 {
 	// Request playlists
-	auto json = getAsJson(QString("me/playlists?limit=50&offset=%1").arg(offset));
+	get(lib::fmt::format("me/playlists?limit=50&offset={}", offset),
+		[this, callback](const nlohmann::json &json)
+		{
+			auto playlists = json.at("items").get<std::vector<lib::spt::playlist>>();
+			// Paging
+			if (json.contains("next") && !json.at("next").is_null())
+			{
+				this->playlists(json.at("offset").get<int>() + json["limit"].get<int>(),
+					[playlists, callback](const std::vector<lib::spt::playlist> &results)
+					{
+						callback(lib::vector::combine(playlists, results));
+					});
+			}
+			callback(playlists);
+		});
+}
 
-	// Parse as playlists
-	auto items = json["items"].items();
-
-	// Create list of playlists
-	std::vector<lib::spt::playlist> playlists;
-
-	// Loop through all items
-	for (auto &item : items)
-		playlists.push_back(item.value());
-
-	// Paging
-	if (json.contains("next") && !json.at("next").is_null())
-	{
-		lib::vector::append(playlists,
-			this->playlists(json.at("offset").get<int>() + json["limit"].get<int>()));
-	}
-
-	return playlists;
+void Spotify::playlists(lib::callback<std::vector<lib::spt::playlist>> &callback)
+{
+	playlists(0, callback);
 }
 
 lib::spt::playlist Spotify::playlist(const std::string &playlistId)

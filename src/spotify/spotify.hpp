@@ -114,7 +114,9 @@ namespace spt
 
 		//region Playlists
 
-		std::vector<lib::spt::playlist> playlists(int offset = 0);
+		void playlists(lib::callback<std::vector<lib::spt::playlist>> &callback);
+
+		void playlists(int offset, lib::callback<std::vector<lib::spt::playlist>> &callback);
 
 		lib::spt::playlist playlist(const std::string &playlistId);
 
