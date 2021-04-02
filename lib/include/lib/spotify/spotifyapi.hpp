@@ -138,7 +138,7 @@ namespace lib
 			 * Change repeat mode
 			 * @param state New repeat mode
 			 */
-			void set_repeat(const lib::repeat_state state, lib::callback<std::string> &callback);
+			void set_repeat(lib::repeat_state state, lib::callback<std::string> &callback);
 
 			/**
 			 * Change player volume

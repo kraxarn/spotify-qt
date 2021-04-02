@@ -135,7 +135,7 @@ void spotify_api::seek(int position, lib::callback<std::string> &callback)
 	put(lib::fmt::format("me/player/seek?position_ms={}", position), callback);
 }
 
-void spotify_api::set_repeat(const lib::repeat_state state, lib::callback<std::string> &callback)
+void spotify_api::set_repeat(lib::repeat_state state, lib::callback<std::string> &callback)
 {
 	std::string repeat;
 	switch (state)
