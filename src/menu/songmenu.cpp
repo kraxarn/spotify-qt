@@ -128,14 +128,13 @@ SongMenu::SongMenu(const std::string &trackId, std::string artist, std::string n
 
 void SongMenu::like(bool)
 {
-	auto callback = [this](const QString &status)
+	auto callback = [this](const std::string &status)
 	{
-		if (!status.isEmpty())
+		if (!status.empty())
 		{
 			auto mainWindow = MainWindow::find(this->parentWidget());
-			mainWindow->setStatus(QString("Failed to %1: %2")
-				.arg(isLiked ? "dislike" : "like")
-				.arg(status), true);
+			mainWindow->status(lib::fmt::format("Failed to {}: {}",
+				isLiked ? "dislike" : "like", status), true);
 		}
 	};
 

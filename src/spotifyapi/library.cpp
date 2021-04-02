@@ -37,7 +37,7 @@ std::vector<lib::spt::track> Spotify::savedTracks(int offset)
 	return tracks;
 }
 
-void Spotify::addSavedTrack(const std::string &trackId, lib::callback<QString> &callback)
+void Spotify::addSavedTrack(const std::string &trackId, lib::callback<std::string> &callback)
 {
 	put("me/tracks", {
 		{"ids", {
@@ -48,7 +48,7 @@ void Spotify::addSavedTrack(const std::string &trackId, lib::callback<QString> &
 	}, callback);
 }
 
-void Spotify::removeSavedTrack(const std::string &trackId, lib::callback<QString> &callback)
+void Spotify::removeSavedTrack(const std::string &trackId, lib::callback<std::string> &callback)
 {
 	del("me/tracks", {
 		{"ids", {

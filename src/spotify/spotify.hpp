@@ -93,9 +93,11 @@ namespace spt
 
 		std::vector<lib::spt::track> savedTracks(int offset = 0);
 
-		void addSavedTrack(const std::string &trackId, lib::callback<QString> &callback);
+		void addSavedTrack(const std::string &trackId,
+			lib::callback<std::string> &callback);
 
-		void removeSavedTrack(const std::string &trackId, lib::callback<QString> &callback);
+		void removeSavedTrack(const std::string &trackId,
+			lib::callback<std::string> &callback);
 
 		void isSavedTrack(const QStringList &trackIds,
 			lib::callback<std::vector<bool>> &callback);
