@@ -35,7 +35,7 @@ std::vector<lib::spt::playlist> lib::cache::get_playlists()
 {
 	try
 	{
-		return json::load<std::vector<lib::spt::playlist>>(path("playlist", "playlists"));
+		return json::load(path("playlist", "playlists"));
 	}
 	catch (const std::exception &e)
 	{
@@ -58,7 +58,7 @@ lib::spt::playlist lib::cache::get_playlist(const std::string &id)
 {
 	try
 	{
-		return json::load<lib::spt::playlist>(path("playlist", id));
+		return json::load(path("playlist", id));
 	}
 	catch (const std::exception &e)
 	{
@@ -84,12 +84,12 @@ std::vector<lib::spt::track> lib::cache::tracks(const std::string &id)
 	if (!ghc::filesystem::exists(file_path))
 		return std::vector<lib::spt::track>();
 
-	return lib::json::load_items<lib::spt::track>(file_path);
+	return lib::json::load(file_path);
 }
 
 void lib::cache::tracks(const std::string &id, const std::vector<lib::spt::track> &tracks)
 {
-	lib::json::save_items(path("tracks", id), tracks);
+	lib::json::save(path("tracks", id), tracks);
 }
 
 std::map<std::string, std::vector<lib::spt::track>> lib::cache::all_tracks()
