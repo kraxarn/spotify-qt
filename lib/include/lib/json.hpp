@@ -62,91 +62,14 @@ namespace lib
 		 * @param path Path to json file, including extension
 		 * @return JSON object, or null object on failure
 		 */
-		static nlohmann::json load_json(const ghc::filesystem::path &path);
-
-		template<typename T>
-		static std::vector<T> load_items(const nlohmann::json &json)
-		{
-			if (json.is_array())
-				return json.get<std::vector<T>>();
-
-			throw std::runtime_error(lib::fmt::format(
-				"wrong type, expected array, but was {}", json.type_name()));
-		}
+		static nlohmann::json load(const ghc::filesystem::path &path);
 
 		/**
-		 * Load a vector of items from a json file
+		 * Save specified item to a json file
 		 * @param path Path to json file, including extension
-		 * @return Vector of items on success, or an empty vector on failure
+		 * @param item Item to save
 		 */
-		template<typename T>
-		static std::vector<T> load_items(const ghc::filesystem::path &path)
-		{
-			try
-			{
-				return load_items<T>(load_json(path));
-			}
-			catch (const std::exception &e)
-			{
-				log::warn("Failed to load items from \"{}\": {}", path.string(), e.what());
-			}
-
-			return std::vector<T>();
-		}
-
-		/**
-		 * Load a single item from a json file
-		 * @param path Path to json file, including extension
-		 * @return Item on success, or default on failure
-		 */
-		template<typename T>
-		static T load(const ghc::filesystem::path &path)
-		{
-			try
-			{
-				return load_json(path);
-			}
-			catch (const std::exception &e)
-			{
-				log::warn("Failed to load item from \"{}\": {}", path.string(), e.what());
-			}
-
-			return T();
-		}
-
-		static void save_json(const ghc::filesystem::path &path, const nlohmann::json &json);
-
-		/**
-		 * Save a vector of items to a json file
-		 * @param path Path to json file, including extension
-		 * @param items Items to save
-		 */
-		template<typename T>
-		static void save_items(const std::string &path, const std::vector<T> &items)
-		{
-			try
-			{
-				save_json(path, items);
-			}
-			catch (const std::exception &e)
-			{
-				log::warn("Failed to save items to \"{}\": {}", path, e.what());
-			}
-		}
-
-		template<typename T>
-		static void save(const ghc::filesystem::path &path, const T &item)
-		{
-			try
-			{
-				save_json(path, item);
-			}
-			catch (const std::exception &e)
-			{
-				log::warn("Failed to save items to \"{}\": {}",
-					path.string(), e.what());
-			}
-		}
+		static void save(const ghc::filesystem::path &path, const nlohmann::json &json);
 
 	private:
 		json() = default;

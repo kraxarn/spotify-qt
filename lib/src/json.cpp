@@ -12,7 +12,7 @@ nlohmann::json lib::json::combine(const nlohmann::json &item1, const nlohmann::j
 	return item;
 }
 
-nlohmann::json lib::json::load_json(const ghc::filesystem::path &path)
+nlohmann::json lib::json::load(const ghc::filesystem::path &path)
 {
 	std::ifstream file(path);
 	if (!file.is_open() || file.bad())
@@ -21,13 +21,29 @@ nlohmann::json lib::json::load_json(const ghc::filesystem::path &path)
 		return nlohmann::json();
 	}
 
-	nlohmann::json json;
-	file >> json;
-	return json;
+	try
+	{
+		nlohmann::json json;
+		file >> json;
+		return json;
+	}
+	catch (const std::exception &e)
+	{
+		log::warn("Failed to load items from \"{}\": {}",
+			path.string(), e.what());
+	}
 }
 
-void lib::json::save_json(const ghc::filesystem::path &path, const nlohmann::json &json)
+void lib::json::save(const ghc::filesystem::path &path, const nlohmann::json &json)
 {
-	std::ofstream file(path);
-	file << std::setw(4) << json;
+	try
+	{
+		std::ofstream file(path);
+		file << std::setw(4) << json;
+	}
+	catch (const std::exception &e)
+	{
+		log::warn("Failed to save items to \"{}\": {}",
+			path.string(), e.what());
+	}
 }
