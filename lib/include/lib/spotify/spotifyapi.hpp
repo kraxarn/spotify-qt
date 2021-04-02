@@ -6,6 +6,7 @@
 #include "lib/strings.hpp"
 #include "lib/spotify/playback.hpp"
 #include "lib/enum/repeatstate.hpp"
+#include "lib/json.hpp"
 
 #include "thirdparty/json.hpp"
 
@@ -225,6 +226,17 @@ namespace lib
 			 */
 			std::string current_device;
 
+			/**
+			 * GET a collection of items
+			 * @param url URL to request
+			 * @param key Key to collection
+			 * @note Automatically handles paging
+			 * @note Temporarily protected
+			 * @throws std::exception
+			 */
+			void get(const std::string &url, const std::string &key,
+				lib::callback<nlohmann::json> &callback);
+
 		private:
 			/**
 			 * Send request to refresh access token
@@ -242,22 +254,6 @@ namespace lib
 			 * @param callback Response as JSON
 			 */
 			virtual void get(const std::string &url, lib::callback<nlohmann::json> &callback) = 0;
-
-			/**
-			 * GET a collection of items
-			 * @param url URL to request
-			 * @param key Key to collection
-			 */
-			template<typename T>
-			void get(const std::string &url, const std::string &key,
-				lib::callback<std::vector<T>> &callback)
-			{
-				get(url, [this, key, callback](const nlohmann::json &json)
-				{
-					auto items = json.at(key);
-					callback(items.get<std::vector<T>>());
-				});
-			}
 
 			/**
 			 * PUT request

@@ -72,6 +72,34 @@ long spotify_api::seconds_since_epoch()
 		.time_since_epoch()).count();
 }
 
+void spotify_api::get(const std::string &url, const std::string &key,
+	lib::callback<nlohmann::json> &callback)
+{
+	auto api_url = lib::strings::starts_with(url, "https://api.spotify.com/v1/")
+		? url.substr(27)
+		: url;
+
+	get(api_url, [this, key, callback](const nlohmann::json &json)
+	{
+		if (!json.contains(key))
+		{
+			lib::log::error(R"(no such key "{}" in "{}" ({}))", key, json.dump());
+		}
+
+		auto items = json.at(key);
+		if (json.contains("next") && json.at("next").is_string())
+		{
+			std::string next = json.at("next").get<std::string>();
+			get(next, key, [items, callback](const nlohmann::json &next)
+			{
+				callback(lib::json::combine(items, next));
+			});
+			return;
+		}
+		callback(items);
+	});
+}
+
 std::string spotify_api::to_uri(const std::string &type, const std::string &id)
 {
 	return lib::strings::starts_with(id, "spotify:")

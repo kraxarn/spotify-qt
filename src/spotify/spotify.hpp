@@ -336,20 +336,6 @@ namespace spt
 		/**
 		 * @deprecated
 		 */
-		template<typename T>
-		void get(const std::string &url, const std::string &key,
-			lib::callback<std::vector<T>> &callback)
-		{
-			get(url, [this, key, callback](const nlohmann::json &json)
-			{
-				auto items = json.at(key);
-				callback(items.get<std::vector<T>>());
-			});
-		}
-
-		/**
-		 * @deprecated
-		 */
 		static QString followTypeString(lib::follow_type type);
 
 		static std::string follow_type_string(lib::follow_type type);
