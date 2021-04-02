@@ -111,3 +111,17 @@ std::string spotify_api::to_id(const std::string &id)
 {
 	return lib::strings::split(id, ':').back();
 }
+
+std::string spotify_api::follow_type_string(lib::follow_type type)
+{
+	switch (type)
+	{
+		case lib::follow_type::artist:
+			return "artist";
+
+		case lib::follow_type::user:
+			return "user";
+	}
+
+	return std::string();
+}

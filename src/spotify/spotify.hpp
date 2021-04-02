@@ -337,13 +337,6 @@ namespace spt
 			});
 		}
 
-		/**
-		 * @deprecated
-		 */
-		static QString followTypeString(lib::follow_type type);
-
-		static std::string follow_type_string(lib::follow_type type);
-
 		std::string request_refresh(const std::string &post_data,
 			const std::string &authorization) override;
 	};

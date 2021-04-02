@@ -7,6 +7,7 @@
 #include "lib/spotify/playback.hpp"
 #include "lib/enum/repeatstate.hpp"
 #include "lib/json.hpp"
+#include "lib/enum/followtype.hpp"
 
 #include "thirdparty/json.hpp"
 
@@ -236,6 +237,12 @@ namespace lib
 			 */
 			void get(const std::string &url, const std::string &key,
 				lib::callback<nlohmann::json> &callback);
+
+			/**
+			 * Get string interpretation of a follow type
+			 * @param type Follow type
+			 */
+			static std::string follow_type_string(lib::follow_type type);
 
 		private:
 			/**
