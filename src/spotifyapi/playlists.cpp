@@ -95,11 +95,11 @@ bool Spotify::playlistTracks(const lib::spt::playlist &playlist,
 	return true;
 }
 
-QString Spotify::addToPlaylist(const std::string &playlistId, const std::string &trackId)
+void Spotify::addToPlaylist(const std::string &playlistId, const std::string &trackId,
+	lib::callback<std::string> &callback)
 {
-	return post(QString("playlists/%1/tracks?uris=%2")
-		.arg(QString::fromStdString(playlistId))
-		.arg(QString::fromStdString(trackId)));
+	post(lib::fmt::format("playlists/{}/tracks?uris={}",
+		playlistId, trackId), callback);
 }
 
 void Spotify::removeFromPlaylist(const std::string &playlistId, const std::string &trackId,

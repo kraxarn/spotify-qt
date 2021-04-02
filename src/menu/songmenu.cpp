@@ -177,15 +177,15 @@ void SongMenu::addToPlaylist(QAction *action)
 	}
 
 	// Actually add
-	auto plTrack = lib::strings::starts_with(trackId, "spotify:track")
-		? trackId
-		: lib::fmt::format("spotify:track:{}", trackId);
-	auto result = spotify.addToPlaylist(playlistId, plTrack);
-	if (!result.isEmpty())
+	auto plTrack = lib::spt::spotify_api::to_uri("track", trackId);
+	spotify.addToPlaylist(playlistId, plTrack, [mainWindow](const std::string &result)
 	{
-		mainWindow->setStatus(QString("Failed to add track to playlist: %1")
-			.arg(result), true);
-	}
+		if (result.empty())
+			return;
+		mainWindow->status(lib::fmt::format("Failed to add track to playlist: {}",
+			result), true);
+	});
+
 }
 
 void SongMenu::remFromPlaylist(bool)
