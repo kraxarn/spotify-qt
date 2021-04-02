@@ -99,7 +99,7 @@ namespace spt
 		void removeSavedTrack(const std::string &trackId,
 			lib::callback<std::string> &callback);
 
-		void isSavedTrack(const QStringList &trackIds,
+		void isSavedTrack(const std::vector<std::string> &trackIds,
 			lib::callback<std::vector<bool>> &callback);
 
 		//endregion

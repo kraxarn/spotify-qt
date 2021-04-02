@@ -59,15 +59,9 @@ void Spotify::removeSavedTrack(const std::string &trackId, lib::callback<std::st
 	}, callback);
 }
 
-void Spotify::isSavedTrack(const QStringList &trackIds,
+void Spotify::isSavedTrack(const std::vector<std::string> &trackIds,
 	lib::callback<std::vector<bool>> &callback)
 {
-	get(QString("me/tracks/contains?ids=%1")
-		.arg(trackIds.join(',')), [callback](const QJsonArray &json)
-	{
-		std::vector<bool> values;
-		for (auto value : json)
-			values.push_back(value.toBool());
-		callback(values);
-	});
+	get(lib::fmt::format("me/tracks/contains?ids={}",
+		lib::strings::join(trackIds, ",")), callback);
 }
