@@ -37,6 +37,14 @@ namespace lib
 		}
 
 		/**
+		 * Combine two JSON arrays
+		 * @param item1 First array
+		 * @param item2 Second array
+		 * @return Combined array, or an empty one on failure
+		 */
+		static nlohmann::json combine(const nlohmann::json &item1, const nlohmann::json &item2);
+
+		/**
 		 * Get item from JSON if found
 		 * @param json JSON to find item in
 		 * @param key Key to try and find
