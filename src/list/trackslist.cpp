@@ -281,7 +281,7 @@ void TracksList::load(const lib::spt::album &album, const std::string &trackId)
 	auto tracks = cache.tracks(album.id);
 
 	if (!tracks.empty())
-		load(tracks);
+		load(tracks, trackId);
 	else
 		setEnabled(false);
 
