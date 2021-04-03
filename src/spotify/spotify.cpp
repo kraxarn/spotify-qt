@@ -249,25 +249,18 @@ void Spotify::put(const std::string &url, lib::callback<std::string> &callback)
 	put(url, nlohmann::json(), callback);
 }
 
-void Spotify::post(const QString &url, lib::callback<QString> &callback)
+void Spotify::post(const std::string &url,
+	lib::callback<std::string> &callback)
 {
-	auto req = request(url);
+	auto req = request(QString::fromStdString(url));
 	req.setHeader(QNetworkRequest::ContentTypeHeader,
 		"application/x-www-form-urlencoded");
 
 	await(networkManager->post(req, QByteArray()),
-		[url, callback](const QByteArray &data)
+		[url, callback](const nlohmann::json &data)
 		{
-			callback(errorMessage(url, data));
+			callback(error_message(url, data));
 		});
-}
-
-void Spotify::post(const std::string &url, lib::callback<std::string> &callback)
-{
-	post(QString::fromStdString(url), [callback](const QString &result)
-	{
-		callback(result.toStdString());
-	});
 }
 
 void Spotify::del(const std::string &url, const nlohmann::json &json,

@@ -205,11 +205,6 @@ namespace spt
 
 		//region POST
 
-		/**
-		 * @deprecated
-		 */
-		void post(const QString &url, lib::callback<QString> &callback);
-
 		void post(const std::string &url, lib::callback<std::string> &callback) override;
 
 		//endregion
