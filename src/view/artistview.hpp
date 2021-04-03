@@ -21,7 +21,7 @@ Q_OBJECT
 
 public:
 	ArtistView(spt::Spotify &spotify, const std::string &artistId, const lib::settings &settings,
-		QWidget	*parent);
+		lib::cache &cache, QWidget *parent);
 
 	std::function<void(const lib::spt::artist &artist)> onArtistLoaded;
 
@@ -64,4 +64,5 @@ private:
 	std::string artistId;
 	lib::spt::artist artist;
 	spt::Spotify &spotify;
+	lib::cache &cache;
 };

@@ -1,28 +1,23 @@
 #include "albummenu.hpp"
 
-AlbumMenu::AlbumMenu(spt::Spotify &spotify, const std::string &albumId, QWidget *parent)
+AlbumMenu::AlbumMenu(spt::Spotify &spotify, lib::cache &cache, const std::string &albumId,
+	QWidget *parent)
 	: parent(parent),
 	albumId(albumId),
 	spotify(spotify),
 	QMenu(parent)
 {
-	auto mainWindow = MainWindow::find(parent);
-	if (mainWindow == nullptr)
-		return;
+	trackCount = addAction("...");
+	trackCount->setEnabled(false);
 
-	tracks = mainWindow->loadTracksFromCache(albumId);
-	if (tracks.empty())
-		tracks = spotify.albumTracks(albumId);
-
-	auto duration = 0;
-	for (auto &track : tracks)
-		duration += track.duration;
-	auto minutes = duration / 1000 / 60;
-	if (tracks.size() > 1)
-		addAction(QString("%1 tracks, %2%3 m")
-			.arg(tracks.size())
-			.arg(minutes >= 60 ? QString("%1 h ").arg(minutes / 60) : QString())
-			.arg(minutes % 60))->setEnabled(false);
+	tracksLoaded(cache.tracks(albumId));
+	spotify.getAlbum(albumId, [this](const lib::spt::album &album)
+	{
+		this->spotify.albumTracks(album, [this](const std::vector<lib::spt::track> &items)
+		{
+			this->tracksLoaded(items);
+		});
+	});
 
 	addSeparator();
 	auto playShuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle play");
@@ -45,7 +40,7 @@ void AlbumMenu::shuffle(bool)
 	}
 
 	auto initialIndex = lib::random().next_int(0, tracks.size());
-	spotify.play_tracks(initialIndex, lib::fmt::format("spotify:album:{}", albumId),
+	spotify.play_tracks(initialIndex, lib::spt::spotify_api::to_uri("album", albumId),
 		[this](const std::string &status)
 		{
 			auto mainWindow = MainWindow::find(this->parent);
@@ -73,4 +68,19 @@ void AlbumMenu::shareOpen(bool)
 {
 	Utils::openUrl(QString("https://open.spotify.com/album/%1")
 		.arg(QString::fromStdString(albumId)), LinkType::Web, this->parent);
+}
+
+void AlbumMenu::tracksLoaded(const std::vector<lib::spt::track> &items)
+{
+	tracks = items;
+
+	auto duration = 0;
+	for (auto &track : tracks)
+		duration += track.duration;
+	auto minutes = duration / 1000 / 60;
+
+	trackCount->setText(QString("%1 tracks, %2%3 m")
+		.arg(tracks.size())
+		.arg(minutes >= 60 ? QString("%1 h ").arg(minutes / 60) : QString())
+		.arg(minutes % 60));
 }

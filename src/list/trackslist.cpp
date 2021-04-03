@@ -273,10 +273,28 @@ void TracksList::load(const lib::spt::playlist &playlist)
 
 	auto mainWindow = MainWindow::find(parentWidget());
 	if (mainWindow != nullptr)
+		mainWindow->setSptContext(playlist);
+}
+
+void TracksList::load(const lib::spt::album &album)
+{
+	auto tracks = cache.tracks(album.id);
+
+	if (!tracks.empty())
+		load(tracks);
+	else
+		setEnabled(false);
+
+	spotify.albumTracks(album, [this, album](const std::vector<lib::spt::track> &tracks)
 	{
-		mainWindow->setSptContext(lib::spt::spotify_api::to_uri("playlist",
-			playlist.id));
-	}
+		this->load(tracks);
+		setEnabled(true);
+		cache.tracks(album.id, tracks);
+
+		auto mainWindow = MainWindow::find(parentWidget());
+		if (mainWindow != nullptr)
+			mainWindow->setSptContext(album);
+	});
 }
 
 void TracksList::setPlayingTrackItem(QTreeWidgetItem *item)

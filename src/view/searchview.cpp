@@ -95,7 +95,8 @@ void SearchView::albumMenu(const QPoint &pos)
 	if (albumId.isEmpty())
 		return;
 
-	auto albumMenu = new AlbumMenu(spotify, albumId.toStdString(), parentWidget());
+	auto albumMenu = new AlbumMenu(spotify, cache, albumId.toStdString(),
+		parentWidget());
 	albumMenu->popup(albumList->mapToGlobal(pos));
 }
 

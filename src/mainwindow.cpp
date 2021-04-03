@@ -290,22 +290,10 @@ void MainWindow::openLyrics(const std::string &artist, const std::string &name)
 
 bool MainWindow::loadAlbum(const std::string &albumId, const std::string &trackId)
 {
-	auto tracks = loadTracksFromCache(albumId);
-	if (tracks.empty())
-		tracks = spotify->albumTracks(albumId);
-
-	if (tracks.empty())
-		setStatus(QString("Album is empty"), true);
-	else
+	spotify->getAlbum(albumId, [this](const lib::spt::album &album)
 	{
-		leftSidePanel->setCurrentPlaylistItem(-1);
-		leftSidePanel->setCurrentLibraryItem(nullptr);
-		current.context = QString::fromStdString(lib::fmt::format(
-			"spotify:album:{}", albumId));
-		songs->load(tracks, trackId);
-		saveTracksToCache(albumId, tracks);
-	}
-
+		this->songs->load(album);
+	});
 	return true;
 }
 

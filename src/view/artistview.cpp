@@ -1,9 +1,10 @@
 #include "artistview.hpp"
 
 ArtistView::ArtistView(spt::Spotify &spotify, const std::string &artistId,
-	const lib::settings &settings, QWidget *parent)
+	const lib::settings &settings, lib::cache &cache, QWidget *parent)
 	: spotify(spotify),
 	artistId(std::string(artistId)),
+	cache(cache),
 	QWidget(parent)
 {
 	spotify.artist(this->artistId, [this](const lib::spt::artist &loadedArtist)
@@ -331,7 +332,8 @@ void ArtistView::albumMenu(const QPoint &pos)
 	if (albumId.isEmpty())
 		return;
 
-	auto albumMenu = new AlbumMenu(spotify, albumId.toStdString(), parentWidget());
+	auto albumMenu = new AlbumMenu(spotify, cache, albumId.toStdString(),
+		parentWidget());
 	albumMenu->popup(list->mapToGlobal(pos));
 }
 

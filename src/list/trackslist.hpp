@@ -35,6 +35,11 @@ public:
 	 */
 	void load(const lib::spt::playlist &playlist);
 
+	/**
+	 * Load album first from cache, then refresh it
+	 */
+	void load(const lib::spt::album &album);
+
 protected:
 	void resizeEvent(QResizeEvent *event) override;
 

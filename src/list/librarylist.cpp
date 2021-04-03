@@ -99,11 +99,20 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 			{
 				if (all.find(album.artist) != all.end())
 				{
-					for (auto &track : spotify.albumTracks(album.id))
-					{
-						track.added_at = album.release_date;
-						tracks.push_back(track);
-					}
+					spotify.albumTracks(album,
+						[album, callback](const std::vector<lib::spt::track> &results)
+						{
+							std::vector<lib::spt::track> tracks;
+							tracks.reserve(results.size());
+							for (auto &result : results)
+							{
+								lib::spt::track track = result;
+								track.added_at = album.release_date;
+								tracks.push_back(track);
+							}
+							callback(tracks);
+						});
+					return;
 				}
 			}
 			callback(tracks);
