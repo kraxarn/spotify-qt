@@ -2,7 +2,7 @@
 
 void Spotify::getAlbum(const std::string &id, lib::callback<lib::spt::album> &callback)
 {
-	get(lib::fmt::format("albums/{}"), callback);
+	get(lib::fmt::format("albums/{}", id), callback);
 }
 
 void Spotify::albumTracks(const lib::spt::album &album,
