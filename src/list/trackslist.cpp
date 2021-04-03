@@ -279,20 +279,21 @@ void TracksList::load(const lib::spt::playlist &playlist)
 void TracksList::load(const lib::spt::album &album, const std::string &trackId)
 {
 	auto tracks = cache.tracks(album.id);
-
 	if (!tracks.empty())
+	{
 		load(tracks, trackId);
-	else
-		setEnabled(false);
+		return;
+	}
 
+	setEnabled(false);
 	spotify.albumTracks(album,
 		[this, album, trackId](const std::vector<lib::spt::track> &tracks)
 		{
 			this->load(tracks, trackId);
-			setEnabled(true);
+			this->setEnabled(true);
 			cache.tracks(album.id, tracks);
 
-			auto mainWindow = MainWindow::find(parentWidget());
+			auto mainWindow = MainWindow::find(this->parentWidget());
 			if (mainWindow != nullptr)
 				mainWindow->setSptContext(album);
 		});
