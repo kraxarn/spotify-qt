@@ -23,14 +23,14 @@ std::vector<lib::spt::artist> Spotify::followedArtists(const std::string &offset
 void Spotify::follow(lib::follow_type type, const std::vector<std::string> &ids,
 	lib::callback<std::string> &callback)
 {
-	put(lib::fmt::format("me/following?type={}&ids={}",
+	lib::spt::spotify_api::put(lib::fmt::format("me/following?type={}&ids={}",
 		follow_type_string(type), lib::strings::join(ids, ",")), callback);
 }
 
 void Spotify::unfollow(lib::follow_type type, const std::vector<std::string> &ids,
 	lib::callback<std::string> &callback)
 {
-	del(lib::fmt::format("me/following?type={}&ids={}",
+	lib::spt::spotify_api::del(lib::fmt::format("me/following?type={}&ids={}",
 		follow_type_string(type), lib::strings::join(ids, ",")), callback);
 }
 

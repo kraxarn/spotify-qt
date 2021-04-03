@@ -244,11 +244,6 @@ void Spotify::put(const std::string &url, const nlohmann::json &body,
 		});
 }
 
-void Spotify::put(const std::string &url, lib::callback<std::string> &callback)
-{
-	put(url, nlohmann::json(), callback);
-}
-
 void Spotify::post(const std::string &url,
 	lib::callback<std::string> &callback)
 {
@@ -278,11 +273,6 @@ void Spotify::del(const std::string &url, const nlohmann::json &json,
 		{
 			callback(error_message(url, data.toStdString()));
 		});
-}
-
-void Spotify::del(const std::string &url, lib::callback<std::string> &callback)
-{
-	del(url, nlohmann::json(), callback);
 }
 
 QString Spotify::post(const QString &url)

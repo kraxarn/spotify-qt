@@ -66,11 +66,55 @@ bool spotify_api::refresh(bool force)
 	return true;
 }
 
+nlohmann::json spotify_api::parse_json(const std::string &url, const std::string &data)
+{
+	// No data, no response, no error
+	if (data.empty())
+		return nlohmann::json();
+
+	auto json = nlohmann::json::parse(data);
+
+	if (!lib::spotify_error::is(json))
+		return json;
+
+	auto err = lib::spotify_error::error_message(json);
+	lib::log::error("{} failed: {}", url, err);
+	throw lib::spotify_error(err, url);
+}
+
 long spotify_api::seconds_since_epoch()
 {
 	return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now()
 		.time_since_epoch()).count();
 }
+
+std::string spotify_api::to_uri(const std::string &type, const std::string &id)
+{
+	return lib::strings::starts_with(id, "spotify:")
+		? id
+		: lib::fmt::format("spotify:{}:{}", type, id);
+}
+
+std::string spotify_api::to_id(const std::string &id)
+{
+	return lib::strings::split(id, ':').back();
+}
+
+std::string spotify_api::follow_type_string(lib::follow_type type)
+{
+	switch (type)
+	{
+		case lib::follow_type::artist:
+			return "artist";
+
+		case lib::follow_type::user:
+			return "user";
+	}
+
+	return std::string();
+}
+
+//region GET
 
 void spotify_api::get(const std::string &url, const std::string &key,
 	lib::callback<nlohmann::json> &callback)
@@ -100,44 +144,26 @@ void spotify_api::get(const std::string &url, const std::string &key,
 	});
 }
 
-std::string spotify_api::to_uri(const std::string &type, const std::string &id)
+//endregion
+
+//region PUT
+
+void spotify_api::put(const std::string &url, lib::callback<std::string> &callback)
 {
-	return lib::strings::starts_with(id, "spotify:")
-		? id
-		: lib::fmt::format("spotify:{}:{}", type, id);
+	put(url, nlohmann::json(), callback);
 }
 
-std::string spotify_api::to_id(const std::string &id)
+//endregion
+
+//region POST
+
+//endregion
+
+//region DELETE
+
+void spotify_api::del(const std::string &url, lib::callback<std::string> &callback)
 {
-	return lib::strings::split(id, ':').back();
+	del(url, nlohmann::json(), callback);
 }
 
-std::string spotify_api::follow_type_string(lib::follow_type type)
-{
-	switch (type)
-	{
-		case lib::follow_type::artist:
-			return "artist";
-
-		case lib::follow_type::user:
-			return "user";
-	}
-
-	return std::string();
-}
-
-nlohmann::json spotify_api::parse_json(const std::string &url, const std::string &data)
-{
-	// No data, no response, no error
-	if (data.empty())
-		return nlohmann::json();
-
-	auto json = nlohmann::json::parse(data);
-
-	if (!lib::spotify_error::is(json))
-		return json;
-
-	auto err = lib::spotify_error::error_message(json);
-	lib::log::error("{} failed: {}", url, err);
-	throw lib::spotify_error(err, url);
-}
+//endregion

@@ -188,33 +188,15 @@ namespace spt
 
 		void await(QNetworkReply *reply, lib::callback<QByteArray> &callback);
 
-		//region GET
-
 		void get(const std::string &url, lib::callback<nlohmann::json> &callback) override;
-
-		//endregion
-
-		//region PUT
 
 		void put(const std::string &url, const nlohmann::json &body,
 			lib::callback<std::string> &callback) override;
 
-		void put(const std::string &url, lib::callback<std::string> &callback) override;
-
-		//endregion
-
-		//region POST
-
 		void post(const std::string &url, lib::callback<std::string> &callback) override;
-
-		//endregion
-
-		//region DELETE
 
 		void del(const std::string &url, const nlohmann::json &json,
 			lib::callback<std::string> &callback) override;
-
-		void del(const std::string &url, lib::callback<std::string> &callback) override;
 
 		//endregion
 

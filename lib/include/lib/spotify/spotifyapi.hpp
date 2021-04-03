@@ -228,6 +228,17 @@ namespace lib
 			 */
 			std::string current_device;
 
+			//region GET
+
+			/**
+			 * GET request
+			 * @param url URL to request
+			 * @param callback Response as JSON
+			 * @note Temporarily protected
+			 */
+			virtual void get(const std::string &url,
+				lib::callback<nlohmann::json> &callback) = 0;
+
 			/**
 			 * GET a collection of items
 			 * @param url URL to request
@@ -238,41 +249,6 @@ namespace lib
 			 */
 			void get(const std::string &url, const std::string &key,
 				lib::callback<nlohmann::json> &callback);
-
-			/**
-			 * Get string interpretation of a follow type
-			 * @param type Follow type
-			 */
-			static std::string follow_type_string(lib::follow_type type);
-
-		private:
-			/**
-			 * Send request to refresh access token
-			 * @param post_data POST form data
-			 * @param authorization Authorization header
-			 * @note Only required until networking is properly implemented
-			 * @return JSON response with (maybe) new access token
-			 */
-			virtual std::string request_refresh(const std::string &post_data,
-				const std::string &authorization) = 0;
-
-			/**
-			 * Parse JSON from string data
-			 * @param url Requested URL (used for error logging)
-			 * @param data JSON data
-			 * @note Throws if JSON failed to parse or JSON contains an error object
-			 * @returns Parsed JSON, or null object if no data
-			 */
-			static nlohmann::json parse_json(const std::string &url, const std::string &data);
-
-			//region GET
-
-			/**
-			 * GET request
-			 * @param url URL to request
-			 * @param callback Response as JSON
-			 */
-			virtual void get(const std::string &url, lib::callback<nlohmann::json> &callback) = 0;
 
 			//endregion
 
@@ -290,7 +266,7 @@ namespace lib
 			/**
 			 * Convenience method for PUT request with no body
 			 */
-			virtual void put(const std::string &url, lib::callback<std::string> &callback) = 0;
+			void put(const std::string &url, lib::callback<std::string> &callback);
 
 			//endregion
 
@@ -319,9 +295,35 @@ namespace lib
 			/**
 			 * Convenience method for DELETE request with no body
 			 */
-			virtual void del(const std::string &url, lib::callback<std::string> &callback) = 0;
+			void del(const std::string &url, lib::callback<std::string> &callback);
 
 			//endregion
+
+			/**
+			 * Get string interpretation of a follow type
+			 * @param type Follow type
+			 */
+			static std::string follow_type_string(lib::follow_type type);
+
+		private:
+			/**
+			 * Send request to refresh access token
+			 * @param post_data POST form data
+			 * @param authorization Authorization header
+			 * @note Only required until networking is properly implemented
+			 * @return JSON response with (maybe) new access token
+			 */
+			virtual std::string request_refresh(const std::string &post_data,
+				const std::string &authorization) = 0;
+
+			/**
+			 * Parse JSON from string data
+			 * @param url Requested URL (used for error logging)
+			 * @param data JSON data
+			 * @note Throws if JSON failed to parse or JSON contains an error object
+			 * @returns Parsed JSON, or null object if no data
+			 */
+			static nlohmann::json parse_json(const std::string &url, const std::string &data);
 		};
 	}
 }
