@@ -25,7 +25,7 @@ namespace lib
 			/**
 			 * Playable in current region
 			 */
-			bool is_playable = false;
+			bool is_playable = true;
 
 			/**
 			 * Track duration in milliseconds
