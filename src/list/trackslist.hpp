@@ -37,8 +37,10 @@ public:
 
 	/**
 	 * Load album first from cache, then refresh it
+	 * @param album Album to load
+	 * @param trackId Track to highlight
 	 */
-	void load(const lib::spt::album &album);
+	void load(const lib::spt::album &album, const std::string &trackId = std::string());
 
 protected:
 	void resizeEvent(QResizeEvent *event) override;
