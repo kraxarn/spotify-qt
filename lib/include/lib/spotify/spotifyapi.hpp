@@ -265,12 +265,18 @@ namespace lib
 			 */
 			static nlohmann::json parse_json(const std::string &url, const std::string &data);
 
+			//region GET
+
 			/**
 			 * GET request
 			 * @param url URL to request
 			 * @param callback Response as JSON
 			 */
 			virtual void get(const std::string &url, lib::callback<nlohmann::json> &callback) = 0;
+
+			//endregion
+
+			//region PUT
 
 			/**
 			 * PUT request
@@ -286,12 +292,20 @@ namespace lib
 			 */
 			virtual void put(const std::string &url, lib::callback<std::string> &callback) = 0;
 
+			//endregion
+
+			//region POST
+
 			/**
 			 * POST request
 			 * @param url URL to request
 			 * @param callback Error message, or empty if none
 			 */
 			virtual void post(const std::string &url, lib::callback<std::string> &callback) = 0;
+
+			//endregion
+
+			//region DELETE
 
 			/**
 			 * DELETE request
@@ -306,6 +320,8 @@ namespace lib
 			 * Convenience method for DELETE request with no body
 			 */
 			virtual void del(const std::string &url, lib::callback<std::string> &callback) = 0;
+
+			//endregion
 		};
 	}
 }
