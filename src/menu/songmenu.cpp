@@ -245,7 +245,5 @@ void SongMenu::viewArtist(bool)
 void SongMenu::openAlbum(bool)
 {
 	auto mainWindow = MainWindow::find(parentWidget());
-	mainWindow->loadAlbum(albumId, lib::strings::starts_with(trackId, "spotify:track:")
-		? trackId.substr(std::string("spotify:track:").size())
-		: trackId);
+	mainWindow->loadAlbum(albumId, lib::spt::spotify_api::to_uri("track", trackId));
 }
