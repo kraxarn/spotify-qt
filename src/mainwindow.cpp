@@ -480,6 +480,16 @@ void MainWindow::setSptContext(const std::string &uri)
 	current.context = QString::fromStdString(uri);
 }
 
+void MainWindow::setSptContext(const lib::spt::playlist &playlist)
+{
+	setSptContext(lib::spt::spotify_api::to_uri("playlist", playlist.id));
+}
+
+void MainWindow::setSptContext(const lib::spt::album &album)
+{
+	setSptContext(lib::spt::spotify_api::to_uri("album", album.id));
+}
+
 lib::spt::playback &MainWindow::getCurrentPlayback()
 {
 	return current.playback;
