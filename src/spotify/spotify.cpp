@@ -183,23 +183,25 @@ QString Spotify::put(const QString &url, QVariantMap *body)
 	return reply;
 }
 
-void Spotify::put(const QString &url, const nlohmann::json &body,
-	lib::callback<QString> &callback)
+void Spotify::put(const std::string &url, const nlohmann::json &body,
+	lib::callback<std::string> &callback)
 {
 	// Set in header we're sending json data
-	auto req = request(url);
-	req.setHeader(QNetworkRequest::ContentTypeHeader, QString("application/json"));
+	auto req = request(QString::fromStdString(url));
+	req.setHeader(QNetworkRequest::ContentTypeHeader,
+		QString("application/json"));
 
 	auto data = body.is_null()
 		? QByteArray()
 		: QByteArray::fromStdString(body.dump());
 
 	await(networkManager->put(req, data),
-		[this, url, body, callback](const QByteArray &data)
+		[this, url, body, callback](const nlohmann::json &data)
 		{
-			auto error = errorMessage(url, data);
+			auto error = error_message(url, data);
 
-			if (error.contains("No active device found"))
+			if (lib::strings::contains(error, "No active device found")
+				|| lib::strings::contains(error, "Device not found"))
 			{
 				devices([this, url, body, error, callback]
 					(const std::vector<lib::spt::device> &devices)
@@ -240,20 +242,6 @@ void Spotify::put(const QString &url, const nlohmann::json &body,
 				callback(error);
 			}
 		});
-}
-
-void Spotify::put(const QString &url, lib::callback<QString> &callback)
-{
-	put(url, nlohmann::json(), callback);
-}
-
-void Spotify::put(const std::string &url, const nlohmann::json &body,
-	lib::callback<std::string> &callback)
-{
-	put(QString::fromStdString(url), body, [callback](const QString &result)
-	{
-		callback(result.toStdString());
-	});
 }
 
 void Spotify::put(const std::string &url, lib::callback<std::string> &callback)

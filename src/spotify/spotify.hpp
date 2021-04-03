@@ -196,16 +196,6 @@ namespace spt
 
 		//region PUT
 
-		/**
-		 * @deprecated
-		 */
-		void put(const QString &url, const nlohmann::json &body, lib::callback<QString> &callback);
-
-		/**
-		 * @deprecated
-		 */
-		void put(const QString &url, lib::callback<QString> &callback);
-
 		void put(const std::string &url, const nlohmann::json &body,
 			lib::callback<std::string> &callback) override;
 
