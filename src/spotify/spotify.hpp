@@ -190,21 +190,6 @@ namespace spt
 
 		//region GET
 
-		/**
-		 * @deprecated Use callback with json instead
-		 */
-		void get(const QString &url, lib::callback<QJsonDocument> &callback);
-
-		/**
-		 * @deprecated Use callback with json instead
-		 */
-		void get(const QString &url, lib::callback<QJsonObject> &callback);
-
-		/**
-		 * @deprecated Use callback with json instead
-		 */
-		void get(const QString &url, lib::callback<QJsonArray> &callback);
-
 		void get(const std::string &url, lib::callback<nlohmann::json> &callback) override;
 
 		//endregion

@@ -120,32 +120,6 @@ nlohmann::json Spotify::getAsJson(const std::string &url)
 	return getAsJson(QString::fromStdString(url));
 }
 
-void Spotify::get(const QString &url, lib::callback<QJsonDocument> &callback)
-{
-	await(networkManager->get(request(url)),
-		[callback](const QByteArray &data)
-		{
-			// Parse reply as json
-			callback(QJsonDocument::fromJson(data));
-		});
-}
-
-void Spotify::get(const QString &url, lib::callback<QJsonObject> &callback)
-{
-	get(url, [callback](const QJsonDocument &json)
-	{
-		callback(json.object());
-	});
-}
-
-void Spotify::get(const QString &url, lib::callback<QJsonArray> &callback)
-{
-	get(url, [callback](const QJsonDocument &json)
-	{
-		callback(json.array());
-	});
-}
-
 void Spotify::get(const std::string &url, lib::callback<nlohmann::json> &callback)
 {
 	await(networkManager->get(request(QString::fromStdString(url))),
