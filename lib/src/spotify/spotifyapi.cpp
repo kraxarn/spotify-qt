@@ -125,3 +125,19 @@ std::string spotify_api::follow_type_string(lib::follow_type type)
 
 	return std::string();
 }
+
+nlohmann::json spotify_api::parse_json(const std::string &url, const std::string &data)
+{
+	// No data, no response, no error
+	if (data.empty())
+		return nlohmann::json();
+
+	auto json = nlohmann::json::parse(data);
+
+	if (!lib::spotify_error::is(json))
+		return json;
+
+	auto err = lib::spotify_error::error_message(json);
+	lib::log::error("{} failed: {}", url, err);
+	throw lib::spotify_error(err, url);
+}

@@ -8,6 +8,7 @@
 #include "lib/enum/repeatstate.hpp"
 #include "lib/json.hpp"
 #include "lib/enum/followtype.hpp"
+#include "lib/spotifyerror.hpp"
 
 #include "thirdparty/json.hpp"
 
@@ -254,6 +255,15 @@ namespace lib
 			 */
 			virtual std::string request_refresh(const std::string &post_data,
 				const std::string &authorization) = 0;
+
+			/**
+			 * Parse JSON from string data
+			 * @param url Requested URL (used for error logging)
+			 * @param data JSON data
+			 * @note Throws if JSON failed to parse or JSON contains an error object
+			 * @returns Parsed JSON, or null object if no data
+			 */
+			static nlohmann::json parse_json(const std::string &url, const std::string &data);
 
 			/**
 			 * GET request
