@@ -42,12 +42,10 @@ namespace spt
 
 		//region Albums
 
-		std::vector<lib::spt::track> albumTracks(const std::string &albumId);
-
 		void getAlbum(const std::string &id, lib::callback<lib::spt::album> &callback);
 
-		std::vector<lib::spt::track> albumTracks(const std::string &albumId,
-			const std::string &albumName, int offset);
+		void albumTracks(const lib::spt::album &album,
+			lib::callback<std::vector<lib::spt::track>> &callback);
 
 		//endregion
 
