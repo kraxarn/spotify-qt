@@ -280,12 +280,10 @@ void TracksList::load(const lib::spt::album &album, const std::string &trackId)
 {
 	auto tracks = cache.tracks(album.id);
 	if (!tracks.empty())
-	{
 		load(tracks, trackId);
-		return;
-	}
+	else
+		setEnabled(false);
 
-	setEnabled(false);
 	spotify.albumTracks(album,
 		[this, album, trackId](const std::vector<lib::spt::track> &tracks)
 		{
