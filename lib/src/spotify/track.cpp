@@ -51,7 +51,11 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 	lib::json::get(track, "name", t.name);
 	lib::json::get(track, "duration_ms", t.duration);
 	lib::json::get(track, "is_local", t.is_local);
-	lib::json::get(track, "is_playable", t.is_playable);
+
+	if (track.contains("is_playable"))
+		track.at("is_playable").get_to(t.is_playable);
+	else
+		t.is_playable = !t.id.empty();
 
 	if (track.contains("artists"))
 	{
