@@ -40,23 +40,6 @@ namespace spt
 	public:
 		explicit Spotify(lib::settings &settings, QObject *parent = nullptr);
 
-		// Albums (moved to lib)
-
-		//region Artists
-
-		void artist(const std::string &artistId, lib::callback<lib::spt::artist> &callback);
-
-		void topTracks(const lib::spt::artist &artist,
-			lib::callback<std::vector<lib::spt::track>> &callback);
-
-		void relatedArtists(const lib::spt::artist &artist,
-			lib::callback<std::vector<lib::spt::artist>> &callback);
-
-		void albums(const lib::spt::artist &artist,
-			lib::callback<std::vector<lib::spt::album>> &callback);
-
-		//endregion
-
 		//region Browse
 
 		std::vector<lib::spt::album> newReleases(int offset = 0);

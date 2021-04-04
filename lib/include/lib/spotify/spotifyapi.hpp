@@ -10,6 +10,7 @@
 #include "lib/enum/followtype.hpp"
 #include "lib/spotifyerror.hpp"
 #include "lib/spotify/album.hpp"
+#include "lib/spotify/artist.hpp"
 
 #include "thirdparty/json.hpp"
 
@@ -46,6 +47,18 @@ namespace lib
 			//endregion
 
 			//region Artists
+
+			void artist(const std::string &artistId,
+				lib::callback<lib::spt::artist> &callback);
+
+			void top_tracks(const lib::spt::artist &artist,
+				lib::callback<std::vector<lib::spt::track>> &callback);
+
+			void related_artists(const lib::spt::artist &artist,
+				lib::callback<std::vector<lib::spt::artist>> &callback);
+
+			void albums(const lib::spt::artist &artist,
+				lib::callback<std::vector<lib::spt::album>> &callback);
 
 			//endregion
 

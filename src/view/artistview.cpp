@@ -162,7 +162,7 @@ void ArtistView::artistLoaded(const lib::spt::artist &loadedArtist)
 	genres->setText(QString::fromStdString(lib::strings::join(artist.genres, ", ")));
 
 	// Top tracks
-	spotify.topTracks(artist, [this](const std::vector<lib::spt::track> &tracks)
+	spotify.top_tracks(artist, [this](const std::vector<lib::spt::track> &tracks)
 	{
 		topTracksLoaded(tracks);
 	});
@@ -174,7 +174,7 @@ void ArtistView::artistLoaded(const lib::spt::artist &loadedArtist)
 	});
 
 	// Related artists
-	spotify.relatedArtists(artist, [this](const std::vector<lib::spt::artist> &artists)
+	spotify.related_artists(artist, [this](const std::vector<lib::spt::artist> &artists)
 	{
 		relatedArtistsLoaded(artists);
 	});
