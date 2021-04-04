@@ -46,21 +46,6 @@ namespace spt
 
 		//endregion
 
-		//region Follow
-
-		std::vector<lib::spt::artist> followedArtists(const std::string &offset = std::string());
-
-		void follow(lib::follow_type type, const std::vector<std::string> &ids,
-			lib::callback<std::string> &callback);
-
-		void unfollow(lib::follow_type type, const std::vector<std::string> &ids,
-			lib::callback<std::string> &callback);
-
-		void isFollowing(lib::follow_type type, const std::vector<std::string> &ids,
-			lib::callback<std::vector<bool>> &callback);
-
-		//endregion
-
 		//region Library
 
 		std::vector<lib::spt::album> savedAlbums();
