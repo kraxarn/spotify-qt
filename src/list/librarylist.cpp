@@ -180,19 +180,30 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 	{
 		for (auto &artist : spotify.topArtists())
 			results.emplace_back(artist.name, artist.id, RoleArtistId);
+		itemsLoaded(results, item);
 	}
 	else if (item->text(0) == SAVED_ALBUMS)
 	{
 		for (auto &album : spotify.savedAlbums())
 			results.emplace_back(album.name, album.id, RoleAlbumId);
+		itemsLoaded(results, item);
 	}
 	else if (item->text(0) == FOLLOWED_ARTISTS)
 	{
-		for (auto &artist : spotify.followedArtists())
-			results.emplace_back(artist.name, artist.id, RoleArtistId);
+		spotify.followed_artists([item](const std::vector<lib::spt::artist> &artists)
+		{
+			std::vector<LibraryItem> results;
+			results.reserve(artists.size());
+			for (auto &artist : artists)
+				results.emplace_back(artist.name, artist.id, RoleArtistId);
+			LibraryList::itemsLoaded(results, item);
+		});
 	}
+}
 
-	std::sort(results.begin(), results.end(),
+void LibraryList::itemsLoaded(std::vector<LibraryItem> &items, QTreeWidgetItem *item)
+{
+	std::sort(items.begin(), items.end(),
 		[](const LibraryItem &x, const LibraryItem &y)
 		{
 			return x.name < y.name;
@@ -200,7 +211,7 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 	);
 
 	// No results
-	if (results.empty())
+	if (items.empty())
 	{
 		auto child = new QTreeWidgetItem(item, {
 			"No results"
@@ -212,7 +223,7 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 	}
 
 	// Add all to the list
-	for (auto &result : results)
+	for (auto &result : items)
 	{
 		auto child = new QTreeWidgetItem(item, {
 			QString::fromStdString(result.name)

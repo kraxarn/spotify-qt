@@ -1,8 +1,7 @@
 #pragma once
 
-#include "../enum/datarole.hpp"
-#include "../spotify/spotify.hpp"
-#include "../util/utils.hpp"
+#include "spotify/spotify.hpp"
+#include "util/utils.hpp"
 #include "libraryitem.hpp"
 
 #include <QTreeWidget>
@@ -23,4 +22,5 @@ private:
 	void expanded(QTreeWidgetItem *item);
 
 	void tracksLoaded(const std::string &id, const std::vector<lib::spt::track> &tracks);
+	static void itemsLoaded(std::vector<LibraryItem> &items, QTreeWidgetItem *item);
 };
