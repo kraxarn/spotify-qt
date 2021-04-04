@@ -51,7 +51,7 @@ PlaylistEditDialog::PlaylistEditDialog(spt::Spotify *spotify, const lib::spt::pl
 		pl.is_public = isPublic->isChecked();
 		pl.collaborative = isCollaborative->isChecked();
 
-		spotify->editPlaylist(pl, [this](const std::string &result)
+		spotify->edit_playlist(pl, [this](const std::string &result)
 		{
 			if (result.empty())
 			{

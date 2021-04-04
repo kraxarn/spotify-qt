@@ -163,7 +163,7 @@ void SongMenu::addToPlaylist(QAction *action)
 
 	spotify.playlist(playlistId, [this, playlistId](const lib::spt::playlist &playlist)
 	{
-		this->spotify.playlistTracks(playlist,
+		this->spotify.playlist_tracks(playlist,
 			[this, playlistId](const std::vector<lib::spt::track> &tracks)
 			{
 				auto mainWindow = MainWindow::find(this->parentWidget());
@@ -183,7 +183,7 @@ void SongMenu::addToPlaylist(QAction *action)
 
 				// Actually add
 				auto plTrack = lib::spt::spotify_api::to_uri("track", trackId);
-				spotify.addToPlaylist(playlistId, plTrack, [mainWindow](const std::string &result)
+				spotify.add_to_playlist(playlistId, plTrack, [mainWindow](const std::string &result)
 				{
 					if (result.empty())
 						return;
@@ -196,7 +196,7 @@ void SongMenu::addToPlaylist(QAction *action)
 
 void SongMenu::remFromPlaylist(bool)
 {
-	spotify.removeFromPlaylist(currentPlaylist->id, trackId, index,
+	spotify.remove_from_playlist(currentPlaylist->id, trackId, index,
 		[this](const std::string &status)
 		{
 			// Remove from Spotify

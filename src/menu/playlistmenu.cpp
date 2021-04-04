@@ -14,7 +14,7 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &play
 	byAction = addAction("By ...");
 
 	tracksLoaded(cache.get_playlist(playlist.id).tracks);
-	spotify.playlistTracks(playlist, [this](const std::vector<lib::spt::track> &items)
+	spotify.playlist_tracks(playlist, [this](const std::vector<lib::spt::track> &items)
 	{
 		tracksLoaded(items);
 	});

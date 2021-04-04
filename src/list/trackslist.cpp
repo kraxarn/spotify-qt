@@ -267,7 +267,7 @@ void TracksList::load(const lib::spt::playlist &playlist)
 
 	spotify.playlist(playlist.id, [this](const lib::spt::playlist &loadedPlaylist)
 	{
-		spotify.playlistTracks(loadedPlaylist,
+		spotify.playlist_tracks(loadedPlaylist,
 			[this, loadedPlaylist](const std::vector<lib::spt::track> &tracks)
 		{
 			auto newPlaylist = loadedPlaylist;
