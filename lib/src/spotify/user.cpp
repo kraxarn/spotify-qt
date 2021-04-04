@@ -17,6 +17,9 @@ void lib::spt::from_json(const nlohmann::json &j, user &u)
 
 	j.at("display_name").get_to(u.display_name);
 	j.at("id").get_to(u.id);
-	j.at("images").back().at("url").get_to(u.image);
+    const auto& images = j.at("images");
+    if (images.size() > 0) {
+        images.back().at("url").get_to(u.image);
+    }
 	j.at("product").get_to(u.product);
 }
