@@ -171,13 +171,12 @@ void SongMenu::addToPlaylist(QAction *action)
 				{
 					if (lib::strings::ends_with(trackId, item.id))
 					{
-						if (QMessageBox::information(mainWindow, "Duplicate",
+						auto result = QMessageBox::information(mainWindow, "Duplicate",
 							"Track is already in the playlist, do you want to add it anyway?",
-							QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes)
-							== QMessageBox::No)
-						{
+							QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+
+						if (result == QMessageBox::No)
 							return;
-						}
 						break;
 					}
 				}
