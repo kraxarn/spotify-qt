@@ -11,6 +11,7 @@
 #include "lib/spotifyerror.hpp"
 #include "lib/spotify/album.hpp"
 #include "lib/spotify/artist.hpp"
+#include "lib/spotify/playlist.hpp"
 
 #include "thirdparty/json.hpp"
 
@@ -215,6 +216,23 @@ namespace lib
 			//endregion
 
 			//region Playlists
+
+			void playlists(lib::callback<std::vector<lib::spt::playlist>> &callback);
+
+			void playlist(const std::string &playlist_id,
+				lib::callback<lib::spt::playlist> &callback);
+
+			void edit_playlist(const lib::spt::playlist &playlist,
+				lib::callback<std::string> &callback);
+
+			void playlist_tracks(const lib::spt::playlist &playlist,
+				lib::callback<std::vector<lib::spt::track>> &callback);
+
+			void add_to_playlist(const std::string &playlist_id, const std::string &track_id,
+				lib::callback<std::string> &callback);
+
+			void remove_from_playlist(const std::string &playlist_id, const std::string &track_id,
+				int pos, lib::callback<std::string> &callback);
 
 			//endregion
 

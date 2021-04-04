@@ -48,24 +48,7 @@ namespace spt
 
 		//region Playlists
 
-		void playlists(lib::callback<std::vector<lib::spt::playlist>> &callback);
 
-		void playlists(int offset, lib::callback<std::vector<lib::spt::playlist>> &callback);
-
-		void playlist(const std::string &playlistId,
-			lib::callback<lib::spt::playlist> &callback);
-
-		void editPlaylist(const lib::spt::playlist &playlist,
-			lib::callback<std::string> &callback);
-
-		void playlistTracks(const lib::spt::playlist &playlist,
-			lib::callback<std::vector<lib::spt::track>> &callback);
-
-		void addToPlaylist(const std::string &playlistId, const std::string &trackId,
-			lib::callback<std::string> &callback);
-
-		void removeFromPlaylist(const std::string &playlistId, const std::string &trackId,
-			int pos, lib::callback<std::string> &callback);
 
 		//endregion
 
