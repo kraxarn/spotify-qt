@@ -12,6 +12,7 @@
 #include "lib/spotify/album.hpp"
 #include "lib/spotify/artist.hpp"
 #include "lib/spotify/playlist.hpp"
+#include "lib/spotify/searchresults.hpp"
 
 #include "thirdparty/json.hpp"
 
@@ -237,6 +238,9 @@ namespace lib
 			//endregion
 
 			//region Search
+
+			void search(const std::string &query,
+				lib::callback<lib::spt::search_results> &callback);
 
 			//endregion
 

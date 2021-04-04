@@ -46,18 +46,6 @@ namespace spt
 
 		//endregion
 
-		//region Playlists
-
-
-
-		//endregion
-
-		//region Search
-
-		void search(const std::string &query, lib::callback<lib::spt::search_results> &callback);
-
-		//endregion
-
 		//region Tracks
 
 		lib::spt::track getTrack(const std::string &id);
