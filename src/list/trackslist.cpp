@@ -265,15 +265,18 @@ void TracksList::load(const lib::spt::playlist &playlist)
 	else
 		setEnabled(false);
 
-	auto newPlaylist = spotify.playlist(playlist.id);
-	newPlaylist.tracks = spotify.playlistTracks(newPlaylist);
-	load(newPlaylist.tracks);
-	setEnabled(true);
-	cache.set_playlist(newPlaylist);
+	spotify.playlist(playlist.id, [this](const lib::spt::playlist &loadedPlaylist)
+	{
+		auto newPlaylist = loadedPlaylist;
+		newPlaylist.tracks = this->spotify.playlistTracks(newPlaylist);
+		this->load(newPlaylist.tracks);
+		this->setEnabled(true);
+		this->cache.set_playlist(newPlaylist);
 
-	auto mainWindow = MainWindow::find(parentWidget());
-	if (mainWindow != nullptr)
-		mainWindow->setSptContext(playlist);
+		auto mainWindow = MainWindow::find(this->parentWidget());
+		if (mainWindow != nullptr)
+			mainWindow->setSptContext(newPlaylist);
+	});
 }
 
 void TracksList::load(const lib::spt::album &album, const std::string &trackId)

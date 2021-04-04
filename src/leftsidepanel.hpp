@@ -67,7 +67,7 @@ private:
 	void contextInfoMenu(const QPoint &pos);
 	void contextInfoOpen(bool checked);
 	QIcon currentContextIcon() const;
-	std::string getPlaylistName(const std::string &id);
+	void getPlaylistName(const std::string &id, lib::callback<std::string> &callback);
 
 	void popupSongMenu(const QPoint &pos);
 };

@@ -119,10 +119,12 @@ void SearchView::artistClick(QListWidgetItem *item)
 
 void SearchView::playlistClick(QListWidgetItem *item)
 {
-	lib::spt::playlist playlist(spotify.playlist(item->data(RolePlaylistId)
-		.toString().toStdString()));
-	auto mainWindow = MainWindow::find(parentWidget());
-	mainWindow->getSongsTree()->load(playlist);
+	spotify.playlist(item->data(RolePlaylistId)
+		.toString().toStdString(), [this](const lib::spt::playlist &playlist)
+	{
+		auto mainWindow = MainWindow::find(this->parentWidget());
+		mainWindow->getSongsTree()->load(playlist);
+	});
 }
 
 void SearchView::search()
@@ -175,7 +177,10 @@ void SearchView::search()
 			}
 			else if (cat == "playlist")
 			{
-				addPlaylist(spotify.playlist(id));
+				spotify.playlist(id, [this](const lib::spt::playlist &playlist)
+				{
+					this->addPlaylist(playlist);
+				});
 				i = 3;
 			}
 
@@ -223,8 +228,12 @@ void SearchView::playlistMenu(const QPoint &pos)
 {
 	auto item = playlistList->itemAt(pos);
 	auto playlistId = item->data(RolePlaylistId).toString().toStdString();
-	auto menu = new PlaylistMenu(spotify, playlistId, cache, parentWidget());
-	menu->popup(playlistList->mapToGlobal(pos));
+
+	spotify.playlist(playlistId, [this, pos](const lib::spt::playlist &playlist)
+	{
+		auto menu = new PlaylistMenu(spotify, playlist, cache, parentWidget());
+		menu->popup(playlistList->mapToGlobal(pos));
+	});
 }
 
 void SearchView::addArtist(const lib::spt::artist &artist)

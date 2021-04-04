@@ -86,22 +86,26 @@ void LeftSidePanel::updateContextIcon()
 		return;
 	}
 
-	auto currentName = current.playback.context.type.empty()
-		|| current.playback.context.uri.empty()
-		? "No context"
-		: current.playback.context.type == "album"
-			? current.playback.item.album
-			: current.playback.context.type == "artist"
-				? current.playback.item.artist
-				: getPlaylistName(current.playback.context.uri);
+	auto callback = [this](const std::string &currentName)
+	{
+		this->contextInfo->setText(QString::fromStdString(currentName));
+		auto size = this->contextInfo->fontInfo().pixelSize();
+		this->contextIcon->setPixmap(currentContextIcon().pixmap(size, size));
 
-	contextInfo->setText(QString::fromStdString(currentName));
-	auto size = contextInfo->fontInfo().pixelSize();
-	contextIcon->setPixmap(currentContextIcon().pixmap(size, size));
+		auto show = currentName != "No context";
+		this->contextIcon->setVisible(show);
+		this->contextInfo->setVisible(show);
+	};
 
-	auto show = currentName != "No context";
-	contextIcon->setVisible(show);
-	contextInfo->setVisible(show);
+	if (current.playback.context.type.empty()
+		|| current.playback.context.uri.empty())
+		callback("No context");
+	else if (current.playback.context.type == "album")
+		callback(current.playback.item.album);
+	else if (current.playback.context.type == "artist")
+		callback(current.playback.item.artist);
+	else
+		getPlaylistName(current.playback.context.uri, callback);
 }
 
 void LeftSidePanel::contextInfoMenu(const QPoint &pos)
@@ -133,10 +137,12 @@ void LeftSidePanel::contextInfoOpen(bool)
 		mainWindow->openArtist(uri);
 	else if (type == "playlist")
 	{
-		auto playlist = spotify.playlist(uri);
-		libraryList->setCurrentItem(nullptr);
-		playlists->setCurrentRow(-1);
-		mainWindow->getSongsTree()->load(playlist);
+		spotify.playlist(uri, [this, mainWindow](const lib::spt::playlist &playlist)
+		{
+			this->libraryList->setCurrentItem(nullptr);
+			this->playlists->setCurrentRow(-1);
+			mainWindow->getSongsTree()->load(playlist);
+		});
 	}
 }
 
@@ -219,12 +225,20 @@ void LeftSidePanel::setAlbumImage(const QPixmap &pixmap)
 	nowAlbum->setPixmap(pixmap);
 }
 
-std::string LeftSidePanel::getPlaylistName(const std::string &id)
+void LeftSidePanel::getPlaylistName(const std::string &id,
+	lib::callback<std::string> &callback)
 {
 	auto name = getPlaylistNameFromSaved(id);
 	if (!name.empty())
-		return name;
-	return spotify.playlist(lib::strings::split(id, ':').back()).name;
+		callback(name);
+	else
+	{
+		spotify.playlist(lib::spt::spotify_api::to_id(id),
+			[callback](const lib::spt::playlist &playlist)
+		{
+			callback(playlist.name);
+		});
+	}
 }
 
 QTreeWidgetItem *LeftSidePanel::getCurrentLibraryItem()

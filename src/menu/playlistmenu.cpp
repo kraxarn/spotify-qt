@@ -10,36 +10,16 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &play
 	if (window == nullptr)
 		return;
 
-	auto tracks = cache.get_playlist(playlist.id).tracks;
-	if (tracks.empty())
-		tracks = spotify.playlist(playlist.id).tracks;
+	tracksAction = addAction("... tracks");
+	byAction = addAction("By ...");
 
-	auto duration = 0;
-	for (auto &track : tracks)
-		duration += track.duration;
-	auto minutes = duration / 1000 / 60;
-	if (tracks.size() > 1)
-	{
-		addAction(QString("%1 tracks, %2%3 m")
-			.arg(tracks.size())
-			.arg(minutes >= 60
-				? QString("%1 h ").arg(minutes / 60)
-				: QString())
-			.arg(minutes % 60))->setEnabled(false);
-	}
-
-	auto isOwner = playlist.is_owner(window->getCurrentUser());
-	if (!isOwner && !playlist.owner_name.empty())
-	{
-		auto action = addAction(QString("By %1")
-			.arg(QString::fromStdString(playlist.owner_name)));
-		action->setEnabled(false);
-	}
+	tracksLoaded(cache.get_playlist(playlist.id).tracks);
+	tracksLoaded(spotify.playlistTracks(playlist));
 
 	addSeparator();
 	auto playShuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle play");
 	QAction::connect(playShuffle, &QAction::triggered,
-		[tracks, playlist, &spotify, window](bool checked)
+		[this, playlist, &spotify, window](bool checked)
 		{
 			if (tracks.empty())
 			{
@@ -64,17 +44,17 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &play
 			});
 		});
 
-	if (isOwner)
-	{
-		QAction::connect(addAction(Icon::get("document-edit"), "Edit"), &QAction::triggered,
-			[this, playlist, &spotify, window](bool checked)
-			{
-				delete editDialog;
-				editDialog = new PlaylistEditDialog(&spotify, playlist, -1, parentWidget());
-				if (editDialog->exec() == QDialog::Accepted)
-					window->refreshPlaylists();
-			});
-	}
+	editAction = addAction(Icon::get("document-edit"), "Edit");
+	editAction->setVisible(false);
+	QAction::connect(editAction, &QAction::triggered,
+		[this, playlist, &spotify, window](bool checked)
+		{
+			delete editDialog;
+			editDialog = new PlaylistEditDialog(&spotify, playlist, -1,
+				parentWidget());
+			if (editDialog->exec() == QDialog::Accepted)
+				window->refreshPlaylists();
+		});
 
 	auto share = addMenu(Icon::get("document-share"), "Share");
 	auto sharePlaylist = share->addAction("Copy playlist link");
@@ -107,8 +87,31 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &play
 	}
 }
 
-PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const std::string &playlistId,
-	lib::cache &cache, QWidget *parent)
-	: PlaylistMenu(spotify, spotify.playlist(playlistId), cache, parent)
+void PlaylistMenu::tracksLoaded(const std::vector<lib::spt::track> &items)
 {
+	tracks = items;
+
+	auto duration = 0;
+	for (auto &track : tracks)
+		duration += track.duration;
+	auto minutes = duration / 1000 / 60;
+
+	if (tracks.size() > 1)
+	{
+		tracksAction->setText(QString("%1 tracks, %2%3 m")
+			.arg(tracks.size())
+			.arg(minutes >= 60
+				? QString("%1 h ").arg(minutes / 60)
+				: QString())
+			.arg(minutes % 60));
+	}
+
+	auto window = MainWindow::find(this->parentWidget());
+	auto isOwner = playlist.is_owner(window->getCurrentUser());
+	if (!isOwner && !playlist.owner_name.empty())
+	{
+		byAction->setText(QString("By %1")
+			.arg(QString::fromStdString(playlist.owner_name)));
+	}
+	editAction->setVisible(isOwner);
 }
