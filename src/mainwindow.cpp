@@ -290,7 +290,7 @@ void MainWindow::openLyrics(const std::string &artist, const std::string &name)
 
 bool MainWindow::loadAlbum(const std::string &albumId, const std::string &trackId)
 {
-	spotify->getAlbum(albumId, [this, trackId](const lib::spt::album &album)
+	spotify->album(albumId, [this, trackId](const lib::spt::album &album)
 	{
 		this->songs->load(album, trackId);
 	});

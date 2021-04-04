@@ -99,7 +99,7 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 			{
 				if (all.find(album.artist) != all.end())
 				{
-					spotify.albumTracks(album,
+					spotify.album_tracks(album,
 						[album, callback](const std::vector<lib::spt::track> &results)
 						{
 							std::vector<lib::spt::track> tracks;

@@ -169,7 +169,7 @@ void SearchView::search()
 			}
 			else if (cat == "album")
 			{
-				spotify.getAlbum(id, [this](const lib::spt::album &album)
+				spotify.album(id, [this](const lib::spt::album &album)
 				{
 					this->addAlbum(album);
 				});

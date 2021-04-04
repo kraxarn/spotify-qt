@@ -9,6 +9,7 @@
 #include "lib/json.hpp"
 #include "lib/enum/followtype.hpp"
 #include "lib/spotifyerror.hpp"
+#include "lib/spotify/album.hpp"
 
 #include "thirdparty/json.hpp"
 
@@ -35,6 +36,12 @@ namespace lib
 			explicit spotify_api(lib::settings &settings);
 
 			//region Albums
+
+			void album(const std::string &id,
+				lib::callback<lib::spt::album> &callback);
+
+			void album_tracks(const lib::spt::album &album,
+				lib::callback<std::vector<lib::spt::track>> &callback);
 
 			//endregion
 

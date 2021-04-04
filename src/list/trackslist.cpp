@@ -291,7 +291,7 @@ void TracksList::load(const lib::spt::album &album, const std::string &trackId)
 	else
 		setEnabled(false);
 
-	spotify.albumTracks(album,
+	spotify.album_tracks(album,
 		[this, album, trackId](const std::vector<lib::spt::track> &tracks)
 		{
 			this->load(tracks, trackId);
