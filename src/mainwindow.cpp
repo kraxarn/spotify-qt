@@ -185,7 +185,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 			songs->setPlayingTrackItem(current.playback.item.id);
 
 		leftSidePanel->setCurrentlyPlaying(currPlaying);
-		setAlbumImage(QString::fromStdString(current.playback.item.image));
+		setAlbumImage(current.playback.item.image);
 		setWindowTitle(QString::fromStdString(current.playback.item.title()));
 		leftSidePanel->updateContextIcon();
 
@@ -327,7 +327,7 @@ void MainWindow::status(const std::string &message, bool important)
 	setStatus(QString::fromStdString(message), important);
 }
 
-void MainWindow::setAlbumImage(const QString &url)
+void MainWindow::setAlbumImage(const std::string &url)
 {
 	leftSidePanel->setAlbumImage(Utils::mask(getAlbum(url)));
 }
@@ -343,46 +343,32 @@ QByteArray MainWindow::get(const QString &url)
 		: QByteArray();
 }
 
+std::vector<unsigned char> MainWindow::get(const std::string &url)
+{
+	auto data = get(QString::fromStdString(url));
+	return std::vector<unsigned char>(data.begin(), data.end());
+}
+
 QJsonDocument MainWindow::getJson(const QString &url)
 {
 	return QJsonDocument::fromJson(get(url));
 }
 
-QPixmap MainWindow::getImage(const QString &type, const QString &url)
-{
-	QPixmap img;
-	if (url.isEmpty())
-		return img;
-	// Check if cache exists
-	auto cachePath = QString("%1/%2/%3")
-		.arg(cacheLocation)
-		.arg(type)
-		.arg(QFileInfo(url).baseName());
-	if (QFileInfo::exists(cachePath))
-	{
-		// Read file from cache
-		QFile file(cachePath);
-		file.open(QIODevice::ReadOnly);
-		img.loadFromData(file.readAll(), "jpeg");
-	}
-	else
-	{
-		// Download image and save to cache
-		img.loadFromData(get(url), "jpeg");
-		if (!img.save(cachePath, "jpeg"))
-			lib::log::error("Failed to save album cache to {}", cachePath.toStdString());
-	}
-	return img;
-}
-
-QPixmap MainWindow::getAlbum(const QString &url)
-{
-	return getImage("album", url);
-}
-
 QPixmap MainWindow::getAlbum(const std::string &url)
 {
-	return getAlbum(QString::fromStdString(url));
+	QPixmap img;
+	if (url.empty())
+		return img;
+
+	auto data = cache.get_album_image(url);
+	if (data.empty())
+	{
+		data = get(url);
+		cache.set_album_image(url, data);
+	}
+
+	img.loadFromData(data.data(), data.size(), "jpeg");
+	return img;
 }
 
 void MainWindow::openArtist(const std::string &artistId)

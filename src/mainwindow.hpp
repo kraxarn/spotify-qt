@@ -16,17 +16,13 @@ protected:
 
 public:
 	QByteArray get(const QString &url);
+	std::vector<unsigned char> get(const std::string &url);
 	QJsonDocument getJson(const QString &url);
 	void setStatus(const QString &message, bool important = false);
 	void status(const std::string &message, bool important = false);
 	bool loadAlbum(const std::string &albumId, const std::string &trackId = std::string());
 	void openArtist(const std::string &artistId);
-	/**
-	 * @deprecated Use with url as std::string instead
-	 */
-	QPixmap getAlbum(const QString &url);
 	QPixmap getAlbum(const std::string &url);
-	QPixmap getImage(const QString &type, const QString &url);
 	lib::spt::playback currentPlayback() const;
 	void openAudioFeaturesWidget(const std::string &trackId,
 		const std::string &artist, const std::string &name);
@@ -104,5 +100,5 @@ private:
 
 	// Methods
 	QWidget *createCentralWidget();
-	void setAlbumImage(const QString &url);
+	void setAlbumImage(const std::string &url);
 };

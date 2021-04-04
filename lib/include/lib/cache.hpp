@@ -8,6 +8,7 @@
 #include "lib/json.hpp"
 #include "lib/spotify/track.hpp"
 #include "lib/spotify/playlist.hpp"
+#include "lib/spotify/album.hpp"
 
 namespace lib
 {
@@ -24,6 +25,20 @@ namespace lib
 		explicit cache(const paths &paths);
 
 		//region album
+
+		/**
+		 * Get album image data
+		 * @param id Album ID
+		 * @return Binary JPEG data, or an empty vector if none
+		 */
+		std::vector<unsigned char> get_album_image(const std::string &url);
+
+		/**
+		 * Set album image data
+		 * @param id Album ID
+		 * @param data Binary JPEG data to save
+		 */
+		void set_album_image(const std::string &url, const std::vector<unsigned char> &data);
 
 		//endregion
 
@@ -93,11 +108,14 @@ namespace lib
 		/**
 		 * Get file name for id
 		 */
-		static std::string file(const std::string &id);
+		static std::string file(const std::string &id, const std::string &extension);
 
 		/**
 		 * Get full file path for cache type and id
 		 */
-		ghc::filesystem::path path(const std::string &type, const std::string &id);
+		ghc::filesystem::path path(const std::string &type, const std::string &id,
+			const std::string &extension);
+
+		static std::string get_url_id(const ghc::filesystem::path &path);
 	};
 }

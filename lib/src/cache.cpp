@@ -1,3 +1,4 @@
+#include <lib/spotify/album.hpp>
 #include "lib/cache.hpp"
 
 lib::cache::cache(const lib::paths &paths)
@@ -15,17 +16,42 @@ ghc::filesystem::path lib::cache::dir(const std::string &type)
 	return file_dir;
 }
 
-std::string lib::cache::file(const std::string &id)
+std::string lib::cache::file(const std::string &id, const std::string &extension)
 {
-	return fmt::format("{}.json", id);
+	return extension.empty()
+		? id
+		: fmt::format("{}.{}", id, extension);
 }
 
-ghc::filesystem::path lib::cache::path(const std::string &type, const std::string &id)
+ghc::filesystem::path lib::cache::path(const std::string &type, const std::string &id,
+	const std::string &extension)
 {
-	return dir(type) / file(id);
+	return dir(type) / file(id, extension);
+}
+
+std::string lib::cache::get_url_id(const ghc::filesystem::path &path)
+{
+	return path.stem();
 }
 
 //region album
+
+std::vector<unsigned char> lib::cache::get_album_image(const std::string &url)
+{
+	std::ifstream file(path("album", get_url_id(url), ""), std::ios::binary);
+	if (!file.is_open() || file.bad())
+		return std::vector<unsigned char>();
+
+	return std::vector<unsigned char>(std::istreambuf_iterator<char>(file),
+		std::istreambuf_iterator<char>());
+}
+
+void lib::cache::set_album_image(const std::string &url, const std::vector<unsigned char> &data)
+{
+	std::ofstream file(path("album", get_url_id(url), ""), std::ios::binary);
+	std::copy(data.begin(), data.end(),
+		std::ostream_iterator<char>(file));
+}
 
 //endregion
 
@@ -35,7 +61,7 @@ std::vector<lib::spt::playlist> lib::cache::get_playlists()
 {
 	try
 	{
-		return json::load(path("playlist", "playlists"));
+		return json::load(path("playlist", "playlists", "json"));
 	}
 	catch (const std::exception &e)
 	{
@@ -47,7 +73,7 @@ std::vector<lib::spt::playlist> lib::cache::get_playlists()
 
 void lib::cache::set_playlists(const std::vector<spt::playlist> &playlists)
 {
-	lib::json::save(path("playlist", "playlists"), playlists);
+	lib::json::save(path("playlist", "playlists", "json"), playlists);
 }
 
 //endregion
@@ -58,7 +84,7 @@ lib::spt::playlist lib::cache::get_playlist(const std::string &id)
 {
 	try
 	{
-		return json::load(path("playlist", id));
+		return json::load(path("playlist", id, "json"));
 	}
 	catch (const std::exception &e)
 	{
@@ -70,7 +96,7 @@ lib::spt::playlist lib::cache::get_playlist(const std::string &id)
 
 void lib::cache::set_playlist(const spt::playlist &playlist)
 {
-	lib::json::save(path("playlist", playlist.id), playlist);
+	lib::json::save(path("playlist", playlist.id, "json"), playlist);
 }
 
 //endregion
@@ -79,17 +105,12 @@ void lib::cache::set_playlist(const spt::playlist &playlist)
 
 std::vector<lib::spt::track> lib::cache::tracks(const std::string &id)
 {
-	auto file_path = path("tracks", id);
-
-	if (!ghc::filesystem::exists(file_path))
-		return std::vector<lib::spt::track>();
-
-	return lib::json::load(file_path);
+	return lib::json::load(path("tracks", id, "json"));
 }
 
 void lib::cache::tracks(const std::string &id, const std::vector<lib::spt::track> &tracks)
 {
-	lib::json::save(path("tracks", id), tracks);
+	lib::json::save(path("tracks", id, "json"), tracks);
 }
 
 std::map<std::string, std::vector<lib::spt::track>> lib::cache::all_tracks()
