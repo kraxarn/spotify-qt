@@ -80,7 +80,7 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 
 	if (track.contains("added_at"))
 		track.at("added_at").get_to(t.added_at);
-	else if (track.contains("played_ar"))
+	else if (track.contains("played_at"))
 		track.at("played_at").get_to(t.added_at);
 
 	// Treat 1970-01-01 as no date
