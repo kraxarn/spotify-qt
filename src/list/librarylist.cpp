@@ -86,7 +86,7 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 		if (item->text(0) == RECENTLY_PLAYED)
 			spotify.recently_played(callback);
 		else if (item->text(0) == SAVED_TRACKS)
-			callback(spotify.savedTracks());
+			spotify.saved_tracks(callback);
 		else if (item->text(0) == TOP_TRACKS)
 			callback(spotify.topTracks());
 		else if (item->text(0) == NEW_RELEASES)
@@ -166,7 +166,7 @@ void LibraryList::doubleClicked(QTreeWidgetItem *item, int)
 	if (item->text(0) == RECENTLY_PLAYED)
 		spotify.recently_played(callback);
 	else if (item->text(0) == SAVED_TRACKS)
-		callback(spotify.savedTracks());
+		spotify.saved_tracks(callback);
 	else if (item->text(0) == TOP_TRACKS)
 		callback(spotify.topTracks());
 }
@@ -184,9 +184,14 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 	}
 	else if (item->text(0) == SAVED_ALBUMS)
 	{
-		for (auto &album : spotify.savedAlbums())
-			results.emplace_back(album.name, album.id, RoleAlbumId);
-		itemsLoaded(results, item);
+		spotify.saved_albums([item](const std::vector<lib::spt::album> &albums)
+		{
+			std::vector<LibraryItem> results;
+			results.reserve(albums.size());
+			for (auto &album : albums)
+				results.emplace_back(album.name, album.id, RoleAlbumId);
+			LibraryList::itemsLoaded(results, item);
+		});
 	}
 	else if (item->text(0) == FOLLOWED_ARTISTS)
 	{

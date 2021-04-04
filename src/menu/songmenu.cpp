@@ -139,9 +139,9 @@ void SongMenu::like(bool)
 	};
 
 	if (isLiked)
-		spotify.removeSavedTrack(trackId, callback);
+		spotify.remove_saved_track(trackId, callback);
 	else
-		spotify.addSavedTrack(trackId, callback);
+		spotify.add_saved_track(trackId, callback);
 }
 
 void SongMenu::addToQueue(bool)
