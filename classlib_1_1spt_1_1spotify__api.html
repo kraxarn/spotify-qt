@@ -133,8 +133,20 @@ Static Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
+<tr class="memitem:afe6807cc2f673bb1d6cdb667cc9299cc"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1spotify__api.html#afe6807cc2f673bb1d6cdb667cc9299cc">get</a> (const std::string &amp;url, lib::callback&lt; nlohmann::json &gt; &amp;callback)=0</td></tr>
+<tr class="separator:afe6807cc2f673bb1d6cdb667cc9299cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a659b9df5ce170f923f9dbbacd10ac447"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1spotify__api.html#a659b9df5ce170f923f9dbbacd10ac447">get</a> (const std::string &amp;url, const std::string &amp;key, lib::callback&lt; nlohmann::json &gt; &amp;callback)</td></tr>
 <tr class="separator:a659b9df5ce170f923f9dbbacd10ac447"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adeedf32bd0595f1a599e7ecb33b54f32"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1spotify__api.html#adeedf32bd0595f1a599e7ecb33b54f32">put</a> (const std::string &amp;url, const nlohmann::json &amp;body, lib::callback&lt; std::string &gt; &amp;callback)=0</td></tr>
+<tr class="separator:adeedf32bd0595f1a599e7ecb33b54f32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cc63801f97534899200d12847d0f33c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1spotify__api.html#a5cc63801f97534899200d12847d0f33c">put</a> (const std::string &amp;url, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a5cc63801f97534899200d12847d0f33c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a236055204a2188e37ab597401fde56fe"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1spotify__api.html#a236055204a2188e37ab597401fde56fe">post</a> (const std::string &amp;url, lib::callback&lt; std::string &gt; &amp;callback)=0</td></tr>
+<tr class="separator:a236055204a2188e37ab597401fde56fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade0d026f96fc04332ffd6dc29f51b729"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1spotify__api.html#ade0d026f96fc04332ffd6dc29f51b729">del</a> (const std::string &amp;url, const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>, lib::callback&lt; std::string &gt; &amp;callback)=0</td></tr>
+<tr class="separator:ade0d026f96fc04332ffd6dc29f51b729"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeab3bd9307ac62037703800893b094e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1spotify__api.html#aeab3bd9307ac62037703800893b094e4">del</a> (const std::string &amp;url, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:aeab3bd9307ac62037703800893b094e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-methods"></a>
 Static Protected Member Functions</h2></td></tr>
@@ -241,6 +253,93 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ade0d026f96fc04332ffd6dc29f51b729"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade0d026f96fc04332ffd6dc29f51b729">&#9670;&nbsp;</a></span>del() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void lib::spt::spotify_api::del </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const nlohmann::json &amp;&#160;</td>
+          <td class="paramname"><em>json</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>DELETE request </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>URL to request </td></tr>
+    <tr><td class="paramname">json</td><td>JSON body or null if no body </td></tr>
+    <tr><td class="paramname">callback</td><td>Error message, or empty if none </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aeab3bd9307ac62037703800893b094e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeab3bd9307ac62037703800893b094e4">&#9670;&nbsp;</a></span>del() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::spt::spotify_api::del </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Convenience method for DELETE request with no body </p>
+
+</div>
+</div>
 <a id="a8ee26016b11219c4730ee496f4c5ce24"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8ee26016b11219c4730ee496f4c5ce24">&#9670;&nbsp;</a></span>devices()</h2>
 
@@ -293,7 +392,7 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <a id="a659b9df5ce170f923f9dbbacd10ac447"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a659b9df5ce170f923f9dbbacd10ac447">&#9670;&nbsp;</a></span>get()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a659b9df5ce170f923f9dbbacd10ac447">&#9670;&nbsp;</a></span>get() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -347,6 +446,50 @@ Temporarily protected </dd></dl>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="afe6807cc2f673bb1d6cdb667cc9299cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe6807cc2f673bb1d6cdb667cc9299cc">&#9670;&nbsp;</a></span>get() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void lib::spt::spotify_api::get </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; nlohmann::json &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>GET request </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>URL to request </td></tr>
+    <tr><td class="paramname">callback</td><td>Response as JSON </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Temporarily protected </dd></dl>
 
 </div>
 </div>
@@ -540,6 +683,49 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
+<a id="a236055204a2188e37ab597401fde56fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a236055204a2188e37ab597401fde56fe">&#9670;&nbsp;</a></span>post()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void lib::spt::spotify_api::post </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>POST request </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>URL to request </td></tr>
+    <tr><td class="paramname">callback</td><td>Error message, or empty if none </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a0c4ad318b01281350371dea47af78f06"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0c4ad318b01281350371dea47af78f06">&#9670;&nbsp;</a></span>previous()</h2>
 
@@ -556,6 +742,93 @@ Temporarily protected </dd></dl>
       </table>
 </div><div class="memdoc">
 <p>Go to previous track, or restart current </p>
+
+</div>
+</div>
+<a id="adeedf32bd0595f1a599e7ecb33b54f32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adeedf32bd0595f1a599e7ecb33b54f32">&#9670;&nbsp;</a></span>put() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void lib::spt::spotify_api::put </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const nlohmann::json &amp;&#160;</td>
+          <td class="paramname"><em>body</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>PUT request </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>URL to request </td></tr>
+    <tr><td class="paramname">body</td><td>JSON body or null if no body </td></tr>
+    <tr><td class="paramname">callback</td><td>Error message, or empty if none </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5cc63801f97534899200d12847d0f33c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cc63801f97534899200d12847d0f33c">&#9670;&nbsp;</a></span>put() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::spt::spotify_api::put </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Convenience method for PUT request with no body </p>
 
 </div>
 </div>

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['paths_216',['paths',['../classlib_1_1paths.html',1,'lib']]],
-  ['playback_217',['playback',['../classlib_1_1spt_1_1playback.html',1,'lib::spt']]],
-  ['playlist_218',['playlist',['../classlib_1_1spt_1_1playlist.html',1,'lib::spt']]]
+  ['paths_223',['paths',['../classlib_1_1paths.html',1,'lib']]],
+  ['playback_224',['playback',['../classlib_1_1spt_1_1playback.html',1,'lib::spt']]],
+  ['playlist_225',['playlist',['../classlib_1_1spt_1_1playlist.html',1,'lib::spt']]]
 ];
