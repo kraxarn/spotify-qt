@@ -1,11 +1,17 @@
 #pragma once
 
+#include "lib/developermode.hpp"
+#include "lib/log.hpp"
+#include "lib/spotify/playback.hpp"
+#include "lib/spotify/playlist.hpp"
+#include "lib/spotify/user.hpp"
+#include "lib/cache.hpp"
+#include "lib/spotify/spotifyapi.hpp"
+
 #include "dialog/settingsdialog.hpp"
 #include "dialog/splashdialog.hpp"
 #include "dialog/whatsnewdialog.hpp"
 #include "leftsidepanel.hpp"
-#include "lib/developermode.hpp"
-#include "lib/log.hpp"
 #include "list/librarylist.hpp"
 #include "list/playlistlist.hpp"
 #include "list/tracklistitem.hpp"
@@ -19,18 +25,13 @@
 #include "spotify/audiofeatures.hpp"
 #include "spotify/clienthandler.hpp"
 #include "spotify/current.hpp"
-#include "lib/spotify/playback.hpp"
-#include "lib/spotify/playlist.hpp"
 #include "spotify/spotify.hpp"
-#include "lib/spotify/user.hpp"
 #include "trayicon.hpp"
 #include "util/dateutils.hpp"
 #include "util/icon.hpp"
 #include "util/utils.hpp"
 #include "view/lyricsview.hpp"
 #include "volumebutton.hpp"
-#include "lib/cache.hpp"
-#include "lib/spotify/spotifyapi.hpp"
 
 #include <QAction>
 #include <QApplication>
