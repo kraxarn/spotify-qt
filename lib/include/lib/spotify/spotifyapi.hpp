@@ -83,6 +83,19 @@ namespace lib
 
 			//region Library
 
+			void saved_albums(lib::callback<std::vector<lib::spt::album>> &callback);
+
+			void saved_tracks(lib::callback<std::vector<lib::spt::track>> &callback);
+
+			void add_saved_track(const std::string &id,
+				lib::callback<std::string> &callback);
+
+			void remove_saved_track(const std::string &id,
+				lib::callback<std::string> &callback);
+
+			void is_saved_track(const std::vector<std::string> &ids,
+				lib::callback<std::vector<bool>> &callback);
+
 			//endregion
 
 			//region Personalization

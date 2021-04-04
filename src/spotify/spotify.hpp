@@ -46,23 +46,6 @@ namespace spt
 
 		//endregion
 
-		//region Library
-
-		std::vector<lib::spt::album> savedAlbums();
-
-		std::vector<lib::spt::track> savedTracks(int offset = 0);
-
-		void addSavedTrack(const std::string &trackId,
-			lib::callback<std::string> &callback);
-
-		void removeSavedTrack(const std::string &trackId,
-			lib::callback<std::string> &callback);
-
-		void isSavedTrack(const std::vector<std::string> &trackIds,
-			lib::callback<std::vector<bool>> &callback);
-
-		//endregion
-
 		//region Personalization
 
 		std::vector<lib::spt::artist> topArtists();
