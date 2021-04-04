@@ -33,10 +33,10 @@ void Spotify::playlists(lib::callback<std::vector<lib::spt::playlist>> &callback
 	playlists(0, callback);
 }
 
-lib::spt::playlist Spotify::playlist(const std::string &playlistId)
+void Spotify::playlist(const std::string &playlistId,
+	lib::callback<lib::spt::playlist> &callback)
 {
-	return getAsJson(QString::fromStdString(lib::fmt::format("playlists/{}",
-		playlistId)));
+	get(lib::fmt::format("playlists/{}", playlistId), callback);
 }
 
 void Spotify::editPlaylist(const lib::spt::playlist &playlist,

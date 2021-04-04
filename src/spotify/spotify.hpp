@@ -118,7 +118,8 @@ namespace spt
 
 		void playlists(int offset, lib::callback<std::vector<lib::spt::playlist>> &callback);
 
-		lib::spt::playlist playlist(const std::string &playlistId);
+		void playlist(const std::string &playlistId,
+			lib::callback<lib::spt::playlist> &callback);
 
 		void editPlaylist(const lib::spt::playlist &playlist,
 			lib::callback<std::string> &callback);
