@@ -124,13 +124,8 @@ namespace spt
 		void editPlaylist(const lib::spt::playlist &playlist,
 			lib::callback<std::string> &callback);
 
-		bool playlistTracks(const lib::spt::playlist &playlist,
-			std::vector<lib::spt::track> &trackList);
-
-		std::vector<lib::spt::track> playlistTracks(const lib::spt::playlist &playlist);
-
-		bool playlistTracks(const lib::spt::playlist &playlist,
-			std::vector<lib::spt::track> &trackList, const std::string &url, int offset);
+		void playlistTracks(const lib::spt::playlist &playlist,
+			lib::callback<std::vector<lib::spt::track>> &callback);
 
 		void addToPlaylist(const std::string &playlistId, const std::string &trackId,
 			lib::callback<std::string> &callback);
