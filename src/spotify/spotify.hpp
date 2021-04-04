@@ -46,16 +46,6 @@ namespace spt
 
 		//endregion
 
-		//region Personalization
-
-		std::vector<lib::spt::artist> topArtists();
-
-		std::vector<lib::spt::track> topTracks();
-
-		//endregion
-
-		// Player (moved to lib)
-
 		//region Playlists
 
 		void playlists(lib::callback<std::vector<lib::spt::playlist>> &callback);

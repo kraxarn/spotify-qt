@@ -100,6 +100,10 @@ namespace lib
 
 			//region Personalization
 
+			void top_artists(lib::callback<std::vector<lib::spt::artist>> &callback);
+
+			void top_tracks(lib::callback<std::vector<lib::spt::track>> &callback);
+
 			//endregion
 
 			//region Player
