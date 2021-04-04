@@ -85,6 +85,57 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a572f4ffe76b50d1ac19bcbc8d908fd80"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1spotify__api.html#a572f4ffe76b50d1ac19bcbc8d908fd80">spotify_api</a> (<a class="el" href="classlib_1_1settings.html">lib::settings</a> &amp;<a class="el" href="classlib_1_1settings.html">settings</a>)</td></tr>
 <tr class="separator:a572f4ffe76b50d1ac19bcbc8d908fd80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaeed267cf449f0a883c1077fde678f48"><td class="memItemLeft" align="right" valign="top"><a id="aaeed267cf449f0a883c1077fde678f48"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>album</b> (const std::string &amp;id, lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1album.html">lib::spt::album</a> &gt; &amp;callback)</td></tr>
+<tr class="separator:aaeed267cf449f0a883c1077fde678f48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04a1aece023a03262fe33b259595791a"><td class="memItemLeft" align="right" valign="top"><a id="a04a1aece023a03262fe33b259595791a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>album_tracks</b> (const <a class="el" href="classlib_1_1spt_1_1album.html">lib::spt::album</a> &amp;<a class="el" href="classlib_1_1spt_1_1album.html">album</a>, lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt;&gt; &amp;callback)</td></tr>
+<tr class="separator:a04a1aece023a03262fe33b259595791a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d2dee3ee763c252aa0063082e138d50"><td class="memItemLeft" align="right" valign="top"><a id="a1d2dee3ee763c252aa0063082e138d50"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>artist</b> (const std::string &amp;artistId, lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &gt; &amp;callback)</td></tr>
+<tr class="separator:a1d2dee3ee763c252aa0063082e138d50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0f2e8581ef8c01dee7c23b9c9cccb29"><td class="memItemLeft" align="right" valign="top"><a id="af0f2e8581ef8c01dee7c23b9c9cccb29"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>top_tracks</b> (const <a class="el" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &amp;<a class="el" href="classlib_1_1spt_1_1artist.html">artist</a>, lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt;&gt; &amp;callback)</td></tr>
+<tr class="separator:af0f2e8581ef8c01dee7c23b9c9cccb29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f832cf8229db83d060e289d7d47f668"><td class="memItemLeft" align="right" valign="top"><a id="a5f832cf8229db83d060e289d7d47f668"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>related_artists</b> (const <a class="el" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &amp;<a class="el" href="classlib_1_1spt_1_1artist.html">artist</a>, lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &gt;&gt; &amp;callback)</td></tr>
+<tr class="separator:a5f832cf8229db83d060e289d7d47f668"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73c083896d13e61a0439812220ffdf50"><td class="memItemLeft" align="right" valign="top"><a id="a73c083896d13e61a0439812220ffdf50"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>albums</b> (const <a class="el" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &amp;<a class="el" href="classlib_1_1spt_1_1artist.html">artist</a>, lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1album.html">lib::spt::album</a> &gt;&gt; &amp;callback)</td></tr>
+<tr class="separator:a73c083896d13e61a0439812220ffdf50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7475ee44c2d9cc0348fc0a6103a56357"><td class="memItemLeft" align="right" valign="top"><a id="a7475ee44c2d9cc0348fc0a6103a56357"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>followed_artists</b> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &gt;&gt; &amp;callback)</td></tr>
+<tr class="separator:a7475ee44c2d9cc0348fc0a6103a56357"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affad1b9f8d24a0db2e19ace935d49f45"><td class="memItemLeft" align="right" valign="top"><a id="affad1b9f8d24a0db2e19ace935d49f45"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>follow</b> (lib::follow_type type, const std::vector&lt; std::string &gt; &amp;ids, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:affad1b9f8d24a0db2e19ace935d49f45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bba5ee95345907b1c18e8207af1db59"><td class="memItemLeft" align="right" valign="top"><a id="a0bba5ee95345907b1c18e8207af1db59"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>unfollow</b> (lib::follow_type type, const std::vector&lt; std::string &gt; &amp;ids, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a0bba5ee95345907b1c18e8207af1db59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12caad2a71fb3251301a1f0b8244b7e0"><td class="memItemLeft" align="right" valign="top"><a id="a12caad2a71fb3251301a1f0b8244b7e0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>is_following</b> (lib::follow_type type, const std::vector&lt; std::string &gt; &amp;ids, lib::callback&lt; std::vector&lt; bool &gt;&gt; &amp;callback)</td></tr>
+<tr class="separator:a12caad2a71fb3251301a1f0b8244b7e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9493840c57a686d5caa4b9dc9128645c"><td class="memItemLeft" align="right" valign="top"><a id="a9493840c57a686d5caa4b9dc9128645c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>saved_albums</b> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1album.html">lib::spt::album</a> &gt;&gt; &amp;callback)</td></tr>
+<tr class="separator:a9493840c57a686d5caa4b9dc9128645c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addcf6609e93befe77c836a7c8d23ecb1"><td class="memItemLeft" align="right" valign="top"><a id="addcf6609e93befe77c836a7c8d23ecb1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>saved_tracks</b> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt;&gt; &amp;callback)</td></tr>
+<tr class="separator:addcf6609e93befe77c836a7c8d23ecb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06b8151727ff6bf80e83117ff9b7ed01"><td class="memItemLeft" align="right" valign="top"><a id="a06b8151727ff6bf80e83117ff9b7ed01"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>add_saved_track</b> (const std::string &amp;id, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a06b8151727ff6bf80e83117ff9b7ed01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa316a38c4fd452da9711204f2748c39b"><td class="memItemLeft" align="right" valign="top"><a id="aa316a38c4fd452da9711204f2748c39b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>remove_saved_track</b> (const std::string &amp;id, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:aa316a38c4fd452da9711204f2748c39b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebd608390cf88586ca3e1adcec6b1904"><td class="memItemLeft" align="right" valign="top"><a id="aebd608390cf88586ca3e1adcec6b1904"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>is_saved_track</b> (const std::vector&lt; std::string &gt; &amp;ids, lib::callback&lt; std::vector&lt; bool &gt;&gt; &amp;callback)</td></tr>
+<tr class="separator:aebd608390cf88586ca3e1adcec6b1904"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa38e0a85b0ec4ad9c3915b18425236c1"><td class="memItemLeft" align="right" valign="top"><a id="aa38e0a85b0ec4ad9c3915b18425236c1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>top_artists</b> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &gt;&gt; &amp;callback)</td></tr>
+<tr class="separator:aa38e0a85b0ec4ad9c3915b18425236c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec8a233206c0271104b10227010c07b4"><td class="memItemLeft" align="right" valign="top"><a id="aec8a233206c0271104b10227010c07b4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>top_tracks</b> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt;&gt; &amp;callback)</td></tr>
+<tr class="separator:aec8a233206c0271104b10227010c07b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada384807b6a0236091bffc6a37bb564d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1spotify__api.html#ada384807b6a0236091bffc6a37bb564d">current_playback</a> (lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1playback.html">lib::spt::playback</a> &gt; &amp;callback)</td></tr>
 <tr class="separator:ada384807b6a0236091bffc6a37bb564d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a36c0d7e15275977dfa9ea240f107d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1spotify__api.html#a2a36c0d7e15275977dfa9ea240f107d2">set_device</a> (const std::string &amp;deviceId, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
@@ -121,6 +172,27 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aacb0b4cb3a6ba74264f5e81556a6293a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2be5a2213d3c04a700963f0cdaebbff9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1spotify__api.html#a2be5a2213d3c04a700963f0cdaebbff9">add_to_queue</a> (const std::string &amp;uri, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
 <tr class="separator:a2be5a2213d3c04a700963f0cdaebbff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0df2bb4298e6bfa7d6c8b0159302cb1e"><td class="memItemLeft" align="right" valign="top"><a id="a0df2bb4298e6bfa7d6c8b0159302cb1e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>playlists</b> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &gt;&gt; &amp;callback)</td></tr>
+<tr class="separator:a0df2bb4298e6bfa7d6c8b0159302cb1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1bfb72e3756c9a0d92e8d4b494eac1a"><td class="memItemLeft" align="right" valign="top"><a id="ad1bfb72e3756c9a0d92e8d4b494eac1a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>playlist</b> (const std::string &amp;playlist_id, lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &gt; &amp;callback)</td></tr>
+<tr class="separator:ad1bfb72e3756c9a0d92e8d4b494eac1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a628ab9b7a0bcd535c58b7cf6d5204aca"><td class="memItemLeft" align="right" valign="top"><a id="a628ab9b7a0bcd535c58b7cf6d5204aca"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>edit_playlist</b> (const <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &amp;<a class="el" href="classlib_1_1spt_1_1playlist.html">playlist</a>, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a628ab9b7a0bcd535c58b7cf6d5204aca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a05b7aeb5b3ac60b7480dacf0dbfd5b"><td class="memItemLeft" align="right" valign="top"><a id="a1a05b7aeb5b3ac60b7480dacf0dbfd5b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>playlist_tracks</b> (const <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &amp;<a class="el" href="classlib_1_1spt_1_1playlist.html">playlist</a>, lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt;&gt; &amp;callback)</td></tr>
+<tr class="separator:a1a05b7aeb5b3ac60b7480dacf0dbfd5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afaafdbe49444c5623cc5cddf66bffe7f"><td class="memItemLeft" align="right" valign="top"><a id="afaafdbe49444c5623cc5cddf66bffe7f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>add_to_playlist</b> (const std::string &amp;playlist_id, const std::string &amp;track_id, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:afaafdbe49444c5623cc5cddf66bffe7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d42561045c7899f631f5ff055837bef"><td class="memItemLeft" align="right" valign="top"><a id="a8d42561045c7899f631f5ff055837bef"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>remove_from_playlist</b> (const std::string &amp;playlist_id, const std::string &amp;track_id, int pos, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a8d42561045c7899f631f5ff055837bef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5869e5e84357cf71d7ab6f02716aa409"><td class="memItemLeft" align="right" valign="top"><a id="a5869e5e84357cf71d7ab6f02716aa409"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>search</b> (const std::string &amp;query, lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1search__results.html">lib::spt::search_results</a> &gt; &amp;callback)</td></tr>
+<tr class="separator:a5869e5e84357cf71d7ab6f02716aa409"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b3b029da5b29f1bd7e015233ba9fedc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1spotify__api.html#a9b3b029da5b29f1bd7e015233ba9fedc">refresh</a> (bool force=false)</td></tr>
 <tr class="separator:a9b3b029da5b29f1bd7e015233ba9fedc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">

@@ -81,6 +81,10 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a5863aa2f8a8179cc7d08fe8dfbe26077"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#a5863aa2f8a8179cc7d08fe8dfbe26077">cache</a> (const <a class="el" href="classlib_1_1paths.html">paths</a> &amp;<a class="el" href="classlib_1_1paths.html">paths</a>)</td></tr>
 <tr class="separator:a5863aa2f8a8179cc7d08fe8dfbe26077"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15a37b6a7ee17ec70a3964656205fa44"><td class="memItemLeft" align="right" valign="top">std::vector&lt; unsigned char &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#a15a37b6a7ee17ec70a3964656205fa44">get_album_image</a> (const std::string &amp;url)</td></tr>
+<tr class="separator:a15a37b6a7ee17ec70a3964656205fa44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e76a6170dc731f5f7ac6bd875d68586"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#a2e76a6170dc731f5f7ac6bd875d68586">set_album_image</a> (const std::string &amp;url, const std::vector&lt; unsigned char &gt; &amp;data)</td></tr>
+<tr class="separator:a2e76a6170dc731f5f7ac6bd875d68586"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac41acdd3a1bde0c96a36d7e5c7f09870"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#ac41acdd3a1bde0c96a36d7e5c7f09870">get_playlists</a> ()</td></tr>
 <tr class="separator:ac41acdd3a1bde0c96a36d7e5c7f09870"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22c2818b603afd2471771805c932f4fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#a22c2818b603afd2471771805c932f4fb">set_playlists</a> (const std::vector&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">spt::playlist</a> &gt; &amp;playlists)</td></tr>
@@ -150,6 +154,31 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a15a37b6a7ee17ec70a3964656205fa44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15a37b6a7ee17ec70a3964656205fa44">&#9670;&nbsp;</a></span>get_album_image()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;unsigned char&gt; lib::cache::get_album_image </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get album image data </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>Album ID </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Binary JPEG data, or an empty vector if none </dd></dl>
+
+</div>
+</div>
 <a id="a48298f2fc223e08d85e078b95743d5a1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a48298f2fc223e08d85e078b95743d5a1">&#9670;&nbsp;</a></span>get_playlist()</h2>
 
@@ -190,6 +219,41 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Get list of user's playlists </p>
+
+</div>
+</div>
+<a id="a2e76a6170dc731f5f7ac6bd875d68586"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e76a6170dc731f5f7ac6bd875d68586">&#9670;&nbsp;</a></span>set_album_image()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::cache::set_album_image </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; unsigned char &gt; &amp;&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set album image data </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>Album ID </td></tr>
+    <tr><td class="paramname">data</td><td>Binary JPEG data to save </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
