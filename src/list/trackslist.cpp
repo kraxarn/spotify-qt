@@ -267,15 +267,19 @@ void TracksList::load(const lib::spt::playlist &playlist)
 
 	spotify.playlist(playlist.id, [this](const lib::spt::playlist &loadedPlaylist)
 	{
-		auto newPlaylist = loadedPlaylist;
-		newPlaylist.tracks = this->spotify.playlistTracks(newPlaylist);
-		this->load(newPlaylist.tracks);
-		this->setEnabled(true);
-		this->cache.set_playlist(newPlaylist);
+		spotify.playlistTracks(loadedPlaylist,
+			[this, loadedPlaylist](const std::vector<lib::spt::track> &tracks)
+		{
+			auto newPlaylist = loadedPlaylist;
+			newPlaylist.tracks = tracks;
+			this->load(newPlaylist.tracks);
+			this->setEnabled(true);
+			this->cache.set_playlist(newPlaylist);
 
-		auto mainWindow = MainWindow::find(this->parentWidget());
-		if (mainWindow != nullptr)
-			mainWindow->setSptContext(newPlaylist);
+			auto mainWindow = MainWindow::find(this->parentWidget());
+			if (mainWindow != nullptr)
+				mainWindow->setSptContext(newPlaylist);
+		});
 	});
 }
 

@@ -14,7 +14,10 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &play
 	byAction = addAction("By ...");
 
 	tracksLoaded(cache.get_playlist(playlist.id).tracks);
-	tracksLoaded(spotify.playlistTracks(playlist));
+	spotify.playlistTracks(playlist, [this](const std::vector<lib::spt::track> &items)
+	{
+		tracksLoaded(items);
+	});
 
 	addSeparator();
 	auto playShuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle play");
