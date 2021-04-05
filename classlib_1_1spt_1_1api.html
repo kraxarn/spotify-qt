@@ -118,9 +118,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>unfollow</b> (lib::fo
 <tr class="memitem:a7fcc6b4ecd2e20a8f776fabffd6a9712"><td class="memItemLeft" align="right" valign="top"><a id="a7fcc6b4ecd2e20a8f776fabffd6a9712"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>is_following</b> (lib::follow_type type, const std::vector&lt; std::string &gt; &amp;ids, lib::callback&lt; std::vector&lt; bool &gt;&gt; &amp;callback)</td></tr>
 <tr class="separator:a7fcc6b4ecd2e20a8f776fabffd6a9712"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af51afc338f8a12795ab75fc0c38e7bad"><td class="memItemLeft" align="right" valign="top"><a id="af51afc338f8a12795ab75fc0c38e7bad"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>saved_albums</b> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1album.html">lib::spt::album</a> &gt;&gt; &amp;callback)</td></tr>
-<tr class="separator:af51afc338f8a12795ab75fc0c38e7bad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa17d85c55d14cbb80a740b003f39b6e"><td class="memItemLeft" align="right" valign="top"><a id="afa17d85c55d14cbb80a740b003f39b6e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>saved_albums</b> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1saved__album.html">lib::spt::saved_album</a> &gt;&gt; &amp;callback)</td></tr>
+<tr class="separator:afa17d85c55d14cbb80a740b003f39b6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ec2bf8c0b0e8c58d3afc1bce13d4c70"><td class="memItemLeft" align="right" valign="top"><a id="a6ec2bf8c0b0e8c58d3afc1bce13d4c70"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>saved_tracks</b> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt;&gt; &amp;callback)</td></tr>
 <tr class="separator:a6ec2bf8c0b0e8c58d3afc1bce13d4c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -219,8 +219,10 @@ Static Public Member Functions</h2></td></tr>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a40eb4c3ade662922d81706740794dc12"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a40eb4c3ade662922d81706740794dc12">get</a> (const std::string &amp;url, lib::callback&lt; nlohmann::json &gt; &amp;callback)=0</td></tr>
 <tr class="separator:a40eb4c3ade662922d81706740794dc12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03e1d36cc42cd64944b4caf447b54d21"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a03e1d36cc42cd64944b4caf447b54d21">get</a> (const std::string &amp;url, const std::string &amp;key, lib::callback&lt; nlohmann::json &gt; &amp;callback)</td></tr>
-<tr class="separator:a03e1d36cc42cd64944b4caf447b54d21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8c249ba34558bb06a807f13aace0554"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#af8c249ba34558bb06a807f13aace0554">get_items</a> (const std::string &amp;url, lib::callback&lt; nlohmann::json &gt; &amp;callback)</td></tr>
+<tr class="separator:af8c249ba34558bb06a807f13aace0554"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a348f5279b629971c0b8e2097b333b5e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a348f5279b629971c0b8e2097b333b5e7">get_items</a> (const std::string &amp;url, const std::string &amp;key, lib::callback&lt; nlohmann::json &gt; &amp;callback)</td></tr>
+<tr class="separator:a348f5279b629971c0b8e2097b333b5e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a741339c4d903a0473971e45a53f1a390"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a741339c4d903a0473971e45a53f1a390">put</a> (const std::string &amp;url, const nlohmann::json &amp;body, lib::callback&lt; std::string &gt; &amp;callback)=0</td></tr>
 <tr class="separator:a741339c4d903a0473971e45a53f1a390"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1370bf233537673881fc2867adc433bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a1370bf233537673881fc2867adc433bf">put</a> (const std::string &amp;url, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
@@ -475,66 +477,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a03e1d36cc42cd64944b4caf447b54d21"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a03e1d36cc42cd64944b4caf447b54d21">&#9670;&nbsp;</a></span>get() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void lib::spt::api::get </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>url</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">lib::callback&lt; nlohmann::json &gt; &amp;&#160;</td>
-          <td class="paramname"><em>callback</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>GET a collection of items </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">url</td><td>URL to request </td></tr>
-    <tr><td class="paramname">key</td><td>Key to collection </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Automatically handles paging </dd>
-<dd>
-Temporarily protected </dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::exception</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="a40eb4c3ade662922d81706740794dc12"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a40eb4c3ade662922d81706740794dc12">&#9670;&nbsp;</a></span>get() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a40eb4c3ade662922d81706740794dc12">&#9670;&nbsp;</a></span>get()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -574,6 +518,100 @@ Temporarily protected </dd></dl>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Temporarily protected </dd></dl>
+
+</div>
+</div>
+<a id="a348f5279b629971c0b8e2097b333b5e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a348f5279b629971c0b8e2097b333b5e7">&#9670;&nbsp;</a></span>get_items() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::spt::api::get_items </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; nlohmann::json &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Custom get_items when items are contained in a key </p>
+
+</div>
+</div>
+<a id="af8c249ba34558bb06a807f13aace0554"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8c249ba34558bb06a807f13aace0554">&#9670;&nbsp;</a></span>get_items() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::spt::api::get_items </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; nlohmann::json &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>GET a collection of items </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>URL to request </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Automatically handles paging </dd>
+<dd>
+Temporarily protected </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::exception</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
