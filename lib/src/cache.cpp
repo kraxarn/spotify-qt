@@ -105,7 +105,7 @@ void lib::cache::set_playlist(const spt::playlist &playlist)
 
 std::vector<lib::spt::track> lib::cache::tracks(const std::string &id)
 {
-	return lib::json::load(path("tracks", id, "json"));
+	return lib::json::load<std::vector<lib::spt::track>>(path("tracks", id, "json"));
 }
 
 void lib::cache::tracks(const std::string &id, const std::vector<lib::spt::track> &tracks)
