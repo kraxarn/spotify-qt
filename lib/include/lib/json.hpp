@@ -65,6 +65,21 @@ namespace lib
 		static nlohmann::json load(const ghc::filesystem::path &path);
 
 		/**
+		 * Convenience method to parse generic class from JSON,
+		 * returns instance of T on failure
+		 */
+		template<typename T>
+		static auto load(const ghc::filesystem::path &path) -> T
+		{
+			auto json = load(path);
+			if (json.is_null())
+			{
+				return T();
+			}
+			return json;
+		}
+
+		/**
 		 * Save specified item to a json file
 		 * @param path Path to json file, including extension
 		 * @param item Item to save
