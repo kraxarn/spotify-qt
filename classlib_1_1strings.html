@@ -100,12 +100,48 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:afe1fc802718af72329c6363229996c20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad75f085892bbf2a3506feb782255a72f"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#ad75f085892bbf2a3506feb782255a72f">right</a> (const std::string &amp;str, size_t n)</td></tr>
 <tr class="separator:ad75f085892bbf2a3506feb782255a72f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84c3a5228ce4969de2ca4f7db27a9552"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#a84c3a5228ce4969de2ca4f7db27a9552">to_lower</a> (std::string &amp;str)</td></tr>
-<tr class="separator:a84c3a5228ce4969de2ca4f7db27a9552"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adeff09a732ccec395127d5aea748e316"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#adeff09a732ccec395127d5aea748e316">to_lower</a> (const std::string &amp;str) -&gt; std::string</td></tr>
+<tr class="separator:adeff09a732ccec395127d5aea748e316"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04325ef56364db92cbf38d175006a80f"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#a04325ef56364db92cbf38d175006a80f">to_upper</a> (const std::string &amp;str) -&gt; std::string</td></tr>
+<tr class="separator:a04325ef56364db92cbf38d175006a80f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a531ac77b4dc9cacd25bf7a4493bd62dd"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#a531ac77b4dc9cacd25bf7a4493bd62dd">capitalize</a> (const std::string &amp;str) -&gt; std::string</td></tr>
+<tr class="separator:a531ac77b4dc9cacd25bf7a4493bd62dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>String utilities </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a531ac77b4dc9cacd25bf7a4493bd62dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a531ac77b4dc9cacd25bf7a4493bd62dd">&#9670;&nbsp;</a></span>capitalize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static auto lib::strings::capitalize </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td> -&gt;  std::string</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Capitalize string, first letter in uppercase, and the rest in lowercase </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>String to transform </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ad6bb089dfe2793c7e01c1859e8c2b681"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad6bb089dfe2793c7e01c1859e8c2b681">&#9670;&nbsp;</a></span>contains()</h2>
 
@@ -460,8 +496,8 @@ template&lt;typename String &gt; </div>
 
 </div>
 </div>
-<a id="a84c3a5228ce4969de2ca4f7db27a9552"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a84c3a5228ce4969de2ca4f7db27a9552">&#9670;&nbsp;</a></span>to_lower()</h2>
+<a id="adeff09a732ccec395127d5aea748e316"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adeff09a732ccec395127d5aea748e316">&#9670;&nbsp;</a></span>to_lower()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -470,11 +506,11 @@ template&lt;typename String &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static std::string lib::strings::to_lower </td>
+          <td class="memname">static auto lib::strings::to_lower </td>
           <td>(</td>
-          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
-          <td></td>
+          <td> -&gt;  std::string</td>
         </tr>
       </table>
   </td>
@@ -483,13 +519,46 @@ template&lt;typename String &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Get strings as all lowercase </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Get string as all lowercase </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">str</td><td>String to transform </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>String is all lowercase, same as str </dd></dl>
+
+</div>
+</div>
+<a id="a04325ef56364db92cbf38d175006a80f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04325ef56364db92cbf38d175006a80f">&#9670;&nbsp;</a></span>to_upper()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static auto lib::strings::to_upper </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td> -&gt;  std::string</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get string as all uppercase </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>String to transform </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>String in all uppercase </dd></dl>
 
 </div>
 </div>

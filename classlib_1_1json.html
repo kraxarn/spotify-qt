@@ -89,6 +89,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a301b8eb203e2c032ef1ab73fdc3dfe21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e87385d0fc627db70a1b800b368559b"><td class="memItemLeft" align="right" valign="top">static nlohmann::json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1json.html#a6e87385d0fc627db70a1b800b368559b">load</a> (const ghc::filesystem::path &amp;path)</td></tr>
 <tr class="separator:a6e87385d0fc627db70a1b800b368559b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac77ec391011b3a8745245272987c99a"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aac77ec391011b3a8745245272987c99a"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1json.html#aac77ec391011b3a8745245272987c99a">load</a> (const ghc::filesystem::path &amp;path) -&gt; T</td></tr>
+<tr class="separator:aac77ec391011b3a8745245272987c99a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa45d39432785ccca3c0157b8e01439b3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1json.html#aa45d39432785ccca3c0157b8e01439b3">save</a> (const ghc::filesystem::path &amp;path, const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>)</td></tr>
 <tr class="separator:aa45d39432785ccca3c0157b8e01439b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -245,7 +248,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="a6e87385d0fc627db70a1b800b368559b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e87385d0fc627db70a1b800b368559b">&#9670;&nbsp;</a></span>load()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e87385d0fc627db70a1b800b368559b">&#9670;&nbsp;</a></span>load() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -274,6 +277,36 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>JSON object, or null object on failure </dd></dl>
+
+</div>
+</div>
+<a id="aac77ec391011b3a8745245272987c99a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac77ec391011b3a8745245272987c99a">&#9670;&nbsp;</a></span>load() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static auto lib::json::load </td>
+          <td>(</td>
+          <td class="paramtype">const ghc::filesystem::path &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td> -&gt; T
+		</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Convenience method to parse generic class from JSON, returns instance of T on failure </p>
 
 </div>
 </div>
