@@ -15,14 +15,20 @@ void api::top_tracks(const lib::spt::artist &artist,
 	lib::callback<std::vector<lib::spt::track>> &callback)
 {
 	get(lib::fmt::format("artists/{}/top-tracks?country=from_token",
-		artist.id), "tracks", callback);
+		artist.id), [callback](const nlohmann::json &json)
+	{
+		callback(json.at("tracks"));
+	});
 }
 
 void api::related_artists(const lib::spt::artist &artist,
 	lib::callback<std::vector<lib::spt::artist>> &callback)
 {
 	get(lib::fmt::format("artists/{}/related-artists",
-		artist.id), "artists", callback);
+		artist.id), [callback](const nlohmann::json &json)
+	{
+		callback(json.at("artists"));
+	});
 }
 
 void api::albums(const lib::spt::artist &artist,
