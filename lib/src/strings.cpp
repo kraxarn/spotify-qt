@@ -97,11 +97,27 @@ std::string strings::right(const std::string &str, size_t n)
 		: str.substr(str.length() - n);
 }
 
-std::string strings::to_lower(std::string &str)
+auto strings::to_lower(const std::string &str) -> std::string
 {
 	std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c)
 	{
 		return std::tolower(c);
 	});
 	return str;
+}
+
+auto strings::to_upper(const std::string &str) -> std::string
+{
+	std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c)
+	{
+		return std::toupper(c);
+	});
+	return str;
+}
+
+auto strings::capitalize(const std::string &str) -> std::string
+{
+	return lib::fmt::format("{}{}",
+		to_upper(str.substr(0, 1)),
+		to_lower(str.substr(1)));
 }

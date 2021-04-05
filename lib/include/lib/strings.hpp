@@ -1,5 +1,7 @@
 #pragma once
 
+#include "lib/format.hpp"
+
 #include <iterator>
 #include <sstream>
 #include <string>
@@ -100,11 +102,24 @@ namespace lib
 		static std::string right(const std::string &str, size_t n);
 
 		/**
-		 * Get strings as all lowercase
+		 * Get string as all lowercase
 		 * @param str String to transform
 		 * @return String is all lowercase, same as str
 		 */
-		static std::string to_lower(std::string &str);
+		static auto to_lower(const std::string &str) -> std::string;
+
+		/**
+		 * Get string as all uppercase
+		 * @param str String to transform
+		 * @return String in all uppercase
+		 */
+		static auto to_upper(const std::string &str) -> std::string;
+
+		/**
+		 * Capitalize string, first letter in uppercase, and the rest in lowercase
+		 * @param str String to transform
+		 */
+		static auto capitalize(const std::string &str) -> std::string;
 
 	private:
 		/**
