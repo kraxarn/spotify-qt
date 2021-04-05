@@ -4,7 +4,14 @@ AudioFeaturesView::AudioFeaturesView(spt::Spotify &spotify, const std::string &t
 	QWidget *parent)
 	: QTreeWidget(parent)
 {
-	auto features = spotify.trackAudioFeatures(trackId);
+	setEnabled(false);
+
+	spotify.track_audio_features(trackId,
+		[this](const lib::spt::audio_features &audioFeatures)
+		{
+			this->loaded(audioFeatures);
+			this->setEnabled(true);
+		});
 
 	setEditTriggers(QAbstractItemView::NoEditTriggers);
 	header()->hide();
@@ -13,11 +20,12 @@ AudioFeaturesView::AudioFeaturesView(spt::Spotify &spotify, const std::string &t
 	setAllColumnsShowFocus(true);
 	setColumnCount(2);
 	header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+}
 
-	QMapIterator<QString, QString> i(features.values);
-	while (i.hasNext())
+void AudioFeaturesView::loaded(const lib::spt::audio_features &features)
+{
+	for (const auto &value : features.get_values())
 	{
-		i.next();
-		addTopLevelItem(Utils::treeItem(this, i.key(), i.value()));
+		addTopLevelItem(Utils::treeItem(this, value.first, value.second));
 	}
 }

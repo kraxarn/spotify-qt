@@ -156,7 +156,10 @@ void SearchView::search()
 
 			if (cat == "track")
 			{
-				addTrack(spotify.getTrack(id));
+				spotify.track(id, [this](const lib::spt::track &track)
+				{
+					this->addTrack(track);
+				});
 				i = 0;
 			}
 			else if (cat == "artist")
