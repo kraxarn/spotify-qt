@@ -99,20 +99,22 @@ std::string strings::right(const std::string &str, size_t n)
 
 auto strings::to_lower(const std::string &str) -> std::string
 {
-	std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c)
+	std::string val(str);
+	std::transform(val.begin(), val.end(), val.begin(), [](unsigned char c)
 	{
 		return std::tolower(c);
 	});
-	return str;
+	return val;
 }
 
 auto strings::to_upper(const std::string &str) -> std::string
 {
-	std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c)
+	std::string val(str);
+	std::transform(val.begin(), val.end(), val.begin(), [](unsigned char c)
 	{
 		return std::toupper(c);
 	});
-	return str;
+	return val;
 }
 
 auto strings::capitalize(const std::string &str) -> std::string
