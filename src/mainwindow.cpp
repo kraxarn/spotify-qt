@@ -6,7 +6,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	QMainWindow()
 {
 	// Splash
-	auto splash = new SplashDialog();
+	auto *splash = new SplashDialog();
 	splash->show();
 	splash->showMessage("Please wait...");
 
@@ -34,9 +34,12 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	}
 
 	// Check for dark background
-	auto bg = palette().color(backgroundRole());
-	if (((bg.red() + bg.green() + bg.blue()) / 3) < 128)
+	const auto bg = palette().color(backgroundRole());
+	constexpr auto threshold = 128;
+	if (((bg.red() + bg.green() + bg.blue()) / 3) < threshold)
+	{
 		Utils::darkBackground = true;
+	}
 
 	// Set Spotify
 	splash->showMessage("Connecting...");
@@ -56,17 +59,20 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	// Setup main window
 	setWindowTitle("spotify-qt");
 	setWindowIcon(Icon::get("logo:spotify-qt"));
-	resize(1280, 720);
+	constexpr int windowWidth = 1280;
+	constexpr int windowHeight = 720;
+	resize(windowWidth, windowHeight);
 	setCentralWidget(createCentralWidget());
 	toolBar = new MainToolBar(*spotify, settings, this);
 	addToolBar(Qt::ToolBarArea::TopToolBarArea, toolBar);
 
 	// Update player status
 	splash->showMessage("Refreshing...");
-	auto timer = new QTimer(this);
+	auto *timer = new QTimer(this);
 	QTimer::connect(timer, &QTimer::timeout, this, &MainWindow::refresh);
 	refresh();
-	timer->start(1000);
+	constexpr int tickMs = 1000;
+	timer->start(tickMs);
 	splash->showMessage("Welcome!");
 
 	// Check if should start client
@@ -83,13 +89,17 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 			}
 		};
 		if (settings.spotify.always_start)
+		{
 			startClient();
+		}
 		else
 		{
 			spotify->devices([startClient](const std::vector<lib::spt::device> &devices)
 			{
 				if (devices.empty())
+				{
 					startClient();
+				}
 			});
 		}
 	}
@@ -110,18 +120,24 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 
 	// Create tray icon if specified
 	if (settings.general.tray_icon)
+	{
 		trayIcon = new TrayIcon(spotify, settings, this);
+	}
 
 	// If new version has been detected, show what's new dialog
 	if (settings.general.show_changelog
 		&& settings.general.last_version != APP_VERSION)
 	{
-		auto dialog = new WhatsNewDialog(APP_VERSION, settings, this);
+		auto *dialog = new WhatsNewDialog(APP_VERSION, settings, this);
 
 		if (dialog->isValid())
+		{
 			dialog->open();
+		}
 		else
+		{
 			lib::log::error("Failed to fetch what's new in \"{}\"", APP_VERSION);
+		}
 	}
 
 	settings.general.last_version = APP_VERSION;
@@ -146,9 +162,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::refresh()
 {
+	constexpr int msInSec = 1000;
+
 	if (refreshCount < 0
 		|| ++refreshCount >= settings.general.refresh_interval
-		|| current.playback.progress_ms + 1000 > current.playback.item.duration)
+		|| current.playback.progress_ms + msInSec > current.playback.item.duration)
 	{
 		spotify->current_playback([this](const lib::spt::playback &playback)
 		{
@@ -160,8 +178,10 @@ void MainWindow::refresh()
 
 	// Assume last refresh was 1 sec ago
 	if (!current.playback.is_playing)
+	{
 		return;
-	current.playback.progress_ms += 1000;
+	}
+	current.playback.progress_ms += msInSec;
 	refreshed(current.playback);
 }
 
@@ -169,7 +189,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 {
 	current.playback = playback;
 
-	auto mainToolBar = dynamic_cast<MainToolBar *>(toolBar);
+	auto *mainToolBar = dynamic_cast<MainToolBar *>(toolBar);
 
 	if (!current.playback.is_playing && current.playback.item.name == "(no name)")
 	{
@@ -182,7 +202,9 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 	if (leftSidePanel->getCurrentlyPlaying() != currPlaying)
 	{
 		if (current.playback.is_playing)
+		{
 			songs->setPlayingTrackItem(current.playback.item.id);
+		}
 
 		leftSidePanel->setCurrentlyPlaying(currPlaying);
 		setAlbumImage(current.playback.item.image);
@@ -191,11 +213,15 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 
 #ifdef USE_DBUS
 		if (mediaPlayer != nullptr)
+		{
 			mediaPlayer->currentSourceChanged(current.playback);
+		}
 #endif
 
 		if (trayIcon != nullptr && settings.general.tray_album_art)
+		{
 			trayIcon->setPixmap(getAlbum(current.playback.item.image));
+		}
 	}
 
 	mainToolBar->position->setText(QString("%1/%2")
@@ -210,15 +236,18 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 	mainToolBar->playPause->setText(current.playback.is_playing ? "Pause" : "Play");
 
 	if (!settings.general.pulse_volume)
-		mainToolBar->volumeButton->setVolume(current.playback.volume() / 5);
+	{
+		constexpr int volumeStep = 5;
+		mainToolBar->volumeButton->setVolume(current.playback.volume() / volumeStep);
+	}
 
 	mainToolBar->repeat->setChecked(current.playback.repeat != lib::repeat_state::off);
 	mainToolBar->shuffle->setChecked(current.playback.shuffle);
 }
 
-QWidget *MainWindow::createCentralWidget()
+auto MainWindow::createCentralWidget() -> QWidget *
 {
-	auto container = new QSplitter();
+	auto *container = new QSplitter();
 
 	// Left side panel with library and playlists
 	leftSidePanel = new LeftSidePanel(*spotify, settings, current, cache, this);
@@ -246,7 +275,7 @@ QWidget *MainWindow::createCentralWidget()
 	// Find playlist in list
 	for (auto i = 0; i < leftSidePanel->playlistCount(); i++)
 	{
-		auto item = leftSidePanel->playlistItem(i);
+		auto *item = leftSidePanel->playlistItem(i);
 
 		if (item->data(RolePlaylistId).toString().endsWith(playlistId))
 		{
@@ -273,7 +302,7 @@ void MainWindow::openAudioFeaturesWidget(const std::string &trackId,
 
 void MainWindow::openLyrics(const std::string &artist, const std::string &name)
 {
-	auto view = new LyricsView(artist, name, this);
+	auto *view = new LyricsView(artist, name, this);
 	if (!view->lyricsFound())
 	{
 		view->deleteLater();
@@ -288,7 +317,7 @@ void MainWindow::openLyrics(const std::string &artist, const std::string &name)
 	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, lyricsView);
 }
 
-bool MainWindow::loadAlbum(const std::string &albumId, const std::string &trackId)
+auto MainWindow::loadAlbum(const std::string &albumId, const std::string &trackId) -> bool
 {
 	spotify->album(albumId, [this, trackId](const lib::spt::album &album)
 	{
@@ -297,7 +326,7 @@ bool MainWindow::loadAlbum(const std::string &albumId, const std::string &trackI
 	return true;
 }
 
-std::vector<lib::spt::track> MainWindow::loadTracksFromCache(const std::string &id)
+auto MainWindow::loadTracksFromCache(const std::string &id) -> std::vector<lib::spt::track>
 {
 	return cache.tracks(id);
 }
@@ -311,15 +340,22 @@ void MainWindow::saveTracksToCache(const std::string &id,
 void MainWindow::setStatus(const QString &message, bool important)
 {
 	if (message.isNull() || message.isEmpty())
+	{
 		return;
+	}
 
 	if (trayIcon != nullptr && settings.general.tray_notifications)
 	{
 		if (important)
+		{
 			trayIcon->message(message);
+		}
 	}
 	else
-		statusBar()->showMessage(message, 5000);
+	{
+		const int messageTimeout = 5000;
+		statusBar()->showMessage(message, messageTimeout);
+	}
 }
 
 void MainWindow::status(const std::string &message, bool important)
@@ -332,33 +368,37 @@ void MainWindow::setAlbumImage(const std::string &url)
 	leftSidePanel->setAlbumImage(Utils::mask(getAlbum(url)));
 }
 
-QByteArray MainWindow::get(const QString &url)
+auto MainWindow::get(const QString &url) -> QByteArray
 {
-	auto reply = network->get(QNetworkRequest(QUrl(url)));
+	auto *reply = network->get(QNetworkRequest(QUrl(url)));
 	while (!reply->isFinished())
+	{
 		QCoreApplication::processEvents();
+	}
 	reply->deleteLater();
 	return reply->error() == QNetworkReply::NoError
 		? reply->readAll()
 		: QByteArray();
 }
 
-std::vector<unsigned char> MainWindow::get(const std::string &url)
+auto MainWindow::get(const std::string &url) -> std::vector<unsigned char>
 {
 	auto data = get(QString::fromStdString(url));
 	return std::vector<unsigned char>(data.begin(), data.end());
 }
 
-QJsonDocument MainWindow::getJson(const QString &url)
+auto MainWindow::getJson(const QString &url) -> QJsonDocument
 {
 	return QJsonDocument::fromJson(get(url));
 }
 
-QPixmap MainWindow::getAlbum(const std::string &url)
+auto MainWindow::getAlbum(const std::string &url) -> QPixmap
 {
 	QPixmap img;
 	if (url.empty())
+	{
 		return img;
+	}
 
 	auto data = cache.get_album_image(url);
 	if (data.empty())
@@ -376,16 +416,18 @@ void MainWindow::openArtist(const std::string &artistId)
 	dynamic_cast<SidePanel *>(sidePanel)->openArtist(artistId);
 }
 
-std::vector<std::string> MainWindow::currentTracks()
+auto MainWindow::currentTracks() -> std::vector<std::string>
 {
 	std::vector<std::string> tracks;
 	for (int i = 0; i < songs->topLevelItemCount(); i++)
 	{
 		auto trackId = songs->topLevelItem(i)->data(0, RoleTrackId)
 			.toString().toStdString();
-		// spotify:track: = 14
-		if (trackId.length() > 14)
+		const int trackPrefixLength = 14;
+		if (trackId.length() > trackPrefixLength)
+		{
 			tracks.push_back(trackId);
+		}
 	}
 	return tracks;
 }
@@ -398,7 +440,9 @@ void MainWindow::reloadTrayIcon()
 		trayIcon = nullptr;
 	}
 	if (settings.general.tray_icon)
+	{
 		trayIcon = new TrayIcon(spotify, settings, this);
+	}
 }
 
 void MainWindow::setFixedWidthTime(bool value)
@@ -410,7 +454,7 @@ void MainWindow::toggleTrackNumbers(bool enabled)
 {
 	for (int i = 0; i < songs->topLevelItemCount(); i++)
 	{
-		auto item = songs->topLevelItem(i);
+		auto *item = songs->topLevelItem(i);
 		item->setText(0, enabled
 			? QString("%1").arg(item->data(0, RoleIndex).toInt() + 1, 3)
 			: QString());
@@ -419,32 +463,32 @@ void MainWindow::toggleTrackNumbers(bool enabled)
 
 //region Getters
 
-lib::spt::playback MainWindow::currentPlayback() const
+auto MainWindow::currentPlayback() const -> lib::spt::playback
 {
 	return current.playback;
 }
 
-lib::spt::user MainWindow::getCurrentUser()
+auto MainWindow::getCurrentUser() -> lib::spt::user
 {
 	return currentUser;
 }
 
-QString &MainWindow::getCacheLocation()
+auto MainWindow::getCacheLocation() -> QString &
 {
 	return cacheLocation;
 }
 
-QAction *MainWindow::getSearchAction()
+auto MainWindow::getSearchAction() -> QAction *
 {
 	return ((MainToolBar *) toolBar)->search;
 }
 
-TracksList *MainWindow::getSongsTree()
+auto MainWindow::getSongsTree() -> TracksList *
 {
 	return songs;
 }
 
-std::string MainWindow::getSptContext() const
+auto MainWindow::getSptContext() const -> std::string
 {
 	return current.context.toStdString();
 }
@@ -464,24 +508,24 @@ void MainWindow::setSptContext(const lib::spt::album &album)
 	setSptContext(lib::spt::spotify_api::to_uri("album", album.id));
 }
 
-lib::spt::playback &MainWindow::getCurrentPlayback()
+auto MainWindow::getCurrentPlayback() -> lib::spt::playback &
 {
 	return current.playback;
 }
 
-const spt::Current &MainWindow::getCurrent()
+auto MainWindow::getCurrent() -> const spt::Current &
 {
 	return current;
 }
 
 #ifdef USE_DBUS
-mp::Service *MainWindow::getMediaPlayer()
+auto MainWindow::getMediaPlayer() -> mp::Service *
 {
 	return mediaPlayer;
 }
 #endif
 
-bool MainWindow::isValid() const
+auto MainWindow::isValid() const -> bool
 {
 	return stateValid;
 }
@@ -490,11 +534,15 @@ bool MainWindow::isValid() const
 
 void MainWindow::setSearchVisible(bool visible)
 {
-	auto panel = dynamic_cast<SidePanel *>(sidePanel);
+	auto *panel = dynamic_cast<SidePanel *>(sidePanel);
 	if (visible)
+	{
 		panel->openSearch();
+	}
 	else
+	{
 		panel->closeSearch();
+	}
 }
 
 void MainWindow::addSidePanelTab(QWidget *widget, const QString &title)
@@ -514,12 +562,12 @@ void MainWindow::setCurrentLibraryItem(QTreeWidgetItem *item)
 	leftSidePanel->setCurrentLibraryItem(item);
 }
 
-QTreeWidgetItem *MainWindow::getCurrentLibraryItem()
+auto MainWindow::getCurrentLibraryItem() -> QTreeWidgetItem *
 {
 	return leftSidePanel->getCurrentLibraryItem();
 }
 
-lib::spt::playlist &MainWindow::getPlaylist(int index)
+auto MainWindow::getPlaylist(int index) -> lib::spt::playlist &
 {
 	return leftSidePanel->playlist(index);
 }
@@ -529,27 +577,27 @@ void MainWindow::setCurrentPlaylistItem(int index)
 	leftSidePanel->setCurrentPlaylistItem(index);
 }
 
-std::unordered_set<std::string> MainWindow::allArtists()
+auto MainWindow::allArtists() -> std::unordered_set<std::string>
 {
 	return leftSidePanel->allArtists();
 }
 
-QListWidgetItem *MainWindow::getCurrentPlaylistItem()
+auto MainWindow::getCurrentPlaylistItem() -> QListWidgetItem *
 {
 	return leftSidePanel->currentPlaylist();
 }
 
-std::vector<lib::spt::playlist> &MainWindow::getPlaylists()
+auto MainWindow::getPlaylists() -> std::vector<lib::spt::playlist> &
 {
 	return leftSidePanel->getPlaylists();
 }
 
-int MainWindow::getPlaylistItemCount()
+auto MainWindow::getPlaylistItemCount() -> int
 {
 	return leftSidePanel->playlistItemCount();
 }
 
-QListWidgetItem *MainWindow::getPlaylistItem(int index)
+auto MainWindow::getPlaylistItem(int index) -> QListWidgetItem *
 {
 	return leftSidePanel->playlistItem(index);
 }
@@ -559,10 +607,12 @@ void MainWindow::orderPlaylists(lib::playlist_order order)
 	leftSidePanel->orderPlaylists(order);
 }
 
-MainWindow *MainWindow::find(QWidget *from)
+auto MainWindow::find(QWidget *from) -> MainWindow *
 {
-	auto w = from;
+	auto *w = from;
 	while (w != nullptr && typeid(*w) != typeid(MainWindow))
+	{
 		w = w->parentWidget();
+	}
 	return dynamic_cast<MainWindow *>(w);
 }
