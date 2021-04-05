@@ -15,6 +15,7 @@
 #include "lib/spotify/searchresults.hpp"
 #include "lib/spotify/track.hpp"
 #include "lib/spotify/audiofeatures.hpp"
+#include "lib/spotify/savedalbum.hpp"
 
 #include "thirdparty/json.hpp"
 
@@ -89,7 +90,7 @@ namespace lib
 
 			//region Library
 
-			void saved_albums(lib::callback<std::vector<lib::spt::album>> &callback);
+			void saved_albums(lib::callback<std::vector<lib::spt::saved_album>> &callback);
 
 			void saved_tracks(lib::callback<std::vector<lib::spt::track>> &callback);
 

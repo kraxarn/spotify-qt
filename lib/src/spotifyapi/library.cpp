@@ -9,7 +9,7 @@ using namespace lib::spt;
 // me/shows
 // me/shows/contains
 
-void api::saved_albums(lib::callback<std::vector<lib::spt::album>> &callback)
+void api::saved_albums(lib::callback<std::vector<lib::spt::saved_album>> &callback)
 {
 	get_items("me/albums", callback);
 }
