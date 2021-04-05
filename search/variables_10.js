@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['settings_415',['settings',['../classlib_1_1spt_1_1spotify__api.html#a62afd59011d3c1bbfe8e21a32bc6f90c',1,'lib::spt::spotify_api']]],
+  ['settings_415',['settings',['../classlib_1_1spt_1_1api.html#a5a058e247f84895b9ee98f7b5a6ed756',1,'lib::spt::api']]],
   ['show_5fchangelog_416',['show_changelog',['../structlib_1_1set_1_1general.html#a2b1eb5136d277f58c1cd6a32e9710488',1,'lib::set::general']]],
   ['show_5fcontext_5finfo_417',['show_context_info',['../structlib_1_1set_1_1general.html#ac2cc3867b8fbd6d1a17cad5f0daca00f',1,'lib::set::general']]],
   ['shuffle_418',['shuffle',['../classlib_1_1spt_1_1playback.html#a593d145ce768c35439952a27ab29294d',1,'lib::spt::playback']]],
