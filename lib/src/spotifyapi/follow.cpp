@@ -8,7 +8,7 @@ using namespace lib::spt;
 
 void api::followed_artists(lib::callback<std::vector<lib::spt::artist>> &callback)
 {
-	get_items("me/following?type=artist&limit=50", callback);
+	get_items("me/following?type=artist&limit=50", "artists", callback);
 }
 
 void api::follow(lib::follow_type type, const std::vector<std::string> &ids,
