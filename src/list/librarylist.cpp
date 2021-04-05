@@ -200,12 +200,14 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 	}
 	else if (item->text(0) == SAVED_ALBUMS)
 	{
-		spotify.saved_albums([item](const std::vector<lib::spt::album> &albums)
+		spotify.saved_albums([item](const std::vector<lib::spt::saved_album> &albums)
 		{
 			std::vector<LibraryItem> results;
 			results.reserve(albums.size());
-			for (auto &album : albums)
-				results.emplace_back(album.name, album.id, RoleAlbumId);
+			for (const auto &album : albums)
+			{
+				results.emplace_back(album.album.name, album.album.id, RoleAlbumId);
+			}
 			LibraryList::itemsLoaded(results, item);
 		});
 	}
