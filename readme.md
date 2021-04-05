@@ -43,6 +43,7 @@ free to, just please open an issue, or get in contact with me, so I can add it t
 | FreeBSD | [![FreeBSD Ports](https://repology.org/badge/version-for-repo/freebsd/spotify-qt.svg?header=FreeBSD%20Ports)](https://www.freshports.org/audio/spotify-qt) | [ehaupt](https://github.com/ehaupt) |
 | DragonflyBSD | [![DPorts](https://repology.org/badge/version-for-repo/dports/spotify-qt.svg?header=DPorts)](https://github.com/DragonFlyBSD/DPorts/blob/master/audio/spotify-qt/Makefile) | [ehaupt](https://github.com/ehaupt) |
 | Void Linux | [![Void Linux](https://repology.org/badge/version-for-repo/void_x86_64/spotify-qt.svg?header=Void%20Linux)](https://github.com/void-linux/void-packages/blob/master/srcpkgs/spotify-qt/template) | [abenson](https://github.com/abenson) |
+| nixpkgs | [![nixpkgs unstable](https://repology.org/badge/version-for-repo/nix_unstable/spotify-qt.svg?header=nixpkgs%20unstable)](https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/audio/spotify-qt/default.nix) | [karthikiyengar](https://github.com/karthikiyengar)
 | Other (Linux) | [![Snapcraft](https://snapcraft.io//spotify-qt/badge.svg)](https://snapcraft.io/spotify-qt) | [kraxarn](https://github.com/kraxarn) |
 
 The snap version can be installed by simply running  `snap install spotify-qt`, 
