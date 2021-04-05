@@ -12,9 +12,5 @@ using namespace lib::spt;
 
 void api::new_releases(lib::callback<std::vector<lib::spt::album>> &callback)
 {
-	// TODO: No paging
-	get("browse/new-releases?limit=50", [callback](const nlohmann::json &json)
-	{
-		callback(json.at("albums"));
-	});
+	get_items("browse/new-releases?limit=50", "albums", callback);
 }
