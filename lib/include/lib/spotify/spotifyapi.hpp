@@ -52,7 +52,7 @@ namespace lib
 
 			//region Artists
 
-			void artist(const std::string &artistId,
+			void artist(const std::string &id,
 				lib::callback<lib::spt::artist> &callback);
 
 			void top_tracks(const lib::spt::artist &artist,
@@ -93,13 +93,13 @@ namespace lib
 
 			void saved_tracks(lib::callback<std::vector<lib::spt::track>> &callback);
 
-			void add_saved_track(const std::string &id,
+			void add_saved_track(const std::string &track_id,
 				lib::callback<std::string> &callback);
 
-			void remove_saved_track(const std::string &id,
+			void remove_saved_track(const std::string &track_id,
 				lib::callback<std::string> &callback);
 
-			void is_saved_track(const std::vector<std::string> &ids,
+			void is_saved_track(const std::vector<std::string> &track_ids,
 				lib::callback<std::vector<bool>> &callback);
 
 			//endregion
@@ -122,7 +122,7 @@ namespace lib
 			/**
 			 * Set current active device by device ID
 			 */
-			void set_device(const std::string &deviceId, lib::callback<std::string> &callback);
+			void set_device(const std::string &device_id, lib::callback<std::string> &callback);
 
 			/**
 			 * Set current active device

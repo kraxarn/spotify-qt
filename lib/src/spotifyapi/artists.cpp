@@ -5,10 +5,10 @@ using namespace lib::spt;
 // Currently unavailable:
 // artists
 
-void api::artist(const std::string &artistId,
+void api::artist(const std::string &id,
 	lib::callback<lib::spt::artist> &callback)
 {
-	get(lib::fmt::format("artists/{}", artistId), callback);
+	get(lib::fmt::format("artists/{}", id), callback);
 }
 
 void api::top_tracks(const lib::spt::artist &artist,
