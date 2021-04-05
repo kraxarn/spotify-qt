@@ -2,12 +2,12 @@
 
 using namespace lib::spt;
 
-spotify_api::spotify_api(lib::settings &settings)
+api::api(lib::settings &settings)
 	: settings(settings)
 {
 }
 
-bool spotify_api::refresh(bool force)
+bool api::refresh(bool force)
 {
 	if (!force && seconds_since_epoch() - settings.account.last_refresh < 3600)
 	{
@@ -66,7 +66,7 @@ bool spotify_api::refresh(bool force)
 	return true;
 }
 
-nlohmann::json spotify_api::parse_json(const std::string &url, const std::string &data)
+nlohmann::json api::parse_json(const std::string &url, const std::string &data)
 {
 	// No data, no response, no error
 	if (data.empty())
@@ -82,25 +82,25 @@ nlohmann::json spotify_api::parse_json(const std::string &url, const std::string
 	throw lib::spotify_error(err, url);
 }
 
-long spotify_api::seconds_since_epoch()
+long api::seconds_since_epoch()
 {
 	return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now()
 		.time_since_epoch()).count();
 }
 
-std::string spotify_api::to_uri(const std::string &type, const std::string &id)
+std::string api::to_uri(const std::string &type, const std::string &id)
 {
 	return lib::strings::starts_with(id, "spotify:")
 		? id
 		: lib::fmt::format("spotify:{}:{}", type, id);
 }
 
-std::string spotify_api::to_id(const std::string &id)
+std::string api::to_id(const std::string &id)
 {
 	return lib::strings::split(id, ':').back();
 }
 
-std::string spotify_api::follow_type_string(lib::follow_type type)
+std::string api::follow_type_string(lib::follow_type type)
 {
 	switch (type)
 	{
@@ -116,7 +116,7 @@ std::string spotify_api::follow_type_string(lib::follow_type type)
 
 //region GET
 
-void spotify_api::get(const std::string &url, const std::string &key,
+void api::get(const std::string &url, const std::string &key,
 	lib::callback<nlohmann::json> &callback)
 {
 	auto api_url = lib::strings::starts_with(url, "https://api.spotify.com/v1/")
@@ -148,7 +148,7 @@ void spotify_api::get(const std::string &url, const std::string &key,
 
 //region PUT
 
-void spotify_api::put(const std::string &url, lib::callback<std::string> &callback)
+void api::put(const std::string &url, lib::callback<std::string> &callback)
 {
 	put(url, nlohmann::json(), callback);
 }
@@ -161,7 +161,7 @@ void spotify_api::put(const std::string &url, lib::callback<std::string> &callba
 
 //region DELETE
 
-void spotify_api::del(const std::string &url, lib::callback<std::string> &callback)
+void api::del(const std::string &url, lib::callback<std::string> &callback)
 {
 	del(url, nlohmann::json(), callback);
 }

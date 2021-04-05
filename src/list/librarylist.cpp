@@ -156,8 +156,10 @@ void LibraryList::doubleClicked(QTreeWidgetItem *item, int)
 		// Get id of all tracks
 		std::vector<std::string> trackIds;
 		trackIds.reserve(tracks.size());
-		for (auto &track : tracks)
-			trackIds.push_back(lib::spt::spotify_api::to_uri("track", track.id));
+		for (const auto &track : tracks)
+		{
+			trackIds.push_back(lib::spt::api::to_uri("track", track.id));
+		}
 
 		// Play in context of all tracks
 		this->spotify.play_tracks(0, trackIds,

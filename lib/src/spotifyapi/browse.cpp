@@ -10,7 +10,7 @@ using namespace lib::spt;
 // recommendations
 // recommendations/available-genre-seeds
 
-void spotify_api::new_releases(lib::callback<std::vector<lib::spt::album>> &callback)
+void api::new_releases(lib::callback<std::vector<lib::spt::album>> &callback)
 {
 	// TODO: No paging
 	get("browse/new-releases?limit=50", [callback](const nlohmann::json &json)

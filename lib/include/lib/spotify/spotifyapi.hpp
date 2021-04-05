@@ -31,14 +31,14 @@ namespace lib
 		/**
 		 * Spotify Web API
 		 */
-		class spotify_api
+		class api
 		{
 		public:
 			/**
 			 * Construct a new instance and refresh if needed
 			 * @param settings Settings for access token and refresh token
 			 */
-			explicit spotify_api(lib::settings &settings);
+			explicit api(lib::settings &settings);
 
 			//region Albums
 

@@ -182,7 +182,7 @@ void SongMenu::addToPlaylist(QAction *action)
 				}
 
 				// Actually add
-				auto plTrack = lib::spt::spotify_api::to_uri("track", trackId);
+				auto plTrack = lib::spt::api::to_uri("track", trackId);
 				spotify.add_to_playlist(playlistId, plTrack, [mainWindow](const std::string &result)
 				{
 					if (result.empty())
@@ -251,5 +251,5 @@ void SongMenu::viewArtist(bool)
 void SongMenu::openAlbum(bool)
 {
 	auto mainWindow = MainWindow::find(parentWidget());
-	mainWindow->loadAlbum(albumId, lib::spt::spotify_api::to_uri("track", trackId));
+	mainWindow->loadAlbum(albumId, lib::spt::api::to_uri("track", trackId));
 }

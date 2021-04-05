@@ -500,12 +500,12 @@ void MainWindow::setSptContext(const std::string &uri)
 
 void MainWindow::setSptContext(const lib::spt::playlist &playlist)
 {
-	setSptContext(lib::spt::spotify_api::to_uri("playlist", playlist.id));
+	setSptContext(lib::spt::api::to_uri("playlist", playlist.id));
 }
 
 void MainWindow::setSptContext(const lib::spt::album &album)
 {
-	setSptContext(lib::spt::spotify_api::to_uri("album", album.id));
+	setSptContext(lib::spt::api::to_uri("album", album.id));
 }
 
 auto MainWindow::getCurrentPlayback() -> lib::spt::playback &

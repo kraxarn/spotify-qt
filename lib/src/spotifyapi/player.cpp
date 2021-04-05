@@ -5,7 +5,7 @@ using namespace lib::spt;
 // Currently unavailable:
 // me/player/currently-playing
 
-void spotify_api::current_playback(lib::callback<lib::spt::playback> &callback)
+void api::current_playback(lib::callback<lib::spt::playback> &callback)
 {
 	get("me/player", [callback](const nlohmann::json &json)
 	{
@@ -15,24 +15,24 @@ void spotify_api::current_playback(lib::callback<lib::spt::playback> &callback)
 
 //region set_device
 
-void spotify_api::set_device(const std::string &deviceId, lib::callback<std::string> &callback)
+void api::set_device(const std::string &device_id, lib::callback<std::string> &callback)
 {
-	current_device = deviceId;
+	current_device = device_id;
 	put("me/player", {
 		{"device_ids", {
-			deviceId
+			device_id
 		}}
 	}, callback);
 }
 
-void spotify_api::set_device(const device &device, lib::callback<std::string> &callback)
+void api::set_device(const device &device, lib::callback<std::string> &callback)
 {
 	set_device(device.id, callback);
 }
 
 //endregion
 
-void spotify_api::devices(lib::callback<std::vector<lib::spt::device>> &callback)
+void api::devices(lib::callback<std::vector<lib::spt::device>> &callback)
 {
 	get("me/player/devices", [callback](const nlohmann::json &json)
 	{
@@ -42,7 +42,7 @@ void spotify_api::devices(lib::callback<std::vector<lib::spt::device>> &callback
 
 //region play_tracks
 
-void spotify_api::play_tracks(int trackIndex, const std::string &context,
+void api::play_tracks(int trackIndex, const std::string &context,
 	lib::callback<std::string> &callback)
 {
 	lib::log::dev("Playing track {} from {}", trackIndex, context);
@@ -60,7 +60,7 @@ void spotify_api::play_tracks(int trackIndex, const std::string &context,
 		body, callback);
 }
 
-void spotify_api::play_tracks(int track_index, const std::vector<std::string> &all,
+void api::play_tracks(int track_index, const std::vector<std::string> &all,
 	lib::callback<std::string> &callback)
 {
 	lib::log::dev("Playing track {} ({} total)", track_index, all.size());
@@ -88,13 +88,13 @@ void spotify_api::play_tracks(int track_index, const std::vector<std::string> &a
 		body, callback);
 }
 
-void spotify_api::play_tracks(int track_index, const std::initializer_list<std::string> &all,
+void api::play_tracks(int track_index, const std::initializer_list<std::string> &all,
 	lib::callback<std::string> &callback)
 {
 	play_tracks(track_index, std::vector<std::string>(all), callback);
 }
 
-void spotify_api::play_tracks(const std::string &context, lib::callback<std::string> &callback)
+void api::play_tracks(const std::string &context, lib::callback<std::string> &callback)
 {
 	lib::log::dev("Playing track from {}", context);
 
@@ -110,32 +110,32 @@ void spotify_api::play_tracks(const std::string &context, lib::callback<std::str
 
 //endregion
 
-void spotify_api::resume(lib::callback<std::string> &callback)
+void api::resume(lib::callback<std::string> &callback)
 {
 	put("me/player/play", callback);
 }
 
-void spotify_api::pause(lib::callback<std::string> &callback)
+void api::pause(lib::callback<std::string> &callback)
 {
 	put("me/player/pause", callback);
 }
 
-void spotify_api::next(lib::callback<std::string> &callback)
+void api::next(lib::callback<std::string> &callback)
 {
 	post("me/player/next", callback);
 }
 
-void spotify_api::previous(lib::callback<std::string> &callback)
+void api::previous(lib::callback<std::string> &callback)
 {
 	post("me/player/previous", callback);
 }
 
-void spotify_api::seek(int position, lib::callback<std::string> &callback)
+void api::seek(int position, lib::callback<std::string> &callback)
 {
 	put(lib::fmt::format("me/player/seek?position_ms={}", position), callback);
 }
 
-void spotify_api::set_repeat(lib::repeat_state state, lib::callback<std::string> &callback)
+void api::set_repeat(lib::repeat_state state, lib::callback<std::string> &callback)
 {
 	std::string repeat;
 	switch (state)
@@ -156,22 +156,22 @@ void spotify_api::set_repeat(lib::repeat_state state, lib::callback<std::string>
 	put(lib::fmt::format("me/player/repeat?state={}", repeat), callback);
 }
 
-void spotify_api::set_volume(int volume, lib::callback<std::string> &callback)
+void api::set_volume(int volume, lib::callback<std::string> &callback)
 {
 	put(lib::fmt::format("me/player/volume?volume_percent={}", volume), callback);
 }
 
-void spotify_api::set_shuffle(bool enabled, lib::callback<std::string> &callback)
+void api::set_shuffle(bool enabled, lib::callback<std::string> &callback)
 {
 	put(lib::fmt::format("me/player/shuffle?state={}", enabled), callback);
 }
 
-void spotify_api::recently_played(lib::callback<std::vector<lib::spt::track>> &callback)
+void api::recently_played(lib::callback<std::vector<lib::spt::track>> &callback)
 {
 	get("me/player/recently-played?limit=50", "items", callback);
 }
 
-void spotify_api::add_to_queue(const std::string &uri, lib::callback<std::string> &callback)
+void api::add_to_queue(const std::string &uri, lib::callback<std::string> &callback)
 {
 	post(lib::fmt::format("me/player/queue?uri={}", uri), callback);
 }

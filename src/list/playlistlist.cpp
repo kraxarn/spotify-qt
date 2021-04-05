@@ -42,7 +42,7 @@ void PlaylistList::doubleClicked(QListWidgetItem *item)
 	auto currentPlaylist = mainWindow->getPlaylist(getItemIndex(item));
 	mainWindow->getSongsTree()->load(currentPlaylist);
 
-	spotify.play_tracks(lib::spt::spotify_api::to_uri("playlist", currentPlaylist.id),
+	spotify.play_tracks(lib::spt::api::to_uri("playlist", currentPlaylist.id),
 		[mainWindow](const std::string &result)
 		{
 			mainWindow->status(lib::fmt::format("Failed to start playlist playback: {}",
@@ -70,7 +70,7 @@ void PlaylistList::load(const std::vector<lib::spt::playlist> &items)
 
 	auto lastItem = currentItem() != nullptr
 		? currentItem()->data(RolePlaylistId).toString().toStdString()
-		: lib::spt::spotify_api::to_id(settings.general.last_playlist);
+		: lib::spt::api::to_id(settings.general.last_playlist);
 
 	playlists = items;
 

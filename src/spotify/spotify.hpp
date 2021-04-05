@@ -32,7 +32,7 @@ namespace spt
 
 namespace spt
 {
-	class Spotify: public QObject, public lib::spt::spotify_api
+	class Spotify: public QObject, public lib::spt::api
 	{
 	Q_OBJECT
 

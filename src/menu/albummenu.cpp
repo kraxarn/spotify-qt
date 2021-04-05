@@ -40,7 +40,7 @@ void AlbumMenu::shuffle(bool)
 	}
 
 	auto initialIndex = lib::random().next_int(0, tracks.size());
-	spotify.play_tracks(initialIndex, lib::spt::spotify_api::to_uri("album", albumId),
+	spotify.play_tracks(initialIndex, lib::spt::api::to_uri("album", albumId),
 		[this](const std::string &status)
 		{
 			auto mainWindow = MainWindow::find(this->parent);

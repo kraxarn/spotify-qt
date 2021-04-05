@@ -339,7 +339,7 @@ void ArtistView::albumMenu(const QPoint &pos)
 
 void ArtistView::albumDoubleClicked(QTreeWidgetItem *item, int)
 {
-	spotify.play_tracks(lib::spt::spotify_api::to_uri("album",
+	spotify.play_tracks(lib::spt::api::to_uri("album",
 		item->data(0, RoleAlbumId).toString().toStdString()),
 		[this](const std::string &result)
 		{
@@ -366,7 +366,7 @@ void ArtistView::searchDuckDuckGo(bool)
 
 void ArtistView::play(bool)
 {
-	spotify.play_tracks(lib::spt::spotify_api::to_uri("artist", artistId), {});
+	spotify.play_tracks(lib::spt::api::to_uri("artist", artistId), {});
 }
 
 void ArtistView::copyLink(bool)

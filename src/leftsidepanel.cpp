@@ -233,7 +233,7 @@ void LeftSidePanel::getPlaylistName(const std::string &id,
 		callback(name);
 	else
 	{
-		spotify.playlist(lib::spt::spotify_api::to_id(id),
+		spotify.playlist(lib::spt::api::to_id(id),
 			[callback](const lib::spt::playlist &playlist)
 		{
 			callback(playlist.name);

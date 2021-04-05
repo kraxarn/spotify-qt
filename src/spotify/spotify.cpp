@@ -4,7 +4,7 @@ using namespace spt;
 
 Spotify::Spotify(lib::settings &settings, QObject *parent)
 	: networkManager(new QNetworkAccessManager(this)),
-	lib::spt::spotify_api(settings),
+	lib::spt::api(settings),
 	QObject(parent)
 {
 }
@@ -16,7 +16,7 @@ QNetworkRequest Spotify::request(const QString &url)
 	if (lastRefresh > 3600)
 	{
 		lib::log::info("Access token probably expired, refreshing");
-		lib::spt::spotify_api::refresh();
+		lib::spt::api::refresh();
 	}
 
 	// Prepare request

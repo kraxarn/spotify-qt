@@ -1,6 +1,6 @@
 #include "developermenu.hpp"
 
-DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::spotify_api &spotify,
+DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	QWidget *parent)
 	: spotify(spotify),
 	settings(settings),
