@@ -66,7 +66,6 @@ std::string Spotify::error_message(const std::string &url, const std::string &da
 	return message;
 }
 
-
 void Spotify::get(const std::string &url, lib::callback<nlohmann::json> &callback)
 {
 	await(networkManager->get(request(QString::fromStdString(url))),
@@ -85,7 +84,6 @@ void Spotify::get(const std::string &url, lib::callback<nlohmann::json> &callbac
 			}
 		});
 }
-
 
 void Spotify::put(const std::string &url, const nlohmann::json &body,
 	lib::callback<std::string> &callback)
