@@ -45,12 +45,6 @@ namespace spt
 
 		//endregion
 
-		//region User Profile
-
-		void me(lib::callback<lib::spt::user> &callback);
-
-		//endregion
-
 		/**
 		 * @note Calls should not be done directly
 		 * @deprecated

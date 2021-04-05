@@ -258,6 +258,8 @@ namespace lib
 
 			//region User Profile
 
+			void me(lib::callback<lib::spt::user> &callback);
+
 			//endregion
 
 			/**
