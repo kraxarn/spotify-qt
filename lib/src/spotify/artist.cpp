@@ -34,7 +34,19 @@ void lib::spt::from_json(const nlohmann::json &j, artist &a)
 	}
 
 	if (j.contains("image"))
+	{
 		j.at("image").get_to(a.image);
+	}
 	else if (j.contains("images"))
-		j.at("images").at(1).at("url").get_to(a.image);
+	{
+		const auto &images = j.at("images");
+		if (images.size() > 1)
+		{
+			images.at(1).at("url").get_to(a.image);
+		}
+		else if (!images.empty())
+		{
+			images.front().at("url").get_to(a.image);
+		}
+	}
 }
