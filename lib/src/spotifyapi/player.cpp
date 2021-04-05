@@ -168,7 +168,7 @@ void api::set_shuffle(bool enabled, lib::callback<std::string> &callback)
 
 void api::recently_played(lib::callback<std::vector<lib::spt::track>> &callback)
 {
-	get("me/player/recently-played?limit=50", "items", callback);
+	get_items("me/player/recently-played?limit=50", callback);
 }
 
 void api::add_to_queue(const std::string &uri, lib::callback<std::string> &callback)

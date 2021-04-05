@@ -34,6 +34,6 @@ void api::related_artists(const lib::spt::artist &artist,
 void api::albums(const lib::spt::artist &artist,
 	lib::callback<std::vector<lib::spt::album>> &callback)
 {
-	get(lib::fmt::format("artists/{}/albums?country=from_token",
-		artist.id), "items", callback);
+	get_items(lib::fmt::format("artists/{}/albums?country=from_token",
+		artist.id), callback);
 }

@@ -11,12 +11,12 @@ using namespace lib::spt;
 
 void api::saved_albums(lib::callback<std::vector<lib::spt::album>> &callback)
 {
-	get("me/albums", "items", callback);
+	get_items("me/albums", callback);
 }
 
 void api::saved_tracks(lib::callback<std::vector<lib::spt::track>> &callback)
 {
-	get("me/tracks?limit=50", "items", callback);
+	get_items("me/tracks?limit=50", callback);
 }
 
 void api::add_saved_track(const std::string &track_id,

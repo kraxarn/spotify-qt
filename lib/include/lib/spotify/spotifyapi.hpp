@@ -324,12 +324,17 @@ namespace lib
 			/**
 			 * GET a collection of items
 			 * @param url URL to request
-			 * @param key Key to collection
 			 * @note Automatically handles paging
 			 * @note Temporarily protected
 			 * @throws std::exception
 			 */
-			void get(const std::string &url, const std::string &key,
+			void get_items(const std::string &url,
+				lib::callback<nlohmann::json> &callback);
+
+			/**
+			 * Custom get_items when items are contained in a key
+			 */
+			void get_items(const std::string &url, const std::string &key,
 				lib::callback<nlohmann::json> &callback);
 
 			//endregion

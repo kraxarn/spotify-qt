@@ -116,7 +116,7 @@ std::string api::follow_type_string(lib::follow_type type)
 
 //region GET
 
-void api::get(const std::string &url, const std::string &key,
+void api::get_items(const std::string &url, const std::string &key,
 	lib::callback<nlohmann::json> &callback)
 {
 	auto api_url = lib::strings::starts_with(url, "https://api.spotify.com/v1/")
@@ -125,16 +125,16 @@ void api::get(const std::string &url, const std::string &key,
 
 	get(api_url, [this, key, callback](const nlohmann::json &json)
 	{
-		if (!json.contains(key))
+		if (!key.empty() && !json.contains(key))
 		{
 			lib::log::error(R"(no such key "{}" in "{}" ({}))", key, json.dump());
 		}
 
-		auto items = json.at(key);
+		auto items = (key.empty() ? json : json.at(key)).at("items");
 		if (json.contains("next") && json.at("next").is_string())
 		{
 			std::string next = json.at("next").get<std::string>();
-			get(next, key, [items, callback](const nlohmann::json &next)
+			get_items(next, key, [items, callback](const nlohmann::json &next)
 			{
 				callback(lib::json::combine(items, next));
 			});
@@ -142,6 +142,11 @@ void api::get(const std::string &url, const std::string &key,
 		}
 		callback(items);
 	});
+}
+
+void api::get_items(const std::string &url, lib::callback<nlohmann::json> &callback)
+{
+	get_items(url, std::string(), callback);
 }
 
 //endregion

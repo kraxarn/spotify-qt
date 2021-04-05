@@ -12,7 +12,7 @@ using namespace lib::spt;
 
 void api::playlists(lib::callback<std::vector<lib::spt::playlist>> &callback)
 {
-	get("me/playlists?limit=50", "items", callback);
+	get_items("me/playlists?limit=50", callback);
 }
 
 void api::playlist(const std::string &playlist_id,
@@ -32,7 +32,7 @@ void api::playlist_tracks(const lib::spt::playlist &playlist,
 {
 	auto fetch = [this, callback](const std::string &url)
 	{
-		get(url, "items", callback);
+		get_items(url, callback);
 	};
 
 	if (playlist.tracks_href.empty())
