@@ -181,13 +181,12 @@ TEST_CASE("strings::to_lower")
 {
 	std::string str("aa,BB,Cc");
 	CHECK_EQ(lib::strings::to_lower(str), "aa,bb,cc");
-	CHECK_EQ(str, "aa,bb,cc");
 }
 
 TEST_CASE("strings::to_upper")
 {
 	std::string str("aa,BB,Cc");
-	CHECK_EQ(lib::strings::to_lower(str), "AA,BB,CC");
+	CHECK_EQ(lib::strings::to_upper(str), "AA,BB,CC");
 }
 
 TEST_CASE("strings::capitalize")
