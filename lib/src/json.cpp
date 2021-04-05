@@ -32,6 +32,8 @@ nlohmann::json lib::json::load(const ghc::filesystem::path &path)
 		log::warn("Failed to load items from \"{}\": {}",
 			path.string(), e.what());
 	}
+
+	return nlohmann::json();
 }
 
 void lib::json::save(const ghc::filesystem::path &path, const nlohmann::json &json)
