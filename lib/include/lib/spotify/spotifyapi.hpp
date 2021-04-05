@@ -13,6 +13,8 @@
 #include "lib/spotify/artist.hpp"
 #include "lib/spotify/playlist.hpp"
 #include "lib/spotify/searchresults.hpp"
+#include "lib/spotify/track.hpp"
+#include "lib/spotify/audiofeatures.hpp"
 
 #include "thirdparty/json.hpp"
 
@@ -245,6 +247,12 @@ namespace lib
 			//endregion
 
 			//region Tracks
+
+			void track(const std::string &id,
+				lib::callback<lib::spt::track> &callback);
+
+			void track_audio_features(const std::string &track_id,
+				lib::callback<lib::spt::audio_features> &callback);
 
 			//endregion
 

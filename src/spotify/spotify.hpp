@@ -9,7 +9,6 @@ namespace spt
 #include "lib/enum/followtype.hpp"
 #include "lib/settings.hpp"
 #include "lib/spotify/artist.hpp"
-#include "audiofeatures.hpp"
 #include "lib/spotify/device.hpp"
 #include "lib/spotify/playback.hpp"
 #include "lib/spotify/playlist.hpp"
@@ -43,14 +42,6 @@ namespace spt
 		//region Browse
 
 		std::vector<lib::spt::album> newReleases(int offset = 0);
-
-		//endregion
-
-		//region Tracks
-
-		lib::spt::track getTrack(const std::string &id);
-
-		AudioFeatures trackAudioFeatures(const std::string &trackId);
 
 		//endregion
 
