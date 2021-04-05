@@ -67,11 +67,12 @@ std::string Spotify::error_message(const std::string &url, const std::string &da
 	nlohmann::json json;
 	try
 	{
-		json = nlohmann::json::parse(data);
+		if (!data.empty())
+			json = nlohmann::json::parse(data);
 	}
-	catch (const std::exception &)
+	catch (const std::exception &e)
 	{
-		// No response, so probably no error
+		lib::log::warn("{} failed: {}", url, e.what());
 		return std::string();
 	}
 
