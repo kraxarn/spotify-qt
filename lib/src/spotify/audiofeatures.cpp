@@ -43,9 +43,11 @@ void lib::spt::from_json(const nlohmann::json &j, audio_features &a)
 	a.set("Speechiness", audio_features::format_stat(j.at("speechiness"),
 		"spoken words"));
 
-	a.set("Tempo", lib::fmt::format("{} BPM", j.at("tempo")));
+	a.set("Tempo", lib::fmt::format("{} BPM",
+		j.at("tempo").get<double>()));
 
-	a.set("Time signature", j.at("time_signature"));
+	a.set("Time signature", lib::fmt::format("{}",
+		j.at("time_signature").get<int>()));
 
 	a.set("Valence", audio_features::format_stat(j.at("valence"),
 		"negative", "positive"));
