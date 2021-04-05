@@ -135,6 +135,12 @@ QTreeWidgetItem *Utils::treeItem(QTreeWidget *tree, const QString &key, const QS
 	});
 }
 
+auto Utils::treeItem(QTreeWidget *tree, const std::string &key,
+	const std::string &value) -> QTreeWidgetItem *
+{
+	return treeItem(tree, QString::fromStdString(key), QString::fromStdString(value));
+}
+
 void Utils::openUrl(const QString &url, LinkType linkType, QWidget *parent)
 {
 	if (!QDesktopServices::openUrl(QUrl(url)))
