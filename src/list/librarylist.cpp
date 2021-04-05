@@ -84,38 +84,47 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 		};
 
 		if (item->text(0) == RECENTLY_PLAYED)
+		{
 			spotify.recently_played(callback);
+		}
 		else if (item->text(0) == SAVED_TRACKS)
+		{
 			spotify.saved_tracks(callback);
+		}
 		else if (item->text(0) == TOP_TRACKS)
+		{
 			spotify.top_tracks(callback);
+		}
 		else if (item->text(0) == NEW_RELEASES)
 		{
-			auto all = mainWindow->allArtists();
-			auto releases = spotify.newReleases();
-			std::vector<lib::spt::track> tracks;
-
-			for (auto &album : releases)
+			spotify.new_releases([this, mainWindow, callback]
+				(const std::vector<lib::spt::album> &releases)
 			{
-				if (all.find(album.artist) != all.end())
+				auto all = mainWindow->allArtists();
+				std::vector<lib::spt::track> tracks;
+
+				for (const auto &album : releases)
 				{
-					spotify.album_tracks(album,
-						[album, callback](const std::vector<lib::spt::track> &results)
-						{
-							std::vector<lib::spt::track> tracks;
-							tracks.reserve(results.size());
-							for (auto &result : results)
+					if (all.find(album.artist) != all.end())
+					{
+						spotify.album_tracks(album,
+							[album, callback](const std::vector<lib::spt::track> &results)
 							{
-								lib::spt::track track = result;
-								track.added_at = album.release_date;
-								tracks.push_back(track);
-							}
-							callback(tracks);
-						});
-					return;
+								std::vector<lib::spt::track> tracks;
+								tracks.reserve(results.size());
+								for (const auto &result : results)
+								{
+									lib::spt::track track = result;
+									track.added_at = album.release_date;
+									tracks.push_back(track);
+								}
+								callback(tracks);
+							});
+						return;
+					}
 				}
-			}
-			callback(tracks);
+				callback(tracks);
+			});
 		}
 	}
 }
