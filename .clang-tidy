@@ -1,0 +1,1 @@
+Checks: "bugprone-*,cert-*,clang-analyzer-*,misc-*,modernize-*,performance-*,portability-*,readability-*"
