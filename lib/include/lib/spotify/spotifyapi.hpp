@@ -68,6 +68,8 @@ namespace lib
 
 			//region Browse
 
+			void new_releases(lib::callback<std::vector<lib::spt::album>> &callback);
+
 			//endregion
 
 			//region Follow

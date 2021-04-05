@@ -39,12 +39,6 @@ namespace spt
 	public:
 		explicit Spotify(lib::settings &settings, QObject *parent = nullptr);
 
-		//region Browse
-
-		std::vector<lib::spt::album> newReleases(int offset = 0);
-
-		//endregion
-
 		/**
 		 * @note Calls should not be done directly
 		 * @deprecated
