@@ -39,24 +39,6 @@ namespace spt
 	public:
 		explicit Spotify(lib::settings &settings, QObject *parent = nullptr);
 
-		/**
-		 * @note Calls should not be done directly
-		 * @deprecated
-		 */
-		QJsonObject getAsObject(const QString &url);
-
-		/**
-		 * @note Calls should not be done directly
-		 * @deprecated
-		 */
-		nlohmann::json getAsJson(const QString &url);
-
-		/**
-		 * @note Calls should not be done directly
-		 * @deprecated
-		 */
-		nlohmann::json getAsJson(const std::string &url);
-
 	private:
 		QNetworkAccessManager *networkManager;
 
@@ -78,85 +60,8 @@ namespace spt
 
 		//endregion
 
-		//region Old synchronous (deprecated)
-
-		/**
-		 * @deprecated
-		 */
-		QString post(const QString &url);
-
-		/**
-		 * @deprecated
-		 */
-		QJsonDocument get(const QString &url);
-
-		/**
-		 * @deprecated
-		 */
-		QString put(const QString &url, QVariantMap *body = nullptr);
-
-		//endregion
-
-		/**
-		 * @deprecated
-		 */
-		static QString errorMessage(QNetworkReply *reply);
-
-		/**
-		 * @deprecated
-		 */
-		static QString errorMessage(const QJsonDocument &json, const QUrl &url);
-
-		/**
-		 * @deprecated
-		 */
-		static QString errorMessage(const QUrl &url, const QByteArray &data);
-
 		static std::string error_message(const std::string &url,
 			const std::string &data);
-
-		/**
-		 * @deprecated
-		 */
-		template<typename T>
-		QVector<T> loadItems(const QString &url)
-		{
-			auto items = getAsObject(url)["items"].toArray();
-			QVector<T> result;
-			result.reserve(items.count());
-			for (auto item : items)
-				result.append(T(item.toObject()));
-			return result;
-		}
-
-		/**
-		 * @deprecated
-		 */
-		template<typename T>
-		std::vector<T> loadItemsAsJson(const QString &url)
-		{
-			return getAsJson(url).at("items").get<std::vector<T>>();
-		}
-
-		/**
-		 * @deprecated
-		 */
-		template<typename T>
-		void get(const QString &url, lib::callback<std::vector<T>> &callback)
-		{
-			get(url, [this, callback](const QJsonObject &json)
-			{
-				auto items = json[json.contains("tracks")
-					? "tracks"
-					: json.contains("artists")
-						? "artists"
-						: "items"].toArray();
-				std::vector<T> result;
-				for (auto item : items)
-					result.emplace_back(item.toObject());
-				callback(result);
-			});
-		}
 
 		std::string request_refresh(const std::string &post_data,
 			const std::string &authorization) override;

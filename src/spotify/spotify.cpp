@@ -42,25 +42,6 @@ void Spotify::await(QNetworkReply *reply, lib::callback<QByteArray> &callback)
 		});
 }
 
-QString Spotify::errorMessage(const QUrl &url, const QByteArray &data)
-{
-	QJsonParseError error{};
-	auto json = QJsonDocument::fromJson(data, &error);
-	if (error.error != QJsonParseError::NoError)
-	{
-		// No response, so probably no error
-		return QString();
-	}
-
-	if (!json.isObject() || !json.object().contains("error"))
-		return QString();
-
-	auto message = json.object()["error"].toObject()["message"].toString();
-	if (!message.isEmpty())
-		lib::log::error("{} failed: {}", url.path().toStdString(), message.toStdString());
-
-	return message;
-}
 
 std::string Spotify::error_message(const std::string &url, const std::string &data)
 {
@@ -85,41 +66,6 @@ std::string Spotify::error_message(const std::string &url, const std::string &da
 	return message;
 }
 
-QJsonDocument Spotify::get(const QString &url)
-{
-	// Send request
-	auto reply = networkManager->get(request(url));
-
-	// Wait for request to finish
-	while (!reply->isFinished())
-		QCoreApplication::processEvents();
-
-	// Parse reply as json
-	auto json = QJsonDocument::fromJson(reply->readAll());
-	reply->deleteLater();
-
-	// Return parsed json
-	errorMessage(json, QUrl(url));
-	return json;
-}
-
-QJsonObject Spotify::getAsObject(const QString &url)
-{
-	return get(url).object();
-}
-
-nlohmann::json Spotify::getAsJson(const QString &url)
-{
-	auto response = get(url).toJson().toStdString();
-	return response.empty()
-		? nlohmann::json()
-		: nlohmann::json::parse(response);
-}
-
-nlohmann::json Spotify::getAsJson(const std::string &url)
-{
-	return getAsJson(QString::fromStdString(url));
-}
 
 void Spotify::get(const std::string &url, lib::callback<nlohmann::json> &callback)
 {
@@ -140,49 +86,6 @@ void Spotify::get(const std::string &url, lib::callback<nlohmann::json> &callbac
 		});
 }
 
-QString Spotify::put(const QString &url, QVariantMap *body)
-{
-	// Set in header we're sending json data
-	auto req = request(url);
-	req.setHeader(QNetworkRequest::ContentTypeHeader, QString("application/json"));
-
-	// Send the request, we don't expect any response
-	auto putData = body == nullptr ? nullptr : QJsonDocument::fromVariant(*body).toJson();
-	auto reply = errorMessage(networkManager->put(req, putData));
-	if (reply.contains("No active device found")
-		|| reply.contains("Device not found"))
-	{
-		devices([this, url, body](const std::vector<lib::spt::device> &devices)
-		{
-			if (devices.size() == 1)
-			{
-				this->set_device(devices.at(0),
-					[this, url, body](const std::string &status)
-					{
-						// TODO: This result needs to be handled
-						this->put(url, body);
-					});
-			}
-			else if (devices.size() > 1)
-			{
-				DeviceSelectDialog dialog(devices);
-				if (dialog.exec() == QDialog::Accepted)
-				{
-					auto selected = dialog.selectedDevice();
-					if (!selected.id.empty())
-					{
-						set_device(selected, [this, url, body](const std::string &status)
-						{
-							// TODO: This result needs to be handled
-							this->put(url, body);
-						});
-					}
-				}
-			}
-		});
-	}
-	return reply;
-}
 
 void Spotify::put(const std::string &url, const nlohmann::json &body,
 	lib::callback<std::string> &callback)
@@ -274,36 +177,6 @@ void Spotify::del(const std::string &url, const nlohmann::json &json,
 		{
 			callback(error_message(url, data.toStdString()));
 		});
-}
-
-QString Spotify::post(const QString &url)
-{
-	auto req = request(url);
-	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-	return errorMessage(networkManager->post(req, QByteArray()));
-}
-
-QString Spotify::errorMessage(QNetworkReply *reply)
-{
-	while (!reply->isFinished())
-		QCoreApplication::processEvents();
-	auto replyBody = reply->readAll();
-	reply->deleteLater();
-	if (replyBody.isEmpty())
-		return QString();
-
-	return errorMessage(QJsonDocument::fromJson(replyBody), reply->url());
-}
-
-QString Spotify::errorMessage(const QJsonDocument &json, const QUrl &url)
-{
-	if (!json.isObject() || !json.object().contains("error"))
-		return QString();
-
-	auto message = json.object()["error"].toObject()["message"].toString();
-	if (!message.isEmpty())
-		lib::log::error("{} failed: {}", url.path().toStdString(), message.toStdString());
-	return message;
 }
 
 std::string Spotify::request_refresh(const std::string &post_data, const std::string &authorization)
