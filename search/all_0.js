@@ -15,5 +15,6 @@ var searchData=
   ['artist_12',['artist',['../classlib_1_1spt_1_1album.html#a9213de387c38199a913fc9d3ba2a450e',1,'lib::spt::album::artist()'],['../classlib_1_1spt_1_1track.html#a30c7e4ccd8a22ed74d58674538fa090d',1,'lib::spt::track::artist()'],['../classlib_1_1spt_1_1artist.html',1,'lib::spt::artist']]],
   ['artist_5fid_13',['artist_id',['../classlib_1_1spt_1_1track.html#a82603b8b461cf85bf7309e137d0785c9',1,'lib::spt::track']]],
   ['artists_14',['artists',['../classlib_1_1spt_1_1search__results.html#a18a3ef467a3908d0933139378f9c2a31',1,'lib::spt::search_results']]],
-  ['audio_5ffeatures_15',['audio_features',['../classlib_1_1spt_1_1audio__features.html',1,'lib::spt']]]
+  ['audio_5ffeatures_15',['audio_features',['../classlib_1_1spt_1_1audio__features.html',1,'lib::spt']]],
+  ['authorization_5fheader_16',['authorization_header',['../classlib_1_1http__client.html#a6e0b8bf981eab17c29cea7acff8acecb',1,'lib::http_client']]]
 ];
