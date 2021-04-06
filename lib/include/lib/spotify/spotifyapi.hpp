@@ -16,17 +16,12 @@
 #include "lib/spotify/track.hpp"
 #include "lib/spotify/audiofeatures.hpp"
 #include "lib/spotify/savedalbum.hpp"
+#include "lib/spotify/callback.hpp"
 
 #include "thirdparty/json.hpp"
 
 namespace lib
 {
-	/**
-	 * API callback
-	 */
-	template<typename T>
-	using callback = const std::function<void(const T &)>;
-
 	namespace spt
 	{
 		/**
