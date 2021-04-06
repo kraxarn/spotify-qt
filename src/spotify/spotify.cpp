@@ -11,9 +11,11 @@ Spotify::Spotify(lib::settings &settings, QObject *parent)
 
 QNetworkRequest Spotify::request(const QString &url)
 {
+	constexpr int secsInHour = 3600;
+
 	// See when last refresh was
 	auto lastRefresh = seconds_since_epoch() - last_auth;
-	if (lastRefresh > 3600)
+	if (lastRefresh > secsInHour)
 	{
 		lib::log::info("Access token probably expired, refreshing");
 		lib::spt::api::refresh();
