@@ -42,13 +42,13 @@ ArtistView::ArtistView(spt::Spotify &spotify, const std::string &artistId,
 	followButton->setEnabled(false);
 	QAction::connect(followButton, &QAction::triggered, this, &ArtistView::follow);
 
-	auto menuSearch = menu->addMenu(Icon::get("edit-find"), "Search");
+	auto *menuSearch = menu->addMenu(Icon::get("edit-find"), "Search");
 	QAction::connect(menuSearch->addAction("Wikipedia"), &QAction::triggered,
 		this, &ArtistView::searchWikipedia);
 	QAction::connect(menuSearch->addAction("DuckDuckGo"), &QAction::triggered,
 		this, &ArtistView::searchDuckDuckGo);
 
-	auto shareMenu = menu->addMenu(Icon::get("document-share"), "Share");
+	auto *shareMenu = menu->addMenu(Icon::get("document-share"), "Share");
 	QAction::connect(shareMenu->addAction("Copy artist link"), &QAction::triggered,
 		this, &ArtistView::copyLink);
 	QAction::connect(shareMenu->addAction("Open in Spotify"), &QAction::triggered,
@@ -85,7 +85,7 @@ ArtistView::ArtistView(spt::Spotify &spotify, const std::string &artistId,
 	albumList = new QTreeWidget(tabs);
 	singleList = new QTreeWidget(tabs);
 
-	for (auto &list : {albumList, singleList})
+	for (const auto &list : {albumList, singleList})
 	{
 		list->setEnabled(false);
 		list->setColumnCount(2);
@@ -116,9 +116,11 @@ void ArtistView::artistLoaded(const lib::spt::artist &loadedArtist)
 	artist = loadedArtist;
 
 	if (onArtistLoaded)
+	{
 		onArtistLoaded(loadedArtist);
+	}
 
-	auto mainWindow = MainWindow::find(parentWidget());
+	auto *mainWindow = MainWindow::find(parentWidget());
 
 	// Get cover image (320x320 -> 320x160)
 	QPixmap cover;
@@ -151,7 +153,7 @@ void ArtistView::artistLoaded(const lib::spt::artist &loadedArtist)
 		artistId
 	}, [this](const std::vector<bool> &follows)
 	{
-		updateFollow(follows.empty() ? false : follows[0]);
+		updateFollow(!follows.empty() && follows[0]);
 		this->followButton->setEnabled(true);
 	});
 
@@ -182,12 +184,12 @@ void ArtistView::artistLoaded(const lib::spt::artist &loadedArtist)
 
 void ArtistView::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
 {
-	auto mainWindow = MainWindow::find(parentWidget());
+	auto *mainWindow = MainWindow::find(parentWidget());
 	auto i = 0;
 
-	for (auto &track : tracks)
+	for (const auto &track : tracks)
 	{
-		auto item = new QListWidgetItem(QString::fromStdString(track.name), topTracksList);
+		auto *item = new QListWidgetItem(QString::fromStdString(track.name), topTracksList);
 		item->setIcon(QIcon(mainWindow->getAlbum(track.image)));
 		item->setData(RoleTrackId, QString::fromStdString(track.id));
 		item->setData(RoleAlbumId, QString::fromStdString(track.album_id));
@@ -200,17 +202,17 @@ void ArtistView::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
 
 void ArtistView::albumsLoaded(const std::vector<lib::spt::album> &albums)
 {
-	auto mainWindow = MainWindow::find(parentWidget());
+	auto *mainWindow = MainWindow::find(parentWidget());
 
-	for (auto &album : albums)
+	for (const auto &album : albums)
 	{
 		auto releaseDate = QDateTime::fromString(QString::fromStdString(album.release_date),
 			Qt::ISODate);
-		auto parentTab = album.album_group == lib::album_group::single
+		auto *parentTab = album.album_group == lib::album_group::single
 			? singleList
 			: albumList;
 		auto year = releaseDate.toString("yyyy");
-		auto item = new QTreeWidgetItem(parentTab, {
+		auto *item = new QTreeWidgetItem(parentTab, {
 			QString::fromStdString(album.name),
 			year.isEmpty() ? QString() : year
 		});
@@ -228,9 +230,9 @@ void ArtistView::albumsLoaded(const std::vector<lib::spt::album> &albums)
 
 void ArtistView::relatedArtistsLoaded(const std::vector<lib::spt::artist> &artists)
 {
-	for (auto &related : artists)
+	for (const auto &related : artists)
 	{
-		auto item = new QListWidgetItem(QString::fromStdString(related.name), relatedList);
+		auto *item = new QListWidgetItem(QString::fromStdString(related.name), relatedList);
 		item->setData(RoleArtistId, QString::fromStdString(related.id));
 	}
 
@@ -246,7 +248,7 @@ void ArtistView::updateFollow(bool isFollowing)
 			.right(followButton->text().length() - followButton->text().indexOf(' '))));
 }
 
-void ArtistView::follow(bool)
+void ArtistView::follow(bool /*checked*/)
 {
 	auto isFollowing = followButton->text().contains("Unfollow");
 	updateFollow(!isFollowing);
@@ -254,9 +256,11 @@ void ArtistView::follow(bool)
 	auto callback = [this, isFollowing](const std::string &status)
 	{
 		if (status.empty())
+		{
 			return;
+		}
 
-		auto mainWindow = MainWindow::find(this->parentWidget());
+		auto *mainWindow = MainWindow::find(this->parentWidget());
 		mainWindow->status(lib::fmt::format("Failed to {}: {}",
 			isFollowing ? "unfollow" : "follow", status));
 	};
@@ -281,9 +285,11 @@ void ArtistView::trackClick(QListWidgetItem *item)
 		[this](const std::string &result)
 		{
 			if (result.empty())
+			{
 				return;
+			}
 
-			auto mainWindow = MainWindow::find(this->parentWidget());
+			auto *mainWindow = MainWindow::find(this->parentWidget());
 			mainWindow->status(lib::fmt::format("Failed to start playback: {}",
 				result), true);
 		});
@@ -291,17 +297,20 @@ void ArtistView::trackClick(QListWidgetItem *item)
 
 void ArtistView::trackMenu(const QPoint &pos)
 {
-	auto item = topTracksList->itemAt(pos);
+	auto *item = topTracksList->itemAt(pos);
 	auto trackId = item->data(RoleTrackId).toString();
 	if (trackId.isEmpty())
+	{
 		return;
-	(new SongMenu(item, artist.name, spotify, parentWidget()))
-		->popup(topTracksList->mapToGlobal(pos));
+	}
+
+	auto *songMenu = new SongMenu(item, artist.name, spotify, parentWidget());
+	songMenu->popup(topTracksList->mapToGlobal(pos));
 }
 
 void ArtistView::loadAlbumId(QTreeWidgetItem *item)
 {
-	auto mainWindow = MainWindow::find(parentWidget());
+	auto *mainWindow = MainWindow::find(parentWidget());
 	if (!mainWindow->loadAlbum(item->data(0, RoleAlbumId)
 		.toString().toStdString()))
 	{
@@ -319,64 +328,70 @@ void ArtistView::relatedClick(QListWidgetItem *item)
 
 void ArtistView::albumMenu(const QPoint &pos)
 {
-	auto list = tabs->currentIndex() == 1
+	auto *list = tabs->currentIndex() == 1
 		? albumList
 		: tabs->currentIndex() == 2
 			? singleList
 			: nullptr;
 	if (list == nullptr)
+	{
 		return;
+	}
 
-	auto item = list->itemAt(pos);
+	auto *item = list->itemAt(pos);
 	auto albumId = item->data(0, RoleAlbumId).toString();
 	if (albumId.isEmpty())
+	{
 		return;
+	}
 
-	auto albumMenu = new AlbumMenu(spotify, cache, albumId.toStdString(),
+	auto *albumMenu = new AlbumMenu(spotify, cache, albumId.toStdString(),
 		parentWidget());
 	albumMenu->popup(list->mapToGlobal(pos));
 }
 
-void ArtistView::albumDoubleClicked(QTreeWidgetItem *item, int)
+void ArtistView::albumDoubleClicked(QTreeWidgetItem *item, int /*column*/)
 {
 	spotify.play_tracks(lib::spt::api::to_uri("album",
 		item->data(0, RoleAlbumId).toString().toStdString()),
 		[this](const std::string &result)
 		{
 			if (result.empty())
+			{
 				return;
+			}
 
-			auto mainWindow = MainWindow::find(this->parentWidget());
+			auto *mainWindow = MainWindow::find(this->parentWidget());
 			mainWindow->status(lib::fmt::format("Failed to start playback: {}",
 				result), true);
 		});
 }
 
-void ArtistView::searchWikipedia(bool)
+void ArtistView::searchWikipedia(bool /*checked*/)
 {
 	Utils::openUrl(lib::fmt::format(
 		"https://www.wikipedia.org/search-redirect.php?family=wikipedia&go=Go&search={}",
 		artist.name), LinkType::Web, this);
 }
-void ArtistView::searchDuckDuckGo(bool)
+void ArtistView::searchDuckDuckGo(bool /*checked*/)
 {
 	Utils::openUrl(lib::fmt::format("https://duckduckgo.com/?t=h_&q={}", artist.name),
 		LinkType::Web, this);
 }
 
-void ArtistView::play(bool)
+void ArtistView::play(bool /*checked*/)
 {
 	spotify.play_tracks(lib::spt::api::to_uri("artist", artistId), {});
 }
 
-void ArtistView::copyLink(bool)
+void ArtistView::copyLink(bool /*checked*/)
 {
 	QApplication::clipboard()->setText(QString("https://open.spotify.com/artist/%1")
 		.arg(QString::fromStdString(artistId)));
 	MainWindow::find(parentWidget())->setStatus("Link copied to clipboard");
 }
 
-void ArtistView::openInSpotify(bool)
+void ArtistView::openInSpotify(bool /*chekced*/)
 {
 	Utils::openUrl(lib::fmt::format("https://open.spotify.com/artist/{}", artistId),
 		LinkType::Web, MainWindow::find(parentWidget()));
