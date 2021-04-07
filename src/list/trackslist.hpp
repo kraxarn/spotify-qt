@@ -4,6 +4,7 @@
 #include "lib/cache.hpp"
 #include "../spotify/current.hpp"
 #include "../menu/songmenu.hpp"
+#include "lib/set.hpp"
 
 #include <QListWidget>
 #include <QTreeWidgetItem>

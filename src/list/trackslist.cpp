@@ -237,6 +237,7 @@ void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::str
 	playingTrackItem = nullptr;
 	auto fieldWidth = std::to_string(tracks.size()).size();
 	auto current = getCurrent();
+	auto anyHasDate = false;
 
 	for (int i = 0; i < tracks.size(); i++)
 	{
@@ -258,6 +259,11 @@ void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::str
 					QLocale::ShortFormat)
 		}, track, emptyIcon, i);
 
+		if (!anyHasDate && !track.added_at.empty())
+		{
+			anyHasDate = true;
+		}
+
 		if (track.id == current.playback.item.id)
 		{
 			setPlayingTrackItem(item);
@@ -271,6 +277,9 @@ void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::str
 			setCurrentItem(item);
 		}
 	}
+
+	header()->setSectionHidden(colAdded, !anyHasDate
+		|| lib::set::contains(settings.general.hidden_song_headers, colAdded));
 }
 
 void TracksList::load(const std::vector<lib::spt::track> &tracks)
