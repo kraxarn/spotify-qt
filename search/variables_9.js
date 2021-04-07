@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['keyring_5fpassword_400',['keyring_password',['../structlib_1_1set_1_1spotify.html#abc9fe00a033f08f6e3f6969743ba1c2e',1,'lib::set::spotify']]]
+  ['owner_5fid_352',['owner_id',['../classlib_1_1spt_1_1playlist.html#a59f10ebad47330939b4759c3f0a982ea',1,'lib::spt::playlist']]],
+  ['owner_5fname_353',['owner_name',['../classlib_1_1spt_1_1playlist.html#a9af238a93a7984167540d3b406ca3b86',1,'lib::spt::playlist']]]
 ];

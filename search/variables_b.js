@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['max_5fqueue_406',['max_queue',['../structlib_1_1set_1_1spotify.html#a85004b11863196329d84c24841be16d7',1,'lib::set::spotify']]],
-  ['media_5fcontroller_407',['media_controller',['../structlib_1_1set_1_1general.html#aa0aeb913a3cf2cb58cb545eb16ed0413',1,'lib::set::general']]]
+  ['release_5fdate_358',['release_date',['../classlib_1_1spt_1_1album.html#a12f19a9ab0139d5033d22a9839e7a73f',1,'lib::spt::album']]],
+  ['repeat_359',['repeat',['../classlib_1_1spt_1_1playback.html#aa9f346fa0c4f0c68ed0b9c808315c57d',1,'lib::spt::playback']]]
 ];

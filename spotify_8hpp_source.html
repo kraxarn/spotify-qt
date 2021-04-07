@@ -77,43 +77,32 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>lib</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;{</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">namespace </span>set</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">namespace </span>setting</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    {</div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="structlib_1_1set_1_1spotify.html">   12</a></span>&#160;        <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structlib_1_1set_1_1spotify.html">spotify</a></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">using</span> spotify = <span class="keyword">struct </span>spotify</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        {</div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="structlib_1_1set_1_1spotify.html#a31c356dde78981f894eed236918aad1d">   17</a></span>&#160;            std::string <a class="code" href="structlib_1_1set_1_1spotify.html#a31c356dde78981f894eed236918aad1d">backend</a>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            std::string backend;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="structlib_1_1set_1_1spotify.html#a18578f3f4632539f61f7a326b8607903">   22</a></span>&#160;            std::string <a class="code" href="structlib_1_1set_1_1spotify.html#a18578f3f4632539f61f7a326b8607903">path</a>;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            std::string path;</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="structlib_1_1set_1_1spotify.html#a43880013a377b780d4845edbde9fb2fa">   27</a></span>&#160;            std::string <a class="code" href="structlib_1_1set_1_1spotify.html#a43880013a377b780d4845edbde9fb2fa">username</a>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            std::string username;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="structlib_1_1set_1_1spotify.html#a0a38a1677430b7636c2d0aaaeecdd650">   32</a></span>&#160;            <span class="keywordtype">bool</span> <a class="code" href="structlib_1_1set_1_1spotify.html#a0a38a1677430b7636c2d0aaaeecdd650">always_start</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <span class="keywordtype">bool</span> always_start = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="structlib_1_1set_1_1spotify.html#ac1f298d75d5872d23fdbe4b0696a091f">   37</a></span>&#160;            <span class="keywordtype">bool</span> <a class="code" href="structlib_1_1set_1_1spotify.html#ac1f298d75d5872d23fdbe4b0696a091f">global_config</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <span class="keywordtype">bool</span> global_config = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="structlib_1_1set_1_1spotify.html#abc9fe00a033f08f6e3f6969743ba1c2e">   42</a></span>&#160;            <span class="keywordtype">bool</span> <a class="code" href="structlib_1_1set_1_1spotify.html#abc9fe00a033f08f6e3f6969743ba1c2e">keyring_password</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keywordtype">bool</span> keyring_password = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="structlib_1_1set_1_1spotify.html#a803d11bbe0faad8d9cdec771630c97bd">   47</a></span>&#160;            <span class="keywordtype">bool</span> <a class="code" href="structlib_1_1set_1_1spotify.html#a803d11bbe0faad8d9cdec771630c97bd">start_client</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="keywordtype">bool</span> start_client = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="structlib_1_1set_1_1spotify.html#a040e69daab18b62fa518d921364a6d92">   53</a></span>&#160;            <span class="keywordtype">bool</span> <a class="code" href="structlib_1_1set_1_1spotify.html#a040e69daab18b62fa518d921364a6d92">disable_discovery</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keywordtype">bool</span> disable_discovery = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="structlib_1_1set_1_1spotify.html#aebccb2064d9930f86594866ea6d10150">   59</a></span>&#160;            <span class="keywordtype">int</span> <a class="code" href="structlib_1_1set_1_1spotify.html#aebccb2064d9930f86594866ea6d10150">bitrate</a> = 320;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keywordtype">int</span> bitrate = 320;</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="structlib_1_1set_1_1spotify.html#a85004b11863196329d84c24841be16d7">   64</a></span>&#160;            <span class="keywordtype">int</span> <a class="code" href="structlib_1_1set_1_1spotify.html#a85004b11863196329d84c24841be16d7">max_queue</a> = 500;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        } <a class="code" href="structlib_1_1set_1_1spotify.html">spotify</a>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <span class="keywordtype">int</span> max_queue = 500;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        };</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    }</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}</div>
-<div class="ttc" id="astructlib_1_1set_1_1spotify_html"><div class="ttname"><a href="structlib_1_1set_1_1spotify.html">lib::set::spotify</a></div><div class="ttdef"><b>Definition:</b> spotify.hpp:13</div></div>
-<div class="ttc" id="astructlib_1_1set_1_1spotify_html_a040e69daab18b62fa518d921364a6d92"><div class="ttname"><a href="structlib_1_1set_1_1spotify.html#a040e69daab18b62fa518d921364a6d92">lib::set::spotify::disable_discovery</a></div><div class="ttdeci">bool disable_discovery</div><div class="ttdef"><b>Definition:</b> spotify.hpp:53</div></div>
-<div class="ttc" id="astructlib_1_1set_1_1spotify_html_a0a38a1677430b7636c2d0aaaeecdd650"><div class="ttname"><a href="structlib_1_1set_1_1spotify.html#a0a38a1677430b7636c2d0aaaeecdd650">lib::set::spotify::always_start</a></div><div class="ttdeci">bool always_start</div><div class="ttdef"><b>Definition:</b> spotify.hpp:32</div></div>
-<div class="ttc" id="astructlib_1_1set_1_1spotify_html_a18578f3f4632539f61f7a326b8607903"><div class="ttname"><a href="structlib_1_1set_1_1spotify.html#a18578f3f4632539f61f7a326b8607903">lib::set::spotify::path</a></div><div class="ttdeci">std::string path</div><div class="ttdef"><b>Definition:</b> spotify.hpp:22</div></div>
-<div class="ttc" id="astructlib_1_1set_1_1spotify_html_a31c356dde78981f894eed236918aad1d"><div class="ttname"><a href="structlib_1_1set_1_1spotify.html#a31c356dde78981f894eed236918aad1d">lib::set::spotify::backend</a></div><div class="ttdeci">std::string backend</div><div class="ttdef"><b>Definition:</b> spotify.hpp:17</div></div>
-<div class="ttc" id="astructlib_1_1set_1_1spotify_html_a43880013a377b780d4845edbde9fb2fa"><div class="ttname"><a href="structlib_1_1set_1_1spotify.html#a43880013a377b780d4845edbde9fb2fa">lib::set::spotify::username</a></div><div class="ttdeci">std::string username</div><div class="ttdef"><b>Definition:</b> spotify.hpp:27</div></div>
-<div class="ttc" id="astructlib_1_1set_1_1spotify_html_a803d11bbe0faad8d9cdec771630c97bd"><div class="ttname"><a href="structlib_1_1set_1_1spotify.html#a803d11bbe0faad8d9cdec771630c97bd">lib::set::spotify::start_client</a></div><div class="ttdeci">bool start_client</div><div class="ttdef"><b>Definition:</b> spotify.hpp:47</div></div>
-<div class="ttc" id="astructlib_1_1set_1_1spotify_html_a85004b11863196329d84c24841be16d7"><div class="ttname"><a href="structlib_1_1set_1_1spotify.html#a85004b11863196329d84c24841be16d7">lib::set::spotify::max_queue</a></div><div class="ttdeci">int max_queue</div><div class="ttdef"><b>Definition:</b> spotify.hpp:64</div></div>
-<div class="ttc" id="astructlib_1_1set_1_1spotify_html_abc9fe00a033f08f6e3f6969743ba1c2e"><div class="ttname"><a href="structlib_1_1set_1_1spotify.html#abc9fe00a033f08f6e3f6969743ba1c2e">lib::set::spotify::keyring_password</a></div><div class="ttdeci">bool keyring_password</div><div class="ttdef"><b>Definition:</b> spotify.hpp:42</div></div>
-<div class="ttc" id="astructlib_1_1set_1_1spotify_html_ac1f298d75d5872d23fdbe4b0696a091f"><div class="ttname"><a href="structlib_1_1set_1_1spotify.html#ac1f298d75d5872d23fdbe4b0696a091f">lib::set::spotify::global_config</a></div><div class="ttdeci">bool global_config</div><div class="ttdef"><b>Definition:</b> spotify.hpp:37</div></div>
-<div class="ttc" id="astructlib_1_1set_1_1spotify_html_aebccb2064d9930f86594866ea6d10150"><div class="ttname"><a href="structlib_1_1set_1_1spotify.html#aebccb2064d9930f86594866ea6d10150">lib::set::spotify::bitrate</a></div><div class="ttdeci">int bitrate</div><div class="ttdef"><b>Definition:</b> spotify.hpp:59</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

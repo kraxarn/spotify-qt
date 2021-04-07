@@ -1,11 +1,4 @@
 var searchData=
 [
-  ['id_392',['id',['../classlib_1_1spt_1_1artist.html#a0bedf7fcb0431699f55109c804d2eb46',1,'lib::spt::artist::id()'],['../classlib_1_1spt_1_1device.html#ae5c5717d6589850d59f4de10447eb763',1,'lib::spt::device::id()'],['../classlib_1_1spt_1_1playlist.html#a61ec336efa5f592e85068abdf59ca72b',1,'lib::spt::playlist::id()'],['../classlib_1_1spt_1_1track.html#ac6ee4f50dc8cd0b4e2ef04fe522e606d',1,'lib::spt::track::id()'],['../classlib_1_1spt_1_1user.html#a3a903d10830bfb230995f5799318bdc1',1,'lib::spt::user::id()'],['../classlib_1_1spt_1_1album.html#a46633aea8678bb9c2f128683633ad222',1,'lib::spt::album::id()']]],
-  ['image_393',['image',['../classlib_1_1spt_1_1playlist.html#a54d2e594389dd4ae20588b7a28a6745e',1,'lib::spt::playlist::image()'],['../classlib_1_1spt_1_1user.html#ab3268fbf2cf6d5412033c552d494b331',1,'lib::spt::user::image()'],['../classlib_1_1spt_1_1track.html#a970f630528e6390e1820cac419e31a50',1,'lib::spt::track::image()'],['../classlib_1_1spt_1_1artist.html#a192bafc54f4236530d943731f535c738',1,'lib::spt::artist::image()'],['../classlib_1_1spt_1_1album.html#a9ddfcaaa1236598d3ac692597aafd644',1,'lib::spt::album::image()']]],
-  ['is_5factive_394',['is_active',['../classlib_1_1spt_1_1device.html#a49f9a8bc672e50a80d6ae29a8441ff88',1,'lib::spt::device']]],
-  ['is_5flocal_395',['is_local',['../classlib_1_1spt_1_1track.html#a49999656e64cc5c72573cdf89093449a',1,'lib::spt::track']]],
-  ['is_5fplayable_396',['is_playable',['../classlib_1_1spt_1_1track.html#ad752f55bc9254da0e20cc4aba182c946',1,'lib::spt::track']]],
-  ['is_5fplaying_397',['is_playing',['../classlib_1_1spt_1_1playback.html#ad3425f946100fb132fd503069e2cbf35',1,'lib::spt::playback']]],
-  ['is_5fpublic_398',['is_public',['../classlib_1_1spt_1_1playlist.html#a0324054ae36cc088df2e6b79ca34956b',1,'lib::spt::playlist']]],
-  ['item_399',['item',['../classlib_1_1spt_1_1playback.html#ae6c4262236734fcaf6c7c8fecc417bab',1,'lib::spt::playback']]]
+  ['name_351',['name',['../classlib_1_1spt_1_1album.html#a1e3290ed717ea715afa1a672504ce95b',1,'lib::spt::album::name()'],['../classlib_1_1spt_1_1artist.html#ab2ac2371a7a286f91478a119c047afc5',1,'lib::spt::artist::name()'],['../classlib_1_1spt_1_1device.html#a125cf05de56ecb26be42cc6e40b5c1c8',1,'lib::spt::device::name()'],['../classlib_1_1spt_1_1playlist.html#af3c7ea64e6fa3fc9c1d9f6ee6e764b1e',1,'lib::spt::playlist::name()'],['../classlib_1_1spt_1_1track.html#a507f463aa5ac512471de37ff8e4da014',1,'lib::spt::track::name()']]]
 ];

@@ -1,9 +1,7 @@
 var searchData=
 [
-  ['client_5fid_372',['client_id',['../structlib_1_1set_1_1account.html#a71a7b7b8c7766af3bbe3a18d72ee1b73',1,'lib::set::account']]],
-  ['client_5fsecret_373',['client_secret',['../structlib_1_1set_1_1account.html#a8f71cdb24407039c179b3208f3140b4e',1,'lib::set::account']]],
-  ['collaborative_374',['collaborative',['../classlib_1_1spt_1_1playlist.html#aa0f4ab3aa888669049dc17805a9402e5',1,'lib::spt::playlist']]],
-  ['context_375',['context',['../classlib_1_1spt_1_1playback.html#ab80dbe821d37e348298beeb56cde4c87',1,'lib::spt::playback']]],
-  ['current_5fdevice_376',['current_device',['../classlib_1_1spt_1_1api.html#a973aa08f3dedb37dd61842a2a56834e1',1,'lib::spt::api']]],
-  ['custom_5fplaylist_5forder_377',['custom_playlist_order',['../structlib_1_1set_1_1general.html#ae369f9a24d410c8e1113fa9c3a495f7f',1,'lib::set::general']]]
+  ['description_333',['description',['../classlib_1_1spt_1_1playlist.html#af058c4eb3226f7b4d8cd270acdfa2514',1,'lib::spt::playlist']]],
+  ['device_334',['device',['../classlib_1_1spt_1_1playback.html#a347a1f37e20750a9ffaaf42cf93780bd',1,'lib::spt::playback']]],
+  ['display_5fname_335',['display_name',['../classlib_1_1spt_1_1user.html#a015858a71b0d9e7ea1c5fbf4739cea9e',1,'lib::spt::user']]],
+  ['duration_336',['duration',['../classlib_1_1spt_1_1track.html#a95db80e3f3255ceebda0e1d3a213166b',1,'lib::spt::track']]]
 ];

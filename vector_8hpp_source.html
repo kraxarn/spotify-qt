@@ -110,12 +110,26 @@ $(function() {
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="keywordflow">return</span> std::vector&lt;T&gt;(vec.cbegin() + pos, vec.cbegin() + len);</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        }</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    };</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classlib_1_1vector.html#adec996ef8f9a7b4a5d70a979a22e80d8">   64</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1vector.html#adec996ef8f9a7b4a5d70a979a22e80d8">contains</a>(<span class="keyword">const</span> std::vector&lt;T&gt; &amp;vec, <span class="keyword">const</span> T &amp;item) -&gt; <span class="keywordtype">bool</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keywordflow">return</span> std::find(vec.begin(), vec.end(), item) != vec.end();</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        }</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="classlib_1_1vector.html#a221cd8e85cccd913ad3721bf75999233">   75</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1vector.html#a221cd8e85cccd913ad3721bf75999233">erase</a>(<span class="keyword">const</span> std::vector&lt;T&gt; &amp;vec, <span class="keyword">const</span> T &amp;item)</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        {</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            vec.erase(std::remove(vec.begin(), vec.end(), item), vec.end());</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    };</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
 <div class="ttc" id="aclasslib_1_1vector_html"><div class="ttname"><a href="classlib_1_1vector.html">lib::vector</a></div><div class="ttdef"><b>Definition:</b> vector.hpp:8</div></div>
 <div class="ttc" id="aclasslib_1_1vector_html_a0cbbd30c44399adbab7929e0d5d2986c"><div class="ttname"><a href="classlib_1_1vector.html#a0cbbd30c44399adbab7929e0d5d2986c">lib::vector::sub</a></div><div class="ttdeci">static std::vector&lt; T &gt; sub(const std::vector&lt; T &gt; &amp;vec, size_t pos, size_t len)</div><div class="ttdef"><b>Definition:</b> vector.hpp:45</div></div>
+<div class="ttc" id="aclasslib_1_1vector_html_a221cd8e85cccd913ad3721bf75999233"><div class="ttname"><a href="classlib_1_1vector.html#a221cd8e85cccd913ad3721bf75999233">lib::vector::erase</a></div><div class="ttdeci">static void erase(const std::vector&lt; T &gt; &amp;vec, const T &amp;item)</div><div class="ttdef"><b>Definition:</b> vector.hpp:75</div></div>
 <div class="ttc" id="aclasslib_1_1vector_html_a9fbc23ff2283212ee4fb8676c7f30391"><div class="ttname"><a href="classlib_1_1vector.html#a9fbc23ff2283212ee4fb8676c7f30391">lib::vector::combine</a></div><div class="ttdeci">static std::vector&lt; T &gt; combine(const std::vector&lt; T &gt; &amp;vec1, const std::vector&lt; T &gt; &amp;vec2)</div><div class="ttdef"><b>Definition:</b> vector.hpp:17</div></div>
 <div class="ttc" id="aclasslib_1_1vector_html_abd6f4bb72d24e728392a4fb104e3b22c"><div class="ttname"><a href="classlib_1_1vector.html#abd6f4bb72d24e728392a4fb104e3b22c">lib::vector::append</a></div><div class="ttdeci">static void append(std::vector&lt; T &gt; &amp;vec, const std::vector&lt; T &gt; &amp;append)</div><div class="ttdef"><b>Definition:</b> vector.hpp:33</div></div>
+<div class="ttc" id="aclasslib_1_1vector_html_adec996ef8f9a7b4a5d70a979a22e80d8"><div class="ttname"><a href="classlib_1_1vector.html#adec996ef8f9a7b4a5d70a979a22e80d8">lib::vector::contains</a></div><div class="ttdeci">static auto contains(const std::vector&lt; T &gt; &amp;vec, const T &amp;item) -&gt; bool</div><div class="ttdef"><b>Definition:</b> vector.hpp:64</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

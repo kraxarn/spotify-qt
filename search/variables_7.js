@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hidden_5fsong_5fheaders_391',['hidden_song_headers',['../structlib_1_1set_1_1general.html#a39909adafa1220fb816cf706081d97da',1,'lib::set::general']]]
+  ['last_5fauth_350',['last_auth',['../classlib_1_1spt_1_1api.html#ad241152c1673308341d7180a0be4a357',1,'lib::spt::api']]]
 ];

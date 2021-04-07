@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['last_5fauth_401',['last_auth',['../classlib_1_1spt_1_1api.html#ad241152c1673308341d7180a0be4a357',1,'lib::spt::api']]],
-  ['last_5fplaylist_402',['last_playlist',['../structlib_1_1set_1_1general.html#a3aba1519c851ec5c59fff5ab16b5b9db',1,'lib::set::general']]],
-  ['last_5frefresh_403',['last_refresh',['../structlib_1_1set_1_1account.html#a4e36640164a5e9e26d13f546932ac725',1,'lib::set::account']]],
-  ['last_5fversion_404',['last_version',['../structlib_1_1set_1_1general.html#a1a327f112ae6f518b7789c0c2215e2d2',1,'lib::set::general']]],
-  ['last_5fvolume_405',['last_volume',['../structlib_1_1set_1_1general.html#ab5885f46cbd5822e12152d1caa90ef7b',1,'lib::set::general']]]
+  ['playlists_354',['playlists',['../classlib_1_1spt_1_1search__results.html#a1e1b2635d850b087c917cf4d04d054d1',1,'lib::spt::search_results']]],
+  ['popularity_355',['popularity',['../classlib_1_1spt_1_1artist.html#a3edf12f868b693d887b4ba9d4e0f23c7',1,'lib::spt::artist']]],
+  ['product_356',['product',['../classlib_1_1spt_1_1user.html#a3e7bbe3f42657f4eb0a43bd38881deff',1,'lib::spt::user']]],
+  ['progress_5fms_357',['progress_ms',['../classlib_1_1spt_1_1playback.html#a3b8abad8cc302c24f0a07b4b3bca9146',1,'lib::spt::playback']]]
 ];
