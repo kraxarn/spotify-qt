@@ -65,9 +65,17 @@ void lib::spt::from_json(const nlohmann::json &j, album &a)
 	}
 
 	if (j.contains("images"))
-		j.at("images").back().at("url").get_to(a.image);
+	{
+		const auto &images = j.at("images");
+		if (images.is_array() && !images.empty())
+		{
+			images.back().at("url").get_to(a.image);
+		}
+	}
 	else if (j.contains("image"))
+	{
 		j.at("image").get_to(a.image);
+	}
 
 	if (j.contains("artists"))
 		j.at("artists").front().at("name").get_to(a.artist);
