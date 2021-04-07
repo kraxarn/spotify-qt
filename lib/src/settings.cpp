@@ -70,12 +70,18 @@ void settings::from_json(const nlohmann::json &json)
 	auto errors = validate();
 
 	for (auto &error : errors)
+	{
 		log::error("One or more invalid {} settings found, restoring defaults",
 			error.first);
+	}
 	if (errors.find("General") != errors.end())
-		general = set::general{};
+	{
+		general = setting::general{};
+	}
 	if (errors.find("Spotify") != errors.end())
-		spotify = set::spotify{};
+	{
+		spotify = setting::spotify{};
+	}
 }
 
 void settings::load()
