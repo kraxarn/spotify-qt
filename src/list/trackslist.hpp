@@ -54,12 +54,12 @@ private:
 	auto getCurrent() -> const spt::Current &;
 
 	// Constants
-	static constexpr int colIndex = 0;
-	static constexpr int colTitle = 1;
-	static constexpr int colArtist = 2;
-	static constexpr int colAlbum = 3;
-	static constexpr int colLength = 4;
-	static constexpr int colAdded = 5;
+	const int colIndex = 0;
+	const int colTitle = 1;
+	const int colArtist = 2;
+	const int colAlbum = 3;
+	const int colLength = 4;
+	const int colAdded = 5;
 
 	// lib
 	lib::settings &settings;
