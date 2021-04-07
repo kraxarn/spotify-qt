@@ -78,10 +78,14 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 		t.album_id = "0";
 	}
 
-	if (track.contains("added_at"))
-		track.at("added_at").get_to(t.added_at);
-	else if (track.contains("played_at"))
-		track.at("played_at").get_to(t.added_at);
+	if (j.contains("added_at"))
+	{
+		j.at("added_at").get_to(t.added_at);
+	}
+	else if (j.contains("played_at"))
+	{
+		j.at("played_at").get_to(t.added_at);
+	}
 
 	// Treat 1970-01-01 as no date
 	if (lib::strings::starts_with(t.added_at, "1970-01-01"))
