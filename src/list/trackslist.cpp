@@ -188,13 +188,6 @@ void TracksList::resizeHeaders(const QSize &newSize)
 	constexpr int minSize = 60;
 	constexpr int columnCount = 7;
 
-	constexpr int colIndex = 0;
-	constexpr int colTitle = 1;
-	constexpr int colArtist = 2;
-	constexpr int colAlbum = 3;
-	constexpr int colLength = 4;
-	constexpr int colAdded = 5;
-
 	auto size = (newSize.width() - indexSize - lengthSize - addedSize) / columnCount;
 
 	if (size < minSize)
