@@ -50,7 +50,7 @@ private:
 	void clicked(QTreeWidgetItem *item, int column);
 	void headerMenu(const QPoint &pos);
 	void resizeHeaders(const QSize &newSize);
-	const spt::Current &getCurrent();
+	auto getCurrent() -> const spt::Current &;
 
 	// lib
 	lib::settings &settings;
