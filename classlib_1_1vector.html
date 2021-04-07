@@ -86,12 +86,6 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a0cbbd30c44399adbab7929e0d5d2986c"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a0cbbd30c44399adbab7929e0d5d2986c"><td class="memTemplItemLeft" align="right" valign="top">static std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1vector.html#a0cbbd30c44399adbab7929e0d5d2986c">sub</a> (const std::vector&lt; T &gt; &amp;vec, size_t pos, size_t len)</td></tr>
 <tr class="separator:a0cbbd30c44399adbab7929e0d5d2986c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adec996ef8f9a7b4a5d70a979a22e80d8"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:adec996ef8f9a7b4a5d70a979a22e80d8"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1vector.html#adec996ef8f9a7b4a5d70a979a22e80d8">contains</a> (const std::vector&lt; T &gt; &amp;vec, const T &amp;item) -&gt; bool</td></tr>
-<tr class="separator:adec996ef8f9a7b4a5d70a979a22e80d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a221cd8e85cccd913ad3721bf75999233"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a221cd8e85cccd913ad3721bf75999233"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1vector.html#a221cd8e85cccd913ad3721bf75999233">erase</a> (const std::vector&lt; T &gt; &amp;vec, const T &amp;item)</td></tr>
-<tr class="separator:a221cd8e85cccd913ad3721bf75999233"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="abd6f4bb72d24e728392a4fb104e3b22c"></a>
@@ -182,97 +176,6 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Combined vector </dd></dl>
-
-</div>
-</div>
-<a id="adec996ef8f9a7b4a5d70a979a22e80d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adec996ef8f9a7b4a5d70a979a22e80d8">&#9670;&nbsp;</a></span>contains()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static auto lib::vector::contains </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; T &gt; &amp;&#160;</td>
-          <td class="paramname"><em>vec</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const T &amp;&#160;</td>
-          <td class="paramname"><em>item</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> -&gt; bool
-		</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>If a vector contains a specific item </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">vec</td><td>Vector to search in </td></tr>
-    <tr><td class="paramname">item</td><td>Item to search for </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a221cd8e85cccd913ad3721bf75999233"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a221cd8e85cccd913ad3721bf75999233">&#9670;&nbsp;</a></span>erase()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void lib::vector::erase </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; T &gt; &amp;&#160;</td>
-          <td class="paramname"><em>vec</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const T &amp;&#160;</td>
-          <td class="paramname"><em>item</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Remove all instances of item in vector </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">vec</td><td>Vector to remove from </td></tr>
-    <tr><td class="paramname">item</td><td>Item to remove </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
