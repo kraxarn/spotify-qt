@@ -241,7 +241,8 @@ void ArtistView::relatedArtistsLoaded(const std::vector<lib::spt::artist> &artis
 
 void ArtistView::updateFollow(bool isFollowing)
 {
-	followButton->setIcon(Icon::get(QString("%1starred-symbolic").arg(isFollowing ? "non-" : "")));
+	followButton->setIcon(Icon::get(QString("%1starred-symbolic")
+		.arg(isFollowing ? "" : "non-")));
 	followButton->setText(QString("%1%2")
 		.arg(isFollowing ? "Unfollow" : "Follow")
 		.arg(followButton->text()
