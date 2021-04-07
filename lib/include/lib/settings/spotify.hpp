@@ -9,7 +9,7 @@ namespace lib
 		/**
 		 * Spotify client settings
 		 */
-		typedef struct spotify
+		using spotify = struct spotify
 		{
 			/**
 			 * Name of backend to use
@@ -62,6 +62,6 @@ namespace lib
 			 * Max items allowed to be queued
 			 */
 			int max_queue = 500;
-		} spotify;
+		};
 	}
 }

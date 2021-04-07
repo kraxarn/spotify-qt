@@ -15,7 +15,7 @@ namespace lib
 		/**
 		 * General application settings
 		 */
-		typedef struct general
+		using general = struct general
 		{
 			/**
 			 * Palette for app
@@ -132,6 +132,6 @@ namespace lib
 			 * Which column to sort by in track list
 			 */
 			int song_header_sort_by = -1;
-		} general;
+		};
 	}
 }
