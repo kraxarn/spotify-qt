@@ -19,7 +19,7 @@ SidePanel::SidePanel(spt::Spotify &spotify, const lib::settings &settings, lib::
 
 void SidePanel::openArtist(const std::string &artistId)
 {
-	auto view = new ArtistView(spotify, artistId, settings, cache, parent);
+	auto *view = new ArtistView(spotify, artistId, cache, parent);
 	view->onArtistLoaded = [this, view](const lib::spt::artist &artist)
 	{
 		auto index = indexOf(view);

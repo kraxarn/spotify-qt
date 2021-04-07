@@ -1,7 +1,7 @@
 #include "artistview.hpp"
 
 ArtistView::ArtistView(spt::Spotify &spotify, const std::string &artistId,
-	const lib::settings &settings, lib::cache &cache, QWidget *parent)
+	lib::cache &cache, QWidget *parent)
 	: spotify(spotify),
 	artistId(std::string(artistId)),
 	cache(cache),
