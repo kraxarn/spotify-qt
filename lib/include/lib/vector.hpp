@@ -54,27 +54,5 @@ namespace lib
 
 			return std::vector<T>(vec.cbegin() + pos, vec.cbegin() + len);
 		}
-
-		/**
-		 * If a vector contains a specific item
-		 * @param vec Vector to search in
-		 * @param item Item to search for
-		 */
-		template<typename T>
-		static auto contains(const std::vector<T> &vec, const T &item) -> bool
-		{
-			return std::find(vec.begin(), vec.end(), item) != vec.end();
-		}
-
-		/**
-		 * Remove all instances of item in vector
-		 * @param vec Vector to remove from
-		 * @param item Item to remove
-		 */
-		template<typename T>
-		static void erase(const std::vector<T> &vec, const T &item)
-		{
-			vec.erase(std::remove(vec.begin(), vec.end(), item), vec.end());
-		}
 	};
 }
