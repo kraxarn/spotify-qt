@@ -80,7 +80,14 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &play
 	if (lib::developer_mode::enabled)
 	{
 		auto *devMenu = addMenu(Icon::get("folder-txt"), "Developer");
-		devMenu->addAction(QString::fromStdString(playlist.id))->setEnabled(false);
+
+		const auto playlistId = QString::fromStdString(playlist.id);
+		QAction::connect(devMenu->addAction(playlistId), &QAction::triggered,
+			[playlistId](bool /*checked*/)
+			{
+				QApplication::clipboard()->setText(playlistId);
+			});
+
 		QAction::connect(devMenu->addAction("As JSON"), &QAction::triggered,
 			[this](bool /*checked*/)
 			{
