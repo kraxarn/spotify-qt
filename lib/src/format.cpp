@@ -26,3 +26,18 @@ std::string fmt::size(unsigned int bytes)
 
 	return format("{} B", bytes);
 }
+
+auto fmt::count(unsigned int count) -> std::string
+{
+	if (count >= 1000000)
+	{
+		return format("{}M", count / 1000000);
+	}
+
+	if (count >= 1000)
+	{
+		return format("{}k", count / 1000);
+	}
+
+	return format("{}", count);
+}

@@ -128,15 +128,8 @@ void ArtistView::artistLoaded(const lib::spt::artist &loadedArtist)
 		"jpeg");
 	coverLabel->setPixmap(cover.copy(0, 80, 320, 160));
 
-	// Format followers
-	char prefix = artist.followers > 1000000
-		? 'M' : artist.followers > 1000
-			? 'k' : '\0';
-	auto followers = QString("%1%2 follower%3")
-		.arg(prefix == 'M'
-			? artist.followers / 1000000 : prefix == 'k'
-				? artist.followers / 1000 : artist.followers)
-		.arg(prefix)
+	auto followers = QString("%1 follower%2")
+		.arg(QString::fromStdString(lib::fmt::count(artist.followers)))
 		.arg(artist.followers == 1 ? "" : "s");
 
 	// Artist name title

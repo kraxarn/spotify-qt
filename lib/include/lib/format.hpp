@@ -48,6 +48,12 @@ namespace lib
 		 */
 		static std::string size(unsigned int bytes);
 
+		/**
+		 * Format as k or M
+		 * @param count Amount
+		 */
+		static auto count(unsigned int count) -> std::string;
+
 	private:
 		/**
 		 * Format string into another string
