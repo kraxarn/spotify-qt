@@ -4,7 +4,7 @@
 
 namespace lib
 {
-	namespace set
+	namespace setting
 	{
 		/**
 		 * Spotify client settings

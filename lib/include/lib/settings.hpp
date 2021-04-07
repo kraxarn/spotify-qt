@@ -51,17 +51,17 @@ namespace lib
 		/**
 		 * Account settings
 		 */
-		set::account account;
+		setting::account account;
 
 		/**
 		 * General settings
 		 */
-		set::general general;
+		setting::general general;
 
 		/**
 		 * Spotify settings
 		 */
-		set::spotify spotify;
+		setting::spotify spotify;
 
 		/**
 		 * Reset client_id and client_secret properties

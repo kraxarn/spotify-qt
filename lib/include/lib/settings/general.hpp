@@ -10,7 +10,7 @@
 
 namespace lib
 {
-	namespace set
+	namespace setting
 	{
 		/**
 		 * General application settings
