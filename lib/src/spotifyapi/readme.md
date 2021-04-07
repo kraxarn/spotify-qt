@@ -5,19 +5,19 @@ Note that this is more than a simple API wrapper. For example, it handles errors
 This means that the API calls may not fully match and this table can be inaccurate.
 
 ## API Status
-| Category        | Complete | Asynchronous |
-| --------------- | -------- | ------------ |
-| Albums          |  3/3     |  0/3         |
-| Artists         |  4/5     |  4/5         |
-| Browse          |  1/7     |  0/7         |
-| Episodes        |  0/2     |  0/2         |
-| Follow          |  4/7     |  1/7         |
-| Library         |  4/12    |  0/12        |
-| Personalization |  1/1     |  0/1         |
-| Player          | 13/14    |  3/14        |
-| Playlists       |  5/11    |  0/11        |
-| Search          |  1/1     |  0/1         |
-| Shows           |  0/3     |  0/3         |
-| Tracks          |  2/5     |  0/5         |
-| Users Profile   |  1/2     |  0/2         |
-| **Total**       | 39/73    |  8/73        |
+| Category        | Complete | Percent |
+| --------------- | -------- | ------- |
+| Albums          |  3/3     |  100%   |
+| Artists         |  4/5     |   80%   |
+| Browse          |  1/7     |   15%   |
+| Episodes        |  0/2     |    0%   |
+| Follow          |  4/7     |   55%   |
+| Library         |  4/12    |   35%   |
+| Personalization |  1/1     |  100%   |
+| Player          | 13/14    |   95%   |
+| Playlists       |  5/11    |   45%   |
+| Search          |  1/1     |  100%   |
+| Shows           |  0/3     |    0%   |
+| Tracks          |  2/5     |   40%   |
+| Users Profile   |  1/2     |   50%   |
+| **Total**       | 39/73    |   55%   |
