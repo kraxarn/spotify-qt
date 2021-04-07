@@ -11,13 +11,9 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &play
 		return;
 
 	tracksAction = addAction("... tracks");
+	tracksAction->setEnabled(false);
 	byAction = addAction("By ...");
-
-	tracksLoaded(cache.get_playlist(playlist.id).tracks);
-	spotify.playlist_tracks(playlist, [this](const std::vector<lib::spt::track> &items)
-	{
-		tracksLoaded(items);
-	});
+	byAction->setEnabled(false);
 
 	addSeparator();
 	auto playShuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle play");
@@ -88,6 +84,12 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &play
 					QString::fromStdString(json.dump(4)));
 			});
 	}
+
+	tracksLoaded(cache.get_playlist(playlist.id).tracks);
+	spotify.playlist_tracks(playlist, [this](const std::vector<lib::spt::track> &items)
+	{
+		tracksLoaded(items);
+	});
 }
 
 void PlaylistMenu::tracksLoaded(const std::vector<lib::spt::track> &items)
