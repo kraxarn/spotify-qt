@@ -146,14 +146,11 @@ void TracksList::headerMenu(const QPoint &pos)
 			header()->setSectionHidden(i + 1, !action->isChecked());
 			if (action->isChecked())
 			{
-				this->settings.general.hidden_song_headers
-					.erase(std::remove(this->settings.general.hidden_song_headers.begin(),
-						this->settings.general.hidden_song_headers.end(), i),
-						this->settings.general.hidden_song_headers.end());
+				this->settings.general.hidden_song_headers.erase(i);
 			}
 			else
 			{
-				this->settings.general.hidden_song_headers.push_back(i);
+				this->settings.general.hidden_song_headers.emplace(i);
 			}
 			this->settings.save();
 			return;

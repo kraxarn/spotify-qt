@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <unordered_set>
 
 namespace lib
 {
@@ -50,7 +51,7 @@ namespace lib
 			/**
 			 * Indices of track list headers to hide
 			 */
-			std::vector<int> hidden_song_headers;
+			std::unordered_set<int> hidden_song_headers;
 
 			/**
 			 * In which contexts to show track numbers
