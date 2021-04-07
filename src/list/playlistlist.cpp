@@ -45,6 +45,11 @@ void PlaylistList::doubleClicked(QListWidgetItem *item)
 	spotify.play_tracks(lib::spt::api::to_uri("playlist", currentPlaylist.id),
 		[mainWindow](const std::string &result)
 		{
+			if (result.empty())
+			{
+				return;
+			}
+
 			mainWindow->status(lib::fmt::format("Failed to start playlist playback: {}",
 				result), true);
 		});
