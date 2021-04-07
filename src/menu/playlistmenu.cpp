@@ -6,9 +6,11 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &play
 	playlist(playlist),
 	QMenu(parent)
 {
-	auto window = MainWindow::find(parent);
+	auto *window = MainWindow::find(parent);
 	if (window == nullptr)
+	{
 		return;
+	}
 
 	tracksAction = addAction("... tracks");
 	tracksAction->setEnabled(false);
@@ -16,9 +18,10 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &play
 	byAction->setEnabled(false);
 
 	addSeparator();
-	auto playShuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle play");
+	auto *playShuffle = addAction(Icon::get("media-playlist-shuffle"),
+		"Shuffle play");
 	QAction::connect(playShuffle, &QAction::triggered,
-		[this, playlist, &spotify, window](bool checked)
+		[this, playlist, &spotify, window](bool /*checked*/)
 		{
 			if (tracks.empty())
 			{
@@ -46,26 +49,28 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &play
 	editAction = addAction(Icon::get("document-edit"), "Edit");
 	editAction->setVisible(false);
 	QAction::connect(editAction, &QAction::triggered,
-		[this, playlist, &spotify, window](bool checked)
+		[this, playlist, &spotify, window](bool /*checked*/)
 		{
 			delete editDialog;
 			editDialog = new PlaylistEditDialog(&spotify, playlist, -1,
 				parentWidget());
 			if (editDialog->exec() == QDialog::Accepted)
+			{
 				window->refreshPlaylists();
+			}
 		});
 
-	auto share = addMenu(Icon::get("document-share"), "Share");
-	auto sharePlaylist = share->addAction("Copy playlist link");
-	QAction::connect(sharePlaylist, &QAction::triggered, [window, playlist](bool checked)
+	auto *share = addMenu(Icon::get("document-share"), "Share");
+	auto *sharePlaylist = share->addAction("Copy playlist link");
+	QAction::connect(sharePlaylist, &QAction::triggered, [window, playlist](bool /*checked*/)
 	{
 		QApplication::clipboard()->setText(QString("https://open.spotify.com/playlist/%1")
 			.arg(QString::fromStdString(playlist.id)));
 		window->setStatus("Link copied to clipboard");
 	});
 
-	auto shareSongOpen = share->addAction("Open in Spotify");
-	QAction::connect(shareSongOpen, &QAction::triggered, [this](bool checked)
+	auto *shareSongOpen = share->addAction("Open in Spotify");
+	QAction::connect(shareSongOpen, &QAction::triggered, [this](bool /*checked*/)
 	{
 		Utils::openUrl(QString("https://open.spotify.com/playlist/%1")
 				.arg(QString::fromStdString(this->playlist.id)),
@@ -74,10 +79,10 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &play
 
 	if (lib::developer_mode::enabled)
 	{
-		auto devMenu = addMenu(Icon::get("folder-txt"), "Developer");
+		auto *devMenu = addMenu(Icon::get("folder-txt"), "Developer");
 		devMenu->addAction(QString::fromStdString(playlist.id))->setEnabled(false);
 		QAction::connect(devMenu->addAction("As JSON"), &QAction::triggered,
-			[this](bool checked)
+			[this](bool /*checked*/)
 			{
 				nlohmann::json json = this->playlist;
 				QMessageBox::information(this->parent, "JSON",
@@ -94,25 +99,30 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &play
 
 void PlaylistMenu::tracksLoaded(const std::vector<lib::spt::track> &items)
 {
+	constexpr int sInMin = 60;
+	constexpr int msInMin = 1000 * sInMin;
+
 	tracks = items;
 
 	auto duration = 0;
-	for (auto &track : tracks)
+	for (const auto &track : tracks)
+	{
 		duration += track.duration;
-	auto minutes = duration / 1000 / 60;
+	}
+	const auto minutes = duration / msInMin;
 
 	if (tracks.size() > 1)
 	{
 		tracksAction->setText(QString("%1 tracks, %2%3 m")
 			.arg(tracks.size())
-			.arg(minutes >= 60
-				? QString("%1 h ").arg(minutes / 60)
+			.arg(minutes >= sInMin
+				? QString("%1 h ").arg(minutes / sInMin)
 				: QString())
-			.arg(minutes % 60));
+			.arg(minutes % sInMin));
 	}
 
-	auto window = MainWindow::find(this->parentWidget());
-	auto isOwner = playlist.is_owner(window->getCurrentUser());
+	auto *window = MainWindow::find(this->parentWidget());
+	const auto isOwner = playlist.is_owner(window->getCurrentUser());
 	if (!isOwner && !playlist.owner_name.empty())
 	{
 		byAction->setText(QString("By %1")
