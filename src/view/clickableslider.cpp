@@ -10,7 +10,10 @@ void ClickableSlider::mousePressEvent(QMouseEvent *ev)
 	QSlider::mousePressEvent(ev);
 
 	if (ev->button() == Qt::LeftButton)
+	{
 		setValue(valueFromPos(ev->pos()));
+	}
+	emit sliderReleased();
 }
 
 int ClickableSlider::valueFromPos(const QPoint &pos)
