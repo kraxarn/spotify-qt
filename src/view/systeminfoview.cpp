@@ -42,8 +42,7 @@ QString SystemInfoView::systemInfo(const lib::spt::playback &playback, bool html
 
 	// spotify-qt version
 #ifdef GIT_COMMIT
-	info["App version"] = QString("%1-dev (%2)")
-		.arg(APP_VERSION).arg(GIT_COMMIT);
+	info["App version"] = QString("%1-dev (%2)").arg(APP_VERSION, GIT_COMMIT);
 #else
 	info["App version"] = APP_VERSION;
 #endif
@@ -67,7 +66,7 @@ QString SystemInfoView::systemInfo(const lib::spt::playback &playback, bool html
 	}
 
 	// Kernel
-	info["Kernel"] = QString("%1 %2").arg(QSysInfo::kernelType()).arg(QSysInfo::kernelVersion());
+	info["Kernel"] = QString("%1 %2").arg(QSysInfo::kernelType(), QSysInfo::kernelVersion());
 
 	// Product
 	info["Product"] = QSysInfo::prettyProductName();
@@ -90,7 +89,7 @@ QString SystemInfoView::systemInfo(const lib::spt::playback &playback, bool html
 		systemInfo += QString(html
 			? "<tr><td>%1:</td> <td>%2</td></tr>"
 			: "%1: %2\n")
-			.arg(i.key()).arg(i.value());
+			.arg(i.key(), i.value());
 	}
 	return html
 		? systemInfo + "</table>"
