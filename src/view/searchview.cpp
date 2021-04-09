@@ -204,7 +204,7 @@ void SearchView::search()
 void SearchView::trackClick(QTreeWidgetItem *item, int)
 {
 	// Do we want it to continue playing results?
-	auto trackId = lib::fmt::format("spotify:track:{}",
+	auto trackId = lib::spt::api::to_uri("track",
 		item->data(0, RoleTrackId).toString().toStdString());
 
 	spotify.play_tracks(0, {trackId}, [this](const std::string &status)

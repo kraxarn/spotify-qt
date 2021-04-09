@@ -146,10 +146,7 @@ void SongMenu::like(bool)
 
 void SongMenu::addToQueue(bool)
 {
-	auto uri = lib::strings::starts_with(trackId, "spotify:track")
-		? trackId
-		: lib::fmt::format("spotify:track:{}", trackId);
-
+	auto uri = lib::spt::api::to_uri("track", trackId);
 	spotify.add_to_queue(uri, [this](const std::string &status)
 	{
 		MainWindow::find(this->parentWidget())->status(status, true);

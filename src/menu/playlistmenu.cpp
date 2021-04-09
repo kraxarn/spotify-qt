@@ -30,20 +30,20 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &play
 			}
 
 			auto initialIndex = lib::random().next_int(0, tracks.size());
-			spotify.play_tracks(initialIndex, lib::fmt::format("spotify:playlist:{}",
-				playlist.id), [&spotify, window](const std::string &status)
-			{
-				if (!status.empty())
+			spotify.play_tracks(initialIndex, lib::spt::api::to_uri("playlist", playlist.id),
+				[&spotify, window](const std::string &status)
 				{
-					window->status(status, true);
-					return;
-				}
+					if (!status.empty())
+					{
+						window->status(status, true);
+						return;
+					}
 
-				spotify.set_shuffle(true, [window](const std::string &status)
-				{
-					window->status(status, true);
+					spotify.set_shuffle(true, [window](const std::string &status)
+					{
+						window->status(status, true);
+					});
 				});
-			});
 		});
 
 	editAction = addAction(Icon::get("document-edit"), "Edit");
