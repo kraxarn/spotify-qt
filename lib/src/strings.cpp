@@ -45,7 +45,14 @@ std::vector<std::string> strings::split(const std::string &str, char delimiter)
 	std::string temp;
 
 	while (std::getline(stream, temp, delimiter))
+	{
 		vec.push_back(temp);
+	}
+
+	if (vec.empty())
+	{
+		vec.push_back(str);
+	}
 
 	return vec;
 }

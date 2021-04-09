@@ -71,6 +71,13 @@ TEST_CASE("strings::split")
 		CHECK_EQ(results.size(), 1);
 		CHECK_EQ(results[0], "a,bb,ccc");
 	}
+
+	SUBCASE("empty string")
+	{
+		auto results = lib::strings::split(std::string(), ',');
+		CHECK_EQ(results.size(), 1);
+		CHECK(results[0].empty());
+	}
 }
 
 TEST_CASE("strings::starts_with")

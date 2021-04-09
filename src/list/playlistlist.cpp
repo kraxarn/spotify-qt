@@ -104,6 +104,18 @@ void PlaylistList::load(const std::vector<lib::spt::playlist> &items)
 	if (settings.general.playlist_order != lib::playlist_order_default)
 		order(settings.general.playlist_order);
 
+	if (activeItem == nullptr || activePlaylist == nullptr)
+	{
+		if (count() > 0)
+		{
+			activeItem = item(0);
+		}
+		if (!playlists.empty())
+		{
+			activePlaylist = &playlists.at(0);
+		}
+	}
+
 	if (currentItem() == nullptr && activePlaylist != nullptr)
 	{
 		auto mainWindow = MainWindow::find(parentWidget());
