@@ -25,7 +25,8 @@ jobs:
             cmake
             mingw-w64-x86_64-toolchain
             mingw-w64-x86_64-cmake
-            mingw-w64-x86_64-qt5
+            mingw-w64-x86_64-qt6-base
+            mingw-w64-x86_64-qt6-svg
 
       - name: Configure CMake
         run: cmake . -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_TESTS=ON
