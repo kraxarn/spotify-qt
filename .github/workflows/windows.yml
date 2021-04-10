@@ -29,7 +29,7 @@ jobs:
             mingw-w64-x86_64-qt6-svg
 
       - name: Configure CMake
-        run: cmake . -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_TESTS=ON
+        run: cmake . -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_QT6=ON -DUSE_TESTS=ON
 
       - name: Build
         run: cmake --build . --config $BUILD_TYPE
