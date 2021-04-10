@@ -39,8 +39,16 @@ jobs:
 
       - name: Package
         run: |
-          mkdir spotify-qt
-          cp /mingw64/bin/Qt6*.dll ./spotify-qt/
+          curl https://raw.githubusercontent.com/mxe/mxe/master/tools/copydlldeps.sh -o copydlldeps.sh
+          ./copydlldeps.sh --infile ./spotify-qt.exe \
+            --destdir ./spotify-qt/ \
+            --recursivesrcdir /mingw64/bin/ \
+            --enforcedir /mingw64/share/qt6/plugins/generic/ \
+            --enforcedir /mingw64/share/qt6/plugins/iconengines/ \
+            --enforcedir /mingw64/share/qt6/plugins/imageformats/ \
+            --enforcedir /mingw64/share/qt6/plugins/platforms/ \
+            --enforcedir /mingw64/share/qt6/plugins/styles/ \
+            --copy
           cp ./spotify-qt.exe ./spotify-qt/
 
       - name: Upload Artifact
