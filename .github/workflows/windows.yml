@@ -23,6 +23,7 @@ jobs:
             git
             base-devel
             cmake
+            mingw-w64-i686-toolchain
             mingw-w64-i686-cmake
             mingw-w64-i686-qt5
 
