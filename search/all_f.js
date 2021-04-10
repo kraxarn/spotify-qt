@@ -2,7 +2,7 @@ var searchData=
 [
   ['random_114',['random',['../classlib_1_1random.html',1,'lib']]],
   ['recently_5fplayed_115',['recently_played',['../classlib_1_1spt_1_1api.html#abd52d73893c4175cc039557b51dda56e',1,'lib::spt::api']]],
-  ['refresh_116',['refresh',['../classlib_1_1spt_1_1api.html#a008b93d6f058625d021c0992dcf4a2bb',1,'lib::spt::api']]],
+  ['refresh_116',['refresh',['../classlib_1_1spt_1_1api.html#a294dd5d87ca2258de4235a3eb5285285',1,'lib::spt::api']]],
   ['release_5fdate_117',['release_date',['../classlib_1_1spt_1_1album.html#a12f19a9ab0139d5033d22a9839e7a73f',1,'lib::spt::album']]],
   ['remove_118',['remove',['../classlib_1_1strings.html#ad9c0382afad068f80464b6abecc7d28e',1,'lib::strings']]],
   ['remove_5fclient_119',['remove_client',['../classlib_1_1settings.html#ae2330fba54af6807d6a94efc251cd6bf',1,'lib::settings']]],
