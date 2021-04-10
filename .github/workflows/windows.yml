@@ -26,13 +26,8 @@ jobs:
             mingw-w64-i686-cmake
             mingw-w64-i686-qt5
 
-      - name: Create Build Environment
-        run: cmake -E make_directory ./build
+      - name: Configure CMake
+        run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_TESTS=ON
 
-#      - name: Configure CMake
-#        working-directory: ./build
-#        run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_TESTS=ON
-#
-#      - name: Build
-#        working-directory: ./build
-#        run: cmake --build . --config $BUILD_TYPE
+      - name: Build
+        run: cmake --build . --config $BUILD_TYPE
