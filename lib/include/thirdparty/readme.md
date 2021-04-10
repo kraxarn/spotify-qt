@@ -41,7 +41,7 @@ As an exception, if, as a result of your compiling your source code, portions of
 ```
 
 ## [filesystem](https://github.com/gulrak/filesystem)
-v1.5.4, used for creating and managing directories used by settings, cache etc.
+v1.4.0, used for creating and managing directories used by settings, cache etc.
 ```
 Copyright (c) 2018, Steffen Schümann <s.schuemann@pobox.com>
 
