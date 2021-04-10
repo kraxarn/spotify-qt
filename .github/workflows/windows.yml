@@ -23,7 +23,6 @@ jobs:
             git
             base-devel
             cmake
-            zip
             mingw-w64-x86_64-toolchain
             mingw-w64-x86_64-cmake
             mingw-w64-x86_64-qt6-base
@@ -43,10 +42,9 @@ jobs:
           mkdir spotify-qt
           cp /mingw64/bin/Qt6*.dll ./spotify-qt/
           cp ./spotify-qt.exe ./spotify-qt/
-          zip -r spotify-qt.zip ./spotify-qt/
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: spotify-qt-$GITHUB_SHA.zip
-          path: ./spotify-qt.zip
+          name: spotify-qt
+          path: ./spotify-qt/
