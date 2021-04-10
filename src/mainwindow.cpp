@@ -47,12 +47,34 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	network = new QNetworkAccessManager();
 
 	// Check connection
-	stateValid = spotify->refresh();
+	try
+	{
+		spotify->refresh();
+		stateValid = true;
+	}
+	catch (const nlohmann::json::exception &e)
+	{
+		stateValid = false;
+		QMessageBox::warning(this, "Connection failed",
+			QString("Failed to parse response from Spotify:\n%1").arg(e.what()));
+	}
+	catch (const lib::spotify_error &e)
+	{
+		stateValid = false;
+		QMessageBox::warning(this, "Connection failed",
+			QString("Unexpected response:\n%1").arg(e.what()));
+	}
+	catch (const std::exception &e)
+	{
+		stateValid = false;
+		QMessageBox::warning(this, "Connection failed",
+			QString("Failed to connect to Spotify, check your connection and try again:\n%1")
+				.arg(e.what()));
+	}
+
 	if (!stateValid)
 	{
 		splash->finish(this);
-		QMessageBox::warning(this, "Connection failed",
-			"Failed to connect to Spotify, check your connection and try again");
 		return;
 	}
 

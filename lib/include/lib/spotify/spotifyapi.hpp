@@ -17,6 +17,7 @@
 #include "lib/spotify/audiofeatures.hpp"
 #include "lib/spotify/savedalbum.hpp"
 #include "lib/spotify/callback.hpp"
+#include "lib/spotifyerror.hpp"
 
 #include "thirdparty/json.hpp"
 
@@ -264,7 +265,7 @@ namespace lib
 			 * Refresh access token with refresh token
 			 * @return Refresh was successful
 			 */
-			bool refresh(bool force = false);
+			void refresh(bool force = false);
 
 			/**
 			 * Spotify ID (4uLU6hMCjMI75M1A2tKUQC) to Spotify URI

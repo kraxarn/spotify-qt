@@ -7,21 +7,20 @@ api::api(lib::settings &settings)
 {
 }
 
-bool api::refresh(bool force)
+void api::refresh(bool force)
 {
 	if (!force && seconds_since_epoch() - settings.account.last_refresh < 3600)
 	{
 		lib::log::info("Last refresh was less than an hour ago, not refreshing access token");
 		last_auth = settings.account.last_refresh;
-		return true;
+		return;
 	}
 
 	// Make sure we have a refresh token
 	auto refresh_token = settings.account.refresh_token;
 	if (refresh_token.empty())
 	{
-		lib::log::error("Failed to refresh: no refresh token");
-		return false;
+		throw lib::spotify_error("No refresh token", "token");
 	}
 
 	// Create form
@@ -37,24 +36,14 @@ bool api::refresh(bool force)
 	auto reply = request_refresh(post_data, auth_header);
 
 	// Parse as JSON
-	nlohmann::json json;
-	try
-	{
-		json = nlohmann::json::parse(reply);
-	}
-	catch (const std::exception &e)
-	{
-		lib::log::error("Failed to refresh: {}", e.what());
-		return false;
-	}
+	const auto json = nlohmann::json::parse(reply);
 
 	// Check if error
 	if (json.contains("error_description") || !json.contains("access_token"))
 	{
 		auto error = json.at("error_description").get<std::string>();
-		lib::log::error("Failed to refresh: {}", error.empty()
-			? "no access token" : error);
-		return false;
+		throw lib::spotify_error(error.empty()
+			? "No access token" : error, "token");
 	}
 
 	// Save as access token
@@ -62,8 +51,6 @@ bool api::refresh(bool force)
 	settings.account.last_refresh = last_auth;
 	settings.account.access_token = json.at("access_token").get<std::string>();
 	settings.save();
-
-	return true;
 }
 
 nlohmann::json api::parse_json(const std::string &url, const std::string &data)

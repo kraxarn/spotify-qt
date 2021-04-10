@@ -21,17 +21,17 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 
 	QAction::connect(addAction("Refresh access token"), &QAction::triggered, [this]()
 	{
-		if (this->spotify.refresh())
+		try
 		{
+			this->spotify.refresh();
 			QMessageBox::information(this, "Success",
-				QString::fromStdString(lib::fmt::format(
-					"Successfully refreshed access token:\n{}",
+				QString::fromStdString(lib::fmt::format("Successfully refreshed access token:\n{}",
 					this->settings.account.refresh_token)));
 		}
-		else
+		catch (const std::exception &e)
 		{
 			QMessageBox::critical(this, "Error",
-				"Refresh failed, check the log for details");
+				QString("Refresh failed: %1").arg(e.what()));
 		}
 	});
 

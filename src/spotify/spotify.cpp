@@ -18,7 +18,14 @@ QNetworkRequest Spotify::request(const QString &url)
 	if (lastRefresh > secsInHour)
 	{
 		lib::log::info("Access token probably expired, refreshing");
-		lib::spt::api::refresh();
+		try
+		{
+			lib::spt::api::refresh();
+		}
+		catch (const std::exception &e)
+		{
+			lib::log::error("Refresh failed: {}", e.what());
+		}
 	}
 
 	// Prepare request
