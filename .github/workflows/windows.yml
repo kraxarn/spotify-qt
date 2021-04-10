@@ -23,9 +23,9 @@ jobs:
             git
             base-devel
             cmake
-            mingw-w64-i686-toolchain
-            mingw-w64-i686-cmake
-            mingw-w64-i686-qt5
+            mingw-w64-x86_64-toolchain
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-qt5
 
       - name: Configure CMake
         run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_TESTS=ON
