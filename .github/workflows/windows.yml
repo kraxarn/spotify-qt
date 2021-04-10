@@ -43,7 +43,7 @@ jobs:
           mkdir spotify-qt
           cp /mingw64/bin/Qt6*.dll ./spotify-qt/
           cp ./spotify-qt.exe ./spotify-qt/
-          zip -r spotify-qt.zip ./spotift-qt/
+          zip -r spotify-qt.zip ./spotify-qt/
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
