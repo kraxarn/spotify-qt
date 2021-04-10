@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 	QCoreApplication::setApplicationVersion(APP_VERSION);
 
 	// High-DPI support
-	// These flags deprecated and always enabled in Qt 6 and newer
+	// These flags are deprecated and always enabled in Qt 6 and newer
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 	QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
