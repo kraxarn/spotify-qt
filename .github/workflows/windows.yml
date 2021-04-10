@@ -33,3 +33,6 @@ jobs:
 
       - name: Build
         run: cmake --build . --config $BUILD_TYPE
+
+      - name: Test
+        run: ./lib/test/spotify-qt-lib-test.exe
