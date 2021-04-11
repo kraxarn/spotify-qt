@@ -74,55 +74,56 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>lib</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;{</div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classlib_1_1vector.html">    7</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classlib_1_1vector.html">vector</a></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classlib_1_1vector.html#a9fbc23ff2283212ee4fb8676c7f30391">   17</a></span>&#160;        <span class="keyword">static</span> std::vector&lt;T&gt; <a class="code" href="classlib_1_1vector.html#a9fbc23ff2283212ee4fb8676c7f30391">combine</a>(<span class="keyword">const</span> std::vector&lt;T&gt; &amp;vec1, <span class="keyword">const</span> std::vector&lt;T&gt; &amp;vec2)</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        {</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            std::vector&lt;T&gt; vec;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            vec.reserve(vec1.size() + vec2.size());</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            vec.insert(vec.end(), vec1.begin(), vec1.end());</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            vec.insert(vec.end(), vec2.begin(), vec2.end());</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            <span class="keywordflow">return</span> vec;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        }</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classlib_1_1vector.html#abd6f4bb72d24e728392a4fb104e3b22c">   33</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1vector.html#abd6f4bb72d24e728392a4fb104e3b22c">append</a>(std::vector&lt;T&gt; &amp;vec, <span class="keyword">const</span> std::vector&lt;T&gt; &amp;<a class="code" href="classlib_1_1vector.html#abd6f4bb72d24e728392a4fb104e3b22c">append</a>)</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            vec.insert(vec.end(), <a class="code" href="classlib_1_1vector.html#abd6f4bb72d24e728392a4fb104e3b22c">append</a>.begin(), <a class="code" href="classlib_1_1vector.html#abd6f4bb72d24e728392a4fb104e3b22c">append</a>.end());</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classlib_1_1vector.html#a0cbbd30c44399adbab7929e0d5d2986c">   45</a></span>&#160;        <span class="keyword">static</span> std::vector&lt;T&gt; <a class="code" href="classlib_1_1vector.html#a0cbbd30c44399adbab7929e0d5d2986c">sub</a>(<span class="keyword">const</span> std::vector&lt;T&gt; &amp;vec, <span class="keywordtype">size_t</span> pos, <span class="keywordtype">size_t</span> len)</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="comment">// If pos is larger than element count, return an empty vector</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keywordflow">if</span> (pos &gt; vec.size())</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                <span class="keywordflow">return</span> std::vector&lt;T&gt;();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            <span class="comment">// If size+len is larger than element count, stop as last element</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="keywordflow">if</span> (len &lt; 0 || pos + len &gt; vec.size())</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                len = vec.size() - pos - 1;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="keywordflow">return</span> std::vector&lt;T&gt;(vec.cbegin() + pos, vec.cbegin() + len);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        }</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> P&gt;</div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classlib_1_1vector.html#a19d986f6bc59f3e5f2ccfbeca8a02a06">   64</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1vector.html#a19d986f6bc59f3e5f2ccfbeca8a02a06">remove_if</a>(std::vector&lt;T&gt; &amp;vec, <span class="keyword">const</span> P &amp;predicate)</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        {</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            vec.erase(std::remove_if(vec.begin(), vec.end(), predicate), vec.end());</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    };</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
-<div class="ttc" id="aclasslib_1_1vector_html"><div class="ttname"><a href="classlib_1_1vector.html">lib::vector</a></div><div class="ttdef"><b>Definition:</b> vector.hpp:8</div></div>
-<div class="ttc" id="aclasslib_1_1vector_html_a0cbbd30c44399adbab7929e0d5d2986c"><div class="ttname"><a href="classlib_1_1vector.html#a0cbbd30c44399adbab7929e0d5d2986c">lib::vector::sub</a></div><div class="ttdeci">static std::vector&lt; T &gt; sub(const std::vector&lt; T &gt; &amp;vec, size_t pos, size_t len)</div><div class="ttdef"><b>Definition:</b> vector.hpp:45</div></div>
-<div class="ttc" id="aclasslib_1_1vector_html_a19d986f6bc59f3e5f2ccfbeca8a02a06"><div class="ttname"><a href="classlib_1_1vector.html#a19d986f6bc59f3e5f2ccfbeca8a02a06">lib::vector::remove_if</a></div><div class="ttdeci">static void remove_if(std::vector&lt; T &gt; &amp;vec, const P &amp;predicate)</div><div class="ttdef"><b>Definition:</b> vector.hpp:64</div></div>
-<div class="ttc" id="aclasslib_1_1vector_html_a9fbc23ff2283212ee4fb8676c7f30391"><div class="ttname"><a href="classlib_1_1vector.html#a9fbc23ff2283212ee4fb8676c7f30391">lib::vector::combine</a></div><div class="ttdeci">static std::vector&lt; T &gt; combine(const std::vector&lt; T &gt; &amp;vec1, const std::vector&lt; T &gt; &amp;vec2)</div><div class="ttdef"><b>Definition:</b> vector.hpp:17</div></div>
-<div class="ttc" id="aclasslib_1_1vector_html_abd6f4bb72d24e728392a4fb104e3b22c"><div class="ttname"><a href="classlib_1_1vector.html#abd6f4bb72d24e728392a4fb104e3b22c">lib::vector::append</a></div><div class="ttdeci">static void append(std::vector&lt; T &gt; &amp;vec, const std::vector&lt; T &gt; &amp;append)</div><div class="ttdef"><b>Definition:</b> vector.hpp:33</div></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>lib</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;{</div>
+<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classlib_1_1vector.html">    8</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classlib_1_1vector.html">vector</a></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    {</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classlib_1_1vector.html#a9fbc23ff2283212ee4fb8676c7f30391">   18</a></span>&#160;        <span class="keyword">static</span> std::vector&lt;T&gt; <a class="code" href="classlib_1_1vector.html#a9fbc23ff2283212ee4fb8676c7f30391">combine</a>(<span class="keyword">const</span> std::vector&lt;T&gt; &amp;vec1, <span class="keyword">const</span> std::vector&lt;T&gt; &amp;vec2)</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        {</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            std::vector&lt;T&gt; vec;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            vec.reserve(vec1.size() + vec2.size());</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            vec.insert(vec.end(), vec1.begin(), vec1.end());</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            vec.insert(vec.end(), vec2.begin(), vec2.end());</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            <span class="keywordflow">return</span> vec;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        }</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classlib_1_1vector.html#abd6f4bb72d24e728392a4fb104e3b22c">   34</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1vector.html#abd6f4bb72d24e728392a4fb104e3b22c">append</a>(std::vector&lt;T&gt; &amp;vec, <span class="keyword">const</span> std::vector&lt;T&gt; &amp;<a class="code" href="classlib_1_1vector.html#abd6f4bb72d24e728392a4fb104e3b22c">append</a>)</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            vec.insert(vec.end(), <a class="code" href="classlib_1_1vector.html#abd6f4bb72d24e728392a4fb104e3b22c">append</a>.begin(), <a class="code" href="classlib_1_1vector.html#abd6f4bb72d24e728392a4fb104e3b22c">append</a>.end());</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        }</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="classlib_1_1vector.html#a0cbbd30c44399adbab7929e0d5d2986c">   46</a></span>&#160;        <span class="keyword">static</span> std::vector&lt;T&gt; <a class="code" href="classlib_1_1vector.html#a0cbbd30c44399adbab7929e0d5d2986c">sub</a>(<span class="keyword">const</span> std::vector&lt;T&gt; &amp;vec, <span class="keywordtype">size_t</span> pos, <span class="keywordtype">size_t</span> len)</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="comment">// If pos is larger than element count, return an empty vector</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="keywordflow">if</span> (pos &gt; vec.size())</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                <span class="keywordflow">return</span> std::vector&lt;T&gt;();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="comment">// If size+len is larger than element count, stop as last element</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keywordflow">if</span> (len &lt; 0 || pos + len &gt; vec.size())</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                len = vec.size() - pos - 1;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="keywordflow">return</span> std::vector&lt;T&gt;(vec.cbegin() + pos, vec.cbegin() + len);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> P&gt;</div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classlib_1_1vector.html#a19d986f6bc59f3e5f2ccfbeca8a02a06">   65</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1vector.html#a19d986f6bc59f3e5f2ccfbeca8a02a06">remove_if</a>(std::vector&lt;T&gt; &amp;vec, <span class="keyword">const</span> P &amp;predicate)</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            vec.erase(std::remove_if(vec.begin(), vec.end(), predicate), vec.end());</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    };</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
+<div class="ttc" id="aclasslib_1_1vector_html"><div class="ttname"><a href="classlib_1_1vector.html">lib::vector</a></div><div class="ttdef"><b>Definition:</b> vector.hpp:9</div></div>
+<div class="ttc" id="aclasslib_1_1vector_html_a0cbbd30c44399adbab7929e0d5d2986c"><div class="ttname"><a href="classlib_1_1vector.html#a0cbbd30c44399adbab7929e0d5d2986c">lib::vector::sub</a></div><div class="ttdeci">static std::vector&lt; T &gt; sub(const std::vector&lt; T &gt; &amp;vec, size_t pos, size_t len)</div><div class="ttdef"><b>Definition:</b> vector.hpp:46</div></div>
+<div class="ttc" id="aclasslib_1_1vector_html_a19d986f6bc59f3e5f2ccfbeca8a02a06"><div class="ttname"><a href="classlib_1_1vector.html#a19d986f6bc59f3e5f2ccfbeca8a02a06">lib::vector::remove_if</a></div><div class="ttdeci">static void remove_if(std::vector&lt; T &gt; &amp;vec, const P &amp;predicate)</div><div class="ttdef"><b>Definition:</b> vector.hpp:65</div></div>
+<div class="ttc" id="aclasslib_1_1vector_html_a9fbc23ff2283212ee4fb8676c7f30391"><div class="ttname"><a href="classlib_1_1vector.html#a9fbc23ff2283212ee4fb8676c7f30391">lib::vector::combine</a></div><div class="ttdeci">static std::vector&lt; T &gt; combine(const std::vector&lt; T &gt; &amp;vec1, const std::vector&lt; T &gt; &amp;vec2)</div><div class="ttdef"><b>Definition:</b> vector.hpp:18</div></div>
+<div class="ttc" id="aclasslib_1_1vector_html_abd6f4bb72d24e728392a4fb104e3b22c"><div class="ttname"><a href="classlib_1_1vector.html#abd6f4bb72d24e728392a4fb104e3b22c">lib::vector::append</a></div><div class="ttdeci">static void append(std::vector&lt; T &gt; &amp;vec, const std::vector&lt; T &gt; &amp;append)</div><div class="ttdef"><b>Definition:</b> vector.hpp:34</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
