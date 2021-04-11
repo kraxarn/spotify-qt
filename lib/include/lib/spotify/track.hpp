@@ -77,7 +77,12 @@ namespace lib
 			/**
 			 * Format track as "{name} - {artist}" or "(no track)"
 			 */
-			std::string title();
+			auto title() const -> std::string;
+
+			/**
+			 * Has a valid name and artist
+			 */
+			auto is_valid() const -> bool;
 		};
 
 		/**

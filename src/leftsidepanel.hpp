@@ -29,6 +29,11 @@ public:
 
 	void setAlbumImage(const QPixmap &pixmap);
 
+	/**
+	 * Shows default album icon and "No music playing"
+	 */
+	void resetCurrentlyPlaying();
+
 	//region Playlists
 
 	QListWidgetItem *playlistItem(int index) const;

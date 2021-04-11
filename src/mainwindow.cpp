@@ -213,12 +213,15 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 
 	auto *mainToolBar = dynamic_cast<MainToolBar *>(toolBar);
 
-	if (!current.playback.is_playing && current.playback.item.name == "(no name)")
+	if (!current.playback.is_playing && !current.playback.item.is_valid())
 	{
 		mainToolBar->playPause->setIcon(Icon::get("media-playback-start"));
 		mainToolBar->playPause->setText("Play");
+		leftSidePanel->resetCurrentlyPlaying();
+		setWindowTitle("spotify-qt");
 		return;
 	}
+
 	auto currPlaying = QString::fromStdString(lib::fmt::format("{}\n{}",
 		current.playback.item.name, current.playback.item.artist));
 	if (leftSidePanel->getCurrentlyPlaying() != currPlaying)

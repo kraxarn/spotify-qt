@@ -46,17 +46,24 @@ LeftSidePanel::LeftSidePanel(spt::Spotify &spotify, lib::settings &settings,
 	nowPlayingLayout->setSpacing(12);
 	nowAlbum = new QLabel(this);
 	nowAlbum->setFixedSize(64, 64);
-	nowAlbum->setPixmap(Icon::get("media-optical-audio").pixmap(nowAlbum->size()));
 	nowPlayingLayout->addWidget(nowAlbum);
-	nowPlaying = new QLabel("No music playing", this);
+	nowPlaying = new QLabel(this);
 	nowPlaying->setWordWrap(true);
 	nowPlayingLayout->addWidget(nowPlaying);
 	layout->addLayout(nowPlayingLayout);
+
+	resetCurrentlyPlaying();
 
 	// Show menu when clicking now playing
 	nowPlaying->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QLabel::connect(nowPlaying, &QWidget::customContextMenuRequested,
 		this, &LeftSidePanel::popupSongMenu);
+}
+
+void LeftSidePanel::resetCurrentlyPlaying()
+{
+	nowAlbum->setPixmap(Icon::get("media-optical-audio").pixmap(nowAlbum->size()));
+	nowPlaying->setText("No music playing");
 }
 
 void LeftSidePanel::popupSongMenu(const QPoint &pos)

@@ -99,9 +99,14 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 		t.added_at = std::string();
 }
 
-std::string lib::spt::track::title()
+auto lib::spt::track::title() const -> std::string
 {
-	return artist.empty() || name.empty()
-		? std::string("(no track)")
-		: lib::fmt::format("{} - {}", artist, name);
+	return is_valid()
+		? lib::fmt::format("{} - {}", artist, name)
+		: std::string("(no track)");
+}
+
+auto lib::spt::track::is_valid() const -> bool
+{
+	return !artist.empty() && !name.empty();
 }
