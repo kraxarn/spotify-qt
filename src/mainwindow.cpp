@@ -148,6 +148,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 
 	// If new version has been detected, show what's new dialog
 	if (settings.general.show_changelog
+		&& !settings.general.last_version.empty()
 		&& settings.general.last_version != APP_VERSION)
 	{
 		auto *dialog = new WhatsNewDialog(APP_VERSION, settings, this);
