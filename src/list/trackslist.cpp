@@ -127,7 +127,7 @@ void TracksList::headerMenu(const QPoint &pos)
 	{
 		auto *showTitle = showHeaders->addAction(headerTitles.at(i));
 		showTitle->setCheckable(true);
-		showTitle->setChecked(lib::set::contains(headers, i));
+		showTitle->setChecked(!lib::set::contains(headers, i));
 		showTitle->setData(QVariant(i));
 
 		auto *sortTitle = sortBy->addAction(headerTitles.at(i));
