@@ -58,7 +58,11 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 	{
 		auto artist = track.at("artists").at(0);
 		artist.at("name").get_to(t.artist);
-		artist.at("id").get_to(t.artist_id);
+
+		if (!t.is_local && artist.contains("id"))
+		{
+			artist.at("id").get_to(t.artist_id);
+		}
 	}
 	else
 	{
@@ -69,9 +73,21 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 	if (track.contains("album"))
 	{
 		auto album = track.at("album");
-		album.at("id").get_to(t.album_id);
 		album.at("name").get_to(t.album);
-		album.at("images").back().at("url").get_to(t.image);
+
+		if (!t.is_local && album.contains("id"))
+		{
+			album.at("id").get_to(t.album_id);
+		}
+
+		if (album.contains("images"))
+		{
+			const auto &images = album.at("images");
+			if (images.is_array() && !images.empty())
+			{
+				album.at("images").back().at("url").get_to(t.image);
+			}
+		}
 	}
 	else
 	{
