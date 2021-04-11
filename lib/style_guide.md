@@ -59,11 +59,12 @@ enum log_type
 ```
 
 ### If/else
-No brackets are used when content in statement is a single line only (not 
-necessarily a single statement).
+Brackets are always used, and is always on a new line.
 ```c++
 if (true)
+{
 	do_something();
+}
 
 if (true)
 {
