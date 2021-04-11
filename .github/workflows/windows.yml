@@ -50,6 +50,8 @@ jobs:
             --enforcedir /mingw64/share/qt6/plugins/styles/ \
             --copy
           cp ./spotify-qt.exe ./spotify-qt/
+          mkdir ./spotify-qt/bin/
+          cp /mingw64/bin/*.dll ./spotify-qt/bin/
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
