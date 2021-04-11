@@ -307,7 +307,7 @@ void ArtistView::trackMenu(const QPoint &pos)
 		return entity.id == this->artistId;
 	});
 
-	auto *songMenu = new SongMenu(item, artists, spotify, parentWidget());
+	auto *songMenu = new SongMenu(item, artists, spotify, true, parentWidget());
 	songMenu->popup(topTracksList->mapToGlobal(pos));
 }
 

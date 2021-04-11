@@ -7,26 +7,27 @@ SongMenu::SongMenu(QTreeWidgetItem *item, spt::Spotify &spotify, QWidget *parent
 	nlohmann::json::parse(item->data(0, RoleArtists).toString().toStdString()),
 	item->text(2).toStdString(),
 	item->data(0, RoleAlbumId).toString().toStdString(),
-	item->data(0, RoleIndex).toInt(), spotify, parent)
+	item->data(0, RoleIndex).toInt(), spotify, false, parent)
 {
 }
 
 SongMenu::SongMenu(QListWidgetItem *item, const std::vector<lib::spt::entity> &artists,
-	spt::Spotify &spotify, QWidget *parent)
+	spt::Spotify &spotify, bool forceArtistSubmenu, QWidget *parent)
 	: SongMenu(item->data(RoleTrackId).toString().toStdString(), artists,
 	item->text().toStdString(), item->data(RoleAlbumId).toString().toStdString(),
-	item->data(RoleIndex).toInt(), spotify, parent)
+	item->data(RoleIndex).toInt(), spotify, forceArtistSubmenu, parent)
 {
 }
 
 SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify, QWidget *parent)
 	: SongMenu(track.id, track.artists, track.name, track.album.id,
-	0, spotify, parent)
+	0, spotify, false, parent)
 {
 }
 
 SongMenu::SongMenu(const std::string &trackId, const std::vector<lib::spt::entity> &artists,
-	std::string name, std::string albumId, int index, spt::Spotify &spotify, QWidget *parent)
+	std::string name, std::string albumId, int index, spt::Spotify &spotify,
+	bool forceArtistSubmenu, QWidget *parent)
 	: trackId(trackId),
 	artists(artists),
 	trackName(std::move(name)),
@@ -115,7 +116,7 @@ SongMenu::SongMenu(const std::string &trackId, const std::vector<lib::spt::entit
 	QAction::connect(remPlaylist, &QAction::triggered, this, &SongMenu::remFromPlaylist);
 
 	addSeparator();
-	if (artists.size() > 1)
+	if (artists.size() > 1 || (forceArtistSubmenu && !artists.empty()))
 	{
 		auto *artistsMenu = addMenu(Icon::get("view-media-artist"), "View artist");
 		for (const auto &artist : artists)
