@@ -48,10 +48,12 @@ jobs:
             --enforcedir /mingw64/share/qt6/plugins/imageformats/ \
             --enforcedir /mingw64/share/qt6/plugins/platforms/ \
             --enforcedir /mingw64/share/qt6/plugins/styles/ \
+            --enforcedir /mingw64/bin/libcrypto-1_1-x64.dll \
+            --enforcedir /mingw64/bin/libjpeg-8.dll \
+            --enforcedir /mingw64/bin/libssl-1_1-x64.dll \
+            --enforcedir /mingw64/bin/Qt6Svg.dll \
             --copy
           cp ./spotify-qt.exe ./spotify-qt/
-          mkdir ./spotify-qt/bin/
-          cp /mingw64/bin/*.dll ./spotify-qt/bin/
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
