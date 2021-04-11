@@ -280,13 +280,13 @@ void SearchView::addPlaylist(const lib::spt::playlist &playlist)
 void SearchView::addTrack(const lib::spt::track &track)
 {
 	auto trackName = QString::fromStdString(track.name);
-	auto trackArtist = QString::fromStdString(track.artist);
+	auto trackArtist = QString::fromStdString(track.artist.name);
 	auto item = new QTreeWidgetItem(trackList, {
 		trackName, trackArtist
 	});
 	item->setData(0, RoleTrackId, QString::fromStdString(track.id));
-	item->setData(0, RoleArtistId, QString::fromStdString(track.artist_id));
-	item->setData(0, RoleAlbumId, QString::fromStdString(track.album_id));
+	item->setData(0, RoleArtistId, QString::fromStdString(track.artist.id));
+	item->setData(0, RoleAlbumId, QString::fromStdString(track.album.id));
 	item->setToolTip(0, trackName);
 	item->setToolTip(1, trackArtist);
 }

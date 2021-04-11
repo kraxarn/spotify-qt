@@ -1,7 +1,9 @@
 #pragma once
 
-#include "thirdparty/json.hpp"
 #include "lib/format.hpp"
+#include "lib/spotify/entity.hpp"
+
+#include "thirdparty/json.hpp"
 
 #include <string>
 
@@ -12,7 +14,7 @@ namespace lib
 		/**
 		 * A music track
 		 */
-		class track
+		class track : public entity
 		{
 		public:
 			track() = default;
@@ -38,41 +40,20 @@ namespace lib
 			std::string added_at;
 
 			/**
-			 * Name of album
+			 * Album track belongs in
 			 */
-			std::string album;
+			entity album;
 
 			/**
-			 * ID of album
-			 */
-			std::string album_id;
-
-			/**
-			 * Name of artist
+			 * Artist track is made by
 			 * @todo Add support for multiple artists
 			 */
-			std::string artist;
-
-			/**
-			 * ID of artist
-			 * @todo Add support for multiple artists
-			 */
-			std::string artist_id;
-
-			/**
-			 * ID of track
-			 */
-			std::string id;
+			entity artist;
 
 			/**
 			 * URL to cover of album
 			 */
 			std::string image;
-
-			/**
-			 * Name of track
-			 */
-			std::string name;
 
 			/**
 			 * Format track as "{name} - {artist}" or "(no track)"

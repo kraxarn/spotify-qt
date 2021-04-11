@@ -7,10 +7,10 @@ void lib::spt::to_json(nlohmann::json &j, const track &t)
 {
 	j = nlohmann::json{
 		{"id", t.id},
-		{"album", t.album},
-		{"album_id", t.album_id},
-		{"artist", t.artist},
-		{"artist_id", t.artist_id},
+		{"album", t.album.name},
+		{"album_id", t.album.id},
+		{"artist", t.artist.name},
+		{"artist_id", t.artist.id},
 		{"name", t.name},
 		{"image", t.image},
 		{"duration", t.duration},
@@ -23,16 +23,18 @@ void lib::spt::to_json(nlohmann::json &j, const track &t)
 void lib::spt::from_json(const nlohmann::json &j, track &t)
 {
 	if (!j.is_object())
+	{
 		return;
+	}
 
 	// If album is a string, track is loaded from cache
-	if (j.contains("album") && j.at("album").is_string())
+	if (j.contains("album") && j.contains("album_id"))
 	{
 		j.at("id").get_to(t.id);
-		j.at("album").get_to(t.album);
-		j.at("album_id").get_to(t.album_id);
-		j.at("artist").get_to(t.artist);
-		j.at("artist_id").get_to(t.artist_id);
+		j.at("album").get_to(t.album.name);
+		j.at("album_id").get_to(t.album.id);
+		j.at("artist").get_to(t.artist.name);
+		j.at("artist_id").get_to(t.artist.id);
 		j.at("name").get_to(t.name);
 		j.at("duration").get_to(t.duration);
 		j.at("image").get_to(t.image);
@@ -56,24 +58,13 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 
 	if (track.contains("artists"))
 	{
-		auto artist = track.at("artists").at(0);
-		artist.at("name").get_to(t.artist);
-
-		if (!t.is_local && artist.contains("id"))
-		{
-			artist.at("id").get_to(t.artist_id);
-		}
+		track.at("artists").at(0).get_to(t.artist);
 	}
 
 	if (track.contains("album"))
 	{
 		auto album = track.at("album");
-		album.at("name").get_to(t.album);
-
-		if (!t.is_local && album.contains("id"))
-		{
-			album.at("id").get_to(t.album_id);
-		}
+		album.get_to(t.album);
 
 		if (album.contains("images"))
 		{
@@ -102,11 +93,11 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 auto lib::spt::track::title() const -> std::string
 {
 	return is_valid()
-		? lib::fmt::format("{} - {}", artist, name)
+		? lib::fmt::format("{} - {}", artist.name, name)
 		: std::string("(no track)");
 }
 
 auto lib::spt::track::is_valid() const -> bool
 {
-	return !artist.empty() && !name.empty();
+	return !artist.name.empty() && !name.empty();
 }

@@ -248,8 +248,8 @@ void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::str
 				? QString("%1").arg(i + 1, fieldWidth)
 				: QString(),
 			QString::fromStdString(track.name),
-			QString::fromStdString(track.artist),
-			QString::fromStdString(track.album),
+			QString::fromStdString(track.artist.name),
+			QString::fromStdString(track.album.name),
 			QString::fromStdString(lib::fmt::time(track.duration)),
 			track.added_at.empty()
 				? QString()

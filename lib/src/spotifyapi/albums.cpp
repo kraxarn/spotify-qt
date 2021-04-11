@@ -15,10 +15,10 @@ void api::album_tracks(const lib::spt::album &album,
 		{
 			std::vector<lib::spt::track> tracks;
 			tracks.reserve(results.size());
-			for (auto &result : results)
+			for (const auto &result : results)
 			{
 				lib::spt::track track = result;
-				track.album = album.name;
+				track.album.name = album.name;
 				tracks.push_back(track);
 			}
 			callback(tracks);

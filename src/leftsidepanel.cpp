@@ -69,9 +69,13 @@ void LeftSidePanel::resetCurrentlyPlaying()
 void LeftSidePanel::popupSongMenu(const QPoint &pos)
 {
 	auto track = current.playback.item;
-	if (track.name.empty() && track.artist.empty())
+	if (track.name.empty() && track.artist.name.empty())
+	{
 		return;
-	(new SongMenu(track, spotify, parentWidget()))->popup(nowPlaying->mapToGlobal(pos));
+	}
+
+	auto *menu = new SongMenu(track, spotify, parentWidget());
+	menu->popup(nowPlaying->mapToGlobal(pos));
 }
 
 QIcon LeftSidePanel::currentContextIcon() const
@@ -106,13 +110,21 @@ void LeftSidePanel::updateContextIcon()
 
 	if (current.playback.context.type.empty()
 		|| current.playback.context.uri.empty())
+	{
 		callback("No context");
+	}
 	else if (current.playback.context.type == "album")
-		callback(current.playback.item.album);
+	{
+		callback(current.playback.item.album.name);
+	}
 	else if (current.playback.context.type == "artist")
-		callback(current.playback.item.artist);
+	{
+		callback(current.playback.item.artist.name);
+	}
 	else
+	{
 		getPlaylistName(current.playback.context.uri, callback);
+	}
 }
 
 void LeftSidePanel::contextInfoMenu(const QPoint &pos)
@@ -160,7 +172,9 @@ std::unordered_set<std::string> LeftSidePanel::allArtists()
 	{
 		auto playlistId = playlists->item(i)->data(RolePlaylistId).toString().toStdString();
 		for (auto &track : cache.get_playlist(playlistId).tracks)
-			artists.insert(track.artist);
+		{
+			artists.insert(track.artist.name);
+		}
 	}
 	return artists;
 }

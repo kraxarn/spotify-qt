@@ -224,7 +224,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 	}
 
 	auto currPlaying = QString::fromStdString(lib::fmt::format("{}\n{}",
-		current.playback.item.name, current.playback.item.artist));
+		current.playback.item.name, current.playback.item.artist.name));
 	if (leftSidePanel->getCurrentlyPlaying() != currPlaying)
 	{
 		if (current.playback.is_playing)
