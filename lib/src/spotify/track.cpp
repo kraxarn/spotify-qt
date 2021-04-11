@@ -7,10 +7,8 @@ void lib::spt::to_json(nlohmann::json &j, const track &t)
 {
 	j = nlohmann::json{
 		{"id", t.id},
-		{"album", t.album.name},
-		{"album_id", t.album.id},
-		{"artist", t.artist.name},
-		{"artist_id", t.artist.id},
+		{"album", t.album},
+		{"artist", t.artist},
 		{"name", t.name},
 		{"image", t.image},
 		{"duration", t.duration},
@@ -27,20 +25,40 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 		return;
 	}
 
-	// If album is a string, track is loaded from cache
-	if (j.contains("album") && j.contains("album_id"))
+	// If json contains image, track is loaded from cache
+	if (j.contains("image"))
 	{
 		j.at("id").get_to(t.id);
-		j.at("album").get_to(t.album.name);
-		j.at("album_id").get_to(t.album.id);
-		j.at("artist").get_to(t.artist.name);
-		j.at("artist_id").get_to(t.artist.id);
 		j.at("name").get_to(t.name);
 		j.at("duration").get_to(t.duration);
 		j.at("image").get_to(t.image);
 		j.at("is_local").get_to(t.is_local);
 		j.at("added_at").get_to(t.added_at);
 		j.at("is_playable").get_to(t.is_playable);
+
+		const auto &album = j.at("album");
+		const auto &artist = j.at("artist");
+
+		if (album.is_object())
+		{
+			album.get_to(t.album);
+		}
+		else if (album.is_string() && j.contains("album_id"))
+		{
+			album.get_to(t.album.name);
+			j.at("album_id").get_to(t.album.id);
+		}
+
+		if (artist.is_object())
+		{
+			artist.get_to(t.artist);
+		}
+		else if (artist.is_string() && j.contains("artist_id"))
+		{
+			artist.get_to(t.artist.name);
+			j.at("artist_id").get_to(t.artist.id);
+		}
+
 		return;
 	}
 
