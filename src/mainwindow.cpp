@@ -531,6 +531,7 @@ void MainWindow::setSptContext(const lib::spt::playlist &playlist)
 void MainWindow::setSptContext(const lib::spt::album &album)
 {
 	setSptContext(lib::spt::api::to_uri("album", album.id));
+	leftSidePanel->setCurrentPlaylistItem(nullptr);
 }
 
 auto MainWindow::getCurrentPlayback() -> lib::spt::playback &

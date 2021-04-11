@@ -263,4 +263,9 @@ std::vector<lib::spt::playlist> &LeftSidePanel::getPlaylists()
 	return playlists->getPlaylists();
 }
 
+void LeftSidePanel::setCurrentPlaylistItem(QListWidgetItem *item)
+{
+	playlists->setCurrentItem(item);
+}
+
 //endregion

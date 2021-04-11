@@ -47,6 +47,8 @@ public:
 	std::vector<lib::spt::playlist> &getPlaylists();
 	void orderPlaylists(lib::playlist_order order);
 
+	void setCurrentPlaylistItem(QListWidgetItem *item);
+
 	//endregion
 
 	//region Library
