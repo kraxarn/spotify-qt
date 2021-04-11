@@ -2,6 +2,8 @@
 
 #include "enum/logtype.hpp"
 
+#include "thirdparty/json.hpp"
+
 #include <string>
 
 namespace lib
@@ -106,6 +108,18 @@ namespace lib
 		static std::string collect(const Format &fmt, bool arg)
 		{
 			return collect(fmt, arg ? "true" : "false");
+		}
+
+		/**
+		 * Dump JSON as a string
+		 * @param fmt String with {} to replace
+		 * @param arg JSON to dump
+		 * @return Formatted string
+		 */
+		template<typename Format>
+		static std::string collect(const Format &fmt, const nlohmann::json &arg)
+		{
+			return collect(fmt, arg.dump());
 		}
 	};
 }

@@ -32,6 +32,11 @@ TEST_CASE("fmt::format")
 
 		CHECK_NOTHROW(lib::fmt::format("float: {}", std::numeric_limits<float>::max()));
 		CHECK_NOTHROW(lib::fmt::format("double: {}", std::numeric_limits<double>::max()));
+
+		CHECK_EQ(lib::fmt::format("json: {}", nlohmann::json{
+			{"a", 1},
+			{"b", 2}
+		}), R"(json: {"a":1,"b":2})");
 	}
 
 	SUBCASE("time")
