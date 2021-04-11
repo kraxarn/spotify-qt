@@ -3,9 +3,7 @@
 using namespace lib::spt;
 
 // Currently unavailable:
-// me/albums
 // me/albums/contains
-// me/tracks/contains
 // me/shows
 // me/shows/contains
 
