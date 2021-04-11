@@ -110,10 +110,17 @@ $(function() {
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="keywordflow">return</span> std::vector&lt;T&gt;(vec.cbegin() + pos, vec.cbegin() + len);</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        }</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    };</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> P&gt;</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classlib_1_1vector.html#a19d986f6bc59f3e5f2ccfbeca8a02a06">   64</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1vector.html#a19d986f6bc59f3e5f2ccfbeca8a02a06">remove_if</a>(std::vector&lt;T&gt; &amp;vec, <span class="keyword">const</span> P &amp;predicate)</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            vec.erase(std::remove_if(vec.begin(), vec.end(), predicate), vec.end());</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        }</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    };</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
 <div class="ttc" id="aclasslib_1_1vector_html"><div class="ttname"><a href="classlib_1_1vector.html">lib::vector</a></div><div class="ttdef"><b>Definition:</b> vector.hpp:8</div></div>
 <div class="ttc" id="aclasslib_1_1vector_html_a0cbbd30c44399adbab7929e0d5d2986c"><div class="ttname"><a href="classlib_1_1vector.html#a0cbbd30c44399adbab7929e0d5d2986c">lib::vector::sub</a></div><div class="ttdeci">static std::vector&lt; T &gt; sub(const std::vector&lt; T &gt; &amp;vec, size_t pos, size_t len)</div><div class="ttdef"><b>Definition:</b> vector.hpp:45</div></div>
+<div class="ttc" id="aclasslib_1_1vector_html_a19d986f6bc59f3e5f2ccfbeca8a02a06"><div class="ttname"><a href="classlib_1_1vector.html#a19d986f6bc59f3e5f2ccfbeca8a02a06">lib::vector::remove_if</a></div><div class="ttdeci">static void remove_if(std::vector&lt; T &gt; &amp;vec, const P &amp;predicate)</div><div class="ttdef"><b>Definition:</b> vector.hpp:64</div></div>
 <div class="ttc" id="aclasslib_1_1vector_html_a9fbc23ff2283212ee4fb8676c7f30391"><div class="ttname"><a href="classlib_1_1vector.html#a9fbc23ff2283212ee4fb8676c7f30391">lib::vector::combine</a></div><div class="ttdeci">static std::vector&lt; T &gt; combine(const std::vector&lt; T &gt; &amp;vec1, const std::vector&lt; T &gt; &amp;vec2)</div><div class="ttdef"><b>Definition:</b> vector.hpp:17</div></div>
 <div class="ttc" id="aclasslib_1_1vector_html_abd6f4bb72d24e728392a4fb104e3b22c"><div class="ttname"><a href="classlib_1_1vector.html#abd6f4bb72d24e728392a4fb104e3b22c">lib::vector::append</a></div><div class="ttdeci">static void append(std::vector&lt; T &gt; &amp;vec, const std::vector&lt; T &gt; &amp;append)</div><div class="ttdef"><b>Definition:</b> vector.hpp:33</div></div>
 </div><!-- fragment --></div><!-- contents -->
