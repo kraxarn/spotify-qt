@@ -43,9 +43,7 @@ SongMenu::SongMenu(const std::string &trackId, const std::vector<lib::spt::entit
 		return;
 	}
 
-	trackUri = lib::strings::starts_with(trackId, "spotify:track:")
-		? QString::fromStdString(trackId).remove(0, QString("spotify:track:").length())
-		: QString::fromStdString(trackId);
+	trackUri = lib::spt::api::to_id(trackId);
 	auto trackFeatures = addAction(Icon::get("view-statistics"), "Audio features");
 	QAction::connect(trackFeatures, &QAction::triggered, this, &SongMenu::openTrackFeatures);
 
@@ -57,32 +55,31 @@ SongMenu::SongMenu(const std::string &trackId, const std::vector<lib::spt::entit
 	QAction::connect(shareSongLink, &QAction::triggered, [this, mainWindow](bool checked)
 	{
 		QApplication::clipboard()
-			->setText(QString("https://open.spotify.com/track/%1").arg(trackUri));
+			->setText(QString::fromStdString(lib::fmt::format("https://open.spotify.com/track/{}",
+				trackUri)));
 		mainWindow->setStatus("Link copied to clipboard");
 	});
 
 	auto shareSongOpen = share->addAction("Open in Spotify");
 	QAction::connect(shareSongOpen, &QAction::triggered, [this, mainWindow](bool checked)
 	{
-		Utils::openUrl(QString("https://open.spotify.com/track/%1").arg(trackUri),
-			LinkType::Web, mainWindow);
+		Utils::openUrl(QString::fromStdString(lib::fmt::format("https://open.spotify.com/track/{}",
+			trackUri)), LinkType::Web, mainWindow);
 	});
 
 	// Add/remove liked
 	addSeparator();
-	auto likedTracks = mainWindow->loadTracksFromCache("liked");
-	isLiked = false;
-	for (const auto &likedTrack : likedTracks)
-		if (likedTrack.id == trackUri.toStdString())
-		{
-			isLiked = true;
-			break;
-		}
-
-	auto toggleLiked = addAction(Icon::get(isLiked
-			? "starred-symbolic" : "non-starred-symbolic"),
-		isLiked ? "Dislike" : "Like");
+	toggleLiked = addAction("Like");
+	toggleLiked->setEnabled(false);
+	setLiked(false);
 	QAction::connect(toggleLiked, &QAction::triggered, this, &SongMenu::like);
+
+	spotify.is_saved_track({trackUri}, [this](const std::vector<bool> &likes)
+	{
+		auto liked = !likes.empty() && likes.front();
+		this->setLiked(liked);
+		this->toggleLiked->setEnabled(true);
+	});
 
 	// Add to queue
 	auto addQueue = addAction(Icon::get("media-playlist-append"), "Add to queue");
@@ -272,4 +269,14 @@ void SongMenu::openAlbum(bool)
 {
 	auto mainWindow = MainWindow::find(parentWidget());
 	mainWindow->loadAlbum(albumId, lib::spt::api::to_uri("track", trackId));
+}
+
+void SongMenu::setLiked(bool liked)
+{
+	isLiked = liked;
+
+	toggleLiked->setIcon(Icon::get(liked
+		? "starred-symbolic" : "non-starred-symbolic"));
+	toggleLiked->setText(liked
+		? "Dislike" : "Like");
 }

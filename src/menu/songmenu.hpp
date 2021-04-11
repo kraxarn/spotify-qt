@@ -34,9 +34,10 @@ private:
 	const std::string trackId;
 	const std::string albumId;
 	const std::string trackName;
-	QString trackUri;
+	std::string trackUri;
 	int index = 0;
 	const lib::spt::playlist *currentPlaylist = nullptr;
+	QAction *toggleLiked = nullptr;
 
 	void like(bool checked);
 	void addToQueue(bool checked);
@@ -46,4 +47,5 @@ private:
 	void openLyrics(bool checked);
 	void viewArtist(const lib::spt::entity &artist);
 	void openAlbum(bool checked);
+	void setLiked(bool liked);
 };
