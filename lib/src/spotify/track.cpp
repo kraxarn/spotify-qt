@@ -64,11 +64,6 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 			artist.at("id").get_to(t.artist_id);
 		}
 	}
-	else
-	{
-		t.artist = "(no artist)";
-		t.artist_id = "0";
-	}
 
 	if (track.contains("album"))
 	{
@@ -89,11 +84,6 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 			}
 		}
 	}
-	else
-	{
-		t.album = "(no album)";
-		t.album_id = "0";
-	}
 
 	if (j.contains("added_at"))
 	{
@@ -111,5 +101,7 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 
 std::string lib::spt::track::title()
 {
-	return lib::fmt::format("{} - {}", artist, name);
+	return artist.empty() || name.empty()
+		? std::string("(no track)")
+		: lib::fmt::format("{} - {}", artist, name);
 }
