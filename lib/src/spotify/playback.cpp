@@ -33,11 +33,13 @@ void lib::spt::to_json(nlohmann::json &j, const playback &p)
 
 nlohmann::json lib::spt::playback::metadata() const
 {
+	auto artist_names = entity::combine_names(item.artists);
+
 	return {
 		{"xesam:title", item.name},
-		{"xesam:artist", item.artist},
+		{"xesam:artist", artist_names},
 		{"xesam:album", item.album},
-		{"xesam:albumArtist", item.artist},
+		{"xesam:albumArtist", artist_names},
 		{"xesam:url", lib::fmt::format("https://open.spotify.com/track/{}", item.id)},
 		{"mpris:length", item.duration * 1000},
 		{"mpris:artUrl", item.image},

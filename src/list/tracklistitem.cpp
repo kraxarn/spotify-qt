@@ -13,7 +13,8 @@ TrackListItem::TrackListItem(const QStringList &strings,
 
 	setData(0, RoleTrackId,
 		QString::fromStdString(lib::fmt::format("spotify:track:{}", track.id)));
-	setData(0, RoleArtistId, QString::fromStdString(track.artist.id));
+	setData(0, RoleArtists,
+		QString::fromStdString(((nlohmann::json)track.artists).dump()));
 	setData(0, RoleAlbumId, QString::fromStdString(track.album.id));
 	setData(0, RoleIndex, index);
 	setData(0, RoleAddedDate, addedAt);

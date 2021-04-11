@@ -5,6 +5,7 @@
 #include "../util/dateutils.hpp"
 #include "../util/utils.hpp"
 #include "lib/settings.hpp"
+#include "lib/spotify/entity.hpp"
 
 #include <QTreeWidgetItem>
 

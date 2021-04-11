@@ -8,7 +8,7 @@ void lib::spt::to_json(nlohmann::json &j, const track &t)
 	j = nlohmann::json{
 		{"id", t.id},
 		{"album", t.album},
-		{"artist", t.artist},
+		{"artist", t.artists.front()},
 		{"name", t.name},
 		{"image", t.image},
 		{"duration", t.duration},
@@ -37,7 +37,6 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 		j.at("is_playable").get_to(t.is_playable);
 
 		const auto &album = j.at("album");
-		const auto &artist = j.at("artist");
 
 		if (album.is_object())
 		{
@@ -49,14 +48,26 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 			j.at("album_id").get_to(t.album.id);
 		}
 
-		if (artist.is_object())
+		if (j.contains("artists"))
 		{
-			artist.get_to(t.artist);
+			j.at("artists").get_to(t.artists);
 		}
-		else if (artist.is_string() && j.contains("artist_id"))
+		else if (j.contains("artist"))
 		{
-			artist.get_to(t.artist.name);
-			j.at("artist_id").get_to(t.artist.id);
+			const auto &a = j.at("artist");
+			entity artist;
+
+			if (a.is_object())
+			{
+				a.get_to(artist);
+			}
+			else if (a.is_string() && j.contains("artist_id"))
+			{
+				a.get_to(artist.name);
+				j.at("artist_id").get_to(artist.id);
+			}
+
+			t.artists.push_back(artist);
 		}
 
 		return;
@@ -76,7 +87,7 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 
 	if (track.contains("artists"))
 	{
-		track.at("artists").at(0).get_to(t.artist);
+		track.at("artists").get_to(t.artists);
 	}
 
 	if (track.contains("album"))
@@ -111,11 +122,13 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 auto lib::spt::track::title() const -> std::string
 {
 	return is_valid()
-		? lib::fmt::format("{} - {}", artist.name, name)
+		? lib::fmt::format("{} - {}", entity::combine_names(artists), name)
 		: std::string("(no track)");
 }
 
 auto lib::spt::track::is_valid() const -> bool
 {
-	return !artist.name.empty() && !name.empty();
+	return !artists.empty()
+		&& !artists.front().name.empty()
+		&& !name.empty();
 }

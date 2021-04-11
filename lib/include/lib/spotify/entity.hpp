@@ -1,5 +1,7 @@
 #pragma once
 
+#include "lib/strings.hpp"
+
 #include "thirdparty/json.hpp"
 
 #include <string>
@@ -25,6 +27,12 @@ namespace lib
 			 * Entity name
 			 */
 			std::string name;
+
+			/**
+			 * Combine names to a comma separated string
+			 * @param entities Entities to combine
+			 */
+			static auto combine_names(const std::vector<entity> &entities) -> std::string;
 		};
 
 		/**

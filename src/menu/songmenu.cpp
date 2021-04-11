@@ -4,36 +4,34 @@
 
 SongMenu::SongMenu(QTreeWidgetItem *item, spt::Spotify &spotify, QWidget *parent)
 	: SongMenu(item->data(0, RoleTrackId).toString().toStdString(),
-	item->text(2).toStdString(), item->text(1).toStdString(),
-	item->data(0, RoleArtistId).toString().toStdString(),
+	nlohmann::json::parse(item->data(0, RoleArtists).toString().toStdString()),
+	item->text(2).toStdString(),
 	item->data(0, RoleAlbumId).toString().toStdString(),
 	item->data(0, RoleIndex).toInt(), spotify, parent)
 {
 }
 
-SongMenu::SongMenu(QListWidgetItem *item, std::string artist, spt::Spotify &spotify,
-	QWidget *parent)
-	: SongMenu(item->data(RoleTrackId).toString().toStdString(), std::move(artist),
-	item->text().toStdString(), item->data(RoleArtistId).toString().toStdString(),
-	item->data(RoleAlbumId).toString().toStdString(),
+SongMenu::SongMenu(QListWidgetItem *item, const std::vector<lib::spt::entity> &artists,
+	spt::Spotify &spotify, QWidget *parent)
+	: SongMenu(item->data(RoleTrackId).toString().toStdString(), artists,
+	item->text().toStdString(), item->data(RoleAlbumId).toString().toStdString(),
 	item->data(RoleIndex).toInt(), spotify, parent)
 {
 }
 
 SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify, QWidget *parent)
-	: SongMenu(track.id, track.artist.name, track.name, track.artist.id,
-	track.album.id, 0, spotify, parent)
+	: SongMenu(track.id, track.artists, track.name, track.album.id,
+	0, spotify, parent)
 {
 }
 
-SongMenu::SongMenu(const std::string &trackId, std::string artist, std::string name,
-	std::string artistId, std::string albumId, int index, spt::Spotify &spotify, QWidget *parent)
+SongMenu::SongMenu(const std::string &trackId, const std::vector<lib::spt::entity> &artists,
+	std::string name, std::string albumId, int index, spt::Spotify &spotify, QWidget *parent)
 	: trackId(trackId),
-	artist(std::move(artist)),
+	artists(artists),
 	trackName(std::move(name)),
 	index(index),
 	spotify(spotify),
-	artistId(std::move(artistId)),
 	albumId(std::move(albumId)),
 	QMenu(parent)
 {
@@ -117,9 +115,28 @@ SongMenu::SongMenu(const std::string &trackId, std::string artist, std::string n
 	QAction::connect(remPlaylist, &QAction::triggered, this, &SongMenu::remFromPlaylist);
 
 	addSeparator();
-	auto goArtist = addAction(Icon::get("view-media-artist"), "View artist");
-	goArtist->setVisible(this->artistId.length() > 1);
-	QAction::connect(goArtist, &QAction::triggered, this, &SongMenu::viewArtist);
+	if (artists.size() > 1)
+	{
+		auto *artistsMenu = addMenu(Icon::get("view-media-artist"), "View artist");
+		for (const auto &artist : artists)
+		{
+			auto *goArtist = artistsMenu->addAction(QString::fromStdString(artist.name));
+			QAction::connect(goArtist, &QAction::triggered, [this, artist](bool /*checked*/)
+			{
+				this->viewArtist(artist);
+			});
+		}
+	}
+	else if (!artists.empty())
+	{
+		const auto &artist = this->artists.front();
+		auto *goArtist = addAction(Icon::get("view-media-artist"), "View artist");
+		goArtist->setVisible(!artist.id.empty());
+		QAction::connect(goArtist, &QAction::triggered, [this, artist](bool /*checked*/)
+		{
+			this->viewArtist(artist);
+		});
+	}
 
 	auto goAlbum = addAction(Icon::get("view-media-album-cover"), "Open album");
 	goAlbum->setVisible(this->albumId.length() > 1);
@@ -226,23 +243,28 @@ void SongMenu::remFromPlaylist(bool)
 			// i doesn't necessarily match item index depending on sorting order
 			mainWindow->getSongsTree()->takeTopLevelItem(i);
 			mainWindow->status(lib::fmt::format("Removed {} - {} from \"{}\"",
-				trackName, artist, currentPlaylist->name));
+				trackName,
+				lib::spt::entity::combine_names(artists),
+				currentPlaylist->name));
 		});
 }
 
 void SongMenu::openTrackFeatures(bool)
 {
-	MainWindow::find(parentWidget())->openAudioFeaturesWidget(trackId, artist, trackName);
+	auto *mainWindow = MainWindow::find(parentWidget());
+	mainWindow->openAudioFeaturesWidget(trackId,
+		lib::spt::entity::combine_names(artists), trackName);
 }
 
 void SongMenu::openLyrics(bool)
 {
-	MainWindow::find(parentWidget())->openLyrics(artist, trackName);
+	auto *mainWindow = MainWindow::find(parentWidget());
+	mainWindow->openLyrics(lib::spt::entity::combine_names(artists), trackName);
 }
 
-void SongMenu::viewArtist(bool)
+void SongMenu::viewArtist(const lib::spt::entity &artist)
 {
-	MainWindow::find(parentWidget())->openArtist(artistId);
+	MainWindow::find(parentWidget())->openArtist(artist.id);
 }
 
 void SongMenu::openAlbum(bool)

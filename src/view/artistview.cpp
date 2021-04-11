@@ -187,6 +187,8 @@ void ArtistView::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
 		item->setData(RoleTrackId, QString::fromStdString(track.id));
 		item->setData(RoleAlbumId, QString::fromStdString(track.album.id));
 		item->setData(RoleIndex, i++);
+		item->setData(RoleArtists,
+			QString::fromStdString(((nlohmann::json) track.artists).dump()));
 		topTrackIds.push_back(lib::spt::api::to_uri("track", track.id));
 	}
 
@@ -298,7 +300,14 @@ void ArtistView::trackMenu(const QPoint &pos)
 		return;
 	}
 
-	auto *songMenu = new SongMenu(item, artist.name, spotify, parentWidget());
+	std::vector<lib::spt::entity> artists = nlohmann::json::parse(item->data(RoleArtists)
+		.toString().toStdString());
+	lib::vector::remove_if(artists, [this](const lib::spt::entity &entity)
+	{
+		return entity.id == this->artistId;
+	});
+
+	auto *songMenu = new SongMenu(item, artists, spotify, parentWidget());
 	songMenu->popup(topTracksList->mapToGlobal(pos));
 }
 

@@ -46,7 +46,7 @@ void TracksCacheDialog::open()
 		{
 			new QTreeWidgetItem(tree, {
 				QString::fromStdString(track.name),
-				QString::fromStdString(track.artist.name),
+				QString::fromStdString(lib::spt::entity::combine_names(track.artists)),
 				QString::fromStdString(track.album.name),
 			});
 		}

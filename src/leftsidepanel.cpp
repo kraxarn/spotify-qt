@@ -69,7 +69,7 @@ void LeftSidePanel::resetCurrentlyPlaying()
 void LeftSidePanel::popupSongMenu(const QPoint &pos)
 {
 	auto track = current.playback.item;
-	if (track.name.empty() && track.artist.name.empty())
+	if (track.name.empty() && track.artists.empty())
 	{
 		return;
 	}
@@ -119,7 +119,7 @@ void LeftSidePanel::updateContextIcon()
 	}
 	else if (current.playback.context.type == "artist")
 	{
-		callback(current.playback.item.artist.name);
+		callback(lib::spt::entity::combine_names(current.playback.item.artists));
 	}
 	else
 	{
@@ -173,7 +173,10 @@ std::unordered_set<std::string> LeftSidePanel::allArtists()
 		auto playlistId = playlists->item(i)->data(RolePlaylistId).toString().toStdString();
 		for (auto &track : cache.get_playlist(playlistId).tracks)
 		{
-			artists.insert(track.artist.name);
+			for (const auto &artist : track.artists)
+			{
+				artists.insert(artist.name);
+			}
 		}
 	}
 	return artists;

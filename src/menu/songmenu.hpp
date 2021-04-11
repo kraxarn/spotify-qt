@@ -17,19 +17,20 @@ Q_OBJECT
 public:
 	SongMenu(QTreeWidgetItem *item, spt::Spotify &spotify, QWidget *parent);
 
-	SongMenu(QListWidgetItem *item, std::string artist, spt::Spotify &spotify, QWidget *parent);
+	SongMenu(QListWidgetItem *item, const std::vector<lib::spt::entity> &artists,
+		spt::Spotify &spotify, QWidget *parent);
 
 	SongMenu(const lib::spt::track &track, spt::Spotify &spotify, QWidget *parent);
 
 private:
-	SongMenu(const std::string &trackId, std::string artist, std::string name, std::string artistId,
-		std::string albumId, int index, spt::Spotify &spotify, QWidget *parent);
+	SongMenu(const std::string &trackId, const std::vector<lib::spt::entity> &artists,
+		std::string name, std::string albumId, int index, spt::Spotify &spotify, QWidget *parent);
 
 	spt::Spotify &spotify;
 	bool isLiked = false;
+
+	std::vector<lib::spt::entity> artists;
 	const std::string trackId;
-	const std::string artist;
-	const std::string artistId;
 	const std::string albumId;
 	const std::string trackName;
 	QString trackUri;
@@ -42,6 +43,6 @@ private:
 	void remFromPlaylist(bool checked);
 	void openTrackFeatures(bool checked);
 	void openLyrics(bool checked);
-	void viewArtist(bool checked);
+	void viewArtist(const lib::spt::entity &artist);
 	void openAlbum(bool checked);
 };

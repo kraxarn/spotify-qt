@@ -48,7 +48,7 @@ namespace lib
 			 * Artist track is made by
 			 * @todo Add support for multiple artists
 			 */
-			entity artist;
+			std::vector<entity> artists;
 
 			/**
 			 * URL to cover of album
