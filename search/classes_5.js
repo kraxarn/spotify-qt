@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['http_5fclient_191',['http_client',['../classlib_1_1http__client.html',1,'lib']]]
+  ['fmt_190',['fmt',['../classlib_1_1fmt.html',1,'lib']]]
 ];
