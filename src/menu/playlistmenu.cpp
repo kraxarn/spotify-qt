@@ -16,6 +16,7 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &play
 	tracksAction->setEnabled(false);
 	byAction = addAction("By ...");
 	byAction->setEnabled(false);
+	byAction->setVisible(false);
 
 	addSeparator();
 	auto *playShuffle = addAction(Icon::get("media-playlist-shuffle"),
@@ -134,6 +135,7 @@ void PlaylistMenu::tracksLoaded(const std::vector<lib::spt::track> &items)
 	{
 		byAction->setText(QString("By %1")
 			.arg(QString::fromStdString(playlist.owner_name)));
+		byAction->setVisible(true);
 	}
 	editAction->setVisible(isOwner);
 }
