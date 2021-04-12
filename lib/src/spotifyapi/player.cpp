@@ -17,7 +17,7 @@ void api::current_playback(lib::callback<lib::spt::playback> &callback)
 
 void api::set_device(const std::string &device_id, lib::callback<std::string> &callback)
 {
-	current_device = device_id;
+	set_current_device(device_id);
 	put("me/player", {
 		{"device_ids", {
 			device_id
@@ -54,9 +54,10 @@ void api::play_tracks(int trackIndex, const std::string &context,
 		}}
 	};
 
-	put(current_device.empty()
+	put(get_current_device().empty()
 			? "me/player/play"
-			: lib::fmt::format("me/player/play?device_id={}", current_device),
+			: lib::fmt::format("me/player/play?device_id={}",
+			get_current_device()),
 		body, callback);
 }
 
@@ -82,9 +83,10 @@ void api::play_tracks(int track_index, const std::vector<std::string> &all,
 		}}
 	};
 
-	put(current_device.empty()
+	put(get_current_device().empty()
 			? "me/player/play"
-			: lib::fmt::format("me/player/play?device_id={}", current_device),
+			: lib::fmt::format("me/player/play?device_id={}",
+			get_current_device()),
 		body, callback);
 }
 
@@ -102,9 +104,10 @@ void api::play_tracks(const std::string &context, lib::callback<std::string> &ca
 		{"context_uri", context}
 	};
 
-	put(current_device.empty()
+	put(get_current_device().empty()
 			? "me/player/play"
-			: lib::fmt::format("me/player/play?device_id={}", current_device),
+			: lib::fmt::format("me/player/play?device_id={}",
+				get_current_device()),
 		body, callback);
 }
 

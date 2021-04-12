@@ -133,6 +133,11 @@ namespace lib
 			 * Which column to sort by in track list
 			 */
 			int song_header_sort_by = -1;
+
+			/**
+			 * ID of last selected device
+			 */
+			std::string last_device;
 		};
 	}
 }

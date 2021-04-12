@@ -34,6 +34,7 @@ void settings::from_json(const nlohmann::json &json)
 	// General
 	setValue(g, "fallback_icons", general.fallback_icons);
 	setValue(g, "fixed_width_time", general.fixed_width_time);
+	setValue(g, "last_device", general.last_device);
 	setValue(g, "last_playlist", general.last_playlist);
 	setValue(g, "last_version", general.last_version);
 	setValue(g, "last_volume", general.last_volume);
@@ -124,6 +125,7 @@ nlohmann::json settings::to_json() const
 			{"fallback_icons", general.fallback_icons},
 			{"fixed_width_time", general.fixed_width_time},
 			{"hidden_song_headers", general.hidden_song_headers},
+			{"last_device", general.last_device},
 			{"last_playlist", general.last_playlist},
 			{"last_version", general.last_version},
 			{"last_volume", general.last_volume},

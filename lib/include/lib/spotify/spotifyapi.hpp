@@ -302,11 +302,6 @@ namespace lib
 			 */
 			lib::settings &settings;
 
-			/**
-			 * ID of current playback device
-			 */
-			std::string current_device;
-
 			//region GET
 
 			/**
@@ -408,6 +403,17 @@ namespace lib
 			 * @returns Parsed JSON, or null object if no data
 			 */
 			static nlohmann::json parse_json(const std::string &url, const std::string &data);
+
+			/**
+			 * Set last used device
+			 * @param id Device ID
+			 */
+			void set_current_device(const std::string &id);
+
+			/**
+			 * Get last used device
+			 */
+			auto get_current_device() const -> std::string;
 		};
 	}
 }

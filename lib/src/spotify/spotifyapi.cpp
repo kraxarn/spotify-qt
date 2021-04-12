@@ -101,6 +101,17 @@ std::string api::follow_type_string(lib::follow_type type)
 	return std::string();
 }
 
+void api::set_current_device(const std::string &id)
+{
+	settings.general.last_device = id;
+	settings.save();
+}
+
+auto api::get_current_device() const -> std::string
+{
+	return settings.general.last_device;
+}
+
 //region GET
 
 void api::get_items(const std::string &url, const std::string &key,
