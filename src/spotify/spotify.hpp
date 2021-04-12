@@ -44,6 +44,9 @@ namespace spt
 
 		QNetworkRequest request(const QString &url);
 
+		void select_device(const std::vector<lib::spt::device> &devices,
+			lib::callback<lib::spt::device> &callback);
+
 		//region New asynchronous
 
 		void await(QNetworkReply *reply, lib::callback<QByteArray> &callback);

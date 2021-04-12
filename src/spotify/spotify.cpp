@@ -51,7 +51,6 @@ void Spotify::await(QNetworkReply *reply, lib::callback<QByteArray> &callback)
 		});
 }
 
-
 std::string Spotify::error_message(const std::string &url, const std::string &data)
 {
 	nlohmann::json json;
@@ -94,6 +93,21 @@ void Spotify::get(const std::string &url, lib::callback<nlohmann::json> &callbac
 		});
 }
 
+void Spotify::select_device(const std::vector<lib::spt::device> &devices,
+	lib::callback<lib::spt::device> &callback)
+{
+	DeviceSelectDialog dialog(devices, dynamic_cast<QWidget *>(parent()));
+
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		auto selected = dialog.selectedDevice();
+		if (!selected.id.empty())
+		{
+			callback(selected);
+		}
+	}
+}
+
 void Spotify::put(const std::string &url, const nlohmann::json &body,
 	lib::callback<std::string> &callback)
 {
@@ -120,31 +134,35 @@ void Spotify::put(const std::string &url, const nlohmann::json &body,
 					if (devices.empty())
 					{
 						if (callback)
+						{
 							callback(error);
+						}
 					}
 					else if (devices.size() == 1)
 					{
 						this->set_device(devices.at(0),
 							[this, url, body, callback](const std::string &status)
 							{
-								this->put(url, body, callback);
+								if (status.empty())
+								{
+									this->put(url, body, callback);
+								}
 							});
 					}
 					else if (devices.size() > 1)
 					{
-						DeviceSelectDialog dialog(devices);
-						if (dialog.exec() == QDialog::Accepted)
+						select_device(devices, [this, url, body, callback]
+							(const lib::spt::device &device)
 						{
-							auto selected = dialog.selectedDevice();
-							if (!selected.id.empty())
+							this->set_device(device, [this, url, body, callback]
+								(const std::string &status)
 							{
-								this->set_device(selected,
-									[this, url, body, callback](const std::string &status)
-									{
-										this->put(url, body, callback);
-									});
-							}
-						}
+								if (status.empty())
+								{
+									this->put(url, body, callback);
+								}
+							});
+						});
 					}
 				});
 			}
