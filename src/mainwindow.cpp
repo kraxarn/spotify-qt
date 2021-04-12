@@ -173,6 +173,25 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	});
 
 	// Set current device if saved
+	spotify->devices([this](const std::vector<lib::spt::device> &devices)
+	{
+		if (devices.size() == 1)
+		{
+			spotify->set_device(devices.front(), {});
+		}
+		else
+		{
+			for (const auto &device : devices)
+			{
+				if (device.id == this->settings.general.last_device)
+				{
+					spotify->set_device(device, {});
+					break;
+				}
+			}
+		}
+	});
+
 	if (!settings.general.last_device.empty())
 	{
 		spotify->set_device(settings.general.last_device, [this](const std::string &status)
