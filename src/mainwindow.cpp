@@ -175,7 +175,8 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	// Set current device if saved
 	spotify->devices([this](const std::vector<lib::spt::device> &devices)
 	{
-		if (devices.size() == 1)
+		if (devices.size() == 1
+			&& lib::strings::starts_with(devices.front().name, "spotify-qt"))
 		{
 			spotify->set_device(devices.front(), {});
 		}
