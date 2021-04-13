@@ -193,18 +193,6 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 		}
 	});
 
-	if (!settings.general.last_device.empty())
-	{
-		spotify->set_device(settings.general.last_device, [this](const std::string &status)
-		{
-			if (!status.empty())
-			{
-				this->settings.general.last_device = std::string();
-				lib::log::warn("Last used device unavailable: {}", status);
-			}
-		});
-	}
-
 	// Welcome
 	setStatus("Welcome to spotify-qt!");
 	splash->finish(this);
