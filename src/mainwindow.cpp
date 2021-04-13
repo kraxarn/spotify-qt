@@ -172,9 +172,17 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 		this->currentUser = user;
 	});
 
-	// Set current device if saved
 	spotify->devices([this](const std::vector<lib::spt::device> &devices)
 	{
+		// Don't select a new device if one is currently active
+		for (const auto &device : devices)
+		{
+			if (device.is_active)
+			{
+				return;
+			}
+		}
+
 		if (devices.size() == 1
 			&& lib::strings::starts_with(devices.front().name, "spotify-qt"))
 		{
