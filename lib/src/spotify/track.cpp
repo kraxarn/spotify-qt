@@ -18,6 +18,56 @@ void lib::spt::to_json(nlohmann::json &j, const track &t)
 	};
 }
 
+void from_cache(const nlohmann::json &j, lib::spt::track &t)
+{
+	if (!j.is_object())
+	{
+		return;
+	}
+
+	j.at("id").get_to(t.id);
+	j.at("name").get_to(t.name);
+	j.at("duration").get_to(t.duration);
+	j.at("image").get_to(t.image);
+	j.at("is_local").get_to(t.is_local);
+	j.at("added_at").get_to(t.added_at);
+	j.at("is_playable").get_to(t.is_playable);
+
+	const auto &album = j.at("album");
+
+	if (album.is_object())
+	{
+		album.get_to(t.album);
+	}
+	else if (album.is_string() && j.contains("album_id"))
+	{
+		album.get_to(t.album.name);
+		j.at("album_id").get_to(t.album.id);
+	}
+
+	if (j.contains("artists"))
+	{
+		j.at("artists").get_to(t.artists);
+	}
+	else if (j.contains("artist"))
+	{
+		const auto &a = j.at("artist");
+		lib::spt::entity artist;
+
+		if (a.is_object())
+		{
+			a.get_to(artist);
+		}
+		else if (a.is_string() && j.contains("artist_id"))
+		{
+			a.get_to(artist.name);
+			j.at("artist_id").get_to(artist.id);
+		}
+
+		t.artists.push_back(artist);
+	}
+}
+
 void lib::spt::from_json(const nlohmann::json &j, track &t)
 {
 	if (!j.is_object())
@@ -28,48 +78,7 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 	// If json contains image, track is loaded from cache
 	if (j.contains("image"))
 	{
-		j.at("id").get_to(t.id);
-		j.at("name").get_to(t.name);
-		j.at("duration").get_to(t.duration);
-		j.at("image").get_to(t.image);
-		j.at("is_local").get_to(t.is_local);
-		j.at("added_at").get_to(t.added_at);
-		j.at("is_playable").get_to(t.is_playable);
-
-		const auto &album = j.at("album");
-
-		if (album.is_object())
-		{
-			album.get_to(t.album);
-		}
-		else if (album.is_string() && j.contains("album_id"))
-		{
-			album.get_to(t.album.name);
-			j.at("album_id").get_to(t.album.id);
-		}
-
-		if (j.contains("artists"))
-		{
-			j.at("artists").get_to(t.artists);
-		}
-		else if (j.contains("artist"))
-		{
-			const auto &a = j.at("artist");
-			entity artist;
-
-			if (a.is_object())
-			{
-				a.get_to(artist);
-			}
-			else if (a.is_string() && j.contains("artist_id"))
-			{
-				a.get_to(artist.name);
-				j.at("artist_id").get_to(artist.id);
-			}
-
-			t.artists.push_back(artist);
-		}
-
+		from_cache(j, t);
 		return;
 	}
 
