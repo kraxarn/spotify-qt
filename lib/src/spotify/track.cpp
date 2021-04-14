@@ -8,7 +8,7 @@ void lib::spt::to_json(nlohmann::json &j, const track &t)
 	j = nlohmann::json{
 		{"id", t.id},
 		{"album", t.album},
-		{"artist", t.artists.front()},
+		{"artists", t.artists},
 		{"name", t.name},
 		{"image", t.image},
 		{"duration", t.duration},
