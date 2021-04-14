@@ -7,11 +7,6 @@ ArtistView::ArtistView(spt::Spotify &spotify, const std::string &artistId,
 	cache(cache),
 	QWidget(parent)
 {
-	spotify.artist(this->artistId, [this](const lib::spt::artist &loadedArtist)
-	{
-		artistLoaded(loadedArtist);
-	});
-
 	layout = new QVBoxLayout();
 	layout->setContentsMargins(-1, 0, -1, 0);
 	setLayout(layout);
@@ -110,6 +105,11 @@ ArtistView::ArtistView(spt::Spotify &spotify, const std::string &artistId,
 	relatedList->setEnabled(false);
 	QListWidget::connect(relatedList, &QListWidget::itemClicked, this, &ArtistView::relatedClick);
 	tabs->addTab(relatedList, "Related");
+
+	spotify.artist(this->artistId, [this](const lib::spt::artist &loadedArtist)
+	{
+		artistLoaded(loadedArtist);
+	});
 }
 
 void ArtistView::artistLoaded(const lib::spt::artist &loadedArtist)
