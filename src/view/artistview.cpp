@@ -27,8 +27,9 @@ ArtistView::ArtistView(spt::Spotify &spotify, const std::string &artistId,
 	name->setWordWrap(true);
 	new Loader(name);
 
+	constexpr int titleFontSize = 24;
 	auto titleFont = name->font();
-	titleFont.setPointSize(24);
+	titleFont.setPointSize(titleFontSize);
 	name->setFont(titleFont);
 	title->addWidget(name, 1);
 
@@ -129,8 +130,8 @@ void ArtistView::artistLoaded(const lib::spt::artist &loadedArtist)
 	coverLabel->setPixmap(cover.copy(0, 80, 320, 160));
 
 	auto followers = QString("%1 follower%2")
-		.arg(QString::fromStdString(lib::fmt::count(artist.followers)))
-		.arg(artist.followers == 1 ? "" : "s");
+		.arg(QString::fromStdString(lib::fmt::count(artist.followers)),
+			artist.followers == 1 ? "" : "s");
 
 	// Artist name title
 	name->setText(QString::fromStdString(artist.name));
@@ -238,9 +239,9 @@ void ArtistView::updateFollow(bool isFollowing)
 {
 	followButton->setIcon(Icon::get(QString("%1starred-symbolic")
 		.arg(isFollowing ? "" : "non-")));
+
 	followButton->setText(QString("%1%2")
-		.arg(isFollowing ? "Unfollow" : "Follow")
-		.arg(followButton->text()
+		.arg(isFollowing ? "Unfollow" : "Follow", followButton->text()
 			.right(followButton->text().length() - followButton->text().indexOf(' '))));
 }
 
@@ -302,7 +303,7 @@ void ArtistView::trackMenu(const QPoint &pos)
 
 	std::vector<lib::spt::entity> artists = nlohmann::json::parse(item->data(RoleArtists)
 		.toString().toStdString());
-	lib::vector::remove_if(artists, [this](const lib::spt::entity &entity)
+	lib::vector::remove_if(artists, [this](const lib::spt::entity &entity) -> bool
 	{
 		return entity.id == this->artistId;
 	});
