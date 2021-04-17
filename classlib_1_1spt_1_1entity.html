@@ -91,6 +91,8 @@ Inheritance diagram for lib::spt::entity:</div>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:acd4636208a332f3d2f1f9f72e2ae2ec5"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1entity.html#acd4636208a332f3d2f1f9f72e2ae2ec5">combine_names</a> (const std::vector&lt; <a class="el" href="classlib_1_1spt_1_1entity.html">entity</a> &gt; &amp;entities) -&gt; std::string</td></tr>
 <tr class="separator:acd4636208a332f3d2f1f9f72e2ae2ec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f5b7f3520cf211856e3268019a19890"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1entity.html#a4f5b7f3520cf211856e3268019a19890">combine_names</a> (const std::vector&lt; <a class="el" href="classlib_1_1spt_1_1entity.html">entity</a> &gt; &amp;entities, const char *separator) -&gt; std::string</td></tr>
+<tr class="separator:a4f5b7f3520cf211856e3268019a19890"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -103,7 +105,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>An entity with an ID and a name </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="acd4636208a332f3d2f1f9f72e2ae2ec5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd4636208a332f3d2f1f9f72e2ae2ec5">&#9670;&nbsp;</a></span>combine_names()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acd4636208a332f3d2f1f9f72e2ae2ec5">&#9670;&nbsp;</a></span>combine_names() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -126,6 +128,48 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Combine names to a comma separated string </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">entities</td><td>Entities to combine </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4f5b7f3520cf211856e3268019a19890"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f5b7f3520cf211856e3268019a19890">&#9670;&nbsp;</a></span>combine_names() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static auto lib::spt::entity::combine_names </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="classlib_1_1spt_1_1entity.html">entity</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>entities</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>separator</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt;  std::string</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Combine names with separator </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">entities</td><td>Entities to combine </td></tr>
   </table>

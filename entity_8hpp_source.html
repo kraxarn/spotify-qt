@@ -93,14 +93,18 @@ $(function() {
 <div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1entity.html#a52586eeb440239769c5383020a1ca50a">   29</a></span>&#160;            std::string <a class="code" href="classlib_1_1spt_1_1entity.html#a52586eeb440239769c5383020a1ca50a">name</a>;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
 <div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1entity.html#acd4636208a332f3d2f1f9f72e2ae2ec5">   35</a></span>&#160;            <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1spt_1_1entity.html#acd4636208a332f3d2f1f9f72e2ae2ec5">combine_names</a>(<span class="keyword">const</span> std::vector&lt;entity&gt; &amp;entities) -&gt; std::string;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        };</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordtype">void</span> to_json(nlohmann::json &amp;j, <span class="keyword">const</span> <a class="code" href="classlib_1_1spt_1_1entity.html">entity</a> &amp;e);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordtype">void</span> from_json(<span class="keyword">const</span> nlohmann::json &amp;j, <a class="code" href="classlib_1_1spt_1_1entity.html">entity</a> &amp;e);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    }</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;}</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1entity.html#a4f5b7f3520cf211856e3268019a19890">   41</a></span>&#160;            <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1spt_1_1entity.html#a4f5b7f3520cf211856e3268019a19890">combine_names</a>(<span class="keyword">const</span> std::vector&lt;entity&gt; &amp;entities,</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                <span class="keyword">const</span> <span class="keywordtype">char</span> *separator) -&gt; std::string;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        };</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordtype">void</span> to_json(nlohmann::json &amp;j, <span class="keyword">const</span> <a class="code" href="classlib_1_1spt_1_1entity.html">entity</a> &amp;e);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordtype">void</span> from_json(<span class="keyword">const</span> nlohmann::json &amp;j, <a class="code" href="classlib_1_1spt_1_1entity.html">entity</a> &amp;e);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
 <div class="ttc" id="aclasslib_1_1spt_1_1entity_html"><div class="ttname"><a href="classlib_1_1spt_1_1entity.html">lib::spt::entity</a></div><div class="ttdef"><b>Definition:</b> entity.hpp:17</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1entity_html_a4f5b7f3520cf211856e3268019a19890"><div class="ttname"><a href="classlib_1_1spt_1_1entity.html#a4f5b7f3520cf211856e3268019a19890">lib::spt::entity::combine_names</a></div><div class="ttdeci">static auto combine_names(const std::vector&lt; entity &gt; &amp;entities, const char *separator) -&gt; std::string</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1entity_html_a52586eeb440239769c5383020a1ca50a"><div class="ttname"><a href="classlib_1_1spt_1_1entity.html#a52586eeb440239769c5383020a1ca50a">lib::spt::entity::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition:</b> entity.hpp:29</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1entity_html_acd4636208a332f3d2f1f9f72e2ae2ec5"><div class="ttname"><a href="classlib_1_1spt_1_1entity.html#acd4636208a332f3d2f1f9f72e2ae2ec5">lib::spt::entity::combine_names</a></div><div class="ttdeci">static auto combine_names(const std::vector&lt; entity &gt; &amp;entities) -&gt; std::string</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1entity_html_aee885e71436770386505526fb446dbe8"><div class="ttname"><a href="classlib_1_1spt_1_1entity.html#aee885e71436770386505526fb446dbe8">lib::spt::entity::id</a></div><div class="ttdeci">std::string id</div><div class="ttdef"><b>Definition:</b> entity.hpp:24</div></div>
