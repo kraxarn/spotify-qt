@@ -26,7 +26,8 @@ void lib::spt::from_json(const nlohmann::json &j, entity &e)
 	}
 }
 
-auto lib::spt::entity::combine_names(const std::vector<entity> &entities) -> std::string
+auto lib::spt::entity::combine_names(const std::vector<entity> &entities,
+	const char *separator) -> std::string
 {
 	std::vector<std::string> names;
 	names.reserve(entities.size());
@@ -34,5 +35,10 @@ auto lib::spt::entity::combine_names(const std::vector<entity> &entities) -> std
 	{
 		names.push_back(entity.name);
 	}
-	return lib::strings::join(names, ", ");
+	return lib::strings::join(names, separator);
+}
+
+auto lib::spt::entity::combine_names(const std::vector<entity> &entities) -> std::string
+{
+	return combine_names(entities, ", ");
 }

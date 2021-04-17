@@ -28,7 +28,11 @@ TrackListItem::TrackListItem(const QStringList &strings,
 			: "Unavailable");
 	}
 
-	// Title, artist album
+	// Artist
+	setToolTip(2,
+		QString::fromStdString(lib::spt::entity::combine_names(track.artists, "\n")));
+
+	// Title, album
 	for (auto i = 1; i < strings.length() - 2; i++)
 	{
 		if (toolTip(i).isEmpty())

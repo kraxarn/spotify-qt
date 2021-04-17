@@ -33,6 +33,13 @@ namespace lib
 			 * @param entities Entities to combine
 			 */
 			static auto combine_names(const std::vector<entity> &entities) -> std::string;
+
+			/**
+			 * Combine names with separator
+			 * @param entities Entities to combine
+			 */
+			static auto combine_names(const std::vector<entity> &entities,
+				const char *separator) -> std::string;
 		};
 
 		/**
