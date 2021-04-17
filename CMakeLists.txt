@@ -40,15 +40,11 @@ message(STATUS "Using Qt ${QT_VERSION_MAJOR}")
 file(GLOB MAIN_SRC "src/*.[hc]pp")
 file(GLOB SUB_SRC "src/*/*.[hc]pp")
 
-if (USE_QT_QUICK)
-	set(QML_RES qml/res.qrc)
-endif ()
-
 # Add all source files to main executable
 if (ANDROID)
-	add_library(spotify-qt SHARED ${MAIN_SRC} ${SUB_SRC} ${QML_RES} res.qrc)
+	add_library(spotify-qt SHARED ${MAIN_SRC} ${SUB_SRC} res.qrc)
 else ()
-	add_executable(spotify-qt ${MAIN_SRC} ${SUB_SRC} ${QML_RES} ${LIB_SRC} res.qrc)
+	add_executable(spotify-qt ${MAIN_SRC} ${SUB_SRC} ${LIB_SRC} res.qrc)
 endif ()
 
 # Headers are in src/
@@ -88,14 +84,6 @@ target_link_libraries(spotify-qt PRIVATE
 # spotify-qt-lib
 add_subdirectory(lib)
 target_link_libraries(spotify-qt PRIVATE spotify-qt-lib)
-
-# Check if we should include Qt Quick
-if (USE_QT_QUICK)
-	add_subdirectory(qml)
-	target_compile_definitions(spotify-qt PRIVATE USE_QT_QUICK)
-	target_link_libraries(spotify-qt PRIVATE spotify-qt-quick)
-	set_target_properties(spotify-qt PROPERTIES OUTPUT_NAME spotify-qt-quick)
-endif ()
 
 # D-Bus support is optional
 if (Qt5DBus_FOUND)
