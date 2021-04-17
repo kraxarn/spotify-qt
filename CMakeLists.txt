@@ -85,10 +85,6 @@ target_link_libraries(spotify-qt PRIVATE
 add_subdirectory(lib)
 target_link_libraries(spotify-qt PRIVATE spotify-qt-lib)
 
-# spotify-qt-common
-add_subdirectory(common)
-target_link_libraries(spotify-qt PRIVATE spotify-qt-common)
-
 # D-Bus support is optional
 if (Qt5DBus_FOUND)
 	target_compile_definitions(spotify-qt PRIVATE USE_DBUS)
