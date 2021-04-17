@@ -17,4 +17,4 @@ add_library(spotify-qt-common STATIC ${MAIN_SRC})
 
 # Qt
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
-target_link_libraries(spotify-qt-common PRIVATE Qt5::Core)
+target_link_libraries(spotify-qt-common PRIVATE Qt${QT_VERSION_MAJOR}::Core)
