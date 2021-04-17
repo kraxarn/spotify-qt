@@ -56,12 +56,14 @@ void api::add_to_playlist(const std::string &playlist_id, const std::string &tra
 void api::remove_from_playlist(const std::string &playlist_id, const std::string &track_id,
 	int pos, lib::callback<std::string> &callback)
 {
-	del(lib::fmt::format("playlists/%1/tracks", playlist_id), {
+	del(lib::fmt::format("playlists/{}/tracks", playlist_id), {
 		{"tracks", {
-			{"uri", track_id},
-			{"position", {
-				pos
-			}}
+			{
+				{"uri", track_id},
+				{"positions", {
+					pos
+				}}
+			}
 		}}
 	}, callback);
 }
