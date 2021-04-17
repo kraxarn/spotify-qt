@@ -14,7 +14,7 @@ TrackListItem::TrackListItem(const QStringList &strings,
 	setData(0, RoleTrackId,
 		QString::fromStdString(lib::fmt::format("spotify:track:{}", track.id)));
 	setData(0, RoleArtists,
-		QString::fromStdString(((nlohmann::json)track.artists).dump()));
+		QString::fromStdString(((nlohmann::json) track.artists).dump()));
 	setData(0, RoleAlbumId, QString::fromStdString(track.album.id));
 	setData(0, RoleIndex, index);
 	setData(0, RoleAddedDate, addedAt);
@@ -36,7 +36,9 @@ TrackListItem::TrackListItem(const QStringList &strings,
 	for (auto i = 1; i < strings.length() - 2; i++)
 	{
 		if (toolTip(i).isEmpty())
+		{
 			setToolTip(i, strings.at(i));
+		}
 	}
 
 	// Length
@@ -45,8 +47,7 @@ TrackListItem::TrackListItem(const QStringList &strings,
 	{
 		setToolTip(strings.length() - 2,
 			QString("%1m %2s (%3s total)")
-				.arg(length.at(0))
-				.arg(length.at(1))
+				.arg(length.at(0), length.at(1))
 				.arg(track.duration / 1000));
 	}
 
