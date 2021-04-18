@@ -12,13 +12,12 @@ var searchData=
   ['to_5ftime_159',['to_time',['../classlib_1_1date__time.html#a00868acf92467a13aeeea6b0a4b17f5a',1,'lib::date_time']]],
   ['to_5fupper_160',['to_upper',['../classlib_1_1strings.html#a04325ef56364db92cbf38d175006a80f',1,'lib::strings']]],
   ['to_5furi_161',['to_uri',['../classlib_1_1spt_1_1api.html#a016aaf9922544127ab955dcc0b93c65a',1,'lib::spt::api']]],
-  ['todo_20list_162',['Todo List',['../todo.html',1,'']]],
-  ['track_163',['track',['../classlib_1_1spt_1_1track.html',1,'lib::spt']]],
-  ['track_5fcount_164',['track_count',['../classlib_1_1spt_1_1playlist.html#a1049b8b66bb5e127bb8fbfcb7b1b5e0d',1,'lib::spt::playlist']]],
-  ['tracks_165',['tracks',['../classlib_1_1spt_1_1playlist.html#af31fb77d7316d524020f52b99eeae675',1,'lib::spt::playlist::tracks()'],['../classlib_1_1spt_1_1search__results.html#ac5dad86a1b2cb4724d08ff6ed817435d',1,'lib::spt::search_results::tracks()'],['../classlib_1_1cache.html#a36be8a8bd16420aeacf4016bb70ce346',1,'lib::cache::tracks(const std::string &amp;id)'],['../classlib_1_1cache.html#a5fae6af26cda1d25439f1a9ee42bdd44',1,'lib::cache::tracks(const std::string &amp;id, const std::vector&lt; lib::spt::track &gt; &amp;tracks)']]],
-  ['tracks_5fhref_166',['tracks_href',['../classlib_1_1spt_1_1playlist.html#a6bd3cca9afe5a1584d71d0e4d880cf14',1,'lib::spt::playlist']]],
-  ['tracks_5ftotal_167',['tracks_total',['../classlib_1_1spt_1_1playlist.html#abc4dec5cee51165c5f02460b429e14b9',1,'lib::spt::playlist']]],
-  ['trim_168',['trim',['../classlib_1_1strings.html#a67c8af5fdab4b19903a8cabe1a01e348',1,'lib::strings']]],
-  ['try_5fto_5fint_169',['try_to_int',['../classlib_1_1strings.html#aecc8b93d089c231027f7fb1802f4ed00',1,'lib::strings']]],
-  ['type_170',['type',['../classlib_1_1spt_1_1context.html#a3da85d5a0e71c4a58b6e5e0868accefe',1,'lib::spt::context::type()'],['../classlib_1_1spt_1_1device.html#aeb916c1ee10bf9814dfb294b1a55132d',1,'lib::spt::device::type()']]]
+  ['track_162',['track',['../classlib_1_1spt_1_1track.html',1,'lib::spt']]],
+  ['track_5fcount_163',['track_count',['../classlib_1_1spt_1_1playlist.html#a1049b8b66bb5e127bb8fbfcb7b1b5e0d',1,'lib::spt::playlist']]],
+  ['tracks_164',['tracks',['../classlib_1_1spt_1_1playlist.html#af31fb77d7316d524020f52b99eeae675',1,'lib::spt::playlist::tracks()'],['../classlib_1_1spt_1_1search__results.html#ac5dad86a1b2cb4724d08ff6ed817435d',1,'lib::spt::search_results::tracks()'],['../classlib_1_1cache.html#a36be8a8bd16420aeacf4016bb70ce346',1,'lib::cache::tracks(const std::string &amp;id)'],['../classlib_1_1cache.html#a5fae6af26cda1d25439f1a9ee42bdd44',1,'lib::cache::tracks(const std::string &amp;id, const std::vector&lt; lib::spt::track &gt; &amp;tracks)']]],
+  ['tracks_5fhref_165',['tracks_href',['../classlib_1_1spt_1_1playlist.html#a6bd3cca9afe5a1584d71d0e4d880cf14',1,'lib::spt::playlist']]],
+  ['tracks_5ftotal_166',['tracks_total',['../classlib_1_1spt_1_1playlist.html#abc4dec5cee51165c5f02460b429e14b9',1,'lib::spt::playlist']]],
+  ['trim_167',['trim',['../classlib_1_1strings.html#a67c8af5fdab4b19903a8cabe1a01e348',1,'lib::strings']]],
+  ['try_5fto_5fint_168',['try_to_int',['../classlib_1_1strings.html#aecc8b93d089c231027f7fb1802f4ed00',1,'lib::strings']]],
+  ['type_169',['type',['../classlib_1_1spt_1_1context.html#a3da85d5a0e71c4a58b6e5e0868accefe',1,'lib::spt::context::type()'],['../classlib_1_1spt_1_1device.html#aeb916c1ee10bf9814dfb294b1a55132d',1,'lib::spt::device::type()']]]
 ];
