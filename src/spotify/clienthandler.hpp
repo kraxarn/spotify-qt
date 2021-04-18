@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../enum/clienttype.hpp"
+#include "lib/enum/clienttype.hpp"
 #include "../keyring/kwallet.hpp"
 #include "lib/settings.hpp"
 
@@ -36,7 +36,7 @@ namespace spt
 		QString path;
 		static QList<QPair<QDateTime, QString>> log;
 		const lib::settings &settings;
-		ClientType clientType;
+		lib::client_type clientType;
 
 		bool supportsPulse();
 		static QString clientExec(const QString &path, const QStringList &arguments);
@@ -44,6 +44,6 @@ namespace spt
 		void readyRead() const;
 		void readyError() const;
 		void logOutput(const QByteArray &output) const;
-		static ClientType getClientType(const QString &path);
+		static lib::client_type getClientType(const QString &path);
 	};
 }
