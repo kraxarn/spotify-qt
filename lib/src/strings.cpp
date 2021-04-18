@@ -134,3 +134,19 @@ auto strings::capitalize(const std::string &str) -> std::string
 		to_upper(str.substr(0, 1)),
 		to_lower(str.substr(1)));
 }
+
+auto strings::index_of(const std::string &str, const std::string &keyword) -> unsigned long
+{
+	auto result = str.find(keyword);
+	return result == std::string::npos
+		? -1
+		: result;
+}
+
+auto strings::last_index_of(const std::string &str, const std::string &keyword) -> unsigned long
+{
+	auto result = str.rfind(keyword);
+	return result == std::string::npos
+		? -1
+		: result;
+}
