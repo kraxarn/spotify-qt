@@ -3,7 +3,7 @@ name: MSYS2
 on: [push, pull_request]
 
 env:
-  BUILD_TYPE: Releasse
+  BUILD_TYPE: Release
 
 jobs:
   build:
