@@ -80,6 +80,26 @@ TEST_CASE("strings::split")
 		CHECK_EQ(results.size(), 1);
 		CHECK(results[0].empty());
 	}
+
+	SUBCASE("long delimiter")
+	{
+		// with delimiter
+		auto expected = std::array<std::string, 3>{
+			"a", "bb", "ccc",
+		};
+		auto results = lib::strings::split("a, bb, ccc", ", ");
+
+		CHECK_EQ(results.size(), expected.size());
+		for (auto i = 0; i < results.size(); i++)
+		{
+			CHECK_EQ(results[i], expected[i]);
+		}
+
+		// without delimiter
+		CHECK_EQ(lib::strings::split("a, bb, ccc", ". ").at(0), "a, bb, ccc");
+		// empty string
+		CHECK(lib::strings::split(std::string(), ";").at(0).empty());
+	}
 }
 
 TEST_CASE("strings::starts_with")
