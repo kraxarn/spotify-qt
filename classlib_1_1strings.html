@@ -86,8 +86,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a148213e4413fcfab1c92888221ae4c1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67c8af5fdab4b19903a8cabe1a01e348"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#a67c8af5fdab4b19903a8cabe1a01e348">trim</a> (std::string &amp;str) -&gt; std::string</td></tr>
 <tr class="separator:a67c8af5fdab4b19903a8cabe1a01e348"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2747dc1d859225d89a053abfc0400529"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#a2747dc1d859225d89a053abfc0400529">split</a> (const std::string &amp;str, const char *delimiter) -&gt; std::vector&lt; std::string &gt;</td></tr>
-<tr class="separator:a2747dc1d859225d89a053abfc0400529"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac28d3f45f0ec324ec627cc1855f40569"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#ac28d3f45f0ec324ec627cc1855f40569">split</a> (const std::string &amp;str, const std::string &amp;delimiter) -&gt; std::vector&lt; std::string &gt;</td></tr>
+<tr class="separator:ac28d3f45f0ec324ec627cc1855f40569"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8eb65123d86e7e0f3fb834f0c13c4d95"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#a8eb65123d86e7e0f3fb834f0c13c4d95">split</a> (const std::string &amp;str, char delimiter) -&gt; std::vector&lt; std::string &gt;</td></tr>
 <tr class="separator:a8eb65123d86e7e0f3fb834f0c13c4d95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36c370982807a4d49343ec3811d184f9"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#a36c370982807a4d49343ec3811d184f9">starts_with</a> (const std::string &amp;str, const std::string &amp;start) -&gt; bool</td></tr>
@@ -550,8 +550,8 @@ template&lt;typename String &gt; </div>
 
 </div>
 </div>
-<a id="a2747dc1d859225d89a053abfc0400529"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2747dc1d859225d89a053abfc0400529">&#9670;&nbsp;</a></span>split() <span class="overload">[2/2]</span></h2>
+<a id="ac28d3f45f0ec324ec627cc1855f40569"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac28d3f45f0ec324ec627cc1855f40569">&#9670;&nbsp;</a></span>split() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -568,7 +568,7 @@ template&lt;typename String &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const char *&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>delimiter</em>&#160;</td>
         </tr>
         <tr>
@@ -714,6 +714,7 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>Rounds </dd></dl>
 
 </div>
 </div>

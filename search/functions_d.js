@@ -14,7 +14,7 @@ var searchData=
   ['set_5fvolume_296',['set_volume',['../classlib_1_1spt_1_1api.html#a6441af8171fdc04cdc497d3e93a93739',1,'lib::spt::api']]],
   ['settings_297',['settings',['../classlib_1_1settings.html#adb2eacf4134e51934d779cb6d933c6a9',1,'lib::settings']]],
   ['size_298',['size',['../classlib_1_1fmt.html#af388b7f2f3b09a114f8b488b20ac11be',1,'lib::fmt']]],
-  ['split_299',['split',['../classlib_1_1strings.html#a2747dc1d859225d89a053abfc0400529',1,'lib::strings::split(const std::string &amp;str, const char *delimiter) -&gt; std::vector&lt; std::string &gt;'],['../classlib_1_1strings.html#a8eb65123d86e7e0f3fb834f0c13c4d95',1,'lib::strings::split(const std::string &amp;str, char delimiter) -&gt; std::vector&lt; std::string &gt;']]],
+  ['split_299',['split',['../classlib_1_1strings.html#ac28d3f45f0ec324ec627cc1855f40569',1,'lib::strings::split(const std::string &amp;str, const std::string &amp;delimiter) -&gt; std::vector&lt; std::string &gt;'],['../classlib_1_1strings.html#a8eb65123d86e7e0f3fb834f0c13c4d95',1,'lib::strings::split(const std::string &amp;str, char delimiter) -&gt; std::vector&lt; std::string &gt;']]],
   ['spotify_5ferror_300',['spotify_error',['../classlib_1_1spotify__error.html#af5d6ab049435afacca53c14ae86318e4',1,'lib::spotify_error::spotify_error(const char *what, const char *url)'],['../classlib_1_1spotify__error.html#a8733ccd9916fe21aae82671fa994e1f5',1,'lib::spotify_error::spotify_error(const std::string &amp;what, const std::string &amp;url)']]],
   ['starts_5fwith_301',['starts_with',['../classlib_1_1strings.html#a36c370982807a4d49343ec3811d184f9',1,'lib::strings']]],
   ['sub_302',['sub',['../classlib_1_1vector.html#a0cbbd30c44399adbab7929e0d5d2986c',1,'lib::vector']]]
