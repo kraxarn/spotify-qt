@@ -58,7 +58,7 @@ TEST_CASE("strings::split")
 		auto expected = std::array<std::string, 3>{
 			"a", "bb", "ccc",
 		};
-		auto results = lib::strings::split("a, bb, ccc", ", ");
+		auto results = lib::strings::split("a,bb,ccc", ',');
 
 		CHECK_EQ(results.size(), expected.size());
 		for (auto i = 0; i < results.size(); i++)
@@ -69,14 +69,14 @@ TEST_CASE("strings::split")
 
 	SUBCASE("without delimiter")
 	{
-		auto results = lib::strings::split("a, bb, ccc", ". ");
+		auto results = lib::strings::split("a,bb,ccc", '.');
 		CHECK_EQ(results.size(), 1);
-		CHECK_EQ(results[0], "a, bb, ccc");
+		CHECK_EQ(results[0], "a,bb,ccc");
 	}
 
 	SUBCASE("empty string")
 	{
-		auto results = lib::strings::split(std::string(), ", ");
+		auto results = lib::strings::split(std::string(), ',');
 		CHECK_EQ(results.size(), 1);
 		CHECK(results[0].empty());
 	}
