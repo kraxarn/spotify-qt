@@ -14,17 +14,17 @@ public:
 
 	~test_paths()
 	{
-		ghc::filesystem::remove(config_file());
+		ghc::filesystem::remove("spotify-qt.json");
 	}
 
-	std::string config_file() const override
+	auto config_file() const -> ghc::filesystem::path override
 	{
-		return std::string("spotify-qt.json");
+		return "spotify-qt.json";
 	}
 
-	std::string cache() const override
+	auto cache() const -> ghc::filesystem::path override
 	{
-		return std::string("cache");
+		return "cache";
 	}
 };
 
