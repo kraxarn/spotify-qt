@@ -23,7 +23,8 @@ namespace lib
 		 * @param separator Separator between strings
 		 * @return Joined string
 		 */
-		static std::string join(const std::vector<std::string> &strings, const char *separator);
+		static auto join(const std::vector<std::string> &strings,
+			const char *separator) -> std::string;
 
 		/**
 		 * Check if a string is contained within another string
@@ -32,7 +33,7 @@ namespace lib
 		 * @return String contains value
 		 */
 		template<typename String>
-		static bool contains(const std::string &str, const String &value)
+		static auto contains(const std::string &str, const String &value) -> bool
 		{
 			return str.find(value) != std::string::npos;
 		}
@@ -43,7 +44,7 @@ namespace lib
 		 * @remark Argument is modified, return value is the same as the argument
 		 * @return Trimmed string
 		 */
-		static std::string trim(std::string &str);
+		static auto trim(std::string &str) -> std::string;
 
 		/**
 		 * Split a string into a vector
@@ -51,7 +52,8 @@ namespace lib
 		 * @param delimiter Delimiter to split by
 		 * @return Split string
 		 */
-		static std::vector<std::string> split(const std::string &str, char delimiter);
+		static auto split(const std::string &str,
+			const char *delimiter) -> std::vector<std::string>;
 
 		/**
 		 * Check if a string starts with a specific string
@@ -59,7 +61,7 @@ namespace lib
 		 * @param start String that the string should start with
 		 * @return String starts with the specified string
 		 */
-		static bool starts_with(const std::string &str, const std::string &start);
+		static auto starts_with(const std::string &str, const std::string &start) -> bool;
 
 		/**
 		 * Remove specified characters from a string
@@ -67,7 +69,7 @@ namespace lib
 		 * @param substr String to remove
 		 * @return Same as str
 		 */
-		static std::string remove(std::string &str, const std::string &substr);
+		static auto remove(std::string &str, const std::string &substr) -> std::string;
 
 		/**
 		 * Check if a string ends with another string
@@ -75,7 +77,7 @@ namespace lib
 		 * @param end String it should end with
 		 * @return str ends with end
 		 */
-		static bool ends_with(const std::string &str, const std::string &end);
+		static auto ends_with(const std::string &str, const std::string &end) -> bool;
 
 		/**
 		 * Try to parse the specified string as an int
@@ -83,7 +85,7 @@ namespace lib
 		 * @param value Value to write the result to
 		 * @return If conversion was successful
 		 */
-		static bool try_to_int(const std::string &str, int &value);
+		static auto try_to_int(const std::string &str, int &value) -> bool;
 
 		/**
 		 * Get the n-leftmost characters of string
@@ -91,7 +93,7 @@ namespace lib
 		 * @param n Number of characters to get
 		 * @return Substring of string with specified characters
 		 */
-		static std::string left(const std::string &str, size_t n);
+		static auto left(const std::string &str, size_t n) -> std::string;
 
 		/**
 		 * Get the n-rightmost characters of string
@@ -99,7 +101,7 @@ namespace lib
 		 * @param n Number of characters to get
 		 * @return Substring of string with specified characters
 		 */
-		static std::string right(const std::string &str, size_t n);
+		static auto right(const std::string &str, size_t n) -> std::string;
 
 		/**
 		 * Get string as all lowercase

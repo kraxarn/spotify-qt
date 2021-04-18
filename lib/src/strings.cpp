@@ -2,19 +2,21 @@
 
 using namespace lib;
 
-std::string strings::join(const std::vector<std::string> &strings, const char *separator)
+auto strings::join(const std::vector<std::string> &strings, const char *separator) -> std::string
 {
 	if (strings.empty())
+	{
 		return std::string();
+	}
 
 	return std::accumulate(std::next(strings.begin()), strings.end(), strings[0],
-		[separator](const std::string &str1, const std::string &str2)
+		[separator](const std::string &str1, const std::string &str2) -> std::string
 		{
 			return str1 + separator + str2;
 		});
 }
 
-std::string strings::trim(std::string &str)
+auto strings::trim(std::string &str) -> std::string
 {
 	trim_begin(str);
 	trim_end(str);
@@ -24,17 +26,18 @@ std::string strings::trim(std::string &str)
 
 void strings::trim_begin(std::string &str)
 {
-	str.erase(str.begin(), std::find_if(str.begin(), str.end(), [](unsigned char chr)
+	str.erase(str.begin(), std::find_if(str.begin(), str.end(), []
+		(unsigned char chr) -> bool
 	{
-		return !std::isspace(chr);
+		return std::isspace(chr) == 0;
 	}));
 }
 
 void strings::trim_end(std::string &str)
 {
-	str.erase(std::find_if(str.rbegin(), str.rend(), [](unsigned char chr)
+	str.erase(std::find_if(str.rbegin(), str.rend(), [](unsigned char chr) -> bool
 	{
-		return !std::isspace(chr);
+		return std::isspace(chr) == 0;
 	}).base(), str.end());
 }
 
@@ -57,27 +60,28 @@ std::vector<std::string> strings::split(const std::string &str, char delimiter)
 	return vec;
 }
 
-bool strings::starts_with(const std::string &str, const std::string &start)
+auto strings::starts_with(const std::string &str, const std::string &start) -> bool
 {
 	return str.find(start, 0) == 0;
 }
 
-std::string strings::remove(std::string &str, const std::string &substr)
+auto strings::remove(std::string &str, const std::string &substr) -> std::string
 {
 	auto pos = str.find(substr);
 	if (pos != std::string::npos)
+	{
 		str.erase(pos, substr.length());
+	}
 	return str;
 }
 
-bool strings::ends_with(const std::string &str, const std::string &end)
+auto strings::ends_with(const std::string &str, const std::string &end) -> bool
 {
-	return str.length() < end.length()
-		? false
-		: str.compare(str.length() - end.length(), end.length(), end) == 0;
+	return str.length() >= end.length()
+		&& str.compare(str.length() - end.length(), end.length(), end) == 0;
 }
 
-bool strings::try_to_int(const std::string &str, int &value)
+auto strings::try_to_int(const std::string &str, int &value) -> bool
 {
 	try
 	{
@@ -90,14 +94,14 @@ bool strings::try_to_int(const std::string &str, int &value)
 	}
 }
 
-std::string strings::left(const std::string &str, size_t n)
+auto strings::left(const std::string &str, size_t n) -> std::string
 {
 	return str.length() < n
 		? str
 		: str.substr(0, n);
 }
 
-std::string strings::right(const std::string &str, size_t n)
+auto strings::right(const std::string &str, size_t n) -> std::string
 {
 	return str.length() < n
 		? str
@@ -107,7 +111,7 @@ std::string strings::right(const std::string &str, size_t n)
 auto strings::to_lower(const std::string &str) -> std::string
 {
 	std::string val(str);
-	std::transform(val.begin(), val.end(), val.begin(), [](unsigned char c)
+	std::transform(val.begin(), val.end(), val.begin(), [](unsigned char c) -> unsigned char
 	{
 		return std::tolower(c);
 	});
@@ -117,7 +121,7 @@ auto strings::to_lower(const std::string &str) -> std::string
 auto strings::to_upper(const std::string &str) -> std::string
 {
 	std::string val(str);
-	std::transform(val.begin(), val.end(), val.begin(), [](unsigned char c)
+	std::transform(val.begin(), val.end(), val.begin(), [](unsigned char c) -> unsigned char
 	{
 		return std::toupper(c);
 	});
