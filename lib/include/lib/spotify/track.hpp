@@ -46,7 +46,6 @@ namespace lib
 
 			/**
 			 * Artist track is made by
-			 * @todo Add support for multiple artists
 			 */
 			std::vector<entity> artists;
 
