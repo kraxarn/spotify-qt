@@ -10,12 +10,12 @@ QtPaths::QtPaths(QObject *parent)
 		(QStandardPaths::CacheLocation).toStdString();
 }
 
-std::string QtPaths::config_file() const
+auto QtPaths::config_file() const -> ghc::filesystem::path
 {
 	return configFile;
 }
 
-std::string QtPaths::cache() const
+auto QtPaths::cache() const -> ghc::filesystem::path
 {
 	return cachePath;
 }
