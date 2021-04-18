@@ -3,6 +3,7 @@
 #include "lib/enum/clienttype.hpp"
 #include "../keyring/kwallet.hpp"
 #include "lib/settings.hpp"
+#include "clienthelper.hpp"
 
 #include <QDateTime>
 #include <QFileInfo>
@@ -21,13 +22,14 @@ namespace spt
 		explicit ClientHandler(const lib::settings &settings, QWidget *parent = nullptr);
 		~ClientHandler() override;
 
-		QString start();
-		QStringList availableBackends();
-		bool isRunning();
-		static QString version(const QString &path);
-		static QList<QPair<QDateTime, QString>> getLog();
-		static float getVolume();
-		static void setVolume(float value);
+		auto start() -> QString;
+
+		/**
+		 * Wrapper for spt::ClientHelper::availableBackends
+		 */
+		auto availableBackends() -> QStringList;
+
+		static auto getLog() -> const QList<QPair<QDateTime, QString>> &;
 
 		QProcess *process = nullptr;
 
@@ -38,12 +40,20 @@ namespace spt
 		const lib::settings &settings;
 		lib::client_type clientType;
 
-		bool supportsPulse();
-		static QString clientExec(const QString &path, const QStringList &arguments);
-		static QString getSinkInfo();
+		/**
+		 * Wrapper for spt::ClientHelper::supportsPulse
+		 */
+		auto supportsPulse() -> bool;
+
+		/**
+		 * Wrapper for spt::ClientHelper::isRunning
+		 */
+		auto isRunning() -> bool;
+
 		void readyRead() const;
+
 		void readyError() const;
-		void logOutput(const QByteArray &output) const;
-		static lib::client_type getClientType(const QString &path);
+
+		static void logOutput(const QByteArray &output) ;
 	};
 }

@@ -2,7 +2,7 @@
 
 #include "settingspage.hpp"
 #include "../util/icon.hpp"
-#include "client/clienthandler.hpp"
+#include "client/clienthelper.hpp"
 #include "view/clienthandlerlogview.hpp"
 
 #include <QComboBox>
