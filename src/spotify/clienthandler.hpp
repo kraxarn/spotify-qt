@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../enum/clienttype.hpp"
 #include "../keyring/kwallet.hpp"
-#include "lib/settings.hpp"
+#include "lib/spotify/clienthandler.hpp"
+#include "util/qtutils.hpp"
 
 #include <QDateTime>
 #include <QFileInfo>
@@ -13,37 +13,34 @@
 
 namespace spt
 {
-	class ClientHandler: public QObject
+	class ClientHandler: public QObject, public lib::spt::client_handler
 	{
 	Q_OBJECT
 
 	public:
-		explicit ClientHandler(const lib::settings &settings, QWidget *parent = nullptr);
+		ClientHandler(const lib::settings &settings, const lib::paths &paths,
+			QWidget *parent);
 		~ClientHandler() override;
 
-		QString start();
-		QStringList availableBackends();
-		bool isRunning();
-		static QString version(const QString &path);
-		static QList<QPair<QDateTime, QString>> getLog();
-		static float getVolume();
-		static void setVolume(float value);
+	protected:
+		auto get_keyring_password(const std::string &username) -> std::string override;
 
-		QProcess *process = nullptr;
+		void set_keyring_password(const std::string &username,
+			const std::string &password) override;
+
+		auto get_password(const std::string &username) -> std::string override;
+
+		void start_process(const ghc::filesystem::path &path,
+			const std::vector<std::string> &arguments) override;
+
+		auto start_process_and_wait(const ghc::filesystem::path &path,
+			const std::vector<std::string> &arguments) -> std::string override;
 
 	private:
-		QWidget *parentWidget = nullptr;
-		QString path;
-		static QList<QPair<QDateTime, QString>> log;
 		const lib::settings &settings;
-		ClientType clientType;
+		QProcess *process = nullptr;
 
-		bool supportsPulse();
-		static QString clientExec(const QString &path, const QStringList &arguments);
-		static QString getSinkInfo();
-		void readyRead() const;
-		void readyError() const;
-		void logOutput(const QByteArray &output) const;
-		static ClientType getClientType(const QString &path);
+		void readyRead();
+		void readyError();
 	};
 }
