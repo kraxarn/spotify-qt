@@ -23,7 +23,7 @@
 #include "menu/songmenu.hpp"
 #include "sidepanel.hpp"
 #include "lib/spotify/audiofeatures.hpp"
-#include "spotify/clienthandler.hpp"
+#include "client/clienthandler.hpp"
 #include "spotify/current.hpp"
 #include "spotify/spotify.hpp"
 #include "trayicon.hpp"

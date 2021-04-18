@@ -8,7 +8,7 @@
 #include "../settingspage/playlistspage.hpp"
 #include "../settingspage/settingspage.hpp"
 #include "../settingspage/spotifypage.hpp"
-#include "../spotify/clienthandler.hpp"
+#include "client/clienthandler.hpp"
 #include "../util/utils.hpp"
 #include "../view/clienthandlerlogview.hpp"
 #include "../view/systeminfoview.hpp"

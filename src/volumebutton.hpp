@@ -2,7 +2,7 @@
 
 class VolumeButton;
 
-#include "spotify/clienthandler.hpp"
+#include "client/clienthandler.hpp"
 #include "util/icon.hpp"
 #include "spotify/spotify.hpp"
 

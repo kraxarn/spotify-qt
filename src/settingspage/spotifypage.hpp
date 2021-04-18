@@ -2,7 +2,7 @@
 
 #include "settingspage.hpp"
 #include "../util/icon.hpp"
-#include "spotify/clienthandler.hpp"
+#include "client/clienthandler.hpp"
 #include "view/clienthandlerlogview.hpp"
 
 #include <QComboBox>
