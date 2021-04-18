@@ -15,12 +15,12 @@
 
 namespace lib
 {
-	namespace spt
+	namespace cl
 	{
 		/**
 		 * Manages Spotify client
 		 */
-		class client_handler
+		class handler
 		{
 		public:
 			/**
@@ -29,7 +29,7 @@ namespace lib
 			 * @param paths Paths to get cache path from
 			 * @note Does not start the client
 			 */
-			client_handler(const lib::settings &settings, const lib::paths &paths);
+			handler(const lib::settings &settings, const lib::paths &paths);
 
 			/**
 			 * Start client
@@ -131,7 +131,7 @@ namespace lib
 
 			auto get_sink_info() -> std::string;
 
-			static lib::client_type get_client_type(const ghc::filesystem::path &path);
+			static auto get_client_type(const ghc::filesystem::path &path) -> lib::client_type;
 		};
 	}
 }

@@ -1,6 +1,6 @@
-#include "lib/spotify/clienthandler.hpp"
+#include "lib/client/handler.hpp"
 
-lib::spt::client_handler::client_handler(const lib::settings &settings, const lib::paths &paths)
+lib::cl::handler::handler(const lib::settings &settings, const lib::paths &paths)
 	: settings(settings),
 	paths(paths)
 {
@@ -8,7 +8,7 @@ lib::spt::client_handler::client_handler(const lib::settings &settings, const li
 	client_type = get_client_type(path);
 }
 
-auto lib::spt::client_handler::start() -> std::string
+auto lib::cl::handler::start() -> std::string
 {
 	// Don't start if already running
 	if (!settings.spotify.always_start && is_running())
@@ -114,7 +114,7 @@ auto lib::spt::client_handler::start() -> std::string
 	return std::string();
 }
 
-auto lib::spt::client_handler::client_exec(const ghc::filesystem::path &client_path,
+auto lib::cl::handler::client_exec(const ghc::filesystem::path &client_path,
 	std::vector<std::string> &arguments) -> std::string
 {
 	// Check if it exists
@@ -134,7 +134,7 @@ auto lib::spt::client_handler::client_exec(const ghc::filesystem::path &client_p
 	return start_process_and_wait(absolute_path, arguments);
 }
 
-auto lib::spt::client_handler::available_backends() -> std::vector<std::string>
+auto lib::cl::handler::available_backends() -> std::vector<std::string>
 {
 	std::vector<std::string> items;
 
@@ -186,7 +186,7 @@ auto lib::spt::client_handler::available_backends() -> std::vector<std::string>
 	return items;
 }
 
-auto lib::spt::client_handler::supports_pulse() -> bool
+auto lib::cl::handler::supports_pulse() -> bool
 {
 	std::vector<std::string> arguments;
 
@@ -208,7 +208,7 @@ auto lib::spt::client_handler::supports_pulse() -> bool
 		"pulseaudio");
 }
 
-auto lib::spt::client_handler::version(const ghc::filesystem::path &client_path) -> std::string
+auto lib::cl::handler::version(const ghc::filesystem::path &client_path) -> std::string
 {
 	auto temp_type = get_client_type(client_path);
 
@@ -225,7 +225,7 @@ auto lib::spt::client_handler::version(const ghc::filesystem::path &client_path)
 	return std::string();
 }
 
-auto lib::spt::client_handler::is_running() -> bool
+auto lib::cl::handler::is_running() -> bool
 {
 	if (path.empty() || !ghc::filesystem::exists("/usr/bin/ps"))
 	{
@@ -236,7 +236,7 @@ auto lib::spt::client_handler::is_running() -> bool
 		{"aux"}), path);
 }
 
-auto lib::spt::client_handler::get_sink_info() -> std::string
+auto lib::cl::handler::get_sink_info() -> std::string
 {
 	if (!ghc::filesystem::exists("/usr/bin/pactl"))
 	{
@@ -259,7 +259,7 @@ auto lib::spt::client_handler::get_sink_info() -> std::string
 	return std::string();
 }
 
-auto lib::spt::client_handler::get_volume() -> float
+auto lib::cl::handler::get_volume() -> float
 {
 	auto sink = get_sink_info();
 	if (sink.empty())
@@ -293,7 +293,7 @@ auto lib::spt::client_handler::get_volume() -> float
 	return 1.F;
 }
 
-void lib::spt::client_handler::set_volume(float value)
+void lib::cl::handler::set_volume(float value)
 {
 	auto sink = get_sink_info();
 	if (sink.empty())
@@ -311,7 +311,7 @@ void lib::spt::client_handler::set_volume(float value)
 	});
 }
 
-void lib::spt::client_handler::log_output(const std::string &message)
+void lib::cl::handler::log_output(const std::string &message)
 {
 	for (const auto &line : lib::strings::split(message, "\n"))
 	{
@@ -323,12 +323,12 @@ void lib::spt::client_handler::log_output(const std::string &message)
 	}
 }
 
-auto lib::spt::client_handler::get_log() const -> const std::vector<lib::log_message> &
+auto lib::cl::handler::get_log() const -> const std::vector<lib::log_message> &
 {
 	return log;
 }
 
-lib::client_type lib::spt::client_handler::get_client_type(const ghc::filesystem::path &path)
+auto lib::cl::handler::get_client_type(const ghc::filesystem::path &path) -> lib::client_type
 {
 	const auto base_name = lib::strings::to_lower(path.stem());
 
