@@ -42,17 +42,24 @@ void strings::trim_end(std::string &str)
 }
 
 auto strings::split(const std::string &str,
-	const char *delimiter) -> std::vector<std::string>
+	const std::string &delimiter) -> std::vector<std::string>
 {
-	std::stringstream stream(str);
-	std::istream_iterator<std::string> begin(stream);
-	std::istream_iterator<std::string> end;
-	std::vector<std::string> vec(begin, end);
+	std::vector<std::string> vec;
+	size_t start = 0;
+	size_t end = str.find(delimiter);
 
-	std::copy(vec.begin(), vec.end(),
-		std::ostream_iterator<std::string>(std::cout, delimiter));
+	while (end != std::string::npos)
+	{
+		vec.push_back(str.substr(start, end - start));
+		start = end + delimiter.size();
+		end = str.find(delimiter, start);
+	}
 
-	if (vec.empty())
+	if (start != end)
+	{
+		vec.push_back(str.substr(start, end));
+	}
+	else if (vec.empty())
 	{
 		vec.push_back(str);
 	}

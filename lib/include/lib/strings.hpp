@@ -54,7 +54,7 @@ namespace lib
 		 * @return Split string
 		 */
 		static auto split(const std::string &str,
-			const char *delimiter) -> std::vector<std::string>;
+			const std::string &delimiter) -> std::vector<std::string>;
 
 		/**
 		 * Split a string into a vector
