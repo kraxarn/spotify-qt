@@ -8,6 +8,7 @@
 #include <vector>
 #include <numeric>
 #include <algorithm>
+#include <iostream>
 
 namespace lib
 {

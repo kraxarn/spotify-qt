@@ -41,16 +41,16 @@ void strings::trim_end(std::string &str)
 	}).base(), str.end());
 }
 
-std::vector<std::string> strings::split(const std::string &str, char delimiter)
+auto strings::split(const std::string &str,
+	const char *delimiter) -> std::vector<std::string>
 {
-	std::vector<std::string> vec;
-	std::istringstream stream(str);
-	std::string temp;
+	std::stringstream stream(str);
+	std::istream_iterator<std::string> begin(stream);
+	std::istream_iterator<std::string> end;
+	std::vector<std::string> vec(begin, end);
 
-	while (std::getline(stream, temp, delimiter))
-	{
-		vec.push_back(temp);
-	}
+	std::copy(vec.begin(), vec.end(),
+		std::ostream_iterator<std::string>(std::cout, delimiter));
 
 	if (vec.empty())
 	{
