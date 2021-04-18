@@ -57,7 +57,10 @@ namespace lib
 			const char *delimiter) -> std::vector<std::string>;
 
 		/**
-		 * Convenience method for split with a single character
+		 * Split a string into a vector
+		 * @param str String to split
+		 * @param delimiter Delimiter to split by
+		 * @return Split string
 		 */
 		static auto split(const std::string &str,
 			char delimiter) -> std::vector<std::string>;

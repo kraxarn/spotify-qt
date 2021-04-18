@@ -62,7 +62,21 @@ auto strings::split(const std::string &str,
 
 auto strings::split(const std::string &str, char delimiter) -> std::vector<std::string>
 {
-	return split(str, lib::fmt::format("{}", delimiter).c_str());
+	std::vector<std::string> vec;
+	std::istringstream stream(str);
+	std::string temp;
+
+	while (std::getline(stream, temp, delimiter))
+	{
+		vec.push_back(temp);
+	}
+
+	if (vec.empty())
+	{
+		vec.push_back(str);
+	}
+
+	return vec;
 }
 
 auto strings::starts_with(const std::string &str, const std::string &start) -> bool
