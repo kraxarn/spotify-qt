@@ -107,7 +107,7 @@ namespace lib
 			 * @return Application output
 			 */
 			virtual auto start_process_and_wait(const ghc::filesystem::path &path,
-				const std::vector<std::string> &arguments) -> std::string = 0;
+				const std::vector<std::string> &arguments) const -> std::string = 0;
 
 			/**
 			 * Save message to log
