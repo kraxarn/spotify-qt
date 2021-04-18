@@ -154,6 +154,7 @@ namespace lib
 		 * Parse value as string with specified precision
 		 * @param value Value to stringify
 		 * @param precision Precision (number of digits)
+		 * @note Rounds
 		 */
 		template<typename T>
 		static auto to_string(const T value, const int precision) -> std::string
