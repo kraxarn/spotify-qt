@@ -3,6 +3,7 @@
 #include "enum/logtype.hpp"
 
 #include "thirdparty/json.hpp"
+#include "thirdparty/filesystem.hpp"
 
 #include <string>
 
@@ -120,6 +121,18 @@ namespace lib
 		static std::string collect(const Format &fmt, const nlohmann::json &arg)
 		{
 			return collect(fmt, arg.dump());
+		}
+
+		/**
+		 * Format path as string
+		 * @param fmt String with {} to replace
+		 * @param arg Path
+		 * @return Formatted string
+		 */
+		template<typename Format>
+		static auto collect(const Format &fmt, const ghc::filesystem::path &arg) -> std::string
+		{
+			return collect(fmt, arg.string());
 		}
 	};
 }
