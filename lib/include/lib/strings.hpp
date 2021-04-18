@@ -57,6 +57,12 @@ namespace lib
 			const char *delimiter) -> std::vector<std::string>;
 
 		/**
+		 * Convenience method for split with a single character
+		 */
+		static auto split(const std::string &str,
+			char delimiter) -> std::vector<std::string>;
+
+		/**
 		 * Check if a string starts with a specific string
 		 * @param str String to check
 		 * @param start String that the string should start with

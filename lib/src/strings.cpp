@@ -60,6 +60,11 @@ auto strings::split(const std::string &str,
 	return vec;
 }
 
+auto strings::split(const std::string &str, char delimiter) -> std::vector<std::string>
+{
+	return split(str, lib::fmt::format("{}", delimiter).c_str());
+}
+
 auto strings::starts_with(const std::string &str, const std::string &start) -> bool
 {
 	return str.find(start, 0) == 0;
