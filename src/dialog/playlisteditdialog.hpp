@@ -18,11 +18,17 @@ class PlaylistEditDialog: public QDialog
 Q_OBJECT
 
 public:
-	PlaylistEditDialog(spt::Spotify *spotify, const lib::spt::playlist &playlist,
+	PlaylistEditDialog(lib::spt::api &spotify, const lib::spt::playlist &playlist,
 		int selectedIndex, QWidget *parent = nullptr);
 
 private:
 	QLineEdit *name;
 	QTextEdit *description;
 	QCheckBox *isPublic, *isCollaborative;
+
+	lib::spt::api &spotify;
+	const lib::spt::playlist &playlist;
+
+	void yes();
+	void no();
 };

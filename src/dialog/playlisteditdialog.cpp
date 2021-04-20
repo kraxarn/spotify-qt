@@ -1,15 +1,17 @@
 #include "playlisteditdialog.hpp"
 
-PlaylistEditDialog::PlaylistEditDialog(spt::Spotify *spotify, const lib::spt::playlist &playlist,
+PlaylistEditDialog::PlaylistEditDialog(lib::spt::api &spotify, const lib::spt::playlist &playlist,
 	int selectedIndex, QWidget *parent)
-	: QDialog(parent)
+	: spotify(spotify),
+	playlist(playlist),
+	QDialog(parent)
 {
-	auto playlistName = QString::fromStdString(playlist.name);
-	auto playlistDescription = QString::fromStdString(playlist.description);
+	const auto &playlistName = QString::fromStdString(playlist.name);
+	const auto &playlistDescription = QString::fromStdString(playlist.description);
 
 	setWindowTitle(playlistName);
 	setModal(true);
-	auto layout = new QVBoxLayout(this);
+	auto *layout = new QVBoxLayout(this);
 
 	// Name
 	layout->addWidget(new QLabel("Name:", this));
@@ -22,7 +24,7 @@ PlaylistEditDialog::PlaylistEditDialog(spt::Spotify *spotify, const lib::spt::pl
 	layout->addWidget(description);
 
 	// Toggles
-	auto toggles = new QHBoxLayout();
+	auto *toggles = new QHBoxLayout();
 	toggles->setAlignment(Qt::AlignLeft);
 	isPublic = new QCheckBox("Public", this);
 	isPublic->setChecked(playlist.is_public);
@@ -34,42 +36,54 @@ PlaylistEditDialog::PlaylistEditDialog(spt::Spotify *spotify, const lib::spt::pl
 
 	// Focus depending on selected index
 	if (selectedIndex < 0)
+	{
 		setFocus();
+	}
 	else if (selectedIndex == 0)
+	{
 		name->setFocus();
+	}
 	else if (selectedIndex == 1)
+	{
 		description->setFocus();
+	}
 
 	// Dialog buttons
-	auto buttons = new QDialogButtonBox(this);
+	auto *buttons = new QDialogButtonBox(this);
 	buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-	QDialogButtonBox::connect(buttons, &QDialogButtonBox::accepted, [this, playlist, spotify]
-	{
-		auto pl = playlist;
-		pl.name = name->text().toStdString();
-		pl.description = description->toPlainText().toStdString();
-		pl.is_public = isPublic->isChecked();
-		pl.collaborative = isCollaborative->isChecked();
+	QDialogButtonBox::connect(buttons, &QDialogButtonBox::accepted,
+		this, &PlaylistEditDialog::yes);
 
-		spotify->edit_playlist(pl, [this](const std::string &result)
-		{
-			if (result.empty())
-			{
-				accept();
-				return;
-			}
-
-			QMessageBox::warning(this, "Edit failed",
-				QString("Failed to save changes: %1")
-					.arg(QString::fromStdString(result)));
-		});
-	});
-
-	QDialogButtonBox::connect(buttons, &QDialogButtonBox::rejected, [this]
-	{
-		reject();
-	});
+	QDialogButtonBox::connect(buttons, &QDialogButtonBox::rejected,
+		this, &PlaylistEditDialog::no);
 
 	layout->addWidget(buttons);
 	setLayout(layout);
+}
+
+void PlaylistEditDialog::yes()
+{
+	auto pl = playlist;
+	pl.name = name->text().toStdString();
+	pl.description = description->toPlainText().toStdString();
+	pl.is_public = isPublic->isChecked();
+	pl.collaborative = isCollaborative->isChecked();
+
+	spotify.edit_playlist(pl, [this](const std::string &result)
+	{
+		if (result.empty())
+		{
+			accept();
+			return;
+		}
+
+		QMessageBox::warning(this, "Edit failed",
+			QString("Failed to save changes: %1")
+				.arg(QString::fromStdString(result)));
+	});
+}
+
+void PlaylistEditDialog::no()
+{
+	reject();
 }
