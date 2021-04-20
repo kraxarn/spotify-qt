@@ -80,14 +80,14 @@ namespace lib
 		 * @param id Id of album for example
 		 * @return JSON stored in cache, or an empty object if none
 		 */
-		auto tracks(const std::string &id) -> std::vector<lib::spt::track>;
+		auto get_tracks(const std::string &id) -> std::vector<lib::spt::track>;
 
 		/**
 		 * Save tracks to cache
 		 * @param id Id of album for example
 		 * @param tracks Tracks to save
 		 */
-		void tracks(const std::string &id, const std::vector<lib::spt::track> &tracks);
+		void set_tracks(const std::string &id, const std::vector<lib::spt::track> &tracks);
 
 		/**
 		 * Get all tracks saved in cache

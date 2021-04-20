@@ -382,13 +382,13 @@ auto MainWindow::loadAlbum(const std::string &albumId, const std::string &trackI
 
 auto MainWindow::loadTracksFromCache(const std::string &id) -> std::vector<lib::spt::track>
 {
-	return cache.tracks(id);
+	return cache.get_tracks(id);
 }
 
 void MainWindow::saveTracksToCache(const std::string &id,
 	const std::vector<lib::spt::track> &tracks)
 {
-	cache.tracks(id, tracks);
+	cache.set_tracks(id, tracks);
 }
 
 void MainWindow::setStatus(const QString &message, bool important)

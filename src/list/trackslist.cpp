@@ -326,7 +326,7 @@ void TracksList::load(const lib::spt::playlist &playlist)
 
 void TracksList::load(const lib::spt::album &album, const std::string &trackId)
 {
-	auto tracks = cache.tracks(album.id);
+	auto tracks = cache.get_tracks(album.id);
 	if (!tracks.empty())
 	{
 		load(tracks, trackId);
@@ -341,7 +341,7 @@ void TracksList::load(const lib::spt::album &album, const std::string &trackId)
 		{
 			this->load(tracks, trackId);
 			this->setEnabled(true);
-			cache.tracks(album.id, tracks);
+			cache.set_tracks(album.id, tracks);
 
 			auto *mainWindow = MainWindow::find(this->parentWidget());
 			if (mainWindow != nullptr)

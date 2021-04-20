@@ -109,12 +109,12 @@ void lib::cache::set_playlist(const spt::playlist &playlist)
 
 //region tracks
 
-auto lib::cache::tracks(const std::string &id) -> std::vector<lib::spt::track>
+auto lib::cache::get_tracks(const std::string &id) -> std::vector<lib::spt::track>
 {
 	return lib::json::load<std::vector<lib::spt::track>>(path("tracks", id, "json"));
 }
 
-void lib::cache::tracks(const std::string &id, const std::vector<lib::spt::track> &tracks)
+void lib::cache::set_tracks(const std::string &id, const std::vector<lib::spt::track> &tracks)
 {
 	lib::json::save(path("tracks", id, "json"), tracks);
 }
@@ -132,7 +132,7 @@ auto lib::cache::all_tracks() -> std::map<std::string, std::vector<lib::spt::tra
 	for (const auto &entry : ghc::filesystem::directory_iterator(dir))
 	{
 		auto id = entry.path().filename().replace_extension().string();
-		results[id] = tracks(id);
+		results[id] = get_tracks(id);
 	}
 
 	return results;

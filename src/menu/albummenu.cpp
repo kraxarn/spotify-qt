@@ -10,7 +10,7 @@ AlbumMenu::AlbumMenu(spt::Spotify &spotify, lib::cache &cache, const std::string
 	trackCount = addAction("...");
 	trackCount->setEnabled(false);
 
-	tracksLoaded(cache.tracks(albumId));
+	tracksLoaded(cache.get_tracks(albumId));
 	spotify.album(albumId, [this](const lib::spt::album &album)
 	{
 		this->spotify.album_tracks(album, [this](const std::vector<lib::spt::track> &items)
