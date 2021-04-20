@@ -140,9 +140,15 @@ void Spotify::put(const std::string &url, const nlohmann::json &body,
 					}
 					else
 					{
-						select_device(devices, [this, url, body, callback]
+						select_device(devices, [this, url, body, callback, error]
 							(const lib::spt::device &device)
 						{
+							if (device.id.empty())
+							{
+								callback(error);
+								return;
+							}
+
 							this->set_device(device, [this, url, body, callback]
 								(const std::string &status)
 							{
