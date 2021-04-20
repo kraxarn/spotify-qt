@@ -26,7 +26,6 @@ void lib::spt::from_json(const nlohmann::json &j, playlist &p)
 	j.at("description").get_to(p.description);
 	j.at("id").get_to(p.id);
 	j.at("name").get_to(p.name);
-	lib::json::get(j, "is_public", p.is_public);
 	lib::json::get_property(j, {
 		"is_public", "public"
 	}, p.is_public);
