@@ -25,8 +25,9 @@ public:
 
 	void updateContextIcon();
 
-	QString getCurrentlyPlaying();
-	void setCurrentlyPlaying(const QString &value);
+	auto getCurrentlyPlaying() const -> const lib::spt::track &;
+
+	void setCurrentlyPlaying(const lib::spt::track &value);
 
 	void setAlbumImage(const QPixmap &pixmap);
 
@@ -76,6 +77,7 @@ private:
 	LibraryList *libraryList;
 	PlaylistList *playlists;
 	lib::cache &cache;
+	lib::spt::track currentlyPlaying;
 
 	QLabel *contextIcon = nullptr;
 	QLabel *contextInfo = nullptr;

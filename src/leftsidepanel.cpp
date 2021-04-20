@@ -240,14 +240,15 @@ auto LeftSidePanel::getPlaylistNameFromSaved(const std::string &id) -> std::stri
 	return std::string();
 }
 
-QString LeftSidePanel::getCurrentlyPlaying()
+auto LeftSidePanel::getCurrentlyPlaying() const -> const lib::spt::track &
 {
-	return nowPlaying->text();
+	return currentlyPlaying;
 }
 
-void LeftSidePanel::setCurrentlyPlaying(const QString &value)
+void LeftSidePanel::setCurrentlyPlaying(const lib::spt::track &value)
 {
-	nowPlaying->setText(value);
+	nowPlaying->setText(QString::fromStdString(value.details()));
+	currentlyPlaying = value;
 }
 
 void LeftSidePanel::setAlbumImage(const QPixmap &pixmap)
