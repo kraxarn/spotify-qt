@@ -12,6 +12,7 @@
 #include "lib/spotify/album.hpp"
 #include "lib/spotify/artist.hpp"
 #include "lib/spotify/playlist.hpp"
+#include "lib/spotify/playlistdetails.hpp"
 #include "lib/spotify/searchresults.hpp"
 #include "lib/spotify/track.hpp"
 #include "lib/spotify/audiofeatures.hpp"
@@ -224,7 +225,8 @@ namespace lib
 			void playlist(const std::string &playlist_id,
 				lib::callback<lib::spt::playlist> &callback);
 
-			void edit_playlist(const lib::spt::playlist &playlist,
+			void edit_playlist(const std::string &playlist_id,
+				const lib::spt::playlist_details &playlist,
 				lib::callback<std::string> &callback);
 
 			void playlist_tracks(const lib::spt::playlist &playlist,

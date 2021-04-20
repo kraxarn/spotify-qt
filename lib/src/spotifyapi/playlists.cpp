@@ -21,10 +21,11 @@ void api::playlist(const std::string &playlist_id,
 	get(lib::fmt::format("playlists/{}", playlist_id), callback);
 }
 
-void api::edit_playlist(const lib::spt::playlist &playlist,
+void api::edit_playlist(const std::string &playlist_id,
+	const lib::spt::playlist_details &playlist,
 	lib::callback<std::string> &callback)
 {
-	put(lib::fmt::format("playlists/{}", playlist.id), playlist, callback);
+	put(lib::fmt::format("playlists/{}", playlist_id), playlist, callback);
 }
 
 void api::playlist_tracks(const lib::spt::playlist &playlist,
