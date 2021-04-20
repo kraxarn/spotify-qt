@@ -1,7 +1,8 @@
 #pragma once
 
 #include "lib/spotify/playlist.hpp"
-#include "../spotify/spotify.hpp"
+#include "lib/spotify/playlistdetails.hpp"
+#include "spotify/spotify.hpp"
 
 #include <QCheckBox>
 #include <QDialog>

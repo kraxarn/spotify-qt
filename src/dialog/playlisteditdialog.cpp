@@ -63,13 +63,13 @@ PlaylistEditDialog::PlaylistEditDialog(lib::spt::api &spotify, const lib::spt::p
 
 void PlaylistEditDialog::yes()
 {
-	auto pl = playlist;
+	lib::spt::playlist_details pl = (nlohmann::json) playlist;
 	pl.name = name->text().toStdString();
 	pl.description = description->toPlainText().toStdString();
 	pl.is_public = isPublic->isChecked();
 	pl.collaborative = isCollaborative->isChecked();
 
-	spotify.edit_playlist(pl, [this](const std::string &result)
+	spotify.edit_playlist(playlist.id, pl, [this](const std::string &result)
 	{
 		if (result.empty())
 		{
