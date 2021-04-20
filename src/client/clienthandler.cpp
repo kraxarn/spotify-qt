@@ -118,9 +118,13 @@ auto ClientHandler::start() -> QString
 	{
 		backend = "pulseaudio";
 	}
-	arguments.append({
-		"--backend", backend
-	});
+
+	if (!backend.isEmpty())
+	{
+		arguments.append({
+			"--backend", backend
+		});
+	}
 
 	if (clientType == lib::client_type::librespot && settings.spotify.disable_discovery)
 	{
