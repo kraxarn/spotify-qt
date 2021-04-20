@@ -1,5 +1,13 @@
 #include "lib/spotify/playlistdetails.hpp"
 
+lib::spt::playlist_details::playlist_details(const lib::spt::playlist &playlist)
+{
+	name = playlist.name;
+	is_public = playlist.is_public;
+	collaborative = playlist.collaborative;
+	description = playlist.description;
+}
+
 void lib::spt::to_json(nlohmann::json &j, const playlist_details &p)
 {
 	j = nlohmann::json{

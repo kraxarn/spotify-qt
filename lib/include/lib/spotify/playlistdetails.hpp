@@ -1,6 +1,7 @@
 #pragma once
 
 #include "lib/json.hpp"
+#include "lib/spotify/playlist.hpp"
 
 #include "thirdparty/json.hpp"
 
@@ -17,6 +18,8 @@ namespace lib
 		{
 		public:
 			playlist_details() = default;
+
+			explicit playlist_details(const lib::spt::playlist &playlist);
 
 			/**
 			 * Name of playlist

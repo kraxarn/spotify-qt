@@ -63,7 +63,7 @@ PlaylistEditDialog::PlaylistEditDialog(lib::spt::api &spotify, const lib::spt::p
 
 void PlaylistEditDialog::yes()
 {
-	lib::spt::playlist_details pl = (nlohmann::json) playlist;
+	lib::spt::playlist_details pl(playlist);
 	pl.name = name->text().toStdString();
 	pl.description = description->toPlainText().toStdString();
 	pl.is_public = isPublic->isChecked();
