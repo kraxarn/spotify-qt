@@ -16,9 +16,9 @@ class SpotifyPage: public SettingsPage
 public:
 	SpotifyPage(lib::settings &settings, QWidget *parent);
 
-	QIcon icon() override;
-	QString title() override;
-	bool save() override;
+	auto icon() -> QIcon override;
+	auto title() -> QString override;
+	auto save() -> bool override;
 
 private:
 	QCheckBox *sptAlways = nullptr;
@@ -33,12 +33,16 @@ private:
 	QLineEdit *sptUsername = nullptr;
 	QCheckBox *sptDiscovery = nullptr;
 
+	static constexpr int low = 96;
+	static constexpr int medium = 160;
+	static constexpr int high = 320;
+
 	void globalConfigToggle(int state);
 	void startClientToggle(int state);
-	static bool sptConfigExists();
-	QStringList backends();
+	static auto sptConfigExists() -> bool;
+	auto backends() -> QStringList;
 
-	QWidget *spotify();
-	QWidget *config();
-	QWidget *logs();
+	auto spotify() -> QWidget *;
+	auto config() -> QWidget *;
+	auto logs() -> QWidget *;
 };

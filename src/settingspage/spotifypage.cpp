@@ -10,24 +10,27 @@ SpotifyPage::SpotifyPage(lib::settings &settings, QWidget *parent)
 	addTab(logs(), "Logs");
 }
 
-QWidget *SpotifyPage::spotify()
+auto SpotifyPage::spotify() -> QWidget *
 {
-	auto content = new QVBoxLayout();
+	auto *content = new QVBoxLayout();
 	content->setAlignment(Qt::AlignTop);
 
 	// Executable settings
-	auto sptPathLayout = new QHBoxLayout();
+	auto *sptPathLayout = new QHBoxLayout();
 	sptPath = new QLineEdit(QString::fromStdString(settings.spotify.path), this);
 	sptPath->setPlaceholderText("Client path");
 	sptPathLayout->addWidget(sptPath, 1);
-	auto sptPathBrowse = new QPushButton("...", this);
+	auto *sptPathBrowse = new QPushButton("...", this);
 	sptPathBrowse->setMaximumWidth(40);
 	sptPathBrowse->setFlat(true);
-	QAbstractButton::connect(sptPathBrowse, &QAbstractButton::clicked, [this](bool checked)
+	QAbstractButton::connect(sptPathBrowse, &QAbstractButton::clicked, [this]
+		(bool /*checked*/)
 	{
 		auto filePath = QFileDialog::getOpenFileName(this, "Client path", "/");
 		if (!filePath.isEmpty() && sptPath != nullptr)
+		{
 			sptPath->setText(filePath);
+		}
 	});
 	sptPathLayout->addWidget(sptPathBrowse);
 	content->addLayout(sptPathLayout);
@@ -37,8 +40,10 @@ QWidget *SpotifyPage::spotify()
 	if (!settings.spotify.path.empty())
 	{
 		auto client = spt::ClientHelper::version(QString::fromStdString(settings.spotify.path));
-		if (sptVersion != nullptr)
+		if (sptVersion->isVisible())
+		{
 			sptVersion->setText(client);
+		}
 	}
 	sptVersion->setEnabled(false);
 	content->addWidget(sptVersion);
@@ -62,9 +67,9 @@ QWidget *SpotifyPage::spotify()
 	return Utils::layoutToWidget(content);
 }
 
-QWidget *SpotifyPage::config()
+auto SpotifyPage::config() -> QWidget *
 {
-	auto content = new QVBoxLayout();
+	auto *content = new QVBoxLayout();
 	content->setAlignment(Qt::AlignTop);
 
 	// Global config
@@ -78,7 +83,7 @@ QWidget *SpotifyPage::config()
 	// Box and layout for all app specific settings
 	sptGroup = new QGroupBox("App specific settings", this);
 	sptGroup->setEnabled(!sptGlobal->isChecked());
-	auto sptLayout = new QGridLayout();
+	auto *sptLayout = new QGridLayout();
 	sptGroup->setLayout(sptLayout);
 	content->addWidget(sptGroup);
 
@@ -94,7 +99,7 @@ QWidget *SpotifyPage::config()
 		"Low (96 kbit/s)", "Medium (160 kbit/s)", "High (320 kbit/s)"
 	});
 	auto bitrate = settings.spotify.bitrate;
-	sptBitrate->setCurrentIndex(bitrate == 96 ? 0 : bitrate == 160 ? 1 : 2);
+	sptBitrate->setCurrentIndex(bitrate == low ? 0 : bitrate == medium ? 1 : 2);
 	sptLayout->addWidget(sptBitrate, 1, 1);
 
 	// Backend
@@ -125,25 +130,25 @@ QWidget *SpotifyPage::config()
 	return Utils::layoutToWidget(content);
 }
 
-QWidget *SpotifyPage::logs()
+auto SpotifyPage::logs() -> QWidget *
 {
 	return new ClientHandlerLogView(MainWindow::find(parentWidget()));
 }
 
-QIcon SpotifyPage::icon()
+auto SpotifyPage::icon() -> QIcon
 {
 	return Icon::get("headphones");
 }
 
-QString SpotifyPage::title()
+auto SpotifyPage::title() -> QString
 {
 	return "Spotify";
 }
 
-bool SpotifyPage::save()
+auto SpotifyPage::save() -> bool
 {
 	// Check spotify client path
-	if (!sptPath->text().isEmpty())
+	if (sptPath != nullptr && !sptPath->text().isEmpty())
 	{
 		auto client = spt::ClientHelper::version(sptPath->text());
 		if (client.isEmpty())
@@ -151,12 +156,17 @@ bool SpotifyPage::save()
 			applyFail("spotifyd path");
 			return false;
 		}
-		sptVersion->setText(client);
+
+		if (sptVersion != nullptr)
+		{
+			sptVersion->setText(client);
+		}
 		settings.spotify.path = sptPath->text().toStdString();
 	}
 
 	// librespot has no global config support
-	if (sptGlobal->isChecked() && sptVersion->text() == "librespot")
+	if (sptGlobal != nullptr && sptVersion != nullptr
+		&& sptGlobal->isChecked() && sptVersion->text() == "librespot")
 	{
 		warning("librespot",
 			"Global config is not available when using librespot");
@@ -164,40 +174,75 @@ bool SpotifyPage::save()
 	}
 
 	// Spotify global config
-	if (sptGlobal->isChecked() && !sptConfigExists())
-		warning("spotifyd config not found",
-			QString("Couldn't find a config file for spotifyd. You may experience issues."));
-	settings.spotify.global_config = sptGlobal->isChecked();
+	if (sptGlobal != nullptr)
+	{
+		if (sptGlobal->isChecked() && !sptConfigExists())
+		{
+			warning("spotifyd config not found",
+				QString("Couldn't find a config file for spotifyd. You may experience issues."));
+		}
+		settings.spotify.global_config = sptGlobal->isChecked();
+	}
 
 	// Backend
-	settings.spotify.backend = sptBackend->currentIndex() == 0
-		? std::string()
-		: sptBackend->currentText().toStdString();
+	if (sptBackend != nullptr)
+	{
+		settings.spotify.backend = sptBackend->currentIndex() == 0
+			? std::string()
+			: sptBackend->currentText().toStdString();
+	}
 
 	// Other Spotify stuff
-	settings.spotify.start_client = sptAppStart->isChecked();
-	settings.spotify.username = sptUsername->text().toStdString();
-	auto bitrate = sptBitrate->currentIndex();
-	settings.spotify.bitrate = bitrate == 0 ? 96 : bitrate == 1 ? 160 : 320;
-	settings.spotify.always_start = sptAlways->isChecked();
+	if (sptAppStart != nullptr)
+	{
+		settings.spotify.start_client = sptAppStart->isChecked();
+	}
+	if (sptUsername != nullptr)
+	{
+		settings.spotify.username = sptUsername->text().toStdString();
+	}
+	if (sptBitrate != nullptr)
+	{
+		auto bitrate = sptBitrate->currentIndex();
+		settings.spotify.bitrate = bitrate == 0 ? low : bitrate == 1 ? medium : high;
+	}
+	if (sptAlways != nullptr)
+	{
+		settings.spotify.always_start = sptAlways->isChecked();
+	}
 	if (sptKeyring != nullptr)
+	{
 		settings.spotify.keyring_password = sptKeyring->isChecked();
-	settings.spotify.disable_discovery = !sptDiscovery->isChecked();
+	}
+	if (sptDiscovery != nullptr)
+	{
+		settings.spotify.disable_discovery = !sptDiscovery->isChecked();
+	}
 
 	return true;
 }
 
 void SpotifyPage::globalConfigToggle(int state)
 {
+	if (sptGroup == nullptr)
+	{
+		return;
+	}
+
 	sptGroup->setEnabled(state == Qt::Unchecked);
 }
 
 void SpotifyPage::startClientToggle(int state)
 {
+	if (sptAlways == nullptr)
+	{
+		return;
+	}
+
 	sptAlways->setEnabled(state == Qt::Checked);
 }
 
-bool SpotifyPage::sptConfigExists()
+auto SpotifyPage::sptConfigExists() -> bool
 {
 	// Config is either ~/.config/spotifyd/spotifyd.conf or /etc/spotifyd/spotifyd.conf
 	return QFile(QString("%1/.config/spotifyd/spotifyd.conf")
@@ -205,7 +250,7 @@ bool SpotifyPage::sptConfigExists()
 		|| QFile("/etc/spotifyd/spotifyd.conf").exists();
 }
 
-QStringList SpotifyPage::backends()
+auto SpotifyPage::backends() -> QStringList
 {
 	return spt::ClientHandler(settings, this).availableBackends();
 }
