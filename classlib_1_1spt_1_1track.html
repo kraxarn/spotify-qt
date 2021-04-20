@@ -91,6 +91,8 @@ Inheritance diagram for lib::spt::track:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a1083e589cd32b2d96a6630491d1d3975"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1track.html#a1083e589cd32b2d96a6630491d1d3975">title</a> () const -&gt; std::string</td></tr>
 <tr class="separator:a1083e589cd32b2d96a6630491d1d3975"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc6da82e3f541950f2293c7da4ed18b3"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1track.html#abc6da82e3f541950f2293c7da4ed18b3">details</a> () const -&gt; std::string</td></tr>
+<tr class="separator:abc6da82e3f541950f2293c7da4ed18b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71c3ecf3f425cf2092e652c0f3677a1d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1track.html#a71c3ecf3f425cf2092e652c0f3677a1d">is_valid</a> () const -&gt; bool</td></tr>
 <tr class="separator:a71c3ecf3f425cf2092e652c0f3677a1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -127,6 +129,24 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A music track </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="abc6da82e3f541950f2293c7da4ed18b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc6da82e3f541950f2293c7da4ed18b3">&#9670;&nbsp;</a></span>details()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto lib::spt::track::details </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const -&gt;  std::string</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Format track as "{artists}\n{name}" or "(no track)" </p><dl class="section note"><dt>Note</dt><dd>Multiple artists are separated using commas </dd></dl>
+
+</div>
+</div>
 <a id="a71c3ecf3f425cf2092e652c0f3677a1d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a71c3ecf3f425cf2092e652c0f3677a1d">&#9670;&nbsp;</a></span>is_valid()</h2>
 
@@ -159,7 +179,7 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Format track as "{name} - {artist}" or "(no track)" </p>
+<p>Format track as "{artist} - {name}" or "(no track)" </p><dl class="section note"><dt>Note</dt><dd>Only shows first artist, to show all, use <a class="el" href="classlib_1_1spt_1_1track.html#abc6da82e3f541950f2293c7da4ed18b3">details()</a> </dd></dl>
 
 </div>
 </div>
