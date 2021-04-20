@@ -281,8 +281,8 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 	}
 
 	mainToolBar->position->setText(QString("%1/%2")
-		.arg(QString::fromStdString(lib::fmt::time(current.playback.progress_ms)))
-		.arg(QString::fromStdString(lib::fmt::time(current.playback.item.duration))));
+		.arg(QString::fromStdString(lib::fmt::time(current.playback.progress_ms)),
+			QString::fromStdString(lib::fmt::time(current.playback.item.duration))));
 
 	mainToolBar->progress->setValue(current.playback.progress_ms);
 	mainToolBar->progress->setMaximum(current.playback.item.duration);
