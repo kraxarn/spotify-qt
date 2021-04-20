@@ -78,7 +78,7 @@ void PlaylistEditDialog::yes()
 		}
 
 		QMessageBox::warning(this, "Edit failed",
-			QString("Failed to save changes: %1")
+			QString("Failed to save changes:\n%1")
 				.arg(QString::fromStdString(result)));
 	});
 }
