@@ -10,24 +10,24 @@ LeftSidePanel::LeftSidePanel(spt::Spotify &spotify, lib::settings &settings,
 	cache(cache),
 	QWidget(parent)
 {
-	auto layout = new QVBoxLayout(this);
+	auto *layout = new QVBoxLayout(this);
 	setMaximumWidth(250); // TODO: ?
 
 	// Library
 	libraryList = new LibraryList(spotify, parent);
-	auto library = Utils::createGroupBox(QVector<QWidget *>() << libraryList, parent);
+	auto *library = Utils::createGroupBox(QVector<QWidget *>() << libraryList, parent);
 	library->setTitle("Library");
 	layout->addWidget(library);
 
 	// Playlists
 	playlists = new PlaylistList(spotify, settings, cache, parent);
 	refreshPlaylists();
-	auto playlistContainer = Utils::createGroupBox(QVector<QWidget *>() << playlists, parent);
+	auto *playlistContainer = Utils::createGroupBox(QVector<QWidget *>() << playlists, parent);
 	playlistContainer->setTitle("Playlists");
 	layout->addWidget(playlistContainer);
 
 	// Current context info
-	auto contextLayout = new QHBoxLayout();
+	auto *contextLayout = new QHBoxLayout();
 	contextIcon = new QLabel(this);
 	contextIcon->setVisible(false);
 	contextInfo = new QLabel(this);
@@ -42,7 +42,7 @@ LeftSidePanel::LeftSidePanel(spt::Spotify &spotify, lib::settings &settings,
 		this, &LeftSidePanel::contextInfoMenu);
 
 	// Now playing song
-	auto nowPlayingLayout = new QHBoxLayout();
+	auto *nowPlayingLayout = new QHBoxLayout();
 	nowPlayingLayout->setSpacing(12);
 	nowAlbum = new QLabel(this);
 	nowAlbum->setFixedSize(64, 64);
@@ -78,7 +78,7 @@ void LeftSidePanel::popupSongMenu(const QPoint &pos)
 	menu->popup(nowPlaying->mapToGlobal(pos));
 }
 
-QIcon LeftSidePanel::currentContextIcon() const
+auto LeftSidePanel::currentContextIcon() const -> QIcon
 {
 	return Icon::get(QString("view-media-%1")
 		.arg(current.playback.context.type.empty()
@@ -129,31 +129,35 @@ void LeftSidePanel::updateContextIcon()
 
 void LeftSidePanel::contextInfoMenu(const QPoint &pos)
 {
-	auto menu = new QMenu(contextInfo);
+	auto *menu = new QMenu(contextInfo);
 
 	if (lib::developer_mode::enabled)
 	{
-		auto devContext = menu->addAction(current.context);
+		auto *devContext = menu->addAction(current.context);
 		devContext->setEnabled(false);
 	}
 
-	auto open = menu->addAction(currentContextIcon(), QString("Open %1")
+	auto *open = menu->addAction(currentContextIcon(), QString("Open %1")
 		.arg(QString::fromStdString(current.playback.context.type)));
 	QAction::connect(open, &QAction::triggered, this, &LeftSidePanel::contextInfoOpen);
 
 	menu->popup(contextInfo->mapToGlobal(pos));
 }
 
-void LeftSidePanel::contextInfoOpen(bool)
+void LeftSidePanel::contextInfoOpen(bool /*unused*/)
 {
-	auto mainWindow = MainWindow::find(parentWidget());
-	auto type = current.playback.context.type;
-	auto uri = lib::strings::split(current.playback.context.uri, ':').back();
+	auto *mainWindow = MainWindow::find(parentWidget());
+	const auto &type = current.playback.context.type;
+	const auto uri = lib::strings::split(current.playback.context.uri, ':').back();
 
 	if (type == "album")
+	{
 		mainWindow->loadAlbum(uri);
+	}
 	else if (type == "artist")
+	{
 		mainWindow->openArtist(uri);
+	}
 	else if (type == "playlist")
 	{
 		spotify.playlist(uri, [this, mainWindow](const lib::spt::playlist &playlist)
@@ -165,7 +169,7 @@ void LeftSidePanel::contextInfoOpen(bool)
 	}
 }
 
-std::unordered_set<std::string> LeftSidePanel::allArtists()
+auto LeftSidePanel::allArtists() -> std::unordered_set<std::string>
 {
 	std::unordered_set<std::string> artists;
 	for (auto i = 0; i < playlists->count(); i++)
@@ -184,12 +188,12 @@ std::unordered_set<std::string> LeftSidePanel::allArtists()
 
 //region Playlists
 
-QListWidgetItem *LeftSidePanel::playlistItem(int index) const
+auto LeftSidePanel::playlistItem(int index) const -> QListWidgetItem *
 {
 	return playlists->item(index);
 }
 
-int LeftSidePanel::playlistItemCount() const
+auto LeftSidePanel::playlistItemCount() const -> int
 {
 	return playlists->count();
 }
@@ -199,7 +203,7 @@ void LeftSidePanel::setCurrentPlaylistItem(int index) const
 	playlists->setCurrentRow(index);
 }
 
-QListWidgetItem *LeftSidePanel::currentPlaylist()
+auto LeftSidePanel::currentPlaylist() -> QListWidgetItem *
 {
 	return playlists->currentItem();
 }
@@ -214,22 +218,24 @@ void LeftSidePanel::orderPlaylists(lib::playlist_order order)
 	playlists->order(order);
 }
 
-int LeftSidePanel::playlistCount() const
+auto LeftSidePanel::playlistCount() const -> size_t
 {
 	return playlists->getPlaylists().size();
 }
 
-lib::spt::playlist &LeftSidePanel::playlist(size_t index)
+auto LeftSidePanel::playlist(size_t index) -> lib::spt::playlist &
 {
 	return playlists->getPlaylists().at(index);
 }
 
-std::string LeftSidePanel::getPlaylistNameFromSaved(const std::string &id)
+auto LeftSidePanel::getPlaylistNameFromSaved(const std::string &id) -> std::string
 {
 	for (auto &playlist : playlists->getPlaylists())
 	{
 		if (lib::strings::ends_with(id, playlist.id))
+		{
 			return playlist.name;
+		}
 	}
 	return std::string();
 }
@@ -252,20 +258,22 @@ void LeftSidePanel::setAlbumImage(const QPixmap &pixmap)
 void LeftSidePanel::getPlaylistName(const std::string &id,
 	lib::callback<std::string> &callback)
 {
-	auto name = getPlaylistNameFromSaved(id);
+	const auto &name = getPlaylistNameFromSaved(id);
 	if (!name.empty())
+	{
 		callback(name);
+	}
 	else
 	{
-		spotify.playlist(lib::spt::api::to_id(id),
-			[callback](const lib::spt::playlist &playlist)
+		spotify.playlist(lib::spt::api::to_id(id), [callback]
+			(const lib::spt::playlist &playlist)
 		{
 			callback(playlist.name);
 		});
 	}
 }
 
-QTreeWidgetItem *LeftSidePanel::getCurrentLibraryItem()
+auto LeftSidePanel::getCurrentLibraryItem() -> QTreeWidgetItem *
 {
 	return libraryList->currentItem();
 }
@@ -275,7 +283,7 @@ void LeftSidePanel::setCurrentLibraryItem(QTreeWidgetItem *item)
 	libraryList->setCurrentItem(item);
 }
 
-std::vector<lib::spt::playlist> &LeftSidePanel::getPlaylists()
+auto LeftSidePanel::getPlaylists() -> std::vector<lib::spt::playlist> &
 {
 	return playlists->getPlaylists();
 }

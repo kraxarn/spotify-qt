@@ -21,7 +21,8 @@ public:
 	explicit LeftSidePanel(spt::Spotify &spotify, lib::settings &settings,
 		spt::Current &current, lib::cache &cache, QWidget *parent);
 
-	std::unordered_set<std::string> allArtists();
+	auto allArtists() -> std::unordered_set<std::string>;
+
 	void updateContextIcon();
 
 	QString getCurrentlyPlaying();
@@ -36,15 +37,24 @@ public:
 
 	//region Playlists
 
-	QListWidgetItem *playlistItem(int index) const;
-	int playlistItemCount() const;
+	auto playlistItem(int index) const -> QListWidgetItem *;
+
+	auto playlistItemCount() const -> int;
+
 	void setCurrentPlaylistItem(int index) const;
-	QListWidgetItem *currentPlaylist();
+
+	auto currentPlaylist() -> QListWidgetItem *;
+
 	void refreshPlaylists();
-	int playlistCount() const;
-	lib::spt::playlist &playlist(size_t index);
-	std::string getPlaylistNameFromSaved(const std::string &id);
-	std::vector<lib::spt::playlist> &getPlaylists();
+
+	auto playlistCount() const -> size_t;
+
+	auto playlist(size_t index) -> lib::spt::playlist &;
+
+	auto getPlaylistNameFromSaved(const std::string &id) -> std::string;
+
+	auto getPlaylists() -> std::vector<lib::spt::playlist> &;
+
 	void orderPlaylists(lib::playlist_order order);
 
 	void setCurrentPlaylistItem(QListWidgetItem *item);
@@ -54,7 +64,8 @@ public:
 	//region Library
 
 	void setCurrentLibraryItem(QTreeWidgetItem *item);
-	QTreeWidgetItem *getCurrentLibraryItem();
+
+	auto getCurrentLibraryItem() -> QTreeWidgetItem *;
 
 	//endregion
 
@@ -72,8 +83,11 @@ private:
 	QLabel *nowPlaying = nullptr;
 
 	void contextInfoMenu(const QPoint &pos);
+
 	void contextInfoOpen(bool checked);
-	QIcon currentContextIcon() const;
+
+	auto currentContextIcon() const -> QIcon;
+
 	void getPlaylistName(const std::string &id, lib::callback<std::string> &callback);
 
 	void popupSongMenu(const QPoint &pos);
