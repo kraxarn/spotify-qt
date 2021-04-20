@@ -151,9 +151,11 @@ auto ClientHandler::supportsPulse() -> bool
 	return spt::ClientHelper::supportsPulse(path);
 }
 
-auto ClientHandler::isRunning() -> bool
+auto ClientHandler::isRunning() const -> bool
 {
-	return spt::ClientHelper::isRunning(path);
+	return process == nullptr
+		? spt::ClientHelper::isRunning(path)
+		: process->isOpen();
 }
 
 void ClientHandler::logOutput(const QByteArray &output)

@@ -45,10 +45,7 @@ namespace spt
 		 */
 		auto supportsPulse() -> bool;
 
-		/**
-		 * Wrapper for spt::ClientHelper::isRunning
-		 */
-		auto isRunning() -> bool;
+		auto isRunning() const -> bool;
 
 		void readyRead() const;
 
