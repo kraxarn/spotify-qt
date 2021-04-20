@@ -100,27 +100,17 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	// Check if should start client
 	if (settings.spotify.start_client)
 	{
-		auto startClient = [this]()
-		{
-			this->sptClient = new spt::ClientHandler(this->settings, this);
-			auto status = sptClient->start();
-			if (!status.isEmpty())
-			{
-				QMessageBox::warning(this, "Client error",
-					QString("Failed to autostart Spotify client: %1").arg(status));
-			}
-		};
 		if (settings.spotify.always_start)
 		{
 			startClient();
 		}
 		else
 		{
-			spotify->devices([startClient](const std::vector<lib::spt::device> &devices)
+			spotify->devices([this](const std::vector<lib::spt::device> &devices)
 			{
 				if (devices.empty())
 				{
-					startClient();
+					this->startClient();
 				}
 			});
 		}
@@ -346,6 +336,19 @@ auto MainWindow::createCentralWidget() -> QWidget *
 	container->addWidget(sidePanel);
 
 	return container;
+}
+
+void MainWindow::startClient()
+{
+	delete sptClient;
+
+	sptClient = new spt::ClientHandler(settings, this);
+	auto status = sptClient->start();
+	if (!status.isEmpty())
+	{
+		QMessageBox::warning(this, "Client error",
+			QString("Failed to start Spotify client: %1").arg(status));
+	}
 }
 
 void MainWindow::openAudioFeaturesWidget(const std::string &trackId,
