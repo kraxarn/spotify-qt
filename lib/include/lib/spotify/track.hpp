@@ -55,9 +55,16 @@ namespace lib
 			std::string image;
 
 			/**
-			 * Format track as "{name} - {artist}" or "(no track)"
+			 * Format track as "{artist} - {name}" or "(no track)"
+			 * @note Only shows first artist, to show all, use details()
 			 */
 			auto title() const -> std::string;
+
+			/**
+			 * Format track as "{artists}\n{name}" or "(no track)"
+			 * @note Multiple artists are separated using commas
+			 */
+			auto details() const -> std::string;
 
 			/**
 			 * Has a valid name and artist

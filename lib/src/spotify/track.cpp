@@ -131,7 +131,14 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 auto lib::spt::track::title() const -> std::string
 {
 	return is_valid()
-		? lib::fmt::format("{} - {}", entity::combine_names(artists), name)
+		? lib::fmt::format("{} - {}", artists.front().name, name)
+		: std::string("(no track)");
+}
+
+auto lib::spt::track::details() const -> std::string
+{
+	return is_valid()
+		? lib::fmt::format("{}\n{}", name, entity::combine_names(artists))
 		: std::string("(no track)");
 }
 
