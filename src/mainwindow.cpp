@@ -340,7 +340,7 @@ auto MainWindow::createCentralWidget() -> QWidget *
 
 void MainWindow::startClient()
 {
-	delete sptClient;
+	stopClient();
 
 	sptClient = new spt::ClientHandler(settings, this);
 	auto status = sptClient->start();
@@ -349,6 +349,12 @@ void MainWindow::startClient()
 		QMessageBox::warning(this, "Client error",
 			QString("Failed to start Spotify client: %1").arg(status));
 	}
+}
+
+void MainWindow::stopClient()
+{
+	delete sptClient;
+	sptClient = nullptr;
 }
 
 void MainWindow::openAudioFeaturesWidget(const std::string &trackId,
@@ -574,6 +580,11 @@ auto MainWindow::getCurrentPlayback() -> lib::spt::playback &
 auto MainWindow::getCurrent() -> const spt::Current &
 {
 	return current;
+}
+
+auto MainWindow::getClientHandler() -> const spt::ClientHandler *
+{
+	return sptClient;
 }
 
 #ifdef USE_DBUS

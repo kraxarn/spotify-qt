@@ -4,6 +4,7 @@
 #include "../util/icon.hpp"
 #include "client/clienthelper.hpp"
 #include "view/clienthandlerlogview.hpp"
+#include "client/clienthandler.hpp"
 
 #include <QComboBox>
 #include <QGroupBox>
@@ -33,6 +34,11 @@ private:
 	QLineEdit *sptUsername = nullptr;
 	QCheckBox *sptDiscovery = nullptr;
 
+	const spt::ClientHandler *clientHandler = nullptr;
+
+	QPushButton *startClient = nullptr;
+	QLabel *clientStatus = nullptr;
+
 	static constexpr int low = 96;
 	static constexpr int medium = 160;
 	static constexpr int high = 320;
@@ -41,6 +47,10 @@ private:
 	void startClientToggle(int state);
 	static auto sptConfigExists() -> bool;
 	auto backends() -> QStringList;
+
+	void updateClientStatus();
+	void restartClient(bool checked);
+	auto isClientRunning() const -> bool;
 
 	auto spotify() -> QWidget *;
 	auto config() -> QWidget *;

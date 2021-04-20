@@ -5,6 +5,12 @@
 SpotifyPage::SpotifyPage(lib::settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
+	auto *mainWindow = MainWindow::find(parent);
+	if (mainWindow != nullptr)
+	{
+		clientHandler = mainWindow->getClientHandler();
+	}
+
 	addTab(spotify(), "General");
 	addTab(config(), "Configuration");
 	addTab(logs(), "Logs");
@@ -64,7 +70,60 @@ auto SpotifyPage::spotify() -> QWidget *
 	sptAlways->setEnabled(sptAppStart->isChecked());
 	content->addWidget(sptAlways);
 
+	// Client restart
+	auto *statusLayout = new QHBoxLayout();
+	startClient = new QPushButton(this);
+	startClient->setEnabled(MainWindow::find(parentWidget()) != nullptr);
+	statusLayout->addWidget(startClient);
+
+	QAbstractButton::connect(startClient, &QAbstractButton::clicked,
+		this, &SpotifyPage::restartClient);
+
+	clientStatus = new QLabel(this);
+	clientStatus->setEnabled(false);
+	statusLayout->addWidget(clientStatus, 1);
+	content->addLayout(statusLayout);
+	updateClientStatus();
+
 	return Utils::layoutToWidget(content);
+}
+
+auto SpotifyPage::isClientRunning() const -> bool
+{
+	return clientHandler != nullptr
+		&& clientHandler->isRunning();
+}
+
+void SpotifyPage::updateClientStatus()
+{
+	auto running = isClientRunning();
+
+	if (startClient != nullptr)
+	{
+		startClient->setText(running ? "Stop client" : "Start client");
+	}
+	if (clientStatus != nullptr)
+	{
+		clientStatus->setText(running ? "Running" : "Not running");
+	}
+}
+
+void SpotifyPage::restartClient(bool /*checked*/)
+{
+	auto *mainWindow = MainWindow::find(parentWidget());
+	if (mainWindow != nullptr)
+	{
+		if (isClientRunning())
+		{
+			mainWindow->stopClient();
+		}
+		else
+		{
+			mainWindow->startClient();
+		}
+	}
+	// TODO: We need to wait for client to start before updating status
+	updateClientStatus();
 }
 
 auto SpotifyPage::config() -> QWidget *

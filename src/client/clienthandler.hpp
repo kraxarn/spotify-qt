@@ -31,6 +31,8 @@ namespace spt
 
 		static auto getLog() -> const QList<QPair<QDateTime, QString>> &;
 
+		auto isRunning() const -> bool;
+
 		QProcess *process = nullptr;
 
 	private:
@@ -45,12 +47,10 @@ namespace spt
 		 */
 		auto supportsPulse() -> bool;
 
-		auto isRunning() const -> bool;
-
 		void readyRead() const;
 
 		void readyError() const;
 
-		static void logOutput(const QByteArray &output) ;
+		static void logOutput(const QByteArray &output);
 	};
 }

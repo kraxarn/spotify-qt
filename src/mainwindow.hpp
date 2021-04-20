@@ -51,6 +51,7 @@ public:
 	QListWidgetItem *getPlaylistItem(int index);
 	void orderPlaylists(lib::playlist_order order);
 	void startClient();
+	void stopClient();
 
 	void setSptContext(const std::string &uri);
 	void setSptContext(const lib::spt::playlist &playlist);
@@ -63,6 +64,7 @@ public:
 	std::string getSptContext() const;
 	lib::spt::playback &getCurrentPlayback();
 	const spt::Current &getCurrent();
+	auto getClientHandler() -> const spt::ClientHandler *;
 
 #ifdef USE_DBUS
 	mp::Service *getMediaPlayer();
