@@ -252,19 +252,17 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 		return;
 	}
 
-	auto currPlaying = QString::fromStdString(lib::fmt::format("{}\n{}",
-		current.playback.item.name,
-		lib::spt::entity::combine_names(current.playback.item.artists)));
-	if (leftSidePanel->getCurrentlyPlaying() != currPlaying)
+	const auto &currPlaying = current.playback.item;
+	if (leftSidePanel->getCurrentlyPlaying().id != currPlaying.id)
 	{
 		if (current.playback.is_playing)
 		{
-			songs->setPlayingTrackItem(current.playback.item.id);
+			songs->setPlayingTrackItem(currPlaying.id);
 		}
 
 		leftSidePanel->setCurrentlyPlaying(currPlaying);
-		setAlbumImage(current.playback.item.image);
-		setWindowTitle(QString::fromStdString(current.playback.item.title()));
+		setAlbumImage(currPlaying.image);
+		setWindowTitle(QString::fromStdString(currPlaying.title()));
 		leftSidePanel->updateContextIcon();
 
 #ifdef USE_DBUS
