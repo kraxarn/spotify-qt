@@ -4,7 +4,7 @@ var searchData=
   ['decode_27',['decode',['../classlib_1_1base64.html#ae42ec5dcbc7448282b4f64909e95f31a',1,'lib::base64']]],
   ['del_28',['del',['../classlib_1_1spt_1_1api.html#a71a727da67641b5a574086b05e1f1afb',1,'lib::spt::api::del(const std::string &amp;url, const nlohmann::json &amp;json, lib::callback&lt; std::string &gt; &amp;callback)=0'],['../classlib_1_1spt_1_1api.html#ae1c1d6b6d175f6897eee141d502ca313',1,'lib::spt::api::del(const std::string &amp;url, lib::callback&lt; std::string &gt; &amp;callback)']]],
   ['deprecated_20list_29',['Deprecated List',['../deprecated.html',1,'']]],
-  ['description_30',['description',['../classlib_1_1spt_1_1playlist.html#af058c4eb3226f7b4d8cd270acdfa2514',1,'lib::spt::playlist']]],
+  ['description_30',['description',['../classlib_1_1spt_1_1playlist.html#af058c4eb3226f7b4d8cd270acdfa2514',1,'lib::spt::playlist::description()'],['../classlib_1_1spt_1_1playlist__details.html#a920cfc501f831c61e01fb0fa7cfcb812',1,'lib::spt::playlist_details::description()']]],
   ['details_31',['details',['../classlib_1_1spt_1_1track.html#abc6da82e3f541950f2293c7da4ed18b3',1,'lib::spt::track']]],
   ['dev_32',['dev',['../classlib_1_1log.html#a6faeebb4fdad6162e122a5941e8ae323',1,'lib::log::dev(const Format &amp;fmt, const Arg &amp;arg, Args &amp;&amp;... args)'],['../classlib_1_1log.html#af971c261aeceb74c0e806a9ea3e5867e',1,'lib::log::dev(const Format &amp;fmt)']]],
   ['developer_5fmode_33',['developer_mode',['../classlib_1_1developer__mode.html',1,'lib']]],
