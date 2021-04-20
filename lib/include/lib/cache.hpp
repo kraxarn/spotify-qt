@@ -31,7 +31,7 @@ namespace lib
 		 * @param id Album ID
 		 * @return Binary JPEG data, or an empty vector if none
 		 */
-		std::vector<unsigned char> get_album_image(const std::string &url);
+		auto get_album_image(const std::string &url) -> std::vector<unsigned char>;
 
 		/**
 		 * Set album image data
@@ -47,7 +47,7 @@ namespace lib
 		/**
 		 * Get list of user's playlists
 		 */
-		std::vector<lib::spt::playlist> get_playlists();
+		auto get_playlists() -> std::vector<lib::spt::playlist>;
 
 		/**
 		 * Set list of user's playlists
@@ -63,7 +63,7 @@ namespace lib
 		 * @param id Playlist ID
 		 * @return Tracks or an empty vector on failure
 		 */
-		lib::spt::playlist get_playlist(const std::string &id);
+		auto get_playlist(const std::string &id) -> lib::spt::playlist;
 
 		/**
 		 * Save playlist to cache
@@ -80,7 +80,7 @@ namespace lib
 		 * @param id Id of album for example
 		 * @return JSON stored in cache, or an empty object if none
 		 */
-		std::vector<lib::spt::track> tracks(const std::string &id);
+		auto tracks(const std::string &id) -> std::vector<lib::spt::track>;
 
 		/**
 		 * Save tracks to cache
@@ -93,7 +93,7 @@ namespace lib
 		 * Get all tracks saved in cache
 		 * @return Map as id: tracks
 		 */
-		std::map<std::string, std::vector<lib::spt::track>> all_tracks();
+		auto all_tracks() -> std::map<std::string, std::vector<lib::spt::track>>;
 
 		//endregion
 
@@ -103,19 +103,22 @@ namespace lib
 		/**
 		 * Get parent directory for cache type
 		 */
-		ghc::filesystem::path dir(const std::string &type);
+		auto dir(const std::string &type) -> ghc::filesystem::path;
 
 		/**
 		 * Get file name for id
 		 */
-		static std::string file(const std::string &id, const std::string &extension);
+		static auto file(const std::string &id, const std::string &extension) -> std::string;
 
 		/**
 		 * Get full file path for cache type and id
 		 */
-		ghc::filesystem::path path(const std::string &type, const std::string &id,
-			const std::string &extension);
+		auto path(const std::string &type, const std::string &id,
+			const std::string &extension) -> ghc::filesystem::path;
 
-		static std::string get_url_id(const ghc::filesystem::path &path);
+		/**
+		 * Get basename of path
+		 */
+		static auto get_url_id(const ghc::filesystem::path &path) -> std::string;
 	};
 }

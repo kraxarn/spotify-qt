@@ -6,41 +6,46 @@ lib::cache::cache(const lib::paths &paths)
 {
 }
 
-ghc::filesystem::path lib::cache::dir(const std::string &type)
+auto lib::cache::dir(const std::string &type) -> ghc::filesystem::path
 {
 	auto file_dir = ghc::filesystem::path(paths.cache()) / type;
 
 	if (!ghc::filesystem::exists(file_dir))
+	{
 		ghc::filesystem::create_directories(file_dir);
+	}
 
 	return file_dir;
 }
 
-std::string lib::cache::file(const std::string &id, const std::string &extension)
+auto lib::cache::file(const std::string &id, const std::string &extension) -> std::string
 {
 	return extension.empty()
 		? id
 		: fmt::format("{}.{}", id, extension);
 }
 
-ghc::filesystem::path lib::cache::path(const std::string &type, const std::string &id,
-	const std::string &extension)
+auto lib::cache::path(const std::string &type, const std::string &id,
+	const std::string &extension) -> ghc::filesystem::path
 {
 	return dir(type) / file(id, extension);
 }
 
-std::string lib::cache::get_url_id(const ghc::filesystem::path &path)
+auto lib::cache::get_url_id(const ghc::filesystem::path &path) -> std::string
 {
 	return path.stem();
 }
 
 //region album
 
-std::vector<unsigned char> lib::cache::get_album_image(const std::string &url)
+auto lib::cache::get_album_image(const std::string &url) -> std::vector<unsigned char>
 {
-	std::ifstream file(path("album", get_url_id(url), ""), std::ios::binary);
+	std::ifstream file(path("album", get_url_id(url), ""),
+		std::ios::binary);
 	if (!file.is_open() || file.bad())
+	{
 		return std::vector<unsigned char>();
+	}
 
 	return std::vector<unsigned char>(std::istreambuf_iterator<char>(file),
 		std::istreambuf_iterator<char>());
@@ -48,7 +53,8 @@ std::vector<unsigned char> lib::cache::get_album_image(const std::string &url)
 
 void lib::cache::set_album_image(const std::string &url, const std::vector<unsigned char> &data)
 {
-	std::ofstream file(path("album", get_url_id(url), ""), std::ios::binary);
+	std::ofstream file(path("album", get_url_id(url), ""),
+		std::ios::binary);
 	std::copy(data.begin(), data.end(),
 		std::ostream_iterator<char>(file));
 }
@@ -57,7 +63,7 @@ void lib::cache::set_album_image(const std::string &url, const std::vector<unsig
 
 //region playlists
 
-std::vector<lib::spt::playlist> lib::cache::get_playlists()
+auto lib::cache::get_playlists() -> std::vector<lib::spt::playlist>
 {
 	try
 	{
@@ -80,7 +86,7 @@ void lib::cache::set_playlists(const std::vector<spt::playlist> &playlists)
 
 //region playlist
 
-lib::spt::playlist lib::cache::get_playlist(const std::string &id)
+auto lib::cache::get_playlist(const std::string &id) -> lib::spt::playlist
 {
 	try
 	{
@@ -103,7 +109,7 @@ void lib::cache::set_playlist(const spt::playlist &playlist)
 
 //region tracks
 
-std::vector<lib::spt::track> lib::cache::tracks(const std::string &id)
+auto lib::cache::tracks(const std::string &id) -> std::vector<lib::spt::track>
 {
 	return lib::json::load<std::vector<lib::spt::track>>(path("tracks", id, "json"));
 }
@@ -113,13 +119,15 @@ void lib::cache::tracks(const std::string &id, const std::vector<lib::spt::track
 	lib::json::save(path("tracks", id, "json"), tracks);
 }
 
-std::map<std::string, std::vector<lib::spt::track>> lib::cache::all_tracks()
+auto lib::cache::all_tracks() -> std::map<std::string, std::vector<lib::spt::track>>
 {
 	auto dir = ghc::filesystem::path(paths.cache()) / "tracks";
 	std::map<std::string, std::vector<lib::spt::track>> results;
 
 	if (!ghc::filesystem::exists(dir))
+	{
 		return results;
+	}
 
 	for (const auto &entry : ghc::filesystem::directory_iterator(dir))
 	{
