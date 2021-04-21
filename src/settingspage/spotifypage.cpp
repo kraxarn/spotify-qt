@@ -116,12 +116,10 @@ void SpotifyPage::restartClient(bool /*checked*/)
 				const auto *clientHandler = getClientHandler();
 				if (clientHandler != nullptr)
 				{
-					auto success = clientHandler->waitForStarted();
-					updateClientStatus();
-					if (!success && clientStatus != nullptr)
-					{
-						clientStatus->setText("Failed to start");
-					}
+					setClientStatus(true, "Start client",
+						clientHandler->waitForStarted()
+							? "Running"
+							: "Failed to start");
 					return;
 				}
 				updateClientStatus();
