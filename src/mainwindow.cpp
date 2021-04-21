@@ -233,7 +233,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 
 	auto *mainToolBar = dynamic_cast<MainToolBar *>(toolBar);
 
-	if (!current.playback.is_playing && !current.playback.item.is_valid())
+	if (!current.playback.item.is_valid())
 	{
 		mainToolBar->playPause->setIcon(Icon::get("media-playback-start"));
 		mainToolBar->playPause->setText("Play");
