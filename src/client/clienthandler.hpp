@@ -24,6 +24,8 @@ namespace spt
 
 		auto start() -> QString;
 
+		auto waitForStarted() const -> bool;
+
 		/**
 		 * Wrapper for spt::ClientHelper::availableBackends
 		 */

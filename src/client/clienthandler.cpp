@@ -141,6 +141,16 @@ auto ClientHandler::start() -> QString
 	return QString();
 }
 
+auto ClientHandler::waitForStarted() const -> bool
+{
+	if (process == nullptr)
+	{
+		return false;
+	}
+	constexpr int timeout = 3 * 1000;
+	return process->waitForStarted(timeout);
+}
+
 auto ClientHandler::availableBackends() -> QStringList
 {
 	return spt::ClientHelper::availableBackends(path);
