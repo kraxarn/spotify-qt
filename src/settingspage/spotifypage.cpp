@@ -111,10 +111,47 @@ void SpotifyPage::restartClient(bool /*checked*/)
 		}
 		else
 		{
-			mainWindow->startClient();
+			if (startClient != nullptr)
+			{
+				startClient->setText("Starting...");
+				startClient->setEnabled(false);
+			}
+			if (clientStatus != nullptr)
+			{
+				clientStatus->setText(QString());
+			}
+
+			if (!mainWindow->startClient())
+			{
+				if (startClient != nullptr)
+				{
+					startClient->setText("Start client");
+					startClient->setEnabled(true);
+				}
+				if (clientStatus != nullptr)
+				{
+					clientStatus->setText("Failed to start");
+				}
+			}
+			else
+			{
+				const auto *clientHandler = getClientHandler();
+				if (clientHandler != nullptr)
+				{
+					auto success = clientHandler->waitForStarted();
+					updateClientStatus();
+					if (!success && clientStatus != nullptr)
+					{
+						clientStatus->setText("Failed to start");
+					}
+					return;
+				}
+				updateClientStatus();
+			}
+
+			return;
 		}
 	}
-	// TODO: We need to wait for client to start before updating status
 	updateClientStatus();
 }
 
