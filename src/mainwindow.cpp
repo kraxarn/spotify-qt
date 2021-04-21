@@ -339,7 +339,7 @@ auto MainWindow::createCentralWidget() -> QWidget *
 	return container;
 }
 
-void MainWindow::startClient()
+auto MainWindow::startClient() -> bool
 {
 	stopClient();
 
@@ -349,7 +349,10 @@ void MainWindow::startClient()
 	{
 		QMessageBox::warning(this, "Client error",
 			QString("Failed to start Spotify client: %1").arg(status));
+		return false;
 	}
+
+	return true;
 }
 
 void MainWindow::stopClient()

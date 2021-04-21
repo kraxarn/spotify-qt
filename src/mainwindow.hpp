@@ -50,7 +50,8 @@ public:
 	int getPlaylistItemCount();
 	QListWidgetItem *getPlaylistItem(int index);
 	void orderPlaylists(lib::playlist_order order);
-	void startClient();
+
+	auto startClient() -> bool;
 	void stopClient();
 
 	void setSptContext(const std::string &uri);
