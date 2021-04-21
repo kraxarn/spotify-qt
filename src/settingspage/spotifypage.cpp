@@ -46,10 +46,7 @@ auto SpotifyPage::spotify() -> QWidget *
 	if (!settings.spotify.path.empty())
 	{
 		auto client = spt::ClientHelper::version(QString::fromStdString(settings.spotify.path));
-		if (sptVersion->isVisible())
-		{
-			sptVersion->setText(client);
-		}
+		sptVersion->setText(client);
 	}
 	sptVersion->setEnabled(false);
 	content->addWidget(sptVersion);
