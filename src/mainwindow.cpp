@@ -243,7 +243,8 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 	}
 
 	const auto &currPlaying = current.playback.item;
-	if (leftSidePanel->getCurrentlyPlaying().id != currPlaying.id)
+	if (leftSidePanel->getCurrentlyPlaying().id != currPlaying.id
+		|| windowTitle() == "spotify-qt")
 	{
 		if (current.playback.is_playing)
 		{
