@@ -27,10 +27,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	// Custom dark theme
 	if (settings.general.style_palette == lib::palette_dark)
 	{
-		QFile styleFile(":/res/style/dark.qss");
-		styleFile.open(QFile::ReadOnly | QFile::Text);
-		setStyleSheet(QString::fromUtf8(styleFile.readAll()));
-		styleFile.close();
+		setStyleSheet(DarkPalette::getDarkStylesheet());
 	}
 
 	// Check for dark background

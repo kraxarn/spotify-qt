@@ -28,3 +28,12 @@ DarkPalette::DarkPalette()
 	setColor(QPalette::Highlight, highlight);
 	setColor(QPalette::HighlightedText, base);
 }
+
+auto DarkPalette::getDarkStylesheet() -> QString
+{
+	QFile styleFile(":/res/style/dark.qss");
+	styleFile.open(QFile::ReadOnly | QFile::Text);
+	auto data = QString::fromUtf8(styleFile.readAll());
+	styleFile.close();
+	return data;
+}
