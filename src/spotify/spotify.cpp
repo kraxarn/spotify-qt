@@ -9,7 +9,7 @@ Spotify::Spotify(lib::settings &settings, QObject *parent)
 {
 }
 
-QNetworkRequest Spotify::request(const QString &url)
+auto Spotify::request(const QString &url) -> QNetworkRequest
 {
 	constexpr int secsInHour = 3600;
 
@@ -51,13 +51,15 @@ void Spotify::await(QNetworkReply *reply, lib::callback<QByteArray> &callback)
 		});
 }
 
-std::string Spotify::error_message(const std::string &url, const std::string &data)
+auto Spotify::error_message(const std::string &url, const std::string &data) -> std::string
 {
 	nlohmann::json json;
 	try
 	{
 		if (!data.empty())
+		{
 			json = nlohmann::json::parse(data);
+		}
 	}
 	catch (const std::exception &e)
 	{
@@ -66,11 +68,15 @@ std::string Spotify::error_message(const std::string &url, const std::string &da
 	}
 
 	if (json.is_null() || !json.is_object() || !json.contains("error"))
+	{
 		return std::string();
+	}
 
 	auto message = json.at("error").at("message").get<std::string>();
 	if (!message.empty())
+	{
 		lib::log::error("{} failed: {}", url, message);
+	}
 	return message;
 }
 
@@ -199,7 +205,8 @@ void Spotify::del(const std::string &url, const nlohmann::json &json,
 		});
 }
 
-std::string Spotify::request_refresh(const std::string &post_data, const std::string &authorization)
+auto Spotify::request_refresh(const std::string &post_data,
+	const std::string &authorization) -> std::string
 {
 	// Create request
 	QNetworkRequest request(QUrl("https://accounts.spotify.com/api/token"));
@@ -209,9 +216,11 @@ std::string Spotify::request_refresh(const std::string &post_data, const std::st
 		QString::fromStdString(authorization).toUtf8());
 
 	// Send request
-	auto reply = networkManager->post(request, QByteArray::fromStdString(post_data));
+	auto *reply = networkManager->post(request, QByteArray::fromStdString(post_data));
 	while (!reply->isFinished())
+	{
 		QCoreApplication::processEvents();
+	}
 
 	return reply->readAll().toStdString();
 }

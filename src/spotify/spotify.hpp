@@ -42,7 +42,7 @@ namespace spt
 	private:
 		QNetworkAccessManager *networkManager;
 
-		QNetworkRequest request(const QString &url);
+		auto request(const QString &url) -> QNetworkRequest;
 
 		void select_device(const std::vector<lib::spt::device> &devices,
 			lib::callback<lib::spt::device> &callback);
@@ -63,10 +63,10 @@ namespace spt
 
 		//endregion
 
-		static std::string error_message(const std::string &url,
-			const std::string &data);
+		static auto error_message(const std::string &url,
+			const std::string &data) -> std::string;
 
-		std::string request_refresh(const std::string &post_data,
-			const std::string &authorization) override;
+		auto request_refresh(const std::string &post_data,
+			const std::string &authorization) -> std::string override;
 	};
 }
