@@ -2,11 +2,17 @@
 
 DarkPalette::DarkPalette()
 {
-	QColor background(0x212121);
-	QColor base(0x282828);
-	QColor highlight(0x1db954);
-	QColor text(0xf5f5f5);
-	QColor brightText(0xffffff);
+	constexpr unsigned int backgroundColor = 0x212121;
+	constexpr unsigned int baseColor = 0x282828;
+	constexpr unsigned int highlightColor = 0x1db954;
+	constexpr unsigned int textColor = 0xf5f5f5;
+	constexpr unsigned int brightTextColor = 0xffffff;
+
+	QColor background(backgroundColor);
+	QColor base(baseColor);
+	QColor highlight(highlightColor);
+	QColor text(textColor);
+	QColor brightText(brightTextColor);
 
 	// Set colors
 	setColor(QPalette::Window, background);
