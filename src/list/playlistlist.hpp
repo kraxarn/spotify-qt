@@ -16,7 +16,7 @@ public:
 	PlaylistList(spt::Spotify &spotify, lib::settings &settings, lib::cache &cache,
 		QWidget *parent);
 
-	std::vector<lib::spt::playlist> &getPlaylists();
+	auto getPlaylists() -> std::vector<lib::spt::playlist> &;
 
 	void load(const std::vector<lib::spt::playlist> &items);
 	void refresh();
@@ -28,10 +28,10 @@ private:
 	lib::settings &settings;
 	std::vector<lib::spt::playlist> playlists;
 
-	int getItemIndex(QListWidgetItem *item);
+	auto getItemIndex(QListWidgetItem *item) -> int;
 	void clicked(QListWidgetItem *item);
 	void doubleClicked(QListWidgetItem *item);
 	void menu(const QPoint &pos);
 
-	static int latestTrack(const std::vector<lib::spt::track> &tracks);
+	static auto latestTrack(const std::vector<lib::spt::track> &tracks) -> int;
 };
