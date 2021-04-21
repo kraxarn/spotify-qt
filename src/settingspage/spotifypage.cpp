@@ -81,6 +81,7 @@ auto SpotifyPage::spotify() -> QWidget *
 
 auto SpotifyPage::isClientRunning() const -> bool
 {
+	const auto *clientHandler = getClientHandler();
 	return clientHandler != nullptr
 		&& clientHandler->isRunning();
 }
