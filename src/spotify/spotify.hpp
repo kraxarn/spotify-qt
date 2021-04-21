@@ -29,6 +29,7 @@ namespace spt
 #include <QString>
 #include <QVector>
 #include <QtNetwork>
+#include <QMessageBox>
 
 namespace spt
 {
@@ -38,6 +39,8 @@ namespace spt
 
 	public:
 		explicit Spotify(lib::settings &settings, QObject *parent = nullptr);
+
+		auto tryRefresh() -> bool;
 
 	private:
 		QNetworkAccessManager *networkManager;
