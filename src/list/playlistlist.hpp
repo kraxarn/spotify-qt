@@ -22,6 +22,9 @@ public:
 	void refresh();
 	void order(lib::playlist_order order);
 
+protected:
+	void showEvent(QShowEvent *event) override;
+
 private:
 	spt::Spotify &spotify;
 	lib::cache &cache;

@@ -19,7 +19,24 @@ PlaylistList::PlaylistList(spt::Spotify &spotify, lib::settings &settings, lib::
 	QWidget::connect(this, &QWidget::customContextMenuRequested, this, &PlaylistList::menu);
 }
 
-int PlaylistList::getItemIndex(QListWidgetItem *item)
+void PlaylistList::showEvent(QShowEvent */*event*/)
+{
+	// Playlists are already loaded, don't load from cache
+	if (count() > 0)
+	{
+		return;
+	}
+
+	const auto &cached = cache.get_playlists();
+	if (cached.empty())
+	{
+		return;
+	}
+
+	load(cached);
+}
+
+auto PlaylistList::getItemIndex(QListWidgetItem *item) -> int
 {
 	return item == nullptr
 		? currentRow()
