@@ -89,15 +89,9 @@ auto SpotifyPage::isClientRunning() const -> bool
 void SpotifyPage::updateClientStatus()
 {
 	auto running = isClientRunning();
-
-	if (startClient != nullptr)
-	{
-		startClient->setText(running ? "Stop client" : "Start client");
-	}
-	if (clientStatus != nullptr)
-	{
-		clientStatus->setText(running ? "Running" : "Not running");
-	}
+	setClientStatus(true,
+		running ? "Stop client" : "Start client",
+		running ? "Running" : "Not running");
 }
 
 void SpotifyPage::restartClient(bool /*checked*/)
@@ -111,27 +105,11 @@ void SpotifyPage::restartClient(bool /*checked*/)
 		}
 		else
 		{
-			if (startClient != nullptr)
-			{
-				startClient->setText("Starting...");
-				startClient->setEnabled(false);
-			}
-			if (clientStatus != nullptr)
-			{
-				clientStatus->setText(QString());
-			}
+			setClientStatus(false, "Starting", "Please wait...");
 
 			if (!mainWindow->startClient())
 			{
-				if (startClient != nullptr)
-				{
-					startClient->setText("Start client");
-					startClient->setEnabled(true);
-				}
-				if (clientStatus != nullptr)
-				{
-					clientStatus->setText("Failed to start");
-				}
+				setClientStatus(true, "Start client", "Failed to start");
 			}
 			else
 			{
@@ -349,4 +327,17 @@ auto SpotifyPage::getClientHandler() const -> const spt::ClientHandler *
 	return mainWindow == nullptr
 		? nullptr
 		: mainWindow->getClientHandler();
+}
+
+void SpotifyPage::setClientStatus(bool enabled, const QString &start, const QString &status)
+{
+	if (startClient != nullptr)
+	{
+		startClient->setText(start);
+		startClient->setEnabled(enabled);
+	}
+	if (clientStatus != nullptr)
+	{
+		clientStatus->setText(status);
+	}
 }

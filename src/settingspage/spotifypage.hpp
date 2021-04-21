@@ -51,6 +51,7 @@ private:
 	auto isClientRunning() const -> bool;
 
 	auto getClientHandler() const -> const spt::ClientHandler *;
+	void setClientStatus(bool enabled, const QString &start, const QString &status);
 
 	auto spotify() -> QWidget *;
 	auto config() -> QWidget *;
