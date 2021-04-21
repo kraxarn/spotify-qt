@@ -33,9 +33,8 @@ namespace spt
 
 		auto isRunning() const -> bool;
 
-		QProcess *process = nullptr;
-
 	private:
+		QProcess *process = nullptr;
 		QWidget *parentWidget = nullptr;
 		QString path;
 		static QList<QPair<QDateTime, QString>> log;
