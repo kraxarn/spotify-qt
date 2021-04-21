@@ -34,8 +34,6 @@ private:
 	QLineEdit *sptUsername = nullptr;
 	QCheckBox *sptDiscovery = nullptr;
 
-	const spt::ClientHandler *clientHandler = nullptr;
-
 	QPushButton *startClient = nullptr;
 	QLabel *clientStatus = nullptr;
 
@@ -51,6 +49,8 @@ private:
 	void updateClientStatus();
 	void restartClient(bool checked);
 	auto isClientRunning() const -> bool;
+
+	auto getClientHandler() const -> const spt::ClientHandler *;
 
 	auto spotify() -> QWidget *;
 	auto config() -> QWidget *;

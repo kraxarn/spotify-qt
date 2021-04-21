@@ -5,12 +5,6 @@
 SpotifyPage::SpotifyPage(lib::settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
-	auto *mainWindow = MainWindow::find(parent);
-	if (mainWindow != nullptr)
-	{
-		clientHandler = mainWindow->getClientHandler();
-	}
-
 	addTab(spotify(), "General");
 	addTab(config(), "Configuration");
 	addTab(logs(), "Logs");
@@ -309,4 +303,12 @@ auto SpotifyPage::sptConfigExists() -> bool
 auto SpotifyPage::backends() -> QStringList
 {
 	return spt::ClientHandler(settings, this).availableBackends();
+}
+
+auto SpotifyPage::getClientHandler() const -> const spt::ClientHandler *
+{
+	auto *mainWindow = MainWindow::find(parentWidget());
+	return mainWindow == nullptr
+		? nullptr
+		: mainWindow->getClientHandler();
 }
