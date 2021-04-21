@@ -48,8 +48,6 @@ public:
 
 	void refreshPlaylists();
 
-	auto playlistCount() const -> size_t;
-
 	auto playlist(size_t index) -> lib::spt::playlist &;
 
 	auto getPlaylistNameFromSaved(const std::string &id) -> std::string;

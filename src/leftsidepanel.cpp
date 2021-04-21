@@ -218,11 +218,6 @@ void LeftSidePanel::orderPlaylists(lib::playlist_order order)
 	playlists->order(order);
 }
 
-auto LeftSidePanel::playlistCount() const -> size_t
-{
-	return playlists->getPlaylists().size();
-}
-
 auto LeftSidePanel::playlist(size_t index) -> lib::spt::playlist &
 {
 	return playlists->getPlaylists().at(index);
