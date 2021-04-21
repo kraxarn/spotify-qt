@@ -302,33 +302,6 @@ auto MainWindow::createCentralWidget() -> QWidget *
 	songs = new TracksList(*spotify, settings, cache, this);
 	//endregion
 
-	// Load tracks in playlist
-	auto playlistId = QString::fromStdString(settings.general.last_playlist);
-	if (leftSidePanel->playlistCount() <= 0)
-	{
-		// If no playlists were found
-		// TODO: Load something from library here
-	}
-	else if (playlistId.isEmpty())
-	{
-		// Default to first in list
-		playlistId = leftSidePanel
-			->playlistItem(0)
-			->data(RolePlaylistId).toString();
-	}
-
-	// Find playlist in list
-	for (auto i = 0; i < leftSidePanel->playlistCount(); i++)
-	{
-		auto *item = leftSidePanel->playlistItem(i);
-
-		if (item->data(RolePlaylistId).toString().endsWith(playlistId))
-		{
-			leftSidePanel->setCurrentPlaylistItem(i);
-			songs->load(leftSidePanel->playlist(item->data(RoleIndex).toInt()));
-		}
-	}
-
 	// Add to main thing
 	container->addWidget(songs);
 
