@@ -15,6 +15,9 @@ Q_OBJECT
 public:
 	explicit ClientHandlerLogView(QWidget *parent = nullptr);
 
+protected:
+	void showEvent(QShowEvent *event) override;
+
 private:
 	void menu(const QPoint &pos);
 };
