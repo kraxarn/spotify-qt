@@ -8,6 +8,10 @@ ClientHandlerLogView::ClientHandlerLogView(QWidget *parent)
 		"Message",
 	});
 	setRootIsDecorated(false);
+
+	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+	QWidget::connect(this, &QWidget::customContextMenuRequested,
+		this, &ClientHandlerLogView::menu);
 }
 
 void ClientHandlerLogView::showEvent(QShowEvent */*event*/)
@@ -19,9 +23,6 @@ void ClientHandlerLogView::showEvent(QShowEvent */*event*/)
 		item->setText(0, line.first.time().toString());
 		item->setText(1, line.second);
 	}
-	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QWidget::connect(this, &QWidget::customContextMenuRequested,
-		this, &ClientHandlerLogView::menu);
 
 	header()->resizeSections(QHeaderView::ResizeToContents);
 }
