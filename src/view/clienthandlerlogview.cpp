@@ -9,9 +9,9 @@ ClientHandlerLogView::ClientHandlerLogView(QWidget *parent)
 	});
 	setRootIsDecorated(false);
 
-	for (auto &line : spt::ClientHandler::getLog())
+	for (const auto &line : spt::ClientHandler::getLog())
 	{
-		auto item = new QTreeWidgetItem(this);
+		auto *item = new QTreeWidgetItem(this);
 		item->setText(0, line.first.time().toString());
 		item->setText(1, line.second);
 	}
@@ -23,13 +23,16 @@ ClientHandlerLogView::ClientHandlerLogView(QWidget *parent)
 
 void ClientHandlerLogView::menu(const QPoint &pos)
 {
-	auto menu = new QMenu(this);
-	QAction::connect(menu->addAction("Copy log to clipboard"),
-		&QAction::triggered, [](bool)
+	auto *menu = new QMenu(this);
+	QAction::connect(menu->addAction("Copy log to clipboard"), &QAction::triggered,
+		[](bool /*checked*/)
 		{
 			QStringList list;
-			for (auto &line : spt::ClientHandler::getLog())
-				list.append(QString("[%1] %2").arg(line.first.time().toString()).arg(line.second));
+			for (const auto &line : spt::ClientHandler::getLog())
+			{
+				list.append(QString("[%1] %2").arg(line.first.time().toString(),
+					line.second));
+			}
 			QApplication::clipboard()->setText(list.join('\n'));
 		});
 	menu->popup(mapToGlobal(pos));
