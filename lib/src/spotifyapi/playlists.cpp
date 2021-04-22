@@ -44,7 +44,9 @@ void api::playlist_tracks(const lib::spt::playlist &playlist,
 		});
 	}
 	else
+	{
 		fetch(playlist.tracks_href);
+	}
 }
 
 void api::add_to_playlist(const std::string &playlist_id, const std::string &track_id,
