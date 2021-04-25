@@ -42,6 +42,14 @@ void api::devices(lib::callback<std::vector<lib::spt::device>> &callback)
 
 //region play_tracks
 
+auto api::play_tracks_url() -> std::string
+{
+	return get_current_device().empty()
+		? "me/player/play"
+		: lib::fmt::format("me/player/play?device_id={}",
+			get_current_device());
+}
+
 void api::play_tracks(int trackIndex, const std::string &context,
 	lib::callback<std::string> &callback)
 {
@@ -54,11 +62,7 @@ void api::play_tracks(int trackIndex, const std::string &context,
 		}}
 	};
 
-	put(get_current_device().empty()
-			? "me/player/play"
-			: lib::fmt::format("me/player/play?device_id={}",
-			get_current_device()),
-		body, callback);
+	put(play_tracks_url(), body, callback);
 }
 
 void api::play_tracks(int track_index, const std::vector<std::string> &all,
@@ -83,11 +87,7 @@ void api::play_tracks(int track_index, const std::vector<std::string> &all,
 		}}
 	};
 
-	put(get_current_device().empty()
-			? "me/player/play"
-			: lib::fmt::format("me/player/play?device_id={}",
-			get_current_device()),
-		body, callback);
+	put(play_tracks_url(), body, callback);
 }
 
 void api::play_tracks(int track_index, const std::initializer_list<std::string> &all,
@@ -104,18 +104,14 @@ void api::play_tracks(const std::string &context, lib::callback<std::string> &ca
 		{"context_uri", context}
 	};
 
-	put(get_current_device().empty()
-			? "me/player/play"
-			: lib::fmt::format("me/player/play?device_id={}",
-				get_current_device()),
-		body, callback);
+	put(play_tracks_url(), body, callback);
 }
 
 //endregion
 
 void api::resume(lib::callback<std::string> &callback)
 {
-	put("me/player/play", callback);
+	put(play_tracks_url(), callback);
 }
 
 void api::pause(lib::callback<std::string> &callback)

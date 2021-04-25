@@ -133,6 +133,11 @@ namespace lib
 			void devices(lib::callback<std::vector<lib::spt::device>> &callback);
 
 			/**
+			 * Get me/player/play with device_id set if available
+			 */
+			auto play_tracks_url() -> std::string;
+
+			/**
 			 * Play track from specific context
 			 * @param track_index Index to start playback from
 			 * @param context Context to play from
