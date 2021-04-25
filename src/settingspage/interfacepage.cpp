@@ -1,5 +1,6 @@
 #include "interfacepage.hpp"
 #include "mainwindow.hpp"
+#include "util/systemutils.hpp"
 
 InterfacePage::InterfacePage(lib::settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
@@ -318,13 +319,10 @@ auto InterfacePage::defaultStyle() -> QString
 	}
 
 	// Override from environmental variable
-	if (qEnvironmentVariableIsSet("QT_STYLE_OVERRIDE"))
+	auto overridden = SystemUtils::env("QT_STYLE_OVERRIDE");
+	if (!overridden.isEmpty())
 	{
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-		return qEnvironmentVariable("QT_STYLE_OVERRIDE");
-#else
-		return QString::fromLocal8Bit(qgetenv("QT_STYLE_OVERRIDE"));
-#endif
+		return overridden;
 	}
 
 	// Assume Fusion

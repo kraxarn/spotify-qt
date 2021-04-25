@@ -49,13 +49,9 @@ auto SystemInfoView::systemInfo(const lib::spt::playback &playback, bool html) -
 #endif
 
 	// Desktop environment
-	if (qEnvironmentVariableIsSet("XDG_CURRENT_DESKTOP"))
+	if (SystemUtils::hasEnv("XDG_CURRENT_DESKTOP"))
 	{
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-		info["Current desktop"] = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
-#else
-		info["Current desktop"] = QString::fromLocal8Bit(qgetenv("XDG_CURRENT_DESKTOP"));
-#endif
+		info["Current desktop"] = SystemUtils::env("XDG_CURRENT_DESKTOP");
 	}
 
 	// Device
