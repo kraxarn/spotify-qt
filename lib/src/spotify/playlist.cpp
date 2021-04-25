@@ -49,9 +49,13 @@ void lib::spt::from_json(const nlohmann::json &j, playlist &p)
 	{
 		j.at("image").get_to(p.image);
 	}
-	else
+	else if (j.contains("images"))
 	{
-		j.at("images").front().at("url").get_to(p.image);
+		const auto &images = j.at("images");
+		if (!images.empty())
+		{
+			images.front().at("url").get_to(p.image);
+		}
 	}
 
 	if (j.contains("owner_id"))
