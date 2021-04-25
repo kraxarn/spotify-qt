@@ -9,7 +9,9 @@ api::api(lib::settings &settings)
 
 void api::refresh(bool force)
 {
-	if (!force && seconds_since_epoch() - settings.account.last_refresh < 3600)
+	constexpr long s_in_hour = 60 * 60;
+
+	if (!force && seconds_since_epoch() - settings.account.last_refresh < s_in_hour)
 	{
 		lib::log::info("Last refresh was less than an hour ago, not refreshing access token");
 		last_auth = settings.account.last_refresh;
@@ -53,41 +55,45 @@ void api::refresh(bool force)
 	settings.save();
 }
 
-nlohmann::json api::parse_json(const std::string &url, const std::string &data)
+auto api::parse_json(const std::string &url, const std::string &data) -> nlohmann::json
 {
 	// No data, no response, no error
 	if (data.empty())
+	{
 		return nlohmann::json();
+	}
 
 	auto json = nlohmann::json::parse(data);
 
 	if (!lib::spotify_error::is(json))
+	{
 		return json;
+	}
 
 	auto err = lib::spotify_error::error_message(json);
 	lib::log::error("{} failed: {}", url, err);
 	throw lib::spotify_error(err, url);
 }
 
-long api::seconds_since_epoch()
+auto api::seconds_since_epoch() -> long
 {
 	return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now()
 		.time_since_epoch()).count();
 }
 
-std::string api::to_uri(const std::string &type, const std::string &id)
+auto api::to_uri(const std::string &type, const std::string &id) -> std::string
 {
 	return lib::strings::starts_with(id, "spotify:")
 		? id
 		: lib::fmt::format("spotify:{}:{}", type, id);
 }
 
-std::string api::to_id(const std::string &id)
+auto api::to_id(const std::string &id) -> std::string
 {
 	return lib::strings::split(id, ':').back();
 }
 
-std::string api::follow_type_string(lib::follow_type type)
+auto api::follow_type_string(lib::follow_type type) -> std::string
 {
 	switch (type)
 	{
@@ -117,8 +123,10 @@ auto api::get_current_device() const -> std::string
 void api::get_items(const std::string &url, const std::string &key,
 	lib::callback<nlohmann::json> &callback)
 {
+	constexpr size_t api_prefix_length = 27;
+
 	auto api_url = lib::strings::starts_with(url, "https://api.spotify.com/v1/")
-		? url.substr(27)
+		? url.substr(api_prefix_length)
 		: url;
 
 	get(api_url, [this, key, callback](const nlohmann::json &json)
