@@ -71,13 +71,17 @@ void api::play_tracks(int track_index, const std::vector<std::string> &all,
 	lib::log::dev("Playing track {} ({} total)", track_index, all.size());
 
 	auto maxQueue = settings.spotify.max_queue;
-	std::vector<std::string> items = all;
+	std::vector<std::string> items;
 	if (all.size() > maxQueue)
 	{
 		lib::log::warn("Attempting to queue {} tracks, but only {} allowed",
 			all.size(), maxQueue);
 		items = lib::vector::sub(all, track_index, maxQueue);
 		track_index = 0;
+	}
+	else
+	{
+		items = all;
 	}
 
 	nlohmann::json body = {
