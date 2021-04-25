@@ -90,10 +90,3 @@ auto lib::spt::playlist::is_null() const -> bool
 {
 	return id.empty();
 }
-
-size_t lib::spt::playlist::track_count() const
-{
-	return tracks_total >= 0
-		? tracks_total
-		: tracks.size();
-}

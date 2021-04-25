@@ -87,12 +87,7 @@ namespace lib
 			/**
 			 * If no playlist has been parsed (invalid ID)
 			 */
-			bool is_null() const;
-
-			/**
-			 * Get the number of tracks in playlist
-			 */
-			size_t track_count() const;
+			auto is_null() const -> bool;
 		};
 
 		void to_json(nlohmann::json &j, const playlist &p);
