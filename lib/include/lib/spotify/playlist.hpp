@@ -82,7 +82,7 @@ namespace lib
 			/**
 			 * Specified user is the owner of this playlist
 			 */
-			bool is_owner(const lib::spt::user &user) const;
+			auto is_owner(const lib::spt::user &user) const -> bool;
 
 			/**
 			 * If no playlist has been parsed (invalid ID)

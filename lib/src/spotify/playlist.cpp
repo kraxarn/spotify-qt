@@ -46,31 +46,47 @@ void lib::spt::from_json(const nlohmann::json &j, playlist &p)
 	}
 
 	if (j.contains("image"))
+	{
 		j.at("image").get_to(p.image);
+	}
 	else
+	{
 		j.at("images").front().at("url").get_to(p.image);
+	}
 
 	if (j.contains("owner_id"))
+	{
 		j.at("owner_id").get_to(p.owner_id);
+	}
 	else if (j.contains("ownerId"))
+	{
 		j.at("ownerId").get_to(p.owner_id);
+	}
 	else
+	{
 		j.at("owner").at("id").get_to(p.owner_id);
+	}
 
 	if (j.contains("owner_name"))
+	{
 		j.at("owner_name").get_to(p.owner_name);
+	}
 	else if (j.contains("ownerName"))
+	{
 		j.at("ownerName").get_to(p.owner_name);
+	}
 	else
+	{
 		j.at("owner").at("display_name").get_to(p.owner_name);
+	}
 }
 
-bool lib::spt::playlist::is_owner(const lib::spt::user &user) const
+auto lib::spt::playlist::is_owner(const lib::spt::user &user) const -> bool
 {
 	return !owner_id.empty() && owner_id == user.id;
 }
 
-bool lib::spt::playlist::is_null() const
+auto lib::spt::playlist::is_null() const -> bool
 {
 	return id.empty();
 }
