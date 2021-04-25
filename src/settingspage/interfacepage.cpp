@@ -159,7 +159,8 @@ auto InterfacePage::save() -> bool
 	auto *mainWindow = MainWindow::find(parentWidget());
 
 	// Set theme
-	if (itfDark->isChecked() != settings.get_dark_theme())
+	if (itfDark != nullptr
+		&& itfDark->isChecked() != settings.get_dark_theme())
 	{
 		QMessageBox::information(this, "Dark Theme",
 			"Please restart the application to fully apply selected theme");
@@ -168,49 +169,66 @@ auto InterfacePage::save() -> bool
 	}
 
 	// Set style
-	if (itfStyle->currentText() != QString::fromStdString(settings.general.style))
+	if (itfStyle != nullptr
+		&& itfStyle->currentText() != QString::fromStdString(settings.general.style))
 	{
 		QApplication::setStyle(itfStyle->currentText());
 		settings.general.style = itfStyle->currentText().toStdString();
 	}
 
 	// Track list resize mode
-	auto resizeMode = static_cast<lib::resize_mode>(itfResizeMode->currentIndex());
-	if (mainWindow != nullptr
-		&& settings.general.track_list_resize_mode != resizeMode)
+	if (itfResizeMode != nullptr)
 	{
-		auto *tracksList = dynamic_cast<TracksList *>(mainWindow->getSongsTree());
-		if (tracksList != nullptr)
+		auto resizeMode = static_cast<lib::resize_mode>(itfResizeMode->currentIndex());
+		if (mainWindow != nullptr
+			&& settings.general.track_list_resize_mode != resizeMode)
 		{
-			tracksList->updateResizeMode(resizeMode);
+			auto *tracksList = dynamic_cast<TracksList *>(mainWindow->getSongsTree());
+			if (tracksList != nullptr)
+			{
+				tracksList->updateResizeMode(resizeMode);
+			}
 		}
+		settings.general.track_list_resize_mode = resizeMode;
 	}
-	settings.general.track_list_resize_mode = resizeMode;
 
 	// Track numbers
-	if (mainWindow != nullptr)
+	if (itfTrackNum != nullptr)
 	{
-		mainWindow->toggleTrackNumbers(itfTrackNum->isChecked());
+		if (mainWindow != nullptr)
+		{
+			mainWindow->toggleTrackNumbers(itfTrackNum->isChecked());
+		}
+		settings.general.track_numbers = itfTrackNum->isChecked()
+			? lib::context_all
+			: lib::context_none;
 	}
-	settings.general.track_numbers = itfTrackNum->isChecked()
-		? lib::context_all
-		: lib::context_none;
 
 	// Other interface stuff
 	if (itfIcFallback != nullptr)
 	{
 		settings.general.fallback_icons = itfIcFallback->isChecked();
 	}
-	if (mainWindow != nullptr)
+	if (itfMonoTime != nullptr)
 	{
-		mainWindow->setFixedWidthTime(itfMonoTime->isChecked());
+		if (mainWindow != nullptr)
+		{
+			mainWindow->setFixedWidthTime(itfMonoTime->isChecked());
+		}
+		settings.general.fixed_width_time = itfMonoTime->isChecked();
 	}
-	settings.general.fixed_width_time = itfMonoTime->isChecked();
-	settings.general.show_context_info = itfContextInfo->isChecked();
-	settings.general.relative_added = itfRelativeAdded->isChecked();
+	if (itfContextInfo != nullptr)
+	{
+		settings.general.show_context_info = itfContextInfo->isChecked();
+	}
+	if (itfRelativeAdded != nullptr)
+	{
+		settings.general.relative_added = itfRelativeAdded->isChecked();
+	}
 
 	// Desktop notifications and tray icon
-	if (itfTrayNotify->isChecked() && !itfTrayIcon->isChecked())
+	if (itfTrayNotify != nullptr && itfTrayIcon != nullptr
+		&& itfTrayNotify->isChecked() && !itfTrayIcon->isChecked())
 	{
 		itfTrayIcon->setChecked(true);
 		QMessageBox::information(this, "Desktop Notifications",
@@ -218,15 +236,30 @@ auto InterfacePage::save() -> bool
 	}
 
 	// Check if tray icon needs to be reloaded
-	auto reloadTray = settings.general.tray_icon != itfTrayIcon->isChecked()
-		|| settings.general.tray_notifications != itfTrayNotify->isChecked()
-		|| settings.general.tray_light_icon != itfTrayInvert->isChecked();
+	auto reloadTray = itfTrayIcon != nullptr
+		&& itfTrayNotify != nullptr
+		&& itfTrayInvert != nullptr
+		&& (settings.general.tray_icon != itfTrayIcon->isChecked()
+			|| settings.general.tray_notifications != itfTrayNotify->isChecked()
+			|| settings.general.tray_light_icon != itfTrayInvert->isChecked());
 
 	// Apply
-	settings.general.tray_icon = itfTrayIcon->isChecked();
-	settings.general.tray_notifications = itfTrayNotify->isChecked();
-	settings.general.tray_light_icon = itfTrayInvert->isChecked();
-	settings.general.tray_album_art = itfTrayAlbum->isChecked();
+	if (itfTrayIcon != nullptr)
+	{
+		settings.general.tray_icon = itfTrayIcon->isChecked();
+	}
+	if (itfTrayNotify != nullptr)
+	{
+		settings.general.tray_notifications = itfTrayNotify->isChecked();
+	}
+	if (itfTrayInvert != nullptr)
+	{
+		settings.general.tray_light_icon = itfTrayInvert->isChecked();
+	}
+	if (itfTrayAlbum != nullptr)
+	{
+		settings.general.tray_album_art = itfTrayAlbum->isChecked();
+	}
 
 	// Reload if needed
 	if (reloadTray && mainWindow != nullptr)
@@ -244,6 +277,11 @@ auto InterfacePage::hasIconTheme() -> bool
 
 void InterfacePage::darkThemeToggle(bool checked)
 {
+	if (itfStyle == nullptr)
+	{
+		return;
+	}
+
 	if (checked)
 	{
 		itfStyle->setCurrentText("Fusion");
