@@ -172,8 +172,13 @@ auto InterfacePage::save() -> bool
 	if (itfStyle != nullptr
 		&& itfStyle->currentText() != QString::fromStdString(settings.general.style))
 	{
-		QApplication::setStyle(itfStyle->currentText());
-		settings.general.style = itfStyle->currentText().toStdString();
+		QApplication::setStyle(itfStyle->currentIndex() == 0
+			? defaultStyle()
+			: itfStyle->currentText());
+
+		settings.general.style = itfStyle->currentIndex() == 0
+			? std::string()
+			: itfStyle->currentText().toStdString();
 	}
 
 	// Track list resize mode
@@ -295,4 +300,33 @@ void InterfacePage::darkThemeToggle(bool checked)
 	{
 		itfStyle->setCurrentIndex(0);
 	}
+}
+
+auto InterfacePage::defaultStyle() -> QString
+{
+	// Find default style on KDE
+	const auto &path = QStandardPaths::locate(QStandardPaths::GenericConfigLocation,
+		"kdeglobals");
+	if (QFileInfo::exists(path))
+	{
+		QSettings settings(path, QSettings::IniFormat);
+		auto style = settings.value("KDE/widgetStyle").toString();
+		if (!style.isEmpty())
+		{
+			return style;
+		}
+	}
+
+	// Override from environmental variable
+	if (qEnvironmentVariableIsSet("QT_STYLE_OVERRIDE"))
+	{
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+		return qEnvironmentVariable("QT_STYLE_OVERRIDE");
+#else
+		return QString::fromLocal8Bit(qgetenv("QT_STYLE_OVERRIDE"));
+#endif
+	}
+
+	// Assume Fusion
+	return QString("Fusion");
 }

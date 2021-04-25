@@ -35,5 +35,6 @@ private:
 	auto trayIcon() -> QWidget *;
 
 	static auto hasIconTheme() -> bool;
+	static auto defaultStyle() -> QString;
 	void darkThemeToggle(bool checked);
 };
