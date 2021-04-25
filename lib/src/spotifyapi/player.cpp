@@ -50,15 +50,15 @@ auto api::play_tracks_url() -> std::string
 			get_current_device());
 }
 
-void api::play_tracks(int trackIndex, const std::string &context,
+void api::play_tracks(int track_index, const std::string &context,
 	lib::callback<std::string> &callback)
 {
-	lib::log::dev("Playing track {} from {}", trackIndex, context);
+	lib::log::dev("Playing track {} from {}", track_index, context);
 
 	nlohmann::json body = {
 		{"context_uri", context},
 		{"offset", {
-			{"position", trackIndex}
+			{"position", track_index}
 		}}
 	};
 

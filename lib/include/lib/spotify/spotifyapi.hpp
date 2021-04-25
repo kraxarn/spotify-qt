@@ -300,7 +300,7 @@ namespace lib
 			static auto seconds_since_epoch() -> long;
 
 			/**
-			 * Timestamp if last refresh
+			 * Timestamp of last refresh
 			 */
 			long last_auth = 0;
 
