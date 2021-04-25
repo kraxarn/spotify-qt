@@ -8,13 +8,13 @@ InterfacePage::InterfacePage(lib::settings &settings, QWidget *parent)
 	addTab(trayIcon(), "Tray icon");
 }
 
-QWidget *InterfacePage::general()
+auto InterfacePage::general() -> QWidget *
 {
-	auto layout = tabContent();
-	auto comboBoxLayout = new QGridLayout();
+	auto *layout = tabContent();
+	auto *comboBoxLayout = new QGridLayout();
 
 	// Style
-	auto styleLabel = new QLabel("Style", this);
+	auto *styleLabel = new QLabel("Style", this);
 	styleLabel->setToolTip("Qt style to use\n"
 						   "(Fusion is recommended when using the custom dark theme)");
 	comboBoxLayout->addWidget(styleLabel, 0, 0);
@@ -27,16 +27,22 @@ QWidget *InterfacePage::general()
 	comboBoxLayout->addWidget(itfStyle, 0, 1);
 
 	if (styles.contains(QString::fromStdString(settings.general.style)))
+	{
 		itfStyle->setCurrentText(QString::fromStdString(settings.general.style));
+	}
 	else if (styles.contains(QApplication::style()->objectName()))
+	{
 		itfStyle->setCurrentText(QApplication::style()->objectName());
+	}
 	else
+	{
 		itfStyle->setCurrentIndex(0);
+	}
 
 	layout->addLayout(comboBoxLayout);
 
 	// Column resize
-	auto resizeLabel = new QLabel("Track column resize", this);
+	auto *resizeLabel = new QLabel("Track column resize", this);
 	resizeLabel->setToolTip("How to resize the columns in the track list\n"
 							"Fit width (default): Adjust column width to fill width of list\n"
 							"Fit content: Adjust column width to show all content\n"
@@ -97,10 +103,10 @@ QWidget *InterfacePage::general()
 	return Utils::layoutToWidget(layout);
 }
 
-QWidget *InterfacePage::trayIcon()
+auto InterfacePage::trayIcon() -> QWidget *
 {
 	// Main container for everything
-	auto content = new QVBoxLayout();
+	auto *content = new QVBoxLayout();
 	content->setAlignment(Qt::AlignTop);
 
 	// Tray icon settings
@@ -118,7 +124,9 @@ QWidget *InterfacePage::trayIcon()
 	QCheckBox::connect(itfTrayNotify, &QCheckBox::stateChanged, [this](int state)
 	{
 		if (state == Qt::CheckState::Checked && itfTrayIcon != nullptr)
+		{
 			itfTrayIcon->setChecked(true);
+		}
 	});
 
 	// Invert tray icon
@@ -136,19 +144,19 @@ QWidget *InterfacePage::trayIcon()
 	return Utils::layoutToWidget(content);
 }
 
-QIcon InterfacePage::icon()
+auto InterfacePage::icon() -> QIcon
 {
 	return Icon::get("draw-brush");
 }
 
-QString InterfacePage::title()
+auto InterfacePage::title() -> QString
 {
 	return "Interface";
 }
 
-bool InterfacePage::save()
+auto InterfacePage::save() -> bool
 {
-	auto mainWindow = MainWindow::find(parentWidget());
+	auto *mainWindow = MainWindow::find(parentWidget());
 
 	// Set theme
 	if (itfDark->isChecked() != settings.get_dark_theme())
@@ -171,24 +179,32 @@ bool InterfacePage::save()
 	if (mainWindow != nullptr
 		&& settings.general.track_list_resize_mode != resizeMode)
 	{
-		auto tracksList = dynamic_cast<TracksList *>(mainWindow->getSongsTree());
+		auto *tracksList = dynamic_cast<TracksList *>(mainWindow->getSongsTree());
 		if (tracksList != nullptr)
+		{
 			tracksList->updateResizeMode(resizeMode);
+		}
 	}
 	settings.general.track_list_resize_mode = resizeMode;
 
 	// Track numbers
 	if (mainWindow != nullptr)
+	{
 		mainWindow->toggleTrackNumbers(itfTrackNum->isChecked());
+	}
 	settings.general.track_numbers = itfTrackNum->isChecked()
 		? lib::context_all
 		: lib::context_none;
 
 	// Other interface stuff
 	if (itfIcFallback != nullptr)
+	{
 		settings.general.fallback_icons = itfIcFallback->isChecked();
+	}
 	if (mainWindow != nullptr)
+	{
 		mainWindow->setFixedWidthTime(itfMonoTime->isChecked());
+	}
 	settings.general.fixed_width_time = itfMonoTime->isChecked();
 	settings.general.show_context_info = itfContextInfo->isChecked();
 	settings.general.relative_added = itfRelativeAdded->isChecked();
@@ -214,12 +230,14 @@ bool InterfacePage::save()
 
 	// Reload if needed
 	if (reloadTray && mainWindow != nullptr)
+	{
 		mainWindow->reloadTrayIcon();
+	}
 
 	return true;
 }
 
-bool InterfacePage::hasIconTheme()
+auto InterfacePage::hasIconTheme() -> bool
 {
 	return !QIcon::fromTheme("media-playback-start").isNull();
 }
@@ -231,7 +249,9 @@ void InterfacePage::darkThemeToggle(bool checked)
 		itfStyle->setCurrentText("Fusion");
 
 		if (itfIcFallback != nullptr)
+		{
 			itfIcFallback->setChecked(true);
+		}
 	}
 	else
 	{

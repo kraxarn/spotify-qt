@@ -10,9 +10,9 @@ class InterfacePage: public SettingsPage
 public:
 	InterfacePage(lib::settings &settings, QWidget *parent);
 
-	QIcon icon() override;
-	QString title() override;
-	bool save() override;
+	auto icon() -> QIcon override;
+	auto title() -> QString override;
+	auto save() -> bool override;
 
 private:
 	// General
@@ -31,11 +31,9 @@ private:
 	QCheckBox *itfTrayInvert = nullptr;
 	QCheckBox *itfTrayNotify = nullptr;
 
-	QWidget *general();
-	QWidget *trayIcon();
+	auto general() -> QWidget *;
+	auto trayIcon() -> QWidget *;
 
-	static bool hasIconTheme();
+	static auto hasIconTheme() -> bool;
 	void darkThemeToggle(bool checked);
 };
-
-
