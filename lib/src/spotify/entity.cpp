@@ -17,12 +17,20 @@ void lib::spt::from_json(const nlohmann::json &j, entity &e)
 
 	if (j.contains("id"))
 	{
-		j.at("id").get_to(e.id);
+		const auto &id = j.at("id");
+		if (id.is_string())
+		{
+			id.get_to(e.id);
+		}
 	}
 
 	if (j.contains("name"))
 	{
-		j.at("name").get_to(e.name);
+		const auto &name = j.at("name");
+		if (name.is_string())
+		{
+			name.get_to(e.name);
+		}
 	}
 }
 
