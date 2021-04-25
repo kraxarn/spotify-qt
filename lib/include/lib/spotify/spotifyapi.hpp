@@ -277,7 +277,7 @@ namespace lib
 			 * @note Returns result if already an URI
 			 * @return Spotify URI
 			 */
-			static std::string to_uri(const std::string &type, const std::string &id);
+			static auto to_uri(const std::string &type, const std::string &id) -> std::string;
 
 			/**
 			 * Spotify URI (spotify:track:4uLU6hMCjMI75M1A2tKUQC) to Spotify ID
@@ -286,13 +286,13 @@ namespace lib
 			 * @note Returns result if already an ID
 			 * @return Spotify ID
 			 */
-			static std::string to_id(const std::string &id);
+			static auto to_id(const std::string &id) -> std::string;
 
 		protected:
 			/**
 			 * Number of seconds since 1970-01-01
 			 */
-			static long seconds_since_epoch();
+			static auto seconds_since_epoch() -> long;
 
 			/**
 			 * Timestamp if last refresh
@@ -384,7 +384,7 @@ namespace lib
 			 * Get string interpretation of a follow type
 			 * @param type Follow type
 			 */
-			static std::string follow_type_string(lib::follow_type type);
+			static auto follow_type_string(lib::follow_type type) -> std::string;
 
 		private:
 			/**
@@ -394,8 +394,8 @@ namespace lib
 			 * @note Only required until networking is properly implemented
 			 * @return JSON response with (maybe) new access token
 			 */
-			virtual std::string request_refresh(const std::string &post_data,
-				const std::string &authorization) = 0;
+			virtual auto request_refresh(const std::string &post_data,
+				const std::string &authorization) -> std::string = 0;
 
 			/**
 			 * Parse JSON from string data
@@ -404,7 +404,8 @@ namespace lib
 			 * @note Throws if JSON failed to parse or JSON contains an error object
 			 * @returns Parsed JSON, or null object if no data
 			 */
-			static nlohmann::json parse_json(const std::string &url, const std::string &data);
+			static auto parse_json(const std::string &url,
+				const std::string &data) -> nlohmann::json;
 
 			/**
 			 * Set last used device
