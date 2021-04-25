@@ -4,36 +4,37 @@ SystemInfoView::SystemInfoView(QWidget *mainWindow, QWidget *parent)
 	: mainWindow(mainWindow),
 	QWidget(parent)
 {
-	auto layout = new QVBoxLayout();
+	auto *layout = new QVBoxLayout();
 	setLayout(layout);
 	setWindowTitle("System info");
 
-	auto textInfo = new QTextEdit(this);
+	auto *textInfo = new QTextEdit(this);
 	textInfo->setHtml(systemInfo());
 	textInfo->setReadOnly(true);
 	layout->addWidget(textInfo);
 
-	auto infoLayout = new QHBoxLayout();
+	auto *infoLayout = new QHBoxLayout();
 
-	auto infoAbout = new QLabel(
+	auto *infoAbout = new QLabel(
 		"This information could be useful when reporting bugs. "
 		"Additional information, depending on the type of issue, may be more helpful.", this);
 	infoAbout->setWordWrap(true);
 	infoLayout->addWidget(infoAbout, 1);
 
-	auto copy = new QPushButton("Copy to clipboard", this);
-	QPushButton::connect(copy, &QPushButton::clicked, this, &SystemInfoView::copyToClipboard);
+	auto *copy = new QPushButton("Copy to clipboard", this);
+	QPushButton::connect(copy, &QPushButton::clicked,
+		this, &SystemInfoView::copyToClipboard);
 	infoLayout->addWidget(copy);
 
 	layout->addLayout(infoLayout);
 }
 
-QString SystemInfoView::systemInfo(bool html)
+auto SystemInfoView::systemInfo(bool html) -> QString
 {
 	return systemInfo(((MainWindow *) mainWindow)->getCurrentPlayback(), html);
 }
 
-QString SystemInfoView::systemInfo(const lib::spt::playback &playback, bool html)
+auto SystemInfoView::systemInfo(const lib::spt::playback &playback, bool html) -> QString
 {
 	QMap<QString, QString> info;
 
@@ -96,7 +97,7 @@ QString SystemInfoView::systemInfo(const lib::spt::playback &playback, bool html
 		: systemInfo;
 }
 
-void SystemInfoView::copyToClipboard(bool)
+void SystemInfoView::copyToClipboard(bool /*checked*/)
 {
 	QApplication::clipboard()->setText(systemInfo(false));
 }

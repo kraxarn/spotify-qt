@@ -19,7 +19,7 @@ public:
 	static QString systemInfo(const lib::spt::playback &playback, bool html = true);
 
 private:
-	QString systemInfo(bool html = true);
+	auto systemInfo(bool html = true) -> QString;
 	void copyToClipboard(bool checked);
 
 	QWidget *mainWindow = nullptr;
