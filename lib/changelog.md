@@ -5,14 +5,20 @@ Versions use major.minor scheming. New versions are released together with spoti
 * Pre-release and beta releases may contain breaking changes, even if it's a minor release.
 
 ### v0.4 (spotify-qt v3.6)
-* Added enums: `album_group`, `follow_type`, `repeat_state`.
-* Added JSON utilities.
-* Added a random number generator.
-* Added Spotify classes: `album`, `artist`, `context`, `device`, `playback`, `playlist`, 
-	`search_results`, `track`, `user`.
-* Added `spotify_api` and player API.
-* Added function to get part of vector (`vector::sub`).
-* Added utilities for loading (`json::load_json`) and saving (`json::save_json`) JSON.
+* Added enums: `album_group`, `client_type`, `follow_type`, `repeat_state`.
+* Paths in `paths` now return `filesystem::path` instead of `std::string`.
+* Setting `general.hidden_song_headers` is now a `std::unordered_set` instead of `std::vector`.
+* Added `general.last_device` setting.
+* Added Spotify classes: `album`, `artist`, `audio_features`, `device`, `playback`, `playlist`, 
+  `search_results`, `track`, `user`.
+* Added Spotify helper classes: `context`, `playlist_details`, `saved_album`.
+* Added `callback<T>` for asynchronous callbacks.
+* Added `entity` type for saving id and name of various entities.
+* Added `api` as a Spotify Web API wrapper.
+* Added `json`.
+* Version is now defined in `lib/libversion.hpp`.
+* Removed deprecated `locale`.
+* Added `random`.
 * Reworked `cache`.
 
 ### v0.3 (spotify-qt v3.5)
