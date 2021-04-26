@@ -4,6 +4,7 @@
 #include "../spotify/spotify.hpp"
 #include "logview.hpp"
 #include "util/systemutils.hpp"
+#include "lib/libversion.hpp"
 
 #include <QFile>
 #include <QLabel>

@@ -43,7 +43,8 @@ auto SystemInfoView::systemInfo(const lib::spt::playback &playback, bool html) -
 
 	// spotify-qt version
 #ifdef GIT_COMMIT
-	info["App version"] = QString("%1-dev (%2)").arg(APP_VERSION, GIT_COMMIT);
+	info["App version"] = QString("%1-dev (%2) - lib %3")
+		.arg(APP_VERSION, GIT_COMMIT, LIB_VERSION);
 #else
 	info["App version"] = APP_VERSION;
 #endif
