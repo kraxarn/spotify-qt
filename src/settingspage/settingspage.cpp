@@ -12,6 +12,11 @@ void SettingsPage::warning(const QString &title, const QString &message)
 	QMessageBox::warning(this, title, message);
 }
 
+void SettingsPage::info(const QString &title, const QString &message)
+{
+	QMessageBox::information(this, title, message);
+}
+
 void SettingsPage::applyFail(const QString &setting)
 {
 	warning("Failed to apply settings",

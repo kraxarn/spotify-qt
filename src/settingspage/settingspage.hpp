@@ -23,6 +23,8 @@ protected:
 	explicit SettingsPage(lib::settings &settings, QWidget *parent);
 
 	void warning(const QString &title, const QString &message);
+	void info(const QString &title, const QString &message);
+
 	void applyFail(const QString &setting);
 	auto tabContent() -> QVBoxLayout *;
 
