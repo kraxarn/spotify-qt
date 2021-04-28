@@ -19,9 +19,9 @@ void SettingsPage::applyFail(const QString &setting)
 			.arg(setting));
 }
 
-QVBoxLayout *SettingsPage::tabContent()
+auto SettingsPage::tabContent() -> QVBoxLayout *
 {
-	auto layout = new QVBoxLayout(this);
+	auto *layout = new QVBoxLayout(this);
 	layout->setAlignment(Qt::AlignTop);
 	return layout;
 }
