@@ -10,6 +10,8 @@
 #include "settings/general.hpp"
 #include "settings/account.hpp"
 #include "settings/spotify.hpp"
+#include "settings/qt.hpp"
+#include "lib/json.hpp"
 
 #include <mutex>
 
@@ -64,6 +66,16 @@ namespace lib
 		setting::spotify spotify;
 
 		/**
+		 * Qt settings
+		 */
+		auto qt() -> setting::qt &;
+
+		/**
+		 * Qt settings (constant)
+		 */
+		auto qt_const() const -> const setting::qt &;
+
+		/**
 		 * Reset client_id and client_secret properties
 		 */
 		void remove_client();
@@ -114,6 +126,11 @@ namespace lib
 		 * threads
 		 */
 		std::mutex mutex;
+
+		/**
+		 * Qt settings
+		 */
+		setting::qt qt_settings;
 
 		/**
 		 * Set value from JSON in a "safe" way

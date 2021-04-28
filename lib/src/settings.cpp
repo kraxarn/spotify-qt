@@ -18,6 +18,37 @@ auto settings::file_path() const -> std::string
 	return ghc::filesystem::path(file_name()).parent_path().string();
 }
 
+//region qt
+
+void lib::setting::to_json(nlohmann::json &j, const qt &q)
+{
+	j = nlohmann::json{
+		{"system_title_bar", q.system_title_bar},
+	};
+}
+
+void lib::setting::from_json(const nlohmann::json &j, qt &q)
+{
+	if (!j.is_object())
+	{
+		return;
+	}
+
+	lib::json::get(j, "system_title_bar", q.system_title_bar);
+}
+
+auto lib::settings::qt() -> setting::qt &
+{
+	return qt_settings;
+}
+
+auto lib::settings::qt_const() const -> const setting::qt &
+{
+	return qt_settings;
+}
+
+//endregion
+
 void settings::from_json(const nlohmann::json &json)
 {
 	auto a = json.at("Account");
@@ -66,6 +97,10 @@ void settings::from_json(const nlohmann::json &json)
 	setValue(s, "path", spotify.path);
 	setValue(s, "start_client", spotify.start_client);
 	setValue(s, "username", spotify.username);
+
+	// Qt widgets
+	// TODO: This should be loaded dynamically for non-Qt clients
+	lib::json::get(json, "Qt", qt_settings);
 
 	// Validate
 	auto errors = validate();
@@ -157,7 +192,8 @@ auto settings::to_json() const -> nlohmann::json
 			{"path", spotify.path},
 			{"start_client", spotify.start_client},
 			{"username", spotify.username},
-		}}
+		}},
+		{"Qt", qt_settings},
 	};
 }
 
