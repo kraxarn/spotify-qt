@@ -8,12 +8,12 @@ settings::settings(const paths &paths)
 	load();
 }
 
-std::string settings::file_name() const
+auto settings::file_name() const -> std::string
 {
 	return path.config_file();
 }
 
-std::string settings::file_path() const
+auto settings::file_path() const -> std::string
 {
 	return ghc::filesystem::path(file_name()).parent_path().string();
 }
@@ -110,7 +110,7 @@ void settings::load()
 	file.close();
 }
 
-nlohmann::json settings::to_json() const
+auto settings::to_json() const -> nlohmann::json
 {
 	return {
 		{"Account", {
@@ -167,7 +167,9 @@ void settings::save()
 
 	auto file_dir = file_path();
 	if (!ghc::filesystem::exists(file_dir))
+	{
 		ghc::filesystem::create_directories(file_dir);
+	}
 
 	std::ofstream file(file_name());
 	file << std::setw(4) << to_json();
@@ -186,7 +188,7 @@ void settings::remove_tokens()
 	account.refresh_token = std::string();
 }
 
-bool settings::get_dark_theme() const
+auto settings::get_dark_theme() const -> bool
 {
 	return general.style_palette == palette_dark;
 }
@@ -196,7 +198,7 @@ void settings::set_dark_theme(bool value)
 	general.style_palette = value ? palette_dark : palette_app;
 }
 
-std::map<std::string, std::vector<std::string>> settings::validate() const
+auto settings::validate() const -> std::map<std::string, std::vector<std::string>>
 {
 	std::map<std::string, std::vector<std::string>> errors;
 

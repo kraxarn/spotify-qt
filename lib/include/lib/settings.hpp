@@ -30,7 +30,7 @@ namespace lib
 		 * Format settings in settings
 		 * @return JSON
 		 */
-		nlohmann::json to_json() const;
+		auto to_json() const -> nlohmann::json;
 
 		/**
 		 * Load settings from json
@@ -77,7 +77,7 @@ namespace lib
 		 * Get if dark theme should be used
 		 * @return Use dark theme
 		 */
-		bool get_dark_theme() const;
+		auto get_dark_theme() const -> bool;
 
 		/**
 		 * Set if dark theme should be used
@@ -89,19 +89,19 @@ namespace lib
 		 * Get config file name
 		 * @return File name with path
 		 */
-		std::string file_name() const;
+		auto file_name() const -> std::string;
 
 		/**
 		 * Get path to config file name
 		 * @return Path
 		 */
-		std::string file_path() const;
+		auto file_path() const -> std::string;
 
 		/**
 		 * Validate settings to make sure they are valid
 		 * @return Errors
 		 */
-		std::map<std::string, std::vector<std::string>> validate() const;
+		auto validate() const -> std::map<std::string, std::vector<std::string>>;
 
 	private:
 		/**
@@ -120,13 +120,16 @@ namespace lib
 		 * @param json JSON object to try and find value from
 		 * @param key Key of value in root of JSON
 		 * @param value Value to write to
+		 * @deprecated Use lib::json::get
 		 */
 		template<typename T>
-		void setValue(const nlohmann::json &json, const std::string &key,
+		static void setValue(const nlohmann::json &json, const std::string &key,
 			T &value)
 		{
 			if (!json.contains(key))
+			{
 				return;
+			}
 
 			try
 			{
