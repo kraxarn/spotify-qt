@@ -101,6 +101,13 @@ auto InterfacePage::general() -> QWidget *
 	itfRelativeAdded->setChecked(settings.general.relative_added);
 	layout->addWidget(itfRelativeAdded);
 
+	// System title bar
+	const auto &qtSettings = settings.qt_const();
+	titleBar = new QCheckBox("System title bar", this);
+	titleBar->setToolTip("Show system title bar and window borders");
+	titleBar->setChecked(qtSettings.system_title_bar);
+	layout->addWidget(titleBar);
+
 	return Utils::layoutToWidget(layout);
 }
 
@@ -265,6 +272,13 @@ auto InterfacePage::save() -> bool
 	if (itfTrayAlbum != nullptr)
 	{
 		settings.general.tray_album_art = itfTrayAlbum->isChecked();
+	}
+
+	// Qt specific
+	auto &qtSettings = settings.qt();
+	if (titleBar != nullptr)
+	{
+		qtSettings.system_title_bar = titleBar->isChecked();
 	}
 
 	// Reload if needed

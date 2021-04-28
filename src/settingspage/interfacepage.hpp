@@ -24,6 +24,7 @@ private:
 	QCheckBox *itfTrackNum = nullptr;
 	QComboBox *itfStyle = nullptr;
 	QComboBox *itfResizeMode = nullptr;
+	QCheckBox *titleBar = nullptr;
 
 	// Tray icon
 	QCheckBox *itfTrayAlbum = nullptr;
