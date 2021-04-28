@@ -6,13 +6,15 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 	settings(settings),
 	QToolBar("Media controls", parent)
 {
-	auto mainWindow = dynamic_cast<MainWindow *>(parent);
+	auto *mainWindow = dynamic_cast<MainWindow *>(parent);
 	if (mainWindow == nullptr)
+	{
 		return;
+	}
 	setMovable(false);
 
 	// Menu
-	auto menu = new QToolButton(this);
+	auto *menu = new QToolButton(this);
 	menu->setText("Menu");
 	menu->setIcon(Icon::get("application-menu"));
 	menu->setPopupMode(QToolButton::InstantPopup);
@@ -26,20 +28,21 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 
 	// Media controls
 	addSeparator();
-	auto previous = addAction(Icon::get("media-skip-backward"), "Previous");
+	auto *previous = addAction(Icon::get("media-skip-backward"), "Previous");
 	playPause = addAction(Icon::get("media-playback-start"), "Play");
 	playPause->setShortcut(QKeySequence("Space"));
-	QAction::connect(playPause, &QAction::triggered, [this](bool checked)
+	QAction::connect(playPause, &QAction::triggered, [this, mainWindow](bool /*checked*/)
 	{
-		auto mainWindow = (MainWindow *) this->parent;
-		auto current = mainWindow->getCurrentPlayback();
+		auto &current = mainWindow->getCurrentPlayback();
 		current.is_playing = !current.is_playing;
 		mainWindow->refreshed(current);
 
 		auto callback = [this, mainWindow](const std::string &status)
 		{
 			if (status.empty())
+			{
 				return;
+			}
 
 			mainWindow->status(lib::fmt::format("Failed to {} playback: {}",
 				this->playPause->iconText() == "Pause" ? "pause" : "resume",
@@ -47,17 +50,20 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 		};
 
 		if (current.is_playing)
+		{
 			this->spotify.resume(callback);
+		}
 		else
+		{
 			this->spotify.pause(callback);
+		}
 	});
 
-	auto next = addAction(Icon::get("media-skip-forward"), "Next");
-	QAction::connect(previous, &QAction::triggered, [this](bool checked)
+	auto *next = addAction(Icon::get("media-skip-forward"), "Next");
+	QAction::connect(previous, &QAction::triggered, [this, mainWindow](bool /*checked*/)
 	{
-		this->spotify.previous([this](const std::string &status)
+		this->spotify.previous([mainWindow](const std::string &status)
 		{
-			auto mainWindow = MainWindow::find(this->parent);
 			if (!status.empty())
 			{
 				mainWindow->status(lib::fmt::format("Failed to go to previous track: {}",
@@ -67,11 +73,10 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 		});
 	});
 
-	QAction::connect(next, &QAction::triggered, [this](bool checked)
+	QAction::connect(next, &QAction::triggered, [this, mainWindow](bool /*checked*/)
 	{
-		this->spotify.next([this](const std::string &status)
+		this->spotify.next([mainWindow](const std::string &status)
 		{
-			auto mainWindow = MainWindow::find(this->parent);
 			if (!status.empty())
 			{
 				mainWindow->status(lib::fmt::format("Failed to go to next track: {}",
@@ -83,40 +88,44 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 
 	// Progress
 	progress = new ClickableSlider(Qt::Horizontal, this);
-	QSlider::connect(progress, &QAbstractSlider::sliderReleased, this, [this]()
-	{
-		this->spotify.seek(progress->value(), [this](const std::string &status)
+	QSlider::connect(progress, &QAbstractSlider::sliderReleased,
+		this, [this, mainWindow]()
 		{
-			auto mainWindow = MainWindow::find(this->parent);
-			if (!status.empty())
-			{
-				mainWindow->status(lib::fmt::format("Failed to seek: {}",
-					status), true);
-			}
+			this->spotify.seek(progress->value(),
+				[mainWindow](const std::string &status)
+				{
+					if (!status.empty())
+					{
+						mainWindow->status(lib::fmt::format("Failed to seek: {}",
+							status), true);
+					}
 
 #ifdef USE_DBUS
-			if (mainWindow->getMediaPlayer() != nullptr)
-				mainWindow->getMediaPlayer()->stateUpdated();
+					if (mainWindow->getMediaPlayer() != nullptr)
+					{
+						mainWindow->getMediaPlayer()->stateUpdated();
+					}
 #endif
+				});
 		});
-	});
 
 	addSeparator();
 	addWidget(progress);
 	addSeparator();
 	position = new QLabel("0:00/0:00", this);
 	if (settings.general.fixed_width_time)
+	{
 		position->setFont(QFont("monospace"));
+	}
 	addWidget(position);
 	addSeparator();
 
 	// Shuffle and repeat toggles
 	shuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle");
 	shuffle->setCheckable(true);
-	QAction::connect(shuffle, &QAction::triggered, [this](bool checked)
+	QAction::connect(shuffle, &QAction::triggered, [this, mainWindow](bool checked)
 	{
-		auto mainWindow = (MainWindow *) this->parent;
-		auto current = mainWindow->getCurrentPlayback();
+		auto &current = mainWindow->getCurrentPlayback();
 		current.shuffle = !current.shuffle;
 		mainWindow->refreshed(current);
 
@@ -132,10 +141,9 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 
 	repeat = addAction(Icon::get("media-playlist-repeat"), "Repeat");
 	repeat->setCheckable(true);
-	QAction::connect(repeat, &QAction::triggered, [this](bool checked)
+	QAction::connect(repeat, &QAction::triggered, [this, mainWindow](bool checked)
 	{
-		auto mainWindow = (MainWindow *) this->parent;
-		auto current = mainWindow->getCurrentPlayback();
+		auto &current = mainWindow->getCurrentPlayback();
 		auto repeatMode = checked
 			? lib::repeat_state::context
 			: lib::repeat_state::off;
