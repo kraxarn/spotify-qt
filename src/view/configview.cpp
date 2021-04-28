@@ -18,19 +18,19 @@ ConfigView::ConfigView(const lib::settings &settings, QWidget *parent)
 
 void ConfigView::menu(const QPoint &pos)
 {
-	auto menu = new QMenu(this);
-	auto item = itemAt(pos);
+	auto *menu = new QMenu(this);
+	auto *item = itemAt(pos);
 
 	if (item != nullptr)
 	{
-		QAction::connect(menu->addAction("Copy key"), &QAction::triggered,
-			[item](bool)
+		QAction::connect(menu->addAction("Copy key"),
+			&QAction::triggered, [item](bool /*checked*/)
 			{
 				QApplication::clipboard()->setText(item->text(0));
 			});
 
-		QAction::connect(menu->addAction("Copy value"), &QAction::triggered,
-			[item](bool)
+		QAction::connect(menu->addAction("Copy value"),
+			&QAction::triggered, [item](bool /*checked*/)
 			{
 				QApplication::clipboard()->setText(item->text(1));
 			});
@@ -39,7 +39,7 @@ void ConfigView::menu(const QPoint &pos)
 	}
 
 	QAction::connect(menu->addAction(Icon::get("folder-txt"), "Open in external editor"),
-		&QAction::triggered, [this](bool)
+		&QAction::triggered, [this](bool /*checked*/)
 		{
 			Utils::openUrl(QString::fromStdString(this->settings.file_name()),
 				LinkType::Path, this);
@@ -52,22 +52,22 @@ void ConfigView::reload()
 {
 	clear();
 
-	auto json = settings.to_json();
-	for (auto &i : json.items())
+	const auto &json = settings.to_json();
+	for (const auto &i : json.items())
 	{
-		auto item = new QTreeWidgetItem(this);
+		auto *item = new QTreeWidgetItem(this);
 		item->setText(0, QString::fromStdString(i.key()));
 
-		for (auto &ii : i.value().items())
+		for (const auto &ii : i.value().items())
 		{
-			auto child = new QTreeWidgetItem(item);
+			auto *child = new QTreeWidgetItem(item);
 			child->setText(0, QString::fromStdString(ii.key()));
 			child->setText(1, QString::fromStdString(ii.value().dump()));
 		}
 	}
 }
 
-void ConfigView::showEvent(QShowEvent *)
+void ConfigView::showEvent(QShowEvent * /*event*/)
 {
 	reload();
 }
