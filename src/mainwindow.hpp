@@ -50,6 +50,7 @@ public:
 	int getPlaylistItemCount();
 	QListWidgetItem *getPlaylistItem(int index);
 	void orderPlaylists(lib::playlist_order order);
+	void setBorderless(bool enabled);
 
 	auto startClient() -> bool;
 	void stopClient();

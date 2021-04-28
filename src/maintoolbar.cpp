@@ -86,6 +86,9 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 		});
 	});
 
+	leftSpacer = new DragArea(this);
+	addWidget(leftSpacer);
+
 	// Progress
 	progress = new ClickableSlider(Qt::Horizontal, this);
 	QSlider::connect(progress, &QAbstractSlider::sliderReleased,
@@ -119,6 +122,9 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 	}
 	addWidget(position);
 	addSeparator();
+
+	rightSpacer = new DragArea(this);
+	addWidget(rightSpacer);
 
 	// Shuffle and repeat toggles
 	shuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle");
@@ -163,4 +169,32 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 	// Volume
 	volumeButton = new VolumeButton(settings, spotify, this);
 	addWidget(volumeButton);
+
+	titleBarSeparator = addSeparator();
+	minimize = addAction(Icon::get("window-minimize-symbolic"), "Minimize");
+	maximize = addAction(Icon::get("window-maximize-symbolic"), "Maximise");
+	close = addAction(Icon::get("window-close-symbolic"), "Close");
+
+	showTitleBarButtons(!settings.qt_const().system_title_bar);
+}
+
+void MainToolBar::resizeEvent(QResizeEvent */*event*/)
+{
+	const auto width = size().width();
+	const auto spacerWidth = width / 6;
+
+	leftSpacer->setMinimumWidth(spacerWidth);
+	rightSpacer->setMinimumWidth(spacerWidth);
+}
+
+void MainToolBar::showTitleBarButtons(bool show)
+{
+	titleBarSeparator->setVisible(show);
+
+	minimize->setVisible(show);
+	maximize->setVisible(show);
+	close->setVisible(show);
+
+	leftSpacer->setVisible(show);
+	rightSpacer->setVisible(show);
 }

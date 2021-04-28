@@ -164,6 +164,8 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 		}
 	});
 
+	setBorderless(!settings.qt_const().system_title_bar);
+
 	// Welcome
 	setStatus("Welcome to spotify-qt!");
 	splash->finish(this);
@@ -173,6 +175,13 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
 	delete trayIcon;
 	event->accept();
+}
+
+void MainWindow::setBorderless(bool enabled)
+{
+	setWindowFlag(Qt::FramelessWindowHint, enabled);
+	setWindowFlag(Qt::WindowSystemMenuHint, enabled);
+	setAttribute(Qt::WA_TranslucentBackground, enabled);
 }
 
 void MainWindow::refresh()
