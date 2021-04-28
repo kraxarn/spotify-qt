@@ -170,10 +170,29 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 	volumeButton = new VolumeButton(settings, spotify, this);
 	addWidget(volumeButton);
 
+	// Title bar buttons
 	titleBarSeparator = addSeparator();
 	minimize = addAction(Icon::get("window-minimize-symbolic"), "Minimize");
+	QAction::connect(minimize, &QAction::triggered, [mainWindow](bool /*checked*/)
+	{
+		emit mainWindow->showMinimized();
+	});
+
 	maximize = addAction(Icon::get("window-maximize-symbolic"), "Maximise");
+	QAction::connect(maximize, &QAction::triggered, [mainWindow](bool /*checked*/)
+	{
+		if (mainWindow->isMaximized())
+		{
+			mainWindow->resize(1280, 720);
+		}
+		else
+		{
+			emit mainWindow->showMaximized();
+		}
+	});
+
 	close = addAction(Icon::get("window-close-symbolic"), "Close");
+	QAction::connect(close, &QAction::triggered, &QCoreApplication::quit);
 
 	showTitleBarButtons(!settings.qt_const().system_title_bar);
 }
