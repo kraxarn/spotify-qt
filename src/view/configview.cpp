@@ -63,6 +63,7 @@ void ConfigView::reload()
 			auto *child = new QTreeWidgetItem(item);
 			child->setText(0, QString::fromStdString(ii.key()));
 			child->setText(1, QString::fromStdString(ii.value().dump()));
+			child->setToolTip(1, ii.value().type_name());
 		}
 	}
 }
