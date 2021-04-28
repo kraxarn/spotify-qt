@@ -244,7 +244,7 @@ auto InterfacePage::save() -> bool
 		&& itfTrayNotify->isChecked() && !itfTrayIcon->isChecked())
 	{
 		itfTrayIcon->setChecked(true);
-		QMessageBox::information(this, "Desktop Notifications",
+		info("Desktop Notifications",
 			"Desktop notifications requires tray icon to be enabled, so it was enabled");
 	}
 
@@ -278,6 +278,11 @@ auto InterfacePage::save() -> bool
 	auto &qtSettings = settings.qt();
 	if (titleBar != nullptr)
 	{
+		if (qtSettings.system_title_bar != titleBar->isChecked())
+		{
+			info(titleBar->text(),
+				"Please restart the application to toggle system title bar");
+		}
 		qtSettings.system_title_bar = titleBar->isChecked();
 	}
 
