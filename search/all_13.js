@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['validate_177',['validate',['../classlib_1_1settings.html#a0b6afd19590e280b28649c01b580aee8',1,'lib::settings']]],
-  ['vector_178',['vector',['../classlib_1_1vector.html',1,'lib']]],
-  ['volume_179',['volume',['../classlib_1_1spt_1_1playback.html#acffe9e404d6fe0474e8c11345c5767ea',1,'lib::spt::playback']]],
-  ['volume_5fpercent_180',['volume_percent',['../classlib_1_1spt_1_1device.html#a4660cde6df9a480e5594d8252413140b',1,'lib::spt::device']]]
+  ['uri_176',['uri',['../classlib_1_1spt_1_1context.html#a9d23cd4d63d8d0d402c2642d96a4f45e',1,'lib::spt::context']]],
+  ['url_177',['url',['../classlib_1_1spotify__error.html#ae6dca656b0b26ab0c604529c6bbd77a9',1,'lib::spotify_error']]],
+  ['user_178',['user',['../classlib_1_1spt_1_1user.html',1,'lib::spt']]]
 ];

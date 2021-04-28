@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['warn_329',['warn',['../classlib_1_1log.html#ad6c8f913d62cc4d89bbfa27a3369a89b',1,'lib::log::warn(const Format &amp;fmt, const Arg &amp;arg, Args &amp;&amp;... args)'],['../classlib_1_1log.html#a3b352feba3bddb212d53a40db6e69b75',1,'lib::log::warn(const Format &amp;fmt)']]]
+  ['validate_331',['validate',['../classlib_1_1settings.html#a63bfb68ad93aac46a5b48d9ecab6b814',1,'lib::settings']]],
+  ['volume_332',['volume',['../classlib_1_1spt_1_1playback.html#acffe9e404d6fe0474e8c11345c5767ea',1,'lib::spt::playback']]]
 ];

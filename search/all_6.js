@@ -4,7 +4,7 @@ var searchData=
   ['genres_53',['genres',['../classlib_1_1spt_1_1artist.html#a06c0a0e30c21b5a9e1a5d04d5bce52d0',1,'lib::spt::artist']]],
   ['get_54',['get',['../classlib_1_1json.html#a301b8eb203e2c032ef1ab73fdc3dfe21',1,'lib::json::get()'],['../classlib_1_1spt_1_1api.html#a40eb4c3ade662922d81706740794dc12',1,'lib::spt::api::get()']]],
   ['get_5falbum_5fimage_55',['get_album_image',['../classlib_1_1cache.html#a26a9715352683c4338f58bf35b26ef6d',1,'lib::cache']]],
-  ['get_5fdark_5ftheme_56',['get_dark_theme',['../classlib_1_1settings.html#ab91930d5ab56ea2d18a41bc4ec86025f',1,'lib::settings']]],
+  ['get_5fdark_5ftheme_56',['get_dark_theme',['../classlib_1_1settings.html#aa0ce08612b092b3400d6b7a1358853a4',1,'lib::settings']]],
   ['get_5fday_57',['get_day',['../classlib_1_1date__time.html#a3f57cc838edd0fde6f944166407c84cf',1,'lib::date_time']]],
   ['get_5fhour_58',['get_hour',['../classlib_1_1date__time.html#a56b4325ab0eb114808f76c7adcbe5db7',1,'lib::date_time']]],
   ['get_5fitems_59',['get_items',['../classlib_1_1spt_1_1api.html#af8c249ba34558bb06a807f13aace0554',1,'lib::spt::api::get_items(const std::string &amp;url, lib::callback&lt; nlohmann::json &gt; &amp;callback)'],['../classlib_1_1spt_1_1api.html#a348f5279b629971c0b8e2097b333b5e7',1,'lib::spt::api::get_items(const std::string &amp;url, const std::string &amp;key, lib::callback&lt; nlohmann::json &gt; &amp;callback)']]],
