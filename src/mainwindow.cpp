@@ -180,8 +180,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::setBorderless(bool enabled)
 {
 	setWindowFlag(Qt::FramelessWindowHint, enabled);
-	setWindowFlag(Qt::WindowSystemMenuHint, enabled);
-	setAttribute(Qt::WA_TranslucentBackground, enabled);
 }
 
 void MainWindow::refresh()
