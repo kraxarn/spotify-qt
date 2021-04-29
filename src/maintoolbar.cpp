@@ -217,3 +217,52 @@ void MainToolBar::showTitleBarButtons(bool show)
 	leftSpacer->setVisible(show);
 	rightSpacer->setVisible(show);
 }
+
+void MainToolBar::setPlaying(bool playing)
+{
+	playPause->setIcon(Icon::get(playing
+		? "media-playback-pause"
+		: "media-playback-start"));
+
+	playPause->setText(playing ? "Pause" : "Play");
+}
+
+void MainToolBar::setProgress(int current, int duration)
+{
+	position->setText(QString("%1/%2")
+		.arg(QString::fromStdString(lib::fmt::time(current)),
+			QString::fromStdString(lib::fmt::time(duration))));
+
+	progress->setValue(current);
+	progress->setMaximum(duration);
+}
+
+void MainToolBar::setProgress(const lib::spt::playback &playback)
+{
+	setProgress(playback.progress_ms, playback.item.duration);
+}
+
+void MainToolBar::setVolume(int volume)
+{
+	volumeButton->setVolume(volume);
+}
+
+void MainToolBar::setRepeat(lib::repeat_state state)
+{
+	repeat->setChecked(state != lib::repeat_state::off);
+}
+
+void MainToolBar::setShuffle(bool value)
+{
+	shuffle->setChecked(value);
+}
+
+void MainToolBar::setPositionFont(const QFont &font)
+{
+	position->setFont(font);
+}
+
+void MainToolBar::setSearchChecked(bool checked)
+{
+	search->setChecked(checked);
+}
