@@ -37,8 +37,8 @@ private:
 	spt::Spotify &spotify;
 	lib::settings &settings;
 
-	DragArea *leftSpacer;
-	DragArea *rightSpacer;
+	DragArea *leftSpacer = nullptr;
+	DragArea *rightSpacer = nullptr;
 
 	QAction *titleBarSeparator = nullptr;
 	QAction *minimize = nullptr;
