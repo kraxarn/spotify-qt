@@ -74,13 +74,13 @@ SearchView::SearchView(spt::Spotify &spotify, const lib::settings &settings, lib
 void SearchView::showEvent(QShowEvent *event)
 {
 	QWidget::showEvent(event);
-	MainWindow::find(parentWidget())->getSearchAction()->setChecked(true);
+	MainWindow::find(parentWidget())->setSearchChecked(true);
 }
 
 void SearchView::hideEvent(QHideEvent *event)
 {
 	QWidget::hideEvent(event);
-	MainWindow::find(parentWidget())->getSearchAction()->setChecked(false);
+	MainWindow::find(parentWidget())->setSearchChecked(false);
 }
 
 auto SearchView::defaultTree(const QStringList &headers) -> QTreeWidget *

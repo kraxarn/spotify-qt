@@ -61,7 +61,7 @@ public:
 
 	// Getters for private properties
 	QString &getCacheLocation();
-	QAction *getSearchAction();
+	void setSearchChecked(bool checked);
 	TracksList *getSongsTree();
 	std::string getSptContext() const;
 	lib::spt::playback &getCurrentPlayback();

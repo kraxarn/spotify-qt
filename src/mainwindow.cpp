@@ -217,8 +217,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 
 	if (!current.playback.item.is_valid())
 	{
-		mainToolBar->playPause->setIcon(Icon::get("media-playback-start"));
-		mainToolBar->playPause->setText("Play");
+		mainToolBar->setPlaying(false);
 		leftSidePanel->resetCurrentlyPlaying();
 		setWindowTitle("spotify-qt");
 		return;
@@ -251,25 +250,17 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 		}
 	}
 
-	mainToolBar->position->setText(QString("%1/%2")
-		.arg(QString::fromStdString(lib::fmt::time(current.playback.progress_ms)),
-			QString::fromStdString(lib::fmt::time(current.playback.item.duration))));
-
-	mainToolBar->progress->setValue(current.playback.progress_ms);
-	mainToolBar->progress->setMaximum(current.playback.item.duration);
-	mainToolBar->playPause->setIcon(Icon::get(current.playback.is_playing
-		? "media-playback-pause"
-		: "media-playback-start"));
-	mainToolBar->playPause->setText(current.playback.is_playing ? "Pause" : "Play");
+	mainToolBar->setProgress(current.playback);
+	mainToolBar->setPlaying(current.playback.is_playing);
 
 	if (!settings.general.pulse_volume)
 	{
 		constexpr int volumeStep = 5;
-		mainToolBar->volumeButton->setVolume(current.playback.volume() / volumeStep);
+		mainToolBar->setVolume(current.playback.volume() / volumeStep);
 	}
 
-	mainToolBar->repeat->setChecked(current.playback.repeat != lib::repeat_state::off);
-	mainToolBar->shuffle->setChecked(current.playback.shuffle);
+	mainToolBar->setRepeat(current.playback.repeat);
+	mainToolBar->setShuffle(current.playback.shuffle);
 }
 
 auto MainWindow::createCentralWidget() -> QWidget *
@@ -469,7 +460,7 @@ void MainWindow::reloadTrayIcon()
 
 void MainWindow::setFixedWidthTime(bool value)
 {
-	((MainToolBar *) toolBar)->position->setFont(value ? QFont("monospace") : QFont());
+	((MainToolBar *) toolBar)->setPositionFont(value ? QFont("monospace") : QFont());
 }
 
 void MainWindow::toggleTrackNumbers(bool enabled)
@@ -500,9 +491,9 @@ auto MainWindow::getCacheLocation() -> QString &
 	return cacheLocation;
 }
 
-auto MainWindow::getSearchAction() -> QAction *
+void MainWindow::setSearchChecked(bool checked)
 {
-	return ((MainToolBar *) toolBar)->search;
+	((MainToolBar *) toolBar)->setSearchChecked(checked);
 }
 
 auto MainWindow::getSongsTree() -> TracksList *
