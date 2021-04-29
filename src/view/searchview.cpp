@@ -6,7 +6,7 @@ SearchView::SearchView(spt::Spotify &spotify, const lib::settings &settings, lib
 	cache(cache),
 	QWidget(parent)
 {
-	auto layout = new QVBoxLayout();
+	auto *layout = new QVBoxLayout();
 	layout->setContentsMargins(-1, 0, -1, 0);
 	searchBox = new QLineEdit(this);
 	layout->addWidget(searchBox);
@@ -37,26 +37,33 @@ SearchView::SearchView(spt::Spotify &spotify, const lib::settings &settings, lib
 	tabs->addTab(playlistList, "Playlists");
 
 	// Start searching when pressing enter
-	QLineEdit::connect(searchBox, &QLineEdit::returnPressed, this, &SearchView::search);
+	QLineEdit::connect(searchBox, &QLineEdit::returnPressed,
+		this, &SearchView::search);
 
 	// Open album
-	QTreeWidget::connect(albumList, &QTreeWidget::itemClicked, this, &SearchView::albumClick);
+	QTreeWidget::connect(albumList, &QTreeWidget::itemClicked,
+		this, &SearchView::albumClick);
 	// Album context menu
 	albumList->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QWidget::connect(albumList, &QWidget::customContextMenuRequested, this, &SearchView::albumMenu);
+	QWidget::connect(albumList, &QWidget::customContextMenuRequested,
+		this, &SearchView::albumMenu);
 
 	// Open artist
-	QListWidget::connect(artistList, &QListWidget::itemClicked, this, &SearchView::artistClick);
+	QListWidget::connect(artistList, &QListWidget::itemClicked,
+		this, &SearchView::artistClick);
 
 	// Open playlist
-	QListWidget::connect(playlistList, &QListWidget::itemClicked, this, &SearchView::playlistClick);
+	QListWidget::connect(playlistList, &QListWidget::itemClicked,
+		this, &SearchView::playlistClick);
 
 	// Open track
-	QTreeWidget::connect(trackList, &QTreeWidget::itemActivated, this, &SearchView::trackClick);
+	QTreeWidget::connect(trackList, &QTreeWidget::itemActivated,
+		this, &SearchView::trackClick);
 
 	// Track context menu
 	trackList->setContextMenuPolicy(Qt::CustomContextMenu);
-	QWidget::connect(trackList, &QWidget::customContextMenuRequested, this, &SearchView::trackMenu);
+	QWidget::connect(trackList, &QWidget::customContextMenuRequested,
+		this, &SearchView::trackMenu);
 
 	// Playlist context menu
 	playlistList->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -76,9 +83,9 @@ void SearchView::hideEvent(QHideEvent *event)
 	MainWindow::find(parentWidget())->getSearchAction()->setChecked(false);
 }
 
-QTreeWidget *SearchView::defaultTree(const QStringList &headers)
+auto SearchView::defaultTree(const QStringList &headers) -> QTreeWidget *
 {
-	auto tree = new QTreeWidget(this);
+	auto *tree = new QTreeWidget(this);
 	tree->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	tree->setSelectionBehavior(QAbstractItemView::SelectRows);
 	tree->setRootIsDecorated(false);
@@ -90,19 +97,21 @@ QTreeWidget *SearchView::defaultTree(const QStringList &headers)
 
 void SearchView::albumMenu(const QPoint &pos)
 {
-	auto item = albumList->itemAt(pos);
-	auto albumId = item->data(0, RoleAlbumId).toString();
+	auto *item = albumList->itemAt(pos);
+	const auto &albumId = item->data(0, RoleAlbumId).toString();
 	if (albumId.isEmpty())
+	{
 		return;
+	}
 
-	auto albumMenu = new AlbumMenu(spotify, cache, albumId.toStdString(),
+	auto *albumMenu = new AlbumMenu(spotify, cache, albumId.toStdString(),
 		parentWidget());
 	albumMenu->popup(albumList->mapToGlobal(pos));
 }
 
-void SearchView::albumClick(QTreeWidgetItem *item, int)
+void SearchView::albumClick(QTreeWidgetItem *item, int /*column*/)
 {
-	auto mainWindow = MainWindow::find(parentWidget());
+	auto *mainWindow = MainWindow::find(parentWidget());
 	if (!mainWindow->loadAlbum(item->data(0, RoleAlbumId)
 		.toString().toStdString()))
 	{
@@ -112,7 +121,7 @@ void SearchView::albumClick(QTreeWidgetItem *item, int)
 
 void SearchView::artistClick(QListWidgetItem *item)
 {
-	auto mainWindow = MainWindow::find(parentWidget());
+	auto *mainWindow = MainWindow::find(parentWidget());
 	mainWindow->openArtist(item->data(RoleArtistId).toString().toStdString());
 	close();
 }
@@ -122,7 +131,7 @@ void SearchView::playlistClick(QListWidgetItem *item)
 	spotify.playlist(item->data(RolePlaylistId)
 		.toString().toStdString(), [this](const lib::spt::playlist &playlist)
 	{
-		auto mainWindow = MainWindow::find(this->parentWidget());
+		auto *mainWindow = MainWindow::find(this->parentWidget());
 		mainWindow->getSongsTree()->load(playlist);
 	});
 }
@@ -201,7 +210,7 @@ void SearchView::search()
 	}
 }
 
-void SearchView::trackClick(QTreeWidgetItem *item, int)
+void SearchView::trackClick(QTreeWidgetItem *item, int /*column*/)
 {
 	// Do we want it to continue playing results?
 	auto trackId = lib::spt::api::to_uri("track",
@@ -211,7 +220,7 @@ void SearchView::trackClick(QTreeWidgetItem *item, int)
 	{
 		if (!status.empty())
 		{
-			auto mainWindow = MainWindow::find(this->parentWidget());
+			auto *mainWindow = MainWindow::find(this->parentWidget());
 			mainWindow->status(lib::fmt::format("Failed to play track: {}",
 				status), true);
 		}
@@ -220,21 +229,24 @@ void SearchView::trackClick(QTreeWidgetItem *item, int)
 
 void SearchView::trackMenu(const QPoint &pos)
 {
-	auto item = trackList->itemAt(pos);
+	auto *item = trackList->itemAt(pos);
 	auto trackId = item->data(0, RoleTrackId).toString();
 	if (trackId.isEmpty())
+	{
 		return;
-	(new SongMenu(item, spotify, parentWidget()))->popup(trackList->mapToGlobal(pos));
+	}
+	auto *menu = new SongMenu(item, spotify, parentWidget());
+	menu->popup(trackList->mapToGlobal(pos));
 }
 
 void SearchView::playlistMenu(const QPoint &pos)
 {
-	auto item = playlistList->itemAt(pos);
+	auto *item = playlistList->itemAt(pos);
 	auto playlistId = item->data(RolePlaylistId).toString().toStdString();
 
 	spotify.playlist(playlistId, [this, pos](const lib::spt::playlist &playlist)
 	{
-		auto menu = new PlaylistMenu(spotify, playlist, cache, parentWidget());
+		auto *menu = new PlaylistMenu(spotify, playlist, cache, parentWidget());
 		menu->popup(playlistList->mapToGlobal(pos));
 	});
 }
@@ -244,7 +256,7 @@ void SearchView::addArtist(const lib::spt::artist &artist)
 	auto name = QString::fromStdString(artist.name);
 	auto id = QString::fromStdString(artist.id);
 
-	auto item = new QListWidgetItem(name, artistList);
+	auto *item = new QListWidgetItem(name, artistList);
 	item->setData(RoleArtistId, id);
 	item->setToolTip(name);
 }
@@ -255,11 +267,11 @@ void SearchView::addAlbum(const lib::spt::album &album)
 	auto name = QString::fromStdString(album.name);
 	auto artist = QString::fromStdString(album.artist);
 
-	auto item = new QTreeWidgetItem({
+	auto *item = new QTreeWidgetItem({
 		name, artist
 	});
 
-	auto mainWindow = MainWindow::find(parentWidget());
+	auto *mainWindow = MainWindow::find(parentWidget());
 	item->setIcon(0, mainWindow->getAlbum(album.image));
 	item->setData(0, RoleAlbumId, id);
 	item->setToolTip(0, name);
@@ -272,7 +284,7 @@ void SearchView::addPlaylist(const lib::spt::playlist &playlist)
 	auto playlistName = QString::fromStdString(playlist.name);
 	auto playlistId = QString::fromStdString(playlist.id);
 
-	auto item = new QListWidgetItem(playlistName, playlistList);
+	auto *item = new QListWidgetItem(playlistName, playlistList);
 	item->setData(RolePlaylistId, playlistId);
 	item->setToolTip(playlistName);
 }
@@ -295,20 +307,28 @@ void SearchView::addTrack(const lib::spt::track &track)
 void SearchView::resultsLoaded(const lib::spt::search_results &results)
 {
 	// Albums
-	for (auto &album : results.albums)
+	for (const auto &album : results.albums)
+	{
 		addAlbum(album);
+	}
 
 	// Artists
-	for (auto &artist : results.artists)
+	for (const auto &artist : results.artists)
+	{
 		addArtist(artist);
+	}
 
 	// Playlists
-	for (auto &playlist : results.playlists)
+	for (const auto &playlist : results.playlists)
+	{
 		addPlaylist(playlist);
+	}
 
 	// Tracks
-	for (auto &track : results.tracks)
+	for (const auto &track : results.tracks)
+	{
 		addTrack(track);
+	}
 
 	// Search done
 	searchBox->setEnabled(true);
