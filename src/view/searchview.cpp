@@ -235,7 +235,7 @@ void SearchView::trackMenu(const QPoint &pos)
 	{
 		return;
 	}
-	auto *menu = new SongMenu(item, spotify, parentWidget());
+	auto *menu = new SongMenu(track, spotify, parentWidget());
 	menu->popup(trackList->mapToGlobal(pos));
 }
 

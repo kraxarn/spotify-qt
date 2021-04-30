@@ -15,12 +15,10 @@ class SongMenu: public QMenu
 Q_OBJECT
 
 public:
-	SongMenu(QTreeWidgetItem *item, spt::Spotify &spotify, QWidget *parent);
-
-	SongMenu(QListWidgetItem *item, const std::vector<lib::spt::entity> &artists,
-		spt::Spotify &spotify, bool forceArtistSubmenu = false, QWidget *parent = nullptr);
-
 	SongMenu(const lib::spt::track &track, spt::Spotify &spotify, QWidget *parent);
+
+	SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
+		bool forceArtistSubmenu, QWidget *parent);
 
 private:
 	SongMenu(const std::string &trackId, const std::vector<lib::spt::entity> &artists,

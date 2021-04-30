@@ -2,26 +2,15 @@
 
 #include "mainwindow.hpp"
 
-SongMenu::SongMenu(QTreeWidgetItem *item, spt::Spotify &spotify, QWidget *parent)
-	: SongMenu(item->data(0, RoleTrack).value<lib::spt::track>().id,
-	item->data(0, RoleTrack).value<lib::spt::track>().artists,
-	item->text(2).toStdString(),
-	item->data(0, RoleAlbumId).toString().toStdString(),
-	item->data(0, RoleIndex).toInt(), spotify, false, parent)
-{
-}
-
-SongMenu::SongMenu(QListWidgetItem *item, const std::vector<lib::spt::entity> &artists,
-	spt::Spotify &spotify, bool forceArtistSubmenu, QWidget *parent)
-	: SongMenu(item->data(RoleTrack).value<lib::spt::track>().id, artists,
-	item->text().toStdString(), item->data(RoleAlbumId).toString().toStdString(),
-	item->data(RoleIndex).toInt(), spotify, forceArtistSubmenu, parent)
-{
-}
-
 SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify, QWidget *parent)
-	: SongMenu(track.id, track.artists, track.name, track.album.id,
-	0, spotify, false, parent)
+	: SongMenu(track, spotify, false, parent)
+{
+}
+
+SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
+	bool forceArtistSubmenu, QWidget *parent)
+	: SongMenu(track.id, track.artists, track.name, track.album.id, 0,
+	spotify, forceArtistSubmenu, parent)
 {
 }
 
