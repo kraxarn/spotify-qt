@@ -4,7 +4,7 @@
 
 SongMenu::SongMenu(QTreeWidgetItem *item, spt::Spotify &spotify, QWidget *parent)
 	: SongMenu(item->data(0, RoleTrack).value<lib::spt::track>().id,
-	nlohmann::json::parse(item->data(0, RoleArtists).toString().toStdString()),
+	item->data(0, RoleTrack).value<lib::spt::track>().artists,
 	item->text(2).toStdString(),
 	item->data(0, RoleAlbumId).toString().toStdString(),
 	item->data(0, RoleIndex).toInt(), spotify, false, parent)

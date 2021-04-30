@@ -297,8 +297,6 @@ void SearchView::addTrack(const lib::spt::track &track)
 		trackName, trackArtist
 	});
 	item->setData(0, RoleTrack, QVariant::fromValue(track));
-	item->setData(0, RoleArtists,
-		QString::fromStdString(((nlohmann::json) track.artists).dump()));
 	item->setData(0, RoleAlbumId, QString::fromStdString(track.album.id));
 	item->setToolTip(0, trackName);
 	item->setToolTip(1, trackArtist);

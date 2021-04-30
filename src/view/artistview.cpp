@@ -188,8 +188,6 @@ void ArtistView::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
 		item->setData(RoleTrack, QVariant::fromValue(track));
 		item->setData(RoleAlbumId, QString::fromStdString(track.album.id));
 		item->setData(RoleIndex, i++);
-		item->setData(RoleArtists,
-			QString::fromStdString(((nlohmann::json) track.artists).dump()));
 		topTrackIds.push_back(lib::spt::api::to_uri("track", track.id));
 	}
 
@@ -301,8 +299,7 @@ void ArtistView::trackMenu(const QPoint &pos)
 		return;
 	}
 
-	std::vector<lib::spt::entity> artists = nlohmann::json::parse(item->data(RoleArtists)
-		.toString().toStdString());
+	std::vector<lib::spt::entity> artists = track.artists;
 	lib::vector::remove_if(artists, [this](const lib::spt::entity &entity) -> bool
 	{
 		return entity.id == this->artistId;

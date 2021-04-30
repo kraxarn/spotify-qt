@@ -12,8 +12,6 @@ TrackListItem::TrackListItem(const QStringList &strings,
 		Qt::DateFormat::ISODate);
 
 	setData(0, RoleTrack, QVariant::fromValue(track));
-	setData(0, RoleArtists,
-		QString::fromStdString(((nlohmann::json) track.artists).dump()));
 	setData(0, RoleAlbumId, QString::fromStdString(track.album.id));
 	setData(0, RoleIndex, index);
 	setData(0, RoleAddedDate, addedAt);
