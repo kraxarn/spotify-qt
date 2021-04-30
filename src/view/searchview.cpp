@@ -214,7 +214,7 @@ void SearchView::trackClick(QTreeWidgetItem *item, int /*column*/)
 {
 	// Do we want it to continue playing results?
 	auto trackId = lib::spt::api::to_uri("track",
-		item->data(0, RoleTrackId).toString().toStdString());
+		item->data(0, RoleTrack).value<lib::spt::track>().id);
 
 	spotify.play_tracks(0, {trackId}, [this](const std::string &status)
 	{
@@ -230,8 +230,8 @@ void SearchView::trackClick(QTreeWidgetItem *item, int /*column*/)
 void SearchView::trackMenu(const QPoint &pos)
 {
 	auto *item = trackList->itemAt(pos);
-	auto trackId = item->data(0, RoleTrackId).toString();
-	if (trackId.isEmpty())
+	const auto &track = item->data(0, RoleTrack).value<lib::spt::track>();
+	if (!track.is_valid())
 	{
 		return;
 	}
@@ -296,7 +296,7 @@ void SearchView::addTrack(const lib::spt::track &track)
 	auto *item = new QTreeWidgetItem(trackList, {
 		trackName, trackArtist
 	});
-	item->setData(0, RoleTrackId, QString::fromStdString(track.id));
+	item->setData(0, RoleTrack, QVariant::fromValue(track));
 	item->setData(0, RoleArtists,
 		QString::fromStdString(((nlohmann::json) track.artists).dump()));
 	item->setData(0, RoleAlbumId, QString::fromStdString(track.album.id));

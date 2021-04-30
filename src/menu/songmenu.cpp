@@ -3,7 +3,7 @@
 #include "mainwindow.hpp"
 
 SongMenu::SongMenu(QTreeWidgetItem *item, spt::Spotify &spotify, QWidget *parent)
-	: SongMenu(item->data(0, RoleTrackId).toString().toStdString(),
+	: SongMenu(item->data(0, RoleTrack).value<lib::spt::track>().id,
 	nlohmann::json::parse(item->data(0, RoleArtists).toString().toStdString()),
 	item->text(2).toStdString(),
 	item->data(0, RoleAlbumId).toString().toStdString(),
@@ -13,7 +13,7 @@ SongMenu::SongMenu(QTreeWidgetItem *item, spt::Spotify &spotify, QWidget *parent
 
 SongMenu::SongMenu(QListWidgetItem *item, const std::vector<lib::spt::entity> &artists,
 	spt::Spotify &spotify, bool forceArtistSubmenu, QWidget *parent)
-	: SongMenu(item->data(RoleTrackId).toString().toStdString(), artists,
+	: SongMenu(item->data(RoleTrack).value<lib::spt::track>().id, artists,
 	item->text().toStdString(), item->data(RoleAlbumId).toString().toStdString(),
 	item->data(RoleIndex).toInt(), spotify, forceArtistSubmenu, parent)
 {

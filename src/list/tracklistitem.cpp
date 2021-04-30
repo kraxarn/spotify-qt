@@ -11,8 +11,7 @@ TrackListItem::TrackListItem(const QStringList &strings,
 	auto addedAt = QDateTime::fromString(QString::fromStdString(track.added_at),
 		Qt::DateFormat::ISODate);
 
-	setData(0, RoleTrackId,
-		QString::fromStdString(lib::fmt::format("spotify:track:{}", track.id)));
+	setData(0, RoleTrack, QVariant::fromValue(track));
 	setData(0, RoleArtists,
 		QString::fromStdString(((nlohmann::json) track.artists).dump()));
 	setData(0, RoleAlbumId, QString::fromStdString(track.album.id));

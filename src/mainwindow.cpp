@@ -432,8 +432,8 @@ auto MainWindow::currentTracks() -> std::vector<std::string>
 	std::vector<std::string> tracks;
 	for (int i = 0; i < songs->topLevelItemCount(); i++)
 	{
-		auto trackId = songs->topLevelItem(i)->data(0, RoleTrackId)
-			.toString().toStdString();
+		auto trackId = songs->topLevelItem(i)->data(0, RoleTrack)
+			.value<lib::spt::track>().id;
 		const int trackPrefixLength = 14;
 		if (trackId.length() > trackPrefixLength)
 		{

@@ -58,8 +58,8 @@ void TracksList::menu(const QPoint &pos)
 		return;
 	}
 
-	auto trackId = item->data(0, RoleTrackId).toString();
-	if (trackId.isEmpty())
+	const auto &track = item->data(0, RoleTrack).value<lib::spt::track>();
+	if (!track.is_valid())
 	{
 		return;
 	}

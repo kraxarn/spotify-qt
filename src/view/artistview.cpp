@@ -185,7 +185,7 @@ void ArtistView::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
 	{
 		auto *item = new QListWidgetItem(QString::fromStdString(track.name), topTracksList);
 		item->setIcon(QIcon(mainWindow->getAlbum(track.image)));
-		item->setData(RoleTrackId, QString::fromStdString(track.id));
+		item->setData(RoleTrack, QVariant::fromValue(track));
 		item->setData(RoleAlbumId, QString::fromStdString(track.album.id));
 		item->setData(RoleIndex, i++);
 		item->setData(RoleArtists,

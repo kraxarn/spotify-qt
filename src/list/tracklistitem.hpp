@@ -6,6 +6,7 @@
 #include "../util/utils.hpp"
 #include "lib/settings.hpp"
 #include "lib/spotify/entity.hpp"
+#include "metatypes.hpp"
 
 #include <QTreeWidgetItem>
 
