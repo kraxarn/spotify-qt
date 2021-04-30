@@ -12,11 +12,14 @@ PlaylistList::PlaylistList(spt::Spotify &spotify, lib::settings &settings, lib::
 	// Set default selected playlist
 	setCurrentRow(0);
 
-	QListWidget::connect(this, &QListWidget::itemClicked, this, &PlaylistList::clicked);
-	QListWidget::connect(this, &QListWidget::itemDoubleClicked, this, &PlaylistList::doubleClicked);
+	QListWidget::connect(this, &QListWidget::itemClicked,
+		this, &PlaylistList::clicked);
+	QListWidget::connect(this, &QListWidget::itemDoubleClicked,
+		this, &PlaylistList::doubleClicked);
 
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QWidget::connect(this, &QWidget::customContextMenuRequested, this, &PlaylistList::menu);
+	QWidget::connect(this, &QWidget::customContextMenuRequested,
+		this, &PlaylistList::menu);
 }
 
 void PlaylistList::showEvent(QShowEvent */*event*/)
@@ -38,9 +41,13 @@ void PlaylistList::showEvent(QShowEvent */*event*/)
 
 auto PlaylistList::getItemIndex(QListWidgetItem *item) -> int
 {
-	return item == nullptr
+	auto *playlistItem = item == nullptr
+		? nullptr
+		: dynamic_cast<PlaylistListItem *>(item);
+
+	return playlistItem == nullptr
 		? currentRow()
-		: item->data(RoleIndex).toInt();
+		: playlistItem->getIndex();
 }
 
 void PlaylistList::clicked(QListWidgetItem *item)
@@ -92,9 +99,19 @@ void PlaylistList::load(const std::vector<lib::spt::playlist> &items)
 	QListWidgetItem *activeItem = nullptr;
 	const lib::spt::playlist *activePlaylist = nullptr;
 
-	auto lastItem = currentItem() != nullptr
-		? currentItem()->data(RolePlaylistId).toString().toStdString()
-		: lib::spt::api::to_id(settings.general.last_playlist);
+	std::string lastItem;
+	if (currentItem() != nullptr)
+	{
+		auto *playlistItem = dynamic_cast<PlaylistListItem *>(currentItem());
+		if (playlistItem != nullptr)
+		{
+			lastItem = playlistItem->getData().id;
+		}
+	}
+	else
+	{
+		lastItem = lib::spt::api::to_id(settings.general.last_playlist);
+	}
 
 	playlists = items;
 
@@ -104,13 +121,7 @@ void PlaylistList::load(const std::vector<lib::spt::playlist> &items)
 	QTextDocument doc;
 	for (const auto &playlist : playlists)
 	{
-		auto *item = new QListWidgetItem(QString::fromStdString(playlist.name), this);
-
-		doc.setHtml(QString::fromStdString(playlist.description));
-		item->setToolTip(doc.toPlainText());
-
-		item->setData(RolePlaylistId, QString::fromStdString(playlist.id));
-		item->setData(RoleIndex, i++);
+		auto *item = new PlaylistListItem(playlist, i++, this);
 
 		if (playlist.id == lastItem)
 		{
@@ -160,25 +171,29 @@ void PlaylistList::refresh()
 
 void PlaylistList::order(lib::playlist_order order)
 {
-	QList<QListWidgetItem *> items;
+	QList<PlaylistListItem *> items;
 	items.reserve(count());
 
-	auto i = 0;
 	while (item(0) != nullptr)
 	{
-		items.insert(i, takeItem(0));
+		auto *playlistItem = dynamic_cast<PlaylistListItem *>(takeItem(0));
+		if (playlistItem != nullptr)
+		{
+			items.insert(0, playlistItem);
+		}
 	}
 
-	QMap<QString, int> customOrder;
+	std::unordered_map<std::string, int> customOrder;
 	MainWindow *mainWindow;
+	int i;
 
 	switch (order)
 	{
 		case lib::playlist_order_default:
 			std::sort(items.begin(), items.end(), []
-				(QListWidgetItem *i1, QListWidgetItem *i2) -> bool
+				(PlaylistListItem *i1, PlaylistListItem *i2) -> bool
 			{
-				return i1->data(RoleIndex).toInt() < i2->data(RoleIndex).toInt();
+				return i1->getIndex() < i2->getIndex();
 			});
 			break;
 
@@ -200,13 +215,17 @@ void PlaylistList::order(lib::playlist_order order)
 			}
 
 			std::sort(items.begin(), items.end(), [this]
-				(QListWidgetItem *i1, QListWidgetItem *i2) -> bool
+				(PlaylistListItem *i1, PlaylistListItem *i2) -> bool
 			{
-				auto id1 = i1->data(DataRole::RolePlaylistId).toString().toStdString();
-				auto id2 = i2->data(DataRole::RolePlaylistId).toString().toStdString();
+				const auto &pl1 = i1->getData();
+				const auto &pl2 = i2->getData();
 
-				auto t1 = this->cache.get_playlist(id1).tracks;
-				auto t2 = this->cache.get_playlist(id2).tracks;
+				const auto &t1 = (pl1.tracks.empty()
+					? this->cache.get_playlist(pl1.id)
+					: pl1).tracks;
+				const auto &t2 = (pl2.tracks.empty()
+					? this->cache.get_playlist(pl2.id)
+					: pl2).tracks;
 
 				return !t1.empty() && !t2.empty()
 					&& DateUtils::fromIso(t1.at(latestTrack(t1)).added_at)
@@ -218,16 +237,17 @@ void PlaylistList::order(lib::playlist_order order)
 			i = 0;
 			for (auto &playlist : settings.general.custom_playlist_order)
 			{
-				customOrder[QString::fromStdString(playlist)] = i++;
+				customOrder[playlist] = i++;
 			}
 			std::sort(items.begin(), items.end(), [customOrder]
-				(QListWidgetItem *i1, QListWidgetItem *i2) -> bool
+				(PlaylistListItem *i1, PlaylistListItem *i2) -> bool
 			{
-				auto id1 = i1->data(DataRole::RolePlaylistId).toString();
-				auto id2 = i2->data(DataRole::RolePlaylistId).toString();
+				const auto &id1 = i1->getData().id;
+				const auto &id2 = i2->getData().id;
 
-				return customOrder.contains(id1) && customOrder.contains(id2)
-					&& customOrder[id1] < customOrder[id2];
+				return lib::map::contains(customOrder, id1)
+					&& lib::map::contains(customOrder, id2)
+					&& customOrder.at(id1) < customOrder.at(id2);
 			});
 			break;
 	}

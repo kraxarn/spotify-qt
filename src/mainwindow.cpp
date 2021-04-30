@@ -432,8 +432,13 @@ auto MainWindow::currentTracks() -> std::vector<std::string>
 	std::vector<std::string> tracks;
 	for (int i = 0; i < songs->topLevelItemCount(); i++)
 	{
-		auto trackId = songs->topLevelItem(i)->data(0, RoleTrackId)
-			.toString().toStdString();
+		auto *trackItem = dynamic_cast<TrackListItem*>(songs->topLevelItem(i));
+		if (trackItem == nullptr)
+		{
+			continue;
+		}
+
+		const auto &trackId = trackItem->getTrack().id;
 		const int trackPrefixLength = 14;
 		if (trackId.length() > trackPrefixLength)
 		{
@@ -466,8 +471,14 @@ void MainWindow::toggleTrackNumbers(bool enabled)
 	for (int i = 0; i < songs->topLevelItemCount(); i++)
 	{
 		auto *item = songs->topLevelItem(i);
+		auto *trackItem = dynamic_cast<TrackListItem*>(item);
+		if (trackItem == nullptr)
+		{
+			continue;
+		}
+
 		item->setText(0, enabled
-			? QString("%1").arg(item->data(0, RoleIndex).toInt() + 1, 3)
+			? QString("%1").arg(trackItem->getIndex() + 1, 3)
 			: QString());
 	}
 }

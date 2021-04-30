@@ -1,24 +1,15 @@
 #include "tracklistitem.hpp"
 
-TrackListItem::TrackListItem(const QStringList &strings,
-	const lib::spt::track &track,
-	const QIcon &icon,
-	int index)
-	: QTreeWidgetItem(strings)
+TrackListItem::TrackListItem(const QStringList &strings, const lib::spt::track &track,
+	const QIcon &icon, int index)
+	: index(index),
+	track(track),
+	QTreeWidgetItem(strings)
 {
 	setIcon(0, icon);
 
-	auto addedAt = QDateTime::fromString(QString::fromStdString(track.added_at),
+	addedAt = QDateTime::fromString(QString::fromStdString(track.added_at),
 		Qt::DateFormat::ISODate);
-
-	setData(0, RoleTrackId,
-		QString::fromStdString(lib::fmt::format("spotify:track:{}", track.id)));
-	setData(0, RoleArtists,
-		QString::fromStdString(((nlohmann::json) track.artists).dump()));
-	setData(0, RoleAlbumId, QString::fromStdString(track.album.id));
-	setData(0, RoleIndex, index);
-	setData(0, RoleAddedDate, addedAt);
-	setData(0, RoleLength, track.duration);
 
 	if (track.is_local || !track.is_playable)
 	{
@@ -42,12 +33,12 @@ TrackListItem::TrackListItem(const QStringList &strings,
 	}
 
 	// Length
-	auto length = strings.at(strings.length() - 2).split(':');
-	if (length.length() >= 2)
+	auto lengths = strings.at(strings.length() - 2).split(':');
+	if (lengths.length() >= 2)
 	{
 		setToolTip(strings.length() - 2,
 			QString("%1m %2s (%3s total)")
-				.arg(length.at(0), length.at(1))
+				.arg(lengths.at(0), lengths.at(1))
 				.arg(track.duration / 1000));
 	}
 
@@ -59,27 +50,47 @@ TrackListItem::TrackListItem(const QStringList &strings,
 	}
 }
 
-bool TrackListItem::operator<(const QTreeWidgetItem &item) const
+auto TrackListItem::operator<(const QTreeWidgetItem &item) const -> bool
 {
+	const auto *trackItem = dynamic_cast<const TrackListItem*>(&item);
+	if (trackItem == nullptr)
+	{
+		return false;
+	}
 	auto column = treeWidget()->sortColumn();
 
 	// Track number
-	if (column == 0)
+	if (column == indexTrackNumber)
 	{
-		return data(0, RoleIndex).toInt() < item.data(0, RoleIndex).toInt();
+		return index < trackItem->getIndex();
 	}
 
 	// Length
-	if (column == 4)
+	if (column == indexLength)
 	{
-		return data(0, RoleLength).toInt() < item.data(0, RoleLength).toInt();
+		return track.duration < trackItem->getTrack().duration;
 	}
 
 	// Added
-	if (column == 5)
+	if (column == indexAdded)
 	{
-		return data(0, RoleAddedDate).toDateTime() < item.data(0, RoleAddedDate).toDateTime();
+		return addedAt < trackItem->getAddedAt();
 	}
 
 	return text(column) < item.text(column);
+}
+
+auto TrackListItem::getIndex() const -> int
+{
+	return index;
+}
+
+auto TrackListItem::getTrack() const -> const lib::spt::track &
+{
+	return track;
+}
+
+auto TrackListItem::getAddedAt() const -> const QDateTime &
+{
+	return addedAt;
 }

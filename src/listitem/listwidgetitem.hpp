@@ -1,14 +1,14 @@
 #pragma once
 
-#include <QTreeWidgetItem>
+#include <QListWidgetItem>
 
 template<typename T>
-class TreeWidgetItem: public QTreeWidgetItem
+class ListWidgetItem: public QListWidgetItem
 {
 public:
-	TreeWidgetItem(const T &data, QTreeWidgetItem *parent)
+	ListWidgetItem(const T &data, QListWidget *parent)
 		: data(data),
-		QTreeWidgetItem(parent)
+		QListWidgetItem(parent)
 	{
 	}
 
