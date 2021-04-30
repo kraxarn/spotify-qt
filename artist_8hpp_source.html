@@ -74,48 +74,44 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;thirdparty/json.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span>lib</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">namespace </span>spt</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    {</div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1artist.html">   13</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classlib_1_1spt_1_1artist.html">artist</a></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        {</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;            <a class="code" href="classlib_1_1spt_1_1artist.html">artist</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1artist.html#a9e18c773e6f8a4d05dd8e7d8eb159ca0">   21</a></span>&#160;            <span class="keywordtype">int</span> <a class="code" href="classlib_1_1spt_1_1artist.html#a9e18c773e6f8a4d05dd8e7d8eb159ca0">followers</a> = 0;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1artist.html#a3edf12f868b693d887b4ba9d4e0f23c7">   26</a></span>&#160;            <span class="keywordtype">int</span> <a class="code" href="classlib_1_1spt_1_1artist.html#a3edf12f868b693d887b4ba9d4e0f23c7">popularity</a> = 0;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1artist.html#a06c0a0e30c21b5a9e1a5d04d5bce52d0">   31</a></span>&#160;            std::vector&lt;std::string&gt; <a class="code" href="classlib_1_1spt_1_1artist.html#a06c0a0e30c21b5a9e1a5d04d5bce52d0">genres</a>;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1artist.html#a0bedf7fcb0431699f55109c804d2eb46">   36</a></span>&#160;            std::string <a class="code" href="classlib_1_1spt_1_1artist.html#a0bedf7fcb0431699f55109c804d2eb46">id</a>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1artist.html#ab2ac2371a7a286f91478a119c047afc5">   41</a></span>&#160;            std::string <a class="code" href="classlib_1_1spt_1_1artist.html#ab2ac2371a7a286f91478a119c047afc5">name</a>;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1artist.html#a192bafc54f4236530d943731f535c738">   46</a></span>&#160;            std::string <a class="code" href="classlib_1_1spt_1_1artist.html#a192bafc54f4236530d943731f535c738">image</a>;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1artist.html#a5c6d67c36d4f61358ec615aae7d8c6f5">   51</a></span>&#160;            std::map&lt;std::string, std::string&gt; <a class="code" href="classlib_1_1spt_1_1artist.html#a5c6d67c36d4f61358ec615aae7d8c6f5">external_urls</a>;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        };</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordtype">void</span> to_json(nlohmann::json &amp;j, <span class="keyword">const</span> <a class="code" href="classlib_1_1spt_1_1artist.html">artist</a> &amp;a);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordtype">void</span> from_json(<span class="keyword">const</span> nlohmann::json &amp;j, <a class="code" href="classlib_1_1spt_1_1artist.html">artist</a> &amp;a);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    }</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
-<div class="ttc" id="aclasslib_1_1spt_1_1artist_html"><div class="ttname"><a href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a></div><div class="ttdef"><b>Definition:</b> artist.hpp:14</div></div>
-<div class="ttc" id="aclasslib_1_1spt_1_1artist_html_a06c0a0e30c21b5a9e1a5d04d5bce52d0"><div class="ttname"><a href="classlib_1_1spt_1_1artist.html#a06c0a0e30c21b5a9e1a5d04d5bce52d0">lib::spt::artist::genres</a></div><div class="ttdeci">std::vector&lt; std::string &gt; genres</div><div class="ttdef"><b>Definition:</b> artist.hpp:31</div></div>
-<div class="ttc" id="aclasslib_1_1spt_1_1artist_html_a0bedf7fcb0431699f55109c804d2eb46"><div class="ttname"><a href="classlib_1_1spt_1_1artist.html#a0bedf7fcb0431699f55109c804d2eb46">lib::spt::artist::id</a></div><div class="ttdeci">std::string id</div><div class="ttdef"><b>Definition:</b> artist.hpp:36</div></div>
-<div class="ttc" id="aclasslib_1_1spt_1_1artist_html_a192bafc54f4236530d943731f535c738"><div class="ttname"><a href="classlib_1_1spt_1_1artist.html#a192bafc54f4236530d943731f535c738">lib::spt::artist::image</a></div><div class="ttdeci">std::string image</div><div class="ttdef"><b>Definition:</b> artist.hpp:46</div></div>
-<div class="ttc" id="aclasslib_1_1spt_1_1artist_html_a3edf12f868b693d887b4ba9d4e0f23c7"><div class="ttname"><a href="classlib_1_1spt_1_1artist.html#a3edf12f868b693d887b4ba9d4e0f23c7">lib::spt::artist::popularity</a></div><div class="ttdeci">int popularity</div><div class="ttdef"><b>Definition:</b> artist.hpp:26</div></div>
-<div class="ttc" id="aclasslib_1_1spt_1_1artist_html_a5c6d67c36d4f61358ec615aae7d8c6f5"><div class="ttname"><a href="classlib_1_1spt_1_1artist.html#a5c6d67c36d4f61358ec615aae7d8c6f5">lib::spt::artist::external_urls</a></div><div class="ttdeci">std::map&lt; std::string, std::string &gt; external_urls</div><div class="ttdef"><b>Definition:</b> artist.hpp:51</div></div>
-<div class="ttc" id="aclasslib_1_1spt_1_1artist_html_a9e18c773e6f8a4d05dd8e7d8eb159ca0"><div class="ttname"><a href="classlib_1_1spt_1_1artist.html#a9e18c773e6f8a4d05dd8e7d8eb159ca0">lib::spt::artist::followers</a></div><div class="ttdeci">int followers</div><div class="ttdef"><b>Definition:</b> artist.hpp:21</div></div>
-<div class="ttc" id="aclasslib_1_1spt_1_1artist_html_ab2ac2371a7a286f91478a119c047afc5"><div class="ttname"><a href="classlib_1_1spt_1_1artist.html#ab2ac2371a7a286f91478a119c047afc5">lib::spt::artist::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition:</b> artist.hpp:41</div></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;lib/spotify/entity.hpp&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span>lib</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">namespace </span>spt</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    {</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1artist.html">   14</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classlib_1_1spt_1_1artist.html">artist</a>: <span class="keyword">public</span> <a class="code" href="classlib_1_1spt_1_1entity.html">entity</a></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        {</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            <a class="code" href="classlib_1_1spt_1_1artist.html">artist</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1artist.html#a9e18c773e6f8a4d05dd8e7d8eb159ca0">   22</a></span>&#160;            <span class="keywordtype">int</span> <a class="code" href="classlib_1_1spt_1_1artist.html#a9e18c773e6f8a4d05dd8e7d8eb159ca0">followers</a> = 0;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1artist.html#a3edf12f868b693d887b4ba9d4e0f23c7">   27</a></span>&#160;            <span class="keywordtype">int</span> <a class="code" href="classlib_1_1spt_1_1artist.html#a3edf12f868b693d887b4ba9d4e0f23c7">popularity</a> = 0;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1artist.html#a06c0a0e30c21b5a9e1a5d04d5bce52d0">   32</a></span>&#160;            std::vector&lt;std::string&gt; <a class="code" href="classlib_1_1spt_1_1artist.html#a06c0a0e30c21b5a9e1a5d04d5bce52d0">genres</a>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1artist.html#a192bafc54f4236530d943731f535c738">   37</a></span>&#160;            std::string <a class="code" href="classlib_1_1spt_1_1artist.html#a192bafc54f4236530d943731f535c738">image</a>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1artist.html#a5c6d67c36d4f61358ec615aae7d8c6f5">   42</a></span>&#160;            std::map&lt;std::string, std::string&gt; <a class="code" href="classlib_1_1spt_1_1artist.html#a5c6d67c36d4f61358ec615aae7d8c6f5">external_urls</a>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        };</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordtype">void</span> to_json(nlohmann::json &amp;j, <span class="keyword">const</span> <a class="code" href="classlib_1_1spt_1_1artist.html">artist</a> &amp;a);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordtype">void</span> from_json(<span class="keyword">const</span> nlohmann::json &amp;j, <a class="code" href="classlib_1_1spt_1_1artist.html">artist</a> &amp;a);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
+<div class="ttc" id="aclasslib_1_1spt_1_1artist_html"><div class="ttname"><a href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a></div><div class="ttdef"><b>Definition:</b> artist.hpp:15</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1artist_html_a06c0a0e30c21b5a9e1a5d04d5bce52d0"><div class="ttname"><a href="classlib_1_1spt_1_1artist.html#a06c0a0e30c21b5a9e1a5d04d5bce52d0">lib::spt::artist::genres</a></div><div class="ttdeci">std::vector&lt; std::string &gt; genres</div><div class="ttdef"><b>Definition:</b> artist.hpp:32</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1artist_html_a192bafc54f4236530d943731f535c738"><div class="ttname"><a href="classlib_1_1spt_1_1artist.html#a192bafc54f4236530d943731f535c738">lib::spt::artist::image</a></div><div class="ttdeci">std::string image</div><div class="ttdef"><b>Definition:</b> artist.hpp:37</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1artist_html_a3edf12f868b693d887b4ba9d4e0f23c7"><div class="ttname"><a href="classlib_1_1spt_1_1artist.html#a3edf12f868b693d887b4ba9d4e0f23c7">lib::spt::artist::popularity</a></div><div class="ttdeci">int popularity</div><div class="ttdef"><b>Definition:</b> artist.hpp:27</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1artist_html_a5c6d67c36d4f61358ec615aae7d8c6f5"><div class="ttname"><a href="classlib_1_1spt_1_1artist.html#a5c6d67c36d4f61358ec615aae7d8c6f5">lib::spt::artist::external_urls</a></div><div class="ttdeci">std::map&lt; std::string, std::string &gt; external_urls</div><div class="ttdef"><b>Definition:</b> artist.hpp:42</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1artist_html_a9e18c773e6f8a4d05dd8e7d8eb159ca0"><div class="ttname"><a href="classlib_1_1spt_1_1artist.html#a9e18c773e6f8a4d05dd8e7d8eb159ca0">lib::spt::artist::followers</a></div><div class="ttdeci">int followers</div><div class="ttdef"><b>Definition:</b> artist.hpp:22</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1entity_html"><div class="ttname"><a href="classlib_1_1spt_1_1entity.html">lib::spt::entity</a></div><div class="ttdef"><b>Definition:</b> entity.hpp:17</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -74,8 +74,8 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;lib/enum/albumgroup.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;thirdparty/json.hpp&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;thirdparty/json.hpp&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;lib/spotify/entity.hpp&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
@@ -83,35 +83,30 @@ $(function() {
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">namespace </span>spt</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    {</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1album.html">   16</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classlib_1_1spt_1_1album.html">album</a></div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1album.html">   16</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classlib_1_1spt_1_1album.html">album</a>: <span class="keyword">public</span> <a class="code" href="classlib_1_1spt_1_1entity.html">entity</a></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        {</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            <a class="code" href="classlib_1_1spt_1_1album.html">album</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1album.html#a46633aea8678bb9c2f128683633ad222">   24</a></span>&#160;            std::string <a class="code" href="classlib_1_1spt_1_1album.html#a46633aea8678bb9c2f128683633ad222">id</a>;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1album.html#aa1627db8f402a299e363191a3abf9730">   30</a></span>&#160;            lib::album_group album_group = lib::album_group::none;</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1album.html#aa1627db8f402a299e363191a3abf9730">   25</a></span>&#160;            lib::album_group album_group = lib::album_group::none;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1album.html#a9ddfcaaa1236598d3ac692597aafd644">   30</a></span>&#160;            std::string <a class="code" href="classlib_1_1spt_1_1album.html#a9ddfcaaa1236598d3ac692597aafd644">image</a>;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1album.html#a9ddfcaaa1236598d3ac692597aafd644">   35</a></span>&#160;            std::string <a class="code" href="classlib_1_1spt_1_1album.html#a9ddfcaaa1236598d3ac692597aafd644">image</a>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1album.html#a9213de387c38199a913fc9d3ba2a450e">   35</a></span>&#160;            std::string <a class="code" href="classlib_1_1spt_1_1album.html#a9213de387c38199a913fc9d3ba2a450e">artist</a>;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1album.html#a1e3290ed717ea715afa1a672504ce95b">   40</a></span>&#160;            std::string <a class="code" href="classlib_1_1spt_1_1album.html#a1e3290ed717ea715afa1a672504ce95b">name</a>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1album.html#a9213de387c38199a913fc9d3ba2a450e">   45</a></span>&#160;            std::string <a class="code" href="classlib_1_1spt_1_1album.html#a9213de387c38199a913fc9d3ba2a450e">artist</a>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1album.html#a12f19a9ab0139d5033d22a9839e7a73f">   50</a></span>&#160;            std::string <a class="code" href="classlib_1_1spt_1_1album.html#a12f19a9ab0139d5033d22a9839e7a73f">release_date</a>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        };</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keywordtype">void</span> to_json(nlohmann::json &amp;j, <span class="keyword">const</span> <a class="code" href="classlib_1_1spt_1_1album.html">album</a> &amp;a);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">void</span> from_json(<span class="keyword">const</span> nlohmann::json &amp;j, <a class="code" href="classlib_1_1spt_1_1album.html">album</a> &amp;a);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    }</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1album.html#a12f19a9ab0139d5033d22a9839e7a73f">   40</a></span>&#160;            std::string <a class="code" href="classlib_1_1spt_1_1album.html#a12f19a9ab0139d5033d22a9839e7a73f">release_date</a>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        };</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordtype">void</span> to_json(nlohmann::json &amp;j, <span class="keyword">const</span> <a class="code" href="classlib_1_1spt_1_1album.html">album</a> &amp;a);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordtype">void</span> from_json(<span class="keyword">const</span> nlohmann::json &amp;j, <a class="code" href="classlib_1_1spt_1_1album.html">album</a> &amp;a);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    }</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
 <div class="ttc" id="aclasslib_1_1spt_1_1album_html"><div class="ttname"><a href="classlib_1_1spt_1_1album.html">lib::spt::album</a></div><div class="ttdef"><b>Definition:</b> album.hpp:17</div></div>
-<div class="ttc" id="aclasslib_1_1spt_1_1album_html_a12f19a9ab0139d5033d22a9839e7a73f"><div class="ttname"><a href="classlib_1_1spt_1_1album.html#a12f19a9ab0139d5033d22a9839e7a73f">lib::spt::album::release_date</a></div><div class="ttdeci">std::string release_date</div><div class="ttdef"><b>Definition:</b> album.hpp:50</div></div>
-<div class="ttc" id="aclasslib_1_1spt_1_1album_html_a1e3290ed717ea715afa1a672504ce95b"><div class="ttname"><a href="classlib_1_1spt_1_1album.html#a1e3290ed717ea715afa1a672504ce95b">lib::spt::album::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition:</b> album.hpp:40</div></div>
-<div class="ttc" id="aclasslib_1_1spt_1_1album_html_a46633aea8678bb9c2f128683633ad222"><div class="ttname"><a href="classlib_1_1spt_1_1album.html#a46633aea8678bb9c2f128683633ad222">lib::spt::album::id</a></div><div class="ttdeci">std::string id</div><div class="ttdef"><b>Definition:</b> album.hpp:24</div></div>
-<div class="ttc" id="aclasslib_1_1spt_1_1album_html_a9213de387c38199a913fc9d3ba2a450e"><div class="ttname"><a href="classlib_1_1spt_1_1album.html#a9213de387c38199a913fc9d3ba2a450e">lib::spt::album::artist</a></div><div class="ttdeci">std::string artist</div><div class="ttdef"><b>Definition:</b> album.hpp:45</div></div>
-<div class="ttc" id="aclasslib_1_1spt_1_1album_html_a9ddfcaaa1236598d3ac692597aafd644"><div class="ttname"><a href="classlib_1_1spt_1_1album.html#a9ddfcaaa1236598d3ac692597aafd644">lib::spt::album::image</a></div><div class="ttdeci">std::string image</div><div class="ttdef"><b>Definition:</b> album.hpp:35</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1album_html_a12f19a9ab0139d5033d22a9839e7a73f"><div class="ttname"><a href="classlib_1_1spt_1_1album.html#a12f19a9ab0139d5033d22a9839e7a73f">lib::spt::album::release_date</a></div><div class="ttdeci">std::string release_date</div><div class="ttdef"><b>Definition:</b> album.hpp:40</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1album_html_a9213de387c38199a913fc9d3ba2a450e"><div class="ttname"><a href="classlib_1_1spt_1_1album.html#a9213de387c38199a913fc9d3ba2a450e">lib::spt::album::artist</a></div><div class="ttdeci">std::string artist</div><div class="ttdef"><b>Definition:</b> album.hpp:35</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1album_html_a9ddfcaaa1236598d3ac692597aafd644"><div class="ttname"><a href="classlib_1_1spt_1_1album.html#a9ddfcaaa1236598d3ac692597aafd644">lib::spt::album::image</a></div><div class="ttdeci">std::string image</div><div class="ttdef"><b>Definition:</b> album.hpp:30</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1entity_html"><div class="ttname"><a href="classlib_1_1spt_1_1entity.html">lib::spt::entity</a></div><div class="ttdef"><b>Definition:</b> entity.hpp:17</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
