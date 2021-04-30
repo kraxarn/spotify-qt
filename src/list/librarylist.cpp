@@ -46,45 +46,37 @@ LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 		this, &LibraryList::expanded);
 }
 
-void LibraryList::clicked(QTreeWidgetItem *item, int /*column*/)
+void LibraryList::clicked(QTreeWidgetItem *item, int)
 {
-	auto *mainWindow = MainWindow::find(parentWidget());
+	auto mainWindow = MainWindow::find(parentWidget());
 	if (mainWindow == nullptr || item == nullptr)
-	{
 		return;
-	}
 
 	mainWindow->setCurrentPlaylistItem(-1);
 	if (item->parent() != nullptr)
 	{
-		auto *artistItem = dynamic_cast<LibraryArtistItem *>(item);
-		if (artistItem != nullptr)
+		auto data = item->data(0, 0x100).toString().toStdString();
+		switch (item->data(0, 0x101).toInt())
 		{
-			mainWindow->openArtist(artistItem->getData().id);
-			return;
-		}
+			case RoleArtistId:
+				mainWindow->openArtist(data);
+				break;
 
-		auto *albumItem = dynamic_cast<LibraryAlbumItem *>(item);
-		if (albumItem != nullptr)
-		{
-			mainWindow->loadAlbum(albumItem->getData().id);
-			return;
+			case RoleAlbumId:
+				mainWindow->loadAlbum(data);
+				break;
 		}
 	}
 	else
 	{
 		auto id = item->text(0).toLower().replace(' ', '_').toStdString();
 		auto cacheTracks = mainWindow->loadTracksFromCache(id);
-		auto *songs = mainWindow->getSongsTree();
+		auto songs = mainWindow->getSongsTree();
 
 		if (cacheTracks.empty())
-		{
 			songs->setEnabled(false);
-		}
 		else
-		{
 			songs->load(cacheTracks);
-		}
 
 		auto callback = [this, id](const std::vector<lib::spt::track> &tracks)
 		{
@@ -139,7 +131,7 @@ void LibraryList::clicked(QTreeWidgetItem *item, int /*column*/)
 
 void LibraryList::tracksLoaded(const std::string &id, const std::vector<lib::spt::track> &tracks)
 {
-	auto *mainWindow = MainWindow::find(parentWidget());
+	auto mainWindow = MainWindow::find(parentWidget());
 
 	if (!tracks.empty())
 	{
@@ -149,21 +141,17 @@ void LibraryList::tracksLoaded(const std::string &id, const std::vector<lib::spt
 	mainWindow->getSongsTree()->setEnabled(true);
 }
 
-void LibraryList::doubleClicked(QTreeWidgetItem *item, int /*column*/)
+void LibraryList::doubleClicked(QTreeWidgetItem *item, int)
 {
-	auto *mainWindow = MainWindow::find(parentWidget());
+	auto mainWindow = MainWindow::find(parentWidget());
 	if (mainWindow == nullptr)
-	{
 		return;
-	}
 
 	auto callback = [this, mainWindow](const std::vector<lib::spt::track> &tracks)
 	{
 		// If none were found, don't do anything
 		if (tracks.empty())
-		{
 			return;
-		}
 
 		// Get id of all tracks
 		std::vector<std::string> trackIds;
@@ -187,25 +175,59 @@ void LibraryList::doubleClicked(QTreeWidgetItem *item, int /*column*/)
 
 	// Fetch all tracks in list
 	if (item->text(0) == RECENTLY_PLAYED)
-	{
 		spotify.recently_played(callback);
-	}
 	else if (item->text(0) == SAVED_TRACKS)
-	{
 		spotify.saved_tracks(callback);
-	}
 	else if (item->text(0) == TOP_TRACKS)
-	{
 		spotify.top_tracks(callback);
+}
+
+void LibraryList::expanded(QTreeWidgetItem *item)
+{
+	std::vector<LibraryItem> results;
+	item->takeChildren();
+
+	if (item->text(0) == TOP_ARTISTS)
+	{
+		spotify.top_artists([item](const std::vector<lib::spt::artist> &artists)
+		{
+			std::vector<LibraryItem> results;
+			results.reserve(artists.size());
+			for (auto &artist : artists)
+				results.emplace_back(artist.name, artist.id, RoleArtistId);
+			LibraryList::itemsLoaded(results, item);
+		});
+	}
+	else if (item->text(0) == SAVED_ALBUMS)
+	{
+		spotify.saved_albums([item](const std::vector<lib::spt::saved_album> &albums)
+		{
+			std::vector<LibraryItem> results;
+			results.reserve(albums.size());
+			for (const auto &album : albums)
+			{
+				results.emplace_back(album.album.name, album.album.id, RoleAlbumId);
+			}
+			LibraryList::itemsLoaded(results, item);
+		});
+	}
+	else if (item->text(0) == FOLLOWED_ARTISTS)
+	{
+		spotify.followed_artists([item](const std::vector<lib::spt::artist> &artists)
+		{
+			std::vector<LibraryItem> results;
+			results.reserve(artists.size());
+			for (auto &artist : artists)
+				results.emplace_back(artist.name, artist.id, RoleArtistId);
+			LibraryList::itemsLoaded(results, item);
+		});
 	}
 }
 
-template<typename T>
-void itemsLoaded(const std::vector<T> &entities, QTreeWidgetItem *parent)
+void LibraryList::itemsLoaded(std::vector<LibraryItem> &items, QTreeWidgetItem *item)
 {
-	std::vector<T> items = entities;
 	std::sort(items.begin(), items.end(),
-		[](const lib::spt::entity &x, const lib::spt::entity &y) -> bool
+		[](const LibraryItem &x, const LibraryItem &y)
 		{
 			return x.name < y.name;
 		}
@@ -214,49 +236,23 @@ void itemsLoaded(const std::vector<T> &entities, QTreeWidgetItem *parent)
 	// No results
 	if (items.empty())
 	{
-		auto *child = new QTreeWidgetItem(parent, {
+		auto child = new QTreeWidgetItem(item, {
 			"No results"
 		});
 		child->setDisabled(true);
 		child->setToolTip(0, "If they should be here, try logging out and back in");
-		parent->addChild(child);
+		item->addChild(child);
 		return;
 	}
 
 	// Add all to the list
-	for (const auto &item : items)
+	for (auto &result : items)
 	{
-		parent->addChild(std::is_same<T, lib::spt::artist>::value
-			? new LibraryArtistItem(item, parent)
-			: std::is_same<T, lib::spt::album>::value
-				? new LibraryAlbumItem(item, parent)
-				: nullptr);
-	}
-}
-
-void LibraryList::expanded(QTreeWidgetItem *item)
-{
-	item->takeChildren();
-
-	if (item->text(0) == TOP_ARTISTS)
-	{
-		spotify.top_artists([item](const std::vector<lib::spt::artist> &artists)
-		{
-			itemsLoaded(artists, item);
+		auto child = new QTreeWidgetItem(item, {
+			QString::fromStdString(result.name)
 		});
-	}
-	else if (item->text(0) == SAVED_ALBUMS)
-	{
-		spotify.saved_albums([item](const std::vector<lib::spt::saved_album> &albums)
-		{
-			itemsLoaded(albums, item);
-		});
-	}
-	else if (item->text(0) == FOLLOWED_ARTISTS)
-	{
-		spotify.followed_artists([item](const std::vector<lib::spt::artist> &artists)
-		{
-			itemsLoaded(artists, item);
-		});
+		child->setData(0, 0x100, QString::fromStdString(result.id));
+		child->setData(0, 0x101, result.role);
+		item->addChild(child);
 	}
 }
