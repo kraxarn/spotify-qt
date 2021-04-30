@@ -36,7 +36,7 @@ SongMenu::SongMenu(const std::string &trackId, const std::vector<lib::spt::entit
 	albumId(std::move(albumId)),
 	QMenu(parent)
 {
-	auto mainWindow = MainWindow::find(parent);
+	auto *mainWindow = MainWindow::find(parent);
 	if (mainWindow == nullptr)
 	{
 		lib::log::warn("Parent is not MainWindow, SongMenu won't work properly");
@@ -44,27 +44,24 @@ SongMenu::SongMenu(const std::string &trackId, const std::vector<lib::spt::entit
 	}
 
 	trackUri = lib::spt::api::to_id(trackId);
-	auto trackFeatures = addAction(Icon::get("view-statistics"), "Audio features");
+	auto *trackFeatures = addAction(Icon::get("view-statistics"), "Audio features");
 	QAction::connect(trackFeatures, &QAction::triggered, this, &SongMenu::openTrackFeatures);
 
 //	auto lyrics = addAction(Icon::get("view-media-lyrics"), "Lyrics");
 //	QAction::connect(lyrics, &QAction::triggered, this, &SongMenu::openLyrics);
 
-	auto share = addMenu(Icon::get("document-share"), "Share");
-	auto shareSongLink = share->addAction("Copy song link");
-	QAction::connect(shareSongLink, &QAction::triggered, [this, mainWindow](bool checked)
+	auto *share = addMenu(Icon::get("document-share"), "Share");
+	auto *shareSongLink = share->addAction("Copy song link");
+	QAction::connect(shareSongLink, &QAction::triggered, [this, mainWindow](bool /*checked*/)
 	{
-		QApplication::clipboard()
-			->setText(QString::fromStdString(lib::fmt::format("https://open.spotify.com/track/{}",
-				trackUri)));
+		QApplication::clipboard()->setText(this->getTrackUrl());
 		mainWindow->setStatus("Link copied to clipboard");
 	});
 
-	auto shareSongOpen = share->addAction("Open in Spotify");
-	QAction::connect(shareSongOpen, &QAction::triggered, [this, mainWindow](bool checked)
+	auto *shareSongOpen = share->addAction("Open in Spotify");
+	QAction::connect(shareSongOpen, &QAction::triggered, [this, mainWindow](bool /*checked*/)
 	{
-		Utils::openUrl(QString::fromStdString(lib::fmt::format("https://open.spotify.com/track/{}",
-			trackUri)), LinkType::Web, mainWindow);
+		Utils::openUrl(this->getTrackUrl(), LinkType::Web, mainWindow);
 	});
 
 	// Add/remove liked
@@ -82,14 +79,14 @@ SongMenu::SongMenu(const std::string &trackId, const std::vector<lib::spt::entit
 	});
 
 	// Add to queue
-	auto addQueue = addAction(Icon::get("media-playlist-append"), "Add to queue");
+	auto *addQueue = addAction(Icon::get("media-playlist-append"), "Add to queue");
 	QAction::connect(addQueue, &QAction::triggered, this, &SongMenu::addToQueue);
 
 	// Add to playlist
 	addSeparator();
-	auto addPlaylist = addMenu(Icon::get("list-add"), "Add to playlist");
+	auto *addPlaylist = addMenu(Icon::get("list-add"), "Add to playlist");
 
-	auto playlistItem = mainWindow->getCurrentPlaylistItem();
+	auto *playlistItem = mainWindow->getCurrentPlaylistItem();
 	if (playlistItem != nullptr)
 	{
 		currentPlaylist = &mainWindow->getPlaylist(playlistItem->data(RoleIndex).toInt());
@@ -99,16 +96,18 @@ SongMenu::SongMenu(const std::string &trackId, const std::vector<lib::spt::entit
 	for (auto &playlist : mainWindow->getPlaylists())
 	{
 		if (!playlist.collaborative && playlist.owner_id != currentUserId)
+		{
 			continue;
+		}
 
 		// Create main action
-		auto action = addPlaylist->addAction(QString::fromStdString(playlist.name));
+		auto *action = addPlaylist->addAction(QString::fromStdString(playlist.name));
 		action->setData(QString::fromStdString(playlist.id));
 	}
 	QMenu::connect(addPlaylist, &QMenu::triggered, this, &SongMenu::addToPlaylist);
 
 	// Remove from playlist
-	auto remPlaylist = addAction(Icon::get("list-remove"), "Remove from playlist");
+	auto *remPlaylist = addAction(Icon::get("list-remove"), "Remove from playlist");
 	remPlaylist->setVisible(mainWindow->getCurrentPlaylistItem() != nullptr);
 	QAction::connect(remPlaylist, &QAction::triggered, this, &SongMenu::remFromPlaylist);
 
@@ -136,30 +135,34 @@ SongMenu::SongMenu(const std::string &trackId, const std::vector<lib::spt::entit
 		});
 	}
 
-	auto goAlbum = addAction(Icon::get("view-media-album-cover"), "Open album");
+	auto *goAlbum = addAction(Icon::get("view-media-album-cover"), "Open album");
 	goAlbum->setVisible(this->albumId.length() > 1);
 	QAction::connect(goAlbum, &QAction::triggered, this, &SongMenu::openAlbum);
 }
 
-void SongMenu::like(bool)
+void SongMenu::like(bool /*checked*/)
 {
 	auto callback = [this](const std::string &status)
 	{
 		if (!status.empty())
 		{
-			auto mainWindow = MainWindow::find(this->parentWidget());
+			auto *mainWindow = MainWindow::find(this->parentWidget());
 			mainWindow->status(lib::fmt::format("Failed to {}: {}",
 				isLiked ? "dislike" : "like", status), true);
 		}
 	};
 
 	if (isLiked)
+	{
 		spotify.remove_saved_track(trackId, callback);
+	}
 	else
+	{
 		spotify.add_saved_track(trackId, callback);
+	}
 }
 
-void SongMenu::addToQueue(bool)
+void SongMenu::addToQueue(bool /*checked*/)
 {
 	auto uri = lib::spt::api::to_uri("track", trackId);
 	spotify.add_to_queue(uri, [this](const std::string &status)
@@ -178,8 +181,8 @@ void SongMenu::addToPlaylist(QAction *action)
 		this->spotify.playlist_tracks(playlist,
 			[this, playlistId](const std::vector<lib::spt::track> &tracks)
 			{
-				auto mainWindow = MainWindow::find(this->parentWidget());
-				for (auto &item : tracks)
+				auto *mainWindow = MainWindow::find(this->parentWidget());
+				for (const auto &item : tracks)
 				{
 					if (lib::strings::ends_with(trackId, item.id))
 					{
@@ -188,7 +191,9 @@ void SongMenu::addToPlaylist(QAction *action)
 							QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 
 						if (result == QMessageBox::No)
+						{
 							return;
+						}
 						break;
 					}
 				}
@@ -198,7 +203,9 @@ void SongMenu::addToPlaylist(QAction *action)
 				spotify.add_to_playlist(playlistId, plTrack, [mainWindow](const std::string &result)
 				{
 					if (result.empty())
+					{
 						return;
+					}
 					mainWindow->status(lib::fmt::format("Failed to add track to playlist: {}",
 						result), true);
 				});
@@ -206,13 +213,13 @@ void SongMenu::addToPlaylist(QAction *action)
 	});
 }
 
-void SongMenu::remFromPlaylist(bool)
+void SongMenu::remFromPlaylist(bool /*checked*/)
 {
 	spotify.remove_from_playlist(currentPlaylist->id, trackId, index,
 		[this](const std::string &status)
 		{
 			// Remove from Spotify
-			auto mainWindow = MainWindow::find(this->parentWidget());
+			auto *mainWindow = MainWindow::find(this->parentWidget());
 
 			if (!status.empty())
 			{
@@ -227,8 +234,10 @@ void SongMenu::remFromPlaylist(bool)
 			for (i = 0; i < mainWindow->getSongsTree()->topLevelItemCount(); i++)
 			{
 				item = mainWindow->getSongsTree()->topLevelItem(i);
-				if (item->data(0, RoleTrackId).toString().toStdString() == trackId)
+				if (item->data(0, RoleTrack).value<lib::spt::track>().id == trackId)
+				{
 					break;
+				}
 				item = nullptr;
 			}
 
@@ -247,14 +256,14 @@ void SongMenu::remFromPlaylist(bool)
 		});
 }
 
-void SongMenu::openTrackFeatures(bool)
+void SongMenu::openTrackFeatures(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	mainWindow->openAudioFeaturesWidget(trackId,
 		lib::spt::entity::combine_names(artists), trackName);
 }
 
-void SongMenu::openLyrics(bool)
+void SongMenu::openLyrics(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	mainWindow->openLyrics(lib::spt::entity::combine_names(artists), trackName);
@@ -265,9 +274,9 @@ void SongMenu::viewArtist(const lib::spt::entity &artist)
 	MainWindow::find(parentWidget())->openArtist(artist.id);
 }
 
-void SongMenu::openAlbum(bool)
+void SongMenu::openAlbum(bool /*checked*/)
 {
-	auto mainWindow = MainWindow::find(parentWidget());
+	auto *mainWindow = MainWindow::find(parentWidget());
 	mainWindow->loadAlbum(albumId, lib::spt::api::to_uri("track", trackId));
 }
 
@@ -279,4 +288,10 @@ void SongMenu::setLiked(bool liked)
 		? "starred-symbolic" : "non-starred-symbolic"));
 	toggleLiked->setText(liked
 		? "Dislike" : "Like");
+}
+
+auto SongMenu::getTrackUrl() const -> QString
+{
+	auto str = lib::fmt::format("https://open.spotify.com/track/{}",trackUri);
+	return QString::fromStdString(str);
 }

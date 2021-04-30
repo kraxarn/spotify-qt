@@ -16,5 +16,5 @@ public:
 		int index);
 
 private:
-	bool operator<(const QTreeWidgetItem &item) const override;
+	auto operator<(const QTreeWidgetItem &item) const -> bool override;
 };

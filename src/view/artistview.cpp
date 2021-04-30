@@ -295,8 +295,8 @@ void ArtistView::trackClick(QListWidgetItem *item)
 void ArtistView::trackMenu(const QPoint &pos)
 {
 	auto *item = topTracksList->itemAt(pos);
-	auto trackId = item->data(RoleTrackId).toString();
-	if (trackId.isEmpty())
+	const auto &track = item->data(RoleTrack).value<lib::spt::track>();
+	if (!track.is_valid())
 	{
 		return;
 	}

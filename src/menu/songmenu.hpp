@@ -39,6 +39,8 @@ private:
 	const lib::spt::playlist *currentPlaylist = nullptr;
 	QAction *toggleLiked = nullptr;
 
+	auto getTrackUrl() const -> QString;
+
 	void like(bool checked);
 	void addToQueue(bool checked);
 	void addToPlaylist(QAction *action);
