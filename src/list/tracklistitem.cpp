@@ -26,8 +26,8 @@ TrackListItem::TrackListItem(const QStringList &strings,
 	}
 
 	// Artist
-	setToolTip(2,
-		QString::fromStdString(lib::spt::entity::combine_names(track.artists, "\n")));
+	auto names = lib::spt::entity::combine_names(track.artists, "\n");
+	setToolTip(2, QString::fromStdString(names));
 
 	// Title, album
 	for (auto i = 1; i < strings.length() - 2; i++)
@@ -56,7 +56,7 @@ TrackListItem::TrackListItem(const QStringList &strings,
 	}
 }
 
-bool TrackListItem::operator<(const QTreeWidgetItem &item) const
+auto TrackListItem::operator<(const QTreeWidgetItem &item) const -> bool
 {
 	auto column = treeWidget()->sortColumn();
 

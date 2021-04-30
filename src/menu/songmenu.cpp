@@ -292,6 +292,6 @@ void SongMenu::setLiked(bool liked)
 
 auto SongMenu::getTrackUrl() const -> QString
 {
-	auto str = lib::fmt::format("https://open.spotify.com/track/{}",trackUri);
+	auto str = lib::fmt::format("https://open.spotify.com/track/{}", trackUri);
 	return QString::fromStdString(str);
 }

@@ -46,11 +46,13 @@ LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 		this, &LibraryList::expanded);
 }
 
-void LibraryList::clicked(QTreeWidgetItem *item, int)
+void LibraryList::clicked(QTreeWidgetItem *item, int /*column*/)
 {
-	auto mainWindow = MainWindow::find(parentWidget());
+	auto *mainWindow = MainWindow::find(parentWidget());
 	if (mainWindow == nullptr || item == nullptr)
+	{
 		return;
+	}
 
 	mainWindow->setCurrentPlaylistItem(-1);
 	if (item->parent() != nullptr)
@@ -70,13 +72,17 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 	else
 	{
 		auto id = item->text(0).toLower().replace(' ', '_').toStdString();
-		auto cacheTracks = mainWindow->loadTracksFromCache(id);
-		auto songs = mainWindow->getSongsTree();
+		const auto &cacheTracks = mainWindow->loadTracksFromCache(id);
+		auto *songs = mainWindow->getSongsTree();
 
 		if (cacheTracks.empty())
+		{
 			songs->setEnabled(false);
+		}
 		else
+		{
 			songs->load(cacheTracks);
+		}
 
 		auto callback = [this, id](const std::vector<lib::spt::track> &tracks)
 		{
@@ -131,7 +137,7 @@ void LibraryList::clicked(QTreeWidgetItem *item, int)
 
 void LibraryList::tracksLoaded(const std::string &id, const std::vector<lib::spt::track> &tracks)
 {
-	auto mainWindow = MainWindow::find(parentWidget());
+	auto *mainWindow = MainWindow::find(parentWidget());
 
 	if (!tracks.empty())
 	{
@@ -141,17 +147,21 @@ void LibraryList::tracksLoaded(const std::string &id, const std::vector<lib::spt
 	mainWindow->getSongsTree()->setEnabled(true);
 }
 
-void LibraryList::doubleClicked(QTreeWidgetItem *item, int)
+void LibraryList::doubleClicked(QTreeWidgetItem *item, int /*column*/)
 {
-	auto mainWindow = MainWindow::find(parentWidget());
+	auto *mainWindow = MainWindow::find(parentWidget());
 	if (mainWindow == nullptr)
+	{
 		return;
+	}
 
 	auto callback = [this, mainWindow](const std::vector<lib::spt::track> &tracks)
 	{
 		// If none were found, don't do anything
 		if (tracks.empty())
+		{
 			return;
+		}
 
 		// Get id of all tracks
 		std::vector<std::string> trackIds;
@@ -175,16 +185,21 @@ void LibraryList::doubleClicked(QTreeWidgetItem *item, int)
 
 	// Fetch all tracks in list
 	if (item->text(0) == RECENTLY_PLAYED)
+	{
 		spotify.recently_played(callback);
+	}
 	else if (item->text(0) == SAVED_TRACKS)
+	{
 		spotify.saved_tracks(callback);
+	}
 	else if (item->text(0) == TOP_TRACKS)
+	{
 		spotify.top_tracks(callback);
+	}
 }
 
 void LibraryList::expanded(QTreeWidgetItem *item)
 {
-	std::vector<LibraryItem> results;
 	item->takeChildren();
 
 	if (item->text(0) == TOP_ARTISTS)
@@ -193,8 +208,10 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 		{
 			std::vector<LibraryItem> results;
 			results.reserve(artists.size());
-			for (auto &artist : artists)
+			for (const auto &artist : artists)
+			{
 				results.emplace_back(artist.name, artist.id, RoleArtistId);
+			}
 			LibraryList::itemsLoaded(results, item);
 		});
 	}
@@ -217,8 +234,10 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 		{
 			std::vector<LibraryItem> results;
 			results.reserve(artists.size());
-			for (auto &artist : artists)
+			for (const auto &artist : artists)
+			{
 				results.emplace_back(artist.name, artist.id, RoleArtistId);
+			}
 			LibraryList::itemsLoaded(results, item);
 		});
 	}
@@ -227,7 +246,7 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 void LibraryList::itemsLoaded(std::vector<LibraryItem> &items, QTreeWidgetItem *item)
 {
 	std::sort(items.begin(), items.end(),
-		[](const LibraryItem &x, const LibraryItem &y)
+		[](const LibraryItem &x, const LibraryItem &y) -> bool
 		{
 			return x.name < y.name;
 		}
@@ -236,7 +255,7 @@ void LibraryList::itemsLoaded(std::vector<LibraryItem> &items, QTreeWidgetItem *
 	// No results
 	if (items.empty())
 	{
-		auto child = new QTreeWidgetItem(item, {
+		auto *child = new QTreeWidgetItem(item, {
 			"No results"
 		});
 		child->setDisabled(true);
@@ -248,7 +267,7 @@ void LibraryList::itemsLoaded(std::vector<LibraryItem> &items, QTreeWidgetItem *
 	// Add all to the list
 	for (auto &result : items)
 	{
-		auto child = new QTreeWidgetItem(item, {
+		auto *child = new QTreeWidgetItem(item, {
 			QString::fromStdString(result.name)
 		});
 		child->setData(0, 0x100, QString::fromStdString(result.id));
