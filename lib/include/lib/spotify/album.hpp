@@ -1,8 +1,8 @@
 #pragma once
 
 #include "lib/enum/albumgroup.hpp"
-
 #include "thirdparty/json.hpp"
+#include "lib/spotify/entity.hpp"
 
 #include <string>
 
@@ -13,15 +13,10 @@ namespace lib
 		/**
 		 * Spotify album
 		 */
-		class album
+		class album: public entity
 		{
 		public:
 			album() = default;
-
-			/**
-			 * Spotify ID
-			 */
-			std::string id;
 
 			/**
 			 * Album group, relation to artist
@@ -33,11 +28,6 @@ namespace lib
 			 * URL to cover image
 			 */
 			std::string image;
-
-			/**
-			 * Name of album
-			 */
-			std::string name;
 
 			/**
 			 * Primary artist

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "thirdparty/json.hpp"
+#include "lib/spotify/entity.hpp"
 
 #include <string>
 #include <vector>
@@ -10,7 +11,7 @@ namespace lib
 {
 	namespace spt
 	{
-		class artist
+		class artist: public entity
 		{
 		public:
 			artist() = default;
@@ -29,16 +30,6 @@ namespace lib
 			 * List of artist genres
 			 */
 			std::vector<std::string> genres;
-
-			/**
-			 * Spotify ID
-			 */
-			std::string id;
-
-			/**
-			 * Name of artist
-			 */
-			std::string name;
 
 			/**
 			 * URL to cover image
