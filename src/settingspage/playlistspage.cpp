@@ -7,9 +7,9 @@ PlaylistsPage::PlaylistsPage(lib::settings &settings, QWidget *parent)
 	addTab(order(), "Order");
 }
 
-auto PlaylistsPage::order() -> QWidget *
+QWidget *PlaylistsPage::order()
 {
-	auto *layout = new QVBoxLayout();
+	auto layout = new QVBoxLayout();
 
 	plHints = QStringList({
 		"Display in the order they are fetched.",
@@ -18,7 +18,7 @@ auto PlaylistsPage::order() -> QWidget *
 		"Display in a custom order defined below."
 	});
 
-	auto *typeContainer = new QHBoxLayout();
+	auto typeContainer = new QHBoxLayout();
 	typeContainer->addWidget(new QLabel("Playlist order"));
 	plOrder = new QComboBox(this);
 	plOrder->addItems({
@@ -35,7 +35,7 @@ auto PlaylistsPage::order() -> QWidget *
 	QComboBox::connect(plOrder, QOverload<int>::of(&QComboBox::currentIndexChanged),
 		this, &PlaylistsPage::playlistOrderChanged);
 
-	auto *mainWindow = MainWindow::find(parentWidget());
+	auto mainWindow = MainWindow::find(parentWidget());
 
 	plListLayout = new QHBoxLayout();
 	plList = new QListWidget(this);
@@ -43,7 +43,7 @@ auto PlaylistsPage::order() -> QWidget *
 	QListWidget::connect(plList, &QListWidget::currentRowChanged, this,
 		&PlaylistsPage::playlistItemChanged);
 
-	auto *buttons = new QToolBar(this);
+	auto buttons = new QToolBar(this);
 	buttons->setOrientation(Qt::Vertical);
 
 	plBtnUp = buttons->addAction(Icon::get("go-up"), "Up");
@@ -60,8 +60,8 @@ auto PlaylistsPage::order() -> QWidget *
 
 	for (auto i = 0; i < mainWindow->getPlaylistItemCount(); i++)
 	{
-		auto *mainItem = mainWindow->getPlaylistItem(i);
-		auto *listItem = new QListWidgetItem(mainItem->text());
+		auto mainItem = mainWindow->getPlaylistItem(i);
+		auto listItem = new QListWidgetItem(mainItem->text());
 		listItem->setData(DataRole::RolePlaylistId, mainItem->data(DataRole::RolePlaylistId));
 		plList->addItem(listItem);
 	}
@@ -69,17 +69,17 @@ auto PlaylistsPage::order() -> QWidget *
 	return Utils::layoutToWidget(layout);
 }
 
-auto PlaylistsPage::icon() -> QIcon
+QIcon PlaylistsPage::icon()
 {
 	return Icon::get("view-media-playlist");
 }
 
-auto PlaylistsPage::title() -> QString
+QString PlaylistsPage::title()
 {
 	return "Playlists";
 }
 
-auto PlaylistsPage::save() -> bool
+bool PlaylistsPage::save()
 {
 	// Custom playlist order
 	auto playlistOrder = (lib::playlist_order) plOrder->currentIndex();
@@ -87,25 +87,16 @@ auto PlaylistsPage::save() -> bool
 	{
 		std::vector<std::string> order;
 		for (auto i = 0; i < plList->count(); i++)
-		{
-			auto *playlistItem = dynamic_cast<PlaylistListItem*>(plList->item(i));
-			if (playlistItem == nullptr)
-			{
-				continue;
-			}
-			order.push_back(playlistItem->getData().id);
-		}
+			order.push_back(plList->item(i)->data(RolePlaylistId).toString().toStdString());
 		settings.general.custom_playlist_order = order;
 	}
 
 	// Playlist stuff
-	auto *mainWindow = MainWindow::find(parentWidget());
+	auto mainWindow = MainWindow::find(parentWidget());
 	if ((settings.general.playlist_order != playlistOrder
 		|| playlistOrder == lib::playlist_order_custom)
 		&& mainWindow != nullptr)
-	{
 		mainWindow->orderPlaylists(playlistOrder);
-	}
 	settings.general.playlist_order = playlistOrder;
 
 	return true;
@@ -114,9 +105,7 @@ auto PlaylistsPage::save() -> bool
 void PlaylistsPage::playlistOrderChanged(int index)
 {
 	for (auto i = 0; i < plListLayout->count(); i++)
-	{
 		plListLayout->itemAt(i)->widget()->setEnabled(index == 3);
-	}
 
 	plHint->setText(plHints.at(index));
 }
@@ -124,7 +113,7 @@ void PlaylistsPage::playlistOrderChanged(int index)
 void PlaylistsPage::playlistMove(int steps)
 {
 	auto row = plList->currentRow();
-	auto *item = plList->takeItem(row);
+	auto item = plList->takeItem(row);
 	plList->insertItem(row + steps, item);
 	plList->setCurrentItem(item);
 }

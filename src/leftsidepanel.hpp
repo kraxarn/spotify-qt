@@ -8,7 +8,6 @@
 #include "lib/developermode.hpp"
 #include "util/dateutils.hpp"
 #include "lib/cache.hpp"
-#include "listitem/playlistlistitem.hpp"
 
 #include <unordered_set>
 

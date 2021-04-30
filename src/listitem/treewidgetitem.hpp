@@ -6,7 +6,7 @@ template<typename T>
 class TreeWidgetItem: public QTreeWidgetItem
 {
 public:
-	TreeWidgetItem(const T &data, QTreeWidgetItem *parent)
+	TreeWidgetItem(const T &data, QTreeWidget *parent)
 		: data(data),
 		QTreeWidgetItem(parent)
 	{

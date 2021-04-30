@@ -5,8 +5,6 @@
 #include "lib/cache.hpp"
 #include "lib/spotify/playlist.hpp"
 #include "lib/enum/playlistorder.hpp"
-#include "listitem/playlistlistitem.hpp"
-#include "lib/map.hpp"
 
 #include <QListWidget>
 

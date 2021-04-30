@@ -6,7 +6,7 @@
 class LibraryAlbumItem: public TreeWidgetItem<lib::spt::album>
 {
 public:
-	LibraryAlbumItem(const lib::spt::album &album, QTreeWidgetItem *parent)
+	LibraryAlbumItem(const lib::spt::album &album, QTreeWidget *parent)
 		: TreeWidgetItem<lib::spt::album>(album, parent)
 	{
 		setText(0, QString::fromStdString(album.name));

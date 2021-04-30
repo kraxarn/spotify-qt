@@ -200,34 +200,14 @@ void LibraryList::doubleClicked(QTreeWidgetItem *item, int /*column*/)
 	}
 }
 
-auto getTreeItem(const lib::spt::artist &artist, QTreeWidgetItem *parent) -> QTreeWidgetItem *
-{
-	return new LibraryArtistItem(artist, parent);
-}
-
-auto getTreeItem(const lib::spt::saved_album &album, QTreeWidgetItem *parent) -> QTreeWidgetItem *
-{
-	return new LibraryAlbumItem(album.album, parent);
-}
-
-auto getName(const lib::spt::artist &artist) -> std::string
-{
-	return artist.name;
-}
-
-auto getName(const lib::spt::saved_album &album) -> std::string
-{
-	return album.album.name;
-}
-
 template<typename T>
 void itemsLoaded(const std::vector<T> &entities, QTreeWidgetItem *parent)
 {
 	std::vector<T> items = entities;
 	std::sort(items.begin(), items.end(),
-		[](const T &x, const T &y) -> bool
+		[](const lib::spt::entity &x, const lib::spt::entity &y) -> bool
 		{
-			return getName(x) < getName(y);
+			return x.name < y.name;
 		}
 	);
 
@@ -246,7 +226,11 @@ void itemsLoaded(const std::vector<T> &entities, QTreeWidgetItem *parent)
 	// Add all to the list
 	for (const auto &item : items)
 	{
-		parent->addChild(getTreeItem(item, parent));
+		parent->addChild(std::is_same<T, lib::spt::artist>::value
+			? new LibraryArtistItem(item, parent)
+			: std::is_same<T, lib::spt::album>::value
+				? new LibraryAlbumItem(item, parent)
+				: nullptr);
 	}
 }
 

@@ -17,7 +17,6 @@ LeftSidePanel::LeftSidePanel(spt::Spotify &spotify, lib::settings &settings,
 	libraryList = new LibraryList(spotify, parent);
 	auto *library = Utils::createGroupBox(QVector<QWidget *>() << libraryList, parent);
 	library->setTitle("Library");
-	library->setWindowIcon(Icon::get("view-media-playlist"));
 	layout->addWidget(library);
 
 	// Playlists
@@ -175,13 +174,7 @@ auto LeftSidePanel::allArtists() -> std::unordered_set<std::string>
 	std::unordered_set<std::string> artists;
 	for (auto i = 0; i < playlists->count(); i++)
 	{
-		auto *playlistItem = dynamic_cast<PlaylistListItem *>(playlists->item(i));
-		if (playlistItem == nullptr)
-		{
-			continue;
-		}
-
-		auto playlistId = playlistItem->getData().id;
+		auto playlistId = playlists->item(i)->data(RolePlaylistId).toString().toStdString();
 		for (auto &track : cache.get_playlist(playlistId).tracks)
 		{
 			for (const auto &artist : track.artists)
