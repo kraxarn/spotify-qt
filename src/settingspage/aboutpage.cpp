@@ -10,30 +10,23 @@ AboutPage::AboutPage(lib::settings &settings, QWidget *parent)
 	addTab(configPreview(), "Config preview");
 }
 
-QWidget *AboutPage::about()
+auto AboutPage::about() -> QWidget *
 {
-	auto mainWindow = MainWindow::find(parentWidget());
-	auto layout = tabContent();
+	auto *mainWindow = MainWindow::find(parentWidget());
+	auto *layout = tabContent();
 	layout->setAlignment(Qt::AlignCenter);
 
-	// Version
-#ifdef GIT_COMMIT
-	auto version = QString("%1-%2, built using Qt %3\nDevelopment build")
-		.arg(APP_VERSION).arg(GIT_COMMIT).arg(QT_VERSION_STR);
-#else
-	auto version = QString("%1, built using Qt %2")
-		.arg(APP_VERSION).arg(QT_VERSION_STR);
-#endif
-
 	// Logo
-	auto titleLogo = new QLabel();
-	titleLogo->setPixmap(Icon::get("logo:spotify-qt").pixmap(96, 96));
+	constexpr int logoSize = 96;
+	auto *titleLogo = new QLabel();
+	titleLogo->setPixmap(Icon::get("logo:spotify-qt").pixmap(logoSize, logoSize));
 	layout->addWidget(titleLogo, 0, Qt::AlignHCenter);
 
 	// Title
-	auto titleAppName = new QLabel(QString("spotify-qt %1").arg(APP_VERSION));
+	constexpr float appNameFontMulti = 1.5F;
+	auto *titleAppName = new QLabel(QString("spotify-qt %1").arg(APP_VERSION));
 	auto appNameFont = titleAppName->font();
-	appNameFont.setPointSize(appNameFont.pointSizeF() * 1.5);
+	appNameFont.setPointSize((int)(appNameFont.pointSizeF() * appNameFontMulti));
 	titleAppName->setFont(appNameFont);
 	layout->addWidget(titleAppName, 0, Qt::AlignHCenter);
 
@@ -59,32 +52,32 @@ QWidget *AboutPage::about()
 	return Utils::layoutToWidget(layout);
 }
 
-QWidget *AboutPage::systemInfo()
+auto AboutPage::systemInfo() -> QWidget *
 {
 	return new SystemInfoView(MainWindow::find(parentWidget()), this);
 }
 
-QWidget *AboutPage::cacheInfo()
+auto AboutPage::cacheInfo() -> QWidget *
 {
 	return new CacheView(MainWindow::find(parentWidget())->getCacheLocation(), this);
 }
 
-QWidget *AboutPage::configPreview()
+auto AboutPage::configPreview() -> QWidget *
 {
 	return new ConfigView(settings, this);
 }
 
-QIcon AboutPage::icon()
+auto AboutPage::icon() -> QIcon
 {
 	return Icon::get("help-about");
 }
 
-QString AboutPage::title()
+auto AboutPage::title() -> QString
 {
 	return "About";
 }
 
-bool AboutPage::save()
+auto AboutPage::save() -> bool
 {
 	return true;
 }
