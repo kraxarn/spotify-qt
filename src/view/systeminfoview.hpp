@@ -3,8 +3,8 @@
 #include "../mainwindow.hpp"
 #include "../spotify/spotify.hpp"
 #include "logview.hpp"
-#include "util/systemutils.hpp"
 #include "lib/libversion.hpp"
+#include "common/systeminfo.hpp"
 
 #include <QFile>
 #include <QLabel>
@@ -17,12 +17,9 @@ class SystemInfoView: public QWidget
 Q_OBJECT
 
 public:
-	explicit SystemInfoView(QWidget *mainWindow, QWidget *parent = nullptr);
-	static QString systemInfo(const lib::spt::playback &playback, bool html = true);
+	explicit SystemInfoView(QWidget *parent = nullptr);
 
 private:
-	auto systemInfo(bool html = true) -> QString;
+	auto systemInfo() -> SystemInfo;
 	void copyToClipboard(bool checked);
-
-	QWidget *mainWindow = nullptr;
 };

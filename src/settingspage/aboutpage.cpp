@@ -54,7 +54,7 @@ auto AboutPage::about() -> QWidget *
 
 auto AboutPage::systemInfo() -> QWidget *
 {
-	return new SystemInfoView(MainWindow::find(parentWidget()), this);
+	return new SystemInfoView(this);
 }
 
 auto AboutPage::cacheInfo() -> QWidget *
