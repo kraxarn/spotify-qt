@@ -15,14 +15,26 @@ class SongMenu: public QMenu
 Q_OBJECT
 
 public:
+	/**
+	 * Basic SongMenu
+	 */
 	SongMenu(const lib::spt::track &track, spt::Spotify &spotify, QWidget *parent);
 
+	/**
+	 * SongMenu from artist
+	 */
 	SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
-		bool forceArtistSubmenu, QWidget *parent);
+		const lib::spt::artist *fromArtist, QWidget *parent);
+
+	/**
+	 * SongMenu from playlist with index of track in playlist
+	 */
+	SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
+		int index, QWidget *parent);
 
 private:
-	SongMenu(const lib::spt::track &track, int index, spt::Spotify &spotify,
-		bool forceArtistSubmenu, QWidget *parent);
+	SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
+		const lib::spt::artist *fromArtist, int index, QWidget *parent);
 
 	spt::Spotify &spotify;
 	bool isLiked = false;

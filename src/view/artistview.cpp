@@ -299,13 +299,7 @@ void ArtistView::trackMenu(const QPoint &pos)
 		return;
 	}
 
-	std::vector<lib::spt::entity> artists = track.artists;
-	lib::vector::remove_if(artists, [this](const lib::spt::entity &entity) -> bool
-	{
-		return entity.id == this->artistId;
-	});
-
-	auto *songMenu = new SongMenu(track, spotify, true, parentWidget());
+	auto *songMenu = new SongMenu(track, spotify, &artist, parentWidget());
 	songMenu->popup(topTracksList->mapToGlobal(pos));
 }
 

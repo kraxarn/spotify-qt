@@ -3,18 +3,24 @@
 #include "mainwindow.hpp"
 
 SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify, QWidget *parent)
-	: SongMenu(track, spotify, false, parent)
+	: SongMenu(track, spotify, nullptr, parent)
 {
 }
 
 SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
-	bool forceArtistSubmenu, QWidget *parent)
-	: SongMenu(track, 0, spotify, forceArtistSubmenu, parent)
+	const lib::spt::artist *fromArtist, QWidget *parent)
+	: SongMenu(track, spotify, fromArtist, -1, parent)
 {
 }
 
-SongMenu::SongMenu(const lib::spt::track &track, int index, spt::Spotify &spotify,
-	bool forceArtistSubmenu, QWidget *parent)
+SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
+	int index, QWidget *parent)
+	: SongMenu(track, spotify, nullptr, index, parent)
+{
+}
+
+SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
+	const lib::spt::artist *fromArtist, int index, QWidget *parent)
 	: track(track),
 	index(index),
 	spotify(spotify),
@@ -92,15 +98,25 @@ SongMenu::SongMenu(const lib::spt::track &track, int index, spt::Spotify &spotif
 
 	// Remove from playlist
 	auto *remPlaylist = addAction(Icon::get("list-remove"), "Remove from playlist");
-	remPlaylist->setVisible(mainWindow->getCurrentPlaylistItem() != nullptr);
+	remPlaylist->setVisible(index >= 0 && mainWindow->getCurrentPlaylistItem() != nullptr);
 	QAction::connect(remPlaylist, &QAction::triggered, this, &SongMenu::remFromPlaylist);
 
 	addSeparator();
-	if (track.artists.size() > 1 || (forceArtistSubmenu && !track.artists.empty()))
+	if (track.artists.size() == 1 && fromArtist != nullptr
+		&& fromArtist->id == track.artists.front().id)
+	{
+		// Do nothing, we're already in the only artist
+	}
+	else if (track.artists.size() > 1)
 	{
 		auto *artistsMenu = addMenu(Icon::get("view-media-artist"), "View artist");
 		for (const auto &artist : track.artists)
 		{
+			if (fromArtist != nullptr && fromArtist->id == artist.id)
+			{
+				continue;
+			}
+
 			auto *goArtist = artistsMenu->addAction(QString::fromStdString(artist.name));
 			QAction::connect(goArtist, &QAction::triggered, [this, artist](bool /*checked*/)
 			{
