@@ -17,4 +17,6 @@ protected:
 private:
 	QMainWindow *mainWindow = nullptr;
 	QPoint dragPosition;
+
+	void menu(const QPoint &pos);
 };

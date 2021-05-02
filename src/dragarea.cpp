@@ -11,6 +11,10 @@ DragArea::DragArea(QWidget *parent)
 	{
 		lib::log::error("DragArea: MainWindow not found");
 	}
+
+	setContextMenuPolicy(Qt::CustomContextMenu);
+	QWidget::connect(this, &QWidget::customContextMenuRequested,
+		this, &DragArea::menu);
 }
 
 void DragArea::mousePressEvent(QMouseEvent *event)
@@ -39,4 +43,36 @@ void DragArea::mouseMoveEvent(QMouseEvent *event)
 void DragArea::mouseReleaseEvent(QMouseEvent */*event*/)
 {
 	setCursor(Qt::ArrowCursor);
+}
+
+void DragArea::menu(const QPoint &pos)
+{
+	auto *menu = new QMenu(this);
+
+	auto *minimize = menu->addAction(Icon::get("window-minimize-symbolic"),
+		"Minimize");
+	QAction::connect(minimize, &QAction::triggered, [this](bool /*checked*/)
+	{
+		emit this->mainWindow->showMinimized();
+	});
+
+	auto *maximize = menu->addAction(Icon::get("window-maximize-symbolic"),
+		"Maximize");
+	QAction::connect(maximize, &QAction::triggered, [this](bool /*checked*/)
+	{
+		if (mainWindow->isMaximized())
+		{
+			mainWindow->resize(MainWindow::defaultSize());
+		}
+		else
+		{
+			emit mainWindow->showMaximized();
+		}
+	});
+
+	auto *close = menu->addAction(Icon::get("window-close-symbolic"),
+		"Close");
+	QAction::connect(close, &QAction::triggered, &QCoreApplication::quit);
+
+	menu->popup(mapToGlobal(pos));
 }
