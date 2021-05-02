@@ -9,20 +9,15 @@ SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify, QWidget 
 
 SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
 	bool forceArtistSubmenu, QWidget *parent)
-	: SongMenu(track.id, track.artists, track.name, track.album.id, 0,
-	spotify, forceArtistSubmenu, parent)
+	: SongMenu(track, 0, spotify, forceArtistSubmenu, parent)
 {
 }
 
-SongMenu::SongMenu(const std::string &trackId, const std::vector<lib::spt::entity> &artists,
-	std::string name, std::string albumId, int index, spt::Spotify &spotify,
+SongMenu::SongMenu(const lib::spt::track &track, int index, spt::Spotify &spotify,
 	bool forceArtistSubmenu, QWidget *parent)
-	: trackId(trackId),
-	artists(artists),
-	trackName(std::move(name)),
+	: track(track),
 	index(index),
 	spotify(spotify),
-	albumId(std::move(albumId)),
 	QMenu(parent)
 {
 	auto *mainWindow = MainWindow::find(parent);
@@ -32,7 +27,7 @@ SongMenu::SongMenu(const std::string &trackId, const std::vector<lib::spt::entit
 		return;
 	}
 
-	trackUri = lib::spt::api::to_id(trackId);
+	trackUri = lib::spt::api::to_id(track.id);
 	auto *trackFeatures = addAction(Icon::get("view-statistics"), "Audio features");
 	QAction::connect(trackFeatures, &QAction::triggered, this, &SongMenu::openTrackFeatures);
 
@@ -101,10 +96,10 @@ SongMenu::SongMenu(const std::string &trackId, const std::vector<lib::spt::entit
 	QAction::connect(remPlaylist, &QAction::triggered, this, &SongMenu::remFromPlaylist);
 
 	addSeparator();
-	if (artists.size() > 1 || (forceArtistSubmenu && !artists.empty()))
+	if (track.artists.size() > 1 || (forceArtistSubmenu && !track.artists.empty()))
 	{
 		auto *artistsMenu = addMenu(Icon::get("view-media-artist"), "View artist");
-		for (const auto &artist : artists)
+		for (const auto &artist : track.artists)
 		{
 			auto *goArtist = artistsMenu->addAction(QString::fromStdString(artist.name));
 			QAction::connect(goArtist, &QAction::triggered, [this, artist](bool /*checked*/)
@@ -113,9 +108,9 @@ SongMenu::SongMenu(const std::string &trackId, const std::vector<lib::spt::entit
 			});
 		}
 	}
-	else if (!artists.empty())
+	else if (!track.artists.empty())
 	{
-		const auto &artist = this->artists.front();
+		const auto &artist = track.artists.front();
 		auto *goArtist = addAction(Icon::get("view-media-artist"), "View artist");
 		goArtist->setVisible(!artist.id.empty());
 		QAction::connect(goArtist, &QAction::triggered, [this, artist](bool /*checked*/)
@@ -125,7 +120,7 @@ SongMenu::SongMenu(const std::string &trackId, const std::vector<lib::spt::entit
 	}
 
 	auto *goAlbum = addAction(Icon::get("view-media-album-cover"), "Open album");
-	goAlbum->setVisible(this->albumId.length() > 1);
+	goAlbum->setVisible(track.album.id.length() > 1);
 	QAction::connect(goAlbum, &QAction::triggered, this, &SongMenu::openAlbum);
 }
 
@@ -143,17 +138,17 @@ void SongMenu::like(bool /*checked*/)
 
 	if (isLiked)
 	{
-		spotify.remove_saved_track(trackId, callback);
+		spotify.remove_saved_track(track.id, callback);
 	}
 	else
 	{
-		spotify.add_saved_track(trackId, callback);
+		spotify.add_saved_track(track.id, callback);
 	}
 }
 
 void SongMenu::addToQueue(bool /*checked*/)
 {
-	auto uri = lib::spt::api::to_uri("track", trackId);
+	auto uri = lib::spt::api::to_uri("track", track.id);
 	spotify.add_to_queue(uri, [this](const std::string &status)
 	{
 		MainWindow::find(this->parentWidget())->status(status, true);
@@ -173,7 +168,7 @@ void SongMenu::addToPlaylist(QAction *action)
 				auto *mainWindow = MainWindow::find(this->parentWidget());
 				for (const auto &item : tracks)
 				{
-					if (lib::strings::ends_with(trackId, item.id))
+					if (lib::strings::ends_with(track.id, item.id))
 					{
 						auto result = QMessageBox::information(mainWindow, "Duplicate",
 							"Track is already in the playlist, do you want to add it anyway?",
@@ -188,7 +183,7 @@ void SongMenu::addToPlaylist(QAction *action)
 				}
 
 				// Actually add
-				auto plTrack = lib::spt::api::to_uri("track", trackId);
+				auto plTrack = lib::spt::api::to_uri("track", track.id);
 				spotify.add_to_playlist(playlistId, plTrack, [mainWindow](const std::string &result)
 				{
 					if (result.empty())
@@ -204,7 +199,7 @@ void SongMenu::addToPlaylist(QAction *action)
 
 void SongMenu::remFromPlaylist(bool /*checked*/)
 {
-	spotify.remove_from_playlist(currentPlaylist->id, trackId, index,
+	spotify.remove_from_playlist(currentPlaylist->id, track.id, index,
 		[this](const std::string &status)
 		{
 			// Remove from Spotify
@@ -223,7 +218,7 @@ void SongMenu::remFromPlaylist(bool /*checked*/)
 			for (i = 0; i < mainWindow->getSongsTree()->topLevelItemCount(); i++)
 			{
 				item = mainWindow->getSongsTree()->topLevelItem(i);
-				if (item->data(0, RoleTrack).value<lib::spt::track>().id == trackId)
+				if (item->data(0, RoleTrack).value<lib::spt::track>().id == track.id)
 				{
 					break;
 				}
@@ -239,8 +234,8 @@ void SongMenu::remFromPlaylist(bool /*checked*/)
 			// i doesn't necessarily match item index depending on sorting order
 			mainWindow->getSongsTree()->takeTopLevelItem(i);
 			mainWindow->status(lib::fmt::format("Removed {} - {} from \"{}\"",
-				trackName,
-				lib::spt::entity::combine_names(artists),
+				track.name,
+				lib::spt::entity::combine_names(track.artists),
 				currentPlaylist->name));
 		});
 }
@@ -248,14 +243,14 @@ void SongMenu::remFromPlaylist(bool /*checked*/)
 void SongMenu::openTrackFeatures(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-	mainWindow->openAudioFeaturesWidget(trackId,
-		lib::spt::entity::combine_names(artists), trackName);
+	mainWindow->openAudioFeaturesWidget(track.id,
+		lib::spt::entity::combine_names(track.artists), track.name);
 }
 
 void SongMenu::openLyrics(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-	mainWindow->openLyrics(lib::spt::entity::combine_names(artists), trackName);
+	mainWindow->openLyrics(lib::spt::entity::combine_names(track.artists), track.name);
 }
 
 void SongMenu::viewArtist(const lib::spt::entity &artist)
@@ -266,7 +261,7 @@ void SongMenu::viewArtist(const lib::spt::entity &artist)
 void SongMenu::openAlbum(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-	mainWindow->loadAlbum(albumId, lib::spt::api::to_uri("track", trackId));
+	mainWindow->loadAlbum(track.album.id, lib::spt::api::to_uri("track", track.id));
 }
 
 void SongMenu::setLiked(bool liked)

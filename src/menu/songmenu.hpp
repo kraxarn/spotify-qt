@@ -21,17 +21,13 @@ public:
 		bool forceArtistSubmenu, QWidget *parent);
 
 private:
-	SongMenu(const std::string &trackId, const std::vector<lib::spt::entity> &artists,
-		std::string name, std::string albumId, int index, spt::Spotify &spotify,
+	SongMenu(const lib::spt::track &track, int index, spt::Spotify &spotify,
 		bool forceArtistSubmenu, QWidget *parent);
 
 	spt::Spotify &spotify;
 	bool isLiked = false;
 
-	std::vector<lib::spt::entity> artists;
-	const std::string trackId;
-	const std::string albumId;
-	const std::string trackName;
+	const lib::spt::track &track;
 	std::string trackUri;
 	int index = 0;
 	const lib::spt::playlist *currentPlaylist = nullptr;
