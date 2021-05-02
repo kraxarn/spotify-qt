@@ -86,6 +86,7 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 		});
 	});
 
+	addSeparator();
 	leftSpacer = new DragArea(this);
 	addWidget(leftSpacer);
 
@@ -112,7 +113,6 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 				});
 		});
 
-	addSeparator();
 	addWidget(progress);
 	addSeparator();
 	position = new QLabel("0:00/0:00", this);
@@ -121,10 +121,10 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 		position->setFont(QFont("monospace"));
 	}
 	addWidget(position);
-	addSeparator();
 
 	rightSpacer = new DragArea(this);
 	addWidget(rightSpacer);
+	addSeparator();
 
 	// Shuffle and repeat toggles
 	shuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle");
