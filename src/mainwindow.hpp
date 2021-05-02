@@ -10,7 +10,7 @@ public:
 	MainWindow(lib::settings &settings, lib::paths &paths);
 
 	static MainWindow *find(QWidget *from);
-	static constexpr auto defaultSize() -> QSize;
+	static auto defaultSize() -> QSize;
 
 protected:
 	void closeEvent(QCloseEvent *event) override;
@@ -99,9 +99,6 @@ private:
 	bool stateValid = true;
 	QTabWidget *sidePanel = nullptr;
 	LeftSidePanel *leftSidePanel = nullptr;
-
-	static constexpr int defaultWidth = 1280;
-	static constexpr int defaultHeight = 720;
 
 #ifdef USE_DBUS
 	mp::Service *mediaPlayer = nullptr;

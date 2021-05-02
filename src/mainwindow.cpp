@@ -632,10 +632,13 @@ auto MainWindow::find(QWidget *from) -> MainWindow *
 	return dynamic_cast<MainWindow *>(w);
 }
 
-constexpr auto MainWindow::defaultSize() -> QSize
+auto MainWindow::defaultSize() -> QSize
 {
+	constexpr int width = 1280;
+	constexpr int height = 720;
+
 	return {
-		defaultWidth,
-		defaultHeight
+		width,
+		height
 	};
 }
