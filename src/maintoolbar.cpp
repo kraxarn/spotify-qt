@@ -178,19 +178,6 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 		emit mainWindow->showMinimized();
 	});
 
-	maximize = addAction(Icon::get("window-maximize-symbolic"), "Maximise");
-	QAction::connect(maximize, &QAction::triggered, [mainWindow](bool /*checked*/)
-	{
-		if (mainWindow->isMaximized())
-		{
-			mainWindow->resize(1280, 720);
-		}
-		else
-		{
-			emit mainWindow->showMaximized();
-		}
-	});
-
 	close = addAction(Icon::get("window-close-symbolic"), "Close");
 	QAction::connect(close, &QAction::triggered, &QCoreApplication::quit);
 
@@ -211,7 +198,6 @@ void MainToolBar::showTitleBarButtons(bool show)
 	titleBarSeparator->setVisible(show);
 
 	minimize->setVisible(show);
-	maximize->setVisible(show);
 	close->setVisible(show);
 
 	leftSpacer->setVisible(show);

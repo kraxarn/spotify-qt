@@ -50,6 +50,5 @@ private:
 
 	QAction *titleBarSeparator = nullptr;
 	QAction *minimize = nullptr;
-	QAction *maximize = nullptr;
 	QAction *close = nullptr;
 };
