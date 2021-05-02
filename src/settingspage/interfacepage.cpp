@@ -1,6 +1,5 @@
 #include "interfacepage.hpp"
 #include "mainwindow.hpp"
-#include "util/systemutils.hpp"
 
 InterfacePage::InterfacePage(lib::settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
