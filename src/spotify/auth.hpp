@@ -1,28 +1,23 @@
 #pragma once
 
+#include "common/spotify/auth.hpp"
 #include "lib/settings.hpp"
 
-#include <QCoreApplication>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QNetworkRequest>
-#include <QString>
-#include <QUrl>
+#include <QObject>
 
 namespace spt
 {
-	class Auth
+	class Auth: public QObject, public cmn::spt::Auth
 	{
+	Q_OBJECT
+
 	public:
 		explicit Auth(lib::settings &settings);
-		virtual ~Auth();
-		static QString authUrl(const QString &clientId, const QString &redirect);
-		QString auth(const QString &code, const QString &redirect, const QString &id, const QString &secret);
+
+		auto auth(const QString &code, const QString &redirect,
+			const QString &id, const QString &secret) -> QString;
 
 	private:
-		QNetworkAccessManager *networkManager;
 		lib::settings &settings;
 	};
 }
