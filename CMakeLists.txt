@@ -20,14 +20,14 @@ endif ()
 # Optional Qt 6 support
 if (DEFINED USE_QT6)
 	set(QT_VERSION_MAJOR 6)
-else()
+else ()
 	set(QT_VERSION_MAJOR 5)
-endif()
+endif ()
 
 # Prefer new OpenGL
-if(POLICY CMP0072)
-  cmake_policy(SET CMP0072 NEW)
-endif()
+if (POLICY CMP0072)
+	cmake_policy(SET CMP0072 NEW)
+endif ()
 
 # Find Qt
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Widgets Network Gui Svg REQUIRED)
@@ -54,9 +54,9 @@ target_include_directories(spotify-qt PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 find_package(Git QUIET)
 if (GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
 	execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
-			WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-			OUTPUT_VARIABLE GIT_COMMIT
-			OUTPUT_STRIP_TRAILING_WHITESPACE)
+		WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+		OUTPUT_VARIABLE GIT_COMMIT
+		OUTPUT_STRIP_TRAILING_WHITESPACE)
 	target_compile_definitions(spotify-qt PRIVATE GIT_COMMIT="${GIT_COMMIT}")
 endif ()
 
@@ -75,11 +75,11 @@ endif ()
 
 # Link Qt
 target_link_libraries(spotify-qt PRIVATE
-		Qt${QT_VERSION_MAJOR}::Core
-		Qt${QT_VERSION_MAJOR}::Widgets
-		Qt${QT_VERSION_MAJOR}::Network
-		Qt${QT_VERSION_MAJOR}::Gui
-		Qt${QT_VERSION_MAJOR}::Svg)
+	Qt${QT_VERSION_MAJOR}::Core
+	Qt${QT_VERSION_MAJOR}::Widgets
+	Qt${QT_VERSION_MAJOR}::Network
+	Qt${QT_VERSION_MAJOR}::Gui
+	Qt${QT_VERSION_MAJOR}::Svg)
 
 # spotify-qt-lib
 add_subdirectory(lib)
