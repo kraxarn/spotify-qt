@@ -54,9 +54,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	// Setup main window
 	setWindowTitle("spotify-qt");
 	setWindowIcon(Icon::get("logo:spotify-qt"));
-	constexpr int windowWidth = 1280;
-	constexpr int windowHeight = 720;
-	resize(windowWidth, windowHeight);
+	resize(defaultSize());
 	setCentralWidget(createCentralWidget());
 	toolBar = new MainToolBar(*spotify, settings, this);
 	addToolBar(Qt::ToolBarArea::TopToolBarArea, toolBar);
@@ -632,4 +630,12 @@ auto MainWindow::find(QWidget *from) -> MainWindow *
 		w = w->parentWidget();
 	}
 	return dynamic_cast<MainWindow *>(w);
+}
+
+constexpr auto MainWindow::defaultSize() -> QSize
+{
+	return {
+		defaultWidth,
+		defaultHeight
+	};
 }
