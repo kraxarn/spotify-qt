@@ -4,7 +4,7 @@ SetupDialog::SetupDialog(lib::settings &settings, QWidget *parent)
 	: settings(settings), QDialog(parent)
 {
 	// Auth
-	auth = new spt::Auth(settings);
+	auth = new cmn::spt::Auth(settings, this);
 
 	// Main layout
 	auto *mainLayout = new QVBoxLayout();
