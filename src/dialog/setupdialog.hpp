@@ -29,4 +29,9 @@ private:
 	QLineEdit *clientId, *clientSecret;
 	QString clientIdText, clientSecretText, redirect;
 	lib::settings &settings;
+
+	void cancel(bool checked);
+	void spotifyDashboard(bool checked);
+	void authenticate(bool checked);
+	void newServerConnection();
 };
