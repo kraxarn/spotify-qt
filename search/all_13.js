@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['uri_176',['uri',['../classlib_1_1spt_1_1context.html#a9d23cd4d63d8d0d402c2642d96a4f45e',1,'lib::spt::context']]],
-  ['url_177',['url',['../classlib_1_1spotify__error.html#ae6dca656b0b26ab0c604529c6bbd77a9',1,'lib::spotify_error']]],
-  ['user_178',['user',['../classlib_1_1spt_1_1user.html',1,'lib::spt']]]
+  ['uri_175',['uri',['../classlib_1_1spt_1_1context.html#a9d23cd4d63d8d0d402c2642d96a4f45e',1,'lib::spt::context']]],
+  ['url_176',['url',['../classlib_1_1spotify__error.html#ae6dca656b0b26ab0c604529c6bbd77a9',1,'lib::spotify_error']]],
+  ['user_177',['user',['../classlib_1_1spt_1_1user.html',1,'lib::spt']]]
 ];
