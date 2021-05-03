@@ -83,7 +83,7 @@ target_link_libraries(spotify-qt PRIVATE
 
 # spotify-qt-lib
 add_subdirectory(lib)
-target_link_libraries(spotify-qt PUBLIC spotify-qt-lib)
+target_link_libraries(spotify-qt PRIVATE spotify-qt-lib)
 
 # spotify-qt-common
 add_subdirectory(common)
