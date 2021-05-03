@@ -13,7 +13,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Source files
 file(GLOB MAIN_SRC "src/*.cpp")
-file(GLOB MAIN_INC "include/common/*.hpp")
 add_library(spotify-qt-common STATIC ${MAIN_SRC} ${MAIN_INC})
 
 # Qt
@@ -25,5 +24,5 @@ target_link_libraries(spotify-qt-common PRIVATE
 # Include src directory
 target_include_directories(spotify-qt-common PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-# We have some spotify-qt-lib stuff
+# spotify-qt-lib
 target_link_libraries(spotify-qt-common PRIVATE spotify-qt-lib)
