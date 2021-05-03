@@ -24,3 +24,6 @@ target_link_libraries(spotify-qt-common PRIVATE
 
 # Include src directory
 target_include_directories(spotify-qt-common PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+
+# We have some spotify-qt-lib stuff
+target_link_libraries(spotify-qt-common PRIVATE spotify-qt-lib)
