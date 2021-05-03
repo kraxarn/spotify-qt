@@ -1,5 +1,7 @@
 #pragma once
 
+#include "lib/settings.hpp"
+
 #include <QCoreApplication>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -16,7 +18,7 @@ namespace cmn
 		class Auth
 		{
 		public:
-			explicit Auth(QObject *parent);
+			explicit Auth(lib::settings &settings, QObject *parent);
 
 			/**
 			 * Authentication URL
@@ -33,11 +35,12 @@ namespace cmn
 			 * @param refreshToken Outputted refresh token
 			 * @return Error, or empty string on success
 			 */
-			auto auth(const QString &code, const QString &redirect, const QString &id,
-				const QString &secret, QString &accessToken, QString &refreshToken) -> QString;
+			auto auth(const QString &code, const QString &redirect,
+				const QString &id, const QString &secret) -> QString;
 
 		private:
 			QNetworkAccessManager *networkManager = nullptr;
+			lib::settings &settings;
 		};
 	}
 }

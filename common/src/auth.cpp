@@ -1,6 +1,7 @@
 #include "common/spotify/auth.hpp"
 
-cmn::spt::Auth::Auth(QObject *parent)
+cmn::spt::Auth::Auth(lib::settings &settings, QObject *parent)
+	: settings(settings)
 {
 	networkManager = new QNetworkAccessManager(parent);
 }
@@ -35,8 +36,8 @@ auto cmn::spt::Auth::authUrl(const QString &clientId, const QString &redirect) -
 		.arg(clientId, QString(redirectUrl.toEncoded()), scopes.join("%20"));
 }
 
-auto cmn::spt::Auth::auth(const QString &code, const QString &redirect, const QString &id,
-	const QString &secret, QString &accessToken, QString &refreshToken) -> QString
+auto cmn::spt::Auth::auth(const QString &code, const QString &redirect,
+	const QString &id, const QString &secret) -> QString
 {
 	if (networkManager == nullptr)
 	{
@@ -76,8 +77,8 @@ auto cmn::spt::Auth::auth(const QString &code, const QString &redirect, const QS
 	}
 
 	// Save access/refresh token
-	accessToken = jsonData["access_token"].toString();
-	refreshToken = jsonData["refresh_token"].toString();
+	settings.account.access_token = jsonData["access_token"].toString().toStdString();
+	settings.account.refresh_token = jsonData["refresh_token"].toString().toStdString();
 
 	// Everything hopefully went fine
 	return QString();
