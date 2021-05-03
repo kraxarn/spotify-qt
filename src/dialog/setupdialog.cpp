@@ -7,10 +7,10 @@ SetupDialog::SetupDialog(lib::settings &settings, QWidget *parent)
 	auth = new spt::Auth(settings);
 
 	// Main layout
-	auto mainLayout = new QVBoxLayout();
+	auto *mainLayout = new QVBoxLayout();
 
 	// Welcome text
-	auto welcomeText = new QLabel(
+	auto *welcomeText = new QLabel(
 		"Welcome to spotify-qt!\n"
 		"Before using the app, you need to setup your Spotify Web API keys.\n"
 		"You can do this by opening the Spotify Dashboard, create a new app and \n"
@@ -20,31 +20,31 @@ SetupDialog::SetupDialog(lib::settings &settings, QWidget *parent)
 	mainLayout->addWidget(welcomeText);
 
 	// Client ID
-	clientId = new QLineEdit(QString::fromStdString
-		(settings.account.client_id), this);
+	clientId = new QLineEdit(QString::fromStdString(settings.account.client_id),
+		this);
 	clientId->setPlaceholderText("Client ID");
 	mainLayout->addWidget(clientId);
 
 	// Client secret
-	clientSecret = new QLineEdit(QString::fromStdString
-		(settings.account.client_secret), this);
+	clientSecret = new QLineEdit(QString::fromStdString(settings.account.client_secret),
+		this);
 	clientSecret->setPlaceholderText("Client secret");
 	mainLayout->addWidget(clientSecret);
 
 	// Add buttons
-	auto cancelButton = new QPushButton("Cancel");
-	QAbstractButton::connect(cancelButton, &QAbstractButton::clicked, [this](bool checked)
+	auto *cancelButton = new QPushButton("Cancel");
+	QAbstractButton::connect(cancelButton, &QAbstractButton::clicked, [this](bool /*checked*/)
 	{
 		reject();
 	});
-	auto dashboardButton = new QPushButton("Spotify Dashboard");
-	QAbstractButton::connect(dashboardButton, &QAbstractButton::clicked, [this](bool checked)
+	auto *dashboardButton = new QPushButton("Spotify Dashboard");
+	QAbstractButton::connect(dashboardButton, &QAbstractButton::clicked, [this](bool /*checked*/)
 	{
 		QString url("https://developer.spotify.com/dashboard/applications");
 		Utils::openUrl(url, LinkType::Web, this);
 	});
 
-	auto authButton = new QPushButton("Authenticate");
+	auto *authButton = new QPushButton("Authenticate");
 	server = nullptr;
 	QAbstractButton::connect(authButton, &QAbstractButton::clicked, [this](bool checked)
 	{
@@ -56,8 +56,9 @@ SetupDialog::SetupDialog(lib::settings &settings, QWidget *parent)
 
 		if (server == nullptr)
 		{
+			constexpr int serverPort = 8888;
 			server = new QTcpServer(this);
-			if (!server->listen(QHostAddress::LocalHost, 8888))
+			if (!server->listen(QHostAddress::LocalHost, serverPort))
 			{
 				QMessageBox::warning(this,
 					"server error",
@@ -68,7 +69,7 @@ SetupDialog::SetupDialog(lib::settings &settings, QWidget *parent)
 			QTcpServer::connect(server, &QTcpServer::newConnection, [this]()
 			{
 				// Read
-				auto socket = server->nextPendingConnection();
+				auto *socket = server->nextPendingConnection();
 				socket->waitForReadyRead();
 				auto response = QString(socket->readAll());
 
@@ -114,11 +115,11 @@ SetupDialog::SetupDialog(lib::settings &settings, QWidget *parent)
 				}
 			});
 		}
-		auto url = spt::Auth::authUrl(clientIdText, redirect);
+		auto url = cmn::spt::Auth::authUrl(clientIdText, redirect);
 		Utils::openUrl(url, LinkType::Web, this);
 	});
 
-	auto buttonBox = new QHBoxLayout();
+	auto *buttonBox = new QHBoxLayout();
 	buttonBox->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
 	buttonBox->addWidget(cancelButton);
 	buttonBox->addWidget(dashboardButton);
