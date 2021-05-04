@@ -8,6 +8,9 @@
 
 namespace lib
 {
+	/**
+	 * Request auth_headers
+	 */
 	using headers = std::map<std::string, std::string>;
 
 	/**
@@ -16,31 +19,41 @@ namespace lib
 	class http_client
 	{
 	public:
+		/**
+		 * GET request
+		 */
 		virtual void get(const std::string &url,
 			const headers &headers,
-			lib::callback<std::string> &callback) = 0;
+			lib::callback<std::string> &callback) const = 0;
 
+		/**
+		 * PUT request
+		 * @param body JSON body, or empty if none
+		 */
 		virtual void put(const std::string &url, const std::string &body,
 			const headers &headers,
-			lib::callback<std::string> &callback) = 0;
+			lib::callback<std::string> &callback) const = 0;
 
+		/**
+		 * POST request
+		 */
 		virtual void post(const std::string &url,
 			const headers &headers,
-			lib::callback<std::string> &callback) = 0;
+			lib::callback<std::string> &callback) const = 0;
 
+		/**
+		 * Synchronous POST request
+		 * @deprecated Use asynchronous method
+		 */
+		virtual auto post(const std::string &url, const headers &headers,
+			const std::string &post_data) const -> std::string = 0;
+
+		/**
+		 * DELETE request
+		 * @param body JSON body, or empty if none
+		 */
 		virtual void del(const std::string &url, const std::string &body,
 			const headers &headers,
-			lib::callback<std::string> &callback) = 0;
-
-	protected:
-		explicit http_client(lib::settings &settings);
-
-	private:
-		/**
-		 * Get Authorization header value
-		 */
-		auto authorization_header() const -> std::string;
-
-		lib::settings &settings;
+			lib::callback<std::string> &callback) const = 0;
 	};
 }

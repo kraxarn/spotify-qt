@@ -1,8 +1,7 @@
 #include "common/lib/qthttpclient.hpp"
 
-QtHttpClient::QtHttpClient(lib::settings &settings, QObject *parent)
-	: lib::http_client(settings),
-	QObject(parent)
+QtHttpClient::QtHttpClient(QObject *parent)
+	: QObject(parent)
 {
 	networkManager = new QNetworkAccessManager(this);
 }
@@ -10,9 +9,7 @@ QtHttpClient::QtHttpClient(lib::settings &settings, QObject *parent)
 auto QtHttpClient::request(const std::string &url, const lib::headers &headers) -> QNetworkRequest
 {
 	// Prepare request
-	QUrl requestUrl = QString("https://api.spotify.com/v1/%1")
-		.arg(QString::fromStdString(url));
-	QNetworkRequest request(requestUrl);
+	QNetworkRequest request(QUrl(QString::fromStdString(url)));
 
 	// Set headers
 	for (const auto &header : headers)
@@ -25,7 +22,7 @@ auto QtHttpClient::request(const std::string &url, const lib::headers &headers) 
 	return request;
 }
 
-void QtHttpClient::await(QNetworkReply *reply, lib::callback<QByteArray> &callback)
+void QtHttpClient::await(QNetworkReply *reply, lib::callback<QByteArray> &callback) const
 {
 	QNetworkReply::connect(reply, &QNetworkReply::finished, this,
 		[reply, callback]()
@@ -36,7 +33,7 @@ void QtHttpClient::await(QNetworkReply *reply, lib::callback<QByteArray> &callba
 }
 
 void QtHttpClient::get(const std::string &url, const lib::headers &headers,
-	lib::callback<std::string> &callback)
+	lib::callback<std::string> &callback) const
 {
 	await(networkManager->get(request(url, headers)),
 		[url, callback](const QByteArray &data)
@@ -46,7 +43,7 @@ void QtHttpClient::get(const std::string &url, const lib::headers &headers,
 }
 
 void QtHttpClient::put(const std::string &url, const std::string &body, const lib::headers &headers,
-	lib::callback<std::string> &callback)
+	lib::callback<std::string> &callback) const
 {
 	auto data = body.empty()
 		? QByteArray()
@@ -60,7 +57,7 @@ void QtHttpClient::put(const std::string &url, const std::string &body, const li
 }
 
 void QtHttpClient::post(const std::string &url, const lib::headers &headers,
-	lib::callback<std::string> &callback)
+	lib::callback<std::string> &callback) const
 {
 	await(networkManager->post(request(url, headers), QByteArray()),
 		[url, callback](const QByteArray &data)
@@ -69,8 +66,22 @@ void QtHttpClient::post(const std::string &url, const lib::headers &headers,
 		});
 }
 
+auto QtHttpClient::post(const std::string &url, const lib::headers &headers,
+	const std::string &post_data) const -> std::string
+{
+	// Send request
+	auto *reply = networkManager->post(request(url, headers),
+		QByteArray::fromStdString(post_data));
+	while (!reply->isFinished())
+	{
+		QCoreApplication::processEvents();
+	}
+
+	return reply->readAll().toStdString();
+}
+
 void QtHttpClient::del(const std::string &url, const std::string &body, const lib::headers &headers,
-	lib::callback<std::string> &callback)
+	lib::callback<std::string> &callback) const
 {
 	auto data = body.empty()
 		? QByteArray()
