@@ -19,6 +19,7 @@
 #include "lib/spotify/savedalbum.hpp"
 #include "lib/spotify/callback.hpp"
 #include "lib/spotifyerror.hpp"
+#include "lib/httpclient.hpp"
 
 #include "thirdparty/json.hpp"
 
@@ -35,8 +36,9 @@ namespace lib
 			/**
 			 * Construct a new instance and refresh if needed
 			 * @param settings Settings for access token and refresh token
+			 * @param http_client HTTP Client for requests
 			 */
-			explicit api(lib::settings &settings);
+			api(lib::settings &settings, const lib::http_client &http_client);
 
 			//region Albums
 
@@ -300,6 +302,14 @@ namespace lib
 			static auto seconds_since_epoch() -> long;
 
 			/**
+			 * Allow use to select device, by default, none is chosen
+			 * @param devices Devices to select from
+			 * @param callback Selected device
+			 */
+			virtual void select_device(const std::vector<lib::spt::device> &devices,
+				lib::callback<lib::spt::device> &callback);
+
+			/**
 			 * Timestamp of last refresh
 			 */
 			long last_auth = 0;
@@ -313,12 +323,12 @@ namespace lib
 
 			/**
 			 * GET request
-			 * @param url URL to request
+			 * @param response URL to request
 			 * @param callback Response as JSON
 			 * @note Temporarily protected
 			 */
-			virtual void get(const std::string &url,
-				lib::callback<nlohmann::json> &callback) = 0;
+			void get(const std::string &response,
+				lib::callback<nlohmann::json> &callback);
 
 			/**
 			 * GET a collection of items
@@ -346,8 +356,8 @@ namespace lib
 			 * @param body JSON body or null if no body
 			 * @param callback Error message, or empty if none
 			 */
-			virtual void put(const std::string &url, const nlohmann::json &body,
-				lib::callback<std::string> &callback) = 0;
+			void put(const std::string &url, const nlohmann::json &body,
+				lib::callback<std::string> &callback);
 
 			/**
 			 * Convenience method for PUT request with no body
@@ -363,7 +373,7 @@ namespace lib
 			 * @param url URL to request
 			 * @param callback Error message, or empty if none
 			 */
-			virtual void post(const std::string &url, lib::callback<std::string> &callback) = 0;
+			void post(const std::string &url, lib::callback<std::string> &callback);
 
 			//endregion
 
@@ -375,8 +385,8 @@ namespace lib
 			 * @param json JSON body or null if no body
 			 * @param callback Error message, or empty if none
 			 */
-			virtual void del(const std::string &url, const nlohmann::json &json,
-				lib::callback<std::string> &callback) = 0;
+			void del(const std::string &url, const nlohmann::json &json,
+				lib::callback<std::string> &callback);
 
 			/**
 			 * Convenience method for DELETE request with no body
@@ -393,14 +403,19 @@ namespace lib
 
 		private:
 			/**
+			 * Implementation of HTTP Client
+			 */
+			const lib::http_client &http;
+
+			/**
 			 * Send request to refresh access token
 			 * @param post_data POST form data
 			 * @param authorization Authorization header
 			 * @note Only required until networking is properly implemented
 			 * @return JSON response with (maybe) new access token
 			 */
-			virtual auto request_refresh(const std::string &post_data,
-				const std::string &authorization) -> std::string = 0;
+			auto request_refresh(const std::string &post_data,
+				const std::string &authorization) -> std::string;
 
 			/**
 			 * Parse JSON from string data
@@ -411,6 +426,22 @@ namespace lib
 			 */
 			static auto parse_json(const std::string &url,
 				const std::string &data) -> nlohmann::json;
+
+			/**
+			 * Get error message from JSON response
+			 */
+			static auto error_message(const std::string &url,
+				const std::string &data) -> std::string;
+
+			/**
+			 * Get authorization header, and refresh if needed
+			 */
+			auto auth_headers() -> lib::headers;
+
+			/**
+			 * Get full API url from relative URL
+			 */
+			static auto to_full_url(const std::string &relative_url) -> std::string;
 
 			/**
 			 * Set last used device

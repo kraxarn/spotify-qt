@@ -2,8 +2,9 @@
 
 using namespace lib::spt;
 
-api::api(lib::settings &settings)
-	: settings(settings)
+api::api(lib::settings &settings, const lib::http_client &http_client)
+	: settings(settings),
+	http(http_client)
 {
 }
 
@@ -55,6 +56,33 @@ void api::refresh(bool force)
 	settings.save();
 }
 
+auto api::auth_headers() -> lib::headers
+{
+	constexpr int secsInHour = 3600;
+
+	// See when last refresh was
+	auto last_refresh = seconds_since_epoch() - last_auth;
+	if (last_refresh >= secsInHour)
+	{
+		lib::log::info("Access token probably expired, refreshing");
+		try
+		{
+			refresh();
+		}
+		catch (const std::exception &e)
+		{
+			lib::log::error("Refresh failed: {}", e.what());
+		}
+	}
+
+	return {
+		{
+			"Authorization",
+			lib::fmt::format("Bearer {}", settings.account.access_token),
+		},
+	};
+}
+
 auto api::parse_json(const std::string &url, const std::string &data) -> nlohmann::json
 {
 	// No data, no response, no error
@@ -75,10 +103,54 @@ auto api::parse_json(const std::string &url, const std::string &data) -> nlohman
 	throw lib::spotify_error(err, url);
 }
 
+auto api::request_refresh(const std::string &post_data,
+	const std::string &authorization) -> std::string
+{
+	return http.post("https://accounts.spotify.com/api/token", {
+		{"Content-Type", "application/x-www-form-urlencoded"},
+		{"Authorization", authorization},
+	}, post_data);
+}
+
+auto api::error_message(const std::string &url, const std::string &data) -> std::string
+{
+	nlohmann::json json;
+	try
+	{
+		if (!data.empty())
+		{
+			json = nlohmann::json::parse(data);
+		}
+	}
+	catch (const std::exception &e)
+	{
+		lib::log::warn("{} failed: {}", url, e.what());
+		return std::string();
+	}
+
+	if (json.is_null() || !json.is_object() || !json.contains("error"))
+	{
+		return std::string();
+	}
+
+	auto message = json.at("error").at("message").get<std::string>();
+	if (!message.empty())
+	{
+		lib::log::error("{} failed: {}", url, message);
+	}
+	return message;
+}
+
 auto api::seconds_since_epoch() -> long
 {
 	return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now()
 		.time_since_epoch()).count();
+}
+
+void api::select_device(const std::vector<lib::spt::device> &/*devices*/,
+	lib::callback<lib::spt::device> &callback)
+{
+	callback(lib::spt::device());
 }
 
 auto api::to_uri(const std::string &type, const std::string &id) -> std::string
@@ -94,6 +166,11 @@ auto api::to_id(const std::string &id) -> std::string
 	return i >= 0
 		? id.substr(i + 1)
 		: id;
+}
+
+auto api::to_full_url(const std::string &relative_url) -> std::string
+{
+	return lib::fmt::format("https://api.spotify.com/v1/{}", relative_url);
 }
 
 auto api::follow_type_string(lib::follow_type type) -> std::string
@@ -122,6 +199,24 @@ auto api::get_current_device() const -> std::string
 }
 
 //region GET
+
+void api::get(const std::string &url, lib::callback<nlohmann::json> &callback)
+{
+	http.get(to_full_url(url), auth_headers(),
+		[url, callback](const std::string &response)
+		{
+			try
+			{
+				callback(response.empty()
+					? nlohmann::json()
+					: nlohmann::json::parse(response));
+			}
+			catch (const std::exception &e)
+			{
+				lib::log::error("{} failed: {}", url, e.what());
+			}
+		});
+}
 
 void api::get_items(const std::string &url, const std::string &key,
 	lib::callback<nlohmann::json> &callback)
@@ -162,6 +257,64 @@ void api::get_items(const std::string &url, lib::callback<nlohmann::json> &callb
 
 //region PUT
 
+void api::put(const std::string &url, const nlohmann::json &body,
+	lib::callback<std::string> &callback)
+{
+	auto header = auth_headers();
+	header["Content-Type"] = "application/json";
+
+	auto data = body.is_null()
+		? std::string()
+		: body.dump();
+
+	http.put(to_full_url(url), data, header,
+		[this, url, body, callback](const std::string &response)
+		{
+			auto error = error_message(url, response);
+
+			if (lib::strings::contains(error, "No active device found")
+				|| lib::strings::contains(error, "Device not found"))
+			{
+				devices([this, url, body, error, callback]
+					(const std::vector<lib::spt::device> &devices)
+				{
+					if (devices.empty())
+					{
+						if (callback)
+						{
+							callback(error);
+						}
+					}
+					else
+					{
+						this->select_device(devices, [this, url, body, callback, error]
+							(const lib::spt::device &device)
+						{
+							if (device.id.empty())
+							{
+								callback(error);
+								return;
+							}
+
+							this->set_device(device, [this, url, body, callback]
+								(const std::string &status)
+							{
+								if (status.empty())
+								{
+									this->put(url, body, callback);
+								}
+							});
+						});
+					}
+				});
+			}
+			else if (callback)
+			{
+				callback(error);
+			}
+		});
+}
+
 void api::put(const std::string &url, lib::callback<std::string> &callback)
 {
 	put(url, nlohmann::json(), callback);
@@ -171,9 +324,37 @@ void api::put(const std::string &url, lib::callback<std::string> &callback)
 
 //region POST
 
+void api::post(const std::string &url, lib::callback<std::string> &callback)
+{
+	auto headers = auth_headers();
+	headers["Content-Type"] = "application/x-www-form-urlencoded";
+
+	http.post(to_full_url(url), headers, [url, callback](const std::string &response)
+	{
+		callback(error_message(url, response));
+	});
+}
+
 //endregion
 
 //region DELETE
+
+void api::del(const std::string &url, const nlohmann::json &json,
+	lib::callback<std::string> &callback)
+{
+	auto headers = auth_headers();
+	headers["Content-Type"] = "application/json";
+
+	auto data = json.is_null()
+		? std::string()
+		: json.dump();
+
+	http.del(to_full_url(url), data, headers,
+		[url, callback](const std::string &response)
+		{
+			callback(error_message(url, response));
+		});
+}
 
 void api::del(const std::string &url, lib::callback<std::string> &callback)
 {
