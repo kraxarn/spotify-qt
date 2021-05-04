@@ -6,6 +6,8 @@
 
 #include <QTabWidget>
 
+class SearchView;
+
 class SidePanel: public QTabWidget
 {
 Q_OBJECT
@@ -24,7 +26,7 @@ private:
 	QWidget *parent = nullptr;
 	spt::Spotify &spotify;
 	const lib::settings &settings;
-	QWidget *searchView = nullptr;
+	SearchView *searchView = nullptr;
 	lib::cache &cache;
 
 	void tabRemoved(int index) override;

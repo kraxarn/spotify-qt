@@ -95,6 +95,11 @@ auto SearchView::defaultTree(const QStringList &headers) -> QTreeWidget *
 	return tree;
 }
 
+void SearchView::focusSearchBox(void)
+{
+	searchBox->setFocus();
+}
+
 void SearchView::albumMenu(const QPoint &pos)
 {
 	auto *item = albumList->itemAt(pos);
