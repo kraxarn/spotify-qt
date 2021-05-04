@@ -75,6 +75,7 @@ void SearchView::showEvent(QShowEvent *event)
 {
 	QWidget::showEvent(event);
 	MainWindow::find(parentWidget())->setSearchChecked(true);
+	searchBox->setFocus();
 }
 
 void SearchView::hideEvent(QHideEvent *event)
