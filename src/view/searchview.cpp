@@ -75,6 +75,7 @@ void SearchView::showEvent(QShowEvent *event)
 {
 	QWidget::showEvent(event);
 	MainWindow::find(parentWidget())->setSearchChecked(true);
+	searchBox->setFocus();
 }
 
 void SearchView::hideEvent(QHideEvent *event)
@@ -93,11 +94,6 @@ auto SearchView::defaultTree(const QStringList &headers) -> QTreeWidget *
 	tree->setColumnCount(headers.length());
 	tree->setHeaderLabels(headers);
 	return tree;
-}
-
-void SearchView::focusSearchBox(void)
-{
-	searchBox->setFocus();
 }
 
 void SearchView::albumMenu(const QPoint &pos)

@@ -18,7 +18,6 @@ Q_OBJECT
 public:
 	explicit SearchView(spt::Spotify &spotify, const lib::settings &settings, lib::cache &cache,
 		QWidget *parent);
-	void focusSearchBox(void);
 
 private:
 	QTabWidget *tabs = nullptr;
