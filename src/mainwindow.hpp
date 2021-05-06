@@ -99,6 +99,7 @@ private:
 	bool stateValid = true;
 	QTabWidget *sidePanel = nullptr;
 	LeftSidePanel *leftSidePanel = nullptr;
+	QtHttpClient *httpClient = nullptr;
 
 #ifdef USE_DBUS
 	mp::Service *mediaPlayer = nullptr;
