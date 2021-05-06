@@ -1,7 +1,8 @@
-#include "common/lib/qthttpclient.hpp"
+#include "lib/qthttpclient.hpp"
 
 QtHttpClient::QtHttpClient(QObject *parent)
-	: QObject(parent)
+	: QObject(parent),
+	lib::http_client()
 {
 	networkManager = new QNetworkAccessManager(this);
 }
