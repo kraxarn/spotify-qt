@@ -17,7 +17,7 @@ namespace spt
 #include "thirdparty/json.hpp"
 #include "lib/spotify/spotifyapi.hpp"
 #include "lib/strings.hpp"
-#include "common/lib/qthttpclient.hpp"
+#include "lib/qthttpclient.hpp"
 
 #include <QCoreApplication>
 #include <QDateTime>
