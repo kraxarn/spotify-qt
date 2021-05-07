@@ -56,7 +56,6 @@ public:
 	auto startClient() -> bool;
 	void stopClient();
 
-	void setSptContext(const std::string &uri);
 	void setSptContext(const lib::spt::playlist &playlist);
 	void setSptContext(const lib::spt::album &album);
 
@@ -108,4 +107,5 @@ private:
 	// Methods
 	QWidget *createCentralWidget();
 	void setAlbumImage(const std::string &url);
+	void setSptContext(const std::string &uri);
 };
