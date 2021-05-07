@@ -39,7 +39,7 @@ private:
 	spt::Spotify &spotify;
 	bool isLiked = false;
 
-	const lib::spt::track &track;
+	lib::spt::track track;
 	std::string trackUri;
 	int index = 0;
 	const lib::spt::playlist *currentPlaylist = nullptr;
