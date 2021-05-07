@@ -69,7 +69,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classlib_1_1http__client-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">lib::http_client Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -80,28 +79,258 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7bb9acea472e2ec89abf709890a82060"><td class="memItemLeft" align="right" valign="top"><a id="a7bb9acea472e2ec89abf709890a82060"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (const std::string &amp;url, const headers &amp;headers, lib::callback&lt; std::string &gt; &amp;callback)=0</td></tr>
-<tr class="separator:a7bb9acea472e2ec89abf709890a82060"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20c21f95c1518521c46d30b9aeaa4def"><td class="memItemLeft" align="right" valign="top"><a id="a20c21f95c1518521c46d30b9aeaa4def"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>put</b> (const std::string &amp;url, const std::string &amp;body, const headers &amp;headers, lib::callback&lt; std::string &gt; &amp;callback)=0</td></tr>
-<tr class="separator:a20c21f95c1518521c46d30b9aeaa4def"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17b6055fc131dd3544ac488fbed0330c"><td class="memItemLeft" align="right" valign="top"><a id="a17b6055fc131dd3544ac488fbed0330c"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>post</b> (const std::string &amp;url, const headers &amp;headers, lib::callback&lt; std::string &gt; &amp;callback)=0</td></tr>
-<tr class="separator:a17b6055fc131dd3544ac488fbed0330c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef8dd8a8a126c6784e0bda3d77761b04"><td class="memItemLeft" align="right" valign="top"><a id="aef8dd8a8a126c6784e0bda3d77761b04"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const std::string &amp;url, const std::string &amp;body, const headers &amp;headers, lib::callback&lt; std::string &gt; &amp;callback)=0</td></tr>
-<tr class="separator:aef8dd8a8a126c6784e0bda3d77761b04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:a84c396ab74a07064a9abbc12f084eb06"><td class="memItemLeft" align="right" valign="top"><a id="a84c396ab74a07064a9abbc12f084eb06"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>http_client</b> (<a class="el" href="classlib_1_1settings.html">lib::settings</a> &amp;<a class="el" href="classlib_1_1settings.html">settings</a>)</td></tr>
-<tr class="separator:a84c396ab74a07064a9abbc12f084eb06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a4d7f73319b2e2744895a5a3aad555e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1http__client.html#a6a4d7f73319b2e2744895a5a3aad555e">get</a> (const std::string &amp;url, const headers &amp;headers, lib::callback&lt; std::string &gt; &amp;callback) const =0</td></tr>
+<tr class="separator:a6a4d7f73319b2e2744895a5a3aad555e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a417ac19ac51959fc94c36b432d7e28c1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1http__client.html#a417ac19ac51959fc94c36b432d7e28c1">put</a> (const std::string &amp;url, const std::string &amp;body, const headers &amp;headers, lib::callback&lt; std::string &gt; &amp;callback) const =0</td></tr>
+<tr class="separator:a417ac19ac51959fc94c36b432d7e28c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4aec7f773dc5fcea4e4127d7127ecce"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1http__client.html#af4aec7f773dc5fcea4e4127d7127ecce">post</a> (const std::string &amp;url, const headers &amp;headers, lib::callback&lt; std::string &gt; &amp;callback) const =0</td></tr>
+<tr class="separator:af4aec7f773dc5fcea4e4127d7127ecce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6883132a18443387a0bfce0145a75f7c"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1http__client.html#a6883132a18443387a0bfce0145a75f7c">post</a> (const std::string &amp;url, const headers &amp;headers, const std::string &amp;post_data) const -&gt; std::string=0</td></tr>
+<tr class="separator:a6883132a18443387a0bfce0145a75f7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4cc68e5a7ab4d9f140c80873f50ceca"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1http__client.html#ab4cc68e5a7ab4d9f140c80873f50ceca">del</a> (const std::string &amp;url, const std::string &amp;body, const headers &amp;headers, lib::callback&lt; std::string &gt; &amp;callback) const =0</td></tr>
+<tr class="separator:ab4cc68e5a7ab4d9f140c80873f50ceca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract HTTP client </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ab4cc68e5a7ab4d9f140c80873f50ceca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4cc68e5a7ab4d9f140c80873f50ceca">&#9670;&nbsp;</a></span>del()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void lib::http_client::del </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>body</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const headers &amp;&#160;</td>
+          <td class="paramname"><em>headers</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>DELETE request </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">body</td><td>JSON body, or empty if none </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6a4d7f73319b2e2744895a5a3aad555e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a4d7f73319b2e2744895a5a3aad555e">&#9670;&nbsp;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void lib::http_client::get </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const headers &amp;&#160;</td>
+          <td class="paramname"><em>headers</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>GET request </p>
+
+</div>
+</div>
+<a id="a6883132a18443387a0bfce0145a75f7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6883132a18443387a0bfce0145a75f7c">&#9670;&nbsp;</a></span>post() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual auto lib::http_client::post </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const headers &amp;&#160;</td>
+          <td class="paramname"><em>headers</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>post_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const -&gt;  std::string</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Synchronous POST request </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000002">Deprecated:</a></b></dt><dd>Use asynchronous method </dd></dl>
+
+</div>
+</div>
+<a id="af4aec7f773dc5fcea4e4127d7127ecce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4aec7f773dc5fcea4e4127d7127ecce">&#9670;&nbsp;</a></span>post() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void lib::http_client::post </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const headers &amp;&#160;</td>
+          <td class="paramname"><em>headers</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>POST request </p>
+
+</div>
+</div>
+<a id="a417ac19ac51959fc94c36b432d7e28c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a417ac19ac51959fc94c36b432d7e28c1">&#9670;&nbsp;</a></span>put()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void lib::http_client::put </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>body</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const headers &amp;&#160;</td>
+          <td class="paramname"><em>headers</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>PUT request </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">body</td><td>JSON body, or empty if none </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>/github/workspace/lib/include/lib/<a class="el" href="httpclient_8hpp_source.html">httpclient.hpp</a></li>
 </ul>
 </div><!-- contents -->

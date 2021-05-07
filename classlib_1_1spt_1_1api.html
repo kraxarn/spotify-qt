@@ -75,7 +75,7 @@ $(function() {
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classlib_1_1spt_1_1api-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">lib::spt::api Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+<div class="title">lib::spt::api Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -83,8 +83,8 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a819cd95c50ac7b064decaaac26abc9bf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a819cd95c50ac7b064decaaac26abc9bf">api</a> (<a class="el" href="classlib_1_1settings.html">lib::settings</a> &amp;<a class="el" href="classlib_1_1settings.html">settings</a>)</td></tr>
-<tr class="separator:a819cd95c50ac7b064decaaac26abc9bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0c5cca7517e86ab3db837cb528e321a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#ac0c5cca7517e86ab3db837cb528e321a">api</a> (<a class="el" href="classlib_1_1settings.html">lib::settings</a> &amp;<a class="el" href="classlib_1_1settings.html">settings</a>, const <a class="el" href="classlib_1_1http__client.html">lib::http_client</a> &amp;<a class="el" href="classlib_1_1http__client.html">http_client</a>)</td></tr>
+<tr class="separator:ac0c5cca7517e86ab3db837cb528e321a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a320472111e815a50d1a09cec4e830281"><td class="memItemLeft" align="right" valign="top"><a id="a320472111e815a50d1a09cec4e830281"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>album</b> (const std::string &amp;id, lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1album.html">lib::spt::album</a> &gt; &amp;callback)</td></tr>
 <tr class="separator:a320472111e815a50d1a09cec4e830281"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -219,20 +219,22 @@ Static Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a40eb4c3ade662922d81706740794dc12"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a40eb4c3ade662922d81706740794dc12">get</a> (const std::string &amp;url, lib::callback&lt; nlohmann::json &gt; &amp;callback)=0</td></tr>
-<tr class="separator:a40eb4c3ade662922d81706740794dc12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed0d8133140221ebdd84d5efc795fda5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#aed0d8133140221ebdd84d5efc795fda5">select_device</a> (const std::vector&lt; <a class="el" href="classlib_1_1spt_1_1device.html">lib::spt::device</a> &gt; &amp;<a class="el" href="classlib_1_1spt_1_1api.html#a8f4ac4109908607c0ebd16b9425b9ef9">devices</a>, lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1device.html">lib::spt::device</a> &gt; &amp;callback)</td></tr>
+<tr class="separator:aed0d8133140221ebdd84d5efc795fda5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8235c4f96e74fa58a5e1f12795b9612d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a8235c4f96e74fa58a5e1f12795b9612d">get</a> (const std::string &amp;response, lib::callback&lt; nlohmann::json &gt; &amp;callback)</td></tr>
+<tr class="separator:a8235c4f96e74fa58a5e1f12795b9612d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8c249ba34558bb06a807f13aace0554"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#af8c249ba34558bb06a807f13aace0554">get_items</a> (const std::string &amp;url, lib::callback&lt; nlohmann::json &gt; &amp;callback)</td></tr>
 <tr class="separator:af8c249ba34558bb06a807f13aace0554"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a348f5279b629971c0b8e2097b333b5e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a348f5279b629971c0b8e2097b333b5e7">get_items</a> (const std::string &amp;url, const std::string &amp;key, lib::callback&lt; nlohmann::json &gt; &amp;callback)</td></tr>
 <tr class="separator:a348f5279b629971c0b8e2097b333b5e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a741339c4d903a0473971e45a53f1a390"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a741339c4d903a0473971e45a53f1a390">put</a> (const std::string &amp;url, const nlohmann::json &amp;body, lib::callback&lt; std::string &gt; &amp;callback)=0</td></tr>
-<tr class="separator:a741339c4d903a0473971e45a53f1a390"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6de5354ebff77d8d21124141dfa8d09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#ae6de5354ebff77d8d21124141dfa8d09">put</a> (const std::string &amp;url, const nlohmann::json &amp;body, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:ae6de5354ebff77d8d21124141dfa8d09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1370bf233537673881fc2867adc433bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a1370bf233537673881fc2867adc433bf">put</a> (const std::string &amp;url, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
 <tr class="separator:a1370bf233537673881fc2867adc433bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3fc47b5c38a9fcd852968eea200429dc"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a3fc47b5c38a9fcd852968eea200429dc">post</a> (const std::string &amp;url, lib::callback&lt; std::string &gt; &amp;callback)=0</td></tr>
-<tr class="separator:a3fc47b5c38a9fcd852968eea200429dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71a727da67641b5a574086b05e1f1afb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a71a727da67641b5a574086b05e1f1afb">del</a> (const std::string &amp;url, const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>, lib::callback&lt; std::string &gt; &amp;callback)=0</td></tr>
-<tr class="separator:a71a727da67641b5a574086b05e1f1afb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64f1734b8278db05880989f44a70e552"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a64f1734b8278db05880989f44a70e552">post</a> (const std::string &amp;url, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a64f1734b8278db05880989f44a70e552"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f97861134a29ce268d5730ef9c251a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a3f97861134a29ce268d5730ef9c251a7">del</a> (const std::string &amp;url, const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a3f97861134a29ce268d5730ef9c251a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1c1d6b6d175f6897eee141d502ca313"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#ae1c1d6b6d175f6897eee141d502ca313">del</a> (const std::string &amp;url, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
 <tr class="separator:ae1c1d6b6d175f6897eee141d502ca313"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -253,32 +255,35 @@ Protected Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Spotify Web API </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a819cd95c50ac7b064decaaac26abc9bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a819cd95c50ac7b064decaaac26abc9bf">&#9670;&nbsp;</a></span>api()</h2>
+<a id="ac0c5cca7517e86ab3db837cb528e321a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0c5cca7517e86ab3db837cb528e321a">&#9670;&nbsp;</a></span>api()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">lib::spt::api::api </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classlib_1_1settings.html">lib::settings</a> &amp;&#160;</td>
-          <td class="paramname"><em>settings</em></td><td>)</td>
+          <td class="paramname"><em>settings</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const <a class="el" href="classlib_1_1http__client.html">lib::http_client</a> &amp;&#160;</td>
+          <td class="paramname"><em>http_client</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Construct a new instance and refresh if needed </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">settings</td><td>Settings for access token and refresh token </td></tr>
+    <tr><td class="paramname"><a class="el" href="classlib_1_1http__client.html">http_client</a></td><td>HTTP Client for requests </td></tr>
   </table>
   </dd>
 </dl>
@@ -339,8 +344,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a71a727da67641b5a574086b05e1f1afb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71a727da67641b5a574086b05e1f1afb">&#9670;&nbsp;</a></span>del() <span class="overload">[1/2]</span></h2>
+<a id="a3f97861134a29ce268d5730ef9c251a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f97861134a29ce268d5730ef9c251a7">&#9670;&nbsp;</a></span>del() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -349,7 +354,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void lib::spt::api::del </td>
+          <td class="memname">void lib::spt::api::del </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>url</em>, </td>
@@ -374,7 +379,7 @@ Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -477,8 +482,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a40eb4c3ade662922d81706740794dc12"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a40eb4c3ade662922d81706740794dc12">&#9670;&nbsp;</a></span>get()</h2>
+<a id="a8235c4f96e74fa58a5e1f12795b9612d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8235c4f96e74fa58a5e1f12795b9612d">&#9670;&nbsp;</a></span>get()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -487,10 +492,10 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void lib::spt::api::get </td>
+          <td class="memname">void lib::spt::api::get </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>url</em>, </td>
+          <td class="paramname"><em>response</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -506,13 +511,13 @@ Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p>GET request </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">url</td><td>URL to request </td></tr>
+    <tr><td class="paramname">response</td><td>URL to request </td></tr>
     <tr><td class="paramname">callback</td><td>Response as JSON </td></tr>
   </table>
   </dd>
@@ -823,8 +828,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a3fc47b5c38a9fcd852968eea200429dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3fc47b5c38a9fcd852968eea200429dc">&#9670;&nbsp;</a></span>post()</h2>
+<a id="a64f1734b8278db05880989f44a70e552"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64f1734b8278db05880989f44a70e552">&#9670;&nbsp;</a></span>post()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -833,7 +838,7 @@ Temporarily protected </dd></dl>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void lib::spt::api::post </td>
+          <td class="memname">void lib::spt::api::post </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>url</em>, </td>
@@ -852,7 +857,7 @@ Temporarily protected </dd></dl>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -885,8 +890,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a741339c4d903a0473971e45a53f1a390"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a741339c4d903a0473971e45a53f1a390">&#9670;&nbsp;</a></span>put() <span class="overload">[1/2]</span></h2>
+<a id="ae6de5354ebff77d8d21124141dfa8d09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6de5354ebff77d8d21124141dfa8d09">&#9670;&nbsp;</a></span>put() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -895,7 +900,7 @@ Temporarily protected </dd></dl>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void lib::spt::api::put </td>
+          <td class="memname">void lib::spt::api::put </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>url</em>, </td>
@@ -920,7 +925,7 @@ Temporarily protected </dd></dl>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1083,6 +1088,49 @@ Temporarily protected </dd></dl>
 <p>Seek in current track </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">position</td><td>Position to seek to in milliseconds </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aed0d8133140221ebdd84d5efc795fda5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed0d8133140221ebdd84d5efc795fda5">&#9670;&nbsp;</a></span>select_device()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void lib::spt::api::select_device </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="classlib_1_1spt_1_1device.html">lib::spt::device</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>devices</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1device.html">lib::spt::device</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Allow use to select device, by default, none is chosen </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">devices</td><td>Devices to select from </td></tr>
+    <tr><td class="paramname">callback</td><td>Selected device </td></tr>
   </table>
   </dd>
 </dl>
