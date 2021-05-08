@@ -37,6 +37,10 @@ void api::refresh(bool force)
 
 	// Send request
 	auto reply = request_refresh(post_data, auth_header);
+	if (reply.empty())
+	{
+		throw lib::spotify_error("No response", "token");
+	}
 
 	// Parse as JSON
 	const auto json = nlohmann::json::parse(reply);
