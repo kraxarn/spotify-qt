@@ -55,7 +55,7 @@ namespace lib
 			// If size+len is larger than element count, stop as last element
 			if (len < 0 || pos + len > vec.size())
 			{
-				len = vec.size() - pos - 1;
+				len = vec.size() - 1;
 			}
 
 			return std::vector<T>(vec.cbegin() + pos, vec.cbegin() + len);
