@@ -143,6 +143,7 @@ void LibraryList::tracksLoaded(const std::string &id, const std::vector<lib::spt
 	{
 		mainWindow->saveTracksToCache(id, tracks);
 		mainWindow->getSongsTree()->load(tracks);
+		mainWindow->setNoSptContext();
 	}
 	mainWindow->getSongsTree()->setEnabled(true);
 }

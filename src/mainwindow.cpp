@@ -520,6 +520,11 @@ void MainWindow::setSptContext(const lib::spt::album &album)
 	leftSidePanel->setCurrentPlaylistItem(nullptr);
 }
 
+void MainWindow::setNoSptContext()
+{
+	setSptContext(std::string());
+}
+
 auto MainWindow::getCurrentPlayback() -> lib::spt::playback &
 {
 	return current.playback;
@@ -577,11 +582,6 @@ void MainWindow::refreshPlaylists()
 void MainWindow::setCurrentLibraryItem(QTreeWidgetItem *item)
 {
 	leftSidePanel->setCurrentLibraryItem(item);
-}
-
-auto MainWindow::getCurrentLibraryItem() -> QTreeWidgetItem *
-{
-	return leftSidePanel->getCurrentLibraryItem();
 }
 
 auto MainWindow::getPlaylist(int index) -> lib::spt::playlist &

@@ -101,15 +101,15 @@ void TracksList::clicked(QTreeWidgetItem *item, int /*column*/)
 		mainWindow->refresh();
 	};
 
-	// If we played from library, we don't have any context
-	if (mainWindow->getCurrentLibraryItem() != nullptr)
+	const auto &context = mainWindow->getSptContext();
+	if (context.empty())
 	{
 		auto allTracks = mainWindow->currentTracks();
 		this->spotify.play_tracks(currentIndex().row(), allTracks, callback);
 	}
 	else
 	{
-		this->spotify.play_tracks(trackIndex, mainWindow->getSptContext(), callback);
+		this->spotify.play_tracks(trackIndex, context, callback);
 	}
 }
 

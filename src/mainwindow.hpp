@@ -57,7 +57,6 @@ public:
 	void setSearchVisible(bool visible);
 	void addSidePanelTab(QWidget *widget, const QString &title);
 	void refreshPlaylists();
-	QTreeWidgetItem *getCurrentLibraryItem();
 	void setCurrentLibraryItem(QTreeWidgetItem *item);
 	lib::spt::playlist &getPlaylist(int index);
 	void setCurrentPlaylistItem(int index);
@@ -74,6 +73,7 @@ public:
 
 	void setSptContext(const lib::spt::playlist &playlist);
 	void setSptContext(const lib::spt::album &album);
+	void setNoSptContext();
 
 	// Getters for private properties
 	QString &getCacheLocation();
