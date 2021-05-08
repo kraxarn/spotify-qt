@@ -60,16 +60,5 @@ namespace lib
 
 			return std::vector<T>(vec.cbegin() + pos, vec.cbegin() + len);
 		}
-
-		/**
-		 * Remove all instances of item in vector
-		 * @param vec Vector to remove from
-		 * @param predicate True if should remove
-		 */
-		template<typename T, typename P>
-		static void remove_if(std::vector<T> &vec, const P &predicate)
-		{
-			vec.erase(std::remove_if(vec.begin(), vec.end(), predicate), vec.end());
-		}
 	};
 }
