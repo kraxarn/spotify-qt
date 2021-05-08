@@ -5,7 +5,7 @@ var searchData=
   ['cipher_15',['cipher',['../classlib_1_1cipher.html',1,'lib']]],
   ['clear_16',['clear',['../classlib_1_1log.html#aac5793c9eb61c61b83bf738a75d90919',1,'lib::log']]],
   ['collaborative_17',['collaborative',['../classlib_1_1spt_1_1playlist.html#aa0f4ab3aa888669049dc17805a9402e5',1,'lib::spt::playlist::collaborative()'],['../classlib_1_1spt_1_1playlist__details.html#a462a0bc941d80ba4b1ffb2639bd53e57',1,'lib::spt::playlist_details::collaborative()']]],
-  ['combine_18',['combine',['../classlib_1_1json.html#a4e21143b9ac2e5b2996ee8439a7a55af',1,'lib::json::combine()'],['../classlib_1_1vector.html#a9fbc23ff2283212ee4fb8676c7f30391',1,'lib::vector::combine()']]],
+  ['combine_18',['combine',['../classlib_1_1json.html#a4e21143b9ac2e5b2996ee8439a7a55af',1,'lib::json::combine()'],['../classlib_1_1vector.html#ad620af939ec2cbf25514e3381c5a2782',1,'lib::vector::combine()']]],
   ['combine_5fnames_19',['combine_names',['../classlib_1_1spt_1_1entity.html#acd4636208a332f3d2f1f9f72e2ae2ec5',1,'lib::spt::entity::combine_names(const std::vector&lt; entity &gt; &amp;entities) -&gt; std::string'],['../classlib_1_1spt_1_1entity.html#a4f5b7f3520cf211856e3268019a19890',1,'lib::spt::entity::combine_names(const std::vector&lt; entity &gt; &amp;entities, const char *separator) -&gt; std::string']]],
   ['config_5ffile_20',['config_file',['../classlib_1_1paths.html#af222de7336cb7056a155e040171622fe',1,'lib::paths']]],
   ['contains_21',['contains',['../classlib_1_1set.html#a232a5db0b4b26d5c169cc22146b4a757',1,'lib::set::contains()'],['../classlib_1_1strings.html#a148213e4413fcfab1c92888221ae4c1c',1,'lib::strings::contains()']]],
