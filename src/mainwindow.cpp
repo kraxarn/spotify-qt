@@ -434,10 +434,13 @@ auto MainWindow::currentTracks() -> std::vector<std::string>
 
 	for (int i = 0; i < songs->topLevelItemCount(); i++)
 	{
-		auto id = songs->topLevelItem(i)->data(0, RoleTrack)
-			.value<lib::spt::track>().id;
-		auto uri = lib::spt::api::to_uri("track", id);
-		tracks.push_back(uri);
+		auto track = songs->topLevelItem(i)->data(0, RoleTrack)
+			.value<lib::spt::track>();
+		if (!track.is_valid())
+		{
+			continue;
+		}
+		tracks.push_back(lib::spt::api::to_uri("track", track.id));
 	}
 
 	return tracks;
