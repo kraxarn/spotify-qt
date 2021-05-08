@@ -17,7 +17,8 @@ class MainToolBar: public QToolBar
 Q_OBJECT
 
 public:
-	MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget *parent);
+	MainToolBar(spt::Spotify &spotify, lib::settings &settings,
+		const lib::http_client &httpClient, QWidget *parent);
 
 	void showTitleBarButtons(bool show);
 	void setPlaying(bool playing);

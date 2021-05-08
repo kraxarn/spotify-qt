@@ -1,6 +1,7 @@
 #include "mainmenu.hpp"
 
-MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings, QWidget *parent)
+MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings,
+	const lib::http_client &httpClient, QWidget *parent)
 	: settings(settings),
 	spotify(spotify),
 	QMenu(parent)
@@ -13,22 +14,11 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings, QWidget *pare
 	auto *mainWindow = dynamic_cast<MainWindow *>(parent);
 	if (mainWindow != nullptr)
 	{
-		auto json = mainWindow
-			->getJson("https://api.github.com/repos/kraxarn/spotify-qt/releases/latest");
-		auto latest = json.object()["tag_name"].toString();
-		auto isLatest = latest.isEmpty() || latest == APP_VERSION;
-		if (latest.isEmpty() || isLatest)
-			about->setVisible(false);
-		else
-		{
-			about->setDisabled(false);
-			about->setText(QString("Update found: %1").arg(latest));
-			QAction::connect(about, &QAction::triggered, [this]()
+		httpClient.get("https://api.github.com/repos/kraxarn/spotify-qt/releases/latest",
+			lib::headers(), [this](const std::string &data)
 			{
-				Utils::openUrl(QString("https://github.com/kraxarn/spotify-qt/releases/latest"),
-					LinkType::Web, MainWindow::find(this->parentWidget()));
+				this->checkForUpdate(data);
 			});
-		}
 	}
 
 	// Device selection

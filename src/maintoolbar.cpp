@@ -1,6 +1,7 @@
 #include "maintoolbar.hpp"
 
-MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget *parent)
+MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings,
+	const lib::http_client &httpClient, QWidget *parent)
 	: parent(parent),
 	spotify(spotify),
 	settings(settings),
@@ -18,7 +19,8 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings, QWidget
 	menu->setText("Menu");
 	menu->setIcon(Icon::get("application-menu"));
 	menu->setPopupMode(QToolButton::InstantPopup);
-	menu->setMenu(new MainMenu(spotify, settings, mainWindow));
+	menu->setMenu(new MainMenu(spotify, settings,
+		httpClient, mainWindow));
 	addWidget(menu);
 
 	// Search

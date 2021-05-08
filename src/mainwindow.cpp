@@ -57,7 +57,8 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	setWindowIcon(Icon::get("logo:spotify-qt"));
 	resize(defaultSize());
 	setCentralWidget(createCentralWidget());
-	toolBar = new MainToolBar(*spotify, settings, this);
+	toolBar = new MainToolBar(*spotify, settings,
+		*httpClient, this);
 	addToolBar(Qt::ToolBarArea::TopToolBarArea, toolBar);
 
 	// Update player status
