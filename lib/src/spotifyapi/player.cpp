@@ -74,7 +74,7 @@ void api::play_tracks(int track_index, const std::vector<std::string> &all,
 	std::vector<std::string> items;
 	if (all.size() > maxQueue)
 	{
-		lib::log::warn("Attempting to queue {} tracks, but only {} allowed",
+		lib::log::info("Attempting to queue {} tracks, but only {} allowed",
 			all.size(), maxQueue);
 		items = lib::vector::sub(all, track_index, maxQueue);
 		track_index = 0;
