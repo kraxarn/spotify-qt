@@ -23,4 +23,6 @@ private:
 
 	void refreshDevices();
 	void deviceSelected(QAction *action);
+	void logOut(bool checked);
+	void checkForUpdate(const std::string &data);
 };
