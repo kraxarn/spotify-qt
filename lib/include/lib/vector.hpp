@@ -15,7 +15,8 @@ namespace lib
 		 * @return Combined vector
 		 */
 		template<typename T>
-		static std::vector<T> combine(const std::vector<T> &vec1, const std::vector<T> &vec2)
+		static auto combine(const std::vector<T> &vec1,
+			const std::vector<T> &vec2) -> std::vector<T>
 		{
 			std::vector<T> vec;
 			vec.reserve(vec1.size() + vec2.size());
@@ -43,15 +44,19 @@ namespace lib
 		 * @param len Number of elements (-1 to include rest of items)
 		 */
 		template<typename T>
-		static std::vector<T> sub(const std::vector<T> &vec, size_t pos, size_t len)
+		static auto sub(const std::vector<T> &vec, size_t pos, size_t len) -> std::vector<T>
 		{
 			// If pos is larger than element count, return an empty vector
 			if (pos > vec.size())
+			{
 				return std::vector<T>();
+			}
 
 			// If size+len is larger than element count, stop as last element
 			if (len < 0 || pos + len > vec.size())
+			{
 				len = vec.size() - pos - 1;
+			}
 
 			return std::vector<T>(vec.cbegin() + pos, vec.cbegin() + len);
 		}
