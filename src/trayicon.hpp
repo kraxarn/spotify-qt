@@ -15,14 +15,14 @@ class TrayIcon: private QSystemTrayIcon
 Q_OBJECT
 
 public:
-	TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QObject *parent = nullptr);
+	TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QObject *parent);
 	~TrayIcon() override;
 
 	void message(const QString &message);
 	void setPixmap(const QPixmap &pixmap);
 
 private:
-	lib::spt::playback playback();
+	auto playback() -> lib::spt::playback;
 
 	QMenu *contextMenu;
 	QAction *playPause;

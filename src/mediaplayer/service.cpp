@@ -19,7 +19,9 @@ Service::Service(spt::Spotify *spotify, QObject *parent)
 	playerPlayer = new MediaPlayerPlayer(spotify, this);
 	if (!QDBusConnection::sessionBus()
 		.registerObject(SERVICE_PATH, this, QDBusConnection::ExportAdaptors))
+	{
 		lib::log::warn("Failed to register D-Bus object");
+	}
 }
 
 Service::~Service() = default;
@@ -73,7 +75,7 @@ lib::spt::playback Service::currentPlayback()
 	return ((MainWindow *) parent())->currentPlayback();
 }
 
-bool Service::isValid()
+auto Service::isValid() -> bool
 {
 	return playerPlayer != nullptr;
 }

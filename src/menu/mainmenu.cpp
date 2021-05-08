@@ -10,7 +10,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings, QWidget *pare
 	about->setDisabled(true);
 
 	// Check for updates
-	auto mainWindow = dynamic_cast<MainWindow *>(parent);
+	auto *mainWindow = dynamic_cast<MainWindow *>(parent);
 	if (mainWindow != nullptr)
 	{
 		auto json = mainWindow
@@ -42,7 +42,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings, QWidget *pare
 	addMenu(deviceMenu);
 
 	// Refresh and settings
-	auto openSettings = Utils::createMenuAction("configure",
+	auto *openSettings = Utils::createMenuAction("configure",
 		"Settings...", QKeySequence::Preferences);
 	QAction::connect(openSettings, &QAction::triggered, [this]()
 	{
@@ -53,7 +53,9 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings, QWidget *pare
 
 	// Debug options if enabled
 	if (lib::developer_mode::enabled)
+	{
 		addMenu(new DeveloperMenu(settings, spotify, this));
+	}
 
 	// Log out and quit
 	addSeparator();
@@ -103,11 +105,15 @@ void MainMenu::refreshDevices()
 	{
 		// Probably left menu before it loaded
 		if (this->deviceMenu == nullptr)
+		{
 			return;
+		}
 
 		// Clear all entries
 		for (auto &action : deviceMenu->actions())
+		{
 			deviceMenu->removeAction(action);
+		}
 
 		// Check if empty
 		if (devices.empty())
@@ -117,9 +123,9 @@ void MainMenu::refreshDevices()
 		}
 
 		// Update devices
-		for (auto &device : devices)
+		for (const auto &device : devices)
 		{
-			auto action = deviceMenu->addAction(QString::fromStdString(device.name));
+			auto *action = deviceMenu->addAction(QString::fromStdString(device.name));
 			action->setCheckable(true);
 			action->setChecked(device.is_active);
 			action->setDisabled(device.is_active);
@@ -136,7 +142,7 @@ void MainMenu::deviceSelected(QAction *action)
 			if (!status.empty())
 			{
 				action->setChecked(false);
-				auto window = MainWindow::find(this->parentWidget());
+				auto *window = MainWindow::find(this->parentWidget());
 				if (window != nullptr)
 				{
 					window->status(lib::fmt::format("Failed to set device: {}",
@@ -144,6 +150,8 @@ void MainMenu::deviceSelected(QAction *action)
 				}
 			}
 			else
+			{
 				action->setDisabled(true);
+			}
 		});
 }

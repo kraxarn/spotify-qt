@@ -10,7 +10,7 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 
 	QAction::connect(addAction("Test API requests"), &QAction::triggered, [this]()
 	{
-		auto mainWindow = MainWindow::find(parentWidget());
+		auto *mainWindow = MainWindow::find(parentWidget());
 		mainWindow->addSidePanelTab(new DebugView(this->settings, mainWindow), "API request");
 	});
 
@@ -39,10 +39,10 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	addMenu(dialogMenu());
 }
 
-QMenu *DeveloperMenu::dialogMenu()
+auto DeveloperMenu::dialogMenu() -> QMenu *
 {
-	auto menu = new QMenu("Dialogs", this);
-	auto mainWindow = MainWindow::find(parentWidget());
+	auto *menu = new QMenu("Dialogs", this);
+	auto *mainWindow = MainWindow::find(parentWidget());
 
 	std::vector<QDialog *> dialogs = {
 		new DeviceSelectDialog({}, mainWindow),
@@ -52,7 +52,7 @@ QMenu *DeveloperMenu::dialogMenu()
 		new WhatsNewDialog(APP_VERSION, settings, mainWindow),
 	};
 
-	for (auto dialog : dialogs)
+	for (auto *dialog : dialogs)
 	{
 		QAction::connect(menu->addAction(dialog->metaObject()->className()),
 			&QAction::triggered, [dialog]()
@@ -64,10 +64,10 @@ QMenu *DeveloperMenu::dialogMenu()
 	return menu;
 }
 
-QMenu *DeveloperMenu::infoMenu()
+auto DeveloperMenu::infoMenu() -> QMenu *
 {
-	auto menu = new QMenu("Current", this);
-	auto mainWindow = MainWindow::find(parentWidget());
+	auto *menu = new QMenu("Current", this);
+	auto *mainWindow = MainWindow::find(parentWidget());
 
 	QAction::connect(menu->addAction("Playback"), &QAction::triggered,
 		[mainWindow]()

@@ -12,21 +12,37 @@ public:
 	static MainWindow *find(QWidget *from);
 	static auto defaultSize() -> QSize;
 
-protected:
-	void closeEvent(QCloseEvent *event) override;
-
 public:
+	//region Deprecated
+
+	/** @deprecated Use http_client.get instead */
 	QByteArray get(const QString &url);
+
+	/** @deprecated Use http_client.get instead */
 	std::vector<unsigned char> get(const std::string &url);
+
+	/** @deprecated Use http_client.get instead */
 	QJsonDocument getJson(const QString &url);
-	void setStatus(const QString &message, bool important = false);
-	void status(const std::string &message, bool important = false);
-	bool loadAlbum(const std::string &albumId, const std::string &trackId = std::string());
+
+	/** @deprecated Use TracksList.load instead */
+	bool loadAlbum(const std::string &albumId,
+		const std::string &trackId = std::string());
+
+	/** @deprecated Use SidePanel.openArtist instead */
 	void openArtist(const std::string &artistId);
+
+	/** @deprecated Use HttpUtils.getAlbum instead */
 	QPixmap getAlbum(const std::string &url);
-	lib::spt::playback currentPlayback() const;
+
+	/** @deprecated SidePanel.openAudioFeatures instead */
 	void openAudioFeaturesWidget(const std::string &trackId,
 		const std::string &artist, const std::string &name);
+
+	//endregion
+
+	void setStatus(const QString &message, bool important = false);
+	void status(const std::string &message, bool important = false);
+	lib::spt::playback currentPlayback() const;
 	void openLyrics(const std::string &artist, const std::string &name);
 	void reloadTrayIcon();
 	lib::spt::user getCurrentUser();
@@ -72,11 +88,10 @@ public:
 	mp::Service *getMediaPlayer();
 #endif
 
-private:
-	// Constructor
-	lib::settings &settings;
-	lib::cache cache;
+protected:
+	void closeEvent(QCloseEvent *event) override;
 
+private:
 	// Qt Widgets
 	TracksList *songs = nullptr;
 	QToolBar *toolBar = nullptr;
@@ -86,6 +101,12 @@ private:
 	spt::Spotify *spotify = nullptr;
 	spt::Current current;
 
+	// lib
+	lib::settings &settings;
+	lib::cache cache;
+	lib::spt::user currentUser;
+	lib::http_client *httpClient = nullptr;
+
 	// Non-Widget Qt
 	QNetworkAccessManager *network = nullptr;
 
@@ -94,11 +115,9 @@ private:
 	QString cacheLocation;
 	TrayIcon *trayIcon = nullptr;
 	int refreshCount = -1;
-	lib::spt::user currentUser;
 	bool stateValid = true;
 	QTabWidget *sidePanel = nullptr;
 	LeftSidePanel *leftSidePanel = nullptr;
-	QtHttpClient *httpClient = nullptr;
 
 #ifdef USE_DBUS
 	mp::Service *mediaPlayer = nullptr;

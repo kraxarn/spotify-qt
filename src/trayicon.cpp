@@ -15,14 +15,16 @@ TrayIcon::TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QObject
 	currentTrack->setEnabled(false);
 	contextMenu->addSeparator();
 
-	auto previous = contextMenu->addAction(Icon::get("media-skip-backward"), "Previous");
+	auto *previous = contextMenu->addAction(Icon::get("media-skip-backward"),
+		"Previous");
 	QAction::connect(previous, &QAction::triggered, [this, spotify]()
 	{
 		spotify->previous(this->callback);
 	});
 
-	playPause = contextMenu->addAction(Icon::get("media-playback-start"), "Play");
-	QAction::connect(playPause, &QAction::triggered, [this](bool checked)
+	playPause = contextMenu->addAction(Icon::get("media-playback-start"),
+		"Play");
+	QAction::connect(playPause, &QAction::triggered, [this](bool /*checked*/)
 	{
 		if (playback().is_playing)
 			this->spotify->pause(this->callback);
@@ -30,28 +32,34 @@ TrayIcon::TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QObject
 			this->spotify->resume(this->callback);
 	});
 
-	auto next = contextMenu->addAction(Icon::get("media-skip-forward"), "Next");
+	auto *next = contextMenu->addAction(Icon::get("media-skip-forward"), "Next");
 	QAction::connect(next, &QAction::triggered, [this, spotify]()
 	{
 		spotify->next(this->callback);
 	});
 
 	contextMenu->addSeparator();
-	auto quit = contextMenu->addAction(Icon::get("application-exit"), "Quit");
+	auto *quit = contextMenu->addAction(Icon::get("application-exit"), "Quit");
 	QAction::connect(quit, &QAction::triggered, QCoreApplication::quit);
 
+	constexpr int iconSize = 64;
 	setIcon(Icon::get(QString("logo:spotify-qt-symbolic-%1")
-		.arg(settings.general.tray_light_icon ? "light" : "dark")).pixmap(64, 64));
+		.arg(settings.general.tray_light_icon ? "light" : "dark"))
+		.pixmap(iconSize, iconSize));
 	setContextMenu(contextMenu);
 	show();
 
 	QSystemTrayIcon::connect(this, &QSystemTrayIcon::activated, [this](ActivationReason reason)
 	{
 		if (reason != ActivationReason::Trigger)
+		{
 			return;
-		auto window = dynamic_cast<QWidget *>(this->parent());
+		}
+		auto *window = dynamic_cast<QWidget *>(this->parent());
 		if (window != nullptr)
+		{
 			window->setVisible(!window->isVisible());
+		}
 	});
 
 	QMenu::connect(contextMenu, &QMenu::aboutToShow, [this]()
@@ -72,16 +80,20 @@ TrayIcon::~TrayIcon()
 void TrayIcon::message(const QString &message)
 {
 	if (message.isNull() || message.isEmpty())
+	{
 		return;
+	}
 
 	showMessage("spotify-qt", message);
 }
 
-lib::spt::playback TrayIcon::playback()
+auto TrayIcon::playback() -> lib::spt::playback
 {
-	auto mainWindow = dynamic_cast<MainWindow *>(this->parent());
+	auto *mainWindow = dynamic_cast<MainWindow *>(this->parent());
 	if (mainWindow == nullptr)
+	{
 		return lib::spt::playback();
+	}
 	return mainWindow->currentPlayback();
 }
 

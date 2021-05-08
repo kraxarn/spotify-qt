@@ -7,7 +7,7 @@ namespace mp
 	class Service;
 }
 
-#include "../spotify/spotify.hpp"
+#include "spotify/spotify.hpp"
 #include "mediaplayer.hpp"
 #include "mediaplayerplayer.hpp"
 
