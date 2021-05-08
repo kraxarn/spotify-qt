@@ -430,16 +430,16 @@ void MainWindow::openArtist(const std::string &artistId)
 auto MainWindow::currentTracks() -> std::vector<std::string>
 {
 	std::vector<std::string> tracks;
+	tracks.reserve(songs->topLevelItemCount());
+
 	for (int i = 0; i < songs->topLevelItemCount(); i++)
 	{
-		auto trackId = songs->topLevelItem(i)->data(0, RoleTrack)
+		auto id = songs->topLevelItem(i)->data(0, RoleTrack)
 			.value<lib::spt::track>().id;
-		const int trackPrefixLength = 14;
-		if (trackId.length() > trackPrefixLength)
-		{
-			tracks.push_back(trackId);
-		}
+		auto uri = lib::spt::api::to_uri("track", id);
+		tracks.push_back(uri);
 	}
+
 	return tracks;
 }
 
