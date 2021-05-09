@@ -1,22 +1,22 @@
 #pragma once
 
-class LyricsView;
-
-#include "../mainwindow.hpp"
+#include "lib/httpclient.hpp"
+#include "lib/spotify/track.hpp"
+#include "lib/lyrics.hpp"
 
 #include <QDockWidget>
+#include <QTextEdit>
 
 class LyricsView: public QDockWidget
 {
 Q_OBJECT
 
 public:
-	LyricsView(const std::string &artist, const std::string &name, QWidget *parent);
+	LyricsView(const lib::http_client &httpClient, QWidget *parent);
 
-	bool lyricsFound() const;
+	void open(const lib::spt::track &track);
 
 private:
-	static QString format(const QString &word);
-
-	bool found;
+	const lib::http_client &http;
+	QTextEdit *lyricsView = nullptr;
 };

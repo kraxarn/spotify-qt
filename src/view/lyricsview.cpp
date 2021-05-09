@@ -1,43 +1,30 @@
 #include "lyricsview.hpp"
 
-LyricsView::LyricsView(const std::string &artist, const std::string &name, QWidget *parent)
-	: QDockWidget(parent)
+LyricsView::LyricsView(const lib::http_client &httpClient, QWidget *parent)
+	: http(httpClient),
+	QDockWidget(parent)
 {
-	auto window = (MainWindow *) parent;
-
-	auto reply = window->get(QString("https://lyrics.fandom.com/wiki/%1:%2?action=raw")
-		.arg(format(QString::fromStdString(artist)))
-		.arg(format(QString::fromStdString(name))));
-	if (reply.isEmpty())
-	{
-		window->setStatus("Lyrics not found", true);
-		found = false;
-		return;
-	}
-
-	auto html = QString(reply);
-	auto lyricsStart = html.indexOf("<lyrics>") + 9;
-	html = html.mid(lyricsStart, html.indexOf("</lyrics>") - lyricsStart);
-
-	setWindowTitle(QString::fromStdString(lib::fmt::format("{} - {}",
-		artist, name)));
-	auto lyricsView = new QTextEdit(this);
-	lyricsView->setPlainText(html.trimmed());
+	setWindowTitle("Lyrics");
+	lyricsView = new QTextEdit(this);
 	lyricsView->setReadOnly(true);
 	setWidget(lyricsView);
 	setMinimumWidth(300);
-	found = true;
 }
 
-bool LyricsView::lyricsFound() const
+void LyricsView::open(const lib::spt::track &track)
 {
-	return found;
-}
+	if (lyricsView == nullptr)
+	{
+		return;
+	}
 
-QString LyricsView::format(const QString &word)
-{
-	auto words = word.split(' ');
-	for (auto &w : words)
-		w = w.left(1).toUpper() + w.right(w.length() - 1).toLower();
-	return words.join('_');
+	setWindowTitle("...");
+	lyricsView->setPlainText("Searching...");
+
+	lib::lyrics lyrics(http);
+	lyrics.get(track, [this, &track](const std::string &lyrics)
+	{
+		this->setWindowTitle(QString::fromStdString(track.title()));
+		this->lyricsView->setHtml(QString::fromStdString(lyrics).trimmed());
+	});
 }
