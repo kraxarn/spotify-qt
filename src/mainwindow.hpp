@@ -43,7 +43,7 @@ public:
 	void setStatus(const QString &message, bool important = false);
 	void status(const std::string &message, bool important = false);
 	lib::spt::playback currentPlayback() const;
-	void openLyrics(const std::string &artist, const std::string &name);
+	void openLyrics(const lib::spt::track &track);
 	void reloadTrayIcon();
 	lib::spt::user getCurrentUser();
 	void setFixedWidthTime(bool value);

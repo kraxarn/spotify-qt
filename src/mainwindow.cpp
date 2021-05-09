@@ -311,20 +311,14 @@ void MainWindow::openAudioFeaturesWidget(const std::string &trackId,
 	dynamic_cast<SidePanel *>(sidePanel)->openAudioFeatures(trackId, artist, name);
 }
 
-void MainWindow::openLyrics(const std::string &artist, const std::string &name)
+void MainWindow::openLyrics(const lib::spt::track &track)
 {
-	auto *view = new LyricsView(artist, name, this);
-	if (!view->lyricsFound())
+	if (lyricsView == nullptr)
 	{
-		view->deleteLater();
-		return;
+		lyricsView = new LyricsView(*httpClient, this);
 	}
-	if (lyricsView != nullptr)
-	{
-		lyricsView->close();
-		lyricsView->deleteLater();
-	}
-	lyricsView = view;
+
+	lyricsView->open(track);
 	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, lyricsView);
 }
 
