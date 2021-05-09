@@ -24,9 +24,17 @@ void LyricsView::open(const lib::spt::track &track)
 	lyricsView->setPlainText("Searching...");
 
 	lib::lyrics lyrics(http);
-	lyrics.get(track, [this, &track](const std::string &lyrics)
+	lyrics.get(track, [this, &track](bool success, const std::string &lyrics)
 	{
 		this->setWindowTitle(QString::fromStdString(track.title()));
+
+		if (!success)
+		{
+			this->lyricsView->setPlainText(QString::fromStdString(lyrics));
+			return;
+		}
+
 		this->lyricsView->setHtml(QString::fromStdString(lyrics).trimmed());
+		this->cache.set_lyrics(track, lyrics);
 	});
 }
