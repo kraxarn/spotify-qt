@@ -3,6 +3,7 @@
 #include "lib/httpclient.hpp"
 #include "lib/spotify/track.hpp"
 #include "lib/lyrics.hpp"
+#include "lib/cache.hpp"
 
 #include <QDockWidget>
 #include <QTextEdit>
@@ -12,11 +13,13 @@ class LyricsView: public QDockWidget
 Q_OBJECT
 
 public:
-	LyricsView(const lib::http_client &httpClient, QWidget *parent);
+	LyricsView(const lib::http_client &httpClient,
+		lib::cache &cache, QWidget *parent);
 
 	void open(const lib::spt::track &track);
 
 private:
 	const lib::http_client &http;
+	lib::cache &cache;
 	QTextEdit *lyricsView = nullptr;
 };

@@ -1,7 +1,9 @@
 #include "lyricsview.hpp"
 
-LyricsView::LyricsView(const lib::http_client &httpClient, QWidget *parent)
+LyricsView::LyricsView(const lib::http_client &httpClient,
+	lib::cache &cache, QWidget *parent)
 	: http(httpClient),
+	cache(cache),
 	QDockWidget(parent)
 {
 	setWindowTitle("Lyrics");

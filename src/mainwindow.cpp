@@ -315,7 +315,7 @@ void MainWindow::openLyrics(const lib::spt::track &track)
 {
 	if (lyricsView == nullptr)
 	{
-		lyricsView = new LyricsView(*httpClient, this);
+		lyricsView = new LyricsView(*httpClient, cache, this);
 	}
 
 	lyricsView->open(track);
