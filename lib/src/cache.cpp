@@ -139,3 +139,26 @@ auto lib::cache::all_tracks() -> std::map<std::string, std::vector<lib::spt::tra
 }
 
 //endregion
+
+//region lyrics
+
+auto lib::cache::get_lyrics(const lib::spt::track &track) -> std::string
+{
+	std::ifstream file(path("lyrics", track.id, "html"));
+	if (!file.is_open() || file.bad())
+	{
+		return std::string();
+	}
+
+	std::ostringstream stream;
+	stream << file.rdbuf();
+	return stream.str();
+}
+
+void lib::cache::set_lyrics(const lib::spt::track &track, const std::string &lyrics)
+{
+	std::ofstream file(path("lyrics", track.id, "html"));
+	file << lyrics;
+}
+
+//endregion

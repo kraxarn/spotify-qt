@@ -97,6 +97,24 @@ namespace lib
 
 		//endregion
 
+		//region lyrics
+
+		/**
+		 * Get lyrics HTML
+		 * @param track Track
+		 * @return Lyrics
+		 */
+		auto get_lyrics(const lib::spt::track &track) -> std::string;
+
+		/**
+		 * Set lyrics HTML
+		 * @param track Track
+		 * @param lyrics Lyrics to save
+		 */
+		void set_lyrics(const lib::spt::track &track, const std::string &lyrics);
+
+		//endregion
+
 	private:
 		const lib::paths &paths;
 
@@ -120,5 +138,10 @@ namespace lib
 		 * Get basename of path
 		 */
 		static auto get_url_id(const ghc::filesystem::path &path) -> std::string;
+
+		/**
+		 * Get content from file
+		 */
+		static auto get_file_content(const ghc::filesystem::path &path) -> std::string;
 	};
 }
