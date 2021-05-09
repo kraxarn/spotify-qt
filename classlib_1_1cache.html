@@ -99,6 +99,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aad98c1f3efa17e675f93ac91497bc5b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61af08acdfc27ab88ab0696f1cecd491"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#a61af08acdfc27ab88ab0696f1cecd491">all_tracks</a> () -&gt; std::map&lt; std::string, std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt;&gt;</td></tr>
 <tr class="separator:a61af08acdfc27ab88ab0696f1cecd491"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a408bc2dbed8f0d2219c22b4bf9a85812"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#a408bc2dbed8f0d2219c22b4bf9a85812">get_lyrics</a> (const <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &amp;track) -&gt; std::string</td></tr>
+<tr class="separator:a408bc2dbed8f0d2219c22b4bf9a85812"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adedc1b8e520a0fe725f432b6904cbed5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#adedc1b8e520a0fe725f432b6904cbed5">set_lyrics</a> (const <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &amp;track, const std::string &amp;<a class="el" href="classlib_1_1lyrics.html">lyrics</a>)</td></tr>
+<tr class="separator:adedc1b8e520a0fe725f432b6904cbed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Handles cache </p>
@@ -176,6 +180,31 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Binary JPEG data, or an empty vector if none </dd></dl>
+
+</div>
+</div>
+<a id="a408bc2dbed8f0d2219c22b4bf9a85812"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a408bc2dbed8f0d2219c22b4bf9a85812">&#9670;&nbsp;</a></span>get_lyrics()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto lib::cache::get_lyrics </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &amp;&#160;</td>
+          <td class="paramname"><em>track</em></td><td>)</td>
+          <td> -&gt;  std::string</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get lyrics HTML </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">track</td><td>Track </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Lyrics </dd></dl>
 
 </div>
 </div>
@@ -276,6 +305,41 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">id</td><td>Album ID </td></tr>
     <tr><td class="paramname">data</td><td>Binary JPEG data to save </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="adedc1b8e520a0fe725f432b6904cbed5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adedc1b8e520a0fe725f432b6904cbed5">&#9670;&nbsp;</a></span>set_lyrics()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::cache::set_lyrics </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &amp;&#160;</td>
+          <td class="paramname"><em>track</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>lyrics</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set lyrics HTML </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">track</td><td>Track </td></tr>
+    <tr><td class="paramname">lyrics</td><td>Lyrics to save </td></tr>
   </table>
   </dd>
 </dl>

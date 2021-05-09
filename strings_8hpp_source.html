@@ -137,17 +137,21 @@ $(function() {
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;            <span class="keywordflow">return</span> stream.str();</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        }</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> trim_begin(std::string &amp;str);</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> trim_end(std::string &amp;str);</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    };</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;}</div>
+<div class="line"><a name="l00175"></a><span class="lineno"><a class="line" href="classlib_1_1strings.html#a2e11df1d2817a24dce01971c7d55dbac">  175</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1strings.html#a2e11df1d2817a24dce01971c7d55dbac">replace_all</a>(<span class="keyword">const</span> std::string &amp;str,</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;            <span class="keywordtype">char</span> oldVal, <span class="keywordtype">char</span> newVal) -&gt; std::string;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> trim_begin(std::string &amp;str);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160; </div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> trim_end(std::string &amp;str);</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    };</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;}</div>
 <div class="ttc" id="aclasslib_1_1strings_html"><div class="ttname"><a href="classlib_1_1strings.html">lib::strings</a></div><div class="ttdef"><b>Definition:</b> strings.hpp:19</div></div>
 <div class="ttc" id="aclasslib_1_1strings_html_a04325ef56364db92cbf38d175006a80f"><div class="ttname"><a href="classlib_1_1strings.html#a04325ef56364db92cbf38d175006a80f">lib::strings::to_upper</a></div><div class="ttdeci">static auto to_upper(const std::string &amp;str) -&gt; std::string</div></div>
 <div class="ttc" id="aclasslib_1_1strings_html_a0b5337226c1e413711e62b5e9fb4931b"><div class="ttname"><a href="classlib_1_1strings.html#a0b5337226c1e413711e62b5e9fb4931b">lib::strings::to_string</a></div><div class="ttdeci">static auto to_string(const T value, const int precision) -&gt; std::string</div><div class="ttdef"><b>Definition:</b> strings.hpp:160</div></div>
 <div class="ttc" id="aclasslib_1_1strings_html_a1020c4cf7a5e92f3d6ce405a48da9886"><div class="ttname"><a href="classlib_1_1strings.html#a1020c4cf7a5e92f3d6ce405a48da9886">lib::strings::ends_with</a></div><div class="ttdeci">static auto ends_with(const std::string &amp;str, const std::string &amp;end) -&gt; bool</div></div>
 <div class="ttc" id="aclasslib_1_1strings_html_a148213e4413fcfab1c92888221ae4c1c"><div class="ttname"><a href="classlib_1_1strings.html#a148213e4413fcfab1c92888221ae4c1c">lib::strings::contains</a></div><div class="ttdeci">static auto contains(const std::string &amp;str, const String &amp;value) -&gt; bool</div><div class="ttdef"><b>Definition:</b> strings.hpp:37</div></div>
+<div class="ttc" id="aclasslib_1_1strings_html_a2e11df1d2817a24dce01971c7d55dbac"><div class="ttname"><a href="classlib_1_1strings.html#a2e11df1d2817a24dce01971c7d55dbac">lib::strings::replace_all</a></div><div class="ttdeci">static auto replace_all(const std::string &amp;str, char oldVal, char newVal) -&gt; std::string</div></div>
 <div class="ttc" id="aclasslib_1_1strings_html_a36c370982807a4d49343ec3811d184f9"><div class="ttname"><a href="classlib_1_1strings.html#a36c370982807a4d49343ec3811d184f9">lib::strings::starts_with</a></div><div class="ttdeci">static auto starts_with(const std::string &amp;str, const std::string &amp;start) -&gt; bool</div></div>
 <div class="ttc" id="aclasslib_1_1strings_html_a3729f9c8c75940d0a09a2b9686bc4fbd"><div class="ttname"><a href="classlib_1_1strings.html#a3729f9c8c75940d0a09a2b9686bc4fbd">lib::strings::right</a></div><div class="ttdeci">static auto right(const std::string &amp;str, size_t n) -&gt; std::string</div></div>
 <div class="ttc" id="aclasslib_1_1strings_html_a3835f55b581fa1851245c1e460b39bd8"><div class="ttname"><a href="classlib_1_1strings.html#a3835f55b581fa1851245c1e460b39bd8">lib::strings::last_index_of</a></div><div class="ttdeci">static auto last_index_of(const std::string &amp;str, const std::string &amp;keyword) -&gt; unsigned long</div></div>
