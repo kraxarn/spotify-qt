@@ -5,33 +5,70 @@ lib::lyrics::lyrics(const lib::http_client &http_client)
 {
 }
 
-void lib::lyrics::get(const spt::track &track, callback<std::string> &callback)
+void lib::lyrics::get(const spt::track &track, lib::result<std::string> &callback)
 {
 	auto artist = lib::strings::capitalize(format(track.artists.front().name));
 	auto name = lib::strings::to_lower(format(track.name));
+	auto url = lib::fmt::format("https://genius.com/{}-{}-lyrics",
+		artist, name);
 
-	http.get(lib::fmt::format("https://genius.com/{}-{}-lyrics",
-		artist, name), lib::headers(), [callback](const std::string &body)
+	http.get(url, lib::headers(), [url, callback](const std::string &body)
 	{
 		if (body.empty())
 		{
-			callback("No response");
+			callback(false, "No response");
 			return;
 		}
 
-		std::string start_str = "song_body-lyrics";
-		auto start = body.find(start_str);
-		if (start == std::string::npos)
+		if (lib::strings::contains(body, "Burrr! | Genius"))
 		{
-			callback("No results");
+			lib::log::warn("No lyrics found from: {}", url);
+			callback(false, "No results");
 			return;
 		}
 
-		callback(body.substr(start + start_str.size()));
+		auto lyrics = get_from_lyrics(body);
+		if (!lyrics.empty())
+		{
+			callback(true, lyrics);
+			return;
+		}
+
+		lyrics = get_from_lyrics_root(body);
+		if (!lyrics.empty())
+		{
+			callback(true, lyrics);
+			return;
+		}
+
+		lib::log::warn("No lyrics parsed from: {}", url);
+		callback(false, "No results");
 	});
 }
 
 auto lib::lyrics::format(const std::string &str) -> std::string
 {
-	return lib::strings::replace_all(str, ' ', '-');
+	auto val = lib::strings::replace_all(str, ' ', '-');
+	val = lib::strings::remove(val, "'");
+	return val;
+}
+
+auto lib::lyrics::get_from_lyrics(const std::string &lyrics) -> std::string
+{
+	std::string start_str = "<div class=\"lyrics\">";
+	auto start = lyrics.find(start_str);
+	auto end = lyrics.find("</div>", start);
+
+	if (start == std::string::npos
+		|| end == std::string::npos)
+	{
+		return std::string();
+	}
+
+	return lyrics.substr(start + start_str.size(), end);
+}
+
+auto lib::lyrics::get_from_lyrics_root(const std::string &lyrics) -> std::string
+{
+	return std::string();
 }

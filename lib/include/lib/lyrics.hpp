@@ -27,7 +27,8 @@ namespace lib
 		 * @param callback Callback with lyrics
 		 * @throws runtime_error Failed to get lyrics or none found
 		 */
-		void get(const lib::spt::track &track, lib::callback<std::string> &callback);
+		void get(const lib::spt::track &track,
+			lib::result<std::string> &callback);
 
 	private:
 		const lib::http_client &http;
@@ -36,5 +37,15 @@ namespace lib
 		 * Format string in a URL-friendly way
 		 */
 		static auto format(const std::string &str) -> std::string;
+
+		/**
+		 * Try to get lyrics from lyrics class
+		 */
+		static auto get_from_lyrics(const std::string &lyrics) -> std::string;
+
+		/**
+		 * Try to get lyrics from lyrics root class
+		 */
+		 static auto get_from_lyrics_root(const std::string &lyrics) -> std::string;
 	};
 }
