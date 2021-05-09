@@ -267,7 +267,7 @@ void SongMenu::openTrackFeatures(bool /*checked*/)
 void SongMenu::openLyrics(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-	mainWindow->openLyrics(lib::spt::entity::combine_names(track.artists), track.name);
+	mainWindow->openLyrics(track);
 }
 
 void SongMenu::viewArtist(const lib::spt::entity &artist)
