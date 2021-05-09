@@ -37,8 +37,9 @@ SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
 	auto *trackFeatures = addAction(Icon::get("view-statistics"), "Audio features");
 	QAction::connect(trackFeatures, &QAction::triggered, this, &SongMenu::openTrackFeatures);
 
-//	auto lyrics = addAction(Icon::get("view-media-lyrics"), "Lyrics");
-//	QAction::connect(lyrics, &QAction::triggered, this, &SongMenu::openLyrics);
+	auto *lyrics = addAction(Icon::get("view-media-lyrics"), "Lyrics");
+	lyrics->setVisible(lib::developer_mode::enabled);
+	QAction::connect(lyrics, &QAction::triggered, this, &SongMenu::openLyrics);
 
 	auto *share = addMenu(Icon::get("document-share"), "Share");
 	auto *shareSongLink = share->addAction("Copy song link");
