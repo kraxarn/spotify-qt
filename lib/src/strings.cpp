@@ -176,3 +176,10 @@ auto strings::last_index_of(const std::string &str, const std::string &keyword) 
 		? -1
 		: result;
 }
+
+auto strings::replace_all(const std::string &str, char oldVal, char newVal) -> std::string
+{
+	std::string val = str;
+	std::replace(val.begin(), val.end(), oldVal, newVal);
+	return val;
+}

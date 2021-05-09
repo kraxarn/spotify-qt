@@ -165,6 +165,16 @@ namespace lib
 			return stream.str();
 		}
 
+		/**
+		 * Replace all occurrences of a value in a string
+		 * @param str String to replace in
+		 * @param oldVal Old value
+		 * @param newVal New value
+		 * @return New string with value replaced
+		 */
+		static auto replace_all(const std::string &str,
+			char oldVal, char newVal) -> std::string;
+
 	private:
 		/**
 		 * Trim beginning of string
