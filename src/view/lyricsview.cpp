@@ -2,39 +2,33 @@
 
 LyricsView::LyricsView(const lib::http_client &httpClient,
 	lib::cache &cache, QWidget *parent)
-	: http(httpClient),
-	cache(cache),
-	QDockWidget(parent)
+	: cache(cache),
+	lyrics(httpClient),
+	QTextEdit(parent)
 {
-	setWindowTitle("Lyrics");
-	lyricsView = new QTextEdit(this);
-	lyricsView->setReadOnly(true);
-	setWidget(lyricsView);
-	setMinimumWidth(300);
+	setReadOnly(true);
 }
 
 void LyricsView::open(const lib::spt::track &track)
 {
-	if (lyricsView == nullptr)
+	const auto &cached = cache.get_lyrics(track);
+	if (!cached.empty())
 	{
+		setHtml(QString::fromStdString(cached));
 		return;
 	}
 
-	setWindowTitle("...");
-	lyricsView->setPlainText("Searching...");
+	setPlainText("Searching...");
 
-	lib::lyrics lyrics(http);
-	lyrics.get(track, [this, &track](bool success, const std::string &lyrics)
+	lyrics.get(track, [this, &track](bool success, const std::string &result)
 	{
-		this->setWindowTitle(QString::fromStdString(track.title()));
-
 		if (!success)
 		{
-			this->lyricsView->setPlainText(QString::fromStdString(lyrics));
+			this->setPlainText(QString::fromStdString(result));
 			return;
 		}
 
-		this->lyricsView->setHtml(QString::fromStdString(lyrics).trimmed());
-		this->cache.set_lyrics(track, lyrics);
+		this->setHtml(QString::fromStdString(result).trimmed());
+		this->cache.set_lyrics(track, result);
 	});
 }

@@ -18,7 +18,6 @@ public:
 	void open(const lib::spt::track &track);
 
 private:
-	const lib::http_client &http;
 	lib::cache &cache;
-	QTextEdit *lyricsView = nullptr;
+	lib::lyrics lyrics;
 };
