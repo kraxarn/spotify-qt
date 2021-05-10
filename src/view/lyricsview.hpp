@@ -5,10 +5,9 @@
 #include "lib/lyrics.hpp"
 #include "lib/cache.hpp"
 
-#include <QDockWidget>
 #include <QTextEdit>
 
-class LyricsView: public QDockWidget
+class LyricsView: public QTextEdit
 {
 Q_OBJECT
 
