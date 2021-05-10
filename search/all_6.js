@@ -2,7 +2,7 @@ var searchData=
 [
   ['general_51',['general',['../classlib_1_1settings.html#a166dc4c1e2727773d9576ad30f5c32ca',1,'lib::settings']]],
   ['genres_52',['genres',['../classlib_1_1spt_1_1artist.html#a06c0a0e30c21b5a9e1a5d04d5bce52d0',1,'lib::spt::artist']]],
-  ['get_53',['get',['../classlib_1_1http__client.html#a6a4d7f73319b2e2744895a5a3aad555e',1,'lib::http_client::get()'],['../classlib_1_1json.html#a301b8eb203e2c032ef1ab73fdc3dfe21',1,'lib::json::get()'],['../classlib_1_1lyrics.html#aaeac091d704711b9dc4e35acd953d997',1,'lib::lyrics::get()'],['../classlib_1_1spt_1_1api.html#a8235c4f96e74fa58a5e1f12795b9612d',1,'lib::spt::api::get()']]],
+  ['get_53',['get',['../classlib_1_1http__client.html#a6a4d7f73319b2e2744895a5a3aad555e',1,'lib::http_client::get()'],['../classlib_1_1json.html#a301b8eb203e2c032ef1ab73fdc3dfe21',1,'lib::json::get()'],['../classlib_1_1lyrics.html#aa31289c5dccdae5b85fb901fc28bea51',1,'lib::lyrics::get()'],['../classlib_1_1spt_1_1api.html#a8235c4f96e74fa58a5e1f12795b9612d',1,'lib::spt::api::get()']]],
   ['get_5falbum_5fimage_54',['get_album_image',['../classlib_1_1cache.html#a26a9715352683c4338f58bf35b26ef6d',1,'lib::cache']]],
   ['get_5fdark_5ftheme_55',['get_dark_theme',['../classlib_1_1settings.html#aa0ce08612b092b3400d6b7a1358853a4',1,'lib::settings']]],
   ['get_5fday_56',['get_day',['../classlib_1_1date__time.html#a3f57cc838edd0fde6f944166407c84cf',1,'lib::date_time']]],

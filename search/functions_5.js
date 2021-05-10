@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['get_248',['get',['../classlib_1_1json.html#a301b8eb203e2c032ef1ab73fdc3dfe21',1,'lib::json::get()'],['../classlib_1_1lyrics.html#aaeac091d704711b9dc4e35acd953d997',1,'lib::lyrics::get()'],['../classlib_1_1spt_1_1api.html#a8235c4f96e74fa58a5e1f12795b9612d',1,'lib::spt::api::get()'],['../classlib_1_1http__client.html#a6a4d7f73319b2e2744895a5a3aad555e',1,'lib::http_client::get()']]],
+  ['get_248',['get',['../classlib_1_1json.html#a301b8eb203e2c032ef1ab73fdc3dfe21',1,'lib::json::get()'],['../classlib_1_1lyrics.html#aa31289c5dccdae5b85fb901fc28bea51',1,'lib::lyrics::get()'],['../classlib_1_1spt_1_1api.html#a8235c4f96e74fa58a5e1f12795b9612d',1,'lib::spt::api::get()'],['../classlib_1_1http__client.html#a6a4d7f73319b2e2744895a5a3aad555e',1,'lib::http_client::get()']]],
   ['get_5falbum_5fimage_249',['get_album_image',['../classlib_1_1cache.html#a26a9715352683c4338f58bf35b26ef6d',1,'lib::cache']]],
   ['get_5fdark_5ftheme_250',['get_dark_theme',['../classlib_1_1settings.html#aa0ce08612b092b3400d6b7a1358853a4',1,'lib::settings']]],
   ['get_5fday_251',['get_day',['../classlib_1_1date__time.html#a3f57cc838edd0fde6f944166407c84cf',1,'lib::date_time']]],
