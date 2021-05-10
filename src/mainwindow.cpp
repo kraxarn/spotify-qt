@@ -277,7 +277,7 @@ auto MainWindow::createCentralWidget() -> QWidget *
 	container->addWidget(songs);
 
 	// Side panel
-	sidePanel = new SidePanel(*spotify, settings, cache, this);
+	sidePanel = new SidePanel(*spotify, settings, cache, *httpClient, this);
 	container->addWidget(sidePanel);
 
 	return container;
@@ -313,13 +313,7 @@ void MainWindow::openAudioFeaturesWidget(const std::string &trackId,
 
 void MainWindow::openLyrics(const lib::spt::track &track)
 {
-	if (lyricsView == nullptr)
-	{
-		lyricsView = new LyricsView(*httpClient, cache, this);
-	}
-
-	lyricsView->open(track);
-	addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, lyricsView);
+	dynamic_cast<SidePanel *>(sidePanel)->openLyrics(track);
 }
 
 auto MainWindow::loadAlbum(const std::string &albumId, const std::string &trackId) -> bool
