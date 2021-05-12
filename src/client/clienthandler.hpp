@@ -19,7 +19,8 @@ namespace spt
 	Q_OBJECT
 
 	public:
-		explicit ClientHandler(const lib::settings &settings, QWidget *parent = nullptr);
+		ClientHandler(const lib::settings &settings,
+			const lib::paths &paths, QWidget *parent);
 		~ClientHandler() override;
 
 		auto start() -> QString;
@@ -41,6 +42,7 @@ namespace spt
 		QString path;
 		static QList<QPair<QDateTime, QString>> log;
 		const lib::settings &settings;
+		const lib::paths &paths;
 		lib::client_type clientType;
 
 		/**

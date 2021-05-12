@@ -5,8 +5,12 @@ using namespace spt;
 
 QList<QPair<QDateTime, QString>> ClientHandler::log;
 
-ClientHandler::ClientHandler(const lib::settings &settings, QWidget *parent)
-	: settings(settings), parentWidget(parent), QObject(parent)
+ClientHandler::ClientHandler(const lib::settings &settings, const lib::paths &paths,
+	QWidget *parent)
+	: settings(settings),
+	parentWidget(parent),
+	paths(paths),
+	QObject(parent)
 {
 	path = QString::fromStdString(settings.spotify.path);
 	process = new QProcess(parent);
@@ -101,8 +105,7 @@ auto ClientHandler::start() -> QString
 			"--name", "spotify-qt (librespot)",
 			"--initial-volume", "100",
 			"--autoplay",
-			"--cache", QString("%1/librespot")
-				.arg(((MainWindow *) parentWidget)->getCacheLocation())
+			"--cache", QString::fromStdString(paths.cache() / "librespot"),
 		});
 	}
 	else if (clientType == lib::client_type::spotifyd)
