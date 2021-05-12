@@ -42,7 +42,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	splash->showMessage("Connecting...");
 	httpClient = new QtHttpClient(this);
 	spotify = new spt::Spotify(settings, *httpClient, this);
-	network = new QNetworkAccessManager();
+	network = new QNetworkAccessManager(this);
 
 	// Check connection
 	stateValid = spotify->tryRefresh();
