@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../enum/datarole.hpp"
+#include "enum/datarole.hpp"
 #include "lib/spotify/track.hpp"
-#include "../util/dateutils.hpp"
-#include "../util/utils.hpp"
+#include "util/dateutils.hpp"
+#include "util/utils.hpp"
 #include "lib/settings.hpp"
 #include "lib/spotify/entity.hpp"
 #include "metatypes.hpp"
