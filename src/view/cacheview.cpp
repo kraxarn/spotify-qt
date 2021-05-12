@@ -15,18 +15,28 @@ CacheView::CacheView(const QString &cachePath, QWidget *parent)
 	QWidget::connect(this, &QWidget::customContextMenuRequested, this, &CacheView::menu);
 }
 
-QString CacheView::fullName(const QString &folderName)
+auto CacheView::fullName(const QString &folderName) -> QString
 {
 	if (folderName == "album")
+	{
 		return "Album covers";
+	}
 	if (folderName == "librespot")
+	{
 		return "Librespot cache";
+	}
 	if (folderName == "playlist")
+	{
 		return "Playlists";
+	}
 	if (folderName == "qmlcache")
+	{
 		return "spotify-qt-quick cache";
+	}
 	if (folderName == "tracks")
+	{
 		return "Album and library";
+	}
 
 	return folderName;
 }
@@ -48,14 +58,17 @@ void CacheView::folderSize(const QString &path, unsigned int *count, unsigned in
 
 void CacheView::menu(const QPoint &pos)
 {
-	auto item = itemAt(pos);
+	auto *item = itemAt(pos);
 	auto folder = item->data(0, 0x100).toString();
 	if (folder.isEmpty())
+	{
 		return;
+	}
 
-	auto menu = new QMenu(this);
-	QAction::connect(menu->addAction(Icon::get("folder-temp"), "Open folder"),
-		&QAction::triggered, [this, folder](bool)
+	auto *menu = new QMenu(this);
+	QAction::connect(menu->addAction(Icon::get("folder-temp"),
+		"Open folder"),
+		&QAction::triggered, [this, folder](bool /*checked*/)
 		{
 			Utils::openUrl(folder, LinkType::Path, this);
 		});
@@ -68,11 +81,11 @@ void CacheView::reload()
 
 	for (auto &dir : QDir(cachePath).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
 	{
-		auto item = new QTreeWidgetItem(this);
+		auto *item = new QTreeWidgetItem(this);
 		item->setText(0, fullName(dir.baseName()));
 
-		auto count = 0u;
-		auto size = 0u;
+		auto count = 0U;
+		auto size = 0U;
 		folderSize(dir.absoluteFilePath(), &count, &size);
 
 		item->setData(0, 0x100, dir.absoluteFilePath());
@@ -83,7 +96,7 @@ void CacheView::reload()
 	header()->resizeSections(QHeaderView::ResizeToContents);
 }
 
-void CacheView::showEvent(QShowEvent *)
+void CacheView::showEvent(QShowEvent */*event*/)
 {
 	reload();
 }
