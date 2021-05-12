@@ -11,16 +11,6 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	splash->show();
 	splash->showMessage("Please wait...");
 
-	// Set cache root location
-	cacheLocation = QStandardPaths::standardLocations(QStandardPaths::CacheLocation)[0];
-
-	// Create main cache path and album subdir
-	QDir cacheDir(cacheLocation);
-	cacheDir.mkpath(".");
-	cacheDir.mkdir("album");
-	cacheDir.mkdir("playlist");
-	cacheDir.mkdir("tracks");
-
 	// Apply selected style and palette
 	QApplication::setStyle(QString::fromStdString(settings.general.style));
 	Utils::applyPalette(settings.general.style_palette);
@@ -474,11 +464,6 @@ auto MainWindow::currentPlayback() const -> lib::spt::playback
 auto MainWindow::getCurrentUser() -> lib::spt::user
 {
 	return currentUser;
-}
-
-auto MainWindow::getCacheLocation() -> QString &
-{
-	return cacheLocation;
 }
 
 void MainWindow::setSearchChecked(bool checked)

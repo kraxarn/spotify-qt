@@ -76,7 +76,6 @@ public:
 	void setNoSptContext();
 
 	// Getters for private properties
-	QString &getCacheLocation();
 	void setSearchChecked(bool checked);
 	TracksList *getSongsTree();
 	std::string getSptContext() const;
@@ -112,7 +111,6 @@ private:
 	QNetworkAccessManager *network = nullptr;
 
 	// Other
-	QString cacheLocation;
 	TrayIcon *trayIcon = nullptr;
 	int refreshCount = -1;
 	bool stateValid = true;
