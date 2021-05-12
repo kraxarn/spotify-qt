@@ -111,7 +111,6 @@ private:
 	QNetworkAccessManager *network = nullptr;
 
 	// Other
-	LyricsView *lyricsView = nullptr;
 	QString cacheLocation;
 	TrayIcon *trayIcon = nullptr;
 	int refreshCount = -1;
