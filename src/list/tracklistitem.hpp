@@ -18,4 +18,6 @@ public:
 
 private:
 	auto operator<(const QTreeWidgetItem &item) const -> bool override;
+
+	static auto removePrefix(const QString &str) -> QStringRef;
 };

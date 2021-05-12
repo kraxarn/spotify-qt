@@ -77,5 +77,14 @@ auto TrackListItem::operator<(const QTreeWidgetItem &item) const -> bool
 		return data(0, RoleAddedDate).toDateTime() < item.data(0, RoleAddedDate).toDateTime();
 	}
 
-	return text(column).compare(item.text(column), Qt::CaseInsensitive) < 0;
+	return removePrefix(text(column))
+		.compare(removePrefix(item.text(column)),
+			Qt::CaseInsensitive) < 0;
+}
+
+auto TrackListItem::removePrefix(const QString &str) -> QStringRef
+{
+	return str.startsWith("The ", Qt::CaseInsensitive)
+		? QStringRef(&str, 4, str.length() - 4)
+		: &str;
 }
