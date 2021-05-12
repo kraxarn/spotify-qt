@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../appversion.hpp"
-#include "../util/icon.hpp"
-#include "../view/cacheview.hpp"
-#include "../view/configview.hpp"
-#include "../view/debugview.hpp"
+#include "appversion.hpp"
+#include "util/icon.hpp"
+#include "view/cacheview.hpp"
+#include "view/configview.hpp"
+#include "view/debugview.hpp"
 #include "settingspage.hpp"
 
 class AboutPage: public SettingsPage
@@ -12,13 +12,13 @@ class AboutPage: public SettingsPage
 public:
 	AboutPage(lib::settings &settings, QWidget *parent);
 
-	QIcon icon() override;
-	QString title() override;
-	bool save() override;
+	auto icon() -> QIcon override;
+	auto title() -> QString override;
+	auto save() -> bool override;
 
 private:
-	QWidget *about();
-	QWidget *systemInfo();
-	QWidget *cacheInfo();
-	QWidget *configPreview();
+	auto about() -> QWidget *;
+	auto systemInfo() -> QWidget *;
+	auto cacheInfo() -> QWidget *;
+	auto configPreview() -> QWidget *;
 };
