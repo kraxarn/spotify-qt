@@ -77,5 +77,5 @@ auto TrackListItem::operator<(const QTreeWidgetItem &item) const -> bool
 		return data(0, RoleAddedDate).toDateTime() < item.data(0, RoleAddedDate).toDateTime();
 	}
 
-	return text(column) < item.text(column);
+	return text(column).compare(item.text(column), Qt::CaseInsensitive) < 0;
 }
