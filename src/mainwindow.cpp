@@ -2,6 +2,7 @@
 
 MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	: settings(settings),
+	paths(paths),
 	cache(paths),
 	QMainWindow()
 {
@@ -287,7 +288,7 @@ auto MainWindow::startClient() -> bool
 {
 	stopClient();
 
-	sptClient = new spt::ClientHandler(settings, this);
+	sptClient = new spt::ClientHandler(settings, paths, this);
 	auto status = sptClient->start();
 	if (!status.isEmpty())
 	{

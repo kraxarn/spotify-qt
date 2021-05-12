@@ -103,6 +103,7 @@ private:
 
 	// lib
 	lib::settings &settings;
+	lib::paths &paths;
 	lib::cache cache;
 	lib::spt::user currentUser;
 	lib::http_client *httpClient = nullptr;
