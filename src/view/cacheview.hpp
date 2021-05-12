@@ -11,10 +11,10 @@
 class CacheView: public QTreeWidget
 {
 public:
-	CacheView(const QString &cachePath, QWidget *parent);
+	CacheView(const lib::paths &paths, QWidget *parent);
 
 private:
-	const QString &cachePath;
+	const lib::paths &paths;
 
 	static auto fullName(const QString &folderName) -> QString;
 	static void folderSize(const QString &path, unsigned int *count, unsigned int *size);

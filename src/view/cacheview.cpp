@@ -1,7 +1,7 @@
 #include "cacheview.hpp"
 
-CacheView::CacheView(const QString &cachePath, QWidget *parent)
-	: cachePath(cachePath),
+CacheView::CacheView(const lib::paths &paths, QWidget *parent)
+	: paths(paths),
 	QTreeWidget(parent)
 {
 	setHeaderLabels({
@@ -83,7 +83,8 @@ void CacheView::reload()
 {
 	clear();
 
-	for (auto &dir : QDir(cachePath).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
+	QDir cacheDir(QString::fromStdString(paths.cache()));
+	for (auto &dir : cacheDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
 	{
 		auto *item = new QTreeWidgetItem(this);
 		item->setText(0, fullName(dir.baseName()));
