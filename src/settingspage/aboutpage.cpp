@@ -26,7 +26,7 @@ auto AboutPage::about() -> QWidget *
 	constexpr float appNameFontMulti = 1.5F;
 	auto *titleAppName = new QLabel(QString("spotify-qt %1").arg(APP_VERSION));
 	auto appNameFont = titleAppName->font();
-	appNameFont.setPointSize((int)(appNameFont.pointSizeF() * appNameFontMulti));
+	appNameFont.setPointSize((int) (appNameFont.pointSizeF() * appNameFontMulti));
 	titleAppName->setFont(appNameFont);
 	layout->addWidget(titleAppName, 0, Qt::AlignHCenter);
 
@@ -59,7 +59,11 @@ auto AboutPage::systemInfo() -> QWidget *
 
 auto AboutPage::cacheInfo() -> QWidget *
 {
-	return new CacheView(MainWindow::find(parentWidget())->getCacheLocation(), this);
+	if (paths == nullptr)
+	{
+		paths = new QtPaths(this);
+	}
+	return new CacheView(*paths, this);
 }
 
 auto AboutPage::configPreview() -> QWidget *

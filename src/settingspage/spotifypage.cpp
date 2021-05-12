@@ -316,7 +316,11 @@ auto SpotifyPage::sptConfigExists() -> bool
 
 auto SpotifyPage::backends() -> QStringList
 {
-	return spt::ClientHandler(settings, this).availableBackends();
+	if (paths == nullptr)
+	{
+		paths = new QtPaths(this);
+	}
+	return spt::ClientHandler(settings, *paths, this).availableBackends();
 }
 
 auto SpotifyPage::getClientHandler() const -> const spt::ClientHandler *

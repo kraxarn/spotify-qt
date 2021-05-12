@@ -37,6 +37,8 @@ private:
 	QPushButton *startClient = nullptr;
 	QLabel *clientStatus = nullptr;
 
+	lib::paths *paths = nullptr;
+
 	static constexpr int low = 96;
 	static constexpr int medium = 160;
 	static constexpr int high = 320;

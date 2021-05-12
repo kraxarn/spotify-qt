@@ -21,4 +21,6 @@ private:
 	auto systemInfo() -> QWidget *;
 	auto cacheInfo() -> QWidget *;
 	auto configPreview() -> QWidget *;
+
+	lib::paths *paths = nullptr;
 };
