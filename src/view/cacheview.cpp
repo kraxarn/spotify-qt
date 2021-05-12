@@ -37,6 +37,10 @@ auto CacheView::fullName(const QString &folderName) -> QString
 	{
 		return "Album and library";
 	}
+	if (folderName == "lyrics")
+	{
+		return "Lyrics";
+	}
 
 	return folderName;
 }
