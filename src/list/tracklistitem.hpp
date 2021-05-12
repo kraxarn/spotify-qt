@@ -9,7 +9,6 @@
 #include "metatypes.hpp"
 
 #include <QTreeWidgetItem>
-#include <QStringView>
 
 class TrackListItem: public QTreeWidgetItem
 {
@@ -20,5 +19,5 @@ public:
 private:
 	auto operator<(const QTreeWidgetItem &item) const -> bool override;
 
-	static auto removePrefix(const QString &str) -> QStringView;
+	static auto removePrefix(const QString &str) -> QString;
 };

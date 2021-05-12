@@ -82,9 +82,9 @@ auto TrackListItem::operator<(const QTreeWidgetItem &item) const -> bool
 			Qt::CaseInsensitive) < 0;
 }
 
-auto TrackListItem::removePrefix(const QString &str) -> QStringView
+auto TrackListItem::removePrefix(const QString &str) -> QString
 {
 	return str.startsWith("The ", Qt::CaseInsensitive)
-		? QStringView(str).right(str.length() - 4)
+		? str.right(str.length() - 4)
 		: str;
 }
