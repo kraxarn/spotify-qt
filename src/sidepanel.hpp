@@ -4,6 +4,7 @@
 #include "view/searchview.hpp"
 #include "view/audiofeaturesview.hpp"
 #include "lib/spotify/track.hpp"
+#include "view/lyricsview.hpp"
 
 #include <QTabWidget>
 
