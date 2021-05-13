@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['cache_13',['cache',['../classlib_1_1cache.html#a5863aa2f8a8179cc7d08fe8dfbe26077',1,'lib::cache::cache()'],['../classlib_1_1paths.html#ae0f0e2bf442b073a5fd6ce3cab18f07a',1,'lib::paths::cache()'],['../classlib_1_1cache.html',1,'lib::cache']]],
+  ['cache_13',['cache',['../classlib_1_1cache.html#ac0f8712abc0810fe9a8061e4f6907972',1,'lib::cache::cache()'],['../classlib_1_1paths.html#ae0f0e2bf442b073a5fd6ce3cab18f07a',1,'lib::paths::cache()'],['../classlib_1_1cache.html',1,'lib::cache']]],
   ['capitalize_14',['capitalize',['../classlib_1_1strings.html#a531ac77b4dc9cacd25bf7a4493bd62dd',1,'lib::strings']]],
   ['cipher_15',['cipher',['../classlib_1_1cipher.html',1,'lib']]],
   ['clear_16',['clear',['../classlib_1_1log.html#aac5793c9eb61c61b83bf738a75d90919',1,'lib::log']]],
