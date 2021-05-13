@@ -1,11 +1,7 @@
 #pragma once
 
-#include "thirdparty/filesystem.hpp"
-#include "thirdparty/json.hpp"
-#include "lib/paths/paths.hpp"
 #include "lib/format.hpp"
 #include "lib/log.hpp"
-#include "lib/json.hpp"
 #include "lib/spotify/track.hpp"
 #include "lib/spotify/playlist.hpp"
 #include "lib/spotify/album.hpp"
@@ -13,16 +9,15 @@
 namespace lib
 {
 	/**
-	 * Handles cache
+	 * Abstract cache handler
 	 */
 	class cache
 	{
 	public:
 		/**
-		 * Instance a new cache manager, does not create any directories
-		 * @param paths Paths to get cache directory
+		 * Instance abstract cache
 		 */
-		explicit cache(const paths &paths);
+		cache() = default;
 
 		//region album
 
@@ -31,14 +26,16 @@ namespace lib
 		 * @param id Album ID
 		 * @return Binary JPEG data, or an empty vector if none
 		 */
-		auto get_album_image(const std::string &url) -> std::vector<unsigned char>;
+		virtual auto get_album_image(const std::string &url)
+		-> std::vector<unsigned char> = 0;
 
 		/**
 		 * Set album image data
 		 * @param id Album ID
 		 * @param data Binary JPEG data to save
 		 */
-		void set_album_image(const std::string &url, const std::vector<unsigned char> &data);
+		virtual void set_album_image(const std::string &url,
+			const std::vector<unsigned char> &data) = 0;
 
 		//endregion
 
@@ -47,12 +44,12 @@ namespace lib
 		/**
 		 * Get list of user's playlists
 		 */
-		auto get_playlists() -> std::vector<lib::spt::playlist>;
+		virtual auto get_playlists() -> std::vector<lib::spt::playlist> = 0;
 
 		/**
 		 * Set list of user's playlists
 		 */
-		void set_playlists(const std::vector<spt::playlist> &playlists);
+		virtual void set_playlists(const std::vector<spt::playlist> &playlists) = 0;
 
 		//endregion
 
@@ -63,13 +60,13 @@ namespace lib
 		 * @param id Playlist ID
 		 * @return Tracks or an empty vector on failure
 		 */
-		auto get_playlist(const std::string &id) -> lib::spt::playlist;
+		virtual auto get_playlist(const std::string &id) -> lib::spt::playlist = 0;
 
 		/**
 		 * Save playlist to cache
 		 * @param playlist Playlist to save
 		 */
-		void set_playlist(const spt::playlist &playlist);
+		virtual void set_playlist(const spt::playlist &playlist) = 0;
 
 		//endregion
 
@@ -80,20 +77,21 @@ namespace lib
 		 * @param id Id of album for example
 		 * @return JSON stored in cache, or an empty object if none
 		 */
-		auto get_tracks(const std::string &id) -> std::vector<lib::spt::track>;
+		virtual auto get_tracks(const std::string &id) -> std::vector<lib::spt::track> = 0;
 
 		/**
 		 * Save tracks to cache
 		 * @param id Id of album for example
 		 * @param tracks Tracks to save
 		 */
-		void set_tracks(const std::string &id, const std::vector<lib::spt::track> &tracks);
+		virtual void set_tracks(const std::string &id,
+			const std::vector<lib::spt::track> &tracks) = 0;
 
 		/**
 		 * Get all tracks saved in cache
 		 * @return Map as id: tracks
 		 */
-		auto all_tracks() -> std::map<std::string, std::vector<lib::spt::track>>;
+		virtual auto all_tracks() -> std::map<std::string, std::vector<lib::spt::track>> = 0;
 
 		//endregion
 
@@ -104,44 +102,15 @@ namespace lib
 		 * @param track Track
 		 * @return Lyrics
 		 */
-		auto get_lyrics(const lib::spt::track &track) -> std::string;
+		virtual auto get_lyrics(const lib::spt::track &track) -> std::string = 0;
 
 		/**
 		 * Set lyrics HTML
 		 * @param track Track
 		 * @param lyrics Lyrics to save
 		 */
-		void set_lyrics(const lib::spt::track &track, const std::string &lyrics);
+		virtual void set_lyrics(const lib::spt::track &track, const std::string &lyrics) = 0;
 
 		//endregion
-
-	private:
-		const lib::paths &paths;
-
-		/**
-		 * Get parent directory for cache type
-		 */
-		auto dir(const std::string &type) -> ghc::filesystem::path;
-
-		/**
-		 * Get file name for id
-		 */
-		static auto file(const std::string &id, const std::string &extension) -> std::string;
-
-		/**
-		 * Get full file path for cache type and id
-		 */
-		auto path(const std::string &type, const std::string &id,
-			const std::string &extension) -> ghc::filesystem::path;
-
-		/**
-		 * Get basename of path
-		 */
-		static auto get_url_id(const ghc::filesystem::path &path) -> std::string;
-
-		/**
-		 * Get content from file
-		 */
-		static auto get_file_content(const ghc::filesystem::path &path) -> std::string;
 	};
 }
