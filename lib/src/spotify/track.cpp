@@ -31,7 +31,7 @@ void from_cache(const nlohmann::json &j, lib::spt::track &t)
 	j.at("image").get_to(t.image);
 	j.at("is_local").get_to(t.is_local);
 	j.at("added_at").get_to(t.added_at);
-	j.at("is_playable").get_to(t.is_playable);
+	lib::json::get(j, "is_playable", t.is_playable);
 
 	const auto &album = j.at("album");
 
