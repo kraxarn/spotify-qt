@@ -64,8 +64,6 @@ public:
 
 	void setCurrentLibraryItem(QTreeWidgetItem *item);
 
-	auto getCurrentLibraryItem() -> QTreeWidgetItem *;
-
 	//endregion
 
 private:

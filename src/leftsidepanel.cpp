@@ -269,11 +269,6 @@ void LeftSidePanel::getPlaylistName(const std::string &id,
 	}
 }
 
-auto LeftSidePanel::getCurrentLibraryItem() -> QTreeWidgetItem *
-{
-	return libraryList->currentItem();
-}
-
 void LeftSidePanel::setCurrentLibraryItem(QTreeWidgetItem *item)
 {
 	libraryList->setCurrentItem(item);
