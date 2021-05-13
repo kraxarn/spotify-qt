@@ -1,13 +1,15 @@
 #pragma once
 
+#include "lib/cache/jsoncache.hpp"
 #include "lib/developermode.hpp"
 #include "lib/log.hpp"
+#include "lib/spotify/audiofeatures.hpp"
 #include "lib/spotify/playback.hpp"
 #include "lib/spotify/playlist.hpp"
-#include "lib/spotify/user.hpp"
-#include "lib/cache/jsoncache.hpp"
 #include "lib/spotify/spotifyapi.hpp"
+#include "lib/spotify/user.hpp"
 
+#include "client/clienthandler.hpp"
 #include "dialog/settingsdialog.hpp"
 #include "dialog/splashdialog.hpp"
 #include "dialog/whatsnewdialog.hpp"
@@ -22,8 +24,6 @@
 #include "menu/playlistmenu.hpp"
 #include "menu/songmenu.hpp"
 #include "sidepanel.hpp"
-#include "lib/spotify/audiofeatures.hpp"
-#include "client/clienthandler.hpp"
 #include "spotify/current.hpp"
 #include "spotify/spotify.hpp"
 #include "trayicon.hpp"
