@@ -11,7 +11,7 @@ namespace lib
 	/**
 	 * Cache as JSON files
 	 */
-	class json_cache: cache
+	class json_cache: public cache
 	{
 	public:
 		/**
