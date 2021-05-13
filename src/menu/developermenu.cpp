@@ -1,9 +1,10 @@
 #include "developermenu.hpp"
 
 DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
-	QWidget *parent)
+	lib::cache &cache, QWidget *parent)
 	: spotify(spotify),
 	settings(settings),
+	cache(cache),
 	QMenu("Developer", parent)
 {
 	setIcon(Icon::get("folder-txt"));
@@ -48,7 +49,7 @@ auto DeveloperMenu::dialogMenu() -> QMenu *
 		new DeviceSelectDialog({}, mainWindow),
 		new OpenLinkDialog("/", LinkType::Path, mainWindow),
 		new SetupDialog(settings, mainWindow),
-		new TracksCacheDialog(mainWindow),
+		new TracksCacheDialog(cache, mainWindow),
 		new WhatsNewDialog(APP_VERSION, settings, mainWindow),
 	};
 

@@ -1,12 +1,13 @@
 #include "trackscachedialog.hpp"
 
-TracksCacheDialog::TracksCacheDialog(QWidget *parent)
-	: QDialog(parent)
+TracksCacheDialog::TracksCacheDialog(lib::cache &cache, QWidget *parent)
+	: cache(cache),
+	QDialog(parent)
 {
 	resize(400, 300);
 	setWindowTitle("Tracks cache");
 
-	auto layout = new QVBoxLayout(this);
+	auto *layout = new QVBoxLayout(this);
 	setLayout(layout);
 
 	tree = new QTreeWidget(this);
@@ -22,13 +23,13 @@ TracksCacheDialog::TracksCacheDialog(QWidget *parent)
 		"Title", "Artist", "Album",
 	});
 
-	auto buttons = new QDialogButtonBox(this);
+	auto *buttons = new QDialogButtonBox(this);
 	layout->addWidget(buttons);
 	QPushButton::connect(buttons->addButton(QDialogButtonBox::Ok),
 		&QPushButton::clicked, this, &TracksCacheDialog::okClicked);
 }
 
-void TracksCacheDialog::okClicked(bool)
+void TracksCacheDialog::okClicked(bool /*checked*/)
 {
 	accept();
 }
@@ -36,9 +37,6 @@ void TracksCacheDialog::okClicked(bool)
 void TracksCacheDialog::open()
 {
 	tree->clear();
-
-	QtPaths paths(this);
-	lib::cache cache(paths);
 
 	for (const auto &pair : cache.all_tracks())
 	{

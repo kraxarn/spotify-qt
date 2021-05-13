@@ -49,7 +49,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	resize(defaultSize());
 	setCentralWidget(createCentralWidget());
 	toolBar = new MainToolBar(*spotify, settings,
-		*httpClient, this);
+		*httpClient, cache, this);
 	addToolBar(Qt::ToolBarArea::TopToolBarArea, toolBar);
 
 	// Update player status

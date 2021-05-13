@@ -15,11 +15,13 @@ class DeveloperMenu: public QMenu
 Q_OBJECT
 
 public:
-	DeveloperMenu(lib::settings &settings, lib::spt::api &spotify, QWidget *parent);
+	DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
+		lib::cache &cache, QWidget *parent);
 
 private:
 	lib::settings &settings;
 	lib::spt::api &spotify;
+	lib::cache &cache;
 
 	QMenu *dialogMenu();
 	QMenu *infoMenu();

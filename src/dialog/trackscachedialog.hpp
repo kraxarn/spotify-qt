@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../lib/qtpaths.hpp"
+#include "lib/qtpaths.hpp"
 #include "lib/cache.hpp"
 
 #include <QDialog>
@@ -14,12 +14,12 @@ class TracksCacheDialog: public QDialog
 Q_OBJECT
 
 public:
-	explicit TracksCacheDialog(QWidget *parent);
+	explicit TracksCacheDialog(lib::cache &cache, QWidget *parent);
 
 private:
 	QTreeWidget *tree = nullptr;
+	lib::cache &cache;
 
 	void okClicked(bool checked);
-
 	void open() override;
 };

@@ -1,7 +1,7 @@
 #include "mainmenu.hpp"
 
 MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings,
-	const lib::http_client &httpClient, QWidget *parent)
+	const lib::http_client &httpClient, lib::cache &cache, QWidget *parent)
 	: settings(settings),
 	spotify(spotify),
 	QMenu(parent)
@@ -44,7 +44,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings,
 	// Debug options if enabled
 	if (lib::developer_mode::enabled)
 	{
-		addMenu(new DeveloperMenu(settings, spotify, this));
+		addMenu(new DeveloperMenu(settings, spotify, cache, this));
 	}
 
 	// Log out and quit
