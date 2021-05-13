@@ -5,7 +5,7 @@
 #include "lib/spotify/playback.hpp"
 #include "lib/spotify/playlist.hpp"
 #include "lib/spotify/user.hpp"
-#include "lib/cache.hpp"
+#include "lib/cache/jsoncache.hpp"
 #include "lib/spotify/spotifyapi.hpp"
 
 #include "dialog/settingsdialog.hpp"
