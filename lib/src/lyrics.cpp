@@ -7,43 +7,37 @@ lib::lyrics::lyrics(const lib::http_client &http_client)
 
 void lib::lyrics::get(const spt::track &track, lib::result<std::string> &callback)
 {
-	auto artist = lib::strings::capitalize(format(track.artists.front().name));
-	auto name = lib::strings::to_lower(format(track.name));
-	auto url = lib::fmt::format("https://genius.com/{}-{}-lyrics",
-		artist, name);
+	std::string url = "spotify-lyrics.azurewebsites.net";
+	nlohmann::json body{
+		{"artist", track.artists.front().name},
+		{"name", track.name},
+	};
 
-	http.get(url, lib::headers(), [url, callback](const std::string &body)
+	try
 	{
-		if (body.empty())
+		http.put(url, body, lib::headers(), [url, callback]
+			(const nlohmann::json &result)
 		{
-			callback(false, "No response");
-			return;
-		}
+			if (result.is_null())
+			{
+				callback(false, "No response");
+				return;
+			}
 
-		if (lib::strings::contains(body, "Burrr! | Genius"))
-		{
-			lib::log::warn("No lyrics found from: {}", url);
-			callback(false, "No results");
-			return;
-		}
+			const auto &lyrics = result.at("lyrics");
+			if (lyrics.is_null())
+			{
+				callback(false, "No results");
+				return;
+			}
 
-		auto lyrics = get_from_lyrics(body);
-		if (!lyrics.empty())
-		{
-			callback(true, lyrics);
-			return;
-		}
-
-		lyrics = get_from_lyrics_root(body);
-		if (!lyrics.empty())
-		{
-			callback(true, lyrics);
-			return;
-		}
-
-		lib::log::warn("No lyrics parsed from: {}", url);
-		callback(false, "No results");
-	});
+			callback(true, lyrics.get<std::string>());
+		});
+	}
+	catch (const std::exception &e)
+	{
+		callback(false, e.what());
+	}
 }
 
 auto lib::lyrics::format(const std::string &str) -> std::string
