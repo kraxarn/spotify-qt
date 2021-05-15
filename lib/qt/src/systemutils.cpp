@@ -1,8 +1,8 @@
-#include "common/util/systemutils.hpp"
+#include "lib/qt/util/systemutils.hpp"
 
-auto SystemUtils::env(const char *name) -> QString
+auto lib::qt::util::system::env(const char *name) -> QString
 {
-	if (!hasEnv(name))
+	if (!has_env(name))
 	{
 		return QString();
 	}
@@ -14,7 +14,7 @@ auto SystemUtils::env(const char *name) -> QString
 #endif
 }
 
-auto SystemUtils::hasEnv(const char *name) -> bool
+auto lib::qt::util::system::has_env(const char *name) -> bool
 {
 	return qEnvironmentVariableIsSet(name);
 }
