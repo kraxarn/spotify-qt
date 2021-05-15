@@ -3,7 +3,7 @@
 #include "lib/httpclient.hpp"
 #include "lib/spotify/callback.hpp"
 #include "lib/spotify/track.hpp"
-#include "lib/spotify/spotifyerror.hpp"
+#include "lib/spotify/error.hpp"
 #include "lib/strings.hpp"
 #include "lib/spotify/trackinfo.hpp"
 

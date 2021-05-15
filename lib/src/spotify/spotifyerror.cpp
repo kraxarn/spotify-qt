@@ -1,5 +1,5 @@
 
-#include "lib/spotify/spotifyerror.hpp"
+#include "lib/spotify/error.hpp"
 
 lib::spt::error::error(const char *what, const char *url)
 	: std::runtime_error(what),

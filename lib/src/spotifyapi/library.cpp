@@ -1,4 +1,4 @@
-#include "lib/spotify/spotifyapi.hpp"
+#include "lib/spotify/api.hpp"
 
 using namespace lib::spt;
 

@@ -8,7 +8,7 @@
 #include "lib/enum/repeatstate.hpp"
 #include "lib/json.hpp"
 #include "lib/enum/followtype.hpp"
-#include "lib/spotify/spotifyerror.hpp"
+#include "lib/spotify/error.hpp"
 #include "lib/spotify/album.hpp"
 #include "lib/spotify/artist.hpp"
 #include "lib/spotify/playlist.hpp"

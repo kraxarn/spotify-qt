@@ -15,7 +15,7 @@ namespace spt
 #include "lib/spotify/searchresults.hpp"
 #include "lib/spotify/user.hpp"
 #include "thirdparty/json.hpp"
-#include "lib/spotify/spotifyapi.hpp"
+#include "lib/spotify/api.hpp"
 #include "lib/strings.hpp"
 #include "lib/qthttpclient.hpp"
 

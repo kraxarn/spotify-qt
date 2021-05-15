@@ -1,5 +1,5 @@
 #include "thirdparty/doctest.h"
-#include "lib/spotify/spotifyapi.hpp"
+#include "lib/spotify/api.hpp"
 
 TEST_CASE("spotify_api")
 {
