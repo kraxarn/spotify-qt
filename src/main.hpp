@@ -26,6 +26,7 @@
 #include "util/dateutils.hpp"
 #include "util/icon.hpp"
 #include "util/utils.hpp"
+#include "common/qthttpclient.hpp"
 
 #include <QMainWindow>
 #include <QSplitter>
