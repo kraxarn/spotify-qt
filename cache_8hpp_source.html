@@ -78,65 +78,68 @@ $(function() {
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;lib/spotify/track.hpp&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;lib/spotify/playlist.hpp&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;lib/spotify/album.hpp&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span>lib</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html">   14</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classlib_1_1cache.html">cache</a></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    {</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#ac0f8712abc0810fe9a8061e4f6907972">   20</a></span>&#160;        <a class="code" href="classlib_1_1cache.html#ac0f8712abc0810fe9a8061e4f6907972">cache</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="comment">//region album</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#aaadcc46488892dfa77fb5ae18ab19e8c">   29</a></span>&#160;        <span class="keyword">virtual</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1cache.html#aaadcc46488892dfa77fb5ae18ab19e8c">get_album_image</a>(<span class="keyword">const</span> std::string &amp;url)</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        -&gt; std::vector&lt;unsigned char&gt; = 0;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#a9bccdd7a8dc24fae23075d21e7986fbf">   37</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1cache.html#a9bccdd7a8dc24fae23075d21e7986fbf">set_album_image</a>(<span class="keyword">const</span> std::string &amp;url,</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            <span class="keyword">const</span> std::vector&lt;unsigned char&gt; &amp;data) = 0;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="comment">//endregion</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="comment">//region playlists</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#ab23624a33def2b90444793ace30548e6">   47</a></span>&#160;        <span class="keyword">virtual</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1cache.html#ab23624a33def2b90444793ace30548e6">get_playlists</a>() -&gt; std::vector&lt;lib::spt::playlist&gt; = 0;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#a4475f0b83d56cd92ae1380325d5a4ef5">   52</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1cache.html#a4475f0b83d56cd92ae1380325d5a4ef5">set_playlists</a>(<span class="keyword">const</span> std::vector&lt;spt::playlist&gt; &amp;playlists) = 0;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="comment">//endregion</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="comment">//region playlist</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#a15437b3751f1056dba1bec37701f4b7e">   63</a></span>&#160;        <span class="keyword">virtual</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1cache.html#a15437b3751f1056dba1bec37701f4b7e">get_playlist</a>(<span class="keyword">const</span> std::string &amp;<span class="keywordtype">id</span>) -&gt; <a class="code" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> = 0;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#ac2e9a9f416596c2995fe083ad38c634c">   69</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1cache.html#ac2e9a9f416596c2995fe083ad38c634c">set_playlist</a>(<span class="keyword">const</span> <a class="code" href="classlib_1_1spt_1_1playlist.html">spt::playlist</a> &amp;playlist) = 0;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="comment">//endregion</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="comment">//region tracks</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#ab0eeea9fa11bcc20e67edf93fe3952c4">   80</a></span>&#160;        <span class="keyword">virtual</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1cache.html#ab0eeea9fa11bcc20e67edf93fe3952c4">get_tracks</a>(<span class="keyword">const</span> std::string &amp;<span class="keywordtype">id</span>) -&gt; std::vector&lt;lib::spt::track&gt; = 0;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#aa9ea636918559924df89df0e63346768">   87</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1cache.html#aa9ea636918559924df89df0e63346768">set_tracks</a>(<span class="keyword">const</span> std::string &amp;<span class="keywordtype">id</span>,</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            <span class="keyword">const</span> std::vector&lt;lib::spt::track&gt; &amp;tracks) = 0;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#a9f620494d92e1614de6060785811a31f">   94</a></span>&#160;        <span class="keyword">virtual</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1cache.html#a9f620494d92e1614de6060785811a31f">all_tracks</a>() -&gt; std::map&lt;std::string, std::vector&lt;lib::spt::track&gt;&gt; = 0;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="comment">//endregion</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="comment">//region lyrics</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#adc695addb162149b75d795cbf742681b">  105</a></span>&#160;        <span class="keyword">virtual</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1cache.html#adc695addb162149b75d795cbf742681b">get_lyrics</a>(<span class="keyword">const</span> <a class="code" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &amp;track) -&gt; std::string = 0;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#a9c5e48074fe39e7326b88d869dba11eb">  112</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1cache.html#a9c5e48074fe39e7326b88d869dba11eb">set_lyrics</a>(<span class="keyword">const</span> <a class="code" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &amp;track, <span class="keyword">const</span> std::string &amp;<a class="code" href="classlib_1_1lyrics.html">lyrics</a>) = 0;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="comment">//endregion</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    };</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;}</div>
-<div class="ttc" id="aclasslib_1_1cache_html"><div class="ttname"><a href="classlib_1_1cache.html">lib::cache</a></div><div class="ttdef"><b>Definition:</b> cache.hpp:15</div></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;lib/spotify/trackinfo.hpp&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span>lib</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html">   15</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classlib_1_1cache.html">cache</a></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    {</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#ac0f8712abc0810fe9a8061e4f6907972">   21</a></span>&#160;        <a class="code" href="classlib_1_1cache.html#ac0f8712abc0810fe9a8061e4f6907972">cache</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="comment">//region album</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#aaadcc46488892dfa77fb5ae18ab19e8c">   30</a></span>&#160;        <span class="keyword">virtual</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1cache.html#aaadcc46488892dfa77fb5ae18ab19e8c">get_album_image</a>(<span class="keyword">const</span> std::string &amp;url)</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        -&gt; std::vector&lt;unsigned char&gt; = 0;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#a9bccdd7a8dc24fae23075d21e7986fbf">   38</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1cache.html#a9bccdd7a8dc24fae23075d21e7986fbf">set_album_image</a>(<span class="keyword">const</span> std::string &amp;url,</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <span class="keyword">const</span> std::vector&lt;unsigned char&gt; &amp;data) = 0;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="comment">//endregion</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="comment">//region playlists</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#ab23624a33def2b90444793ace30548e6">   48</a></span>&#160;        <span class="keyword">virtual</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1cache.html#ab23624a33def2b90444793ace30548e6">get_playlists</a>() -&gt; std::vector&lt;lib::spt::playlist&gt; = 0;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#a4475f0b83d56cd92ae1380325d5a4ef5">   53</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1cache.html#a4475f0b83d56cd92ae1380325d5a4ef5">set_playlists</a>(<span class="keyword">const</span> std::vector&lt;spt::playlist&gt; &amp;playlists) = 0;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="comment">//endregion</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="comment">//region playlist</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#a15437b3751f1056dba1bec37701f4b7e">   64</a></span>&#160;        <span class="keyword">virtual</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1cache.html#a15437b3751f1056dba1bec37701f4b7e">get_playlist</a>(<span class="keyword">const</span> std::string &amp;<span class="keywordtype">id</span>) -&gt; <a class="code" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> = 0;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#ac2e9a9f416596c2995fe083ad38c634c">   70</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1cache.html#ac2e9a9f416596c2995fe083ad38c634c">set_playlist</a>(<span class="keyword">const</span> <a class="code" href="classlib_1_1spt_1_1playlist.html">spt::playlist</a> &amp;playlist) = 0;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="comment">//endregion</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="comment">//region tracks</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#ab0eeea9fa11bcc20e67edf93fe3952c4">   81</a></span>&#160;        <span class="keyword">virtual</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1cache.html#ab0eeea9fa11bcc20e67edf93fe3952c4">get_tracks</a>(<span class="keyword">const</span> std::string &amp;<span class="keywordtype">id</span>) -&gt; std::vector&lt;lib::spt::track&gt; = 0;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#aa9ea636918559924df89df0e63346768">   88</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1cache.html#aa9ea636918559924df89df0e63346768">set_tracks</a>(<span class="keyword">const</span> std::string &amp;<span class="keywordtype">id</span>,</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            <span class="keyword">const</span> std::vector&lt;lib::spt::track&gt; &amp;tracks) = 0;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#a9f620494d92e1614de6060785811a31f">   95</a></span>&#160;        <span class="keyword">virtual</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1cache.html#a9f620494d92e1614de6060785811a31f">all_tracks</a>() -&gt; std::map&lt;std::string, std::vector&lt;lib::spt::track&gt;&gt; = 0;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="comment">//endregion</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="comment">//region lyrics</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#a44e4b19d13153a260dc52c61e413b5f8">  106</a></span>&#160;        <span class="keyword">virtual</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1cache.html#a44e4b19d13153a260dc52c61e413b5f8">get_track_info</a>(<span class="keyword">const</span> <a class="code" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &amp;track) -&gt; <a class="code" href="classlib_1_1spt_1_1track__info.html">lib::spt::track_info</a> = 0;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#a37acca6f61a2221a6886d83489d33d6c">  113</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1cache.html#a37acca6f61a2221a6886d83489d33d6c">set_track_info</a>(<span class="keyword">const</span> <a class="code" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &amp;track,</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <span class="keyword">const</span> <a class="code" href="classlib_1_1spt_1_1track__info.html">lib::spt::track_info</a> &amp;track_info) = 0;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="comment">//endregion</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    };</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;}</div>
+<div class="ttc" id="aclasslib_1_1cache_html"><div class="ttname"><a href="classlib_1_1cache.html">lib::cache</a></div><div class="ttdef"><b>Definition:</b> cache.hpp:16</div></div>
 <div class="ttc" id="aclasslib_1_1cache_html_a15437b3751f1056dba1bec37701f4b7e"><div class="ttname"><a href="classlib_1_1cache.html#a15437b3751f1056dba1bec37701f4b7e">lib::cache::get_playlist</a></div><div class="ttdeci">virtual auto get_playlist(const std::string &amp;id) -&gt; lib::spt::playlist=0</div></div>
+<div class="ttc" id="aclasslib_1_1cache_html_a37acca6f61a2221a6886d83489d33d6c"><div class="ttname"><a href="classlib_1_1cache.html#a37acca6f61a2221a6886d83489d33d6c">lib::cache::set_track_info</a></div><div class="ttdeci">virtual void set_track_info(const lib::spt::track &amp;track, const lib::spt::track_info &amp;track_info)=0</div></div>
 <div class="ttc" id="aclasslib_1_1cache_html_a4475f0b83d56cd92ae1380325d5a4ef5"><div class="ttname"><a href="classlib_1_1cache.html#a4475f0b83d56cd92ae1380325d5a4ef5">lib::cache::set_playlists</a></div><div class="ttdeci">virtual void set_playlists(const std::vector&lt; spt::playlist &gt; &amp;playlists)=0</div></div>
+<div class="ttc" id="aclasslib_1_1cache_html_a44e4b19d13153a260dc52c61e413b5f8"><div class="ttname"><a href="classlib_1_1cache.html#a44e4b19d13153a260dc52c61e413b5f8">lib::cache::get_track_info</a></div><div class="ttdeci">virtual auto get_track_info(const lib::spt::track &amp;track) -&gt; lib::spt::track_info=0</div></div>
 <div class="ttc" id="aclasslib_1_1cache_html_a9bccdd7a8dc24fae23075d21e7986fbf"><div class="ttname"><a href="classlib_1_1cache.html#a9bccdd7a8dc24fae23075d21e7986fbf">lib::cache::set_album_image</a></div><div class="ttdeci">virtual void set_album_image(const std::string &amp;url, const std::vector&lt; unsigned char &gt; &amp;data)=0</div></div>
-<div class="ttc" id="aclasslib_1_1cache_html_a9c5e48074fe39e7326b88d869dba11eb"><div class="ttname"><a href="classlib_1_1cache.html#a9c5e48074fe39e7326b88d869dba11eb">lib::cache::set_lyrics</a></div><div class="ttdeci">virtual void set_lyrics(const lib::spt::track &amp;track, const std::string &amp;lyrics)=0</div></div>
 <div class="ttc" id="aclasslib_1_1cache_html_a9f620494d92e1614de6060785811a31f"><div class="ttname"><a href="classlib_1_1cache.html#a9f620494d92e1614de6060785811a31f">lib::cache::all_tracks</a></div><div class="ttdeci">virtual auto all_tracks() -&gt; std::map&lt; std::string, std::vector&lt; lib::spt::track &gt;&gt;=0</div></div>
 <div class="ttc" id="aclasslib_1_1cache_html_aa9ea636918559924df89df0e63346768"><div class="ttname"><a href="classlib_1_1cache.html#aa9ea636918559924df89df0e63346768">lib::cache::set_tracks</a></div><div class="ttdeci">virtual void set_tracks(const std::string &amp;id, const std::vector&lt; lib::spt::track &gt; &amp;tracks)=0</div></div>
 <div class="ttc" id="aclasslib_1_1cache_html_aaadcc46488892dfa77fb5ae18ab19e8c"><div class="ttname"><a href="classlib_1_1cache.html#aaadcc46488892dfa77fb5ae18ab19e8c">lib::cache::get_album_image</a></div><div class="ttdeci">virtual auto get_album_image(const std::string &amp;url) -&gt; std::vector&lt; unsigned char &gt;=0</div></div>
@@ -144,9 +147,8 @@ $(function() {
 <div class="ttc" id="aclasslib_1_1cache_html_ab23624a33def2b90444793ace30548e6"><div class="ttname"><a href="classlib_1_1cache.html#ab23624a33def2b90444793ace30548e6">lib::cache::get_playlists</a></div><div class="ttdeci">virtual auto get_playlists() -&gt; std::vector&lt; lib::spt::playlist &gt;=0</div></div>
 <div class="ttc" id="aclasslib_1_1cache_html_ac0f8712abc0810fe9a8061e4f6907972"><div class="ttname"><a href="classlib_1_1cache.html#ac0f8712abc0810fe9a8061e4f6907972">lib::cache::cache</a></div><div class="ttdeci">cache()=default</div></div>
 <div class="ttc" id="aclasslib_1_1cache_html_ac2e9a9f416596c2995fe083ad38c634c"><div class="ttname"><a href="classlib_1_1cache.html#ac2e9a9f416596c2995fe083ad38c634c">lib::cache::set_playlist</a></div><div class="ttdeci">virtual void set_playlist(const spt::playlist &amp;playlist)=0</div></div>
-<div class="ttc" id="aclasslib_1_1cache_html_adc695addb162149b75d795cbf742681b"><div class="ttname"><a href="classlib_1_1cache.html#adc695addb162149b75d795cbf742681b">lib::cache::get_lyrics</a></div><div class="ttdeci">virtual auto get_lyrics(const lib::spt::track &amp;track) -&gt; std::string=0</div></div>
-<div class="ttc" id="aclasslib_1_1lyrics_html"><div class="ttname"><a href="classlib_1_1lyrics.html">lib::lyrics</a></div><div class="ttdef"><b>Definition:</b> lyrics.hpp:16</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1playlist_html"><div class="ttname"><a href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a></div><div class="ttdef"><b>Definition:</b> playlist.hpp:17</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1track__info_html"><div class="ttname"><a href="classlib_1_1spt_1_1track__info.html">lib::spt::track_info</a></div><div class="ttdef"><b>Definition:</b> trackinfo.hpp:15</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1track_html"><div class="ttname"><a href="classlib_1_1spt_1_1track.html">lib::spt::track</a></div><div class="ttdef"><b>Definition:</b> track.hpp:18</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

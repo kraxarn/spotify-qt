@@ -13,10 +13,11 @@ var searchData=
   ['to_5fupper_171',['to_upper',['../classlib_1_1strings.html#a04325ef56364db92cbf38d175006a80f',1,'lib::strings']]],
   ['to_5furi_172',['to_uri',['../classlib_1_1spt_1_1api.html#aafba6d10ca71c7884709d17f128252cd',1,'lib::spt::api']]],
   ['track_173',['track',['../classlib_1_1spt_1_1track.html',1,'lib::spt']]],
-  ['tracks_174',['tracks',['../classlib_1_1spt_1_1playlist.html#af31fb77d7316d524020f52b99eeae675',1,'lib::spt::playlist::tracks()'],['../classlib_1_1spt_1_1search__results.html#ac5dad86a1b2cb4724d08ff6ed817435d',1,'lib::spt::search_results::tracks()']]],
-  ['tracks_5fhref_175',['tracks_href',['../classlib_1_1spt_1_1playlist.html#a6bd3cca9afe5a1584d71d0e4d880cf14',1,'lib::spt::playlist']]],
-  ['tracks_5ftotal_176',['tracks_total',['../classlib_1_1spt_1_1playlist.html#abc4dec5cee51165c5f02460b429e14b9',1,'lib::spt::playlist']]],
-  ['trim_177',['trim',['../classlib_1_1strings.html#a67c8af5fdab4b19903a8cabe1a01e348',1,'lib::strings']]],
-  ['try_5fto_5fint_178',['try_to_int',['../classlib_1_1strings.html#aecc8b93d089c231027f7fb1802f4ed00',1,'lib::strings']]],
-  ['type_179',['type',['../classlib_1_1spt_1_1context.html#a3da85d5a0e71c4a58b6e5e0868accefe',1,'lib::spt::context::type()'],['../classlib_1_1spt_1_1device.html#aeb916c1ee10bf9814dfb294b1a55132d',1,'lib::spt::device::type()']]]
+  ['track_5finfo_174',['track_info',['../classlib_1_1spt_1_1track__info.html',1,'lib::spt']]],
+  ['tracks_175',['tracks',['../classlib_1_1spt_1_1playlist.html#af31fb77d7316d524020f52b99eeae675',1,'lib::spt::playlist::tracks()'],['../classlib_1_1spt_1_1search__results.html#ac5dad86a1b2cb4724d08ff6ed817435d',1,'lib::spt::search_results::tracks()']]],
+  ['tracks_5fhref_176',['tracks_href',['../classlib_1_1spt_1_1playlist.html#a6bd3cca9afe5a1584d71d0e4d880cf14',1,'lib::spt::playlist']]],
+  ['tracks_5ftotal_177',['tracks_total',['../classlib_1_1spt_1_1playlist.html#abc4dec5cee51165c5f02460b429e14b9',1,'lib::spt::playlist']]],
+  ['trim_178',['trim',['../classlib_1_1strings.html#a67c8af5fdab4b19903a8cabe1a01e348',1,'lib::strings']]],
+  ['try_5fto_5fint_179',['try_to_int',['../classlib_1_1strings.html#aecc8b93d089c231027f7fb1802f4ed00',1,'lib::strings']]],
+  ['type_180',['type',['../classlib_1_1spt_1_1context.html#a3da85d5a0e71c4a58b6e5e0868accefe',1,'lib::spt::context::type()'],['../classlib_1_1spt_1_1device.html#aeb916c1ee10bf9814dfb294b1a55132d',1,'lib::spt::device::type()']]]
 ];

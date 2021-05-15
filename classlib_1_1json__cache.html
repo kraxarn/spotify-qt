@@ -108,10 +108,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aa07720ce5635da256df28220c3d292a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb05c51e088b264a6dc63f275b8f6363"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1json__cache.html#abb05c51e088b264a6dc63f275b8f6363">all_tracks</a> () -&gt; std::map&lt; std::string, std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt;&gt; override</td></tr>
 <tr class="separator:abb05c51e088b264a6dc63f275b8f6363"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf8fe17a76137c2c28ec8a5d65dd1435"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1json__cache.html#acf8fe17a76137c2c28ec8a5d65dd1435">get_lyrics</a> (const <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &amp;track) -&gt; std::string override</td></tr>
-<tr class="separator:acf8fe17a76137c2c28ec8a5d65dd1435"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ceee0705525e7ceb5cf0c1c3ab3695f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1json__cache.html#a2ceee0705525e7ceb5cf0c1c3ab3695f">set_lyrics</a> (const <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &amp;track, const std::string &amp;<a class="el" href="classlib_1_1lyrics.html">lyrics</a>) override</td></tr>
-<tr class="separator:a2ceee0705525e7ceb5cf0c1c3ab3695f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a915889a8175d7b5ad21cda2990fd108d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1json__cache.html#a915889a8175d7b5ad21cda2990fd108d">get_track_info</a> (const <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &amp;track) -&gt; <a class="el" href="classlib_1_1spt_1_1track__info.html">lib::spt::track_info</a> override</td></tr>
+<tr class="separator:a915889a8175d7b5ad21cda2990fd108d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa57ed3a6b32472729370f284701795ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1json__cache.html#aa57ed3a6b32472729370f284701795ef">set_track_info</a> (const <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &amp;track, const <a class="el" href="classlib_1_1spt_1_1track__info.html">lib::spt::track_info</a> &amp;track_info) override</td></tr>
+<tr class="separator:aa57ed3a6b32472729370f284701795ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classlib_1_1cache"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classlib_1_1cache')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classlib_1_1cache.html">lib::cache</a></td></tr>
 <tr class="memitem:ac0f8712abc0810fe9a8061e4f6907972 inherit pub_methods_classlib_1_1cache"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#ac0f8712abc0810fe9a8061e4f6907972">cache</a> ()=default</td></tr>
 <tr class="separator:ac0f8712abc0810fe9a8061e4f6907972 inherit pub_methods_classlib_1_1cache"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -215,41 +215,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="acf8fe17a76137c2c28ec8a5d65dd1435"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acf8fe17a76137c2c28ec8a5d65dd1435">&#9670;&nbsp;</a></span>get_lyrics()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto lib::json_cache::get_lyrics </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &amp;&#160;</td>
-          <td class="paramname"><em>track</em></td><td>)</td>
-          <td> -&gt;  std::string</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Get lyrics HTML </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">track</td><td>Track </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Lyrics </dd></dl>
-
-<p>Implements <a class="el" href="classlib_1_1cache.html#adc695addb162149b75d795cbf742681b">lib::cache</a>.</p>
-
-</div>
-</div>
 <a id="a08120b63785667a1a021153d2d228a77"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a08120b63785667a1a021153d2d228a77">&#9670;&nbsp;</a></span>get_playlist()</h2>
 
@@ -310,6 +275,41 @@ Public Member Functions</h2></td></tr>
 <p>Get list of user's playlists </p>
 
 <p>Implements <a class="el" href="classlib_1_1cache.html#ab23624a33def2b90444793ace30548e6">lib::cache</a>.</p>
+
+</div>
+</div>
+<a id="a915889a8175d7b5ad21cda2990fd108d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a915889a8175d7b5ad21cda2990fd108d">&#9670;&nbsp;</a></span>get_track_info()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto lib::json_cache::get_track_info </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &amp;&#160;</td>
+          <td class="paramname"><em>track</em></td><td>)</td>
+          <td> -&gt;  <a class="el" href="classlib_1_1spt_1_1track__info.html">lib::spt::track_info</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get track info </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">track</td><td>Track </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Track info </dd></dl>
+
+<p>Implements <a class="el" href="classlib_1_1cache.html#a44e4b19d13153a260dc52c61e413b5f8">lib::cache</a>.</p>
 
 </div>
 </div>
@@ -393,51 +393,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a2ceee0705525e7ceb5cf0c1c3ab3695f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ceee0705525e7ceb5cf0c1c3ab3695f">&#9670;&nbsp;</a></span>set_lyrics()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void lib::json_cache::set_lyrics </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &amp;&#160;</td>
-          <td class="paramname"><em>track</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>lyrics</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Set lyrics HTML </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">track</td><td>Track </td></tr>
-    <tr><td class="paramname">lyrics</td><td>Lyrics to save </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implements <a class="el" href="classlib_1_1cache.html#a9c5e48074fe39e7326b88d869dba11eb">lib::cache</a>.</p>
-
-</div>
-</div>
 <a id="a4deafacbd0fb264185f2570e14536371"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4deafacbd0fb264185f2570e14536371">&#9670;&nbsp;</a></span>set_playlist()</h2>
 
@@ -498,6 +453,51 @@ Public Member Functions</h2></td></tr>
 <p>Set list of user's playlists </p>
 
 <p>Implements <a class="el" href="classlib_1_1cache.html#a4475f0b83d56cd92ae1380325d5a4ef5">lib::cache</a>.</p>
+
+</div>
+</div>
+<a id="aa57ed3a6b32472729370f284701795ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa57ed3a6b32472729370f284701795ef">&#9670;&nbsp;</a></span>set_track_info()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::json_cache::set_track_info </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &amp;&#160;</td>
+          <td class="paramname"><em>track</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classlib_1_1spt_1_1track__info.html">lib::spt::track_info</a> &amp;&#160;</td>
+          <td class="paramname"><em>track_info</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set track info </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">track</td><td>Track </td></tr>
+    <tr><td class="paramname">track_info</td><td>Track info </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classlib_1_1cache.html#a37acca6f61a2221a6886d83489d33d6c">lib::cache</a>.</p>
 
 </div>
 </div>
