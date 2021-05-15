@@ -6,6 +6,7 @@
 #include "lib/spotify/playback.hpp"
 #include "lib/spotify/playlist.hpp"
 #include "lib/spotify/user.hpp"
+#include "lib/qt/httpclient.hpp"
 
 #include "client/clienthandler.hpp"
 #include "dialog/settingsdialog.hpp"
@@ -26,7 +27,6 @@
 #include "util/dateutils.hpp"
 #include "util/icon.hpp"
 #include "util/utils.hpp"
-#include "common/qthttpclient.hpp"
 
 #include <QMainWindow>
 #include <QSplitter>

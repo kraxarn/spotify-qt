@@ -4,7 +4,7 @@ SetupDialog::SetupDialog(lib::settings &settings, QWidget *parent)
 	: settings(settings), QDialog(parent)
 {
 	// Auth
-	auth = new cmn::spt::Auth(settings, this);
+	auth = new lib::qt::spt::auth(settings, this);
 
 	// Main layout
 	auto *mainLayout = new QVBoxLayout();
@@ -93,7 +93,7 @@ void SetupDialog::authenticate(bool /*checked*/)
 		QTcpServer::connect(server, &QTcpServer::newConnection,
 			this, &SetupDialog::newServerConnection);
 	}
-	auto url = cmn::spt::Auth::authUrl(clientIdText, redirect);
+	auto url = lib::qt::spt::auth::url(clientIdText, redirect);
 	Utils::openUrl(url, LinkType::Web, this);
 }
 
@@ -115,7 +115,7 @@ void SetupDialog::newServerConnection()
 	// GET /?code=<code> HTTP...
 	auto left = response.left(response.indexOf(" HTTP"));
 	auto code = left.right(left.length() - left.indexOf("?code=") - 6);
-	auto status = auth->auth(code, redirect, clientIdText, clientSecretText);
+	auto status = auth->get(code, redirect, clientIdText, clientSecretText);
 
 	// Write
 	socket->write(QString("HTTP/1.1 200 OK\r\n\r\n%1")

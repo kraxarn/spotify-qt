@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common/spotify/auth.hpp"
+#include "lib/qt/spotify/auth.hpp"
 #include "openlinkdialog.hpp"
 
 #include <QCoreApplication>
@@ -24,7 +24,7 @@ public:
 	~SetupDialog() override;
 
 private:
-	cmn::spt::Auth *auth;
+	lib::qt::spt::auth *auth;
 	QTcpServer *server;
 	QLineEdit *clientId, *clientSecret;
 	QString clientIdText, clientSecretText, redirect;

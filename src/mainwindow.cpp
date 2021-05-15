@@ -31,7 +31,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 
 	// Set Spotify
 	splash->showMessage("Connecting...");
-	httpClient = new cmn::QtHttpClient(this);
+	httpClient = new lib::qt::http_client(this);
 	spotify = new spt::Spotify(settings, *httpClient, this);
 	network = new QNetworkAccessManager(this);
 

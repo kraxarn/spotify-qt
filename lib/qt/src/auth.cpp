@@ -1,21 +1,21 @@
-#include "common/spotify/auth.hpp"
+#include "lib/qt/spotify/auth.hpp"
 
-cmn::spt::Auth::Auth(lib::settings &settings, QObject *parent)
+lib::qt::spt::auth::auth(lib::settings &settings, QObject *parent)
 	: QObject(parent)
 {
-	auto *httpClient = new cmn::QtHttpClient(this);
-	sptAuth = new lib::spt::auth(settings, *httpClient);
+	auto *httpClient = new lib::qt::http_client(this);
+	spt_auth = new lib::spt::auth(settings, *httpClient);
 }
 
-auto cmn::spt::Auth::authUrl(const QString &clientId, const QString &redirect) -> QString
+auto lib::qt::spt::auth::url(const QString &clientId, const QString &redirect) -> QString
 {
 	return QString::fromStdString(lib::spt::auth::url(clientId.toStdString(),
 		redirect.toStdString()));
 }
 
-auto cmn::spt::Auth::auth(const QString &code, const QString &redirect,
+auto lib::qt::spt::auth::get(const QString &code, const QString &redirect,
 	const QString &id, const QString &secret) -> QString
 {
-	return QString::fromStdString(sptAuth->get(code.toStdString(),
+	return QString::fromStdString(spt_auth->get(code.toStdString(),
 		redirect.toStdString(), id.toStdString(), secret.toStdString()));
 }

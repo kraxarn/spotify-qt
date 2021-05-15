@@ -29,7 +29,7 @@ namespace lib
 				/**
 				 * Authentication URL
 				 */
-				static auto auth_url(const QString &client_id, const QString &redirect) -> QString;
+				static auto url(const QString &client_id, const QString &redirect) -> QString;
 
 				/**
 				 * Authenticate
