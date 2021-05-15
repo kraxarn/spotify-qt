@@ -1,6 +1,6 @@
-#include "common/qthttpclient.hpp"
+#include "lib/qt/httpclient.hpp"
 
-cmn::QtHttpClient::QtHttpClient(QObject *parent)
+lib::qt::http_client::http_client(QObject *parent)
 	: QObject(parent),
 	lib::http_client()
 {
