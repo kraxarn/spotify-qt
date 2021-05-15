@@ -20,3 +20,9 @@ target_include_directories(spotify-qt-lib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/in
 if (USE_TESTS)
 	add_subdirectory(test)
 endif ()
+
+# Optional Qt implementations
+if (LIB_QT_IMPL)
+	add_subdirectory(qt)
+	target_link_libraries(spotify-qt-lib PUBLIC spotify-qt-lib-qt)
+endif ()
