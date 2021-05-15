@@ -1,26 +1,19 @@
-cmake_minimum_required(VERSION 3.5)
-project(spotify-qt-lib-qt LANGUAGES CXX)
-
+# Qt
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 # Source files
-file(GLOB MAIN_SRC "src/*.cpp")
+file(GLOB MAIN_SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 # Header files
-file(GLOB MAIN_INC "include/lib/qt/*.hpp")
-file(GLOB SUB_INC "include/lib/qt/*/*.hpp")
+file(GLOB MAIN_INC "${CMAKE_CURRENT_SOURCE_DIR}/include/lib/qt/*.hpp")
+file(GLOB SUB_INC "${CMAKE_CURRENT_SOURCE_DIR}/include/lib/qt/*/*.hpp")
 # Add all files
-add_library(spotify-qt-lib-qt STATIC ${MAIN_SRC} ${MAIN_INC} ${SUB_INC})
+set(LIB_QT_SOURCES ${MAIN_SRC} ${MAIN_INC} ${SUB_INC})
 
 # Qt
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Network REQUIRED)
-target_link_libraries(spotify-qt-lib-qt PRIVATE
-	Qt${QT_VERSION_MAJOR}::Core
-	Qt${QT_VERSION_MAJOR}::Network)
+set(LIB_QT_LIBRARIES Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Network)
 
 # Headers
-target_include_directories(spotify-qt-lib-qt PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+set(LIB_QT_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/include")
