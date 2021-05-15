@@ -22,8 +22,7 @@ namespace lib
 		/**
 		 * GET request
 		 */
-		virtual void get(const std::string &url,
-			const headers &headers,
+		virtual void get(const std::string &url, const headers &headers,
 			lib::callback<std::string> &callback) const = 0;
 
 		/**
@@ -31,15 +30,19 @@ namespace lib
 		 * @param body JSON body, or empty if none
 		 */
 		virtual void put(const std::string &url, const std::string &body,
-			const headers &headers,
-			lib::callback<std::string> &callback) const = 0;
+			const headers &headers, lib::callback<std::string> &callback) const = 0;
 
 		/**
-		 * POST request
+		 * POST request without request body
 		 */
-		virtual void post(const std::string &url,
-			const headers &headers,
-			lib::callback<std::string> &callback) const = 0;
+		void post(const std::string &url, const headers &headers,
+			lib::callback<std::string> &callback) const;
+
+		/**
+		 * POST request with request body
+		 */
+		virtual void post(const std::string &url, const std::string &body,
+			const headers &headers, lib::callback<std::string> &callback) const = 0;
 
 		/**
 		 * Synchronous POST request
@@ -53,7 +56,6 @@ namespace lib
 		 * @param body JSON body, or empty if none
 		 */
 		virtual void del(const std::string &url, const std::string &body,
-			const headers &headers,
-			lib::callback<std::string> &callback) const = 0;
+			const headers &headers, lib::callback<std::string> &callback) const = 0;
 	};
 }

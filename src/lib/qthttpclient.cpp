@@ -57,10 +57,14 @@ void QtHttpClient::put(const std::string &url, const std::string &body, const li
 		});
 }
 
-void QtHttpClient::post(const std::string &url, const lib::headers &headers,
-	lib::callback<std::string> &callback) const
+void QtHttpClient::post(const std::string &url, const std::string &body,
+	const lib::headers &headers, lib::callback<std::string> &callback) const
 {
-	await(networkManager->post(request(url, headers), QByteArray()),
+	auto data = body.empty()
+		? QByteArray()
+		: QByteArray::fromStdString(body);
+
+	await(networkManager->post(request(url, headers), data),
 		[url, callback](const QByteArray &data)
 		{
 			callback(data.toStdString());
