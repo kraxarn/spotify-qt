@@ -32,20 +32,5 @@ namespace lib
 
 	private:
 		const lib::http_client &http;
-
-		/**
-		 * Format string in a URL-friendly way
-		 */
-		static auto format(const std::string &str) -> std::string;
-
-		/**
-		 * Try to get lyrics from lyrics class
-		 */
-		static auto get_from_lyrics(const std::string &lyrics) -> std::string;
-
-		/**
-		 * Try to get lyrics from lyrics root class
-		 */
-		 static auto get_from_lyrics_root(const std::string &lyrics) -> std::string;
 	};
 }
