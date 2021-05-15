@@ -1,13 +1,14 @@
-#include "lib/qthttpclient.hpp"
+#include "common/qthttpclient.hpp"
 
-QtHttpClient::QtHttpClient(QObject *parent)
+cmn::QtHttpClient::QtHttpClient(QObject *parent)
 	: QObject(parent),
 	lib::http_client()
 {
 	networkManager = new QNetworkAccessManager(this);
 }
 
-auto QtHttpClient::request(const std::string &url, const lib::headers &headers) -> QNetworkRequest
+auto cmn::QtHttpClient::request(const std::string &url, const lib::headers &headers) ->
+QNetworkRequest
 {
 	// Prepare request
 	QNetworkRequest request(QUrl(QString::fromStdString(url)));
@@ -23,7 +24,7 @@ auto QtHttpClient::request(const std::string &url, const lib::headers &headers) 
 	return request;
 }
 
-void QtHttpClient::await(QNetworkReply *reply, lib::callback<QByteArray> &callback) const
+void cmn::QtHttpClient::await(QNetworkReply *reply, lib::callback<QByteArray> &callback) const
 {
 	QNetworkReply::connect(reply, &QNetworkReply::finished, this,
 		[reply, callback]()
@@ -33,7 +34,7 @@ void QtHttpClient::await(QNetworkReply *reply, lib::callback<QByteArray> &callba
 		});
 }
 
-void QtHttpClient::get(const std::string &url, const lib::headers &headers,
+void cmn::QtHttpClient::get(const std::string &url, const lib::headers &headers,
 	lib::callback<std::string> &callback) const
 {
 	await(networkManager->get(request(url, headers)),
@@ -43,7 +44,8 @@ void QtHttpClient::get(const std::string &url, const lib::headers &headers,
 		});
 }
 
-void QtHttpClient::put(const std::string &url, const std::string &body, const lib::headers &headers,
+void cmn::QtHttpClient::put(const std::string &url, const std::string &body, const lib::headers
+&headers,
 	lib::callback<std::string> &callback) const
 {
 	auto data = body.empty()
@@ -57,7 +59,7 @@ void QtHttpClient::put(const std::string &url, const std::string &body, const li
 		});
 }
 
-void QtHttpClient::post(const std::string &url, const std::string &body,
+void cmn::QtHttpClient::post(const std::string &url, const std::string &body,
 	const lib::headers &headers, lib::callback<std::string> &callback) const
 {
 	auto data = body.empty()
@@ -71,7 +73,7 @@ void QtHttpClient::post(const std::string &url, const std::string &body,
 		});
 }
 
-auto QtHttpClient::post(const std::string &url, const lib::headers &headers,
+auto cmn::QtHttpClient::post(const std::string &url, const lib::headers &headers,
 	const std::string &post_data) const -> std::string
 {
 	// Send request
@@ -85,7 +87,8 @@ auto QtHttpClient::post(const std::string &url, const lib::headers &headers,
 	return reply->readAll().toStdString();
 }
 
-void QtHttpClient::del(const std::string &url, const std::string &body, const lib::headers &headers,
+void cmn::QtHttpClient::del(const std::string &url, const std::string &body, const lib::headers
+&headers,
 	lib::callback<std::string> &callback) const
 {
 	auto data = body.empty()
