@@ -4,7 +4,7 @@ var searchData=
   ['image_75',['image',['../classlib_1_1spt_1_1album.html#a9ddfcaaa1236598d3ac692597aafd644',1,'lib::spt::album::image()'],['../classlib_1_1spt_1_1artist.html#a192bafc54f4236530d943731f535c738',1,'lib::spt::artist::image()'],['../classlib_1_1spt_1_1playlist.html#a54d2e594389dd4ae20588b7a28a6745e',1,'lib::spt::playlist::image()'],['../classlib_1_1spt_1_1track.html#a970f630528e6390e1820cac419e31a50',1,'lib::spt::track::image()'],['../classlib_1_1spt_1_1user.html#ab3268fbf2cf6d5412033c552d494b331',1,'lib::spt::user::image()']]],
   ['index_5fof_76',['index_of',['../classlib_1_1strings.html#ab69b626c3b8831b501596648ab3479d6',1,'lib::strings']]],
   ['info_77',['info',['../classlib_1_1log.html#afe551f6a31aee9f7cb1a14b40e50daa4',1,'lib::log::info(const Format &amp;fmt, const Arg &amp;arg, Args &amp;&amp;... args)'],['../classlib_1_1log.html#a7cf72a4b661e07ea524f08a006324964',1,'lib::log::info(const Format &amp;fmt)']]],
-  ['is_78',['is',['../classlib_1_1spotify__error.html#afc9f0132afaad65abd95eee7e9330364',1,'lib::spotify_error']]],
+  ['is_78',['is',['../classlib_1_1spt_1_1error.html#ac3d46b191da87ae88b6aae7467722b80',1,'lib::spt::error']]],
   ['is_5factive_79',['is_active',['../classlib_1_1spt_1_1device.html#a49f9a8bc672e50a80d6ae29a8441ff88',1,'lib::spt::device']]],
   ['is_5flocal_80',['is_local',['../classlib_1_1spt_1_1track.html#a49999656e64cc5c72573cdf89093449a',1,'lib::spt::track']]],
   ['is_5fnull_81',['is_null',['../classlib_1_1spt_1_1playlist.html#a45528c5a2ce934d3edf40666039ce08b',1,'lib::spt::playlist']]],

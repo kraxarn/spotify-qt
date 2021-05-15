@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['url_342',['url',['../classlib_1_1spotify__error.html#ae6dca656b0b26ab0c604529c6bbd77a9',1,'lib::spotify_error']]]
+  ['url_340',['url',['../classlib_1_1spt_1_1error.html#a19860ef550fb939be1d47ec93f97142c',1,'lib::spt::error']]]
 ];
