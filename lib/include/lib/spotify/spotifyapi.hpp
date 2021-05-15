@@ -452,7 +452,7 @@ namespace lib
 			/**
 			 * Get last used device
 			 */
-			auto get_current_device() const -> std::string;
+			auto get_current_device() const -> const std::string &;
 		};
 	}
 }

@@ -197,7 +197,7 @@ void api::set_current_device(const std::string &id)
 	settings.save();
 }
 
-auto api::get_current_device() const -> std::string
+auto api::get_current_device() const -> const std::string &
 {
 	return settings.general.last_device;
 }
