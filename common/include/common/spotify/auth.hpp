@@ -1,6 +1,8 @@
 #pragma once
 
 #include "lib/settings.hpp"
+#include "lib/spotify/auth.hpp"
+#include "common/qthttpclient.hpp"
 
 #include <QCoreApplication>
 #include <QJsonDocument>
@@ -15,8 +17,10 @@ namespace cmn
 {
 	namespace spt
 	{
-		class Auth
+		class Auth: public QObject
 		{
+		Q_OBJECT
+
 		public:
 			explicit Auth(lib::settings &settings, QObject *parent);
 
@@ -39,8 +43,7 @@ namespace cmn
 				const QString &id, const QString &secret) -> QString;
 
 		private:
-			QNetworkAccessManager *networkManager = nullptr;
-			lib::settings &settings;
+			lib::spt::auth *sptAuth = nullptr;
 		};
 	}
 }
