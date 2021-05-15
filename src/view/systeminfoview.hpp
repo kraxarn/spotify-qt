@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../mainwindow.hpp"
-#include "../spotify/spotify.hpp"
+#include "mainwindow.hpp"
+#include "spotify/spotify.hpp"
 #include "logview.hpp"
 #include "lib/libversion.hpp"
-#include "common/systeminfo.hpp"
+#include "lib/qt/systeminfo.hpp"
 
 #include <QFile>
 #include <QLabel>
@@ -20,6 +20,6 @@ public:
 	explicit SystemInfoView(QWidget *parent = nullptr);
 
 private:
-	auto systemInfo() -> SystemInfo;
+	auto systemInfo() -> lib::qt::system_info;
 	void copyToClipboard(bool checked);
 };

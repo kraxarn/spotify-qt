@@ -337,7 +337,7 @@ auto InterfacePage::defaultStyle() -> QString
 	}
 
 	// Override from environmental variable
-	auto overridden = SystemUtils::env("QT_STYLE_OVERRIDE");
+	auto overridden = lib::qt::util::system::env("QT_STYLE_OVERRIDE");
 	if (!overridden.isEmpty())
 	{
 		return overridden;

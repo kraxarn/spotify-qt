@@ -8,7 +8,7 @@ SystemInfoView::SystemInfoView(QWidget *parent)
 	setWindowTitle("System info");
 
 	auto *textInfo = new QTextEdit(this);
-	textInfo->setHtml(systemInfo().toHtml());
+	textInfo->setHtml(systemInfo().to_html());
 	textInfo->setReadOnly(true);
 	layout->addWidget(textInfo);
 
@@ -28,9 +28,9 @@ SystemInfoView::SystemInfoView(QWidget *parent)
 	layout->addLayout(infoLayout);
 }
 
-auto SystemInfoView::systemInfo() -> SystemInfo
+auto SystemInfoView::systemInfo() -> lib::qt::system_info
 {
-	SystemInfo info;
+	lib::qt::system_info info;
 
 	// spotify-qt version
 #ifdef GIT_COMMIT
@@ -65,5 +65,5 @@ auto SystemInfoView::systemInfo() -> SystemInfo
 
 void SystemInfoView::copyToClipboard(bool /*checked*/)
 {
-	QApplication::clipboard()->setText(systemInfo().toText());
+	QApplication::clipboard()->setText(systemInfo().to_text());
 }
