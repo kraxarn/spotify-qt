@@ -20,24 +20,14 @@ void LyricsView::open(const lib::spt::track &track)
 
 	setPlainText("Searching...");
 
-	lyrics.get(track, [this, &track](bool success, const std::string &result)
+	lyrics.get(track, [this, &track](const lib::spt::track_info &info)
 	{
-		try
+		if (!info.is_valid())
 		{
-			if (!success)
-			{
-				this->setPlainText(QString::fromStdString(result));
-				return;
-			}
-
-			lib::spt::track_info info = nlohmann::json::parse(result);
-
-			this->setPlainText(QString::fromStdString(info.lyrics));
-			this->cache.set_track_info(track, info);
+			this->setPlainText("No results");
+			return;
 		}
-		catch (const std::exception &e)
-		{
-			this->setPlainText(e.what());
-		}
+		this->setPlainText(QString::fromStdString(info.lyrics));
+		this->cache.set_track_info(track, info);
 	});
 }

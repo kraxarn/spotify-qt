@@ -5,6 +5,7 @@
 #include "lib/spotify/track.hpp"
 #include "lib/spotifyerror.hpp"
 #include "lib/strings.hpp"
+#include "lib/spotify/trackinfo.hpp"
 
 namespace lib
 {
@@ -28,7 +29,7 @@ namespace lib
 		 * @throws runtime_error Failed to get lyrics or none found
 		 */
 		void get(const lib::spt::track &track,
-			lib::result<std::string> &callback);
+			lib::callback<lib::spt::track_info> &callback);
 
 	private:
 		const lib::http_client &http;

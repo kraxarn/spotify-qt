@@ -5,7 +5,7 @@ lib::lyrics::lyrics(const lib::http_client &http_client)
 {
 }
 
-void lib::lyrics::get(const spt::track &track, lib::result<std::string> &callback)
+void lib::lyrics::get(const spt::track &track, lib::callback<lib::spt::track_info> &callback)
 {
 	std::string url = "https://spotify-lyrics.azurewebsites.net/lyrics";
 	nlohmann::json body{
@@ -18,27 +18,20 @@ void lib::lyrics::get(const spt::track &track, lib::result<std::string> &callbac
 
 	try
 	{
-		http.post(url, body.dump(), lib::headers(), [url, callback]
-			(const nlohmann::json &result)
+		http.post(url, body.dump(), headers, [url, callback]
+			(const std::string &result)
 		{
-			if (result.is_null())
+			if (result.empty())
 			{
-				callback(false, "No response");
+				callback(lib::spt::track_info());
 				return;
 			}
-
-			const auto &lyrics = result.at("lyrics");
-			if (lyrics.is_null())
-			{
-				callback(false, "No results");
-				return;
-			}
-
-			callback(true, lyrics.get<std::string>());
+			callback(nlohmann::json::parse(result));
 		});
 	}
 	catch (const std::exception &e)
 	{
-		callback(false, e.what());
+		lib::log::error("Failed to get lyrics: {}", e.what());
+		callback(lib::spt::track_info());
 	}
 }
