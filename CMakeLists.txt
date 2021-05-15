@@ -82,6 +82,7 @@ target_link_libraries(spotify-qt PRIVATE
 	Qt${QT_VERSION_MAJOR}::Svg)
 
 # spotify-qt-lib
+set(LIB_QT_IMPL ON)
 add_subdirectory(lib)
 target_link_libraries(spotify-qt PRIVATE spotify-qt-lib)
 
