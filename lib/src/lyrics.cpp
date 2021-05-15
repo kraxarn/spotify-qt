@@ -15,7 +15,7 @@ void lib::lyrics::get(const spt::track &track, lib::result<std::string> &callbac
 
 	try
 	{
-		http.put(url, body, lib::headers(), [url, callback]
+		http.post(url, body, lib::headers(), [url, callback]
 			(const nlohmann::json &result)
 		{
 			if (result.is_null())
