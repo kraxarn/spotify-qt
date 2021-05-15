@@ -12,6 +12,9 @@ void lib::lyrics::get(const spt::track &track, lib::result<std::string> &callbac
 		{"artist", track.artists.front().name},
 		{"name", track.name},
 	};
+	lib::headers headers{
+		{"Content-Type", "application/json"},
+	};
 
 	try
 	{
