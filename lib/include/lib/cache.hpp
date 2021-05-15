@@ -5,6 +5,7 @@
 #include "lib/spotify/track.hpp"
 #include "lib/spotify/playlist.hpp"
 #include "lib/spotify/album.hpp"
+#include "lib/spotify/trackinfo.hpp"
 
 namespace lib
 {
@@ -98,18 +99,19 @@ namespace lib
 		//region lyrics
 
 		/**
-		 * Get lyrics HTML
+		 * Get track info
 		 * @param track Track
-		 * @return Lyrics
+		 * @return Track info
 		 */
-		virtual auto get_lyrics(const lib::spt::track &track) -> std::string = 0;
+		virtual auto get_track_info(const lib::spt::track &track) -> lib::spt::track_info = 0;
 
 		/**
-		 * Set lyrics HTML
+		 * Set track info
 		 * @param track Track
-		 * @param lyrics Lyrics to save
+		 * @param track_info Track info
 		 */
-		virtual void set_lyrics(const lib::spt::track &track, const std::string &lyrics) = 0;
+		virtual void set_track_info(const lib::spt::track &track,
+			const lib::spt::track_info &track_info) = 0;
 
 		//endregion
 	};

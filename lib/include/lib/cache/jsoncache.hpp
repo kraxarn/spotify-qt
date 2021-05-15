@@ -35,8 +35,9 @@ namespace lib
 			const std::vector<lib::spt::track> &tracks) override;
 		auto all_tracks() -> std::map<std::string, std::vector<lib::spt::track>> override;
 
-		auto get_lyrics(const lib::spt::track &track) -> std::string override;
-		void set_lyrics(const lib::spt::track &track, const std::string &lyrics) override;
+		auto get_track_info(const lib::spt::track &track) -> lib::spt::track_info override;
+		void set_track_info(const lib::spt::track &track,
+			const lib::spt::track_info &track_info) override;
 
 	private:
 		const lib::paths &paths;

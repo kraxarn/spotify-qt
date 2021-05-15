@@ -11,10 +11,10 @@ LyricsView::LyricsView(const lib::http_client &httpClient,
 
 void LyricsView::open(const lib::spt::track &track)
 {
-	const auto &cached = cache.get_lyrics(track);
-	if (!cached.empty())
+	const auto &cached = cache.get_track_info(track);
+	if (cached.is_valid())
 	{
-		setHtml(QString::fromStdString(cached));
+		setPlainText(QString::fromStdString(cached.lyrics));
 		return;
 	}
 
@@ -22,13 +22,22 @@ void LyricsView::open(const lib::spt::track &track)
 
 	lyrics.get(track, [this, &track](bool success, const std::string &result)
 	{
-		if (!success)
+		try
 		{
-			this->setPlainText(QString::fromStdString(result));
-			return;
-		}
+			if (!success)
+			{
+				this->setPlainText(QString::fromStdString(result));
+				return;
+			}
 
-		this->setHtml(QString::fromStdString(result).trimmed());
-		this->cache.set_lyrics(track, result);
+			lib::spt::track_info info = nlohmann::json::parse(result);
+
+			this->setPlainText(QString::fromStdString(info.lyrics));
+			this->cache.set_track_info(track, info);
+		}
+		catch (const std::exception &e)
+		{
+			this->setPlainText(e.what());
+		}
 	});
 }

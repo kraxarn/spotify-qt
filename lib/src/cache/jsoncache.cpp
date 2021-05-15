@@ -114,23 +114,15 @@ auto lib::json_cache::all_tracks() -> std::map<std::string, std::vector<lib::spt
 
 //region lyrics
 
-auto lib::json_cache::get_lyrics(const lib::spt::track &track) -> std::string
+auto lib::json_cache::get_track_info(const lib::spt::track &track) -> lib::spt::track_info
 {
-	std::ifstream file(path("lyrics", track.id, "html"));
-	if (!file.is_open() || file.bad())
-	{
-		return std::string();
-	}
-
-	std::ostringstream stream;
-	stream << file.rdbuf();
-	return stream.str();
+	return lib::json::load(path("trackInfo", track.id, "json"));
 }
 
-void lib::json_cache::set_lyrics(const lib::spt::track &track, const std::string &lyrics)
+void lib::json_cache::set_track_info(const lib::spt::track &track,
+	const lib::spt::track_info &track_info)
 {
-	std::ofstream file(path("lyrics", track.id, "html"));
-	file << lyrics;
+	lib::json::save(path("trackInfo", track.id, "json"), track_info);
 }
 
 //endregion
