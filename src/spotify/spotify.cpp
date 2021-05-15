@@ -37,7 +37,7 @@ auto Spotify::tryRefresh() -> bool
 			QString("Failed to parse response from Spotify:\n%1").arg(e.what()));
 		return false;
 	}
-	catch (const lib::spotify_error &e)
+	catch (const lib::spt::error &e)
 	{
 		QMessageBox::warning(parentWidget, "Connection failed",
 			QString("Unexpected response:\n%1").arg(e.what()));

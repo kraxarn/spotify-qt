@@ -23,7 +23,7 @@ void api::refresh(bool force)
 	auto refresh_token = settings.account.refresh_token;
 	if (refresh_token.empty())
 	{
-		throw lib::spotify_error("No refresh token", "token");
+		throw lib::spt::error("No refresh token", "token");
 	}
 
 	// Create form
@@ -39,7 +39,7 @@ void api::refresh(bool force)
 	auto reply = request_refresh(post_data, auth_header);
 	if (reply.empty())
 	{
-		throw lib::spotify_error("No response", "token");
+		throw lib::spt::error("No response", "token");
 	}
 
 	// Parse as JSON
@@ -49,7 +49,7 @@ void api::refresh(bool force)
 	if (json.contains("error_description") || !json.contains("access_token"))
 	{
 		auto error = json.at("error_description").get<std::string>();
-		throw lib::spotify_error(error.empty()
+		throw lib::spt::error(error.empty()
 			? "No access token" : error, "token");
 	}
 
@@ -97,14 +97,14 @@ auto api::parse_json(const std::string &url, const std::string &data) -> nlohman
 
 	auto json = nlohmann::json::parse(data);
 
-	if (!lib::spotify_error::is(json))
+	if (!lib::spt::error::is(json))
 	{
 		return json;
 	}
 
-	auto err = lib::spotify_error::error_message(json);
+	auto err = lib::spt::error::error_message(json);
 	lib::log::error("{} failed: {}", url, err);
-	throw lib::spotify_error(err, url);
+	throw lib::spt::error(err, url);
 }
 
 auto api::request_refresh(const std::string &post_data,
