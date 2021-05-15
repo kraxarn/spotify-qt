@@ -7,7 +7,7 @@ lib::lyrics::lyrics(const lib::http_client &http_client)
 
 void lib::lyrics::get(const spt::track &track, lib::result<std::string> &callback)
 {
-	std::string url = "spotify-lyrics.azurewebsites.net";
+	std::string url = "https://spotify-lyrics.azurewebsites.net/lyrics";
 	nlohmann::json body{
 		{"artist", track.artists.front().name},
 		{"name", track.name},
