@@ -1,14 +1,15 @@
-#include "common/systeminfo.hpp"
+#include "lib/qt/systeminfo.hpp"
 
-SystemInfo::SystemInfo()
+lib::qt::system_info::system_info()
 {
 	// Qt version
 	add("Qt version", QT_VERSION_STR);
 
 	// Desktop environment
-	if (SystemUtils::hasEnv("XDG_CURRENT_DESKTOP"))
+	if (lib::qt::util::system::has_env("XDG_CURRENT_DESKTOP"))
 	{
-		add("Current desktop", SystemUtils::env("XDG_CURRENT_DESKTOP"));
+		add("Current desktop",
+			lib::qt::util::system::env("XDG_CURRENT_DESKTOP"));
 	}
 
 	// Kernel
@@ -22,12 +23,12 @@ SystemInfo::SystemInfo()
 	add("ABI", QSysInfo::buildAbi());
 }
 
-void SystemInfo::add(const QString &key, const QString &value)
+void lib::qt::system_info::add(const QString &key, const QString &value)
 {
 	info[key] = value;
 }
 
-auto SystemInfo::toText() -> QString
+auto lib::qt::system_info::to_text() -> QString
 {
 	QString systemInfo;
 	QMapIterator<QString, QString> i(info);
@@ -40,7 +41,7 @@ auto SystemInfo::toText() -> QString
 	return systemInfo;
 }
 
-auto SystemInfo::toHtml() -> QString
+auto lib::qt::system_info::to_html() -> QString
 {
 	QString systemInfo("<table>");
 	QMapIterator<QString, QString> i(info);
