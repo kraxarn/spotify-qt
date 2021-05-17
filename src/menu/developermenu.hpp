@@ -9,6 +9,7 @@
 #include "lib/settings.hpp"
 
 #include <QMenu>
+#include <QMainWindow>
 
 class DeveloperMenu: public QMenu
 {
@@ -22,6 +23,9 @@ private:
 	lib::settings &settings;
 	lib::spt::api &spotify;
 	lib::cache &cache;
+
+	static void addMenuItem(QMenu *menu, const QString &text,
+		const std::function<void()> &triggered);
 
 	QMenu *dialogMenu();
 	QMenu *infoMenu();
