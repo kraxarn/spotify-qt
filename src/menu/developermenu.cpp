@@ -17,7 +17,7 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 
 	QAction::connect(addAction("Reset size"), &QAction::triggered, [this]()
 	{
-		MainWindow::find(parentWidget())->resize(1280, 720);
+		MainWindow::find(parentWidget())->resize(MainWindow::defaultSize());
 	});
 
 	QAction::connect(addAction("Refresh access token"), &QAction::triggered, [this]()
