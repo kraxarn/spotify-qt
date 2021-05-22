@@ -46,6 +46,13 @@ namespace lib
 		static auto time(int ms) -> std::string;
 
 		/**
+		 * Get minutes and seconds from milliseconds
+		 * @param ms Milliseconds
+		 * @return Pair as <minutes, seconds>
+		 */
+		static auto time_min_sec(int ms) -> std::pair<int, int>;
+
+		/**
 		 * Format size as B, kB, MB or GB (bytes)
 		 * @param bytes Bytes
 		 */

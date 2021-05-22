@@ -4,13 +4,21 @@ using namespace lib;
 
 auto fmt::time(int ms) -> std::string
 {
-	auto seconds = ms / size_k;
-
-	auto m = seconds / 60;
-	auto s = seconds % 60;
+	auto t = time_min_sec(ms);
+	auto m = t.first;
+	auto s = t.second;
 
 	return format("{}:{}", m,
 		format("{}{}", s < 10 ? "0" : "", s % 60));
+}
+
+auto fmt::time_min_sec(int ms) -> std::pair<int, int>
+{
+	auto seconds = ms / size_k;
+	return {
+		seconds / 60,
+		seconds % 60,
+	}
 }
 
 auto fmt::size(unsigned int bytes) -> std::string
