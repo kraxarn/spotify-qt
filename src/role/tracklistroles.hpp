@@ -1,7 +1,7 @@
 #pragma once
 
-enum class TrackListRole
+enum TrackListRole
 {
-	Track,
-	Index,
+	TrackRoleTrack = 0x100,
+	TrackRoleIndex = 0x101,
 };

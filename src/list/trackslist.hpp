@@ -1,15 +1,16 @@
 #pragma once
 
-#include "../spotify/spotify.hpp"
+#include "spotify/spotify.hpp"
 #include "lib/cache.hpp"
-#include "../spotify/current.hpp"
-#include "../menu/songmenu.hpp"
+#include "spotify/current.hpp"
+#include "menu/songmenu.hpp"
 #include "lib/set.hpp"
+#include "model/tracklistmodel.hpp"
 
 #include <QListWidget>
 #include <QTreeWidgetItem>
 
-class TracksList: public QTreeWidget
+class TracksList: public QTreeView
 {
 Q_OBJECT
 
@@ -43,6 +44,16 @@ public:
 	 */
 	void load(const lib::spt::album &album, const std::string &trackId = std::string());
 
+	/**
+	 * Get IDs of all tracks currently shown
+	 */
+	auto trackIds() const -> std::vector<std::string>;
+
+	/**
+	 * Remove specified track from list
+	 */
+	void remove(lib::spt::track &track);
+
 protected:
 	void resizeEvent(QResizeEvent *event) override;
 
@@ -71,4 +82,6 @@ private:
 	// qt
 	QTreeWidgetItem *playingTrackItem = nullptr;
 	QIcon emptyIcon;
+
+	TrackListModel model;
 };

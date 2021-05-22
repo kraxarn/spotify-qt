@@ -229,29 +229,9 @@ void SongMenu::remFromPlaylist(bool /*checked*/)
 			}
 
 			// Remove from interface
-			QTreeWidgetItem *item = nullptr;
-			int i;
-			for (i = 0; i < mainWindow->getSongsTree()->topLevelItemCount(); i++)
-			{
-				item = mainWindow->getSongsTree()->topLevelItem(i);
-				if (item->data(0, RoleTrack).value<lib::spt::track>().id == track.id)
-				{
-					break;
-				}
-				item = nullptr;
-			}
-
-			if (item == nullptr)
-			{
-				mainWindow->setStatus("Failed to remove track, not found in playlist", true);
-				return;
-			}
-
-			// i doesn't necessarily match item index depending on sorting order
-			mainWindow->getSongsTree()->takeTopLevelItem(i);
+			mainWindow->getSongsTree()->remove(track);
 			mainWindow->status(lib::fmt::format("Removed {} - {} from \"{}\"",
-				track.name,
-				lib::spt::entity::combine_names(track.artists),
+				track.name, lib::spt::entity::combine_names(track.artists),
 				currentPlaylist->name));
 		});
 }

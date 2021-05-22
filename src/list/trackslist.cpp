@@ -7,26 +7,24 @@ TracksList::TracksList(spt::Spotify &spotify, lib::settings &settings, lib::cach
 	: spotify(spotify),
 	settings(settings),
 	cache(cache),
-	QTreeWidget(parent)
+	model(settings, this),
+	QTreeView(parent)
 {
 	constexpr int emptyPixmapSize = 64;
-	constexpr int columnCount = 5;
 
 	// Empty icon used as replacement for play icon
 	QPixmap emptyPixmap(emptyPixmapSize, emptyPixmapSize);
 	emptyPixmap.fill(Qt::transparent);
 	emptyIcon = QIcon(emptyPixmap);
 
+	setModel(&model);
+	setUniformRowHeights(true);
 	setEditTriggers(QAbstractItemView::NoEditTriggers);
 	setSelectionBehavior(QAbstractItemView::SelectRows);
 	setSortingEnabled(true);
 	setRootIsDecorated(false);
 	setAllColumnsShowFocus(true);
-	setColumnCount(columnCount);
-	setHeaderLabels({
-		settings.general.track_numbers == lib::context_all ? "#" : "",
-		"Title", "Artist", "Album", "Length", "Added"
-	});
+
 	header()->setSectionsMovable(false);
 	header()->setSortIndicator(settings.general.song_header_sort_by + 1, Qt::AscendingOrder);
 
@@ -39,7 +37,8 @@ TracksList::TracksList(spt::Spotify &spotify, lib::settings &settings, lib::cach
 	}
 
 	// Play tracks on click or enter/special key
-	QTreeWidget::connect(this, &QTreeWidget::itemActivated, this, &TracksList::clicked);
+	// TODO
+	//QTreeWidget::connect(this, &QTreeWidget::itemActivated, this, &TracksList::clicked);
 
 	// Song context menu
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
@@ -52,20 +51,15 @@ TracksList::TracksList(spt::Spotify &spotify, lib::settings &settings, lib::cach
 
 void TracksList::menu(const QPoint &pos)
 {
-	auto *item = itemAt(pos);
-	if (item == nullptr)
-	{
-		return;
-	}
-
-	const auto &track = item->data(0, RoleTrack).value<lib::spt::track>();
+	auto index = indexAt(pos);
+	const auto &track = model.at(index.row());
 	if (!track.is_valid())
 	{
 		return;
 	}
 
-	auto index = item->data(0, RoleIndex).toInt();
-	auto *songMenu = new SongMenu(track, spotify, index, parentWidget());
+	//auto index = item->data(0, RoleIndex).toInt();
+	auto *songMenu = new SongMenu(track, spotify, index.row(), parentWidget());
 	songMenu->popup(mapToGlobal(pos));
 }
 
@@ -231,56 +225,59 @@ void TracksList::updateResizeMode(lib::resize_mode mode)
 	resizeHeaders(size());
 }
 
-void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::string &selectedId)
+void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::string &/*selectedId*/)
 {
-	clear();
-	trackItems.clear();
-	playingTrackItem = nullptr;
-	auto fieldWidth = std::to_string(tracks.size()).size();
-	auto current = getCurrent();
-	auto anyHasDate = false;
+	model.clear();
+	model.add(tracks);
 
-	for (int i = 0; i < tracks.size(); i++)
-	{
-		const auto &track = tracks.at(i);
-
-		auto *item = new TrackListItem({
-			settings.general.track_numbers == lib::context_all
-				? QString("%1").arg(i + 1, fieldWidth)
-				: QString(),
-			QString::fromStdString(track.name),
-			QString::fromStdString(lib::spt::entity::combine_names(track.artists)),
-			QString::fromStdString(track.album.name),
-			QString::fromStdString(lib::fmt::time(track.duration)),
-			track.added_at.empty()
-				? QString()
-				: settings.general.relative_added
-				? DateUtils::toRelative(track.added_at)
-				: QLocale().toString(DateUtils::fromIso(track.added_at).date(),
-					QLocale::ShortFormat)
-		}, track, emptyIcon, i);
-
-		if (!anyHasDate && !track.added_at.empty())
-		{
-			anyHasDate = true;
-		}
-
-		if (track.id == current.playback.item.id)
-		{
-			setPlayingTrackItem(item);
-		}
-
-		insertTopLevelItem(i, item);
-		trackItems[track.id] = item;
-
-		if (!selectedId.empty() && track.id == selectedId)
-		{
-			setCurrentItem(item);
-		}
-	}
-
-	header()->setSectionHidden(colAdded, !anyHasDate
-		|| lib::set::contains(settings.general.hidden_song_headers, colAdded));
+//	clear();
+//	trackItems.clear();
+//	playingTrackItem = nullptr;
+//	auto fieldWidth = std::to_string(tracks.size()).size();
+//	auto current = getCurrent();
+//	auto anyHasDate = false;
+//
+//	for (int i = 0; i < tracks.size(); i++)
+//	{
+//		const auto &track = tracks.at(i);
+//
+//		auto *item = new TrackListItem({
+//			settings.general.track_numbers == lib::context_all
+//				? QString("%1").arg(i + 1, fieldWidth)
+//				: QString(),
+//			QString::fromStdString(track.name),
+//			QString::fromStdString(lib::spt::entity::combine_names(track.artists)),
+//			QString::fromStdString(track.album.name),
+//			QString::fromStdString(lib::fmt::time(track.duration)),
+//			track.added_at.empty()
+//				? QString()
+//				: settings.general.relative_added
+//				? DateUtils::toRelative(track.added_at)
+//				: QLocale().toString(DateUtils::fromIso(track.added_at).date(),
+//					QLocale::ShortFormat)
+//		}, track, emptyIcon, i);
+//
+//		if (!anyHasDate && !track.added_at.empty())
+//		{
+//			anyHasDate = true;
+//		}
+//
+//		if (track.id == current.playback.item.id)
+//		{
+//			setPlayingTrackItem(item);
+//		}
+//
+//		insertTopLevelItem(i, item);
+//		trackItems[track.id] = item;
+//
+//		if (!selectedId.empty() && track.id == selectedId)
+//		{
+//			setCurrentItem(item);
+//		}
+//	}
+//
+//	header()->setSectionHidden(colAdded, !anyHasDate
+//		|| lib::set::contains(settings.general.hidden_song_headers, colAdded));
 }
 
 void TracksList::load(const std::vector<lib::spt::track> &tracks)
@@ -379,4 +376,14 @@ auto TracksList::getCurrent() -> const spt::Current &
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	return mainWindow->getCurrent();
+}
+
+auto TracksList::trackIds() const -> std::vector<std::string>
+{
+	return model.trackIds();
+}
+
+void TracksList::remove(lib::spt::track &track)
+{
+	model.remove(track);
 }

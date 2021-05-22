@@ -408,21 +408,7 @@ void MainWindow::openArtist(const std::string &artistId)
 
 auto MainWindow::currentTracks() -> std::vector<std::string>
 {
-	std::vector<std::string> tracks;
-	tracks.reserve(songs->topLevelItemCount());
-
-	for (int i = 0; i < songs->topLevelItemCount(); i++)
-	{
-		auto track = songs->topLevelItem(i)->data(0, RoleTrack)
-			.value<lib::spt::track>();
-		if (!track.is_valid())
-		{
-			continue;
-		}
-		tracks.push_back(lib::spt::api::to_uri("track", track.id));
-	}
-
-	return tracks;
+	return songs->trackIds();
 }
 
 void MainWindow::reloadTrayIcon()
@@ -445,13 +431,14 @@ void MainWindow::setFixedWidthTime(bool value)
 
 void MainWindow::toggleTrackNumbers(bool enabled)
 {
-	for (int i = 0; i < songs->topLevelItemCount(); i++)
-	{
-		auto *item = songs->topLevelItem(i);
-		item->setText(0, enabled
-			? QString("%1").arg(item->data(0, RoleIndex).toInt() + 1, 3)
-			: QString());
-	}
+	// TODO
+//	for (int i = 0; i < songs->topLevelItemCount(); i++)
+//	{
+//		auto *item = songs->topLevelItem(i);
+//		item->setText(0, enabled
+//			? QString("%1").arg(item->data(0, RoleIndex).toInt() + 1, 3)
+//			: QString());
+//	}
 }
 
 //region Getters

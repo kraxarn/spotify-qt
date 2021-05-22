@@ -4,17 +4,24 @@
 #include "lib/spotify/track.hpp"
 #include "metatypes.hpp"
 #include "lib/vector.hpp"
+#include "lib/settings.hpp"
+#include "role/tracklistcolumn.hpp"
+#include "util/dateutils.hpp"
+#include "lib/spotify/api.hpp"
 
 #include <QAbstractListModel>
+#include <QLocale>
 
 class TrackListModel: public QAbstractListModel
 {
 Q_OBJECT
 
 public:
-	explicit TrackListModel(QObject *parent);
+	explicit TrackListModel(const lib::settings &settings, QObject *parent);
 
 	void add(const std::vector<lib::spt::track> &tracks);
+
+	void remove(lib::spt::track &track);
 
 	void clear();
 
@@ -26,11 +33,19 @@ public:
 	auto data(const QModelIndex &index, int role) const -> QVariant override;
 	auto data(const QModelIndex &index) const -> QVariant;
 
-	auto parent(const QModelIndex &child) const -> QModelIndex override;
+	auto headerData(int section, Qt::Orientation orientation,
+		int role) const -> QVariant override;
+
+	auto at(int index) -> const lib::spt::track &;
+
+	auto trackIds() const -> std::vector<std::string>;
 
 protected:
 	auto roleNames() const -> QHash<int, QByteArray> override;
 
 private:
+	const lib::settings &settings;
 	std::vector<lib::spt::track> tracks;
+
+	auto displayRole(TrackListColumn column, int row) const -> QString;
 };
