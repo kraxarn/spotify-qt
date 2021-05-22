@@ -11,6 +11,7 @@
 
 #include <QAbstractListModel>
 #include <QLocale>
+#include <QIcon>
 
 class TrackListModel: public QAbstractListModel
 {
@@ -46,6 +47,7 @@ protected:
 private:
 	const lib::settings &settings;
 	std::vector<lib::spt::track> tracks;
+	QIcon emptyIcon;
 
 	auto displayRole(TrackListColumn column, int row) const -> QString;
 };

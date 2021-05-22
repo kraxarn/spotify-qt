@@ -4,6 +4,12 @@ TrackListModel::TrackListModel(const lib::settings &settings, QObject *parent)
 	: settings(settings),
 	QAbstractListModel(parent)
 {
+	constexpr int emptyPixmapSize = 64;
+
+	// Empty icon used as replacement for play icon
+	QPixmap emptyPixmap(emptyPixmapSize, emptyPixmapSize);
+	emptyPixmap.fill(Qt::transparent);
+	emptyIcon = QIcon(emptyPixmap);
 }
 
 void TrackListModel::add(const std::vector<lib::spt::track> &items)
@@ -75,6 +81,9 @@ auto TrackListModel::data(const QModelIndex &index, int role) const -> QVariant
 	{
 		case Qt::DisplayRole:
 			return displayRole(col, row);
+
+		case Qt::DecorationRole:
+			return emptyIcon;
 
 		case TrackRoleTrack:
 			return QVariant::fromValue(track);
