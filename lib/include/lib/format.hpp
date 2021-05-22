@@ -58,6 +58,13 @@ namespace lib
 		static auto count(unsigned int count) -> std::string;
 
 	private:
+		/** Kilo (1 000) */
+		static constexpr unsigned int size_k = 1000;
+		/** Mega (1 000 000) */
+		static constexpr unsigned int size_m = size_k * 1000;
+		/** Giga (1 000 000 000) */
+		static constexpr unsigned int size_g = size_m * 1000;
+
 		/**
 		 * Format string into another string
 		 * @param fmt String with {} to replace
