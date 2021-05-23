@@ -16,10 +16,18 @@ auto TreeUtils::itemWithChildren(QTreeWidget *tree,
 	return item;
 }
 
-auto TreeUtils::itemWithChildren(QTreeWidget *tree, const QString &name,
+auto TreeUtils::itemWithNoChildren(QTreeWidget *tree, const QString &name,
 	const QString &toolTip) -> QTreeWidgetItem *
 {
-	return itemWithChildren(tree, name, toolTip, QStringList());
+	return itemWithChildren(tree, name, toolTip,
+		QStringList());
+}
+
+auto TreeUtils::itemWithEmptyChild(QTreeWidget *tree, const QString &name,
+	const QString &toolTip) -> QTreeWidgetItem *
+{
+	return itemWithChildren(tree, name, toolTip,
+		QStringList(QString()));
 }
 
 auto TreeUtils::item(QTreeWidget *tree, const QString &key,
@@ -33,5 +41,6 @@ auto TreeUtils::item(QTreeWidget *tree, const QString &key,
 auto TreeUtils::item(QTreeWidget *tree, const std::string &key,
 	const std::string &value) -> QTreeWidgetItem *
 {
-	return treeItem(tree, QString::fromStdString(key), QString::fromStdString(value));
+	return item(tree, QString::fromStdString(key),
+		QString::fromStdString(value));
 }
