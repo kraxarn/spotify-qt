@@ -24,7 +24,8 @@ auto ApplicationPage::app() -> QWidget *
 	appRefresh->setEditable(true);
 	appRefresh->setCurrentIndex(-1);
 	appRefresh->setEditText(QString::number(settings.general.refresh_interval));
-	appRefresh->setValidator(new QIntValidator(1, 60, this));
+	appRefresh->setValidator(new QIntValidator(minRefreshInterval,
+		maxRefreshInterval, this));
 	comboBoxLayout->addWidget(appRefresh, 0, 1);
 	comboBoxLayout->addWidget(new QLabel("seconds"), 0, 2);
 
@@ -35,7 +36,8 @@ auto ApplicationPage::app() -> QWidget *
 
 	appMaxQueue = new QComboBox(this);
 	appMaxQueue->setEditable(true);
-	appMaxQueue->setValidator(new QIntValidator(1, 1000, this));
+	appMaxQueue->setValidator(new QIntValidator(minMaxQueue,
+		maxMaxQueue, this));
 	appMaxQueue->addItems({
 		"100", "250", "500"
 	});
@@ -107,23 +109,31 @@ auto ApplicationPage::save() -> bool
 	}
 
 	// Refresh interval
-	auto ok = false;
-	auto interval = appRefresh->currentText().toInt(&ok);
-	if (!ok || interval <= 0 || interval > 60)
+
+	if (appRefresh != nullptr)
 	{
-		applyFail("refresh interval");
-		return false;
+		auto ok = false;
+		auto interval = appRefresh->currentText().toInt(&ok);
+		if (!ok || interval < minRefreshInterval || interval > maxRefreshInterval)
+		{
+			applyFail("refresh interval");
+			return false;
+		}
+		settings.general.refresh_interval = interval;
 	}
-	settings.general.refresh_interval = interval;
 
 	// Max queue
-	auto maxQueue = appMaxQueue->currentText().toInt(&ok);
-	if (!ok || maxQueue <= 0 || maxQueue > 1000)
+	if (appMaxQueue != nullptr)
 	{
-		applyFail("queue limit");
-		return false;
+		auto ok = false;
+		auto maxQueue = appMaxQueue->currentText().toInt(&ok);
+		if (!ok || maxQueue < minMaxQueue || maxQueue > maxMaxQueue)
+		{
+			applyFail("queue limit");
+			return false;
+		}
+		settings.spotify.max_queue = maxQueue;
 	}
-	settings.spotify.max_queue = maxQueue;
 
 	// Other application stuff
 	settings.general.show_changelog = appWhatsNew->isChecked();

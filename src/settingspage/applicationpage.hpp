@@ -21,7 +21,11 @@ private:
 	QComboBox *appRefresh = nullptr;
 	QComboBox *appMaxQueue = nullptr;
 
-	static bool isPulse();
+	static constexpr int minRefreshInterval = 1;
+	static constexpr int maxRefreshInterval = 60;
+
+	static constexpr int minMaxQueue = 1;
+	static constexpr int maxMaxQueue = 1000;
 
 	static auto isPulse() -> bool;
 
