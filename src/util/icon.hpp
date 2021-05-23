@@ -9,7 +9,7 @@
 class Icon
 {
 public:
-	static QIcon get(const QString &name);
+	static auto get(const QString &name) -> QIcon;
 	static bool useFallbackIcons;
 
 private:

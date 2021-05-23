@@ -2,7 +2,7 @@
 
 bool Icon::useFallbackIcons = false;
 
-QIcon Icon::get(const QString &name)
+auto Icon::get(const QString &name) -> QIcon
 {
 	if (name.startsWith("logo:"))
 	{
