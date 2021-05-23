@@ -13,4 +13,7 @@ public:
 	/** Mask image using specified shape */
 	static auto mask(const QPixmap &source, MaskShape shape = MaskShape::App,
 		const QVariant &data = QVariant()) -> QPixmap;
+
+private:
+	ImageUtils() = default;
 };
