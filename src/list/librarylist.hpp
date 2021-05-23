@@ -1,7 +1,7 @@
 #pragma once
 
 #include "spotify/spotify.hpp"
-#include "util/utils.hpp"
+#include "util/treeutils.hpp"
 #include "libraryitem.hpp"
 
 #include <QTreeWidget>

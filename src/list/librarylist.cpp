@@ -6,23 +6,19 @@ LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 	QTreeWidget(parent)
 {
 	addTopLevelItems({
-		Utils::treeItemWithChildren(this, RECENTLY_PLAYED,
-			"Most recently played tracks from any device",
-			QStringList()),
-		Utils::treeItemWithChildren(this, SAVED_TRACKS,
-			"Liked and saved tracks",
-			QStringList()),
-		Utils::treeItemWithChildren(this, TOP_TRACKS,
-			"Most played tracks for the past 6 months",
-			QStringList()),
-		Utils::treeItemWithChildren(this, NEW_RELEASES,
-			"New albums from artists you listen to",
-			QStringList()),
-		Utils::treeItemWithChildren(this, SAVED_ALBUMS,
+		TreeUtils::itemWithNoChildren(this, recentlyPlayed,
+			"Most recently played tracks from any device"),
+		TreeUtils::itemWithNoChildren(this, savedTracks,
+			"Liked and saved tracks"),
+		TreeUtils::itemWithNoChildren(this, topTracks,
+			"Most played tracks for the past 6 months"),
+		TreeUtils::itemWithNoChildren(this, newReleases,
+			"New albums from artists you listen to"),
+		TreeUtils::itemWithEmptyChild(this, savedAlbums,
 			"Liked and saved albums"),
-		Utils::treeItemWithChildren(this, TOP_ARTISTS,
+		TreeUtils::itemWithEmptyChild(this, topArtists,
 			"Most played artists for the past 6 months"),
-		Utils::treeItemWithChildren(this, FOLLOWED_ARTISTS,
+		TreeUtils::itemWithEmptyChild(this, followedArtists,
 			"Artists you're currently following")
 	});
 

@@ -26,6 +26,6 @@ void AudioFeaturesView::loaded(const lib::spt::audio_features &features)
 {
 	for (const auto &value : features.get_values())
 	{
-		addTopLevelItem(Utils::treeItem(this, value.first, value.second));
+		addTopLevelItem(TreeUtils::item(this, value.first, value.second));
 	}
 }
