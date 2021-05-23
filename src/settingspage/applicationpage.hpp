@@ -10,9 +10,9 @@ class ApplicationPage: public SettingsPage
 public:
 	ApplicationPage(lib::settings &settings, QWidget *parent);
 
-	QIcon icon() override;
-	QString title() override;
-	bool save() override;
+	auto icon() -> QIcon override;
+	auto title() -> QString override;
+	auto save() -> bool override;
 
 private:
 	QCheckBox *appMedia = nullptr;
@@ -23,8 +23,10 @@ private:
 
 	static bool isPulse();
 
-	QWidget *app();
-	QWidget *appLogs();
+	static auto isPulse() -> bool;
+
+	auto app() -> QWidget *;
+	auto appLogs() -> QWidget *;
 };
 
 

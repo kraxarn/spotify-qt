@@ -7,13 +7,13 @@ ApplicationPage::ApplicationPage(lib::settings &settings, QWidget *parent)
 	addTab(appLogs(), "Logs");
 }
 
-QWidget *ApplicationPage::app()
+auto ApplicationPage::app() -> QWidget *
 {
-	auto layout = tabContent();
-	auto comboBoxLayout = new QGridLayout();
+	auto *layout = tabContent();
+	auto *comboBoxLayout = new QGridLayout();
 
 	// Refresh interval
-	auto appRefreshLabel = new QLabel("Refresh interval", this);
+	auto *appRefreshLabel = new QLabel("Refresh interval", this);
 	appRefreshLabel->setToolTip("How often to refresh playback status from the Spotify servers");
 	comboBoxLayout->addWidget(appRefreshLabel, 0, 0);
 
@@ -29,7 +29,7 @@ QWidget *ApplicationPage::app()
 	comboBoxLayout->addWidget(new QLabel("seconds"), 0, 2);
 
 	// Max queue
-	auto maxQueueLabel = new QLabel("Queue limit", this);
+	auto *maxQueueLabel = new QLabel("Queue limit", this);
 	maxQueueLabel->setToolTip("Maximum amount of items allowed to be queued at once");
 	comboBoxLayout->addWidget(maxQueueLabel, 1, 0);
 
@@ -72,22 +72,22 @@ QWidget *ApplicationPage::app()
 	return Utils::layoutToWidget(layout);
 }
 
-QWidget *ApplicationPage::appLogs()
+auto ApplicationPage::appLogs() -> QWidget *
 {
 	return new LogView(this);
 }
 
-QIcon ApplicationPage::icon()
+auto ApplicationPage::icon() -> QIcon
 {
 	return Icon::get("window");
 }
 
-QString ApplicationPage::title()
+auto ApplicationPage::title() -> QString
 {
 	return "Application";
 }
 
-bool ApplicationPage::save()
+auto ApplicationPage::save() -> bool
 {
 	// Media controller
 	if (appMedia != nullptr)
@@ -102,7 +102,9 @@ bool ApplicationPage::save()
 
 	// PulseAudio volume
 	if (appPulse != nullptr)
+	{
 		settings.general.pulse_volume = appPulse->isChecked();
+	}
 
 	// Refresh interval
 	auto ok = false;
@@ -129,7 +131,7 @@ bool ApplicationPage::save()
 	return true;
 }
 
-bool ApplicationPage::isPulse()
+auto ApplicationPage::isPulse() -> bool
 {
 	// Assume /usr/bin/pactl
 	return QFileInfo("/usr/bin/pactl").isExecutable();
