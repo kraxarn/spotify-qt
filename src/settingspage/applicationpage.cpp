@@ -136,7 +136,10 @@ auto ApplicationPage::save() -> bool
 	}
 
 	// Other application stuff
-	settings.general.show_changelog = appWhatsNew->isChecked();
+	if (appWhatsNew != nullptr)
+	{
+		settings.general.show_changelog = appWhatsNew->isChecked();
+	}
 
 	return true;
 }
