@@ -11,9 +11,9 @@ class PlaylistsPage: public SettingsPage
 public:
 	PlaylistsPage(lib::settings &settings, QWidget *parent);
 
-	QIcon icon() override;
-	QString title() override;
-	bool save() override;
+	auto icon() -> QIcon override;
+	auto title() -> QString override;
+	auto save() -> bool override;
 
 private:
 	QComboBox *plOrder = nullptr;
@@ -30,7 +30,7 @@ private:
 	void playlistDown();
 	void playlistItemChanged(int row);
 
-	QWidget *order();
+	auto order() -> QWidget *;
 };
 
 
