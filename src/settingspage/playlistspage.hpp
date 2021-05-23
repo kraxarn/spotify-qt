@@ -1,7 +1,7 @@
 #pragma once
 
 #include "settingspage.hpp"
-#include "../util/icon.hpp"
+#include "util/icon.hpp"
 
 #include <QComboBox>
 #include <QListWidget>
