@@ -1,6 +1,6 @@
 #include "urlutils.hpp"
 
-void UrlUtilities::open(const QString &url, LinkType linkType, QWidget *parent)
+void UrlUtils::open(const QString &url, LinkType linkType, QWidget *parent)
 {
 	if (!QDesktopServices::openUrl(QUrl(url)))
 	{
@@ -8,7 +8,7 @@ void UrlUtilities::open(const QString &url, LinkType linkType, QWidget *parent)
 	}
 }
 
-void UrlUtilities::open(const std::string &url, LinkType linkType, QWidget *parent)
+void UrlUtils::open(const std::string &url, LinkType linkType, QWidget *parent)
 {
 	open(QString::fromStdString(url), linkType, parent);
 }

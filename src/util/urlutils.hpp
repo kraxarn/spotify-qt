@@ -7,7 +7,7 @@
 #include <QWidget>
 #include <QDesktopServices>
 
-class UrlUtilities
+class UrlUtils
 {
 public:
 	/** Open URL of specific type */
@@ -17,5 +17,5 @@ public:
 	static void open(const std::string &url, LinkType linkType, QWidget *parent);
 
 private:
-	UrlUtilities() = default;
+	UrlUtils() = default;
 };
