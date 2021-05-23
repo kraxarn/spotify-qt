@@ -124,11 +124,10 @@ auto Utils::createGroupBox(QVector<QWidget *> &widgets, QWidget *parent) -> QGro
 	return group;
 }
 
-QAction *Utils::createMenuAction(
-	const QString &iconName, const QString &text,
-	QKeySequence::StandardKey shortcut)
+auto Utils::createMenuAction(const QString &iconName, const QString &text,
+	QObject *parent, QKeySequence::StandardKey shortcut) -> QAction *
 {
-	auto action = new QAction(Icon::get(iconName), text);
+	auto *action = new QAction(Icon::get(iconName), text, parent);
 	if (shortcut != QKeySequence::UnknownKey)
 	{
 		action->setShortcut(QKeySequence(shortcut));

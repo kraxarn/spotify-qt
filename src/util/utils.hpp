@@ -34,8 +34,12 @@ public:
 
 	static auto createGroupBox(QVector<QWidget *> &widgets, QWidget *parent) -> QGroupBox *;
 
-	static QTreeWidgetItem *treeItem(QTreeWidget *tree,
-		const QString &key, const QString &value);
+	static auto createMenuAction(const QString &iconName,
+		const QString &text, QObject *parent,
+		QKeySequence::StandardKey shortcut = QKeySequence::UnknownKey) -> QAction *;
+
+	static auto treeItem(QTreeWidget *tree,
+		const QString &key, const QString &value) -> QTreeWidgetItem *;
 
 	static auto treeItem(QTreeWidget *tree, const std::string &key,
 		const std::string &value) -> QTreeWidgetItem *;
