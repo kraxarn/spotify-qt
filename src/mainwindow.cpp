@@ -7,9 +7,9 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	QMainWindow()
 {
 	// Splash
-	auto *splash = new SplashDialog();
-	splash->show();
-	splash->showMessage("Please wait...");
+	SplashDialog splash;
+	splash.show();
+	splash.showMessage("Please wait...");
 
 	// Apply selected style and palette
 	QApplication::setStyle(QString::fromStdString(settings.general.style));
@@ -30,7 +30,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	}
 
 	// Set Spotify
-	splash->showMessage("Connecting...");
+	splash.showMessage("Connecting...");
 	httpClient = new lib::qt::http_client(this);
 	spotify = new spt::Spotify(settings, *httpClient, this);
 	network = new QNetworkAccessManager(this);
@@ -39,7 +39,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	stateValid = spotify->tryRefresh();
 	if (!stateValid)
 	{
-		splash->finish(this);
+		splash.finish(this);
 		return;
 	}
 
@@ -53,13 +53,13 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	addToolBar(Qt::ToolBarArea::TopToolBarArea, toolBar);
 
 	// Update player status
-	splash->showMessage("Refreshing...");
+	splash.showMessage("Refreshing...");
 	auto *timer = new QTimer(this);
 	QTimer::connect(timer, &QTimer::timeout, this, &MainWindow::refresh);
 	refresh();
 	constexpr int tickMs = 1000;
 	timer->start(tickMs);
-	splash->showMessage("Welcome!");
+	splash.showMessage("Welcome!");
 
 	// Check if should start client
 	if (settings.spotify.start_client)
@@ -159,7 +159,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 
 	// Welcome
 	setStatus("Welcome to spotify-qt!");
-	splash->finish(this);
+	splash.finish(this);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
