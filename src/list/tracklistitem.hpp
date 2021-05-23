@@ -22,6 +22,9 @@ public:
 	/** If track can't be played */
 	auto isDisabled() const -> bool;
 
+	/** Track is valid */
+	auto isValid() const -> bool;
+
 	/** Get the underlying track */
 	auto getTrack() const -> const lib::spt::track &;
 

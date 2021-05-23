@@ -52,14 +52,15 @@ TracksList::TracksList(spt::Spotify &spotify, lib::settings &settings, lib::cach
 void TracksList::menu(const QPoint &pos)
 {
 	auto index = indexAt(pos);
-	const auto &track = model.at(index.row());
-	if (!track.is_valid())
+	const auto &trackItem = model.at(index.row());
+	if (!trackItem.isValid())
 	{
 		return;
 	}
 
 	//auto index = item->data(0, RoleIndex).toInt();
-	auto *songMenu = new SongMenu(track, spotify, index.row(), parentWidget());
+	auto *songMenu = new SongMenu(trackItem.getTrack(), spotify,
+		trackItem.getIndex(), parentWidget());
 	songMenu->popup(mapToGlobal(pos));
 }
 

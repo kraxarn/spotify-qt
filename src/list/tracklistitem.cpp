@@ -58,6 +58,11 @@ auto TrackListItem::isDisabled() const -> bool
 	return track.is_local || !track.is_playable;
 }
 
+auto TrackListItem::isValid() const -> bool
+{
+	return track.is_valid();
+}
+
 auto TrackListItem::emptyIcon() -> QIcon
 {
 	constexpr int emptyPixmapSize = 64;

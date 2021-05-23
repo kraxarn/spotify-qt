@@ -38,7 +38,7 @@ public:
 	auto headerData(int section, Qt::Orientation orientation,
 		int role) const -> QVariant override;
 
-	auto at(int index) -> const lib::spt::track &;
+	auto at(int index) -> const TrackListItem &;
 
 	auto trackIds() const -> std::vector<std::string>;
 

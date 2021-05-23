@@ -156,9 +156,9 @@ auto TrackListModel::headerData(int section, Qt::Orientation orientation,
 	}
 }
 
-auto TrackListModel::at(int index) -> const lib::spt::track &
+auto TrackListModel::at(int index) -> const TrackListItem &
 {
-	return tracks.at(index).getTrack();
+	return tracks.at(index);
 }
 
 auto TrackListModel::displayRole(TrackListColumn column, int row) const -> QString
