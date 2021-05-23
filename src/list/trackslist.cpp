@@ -58,9 +58,7 @@ void TracksList::menu(const QPoint &pos)
 		return;
 	}
 
-	//auto index = item->data(0, RoleIndex).toInt();
-	auto *songMenu = new SongMenu(trackItem.getTrack(), spotify,
-		trackItem.getIndex(), parentWidget());
+	auto *songMenu = new SongMenu(trackItem, spotify, parentWidget());
 	songMenu->popup(mapToGlobal(pos));
 }
 

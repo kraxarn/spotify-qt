@@ -13,9 +13,8 @@ SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
 {
 }
 
-SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
-	int index, QWidget *parent)
-	: SongMenu(track, spotify, nullptr, index, parent)
+SongMenu::SongMenu(const TrackListItem &track, spt::Spotify &spotify, QWidget *parent)
+	: SongMenu(track.getTrack(), spotify, nullptr, track.getIndex(), parent)
 {
 }
 

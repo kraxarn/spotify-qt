@@ -1,9 +1,10 @@
 #pragma once
 
-#include "../spotify/spotify.hpp"
-#include "../util/icon.hpp"
+#include "spotify/spotify.hpp"
+#include "util/icon.hpp"
 #include "lib/strings.hpp"
 #include "enum/datarole.hpp"
+#include "list/tracklistitem.hpp"
 
 #include <utility>
 
@@ -27,10 +28,9 @@ public:
 		const lib::spt::artist *fromArtist, QWidget *parent);
 
 	/**
-	 * SongMenu from playlist with index of track in playlist
+	 * SongMenu from tracks list
 	 */
-	SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
-		int index, QWidget *parent);
+	SongMenu(const TrackListItem &track, spt::Spotify &spotify, QWidget *parent);
 
 private:
 	SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
