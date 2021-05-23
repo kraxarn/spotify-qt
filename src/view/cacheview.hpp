@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../util/utils.hpp"
-#include "../util/icon.hpp"
+#include "util/urlutils.hpp"
+#include "util/icon.hpp"
 
 #include <QTreeWidget>
 #include <QDir>

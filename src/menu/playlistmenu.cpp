@@ -73,7 +73,7 @@ PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &play
 	auto *shareSongOpen = share->addAction("Open in Spotify");
 	QAction::connect(shareSongOpen, &QAction::triggered, [this](bool /*checked*/)
 	{
-		Utils::openUrl(QString("https://open.spotify.com/playlist/%1")
+		UrlUtils::open(QString("https://open.spotify.com/playlist/%1")
 				.arg(QString::fromStdString(this->playlist.id)),
 			LinkType::Web, this->parent);
 	});

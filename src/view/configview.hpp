@@ -1,7 +1,8 @@
 #pragma once
 
 #include "lib/settings.hpp"
-#include "../util/icon.hpp"
+#include "util/icon.hpp"
+#include "util/urlutils.hpp"
 
 #include <QTreeWidget>
 #include <QHeaderView>

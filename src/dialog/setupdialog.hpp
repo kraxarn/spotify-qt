@@ -2,6 +2,7 @@
 
 #include "lib/qt/spotify/auth.hpp"
 #include "openlinkdialog.hpp"
+#include "util/urlutils.hpp"
 
 #include <QCoreApplication>
 #include <QDesktopServices>

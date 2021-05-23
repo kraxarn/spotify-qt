@@ -51,7 +51,7 @@ SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
 	auto *shareSongOpen = share->addAction("Open in Spotify");
 	QAction::connect(shareSongOpen, &QAction::triggered, [this, mainWindow](bool /*checked*/)
 	{
-		Utils::openUrl(this->getTrackUrl(), LinkType::Web, mainWindow);
+		UrlUtils::open(this->getTrackUrl(), LinkType::Web, mainWindow);
 	});
 
 	// Add/remove liked

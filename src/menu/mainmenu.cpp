@@ -187,7 +187,7 @@ void MainMenu::checkForUpdate(const std::string &data)
 		QAction::connect(about, &QAction::triggered, [this]()
 		{
 			QString url("https://github.com/kraxarn/spotify-qt/releases/latest");
-			Utils::openUrl(url, LinkType::Web,
+			UrlUtils::open(url, LinkType::Web,
 				MainWindow::find(this->parentWidget()));
 		});
 	}

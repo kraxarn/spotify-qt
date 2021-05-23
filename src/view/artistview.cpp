@@ -364,13 +364,13 @@ void ArtistView::albumDoubleClicked(QTreeWidgetItem *item, int /*column*/)
 
 void ArtistView::searchWikipedia(bool /*checked*/)
 {
-	Utils::openUrl(lib::fmt::format(
+	UrlUtils::open(lib::fmt::format(
 		"https://www.wikipedia.org/search-redirect.php?family=wikipedia&go=Go&search={}",
 		artist.name), LinkType::Web, this);
 }
 void ArtistView::searchDuckDuckGo(bool /*checked*/)
 {
-	Utils::openUrl(lib::fmt::format("https://duckduckgo.com/?t=h_&q={}", artist.name),
+	UrlUtils::open(lib::fmt::format("https://duckduckgo.com/?t=h_&q={}", artist.name),
 		LinkType::Web, this);
 }
 
@@ -388,6 +388,6 @@ void ArtistView::copyLink(bool /*checked*/)
 
 void ArtistView::openInSpotify(bool /*chekced*/)
 {
-	Utils::openUrl(lib::fmt::format("https://open.spotify.com/artist/{}", artistId),
+	UrlUtils::open(lib::fmt::format("https://open.spotify.com/artist/{}", artistId),
 		LinkType::Web, MainWindow::find(parentWidget()));
 }

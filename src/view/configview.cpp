@@ -41,8 +41,7 @@ void ConfigView::menu(const QPoint &pos)
 	QAction::connect(menu->addAction(Icon::get("folder-txt"), "Open in external editor"),
 		&QAction::triggered, [this](bool /*checked*/)
 		{
-			Utils::openUrl(QString::fromStdString(this->settings.file_name()),
-				LinkType::Path, this);
+			UrlUtils::open(this->settings.file_name(), LinkType::Path, this);
 		});
 
 	menu->popup(mapToGlobal(pos));
