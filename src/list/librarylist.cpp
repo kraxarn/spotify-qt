@@ -1,14 +1,5 @@
 #include "librarylist.hpp"
-
-#include "../mainwindow.hpp"
-
-#define FOLLOWED_ARTISTS "Followed Artists"
-#define NEW_RELEASES "New Releases"
-#define RECENTLY_PLAYED "History"
-#define SAVED_ALBUMS "Liked Albums"
-#define SAVED_TRACKS "Liked Tracks"
-#define TOP_ARTISTS "Top Artists"
-#define TOP_TRACKS "Top Tracks"
+#include "mainwindow.hpp"
 
 LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 	: spotify(spotify),
@@ -89,19 +80,19 @@ void LibraryList::clicked(QTreeWidgetItem *item, int /*column*/)
 			this->tracksLoaded(id, tracks);
 		};
 
-		if (item->text(0) == RECENTLY_PLAYED)
+		if (item->text(0) == recentlyPlayed)
 		{
 			spotify.recently_played(callback);
 		}
-		else if (item->text(0) == SAVED_TRACKS)
+		else if (item->text(0) == savedTracks)
 		{
 			spotify.saved_tracks(callback);
 		}
-		else if (item->text(0) == TOP_TRACKS)
+		else if (item->text(0) == topTracks)
 		{
 			spotify.top_tracks(callback);
 		}
-		else if (item->text(0) == NEW_RELEASES)
+		else if (item->text(0) == newReleases)
 		{
 			spotify.new_releases([this, mainWindow, callback]
 				(const std::vector<lib::spt::album> &releases)
@@ -185,15 +176,15 @@ void LibraryList::doubleClicked(QTreeWidgetItem *item, int /*column*/)
 	};
 
 	// Fetch all tracks in list
-	if (item->text(0) == RECENTLY_PLAYED)
+	if (item->text(0) == recentlyPlayed)
 	{
 		spotify.recently_played(callback);
 	}
-	else if (item->text(0) == SAVED_TRACKS)
+	else if (item->text(0) == savedTracks)
 	{
 		spotify.saved_tracks(callback);
 	}
-	else if (item->text(0) == TOP_TRACKS)
+	else if (item->text(0) == topTracks)
 	{
 		spotify.top_tracks(callback);
 	}
@@ -203,7 +194,7 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 {
 	item->takeChildren();
 
-	if (item->text(0) == TOP_ARTISTS)
+	if (item->text(0) == topArtists)
 	{
 		spotify.top_artists([item](const std::vector<lib::spt::artist> &artists)
 		{
@@ -216,7 +207,7 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 			LibraryList::itemsLoaded(results, item);
 		});
 	}
-	else if (item->text(0) == SAVED_ALBUMS)
+	else if (item->text(0) == savedAlbums)
 	{
 		spotify.saved_albums([item](const std::vector<lib::spt::saved_album> &albums)
 		{
@@ -229,7 +220,7 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 			LibraryList::itemsLoaded(results, item);
 		});
 	}
-	else if (item->text(0) == FOLLOWED_ARTISTS)
+	else if (item->text(0) == followedArtists)
 	{
 		spotify.followed_artists([item](const std::vector<lib::spt::artist> &artists)
 		{
