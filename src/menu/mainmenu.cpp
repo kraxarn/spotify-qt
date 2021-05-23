@@ -33,7 +33,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings,
 
 	// Refresh and settings
 	auto *openSettings = Utils::createMenuAction("configure",
-		"Settings...", QKeySequence::Preferences);
+		"Settings...", this, QKeySequence::Preferences);
 	QAction::connect(openSettings, &QAction::triggered, [this]()
 	{
 		SettingsDialog dialog(this->settings, MainWindow::find(parentWidget()));
@@ -49,9 +49,11 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings,
 
 	// Log out and quit
 	addSeparator();
-	auto *quitAction = Utils::createMenuAction("application-exit", "Quit", QKeySequence::Quit);
+	auto *quitAction = Utils::createMenuAction("application-exit",
+		"Quit", this, QKeySequence::Quit);
 	QAction::connect(quitAction, &QAction::triggered, QCoreApplication::quit);
-	auto *logOutAction = Utils::createMenuAction("im-user-away", "Log out");
+	auto *logOutAction = Utils::createMenuAction("im-user-away",
+		"Log out", this);
 
 	QAction::connect(logOutAction, &QAction::triggered,
 		this, &MainMenu::logOut);
