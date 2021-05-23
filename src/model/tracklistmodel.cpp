@@ -16,16 +16,22 @@ void TrackListModel::add(const std::vector<lib::spt::track> &items)
 {
 	beginInsertRows(QModelIndex(), rowCount(),
 		static_cast<int>(rowCount() + tracks.size() - 1));
-	lib::vector::append(tracks, items);
+
+	auto i = rowCount();
+	for (const auto &item : items)
+	{
+		tracks.emplace_back(item, i++);
+	}
+
 	endInsertRows();
 }
 
 void TrackListModel::remove(lib::spt::track &item)
 {
-	std::vector<lib::spt::track>::iterator iter;
+	std::vector<TrackListItem>::iterator iter;
 	for (iter = tracks.begin(); iter != tracks.end(); iter++)
 	{
-		if (iter->id == item.id)
+		if (*iter == item)
 		{
 			break;
 		}
@@ -75,21 +81,27 @@ auto TrackListModel::data(const QModelIndex &index, int role) const -> QVariant
 		return QVariant();
 	}
 
-	const auto &track = tracks.at(row);
+	const auto &trackItem = tracks.at(row);
 
 	switch (role)
 	{
+		// Text to display
 		case Qt::DisplayRole:
 			return displayRole(col, row);
 
+			// Icon to show
 		case Qt::DecorationRole:
 			return emptyIcon;
 
+			// Tooltip to show on hover
+		case Qt::ToolTipRole:
+			return tooltip(col, row);
+
 		case TrackRoleTrack:
-			return QVariant::fromValue(track);
+			return QVariant::fromValue(trackItem.getTrack());
 
 		case TrackRoleIndex:
-			return index.row();
+			return trackItem.getIndex();
 
 		default:
 			return QVariant();
@@ -146,13 +158,11 @@ auto TrackListModel::headerData(int section, Qt::Orientation orientation,
 
 auto TrackListModel::at(int index) -> const lib::spt::track &
 {
-	return tracks.at(index);
+	return tracks.at(index).getTrack();
 }
 
 auto TrackListModel::displayRole(TrackListColumn column, int row) const -> QString
 {
-	const auto &track = tracks.at(row);
-
 	if (column == TrackListColumn::Number)
 	{
 		// TODO: Slow (needs to be done for each row)?
@@ -161,6 +171,8 @@ auto TrackListModel::displayRole(TrackListColumn column, int row) const -> QStri
 			? QString("%1").arg(row + 1, fieldWidth)
 			: QString();
 	}
+
+	const auto &track = tracks.at(row).getTrack();
 
 	if (column == TrackListColumn::Name)
 	{
@@ -203,13 +215,66 @@ auto TrackListModel::displayRole(TrackListColumn column, int row) const -> QStri
 	return QString();
 }
 
+auto TrackListModel::tooltip(TrackListColumn column, int row) const -> QString
+{
+	if (column == TrackListColumn::Number)
+	{
+		return QString();
+	}
+
+	auto trackItem = tracks.at(row);
+	const auto &track = trackItem.getTrack();
+
+	if (column == TrackListColumn::Name)
+	{
+		if (track.is_local)
+		{
+			return QString("Local track");
+		}
+		if (!track.is_playable)
+		{
+			return QString("Unavailable");
+		}
+		return QString::fromStdString(track.name);
+	}
+
+	if (column == TrackListColumn::Artists)
+	{
+		auto names = lib::spt::entity::combine_names(track.artists, "\n");
+		return QString::fromStdString(names);
+	}
+
+	if (column == TrackListColumn::Album)
+	{
+		return QString::fromStdString(track.album.name);
+	}
+
+	if (column == TrackListColumn::Duration)
+	{
+		auto time = lib::fmt::time_min_sec(track.duration);
+		return QString("%1m %2s (%3s total)")
+			.arg(time.first, time.second)
+			.arg(track.duration / 1000);
+	}
+
+	if (column == TrackListColumn::AddedAt)
+	{
+		auto locale = QLocale::system();
+		return locale.toString(trackItem.addedAt());
+	}
+
+	return QString();
+}
+
 auto TrackListModel::trackIds() const -> std::vector<std::string>
 {
 	std::vector<std::string> items;
 	items.reserve(tracks.size());
 
-	for (const auto &track : tracks)
+	for (const auto &trackItem : tracks)
 	{
+		const auto &track = trackItem.getTrack();
+
 		if (!track.is_valid())
 		{
 			continue;

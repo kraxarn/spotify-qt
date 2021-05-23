@@ -8,6 +8,7 @@
 #include "role/tracklistcolumn.hpp"
 #include "util/dateutils.hpp"
 #include "lib/spotify/api.hpp"
+#include "list/tracklistitem.hpp"
 
 #include <QAbstractListModel>
 #include <QLocale>
@@ -46,8 +47,12 @@ protected:
 
 private:
 	const lib::settings &settings;
-	std::vector<lib::spt::track> tracks;
+	std::vector<TrackListItem> tracks;
 	QIcon emptyIcon;
 
+	/** Qt::DisplayRole */
 	auto displayRole(TrackListColumn column, int row) const -> QString;
+
+	/** Qt::ToolTipRole */
+	auto tooltip(TrackListColumn column, int row) const -> QString;
 };
