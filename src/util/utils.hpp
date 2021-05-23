@@ -20,8 +20,7 @@
 class Utils
 {
 public:
-	static auto mask(const QPixmap &source, MaskShape shape = MaskShape::App,
-		const QVariant &data = QVariant()) -> QPixmap;
+
 
 	static auto layoutToWidget(QLayout *layout) -> QWidget *;
 
@@ -32,8 +31,6 @@ public:
 	static auto createMenuAction(const QString &iconName,
 		const QString &text, QObject *parent,
 		QKeySequence::StandardKey shortcut = QKeySequence::UnknownKey) -> QAction *;
-
-
 
 	static bool darkBackground;
 
