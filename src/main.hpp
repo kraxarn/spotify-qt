@@ -27,6 +27,7 @@
 #include "util/dateutils.hpp"
 #include "util/icon.hpp"
 #include "util/utils.hpp"
+#include "util/imageutils.hpp"
 
 #include <QMainWindow>
 #include <QSplitter>

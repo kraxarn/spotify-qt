@@ -355,7 +355,7 @@ void MainWindow::status(const std::string &message, bool important)
 
 void MainWindow::setAlbumImage(const std::string &url)
 {
-	leftSidePanel->setAlbumImage(Utils::mask(getAlbum(url)));
+	leftSidePanel->setAlbumImage(ImageUtils::mask(getAlbum(url)));
 }
 
 auto MainWindow::get(const QString &url) -> QByteArray

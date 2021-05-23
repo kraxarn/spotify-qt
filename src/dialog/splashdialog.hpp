@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../util/icon.hpp"
-#include "../util/utils.hpp"
+#include "util/icon.hpp"
+#include "util/imageutils.hpp"
 
 #include <QSplashScreen>
 #include <QPixmap>

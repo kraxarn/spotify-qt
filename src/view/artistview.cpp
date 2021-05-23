@@ -137,7 +137,7 @@ void ArtistView::artistLoaded(const lib::spt::artist &loadedArtist)
 	name->setText(QString::fromStdString(artist.name));
 
 	// Menu actions
-	popularity->setIcon(QIcon(Utils::mask(Icon::get("draw-donut")
+	popularity->setIcon(QIcon(ImageUtils::mask(Icon::get("draw-donut")
 		.pixmap(64, 64), MaskShape::Pie, QVariant(artist.popularity))));
 	popularity->setText(QString("%1% popularity").arg(artist.popularity));
 

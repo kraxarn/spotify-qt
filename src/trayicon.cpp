@@ -103,5 +103,5 @@ auto TrayIcon::playback() -> lib::spt::playback
 
 void TrayIcon::setPixmap(const QPixmap &pixmap)
 {
-	setIcon(Utils::mask(pixmap));
+	setIcon(ImageUtils::mask(pixmap));
 }
