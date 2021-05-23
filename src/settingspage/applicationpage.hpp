@@ -1,9 +1,10 @@
 #pragma once
 
-#include "../util/icon.hpp"
+#include "util/icon.hpp"
 #include "lib/settings.hpp"
 #include "settingspage.hpp"
 #include "view/logview.hpp"
+#include "util/widgetutils.hpp"
 
 class ApplicationPage: public SettingsPage
 {

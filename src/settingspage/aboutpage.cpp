@@ -49,7 +49,7 @@ auto AboutPage::about() -> QWidget *
 			0, Qt::AlignHCenter);
 	}
 
-	return Utils::layoutToWidget(layout);
+	return WidgetUtils::layoutToWidget(layout, this);
 }
 
 auto AboutPage::systemInfo() -> QWidget *

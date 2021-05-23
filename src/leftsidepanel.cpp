@@ -1,5 +1,4 @@
 #include "leftsidepanel.hpp"
-
 #include "mainwindow.hpp"
 
 LeftSidePanel::LeftSidePanel(spt::Spotify &spotify, lib::settings &settings,
@@ -15,14 +14,14 @@ LeftSidePanel::LeftSidePanel(spt::Spotify &spotify, lib::settings &settings,
 
 	// Library
 	libraryList = new LibraryList(spotify, parent);
-	auto *library = Utils::createGroupBox(QVector<QWidget *>() << libraryList, parent);
+	auto *library = WidgetUtils::createGroupBox(libraryList, parent);
 	library->setTitle("Library");
 	layout->addWidget(library);
 
 	// Playlists
 	playlists = new PlaylistList(spotify, settings, cache, parent);
 	refreshPlaylists();
-	auto *playlistContainer = Utils::createGroupBox(QVector<QWidget *>() << playlists, parent);
+	auto *playlistContainer = WidgetUtils::createGroupBox(playlists, parent);
 	playlistContainer->setTitle("Playlists");
 	layout->addWidget(playlistContainer);
 

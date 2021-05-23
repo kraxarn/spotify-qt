@@ -4,7 +4,7 @@
 #include "list/playlistlist.hpp"
 #include "spotify/current.hpp"
 #include "spotify/spotify.hpp"
-#include "util/utils.hpp"
+#include "util/widgetutils.hpp"
 #include "lib/developermode.hpp"
 #include "util/dateutils.hpp"
 #include "lib/cache.hpp"

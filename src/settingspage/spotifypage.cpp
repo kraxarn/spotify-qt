@@ -76,7 +76,7 @@ auto SpotifyPage::spotify() -> QWidget *
 	content->addLayout(statusLayout);
 	updateClientStatus();
 
-	return Utils::layoutToWidget(content);
+	return WidgetUtils::layoutToWidget(content, this);
 }
 
 auto SpotifyPage::isClientRunning() const -> bool
@@ -191,7 +191,7 @@ auto SpotifyPage::config() -> QWidget *
 	sptDiscovery->setChecked(!settings.spotify.disable_discovery);
 	sptLayout->addWidget(sptDiscovery, 4, 0);
 
-	return Utils::layoutToWidget(content);
+	return WidgetUtils::layoutToWidget(content, this);
 }
 
 auto SpotifyPage::logs() -> QWidget *

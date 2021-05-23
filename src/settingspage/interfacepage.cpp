@@ -107,7 +107,7 @@ auto InterfacePage::general() -> QWidget *
 	titleBar->setChecked(qtSettings.system_title_bar);
 	layout->addWidget(titleBar);
 
-	return Utils::layoutToWidget(layout);
+	return WidgetUtils::layoutToWidget(layout, this);
 }
 
 auto InterfacePage::trayIcon() -> QWidget *
@@ -148,7 +148,7 @@ auto InterfacePage::trayIcon() -> QWidget *
 	itfTrayAlbum->setChecked(settings.general.tray_album_art);
 	content->addWidget(itfTrayAlbum);
 
-	return Utils::layoutToWidget(content);
+	return WidgetUtils::layoutToWidget(content, this);
 }
 
 auto InterfacePage::icon() -> QIcon
