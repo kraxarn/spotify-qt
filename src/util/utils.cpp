@@ -5,20 +5,6 @@
 
 bool Utils::darkBackground = false;
 
-auto Utils::treeItemWithChildren(QTreeWidget *tree,
-	const QString &name, const QString &toolTip,
-	const QStringList &childrenItems) -> QTreeWidgetItem *
-{
-	auto *item = new QTreeWidgetItem(tree, {name});
-	item->setToolTip(0, toolTip);
-	for (const auto &child : childrenItems)
-	{
-		item->addChild(new QTreeWidgetItem(item, {child}));
-	}
-
-	return item;
-}
-
 void Utils::applyPalette(lib::palette palette)
 {
 	QPalette p;
@@ -133,20 +119,6 @@ auto Utils::createMenuAction(const QString &iconName, const QString &text,
 		action->setShortcut(QKeySequence(shortcut));
 	}
 	return action;
-}
-
-auto Utils::treeItem(QTreeWidget *tree, const QString &key,
-	const QString &value) -> QTreeWidgetItem *
-{
-	return new QTreeWidgetItem(tree, {
-		key, value
-	});
-}
-
-auto Utils::treeItem(QTreeWidget *tree, const std::string &key,
-	const std::string &value) -> QTreeWidgetItem *
-{
-	return treeItem(tree, QString::fromStdString(key), QString::fromStdString(value));
 }
 
 void Utils::openUrl(const QString &url, LinkType linkType, QWidget *parent)
