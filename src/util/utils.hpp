@@ -15,6 +15,7 @@
 #include <QStringList>
 #include <QVBoxLayout>
 #include <QDesktopServices>
+#include <QStyle>
 
 class Utils
 {
