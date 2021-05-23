@@ -7,6 +7,11 @@ lib::qt::spt::auth::auth(lib::settings &settings, QObject *parent)
 	spt_auth = new lib::spt::auth(settings, *httpClient);
 }
 
+lib::qt::spt::auth::~auth()
+{
+	delete spt_auth;
+}
+
 auto lib::qt::spt::auth::url(const QString &clientId, const QString &redirect) -> QString
 {
 	return QString::fromStdString(lib::spt::auth::url(clientId.toStdString(),

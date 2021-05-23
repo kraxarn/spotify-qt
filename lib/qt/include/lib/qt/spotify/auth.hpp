@@ -26,6 +26,8 @@ namespace lib
 			public:
 				explicit auth(lib::settings &settings, QObject *parent);
 
+				~auth() override;
+
 				/**
 				 * Authentication URL
 				 */
