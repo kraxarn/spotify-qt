@@ -20,18 +20,18 @@ AlbumMenu::AlbumMenu(spt::Spotify &spotify, lib::cache &cache, const std::string
 	});
 
 	addSeparator();
-	auto playShuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle play");
+	auto *playShuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle play");
 	QAction::connect(playShuffle, &QAction::triggered, this, &AlbumMenu::shuffle);
 
-	auto share = addMenu(Icon::get("document-share"), "Share");
-	auto sharePlaylist = share->addAction("Copy album link");
+	auto *share = addMenu(Icon::get("document-share"), "Share");
+	auto *sharePlaylist = share->addAction("Copy album link");
 	QAction::connect(sharePlaylist, &QAction::triggered, this, &AlbumMenu::shareAlbum);
 
-	auto shareSongOpen = share->addAction("Open in Spotify");
+	auto *shareSongOpen = share->addAction("Open in Spotify");
 	QAction::connect(shareSongOpen, &QAction::triggered, this, &AlbumMenu::shareOpen);
 }
 
-void AlbumMenu::shuffle(bool)
+void AlbumMenu::shuffle(bool /*checked*/)
 {
 	if (tracks.empty())
 	{
@@ -43,7 +43,7 @@ void AlbumMenu::shuffle(bool)
 	spotify.play_tracks(initialIndex, lib::spt::api::to_uri("album", albumId),
 		[this](const std::string &status)
 		{
-			auto mainWindow = MainWindow::find(this->parent);
+			auto *mainWindow = MainWindow::find(this->parent);
 			if (!status.empty())
 			{
 				mainWindow->status(status, true);
@@ -57,14 +57,14 @@ void AlbumMenu::shuffle(bool)
 		});
 }
 
-void AlbumMenu::shareAlbum(bool)
+void AlbumMenu::shareAlbum(bool /*checked*/)
 {
 	QApplication::clipboard()->setText(QString("https://open.spotify.com/album/%1")
 		.arg(QString::fromStdString(albumId)));
 	MainWindow::find(parentWidget())->setStatus("Link copied to clipboard");
 }
 
-void AlbumMenu::shareOpen(bool)
+void AlbumMenu::shareOpen(bool /*checked*/)
 {
 	Utils::openUrl(QString("https://open.spotify.com/album/%1")
 		.arg(QString::fromStdString(albumId)), LinkType::Web, this->parent);
@@ -76,11 +76,18 @@ void AlbumMenu::tracksLoaded(const std::vector<lib::spt::track> &items)
 
 	auto duration = 0;
 	for (auto &track : tracks)
+	{
 		duration += track.duration;
-	auto minutes = duration / 1000 / 60;
+	}
+
+	constexpr int secInMin = 60;
+	constexpr int msToMin = 1000 / secInMin;
+	auto minutes = duration / msToMin;
 
 	trackCount->setText(QString("%1 tracks, %2%3 m")
 		.arg(tracks.size())
-		.arg(minutes >= 60 ? QString("%1 h ").arg(minutes / 60) : QString())
-		.arg(minutes % 60));
+		.arg(minutes >= secInMin
+			? QString("%1 h ").arg(minutes / secInMin)
+			: QString())
+		.arg(minutes % secInMin));
 }
