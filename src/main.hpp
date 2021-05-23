@@ -26,7 +26,6 @@
 #include "trayicon.hpp"
 #include "util/dateutils.hpp"
 #include "util/icon.hpp"
-#include "util/utils.hpp"
 #include "util/imageutils.hpp"
 #include "util/styleutils.hpp"
 

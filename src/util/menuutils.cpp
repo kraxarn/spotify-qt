@@ -1,9 +1,6 @@
-#include "utils.hpp"
+#include "menuutils.hpp"
 
-#include "icon.hpp"
-#include "../dialog/openlinkdialog.hpp"
-
-auto Utils::createMenuAction(const QString &iconName, const QString &text,
+auto MenuUtils::createAction(const QString &iconName, const QString &text,
 	QObject *parent, QKeySequence::StandardKey shortcut) -> QAction *
 {
 	auto *action = new QAction(Icon::get(iconName), text, parent);

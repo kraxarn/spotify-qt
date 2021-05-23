@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../enum/linktype.hpp"
-#include "../util/utils.hpp"
+#include "enum/linktype.hpp"
 
 #include <QClipboard>
 #include <QDialog>
