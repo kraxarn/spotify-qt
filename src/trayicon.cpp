@@ -1,6 +1,6 @@
 #include "trayicon.hpp"
 
-TrayIcon::TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QObject *parent)
+TrayIcon::TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QWidget *parent)
 	: spotify(spotify),
 	settings(settings),
 	QSystemTrayIcon(parent)
@@ -10,7 +10,7 @@ TrayIcon::TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QObject
 		this->message(QString::fromStdString(result));
 	};
 
-	contextMenu = new QMenu();
+	contextMenu = new QMenu(parent);
 	currentTrack = contextMenu->addAction("-");
 	currentTrack->setEnabled(false);
 	contextMenu->addSeparator();
@@ -27,9 +27,13 @@ TrayIcon::TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QObject
 	QAction::connect(playPause, &QAction::triggered, [this](bool /*checked*/)
 	{
 		if (playback().is_playing)
+		{
 			this->spotify->pause(this->callback);
+		}
 		else
+		{
 			this->spotify->resume(this->callback);
+		}
 	});
 
 	auto *next = contextMenu->addAction(Icon::get("media-skip-forward"), "Next");
