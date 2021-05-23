@@ -1,4 +1,4 @@
-#include "urlutilities.hpp"
+#include "urlutils.hpp"
 
 void UrlUtilities::open(const QString &url, LinkType linkType, QWidget *parent)
 {
