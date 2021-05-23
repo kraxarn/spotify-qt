@@ -5,14 +5,16 @@
 
 bool Utils::darkBackground = false;
 
-QTreeWidgetItem *Utils::treeItemWithChildren(
-	QTreeWidget *tree, const QString &name,
-	const QString &toolTip, const QStringList &childrenItems)
+auto Utils::treeItemWithChildren(QTreeWidget *tree,
+	const QString &name, const QString &toolTip,
+	const QStringList &childrenItems) -> QTreeWidgetItem *
 {
-	auto item = new QTreeWidgetItem(tree, {name});
+	auto *item = new QTreeWidgetItem(tree, {name});
 	item->setToolTip(0, toolTip);
-	for (auto &child : childrenItems)
+	for (const auto &child : childrenItems)
+	{
 		item->addChild(new QTreeWidgetItem(item, {child}));
+	}
 
 	return item;
 }
@@ -38,10 +40,12 @@ void Utils::applyPalette(lib::palette palette)
 	QApplication::setPalette(p);
 }
 
-QPixmap Utils::mask(const QPixmap &source, MaskShape shape, const QVariant &data)
+auto Utils::mask(const QPixmap &source, MaskShape shape, const QVariant &data) -> QPixmap
 {
 	if (source.isNull())
+	{
 		return source;
+	}
 
 	auto img = source.toImage().convertToFormat(QImage::Format_ARGB32);
 	QImage out(img.size(), QImage::Format_ARGB32);
@@ -101,19 +105,21 @@ QPixmap Utils::mask(const QPixmap &source, MaskShape shape, const QVariant &data
 	return QPixmap::fromImage(out);
 }
 
-QWidget *Utils::layoutToWidget(QLayout *layout)
+auto Utils::layoutToWidget(QLayout *layout) -> QWidget *
 {
-	auto widget = new QWidget();
+	auto *widget = new QWidget();
 	widget->setLayout(layout);
 	return widget;
 }
 
-QGroupBox *Utils::createGroupBox(QVector<QWidget *> &widgets, QWidget *parent)
+auto Utils::createGroupBox(QVector<QWidget *> &widgets, QWidget *parent) -> QGroupBox *
 {
-	auto group = new QGroupBox(parent);
-	auto layout = new QVBoxLayout();
+	auto *group = new QGroupBox(parent);
+	auto *layout = new QVBoxLayout();
 	for (auto &widget : widgets)
+	{
 		layout->addWidget(widget);
+	}
 	group->setLayout(layout);
 	return group;
 }
@@ -124,11 +130,14 @@ QAction *Utils::createMenuAction(
 {
 	auto action = new QAction(Icon::get(iconName), text);
 	if (shortcut != QKeySequence::UnknownKey)
+	{
 		action->setShortcut(QKeySequence(shortcut));
+	}
 	return action;
 }
 
-QTreeWidgetItem *Utils::treeItem(QTreeWidget *tree, const QString &key, const QString &value)
+auto Utils::treeItem(QTreeWidget *tree, const QString &key,
+	const QString &value) -> QTreeWidgetItem *
 {
 	return new QTreeWidgetItem(tree, {
 		key, value
@@ -144,7 +153,9 @@ auto Utils::treeItem(QTreeWidget *tree, const std::string &key,
 void Utils::openUrl(const QString &url, LinkType linkType, QWidget *parent)
 {
 	if (!QDesktopServices::openUrl(QUrl(url)))
+	{
 		OpenLinkDialog(url, linkType, parent).exec();
+	}
 }
 
 void Utils::openUrl(const std::string &url, LinkType linkType, QWidget *parent)
