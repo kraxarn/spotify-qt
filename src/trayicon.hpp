@@ -15,7 +15,7 @@ class TrayIcon: private QSystemTrayIcon
 Q_OBJECT
 
 public:
-	TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QObject *parent);
+	TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QWidget *parent);
 	~TrayIcon() override;
 
 	void message(const QString &message);
