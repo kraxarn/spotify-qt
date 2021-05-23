@@ -26,25 +26,6 @@ void Utils::applyPalette(lib::palette palette)
 	QApplication::setPalette(p);
 }
 
-auto Utils::layoutToWidget(QLayout *layout) -> QWidget *
-{
-	auto *widget = new QWidget();
-	widget->setLayout(layout);
-	return widget;
-}
-
-auto Utils::createGroupBox(QVector<QWidget *> &widgets, QWidget *parent) -> QGroupBox *
-{
-	auto *group = new QGroupBox(parent);
-	auto *layout = new QVBoxLayout();
-	for (auto &widget : widgets)
-	{
-		layout->addWidget(widget);
-	}
-	group->setLayout(layout);
-	return group;
-}
-
 auto Utils::createMenuAction(const QString &iconName, const QString &text,
 	QObject *parent, QKeySequence::StandardKey shortcut) -> QAction *
 {

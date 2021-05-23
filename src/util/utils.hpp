@@ -22,11 +22,9 @@ class Utils
 public:
 
 
-	static auto layoutToWidget(QLayout *layout) -> QWidget *;
-
 	static void applyPalette(lib::palette palette);
 
-	static auto createGroupBox(QVector<QWidget *> &widgets, QWidget *parent) -> QGroupBox *;
+
 
 	static auto createMenuAction(const QString &iconName,
 		const QString &text, QObject *parent,
