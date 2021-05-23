@@ -13,7 +13,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 
 	// Apply selected style and palette
 	QApplication::setStyle(QString::fromStdString(settings.general.style));
-	Utils::applyPalette(settings.general.style_palette);
+	StyleUtils::applyPalette(settings.general.style_palette);
 
 	// Custom dark theme
 	if (settings.general.style_palette == lib::palette_dark)
@@ -22,12 +22,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	}
 
 	// Check for dark background
-	const auto bg = palette().color(backgroundRole());
-	constexpr auto threshold = 128;
-	if (((bg.red() + bg.green() + bg.blue()) / 3) < threshold)
-	{
-		Utils::darkBackground = true;
-	}
+	StyleUtils::setDarkBackground(this);
 
 	// Set Spotify
 	splash.showMessage("Connecting...");

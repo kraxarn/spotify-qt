@@ -172,7 +172,7 @@ auto InterfacePage::save() -> bool
 		QMessageBox::information(this, "Dark Theme",
 			"Please restart the application to fully apply selected theme");
 		settings.set_dark_theme(itfDark->isChecked());
-		Utils::applyPalette(settings.general.style_palette);
+		StyleUtils::applyPalette(settings.general.style_palette);
 	}
 
 	// Set style
