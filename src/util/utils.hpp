@@ -20,8 +20,6 @@
 class Utils
 {
 public:
-
-
 	static auto mask(const QPixmap &source, MaskShape shape = MaskShape::App,
 		const QVariant &data = QVariant()) -> QPixmap;
 
@@ -35,8 +33,7 @@ public:
 		const QString &text, QObject *parent,
 		QKeySequence::StandardKey shortcut = QKeySequence::UnknownKey) -> QAction *;
 
-	static void openUrl(const QString &url, LinkType linkType, QWidget *parent);
-	static void openUrl(const std::string &url, LinkType linkType, QWidget *parent);
+
 
 	static bool darkBackground;
 
