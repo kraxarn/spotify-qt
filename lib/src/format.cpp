@@ -18,7 +18,7 @@ auto fmt::time_min_sec(int ms) -> std::pair<int, int>
 	return {
 		seconds / 60,
 		seconds % 60,
-	}
+	};
 }
 
 auto fmt::size(unsigned int bytes) -> std::string
