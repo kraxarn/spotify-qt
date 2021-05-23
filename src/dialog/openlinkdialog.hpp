@@ -22,5 +22,5 @@ public:
 private:
 	LinkType linkType;
 
-	QString titleText();
+	auto titleText() -> QString;
 };

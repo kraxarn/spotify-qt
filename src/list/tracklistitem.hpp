@@ -13,8 +13,8 @@
 class TrackListItem: public QTreeWidgetItem
 {
 public:
-	TrackListItem(const QStringList &strings, const lib::spt::track &track, const QIcon &icon,
-		int index);
+	TrackListItem(const QStringList &strings, const lib::spt::track &track,
+		const QIcon &icon, int index);
 
 private:
 	auto operator<(const QTreeWidgetItem &item) const -> bool override;

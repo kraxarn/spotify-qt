@@ -45,7 +45,7 @@ public:
 
 private:
 	void categoryChanged(int row);
-	bool applySettings();
+	auto applySettings() -> bool;
 
 	lib::settings &settings;
 

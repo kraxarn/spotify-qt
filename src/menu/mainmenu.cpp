@@ -1,4 +1,5 @@
 #include "mainmenu.hpp"
+#include "mainwindow.hpp"
 
 MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings,
 	const lib::http_client &httpClient, lib::cache &cache, QWidget *parent)

@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../mainwindow.hpp"
-#include "../spotify/spotify.hpp"
+#include "spotify/spotify.hpp"
 #include "developermenu.hpp"
 
 #include <QMenu>
