@@ -19,49 +19,71 @@ auto ImageUtils::mask(const QPixmap &source, MaskShape shape,
 	painter.setOpacity(1);
 	QPainterPath path(QPointF(0, 0));
 
-	QPolygonF polygon;
-	switch (shape)
-	{
-		case MaskShape::App:
-			polygon << QPointF(img.width() / 4.f, 0)
-				<< QPointF(img.width(), 0)
-				<< QPointF(img.width(), (img.height() / 4.f) * 3)
-				<< QPointF((img.width() / 4.f) * 3, img.height())
-				<< QPointF(0, img.height())
-				<< QPointF(0, img.height() / 4.f);
-			break;
-
-		case MaskShape::Pie:
-			switch (data.toInt() / 25)
-			{
-				case 0:
-					polygon = QPolygonF(QRectF(img.width() / 2.f, 0,
-						img.width() / 2.f, img.height() / 2.f));
-					break;
-
-				case 1:
-					polygon = QPolygonF(QRectF(img.width() / 2.f, 0,
-						img.width() / 2.f, img.height()));
-					break;
-
-				case 2:
-					polygon << QPointF(img.width() / 2.f, 0)
-						<< QPointF(img.width() / 2.f, img.height() / 2.f)
-						<< QPointF(0, img.height() / 2.f)
-						<< QPointF(0, img.height())
-						<< QPointF(img.width(), img.height())
-						<< QPointF(img.width(), 0);
-					break;
-
-				case 3:
-					polygon = QPolygonF(QRectF(0, 0, img.width(), img.height()));
-					break;
-			}
-			break;
-	}
+	auto polygon = shape == MaskShape::App
+		? appShape(img)
+		: shape == MaskShape::Pie
+			? pieShape(img, data)
+			: QPolygonF();
 
 	path.addPolygon(polygon);
 	painter.setClipPath(path);
 	painter.drawImage(0, 0, img);
 	return QPixmap::fromImage(out);
+}
+
+auto ImageUtils::appShape(const QImage &img) -> QPolygonF
+{
+	auto width = (float) img.width();
+	auto height = (float) img.height();
+
+	constexpr float quarter = 4.F;
+
+	auto quarterWidth = width / quarter;
+	auto quarterHeight = height / quarter;
+
+	return QPolygonF()
+		<< QPointF(quarterWidth, 0)
+		<< QPointF(width, 0)
+		<< QPointF(width, quarterHeight * 3)
+		<< QPointF(quarterWidth * 3, height)
+		<< QPointF(0, height)
+		<< QPointF(0, quarterHeight);
+}
+
+auto ImageUtils::pieShape(const QImage &img, const QVariant &data) -> QPolygonF
+{
+	auto width = (float) img.width();
+	auto height = (float) img.height();
+
+	constexpr float half = 2.F;
+	constexpr int quarter = 25;
+
+	auto halfWidth = width / half;
+	auto halfHeight = height / half;
+
+	switch (data.toInt() / quarter)
+	{
+		case 0:
+			return QPolygonF(QRectF(halfWidth, 0,
+				halfWidth, halfHeight));
+
+		case 1:
+			return QPolygonF(QRectF(halfWidth, 0,
+				halfWidth, height));
+
+		case 2:
+			return QPolygonF()
+				<< QPointF(halfWidth, 0)
+				<< QPointF(halfWidth, halfHeight)
+				<< QPointF(0, halfHeight)
+				<< QPointF(0, height)
+				<< QPointF(width, height)
+				<< QPointF(width, 0);
+
+		case 3:
+			return QPolygonF(QRectF(0, 0, width, height));
+
+		default:
+			return QPolygonF();
+	}
 }

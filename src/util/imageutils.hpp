@@ -16,4 +16,10 @@ public:
 
 private:
 	ImageUtils() = default;
+
+	/** Get shape for MaskShape::App */
+	static auto appShape(const QImage &img) -> QPolygonF;
+
+	/** Get shape for MaskShape::Pie */
+	static auto pieShape(const QImage &img, const QVariant &data) -> QPolygonF;
 };
