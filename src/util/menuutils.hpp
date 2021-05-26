@@ -9,10 +9,14 @@
 class MenuUtils
 {
 public:
-	/** Create a new action */
+	/** Create a new action with specified shortcut */
 	static auto createAction(const QString &iconName,
 		const QString &text, QObject *parent,
-		QKeySequence::StandardKey shortcut = QKeySequence::UnknownKey) -> QAction *;
+		QKeySequence::StandardKey shortcut) -> QAction *;
+
+	/** Create a new action without a shortcut */
+	static auto createAction(const QString &iconName,
+		const QString &text, QObject *parent) -> QAction *;
 
 private:
 	MenuUtils() = default;

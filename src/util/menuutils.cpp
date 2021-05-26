@@ -10,3 +10,9 @@ auto MenuUtils::createAction(const QString &iconName, const QString &text,
 	}
 	return action;
 }
+
+auto MenuUtils::createAction(const QString &iconName, const QString &text,
+	QObject *parent) -> QAction *
+{
+	return createAction(iconName, text, parent, QKeySequence::UnknownKey);
+}
