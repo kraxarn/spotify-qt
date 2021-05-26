@@ -53,9 +53,9 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings,
 	auto *quitAction = MenuUtils::createAction("application-exit",
 		"Quit", this, QKeySequence::Quit);
 	QAction::connect(quitAction, &QAction::triggered, QCoreApplication::quit);
+
 	auto *logOutAction = MenuUtils::createAction("im-user-away",
 		"Log out", this);
-
 	QAction::connect(logOutAction, &QAction::triggered,
 		this, &MainMenu::logOut);
 
