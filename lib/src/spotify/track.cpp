@@ -66,6 +66,7 @@ void from_cache(const nlohmann::json &j, lib::spt::track &t)
 
 		t.artists.push_back(artist);
 	}
+	t.artists.shrink_to_fit();
 }
 
 void lib::spt::from_json(const nlohmann::json &j, track &t)
