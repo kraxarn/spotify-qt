@@ -241,7 +241,7 @@ void api::get_items(const std::string &url, const std::string &key,
 		const auto &items = (key.empty() ? json : json.at(key)).at("items");
 		if (json.contains("next") && json.at("next").is_string())
 		{
-			std::string next = json.at("next").get<std::string>();
+			const auto &next = json.at("next").get<std::string>();
 			get_items(next, key, [items, callback](const nlohmann::json &next)
 			{
 				callback(lib::json::combine(items, next));
