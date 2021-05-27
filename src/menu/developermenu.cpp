@@ -36,6 +36,17 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 		}
 	});
 
+	addMenuItem(this, "Load huge playlist (very slow)", [this]()
+	{
+		// playlist id taken from https://github.com/librespot-org/librespot/issues/481
+		this->spotify.playlist("0bQjBPRqy5zReJethJy3aP",
+			[this](const lib::spt::playlist &playlist)
+			{
+				auto *mainWindow = MainWindow::find(this->parentWidget());
+				mainWindow->getSongsTree()->load(playlist);
+			});
+	});
+
 	addMenu(infoMenu());
 	addMenu(dialogMenu());
 }
