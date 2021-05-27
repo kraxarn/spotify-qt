@@ -238,7 +238,7 @@ void api::get_items(const std::string &url, const std::string &key,
 			lib::log::error(R"(no such key "{}" in "{}" ({}))", key, json.dump());
 		}
 
-		auto items = (key.empty() ? json : json.at(key)).at("items");
+		const auto &items = (key.empty() ? json : json.at(key)).at("items");
 		if (json.contains("next") && json.at("next").is_string())
 		{
 			std::string next = json.at("next").get<std::string>();
