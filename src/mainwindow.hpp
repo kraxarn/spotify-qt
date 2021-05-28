@@ -21,9 +21,6 @@ public:
 	/** @deprecated Use http_client.get instead */
 	std::vector<unsigned char> get(const std::string &url);
 
-	/** @deprecated Use http_client.get instead */
-	QJsonDocument getJson(const QString &url);
-
 	/** @deprecated Use TracksList.load instead */
 	bool loadAlbum(const std::string &albumId,
 		const std::string &trackId = std::string());

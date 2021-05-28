@@ -364,11 +364,6 @@ auto MainWindow::get(const std::string &url) -> std::vector<unsigned char>
 	return std::vector<unsigned char>(data.begin(), data.end());
 }
 
-auto MainWindow::getJson(const QString &url) -> QJsonDocument
-{
-	return QJsonDocument::fromJson(get(url));
-}
-
 auto MainWindow::getAlbum(const std::string &url) -> QPixmap
 {
 	QPixmap img;
