@@ -18,4 +18,8 @@ public:
 
 private:
 	bool success = false;
+	lib::settings &settings;
+
+	void onDontShowAgain(bool checked);
+	void onOk(bool checked);
 };
