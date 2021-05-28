@@ -58,18 +58,33 @@ void WhatsNewDialog::open()
 	auto url = lib::fmt::format("https://api.github.com/repos/kraxarn/spotify-qt/releases/tags/{}",
 		APP_VERSION);
 
-	httpClient.get(url, lib::headers(), [this](const nlohmann::json &json)
+	httpClient.get(url, lib::headers(), [this](const std::string &body)
 	{
-		this->onReleaseInfo(json);
+		if (body.empty())
+		{
+			failed("No response from server");
+			return;
+		}
+
+		try
+		{
+			auto json = nlohmann::json::parse(body);
+			this->onReleaseInfo(json);
+		}
+		catch (const std::exception &e)
+		{
+			failed(e.what());
+		}
 	});
 }
 
 void WhatsNewDialog::onReleaseInfo(const nlohmann::json &json)
 {
+	lib::log::dev("release_info: {}", json);
 	const auto &jsonBody = json.at("body");
 	if (jsonBody.is_null() || !jsonBody.is_string())
 	{
-		lib::log::error("Failed to fetch what's new in \"{}\"", APP_VERSION);
+		failed("No release info");
 		return;
 	}
 	auto body = QString::fromStdString(jsonBody.get<std::string>());
@@ -82,4 +97,10 @@ void WhatsNewDialog::onReleaseInfo(const nlohmann::json &json)
 #endif
 
 	QDialog::open();
+}
+
+void WhatsNewDialog::failed(const std::string &reason)
+{
+	lib::log::error("Failed to fetch what's new in \"{}\": {}",
+		APP_VERSION, reason);
 }

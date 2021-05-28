@@ -23,6 +23,8 @@ private:
 	const lib::http_client &httpClient;
 	QTextEdit *text = nullptr;
 
+	static void failed(const std::string &reason);
+
 	void onReleaseInfo(const nlohmann::json &json);
 	void onDontShowAgain(bool checked);
 	void onOk(bool checked);
