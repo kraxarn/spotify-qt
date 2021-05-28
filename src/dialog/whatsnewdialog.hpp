@@ -1,25 +1,29 @@
 #pragma once
 
-#include "../mainwindow.hpp"
 #include "lib/settings.hpp"
+#include "lib/httpclient.hpp"
 
 #include <QDialog>
 #include <QVBoxLayout>
-#include <QtGlobal>
+#include <QTextEdit>
 
 class WhatsNewDialog: public QDialog
 {
 Q_OBJECT
 
 public:
-	WhatsNewDialog(const QString &tag, lib::settings &settings, QWidget *parent);
+	WhatsNewDialog(lib::settings &settings,
+		const lib::http_client &httpClient, QWidget *parent);
 
-	bool isValid() const;
+	/** Show latest changes if fetch was successful */
+	void open() override;
 
 private:
-	bool success = false;
 	lib::settings &settings;
+	const lib::http_client &httpClient;
+	QTextEdit *text = nullptr;
 
+	void onReleaseInfo(const nlohmann::json &json);
 	void onDontShowAgain(bool checked);
 	void onOk(bool checked);
 };
