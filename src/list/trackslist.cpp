@@ -240,6 +240,8 @@ void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::str
 	auto current = getCurrent();
 	auto anyHasDate = false;
 
+	setSortingEnabled(false);
+
 	for (int i = 0; i < tracks.size(); i++)
 	{
 		const auto &track = tracks.at(i);
@@ -278,6 +280,8 @@ void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::str
 			setCurrentItem(item);
 		}
 	}
+
+	setSortingEnabled(true);
 
 	header()->setSectionHidden(colAdded, !anyHasDate
 		|| lib::set::contains(settings.general.hidden_song_headers, colAdded));
