@@ -45,7 +45,8 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings,
 	// Debug options if enabled
 	if (lib::developer_mode::enabled)
 	{
-		addMenu(new DeveloperMenu(settings, spotify, cache, this));
+		addMenu(new DeveloperMenu(settings, spotify, cache,
+			httpClient, this));
 	}
 
 	// Log out and quit

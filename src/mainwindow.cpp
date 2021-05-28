@@ -100,16 +100,8 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 		&& !settings.general.last_version.empty()
 		&& settings.general.last_version != APP_VERSION)
 	{
-		auto *dialog = new WhatsNewDialog(APP_VERSION, settings, this);
-
-		if (dialog->isValid())
-		{
-			dialog->open();
-		}
-		else
-		{
-			lib::log::error("Failed to fetch what's new in \"{}\"", APP_VERSION);
-		}
+		auto *dialog = new WhatsNewDialog(settings, *httpClient, this);
+		dialog->open();
 	}
 
 	settings.general.last_version = APP_VERSION;

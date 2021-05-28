@@ -1,10 +1,12 @@
 #include "developermenu.hpp"
+#include "mainwindow.hpp"
 
 DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
-	lib::cache &cache, QWidget *parent)
+	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
 	: spotify(spotify),
 	settings(settings),
 	cache(cache),
+	httpClient(httpClient),
 	QMenu("Developer", parent)
 {
 	setIcon(Icon::get("folder-txt"));
@@ -12,7 +14,8 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	addMenuItem(this, "Test API requests", [this]()
 	{
 		auto *mainWindow = MainWindow::find(parentWidget());
-		mainWindow->addSidePanelTab(new DebugView(this->settings, mainWindow), "API request");
+		auto *debugView = new DebugView(this->settings, mainWindow);
+		mainWindow->addSidePanelTab(debugView, "API request");
 	});
 
 	addMenuItem(this, "Reset size", [this]()
@@ -71,7 +74,7 @@ auto DeveloperMenu::dialogMenu() -> QMenu *
 		new OpenLinkDialog("/", LinkType::Path, mainWindow),
 		new SetupDialog(settings, mainWindow),
 		new TracksCacheDialog(cache, mainWindow),
-		new WhatsNewDialog(APP_VERSION, settings, mainWindow),
+		new WhatsNewDialog(settings, httpClient, mainWindow),
 	};
 
 	for (auto *dialog : dialogs)
