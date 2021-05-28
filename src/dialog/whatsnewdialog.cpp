@@ -80,7 +80,6 @@ void WhatsNewDialog::open()
 
 void WhatsNewDialog::onReleaseInfo(const nlohmann::json &json)
 {
-	lib::log::dev("release_info: {}", json);
 	const auto &jsonBody = json.at("body");
 	if (jsonBody.is_null() || !jsonBody.is_string())
 	{
