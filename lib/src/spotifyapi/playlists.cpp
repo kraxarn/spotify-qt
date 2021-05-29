@@ -33,9 +33,10 @@ void api::playlist_tracks(const lib::spt::playlist &playlist,
 {
 	auto fetch = [this, callback](const std::string &url)
 	{
-		get_items(lib::strings::contains(url, "market=")
+		auto item_url = lib::strings::contains(url, "market=")
 			? url : lib::fmt::format("{}{}market=from_token",
-				url, lib::strings::contains(url, "?") ? "&" : "?"), callback);
+				url, lib::strings::contains(url, "?") ? "&" : "?");
+		get_items(item_url, callback);
 	};
 
 	if (playlist.tracks_href.empty())
