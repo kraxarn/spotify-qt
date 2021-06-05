@@ -333,6 +333,7 @@ void TracksList::load(const lib::spt::playlist &playlist)
 	}
 
 	settings.general.last_playlist = playlist.id;
+	settings.save();
 }
 
 void TracksList::load(const lib::spt::album &album, const std::string &trackId)
