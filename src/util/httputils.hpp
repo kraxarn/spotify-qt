@@ -3,6 +3,7 @@
 #include "lib/spotify/callback.hpp"
 #include "lib/cache.hpp"
 #include "lib/httpclient.hpp"
+#include "util/icon.hpp"
 
 #include <string>
 #include <QPixmap>
@@ -18,4 +19,6 @@ public:
 
 private:
 	HttpUtils() = default;
+
+	static auto defaultIcon() -> QPixmap;
 };

@@ -18,6 +18,7 @@ void HttpUtils::getAlbum(const std::string &url, const lib::http_client &httpCli
 		return;
 	}
 
+	callback(defaultIcon());
 	httpClient.get(url, lib::headers(),
 		[&cache, url, callback](const std::string &str)
 		{
@@ -30,4 +31,10 @@ void HttpUtils::getAlbum(const std::string &url, const lib::http_client &httpCli
 			callback(img);
 		});
 
+}
+
+auto HttpUtils::defaultIcon() -> QPixmap
+{
+	constexpr int iconSize = 64;
+	return Icon::get("media-optical-audio").pixmap(iconSize);
 }
