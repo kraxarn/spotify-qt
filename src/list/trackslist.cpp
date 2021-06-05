@@ -326,7 +326,7 @@ void TracksList::load(const lib::spt::playlist &playlist)
 			});
 	});
 
-	auto *mainWindow = MainWindow::find(this->parentWidget());
+	auto *mainWindow = MainWindow::find(parentWidget());
 	if (mainWindow != nullptr)
 	{
 		mainWindow->setSptContext(playlist);
