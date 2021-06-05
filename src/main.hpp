@@ -28,6 +28,7 @@
 #include "util/icon.hpp"
 #include "util/imageutils.hpp"
 #include "util/styleutils.hpp"
+#include "util/httputils.hpp"
 
 #include <QMainWindow>
 #include <QSplitter>
