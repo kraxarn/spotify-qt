@@ -364,25 +364,6 @@ auto MainWindow::get(const std::string &url) -> std::vector<unsigned char>
 	return std::vector<unsigned char>(data.begin(), data.end());
 }
 
-auto MainWindow::getAlbum(const std::string &url) -> QPixmap
-{
-	QPixmap img;
-	if (url.empty())
-	{
-		return img;
-	}
-
-	auto data = cache.get_album_image(url);
-	if (data.empty())
-	{
-		data = get(url);
-		cache.set_album_image(url, data);
-	}
-
-	img.loadFromData(data.data(), data.size(), "jpeg");
-	return img;
-}
-
 void MainWindow::openArtist(const std::string &artistId)
 {
 	dynamic_cast<SidePanel *>(sidePanel)->openArtist(artistId);

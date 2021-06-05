@@ -28,9 +28,6 @@ public:
 	/** @deprecated Use SidePanel.openArtist instead */
 	void openArtist(const std::string &artistId);
 
-	/** @deprecated Use HttpUtils.getAlbum instead */
-	QPixmap getAlbum(const std::string &url);
-
 	/** @deprecated SidePanel.openAudioFeatures instead */
 	void openAudioFeaturesWidget(const std::string &trackId,
 		const std::string &artist, const std::string &name);
