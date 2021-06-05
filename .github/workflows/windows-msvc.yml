@@ -1,0 +1,40 @@
+name: Windows (MSVC)
+
+on: [push]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create Build Environment
+        run: cmake -E make_directory ${{runner.workspace}}\build
+
+      - name: Install Dependencies
+        run: vcpkg install vcpkg-cmake qt5-base qt5-imageformats qt5-svg
+
+      - name: Configure CMake
+        shell: bash
+        working-directory: ${{runner.workspace}}\build
+        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_TESTS=ON
+
+      - name: Build
+        working-directory: ${{runner.workspace}}\build
+        shell: bash
+        run: cmake --build . --config $BUILD_TYPE
+
+      - name: Test
+        working-directory: ${{runner.workspace}}\build\Release\lib\test
+        shell: bash
+        run: .\spotify-qt-lib-test.exe
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: spotify-qt
+          path: ${{runner.workspace}}\build\Release\spotify-qt.exe
