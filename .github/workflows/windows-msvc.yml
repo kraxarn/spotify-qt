@@ -4,6 +4,7 @@ on: workflow_dispatch
 
 env:
   BUILD_TYPE: Release
+  VCPKG_ROOT: ${{github.workspace}}\vcpkg
 
 jobs:
   build:
@@ -15,9 +16,13 @@ jobs:
       - name: Cache Dependencies
         uses: actions/cache@v2
         with:
-          path: $VCPKG_INSTALLATION_ROOT\packages
-          key: ${{runner.os}}-vcpkg-${{hashFiles('**/baseline.json')}}
-          restore-keys: ${{runner.os}}-vcpkg-
+          path: |
+            ${{env.CMAKE_BUILD_DIR}}/vcpkg_installed
+            ${{env.VCPKG_ROOT}}
+            !${{env.VCPKG_ROOT}}/buildtrees
+            !${{env.VCPKG_ROOT}}/packages
+            !${{env.VCPKG_ROOT}}/downloads
+          key: ${{hashFiles('vcpkg_manifest/vcpkg.json')}}-${{hashFiles('.git/modules/vcpkg/HEAD')}}
 
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}\build
