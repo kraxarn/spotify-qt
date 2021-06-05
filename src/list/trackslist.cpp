@@ -307,8 +307,14 @@ void TracksList::load(const lib::spt::playlist &playlist)
 		setEnabled(false);
 	}
 
-	spotify.playlist(playlist.id, [this](const lib::spt::playlist &loadedPlaylist)
+	const auto &snapshot = playlist.snapshot;
+	spotify.playlist(playlist.id, [this, snapshot](const lib::spt::playlist &loadedPlaylist)
 	{
+		if (snapshot == loadedPlaylist.snapshot)
+		{
+			return;
+		}
+
 		spotify.playlist_tracks(loadedPlaylist,
 			[this, loadedPlaylist](const std::vector<lib::spt::track> &tracks)
 			{
