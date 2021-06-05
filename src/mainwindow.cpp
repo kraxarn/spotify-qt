@@ -222,7 +222,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 
 		if (trayIcon != nullptr && settings.general.tray_album_art)
 		{
-			HttpUtils::getAlbum(*httpClient, current.playback.item.image,
+			HttpUtils::getAlbum(current.playback.item.image, *httpClient,
 				cache, [this](const QPixmap &image)
 				{
 					if (this->trayIcon != nullptr)
@@ -349,7 +349,7 @@ void MainWindow::status(const std::string &message, bool important)
 
 void MainWindow::setAlbumImage(const std::string &url)
 {
-	HttpUtils::getAlbum(*httpClient, url, cache, [this](const QPixmap &image)
+	HttpUtils::getAlbum(url, *httpClient, cache, [this](const QPixmap &image)
 	{
 		if (this->leftSidePanel != nullptr)
 		{

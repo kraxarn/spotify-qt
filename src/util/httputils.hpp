@@ -13,7 +13,7 @@ public:
 	/**
 	 * Get album from cache or from HTTP
 	 */
-	static void getAlbum(const lib::http_client &httpClient, const std::string &url,
+	static void getAlbum(const std::string &url, const lib::http_client &httpClient,
 		lib::cache &cache, lib::callback<QPixmap> &callback);
 
 private:

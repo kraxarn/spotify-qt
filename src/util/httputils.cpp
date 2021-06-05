@@ -1,6 +1,6 @@
 #include "httputils.hpp"
 
-void HttpUtils::getAlbum(const lib::http_client &httpClient, const std::string &url,
+void HttpUtils::getAlbum(const std::string &url, const lib::http_client &httpClient,
 	lib::cache &cache, lib::callback<QPixmap> &callback)
 {
 	if (url.empty())

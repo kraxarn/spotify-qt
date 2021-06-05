@@ -273,7 +273,7 @@ void SearchView::addAlbum(const lib::spt::album &album)
 		name, artist
 	});
 
-	HttpUtils::getAlbum(httpClient, album.image, cache, [item](const QPixmap &image)
+	HttpUtils::getAlbum(album.image, httpClient, cache, [item](const QPixmap &image)
 	{
 		if (item != nullptr)
 		{

@@ -184,7 +184,7 @@ void ArtistView::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
 	{
 		auto *item = new QListWidgetItem(QString::fromStdString(track.name), topTracksList);
 
-		HttpUtils::getAlbum(httpClient, track.image, cache, [item](const QPixmap &image)
+		HttpUtils::getAlbum(track.image, httpClient, cache, [item](const QPixmap &image)
 		{
 			if (item != nullptr)
 			{
@@ -216,7 +216,7 @@ void ArtistView::albumsLoaded(const std::vector<lib::spt::album> &albums)
 			year.isEmpty() ? QString() : year
 		});
 
-		HttpUtils::getAlbum(httpClient, album.image, cache, [item](const QPixmap &image)
+		HttpUtils::getAlbum(album.image, httpClient, cache, [item](const QPixmap &image)
 		{
 			if (item != nullptr)
 			{
