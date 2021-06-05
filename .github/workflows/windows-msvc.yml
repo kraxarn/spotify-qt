@@ -15,7 +15,7 @@ jobs:
       - name: Cache Dependencies
         uses: actions/cache@v2
         with:
-          path: $(VCPKG_ROOT)\packages
+          path: $VCPKG_INSTALLATION_ROOT\packages
           key: ${{runner.os}}-vcpkg-${{hashFiles('**/baseline.json')}}
           restore-keys: ${{runner.os}}-vcpkg-
 
