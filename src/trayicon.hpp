@@ -20,6 +20,7 @@ public:
 
 	void message(const QString &message);
 	void setPixmap(const QPixmap &pixmap);
+	void setDefaultPixmap();
 
 private:
 	auto playback() -> lib::spt::playback;

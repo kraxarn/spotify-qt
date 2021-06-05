@@ -46,10 +46,7 @@ TrayIcon::TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QWidget
 	auto *quit = contextMenu->addAction(Icon::get("application-exit"), "Quit");
 	QAction::connect(quit, &QAction::triggered, QCoreApplication::quit);
 
-	constexpr int iconSize = 64;
-	setIcon(Icon::get(QString("logo:spotify-qt-symbolic-%1")
-		.arg(settings.general.tray_light_icon ? "light" : "dark"))
-		.pixmap(iconSize, iconSize));
+	setDefaultPixmap();
 	setContextMenu(contextMenu);
 	show();
 
@@ -104,4 +101,13 @@ auto TrayIcon::playback() -> lib::spt::playback
 void TrayIcon::setPixmap(const QPixmap &pixmap)
 {
 	setIcon(ImageUtils::mask(pixmap));
+}
+
+void TrayIcon::setDefaultPixmap()
+{
+	constexpr int iconSize = 64;
+
+	setIcon(Icon::get(QString("logo:spotify-qt-symbolic-%1")
+		.arg(settings.general.tray_light_icon ? "light" : "dark"))
+		.pixmap(iconSize, iconSize));
 }
