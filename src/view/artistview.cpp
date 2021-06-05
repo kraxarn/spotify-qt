@@ -1,10 +1,11 @@
 #include "artistview.hpp"
 
 ArtistView::ArtistView(spt::Spotify &spotify, const std::string &artistId,
-	lib::cache &cache, QWidget *parent)
+	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
 	: spotify(spotify),
 	artistId(std::string(artistId)),
 	cache(cache),
+	httpClient(httpClient),
 	QWidget(parent)
 {
 	layout = new QVBoxLayout();
@@ -178,13 +179,19 @@ void ArtistView::artistLoaded(const lib::spt::artist &loadedArtist)
 
 void ArtistView::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
 {
-	auto *mainWindow = MainWindow::find(parentWidget());
 	auto i = 0;
-
 	for (const auto &track : tracks)
 	{
 		auto *item = new QListWidgetItem(QString::fromStdString(track.name), topTracksList);
-		item->setIcon(QIcon(mainWindow->getAlbum(track.image)));
+
+		HttpUtils::getAlbum(httpClient, track.image, cache, [item](const QPixmap &image)
+		{
+			if (item != nullptr)
+			{
+				item->setIcon(QIcon(image));
+			}
+		});
+
 		item->setData(RoleTrack, QVariant::fromValue(track));
 		item->setData(RoleAlbumId, QString::fromStdString(track.album.id));
 		item->setData(RoleIndex, i++);
@@ -196,8 +203,6 @@ void ArtistView::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
 
 void ArtistView::albumsLoaded(const std::vector<lib::spt::album> &albums)
 {
-	auto *mainWindow = MainWindow::find(parentWidget());
-
 	for (const auto &album : albums)
 	{
 		auto releaseDate = QDateTime::fromString(QString::fromStdString(album.release_date),
@@ -211,7 +216,14 @@ void ArtistView::albumsLoaded(const std::vector<lib::spt::album> &albums)
 			year.isEmpty() ? QString() : year
 		});
 
-		item->setIcon(0, QIcon(mainWindow->getAlbum(album.image)));
+		HttpUtils::getAlbum(httpClient, album.image, cache, [item](const QPixmap &image)
+		{
+			if (item != nullptr)
+			{
+				item->setIcon(0, QIcon(image));
+			}
+		});
+
 		item->setData(0, RoleAlbumId, QString::fromStdString(album.id));
 		item->setToolTip(1, QLocale::system()
 			.toString(releaseDate.date(), QLocale::FormatType::ShortFormat));

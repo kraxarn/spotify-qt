@@ -1,11 +1,10 @@
 #pragma once
 
 #include "lib/enum/followtype.hpp"
-#include "../mainwindow.hpp"
-#include "../menu/albummenu.hpp"
-#include "../menu/songmenu.hpp"
-#include "../spotify/spotify.hpp"
-#include "../loader.hpp"
+#include "menu/albummenu.hpp"
+#include "menu/songmenu.hpp"
+#include "spotify/spotify.hpp"
+#include "loader.hpp"
 
 #include <QDockWidget>
 #include <QLabel>
@@ -21,7 +20,7 @@ Q_OBJECT
 
 public:
 	ArtistView(spt::Spotify &spotify, const std::string &artistId,
-		lib::cache &cache, QWidget *parent);
+		lib::cache &cache, const lib::http_client &httpClient, QWidget *parent);
 
 	std::function<void(const lib::spt::artist &artist)> onArtistLoaded;
 
@@ -65,4 +64,5 @@ private:
 	lib::spt::artist artist;
 	spt::Spotify &spotify;
 	lib::cache &cache;
+	const lib::http_client &httpClient;
 };
