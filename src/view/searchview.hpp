@@ -17,7 +17,7 @@ class SearchView: public QWidget
 Q_OBJECT
 
 public:
-	explicit SearchView(spt::Spotify &spotify, const lib::settings &settings, lib::cache &cache,
+	SearchView(spt::Spotify &spotify, lib::cache &cache,
 		const lib::http_client &httpClient, QWidget *parent);
 
 private:

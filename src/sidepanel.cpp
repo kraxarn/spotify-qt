@@ -46,7 +46,7 @@ void SidePanel::openSearch()
 {
 	if (searchView == nullptr)
 	{
-		searchView = new SearchView(spotify, settings, cache, httpClient, parent);
+		searchView = new SearchView(spotify, cache, httpClient, parent);
 	}
 	addAndSelect(searchView, "edit-find", "Search");
 }
