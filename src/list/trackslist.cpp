@@ -236,7 +236,7 @@ void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::str
 	clear();
 	trackItems.clear();
 	playingTrackItem = nullptr;
-	auto fieldWidth = std::to_string(tracks.size()).size();
+	auto fieldWidth = static_cast<int>(std::to_string(tracks.size()).size());
 	auto current = getCurrent();
 	auto anyHasDate = false;
 
