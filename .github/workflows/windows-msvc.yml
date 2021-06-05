@@ -1,6 +1,6 @@
 name: Windows (MSVC)
 
-on: [push]
+on: workflow_dispatch
 
 env:
   BUILD_TYPE: Release
