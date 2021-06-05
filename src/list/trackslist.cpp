@@ -323,14 +323,14 @@ void TracksList::load(const lib::spt::playlist &playlist)
 				this->load(newPlaylist.tracks);
 				this->setEnabled(true);
 				this->cache.set_playlist(newPlaylist);
-
-				auto *mainWindow = MainWindow::find(this->parentWidget());
-				if (mainWindow != nullptr)
-				{
-					mainWindow->setSptContext(newPlaylist);
-				}
 			});
 	});
+
+	auto *mainWindow = MainWindow::find(this->parentWidget());
+	if (mainWindow != nullptr)
+	{
+		mainWindow->setSptContext(playlist);
+	}
 
 	settings.general.last_playlist = playlist.id;
 }
