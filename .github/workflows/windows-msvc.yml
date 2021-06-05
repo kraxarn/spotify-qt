@@ -12,6 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Cache Dependencies
+        uses: actions/cache@v2
+        with:
+          path: $(VCPKG_ROOT)\packages
+          key: ${{runner.os}}-vcpkg-${{hashFiles('**/baseline.json')}}
+          restore-keys: ${{runner.os}}-vcpkg-
+
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}\build
 
