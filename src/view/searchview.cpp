@@ -1,9 +1,10 @@
 #include "searchview.hpp"
 
 SearchView::SearchView(spt::Spotify &spotify, const lib::settings &settings, lib::cache &cache,
-	QWidget *parent)
+	const lib::http_client &httpClient, QWidget *parent)
 	: spotify(spotify),
 	cache(cache),
+	httpClient(httpClient),
 	QWidget(parent)
 {
 	auto *layout = new QVBoxLayout();
@@ -272,8 +273,14 @@ void SearchView::addAlbum(const lib::spt::album &album)
 		name, artist
 	});
 
-	auto *mainWindow = MainWindow::find(parentWidget());
-	item->setIcon(0, mainWindow->getAlbum(album.image));
+	HttpUtils::getAlbum(httpClient, album.image, cache, [item](const QPixmap &image)
+	{
+		if (item != nullptr)
+		{
+			item->setIcon(0, image);
+		}
+	});
+
 	item->setData(0, RoleAlbumId, id);
 	item->setToolTip(0, name);
 	item->setToolTip(1, artist);

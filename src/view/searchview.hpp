@@ -1,7 +1,8 @@
 #pragma once
 
-#include "../mainwindow.hpp"
-#include "../spotify/spotify.hpp"
+#include "mainwindow.hpp"
+#include "spotify/spotify.hpp"
+#include "lib/httpclient.hpp"
 
 #include <QDockWidget>
 #include <QLineEdit>
@@ -17,7 +18,7 @@ Q_OBJECT
 
 public:
 	explicit SearchView(spt::Spotify &spotify, const lib::settings &settings, lib::cache &cache,
-		QWidget *parent);
+		const lib::http_client &httpClient, QWidget *parent);
 
 private:
 	QTabWidget *tabs = nullptr;
@@ -28,8 +29,9 @@ private:
 	QTreeWidget *trackList = nullptr;
 	spt::Spotify &spotify;
 	lib::cache &cache;
+	const lib::http_client &httpClient;
 
-	QTreeWidget *defaultTree(const QStringList &headers);
+	auto defaultTree(const QStringList &headers) -> QTreeWidget *;
 	void albumClick(QTreeWidgetItem *item, int column);
 	void albumMenu(const QPoint &pos);
 	void artistClick(QListWidgetItem *item);
