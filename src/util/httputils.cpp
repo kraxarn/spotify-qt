@@ -19,7 +19,7 @@ void HttpUtils::getAlbum(const std::string &url, const lib::http_client &httpCli
 	}
 
 	httpClient.get(url, lib::headers(),
-		[&cache, &url, callback](const std::string &str)
+		[&cache, url, callback](const std::string &str)
 		{
 			auto data = QByteArray::fromStdString(str);
 			cache.set_album_image(url,
