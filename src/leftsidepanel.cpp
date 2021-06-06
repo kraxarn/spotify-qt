@@ -217,21 +217,31 @@ void LeftSidePanel::orderPlaylists(lib::playlist_order order)
 	playlists->order(order);
 }
 
-auto LeftSidePanel::playlist(size_t index) -> lib::spt::playlist &
+auto LeftSidePanel::playlist(int index) -> lib::spt::playlist
 {
-	return playlists->getPlaylists().at(index);
+	auto *item = playlistItem(index);
+	if (item == nullptr)
+	{
+		return lib::spt::playlist();
+	}
+	return playlist(item->data(RolePlaylistId).toString().toStdString());
+}
+
+auto LeftSidePanel::playlist(const std::string &playlistId) -> lib::spt::playlist
+{
+	for (const auto &playlist : cache.get_playlists())
+	{
+		if (lib::strings::ends_with(playlistId, playlist.id))
+		{
+			return playlist;
+		}
+	}
+	return lib::spt::playlist();
 }
 
 auto LeftSidePanel::getPlaylistNameFromSaved(const std::string &id) -> std::string
 {
-	for (auto &playlist : playlists->getPlaylists())
-	{
-		if (lib::strings::ends_with(id, playlist.id))
-		{
-			return playlist.name;
-		}
-	}
-	return std::string();
+	return playlist(id).name;
 }
 
 auto LeftSidePanel::getCurrentlyPlaying() const -> const lib::spt::track &
@@ -271,11 +281,6 @@ void LeftSidePanel::getPlaylistName(const std::string &id,
 void LeftSidePanel::setCurrentLibraryItem(QTreeWidgetItem *item)
 {
 	libraryList->setCurrentItem(item);
-}
-
-auto LeftSidePanel::getPlaylists() -> std::vector<lib::spt::playlist> &
-{
-	return playlists->getPlaylists();
 }
 
 void LeftSidePanel::setCurrentPlaylistItem(QListWidgetItem *item)

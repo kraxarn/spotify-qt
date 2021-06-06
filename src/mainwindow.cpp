@@ -537,7 +537,7 @@ void MainWindow::setCurrentLibraryItem(QTreeWidgetItem *item)
 	leftSidePanel->setCurrentLibraryItem(item);
 }
 
-auto MainWindow::getPlaylist(int index) -> lib::spt::playlist &
+auto MainWindow::getPlaylist(int index) -> lib::spt::playlist
 {
 	return leftSidePanel->playlist(index);
 }
@@ -555,11 +555,6 @@ auto MainWindow::allArtists() -> std::unordered_set<std::string>
 auto MainWindow::getCurrentPlaylistItem() -> QListWidgetItem *
 {
 	return leftSidePanel->currentPlaylist();
-}
-
-auto MainWindow::getPlaylists() -> std::vector<lib::spt::playlist> &
-{
-	return leftSidePanel->getPlaylists();
 }
 
 auto MainWindow::getPlaylistItemCount() -> int

@@ -52,11 +52,10 @@ public:
 	void addSidePanelTab(QWidget *widget, const QString &title);
 	void refreshPlaylists();
 	void setCurrentLibraryItem(QTreeWidgetItem *item);
-	lib::spt::playlist &getPlaylist(int index);
+	lib::spt::playlist getPlaylist(int index);
 	void setCurrentPlaylistItem(int index);
 	std::unordered_set<std::string> allArtists();
 	QListWidgetItem *getCurrentPlaylistItem();
-	std::vector<lib::spt::playlist> &getPlaylists();
 	int getPlaylistItemCount();
 	QListWidgetItem *getPlaylistItem(int index);
 	void orderPlaylists(lib::playlist_order order);

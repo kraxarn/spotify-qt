@@ -82,12 +82,7 @@ void PlaylistList::menu(const QPoint &pos)
 	menu->popup(mapToGlobal(pos));
 }
 
-auto PlaylistList::getPlaylists() -> std::vector<lib::spt::playlist> &
-{
-	return playlists;
-}
-
-void PlaylistList::load(const std::vector<lib::spt::playlist> &items)
+void PlaylistList::load(const std::vector<lib::spt::playlist> &playlists)
 {
 	QListWidgetItem *activeItem = nullptr;
 	const lib::spt::playlist *activePlaylist = nullptr;
@@ -95,8 +90,6 @@ void PlaylistList::load(const std::vector<lib::spt::playlist> &items)
 	auto lastItem = currentItem() != nullptr
 		? currentItem()->data(RolePlaylistId).toString().toStdString()
 		: lib::spt::api::to_id(settings.general.last_playlist);
-
-	playlists = items;
 
 	// Add all playlists
 	clear();

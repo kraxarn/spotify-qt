@@ -48,11 +48,10 @@ public:
 
 	void refreshPlaylists();
 
-	auto playlist(size_t index) -> lib::spt::playlist &;
+	auto playlist(int index) -> lib::spt::playlist;
+	auto playlist(const std::string &playlistId) -> lib::spt::playlist;
 
 	auto getPlaylistNameFromSaved(const std::string &id) -> std::string;
-
-	auto getPlaylists() -> std::vector<lib::spt::playlist> &;
 
 	void orderPlaylists(lib::playlist_order order);
 
