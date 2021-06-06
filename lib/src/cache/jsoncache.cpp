@@ -9,7 +9,7 @@ lib::json_cache::json_cache(const lib::paths &paths)
 
 //region album
 
-auto lib::json_cache::get_album_image(const std::string &url) -> std::vector<unsigned char>
+auto lib::json_cache::get_album_image(const std::string &url) const -> std::vector<unsigned char>
 {
 	std::ifstream file(path("album", get_url_id(url), ""),
 		std::ios::binary);
@@ -35,7 +35,7 @@ void lib::json_cache::set_album_image(const std::string &url,
 
 //region playlists
 
-auto lib::json_cache::get_playlists() -> std::vector<lib::spt::playlist>
+auto lib::json_cache::get_playlists() const -> std::vector<lib::spt::playlist>
 {
 	try
 	{
@@ -58,7 +58,7 @@ void lib::json_cache::set_playlists(const std::vector<spt::playlist> &playlists)
 
 //region playlist
 
-auto lib::json_cache::get_playlist(const std::string &id) -> lib::spt::playlist
+auto lib::json_cache::get_playlist(const std::string &id) const -> lib::spt::playlist
 {
 	try
 	{
@@ -81,7 +81,7 @@ void lib::json_cache::set_playlist(const spt::playlist &playlist)
 
 //region tracks
 
-auto lib::json_cache::get_tracks(const std::string &id) -> std::vector<lib::spt::track>
+auto lib::json_cache::get_tracks(const std::string &id) const -> std::vector<lib::spt::track>
 {
 	return lib::json::load<std::vector<lib::spt::track>>(path("tracks", id, "json"));
 }
@@ -91,7 +91,7 @@ void lib::json_cache::set_tracks(const std::string &id, const std::vector<lib::s
 	lib::json::save(path("tracks", id, "json"), tracks);
 }
 
-auto lib::json_cache::all_tracks() -> std::map<std::string, std::vector<lib::spt::track>>
+auto lib::json_cache::all_tracks() const -> std::map<std::string, std::vector<lib::spt::track>>
 {
 	auto dir = ghc::filesystem::path(paths.cache()) / "tracks";
 	std::map<std::string, std::vector<lib::spt::track>> results;
@@ -114,7 +114,7 @@ auto lib::json_cache::all_tracks() -> std::map<std::string, std::vector<lib::spt
 
 //region lyrics
 
-auto lib::json_cache::get_track_info(const lib::spt::track &track) -> lib::spt::track_info
+auto lib::json_cache::get_track_info(const lib::spt::track &track) const -> lib::spt::track_info
 {
 	return lib::json::load(path("trackInfo", track.id, "json"));
 }
@@ -129,7 +129,7 @@ void lib::json_cache::set_track_info(const lib::spt::track &track,
 
 //region private
 
-auto lib::json_cache::dir(const std::string &type) -> ghc::filesystem::path
+auto lib::json_cache::dir(const std::string &type) const -> ghc::filesystem::path
 {
 	auto file_dir = ghc::filesystem::path(paths.cache()) / type;
 
@@ -141,7 +141,8 @@ auto lib::json_cache::dir(const std::string &type) -> ghc::filesystem::path
 	return file_dir;
 }
 
-auto lib::json_cache::file(const std::string &id, const std::string &extension) -> std::string
+auto lib::json_cache::file(const std::string &id,
+	const std::string &extension) -> std::string
 {
 	return extension.empty()
 		? id
@@ -149,7 +150,7 @@ auto lib::json_cache::file(const std::string &id, const std::string &extension) 
 }
 
 auto lib::json_cache::path(const std::string &type, const std::string &id,
-	const std::string &extension) -> ghc::filesystem::path
+	const std::string &extension) const -> ghc::filesystem::path
 {
 	return dir(type) / file(id, extension);
 }

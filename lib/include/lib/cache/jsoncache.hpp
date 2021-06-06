@@ -20,22 +20,22 @@ namespace lib
 		 */
 		explicit json_cache(const paths &paths);
 
-		auto get_album_image(const std::string &url) -> std::vector<unsigned char> override;
+		auto get_album_image(const std::string &url) const -> std::vector<unsigned char> override;
 		void set_album_image(const std::string &url,
 			const std::vector<unsigned char> &data) override;
 
-		auto get_playlists() -> std::vector<lib::spt::playlist> override;
+		auto get_playlists() const -> std::vector<lib::spt::playlist> override;
 		void set_playlists(const std::vector<spt::playlist> &playlists) override;
 
-		auto get_playlist(const std::string &id) -> lib::spt::playlist override;
+		auto get_playlist(const std::string &id) const -> lib::spt::playlist override;
 		void set_playlist(const spt::playlist &playlist) override;
 
-		auto get_tracks(const std::string &id) -> std::vector<lib::spt::track> override;
+		auto get_tracks(const std::string &id) const -> std::vector<lib::spt::track> override;
 		void set_tracks(const std::string &id,
 			const std::vector<lib::spt::track> &tracks) override;
-		auto all_tracks() -> std::map<std::string, std::vector<lib::spt::track>> override;
+		auto all_tracks() const -> std::map<std::string, std::vector<lib::spt::track>> override;
 
-		auto get_track_info(const lib::spt::track &track) -> lib::spt::track_info override;
+		auto get_track_info(const lib::spt::track &track) const -> lib::spt::track_info override;
 		void set_track_info(const lib::spt::track &track,
 			const lib::spt::track_info &track_info) override;
 
@@ -45,7 +45,7 @@ namespace lib
 		/**
 		 * Get parent directory for cache type
 		 */
-		auto dir(const std::string &type) -> ghc::filesystem::path;
+		auto dir(const std::string &type) const -> ghc::filesystem::path;
 
 		/**
 		 * Get file name for id
@@ -56,7 +56,7 @@ namespace lib
 		 * Get full file path for cache type and id
 		 */
 		auto path(const std::string &type, const std::string &id,
-			const std::string &extension) -> ghc::filesystem::path;
+			const std::string &extension) const -> ghc::filesystem::path;
 
 		/**
 		 * Get basename of path

@@ -27,7 +27,7 @@ namespace lib
 		 * @param id Album ID
 		 * @return Binary JPEG data, or an empty vector if none
 		 */
-		virtual auto get_album_image(const std::string &url)
+		virtual auto get_album_image(const std::string &url) const
 		-> std::vector<unsigned char> = 0;
 
 		/**
@@ -45,7 +45,7 @@ namespace lib
 		/**
 		 * Get list of user's playlists
 		 */
-		virtual auto get_playlists() -> std::vector<lib::spt::playlist> = 0;
+		virtual auto get_playlists() const -> std::vector<lib::spt::playlist> = 0;
 
 		/**
 		 * Set list of user's playlists
@@ -61,7 +61,7 @@ namespace lib
 		 * @param id Playlist ID
 		 * @return Tracks or an empty vector on failure
 		 */
-		virtual auto get_playlist(const std::string &id) -> lib::spt::playlist = 0;
+		virtual auto get_playlist(const std::string &id) const -> lib::spt::playlist = 0;
 
 		/**
 		 * Save playlist to cache
@@ -78,7 +78,7 @@ namespace lib
 		 * @param id Id of album for example
 		 * @return JSON stored in cache, or an empty object if none
 		 */
-		virtual auto get_tracks(const std::string &id) -> std::vector<lib::spt::track> = 0;
+		virtual auto get_tracks(const std::string &id) const -> std::vector<lib::spt::track> = 0;
 
 		/**
 		 * Save tracks to cache
@@ -92,7 +92,7 @@ namespace lib
 		 * Get all tracks saved in cache
 		 * @return Map as id: tracks
 		 */
-		virtual auto all_tracks() -> std::map<std::string, std::vector<lib::spt::track>> = 0;
+		virtual auto all_tracks() const -> std::map<std::string, std::vector<lib::spt::track>> = 0;
 
 		//endregion
 
@@ -103,7 +103,7 @@ namespace lib
 		 * @param track Track
 		 * @return Track info
 		 */
-		virtual auto get_track_info(const lib::spt::track &track) -> lib::spt::track_info = 0;
+		virtual auto get_track_info(const lib::spt::track &track) const -> lib::spt::track_info = 0;
 
 		/**
 		 * Set track info
