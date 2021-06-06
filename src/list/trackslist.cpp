@@ -310,7 +310,9 @@ void TracksList::load(const lib::spt::playlist &playlist)
 	const auto &snapshot = playlist.snapshot;
 	spotify.playlist(playlist.id, [this, snapshot](const lib::spt::playlist &loadedPlaylist)
 	{
-		if (snapshot == loadedPlaylist.snapshot && this->isEnabled())
+		if (snapshot == loadedPlaylist.snapshot
+			&& this->isEnabled()
+			&& loadedPlaylist.owner_id != "spotify")
 		{
 			return;
 		}
