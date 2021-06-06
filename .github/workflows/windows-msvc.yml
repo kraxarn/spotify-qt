@@ -4,6 +4,7 @@ on: workflow_dispatch
 
 env:
   BUILD_TYPE: Release
+  VCPKG_ROOT: $VCPKG_INSTALLATION_ROOT
 
 jobs:
   build:
