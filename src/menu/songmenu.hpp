@@ -1,9 +1,10 @@
 #pragma once
 
-#include "../spotify/spotify.hpp"
-#include "../util/icon.hpp"
+#include "spotify/spotify.hpp"
+#include "util/icon.hpp"
 #include "lib/strings.hpp"
 #include "enum/datarole.hpp"
+#include "lib/cache.hpp"
 
 #include <utility>
 
@@ -18,23 +19,26 @@ public:
 	/**
 	 * Basic SongMenu
 	 */
-	SongMenu(const lib::spt::track &track, spt::Spotify &spotify, QWidget *parent);
+	SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
+		const lib::cache &cache, QWidget *parent);
 
 	/**
 	 * SongMenu from artist
 	 */
 	SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
-		const lib::spt::artist *fromArtist, QWidget *parent);
+		const lib::cache &cache, const lib::spt::artist *fromArtist,
+		QWidget *parent);
 
 	/**
 	 * SongMenu from playlist with index of track in playlist
 	 */
 	SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
-		int index, QWidget *parent);
+		const lib::cache &cache, int index, QWidget *parent);
 
 private:
 	SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
-		const lib::spt::artist *fromArtist, int index, QWidget *parent);
+		const lib::cache &cache, const lib::spt::artist *fromArtist,
+		int index, QWidget *parent);
 
 	spt::Spotify &spotify;
 	bool isLiked = false;
@@ -42,7 +46,7 @@ private:
 	lib::spt::track track;
 	std::string trackUri;
 	int index = 0;
-	const lib::spt::playlist *currentPlaylist = nullptr;
+	lib::spt::playlist currentPlaylist;
 	QAction *toggleLiked = nullptr;
 
 	auto getTrackUrl() const -> QString;

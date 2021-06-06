@@ -73,7 +73,7 @@ void LeftSidePanel::popupSongMenu(const QPoint &pos)
 		return;
 	}
 
-	auto *menu = new SongMenu(track, spotify, parentWidget());
+	auto *menu = new SongMenu(track, spotify, cache, parentWidget());
 	menu->popup(nowPlaying->mapToGlobal(pos));
 }
 

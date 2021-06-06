@@ -2,25 +2,27 @@
 
 #include "mainwindow.hpp"
 
-SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify, QWidget *parent)
-	: SongMenu(track, spotify, nullptr, parent)
+SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
+	const lib::cache &cache, QWidget *parent)
+	: SongMenu(track, spotify, cache, nullptr, parent)
 {
 }
 
 SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
-	const lib::spt::artist *fromArtist, QWidget *parent)
-	: SongMenu(track, spotify, fromArtist, -1, parent)
+	const lib::cache &cache, const lib::spt::artist *fromArtist, QWidget *parent)
+	: SongMenu(track, spotify, cache, fromArtist, -1, parent)
 {
 }
 
 SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
+	const lib::cache &cache, int index, QWidget *parent)
+	: SongMenu(track, spotify, cache, nullptr, index, parent)
+{
+}
+
+SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
+	const lib::cache &cache, const lib::spt::artist *fromArtist,
 	int index, QWidget *parent)
-	: SongMenu(track, spotify, nullptr, index, parent)
-{
-}
-
-SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
-	const lib::spt::artist *fromArtist, int index, QWidget *parent)
 	: track(track),
 	index(index),
 	spotify(spotify),
@@ -79,11 +81,11 @@ SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
 	auto *playlistItem = mainWindow->getCurrentPlaylistItem();
 	if (playlistItem != nullptr)
 	{
-		currentPlaylist = &mainWindow->getPlaylist(playlistItem->data(RoleIndex).toInt());
+		currentPlaylist = mainWindow->getPlaylist(playlistItem->data(RoleIndex).toInt());
 	}
 
 	auto currentUserId = mainWindow->getCurrentUser().id;
-	for (auto &playlist : mainWindow->getPlaylists())
+	for (auto &playlist : cache.get_playlists())
 	{
 		if (!playlist.collaborative && playlist.owner_id != currentUserId)
 		{
@@ -215,7 +217,7 @@ void SongMenu::addToPlaylist(QAction *action)
 
 void SongMenu::remFromPlaylist(bool /*checked*/)
 {
-	spotify.remove_from_playlist(currentPlaylist->id, track.id, index,
+	spotify.remove_from_playlist(currentPlaylist.id, track.id, index,
 		[this](const std::string &status)
 		{
 			// Remove from Spotify
@@ -252,7 +254,7 @@ void SongMenu::remFromPlaylist(bool /*checked*/)
 			mainWindow->status(lib::fmt::format("Removed {} - {} from \"{}\"",
 				track.name,
 				lib::spt::entity::combine_names(track.artists),
-				currentPlaylist->name));
+				currentPlaylist.name));
 		});
 }
 
