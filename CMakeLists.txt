@@ -43,7 +43,7 @@ message(STATUS "Using Qt ${QT_VERSION_MAJOR}")
 
 # Find KCRash
 if (USE_KCRASH)
-	find_package(KF5Crash REQUIRED)
+	find_package(KF5Crash QUIET)
 endif ()
 
 # Glob source files
