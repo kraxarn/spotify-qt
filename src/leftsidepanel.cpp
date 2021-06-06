@@ -247,7 +247,7 @@ void LeftSidePanel::setCurrentlyPlaying(const lib::spt::track &value)
 
 void LeftSidePanel::setAlbumImage(const QPixmap &pixmap)
 {
-	nowAlbum->setPixmap(pixmap);
+	nowAlbum->setPixmap(ImageUtils::mask(pixmap));
 }
 
 void LeftSidePanel::getPlaylistName(const std::string &id,
