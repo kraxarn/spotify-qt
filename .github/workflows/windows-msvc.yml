@@ -4,7 +4,6 @@ on: workflow_dispatch
 
 env:
   BUILD_TYPE: Release
-  VCPKG_ROOT: ${{github.workspace}}\vcpkg
 
 jobs:
   build:
@@ -33,7 +32,7 @@ jobs:
       - name: Configure CMake
         shell: bash
         working-directory: ${{runner.workspace}}\build
-        run: cmake $GITHUB_WORKSPACE -DCMAKE_TOOLCHAIN_FILE="${{env.VCPKG_ROOT}}\scripts\buildsystems\vcpkg.cmake" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_TESTS=ON
+        run: cmake $GITHUB_WORKSPACE -DCMAKE_TOOLCHAIN_FILE="$VCPKG_ROOT\scripts\buildsystems\vcpkg.cmake" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_TESTS=ON
 
       - name: Build
         working-directory: ${{runner.workspace}}\build
