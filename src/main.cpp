@@ -8,7 +8,11 @@
 #include "mainwindow.hpp"
 #include "dialog/setupdialog.hpp"
 
-int main(int argc, char *argv[])
+#ifdef USE_KCRASH
+#include <kcrash.h>
+#endif
+
+auto main(int argc, char *argv[]) -> int
 {
 	// Set name for settings etc.
 	QCoreApplication::setOrganizationName("kraxarn");
@@ -24,6 +28,15 @@ int main(int argc, char *argv[])
 
 	// Create Qt application
 	QApplication app(argc, argv);
+
+	// Optional KCrash support
+#ifdef USE_KCRASH
+	KCrash::initialize();
+	if (!KCrash::isDrKonqiEnabled())
+	{
+		lib::log::warn("Failed to initialize crash handler");
+	}
+#endif
 
 	// Settings
 	QtPaths paths(nullptr);

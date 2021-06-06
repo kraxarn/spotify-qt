@@ -60,6 +60,13 @@ auto SystemInfoView::systemInfo() -> lib::qt::system_info
 	info.add("D-Bus support", "No");
 #endif
 
+	// KCrash support
+#ifdef USE_KCRASH
+	info.add("KCrash support", "Yes");
+#else
+	info.add("KCrash support", "No");
+#endif
+
 	return info;
 }
 

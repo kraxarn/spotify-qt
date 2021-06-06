@@ -17,6 +17,11 @@ if (NOT DEFINED USE_DBUS)
 	set(USE_DBUS 1)
 endif ()
 
+# Optional KCrash support
+if (NOT DEFINED USE_KCRASH)
+	set(USE_KCRASH 1)
+endif ()
+
 # Optional Qt 6 support
 if (DEFINED USE_QT6)
 	set(QT_VERSION_MAJOR 6)
@@ -35,6 +40,11 @@ if (USE_DBUS)
 	find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS DBus QUIET)
 endif ()
 message(STATUS "Using Qt ${QT_VERSION_MAJOR}")
+
+# Find KCRash
+if (USE_KCRASH)
+	find_package(KF5Crash REQUIRED)
+endif ()
 
 # Glob source files
 file(GLOB MAIN_SRC "src/*.[hc]pp")
@@ -90,4 +100,10 @@ target_link_libraries(spotify-qt PRIVATE spotify-qt-lib)
 if (Qt5DBus_FOUND)
 	target_compile_definitions(spotify-qt PRIVATE USE_DBUS)
 	target_link_libraries(spotify-qt PRIVATE Qt5::DBus)
+endif ()
+
+# KCrash support
+if (KF5Crash_FOUND AND NOT USE_QT6)
+	target_compile_definitions(spotify-qt PRIVATE USE_KCRASH)
+	target_link_libraries(spotify-qt PRIVATE KF5::Crash)
 endif ()
