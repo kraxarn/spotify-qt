@@ -11,11 +11,10 @@ namespace lib
 	{
 	public:
 		/**
-		 * Data is a JPEG image
-		 * @param data
-		 * @return
+		 * Check if data is a valid jpeg image
+		 * @param data Image data
 		 */
-		static auto is_jpeg(const std::vector<unsigned  char> &data) -> bool;
+		static auto is_jpeg(const std::vector<unsigned char> &data) -> bool;
 
 	private:
 		/**
