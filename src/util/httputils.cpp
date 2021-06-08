@@ -10,7 +10,7 @@ void HttpUtils::getAlbum(const std::string &url, const lib::http_client &httpCli
 	}
 
 	auto data = cache.get_album_image(url);
-	if (!data.empty())
+	if (lib::image::is_jpeg(data))
 	{
 		QPixmap img;
 		img.loadFromData(data.data(), data.size(), "jpeg");
@@ -23,6 +23,12 @@ void HttpUtils::getAlbum(const std::string &url, const lib::http_client &httpCli
 		[&cache, url, callback](const std::string &str)
 		{
 			auto data = QByteArray::fromStdString(str);
+			if (!lib::image::is_jpeg(std::vector<unsigned char>(data.begin(), data.end())))
+			{
+				lib::log::warn("Album art from \"{}\" is not a valid JPEG image",
+					url);
+				return;
+			}
 			cache.set_album_image(url,
 				std::vector<unsigned char>(data.begin(), data.end()));
 
@@ -30,7 +36,6 @@ void HttpUtils::getAlbum(const std::string &url, const lib::http_client &httpCli
 			img.loadFromData(data, "jpeg");
 			callback(img);
 		});
-
 }
 
 auto HttpUtils::defaultIcon() -> QPixmap
