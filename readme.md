@@ -57,9 +57,9 @@ if that's your thing.
 ## Building yourself
 
 Make sure you have Qt (5.9+/6.0+) with SVG support, CMake (3.5+) and various build tools like
-`make`, `g++` and `git`. Keep in mind that the master branch is considered unstable at all times.
+`make`, `g++` and `git`. Keep in mind that the master branch is unstable at all times.
 Therefore, it's recommended to use the stable branch, which is updated after each new stable
-release, only including important bug fixes, unless you wanted to try out new features.
+release, only including important bug fixes, unless you want to try out new features.
 
 ```
 git clone --branch stable https://github.com/kraxarn/spotify-qt.git
