@@ -217,7 +217,8 @@ void SongMenu::addToPlaylist(QAction *action)
 
 void SongMenu::remFromPlaylist(bool /*checked*/)
 {
-	spotify.remove_from_playlist(currentPlaylist.id, track.id, index,
+	spotify.remove_from_playlist(currentPlaylist.id,
+		lib::spt::api::to_uri("track", track.id), index,
 		[this](const std::string &status)
 		{
 			// Remove from Spotify
