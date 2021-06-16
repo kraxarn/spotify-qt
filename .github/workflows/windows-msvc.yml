@@ -21,7 +21,7 @@ jobs:
             !${{env.VCPKG_INSTALLATION_ROOT}}/buildtrees
             !${{env.VCPKG_INSTALLATION_ROOT}}/packages
             !${{env.VCPKG_INSTALLATION_ROOT}}/downloads
-          key: ${{hashFiles('$VCPKG_INSTALLATION_ROOT/vcpkg_manifest/vcpkg.json')}}-${{hashFiles('$VCPKG_INSTALLATION_ROOT/.git/modules/vcpkg/HEAD')}}
+          key: ${{hashFiles('/vcpkg/vcpkg_manifest/vcpkg.json')}}-${{hashFiles('/vcpkg/.git/modules/vcpkg/HEAD')}}
 
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}\build
