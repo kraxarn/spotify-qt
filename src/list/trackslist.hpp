@@ -1,10 +1,11 @@
 #pragma once
 
-#include "../spotify/spotify.hpp"
+#include "spotify/spotify.hpp"
 #include "lib/cache.hpp"
-#include "../spotify/current.hpp"
-#include "../menu/songmenu.hpp"
+#include "spotify/current.hpp"
+#include "menu/songmenu.hpp"
 #include "lib/set.hpp"
+#include "enum/column.hpp"
 
 #include <QListWidget>
 #include <QTreeWidgetItem>
