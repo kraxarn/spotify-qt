@@ -53,14 +53,6 @@ private:
 	void resizeHeaders(const QSize &newSize);
 	auto getCurrent() -> const spt::Current &;
 
-	// Constants
-	const int colIndex = 0;
-	const int colTitle = 1;
-	const int colArtist = 2;
-	const int colAlbum = 3;
-	const int colLength = 4;
-	const int colAdded = 5;
-
 	// lib
 	lib::settings &settings;
 	lib::cache &cache;

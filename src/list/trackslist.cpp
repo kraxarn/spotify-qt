@@ -196,12 +196,12 @@ void TracksList::resizeHeaders(const QSize &newSize)
 		size = minSize;
 	}
 
-	header()->resizeSection(colIndex, indexSize);
-	header()->resizeSection(colTitle, size * 3);
-	header()->resizeSection(colArtist, size * 2);
-	header()->resizeSection(colAlbum, size * 2);
-	header()->resizeSection(colLength, lengthSize);
-	header()->resizeSection(colAdded, addedSize);
+	header()->resizeSection(static_cast<int>(Column::Index), indexSize);
+	header()->resizeSection(static_cast<int>(Column::Title), size * 3);
+	header()->resizeSection(static_cast<int>(Column::Artist), size * 2);
+	header()->resizeSection(static_cast<int>(Column::Album), size * 2);
+	header()->resizeSection(static_cast<int>(Column::Length), lengthSize);
+	header()->resizeSection(static_cast<int>(Column::Added), addedSize);
 }
 
 void TracksList::updateResizeMode(lib::resize_mode mode)
@@ -283,8 +283,9 @@ void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::str
 
 	setSortingEnabled(true);
 
-	header()->setSectionHidden(colAdded, !anyHasDate
-		|| lib::set::contains(settings.general.hidden_song_headers, colAdded));
+	header()->setSectionHidden(static_cast<int>(Column::Added), !anyHasDate
+		|| lib::set::contains(settings.general.hidden_song_headers,
+			static_cast<int>(Column::Added)));
 }
 
 void TracksList::load(const std::vector<lib::spt::track> &tracks)
