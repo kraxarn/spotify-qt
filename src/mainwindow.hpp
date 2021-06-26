@@ -88,6 +88,9 @@ private:
 	TracksList *songs = nullptr;
 	QToolBar *toolBar = nullptr;
 
+	QSizeGrip *bottomLeftResize = nullptr;
+	QSizeGrip *bottomRightResize = nullptr;
+
 	// spt
 	spt::ClientHandler *sptClient = nullptr;
 	spt::Spotify *spotify = nullptr;

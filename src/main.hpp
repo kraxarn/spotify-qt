@@ -33,3 +33,4 @@
 #include <QMainWindow>
 #include <QSplitter>
 #include <QStatusBar>
+#include <QSizeGrip>

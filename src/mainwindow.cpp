@@ -158,6 +158,23 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::setBorderless(bool enabled)
 {
 	setWindowFlag(Qt::FramelessWindowHint, enabled);
+	dynamic_cast<MainToolBar *>(toolBar)->setBorderless(enabled);
+
+	if (enabled)
+	{
+		bottomLeftResize = new QSizeGrip(this);
+		bottomLeftResize->move(geometry().bottomLeft()
+			- bottomLeftResize->geometry().bottomLeft());
+
+		bottomRightResize = new QSizeGrip(this);
+		bottomRightResize->move(geometry().bottomRight()
+			- bottomRightResize->geometry().bottomRight());
+	}
+	else
+	{
+		delete bottomLeftResize;
+		delete bottomRightResize;
+	}
 }
 
 void MainWindow::refresh()
