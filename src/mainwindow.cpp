@@ -267,13 +267,13 @@ auto MainWindow::createCentralWidget() -> QWidget *
 {
 	auto *container = new QSplitter();
 
-	// Left side panel with library and playlists
-	leftSidePanel = new LeftSidePanel(*spotify, settings, current, cache, this);
-	container->addWidget(leftSidePanel);
-
 	//region Songs
 	songs = new TracksList(*spotify, settings, cache, this);
 	//endregion
+
+	// Left side panel with library and playlists
+	leftSidePanel = new LeftSidePanel(*spotify, settings, current, cache, this);
+	container->addWidget(leftSidePanel);
 
 	// Add to main thing
 	container->addWidget(songs);
