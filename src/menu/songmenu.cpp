@@ -2,25 +2,25 @@
 
 #include "mainwindow.hpp"
 
-SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
+SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 	const lib::cache &cache, QWidget *parent)
 	: SongMenu(track, spotify, cache, nullptr, parent)
 {
 }
 
-SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
+SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 	const lib::cache &cache, const lib::spt::artist *fromArtist, QWidget *parent)
 	: SongMenu(track, spotify, cache, fromArtist, -1, parent)
 {
 }
 
-SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
+SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 	const lib::cache &cache, int index, QWidget *parent)
 	: SongMenu(track, spotify, cache, nullptr, index, parent)
 {
 }
 
-SongMenu::SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
+SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 	const lib::cache &cache, const lib::spt::artist *fromArtist,
 	int index, QWidget *parent)
 	: track(track),

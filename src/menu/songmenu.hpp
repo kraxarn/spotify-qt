@@ -19,28 +19,28 @@ public:
 	/**
 	 * Basic SongMenu
 	 */
-	SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
+	SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 		const lib::cache &cache, QWidget *parent);
 
 	/**
 	 * SongMenu from artist
 	 */
-	SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
+	SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 		const lib::cache &cache, const lib::spt::artist *fromArtist,
 		QWidget *parent);
 
 	/**
 	 * SongMenu from playlist with index of track in playlist
 	 */
-	SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
+	SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 		const lib::cache &cache, int index, QWidget *parent);
 
 private:
-	SongMenu(const lib::spt::track &track, spt::Spotify &spotify,
+	SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 		const lib::cache &cache, const lib::spt::artist *fromArtist,
 		int index, QWidget *parent);
 
-	spt::Spotify &spotify;
+	lib::spt::api &spotify;
 	bool isLiked = false;
 
 	lib::spt::track track;
