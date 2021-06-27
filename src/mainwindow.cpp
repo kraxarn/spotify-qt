@@ -211,13 +211,13 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 	if (!current.playback.item.is_valid())
 	{
 		mainToolBar->setPlaying(false);
-		leftSidePanel->resetCurrentlyPlaying();
+		contextView->reset();
 		setWindowTitle("spotify-qt");
 		return;
 	}
 
 	const auto &currPlaying = current.playback.item;
-	if (leftSidePanel->getCurrentlyPlaying().id != currPlaying.id
+	if (contextView->getCurrentlyPlaying().id != currPlaying.id
 		|| windowTitle() == "spotify-qt")
 	{
 		if (current.playback.is_playing)
@@ -225,10 +225,10 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 			songs->setPlayingTrackItem(currPlaying.id);
 		}
 
-		leftSidePanel->setCurrentlyPlaying(currPlaying);
+		contextView->setCurrentlyPlaying(currPlaying);
 		setAlbumImage(currPlaying.image);
 		setWindowTitle(QString::fromStdString(currPlaying.title()));
-		leftSidePanel->updateContextIcon();
+		contextView->updateContextIcon();
 
 #ifdef USE_DBUS
 		if (mediaPlayer != nullptr)
@@ -368,9 +368,9 @@ void MainWindow::setAlbumImage(const std::string &url)
 {
 	HttpUtils::getAlbum(url, *httpClient, cache, [this](const QPixmap &image)
 	{
-		if (this->leftSidePanel != nullptr)
+		if (this->contextView != nullptr)
 		{
-			leftSidePanel->setAlbumImage(image);
+			contextView->setAlbum(image);
 		}
 	});
 }
@@ -487,7 +487,7 @@ void MainWindow::setSptContext(const lib::spt::playlist &playlist)
 void MainWindow::setSptContext(const lib::spt::album &album)
 {
 	setSptContext(lib::spt::api::to_uri("album", album.id));
-	leftSidePanel->setCurrentPlaylistItem(nullptr);
+	playlistList->setCurrentRow(-1);
 }
 
 void MainWindow::setNoSptContext()
@@ -546,47 +546,47 @@ void MainWindow::addSidePanelTab(QWidget *widget, const QString &title)
 
 void MainWindow::refreshPlaylists()
 {
-	leftSidePanel->refreshPlaylists();
+	playlistList->refresh();
 }
 
 void MainWindow::setCurrentLibraryItem(QTreeWidgetItem *item)
 {
-	leftSidePanel->setCurrentLibraryItem(item);
+	libraryList->setCurrentItem(item);
 }
 
 auto MainWindow::getPlaylist(int index) -> lib::spt::playlist
 {
-	return leftSidePanel->playlist(index);
+	return playlistList->at(index);
 }
 
 void MainWindow::setCurrentPlaylistItem(int index)
 {
-	leftSidePanel->setCurrentPlaylistItem(index);
+	playlistList->setCurrentRow(index);
 }
 
 auto MainWindow::allArtists() -> std::unordered_set<std::string>
 {
-	return leftSidePanel->allArtists();
+	return playlistList->allArtists();
 }
 
 auto MainWindow::getCurrentPlaylistItem() -> QListWidgetItem *
 {
-	return leftSidePanel->currentPlaylist();
+	return playlistList->currentItem();
 }
 
 auto MainWindow::getPlaylistItemCount() -> int
 {
-	return leftSidePanel->playlistItemCount();
+	return playlistList->count();
 }
 
 auto MainWindow::getPlaylistItem(int index) -> QListWidgetItem *
 {
-	return leftSidePanel->playlistItem(index);
+	return playlistList->item(index);
 }
 
 void MainWindow::orderPlaylists(lib::playlist_order order)
 {
-	leftSidePanel->orderPlaylists(order);
+	playlistList->order(order);
 }
 
 auto MainWindow::find(QWidget *from) -> MainWindow *
