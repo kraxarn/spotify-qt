@@ -12,9 +12,10 @@
 #include "dialog/settingsdialog.hpp"
 #include "dialog/splashdialog.hpp"
 #include "dialog/whatsnewdialog.hpp"
-#include "leftsidepanel.hpp"
 #include "list/tracklistitem.hpp"
 #include "list/trackslist.hpp"
+#include "list/librarylist.hpp"
+#include "list/playlistlist.hpp"
 #include "maintoolbar.hpp"
 #include "mediaplayer/service.hpp"
 #include "menu/mainmenu.hpp"
@@ -29,6 +30,7 @@
 #include "util/imageutils.hpp"
 #include "util/styleutils.hpp"
 #include "util/httputils.hpp"
+#include "view/contextview.hpp"
 
 #include <QMainWindow>
 #include <QSplitter>
