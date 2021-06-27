@@ -244,3 +244,45 @@ auto PlaylistList::latestTrack(const std::vector<lib::spt::track> &tracks) -> in
 	}
 	return latest;
 }
+
+auto PlaylistList::allArtists() -> std::unordered_set<std::string>
+{
+	std::unordered_set<std::string> artists;
+
+	for (auto i = 0; i < count(); i++)
+	{
+		auto playlistId = item(i)->data(RolePlaylistId).toString().toStdString();
+
+		for (auto &track : cache.get_playlist(playlistId).tracks)
+		{
+			for (const auto &artist : track.artists)
+			{
+				artists.insert(artist.name);
+			}
+		}
+	}
+
+	return artists;
+}
+
+auto PlaylistList::at(int index) -> lib::spt::playlist
+{
+	auto *i = item(index);
+	if (i == nullptr)
+	{
+		return lib::spt::playlist();
+	}
+	return at(i->data(RolePlaylistId).toString().toStdString());
+}
+
+auto PlaylistList::at(const std::string &id) -> lib::spt::playlist
+{
+	for (const auto &playlist : cache.get_playlists())
+	{
+		if (lib::strings::ends_with(id, playlist.id))
+		{
+			return playlist;
+		}
+	}
+	return lib::spt::playlist();
+}

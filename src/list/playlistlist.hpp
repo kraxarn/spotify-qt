@@ -20,6 +20,11 @@ public:
 	void refresh();
 	void order(lib::playlist_order order);
 
+	auto allArtists() -> std::unordered_set<std::string>;
+
+	auto at(int index) -> lib::spt::playlist;
+	auto at(const std::string &id) -> lib::spt::playlist;
+
 protected:
 	void showEvent(QShowEvent *event) override;
 
