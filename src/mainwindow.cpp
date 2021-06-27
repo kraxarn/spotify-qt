@@ -609,3 +609,9 @@ auto MainWindow::defaultSize() -> QSize
 		height
 	};
 }
+
+void MainWindow::resetLibraryPlaylist() const
+{
+	libraryList->setCurrentItem(nullptr);
+	playlistList->setCurrentRow(-1);
+}

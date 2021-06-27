@@ -75,6 +75,7 @@ public:
 	lib::spt::playback &getCurrentPlayback();
 	const spt::Current &getCurrent();
 	auto getClientHandler() -> const spt::ClientHandler *;
+	void resetLibraryPlaylist() const;
 
 #ifdef USE_DBUS
 	mp::Service *getMediaPlayer();
