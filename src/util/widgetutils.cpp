@@ -26,3 +26,10 @@ auto WidgetUtils::createGroupBox(QWidget *widget, QWidget *parent) -> QGroupBox 
 	};
 	return createGroupBox(widgets, parent);
 }
+
+auto WidgetUtils::createDockWidget(QWidget *widget, QWidget *parent) -> QDockWidget *
+{
+	auto *dock = new QDockWidget(parent);
+	dock->setWidget(widget);
+	return dock;
+}
