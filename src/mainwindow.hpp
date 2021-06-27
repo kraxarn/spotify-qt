@@ -112,7 +112,10 @@ private:
 	int refreshCount = -1;
 	bool stateValid = true;
 	QTabWidget *sidePanel = nullptr;
-	LeftSidePanel *leftSidePanel = nullptr;
+
+	LibraryList *libraryList = nullptr;
+	PlaylistList *playlistList = nullptr;
+	ContextView *contextView = nullptr;
 
 #ifdef USE_DBUS
 	mp::Service *mediaPlayer = nullptr;

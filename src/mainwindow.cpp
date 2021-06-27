@@ -265,24 +265,27 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 
 auto MainWindow::createCentralWidget() -> QWidget *
 {
-	auto *container = new QSplitter();
-
-	//region Songs
+	// All widgets in container
 	songs = new TracksList(*spotify, settings, cache, this);
-	//endregion
-
-	// Left side panel with library and playlists
-	leftSidePanel = new LeftSidePanel(*spotify, settings, current, cache, this);
-	container->addWidget(leftSidePanel);
-
-	// Add to main thing
-	container->addWidget(songs);
-
-	// Side panel
 	sidePanel = new SidePanel(*spotify, settings, cache, *httpClient, this);
-	container->addWidget(sidePanel);
 
-	return container;
+	libraryList = new LibraryList(*spotify, this);
+	playlistList = new PlaylistList(*spotify, settings, cache, this);
+	contextView = new ContextView(*spotify, settings, current, cache, this);
+
+	// Left side panel
+	addDockWidget(Qt::LeftDockWidgetArea,
+		WidgetUtils::createDockWidget(libraryList, this));
+	addDockWidget(Qt::LeftDockWidgetArea,
+		WidgetUtils::createDockWidget(playlistList, this));
+	addDockWidget(Qt::LeftDockWidgetArea,
+		WidgetUtils::createDockWidget(contextView, this));
+
+	// Right side panel
+	addDockWidget(Qt::RightDockWidgetArea,
+		WidgetUtils::createDockWidget(sidePanel, this));
+
+	return songs;
 }
 
 auto MainWindow::startClient() -> bool
