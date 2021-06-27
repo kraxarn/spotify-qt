@@ -380,6 +380,7 @@ void ArtistView::searchWikipedia(bool /*checked*/)
 		"https://www.wikipedia.org/search-redirect.php?family=wikipedia&go=Go&search={}",
 		artist.name), LinkType::Web, this);
 }
+
 void ArtistView::searchDuckDuckGo(bool /*checked*/)
 {
 	UrlUtils::open(lib::fmt::format("https://duckduckgo.com/?t=h_&q={}", artist.name),
@@ -398,7 +399,7 @@ void ArtistView::copyLink(bool /*checked*/)
 	MainWindow::find(parentWidget())->setStatus("Link copied to clipboard");
 }
 
-void ArtistView::openInSpotify(bool /*chekced*/)
+void ArtistView::openInSpotify(bool /*checked*/)
 {
 	UrlUtils::open(lib::fmt::format("https://open.spotify.com/artist/{}", artistId),
 		LinkType::Web, MainWindow::find(parentWidget()));
