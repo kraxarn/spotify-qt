@@ -6,6 +6,15 @@ Widget::DockTitle::DockTitle(const QString &title, QDockWidget *parent)
 	parent->setTitleBarWidget(this);
 	parent->setFloating(false);
 
-	setContentsMargins(marginHorizontal, marginVertical,
-		marginHorizontal, marginVertical);
+	setContentsMargins(margins());
+}
+
+auto Widget::DockTitle::margins() -> QMargins
+{
+	return {
+		marginHorizontal,
+		marginVertical,
+		marginHorizontal,
+		marginVertical
+	};
 }
