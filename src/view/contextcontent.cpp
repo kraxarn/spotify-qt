@@ -1,9 +1,8 @@
 #include "contextcontent.hpp"
 
-View::ContextContent::ContextContent(lib::spt::api &spotify, const lib::settings &settings,
-	spt::Current &current, const lib::cache &cache, QWidget *parent)
+View::ContextContent::ContextContent(lib::spt::api &spotify, spt::Current &current,
+	const lib::cache &cache, QWidget *parent)
 	: spotify(spotify),
-	settings(settings),
 	current(current),
 	cache(cache),
 	QWidget(parent)

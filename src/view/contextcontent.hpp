@@ -19,8 +19,8 @@ namespace View
 	class ContextContent: public QWidget
 	{
 	public:
-		ContextContent(lib::spt::api &spotify, const lib::settings &settings,
-			spt::Current &current, const lib::cache &cache, QWidget *parent);
+		ContextContent(lib::spt::api &spotify, spt::Current &current,
+			const lib::cache &cache, QWidget *parent);
 
 		void reset();
 
@@ -31,7 +31,6 @@ namespace View
 
 	private:
 		lib::spt::api &spotify;
-		const lib::settings &settings;
 		spt::Current &current;
 		const lib::cache &cache;
 

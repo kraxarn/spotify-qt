@@ -6,7 +6,7 @@ View::Context::Context(lib::spt::api &spotify, const lib::settings &settings,
 	spt::Current &current, const lib::cache &cache, QWidget *parent)
 	: QDockWidget(parent)
 {
-	content = new View::ContextContent(spotify, settings, current, cache, this);
+	content = new View::ContextContent(spotify, current, cache, this);
 	setWidget(content);
 
 	title = new View::ContextTitle(spotify, settings, current, cache, this);
