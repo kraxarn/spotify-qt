@@ -33,3 +33,11 @@ auto WidgetUtils::createDockWidget(QWidget *widget, QWidget *parent) -> QDockWid
 	dock->setWidget(widget);
 	return dock;
 }
+
+auto WidgetUtils::createDockWidget(QWidget *widget, const QString &title,
+	QWidget *parent) -> QDockWidget *
+{
+	auto *dock = createDockWidget(widget, parent);
+	dock->setTitleBarWidget(new Widget::DockTitle(title, dock));
+	return dock;
+}

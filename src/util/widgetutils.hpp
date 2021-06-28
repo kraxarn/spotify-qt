@@ -1,5 +1,7 @@
 #pragma once
 
+#include "widget/docktitle.hpp"
+
 #include <QLayout>
 #include <QGroupBox>
 #include <QDockWidget>
@@ -19,6 +21,10 @@ public:
 
 	/** Wrap widget in dock widget */
 	static auto createDockWidget(QWidget *widget, QWidget *parent) -> QDockWidget *;
+
+	/** Wrap widget in dock widget with specified title */
+	static auto createDockWidget(QWidget *widget, const QString &title,
+		QWidget *parent) -> QDockWidget *;
 
 private:
 	WidgetUtils() = default;
