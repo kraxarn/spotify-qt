@@ -122,7 +122,9 @@ auto ContextView::currentContextIcon() const -> QIcon
 
 void ContextView::updateContextIcon()
 {
-	if (!settings.general.show_context_info)
+	if (!settings.general.show_context_info
+		&& contextIcon != nullptr
+		&& contextInfo != nullptr)
 	{
 		contextIcon->setVisible(false);
 		contextInfo->setVisible(false);
