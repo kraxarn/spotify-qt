@@ -246,7 +246,7 @@ void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::str
 	{
 		const auto &track = tracks.at(i);
 
-		auto *item = new TrackListItem({
+		auto *item = new ListItem::Track({
 			settings.general.track_numbers == lib::context_all
 				? QString("%1").arg(i + 1, fieldWidth)
 				: QString(),
