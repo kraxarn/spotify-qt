@@ -7,18 +7,6 @@ auto WidgetUtils::layoutToWidget(QLayout *layout, QWidget *parent) -> QWidget *
 	return widget;
 }
 
-auto WidgetUtils::createGroupBox(QVector<QWidget *> &widgets, QWidget *parent) -> QGroupBox *
-{
-	auto *group = new QGroupBox(parent);
-	auto *layout = new QVBoxLayout();
-	for (auto &widget : widgets)
-	{
-		layout->addWidget(widget);
-	}
-	group->setLayout(layout);
-	return group;
-}
-
 auto WidgetUtils::createDockWidget(QWidget *widget, QWidget *parent) -> QDockWidget *
 {
 	auto *dock = new QDockWidget(parent);
