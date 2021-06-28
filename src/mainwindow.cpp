@@ -211,7 +211,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 	if (!current.playback.item.is_valid())
 	{
 		mainToolBar->setPlaying(false);
-		contextView->reset();
+		contextView->resetCurrentlyPlaying();
 		setWindowTitle("spotify-qt");
 		return;
 	}
