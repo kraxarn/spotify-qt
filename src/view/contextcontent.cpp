@@ -8,9 +8,8 @@ View::ContextContent::ContextContent(lib::spt::api &spotify, const lib::settings
 	cache(cache),
 	QWidget(parent)
 {
-	auto *layout = new QHBoxLayout();
+	auto *layout = new QHBoxLayout(this);
 	layout->setSpacing(12);
-	setLayout(layout);
 
 	album = new QLabel(this);
 	album->setFixedSize(64, 64);
