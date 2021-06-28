@@ -280,8 +280,7 @@ auto MainWindow::createCentralWidget() -> QWidget *
 	addDockWidget(Qt::LeftDockWidgetArea,
 		WidgetUtils::createDockWidget(playlistList, "Playlist",
 			Widget::DockTitle::margins(), this));
-	addDockWidget(Qt::LeftDockWidgetArea,
-		WidgetUtils::createDockWidget(contextView, this));
+	addDockWidget(Qt::LeftDockWidgetArea, contextView);
 
 	// Right side panel
 	addDockWidget(Qt::RightDockWidgetArea,
