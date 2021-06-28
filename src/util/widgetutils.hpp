@@ -26,6 +26,10 @@ public:
 	static auto createDockWidget(QWidget *widget, const QString &title,
 		QWidget *parent) -> QDockWidget *;
 
+	/** Wrap widget in dock widget with specified title and margins */
+	static auto createDockWidget(QWidget *widget, const QString &title,
+		const QMargins &margins, QWidget *parent) -> QDockWidget *;
+
 private:
 	WidgetUtils() = default;
 };

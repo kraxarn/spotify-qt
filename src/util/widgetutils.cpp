@@ -41,3 +41,11 @@ auto WidgetUtils::createDockWidget(QWidget *widget, const QString &title,
 	dock->setTitleBarWidget(new Widget::DockTitle(title, dock));
 	return dock;
 }
+
+auto WidgetUtils::createDockWidget(QWidget *widget, const QString &title,
+	const QMargins &margins, QWidget *parent) -> QDockWidget *
+{
+	auto *dock = createDockWidget(widget, title, parent);
+	dock->setContentsMargins(margins);
+	return dock;
+}
