@@ -11,6 +11,8 @@ View::Context::Context(lib::spt::api &spotify, const lib::settings &settings,
 
 	title = new View::ContextTitle(spotify, settings, current, cache, this);
 	setTitleBarWidget(title);
+
+	setFeatures(QDockWidget::NoDockWidgetFeatures);
 }
 
 void View::Context::updateContextIcon()
