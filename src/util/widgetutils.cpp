@@ -19,14 +19,6 @@ auto WidgetUtils::createGroupBox(QVector<QWidget *> &widgets, QWidget *parent) -
 	return group;
 }
 
-auto WidgetUtils::createGroupBox(QWidget *widget, QWidget *parent) -> QGroupBox *
-{
-	QVector<QWidget *> widgets{
-		widget
-	};
-	return createGroupBox(widgets, parent);
-}
-
 auto WidgetUtils::createDockWidget(QWidget *widget, QWidget *parent) -> QDockWidget *
 {
 	auto *dock = new QDockWidget(parent);

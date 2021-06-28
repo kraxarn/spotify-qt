@@ -16,9 +16,6 @@ public:
 	static auto createGroupBox(QVector<QWidget *> &widgets,
 		QWidget *parent) -> QGroupBox *;
 
-	/** Create a new group box with specified widget in a vertical layout */
-	static auto createGroupBox(QWidget *widget, QWidget *parent) -> QGroupBox *;
-
 	/** Wrap widget in dock widget */
 	static auto createDockWidget(QWidget *widget, QWidget *parent) -> QDockWidget *;
 
