@@ -22,17 +22,24 @@ View::ContextContent::ContextContent(lib::spt::api &spotify, const lib::settings
 	reset();
 
 	// Show menu when clicking now playing
-	nowPlaying->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QLabel::connect(nowPlaying, &QWidget::customContextMenuRequested,
-		this, &View::ContextContent::onSongMenu);
+	if (nowPlaying != nullptr)
+	{
+		nowPlaying->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+		QLabel::connect(nowPlaying, &QWidget::customContextMenuRequested,
+			this, &View::ContextContent::onSongMenu);
+	}
 }
 
 void View::ContextContent::onSongMenu(const QPoint &pos)
 {
+	if (nowPlaying == nullptr)
+	{
+		return;
+	}
+
 	auto track = current.playback.item;
 	if (track.name.empty()
-		&& track.artists.empty()
-		&& nowPlaying != nullptr)
+		&& track.artists.empty())
 	{
 		return;
 	}
