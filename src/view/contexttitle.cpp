@@ -10,7 +10,7 @@ View::ContextTitle::ContextTitle(lib::spt::api &spotify, const lib::settings &se
 	cache(cache),
 	QWidget(parent)
 {
-	auto *layout = new QHBoxLayout();
+	auto *layout = new QHBoxLayout(this);
 	icon = new QLabel(this);
 	icon->setVisible(false);
 
