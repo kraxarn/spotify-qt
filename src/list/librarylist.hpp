@@ -2,7 +2,7 @@
 
 #include "spotify/spotify.hpp"
 #include "util/treeutils.hpp"
-#include "libraryitem.hpp"
+#include "listitem/library.hpp"
 
 #include <QTreeWidget>
 #include <QHeaderView>
@@ -30,5 +30,5 @@ private:
 	void expanded(QTreeWidgetItem *item);
 
 	void tracksLoaded(const std::string &id, const std::vector<lib::spt::track> &tracks);
-	static void itemsLoaded(std::vector<LibraryItem> &items, QTreeWidgetItem *item);
+	static void itemsLoaded(std::vector<ListItem::Library> &items, QTreeWidgetItem *item);
 };

@@ -1,6 +1,6 @@
-#include "tracklistitem.hpp"
+#include "listitem/track.hpp"
 
-TrackListItem::TrackListItem(const QStringList &strings,
+ListItem::Track::Track(const QStringList &strings,
 	const lib::spt::track &track,
 	const QIcon &icon,
 	int index)
@@ -55,7 +55,7 @@ TrackListItem::TrackListItem(const QStringList &strings,
 	}
 }
 
-auto TrackListItem::operator<(const QTreeWidgetItem &item) const -> bool
+auto ListItem::Track::operator<(const QTreeWidgetItem &item) const -> bool
 {
 	auto column = treeWidget()->sortColumn();
 
@@ -82,7 +82,7 @@ auto TrackListItem::operator<(const QTreeWidgetItem &item) const -> bool
 			Qt::CaseInsensitive) < 0;
 }
 
-auto TrackListItem::removePrefix(const QString &str) -> QString
+auto ListItem::Track::removePrefix(const QString &str) -> QString
 {
 	return str.startsWith("The ", Qt::CaseInsensitive)
 		? str.right(str.length() - 4)

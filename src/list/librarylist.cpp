@@ -194,7 +194,7 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 	{
 		spotify.top_artists([item](const std::vector<lib::spt::artist> &artists)
 		{
-			std::vector<LibraryItem> results;
+			std::vector<ListItem::Library> results;
 			results.reserve(artists.size());
 			for (const auto &artist : artists)
 			{
@@ -207,7 +207,7 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 	{
 		spotify.saved_albums([item](const std::vector<lib::spt::saved_album> &albums)
 		{
-			std::vector<LibraryItem> results;
+			std::vector<ListItem::Library> results;
 			results.reserve(albums.size());
 			for (const auto &album : albums)
 			{
@@ -220,7 +220,7 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 	{
 		spotify.followed_artists([item](const std::vector<lib::spt::artist> &artists)
 		{
-			std::vector<LibraryItem> results;
+			std::vector<ListItem::Library> results;
 			results.reserve(artists.size());
 			for (const auto &artist : artists)
 			{
@@ -231,10 +231,10 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 	}
 }
 
-void LibraryList::itemsLoaded(std::vector<LibraryItem> &items, QTreeWidgetItem *item)
+void LibraryList::itemsLoaded(std::vector<ListItem::Library> &items, QTreeWidgetItem *item)
 {
 	std::sort(items.begin(), items.end(),
-		[](const LibraryItem &x, const LibraryItem &y) -> bool
+		[](const ListItem::Library &x, const ListItem::Library &y) -> bool
 		{
 			return x.name < y.name;
 		}

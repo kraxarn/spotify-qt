@@ -25,6 +25,7 @@ At least in practise. A lot of older code doesn't follow this.
 |        | keyring/      | Password saving logic. |
 |        | lib/          | Implementations of abstract classes from lib. |
 |        | list/         | Lists, or anything inheriting `QListWidget`, `QTreeWidget`, etc. |
+|        | listitem/     | Items in lists, or anything inheriting `QListWidgetItem`, etc. |
 |        | mediaplayer/  | System media player implementations, like D-bus MPRIS. |
 |        | menu/         | Menus, or anything inheriting `QMenu`. |
 |        | model/        | Models for lists, or anything inheriting `QAbstractListModel`, etc. |
