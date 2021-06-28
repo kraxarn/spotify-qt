@@ -1,8 +1,8 @@
-#include "contextview.hpp"
+#include "view/context.hpp"
 
 #include "mainwindow.hpp"
 
-ContextView::ContextView(lib::spt::api &spotify, const lib::settings &settings,
+View::Context::Context(lib::spt::api &spotify, const lib::settings &settings,
 	spt::Current &current, const lib::cache &cache, QWidget *parent)
 	: spotify(spotify),
 	settings(settings),
@@ -28,7 +28,7 @@ ContextView::ContextView(lib::spt::api &spotify, const lib::settings &settings,
 
 	contextInfo->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(contextInfo, &QWidget::customContextMenuRequested,
-		this, &ContextView::onContextInfoMenu);
+		this, &View::Context::onContextInfoMenu);
 
 	// Now playing song
 	auto *nowPlayingLayout = new QHBoxLayout();
@@ -47,10 +47,10 @@ ContextView::ContextView(lib::spt::api &spotify, const lib::settings &settings,
 	// Show menu when clicking now playing
 	nowPlaying->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QLabel::connect(nowPlaying, &QWidget::customContextMenuRequested,
-		this, &ContextView::onSongMenu);
+		this, &View::Context::onSongMenu);
 }
 
-void ContextView::onContextInfoMenu(const QPoint &pos)
+void View::Context::onContextInfoMenu(const QPoint &pos)
 {
 	if (contextInfo == nullptr)
 	{
@@ -67,12 +67,12 @@ void ContextView::onContextInfoMenu(const QPoint &pos)
 
 	auto *open = menu->addAction(currentContextIcon(), QString("Open %1")
 		.arg(QString::fromStdString(current.playback.context.type)));
-	QAction::connect(open, &QAction::triggered, this, &ContextView::onContextInfoOpen);
+	QAction::connect(open, &QAction::triggered, this, &View::Context::onContextInfoOpen);
 
 	menu->popup(contextInfo->mapToGlobal(pos));
 }
 
-void ContextView::onContextInfoOpen(bool /*checked*/)
+void View::Context::onContextInfoOpen(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	const auto &type = current.playback.context.type;
@@ -96,7 +96,7 @@ void ContextView::onContextInfoOpen(bool /*checked*/)
 	}
 }
 
-void ContextView::onSongMenu(const QPoint &pos)
+void View::Context::onSongMenu(const QPoint &pos)
 {
 	auto track = current.playback.item;
 	if (track.name.empty()
@@ -110,7 +110,7 @@ void ContextView::onSongMenu(const QPoint &pos)
 	menu->popup(nowPlaying->mapToGlobal(pos));
 }
 
-auto ContextView::currentContextIcon() const -> QIcon
+auto View::Context::currentContextIcon() const -> QIcon
 {
 	return Icon::get(QString("view-media-%1")
 		.arg(current.playback.context.type.empty()
@@ -120,7 +120,7 @@ auto ContextView::currentContextIcon() const -> QIcon
 				: QString::fromStdString(current.playback.context.type)));
 }
 
-void ContextView::updateContextIcon()
+void View::Context::updateContextIcon()
 {
 	if (!settings.general.show_context_info
 		&& contextIcon != nullptr
@@ -172,7 +172,7 @@ void ContextView::updateContextIcon()
 	}
 }
 
-auto ContextView::playlist(const std::string &id) -> lib::spt::playlist
+auto View::Context::playlist(const std::string &id) -> lib::spt::playlist
 {
 	for (const auto &playlist : cache.get_playlists())
 	{
@@ -184,12 +184,12 @@ auto ContextView::playlist(const std::string &id) -> lib::spt::playlist
 	return lib::spt::playlist();
 }
 
-auto ContextView::playlistNameFromSaved(const std::string &id) -> std::string
+auto View::Context::playlistNameFromSaved(const std::string &id) -> std::string
 {
 	return playlist(id).name;
 }
 
-void ContextView::playlistName(const std::string &id, lib::callback<std::string> &callback)
+void View::Context::playlistName(const std::string &id, lib::callback<std::string> &callback)
 {
 	const auto &name = playlistNameFromSaved(id);
 	if (!name.empty())
@@ -206,7 +206,7 @@ void ContextView::playlistName(const std::string &id, lib::callback<std::string>
 	}
 }
 
-void ContextView::setAlbum(const QPixmap &pixmap)
+void View::Context::setAlbum(const QPixmap &pixmap)
 {
 	if (nowAlbum != nullptr)
 	{
@@ -214,7 +214,7 @@ void ContextView::setAlbum(const QPixmap &pixmap)
 	}
 }
 
-void ContextView::reset()
+void View::Context::reset()
 {
 	if (nowAlbum != nullptr)
 	{
@@ -226,12 +226,12 @@ void ContextView::reset()
 	}
 }
 
-auto ContextView::getCurrentlyPlaying() const -> const lib::spt::track &
+auto View::Context::getCurrentlyPlaying() const -> const lib::spt::track &
 {
 	return currentlyPlaying;
 }
 
-void ContextView::setCurrentlyPlaying(const lib::spt::track &track)
+void View::Context::setCurrentlyPlaying(const lib::spt::track &track)
 {
 	if (nowPlaying != nullptr)
 	{

@@ -30,7 +30,7 @@
 #include "util/imageutils.hpp"
 #include "util/styleutils.hpp"
 #include "util/httputils.hpp"
-#include "view/contextview.hpp"
+#include "view/context.hpp"
 
 #include <QMainWindow>
 #include <QSplitter>
