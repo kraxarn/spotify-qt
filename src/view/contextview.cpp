@@ -233,5 +233,9 @@ auto ContextView::getCurrentlyPlaying() const -> const lib::spt::track &
 
 void ContextView::setCurrentlyPlaying(const lib::spt::track &track)
 {
+	if (nowPlaying != nullptr)
+	{
+		nowPlaying->setText(QString::fromStdString(track.details()));
+	}
 	currentlyPlaying = track;
 }
