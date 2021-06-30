@@ -17,8 +17,8 @@ SidePanel::SidePanel(spt::Spotify &spotify, const lib::settings &settings, lib::
 
 	setVisible(false);
 
-//	QTabWidget::connect(this, &QTabWidget::tabCloseRequested,
-//		this, &SidePanel::removeTab);
+	QTabBar::connect(title, &QTabBar::tabCloseRequested,
+		this, &SidePanel::removeTab);
 }
 
 void SidePanel::addTab(QWidget *widget, const QString &icon, const QString &tabTitle)
