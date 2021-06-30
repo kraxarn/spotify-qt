@@ -7,15 +7,38 @@ SidePanel::SidePanel(spt::Spotify &spotify, const lib::settings &settings, lib::
 	parent(parent),
 	cache(cache),
 	httpClient(httpClient),
-	QTabWidget(parent)
+	QDockWidget(parent)
 {
-	setMovable(true);
-	setTabsClosable(true);
-	setVisible(false);
-	setFixedWidth(320);
+	title = new View::SidePanelTitle(this);
+	setTitleBarWidget(title);
 
-	QTabWidget::connect(this, &QTabWidget::tabCloseRequested,
-		this, &SidePanel::removeTab);
+	stack = new QStackedWidget(this);
+	setWidget(stack);
+
+	setVisible(false);
+
+//	QTabWidget::connect(this, &QTabWidget::tabCloseRequested,
+//		this, &SidePanel::removeTab);
+}
+
+void SidePanel::addTab(QWidget *widget, const QString &icon, const QString &tabTitle)
+{
+	auto index = stack->addWidget(widget);
+	title->insertTab(index, Icon::get(icon), tabTitle);
+	stack->setCurrentIndex(index);
+
+	setVisible(true);
+}
+
+void SidePanel::removeTab(int index)
+{
+	title->removeTab(index);
+	stack->removeWidget(stack->widget(index));
+
+	if (title->count() <= 0)
+	{
+		setVisible(false);
+	}
 }
 
 void SidePanel::openArtist(const std::string &artistId)
@@ -23,23 +46,14 @@ void SidePanel::openArtist(const std::string &artistId)
 	auto *view = new ArtistView(spotify, artistId, cache, httpClient, parent);
 	view->onArtistLoaded = [this, view](const lib::spt::artist &artist)
 	{
-		auto index = indexOf(view);
+		auto index = stack->indexOf(view);
 		if (index < 0)
 		{
 			return;
 		}
-		setTabText(index, QString::fromStdString(artist.name));
+		title->setTabText(index, QString::fromStdString(artist.name));
 	};
-	addAndSelect(view, "view-media-artist", "...");
-}
-
-void SidePanel::tabRemoved(int index)
-{
-	QTabWidget::tabRemoved(index);
-	if (count() <= 0)
-	{
-		setVisible(false);
-	}
+	addTab(view, "view-media-artist", "...");
 }
 
 void SidePanel::openSearch()
@@ -48,19 +62,19 @@ void SidePanel::openSearch()
 	{
 		searchView = new SearchView(spotify, cache, httpClient, parent);
 	}
-	addAndSelect(searchView, "edit-find", "Search");
+	addTab(searchView, "edit-find", "Search");
 }
 
 void SidePanel::closeSearch()
 {
-	removeTab(indexOf(searchView));
+	removeTab(stack->indexOf(searchView));
 }
 
 void SidePanel::openAudioFeatures(const std::string &trackId,
 	const std::string &artist, const std::string &name)
 {
 	auto *view = new AudioFeaturesView(spotify, trackId, this);
-	addAndSelect(view, "view-statistics", QString("%1 - %2")
+	addTab(view, "view-statistics", QString("%1 - %2")
 		.arg(QString::fromStdString(artist),
 			QString::fromStdString(name)));
 }
@@ -68,13 +82,7 @@ void SidePanel::openAudioFeatures(const std::string &trackId,
 void SidePanel::openLyrics(const lib::spt::track &track)
 {
 	auto *view = new LyricsView(httpClient, cache, this);
-	addAndSelect(view, "view-media-lyrics",
+	addTab(view, "view-media-lyrics",
 		QString::fromStdString(track.title()));
 	view->open(track);
-}
-
-void SidePanel::addAndSelect(QWidget *widget, const QString &icon, const QString &title)
-{
-	setCurrentIndex(addTab(widget, Icon::get(icon), title));
-	setVisible(true);
 }

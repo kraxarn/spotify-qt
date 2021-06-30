@@ -1,14 +1,16 @@
 #pragma once
 
+#include "lib/spotify/track.hpp"
 #include "view/artistview.hpp"
 #include "view/searchview.hpp"
 #include "view/audiofeaturesview.hpp"
-#include "lib/spotify/track.hpp"
 #include "view/lyricsview.hpp"
+#include "view/sidepaneltitle.hpp"
 
 #include <QTabWidget>
+#include <QStackedWidget>
 
-class SidePanel: public QTabWidget
+class SidePanel: public QDockWidget
 {
 Q_OBJECT
 
@@ -23,7 +25,12 @@ public:
 	void openSearch();
 	void closeSearch();
 
+	void addTab(QWidget *widget, const QString &icon, const QString &tabTitle);
+
 private:
+	View::SidePanelTitle *title = nullptr;
+	QStackedWidget *stack = nullptr;
+
 	QWidget *parent = nullptr;
 	QWidget *searchView = nullptr;
 
@@ -32,6 +39,5 @@ private:
 	lib::cache &cache;
 	const lib::http_client &httpClient;
 
-	void tabRemoved(int index) override;
-	void addAndSelect(QWidget *widget, const QString &icon, const QString &title);
+	void removeTab(int index);
 };

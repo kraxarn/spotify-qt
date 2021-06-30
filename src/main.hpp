@@ -21,7 +21,6 @@
 #include "menu/mainmenu.hpp"
 #include "menu/playlistmenu.hpp"
 #include "menu/songmenu.hpp"
-#include "sidepanel.hpp"
 #include "spotify/current.hpp"
 #include "spotify/spotify.hpp"
 #include "util/dateutils.hpp"
@@ -31,6 +30,7 @@
 #include "util/httputils.hpp"
 #include "view/context.hpp"
 #include "view/trayicon.hpp"
+#include "view/sidepanel.hpp"
 
 #include <QMainWindow>
 #include <QSplitter>

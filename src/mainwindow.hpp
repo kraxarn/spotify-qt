@@ -111,7 +111,7 @@ private:
 	TrayIcon *trayIcon = nullptr;
 	int refreshCount = -1;
 	bool stateValid = true;
-	QTabWidget *sidePanel = nullptr;
+	QDockWidget *sidePanel = nullptr;
 
 	LibraryList *libraryList = nullptr;
 	PlaylistList *playlistList = nullptr;

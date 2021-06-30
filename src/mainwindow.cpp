@@ -283,8 +283,7 @@ auto MainWindow::createCentralWidget() -> QWidget *
 	addDockWidget(Qt::LeftDockWidgetArea, contextView);
 
 	// Right side panel
-	addDockWidget(Qt::RightDockWidgetArea,
-		WidgetUtils::createDockWidget(sidePanel, this));
+	addDockWidget(Qt::RightDockWidgetArea, sidePanel);
 
 	return songs;
 }
@@ -543,9 +542,7 @@ void MainWindow::setSearchVisible(bool visible)
 
 void MainWindow::addSidePanelTab(QWidget *widget, const QString &title)
 {
-	sidePanel->addTab(widget, title);
-	sidePanel->setCurrentWidget(widget);
-	sidePanel->show();
+	dynamic_cast<SidePanel *>(sidePanel)->addTab(widget, "folder-txt", title);
 }
 
 void MainWindow::refreshPlaylists()
