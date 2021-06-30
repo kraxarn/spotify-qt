@@ -26,6 +26,7 @@ public:
 	void closeSearch();
 
 	void addTab(QWidget *widget, const QString &icon, const QString &tabTitle);
+	void removeTab(int index);
 
 private:
 	View::SidePanelTitle *title = nullptr;
@@ -38,8 +39,6 @@ private:
 	const lib::settings &settings;
 	lib::cache &cache;
 	const lib::http_client &httpClient;
-
-	void removeTab(int index);
 
 	void setCurrentIndex(int index);
 };
