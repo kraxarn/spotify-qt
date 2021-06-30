@@ -278,7 +278,7 @@ auto MainWindow::createCentralWidget() -> QWidget *
 		WidgetUtils::createDockWidget(libraryList, "Library",
 			Widget::DockTitle::margins(), this));
 	addDockWidget(Qt::LeftDockWidgetArea,
-		WidgetUtils::createDockWidget(playlistList, "Playlist",
+		WidgetUtils::createDockWidget(playlistList, "Playlists",
 			Widget::DockTitle::margins(), this));
 	addDockWidget(Qt::LeftDockWidgetArea, contextView);
 
