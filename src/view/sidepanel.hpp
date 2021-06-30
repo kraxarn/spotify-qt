@@ -40,4 +40,6 @@ private:
 	const lib::http_client &httpClient;
 
 	void removeTab(int index);
+
+	void setCurrentIndex(int index);
 };

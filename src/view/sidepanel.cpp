@@ -19,13 +19,18 @@ SidePanel::SidePanel(spt::Spotify &spotify, const lib::settings &settings, lib::
 
 	QTabBar::connect(title, &QTabBar::tabCloseRequested,
 		this, &SidePanel::removeTab);
+
+	QTabBar::connect(title, &QTabBar::currentChanged,
+		this, &SidePanel::setCurrentIndex);
 }
 
 void SidePanel::addTab(QWidget *widget, const QString &icon, const QString &tabTitle)
 {
 	auto index = stack->addWidget(widget);
-	title->insertTab(index, Icon::get(icon), tabTitle);
 	stack->setCurrentIndex(index);
+
+	title->insertTab(index, Icon::get(icon), tabTitle);
+	title->setCurrentIndex(index);
 
 	setVisible(true);
 }
@@ -39,6 +44,12 @@ void SidePanel::removeTab(int index)
 	{
 		setVisible(false);
 	}
+}
+
+void SidePanel::setCurrentIndex(int index)
+{
+	title->setCurrentIndex(index);
+	stack->setCurrentIndex(index);
 }
 
 void SidePanel::openArtist(const std::string &artistId)
