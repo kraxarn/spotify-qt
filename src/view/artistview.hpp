@@ -4,7 +4,7 @@
 #include "menu/albummenu.hpp"
 #include "menu/songmenu.hpp"
 #include "spotify/spotify.hpp"
-#include "loader.hpp"
+#include "widget/loader.hpp"
 
 #include <QDockWidget>
 #include <QLabel>

@@ -24,13 +24,13 @@
 #include "sidepanel.hpp"
 #include "spotify/current.hpp"
 #include "spotify/spotify.hpp"
-#include "trayicon.hpp"
 #include "util/dateutils.hpp"
 #include "util/icon.hpp"
 #include "util/imageutils.hpp"
 #include "util/styleutils.hpp"
 #include "util/httputils.hpp"
 #include "view/context.hpp"
+#include "view/trayicon.hpp"
 
 #include <QMainWindow>
 #include <QSplitter>

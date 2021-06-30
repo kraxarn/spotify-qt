@@ -5,9 +5,9 @@
 #include "menu/mainmenu.hpp"
 #include "spotify/spotify.hpp"
 #include "util/icon.hpp"
-#include "volumebutton.hpp"
-#include "view/clickableslider.hpp"
-#include "dragarea.hpp"
+#include "widget/volumebutton.hpp"
+#include "widget/clickableslider.hpp"
+#include "widget/dragarea.hpp"
 
 #include <QToolBar>
 #include <QToolButton>
