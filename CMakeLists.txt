@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(spotify-qt LANGUAGES CXX)
+project(spotify-qt LANGUAGES CXX VERSION 3.6)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -69,6 +69,9 @@ if (GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
 		OUTPUT_STRIP_TRAILING_WHITESPACE)
 	target_compile_definitions(spotify-qt PRIVATE GIT_COMMIT="${GIT_COMMIT}")
 endif ()
+
+# Version macros
+target_compile_definitions(spotify-qt PRIVATE APP_VERSION="v${PROJECT_VERSION}")
 
 # Set install targets for 'make install'
 install(TARGETS spotify-qt RUNTIME DESTINATION bin)

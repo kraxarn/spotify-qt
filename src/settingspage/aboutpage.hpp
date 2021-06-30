@@ -1,6 +1,5 @@
 #pragma once
 
-#include "appversion.hpp"
 #include "util/icon.hpp"
 #include "view/cacheview.hpp"
 #include "view/configview.hpp"
