@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(spotify-qt-lib LANGUAGES CXX VERSION 0.1)
+project(spotify-qt-lib LANGUAGES CXX VERSION 0.4)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -22,6 +22,9 @@ add_library(spotify-qt-lib STATIC ${MAIN_SRC} ${SUB_SRC} ${MAIN_INC} ${SUB_INC} 
 target_include_directories(spotify-qt-lib PUBLIC
 	"${CMAKE_CURRENT_SOURCE_DIR}/include"
 	${LIB_QT_HEADERS})
+
+# Version macros
+target_compile_definitions(spotify-qt-lib PUBLIC LIB_VERSION="v${PROJECT_VERSION}")
 
 # Link optional libraries
 if (LIB_QT_LIBRARIES)

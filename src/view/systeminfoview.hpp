@@ -3,7 +3,6 @@
 #include "mainwindow.hpp"
 #include "spotify/spotify.hpp"
 #include "logview.hpp"
-#include "lib/libversion.hpp"
 #include "lib/qt/systeminfo.hpp"
 
 #include <QFile>
