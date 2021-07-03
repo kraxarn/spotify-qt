@@ -19,6 +19,7 @@
 #include "lib/spotify/savedalbum.hpp"
 #include "lib/spotify/callback.hpp"
 #include "lib/httpclient.hpp"
+#include "lib/datetime.hpp"
 
 #include "thirdparty/json.hpp"
 
