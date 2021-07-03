@@ -15,12 +15,6 @@ public:
 public:
 	//region Deprecated
 
-	/** @deprecated Use http_client.get instead */
-	QByteArray get(const QString &url);
-
-	/** @deprecated Use http_client.get instead */
-	std::vector<unsigned char> get(const std::string &url);
-
 	/** @deprecated Use TracksList.load instead */
 	bool loadAlbum(const std::string &albumId,
 		const std::string &trackId = std::string());

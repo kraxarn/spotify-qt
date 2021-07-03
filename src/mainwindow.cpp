@@ -415,25 +415,6 @@ void MainWindow::setAlbumImage(const std::string &url)
 	});
 }
 
-auto MainWindow::get(const QString &url) -> QByteArray
-{
-	auto *reply = network->get(QNetworkRequest(QUrl(url)));
-	while (!reply->isFinished())
-	{
-		QCoreApplication::processEvents();
-	}
-	reply->deleteLater();
-	return reply->error() == QNetworkReply::NoError
-		? reply->readAll()
-		: QByteArray();
-}
-
-auto MainWindow::get(const std::string &url) -> std::vector<unsigned char>
-{
-	auto data = get(QString::fromStdString(url));
-	return std::vector<unsigned char>(data.begin(), data.end());
-}
-
 void MainWindow::openArtist(const std::string &artistId)
 {
 	dynamic_cast<SidePanel *>(sidePanel)->openArtist(artistId);
