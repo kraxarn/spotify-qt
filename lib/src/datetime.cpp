@@ -1,21 +1,19 @@
 #include "lib/datetime.hpp"
 #include "lib/log.hpp"
 
-using namespace lib;
-
 #define LOCALE_TIME_FORMAT "%X"
 #define LOCALE_DATE_FORMAT "%x"
 #define ISO_DATE_FORMAT "%Y-%m-%d"
 #define ISO_DATE_TIME_FORMAT "%Y-%m-%dT%H:%M:%SZ"
 
-date_time::date_time(const date_time &date)
+lib::date_time::date_time(const date_time &date)
 {
 	tm = date.tm;
 }
 
-date_time::date_time(int year, int month, int day, int hour, int minute, int second)
+lib::date_time::date_time(int year, int month, int day, int hour, int minute, int second)
 {
-	tm.tm_year = year - 1900;
+	tm.tm_year = year - c_year_offset;
 	tm.tm_mon = month - 1;
 	tm.tm_mday = day;
 	tm.tm_hour = hour;
@@ -23,123 +21,130 @@ date_time::date_time(int year, int month, int day, int hour, int minute, int sec
 	tm.tm_sec = second;
 }
 
-date_time date_time::parse(const std::string &value)
+auto lib::date_time::parse(const std::string &value) -> lib::date_time
 {
-	date_time date;
+	lib::date_time date;
 
 	// First try to parse as full date and time
 	date.parse(value, ISO_DATE_TIME_FORMAT);
 
 	// Then try to pars as date only
 	if (!date.is_valid())
+	{
 		date.parse(value, ISO_DATE_FORMAT);
+	}
 
 	// If it's still invalid, something is wrong
 	if (!date.is_valid())
+	{
 		log::warn("Failed to parse \"{}\" as a date", value);
+	}
 
 	return date;
 }
 
-date_time date_time::now()
+auto lib::date_time::now() -> lib::date_time
 {
-	date_time date;
+	lib::date_time date;
 	auto time = std::time(nullptr);
 	date.tm = *std::localtime(&time);
 
 	return date;
 }
 
-date_time date_time::now_utc()
+auto lib::date_time::now_utc() -> lib::date_time
 {
-	date_time date;
+	lib::date_time date;
 	auto time = std::time(nullptr);
 	date.tm = *std::gmtime(&time);
 
 	return date;
 }
 
-bool date_time::is_valid() const
+auto lib::date_time::is_valid() const -> bool
 {
 	return tm.tm_year > 0
 		|| tm.tm_mon > 0
 		|| tm.tm_mday > 0;
 }
 
-void date_time::parse(const std::string &value, const char *format)
+void lib::date_time::parse(const std::string &value, const char *format)
 {
 	std::istringstream ss(value);
 	ss >> std::get_time(&tm, format);
 }
 
-std::string date_time::to_time() const
+auto lib::date_time::to_time() const -> std::string
 {
 	return format(LOCALE_TIME_FORMAT);
 }
 
-std::string date_time::to_date() const
+auto lib::date_time::to_date() const -> std::string
 {
 	return format(LOCALE_DATE_FORMAT);
 }
 
-std::string date_time::to_iso_date() const
+auto lib::date_time::to_iso_date() const -> std::string
 {
 	return format(ISO_DATE_FORMAT);
 }
 
-std::string date_time::to_iso_date_time() const
+auto lib::date_time::to_iso_date_time() const -> std::string
 {
 	return format(ISO_DATE_TIME_FORMAT);
 }
 
-std::string date_time::format(const char *format) const
+auto lib::date_time::format(const char *format) const -> std::string
 {
 	if (!is_valid())
+	{
 		return std::string();
+	}
 
-	char buffer[64];
-	std::strftime(buffer, sizeof(buffer), format, &tm);
-	return std::string(buffer);
+	constexpr size_t buffer_size = 64;
+	std::array<char, buffer_size> buffer;
+	std::strftime(buffer.data(), buffer.size(), format, &tm);
+	return std::string(buffer.data());
 }
 
-int date_time::get_second() const
+auto lib::date_time::get_second() const -> int
 {
 	return is_valid()
 		? tm.tm_sec
 		: 0;
 }
 
-int date_time::get_minute() const
+auto lib::date_time::get_minute() const -> int
 {
 	return is_valid()
 		? tm.tm_min
 		: 0;
 }
 
-int date_time::get_hour() const
+auto lib::date_time::get_hour() const -> int
 {
 	return is_valid()
 		? tm.tm_hour
 		: 0;
 }
 
-int date_time::get_day() const
+auto lib::date_time::get_day() const -> int
 {
 	return is_valid()
 		? tm.tm_mday
 		: 0;
 }
 
-int date_time::get_month() const
+auto lib::date_time::get_month() const -> int
 {
 	return 1 + (is_valid()
 		? tm.tm_mon
 		: 0);
 }
 
-int date_time::get_year() const
+auto lib::date_time::get_year() const -> int
 {
-	return 1900 + (is_valid()
+	return c_year_offset + (is_valid()
 		? tm.tm_year
 		: 0);
 }

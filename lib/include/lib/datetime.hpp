@@ -8,7 +8,6 @@ namespace lib
 {
 	/**
 	 * Date and time
-	 * @deprecated Unreliable and inconsistent, dates should be represented as ISO dates instead
 	 */
 	class date_time
 	{
@@ -40,94 +39,99 @@ namespace lib
 		 * @param value ISO date
 		 * @return A date, invalid if parsing failed
 		 */
-		static date_time parse(const std::string &value);
+		static auto parse(const std::string &value) -> date_time;
 
 		/**
 		 * Current date and time in local time
 		 * @return Current date
 		 */
-		static date_time now();
+		static auto now() -> date_time;
 
 		/**
 		 * Current date and time in UTC to_string
 		 * @return Current UTC date
 		 */
-		static date_time now_utc();
+		static auto now_utc() -> date_time;
 
 		/**
 		 * If the current instance represents a valid date
 		 * @return Date is valid
 		 */
-		bool is_valid() const;
+		auto is_valid() const -> bool;
 
 		/**
 		 * Get locale dependent time
 		 * @return Time
 		 */
-		std::string to_time() const;
+		auto to_time() const -> std::string;
 
 		/**
 		 * Get locale dependent date
 		 * @return Date
 		 */
-		std::string to_date() const;
+		auto to_date() const -> std::string;
 
 		/**
 		 * Get ISO date (YYYY-MM-DD)
 		 * @return Date
 		 */
-		std::string to_iso_date() const;
+		auto to_iso_date() const -> std::string;
 
 		/**
 		 * Get ISO date and time (YYYY-MM-DDTHH:MM:SSZ)
 		 * @return Date and time
 		 */
-		std::string to_iso_date_time() const;
+		auto to_iso_date_time() const -> std::string;
 
 		/**
 		 * Second, 0-60
 		 */
-		int get_second() const;
+		auto get_second() const -> int;
 
 		/**
 		 * Minute, 0-59
 		 */
-		int get_minute() const;
+		auto get_minute() const -> int;
 
 		/**
 		 * Hour, 0-23
 		 */
-		int get_hour() const;
+		auto get_hour() const -> int;
 
 		/**
 		 * Day in month, 1-31
 		 */
-		int get_day() const;
+		auto get_day() const -> int;
 
 		/**
 		 * Month, 1-12
 		 */
-		int get_month() const;
+		auto get_month() const -> int;
 
 		/**
 		 * Full year, 1900-
 		 */
-		int get_year() const;
+		auto get_year() const -> int;
 
 	private:
+		/**
+		 * Underlying structure starts year at 1900
+		 */
+		static constexpr int c_year_offset = 1900;
+
 		/**
 		 * Parse a string as a date using the specified to_string
 		 * @param value Date to parse
 		 * @param format Expected to_string
 		 */
-		void parse(const std::string &value, const char* format);
+		void parse(const std::string &value, const char *format);
 
 		/**
 		 * Format a date as a string using the specified to_string
 		 * @param format Format to use
 		 * @return Formatted date as string, or an empty string
 		 */
-		std::string format(const char* format) const;
+		auto format(const char *format) const -> std::string;
 
 		/**
 		 * Internal date structure
