@@ -145,12 +145,6 @@ auto api::error_message(const std::string &url, const std::string &data) -> std:
 	return message;
 }
 
-auto api::seconds_since_epoch() -> long
-{
-	return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now()
-		.time_since_epoch()).count();
-}
-
 void api::select_device(const std::vector<lib::spt::device> &/*devices*/,
 	lib::callback<lib::spt::device> &callback)
 {

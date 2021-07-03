@@ -54,6 +54,11 @@ namespace lib
 		static auto now_utc() -> date_time;
 
 		/**
+		 * Seconds since 1970-01-01
+		 */
+		static auto seconds_since_epoch() -> long;
+
+		/**
 		 * If the current instance represents a valid date
 		 * @return Date is valid
 		 */

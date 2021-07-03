@@ -61,6 +61,12 @@ auto lib::date_time::now_utc() -> lib::date_time
 	return date;
 }
 
+auto lib::date_time::seconds_since_epoch() -> long
+{
+	return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now()
+		.time_since_epoch()).count();
+}
+
 auto lib::date_time::is_valid() const -> bool
 {
 	return tm.tm_year > 0

@@ -296,11 +296,6 @@ namespace lib
 
 		protected:
 			/**
-			 * Number of seconds since 1970-01-01
-			 */
-			static auto seconds_since_epoch() -> long;
-
-			/**
 			 * Allow use to select device, by default, none is chosen
 			 * @param devices Devices to select from
 			 * @param callback Selected device
