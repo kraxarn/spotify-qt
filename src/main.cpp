@@ -10,7 +10,7 @@
 #ifdef USE_KCRASH
 #include <kcrash.h>
 #else
-#include "lib/crashhandler.hpp"
+#include "lib/crash/crashhandler.hpp"
 #endif
 
 auto main(int argc, char *argv[]) -> int
@@ -29,7 +29,7 @@ auto main(int argc, char *argv[]) -> int
 
 #ifndef USE_KCRASH
 	// Custom crash handler if not using KCrash
-	lib::crash_handler crashHandler;
+	lib::crash_handler::init();
 #endif
 
 	// Create Qt application

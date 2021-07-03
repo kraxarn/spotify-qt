@@ -1,10 +1,16 @@
 #include "lib/crash/crashhandler.hpp"
 
-lib::crash_handler::crash_handler(lib::cache &cache)
-	: cache(cache)
+lib::cache *lib::crash_handler::cache = nullptr;
+
+void lib::crash_handler::init()
 {
 #ifdef IS_GNU_CXX
 #endif
+}
+
+void lib::crash_handler::set_cache(lib::cache &c)
+{
+	lib::crash_handler::cache = &c;
 }
 
 #ifdef IS_GNU_CXX
@@ -30,6 +36,10 @@ void lib::crash_handler::handle(int signal, struct sigcontext context)
 		info.info.insert(i, std::string(messages[i]));
 	}
 
-	cache.add_crash(info);
+	if (cache != nullptr)
+	{
+		cache->add_crash(info);
+	}
+	std::cerr << info.to_string() << std::endl;
 }
 #endif

@@ -6,6 +6,8 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	cache(paths),
 	QMainWindow()
 {
+	lib::crash_handler::set_cache(cache);
+
 	// Splash
 	SplashDialog splash;
 	splash.show();

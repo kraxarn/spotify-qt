@@ -7,6 +7,7 @@
 #include "lib/spotify/playlist.hpp"
 #include "lib/spotify/user.hpp"
 #include "lib/qt/httpclient.hpp"
+#include "lib/crash/crashhandler.hpp"
 
 #include "client/clienthandler.hpp"
 #include "dialog/settingsdialog.hpp"

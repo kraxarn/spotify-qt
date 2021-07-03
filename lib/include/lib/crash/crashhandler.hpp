@@ -2,7 +2,7 @@
 
 #include "lib/log.hpp"
 #include "lib/crash/crashinfo.hpp"
-#include "lib/cache.hpp"
+#include "lib/cache/jsoncache.hpp"
 
 #ifdef IS_GNU_CXX
 #include <execinfo.h>
@@ -19,17 +19,22 @@ namespace lib
 	class crash_handler
 	{
 	public:
-		crash_handler(lib::cache &cache);
+		static void init();
+
+		static void set_cache(lib::cache &cache);
 
 	private:
+		crash_handler() = default;
+
 		/** How far back to trace */
 		static constexpr size_t backtrace_size = 16;
 
-		lib::cache &cache;
+		/** Cache instance */
+		static lib::cache *cache;
 
 #ifdef IS_GNU_CXX
 		/** Handle signal (gcc) */
-		void handle(int signal, struct sigcontext context);
+		static void handle(int signal, struct sigcontext context);
 #endif
 	};
 }
