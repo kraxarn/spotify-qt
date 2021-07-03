@@ -29,6 +29,8 @@ namespace lib
 
 		static void set_cache(lib::cache &cache);
 
+		static void log(const lib::crash_info &info);
+
 	private:
 		crash_handler() = default;
 

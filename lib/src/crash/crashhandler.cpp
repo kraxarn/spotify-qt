@@ -14,6 +14,15 @@ void lib::crash_handler::set_cache(lib::cache &c)
 	lib::crash_handler::cache = &c;
 }
 
+void lib::crash_handler::log(const lib::crash_info &info)
+{
+	if (cache != nullptr)
+	{
+		cache->add_crash(info);
+	}
+	std::cerr << info.to_string() << std::endl;
+}
+
 #ifdef USE_GCC_CRASH_HANDLER
 void lib::crash_handler::handle(int signal, struct sigcontext context)
 {
@@ -38,12 +47,7 @@ void lib::crash_handler::handle(int signal, struct sigcontext context)
 		info.stack_trace.emplace_back(messages[i]);
 	}
 
-	if (cache != nullptr)
-	{
-		cache->add_crash(info);
-	}
-	std::cerr << info.to_string() << std::endl;
-
+	log(info);
 	exit(signal);
 }
 #endif
