@@ -5,6 +5,7 @@ lib::cache *lib::crash_handler::cache = nullptr;
 void lib::crash_handler::init()
 {
 #ifdef IS_GNU_CXX
+	signal(SIGSEGV, reinterpret_cast<__sighandler_t>(lib::crash_handler::handle));
 #endif
 }
 
