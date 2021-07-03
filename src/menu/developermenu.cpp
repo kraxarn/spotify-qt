@@ -52,6 +52,7 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 
 	addMenu(infoMenu());
 	addMenu(dialogMenu());
+	addMenu(crashMenu());
 }
 
 void DeveloperMenu::addMenuItem(QMenu *menu, const QString &text,
@@ -104,6 +105,30 @@ auto DeveloperMenu::infoMenu() -> QMenu *
 	{
 		QMessageBox::information(mainWindow, "Context",
 			QString::fromStdString(mainWindow->getSptContext()));
+	});
+
+	return menu;
+}
+
+auto DeveloperMenu::crashMenu() -> QMenu *
+{
+	auto *menu = new QMenu("Crash", this);
+
+	addMenuItem(menu, "exception", []()
+	{
+		throw std::runtime_error("debug crash");
+	});
+
+	addMenuItem(menu, "segfault", []()
+	{
+		// Do stuff with widget that hopefully doesn't exist
+		// to avoid any "unexpected behaviour" warnings
+		QWidget::find(-1)->update();
+	});
+
+	addMenuItem(menu, "qFatal", []()
+	{
+		qFatal("debug crash");
 	});
 
 	return menu;
