@@ -40,7 +40,8 @@ class SettingsDialog: public QDialog
 Q_OBJECT
 
 public:
-	explicit SettingsDialog(lib::settings &settings, QWidget *parent = nullptr);
+	explicit SettingsDialog(lib::settings &settings, lib::cache &cache,
+		QWidget *parent = nullptr);
 
 private:
 	void categoryChanged(int row);

@@ -18,6 +18,7 @@ public:
 private:
 	spt::Spotify &spotify;
 	lib::settings &settings;
+	lib::cache &cache;
 	QAction *about;
 	QMenu *deviceMenu;
 

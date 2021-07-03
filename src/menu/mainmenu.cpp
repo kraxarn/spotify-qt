@@ -5,6 +5,7 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings,
 	const lib::http_client &httpClient, lib::cache &cache, QWidget *parent)
 	: settings(settings),
 	spotify(spotify),
+	cache(cache),
 	QMenu(parent)
 {
 	// Update notifier
@@ -37,7 +38,8 @@ MainMenu::MainMenu(spt::Spotify &spotify, lib::settings &settings,
 		"Settings...", this, QKeySequence::Preferences);
 	QAction::connect(openSettings, &QAction::triggered, [this]()
 	{
-		SettingsDialog dialog(this->settings, MainWindow::find(parentWidget()));
+		SettingsDialog dialog(this->settings, this->cache,
+			MainWindow::find(parentWidget()));
 		dialog.exec();
 	});
 	addAction(openSettings);

@@ -1,13 +1,14 @@
 #include "aboutpage.hpp"
 #include "mainwindow.hpp"
 
-AboutPage::AboutPage(lib::settings &settings, QWidget *parent)
+AboutPage::AboutPage(lib::settings &settings, lib::cache &cache, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
 	addTab(about(), "General");
 	addTab(systemInfo(), "System information");
 	addTab(cacheInfo(), "Cache");
 	addTab(configPreview(), "Config preview");
+	addTab(crashLogs(cache), "Crashes");
 }
 
 auto AboutPage::about() -> QWidget *
@@ -69,6 +70,11 @@ auto AboutPage::cacheInfo() -> QWidget *
 auto AboutPage::configPreview() -> QWidget *
 {
 	return new ConfigView(settings, this);
+}
+
+auto AboutPage::crashLogs(lib::cache &cache) -> QWidget *
+{
+	return new View::Crashes(cache, this);
 }
 
 auto AboutPage::icon() -> QIcon
