@@ -58,37 +58,10 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	splash.showMessage("Welcome!");
 
 	// Check if should start client
-	if (settings.spotify.start_client)
-	{
-		if (settings.spotify.always_start)
-		{
-			startClient();
-		}
-		else
-		{
-			spotify->devices([this](const std::vector<lib::spt::device> &devices)
-			{
-				if (devices.empty())
-				{
-					this->startClient();
-				}
-			});
-		}
-	}
+	initClient();
 
 	// Start media controller if specified
-#ifdef USE_DBUS
-	if (settings.general.media_controller)
-	{
-		mediaPlayer = new mp::Service(spotify, this);
-		// Check if something went wrong during init
-		if (!mediaPlayer->isValid())
-		{
-			delete mediaPlayer;
-			mediaPlayer = nullptr;
-		}
-	}
-#endif
+	initMediaController();
 
 	// Create tray icon if specified
 	if (settings.general.tray_icon)
@@ -97,6 +70,71 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	}
 
 	// If new version has been detected, show what's new dialog
+	initWhatsNew();
+
+	// Get current user
+	spotify->me([this](const lib::spt::user &user)
+	{
+		this->currentUser = user;
+	});
+
+	initDevice();
+	setBorderless(!settings.qt_const().system_title_bar);
+
+	// Welcome
+	setStatus("Welcome to spotify-qt!");
+	splash.finish(this);
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+	delete trayIcon;
+	event->accept();
+}
+
+void MainWindow::initClient()
+{
+	if (!settings.spotify.start_client)
+	{
+		return;
+	}
+
+	if (settings.spotify.always_start)
+	{
+		startClient();
+	}
+	else
+	{
+		spotify->devices([this](const std::vector<lib::spt::device> &devices)
+		{
+			if (devices.empty())
+			{
+				this->startClient();
+			}
+		});
+	}
+}
+
+void MainWindow::initMediaController()
+{
+#ifdef USE_DBUS
+	if (!settings.general.media_controller)
+	{
+		return;
+	}
+
+	mediaPlayer = new mp::Service(spotify, this);
+	// Check if something went wrong during init
+	if (!mediaPlayer->isValid())
+	{
+		delete mediaPlayer;
+		mediaPlayer = nullptr;
+	}
+#endif
+}
+
+void MainWindow::initWhatsNew()
+{
 	if (settings.general.show_changelog
 		&& !settings.general.last_version.empty()
 		&& settings.general.last_version != APP_VERSION)
@@ -107,13 +145,10 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 
 	settings.general.last_version = APP_VERSION;
 	settings.save();
+}
 
-	// Get current user
-	spotify->me([this](const lib::spt::user &user)
-	{
-		this->currentUser = user;
-	});
-
+void MainWindow::initDevice()
+{
 	spotify->devices([this](const std::vector<lib::spt::device> &devices)
 	{
 		// Don't select a new device if one is currently active
@@ -142,18 +177,6 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 			}
 		}
 	});
-
-	setBorderless(!settings.qt_const().system_title_bar);
-
-	// Welcome
-	setStatus("Welcome to spotify-qt!");
-	splash.finish(this);
-}
-
-void MainWindow::closeEvent(QCloseEvent *event)
-{
-	delete trayIcon;
-	event->accept();
 }
 
 void MainWindow::setBorderless(bool enabled)

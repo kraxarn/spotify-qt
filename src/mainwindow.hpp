@@ -121,6 +121,12 @@ private:
 	mp::Service *mediaPlayer = nullptr;
 #endif
 
+	// Initialization
+	void initClient();
+	void initMediaController();
+	void initWhatsNew();
+	void initDevice();
+
 	// Methods
 	QWidget *createCentralWidget();
 	void setAlbumImage(const std::string &url);
