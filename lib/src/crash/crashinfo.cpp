@@ -44,7 +44,7 @@ auto lib::crash_info::to_string() const -> std::string
 	auto width = static_cast<int>(std::to_string(stack_trace.size()).size());
 	for (auto i = 0; i < stack_trace.size(); i++)
 	{
-		stream << "#" << std::setw(width) << i
+		stream << "#" << std::setw(width) << std::left << i
 			<< ' ' << stack_trace.at(i) << std::endl;
 	}
 
