@@ -105,25 +105,29 @@ $(function() {
 <div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="classlib_1_1json__cache.html#aa57ed3a6b32472729370f284701795ef">   39</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classlib_1_1json__cache.html#aa57ed3a6b32472729370f284701795ef">set_track_info</a>(const lib::spt::track &amp;track,</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            const lib::spt::track_info &amp;track_info) override;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    private:</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        const lib::<a class="code" href="classlib_1_1paths.html">paths</a> &amp;<a class="code" href="classlib_1_1paths.html">paths</a>;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        auto dir(const std::<span class="keywordtype">string</span> &amp;type) const -&gt; ghc::filesystem::path;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        static auto file(const std::<span class="keywordtype">string</span> &amp;<span class="keywordtype">id</span>, const std::<span class="keywordtype">string</span> &amp;extension) -&gt; std::<span class="keywordtype">string</span>;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        auto path(const std::<span class="keywordtype">string</span> &amp;type, const std::<span class="keywordtype">string</span> &amp;<span class="keywordtype">id</span>,</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            const std::<span class="keywordtype">string</span> &amp;extension) const -&gt; ghc::filesystem::path;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        static auto get_url_id(const ghc::filesystem::path &amp;path) -&gt; std::<span class="keywordtype">string</span>;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    };</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
-<div class="ttc" id="aclasslib_1_1cache_html"><div class="ttname"><a href="classlib_1_1cache.html">lib::cache</a></div><div class="ttdef"><b>Definition:</b> cache.hpp:16</div></div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classlib_1_1json__cache.html#a828151dcc52dffa459d1253056cd1e18">   42</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classlib_1_1json__cache.html#a828151dcc52dffa459d1253056cd1e18">add_crash</a>(const lib::<a class="code" href="classlib_1_1crash__info.html">crash_info</a> &amp;info) override;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    private:</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        const lib::<a class="code" href="classlib_1_1paths.html">paths</a> &amp;<a class="code" href="classlib_1_1paths.html">paths</a>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        auto dir(const std::<span class="keywordtype">string</span> &amp;type) const -&gt; ghc::filesystem::path;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        static auto file(const std::<span class="keywordtype">string</span> &amp;<span class="keywordtype">id</span>, const std::<span class="keywordtype">string</span> &amp;extension) -&gt; std::<span class="keywordtype">string</span>;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        auto path(const std::<span class="keywordtype">string</span> &amp;type, const std::<span class="keywordtype">string</span> &amp;<span class="keywordtype">id</span>,</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            const std::<span class="keywordtype">string</span> &amp;extension) const -&gt; ghc::filesystem::path;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        static auto get_url_id(const ghc::filesystem::path &amp;path) -&gt; std::<span class="keywordtype">string</span>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    };</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;}</div>
+<div class="ttc" id="aclasslib_1_1cache_html"><div class="ttname"><a href="classlib_1_1cache.html">lib::cache</a></div><div class="ttdef"><b>Definition:</b> cache.hpp:17</div></div>
+<div class="ttc" id="aclasslib_1_1crash__info_html"><div class="ttname"><a href="classlib_1_1crash__info.html">lib::crash_info</a></div><div class="ttdef"><b>Definition:</b> crashinfo.hpp:16</div></div>
 <div class="ttc" id="aclasslib_1_1json__cache_html"><div class="ttname"><a href="classlib_1_1json__cache.html">lib::json_cache</a></div><div class="ttdef"><b>Definition:</b> jsoncache.hpp:15</div></div>
 <div class="ttc" id="aclasslib_1_1json__cache_html_a19d4c2911e7b013d70c8e5204ee4da89"><div class="ttname"><a href="classlib_1_1json__cache.html#a19d4c2911e7b013d70c8e5204ee4da89">lib::json_cache::set_album_image</a></div><div class="ttdeci">void set_album_image(const std::string &amp;url, const std::vector&lt; unsigned char &gt; &amp;data) override</div></div>
 <div class="ttc" id="aclasslib_1_1json__cache_html_a1e3873235803dd0b254a13abcd9e00f1"><div class="ttname"><a href="classlib_1_1json__cache.html#a1e3873235803dd0b254a13abcd9e00f1">lib::json_cache::get_tracks</a></div><div class="ttdeci">auto get_tracks(const std::string &amp;id) const -&gt; std::vector&lt; lib::spt::track &gt; override</div></div>
 <div class="ttc" id="aclasslib_1_1json__cache_html_a42dccd28fef69ce926c0aab7e078c7bf"><div class="ttname"><a href="classlib_1_1json__cache.html#a42dccd28fef69ce926c0aab7e078c7bf">lib::json_cache::set_playlists</a></div><div class="ttdeci">void set_playlists(const std::vector&lt; spt::playlist &gt; &amp;playlists) override</div></div>
 <div class="ttc" id="aclasslib_1_1json__cache_html_a4deafacbd0fb264185f2570e14536371"><div class="ttname"><a href="classlib_1_1json__cache.html#a4deafacbd0fb264185f2570e14536371">lib::json_cache::set_playlist</a></div><div class="ttdeci">void set_playlist(const spt::playlist &amp;playlist) override</div></div>
+<div class="ttc" id="aclasslib_1_1json__cache_html_a828151dcc52dffa459d1253056cd1e18"><div class="ttname"><a href="classlib_1_1json__cache.html#a828151dcc52dffa459d1253056cd1e18">lib::json_cache::add_crash</a></div><div class="ttdeci">void add_crash(const lib::crash_info &amp;info) override</div></div>
 <div class="ttc" id="aclasslib_1_1json__cache_html_a96782469af01abab67e98c3d5b0b525e"><div class="ttname"><a href="classlib_1_1json__cache.html#a96782469af01abab67e98c3d5b0b525e">lib::json_cache::get_playlist</a></div><div class="ttdeci">auto get_playlist(const std::string &amp;id) const -&gt; lib::spt::playlist override</div></div>
 <div class="ttc" id="aclasslib_1_1json__cache_html_a9ff57c587afc651f6bad0b57b107eba3"><div class="ttname"><a href="classlib_1_1json__cache.html#a9ff57c587afc651f6bad0b57b107eba3">lib::json_cache::json_cache</a></div><div class="ttdeci">json_cache(const paths &amp;paths)</div></div>
 <div class="ttc" id="aclasslib_1_1json__cache_html_aa07720ce5635da256df28220c3d292a9"><div class="ttname"><a href="classlib_1_1json__cache.html#aa07720ce5635da256df28220c3d292a9">lib::json_cache::set_tracks</a></div><div class="ttdeci">void set_tracks(const std::string &amp;id, const std::vector&lt; lib::spt::track &gt; &amp;tracks) override</div></div>
