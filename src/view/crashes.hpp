@@ -1,7 +1,7 @@
 #pragma once
 
 #include "lib/cache.hpp"
-#include "util/dateutils.hpp"
+#include "listitem/crash.hpp"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -20,11 +20,6 @@ namespace View
 		void showEvent(QShowEvent *event) override;
 
 	private:
-		enum class Role: int
-		{
-			StackTrace = 0x100,
-		};
-
 		lib::cache &cache;
 
 		QListWidget *list;

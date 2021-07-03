@@ -24,17 +24,22 @@ void View::Crashes::showEvent(QShowEvent */*event*/)
 	list->clear();
 	for (const auto &crash : cache.get_all_crashes())
 	{
-		auto dateTime = QDateTime::fromSecsSinceEpoch(crash.timestamp);
-		auto dateString = QLocale::system().toString(dateTime, QLocale::ShortFormat);
+		list->addItem(new ListItem::Crash(crash, list));
+	}
 
-		auto *item = new QListWidgetItem(dateString);
-		item->setData(static_cast<int>(View::Crashes::Role::StackTrace),
-			QString::fromStdString(crash.to_string()));
-		list->addItem(item);
+	list->sortItems(Qt::DescendingOrder);
+	if (list->count() > 0)
+	{
+		list->setCurrentRow(0);
+	}
+	else
+	{
+		log->setPlainText("No crash logs found");
 	}
 }
 
 void View::Crashes::logItemChanged(QListWidgetItem *current, QListWidgetItem */*previous*/)
 {
-	log->setPlainText(current->data(static_cast<int>(View::Crashes::Role::StackTrace)).toString());
+	auto role = static_cast<int>(ListItem::Crash::Role::StackTrace);
+	log->setPlainText(current->data(role).toString());
 }
