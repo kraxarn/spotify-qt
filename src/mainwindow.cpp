@@ -3,8 +3,7 @@
 MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	: settings(settings),
 	paths(paths),
-	cache(paths),
-	QMainWindow()
+	cache(paths)
 {
 	lib::crash_handler::set_cache(cache);
 
