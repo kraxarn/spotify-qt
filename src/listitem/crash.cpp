@@ -13,6 +13,6 @@ ListItem::Crash::Crash(const lib::crash_info &crashInfo, QListWidget *parent)
 
 auto ListItem::Crash::operator<(const QListWidgetItem &item) const -> bool
 {
-	return data(static_cast<int>(ListItem::Crash::Role::Timestamp)).toDateTime()
-		< item.data(static_cast<int>(ListItem::Crash::Role::Timestamp)).toDateTime();
+	auto role = static_cast<int>(ListItem::Crash::Role::Timestamp);
+	return data(role).toDateTime() < item.data(role).toDateTime();
 }
