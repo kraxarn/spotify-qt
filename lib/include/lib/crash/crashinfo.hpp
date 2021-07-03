@@ -13,6 +13,8 @@ namespace lib
 	class crash_info
 	{
 	public:
+		crash_info() = default;
+
 		/**
 		 * When did the crash occur
 		 */
@@ -22,6 +24,11 @@ namespace lib
 		 * Crash signal
 		 */
 		int signal = -1;
+
+		/**
+		 * Additional information
+		 */
+		std::string info;
 
 		/**
 		 * Stack trace with stack number
