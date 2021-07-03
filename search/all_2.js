@@ -11,5 +11,6 @@ var searchData=
   ['contains_22',['contains',['../classlib_1_1set.html#a232a5db0b4b26d5c169cc22146b4a757',1,'lib::set::contains()'],['../classlib_1_1strings.html#a148213e4413fcfab1c92888221ae4c1c',1,'lib::strings::contains()']]],
   ['context_23',['context',['../classlib_1_1spt_1_1playback.html#ab80dbe821d37e348298beeb56cde4c87',1,'lib::spt::playback::context()'],['../classlib_1_1spt_1_1context.html',1,'lib::spt::context']]],
   ['count_24',['count',['../classlib_1_1fmt.html#a64de843df1a553d391314623db80b3c2',1,'lib::fmt']]],
-  ['current_5fplayback_25',['current_playback',['../classlib_1_1spt_1_1api.html#a273712e8625afb13c404ae910de8a63a',1,'lib::spt::api']]]
+  ['crash_5fhandler_25',['crash_handler',['../classlib_1_1crash__handler.html',1,'lib']]],
+  ['current_5fplayback_26',['current_playback',['../classlib_1_1spt_1_1api.html#a273712e8625afb13c404ae910de8a63a',1,'lib::spt::api']]]
 ];
