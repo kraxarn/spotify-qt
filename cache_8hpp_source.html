@@ -138,10 +138,13 @@ $(function() {
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
 <div class="line"><a name="l00125"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#aad042b2c6f50a0243933dd33b85b2149">  125</a></span>&#160;        virtual <span class="keywordtype">void</span> <a class="code" href="classlib_1_1cache.html#aad042b2c6f50a0243933dd33b85b2149">add_crash</a>(const lib::<a class="code" href="classlib_1_1crash__info.html">crash_info</a> &amp;info) = 0;</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="comment">//endregion</span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    };</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;}</div>
+<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="classlib_1_1cache.html#a36e32d430f2daf4c74b05f9d0b239209">  131</a></span>&#160;        virtual auto <a class="code" href="classlib_1_1cache.html#a36e32d430f2daf4c74b05f9d0b239209">get_all_crashes</a>() const -&gt; std::<a class="code" href="classlib_1_1vector.html">vector</a>&lt;lib::<a class="code" href="classlib_1_1crash__info.html">crash_info</a>&gt; = 0;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        <span class="comment">//endregion</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    };</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;}</div>
 <div class="ttc" id="aclasslib_1_1cache_html"><div class="ttname"><a href="classlib_1_1cache.html">lib::cache</a></div><div class="ttdef"><b>Definition:</b> cache.hpp:17</div></div>
+<div class="ttc" id="aclasslib_1_1cache_html_a36e32d430f2daf4c74b05f9d0b239209"><div class="ttname"><a href="classlib_1_1cache.html#a36e32d430f2daf4c74b05f9d0b239209">lib::cache::get_all_crashes</a></div><div class="ttdeci">virtual auto get_all_crashes() const -&gt; std::vector&lt; lib::crash_info &gt;=0</div></div>
 <div class="ttc" id="aclasslib_1_1cache_html_a37acca6f61a2221a6886d83489d33d6c"><div class="ttname"><a href="classlib_1_1cache.html#a37acca6f61a2221a6886d83489d33d6c">lib::cache::set_track_info</a></div><div class="ttdeci">virtual void set_track_info(const lib::spt::track &amp;track, const lib::spt::track_info &amp;track_info)=0</div></div>
 <div class="ttc" id="aclasslib_1_1cache_html_a4475f0b83d56cd92ae1380325d5a4ef5"><div class="ttname"><a href="classlib_1_1cache.html#a4475f0b83d56cd92ae1380325d5a4ef5">lib::cache::set_playlists</a></div><div class="ttdeci">virtual void set_playlists(const std::vector&lt; spt::playlist &gt; &amp;playlists)=0</div></div>
 <div class="ttc" id="aclasslib_1_1cache_html_a8b27797210a4dfa64900974f7d0704e8"><div class="ttname"><a href="classlib_1_1cache.html#a8b27797210a4dfa64900974f7d0704e8">lib::cache::all_tracks</a></div><div class="ttdeci">virtual auto all_tracks() const -&gt; std::map&lt; std::string, std::vector&lt; lib::spt::track &gt;&gt;=0</div></div>

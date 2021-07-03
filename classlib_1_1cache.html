@@ -114,6 +114,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a37acca6f61a2221a6886d83489d33d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad042b2c6f50a0243933dd33b85b2149"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#aad042b2c6f50a0243933dd33b85b2149">add_crash</a> (const <a class="el" href="classlib_1_1crash__info.html">lib::crash_info</a> &amp;info)=0</td></tr>
 <tr class="separator:aad042b2c6f50a0243933dd33b85b2149"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36e32d430f2daf4c74b05f9d0b239209"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#a36e32d430f2daf4c74b05f9d0b239209">get_all_crashes</a> () const -&gt; std::vector&lt; <a class="el" href="classlib_1_1crash__info.html">lib::crash_info</a> &gt;=0</td></tr>
+<tr class="separator:a36e32d430f2daf4c74b05f9d0b239209"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract cache handler </p>
@@ -239,6 +241,34 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Binary JPEG data, or an empty vector if none </dd></dl>
 
 <p>Implemented in <a class="el" href="classlib_1_1json__cache.html#ad50703b1752cb952c057f0d4e1ee0ac3">lib::json_cache</a>.</p>
+
+</div>
+</div>
+<a id="a36e32d430f2daf4c74b05f9d0b239209"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36e32d430f2daf4c74b05f9d0b239209">&#9670;&nbsp;</a></span>get_all_crashes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual auto lib::cache::get_all_crashes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const -&gt;  std::vector&lt; <a class="el" href="classlib_1_1crash__info.html">lib::crash_info</a> &gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get all known crashes </p><dl class="section return"><dt>Returns</dt><dd>Crash infos </dd></dl>
+
+<p>Implemented in <a class="el" href="classlib_1_1json__cache.html#ad999f363daf8a29811e0c8cda82841f8">lib::json_cache</a>.</p>
 
 </div>
 </div>

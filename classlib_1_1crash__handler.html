@@ -79,16 +79,97 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ab8329bb049c316426c621ab25cd1d921"><td class="memItemLeft" align="right" valign="top"><a id="ab8329bb049c316426c621ab25cd1d921"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> ()</td></tr>
-<tr class="separator:ab8329bb049c316426c621ab25cd1d921"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa41586cb01fdc4ff5ce5690692b4c57a"><td class="memItemLeft" align="right" valign="top"><a id="aa41586cb01fdc4ff5ce5690692b4c57a"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>set_cache</b> (<a class="el" href="classlib_1_1cache.html">lib::cache</a> &amp;<a class="el" href="classlib_1_1cache.html">cache</a>)</td></tr>
+<tr class="memitem:a25aebe0cfaa407547794d6fb223291f0"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1crash__handler.html#a25aebe0cfaa407547794d6fb223291f0">init</a> () -&gt; bool</td></tr>
+<tr class="separator:a25aebe0cfaa407547794d6fb223291f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa41586cb01fdc4ff5ce5690692b4c57a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1crash__handler.html#aa41586cb01fdc4ff5ce5690692b4c57a">set_cache</a> (<a class="el" href="classlib_1_1cache.html">lib::cache</a> &amp;<a class="el" href="classlib_1_1cache.html">cache</a>)</td></tr>
 <tr class="separator:aa41586cb01fdc4ff5ce5690692b4c57a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9774f6b3516f2695df9f17fb9015584"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1crash__handler.html#aa9774f6b3516f2695df9f17fb9015584">log</a> (const <a class="el" href="classlib_1_1crash__info.html">lib::crash_info</a> &amp;info)</td></tr>
+<tr class="separator:aa9774f6b3516f2695df9f17fb9015584"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Handles crashes and logs to file </p><dl class="section note"><dt>Note</dt><dd>Currently only compatible with gcc, does nothing on other compilers </dd></dl>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a25aebe0cfaa407547794d6fb223291f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25aebe0cfaa407547794d6fb223291f0">&#9670;&nbsp;</a></span>init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static auto lib::crash_handler::init </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> -&gt;  bool</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Initialize crash handler </p><dl class="section return"><dt>Returns</dt><dd>Initialization was successful </dd></dl>
+
+</div>
+</div>
+<a id="aa9774f6b3516f2695df9f17fb9015584"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9774f6b3516f2695df9f17fb9015584">&#9670;&nbsp;</a></span>log()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void lib::crash_handler::log </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classlib_1_1crash__info.html">lib::crash_info</a> &amp;&#160;</td>
+          <td class="paramname"><em>info</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Log crash to file, if cache instance is set, and stderr </p>
+
+</div>
+</div>
+<a id="aa41586cb01fdc4ff5ce5690692b4c57a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa41586cb01fdc4ff5ce5690692b4c57a">&#9670;&nbsp;</a></span>set_cache()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void lib::crash_handler::set_cache </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classlib_1_1cache.html">lib::cache</a> &amp;&#160;</td>
+          <td class="paramname"><em>cache</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set cache instance for logging crashes to file </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>/github/workspace/lib/include/lib/crash/<a class="el" href="crashhandler_8hpp_source.html">crashhandler.hpp</a></li>
 </ul>
 </div><!-- contents -->
