@@ -5,8 +5,23 @@ lib::cache *lib::crash_handler::cache = nullptr;
 auto lib::crash_handler::init() -> bool
 {
 #ifdef USE_GCC_CRASH_HANDLER
-	auto result = signal(SIGSEGV, reinterpret_cast<__sighandler_t>(lib::crash_handler::handle));
-	return result != nullptr;
+	std::array<int, 11> signals{{
+		SIGABRT, // Abnormal termination
+		SIGFPE,  // Erroneous arithmetic operation
+		SIGILL,  // Illegal instruction
+		SIGSEGV, // Invalid access to storage
+		SIGSYS,  // Bad system call
+	}};
+	auto success = true;
+	auto handler = reinterpret_cast<__sighandler_t>(lib::crash_handler::handle);
+	for (const auto s : signals)
+	{
+		if (signal(s, handler) == nullptr)
+		{
+			success = false;
+		}
+	}
+	return success;
 #endif
 	return false;
 }
