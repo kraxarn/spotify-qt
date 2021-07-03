@@ -4,7 +4,7 @@
 #include "lib/datetime.hpp"
 
 #include <string>
-#include <unordered_map>
+#include <vector>
 
 namespace lib
 {
@@ -32,9 +32,9 @@ namespace lib
 		std::string info;
 
 		/**
-		 * Stack trace with stack number
+		 * Stack trace
 		 */
-		std::unordered_map<int, std::string> stack_trace;
+		std::vector<std::string> stack_trace;
 
 		/**
 		 * Handled by application
