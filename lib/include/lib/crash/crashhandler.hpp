@@ -4,7 +4,13 @@
 #include "lib/crash/crashinfo.hpp"
 #include "lib/cache/jsoncache.hpp"
 
+#ifdef __linux__
 #ifdef IS_GNU_CXX
+#define USE_GCC_CRASH_HANDLER
+#endif
+#endif
+
+#ifdef USE_GCC_CRASH_HANDLER
 #include <execinfo.h>
 #endif
 
@@ -32,7 +38,7 @@ namespace lib
 		/** Cache instance */
 		static lib::cache *cache;
 
-#ifdef IS_GNU_CXX
+#ifdef USE_GCC_CRASH_HANDLER
 		/** Handle signal (gcc) */
 		static void handle(int signal, struct sigcontext context);
 #endif

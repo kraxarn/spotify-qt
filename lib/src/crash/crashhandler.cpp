@@ -4,7 +4,7 @@ lib::cache *lib::crash_handler::cache = nullptr;
 
 void lib::crash_handler::init()
 {
-#ifdef IS_GNU_CXX
+#ifdef USE_GCC_CRASH_HANDLER
 	signal(SIGSEGV, reinterpret_cast<__sighandler_t>(lib::crash_handler::handle));
 #endif
 }
@@ -14,7 +14,7 @@ void lib::crash_handler::set_cache(lib::cache &c)
 	lib::crash_handler::cache = &c;
 }
 
-#ifdef IS_GNU_CXX
+#ifdef USE_GCC_CRASH_HANDLER
 void lib::crash_handler::handle(int signal, struct sigcontext context)
 {
 	std::array<void *, backtrace_size> trace;
