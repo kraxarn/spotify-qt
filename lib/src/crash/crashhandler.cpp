@@ -42,5 +42,7 @@ void lib::crash_handler::handle(int signal, struct sigcontext context)
 		cache->add_crash(info);
 	}
 	std::cerr << info.to_string() << std::endl;
+
+	exit(signal);
 }
 #endif
