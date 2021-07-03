@@ -25,13 +25,20 @@ namespace lib
 	class crash_handler
 	{
 	public:
-		static void init();
+		/**
+		 * Initialize crash handler
+		 * @return Initialization was successful
+		 */
+		static auto init() -> bool;
 
+		/** Set cache instance for logging crashes to file */
 		static void set_cache(lib::cache &cache);
 
+		/** Log crash to file, if cache instance is set, and stderr */
 		static void log(const lib::crash_info &info);
 
 	private:
+		/** Static class */
 		crash_handler() = default;
 
 		/** How far back to trace */

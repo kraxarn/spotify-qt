@@ -2,11 +2,13 @@
 
 lib::cache *lib::crash_handler::cache = nullptr;
 
-void lib::crash_handler::init()
+auto lib::crash_handler::init() -> bool
 {
 #ifdef USE_GCC_CRASH_HANDLER
-	signal(SIGSEGV, reinterpret_cast<__sighandler_t>(lib::crash_handler::handle));
+	auto result = signal(SIGSEGV, reinterpret_cast<__sighandler_t>(lib::crash_handler::handle));
+	return result != nullptr;
 #endif
+	return false;
 }
 
 void lib::crash_handler::set_cache(lib::cache &c)
