@@ -23,6 +23,7 @@ void lib::crash_handler::handle(int signal, struct sigcontext context)
 	info.signal = signal;
 	if (signal == SIGSEGV)
 	{
+		// TODO: Print this in hex
 		info.info = lib::fmt::format("faulty address at {} from {}",
 			context.cr2, context.rip);
 	}
