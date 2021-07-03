@@ -34,7 +34,7 @@ void lib::crash_handler::handle(int signal, struct sigcontext context)
 	info.stack_trace.reserve(trace_size);
 	for (auto i = 0; i < trace_size; i++)
 	{
-		info.info.insert(i, std::string(messages[i]));
+		info.stack_trace.emplace_back(messages[i]);
 	}
 
 	if (cache != nullptr)
