@@ -1,6 +1,7 @@
 #pragma once
 
 #include "thirdparty/json.hpp"
+#include "lib/datetime.hpp"
 
 #include <string>
 #include <unordered_map>
@@ -13,7 +14,7 @@ namespace lib
 	class crash_info
 	{
 	public:
-		crash_info() = default;
+		crash_info();
 
 		/**
 		 * When did the crash occur

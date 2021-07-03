@@ -1,5 +1,10 @@
 #include "lib/crash/crashinfo.hpp"
 
+lib::crash_info::crash_info()
+{
+	timestamp = lib::date_time::seconds_since_epoch();
+}
+
 void lib::to_json(nlohmann::json &j, const crash_info &i)
 {
 	j = nlohmann::json{
