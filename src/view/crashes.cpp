@@ -28,12 +28,12 @@ void View::Crashes::showEvent(QShowEvent */*event*/)
 		auto dateString = QLocale::system().toString(dateTime, QLocale::ShortFormat);
 
 		auto *item = new QListWidgetItem(dateString);
-		item->setData(0x100, QString::fromStdString(crash.to_string()));
+		item->setData(stack_trace_role, QString::fromStdString(crash.to_string()));
 		list->addItem(item);
 	}
 }
 
 void View::Crashes::logItemChanged(QListWidgetItem *current, QListWidgetItem */*previous*/)
 {
-	log->setPlainText(current->data(0x100).toString());
+	log->setPlainText(current->data(stack_trace_role).toString());
 }

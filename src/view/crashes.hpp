@@ -20,6 +20,8 @@ namespace View
 		void showEvent(QShowEvent *event) override;
 
 	private:
+		static constexpr int stack_trace_role = 0x100;
+
 		lib::cache &cache;
 
 		QListWidget *list;
