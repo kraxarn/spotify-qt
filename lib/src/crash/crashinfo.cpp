@@ -13,7 +13,7 @@ void lib::to_json(nlohmann::json &j, const crash_info &i)
 		{"info", i.info},
 		{"stack_trace", i.stack_trace},
 		{"handled", i.handled},
-	}
+	};
 }
 
 void lib::from_json(const nlohmann::json &j, crash_info &i)
