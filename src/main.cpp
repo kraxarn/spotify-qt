@@ -9,6 +9,8 @@
 
 #ifdef USE_KCRASH
 #include <kcrash.h>
+#else
+#include "lib/crashhandler.hpp"
 #endif
 
 auto main(int argc, char *argv[]) -> int
@@ -23,6 +25,11 @@ auto main(int argc, char *argv[]) -> int
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 	QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+#endif
+
+#ifndef USE_KCRASH
+	// Custom crash handler if not using KCrash
+	lib::crash_handler crashHandler;
 #endif
 
 	// Create Qt application
