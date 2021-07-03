@@ -39,6 +39,8 @@ namespace lib
 		void set_track_info(const lib::spt::track &track,
 			const lib::spt::track_info &track_info) override;
 
+		void add_crash(const lib::crash_info &info) override;
+
 	private:
 		const lib::paths &paths;
 

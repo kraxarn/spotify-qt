@@ -6,6 +6,7 @@
 #include "lib/spotify/playlist.hpp"
 #include "lib/spotify/album.hpp"
 #include "lib/spotify/trackinfo.hpp"
+#include "lib/crash/crashinfo.hpp"
 
 namespace lib
 {
@@ -112,6 +113,16 @@ namespace lib
 		 */
 		virtual void set_track_info(const lib::spt::track &track,
 			const lib::spt::track_info &track_info) = 0;
+
+		//endregion
+
+		//region crash
+
+		/**
+		 * Add crash log
+		 * @param info Crash information
+		 */
+		virtual void add_crash(const lib::crash_info &info) = 0;
 
 		//endregion
 	};

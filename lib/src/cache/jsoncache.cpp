@@ -127,6 +127,16 @@ void lib::json_cache::set_track_info(const lib::spt::track &track,
 
 //endregion
 
+//region crash
+
+void lib::json_cache::add_crash(const lib::crash_info &info)
+{
+	auto file_name = lib::date_time::now().to_iso_date_time();
+	lib::json::save(path("crash", file_name, "json"), info);
+}
+
+//endregion
+
 //region private
 
 auto lib::json_cache::dir(const std::string &type) const -> ghc::filesystem::path
