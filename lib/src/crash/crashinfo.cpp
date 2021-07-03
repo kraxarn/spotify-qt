@@ -41,7 +41,6 @@ auto lib::crash_info::to_string() const -> std::string
 	}
 	stream << std::endl;
 
-	stream << "Stack trace:" << std::endl;
 	for (auto i = 0; i < stack_trace.size(); i++)
 	{
 		stream << "#" << i << ' ' << stack_trace.at(i) << std::endl;
