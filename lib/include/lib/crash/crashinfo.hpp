@@ -5,6 +5,7 @@
 
 #include <string>
 #include <vector>
+#include <sstream>
 
 namespace lib
 {
@@ -40,6 +41,9 @@ namespace lib
 		 * Handled by application
 		 */
 		bool handled = false;
+
+		/** Serialized stack trace */
+		auto to_string() const -> std::string;
 	};
 
 	/** Crash info -> JSON */

@@ -29,3 +29,23 @@ void lib::from_json(const nlohmann::json &j, crash_info &i)
 	j.at("stack_trace").get_to(i.stack_trace);
 	j.at("handled").get_to(i.handled);
 }
+
+auto lib::crash_info::to_string() const -> std::string
+{
+	std::stringstream stream;
+
+	stream << "Signal: " << signal;
+	if (!info.empty())
+	{
+		stream << ", " << info;
+	}
+	stream << std::endl;
+
+	stream << "Stack trace:" << std::endl;
+	for (auto i = 0; i < stack_trace.size(); i++)
+	{
+		stream << "#" << i << ' ' << stack_trace.at(i) << std::endl;
+	}
+
+	return stream.str();
+}
