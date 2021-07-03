@@ -40,6 +40,7 @@ namespace lib
 			const lib::spt::track_info &track_info) override;
 
 		void add_crash(const lib::crash_info &info) override;
+		auto get_all_crashes() const -> std::vector<lib::crash_info> override;
 
 	private:
 		const lib::paths &paths;

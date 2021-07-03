@@ -124,6 +124,12 @@ namespace lib
 		 */
 		virtual void add_crash(const lib::crash_info &info) = 0;
 
+		/**
+		 * Get all known crashes
+		 * @return Crash infos
+		 */
+		virtual auto get_all_crashes() const -> std::vector<lib::crash_info> = 0;
+
 		//endregion
 	};
 }

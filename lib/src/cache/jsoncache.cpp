@@ -135,6 +135,24 @@ void lib::json_cache::add_crash(const lib::crash_info &info)
 	lib::json::save(path("crash", file_name, "json"), info);
 }
 
+auto lib::json_cache::get_all_crashes() const -> std::vector<lib::crash_info>
+{
+	auto dir = ghc::filesystem::path(paths.cache()) / "crash";
+	std::vector<lib::crash_info> results;
+
+	if (!ghc::filesystem::exists(dir))
+	{
+		return results;
+	}
+
+	for (const auto &entry : ghc::filesystem::directory_iterator(dir))
+	{
+		results.push_back(lib::json::load<lib::crash_info>(entry.path()));
+	}
+
+	return results;
+}
+
 //endregion
 
 //region private
