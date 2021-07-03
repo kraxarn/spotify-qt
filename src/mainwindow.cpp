@@ -157,8 +157,21 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::setBorderless(bool enabled)
 {
-	setWindowFlag(Qt::FramelessWindowHint, enabled);
-	dynamic_cast<MainToolBar *>(toolBar)->setBorderless(enabled);
+	try
+	{
+		setWindowFlag(Qt::FramelessWindowHint, enabled);
+
+		auto *mainToolbar = dynamic_cast<MainToolBar *>(toolBar);
+		if (mainToolbar != nullptr)
+		{
+			mainToolbar->setBorderless(enabled);
+		}
+	}
+	catch (const std::exception &e)
+	{
+		lib::log::warn("Failed to set borderless: {}", e.what());
+		return;
+	}
 
 	if (enabled)
 	{
