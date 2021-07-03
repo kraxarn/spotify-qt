@@ -122,13 +122,13 @@ void ArtistView::artistLoaded(const lib::spt::artist &loadedArtist)
 		onArtistLoaded(loadedArtist);
 	}
 
-	auto *mainWindow = MainWindow::find(parentWidget());
-
 	// Get cover image (320x320 -> 320x160)
-	QPixmap cover;
-	cover.loadFromData(mainWindow->get(QString::fromStdString(artist.image)),
-		"jpeg");
-	coverLabel->setPixmap(cover.copy(0, 80, 320, 160));
+	httpClient.get(artist.image, lib::headers(), [this](const std::string &data)
+	{
+		QPixmap cover;
+		cover.loadFromData(QByteArray::fromStdString(data), "jpeg");
+		coverLabel->setPixmap(cover.copy(0, 80, 320, 160));
+	});
 
 	auto followers = QString("%1 follower%2")
 		.arg(QString::fromStdString(lib::fmt::count(artist.followers)),
