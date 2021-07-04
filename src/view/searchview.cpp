@@ -32,15 +32,6 @@ SearchView::SearchView(spt::Spotify &spotify, lib::cache &cache,
 	// Start searching when pressing enter
 	QLineEdit::connect(searchBox, &QLineEdit::returnPressed,
 		this, &SearchView::search);
-
-	// Open playlist
-	QListWidget::connect(playlistList, &QListWidget::itemClicked,
-		this, &SearchView::playlistClick);
-
-	// Playlist context menu
-	playlistList->setContextMenuPolicy(Qt::CustomContextMenu);
-	QWidget::connect(playlistList, &QWidget::customContextMenuRequested,
-		this, &SearchView::playlistMenu);
 }
 
 void SearchView::showEvent(QShowEvent *event)
@@ -66,16 +57,6 @@ auto SearchView::defaultTree(const QStringList &headers) -> QTreeWidget *
 	tree->setColumnCount(headers.length());
 	tree->setHeaderLabels(headers);
 	return tree;
-}
-
-void SearchView::playlistClick(QListWidgetItem *item)
-{
-	spotify.playlist(item->data(RolePlaylistId)
-		.toString().toStdString(), [this](const lib::spt::playlist &playlist)
-	{
-		auto *mainWindow = MainWindow::find(this->parentWidget());
-		mainWindow->getSongsTree()->load(playlist);
-	});
 }
 
 void SearchView::search()
@@ -152,28 +133,6 @@ void SearchView::search()
 	}
 }
 
-void SearchView::playlistMenu(const QPoint &pos)
-{
-	auto *item = playlistList->itemAt(pos);
-	auto playlistId = item->data(RolePlaylistId).toString().toStdString();
-
-	spotify.playlist(playlistId, [this, pos](const lib::spt::playlist &playlist)
-	{
-		auto *menu = new PlaylistMenu(spotify, playlist, cache, parentWidget());
-		menu->popup(playlistList->mapToGlobal(pos));
-	});
-}
-
-void SearchView::addPlaylist(const lib::spt::playlist &playlist)
-{
-	auto playlistName = QString::fromStdString(playlist.name);
-	auto playlistId = QString::fromStdString(playlist.id);
-
-	auto *item = new QListWidgetItem(playlistName, playlistList);
-	item->setData(RolePlaylistId, playlistId);
-	item->setToolTip(playlistName);
-}
-
 void SearchView::resultsLoaded(const lib::spt::search_results &results)
 {
 	// Albums
@@ -185,13 +144,13 @@ void SearchView::resultsLoaded(const lib::spt::search_results &results)
 	// Artists
 	for (const auto &artist : results.artists)
 	{
-		this->artists->add(artist);
+		artists->add(artist);
 	}
 
 	// Playlists
 	for (const auto &playlist : results.playlists)
 	{
-		addPlaylist(playlist);
+		playlists->add(playlist);
 	}
 
 	// Tracks

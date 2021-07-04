@@ -7,6 +7,7 @@
 #include "searchtab/tracks.hpp"
 #include "searchtab/artists.hpp"
 #include "searchtab/albums.hpp"
+#include "searchtab/playlists.hpp"
 
 #include <QDockWidget>
 #include <QLineEdit>
@@ -35,10 +36,9 @@ private:
 	SearchTab::Tracks *tracks = nullptr;
 	SearchTab::Artists *artists = nullptr;
 	SearchTab::Albums *albums = nullptr;
+	SearchTab::Playlists *playlists = nullptr;
 
 	auto defaultTree(const QStringList &headers) -> QTreeWidget *;
-	void playlistClick(QListWidgetItem *item);
-	void playlistMenu(const QPoint &pos);
 	void search();
 
 protected:
