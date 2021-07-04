@@ -5,6 +5,7 @@
 #include "menu/songmenu.hpp"
 #include "spotify/spotify.hpp"
 #include "widget/loader.hpp"
+#include "view/artistcover.hpp"
 
 #include <QDockWidget>
 #include <QLabel>
@@ -46,7 +47,7 @@ private:
 
 	QVBoxLayout *layout = nullptr;
 	QHBoxLayout *title = nullptr;
-	QLabel *coverLabel = nullptr;
+	View::ArtistCover *coverLabel = nullptr;
 	QLabel *name = nullptr;
 	QMenu *menu = nullptr;
 	QToolButton *context = nullptr;

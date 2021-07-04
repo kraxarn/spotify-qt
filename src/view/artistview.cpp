@@ -12,9 +12,8 @@ ArtistView::ArtistView(spt::Spotify &spotify, const std::string &artistId,
 	layout->setContentsMargins(-1, 0, -1, 0);
 	setLayout(layout);
 
-	// Placeholder for cover  image
-	coverLabel = new QLabel(this);
-	coverLabel->setMinimumHeight(160);
+	// Placeholder for cover image
+	coverLabel = new View::ArtistCover(this);
 	layout->addWidget(coverLabel);
 
 	// Artist name title
@@ -125,9 +124,7 @@ void ArtistView::artistLoaded(const lib::spt::artist &loadedArtist)
 	// Get cover image (320x320 -> 320x160)
 	httpClient.get(artist.image, lib::headers(), [this](const std::string &data)
 	{
-		QPixmap cover;
-		cover.loadFromData(QByteArray::fromStdString(data), "jpeg");
-		coverLabel->setPixmap(cover.copy(0, 80, 320, 160));
+		coverLabel->setPixmap(QByteArray::fromStdString(data));
 	});
 
 	auto followers = QString("%1 follower%2")
