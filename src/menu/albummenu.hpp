@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../mainwindow.hpp"
-#include "../spotify/spotify.hpp"
+#include "lib/spotify/api.hpp"
+#include "lib/cache.hpp"
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -12,14 +12,14 @@ class AlbumMenu: public QMenu
 Q_OBJECT
 
 public:
-	AlbumMenu(spt::Spotify &spotify, lib::cache &cache, const std::string &albumId,
+	AlbumMenu(lib::spt::api &spotify, lib::cache &cache, const std::string &albumId,
 		QWidget *parent);
 
 private:
 	QWidget *parent = nullptr;
 	std::vector<lib::spt::track> tracks;
 	std::string albumId;
-	spt::Spotify &spotify;
+	lib::spt::api &spotify;
 	QAction *trackCount = nullptr;
 
 	void tracksLoaded(const std::vector<lib::spt::track> &items);
