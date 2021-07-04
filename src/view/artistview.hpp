@@ -1,9 +1,10 @@
 #pragma once
 
 #include "lib/enum/followtype.hpp"
+#include "lib/spotify/api.hpp"
+
 #include "menu/albummenu.hpp"
 #include "menu/songmenu.hpp"
-#include "spotify/spotify.hpp"
 #include "widget/loader.hpp"
 #include "view/artistcover.hpp"
 
@@ -20,7 +21,7 @@ class ArtistView: public QWidget
 Q_OBJECT
 
 public:
-	ArtistView(spt::Spotify &spotify, const std::string &artistId,
+	ArtistView(lib::spt::api &spotify, const std::string &artistId,
 		lib::cache &cache, const lib::http_client &httpClient, QWidget *parent);
 
 	std::function<void(const lib::spt::artist &artist)> onArtistLoaded;
@@ -63,7 +64,7 @@ private:
 	QTreeWidget *singleList = nullptr;
 	std::string artistId;
 	lib::spt::artist artist;
-	spt::Spotify &spotify;
+	lib::spt::api &spotify;
 	lib::cache &cache;
 	const lib::http_client &httpClient;
 };
