@@ -13,25 +13,21 @@ SearchView::SearchView(spt::Spotify &spotify, lib::cache &cache,
 	layout->addWidget(searchBox);
 	setLayout(layout);
 
-	// Tabs
+	// Tab container
 	tabs = new QTabWidget(this);
 	layout->addWidget(tabs);
 
-	// All lists
-	artistList = new QListWidget(this);
+	// Tab content
+	artists = new SearchTab::Artists(this);
 	playlistList = new QListWidget(this);
-
-	// Track list
 	tracks = new SearchTab::Tracks(spotify, cache, this);
-
-	// Album list
 	albumList = defaultTree({
 		"Title", "Artist"
 	});
 
 	// Add all tabs
 	tabs->addTab(tracks, "Tracks");
-	tabs->addTab(artistList, "Artists");
+	tabs->addTab(artists, "Artists");
 	tabs->addTab(albumList, "Albums");
 	tabs->addTab(playlistList, "Playlists");
 
@@ -46,10 +42,6 @@ SearchView::SearchView(spt::Spotify &spotify, lib::cache &cache,
 	albumList->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(albumList, &QWidget::customContextMenuRequested,
 		this, &SearchView::albumMenu);
-
-	// Open artist
-	QListWidget::connect(artistList, &QListWidget::itemClicked,
-		this, &SearchView::artistClick);
 
 	// Open playlist
 	QListWidget::connect(playlistList, &QListWidget::itemClicked,
@@ -110,13 +102,6 @@ void SearchView::albumClick(QTreeWidgetItem *item, int /*column*/)
 	}
 }
 
-void SearchView::artistClick(QListWidgetItem *item)
-{
-	auto *mainWindow = MainWindow::find(parentWidget());
-	mainWindow->openArtist(item->data(RoleArtistId).toString().toStdString());
-	close();
-}
-
 void SearchView::playlistClick(QListWidgetItem *item)
 {
 	spotify.playlist(item->data(RolePlaylistId)
@@ -131,7 +116,7 @@ void SearchView::search()
 {
 	// Empty all previous results
 	tracks->clear();
-	artistList->clear();
+	artists->clear();
 	albumList->clear();
 	playlistList->clear();
 
@@ -166,7 +151,7 @@ void SearchView::search()
 			{
 				spotify.artist(id, [this](const lib::spt::artist &artist)
 				{
-					this->addArtist(artist);
+					this->artists->add(artist);
 				});
 				i = 1;
 			}
@@ -211,16 +196,6 @@ void SearchView::playlistMenu(const QPoint &pos)
 		auto *menu = new PlaylistMenu(spotify, playlist, cache, parentWidget());
 		menu->popup(playlistList->mapToGlobal(pos));
 	});
-}
-
-void SearchView::addArtist(const lib::spt::artist &artist)
-{
-	auto name = QString::fromStdString(artist.name);
-	auto id = QString::fromStdString(artist.id);
-
-	auto *item = new QListWidgetItem(name, artistList);
-	item->setData(RoleArtistId, id);
-	item->setToolTip(name);
 }
 
 void SearchView::addAlbum(const lib::spt::album &album)
@@ -268,7 +243,7 @@ void SearchView::resultsLoaded(const lib::spt::search_results &results)
 	// Artists
 	for (const auto &artist : results.artists)
 	{
-		addArtist(artist);
+		this->artists->add(artist);
 	}
 
 	// Playlists

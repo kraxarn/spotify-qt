@@ -5,6 +5,7 @@
 #include "lib/httpclient.hpp"
 
 #include "searchtab/tracks.hpp"
+#include "searchtab/artists.hpp"
 
 #include <QDockWidget>
 #include <QLineEdit>
@@ -25,7 +26,6 @@ public:
 private:
 	QTabWidget *tabs = nullptr;
 	QLineEdit *searchBox = nullptr;
-	QListWidget *artistList = nullptr;
 	QListWidget *playlistList = nullptr;
 	QTreeWidget *albumList = nullptr;
 	spt::Spotify &spotify;
@@ -33,11 +33,11 @@ private:
 	const lib::http_client &httpClient;
 
 	SearchTab::Tracks *tracks = nullptr;
+	SearchTab::Artists *artists = nullptr;
 
 	auto defaultTree(const QStringList &headers) -> QTreeWidget *;
 	void albumClick(QTreeWidgetItem *item, int column);
 	void albumMenu(const QPoint &pos);
-	void artistClick(QListWidgetItem *item);
 	void playlistClick(QListWidgetItem *item);
 	void playlistMenu(const QPoint &pos);
 	void search();
@@ -47,7 +47,6 @@ protected:
 	void hideEvent(QHideEvent *event) override;
 
 private:
-	void addArtist(const lib::spt::artist &artist);
 	void addAlbum(const lib::spt::album &album);
 	void addPlaylist(const lib::spt::playlist &playlist);
 
