@@ -21,27 +21,17 @@ SearchView::SearchView(spt::Spotify &spotify, lib::cache &cache,
 	artists = new SearchTab::Artists(this);
 	playlistList = new QListWidget(this);
 	tracks = new SearchTab::Tracks(spotify, cache, this);
-	albumList = defaultTree({
-		"Title", "Artist"
-	});
+	albums = new SearchTab::Albums(spotify, cache, httpClient, this);
 
 	// Add all tabs
 	tabs->addTab(tracks, "Tracks");
 	tabs->addTab(artists, "Artists");
-	tabs->addTab(albumList, "Albums");
+	tabs->addTab(albums, "Albums");
 	tabs->addTab(playlistList, "Playlists");
 
 	// Start searching when pressing enter
 	QLineEdit::connect(searchBox, &QLineEdit::returnPressed,
 		this, &SearchView::search);
-
-	// Open album
-	QTreeWidget::connect(albumList, &QTreeWidget::itemClicked,
-		this, &SearchView::albumClick);
-	// Album context menu
-	albumList->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QWidget::connect(albumList, &QWidget::customContextMenuRequested,
-		this, &SearchView::albumMenu);
 
 	// Open playlist
 	QListWidget::connect(playlistList, &QListWidget::itemClicked,
@@ -78,30 +68,6 @@ auto SearchView::defaultTree(const QStringList &headers) -> QTreeWidget *
 	return tree;
 }
 
-void SearchView::albumMenu(const QPoint &pos)
-{
-	auto *item = albumList->itemAt(pos);
-	const auto &albumId = item->data(0, RoleAlbumId).toString();
-	if (albumId.isEmpty())
-	{
-		return;
-	}
-
-	auto *albumMenu = new AlbumMenu(spotify, cache, albumId.toStdString(),
-		parentWidget());
-	albumMenu->popup(albumList->mapToGlobal(pos));
-}
-
-void SearchView::albumClick(QTreeWidgetItem *item, int /*column*/)
-{
-	auto *mainWindow = MainWindow::find(parentWidget());
-	if (!mainWindow->loadAlbum(item->data(0, RoleAlbumId)
-		.toString().toStdString()))
-	{
-		mainWindow->setStatus(QString("Failed to load album"), true);
-	}
-}
-
 void SearchView::playlistClick(QListWidgetItem *item)
 {
 	spotify.playlist(item->data(RolePlaylistId)
@@ -117,7 +83,7 @@ void SearchView::search()
 	// Empty all previous results
 	tracks->clear();
 	artists->clear();
-	albumList->clear();
+	albums->clear();
 	playlistList->clear();
 
 	// Disable search box while searching
@@ -159,7 +125,7 @@ void SearchView::search()
 			{
 				spotify.album(id, [this](const lib::spt::album &album)
 				{
-					this->addAlbum(album);
+					this->albums->add(album);
 				});
 				i = 2;
 			}
@@ -198,30 +164,6 @@ void SearchView::playlistMenu(const QPoint &pos)
 	});
 }
 
-void SearchView::addAlbum(const lib::spt::album &album)
-{
-	auto id = QString::fromStdString(album.id);
-	auto name = QString::fromStdString(album.name);
-	auto artist = QString::fromStdString(album.artist);
-
-	auto *item = new QTreeWidgetItem({
-		name, artist
-	});
-
-	HttpUtils::getAlbum(album.image, httpClient, cache, [item](const QPixmap &image)
-	{
-		if (item != nullptr)
-		{
-			item->setIcon(0, image);
-		}
-	});
-
-	item->setData(0, RoleAlbumId, id);
-	item->setToolTip(0, name);
-	item->setToolTip(1, artist);
-	albumList->addTopLevelItem(item);
-}
-
 void SearchView::addPlaylist(const lib::spt::playlist &playlist)
 {
 	auto playlistName = QString::fromStdString(playlist.name);
@@ -237,7 +179,7 @@ void SearchView::resultsLoaded(const lib::spt::search_results &results)
 	// Albums
 	for (const auto &album : results.albums)
 	{
-		addAlbum(album);
+		albums->add(album);
 	}
 
 	// Artists
