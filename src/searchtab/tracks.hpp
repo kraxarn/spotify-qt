@@ -9,8 +9,7 @@ namespace SearchTab
 	class Tracks: public SearchTabTree
 	{
 	public:
-		Tracks(lib::spt::api &spotify, lib::cache &cache,
-			QWidget *parent);
+		Tracks(lib::spt::api &spotify, lib::cache &cache, QWidget *parent);
 
 		void add(const lib::spt::track &track);
 
