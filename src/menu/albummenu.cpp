@@ -1,4 +1,5 @@
 #include "albummenu.hpp"
+#include "mainwindow.hpp"
 
 AlbumMenu::AlbumMenu(spt::Spotify &spotify, lib::cache &cache, const std::string &albumId,
 	QWidget *parent)
@@ -35,7 +36,8 @@ void AlbumMenu::shuffle(bool /*checked*/)
 {
 	if (tracks.empty())
 	{
-		((MainWindow *) parent)->setStatus("No tracks found to shuffle", true);
+		auto *mainWindow = MainWindow::find(parentWidget());
+		mainWindow->setStatus("No tracks found to shuffle", true);
 		return;
 	}
 
