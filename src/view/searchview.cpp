@@ -47,18 +47,6 @@ void SearchView::hideEvent(QHideEvent *event)
 	MainWindow::find(parentWidget())->setSearchChecked(false);
 }
 
-auto SearchView::defaultTree(const QStringList &headers) -> QTreeWidget *
-{
-	auto *tree = new QTreeWidget(this);
-	tree->setEditTriggers(QAbstractItemView::NoEditTriggers);
-	tree->setSelectionBehavior(QAbstractItemView::SelectRows);
-	tree->setRootIsDecorated(false);
-	tree->setAllColumnsShowFocus(true);
-	tree->setColumnCount(headers.length());
-	tree->setHeaderLabels(headers);
-	return tree;
-}
-
 void SearchView::search()
 {
 	// Empty all previous results
@@ -114,7 +102,7 @@ void SearchView::search()
 			{
 				spotify.playlist(id, [this](const lib::spt::playlist &playlist)
 				{
-					this->addPlaylist(playlist);
+					this->playlists->add(playlist);
 				});
 				i = 3;
 			}

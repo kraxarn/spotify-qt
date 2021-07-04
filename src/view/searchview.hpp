@@ -38,7 +38,6 @@ private:
 	SearchTab::Albums *albums = nullptr;
 	SearchTab::Playlists *playlists = nullptr;
 
-	auto defaultTree(const QStringList &headers) -> QTreeWidget *;
 	void search();
 
 protected:
@@ -46,7 +45,5 @@ protected:
 	void hideEvent(QHideEvent *event) override;
 
 private:
-	void addPlaylist(const lib::spt::playlist &playlist);
-
 	void resultsLoaded(const lib::spt::search_results &results);
 };
