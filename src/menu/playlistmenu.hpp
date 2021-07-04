@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../dialog/playlisteditdialog.hpp"
-#include "../mainwindow.hpp"
-#include "lib/spotify/playlist.hpp"
+#include "dialog/playlisteditdialog.hpp"
+#include "lib/spotify/api.hpp"
+#include "lib/cache.hpp"
 #include "lib/random.hpp"
 
 #include <QInputDialog>
@@ -14,7 +14,7 @@ class PlaylistMenu: public QMenu
 Q_OBJECT
 
 public:
-	PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &playlist, lib::cache &cache,
+	PlaylistMenu(lib::spt::api &spotify, const lib::spt::playlist &playlist, lib::cache &cache,
 		QWidget *parent = nullptr);
 
 private:

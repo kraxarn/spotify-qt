@@ -1,6 +1,7 @@
 #include "playlistmenu.hpp"
+#include "mainwindow.hpp"
 
-PlaylistMenu::PlaylistMenu(spt::Spotify &spotify, const lib::spt::playlist &playlist,
+PlaylistMenu::PlaylistMenu(lib::spt::api &spotify, const lib::spt::playlist &playlist,
 	lib::cache &cache, QWidget *parent)
 	: parent(parent),
 	playlist(playlist),
