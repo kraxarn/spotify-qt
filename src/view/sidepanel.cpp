@@ -95,13 +95,11 @@ void SidePanel::closeSearch()
 	removeTab(stack->indexOf(searchView));
 }
 
-void SidePanel::openAudioFeatures(const std::string &trackId,
-	const std::string &artist, const std::string &name)
+void SidePanel::openAudioFeatures(const lib::spt::track &track)
 {
-	auto *view = new AudioFeaturesView(spotify, trackId, this);
-	addTab(view, "view-statistics", QString("%1 - %2")
-		.arg(QString::fromStdString(artist),
-			QString::fromStdString(name)));
+	auto *view = new AudioFeaturesView(spotify, track.id, this);
+	addTab(view, "view-statistics",
+		QString::fromStdString(track.title()));
 }
 
 void SidePanel::openLyrics(const lib::spt::track &track)

@@ -19,8 +19,7 @@ public:
 		const lib::http_client &httpClient, QWidget *parent);
 
 	void openArtist(const std::string &artistId);
-	void openAudioFeatures(const std::string &trackId, const std::string &artist,
-		const std::string &name);
+	void openAudioFeatures(const lib::spt::track &track);
 	void openLyrics(const lib::spt::track &track);
 	void openSearch();
 	void closeSearch();

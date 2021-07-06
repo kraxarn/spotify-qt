@@ -23,8 +23,7 @@ public:
 	void openArtist(const std::string &artistId);
 
 	/** @deprecated SidePanel.openAudioFeatures instead */
-	void openAudioFeaturesWidget(const std::string &trackId,
-		const std::string &artist, const std::string &name);
+	void openAudioFeaturesWidget(const lib::spt::track &track);
 
 	//endregion
 

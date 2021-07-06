@@ -347,10 +347,9 @@ void MainWindow::stopClient()
 	sptClient = nullptr;
 }
 
-void MainWindow::openAudioFeaturesWidget(const std::string &trackId,
-	const std::string &artist, const std::string &name)
+void MainWindow::openAudioFeaturesWidget(const lib::spt::track &track)
 {
-	dynamic_cast<SidePanel *>(sidePanel)->openAudioFeatures(trackId, artist, name);
+	dynamic_cast<SidePanel *>(sidePanel)->openAudioFeatures(track);
 }
 
 void MainWindow::openLyrics(const lib::spt::track &track)

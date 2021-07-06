@@ -262,8 +262,7 @@ void SongMenu::remFromPlaylist(bool /*checked*/)
 void SongMenu::openTrackFeatures(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-	mainWindow->openAudioFeaturesWidget(track.id,
-		lib::spt::entity::combine_names(track.artists), track.name);
+	mainWindow->openAudioFeaturesWidget(track);
 }
 
 void SongMenu::openLyrics(bool /*checked*/)
