@@ -41,4 +41,5 @@ private:
 	const lib::http_client &httpClient;
 
 	void setCurrentIndex(int index);
+	void setCurrentWidget(QWidget *widget);
 };

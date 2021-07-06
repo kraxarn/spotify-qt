@@ -27,11 +27,9 @@ SidePanel::SidePanel(spt::Spotify &spotify, const lib::settings &settings, lib::
 void SidePanel::addTab(QWidget *widget, const QString &icon, const QString &tabTitle)
 {
 	auto index = stack->addWidget(widget);
-	stack->setCurrentIndex(index);
-
 	title->insertTab(index, Icon::get(icon), tabTitle);
-	title->setCurrentIndex(index);
 
+	setCurrentIndex(index);
 	setVisible(true);
 }
 
@@ -50,6 +48,15 @@ void SidePanel::setCurrentIndex(int index)
 {
 	title->setCurrentIndex(index);
 	stack->setCurrentIndex(index);
+}
+
+void SidePanel::setCurrentWidget(QWidget *widget)
+{
+	auto index = stack->indexOf(widget);
+	if (index >= 0)
+	{
+		setCurrentIndex(index);
+	}
 }
 
 void SidePanel::openArtist(const std::string &artistId)
@@ -73,7 +80,15 @@ void SidePanel::openSearch()
 	{
 		searchView = new SearchView(spotify, cache, httpClient, parent);
 	}
-	addTab(searchView, "edit-find", "Search");
+
+	if (searchView == nullptr
+		|| stack->indexOf(searchView) < 0)
+	{
+		addTab(searchView, "edit-find", "Search");
+	}
+
+	setCurrentWidget(searchView);
+	setVisible(true);
 }
 
 void SidePanel::closeSearch()
