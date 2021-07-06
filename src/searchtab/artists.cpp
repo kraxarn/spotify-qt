@@ -22,5 +22,4 @@ void SearchTab::Artists::onItemClicked(QListWidgetItem *item)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	mainWindow->openArtist(item->data(RoleArtistId).toString().toStdString());
-	parentWidget()->close();
 }
