@@ -19,7 +19,7 @@ SearchView::SearchView(spt::Spotify &spotify, lib::cache &cache,
 
 	// Tab content
 	artists = new SearchTab::Artists(this);
-	playlistList = new QListWidget(this);
+	playlists = new SearchTab::Playlists(spotify, cache, this);
 	tracks = new SearchTab::Tracks(spotify, cache, this);
 	albums = new SearchTab::Albums(spotify, cache, httpClient, this);
 
@@ -27,7 +27,7 @@ SearchView::SearchView(spt::Spotify &spotify, lib::cache &cache,
 	tabs->addTab(tracks, "Tracks");
 	tabs->addTab(artists, "Artists");
 	tabs->addTab(albums, "Albums");
-	tabs->addTab(playlistList, "Playlists");
+	tabs->addTab(playlists, "Playlists");
 
 	// Start searching when pressing enter
 	QLineEdit::connect(searchBox, &QLineEdit::returnPressed,
@@ -53,7 +53,7 @@ void SearchView::search()
 	tracks->clear();
 	artists->clear();
 	albums->clear();
-	playlistList->clear();
+	playlists->clear();
 
 	// Disable search box while searching
 	searchBox->setEnabled(false);

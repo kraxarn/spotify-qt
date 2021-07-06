@@ -28,7 +28,6 @@ public:
 private:
 	QTabWidget *tabs = nullptr;
 	QLineEdit *searchBox = nullptr;
-	QListWidget *playlistList = nullptr;
 	spt::Spotify &spotify;
 	lib::cache &cache;
 	const lib::http_client &httpClient;
