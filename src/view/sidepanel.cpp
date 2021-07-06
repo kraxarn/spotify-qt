@@ -81,8 +81,7 @@ void SidePanel::openSearch()
 		searchView = new SearchView(spotify, cache, httpClient, parent);
 	}
 
-	if (searchView == nullptr
-		|| stack->indexOf(searchView) < 0)
+	if (stack->indexOf(searchView) < 0)
 	{
 		addTab(searchView, "edit-find", "Search");
 	}
