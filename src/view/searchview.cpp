@@ -44,7 +44,12 @@ void SearchView::showEvent(QShowEvent *event)
 void SearchView::hideEvent(QHideEvent *event)
 {
 	QWidget::hideEvent(event);
-	MainWindow::find(parentWidget())->setSearchChecked(false);
+
+	auto *mainWindow = MainWindow::find(parentWidget());
+	if (mainWindow != nullptr)
+	{
+		mainWindow->setSearchChecked(false);
+	}
 }
 
 void SearchView::search()
