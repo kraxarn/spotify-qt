@@ -1,6 +1,8 @@
 #pragma once
 
 #include <QTreeWidget>
+#include <QHeaderView>
+#include <QResizeEvent>
 
 namespace SearchTab
 {
@@ -8,5 +10,7 @@ namespace SearchTab
 	{
 	protected:
 		SearchTabTree(const QStringList &headers, QWidget *parent);
+
+		void resizeEvent(QResizeEvent *event) override;
 	};
 }
