@@ -61,7 +61,7 @@ void SidePanel::setCurrentWidget(QWidget *widget)
 
 void SidePanel::openArtist(const std::string &artistId)
 {
-	auto *view = new View::Artist::Widget(spotify, artistId, cache, httpClient, parent);
+	auto *view = new View::Artist::Artist(spotify, artistId, cache, httpClient, parent);
 	view->onArtistLoaded = [this, view](const lib::spt::artist &artist)
 	{
 		auto index = stack->indexOf(view);

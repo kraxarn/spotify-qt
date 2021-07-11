@@ -23,12 +23,12 @@ namespace View
 {
 	namespace Artist
 	{
-		class Widget: public QWidget
+		class Artist: public QWidget
 		{
 		Q_OBJECT
 
 		public:
-			Widget(lib::spt::api &spotify, const std::string &artistId,
+			Artist(lib::spt::api &spotify, const std::string &artistId,
 				lib::cache &cache, const lib::http_client &httpClient, QWidget *parent);
 
 			std::function<void(const lib::spt::artist &artist)> onArtistLoaded;
