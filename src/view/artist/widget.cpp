@@ -56,7 +56,8 @@ View::Artist::Widget::Widget(lib::spt::api &spotify, const std::string &artistId
 	context->setIcon(Icon::get("media-playback-start"));
 	context->setMenu(menu);
 	context->setPopupMode(QToolButton::MenuButtonPopup);
-	QAbstractButton::connect(context, &QAbstractButton::clicked, this, &View::Artist::Widget::play);
+	QAbstractButton::connect(context, &QAbstractButton::clicked,
+		this, &View::Artist::Widget::play);
 	title->addWidget(context);
 	layout->addLayout(title);
 
@@ -80,26 +81,8 @@ View::Artist::Widget::Widget(lib::spt::api &spotify, const std::string &artistId
 	tabs->addTab(topTracksList, "Popular");
 
 	// Albums
-	albumList = new QTreeWidget(tabs);
-	singleList = new QTreeWidget(tabs);
-
-	for (const auto &list : {albumList, singleList})
-	{
-		list->setEnabled(false);
-		list->setColumnCount(2);
-		list->header()->hide();
-		list->setRootIsDecorated(false);
-		list->header()->resizeSection(0, 235);
-		list->header()->resizeSection(1, 1);
-		list->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-
-		QTreeWidget::connect(list, &QTreeWidget::itemClicked, this,
-			&View::Artist::Widget::loadAlbumId);
-		QWidget::connect(list, &QWidget::customContextMenuRequested, this,
-			&View::Artist::Widget::albumMenu);
-		QTreeWidget::connect(list, &QTreeWidget::itemDoubleClicked,
-			this, &View::Artist::Widget::albumDoubleClicked);
-	}
+	albumList = new View::Artist::AlbumList(spotify, cache, tabs);
+	singleList = new View::Artist::AlbumList(spotify, cache, tabs);
 
 	tabs->addTab(albumList, "Albums");
 	tabs->addTab(singleList, "Singles");
@@ -317,63 +300,12 @@ void View::Artist::Widget::trackMenu(const QPoint &pos)
 	songMenu->popup(topTracksList->mapToGlobal(pos));
 }
 
-void View::Artist::Widget::loadAlbumId(QTreeWidgetItem *item)
-{
-	auto *mainWindow = MainWindow::find(parentWidget());
-	if (!mainWindow->loadAlbum(item->data(0, RoleAlbumId)
-		.toString().toStdString()))
-	{
-		mainWindow->setStatus(QString("Failed to load album"), true);
-	}
-}
-
 void View::Artist::Widget::relatedClick(QListWidgetItem *item)
 {
 	relatedList->setEnabled(false);
 	MainWindow::find(parentWidget())->openArtist(item->data(RoleArtistId)
 		.toString().toStdString());
 	relatedList->setEnabled(true);
-}
-
-void View::Artist::Widget::albumMenu(const QPoint &pos)
-{
-	auto *list = tabs->currentIndex() == 1
-		? albumList
-		: tabs->currentIndex() == 2
-			? singleList
-			: nullptr;
-	if (list == nullptr)
-	{
-		return;
-	}
-
-	auto *item = list->itemAt(pos);
-	auto albumId = item->data(0, RoleAlbumId).toString();
-	if (albumId.isEmpty())
-	{
-		return;
-	}
-
-	auto *albumMenu = new AlbumMenu(spotify, cache, albumId.toStdString(),
-		parentWidget());
-	albumMenu->popup(list->mapToGlobal(pos));
-}
-
-void View::Artist::Widget::albumDoubleClicked(QTreeWidgetItem *item, int /*column*/)
-{
-	spotify.play_tracks(lib::spt::api::to_uri("album",
-		item->data(0, RoleAlbumId).toString().toStdString()),
-		[this](const std::string &result)
-		{
-			if (result.empty())
-			{
-				return;
-			}
-
-			auto *mainWindow = MainWindow::find(this->parentWidget());
-			mainWindow->status(lib::fmt::format("Failed to start playback: {}",
-				result), true);
-		});
 }
 
 void View::Artist::Widget::searchWikipedia(bool /*checked*/)

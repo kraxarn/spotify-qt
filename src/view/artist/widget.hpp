@@ -7,6 +7,7 @@
 #include "menu/songmenu.hpp"
 #include "widget/loader.hpp"
 #include "view/artist/cover.hpp"
+#include "view/artist/albumlist.hpp"
 
 #include <QDockWidget>
 #include <QLabel>
@@ -40,10 +41,7 @@ namespace View
 			void follow(bool checked);
 			void trackClick(QListWidgetItem *item);
 			void trackMenu(const QPoint &pos);
-			void loadAlbumId(QTreeWidgetItem *item);
 			void relatedClick(QListWidgetItem *item);
-			void albumMenu(const QPoint &pos);
-			void albumDoubleClicked(QTreeWidgetItem *item, int column);
 			void play(bool checked);
 			void searchWikipedia(bool checked);
 			void searchDuckDuckGo(bool checked);
@@ -64,8 +62,8 @@ namespace View
 			QAction *followButton = nullptr;
 			std::vector<std::string> topTrackIds;
 			QTabWidget *tabs = nullptr;
-			QTreeWidget *albumList = nullptr;
-			QTreeWidget *singleList = nullptr;
+			View::Artist::AlbumList *albumList = nullptr;
+			View::Artist::AlbumList *singleList = nullptr;
 			std::string artistId;
 			lib::spt::artist artist;
 			lib::spt::api &spotify;
