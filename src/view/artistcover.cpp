@@ -10,7 +10,7 @@ View::ArtistCover::ArtistCover(QWidget *parent)
 void View::ArtistCover::setJpeg(const QByteArray &jpeg)
 {
 	cover.loadFromData(jpeg, "jpeg");
-	scaleCover(maxWidth);
+	scaleCover(width());
 }
 
 void View::ArtistCover::resizeEvent(QResizeEvent *event)
