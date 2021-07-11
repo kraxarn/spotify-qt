@@ -19,9 +19,6 @@ namespace View
 		static constexpr int maxHeight = 160;
 		static constexpr int maxWidth = 320;
 
-		/** Y offset, should probably be removed */
-		static constexpr int offset = 80;
-
 		QPixmap cover;
 
 		void scaleCover(int width);

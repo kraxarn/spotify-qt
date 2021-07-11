@@ -25,9 +25,15 @@ void View::ArtistCover::resizeEvent(QResizeEvent *event)
 
 void View::ArtistCover::scaleCover(int width)
 {
-	auto pixmap = cover
-		.copy(0, offset, maxWidth, maxHeight)
-		.scaled(width, maxHeight, Qt::KeepAspectRatio);
+	auto pixmap = cover.scaled(width, maxHeight,
+		Qt::KeepAspectRatioByExpanding);
+
+	const auto adjust = pixmap.height() - maxHeight;
+	if (adjust > 0)
+	{
+		pixmap = pixmap.copy(0, adjust / 2,
+			width, maxHeight);
+	}
 
 	setFixedHeight(pixmap.height());
 	QLabel::setPixmap(pixmap);
