@@ -47,14 +47,13 @@ if (USE_KCRASH)
 endif ()
 
 # Glob source files
-file(GLOB MAIN_SRC "src/*.[hc]pp")
-file(GLOB SUB_SRC "src/*/*.[hc]pp")
+file(GLOB SRC_FILES "src/**/*.[hc]pp")
 
 # Add all source files to main executable
 if (ANDROID)
-	add_library(spotify-qt SHARED ${MAIN_SRC} ${SUB_SRC} res.qrc)
+	add_library(spotify-qt SHARED ${SRC_FILES} res.qrc)
 else ()
-	add_executable(spotify-qt ${MAIN_SRC} ${SUB_SRC} ${LIB_SRC} res.qrc)
+	add_executable(spotify-qt ${SRC_FILES} ${LIB_SRC} res.qrc)
 endif ()
 
 # Headers are in src/
