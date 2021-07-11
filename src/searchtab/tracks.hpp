@@ -3,6 +3,7 @@
 #include "lib/spotify/api.hpp"
 #include "lib/cache.hpp"
 #include "searchtab/searchtabtree.hpp"
+#include "enum/column.hpp"
 
 namespace SearchTab
 {
