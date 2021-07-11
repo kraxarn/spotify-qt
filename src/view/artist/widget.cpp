@@ -39,17 +39,8 @@ View::Artist::Widget::Widget(lib::spt::api &spotify, const std::string &artistId
 	followButton->setEnabled(false);
 	QAction::connect(followButton, &QAction::triggered, this, &View::Artist::Widget::follow);
 
-	auto *menuSearch = menu->addMenu(Icon::get("edit-find"), "Search");
-	QAction::connect(menuSearch->addAction("Wikipedia"), &QAction::triggered,
-		this, &View::Artist::Widget::searchWikipedia);
-	QAction::connect(menuSearch->addAction("DuckDuckGo"), &QAction::triggered,
-		this, &View::Artist::Widget::searchDuckDuckGo);
-
-	auto *shareMenu = menu->addMenu(Icon::get("document-share"), "Share");
-	QAction::connect(shareMenu->addAction("Copy artist link"), &QAction::triggered,
-		this, &View::Artist::Widget::copyLink);
-	QAction::connect(shareMenu->addAction("Open in Spotify"), &QAction::triggered,
-		this, &View::Artist::Widget::openInSpotify);
+	menu->addMenu(new View::Artist::SearchMenu(artist, menu));
+	menu->addMenu(new View::Artist::ShareMenu(artist, menu));
 
 	context = new QToolButton(this);
 	context->setEnabled(false);
@@ -308,33 +299,7 @@ void View::Artist::Widget::relatedClick(QListWidgetItem *item)
 	relatedList->setEnabled(true);
 }
 
-void View::Artist::Widget::searchWikipedia(bool /*checked*/)
-{
-	UrlUtils::open(lib::fmt::format(
-		"https://www.wikipedia.org/search-redirect.php?family=wikipedia&go=Go&search={}",
-		artist.name), LinkType::Web, this);
-}
-
-void View::Artist::Widget::searchDuckDuckGo(bool /*checked*/)
-{
-	UrlUtils::open(lib::fmt::format("https://duckduckgo.com/?t=h_&q={}", artist.name),
-		LinkType::Web, this);
-}
-
 void View::Artist::Widget::play(bool /*checked*/)
 {
 	spotify.play_tracks(lib::spt::api::to_uri("artist", artistId), {});
-}
-
-void View::Artist::Widget::copyLink(bool /*checked*/)
-{
-	QApplication::clipboard()->setText(QString("https://open.spotify.com/artist/%1")
-		.arg(QString::fromStdString(artistId)));
-	MainWindow::find(parentWidget())->setStatus("Link copied to clipboard");
-}
-
-void View::Artist::Widget::openInSpotify(bool /*checked*/)
-{
-	UrlUtils::open(lib::fmt::format("https://open.spotify.com/artist/{}", artistId),
-		LinkType::Web, MainWindow::find(parentWidget()));
 }

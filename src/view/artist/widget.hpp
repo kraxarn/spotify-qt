@@ -8,6 +8,8 @@
 #include "widget/loader.hpp"
 #include "view/artist/cover.hpp"
 #include "view/artist/albumlist.hpp"
+#include "view/artist/searchmenu.hpp"
+#include "view/artist/sharemenu.hpp"
 
 #include <QDockWidget>
 #include <QLabel>
@@ -43,10 +45,6 @@ namespace View
 			void trackMenu(const QPoint &pos);
 			void relatedClick(QListWidgetItem *item);
 			void play(bool checked);
-			void searchWikipedia(bool checked);
-			void searchDuckDuckGo(bool checked);
-			void copyLink(bool checked);
-			void openInSpotify(bool checked);
 
 			QVBoxLayout *layout = nullptr;
 			QHBoxLayout *title = nullptr;
