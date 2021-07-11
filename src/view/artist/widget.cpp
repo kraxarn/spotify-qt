@@ -1,7 +1,7 @@
-#include "artistview.hpp"
+#include "widget.hpp"
 #include "mainwindow.hpp"
 
-ArtistView::ArtistView(lib::spt::api &spotify, const std::string &artistId,
+View::Artist::Widget::Widget(lib::spt::api &spotify, const std::string &artistId,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
 	: spotify(spotify),
 	artistId(std::string(artistId)),
@@ -14,7 +14,7 @@ ArtistView::ArtistView(lib::spt::api &spotify, const std::string &artistId,
 	setLayout(layout);
 
 	// Placeholder for cover image
-	coverLabel = new View::ArtistCover(this);
+	coverLabel = new View::Artist::Cover(this);
 	layout->addWidget(coverLabel);
 
 	// Artist name title
@@ -37,26 +37,26 @@ ArtistView::ArtistView(lib::spt::api &spotify, const std::string &artistId,
 
 	followButton = menu->addAction(Icon::get("non-starred-symbolic"), "Follow");
 	followButton->setEnabled(false);
-	QAction::connect(followButton, &QAction::triggered, this, &ArtistView::follow);
+	QAction::connect(followButton, &QAction::triggered, this, &View::Artist::Widget::follow);
 
 	auto *menuSearch = menu->addMenu(Icon::get("edit-find"), "Search");
 	QAction::connect(menuSearch->addAction("Wikipedia"), &QAction::triggered,
-		this, &ArtistView::searchWikipedia);
+		this, &View::Artist::Widget::searchWikipedia);
 	QAction::connect(menuSearch->addAction("DuckDuckGo"), &QAction::triggered,
-		this, &ArtistView::searchDuckDuckGo);
+		this, &View::Artist::Widget::searchDuckDuckGo);
 
 	auto *shareMenu = menu->addMenu(Icon::get("document-share"), "Share");
 	QAction::connect(shareMenu->addAction("Copy artist link"), &QAction::triggered,
-		this, &ArtistView::copyLink);
+		this, &View::Artist::Widget::copyLink);
 	QAction::connect(shareMenu->addAction("Open in Spotify"), &QAction::triggered,
-		this, &ArtistView::openInSpotify);
+		this, &View::Artist::Widget::openInSpotify);
 
 	context = new QToolButton(this);
 	context->setEnabled(false);
 	context->setIcon(Icon::get("media-playback-start"));
 	context->setMenu(menu);
 	context->setPopupMode(QToolButton::MenuButtonPopup);
-	QAbstractButton::connect(context, &QAbstractButton::clicked, this, &ArtistView::play);
+	QAbstractButton::connect(context, &QAbstractButton::clicked, this, &View::Artist::Widget::play);
 	title->addWidget(context);
 	layout->addLayout(title);
 
@@ -73,9 +73,10 @@ ArtistView::ArtistView(lib::spt::api &spotify, const std::string &artistId,
 	topTracksList = new QListWidget(tabs);
 	topTracksList->setEnabled(false);
 	topTracksList->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QListWidget::connect(topTracksList, &QListWidget::itemActivated, this, &ArtistView::trackClick);
+	QListWidget::connect(topTracksList, &QListWidget::itemActivated, this,
+		&View::Artist::Widget::trackClick);
 	QWidget::connect(topTracksList, &QWidget::customContextMenuRequested,
-		this, &ArtistView::trackMenu);
+		this, &View::Artist::Widget::trackMenu);
 	tabs->addTab(topTracksList, "Popular");
 
 	// Albums
@@ -92,10 +93,12 @@ ArtistView::ArtistView(lib::spt::api &spotify, const std::string &artistId,
 		list->header()->resizeSection(1, 1);
 		list->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 
-		QTreeWidget::connect(list, &QTreeWidget::itemClicked, this, &ArtistView::loadAlbumId);
-		QWidget::connect(list, &QWidget::customContextMenuRequested, this, &ArtistView::albumMenu);
+		QTreeWidget::connect(list, &QTreeWidget::itemClicked, this,
+			&View::Artist::Widget::loadAlbumId);
+		QWidget::connect(list, &QWidget::customContextMenuRequested, this,
+			&View::Artist::Widget::albumMenu);
 		QTreeWidget::connect(list, &QTreeWidget::itemDoubleClicked,
-			this, &ArtistView::albumDoubleClicked);
+			this, &View::Artist::Widget::albumDoubleClicked);
 	}
 
 	tabs->addTab(albumList, "Albums");
@@ -104,7 +107,8 @@ ArtistView::ArtistView(lib::spt::api &spotify, const std::string &artistId,
 	// Related artists
 	relatedList = new QListWidget(tabs);
 	relatedList->setEnabled(false);
-	QListWidget::connect(relatedList, &QListWidget::itemClicked, this, &ArtistView::relatedClick);
+	QListWidget::connect(relatedList, &QListWidget::itemClicked, this,
+		&View::Artist::Widget::relatedClick);
 	tabs->addTab(relatedList, "Related");
 
 	spotify.artist(this->artistId, [this](const lib::spt::artist &loadedArtist)
@@ -113,7 +117,7 @@ ArtistView::ArtistView(lib::spt::api &spotify, const std::string &artistId,
 	});
 }
 
-void ArtistView::artistLoaded(const lib::spt::artist &loadedArtist)
+void View::Artist::Widget::artistLoaded(const lib::spt::artist &loadedArtist)
 {
 	artist = loadedArtist;
 
@@ -175,7 +179,7 @@ void ArtistView::artistLoaded(const lib::spt::artist &loadedArtist)
 	});
 }
 
-void ArtistView::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
+void View::Artist::Widget::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
 {
 	auto i = 0;
 	for (const auto &track : tracks)
@@ -199,7 +203,7 @@ void ArtistView::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
 	topTracksList->setEnabled(true);
 }
 
-void ArtistView::albumsLoaded(const std::vector<lib::spt::album> &albums)
+void View::Artist::Widget::albumsLoaded(const std::vector<lib::spt::album> &albums)
 {
 	for (const auto &album : albums)
 	{
@@ -232,7 +236,7 @@ void ArtistView::albumsLoaded(const std::vector<lib::spt::album> &albums)
 	singleList->setEnabled(true);
 }
 
-void ArtistView::relatedArtistsLoaded(const std::vector<lib::spt::artist> &artists)
+void View::Artist::Widget::relatedArtistsLoaded(const std::vector<lib::spt::artist> &artists)
 {
 	for (const auto &related : artists)
 	{
@@ -243,7 +247,7 @@ void ArtistView::relatedArtistsLoaded(const std::vector<lib::spt::artist> &artis
 	relatedList->setEnabled(true);
 }
 
-void ArtistView::updateFollow(bool isFollowing)
+void View::Artist::Widget::updateFollow(bool isFollowing)
 {
 	followButton->setIcon(Icon::get(QString("%1starred-symbolic")
 		.arg(isFollowing ? "" : "non-")));
@@ -253,7 +257,7 @@ void ArtistView::updateFollow(bool isFollowing)
 			.right(followButton->text().length() - followButton->text().indexOf(' '))));
 }
 
-void ArtistView::follow(bool /*checked*/)
+void View::Artist::Widget::follow(bool /*checked*/)
 {
 	auto isFollowing = followButton->text().contains("Unfollow");
 	updateFollow(!isFollowing);
@@ -284,7 +288,7 @@ void ArtistView::follow(bool /*checked*/)
 	}
 }
 
-void ArtistView::trackClick(QListWidgetItem *item)
+void View::Artist::Widget::trackClick(QListWidgetItem *item)
 {
 	spotify.play_tracks(item->data(RoleIndex).toInt(), topTrackIds,
 		[this](const std::string &result)
@@ -300,7 +304,7 @@ void ArtistView::trackClick(QListWidgetItem *item)
 		});
 }
 
-void ArtistView::trackMenu(const QPoint &pos)
+void View::Artist::Widget::trackMenu(const QPoint &pos)
 {
 	auto *item = topTracksList->itemAt(pos);
 	const auto &track = item->data(RoleTrack).value<lib::spt::track>();
@@ -313,7 +317,7 @@ void ArtistView::trackMenu(const QPoint &pos)
 	songMenu->popup(topTracksList->mapToGlobal(pos));
 }
 
-void ArtistView::loadAlbumId(QTreeWidgetItem *item)
+void View::Artist::Widget::loadAlbumId(QTreeWidgetItem *item)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	if (!mainWindow->loadAlbum(item->data(0, RoleAlbumId)
@@ -323,7 +327,7 @@ void ArtistView::loadAlbumId(QTreeWidgetItem *item)
 	}
 }
 
-void ArtistView::relatedClick(QListWidgetItem *item)
+void View::Artist::Widget::relatedClick(QListWidgetItem *item)
 {
 	relatedList->setEnabled(false);
 	MainWindow::find(parentWidget())->openArtist(item->data(RoleArtistId)
@@ -331,7 +335,7 @@ void ArtistView::relatedClick(QListWidgetItem *item)
 	relatedList->setEnabled(true);
 }
 
-void ArtistView::albumMenu(const QPoint &pos)
+void View::Artist::Widget::albumMenu(const QPoint &pos)
 {
 	auto *list = tabs->currentIndex() == 1
 		? albumList
@@ -355,7 +359,7 @@ void ArtistView::albumMenu(const QPoint &pos)
 	albumMenu->popup(list->mapToGlobal(pos));
 }
 
-void ArtistView::albumDoubleClicked(QTreeWidgetItem *item, int /*column*/)
+void View::Artist::Widget::albumDoubleClicked(QTreeWidgetItem *item, int /*column*/)
 {
 	spotify.play_tracks(lib::spt::api::to_uri("album",
 		item->data(0, RoleAlbumId).toString().toStdString()),
@@ -372,32 +376,32 @@ void ArtistView::albumDoubleClicked(QTreeWidgetItem *item, int /*column*/)
 		});
 }
 
-void ArtistView::searchWikipedia(bool /*checked*/)
+void View::Artist::Widget::searchWikipedia(bool /*checked*/)
 {
 	UrlUtils::open(lib::fmt::format(
 		"https://www.wikipedia.org/search-redirect.php?family=wikipedia&go=Go&search={}",
 		artist.name), LinkType::Web, this);
 }
 
-void ArtistView::searchDuckDuckGo(bool /*checked*/)
+void View::Artist::Widget::searchDuckDuckGo(bool /*checked*/)
 {
 	UrlUtils::open(lib::fmt::format("https://duckduckgo.com/?t=h_&q={}", artist.name),
 		LinkType::Web, this);
 }
 
-void ArtistView::play(bool /*checked*/)
+void View::Artist::Widget::play(bool /*checked*/)
 {
 	spotify.play_tracks(lib::spt::api::to_uri("artist", artistId), {});
 }
 
-void ArtistView::copyLink(bool /*checked*/)
+void View::Artist::Widget::copyLink(bool /*checked*/)
 {
 	QApplication::clipboard()->setText(QString("https://open.spotify.com/artist/%1")
 		.arg(QString::fromStdString(artistId)));
 	MainWindow::find(parentWidget())->setStatus("Link copied to clipboard");
 }
 
-void ArtistView::openInSpotify(bool /*checked*/)
+void View::Artist::Widget::openInSpotify(bool /*checked*/)
 {
 	UrlUtils::open(lib::fmt::format("https://open.spotify.com/artist/{}", artistId),
 		LinkType::Web, MainWindow::find(parentWidget()));

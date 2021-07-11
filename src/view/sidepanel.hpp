@@ -1,7 +1,7 @@
 #pragma once
 
 #include "lib/spotify/track.hpp"
-#include "view/artistview.hpp"
+#include "view/artist/widget.hpp"
 #include "view/searchview.hpp"
 #include "view/audiofeaturesview.hpp"
 #include "view/lyricsview.hpp"

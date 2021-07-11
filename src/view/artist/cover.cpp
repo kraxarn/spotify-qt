@@ -1,19 +1,19 @@
-#include "view/artistcover.hpp"
+#include "view/artist/cover.hpp"
 
-View::ArtistCover::ArtistCover(QWidget *parent)
+View::Artist::Cover::Cover(QWidget *parent)
 	: QLabel(parent)
 {
 	setFixedHeight(maxHeight);
 	setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
 }
 
-void View::ArtistCover::setJpeg(const QByteArray &jpeg)
+void View::Artist::Cover::setJpeg(const QByteArray &jpeg)
 {
 	cover.loadFromData(jpeg, "jpeg");
 	scaleCover(width());
 }
 
-void View::ArtistCover::resizeEvent(QResizeEvent *event)
+void View::Artist::Cover::resizeEvent(QResizeEvent *event)
 {
 	if (cover.isNull())
 	{
@@ -23,7 +23,7 @@ void View::ArtistCover::resizeEvent(QResizeEvent *event)
 	scaleCover(event->size().width());
 }
 
-void View::ArtistCover::scaleCover(int width)
+void View::Artist::Cover::scaleCover(int width)
 {
 	auto pixmap = cover.scaled(width, maxHeight,
 		Qt::KeepAspectRatioByExpanding);
