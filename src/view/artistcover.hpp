@@ -10,7 +10,7 @@ namespace View
 	public:
 		explicit ArtistCover(QWidget *parent);
 
-		void setPixmap(const QByteArray &jpeg);
+		void setJpeg(const QByteArray &jpeg);
 
 	protected:
 		void resizeEvent(QResizeEvent *event) override;

@@ -7,7 +7,7 @@ View::ArtistCover::ArtistCover(QWidget *parent)
 	setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
 }
 
-void View::ArtistCover::setPixmap(const QByteArray &jpeg)
+void View::ArtistCover::setJpeg(const QByteArray &jpeg)
 {
 	cover.loadFromData(jpeg, "jpeg");
 	scaleCover(maxWidth);

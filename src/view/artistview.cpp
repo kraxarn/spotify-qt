@@ -125,7 +125,7 @@ void ArtistView::artistLoaded(const lib::spt::artist &loadedArtist)
 	// Get cover image (320x320 -> 320x160)
 	httpClient.get(artist.image, lib::headers(), [this](const std::string &data)
 	{
-		coverLabel->setPixmap(QByteArray::fromStdString(data));
+		coverLabel->setJpeg(QByteArray::fromStdString(data));
 	});
 
 	auto followers = QString("%1 follower%2")
