@@ -481,7 +481,11 @@ auto MainWindow::getCurrentUser() -> lib::spt::user
 
 void MainWindow::setSearchChecked(bool checked)
 {
-	((MainToolBar *) toolBar)->setSearchChecked(checked);
+	auto mainToolBar = dynamic_cast<MainToolBar *>(toolBar);
+	if (mainToolBar != nullptr)
+	{
+		mainToolBar->setSearchChecked(checked);
+	}
 }
 
 auto MainWindow::getSongsTree() -> TracksList *
