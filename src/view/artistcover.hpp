@@ -17,7 +17,6 @@ namespace View
 
 	private:
 		static constexpr int maxHeight = 160;
-		static constexpr int maxWidth = 320;
 
 		QPixmap cover;
 
