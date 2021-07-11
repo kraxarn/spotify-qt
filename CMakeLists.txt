@@ -47,7 +47,7 @@ if (USE_KCRASH)
 endif ()
 
 # Glob source files
-file(GLOB SRC_FILES "src/**/*.[hc]pp")
+file(GLOB_RECURSE SRC_FILES "src/*.[hc]pp")
 
 # Add all source files to main executable
 if (ANDROID)
