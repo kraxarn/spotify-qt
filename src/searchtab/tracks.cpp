@@ -6,6 +6,9 @@ SearchTab::Tracks::Tracks(lib::spt::api &spotify, lib::cache &cache, QWidget *pa
 	cache(cache),
 	SearchTab::SearchTabTree({"Title", "Artist", "Album"}, parent)
 {
+	// Hide "Album" by default
+	header()->setSectionHidden(header()->count() - 1, true);
+
 	QTreeWidget::connect(this, &QTreeWidget::itemActivated,
 		this, &SearchTab::Tracks::onItemActivated);
 
@@ -14,15 +17,27 @@ SearchTab::Tracks::Tracks(lib::spt::api &spotify, lib::cache &cache, QWidget *pa
 		this, &SearchTab::Tracks::onContextMenu);
 }
 
+void SearchTab::Tracks::resizeEvent(QResizeEvent *event)
+{
+	SearchTabTree::resizeEvent(event);
+
+	header()->setSectionHidden(header()->count() - 1,
+		event->size().width() < albumWidthThreshold);
+}
+
 void SearchTab::Tracks::add(const lib::spt::track &track)
 {
 	auto trackName = QString::fromStdString(track.name);
 	auto trackArtist = QString::fromStdString(lib::spt::entity::combine_names(track.artists));
+	auto trackAlbum = QString::fromStdString(track.album.name);
+
 	auto *item = new QTreeWidgetItem(this, {
-		trackName, trackArtist
+		trackName,
+		trackArtist,
+		trackAlbum,
 	});
+
 	item->setData(0, RoleTrack, QVariant::fromValue(track));
-	item->setData(0, RoleAlbumId, QString::fromStdString(track.album.id));
 	item->setToolTip(0, trackName);
 	item->setToolTip(1, trackArtist);
 }

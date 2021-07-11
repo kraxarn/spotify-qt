@@ -14,7 +14,13 @@ namespace SearchTab
 
 		void add(const lib::spt::track &track);
 
+	protected:
+		void resizeEvent(QResizeEvent *event) override;
+
 	private:
+		/** When to show album column */
+		static constexpr int albumWidthThreshold = 340;
+
 		lib::spt::api &spotify;
 		lib::cache &cache;
 
