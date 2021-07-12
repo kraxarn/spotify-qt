@@ -100,7 +100,7 @@ void View::Artist::Artist::artistLoaded(const lib::spt::artist &loadedArtist)
 		onArtistLoaded(loadedArtist);
 	}
 
-	// Get cover image (320x320 -> 320x160)
+	// Get cover image
 	httpClient.get(artist.image, lib::headers(), [this](const std::string &data)
 	{
 		coverLabel->setJpeg(QByteArray::fromStdString(data));
