@@ -29,10 +29,7 @@ View::Artist::AlbumList::AlbumList(lib::spt::api &spotify, lib::cache &cache,
 	for (auto i = lib::album_group::album; i < lib::album_group::none;
 		i = static_cast<lib::album_group>(static_cast<int>(i) + 1))
 	{
-		groups[i] = new QTreeWidgetItem(this, {
-			groupToString(i),
-			QString(),
-		});
+		groups[i] = new QTreeWidgetItem(this, {groupToString(i)});
 		addTopLevelItem(groups[i]);
 	}
 }
