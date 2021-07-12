@@ -5,7 +5,7 @@ lib::cache *lib::crash_handler::cache = nullptr;
 auto lib::crash_handler::init() -> bool
 {
 #ifdef USE_GCC_CRASH_HANDLER
-	std::array<int, 11> signals{{
+	std::array<int, 5> signals{{
 		SIGABRT, // Abnormal termination
 		SIGFPE,  // Erroneous arithmetic operation
 		SIGILL,  // Illegal instruction
