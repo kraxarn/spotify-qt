@@ -54,7 +54,7 @@ View::Artist::Artist::Artist(lib::spt::api &spotify, const std::string &artistId
 	tabs->addTab(topTracksList, "Popular");
 
 	// Albums
-	albumList = new View::Artist::Albums(spotify, cache, httpClient, this);
+	albumList = new View::Artist::AlbumList(spotify, cache, httpClient, this);
 	tabs->addTab(albumList, "Discography");
 
 	// Related artists
