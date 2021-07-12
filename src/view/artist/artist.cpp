@@ -124,7 +124,7 @@ void View::Artist::Artist::artistLoaded(const lib::spt::artist &loadedArtist)
 		artistId
 	}, [this](const std::vector<bool> &follows)
 	{
-		updateFollow(!follows.empty() && follows[0]);
+		this->context->updateFollow(!follows.empty() && follows[0]);
 		this->followButton->setEnabled(true);
 	});
 
