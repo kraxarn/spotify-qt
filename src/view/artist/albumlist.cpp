@@ -104,8 +104,15 @@ auto View::Artist::AlbumList::groupToString(lib::album_group albumGroup) -> QStr
 
 void View::Artist::AlbumList::onItemClicked(QTreeWidgetItem *item, int /*column*/)
 {
+	const auto id = albumId(item);
+	if (id.empty())
+	{
+		item->setSelected(false);
+		return;
+	}
+
 	auto *mainWindow = MainWindow::find(parentWidget());
-	if (!mainWindow->loadAlbum(albumId(item)))
+	if (!mainWindow->loadAlbum(id))
 	{
 		mainWindow->setStatus(QString("Failed to load album"), true);
 	}
@@ -113,7 +120,14 @@ void View::Artist::AlbumList::onItemClicked(QTreeWidgetItem *item, int /*column*
 
 void View::Artist::AlbumList::onItemDoubleClicked(QTreeWidgetItem *item, int /*column*/)
 {
-	spotify.play_tracks(lib::spt::api::to_uri("album", albumId(item)),
+	const auto id = albumId(item);
+	if (id.empty())
+	{
+		item->setSelected(false);
+		return;
+	}
+
+	spotify.play_tracks(lib::spt::api::to_uri("album", id),
 		[this](const std::string &result)
 		{
 			if (result.empty())
