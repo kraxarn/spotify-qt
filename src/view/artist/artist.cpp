@@ -30,25 +30,7 @@ View::Artist::Artist::Artist(lib::spt::api &spotify, const std::string &artistId
 	title->addWidget(name, 1);
 
 	// Context menu
-	menu = new QMenu(this);
-
-	popularity = menu->addAction(Icon::get("draw-donut"), "popularity");
-	popularity->setEnabled(false);
-
-	followButton = menu->addAction(Icon::get("non-starred-symbolic"), "Follow");
-	followButton->setEnabled(false);
-	QAction::connect(followButton, &QAction::triggered, this, &View::Artist::Artist::follow);
-
-	menu->addMenu(new View::Artist::SearchMenu(artist, menu));
-	menu->addMenu(new View::Artist::ShareMenu(artist, menu));
-
-	context = new QToolButton(this);
-	context->setEnabled(false);
-	context->setIcon(Icon::get("media-playback-start"));
-	context->setMenu(menu);
-	context->setPopupMode(QToolButton::MenuButtonPopup);
-	QAbstractButton::connect(context, &QAbstractButton::clicked,
-		this, &View::Artist::Artist::play);
+	context = new View::Artist::PlayButton(spotify, artist, this);
 	title->addWidget(context);
 	layout->addLayout(title);
 
@@ -221,47 +203,6 @@ void View::Artist::Artist::relatedArtistsLoaded(const std::vector<lib::spt::arti
 	relatedList->setEnabled(true);
 }
 
-void View::Artist::Artist::updateFollow(bool isFollowing)
-{
-	followButton->setIcon(Icon::get(QString("%1starred-symbolic")
-		.arg(isFollowing ? "" : "non-")));
-
-	followButton->setText(QString("%1%2")
-		.arg(isFollowing ? "Unfollow" : "Follow", followButton->text()
-			.right(followButton->text().length() - followButton->text().indexOf(' '))));
-}
-
-void View::Artist::Artist::follow(bool /*checked*/)
-{
-	auto isFollowing = followButton->text().contains("Unfollow");
-	updateFollow(!isFollowing);
-
-	auto callback = [this, isFollowing](const std::string &status)
-	{
-		if (status.empty())
-		{
-			return;
-		}
-
-		auto *mainWindow = MainWindow::find(this->parentWidget());
-		mainWindow->status(lib::fmt::format("Failed to {}: {}",
-			isFollowing ? "unfollow" : "follow", status));
-	};
-
-	if (isFollowing)
-	{
-		spotify.unfollow(lib::follow_type::artist, {
-			artistId
-		}, callback);
-	}
-	else
-	{
-		spotify.follow(lib::follow_type::artist, {
-			artistId
-		}, callback);
-	}
-}
-
 void View::Artist::Artist::trackClick(QListWidgetItem *item)
 {
 	spotify.play_tracks(item->data(RoleIndex).toInt(), topTrackIds,
@@ -297,9 +238,4 @@ void View::Artist::Artist::relatedClick(QListWidgetItem *item)
 	MainWindow::find(parentWidget())->openArtist(item->data(RoleArtistId)
 		.toString().toStdString());
 	relatedList->setEnabled(true);
-}
-
-void View::Artist::Artist::play(bool /*checked*/)
-{
-	spotify.play_tracks(lib::spt::api::to_uri("artist", artistId), {});
 }

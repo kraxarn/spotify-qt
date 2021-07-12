@@ -6,10 +6,12 @@
 #include "menu/albummenu.hpp"
 #include "menu/songmenu.hpp"
 #include "widget/loader.hpp"
+
 #include "view/artist/cover.hpp"
 #include "view/artist/albumlist.hpp"
 #include "view/artist/searchmenu.hpp"
 #include "view/artist/sharemenu.hpp"
+#include "view/artist/playbutton.hpp"
 
 #include <QDockWidget>
 #include <QLabel>
@@ -39,19 +41,15 @@ namespace View
 			void albumsLoaded(const std::vector<lib::spt::album> &albums);
 			void relatedArtistsLoaded(const std::vector<lib::spt::artist> &artists);
 
-			void updateFollow(bool isFollowing);
-			void follow(bool checked);
 			void trackClick(QListWidgetItem *item);
 			void trackMenu(const QPoint &pos);
 			void relatedClick(QListWidgetItem *item);
-			void play(bool checked);
 
 			QVBoxLayout *layout = nullptr;
 			QHBoxLayout *title = nullptr;
 			View::Artist::Cover *coverLabel = nullptr;
 			QLabel *name = nullptr;
-			QMenu *menu = nullptr;
-			QToolButton *context = nullptr;
+			View::Artist::PlayButton *context = nullptr;
 			QLabel *genres = nullptr;
 
 			QAction *popularity = nullptr;
