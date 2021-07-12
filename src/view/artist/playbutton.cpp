@@ -1,10 +1,8 @@
 #include "view/artist/playbutton.hpp"
 #include "mainwindow.hpp"
 
-View::Artist::PlayButton::PlayButton(lib::spt::api &spotify, const lib::spt::artist &artist,
-	QWidget *parent)
+View::Artist::PlayButton::PlayButton(lib::spt::api &spotify, QWidget *parent)
 	: spotify(spotify),
-	artist(artist),
 	QToolButton(parent)
 {
 	setEnabled(false);
@@ -20,7 +18,7 @@ auto View::Artist::PlayButton::contextMenu() -> QMenu *
 {
 	auto *menu = new QMenu(this);
 
-	popularity = menu->addAction(Icon::get("draw-donut"), "popularity");
+	popularity = menu->addAction(Icon::get("draw-donut"), "... popularity");
 	popularity->setEnabled(false);
 
 	follow = menu->addAction(Icon::get("non-starred-symbolic"), "Follow");
@@ -42,6 +40,32 @@ void View::Artist::PlayButton::updateFollow(bool isFollowing)
 	follow->setText(QString("%1%2")
 		.arg(isFollowing ? "Unfollow" : "Follow", follow->text()
 			.right(follow->text().length() - follow->text().indexOf(' '))));
+}
+
+void View::Artist::PlayButton::setArtist(const lib::spt::artist &loadedArtist)
+{
+	artist = loadedArtist;
+
+	const auto iconImage = Icon::get("draw-donut").pixmap(64, 64);
+	const auto masked = ImageUtils::mask(iconImage, MaskShape::Pie,
+		QVariant(artist.popularity));
+
+	popularity->setIcon(QIcon(masked));
+	popularity->setText(QString("%1% popularity").arg(artist.popularity));
+
+	auto followers = lib::fmt::format("Follow ({} follower{})",
+		lib::fmt::count(artist.followers),
+		artist.followers == 1 ? "" : "s");
+	follow->setText(QString::fromStdString(followers));
+
+	spotify.is_following(lib::follow_type::artist, {artist.id},
+		[this](const std::vector<bool> &follows)
+		{
+			this->updateFollow(!follows.empty() && follows.at(0));
+			this->follow->setEnabled(true);
+		});
+
+	setEnabled(true);
 }
 
 void View::Artist::PlayButton::onClicked(bool /*checked*/)

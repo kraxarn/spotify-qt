@@ -52,10 +52,8 @@ namespace View
 			View::Artist::PlayButton *context = nullptr;
 			QLabel *genres = nullptr;
 
-			QAction *popularity = nullptr;
 			QListWidget *relatedList = nullptr;
 			QListWidget *topTracksList = nullptr;
-			QAction *followButton = nullptr;
 			std::vector<std::string> topTrackIds;
 			QTabWidget *tabs = nullptr;
 			View::Artist::AlbumList *albumList = nullptr;

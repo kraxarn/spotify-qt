@@ -30,7 +30,7 @@ View::Artist::Artist::Artist(lib::spt::api &spotify, const std::string &artistId
 	title->addWidget(name, 1);
 
 	// Context menu
-	context = new View::Artist::PlayButton(spotify, artist, this);
+	context = new View::Artist::PlayButton(spotify, this);
 	title->addWidget(context);
 	layout->addLayout(title);
 
@@ -95,23 +95,8 @@ void View::Artist::Artist::artistLoaded(const lib::spt::artist &loadedArtist)
 	// Artist name title
 	name->setText(QString::fromStdString(artist.name));
 
-	// Menu actions
-	popularity->setIcon(QIcon(ImageUtils::mask(Icon::get("draw-donut")
-		.pixmap(64, 64), MaskShape::Pie, QVariant(artist.popularity))));
-	popularity->setText(QString("%1% popularity").arg(artist.popularity));
-
-	followButton->setText(QString("Follow (%2)").arg(followers));
-
-	spotify.is_following(lib::follow_type::artist, {
-		artistId
-	}, [this](const std::vector<bool> &follows)
-	{
-		this->context->updateFollow(!follows.empty() && follows[0]);
-		this->followButton->setEnabled(true);
-	});
-
 	// Artist is loaded now at least
-	context->setEnabled(true);
+	context->setArtist(artist);
 
 	// Genres
 	genres->setText(QString::fromStdString(lib::strings::join(artist.genres, ", ")));

@@ -17,14 +17,14 @@ namespace View
 		class PlayButton: public QToolButton
 		{
 		public:
-			PlayButton(lib::spt::api &spotify, const lib::spt::artist &artist,
-				QWidget *parent);
+			PlayButton(lib::spt::api &spotify, QWidget *parent);
 
 			void updateFollow(bool isFollowing);
+			void setArtist(const lib::spt::artist &artist);
 
 		private:
 			lib::spt::api &spotify;
-			const lib::spt::artist &artist;
+			lib::spt::artist artist;
 
 			QAction *popularity = nullptr;
 			QAction *follow = nullptr;
