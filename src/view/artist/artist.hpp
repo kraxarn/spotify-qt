@@ -8,7 +8,7 @@
 #include "widget/loader.hpp"
 
 #include "view/artist/cover.hpp"
-#include "view/artist/albumlist.hpp"
+#include "view/artist/albums.hpp"
 #include "view/artist/searchmenu.hpp"
 #include "view/artist/sharemenu.hpp"
 #include "view/artist/playbutton.hpp"
@@ -38,7 +38,6 @@ namespace View
 		private:
 			void artistLoaded(const lib::spt::artist &loadedArtist);
 			void topTracksLoaded(const std::vector<lib::spt::track> &tracks);
-			void albumsLoaded(const std::vector<lib::spt::album> &albums);
 			void relatedArtistsLoaded(const std::vector<lib::spt::artist> &artists);
 
 			void trackClick(QListWidgetItem *item);
@@ -56,8 +55,7 @@ namespace View
 			QListWidget *topTracksList = nullptr;
 			std::vector<std::string> topTrackIds;
 			QTabWidget *tabs = nullptr;
-			View::Artist::AlbumList *albumList = nullptr;
-			View::Artist::AlbumList *singleList = nullptr;
+			View::Artist::Albums *albumList;
 			std::string artistId;
 			lib::spt::artist artist;
 			lib::spt::api &spotify;

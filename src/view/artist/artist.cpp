@@ -54,11 +54,8 @@ View::Artist::Artist::Artist(lib::spt::api &spotify, const std::string &artistId
 	tabs->addTab(topTracksList, "Popular");
 
 	// Albums
-	albumList = new View::Artist::AlbumList(spotify, cache, tabs);
-	singleList = new View::Artist::AlbumList(spotify, cache, tabs);
-
-	tabs->addTab(albumList, "Albums");
-	tabs->addTab(singleList, "Singles");
+	albumList = new View::Artist::Albums(spotify, cache, httpClient, this);
+	tabs->addTab(albumList, "Discography");
 
 	// Related artists
 	relatedList = new QListWidget(tabs);
@@ -110,7 +107,7 @@ void View::Artist::Artist::artistLoaded(const lib::spt::artist &loadedArtist)
 	// Albums
 	spotify.albums(artist, [this](const std::vector<lib::spt::album> &albums)
 	{
-		albumsLoaded(albums);
+		albumList->setAlbums(albums);
 	});
 
 	// Related artists
@@ -142,39 +139,6 @@ void View::Artist::Artist::topTracksLoaded(const std::vector<lib::spt::track> &t
 	}
 
 	topTracksList->setEnabled(true);
-}
-
-void View::Artist::Artist::albumsLoaded(const std::vector<lib::spt::album> &albums)
-{
-	for (const auto &album : albums)
-	{
-		auto releaseDate = QDateTime::fromString(QString::fromStdString(album.release_date),
-			Qt::ISODate);
-		auto *parentTab = album.album_group == lib::album_group::single
-			? singleList
-			: albumList;
-		auto year = releaseDate.toString("yyyy");
-		auto *item = new QTreeWidgetItem(parentTab, {
-			QString::fromStdString(album.name),
-			year.isEmpty() ? QString() : year
-		});
-
-		HttpUtils::getAlbum(album.image, httpClient, cache, [item](const QPixmap &image)
-		{
-			if (item != nullptr)
-			{
-				item->setIcon(0, QIcon(image));
-			}
-		});
-
-		item->setData(0, RoleAlbumId, QString::fromStdString(album.id));
-		item->setToolTip(1, QLocale::system()
-			.toString(releaseDate.date(), QLocale::FormatType::ShortFormat));
-		parentTab->insertTopLevelItem(0, item);
-	}
-
-	albumList->setEnabled(true);
-	singleList->setEnabled(true);
 }
 
 void View::Artist::Artist::relatedArtistsLoaded(const std::vector<lib::spt::artist> &artists)
