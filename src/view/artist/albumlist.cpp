@@ -92,7 +92,7 @@ auto View::Artist::AlbumList::groupToString(lib::album_group albumGroup) -> QStr
 			return QString("Compilations");
 
 		case lib::album_group::appears_on:
-			return QString("Appears on");
+			return QString("Appears On");
 
 		case lib::album_group::none:
 			return QString("Other");
