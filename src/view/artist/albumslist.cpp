@@ -1,7 +1,7 @@
-#include "albumlist.hpp"
+#include "view/artist/albumslist.hpp"
 #include "mainwindow.hpp"
 
-View::Artist::AlbumList::AlbumList(lib::spt::api &spotify, lib::cache &cache,
+View::Artist::AlbumsList::AlbumsList(lib::spt::api &spotify, lib::cache &cache,
 	const lib::http_client &httpClient, QWidget *parent)
 	: spotify(spotify),
 	cache(cache),
@@ -17,14 +17,14 @@ View::Artist::AlbumList::AlbumList(lib::spt::api &spotify, lib::cache &cache,
 	header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
 
 	QTreeWidget::connect(this, &QTreeWidget::itemClicked,
-		this, &View::Artist::AlbumList::onItemClicked);
+		this, &View::Artist::AlbumsList::onItemClicked);
 
 	QTreeWidget::connect(this, &QTreeWidget::itemDoubleClicked,
-		this, &View::Artist::AlbumList::onItemDoubleClicked);
+		this, &View::Artist::AlbumsList::onItemDoubleClicked);
 
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested,
-		this, &View::Artist::AlbumList::onContextMenu);
+		this, &View::Artist::AlbumsList::onContextMenu);
 
 	for (auto i = lib::album_group::album; i < lib::album_group::none;
 		i = static_cast<lib::album_group>(static_cast<int>(i) + 1))
@@ -34,12 +34,12 @@ View::Artist::AlbumList::AlbumList(lib::spt::api &spotify, lib::cache &cache,
 	}
 }
 
-auto View::Artist::AlbumList::albumId(QTreeWidgetItem *item) -> std::string
+auto View::Artist::AlbumsList::albumId(QTreeWidgetItem *item) -> std::string
 {
 	return item->data(0, RoleAlbumId).toString().toStdString();
 }
 
-void View::Artist::AlbumList::setAlbums(const std::vector<lib::spt::album> &albums)
+void View::Artist::AlbumsList::setAlbums(const std::vector<lib::spt::album> &albums)
 {
 	setEnabled(false);
 
@@ -75,7 +75,7 @@ void View::Artist::AlbumList::setAlbums(const std::vector<lib::spt::album> &albu
 	groups.at(lib::album_group::album)->setExpanded(true);
 }
 
-auto View::Artist::AlbumList::groupToString(lib::album_group albumGroup) -> QString
+auto View::Artist::AlbumsList::groupToString(lib::album_group albumGroup) -> QString
 {
 	switch (albumGroup)
 	{
@@ -99,7 +99,7 @@ auto View::Artist::AlbumList::groupToString(lib::album_group albumGroup) -> QStr
 	}
 }
 
-void View::Artist::AlbumList::onItemClicked(QTreeWidgetItem *item, int /*column*/)
+void View::Artist::AlbumsList::onItemClicked(QTreeWidgetItem *item, int /*column*/)
 {
 	const auto id = albumId(item);
 	if (id.empty())
@@ -115,7 +115,7 @@ void View::Artist::AlbumList::onItemClicked(QTreeWidgetItem *item, int /*column*
 	}
 }
 
-void View::Artist::AlbumList::onItemDoubleClicked(QTreeWidgetItem *item, int /*column*/)
+void View::Artist::AlbumsList::onItemDoubleClicked(QTreeWidgetItem *item, int /*column*/)
 {
 	const auto id = albumId(item);
 	if (id.empty())
@@ -138,7 +138,7 @@ void View::Artist::AlbumList::onItemDoubleClicked(QTreeWidgetItem *item, int /*c
 		});
 }
 
-void View::Artist::AlbumList::onContextMenu(const QPoint &pos)
+void View::Artist::AlbumsList::onContextMenu(const QPoint &pos)
 {
 	auto *item = itemAt(pos);
 	auto albumId = item->data(0, RoleAlbumId).toString();

@@ -13,10 +13,10 @@ namespace View
 {
 	namespace Artist
 	{
-		class AlbumList: public QTreeWidget
+		class AlbumsList: public QTreeWidget
 		{
 		public:
-			AlbumList(lib::spt::api &spotify, lib::cache &cache,
+			AlbumsList(lib::spt::api &spotify, lib::cache &cache,
 				const lib::http_client &httpClient, QWidget *parent);
 
 			void setAlbums(const std::vector<lib::spt::album> &albums);
