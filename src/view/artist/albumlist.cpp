@@ -12,8 +12,9 @@ View::Artist::AlbumList::AlbumList(lib::spt::api &spotify, lib::cache &cache,
 	setColumnCount(2);
 
 	header()->hide();
-	header()->resizeSection(0, 235);
-	header()->resizeSection(1, 1);
+	header()->setStretchLastSection(false);
+	header()->setSectionResizeMode(0, QHeaderView::Stretch);
+	header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
 
 	QTreeWidget::connect(this, &QTreeWidget::itemClicked,
 		this, &View::Artist::AlbumList::onItemClicked);
