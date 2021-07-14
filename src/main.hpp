@@ -29,7 +29,7 @@
 #include "util/imageutils.hpp"
 #include "util/styleutils.hpp"
 #include "util/httputils.hpp"
-#include "view/context.hpp"
+#include "view/context/context.hpp"
 #include "view/trayicon.hpp"
 #include "view/sidepanel/sidepanel.hpp"
 

@@ -1,6 +1,6 @@
-#include "contextcontent.hpp"
+#include "view/context/content.hpp"
 
-View::ContextContent::ContextContent(lib::spt::api &spotify, spt::Current &current,
+View::Context::Content::Content(lib::spt::api &spotify, spt::Current &current,
 	const lib::cache &cache, QWidget *parent)
 	: spotify(spotify),
 	current(current),
@@ -25,11 +25,11 @@ View::ContextContent::ContextContent(lib::spt::api &spotify, spt::Current &curre
 	{
 		nowPlaying->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 		QLabel::connect(nowPlaying, &QWidget::customContextMenuRequested,
-			this, &View::ContextContent::onSongMenu);
+			this, &View::Context::Content::onSongMenu);
 	}
 }
 
-void View::ContextContent::onSongMenu(const QPoint &pos)
+void View::Context::Content::onSongMenu(const QPoint &pos)
 {
 	if (nowPlaying == nullptr)
 	{
@@ -47,7 +47,7 @@ void View::ContextContent::onSongMenu(const QPoint &pos)
 	menu->popup(nowPlaying->mapToGlobal(pos));
 }
 
-void View::ContextContent::reset()
+void View::Context::Content::reset()
 {
 	if (album != nullptr)
 	{
@@ -60,7 +60,7 @@ void View::ContextContent::reset()
 	}
 }
 
-void View::ContextContent::setAlbum(const QPixmap &pixmap)
+void View::Context::Content::setAlbum(const QPixmap &pixmap)
 {
 	if (album != nullptr)
 	{
@@ -68,12 +68,12 @@ void View::ContextContent::setAlbum(const QPixmap &pixmap)
 	}
 }
 
-auto View::ContextContent::getCurrentlyPlaying() const -> const lib::spt::track &
+auto View::Context::Content::getCurrentlyPlaying() const -> const lib::spt::track &
 {
 	return currentlyPlaying;
 }
 
-void View::ContextContent::setCurrentlyPlaying(const lib::spt::track &track)
+void View::Context::Content::setCurrentlyPlaying(const lib::spt::track &track)
 {
 	if (nowPlaying != nullptr)
 	{

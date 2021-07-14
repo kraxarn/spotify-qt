@@ -1,8 +1,8 @@
-#include "contexttitle.hpp"
+#include "view/context/title.hpp"
 
 #include "mainwindow.hpp"
 
-View::ContextTitle::ContextTitle(lib::spt::api &spotify, const lib::settings &settings,
+View::Context::Title::Title(lib::spt::api &spotify, const lib::settings &settings,
 	spt::Current &current, const lib::cache &cache, QWidget *parent)
 	: spotify(spotify),
 	settings(settings),
@@ -24,10 +24,10 @@ View::ContextTitle::ContextTitle(lib::spt::api &spotify, const lib::settings &se
 
 	info->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(info, &QWidget::customContextMenuRequested,
-		this, &View::ContextTitle::onMenu);
+		this, &View::Context::Title::onMenu);
 }
 
-void View::ContextTitle::onMenu(const QPoint &pos)
+void View::Context::Title::onMenu(const QPoint &pos)
 {
 	if (info == nullptr)
 	{
@@ -45,12 +45,12 @@ void View::ContextTitle::onMenu(const QPoint &pos)
 	auto *open = menu->addAction(getIcon(), QString("Open %1")
 		.arg(QString::fromStdString(current.playback.context.type)));
 	QAction::connect(open, &QAction::triggered,
-		this, &View::ContextTitle::onInfoOpen);
+		this, &View::Context::Title::onInfoOpen);
 
 	menu->popup(info->mapToGlobal(pos));
 }
 
-void View::ContextTitle::onInfoOpen(bool /*checked*/)
+void View::Context::Title::onInfoOpen(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	const auto &type = current.playback.context.type;
@@ -74,7 +74,7 @@ void View::ContextTitle::onInfoOpen(bool /*checked*/)
 	}
 }
 
-auto View::ContextTitle::getIcon() const -> QIcon
+auto View::Context::Title::getIcon() const -> QIcon
 {
 	return Icon::get(QString("view-media-%1")
 		.arg(current.playback.context.type.empty()
@@ -84,7 +84,7 @@ auto View::ContextTitle::getIcon() const -> QIcon
 				: QString::fromStdString(current.playback.context.type)));
 }
 
-void View::ContextTitle::updateIcon()
+void View::Context::Title::updateIcon()
 {
 	if (!settings.general.show_context_info && icon != nullptr && info != nullptr)
 	{
@@ -134,7 +134,7 @@ void View::ContextTitle::updateIcon()
 	}
 }
 
-auto View::ContextTitle::playlist(const std::string &id) -> lib::spt::playlist
+auto View::Context::Title::playlist(const std::string &id) -> lib::spt::playlist
 {
 	for (const auto &playlist : cache.get_playlists())
 	{
@@ -146,12 +146,12 @@ auto View::ContextTitle::playlist(const std::string &id) -> lib::spt::playlist
 	return lib::spt::playlist();
 }
 
-auto View::ContextTitle::playlistNameFromSaved(const std::string &id) -> std::string
+auto View::Context::Title::playlistNameFromSaved(const std::string &id) -> std::string
 {
 	return playlist(id).name;
 }
 
-void View::ContextTitle::playlistName(const std::string &id, lib::callback<std::string> &callback)
+void View::Context::Title::playlistName(const std::string &id, lib::callback<std::string> &callback)
 {
 	const auto &name = playlistNameFromSaved(id);
 	if (!name.empty())
