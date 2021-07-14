@@ -304,7 +304,8 @@ auto MainWindow::createCentralWidget() -> QWidget *
 {
 	// All widgets in container
 	songs = new TracksList(*spotify, settings, cache, this);
-	sidePanel = new SidePanel(*spotify, settings, cache, *httpClient, this);
+	sidePanel = new View::SidePanel::SidePanel(*spotify, settings, cache,
+		*httpClient, this);
 
 	libraryList = new LibraryList(*spotify, this);
 	playlistList = new PlaylistList(*spotify, settings, cache, this);
@@ -349,12 +350,12 @@ void MainWindow::stopClient()
 
 void MainWindow::openAudioFeaturesWidget(const lib::spt::track &track)
 {
-	dynamic_cast<SidePanel *>(sidePanel)->openAudioFeatures(track);
+	dynamic_cast<View::SidePanel::SidePanel *>(sidePanel)->openAudioFeatures(track);
 }
 
 void MainWindow::openLyrics(const lib::spt::track &track)
 {
-	dynamic_cast<SidePanel *>(sidePanel)->openLyrics(track);
+	dynamic_cast<View::SidePanel::SidePanel *>(sidePanel)->openLyrics(track);
 }
 
 auto MainWindow::loadAlbum(const std::string &albumId, const std::string &trackId) -> bool
@@ -416,7 +417,7 @@ void MainWindow::setAlbumImage(const std::string &url)
 
 void MainWindow::openArtist(const std::string &artistId)
 {
-	dynamic_cast<SidePanel *>(sidePanel)->openArtist(artistId);
+	dynamic_cast<View::SidePanel::SidePanel *>(sidePanel)->openArtist(artistId);
 }
 
 auto MainWindow::currentTracks() -> std::vector<std::string>
@@ -550,7 +551,7 @@ auto MainWindow::isValid() const -> bool
 
 void MainWindow::setSearchVisible(bool visible)
 {
-	auto *panel = dynamic_cast<SidePanel *>(sidePanel);
+	auto *panel = dynamic_cast<View::SidePanel::SidePanel *>(sidePanel);
 	if (visible)
 	{
 		panel->openSearch();
@@ -563,7 +564,7 @@ void MainWindow::setSearchVisible(bool visible)
 
 void MainWindow::addSidePanelTab(QWidget *widget, const QString &title)
 {
-	dynamic_cast<SidePanel *>(sidePanel)->addTab(widget, "folder-txt", title);
+	dynamic_cast<View::SidePanel::SidePanel *>(sidePanel)->addTab(widget, "folder-txt", title);
 }
 
 void MainWindow::refreshPlaylists()
