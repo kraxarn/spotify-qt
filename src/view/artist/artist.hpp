@@ -12,6 +12,7 @@
 #include "view/artist/searchmenu.hpp"
 #include "view/artist/sharemenu.hpp"
 #include "view/artist/playbutton.hpp"
+#include "view/artist/trackslist.hpp"
 
 #include <QDockWidget>
 #include <QLabel>
@@ -40,8 +41,6 @@ namespace View
 			void topTracksLoaded(const std::vector<lib::spt::track> &tracks);
 			void relatedArtistsLoaded(const std::vector<lib::spt::artist> &artists);
 
-			void trackClick(QListWidgetItem *item);
-			void trackMenu(const QPoint &pos);
 			void relatedClick(QListWidgetItem *item);
 
 			QVBoxLayout *layout = nullptr;
@@ -52,8 +51,7 @@ namespace View
 			QLabel *genres = nullptr;
 
 			QListWidget *relatedList = nullptr;
-			QListWidget *topTracksList = nullptr;
-			std::vector<std::string> topTrackIds;
+			View::Artist::TracksList *topTracksList = nullptr;
 			QTabWidget *tabs = nullptr;
 			View::Artist::AlbumsList *albumList;
 			std::string artistId;

@@ -44,13 +44,8 @@ View::Artist::Artist::Artist(lib::spt::api &spotify, const std::string &artistId
 	layout->addWidget(tabs);
 
 	// Top tracks
-	topTracksList = new QListWidget(tabs);
-	topTracksList->setEnabled(false);
-	topTracksList->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QListWidget::connect(topTracksList, &QListWidget::itemActivated, this,
-		&View::Artist::Artist::trackClick);
-	QWidget::connect(topTracksList, &QWidget::customContextMenuRequested,
-		this, &View::Artist::Artist::trackMenu);
+	topTracksList = new View::Artist::TracksList(spotify, cache,
+		httpClient, artist, tabs);
 	tabs->addTab(topTracksList, "Popular");
 
 	// Albums
@@ -119,25 +114,10 @@ void View::Artist::Artist::artistLoaded(const lib::spt::artist &loadedArtist)
 
 void View::Artist::Artist::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
 {
-	auto i = 0;
 	for (const auto &track : tracks)
 	{
-		auto *item = new QListWidgetItem(QString::fromStdString(track.name), topTracksList);
-
-		HttpUtils::getAlbum(track.image, httpClient, cache, [item](const QPixmap &image)
-		{
-			if (item != nullptr)
-			{
-				item->setIcon(QIcon(image));
-			}
-		});
-
-		item->setData(RoleTrack, QVariant::fromValue(track));
-		item->setData(RoleAlbumId, QString::fromStdString(track.album.id));
-		item->setData(RoleIndex, i++);
-		topTrackIds.push_back(lib::spt::api::to_uri("track", track.id));
+		topTracksList->addTrack(track);
 	}
-
 	topTracksList->setEnabled(true);
 }
 
@@ -150,35 +130,6 @@ void View::Artist::Artist::relatedArtistsLoaded(const std::vector<lib::spt::arti
 	}
 
 	relatedList->setEnabled(true);
-}
-
-void View::Artist::Artist::trackClick(QListWidgetItem *item)
-{
-	spotify.play_tracks(item->data(RoleIndex).toInt(), topTrackIds,
-		[this](const std::string &result)
-		{
-			if (result.empty())
-			{
-				return;
-			}
-
-			auto *mainWindow = MainWindow::find(this->parentWidget());
-			mainWindow->status(lib::fmt::format("Failed to start playback: {}",
-				result), true);
-		});
-}
-
-void View::Artist::Artist::trackMenu(const QPoint &pos)
-{
-	auto *item = topTracksList->itemAt(pos);
-	const auto &track = item->data(RoleTrack).value<lib::spt::track>();
-	if (!track.is_valid())
-	{
-		return;
-	}
-
-	auto *songMenu = new SongMenu(track, spotify, cache, &artist, parentWidget());
-	songMenu->popup(topTracksList->mapToGlobal(pos));
 }
 
 void View::Artist::Artist::relatedClick(QListWidgetItem *item)
