@@ -1,7 +1,6 @@
 #pragma once
 
-#include "mainwindow.hpp"
-#include "spotify/spotify.hpp"
+#include "lib/spotify/api.hpp"
 #include "lib/httpclient.hpp"
 
 #include "searchtab/tracks.hpp"
@@ -24,13 +23,13 @@ namespace View
 	Q_OBJECT
 
 	public:
-		Search(spt::Spotify &spotify, lib::cache &cache,
+		Search(lib::spt::api &spotify, lib::cache &cache,
 			const lib::http_client &httpClient, QWidget *parent);
 
 	private:
 		QTabWidget *tabs = nullptr;
 		QLineEdit *searchBox = nullptr;
-		spt::Spotify &spotify;
+		lib::spt::api &spotify;
 		lib::cache &cache;
 		const lib::http_client &httpClient;
 

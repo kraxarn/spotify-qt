@@ -1,6 +1,7 @@
 #include "view/search.hpp"
+#include "mainwindow.hpp"
 
-View::Search::Search(spt::Spotify &spotify, lib::cache &cache,
+View::Search::Search(lib::spt::api &spotify, lib::cache &cache,
 	const lib::http_client &httpClient, QWidget *parent)
 	: spotify(spotify),
 	cache(cache),
