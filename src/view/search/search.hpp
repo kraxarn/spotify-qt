@@ -7,6 +7,7 @@
 #include "view/search/artists.hpp"
 #include "view/search/albums.hpp"
 #include "view/search/playlists.hpp"
+#include "view/search/library.hpp"
 
 #include <QDockWidget>
 #include <QLineEdit>
@@ -28,6 +29,8 @@ namespace View
 			Search(lib::spt::api &spotify, lib::cache &cache,
 				const lib::http_client &httpClient, QWidget *parent);
 
+			auto getSearchText() -> QString;
+
 		private:
 			QTabWidget *tabs = nullptr;
 			QLineEdit *searchBox = nullptr;
@@ -45,6 +48,7 @@ namespace View
 			View::Search::Artists *artists = nullptr;
 			View::Search::Albums *albums = nullptr;
 			View::Search::Playlists *playlists = nullptr;
+			View::Search::Library *library = nullptr;
 
 			void search();
 
@@ -53,6 +57,8 @@ namespace View
 			void hideEvent(QHideEvent *event) override;
 
 		private:
+			QString searchText;
+
 			void resultsLoaded(const lib::spt::search_results &results);
 		};
 	}

@@ -23,12 +23,14 @@ View::Search::Search::Search(lib::spt::api &spotify, lib::cache &cache,
 	playlists = new View::Search::Playlists(spotify, cache, this);
 	tracks = new View::Search::Tracks(spotify, cache, this);
 	albums = new View::Search::Albums(spotify, cache, httpClient, this);
+	library = new View::Search::Library(spotify, cache, this);
 
 	// Add all tabs
 	tabs->addTab(tracks, "Tracks");
 	tabs->addTab(artists, "Artists");
 	tabs->addTab(albums, "Albums");
 	tabs->addTab(playlists, "Playlists");
+	tabs->addTab(library, "Library");
 
 	// Start searching when pressing enter
 	QLineEdit::connect(searchBox, &QLineEdit::returnPressed,
@@ -64,9 +66,10 @@ void View::Search::Search::search()
 	// Disable search box while searching
 	searchBox->setEnabled(false);
 
-	// Check if spotify uri
-	auto searchText = searchBox->text();
+	// Save last searched query
+	searchText = searchBox->text();
 
+	// Check if spotify uri
 	if (searchText.startsWith("spotify:")
 		|| searchText.startsWith("https://open.spotify.com/"))
 	{
@@ -124,6 +127,12 @@ void View::Search::Search::search()
 			{
 				this->resultsLoaded(results);
 			});
+
+		// Library search is handled separately
+		if (tabs->currentIndex() == libraryIndex)
+		{
+			library->search(searchText.toStdString());
+		}
 	}
 }
 
@@ -155,4 +164,9 @@ void View::Search::Search::resultsLoaded(const lib::spt::search_results &results
 
 	// Search done
 	searchBox->setEnabled(true);
+}
+
+auto View::Search::Search::getSearchText() -> QString
+{
+	return searchText;
 }
