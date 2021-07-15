@@ -35,6 +35,12 @@ namespace View
 			lib::cache &cache;
 			const lib::http_client &httpClient;
 
+			static constexpr int tracksIndex = 0;
+			static constexpr int artistsIndex = 1;
+			static constexpr int albumsIndex = 2;
+			static constexpr int playlistsIndex = 3;
+			static constexpr int libraryIndex = 4;
+
 			View::Search::Tracks *tracks = nullptr;
 			View::Search::Artists *artists = nullptr;
 			View::Search::Albums *albums = nullptr;

@@ -86,7 +86,7 @@ void View::Search::Search::search()
 				{
 					this->tracks->add(track);
 				});
-				i = 0;
+				i = tracksIndex;
 			}
 			else if (cat == "artist")
 			{
@@ -94,7 +94,7 @@ void View::Search::Search::search()
 				{
 					this->artists->add(artist);
 				});
-				i = 1;
+				i = artistsIndex;
 			}
 			else if (cat == "album")
 			{
@@ -102,7 +102,7 @@ void View::Search::Search::search()
 				{
 					this->albums->add(album);
 				});
-				i = 2;
+				i = albumsIndex;
 			}
 			else if (cat == "playlist")
 			{
@@ -110,7 +110,7 @@ void View::Search::Search::search()
 				{
 					this->playlists->add(playlist);
 				});
-				i = 3;
+				i = playlistsIndex;
 			}
 
 			tabs->setCurrentIndex(i);
