@@ -1,6 +1,6 @@
-#include "searchview.hpp"
+#include "view/search.hpp"
 
-SearchView::SearchView(spt::Spotify &spotify, lib::cache &cache,
+View::Search::Search(spt::Spotify &spotify, lib::cache &cache,
 	const lib::http_client &httpClient, QWidget *parent)
 	: spotify(spotify),
 	cache(cache),
@@ -31,17 +31,17 @@ SearchView::SearchView(spt::Spotify &spotify, lib::cache &cache,
 
 	// Start searching when pressing enter
 	QLineEdit::connect(searchBox, &QLineEdit::returnPressed,
-		this, &SearchView::search);
+		this, &View::Search::search);
 }
 
-void SearchView::showEvent(QShowEvent *event)
+void View::Search::showEvent(QShowEvent *event)
 {
 	QWidget::showEvent(event);
 	MainWindow::find(parentWidget())->setSearchChecked(true);
 	searchBox->setFocus();
 }
 
-void SearchView::hideEvent(QHideEvent *event)
+void View::Search::hideEvent(QHideEvent *event)
 {
 	QWidget::hideEvent(event);
 
@@ -52,7 +52,7 @@ void SearchView::hideEvent(QHideEvent *event)
 	}
 }
 
-void SearchView::search()
+void View::Search::search()
 {
 	// Empty all previous results
 	tracks->clear();
@@ -126,7 +126,7 @@ void SearchView::search()
 	}
 }
 
-void SearchView::resultsLoaded(const lib::spt::search_results &results)
+void View::Search::resultsLoaded(const lib::spt::search_results &results)
 {
 	// Albums
 	for (const auto &album : results.albums)
