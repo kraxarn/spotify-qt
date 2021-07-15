@@ -1,20 +1,20 @@
-#include "searchtab/playlists.hpp"
+#include "view/search/playlists.hpp"
 #include "mainwindow.hpp"
 
-SearchTab::Playlists::Playlists(lib::spt::api &spotify, lib::cache &cache, QWidget *parent)
+View::Search::Playlists::Playlists(lib::spt::api &spotify, lib::cache &cache, QWidget *parent)
 	: spotify(spotify),
 	cache(cache),
 	QListWidget(parent)
 {
 	QListWidget::connect(this, &QListWidget::itemClicked,
-		this, &SearchTab::Playlists::onItemClicked);
+		this, &View::Search::Playlists::onItemClicked);
 
 	setContextMenuPolicy(Qt::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested,
-		this, &SearchTab::Playlists::onContextMenu);
+		this, &View::Search::Playlists::onContextMenu);
 }
 
-void SearchTab::Playlists::add(const lib::spt::playlist &playlist)
+void View::Search::Playlists::add(const lib::spt::playlist &playlist)
 {
 	auto playlistName = QString::fromStdString(playlist.name);
 	auto playlistId = QString::fromStdString(playlist.id);
@@ -24,7 +24,7 @@ void SearchTab::Playlists::add(const lib::spt::playlist &playlist)
 	item->setToolTip(playlistName);
 }
 
-void SearchTab::Playlists::onItemClicked(QListWidgetItem *item)
+void View::Search::Playlists::onItemClicked(QListWidgetItem *item)
 {
 	auto playlistId = item->data(RolePlaylistId).toString().toStdString();
 	spotify.playlist(playlistId, [this](const lib::spt::playlist &playlist)
@@ -34,7 +34,7 @@ void SearchTab::Playlists::onItemClicked(QListWidgetItem *item)
 	});
 }
 
-void SearchTab::Playlists::onContextMenu(const QPoint &pos)
+void View::Search::Playlists::onContextMenu(const QPoint &pos)
 {
 	auto *item = itemAt(pos);
 	auto playlistId = item->data(RolePlaylistId).toString().toStdString();

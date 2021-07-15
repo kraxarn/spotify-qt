@@ -1,7 +1,7 @@
-#include "view/search.hpp"
+#include "view/search/search.hpp"
 #include "mainwindow.hpp"
 
-View::Search::Search(lib::spt::api &spotify, lib::cache &cache,
+View::Search::Search::Search(lib::spt::api &spotify, lib::cache &cache,
 	const lib::http_client &httpClient, QWidget *parent)
 	: spotify(spotify),
 	cache(cache),
@@ -19,10 +19,10 @@ View::Search::Search(lib::spt::api &spotify, lib::cache &cache,
 	layout->addWidget(tabs);
 
 	// Tab content
-	artists = new SearchTab::Artists(this);
-	playlists = new SearchTab::Playlists(spotify, cache, this);
-	tracks = new SearchTab::Tracks(spotify, cache, this);
-	albums = new SearchTab::Albums(spotify, cache, httpClient, this);
+	artists = new View::Search::Artists(this);
+	playlists = new View::Search::Playlists(spotify, cache, this);
+	tracks = new View::Search::Tracks(spotify, cache, this);
+	albums = new View::Search::Albums(spotify, cache, httpClient, this);
 
 	// Add all tabs
 	tabs->addTab(tracks, "Tracks");
@@ -32,17 +32,17 @@ View::Search::Search(lib::spt::api &spotify, lib::cache &cache,
 
 	// Start searching when pressing enter
 	QLineEdit::connect(searchBox, &QLineEdit::returnPressed,
-		this, &View::Search::search);
+		this, &View::Search::Search::search);
 }
 
-void View::Search::showEvent(QShowEvent *event)
+void View::Search::Search::showEvent(QShowEvent *event)
 {
 	QWidget::showEvent(event);
 	MainWindow::find(parentWidget())->setSearchChecked(true);
 	searchBox->setFocus();
 }
 
-void View::Search::hideEvent(QHideEvent *event)
+void View::Search::Search::hideEvent(QHideEvent *event)
 {
 	QWidget::hideEvent(event);
 
@@ -53,7 +53,7 @@ void View::Search::hideEvent(QHideEvent *event)
 	}
 }
 
-void View::Search::search()
+void View::Search::Search::search()
 {
 	// Empty all previous results
 	tracks->clear();
@@ -127,7 +127,7 @@ void View::Search::search()
 	}
 }
 
-void View::Search::resultsLoaded(const lib::spt::search_results &results)
+void View::Search::Search::resultsLoaded(const lib::spt::search_results &results)
 {
 	// Albums
 	for (const auto &album : results.albums)

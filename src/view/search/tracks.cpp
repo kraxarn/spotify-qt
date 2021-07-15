@@ -1,23 +1,23 @@
-#include "searchtab/tracks.hpp"
+#include "view/search/tracks.hpp"
 #include "mainwindow.hpp"
 
-SearchTab::Tracks::Tracks(lib::spt::api &spotify, lib::cache &cache, QWidget *parent)
+View::Search::Tracks::Tracks(lib::spt::api &spotify, lib::cache &cache, QWidget *parent)
 	: spotify(spotify),
 	cache(cache),
-	SearchTab::SearchTabTree({"Title", "Artist", "Album"}, parent)
+	View::Search::SearchTabTree({"Title", "Artist", "Album"}, parent)
 {
 	// Hide "Album" by default
 	header()->setSectionHidden(header()->count() - 1, true);
 
 	QTreeWidget::connect(this, &QTreeWidget::itemActivated,
-		this, &SearchTab::Tracks::onItemActivated);
+		this, &View::Search::Tracks::onItemActivated);
 
 	setContextMenuPolicy(Qt::CustomContextMenu);
 	QWidget::connect(this, &QTreeWidget::customContextMenuRequested,
-		this, &SearchTab::Tracks::onContextMenu);
+		this, &View::Search::Tracks::onContextMenu);
 }
 
-void SearchTab::Tracks::resizeEvent(QResizeEvent *event)
+void View::Search::Tracks::resizeEvent(QResizeEvent *event)
 {
 	SearchTabTree::resizeEvent(event);
 
@@ -25,7 +25,7 @@ void SearchTab::Tracks::resizeEvent(QResizeEvent *event)
 		event->size().width() < albumWidthThreshold);
 }
 
-void SearchTab::Tracks::add(const lib::spt::track &track)
+void View::Search::Tracks::add(const lib::spt::track &track)
 {
 	auto trackName = QString::fromStdString(track.name);
 	auto trackArtist = QString::fromStdString(lib::spt::entity::combine_names(track.artists));
@@ -42,7 +42,7 @@ void SearchTab::Tracks::add(const lib::spt::track &track)
 	item->setToolTip(1, trackArtist);
 }
 
-void SearchTab::Tracks::onItemActivated(QTreeWidgetItem *item, int /*column*/)
+void View::Search::Tracks::onItemActivated(QTreeWidgetItem *item, int /*column*/)
 {
 	// Do we want it to continue playing results?
 	const auto &track = item->data(0, RoleTrack).value<lib::spt::track>();
@@ -61,7 +61,7 @@ void SearchTab::Tracks::onItemActivated(QTreeWidgetItem *item, int /*column*/)
 	});
 }
 
-void SearchTab::Tracks::onContextMenu(const QPoint &pos)
+void View::Search::Tracks::onContextMenu(const QPoint &pos)
 {
 	auto *item = itemAt(pos);
 	const auto &track = item->data(0, RoleTrack).value<lib::spt::track>();

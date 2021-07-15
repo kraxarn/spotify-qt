@@ -2,7 +2,7 @@
 
 #include "lib/spotify/track.hpp"
 #include "view/artist/artist.hpp"
-#include "view/search.hpp"
+#include "view/search/search.hpp"
 #include "view/audiofeaturesview.hpp"
 #include "view/lyricsview.hpp"
 #include "view/sidepanel/title.hpp"
