@@ -54,7 +54,7 @@ void View::Search::Library::addResults(const std::string &query,
 			|| lib::strings::contains(lib::strings::to_lower(
 				lib::spt::entity::combine_names(track.artists)), q))
 		{
-			this->add(track);
+			add(track);
 		}
 	}
 }
