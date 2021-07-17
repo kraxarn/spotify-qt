@@ -24,11 +24,14 @@ View::AudioFeatures::AudioFeatures(lib::spt::api &spotify, const std::string &tr
 
 void View::AudioFeatures::loaded(const lib::spt::audio_features &features)
 {
-	for (const auto &value : features.items())
+	for (const auto &item : features.items())
 	{
-		auto *item = new QTreeWidgetItem(this, {
-			QString::fromStdString(value.get_feature()),
-			QString::fromStdString(value.get_value()),
+		auto *treeItem = new QTreeWidgetItem(this, {
+			QString::fromStdString(item.get_feature()),
+			QString::fromStdString(item.get_name()),
 		});
+
+		treeItem->setToolTip(1,
+			QString::fromStdString(item.get_description()));
 	}
 }
