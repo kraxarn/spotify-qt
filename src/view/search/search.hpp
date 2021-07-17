@@ -3,6 +3,7 @@
 #include "lib/spotify/api.hpp"
 #include "lib/httpclient.hpp"
 
+#include "enum/searchtab.hpp"
 #include "view/search/tracks.hpp"
 #include "view/search/artists.hpp"
 #include "view/search/albums.hpp"
@@ -32,15 +33,6 @@ namespace View
 			auto getSearchText() -> QString;
 
 		private:
-			enum class Index: int
-			{
-				Tracks = 0,
-				Artists = 1,
-				Albums = 2,
-				Playlists = 3,
-				Library = 4,
-			};
-
 			QTabWidget *tabs = nullptr;
 			QLineEdit *searchBox = nullptr;
 			lib::spt::api &spotify;
