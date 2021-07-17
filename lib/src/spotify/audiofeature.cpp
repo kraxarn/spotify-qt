@@ -54,6 +54,10 @@ lib::spt::audio_feature::audio_feature(::audio_feature feature, float value)
 			name = valence();
 			break;
 
+		case ::audio_feature::time_signature:
+			name = time_signature();
+			break;
+
 		default:
 			lib::log::warn("Invalid value for feature (float): {}",
 				get_feature());

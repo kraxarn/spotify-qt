@@ -65,6 +65,7 @@ namespace lib
 			auto speechiness() const -> std::string;
 			auto tempo(float &max) const -> std::string;
 			auto valence() const -> std::string;
+			auto time_signature() const -> std::string;
 
 			static auto to_string(audio_key key) -> std::string;
 			static auto to_string(audio_mode mode) -> std::string;
