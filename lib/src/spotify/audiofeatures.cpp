@@ -112,13 +112,13 @@ void lib::spt::from_json(const nlohmann::json &j, audio_features &a)
 		if (feature == ::audio_feature::key)
 		{
 			a.add(item.value().get<audio_key>());
-			return;
+			continue;
 		}
 
 		if (feature == ::audio_feature::mode)
 		{
 			a.add(item.value().get<audio_mode>());
-			return;
+			continue;
 		}
 
 		a.add(feature, item.value().get<float>());
