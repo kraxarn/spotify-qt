@@ -18,14 +18,6 @@ public:
 	static auto itemWithEmptyChild(QTreeWidget *tree, const QString &name,
 		const QString &toolTip) -> QTreeWidgetItem *;
 
-	/** New QTreeWidgetItem with specified key and value */
-	static auto item(QTreeWidget *tree, const QString &key,
-		const QString &value) -> QTreeWidgetItem *;
-
-	/** New QTreeWidgetItem with specified std::string key and value */
-	static auto item(QTreeWidget *tree, const std::string &key,
-		const std::string &value) -> QTreeWidgetItem *;
-
 private:
 	TreeUtils() = default;
 };

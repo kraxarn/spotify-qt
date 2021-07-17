@@ -29,18 +29,3 @@ auto TreeUtils::itemWithEmptyChild(QTreeWidget *tree, const QString &name,
 	return itemWithChildren(tree, name, toolTip,
 		QStringList(QString()));
 }
-
-auto TreeUtils::item(QTreeWidget *tree, const QString &key,
-	const QString &value) -> QTreeWidgetItem *
-{
-	return new QTreeWidgetItem(tree, {
-		key, value
-	});
-}
-
-auto TreeUtils::item(QTreeWidget *tree, const std::string &key,
-	const std::string &value) -> QTreeWidgetItem *
-{
-	return item(tree, QString::fromStdString(key),
-		QString::fromStdString(value));
-}
