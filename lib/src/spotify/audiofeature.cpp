@@ -213,6 +213,11 @@ auto lib::spt::audio_feature::valence() const -> std::string
 			: "Mixed";
 }
 
+auto lib::spt::audio_feature::time_signature() const -> std::string
+{
+	return lib::fmt::format("{} m", value);
+}
+
 auto lib::spt::audio_feature::get_feature() const -> std::string
 {
 	switch (feature)
