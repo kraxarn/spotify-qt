@@ -55,7 +55,7 @@ lib::spt::audio_feature::audio_feature(::audio_feature feature, float value)
 			break;
 
 		case ::audio_feature::time_signature:
-			name = time_signature();
+			name = time_signature(maximum);
 			break;
 
 		default:
@@ -213,9 +213,12 @@ auto lib::spt::audio_feature::valence() const -> std::string
 			: "Mixed";
 }
 
-auto lib::spt::audio_feature::time_signature() const -> std::string
+auto lib::spt::audio_feature::time_signature(float &max) const -> std::string
 {
-	return lib::fmt::format("{} m", value);
+	// Time signature doesn't really have a maximum value?
+	max = value;
+
+	return lib::fmt::format("{} m", static_cast<int>(value));
 }
 
 auto lib::spt::audio_feature::get_feature() const -> std::string
