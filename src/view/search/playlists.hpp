@@ -11,6 +11,8 @@ namespace View
 	{
 		class Playlists: public QListWidget
 		{
+		Q_OBJECT
+
 		public:
 			Playlists(lib::spt::api &spotify, lib::cache &cache, QWidget *parent);
 

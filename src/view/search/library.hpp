@@ -9,6 +9,8 @@ namespace View
 	{
 		class Library: public Tracks
 		{
+		Q_OBJECT
+
 		public:
 			Library(lib::spt::api &spotify, lib::cache &cache, QWidget *parent);
 

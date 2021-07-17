@@ -11,6 +11,8 @@ namespace View
 	{
 		class Tracks: public SearchTabTree
 		{
+		Q_OBJECT
+
 		public:
 			Tracks(lib::spt::api &spotify, lib::cache &cache, QWidget *parent);
 

@@ -10,6 +10,8 @@ namespace View
 	{
 		class Artists: public QListWidget
 		{
+		Q_OBJECT
+
 		public:
 			explicit Artists(QWidget *parent);
 

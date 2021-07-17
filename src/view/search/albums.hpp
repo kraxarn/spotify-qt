@@ -10,6 +10,8 @@ namespace View
 	{
 		class Albums: public SearchTabTree
 		{
+		Q_OBJECT
+
 		public:
 			Albums(lib::spt::api &spotify, lib::cache &cache,
 				const lib::http_client &httpClient, QWidget *parent);
