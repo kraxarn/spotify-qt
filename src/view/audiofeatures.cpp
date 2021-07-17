@@ -26,7 +26,9 @@ void View::AudioFeatures::loaded(const lib::spt::audio_features &features)
 {
 	for (const auto &value : features.items())
 	{
-		addTopLevelItem(TreeUtils::item(this,
-			value.get_feature(), value.get_value()));
+		auto *item = new QTreeWidgetItem(this, {
+			QString::fromStdString(value.get_feature()),
+			QString::fromStdString(value.get_value()),
+		});
 	}
 }
