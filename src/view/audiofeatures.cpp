@@ -1,6 +1,6 @@
-#include "audiofeaturesview.hpp"
+#include "view/audiofeatures.hpp"
 
-AudioFeaturesView::AudioFeaturesView(spt::Spotify &spotify, const std::string &trackId,
+View::AudioFeatures::AudioFeatures(spt::Spotify &spotify, const std::string &trackId,
 	QWidget *parent)
 	: QTreeWidget(parent)
 {
@@ -22,7 +22,7 @@ AudioFeaturesView::AudioFeaturesView(spt::Spotify &spotify, const std::string &t
 	header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
-void AudioFeaturesView::loaded(const lib::spt::audio_features &features)
+void View::AudioFeatures::loaded(const lib::spt::audio_features &features)
 {
 	for (const auto &value : features.items())
 	{

@@ -98,7 +98,7 @@ void View::SidePanel::SidePanel::closeSearch()
 
 void View::SidePanel::SidePanel::openAudioFeatures(const lib::spt::track &track)
 {
-	auto *view = new AudioFeaturesView(spotify, track.id, this);
+	auto *view = new View::AudioFeatures(spotify, track.id, this);
 	addTab(view, "view-statistics",
 		QString::fromStdString(track.title()));
 }
