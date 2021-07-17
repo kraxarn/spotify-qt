@@ -12,6 +12,7 @@ var searchData=
   ['append_9',['append',['../classlib_1_1vector.html#abd6f4bb72d24e728392a4fb104e3b22c',1,'lib::vector']]],
   ['artist_10',['artist',['../classlib_1_1spt_1_1album.html#a9213de387c38199a913fc9d3ba2a450e',1,'lib::spt::album::artist()'],['../classlib_1_1spt_1_1artist.html',1,'lib::spt::artist']]],
   ['artists_11',['artists',['../classlib_1_1spt_1_1search__results.html#a18a3ef467a3908d0933139378f9c2a31',1,'lib::spt::search_results::artists()'],['../classlib_1_1spt_1_1track.html#af73cef429ada1ab45d88e78d218c79be',1,'lib::spt::track::artists()']]],
-  ['audio_5ffeatures_12',['audio_features',['../classlib_1_1spt_1_1audio__features.html',1,'lib::spt']]],
-  ['auth_13',['auth',['../classlib_1_1spt_1_1auth.html',1,'lib::spt']]]
+  ['audio_5ffeature_12',['audio_feature',['../classlib_1_1spt_1_1audio__feature.html#aca28da044aee19568a9922e163e5ed31',1,'lib::spt::audio_feature::audio_feature(::audio_feature feature, float value)'],['../classlib_1_1spt_1_1audio__feature.html#ad885b29abcfc07d1f540f3044057e031',1,'lib::spt::audio_feature::audio_feature(audio_key key)'],['../classlib_1_1spt_1_1audio__feature.html#ad8e51ed505a37c8d612ecca21211bddd',1,'lib::spt::audio_feature::audio_feature(audio_mode mode)'],['../classlib_1_1spt_1_1audio__feature.html',1,'lib::spt::audio_feature']]],
+  ['audio_5ffeatures_13',['audio_features',['../classlib_1_1spt_1_1audio__features.html',1,'lib::spt']]],
+  ['auth_14',['auth',['../classlib_1_1spt_1_1auth.html',1,'lib::spt']]]
 ];

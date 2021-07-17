@@ -80,30 +80,24 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a04fe538926ddce5e4499a9e52ec5dac9"><td class="memItemLeft" align="right" valign="top"><a id="a04fe538926ddce5e4499a9e52ec5dac9"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>get_values</b> () const -&gt; const std::map&lt; std::string, std::string &gt; &amp;</td></tr>
-<tr class="separator:a04fe538926ddce5e4499a9e52ec5dac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c0f470434fcfff7ed03703990ca25fb"><td class="memItemLeft" align="right" valign="top"><a id="a5c0f470434fcfff7ed03703990ca25fb"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (const std::string &amp;key, const std::string &amp;value)</td></tr>
-<tr class="separator:a5c0f470434fcfff7ed03703990ca25fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1423e6bbb4fa18da9ae54f62d89e5f9"><td class="memItemLeft" align="right" valign="top"><a id="ad1423e6bbb4fa18da9ae54f62d89e5f9"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>items</b> () const -&gt; const std::vector&lt; <a class="el" href="classlib_1_1spt_1_1audio__feature.html">lib::spt::audio_feature</a> &gt; &amp;</td></tr>
+<tr class="separator:ad1423e6bbb4fa18da9ae54f62d89e5f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51ec6ca1dec4527e10bada8f6f402eb8"><td class="memItemLeft" align="right" valign="top"><a id="a51ec6ca1dec4527e10bada8f6f402eb8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (::<a class="el" href="classlib_1_1spt_1_1audio__feature.html">audio_feature</a> feature, float value)</td></tr>
+<tr class="separator:a51ec6ca1dec4527e10bada8f6f402eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53a3e9b9d38cd1fb6c6cea9dc17c1489"><td class="memItemLeft" align="right" valign="top"><a id="a53a3e9b9d38cd1fb6c6cea9dc17c1489"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (audio_key key)</td></tr>
+<tr class="separator:a53a3e9b9d38cd1fb6c6cea9dc17c1489"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34ec120a8ebc31c7c33304bf7bd96032"><td class="memItemLeft" align="right" valign="top"><a id="a34ec120a8ebc31c7c33304bf7bd96032"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (audio_mode mode)</td></tr>
+<tr class="separator:a34ec120a8ebc31c7c33304bf7bd96032"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a14f94e3b18720f73e6bc7b5f0c25ec79"><td class="memItemLeft" align="right" valign="top"><a id="a14f94e3b18720f73e6bc7b5f0c25ec79"></a>
-static auto&#160;</td><td class="memItemRight" valign="bottom"><b>format_stat</b> (double value, const std::initializer_list&lt; std::string &gt; &amp;stages) -&gt; std::string</td></tr>
-<tr class="separator:a14f94e3b18720f73e6bc7b5f0c25ec79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9966124400593529ef14605e9738507"><td class="memItemLeft" align="right" valign="top"><a id="ad9966124400593529ef14605e9738507"></a>
-static auto&#160;</td><td class="memItemRight" valign="bottom"><b>format_stat</b> (double value, const std::string &amp;low, const std::string &amp;high) -&gt; std::string</td></tr>
-<tr class="separator:ad9966124400593529ef14605e9738507"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af7094cea5e6a42b715536a9ce38ed84d"><td class="memItemLeft" align="right" valign="top"><a id="af7094cea5e6a42b715536a9ce38ed84d"></a>
-static auto&#160;</td><td class="memItemRight" valign="bottom"><b>format_stat</b> (double value, const std::string &amp;measurement) -&gt; std::string</td></tr>
-<tr class="separator:af7094cea5e6a42b715536a9ce38ed84d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad956da6525eeb1fe9e6d61251e88790b"><td class="memItemLeft" align="right" valign="top"><a id="ad956da6525eeb1fe9e6d61251e88790b"></a>
-static auto&#160;</td><td class="memItemRight" valign="bottom"><b>format_volume</b> (double value) -&gt; std::string</td></tr>
-<tr class="separator:ad956da6525eeb1fe9e6d61251e88790b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a393d32a58ad802d8c5d4aa3c6d2a38af"><td class="memItemLeft" align="right" valign="top"><a id="a393d32a58ad802d8c5d4aa3c6d2a38af"></a>
-static auto&#160;</td><td class="memItemRight" valign="bottom"><b>parse_key</b> (int key) -&gt; std::string</td></tr>
-<tr class="separator:a393d32a58ad802d8c5d4aa3c6d2a38af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2969e97e231e4de33471f10de40af2c9"><td class="memItemLeft" align="right" valign="top"><a id="a2969e97e231e4de33471f10de40af2c9"></a>
+static auto&#160;</td><td class="memItemRight" valign="bottom"><b>to_audio_feature</b> (const std::string &amp;feature) -&gt; ::<a class="el" href="classlib_1_1spt_1_1audio__feature.html">audio_feature</a></td></tr>
+<tr class="separator:a2969e97e231e4de33471f10de40af2c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Audio analysis features </p>
