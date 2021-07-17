@@ -37,7 +37,12 @@ namespace lib
 			 * Get name of value
 			 * @return String representation
 			 */
-			auto get_value() const -> std::string;
+			auto get_name() const -> std::string;
+
+			/**
+			 * Get raw value
+			 */
+			auto get_value() const -> float;
 
 			/**
 			 * Get minimum possible value

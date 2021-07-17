@@ -266,9 +266,14 @@ auto lib::spt::audio_feature::get_feature() const -> std::string
 	}
 }
 
-auto lib::spt::audio_feature::get_value() const -> std::string
+auto lib::spt::audio_feature::get_name() const -> std::string
 {
 	return name;
+}
+
+auto lib::spt::audio_feature::get_value() const -> float
+{
+	return value;
 }
 
 auto lib::spt::audio_feature::get_min() const -> float
