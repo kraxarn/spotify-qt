@@ -40,7 +40,13 @@ View::Search::Search::Search(lib::spt::api &spotify, lib::cache &cache,
 void View::Search::Search::showEvent(QShowEvent *event)
 {
 	QWidget::showEvent(event);
-	MainWindow::find(parentWidget())->setSearchChecked(true);
+
+	auto *mainWindow = MainWindow::find(parentWidget());
+	if (mainWindow != nullptr)
+	{
+		mainWindow->setSearchChecked(true);
+	}
+
 	searchBox->setFocus();
 }
 
