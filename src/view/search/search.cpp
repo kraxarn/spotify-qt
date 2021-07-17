@@ -37,7 +37,7 @@ View::Search::Search::Search(lib::spt::api &spotify, lib::cache &cache,
 		this, &View::Search::Search::search);
 
 	// Searching in library is a separate request,
-	// so only do it once requested
+	// so only actually search once requested
 	QTabWidget::connect(tabs, &QTabWidget::currentChanged,
 		this, &View::Search::Search::onIndexChanged);
 }
@@ -73,12 +73,16 @@ void View::Search::Search::search()
 	artists->clear();
 	albums->clear();
 	playlists->clear();
+	library->clear();
 
 	// Disable search box while searching
 	searchBox->setEnabled(false);
 
 	// Save last searched query
 	searchText = searchBox->text();
+
+	// Search in library cache until tab is selected
+	library->searchCache(searchText.toStdString());
 
 	// Check if spotify uri
 	if (searchText.startsWith("spotify:")
