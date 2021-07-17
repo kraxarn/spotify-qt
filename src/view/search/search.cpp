@@ -53,6 +53,7 @@ void View::Search::Search::showEvent(QShowEvent *event)
 	}
 
 	searchBox->setFocus();
+	searchBox->selectAll();
 }
 
 void View::Search::Search::hideEvent(QHideEvent *event)
