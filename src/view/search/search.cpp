@@ -85,7 +85,7 @@ void View::Search::Search::search()
 
 		if (parts.length() >= 3)
 		{
-			auto i = tabs->currentIndex();
+			auto i = static_cast<Index>(tabs->currentIndex());
 			auto cat = parts[1];
 			auto id = parts[2].toStdString();
 
@@ -95,7 +95,7 @@ void View::Search::Search::search()
 				{
 					this->tracks->add(track);
 				});
-				i = tracksIndex;
+				i = Index::Tracks;
 			}
 			else if (cat == "artist")
 			{
@@ -103,7 +103,7 @@ void View::Search::Search::search()
 				{
 					this->artists->add(artist);
 				});
-				i = artistsIndex;
+				i = Index::Artists;
 			}
 			else if (cat == "album")
 			{
@@ -111,7 +111,7 @@ void View::Search::Search::search()
 				{
 					this->albums->add(album);
 				});
-				i = albumsIndex;
+				i = Index::Albums;
 			}
 			else if (cat == "playlist")
 			{
@@ -119,10 +119,10 @@ void View::Search::Search::search()
 				{
 					this->playlists->add(playlist);
 				});
-				i = playlistsIndex;
+				i = Index::Playlists;
 			}
 
-			tabs->setCurrentIndex(i);
+			tabs->setCurrentIndex(static_cast<int>(i));
 		}
 	}
 	else
@@ -135,7 +135,7 @@ void View::Search::Search::search()
 			});
 
 		// Library search is handled separately
-		if (tabs->currentIndex() == libraryIndex)
+		if (static_cast<Index>(tabs->currentIndex()) == Index::Library)
 		{
 			library->search(searchText.toStdString());
 		}
