@@ -1,8 +1,7 @@
 #pragma once
 
-#include "spotify/spotify.hpp"
 #include "util/treeutils.hpp"
-#include "lib/spotify/audiofeatures.hpp"
+#include "lib/spotify/api.hpp"
 
 #include <QAbstractItemView>
 #include <QDockWidget>
@@ -16,7 +15,7 @@ namespace View
 	Q_OBJECT
 
 	public:
-		AudioFeatures(spt::Spotify &spotify, const std::string &trackId, QWidget *parent);
+		AudioFeatures(lib::spt::api &spotify, const std::string &trackId, QWidget *parent);
 
 	private:
 		void loaded(const lib::spt::audio_features &features);
