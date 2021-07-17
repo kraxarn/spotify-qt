@@ -54,6 +54,11 @@ namespace lib
 			 */
 			auto get_max() const -> float;
 
+			/**
+			 * Get value description
+			 */
+			auto get_description() const -> std::string;
+
 		private:
 			::audio_feature feature = ::audio_feature::unknown;
 			float minimum = 0.F;

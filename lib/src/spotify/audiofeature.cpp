@@ -286,6 +286,30 @@ auto lib::spt::audio_feature::get_max() const -> float
 	return maximum;
 }
 
+auto lib::spt::audio_feature::get_description() const -> std::string
+{
+	if (get_min() == 0.F && get_max() == 1.F)
+	{
+		return lib::fmt::format("{}%", get_value() * 100.F);
+	}
+
+	std::string suffix;
+	if (feature == ::audio_feature::loudness)
+	{
+		suffix = " dB";
+	}
+	else if (feature == ::audio_feature::tempo)
+	{
+		suffix = " BPM";
+	}
+	else if (feature == ::audio_feature::time_signature)
+	{
+		suffix = " m";
+	}
+
+	return lib::fmt::format("{}{}", get_value(), suffix);
+}
+
 auto lib::spt::audio_feature::to_string(audio_key key) -> std::string
 {
 	switch (key)
