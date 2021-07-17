@@ -132,6 +132,7 @@ void View::Search::Search::search()
 			}
 
 			tabs->setCurrentIndex(static_cast<int>(i));
+			searchBox->setEnabled(true);
 		}
 	}
 	else
