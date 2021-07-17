@@ -24,8 +24,9 @@ AudioFeaturesView::AudioFeaturesView(spt::Spotify &spotify, const std::string &t
 
 void AudioFeaturesView::loaded(const lib::spt::audio_features &features)
 {
-	for (const auto &value : features.get_values())
+	for (const auto &value : features.items())
 	{
-		addTopLevelItem(TreeUtils::item(this, value.first, value.second));
+		addTopLevelItem(TreeUtils::item(this,
+			value.get_feature(), value.get_value()));
 	}
 }

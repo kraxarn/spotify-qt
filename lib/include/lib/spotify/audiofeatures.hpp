@@ -2,6 +2,9 @@
 
 #include "lib/format.hpp"
 #include "lib/strings.hpp"
+#include "lib/enum/audiokey.hpp"
+#include "lib/enum/audiomode.hpp"
+#include "lib/spotify/audiofeature.hpp"
 #include "thirdparty/json.hpp"
 
 #include <string>
@@ -20,42 +23,22 @@ namespace lib
 		public:
 			audio_features() = default;
 
-			auto get_values() const -> const std::map<std::string, std::string> &;
+			auto items() const -> const std::vector<lib::spt::audio_feature> &;
 
-			void set(const std::string &key, const std::string &value);
+			void add(::audio_feature feature, float value);
+			void add(audio_key key);
+			void add(audio_mode mode);
 
-			static auto format_stat(double value,
-				const std::initializer_list<std::string> &stages) -> std::string;
-
-			static auto format_stat(double value, const std::string &low,
-				const std::string &high) -> std::string;
-
-			static auto format_stat(double value, const std::string &measurement) -> std::string;
-
-			static auto format_volume(double value) -> std::string;
-
-			static auto parse_key(int key) -> std::string;
+			static auto to_audio_feature(const std::string &feature) -> ::audio_feature;
 
 		private:
-			std::map<std::string, std::string> values;
-
-			static constexpr double lowerThreshold = 0.2;
-			static constexpr double lowThreshold = 0.4;
-			static constexpr double highThreshold = 0.6;
-			static constexpr double higherThreshold = 0.8;
-
-			static constexpr double veryQuietDb = -10.0;
-			static constexpr double quietDb = -5.0;
+			std::vector<lib::spt::audio_feature> values;
 		};
 
-		/**
-		 * Audio features -> JSON
-		 */
+		/** Audio features -> JSON */
 		void to_json(nlohmann::json &j, const audio_features &a);
 
-		/**
-		 * JSON -> Audio features
-		 */
+		/** JSON -> Audio features */
 		void from_json(const nlohmann::json &j, audio_features &a);
 	}
 }
