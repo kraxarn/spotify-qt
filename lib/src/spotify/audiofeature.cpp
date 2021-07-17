@@ -59,8 +59,7 @@ lib::spt::audio_feature::audio_feature(::audio_feature feature, float value)
 			break;
 
 		default:
-			lib::log::warn("Invalid value for feature (float): {}",
-				get_feature());
+			lib::log::warn("Invalid value: {}", get_feature());
 			break;
 	}
 }
