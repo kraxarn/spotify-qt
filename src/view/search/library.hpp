@@ -16,9 +16,6 @@ namespace View
 
 			void search(const std::string &query);
 
-		protected:
-			void showEvent(QShowEvent *event) override;
-
 		private:
 			lib::spt::api &spotify;
 		};

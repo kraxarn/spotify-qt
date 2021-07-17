@@ -35,6 +35,11 @@ View::Search::Search::Search(lib::spt::api &spotify, lib::cache &cache,
 	// Start searching when pressing enter
 	QLineEdit::connect(searchBox, &QLineEdit::returnPressed,
 		this, &View::Search::Search::search);
+
+	// Searching in library is a separate request,
+	// so only do it once requested
+	QTabWidget::connect(tabs, &QTabWidget::currentChanged,
+		this, &View::Search::Search::onIndexChanged);
 }
 
 void View::Search::Search::showEvent(QShowEvent *event)
@@ -172,7 +177,10 @@ void View::Search::Search::resultsLoaded(const lib::spt::search_results &results
 	searchBox->setEnabled(true);
 }
 
-auto View::Search::Search::getSearchText() -> QString
+void View::Search::Search::onIndexChanged(int index)
 {
-	return searchText;
+	if (static_cast<SearchTab>(index) == SearchTab::Library)
+	{
+		library->search(searchText.toStdString());
+	}
 }

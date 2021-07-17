@@ -31,13 +31,3 @@ void View::Search::Library::search(const std::string &query)
 		}
 	});
 }
-
-void View::Search::Library::showEvent(QShowEvent */*event*/)
-{
-	auto *searchParent = dynamic_cast<View::Search::Search *>(parentWidget());
-	if (searchParent == nullptr)
-	{
-		return;
-	}
-	search(searchParent->getSearchText().toLower().toStdString());
-}

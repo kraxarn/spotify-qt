@@ -30,8 +30,6 @@ namespace View
 			Search(lib::spt::api &spotify, lib::cache &cache,
 				const lib::http_client &httpClient, QWidget *parent);
 
-			auto getSearchText() -> QString;
-
 		private:
 			QTabWidget *tabs = nullptr;
 			QLineEdit *searchBox = nullptr;
@@ -55,6 +53,8 @@ namespace View
 			QString searchText;
 
 			void resultsLoaded(const lib::spt::search_results &results);
+
+			void onIndexChanged(int index);
 		};
 	}
 }
