@@ -85,15 +85,6 @@ auto lib::spt::audio_features::to_audio_feature(const std::string &feature) -> :
 	return ::audio_feature::unknown;
 }
 
-void lib::spt::to_json(nlohmann::json &j, const audio_features &a)
-{
-	j = nlohmann::json::array();
-	for (const auto &item : a.items())
-	{
-		j.push_back(item);
-	}
-}
-
 void lib::spt::from_json(const nlohmann::json &j, audio_features &a)
 {
 	if (!j.is_object())

@@ -69,11 +69,5 @@ namespace lib
 			static auto to_string(audio_key key) -> std::string;
 			static auto to_string(audio_mode mode) -> std::string;
 		};
-
-		/**
-		 * Audio feature -> JSON
-		 * @note From JSON is handled in audio_features
-		 */
-		void to_json(nlohmann::json &j, const audio_feature &a);
 	}
 }

@@ -332,13 +332,3 @@ auto lib::spt::audio_feature::to_string(audio_mode mode) -> std::string
 			return "Unknown";
 	}
 }
-
-void lib::spt::to_json(nlohmann::json &j, const audio_feature &a)
-{
-	j = nlohmann::json{
-		{"feature", a.get_feature()},
-		{"value", a.get_value()},
-		{"min", a.get_min()},
-		{"max", a.get_max()},
-	};
-}

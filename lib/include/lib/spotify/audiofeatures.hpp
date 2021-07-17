@@ -35,9 +35,6 @@ namespace lib
 			std::vector<lib::spt::audio_feature> values;
 		};
 
-		/** Audio features -> JSON */
-		void to_json(nlohmann::json &j, const audio_features &a);
-
 		/** JSON -> Audio features */
 		void from_json(const nlohmann::json &j, audio_features &a);
 	}
