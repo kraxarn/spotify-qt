@@ -95,45 +95,49 @@ $(function() {
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
 <div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1audio__feature.html#a3f5611b86fd465fc90dd6147a63b8de7">   34</a></span>&#160;            <span class="keyword">auto</span> <a class="code" href="classlib_1_1spt_1_1audio__feature.html#a3f5611b86fd465fc90dd6147a63b8de7">get_feature</a>() const -&gt; std::<span class="keywordtype">string</span>;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1audio__feature.html#abc401ea4b528e948beca6c952c252403">   40</a></span>&#160;            auto <a class="code" href="classlib_1_1spt_1_1audio__feature.html#abc401ea4b528e948beca6c952c252403">get_value</a>() const -&gt; std::<span class="keywordtype">string</span>;</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1audio__feature.html#adbbb516b1b8c834d6e73b11b0e02e212">   40</a></span>&#160;            auto <a class="code" href="classlib_1_1spt_1_1audio__feature.html#adbbb516b1b8c834d6e73b11b0e02e212">get_name</a>() const -&gt; std::<span class="keywordtype">string</span>;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1audio__feature.html#a82b42d2c341af84009e6d988d0b82953">   45</a></span>&#160;            auto <a class="code" href="classlib_1_1spt_1_1audio__feature.html#a82b42d2c341af84009e6d988d0b82953">get_min</a>() const -&gt; <span class="keywordtype">float</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1audio__feature.html#a6ad5e61e3d3e7bbe953e1f583ea59b14">   45</a></span>&#160;            auto <a class="code" href="classlib_1_1spt_1_1audio__feature.html#a6ad5e61e3d3e7bbe953e1f583ea59b14">get_value</a>() const -&gt; <span class="keywordtype">float</span>;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1audio__feature.html#ac25975142ad817228daabdce9a9786cd">   50</a></span>&#160;            auto <a class="code" href="classlib_1_1spt_1_1audio__feature.html#ac25975142ad817228daabdce9a9786cd">get_max</a>() const -&gt; <span class="keywordtype">float</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1audio__feature.html#a82b42d2c341af84009e6d988d0b82953">   50</a></span>&#160;            auto <a class="code" href="classlib_1_1spt_1_1audio__feature.html#a82b42d2c341af84009e6d988d0b82953">get_min</a>() const -&gt; <span class="keywordtype">float</span>;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        private:</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            ::<a class="code" href="classlib_1_1spt_1_1audio__feature.html">audio_feature</a> feature = ::<a class="code" href="classlib_1_1spt_1_1audio__feature.html">audio_feature</a>::unknown;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <span class="keywordtype">float</span> minimum = 0.F;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="keywordtype">float</span> maximum = 1.F;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="keywordtype">float</span> value = 0.F;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            std::<span class="keywordtype">string</span> name;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            auto acousticness() const -&gt; std::<span class="keywordtype">string</span>;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            auto danceability() const -&gt; std::<span class="keywordtype">string</span>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            auto energy() const -&gt; std::<span class="keywordtype">string</span>;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            auto instrumentalness() const -&gt; std::<span class="keywordtype">string</span>;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            auto liveness() const -&gt; std::<span class="keywordtype">string</span>;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            auto loudness(<span class="keywordtype">float</span> &amp;min, <span class="keywordtype">float</span> &amp;max) const -&gt; std::<span class="keywordtype">string</span>;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            auto speechiness() const -&gt; std::<span class="keywordtype">string</span>;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            auto tempo(<span class="keywordtype">float</span> &amp;max) const -&gt; std::<span class="keywordtype">string</span>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            auto valence() const -&gt; std::<span class="keywordtype">string</span>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1audio__feature.html#ac25975142ad817228daabdce9a9786cd">   55</a></span>&#160;            auto <a class="code" href="classlib_1_1spt_1_1audio__feature.html#ac25975142ad817228daabdce9a9786cd">get_max</a>() const -&gt; <span class="keywordtype">float</span>;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1audio__feature.html#af1c087ff91a4a962d1074ca942d99bb9">   60</a></span>&#160;            auto <a class="code" href="classlib_1_1spt_1_1audio__feature.html#af1c087ff91a4a962d1074ca942d99bb9">get_description</a>() const -&gt; std::<span class="keywordtype">string</span>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        private:</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            ::<a class="code" href="classlib_1_1spt_1_1audio__feature.html">audio_feature</a> feature = ::<a class="code" href="classlib_1_1spt_1_1audio__feature.html">audio_feature</a>::unknown;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <span class="keywordtype">float</span> minimum = 0.F;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="keywordtype">float</span> maximum = 1.F;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keywordtype">float</span> value = 0.F;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            std::<span class="keywordtype">string</span> name;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            static auto to_string(audio_key key) -&gt; std::<span class="keywordtype">string</span>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            static auto to_string(audio_mode mode) -&gt; std::<span class="keywordtype">string</span>;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        };</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keywordtype">void</span> to_json(nlohmann::<a class="code" href="classlib_1_1json.html">json</a> &amp;j, const <a class="code" href="classlib_1_1spt_1_1audio__feature.html">audio_feature</a> &amp;a);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
-<div class="ttc" id="aclasslib_1_1json_html"><div class="ttname"><a href="classlib_1_1json.html">lib::json</a></div><div class="ttdef"><b>Definition:</b> json.hpp:15</div></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            auto acousticness() const -&gt; std::<span class="keywordtype">string</span>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            auto danceability() const -&gt; std::<span class="keywordtype">string</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            auto energy() const -&gt; std::<span class="keywordtype">string</span>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            auto instrumentalness() const -&gt; std::<span class="keywordtype">string</span>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            auto liveness() const -&gt; std::<span class="keywordtype">string</span>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            auto loudness(<span class="keywordtype">float</span> &amp;min, <span class="keywordtype">float</span> &amp;max) const -&gt; std::<span class="keywordtype">string</span>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            auto speechiness() const -&gt; std::<span class="keywordtype">string</span>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            auto tempo(<span class="keywordtype">float</span> &amp;max) const -&gt; std::<span class="keywordtype">string</span>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            auto valence() const -&gt; std::<span class="keywordtype">string</span>;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            auto time_signature(<span class="keywordtype">float</span> &amp;max) const -&gt; std::<span class="keywordtype">string</span>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            static auto to_string(audio_key key) -&gt; std::<span class="keywordtype">string</span>;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            static auto to_string(audio_mode mode) -&gt; std::<span class="keywordtype">string</span>;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        };</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;}</div>
 <div class="ttc" id="aclasslib_1_1spt_1_1audio__feature_html"><div class="ttname"><a href="classlib_1_1spt_1_1audio__feature.html">lib::spt::audio_feature</a></div><div class="ttdef"><b>Definition:</b> audiofeature.hpp:15</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1audio__feature_html_a3f5611b86fd465fc90dd6147a63b8de7"><div class="ttname"><a href="classlib_1_1spt_1_1audio__feature.html#a3f5611b86fd465fc90dd6147a63b8de7">lib::spt::audio_feature::get_feature</a></div><div class="ttdeci">auto get_feature() const -&gt; std::string</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1audio__feature_html_a6ad5e61e3d3e7bbe953e1f583ea59b14"><div class="ttname"><a href="classlib_1_1spt_1_1audio__feature.html#a6ad5e61e3d3e7bbe953e1f583ea59b14">lib::spt::audio_feature::get_value</a></div><div class="ttdeci">auto get_value() const -&gt; float</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1audio__feature_html_a82b42d2c341af84009e6d988d0b82953"><div class="ttname"><a href="classlib_1_1spt_1_1audio__feature.html#a82b42d2c341af84009e6d988d0b82953">lib::spt::audio_feature::get_min</a></div><div class="ttdeci">auto get_min() const -&gt; float</div></div>
-<div class="ttc" id="aclasslib_1_1spt_1_1audio__feature_html_abc401ea4b528e948beca6c952c252403"><div class="ttname"><a href="classlib_1_1spt_1_1audio__feature.html#abc401ea4b528e948beca6c952c252403">lib::spt::audio_feature::get_value</a></div><div class="ttdeci">auto get_value() const -&gt; std::string</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1audio__feature_html_ac25975142ad817228daabdce9a9786cd"><div class="ttname"><a href="classlib_1_1spt_1_1audio__feature.html#ac25975142ad817228daabdce9a9786cd">lib::spt::audio_feature::get_max</a></div><div class="ttdeci">auto get_max() const -&gt; float</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1audio__feature_html_aca28da044aee19568a9922e163e5ed31"><div class="ttname"><a href="classlib_1_1spt_1_1audio__feature.html#aca28da044aee19568a9922e163e5ed31">lib::spt::audio_feature::audio_feature</a></div><div class="ttdeci">audio_feature(::audio_feature feature, float value)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1audio__feature_html_ad885b29abcfc07d1f540f3044057e031"><div class="ttname"><a href="classlib_1_1spt_1_1audio__feature.html#ad885b29abcfc07d1f540f3044057e031">lib::spt::audio_feature::audio_feature</a></div><div class="ttdeci">audio_feature(audio_key key)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1audio__feature_html_ad8e51ed505a37c8d612ecca21211bddd"><div class="ttname"><a href="classlib_1_1spt_1_1audio__feature.html#ad8e51ed505a37c8d612ecca21211bddd">lib::spt::audio_feature::audio_feature</a></div><div class="ttdeci">audio_feature(audio_mode mode)</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1audio__feature_html_adbbb516b1b8c834d6e73b11b0e02e212"><div class="ttname"><a href="classlib_1_1spt_1_1audio__feature.html#adbbb516b1b8c834d6e73b11b0e02e212">lib::spt::audio_feature::get_name</a></div><div class="ttdeci">auto get_name() const -&gt; std::string</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1audio__feature_html_af1c087ff91a4a962d1074ca942d99bb9"><div class="ttname"><a href="classlib_1_1spt_1_1audio__feature.html#af1c087ff91a4a962d1074ca942d99bb9">lib::spt::audio_feature::get_description</a></div><div class="ttdeci">auto get_description() const -&gt; std::string</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
