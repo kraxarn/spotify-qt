@@ -63,9 +63,10 @@ lib::spt::audio_feature::audio_feature(::audio_feature feature, float value)
 
 lib::spt::audio_feature::audio_feature(audio_key key)
 	: feature(::audio_feature::key),
-	name(to_string(key))
+	name(to_string(key)),
+	value(static_cast<float>(key))
 {
-	// Min and max values doesn't really make sense here,
+	// These values doesn't really make sense here,
 	// but it looks better
 	minimum = static_cast<float>(audio_key::c);
 	maximum = static_cast<float>(audio_key::b);
@@ -73,9 +74,10 @@ lib::spt::audio_feature::audio_feature(audio_key key)
 
 lib::spt::audio_feature::audio_feature(audio_mode mode)
 	: feature(::audio_feature::mode),
-	name(to_string(mode))
+	name(to_string(mode)),
+	value(static_cast<float>(mode))
 {
-	// Min and max values doesn't really make sense here,
+	// These values doesn't really make sense here,
 	// but it looks better
 	minimum = static_cast<float>(audio_mode::minor);
 	maximum = static_cast<float>(audio_mode::major);
