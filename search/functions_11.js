@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['validate_378',['validate',['../classlib_1_1settings.html#a63bfb68ad93aac46a5b48d9ecab6b814',1,'lib::settings']]],
-  ['volume_379',['volume',['../classlib_1_1spt_1_1playback.html#acffe9e404d6fe0474e8c11345c5767ea',1,'lib::spt::playback']]]
+  ['url_383',['url',['../classlib_1_1spt_1_1auth.html#a3f4dd7f6fa15555e5ea65c11d8f50974',1,'lib::spt::auth::url()'],['../classlib_1_1spt_1_1error.html#a19860ef550fb939be1d47ec93f97142c',1,'lib::spt::error::url()']]]
 ];
