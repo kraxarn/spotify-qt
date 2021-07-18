@@ -6,10 +6,10 @@ lib::qt::system_info::system_info()
 	add("Qt version", QT_VERSION_STR);
 
 	// Desktop environment
-	if (lib::qt::util::system::has_env("XDG_CURRENT_DESKTOP"))
+	if (lib::system::has_env("XDG_CURRENT_DESKTOP"))
 	{
 		add("Current desktop",
-			lib::qt::util::system::env("XDG_CURRENT_DESKTOP"));
+			QString::fromStdString(lib::system::env("XDG_CURRENT_DESKTOP")));
 	}
 
 	// Kernel

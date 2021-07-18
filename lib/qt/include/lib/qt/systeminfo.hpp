@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/qt/util/systemutils.hpp"
+#include "lib/system.hpp"
 
 #include <QString>
 #include <QMap>
