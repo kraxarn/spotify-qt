@@ -71,8 +71,15 @@ void View::Artist::AlbumsList::setAlbums(const std::vector<lib::spt::album> &alb
 
 	setEnabled(true);
 
-	// Expand albums by default
-	groups.at(lib::album_group::album)->setExpanded(true);
+	// Expand first group with items
+	for (const auto &group : groups)
+	{
+		if (group.second->childCount() > 0)
+		{
+			group.second->setExpanded(true);
+			break;
+		}
+	}
 }
 
 auto View::Artist::AlbumsList::groupToString(lib::album_group albumGroup) -> QString
