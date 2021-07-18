@@ -21,6 +21,15 @@ lib::qt::system_info::system_info()
 
 	// Build ABI
 	add("ABI", QSysInfo::buildAbi());
+
+	// Window system
+	const auto windowSystem = lib::system::window_system();
+	if (windowSystem != lib::window_system::unknown)
+	{
+		add("Window system", windowSystem == lib::window_system::wayland
+			? "Wayland" : windowSystem == lib::window_system::x11
+				? "X11" : "Unknown");
+	}
 }
 
 void lib::qt::system_info::add(const QString &key, const QString &value)
