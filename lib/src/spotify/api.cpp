@@ -15,7 +15,7 @@ void api::refresh(bool force)
 	if (!force
 		&& lib::date_time::seconds_since_epoch() - settings.account.last_refresh < s_in_hour)
 	{
-		lib::log::info("Last refresh was less than an hour ago, not refreshing access token");
+		lib::log::dev("Last refresh was less than an hour ago, not refreshing access token");
 		last_auth = settings.account.last_refresh;
 		return;
 	}
@@ -69,7 +69,7 @@ auto api::auth_headers() -> lib::headers
 	auto last_refresh = lib::date_time::seconds_since_epoch() - last_auth;
 	if (last_refresh >= secsInHour)
 	{
-		lib::log::info("Access token probably expired, refreshing");
+		lib::log::dev("Access token probably expired, refreshing");
 		try
 		{
 			refresh();
