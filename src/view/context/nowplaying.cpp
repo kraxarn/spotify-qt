@@ -41,6 +41,7 @@ auto View::Context::NowPlaying::newLabel(float scale) -> QLabel *
 {
 	auto *label = new QLabel(this);
 	label->setWordWrap(true);
+	label->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
 
 	auto font = label->font();
 	auto pointSize = static_cast<float>(font.pointSize()) * scale;
