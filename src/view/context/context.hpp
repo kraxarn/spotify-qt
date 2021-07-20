@@ -16,12 +16,12 @@ namespace View
 				spt::Current &current, const lib::cache &cache, QWidget *parent);
 
 			void updateContextIcon();
-			void resetCurrentlyPlaying();
+			void resetCurrentlyPlaying() const;
 
 			auto getCurrentlyPlaying() const -> const lib::spt::track &;
-			void setCurrentlyPlaying(const lib::spt::track &track);
+			void setCurrentlyPlaying(const lib::spt::track &track) const;
 
-			void setAlbum(const QPixmap &pixmap);
+			void setAlbum(const QPixmap &pixmap) const;
 
 		private:
 			View::Context::Title *title = nullptr;

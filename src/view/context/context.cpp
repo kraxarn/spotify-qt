@@ -22,7 +22,7 @@ void View::Context::Context::updateContextIcon()
 	}
 }
 
-void View::Context::Context::resetCurrentlyPlaying()
+void View::Context::Context::resetCurrentlyPlaying() const
 {
 	if (content != nullptr)
 	{
@@ -39,7 +39,7 @@ auto View::Context::Context::getCurrentlyPlaying() const -> const lib::spt::trac
 	return content->getCurrentlyPlaying();
 }
 
-void View::Context::Context::setCurrentlyPlaying(const lib::spt::track &track)
+void View::Context::Context::setCurrentlyPlaying(const lib::spt::track &track) const
 {
 	if (content != nullptr)
 	{
@@ -47,7 +47,7 @@ void View::Context::Context::setCurrentlyPlaying(const lib::spt::track &track)
 	}
 }
 
-void View::Context::Context::setAlbum(const QPixmap &pixmap)
+void View::Context::Context::setAlbum(const QPixmap &pixmap) const
 {
 	if (content != nullptr)
 	{
