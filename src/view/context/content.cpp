@@ -14,8 +14,7 @@ View::Context::Content::Content(lib::spt::api &spotify, spt::Current &current,
 	album->setFixedSize(64, 64);
 
 	layout->addWidget(album);
-	nowPlaying = new QLabel(this);
-	nowPlaying->setWordWrap(true);
+	nowPlaying = new View::Context::NowPlaying(this);
 	layout->addWidget(nowPlaying);
 
 	reset();
@@ -48,7 +47,7 @@ void View::Context::Content::reset()
 
 	if (nowPlaying != nullptr)
 	{
-		nowPlaying->setText("No music playing");
+		nowPlaying->setNoPlaying();
 	}
 }
 
@@ -69,7 +68,7 @@ void View::Context::Content::setCurrentlyPlaying(const lib::spt::track &track)
 {
 	if (nowPlaying != nullptr)
 	{
-		nowPlaying->setText(QString::fromStdString(track.details()));
+		nowPlaying->setTrack(track);
 	}
 	currentlyPlaying = track;
 }

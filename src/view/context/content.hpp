@@ -8,6 +8,7 @@
 #include "menu/songmenu.hpp"
 #include "util/icon.hpp"
 #include "util/imageutils.hpp"
+#include "view/context/nowplaying.hpp"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -39,7 +40,7 @@ namespace View
 			lib::spt::track currentlyPlaying;
 
 			QLabel *album = nullptr;
-			QLabel *nowPlaying = nullptr;
+			View::Context::NowPlaying *nowPlaying = nullptr;
 
 			void onSongMenu(const QPoint &pos);
 		};
