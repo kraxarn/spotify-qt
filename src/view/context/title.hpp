@@ -33,6 +33,8 @@ namespace View
 			spt::Current &current;
 			const lib::cache &cache;
 
+			static constexpr int spacing = 16;
+
 			void onMenu(const QPoint &pos);
 			void onInfoOpen(bool checked);
 

@@ -1,17 +1,52 @@
 #include "nowplaying.hpp"
 
 View::Context::NowPlaying::NowPlaying(QWidget *parent)
-	: QLabel(parent)
+	: QWidget(parent)
 {
-	setWordWrap(true);
+	layout = new QVBoxLayout(this);
+	layout->setSpacing(0);
+
+	name = newLabel(nameScale);
+	artist = newLabel(artistScale);
 }
 
 void View::Context::NowPlaying::setTrack(const lib::spt::track &track)
 {
-	setText(QString::fromStdString(track.details()));
+	if (artist != nullptr)
+	{
+		const auto names = lib::spt::entity::combine_names(track.artists);
+		artist->setText(QString::fromStdString(names));
+	}
+
+	if (name != nullptr)
+	{
+		name->setText(QString::fromStdString(track.name));
+	}
 }
 
 void View::Context::NowPlaying::setNoPlaying()
 {
-	setText("No music playing");
+	if (artist != nullptr)
+	{
+		artist->setText("No music playing");
+	}
+
+	if (name != nullptr)
+	{
+		name->setText(QString());
+	}
+}
+
+auto View::Context::NowPlaying::newLabel(float scale) -> QLabel *
+{
+	auto *label = new QLabel(this);
+	label->setWordWrap(true);
+
+	auto font = label->font();
+	auto pointSize = static_cast<float>(font.pointSize()) * scale;
+	font.setPointSize(static_cast<int>(pointSize));
+	label->setFont(font);
+
+	layout->addWidget(label);
+	return label;
 }

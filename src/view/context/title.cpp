@@ -11,6 +11,9 @@ View::Context::Title::Title(lib::spt::api &spotify, const lib::settings &setting
 	QWidget(parent)
 {
 	auto *layout = new QHBoxLayout(this);
+	layout->setSpacing(spacing);
+	layout->setContentsMargins(spacing, 0, spacing, 0);
+
 	icon = new QLabel(this);
 	icon->setVisible(false);
 
@@ -18,7 +21,6 @@ View::Context::Title::Title(lib::spt::api &spotify, const lib::settings &setting
 	info->setToolTip("Currently playing from");
 	info->setVisible(false);
 
-	layout->addSpacing(16);
 	layout->addWidget(icon);
 	layout->addWidget(info, 1);
 
