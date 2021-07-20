@@ -20,22 +20,14 @@ View::Context::Content::Content(lib::spt::api &spotify, spt::Current &current,
 
 	reset();
 
-	// Show menu when clicking now playing
-	if (nowPlaying != nullptr)
-	{
-		nowPlaying->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-		QLabel::connect(nowPlaying, &QWidget::customContextMenuRequested,
-			this, &View::Context::Content::onSongMenu);
-	}
+	// Show menu when clicking
+	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+	QLabel::connect(this, &QWidget::customContextMenuRequested,
+		this, &View::Context::Content::onSongMenu);
 }
 
 void View::Context::Content::onSongMenu(const QPoint &pos)
 {
-	if (nowPlaying == nullptr)
-	{
-		return;
-	}
-
 	auto track = current.playback.item;
 	if (track.name.empty()
 		&& track.artists.empty())
@@ -44,7 +36,7 @@ void View::Context::Content::onSongMenu(const QPoint &pos)
 	}
 
 	auto *menu = new SongMenu(track, spotify, cache, parentWidget());
-	menu->popup(nowPlaying->mapToGlobal(pos));
+	menu->popup(mapToGlobal(pos));
 }
 
 void View::Context::Content::reset()
