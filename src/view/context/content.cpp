@@ -8,7 +8,8 @@ View::Context::Content::Content(lib::spt::api &spotify, spt::Current &current,
 	QWidget(parent)
 {
 	auto *layout = new QHBoxLayout(this);
-	layout->setSpacing(12);
+	layout->setSpacing(0);
+	layout->setAlignment(Qt::AlignBottom);
 
 	album = new QLabel(this);
 	album->setFixedSize(64, 64);
