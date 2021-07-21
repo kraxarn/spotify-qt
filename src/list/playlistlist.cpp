@@ -223,9 +223,10 @@ void PlaylistList::order(lib::playlist_order order)
 					auto id1 = i1->data(DataRole::RolePlaylistId).toString();
 					auto id2 = i2->data(DataRole::RolePlaylistId).toString();
 
-				return customOrder.contains(id1) && customOrder.contains(id2)
-					&& customOrder[id1] < customOrder[id2];
-			});
+					return customOrder.contains(id1)
+						&& customOrder.contains(id2)
+						&& customOrder[id1] < customOrder[id2];
+				});
 			break;
 	}
 
