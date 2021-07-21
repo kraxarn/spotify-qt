@@ -40,7 +40,8 @@ void View::Context::Title::onMenu(const QPoint &pos)
 
 	if (lib::developer_mode::enabled)
 	{
-		auto *devContext = menu->addAction(current.context);
+		const auto uri = QString::fromStdString(current.playback.context.uri);
+		auto *devContext = menu->addAction(uri);
 		devContext->setEnabled(false);
 	}
 
