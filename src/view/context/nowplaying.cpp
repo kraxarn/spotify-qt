@@ -12,29 +12,29 @@ View::Context::NowPlaying::NowPlaying(QWidget *parent)
 
 void View::Context::NowPlaying::setTrack(const lib::spt::track &track)
 {
-	if (artist != nullptr)
-	{
-		const auto names = lib::spt::entity::combine_names(track.artists);
-		artist->setText(QString::fromStdString(names));
-	}
-
 	if (name != nullptr)
 	{
 		name->setVisible(true);
 		name->setText(QString::fromStdString(track.name));
 	}
+
+	if (artist != nullptr)
+	{
+		const auto names = lib::spt::entity::combine_names(track.artists);
+		artist->setText(QString::fromStdString(names));
+	}
 }
 
 void View::Context::NowPlaying::setNoPlaying()
 {
-	if (artist != nullptr)
-	{
-		artist->setText("No music playing");
-	}
-
 	if (name != nullptr)
 	{
 		name->setVisible(false);
+	}
+
+	if (artist != nullptr)
+	{
+		artist->setText("No music playing");
 	}
 }
 
