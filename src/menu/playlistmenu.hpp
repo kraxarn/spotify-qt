@@ -18,9 +18,11 @@ public:
 		QWidget *parent = nullptr);
 
 private:
+	lib::spt::playlist playlist;
+	lib::cache &cache;
+
 	PlaylistEditDialog *editDialog = nullptr;
 	QWidget *parent = nullptr;
-	const lib::spt::playlist playlist;
 	std::vector<lib::spt::track> tracks;
 	QAction *tracksAction = nullptr;
 	QAction *byAction = nullptr;

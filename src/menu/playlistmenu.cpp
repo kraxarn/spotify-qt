@@ -5,6 +5,7 @@ PlaylistMenu::PlaylistMenu(lib::spt::api &spotify, const lib::spt::playlist &pla
 	lib::cache &cache, QWidget *parent)
 	: parent(parent),
 	playlist(playlist),
+	cache(cache),
 	QMenu(parent)
 {
 	auto *window = MainWindow::find(parent);
@@ -139,4 +140,10 @@ void PlaylistMenu::tracksLoaded(const std::vector<lib::spt::track> &items)
 		byAction->setVisible(true);
 	}
 	editAction->setVisible(isOwner);
+
+	if (!items.empty() && !playlist.is_null())
+	{
+		playlist.tracks = items;
+		cache.set_playlist(playlist);
+	}
 }
