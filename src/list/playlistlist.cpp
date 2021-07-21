@@ -12,11 +12,14 @@ PlaylistList::PlaylistList(spt::Spotify &spotify, lib::settings &settings, lib::
 	// Set default selected playlist
 	setCurrentRow(0);
 
-	QListWidget::connect(this, &QListWidget::itemClicked, this, &PlaylistList::clicked);
-	QListWidget::connect(this, &QListWidget::itemDoubleClicked, this, &PlaylistList::doubleClicked);
+	QListWidget::connect(this, &QListWidget::itemClicked,
+		this, &PlaylistList::clicked);
+	QListWidget::connect(this, &QListWidget::itemDoubleClicked,
+		this, &PlaylistList::doubleClicked);
 
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QWidget::connect(this, &QWidget::customContextMenuRequested, this, &PlaylistList::menu);
+	QWidget::connect(this, &QWidget::customContextMenuRequested,
+		this, &PlaylistList::menu);
 }
 
 void PlaylistList::showEvent(QShowEvent */*event*/)
@@ -168,19 +171,20 @@ void PlaylistList::order(lib::playlist_order order)
 	switch (order)
 	{
 		case lib::playlist_order_default:
-			std::sort(items.begin(), items.end(), []
-				(QListWidgetItem *i1, QListWidgetItem *i2) -> bool
-			{
-				return i1->data(RoleIndex).toInt() < i2->data(RoleIndex).toInt();
-			});
+			std::sort(items.begin(), items.end(),
+				[](QListWidgetItem *i1, QListWidgetItem *i2) -> bool
+				{
+					return i1->data(RoleIndex).toInt()
+						< i2->data(RoleIndex).toInt();
+				});
 			break;
 
 		case lib::playlist_order_alphabetical:
-			std::sort(items.begin(), items.end(), []
-				(QListWidgetItem *i1, QListWidgetItem *i2) -> bool
-			{
-				return i1->text() < i2->text();
-			});
+			std::sort(items.begin(), items.end(),
+				[](QListWidgetItem *i1, QListWidgetItem *i2) -> bool
+				{
+					return i1->text() < i2->text();
+				});
 			break;
 
 		case lib::playlist_order_recent:
@@ -213,11 +217,11 @@ void PlaylistList::order(lib::playlist_order order)
 			{
 				customOrder[QString::fromStdString(playlist)] = i++;
 			}
-			std::sort(items.begin(), items.end(), [customOrder]
-				(QListWidgetItem *i1, QListWidgetItem *i2) -> bool
-			{
-				auto id1 = i1->data(DataRole::RolePlaylistId).toString();
-				auto id2 = i2->data(DataRole::RolePlaylistId).toString();
+			std::sort(items.begin(), items.end(),
+				[customOrder](QListWidgetItem *i1, QListWidgetItem *i2) -> bool
+				{
+					auto id1 = i1->data(DataRole::RolePlaylistId).toString();
+					auto id2 = i2->data(DataRole::RolePlaylistId).toString();
 
 				return customOrder.contains(id1) && customOrder.contains(id2)
 					&& customOrder[id1] < customOrder[id2];
