@@ -20,6 +20,7 @@ void View::Context::NowPlaying::setTrack(const lib::spt::track &track)
 
 	if (name != nullptr)
 	{
+		name->setVisible(true);
 		name->setText(QString::fromStdString(track.name));
 	}
 }
@@ -33,7 +34,7 @@ void View::Context::NowPlaying::setNoPlaying()
 
 	if (name != nullptr)
 	{
-		name->setText(QString());
+		name->setVisible(false);
 	}
 }
 
