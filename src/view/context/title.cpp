@@ -128,7 +128,20 @@ void View::Context::Title::updateIcon()
 	}
 	else if (current.playback.context.type == "artist")
 	{
-		callback(lib::spt::entity::combine_names(current.playback.item.artists));
+		auto name = current.playback.item.artists.empty()
+			? std::string()
+			: current.playback.item.artists.front().name;
+
+		auto id = lib::spt::api::to_id(current.playback.context.uri);
+		for (const auto &artist : current.playback.item.artists)
+		{
+			if (artist.id == id)
+			{
+				name = artist.name;
+			}
+		}
+
+		callback(name);
 	}
 	else
 	{
