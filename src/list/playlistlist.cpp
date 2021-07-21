@@ -2,7 +2,7 @@
 
 #include "../mainwindow.hpp"
 
-PlaylistList::PlaylistList(spt::Spotify &spotify, lib::settings &settings, lib::cache &cache,
+PlaylistList::PlaylistList(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
 	QWidget *parent)
 	: spotify(spotify),
 	settings(settings),

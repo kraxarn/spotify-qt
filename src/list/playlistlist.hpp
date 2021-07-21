@@ -1,8 +1,7 @@
 #pragma once
 
-#include "../spotify/spotify.hpp"
-#include "playlistlist.hpp"
 #include "lib/cache.hpp"
+#include "lib/spotify/api.hpp"
 #include "lib/spotify/playlist.hpp"
 #include "lib/enum/playlistorder.hpp"
 
@@ -13,7 +12,7 @@ class PlaylistList: public QListWidget
 Q_OBJECT
 
 public:
-	PlaylistList(spt::Spotify &spotify, lib::settings &settings, lib::cache &cache,
+	PlaylistList(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
 		QWidget *parent);
 
 	void load(const std::vector<lib::spt::playlist> &items);
@@ -29,7 +28,7 @@ protected:
 	void showEvent(QShowEvent *event) override;
 
 private:
-	spt::Spotify &spotify;
+	lib::spt::api &spotify;
 	lib::cache &cache;
 	lib::settings &settings;
 
