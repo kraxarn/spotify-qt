@@ -1,7 +1,7 @@
-#include "albummenu.hpp"
+#include "menu/album.hpp"
 #include "mainwindow.hpp"
 
-AlbumMenu::AlbumMenu(lib::spt::api &spotify, lib::cache &cache, const std::string &albumId,
+Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache, const std::string &albumId,
 	QWidget *parent)
 	: parent(parent),
 	albumId(albumId),
@@ -22,17 +22,17 @@ AlbumMenu::AlbumMenu(lib::spt::api &spotify, lib::cache &cache, const std::strin
 
 	addSeparator();
 	auto *playShuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle play");
-	QAction::connect(playShuffle, &QAction::triggered, this, &AlbumMenu::shuffle);
+	QAction::connect(playShuffle, &QAction::triggered, this, &Menu::Album::shuffle);
 
 	auto *share = addMenu(Icon::get("document-share"), "Share");
 	auto *sharePlaylist = share->addAction("Copy album link");
-	QAction::connect(sharePlaylist, &QAction::triggered, this, &AlbumMenu::shareAlbum);
+	QAction::connect(sharePlaylist, &QAction::triggered, this, &Menu::Album::shareAlbum);
 
 	auto *shareSongOpen = share->addAction("Open in Spotify");
-	QAction::connect(shareSongOpen, &QAction::triggered, this, &AlbumMenu::shareOpen);
+	QAction::connect(shareSongOpen, &QAction::triggered, this, &Menu::Album::shareOpen);
 }
 
-void AlbumMenu::shuffle(bool /*checked*/)
+void Menu::Album::shuffle(bool /*checked*/)
 {
 	if (tracks.empty())
 	{
@@ -59,20 +59,20 @@ void AlbumMenu::shuffle(bool /*checked*/)
 		});
 }
 
-void AlbumMenu::shareAlbum(bool /*checked*/)
+void Menu::Album::shareAlbum(bool /*checked*/)
 {
 	QApplication::clipboard()->setText(QString("https://open.spotify.com/album/%1")
 		.arg(QString::fromStdString(albumId)));
 	MainWindow::find(parentWidget())->setStatus("Link copied to clipboard");
 }
 
-void AlbumMenu::shareOpen(bool /*checked*/)
+void Menu::Album::shareOpen(bool /*checked*/)
 {
 	UrlUtils::open(QString("https://open.spotify.com/album/%1")
 		.arg(QString::fromStdString(albumId)), LinkType::Web, this->parent);
 }
 
-void AlbumMenu::tracksLoaded(const std::vector<lib::spt::track> &items)
+void Menu::Album::tracksLoaded(const std::vector<lib::spt::track> &items)
 {
 	tracks = items;
 
