@@ -18,7 +18,6 @@ namespace Menu
 			QWidget *parent);
 
 	private:
-		QWidget *parent = nullptr;
 		std::vector<lib::spt::track> tracks;
 		std::string albumId;
 		lib::spt::api &spotify;

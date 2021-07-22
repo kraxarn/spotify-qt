@@ -3,8 +3,7 @@
 
 Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache, const std::string &albumId,
 	QWidget *parent)
-	: parent(parent),
-	albumId(albumId),
+	: albumId(albumId),
 	spotify(spotify),
 	QMenu(parent)
 {
@@ -45,7 +44,7 @@ void Menu::Album::shuffle(bool /*checked*/)
 	spotify.play_tracks(initialIndex, lib::spt::api::to_uri("album", albumId),
 		[this](const std::string &status)
 		{
-			auto *mainWindow = MainWindow::find(this->parent);
+			auto *mainWindow = MainWindow::find(this->parentWidget());
 			if (!status.empty())
 			{
 				mainWindow->status(status, true);
@@ -69,7 +68,8 @@ void Menu::Album::shareAlbum(bool /*checked*/)
 void Menu::Album::shareOpen(bool /*checked*/)
 {
 	UrlUtils::open(QString("https://open.spotify.com/album/%1")
-		.arg(QString::fromStdString(albumId)), LinkType::Web, this->parent);
+			.arg(QString::fromStdString(albumId)), LinkType::Web,
+		MainWindow::find(parentWidget()));
 }
 
 void Menu::Album::tracksLoaded(const std::vector<lib::spt::track> &items)
