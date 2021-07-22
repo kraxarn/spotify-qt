@@ -5,6 +5,7 @@ Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playl
 	lib::cache &cache, QWidget *parent)
 	: playlist(playlist),
 	cache(cache),
+	spotify(spotify),
 	QMenu(parent)
 {
 	auto *window = MainWindow::find(parent);
@@ -23,44 +24,12 @@ Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playl
 	auto *playShuffle = addAction(Icon::get("media-playlist-shuffle"),
 		"Shuffle play");
 	QAction::connect(playShuffle, &QAction::triggered,
-		[this, playlist, &spotify, window](bool /*checked*/)
-		{
-			if (tracks.empty())
-			{
-				window->setStatus("No tracks found to shuffle", true);
-				return;
-			}
-
-			auto initialIndex = lib::random().next_int(0, tracks.size());
-			spotify.play_tracks(initialIndex, lib::spt::api::to_uri("playlist", playlist.id),
-				[&spotify, window](const std::string &status)
-				{
-					if (!status.empty())
-					{
-						window->status(status, true);
-						return;
-					}
-
-					spotify.set_shuffle(true, [window](const std::string &status)
-					{
-						window->status(status, true);
-					});
-				});
-		});
+		this, &Menu::Playlist::Playlist::onShuffle);
 
 	editAction = addAction(Icon::get("document-edit"), "Edit");
 	editAction->setVisible(false);
 	QAction::connect(editAction, &QAction::triggered,
-		[this, playlist, &spotify, window](bool /*checked*/)
-		{
-			delete editDialog;
-			editDialog = new PlaylistEditDialog(spotify, playlist, -1,
-				parentWidget());
-			if (editDialog->exec() == QDialog::Accepted)
-			{
-				window->refreshPlaylists();
-			}
-		});
+		this, &Menu::Playlist::onEdit);
 
 	auto *share = addMenu(Icon::get("document-share"), "Share");
 	auto *sharePlaylist = share->addAction("Copy playlist link");
@@ -144,5 +113,53 @@ void Menu::Playlist::tracksLoaded(const std::vector<lib::spt::track> &items)
 	{
 		playlist.tracks = items;
 		cache.set_playlist(playlist);
+	}
+}
+
+void Menu::Playlist::onShuffle(bool /*checked*/)
+{
+	if (tracks.empty())
+	{
+		auto *mainWindow = MainWindow::find(parentWidget());
+		mainWindow->setStatus("No tracks found to shuffle", true);
+		return;
+	}
+
+	auto initialIndex = lib::random().next_int(0, static_cast<int>(tracks.size()));
+	spotify.play_tracks(initialIndex, lib::spt::api::to_uri("playlist", playlist.id),
+		[this](const std::string &status)
+		{
+			if (!status.empty())
+			{
+				auto *mainWindow = MainWindow::find(this->parentWidget());
+				mainWindow->status(status, true);
+				return;
+			}
+
+			spotify.set_shuffle(true, [this](const std::string &status)
+			{
+				if (!status.empty())
+				{
+					auto *mainWindow = MainWindow::find(this->parentWidget());
+					mainWindow->status(status, true);
+				}
+			});
+		});
+}
+
+void Menu::Playlist::onEdit(bool /*checked*/)
+{
+	if (editDialog != nullptr)
+	{
+		editDialog->deleteLater();
+	}
+
+	editDialog = new PlaylistEditDialog(spotify, playlist, -1,
+		MainWindow::find(parentWidget()));
+
+	if (editDialog->exec() == QDialog::Accepted)
+	{
+		auto *mainWindow = MainWindow::find(parentWidget());
+		mainWindow->refreshPlaylists();
 	}
 }

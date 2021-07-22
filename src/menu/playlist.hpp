@@ -22,6 +22,7 @@ namespace Menu
 	private:
 		lib::spt::playlist playlist;
 		lib::cache &cache;
+		lib::spt::api &spotify;
 
 		PlaylistEditDialog *editDialog = nullptr;
 		std::vector<lib::spt::track> tracks;
@@ -30,5 +31,8 @@ namespace Menu
 		QAction *editAction = nullptr;
 
 		void tracksLoaded(const std::vector<lib::spt::track> &items);
+
+		void onShuffle(bool checked);
+		void onEdit(bool checked);
 	};
 }
