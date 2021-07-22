@@ -24,7 +24,6 @@ namespace Menu
 		lib::cache &cache;
 
 		PlaylistEditDialog *editDialog = nullptr;
-		QWidget *parent = nullptr;
 		std::vector<lib::spt::track> tracks;
 		QAction *tracksAction = nullptr;
 		QAction *byAction = nullptr;

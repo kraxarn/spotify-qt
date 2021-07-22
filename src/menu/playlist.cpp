@@ -3,8 +3,7 @@
 
 Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playlist,
 	lib::cache &cache, QWidget *parent)
-	: parent(parent),
-	playlist(playlist),
+	: playlist(playlist),
 	cache(cache),
 	QMenu(parent)
 {
@@ -77,7 +76,7 @@ Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playl
 	{
 		UrlUtils::open(QString("https://open.spotify.com/playlist/%1")
 				.arg(QString::fromStdString(this->playlist.id)),
-			LinkType::Web, this->parent);
+			LinkType::Web, MainWindow::find(parentWidget()));
 	});
 
 	if (lib::developer_mode::enabled)
@@ -95,7 +94,7 @@ Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playl
 			[this](bool /*checked*/)
 			{
 				nlohmann::json json = this->playlist;
-				QMessageBox::information(this->parent, "JSON",
+				QMessageBox::information(MainWindow::find(parentWidget()), "JSON",
 					QString::fromStdString(json.dump(4)));
 			});
 	}
