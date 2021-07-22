@@ -18,12 +18,6 @@ file(GLOB SUB_INC "include/lib/*/*.hpp")
 # Add all files
 add_library(spotify-qt-lib STATIC ${MAIN_SRC} ${SUB_SRC} ${MAIN_INC} ${SUB_INC} ${LIB_QT_SOURCES})
 
-# Sources for third-party libraries are built separately
-# (to make sure include paths are correct for source files)
-add_subdirectory(src/thirdparty)
-target_link_libraries(${PROJECT_NAME} PRIVATE
-	spotify-qt-lib-third-party)
-
 # Main source folder has the headers
 target_include_directories(spotify-qt-lib PUBLIC
 	"${CMAKE_CURRENT_SOURCE_DIR}/include"
