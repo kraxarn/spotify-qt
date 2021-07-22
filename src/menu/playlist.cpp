@@ -24,7 +24,7 @@ Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playl
 	auto *playShuffle = addAction(Icon::get("media-playlist-shuffle"),
 		"Shuffle play");
 	QAction::connect(playShuffle, &QAction::triggered,
-		this, &Menu::Playlist::Playlist::onShuffle);
+		this, &Menu::Playlist::onShuffle);
 
 	editAction = addAction(Icon::get("document-edit"), "Edit");
 	editAction->setVisible(false);
