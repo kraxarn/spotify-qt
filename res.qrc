@@ -41,6 +41,7 @@
         <file>res/ic/light/view-media-lyrics.svg</file>
         <file>res/ic/light/view-media-playlist.svg</file>
         <file>res/ic/light/view-media-track.svg</file>
+        <file>res/ic/light/view-refresh.svg</file>
         <file>res/ic/light/view-sort-ascending.svg</file>
         <file>res/ic/light/view-statistics.svg</file>
         <file>res/ic/light/visibility.svg</file>
@@ -88,6 +89,7 @@
         <file>res/ic/dark/view-media-lyrics.svg</file>
         <file>res/ic/dark/view-media-playlist.svg</file>
         <file>res/ic/dark/view-media-track.svg</file>
+        <file>res/ic/dark/view-refresh.svg</file>
         <file>res/ic/dark/view-sort-ascending.svg</file>
         <file>res/ic/dark/view-statistics.svg</file>
         <file>res/ic/dark/visibility.svg</file>
