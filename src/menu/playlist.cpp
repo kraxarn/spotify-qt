@@ -31,6 +31,12 @@ Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playl
 	QAction::connect(editAction, &QAction::triggered,
 		this, &Menu::Playlist::onEdit);
 
+	auto *refresh = addAction(Icon::get("view-refresh"), "Refresh");
+	const std::string parentName = parentWidget()->metaObject()->className();
+	refresh->setVisible(parentName == "PlaylistList");
+	QAction::connect(refresh, &QAction::triggered,
+		this, &Menu::Playlist::onRefresh);
+
 	auto *share = addMenu(Icon::get("document-share"), "Share");
 	auto *sharePlaylist = share->addAction("Copy playlist link");
 	QAction::connect(sharePlaylist, &QAction::triggered, [window, playlist](bool /*checked*/)
@@ -162,4 +168,10 @@ void Menu::Playlist::onEdit(bool /*checked*/)
 		auto *mainWindow = MainWindow::find(parentWidget());
 		mainWindow->refreshPlaylists();
 	}
+}
+
+void Menu::Playlist::onRefresh(bool /*checked*/)
+{
+	auto *mainWindow = MainWindow::find(parentWidget());
+	mainWindow->getSongsTree()->refreshPlaylist(playlist);
 }

@@ -34,5 +34,6 @@ namespace Menu
 
 		void onShuffle(bool checked);
 		void onEdit(bool checked);
+		void onRefresh(bool checked);
 	};
 }

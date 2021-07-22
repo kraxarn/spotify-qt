@@ -37,6 +37,9 @@ public:
 	 */
 	void load(const lib::spt::playlist &playlist);
 
+	/** Force refresh tracks in playlist */
+	void refreshPlaylist(const lib::spt::playlist &playlist);
+
 	/**
 	 * Load album first from cache, then refresh it
 	 * @param album Album to load
