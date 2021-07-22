@@ -60,6 +60,6 @@ void View::Search::Albums::onContextMenu(const QPoint &pos)
 		return;
 	}
 
-	auto *albumMenu = new AlbumMenu(spotify, cache, albumId.toStdString(), parentWidget());
+	auto *albumMenu = new Menu::Album(spotify, cache, albumId.toStdString(), parentWidget());
 	albumMenu->popup(mapToGlobal(pos));
 }

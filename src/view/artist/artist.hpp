@@ -3,7 +3,7 @@
 #include "lib/enum/followtype.hpp"
 #include "lib/spotify/api.hpp"
 
-#include "menu/albummenu.hpp"
+#include "menu/album.hpp"
 #include "menu/songmenu.hpp"
 #include "widget/loader.hpp"
 

@@ -154,7 +154,7 @@ void View::Artist::AlbumsList::onContextMenu(const QPoint &pos)
 		return;
 	}
 
-	auto *albumMenu = new AlbumMenu(spotify, cache, albumId.toStdString(),
+	auto *albumMenu = new Menu::Album(spotify, cache, albumId.toStdString(),
 		parentWidget());
 	albumMenu->popup(mapToGlobal(pos));
 }
