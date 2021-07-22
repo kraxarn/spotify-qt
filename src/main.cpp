@@ -57,13 +57,21 @@ auto main(int argc, char *argv[]) -> int
 	parser.addHelpOption();
 	parser.addOptions({
 		{"dev", "Enable developer mode for troubleshooting issues."},
-		{"reset-credentials", "Allows providing new Spotify credentials."}
+		{"reset-credentials", "Allows providing new Spotify credentials."},
+		{"paths", "Print paths for config file and cache."},
 	});
 	parser.process(app);
 
 	if (parser.isSet("dev"))
 	{
 		lib::developer_mode::enabled = true;
+	}
+
+	if (parser.isSet("paths"))
+	{
+		lib::log::info("Config: {}", paths.config_file());
+		lib::log::info("Cache:  {}", paths.cache());
+		return 0;
 	}
 
 	// First setup window
