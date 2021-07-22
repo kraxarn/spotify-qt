@@ -41,7 +41,7 @@ void View::Search::Playlists::onContextMenu(const QPoint &pos)
 
 	spotify.playlist(playlistId, [this, pos](const lib::spt::playlist &playlist)
 	{
-		auto *menu = new PlaylistMenu(spotify, playlist, cache, parentWidget());
+		auto *menu = new Menu::Playlist(spotify, playlist, cache, parentWidget());
 		menu->popup(mapToGlobal(pos));
 	});
 }

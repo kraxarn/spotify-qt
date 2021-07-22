@@ -1,7 +1,7 @@
-#include "playlistmenu.hpp"
+#include "menu/playlist.hpp"
 #include "mainwindow.hpp"
 
-PlaylistMenu::PlaylistMenu(lib::spt::api &spotify, const lib::spt::playlist &playlist,
+Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playlist,
 	lib::cache &cache, QWidget *parent)
 	: parent(parent),
 	playlist(playlist),
@@ -107,7 +107,7 @@ PlaylistMenu::PlaylistMenu(lib::spt::api &spotify, const lib::spt::playlist &pla
 	});
 }
 
-void PlaylistMenu::tracksLoaded(const std::vector<lib::spt::track> &items)
+void Menu::Playlist::tracksLoaded(const std::vector<lib::spt::track> &items)
 {
 	constexpr int sInMin = 60;
 	constexpr int msInMin = 1000 * sInMin;

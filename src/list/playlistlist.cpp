@@ -81,7 +81,7 @@ void PlaylistList::menu(const QPoint &pos)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	const auto &playlist = mainWindow->getPlaylist(getItemIndex(itemAt(pos)));
-	auto *menu = new PlaylistMenu(spotify, playlist, cache, mainWindow);
+	auto *menu = new Menu::Playlist(spotify, playlist, cache, mainWindow);
 	menu->popup(mapToGlobal(pos));
 }
 
