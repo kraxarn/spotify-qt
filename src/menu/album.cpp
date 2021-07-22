@@ -76,14 +76,14 @@ void Menu::Album::tracksLoaded(const std::vector<lib::spt::track> &items)
 {
 	tracks = items;
 
-	auto duration = 0;
+	auto duration = 0u;
 	for (auto &track : tracks)
 	{
 		duration += track.duration;
 	}
 
-	constexpr int secInMin = 60;
-	constexpr int msToMin = 1000 / secInMin;
+	constexpr unsigned int secInMin = 60u;
+	constexpr unsigned int msToMin = 1000u / secInMin;
 	auto minutes = duration / msToMin;
 
 	trackCount->setText(QString("%1 tracks, %2%3 m")
