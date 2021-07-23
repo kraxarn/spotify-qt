@@ -73,7 +73,12 @@ Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playl
 			});
 	}
 
-	tracksLoaded(cache.get_playlist(playlist.id).tracks);
+	const auto cached = cache.get_playlist(playlist.id);
+	if (!cached.is_null())
+	{
+		tracksLoaded(cached.tracks);
+	}
+
 	spotify.playlist_tracks(playlist, [this](const std::vector<lib::spt::track> &items)
 	{
 		tracksLoaded(items);
