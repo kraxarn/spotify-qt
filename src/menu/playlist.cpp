@@ -32,8 +32,7 @@ Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playl
 		this, &Menu::Playlist::onEdit);
 
 	auto *refresh = addAction(Icon::get("view-refresh"), "Refresh");
-	const std::string parentName = parentWidget()->metaObject()->className();
-	refresh->setVisible(parentName == "PlaylistList");
+	refresh->setVisible(dynamic_cast<PlaylistList *>(parentWidget()) != nullptr);
 	QAction::connect(refresh, &QAction::triggered,
 		this, &Menu::Playlist::onRefresh);
 
