@@ -87,12 +87,12 @@ Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playl
 
 void Menu::Playlist::tracksLoaded(const std::vector<lib::spt::track> &items)
 {
-	constexpr int sInMin = 60;
-	constexpr int msInMin = 1000 * sInMin;
+	constexpr unsigned int sInMin = 60U;
+	constexpr unsigned int msInMin = 1000U * sInMin;
 
 	tracks = items;
 
-	auto duration = 0;
+	auto duration = 0U;
 	for (const auto &track : tracks)
 	{
 		duration += track.duration;
