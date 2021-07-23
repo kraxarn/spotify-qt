@@ -94,3 +94,9 @@ auto lib::spt::playlist::is_null() const -> bool
 {
 	return id.empty();
 }
+
+auto lib::spt::playlist::is_up_to_date(const std::string &playlist_snapshot) const -> bool
+{
+	return owner_id != "spotify"
+		&& snapshot == playlist_snapshot;
+}

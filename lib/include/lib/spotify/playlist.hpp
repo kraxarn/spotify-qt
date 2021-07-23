@@ -88,6 +88,11 @@ namespace lib
 			 * If no playlist has been parsed (invalid ID)
 			 */
 			auto is_null() const -> bool;
+
+			/**
+			 * Compare snapshot and check if playlist is up to date
+			 */
+			auto is_up_to_date(const std::string &snapshot) const -> bool;
 		};
 
 		void to_json(nlohmann::json &j, const playlist &p);
