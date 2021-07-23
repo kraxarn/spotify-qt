@@ -99,10 +99,11 @@ void Menu::Playlist::tracksLoaded(const std::vector<lib::spt::track> &items)
 	}
 	const auto minutes = duration / msInMin;
 
-	if (tracks.size() > 1)
+	if (!tracks.empty())
 	{
-		tracksAction->setText(QString("%1 tracks, %2%3 m")
+		tracksAction->setText(QString("%1 track%2, %3%4 m")
 			.arg(tracks.size())
+			.arg(tracks.size() == 1 ? "" : "s")
 			.arg(minutes >= sInMin
 				? QString("%1 h ").arg(minutes / sInMin)
 				: QString())
