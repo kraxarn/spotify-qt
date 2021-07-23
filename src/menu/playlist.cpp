@@ -79,10 +79,13 @@ Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playl
 		tracksLoaded(cached.tracks);
 	}
 
-	spotify.playlist_tracks(playlist, [this](const std::vector<lib::spt::track> &items)
+	if (cached.is_null() || !playlist.is_up_to_date(cached.snapshot))
 	{
-		tracksLoaded(items);
-	});
+		spotify.playlist_tracks(playlist, [this](const std::vector<lib::spt::track> &items)
+		{
+			tracksLoaded(items);
+		});
+	}
 }
 
 void Menu::Playlist::tracksLoaded(const std::vector<lib::spt::track> &items)
