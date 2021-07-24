@@ -520,6 +520,16 @@ void MainWindow::setNoSptContext()
 	setSptContext(std::string());
 }
 
+auto MainWindow::getQueue() const -> const std::vector<std::string> &
+{
+	return queue;
+}
+
+void MainWindow::setQueue(const std::vector<std::string> &trackUris)
+{
+	queue = trackUris;
+}
+
 auto MainWindow::getCurrentPlayback() -> lib::spt::playback &
 {
 	return current.playback;

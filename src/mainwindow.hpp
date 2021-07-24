@@ -61,6 +61,9 @@ public:
 	void setSptContext(const lib::spt::album &album);
 	void setNoSptContext();
 
+	auto getQueue() const -> const std::vector<std::string> &;
+	void setQueue(const std::vector<std::string> &trackUris);
+
 	// Getters for private properties
 	void setSearchChecked(bool checked);
 	TracksList *getSongsTree();
@@ -105,6 +108,9 @@ private:
 	int refreshCount = -1;
 	bool stateValid = true;
 	QDockWidget *sidePanel = nullptr;
+
+	/** @note Only valid when playing without context */
+	std::vector<std::string> queue;
 
 	LibraryList *libraryList = nullptr;
 	PlaylistList *playlistList = nullptr;

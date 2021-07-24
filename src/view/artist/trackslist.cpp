@@ -49,16 +49,22 @@ void View::Artist::TracksList::onActivated(QListWidgetItem *currentItem)
 		uris.push_back(lib::spt::api::to_uri("track", trackId));
 	}
 
-	spotify.play_tracks(index, uris, [this](const std::string &result)
+	spotify.play_tracks(index, uris, [this, uris](const std::string &result)
 	{
-		if (result.empty())
+		auto *mainWindow = MainWindow::find(this->parentWidget());
+		if (mainWindow == nullptr)
 		{
 			return;
 		}
 
-		auto *mainWindow = MainWindow::find(this->parentWidget());
-		mainWindow->status(lib::fmt::format("Failed to start playback: {}",
-			result), true);
+		if (!result.empty())
+		{
+			mainWindow->status(lib::fmt::format("Failed to start playback: {}",
+				result), true);
+			return;
+		}
+
+		mainWindow->setQueue(uris);
 	});
 }
 
