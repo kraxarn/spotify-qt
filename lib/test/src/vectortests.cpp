@@ -52,4 +52,16 @@ TEST_CASE("vector")
 			1, 2, 3, 4, 5, 6
 		}));
 	}
+
+	SUBCASE("index_of")
+	{
+		std::vector<int> vec = {
+			1, 2, 3
+		};
+
+		CHECK_EQ(lib::vector::index_of(vec, 1), 0);
+		CHECK_EQ(lib::vector::index_of(vec, 2), 1);
+		CHECK_EQ(lib::vector::index_of(vec, 3), 2);
+		CHECK_EQ(lib::vector::index_of(vec, 4), vec.size());
+	}
 }

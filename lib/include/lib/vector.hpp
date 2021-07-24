@@ -60,5 +60,17 @@ namespace lib
 
 			return std::vector<T>(vec.cbegin() + pos, vec.cbegin() + len);
 		}
+
+		/**
+		 * Get index of specific item
+		 * @param vec Vector to search in
+		 * @param item Item to search for
+		 * @return Index if found, otherwise size
+		 */
+		template<typename T>
+		static auto index_of(const std::vector<T> &vec, const T &item) -> size_t
+		{
+			return std::distance(vec.begin(), std::find(vec.begin(), vec.end(), item));
+		}
 	};
 }
