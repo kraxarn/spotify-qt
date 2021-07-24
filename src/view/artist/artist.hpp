@@ -6,13 +6,13 @@
 #include "menu/album.hpp"
 #include "menu/songmenu.hpp"
 
-#include "view/artist/cover.hpp"
 #include "view/artist/albumslist.hpp"
+#include "view/artist/cover.hpp"
+#include "view/artist/playbutton.hpp"
 #include "view/artist/searchmenu.hpp"
 #include "view/artist/sharemenu.hpp"
-#include "view/artist/playbutton.hpp"
-#include "view/artist/trackslist.hpp"
 #include "view/artist/title.hpp"
+#include "view/artist/trackslist.hpp"
 
 #include <QDockWidget>
 #include <QLabel>
@@ -43,22 +43,23 @@ namespace View
 
 			void relatedClick(QListWidgetItem *item);
 
-			QVBoxLayout *layout = nullptr;
-			QHBoxLayout *title = nullptr;
-			View::Artist::Cover *coverLabel = nullptr;
-			View::Artist::Title *name = nullptr;
-			View::Artist::PlayButton *context = nullptr;
-			QLabel *genres = nullptr;
-
-			QListWidget *relatedList = nullptr;
-			View::Artist::TracksList *topTracksList = nullptr;
-			QTabWidget *tabs = nullptr;
-			View::Artist::AlbumsList *albumList;
 			std::string artistId;
 			lib::spt::artist artist;
 			lib::spt::api &spotify;
 			lib::cache &cache;
 			const lib::http_client &httpClient;
+
+			View::Artist::AlbumsList *albumList;
+			View::Artist::Cover *coverLabel = nullptr;
+			View::Artist::PlayButton *context = nullptr;
+			View::Artist::Title *name = nullptr;
+			View::Artist::TracksList *topTracksList = nullptr;
+
+			QVBoxLayout *layout = nullptr;
+			QHBoxLayout *title = nullptr;
+			QLabel *genres = nullptr;
+			QListWidget *relatedList = nullptr;
+			QTabWidget *tabs = nullptr;
 		};
 	}
 }
