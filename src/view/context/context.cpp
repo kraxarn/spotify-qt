@@ -1,14 +1,14 @@
 #include "view/context/context.hpp"
 #include "mainwindow.hpp"
 
-View::Context::Context::Context(lib::spt::api &spotify, const lib::settings &settings,
-	spt::Current &current, const lib::cache &cache, QWidget *parent)
+View::Context::Context::Context(lib::spt::api &spotify, spt::Current &current,
+	const lib::cache &cache, QWidget *parent)
 	: QDockWidget(parent)
 {
 	content = new View::Context::Content(spotify, current, cache, this);
 	setWidget(content);
 
-	title = new View::Context::Title(spotify, settings, current, cache, this);
+	title = new View::Context::Title(spotify, current, cache, this);
 	setTitleBarWidget(title);
 
 	setFeatures(QDockWidget::NoDockWidgetFeatures);

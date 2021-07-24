@@ -18,9 +18,11 @@ namespace View
 	{
 		class Title: public QWidget
 		{
+		Q_OBJECT
+
 		public:
-			Title(lib::spt::api &spotify, const lib::settings &settings,
-				spt::Current &current, const lib::cache &cache, QWidget *parent);
+			Title(lib::spt::api &spotify, spt::Current &current,
+				const lib::cache &cache, QWidget *parent);
 
 			void updateIcon();
 
@@ -29,7 +31,6 @@ namespace View
 			QLabel *info = nullptr;
 
 			lib::spt::api &spotify;
-			const lib::settings &settings;
 			spt::Current &current;
 			const lib::cache &cache;
 

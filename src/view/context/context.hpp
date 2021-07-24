@@ -11,9 +11,11 @@ namespace View
 	{
 		class Context: public QDockWidget
 		{
+		Q_OBJECT
+
 		public:
-			Context(lib::spt::api &spotify, const lib::settings &settings,
-				spt::Current &current, const lib::cache &cache, QWidget *parent);
+			Context(lib::spt::api &spotify, spt::Current &current,
+				const lib::cache &cache, QWidget *parent);
 
 			void updateContextIcon();
 			void resetCurrentlyPlaying() const;
