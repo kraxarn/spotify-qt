@@ -32,6 +32,8 @@ namespace Menu
 
 		void tracksLoaded(const std::vector<lib::spt::track> &items);
 
+		auto playlistUrl() const -> QString;
+
 		auto shareMenu() -> QMenu *;
 		auto devMenu() -> QMenu *;
 

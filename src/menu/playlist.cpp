@@ -131,6 +131,12 @@ void Menu::Playlist::tracksLoaded(const std::vector<lib::spt::track> &items)
 	}
 }
 
+auto Menu::Playlist::playlistUrl() const -> QString
+{
+	return QString("https://open.spotify.com/playlist/%1")
+		.arg(QString::fromStdString(playlist.id));
+}
+
 void Menu::Playlist::onShuffle(bool /*checked*/)
 {
 	if (tracks.empty())
@@ -187,8 +193,7 @@ void Menu::Playlist::onRefresh(bool /*checked*/)
 
 void Menu::Playlist::onCopyLink(bool /*checked*/) const
 {
-	QApplication::clipboard()->setText(QString("https://open.spotify.com/playlist/%1")
-		.arg(QString::fromStdString(playlist.id)));
+	QApplication::clipboard()->setText(playlistUrl());
 
 	auto *mainWindow = MainWindow::find(parentWidget());
 	if (mainWindow != nullptr)
@@ -199,10 +204,8 @@ void Menu::Playlist::onCopyLink(bool /*checked*/) const
 
 void Menu::Playlist::onOpenInSpotify(bool /*checked*/) const
 {
-	auto url = QString("https://open.spotify.com/playlist/%1")
-		.arg(QString::fromStdString(playlist.id));
-
-	UrlUtils::open(url, LinkType::Web, MainWindow::find(parentWidget()));
+	UrlUtils::open(playlistUrl(), LinkType::Web,
+		MainWindow::find(parentWidget()));
 }
 
 void Menu::Playlist::onCopyId(bool /*checked*/) const
