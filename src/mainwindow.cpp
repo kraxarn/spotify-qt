@@ -614,12 +614,7 @@ void MainWindow::orderPlaylists(lib::playlist_order order)
 
 auto MainWindow::find(QWidget *from) -> MainWindow *
 {
-	auto *w = from;
-	while (w != nullptr && typeid(*w) != typeid(MainWindow))
-	{
-		w = w->parentWidget();
-	}
-	return dynamic_cast<MainWindow *>(w);
+	return WidgetUtils::find<MainWindow>(from);
 }
 
 auto MainWindow::defaultSize() -> QSize
