@@ -12,7 +12,6 @@ View::Context::Context::Context(lib::spt::api &spotify, spt::Current &current,
 	setTitleBarWidget(title);
 
 	setFeatures(QDockWidget::NoDockWidgetFeatures);
-	setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
 }
 
 void View::Context::Context::updateContextIcon()
