@@ -5,7 +5,6 @@
 
 #include "menu/album.hpp"
 #include "menu/songmenu.hpp"
-#include "widget/loader.hpp"
 
 #include "view/artist/cover.hpp"
 #include "view/artist/albumslist.hpp"
@@ -13,6 +12,7 @@
 #include "view/artist/sharemenu.hpp"
 #include "view/artist/playbutton.hpp"
 #include "view/artist/trackslist.hpp"
+#include "view/artist/title.hpp"
 
 #include <QDockWidget>
 #include <QLabel>
@@ -46,7 +46,7 @@ namespace View
 			QVBoxLayout *layout = nullptr;
 			QHBoxLayout *title = nullptr;
 			View::Artist::Cover *coverLabel = nullptr;
-			QLabel *name = nullptr;
+			View::Artist::Title *name = nullptr;
 			View::Artist::PlayButton *context = nullptr;
 			QLabel *genres = nullptr;
 

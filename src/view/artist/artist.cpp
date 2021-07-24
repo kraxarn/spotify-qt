@@ -19,14 +19,7 @@ View::Artist::Artist::Artist(lib::spt::api &spotify, const std::string &artistId
 
 	// Artist name title
 	title = new QHBoxLayout();
-	name = new QLabel("...", this);
-	name->setWordWrap(true);
-	new Loader(name);
-
-	constexpr int titleFontSize = 24;
-	auto titleFont = name->font();
-	titleFont.setPointSize(titleFontSize);
-	name->setFont(titleFont);
+	name = new View::Artist::Title(this);
 	title->addWidget(name, 1);
 
 	// Context menu
