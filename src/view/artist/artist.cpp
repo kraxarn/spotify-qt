@@ -73,10 +73,6 @@ void View::Artist::Artist::artistLoaded(const lib::spt::artist &loadedArtist)
 		coverLabel->setJpeg(QByteArray::fromStdString(data));
 	});
 
-	auto followers = QString("%1 follower%2")
-		.arg(QString::fromStdString(lib::fmt::count(artist.followers)),
-			artist.followers == 1 ? "" : "s");
-
 	// Artist name title
 	name->setText(QString::fromStdString(artist.name));
 
