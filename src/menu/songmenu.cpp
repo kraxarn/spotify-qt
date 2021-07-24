@@ -289,7 +289,7 @@ void SongMenu::setLiked(bool liked)
 	toggleLiked->setIcon(Icon::get(liked
 		? "starred-symbolic" : "non-starred-symbolic"));
 	toggleLiked->setText(liked
-		? "Dislike" : "Like");
+		? "Unlike" : "Like");
 }
 
 auto SongMenu::getTrackUrl() const -> QString
