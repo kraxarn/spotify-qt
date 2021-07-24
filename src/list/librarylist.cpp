@@ -35,6 +35,14 @@ LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 
 void LibraryList::clicked(QTreeWidgetItem *item, int /*column*/)
 {
+	if (item != nullptr
+		&& item->parent() == nullptr
+		&& item->childCount() > 0)
+	{
+		item->setExpanded(true);
+		return;
+	}
+
 	auto *mainWindow = MainWindow::find(parentWidget());
 	if (mainWindow == nullptr || item == nullptr)
 	{
