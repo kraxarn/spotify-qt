@@ -7,6 +7,8 @@
 
 class InterfacePage: public SettingsPage
 {
+Q_OBJECT
+
 public:
 	InterfacePage(lib::settings &settings, QWidget *parent);
 
