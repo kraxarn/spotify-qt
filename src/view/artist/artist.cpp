@@ -62,9 +62,10 @@ void View::Artist::Artist::artistLoaded(const lib::spt::artist &loadedArtist)
 {
 	artist = loadedArtist;
 
-	if (onArtistLoaded)
+	auto *sidePanel = WidgetUtils::find<View::SidePanel::SidePanel>(parentWidget());
+	if (sidePanel != nullptr)
 	{
-		onArtistLoaded(loadedArtist);
+		sidePanel->setTabText(this, QString::fromStdString(artist.name));
 	}
 
 	// Get cover image

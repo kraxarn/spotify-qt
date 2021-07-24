@@ -32,6 +32,8 @@ namespace View
 			void addTab(QWidget *widget, const QString &icon, const QString &tabTitle);
 			void removeTab(int index);
 
+			void setTabText(QWidget *widget, const QString &text);
+
 		private:
 			View::SidePanel::Title *title = nullptr;
 			QStackedWidget *stack = nullptr;

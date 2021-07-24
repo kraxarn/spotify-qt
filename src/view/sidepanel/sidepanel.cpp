@@ -63,16 +63,17 @@ void View::SidePanel::SidePanel::setCurrentWidget(QWidget *widget)
 void View::SidePanel::SidePanel::openArtist(const std::string &artistId)
 {
 	auto *view = new View::Artist::Artist(spotify, artistId, cache, httpClient, parent);
-	view->onArtistLoaded = [this, view](const lib::spt::artist &artist)
-	{
-		auto index = stack->indexOf(view);
-		if (index < 0)
-		{
-			return;
-		}
-		title->setTabText(index, QString::fromStdString(artist.name));
-	};
 	addTab(view, "view-media-artist", "...");
+}
+
+void View::SidePanel::SidePanel::setTabText(QWidget *widget, const QString &text)
+{
+	auto index = stack->indexOf(widget);
+	if (index < 0)
+	{
+		return;
+	}
+	title->setTabText(index, text);
 }
 
 void View::SidePanel::SidePanel::openSearch()

@@ -14,6 +14,8 @@
 #include "view/artist/title.hpp"
 #include "view/artist/trackslist.hpp"
 
+#include "util/widgetutils.hpp"
+
 #include <QDockWidget>
 #include <QLabel>
 #include <QListWidget>
@@ -33,8 +35,6 @@ namespace View
 		public:
 			Artist(lib::spt::api &spotify, const std::string &artistId,
 				lib::cache &cache, const lib::http_client &httpClient, QWidget *parent);
-
-			std::function<void(const lib::spt::artist &artist)> onArtistLoaded;
 
 		private:
 			void artistLoaded(const lib::spt::artist &loadedArtist);
