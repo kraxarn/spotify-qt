@@ -80,13 +80,6 @@ auto InterfacePage::general() -> QWidget *
 	itfMonoTime->setChecked(settings.general.fixed_width_time);
 	layout->addWidget(itfMonoTime);
 
-	// Context info
-	itfContextInfo = new QCheckBox("Show context information", this);
-	itfContextInfo->setToolTip("Show what context music is currently playing from\n"
-							   "above current track");
-	itfContextInfo->setChecked(settings.general.show_context_info);
-	layout->addWidget(itfContextInfo);
-
 	// Track numbers
 	itfTrackNum = new QCheckBox("Show track numbers", this);
 	itfTrackNum->setToolTip("Show track numbers next to tracks in the list");
@@ -221,6 +214,7 @@ auto InterfacePage::save() -> bool
 	{
 		settings.general.fallback_icons = itfIcFallback->isChecked();
 	}
+
 	if (itfMonoTime != nullptr)
 	{
 		if (mainWindow != nullptr)
@@ -229,10 +223,7 @@ auto InterfacePage::save() -> bool
 		}
 		settings.general.fixed_width_time = itfMonoTime->isChecked();
 	}
-	if (itfContextInfo != nullptr)
-	{
-		settings.general.show_context_info = itfContextInfo->isChecked();
-	}
+
 	if (itfRelativeAdded != nullptr)
 	{
 		settings.general.relative_added = itfRelativeAdded->isChecked();

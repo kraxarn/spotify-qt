@@ -89,11 +89,6 @@ namespace lib
 			bool show_changelog = true;
 
 			/**
-			 * Show context information
-			 */
-			bool show_context_info = true;
-
-			/**
 			 * Show album art in tray icon
 			 */
 			bool tray_album_art = false;

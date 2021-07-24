@@ -18,7 +18,6 @@ public:
 
 private:
 	// General
-	QCheckBox *itfContextInfo = nullptr;
 	QCheckBox *itfDark = nullptr;
 	QCheckBox *itfIcFallback = nullptr;
 	QCheckBox *itfMonoTime = nullptr;

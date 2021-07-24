@@ -89,13 +89,6 @@ auto View::Context::Title::getIcon() const -> QIcon
 
 void View::Context::Title::updateIcon()
 {
-	if (!settings.general.show_context_info && icon != nullptr && info != nullptr)
-	{
-		icon->setVisible(false);
-		info->setVisible(false);
-		return;
-	}
-
 	auto callback = [this](const std::string &currentName)
 	{
 		auto size = 0;
