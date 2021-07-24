@@ -44,14 +44,8 @@ void View::Context::Title::onMenu(const QPoint &pos)
 		devContext->setEnabled(false);
 	}
 
-	auto openIcon = icon == nullptr
-		? getIcon()
-		: QIcon(icon->pixmap(Qt::ReturnByValue));
-
-	auto openText = QString("Open %1")
-		.arg(QString::fromStdString(current.playback.context.type));
-
-	auto *open = menu->addAction(openIcon, openText);
+	auto *open = menu->addAction(getIcon(), QString("Open %1")
+		.arg(QString::fromStdString(current.playback.context.type)));
 	QAction::connect(open, &QAction::triggered,
 		this, &View::Context::Title::onInfoOpen);
 
@@ -103,50 +97,16 @@ void View::Context::Title::updateIcon()
 			size = this->info->fontInfo().pixelSize();
 		}
 
-		auto *mainWindow = currentName == "No context"
-			? MainWindow::find(parentWidget())
-			: nullptr;
-
-		auto currentTrack = -1;
-		auto totalTracks = -1;
-
-		if (mainWindow != nullptr)
-		{
-			const auto &uris = mainWindow->getQueue();
-			if (uris.empty())
-			{
-				return;
-			}
-
-			const auto trackUri = lib::spt::api::to_uri("track", current.playback.item.id);
-			const auto trackIndex = lib::vector::index_of(uris, trackUri);
-
-			currentTrack = static_cast<int>(trackIndex);
-			totalTracks = static_cast<int>(uris.size());
-		}
-
-		auto fromQueue = currentTrack >= 0 && totalTracks >= 0;
-		auto show = currentName != "No context" || fromQueue;
+		auto show = currentName != "No context";
 
 		if (this->icon != nullptr)
 		{
-			auto newIcon = fromQueue
-				? Icon::get("view-media-track")
-				: getIcon();
-
-			this->icon->setPixmap(newIcon.pixmap(size, size));
+			this->icon->setPixmap(getIcon().pixmap(size, size));
 			this->icon->setVisible(show);
 		}
 		if (this->info != nullptr)
 		{
 			this->info->setVisible(show);
-
-			if (fromQueue)
-			{
-				this->info->setText(QString("Track %1/%2")
-					.arg(currentTrack + 1)
-					.arg(totalTracks));
-			}
 		}
 	};
 
