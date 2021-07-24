@@ -36,41 +36,11 @@ Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playl
 	QAction::connect(refresh, &QAction::triggered,
 		this, &Menu::Playlist::onRefresh);
 
-	auto *share = addMenu(Icon::get("document-share"), "Share");
-	auto *sharePlaylist = share->addAction("Copy playlist link");
-	QAction::connect(sharePlaylist, &QAction::triggered, [window, playlist](bool /*checked*/)
-	{
-		QApplication::clipboard()->setText(QString("https://open.spotify.com/playlist/%1")
-			.arg(QString::fromStdString(playlist.id)));
-		window->setStatus("Link copied to clipboard");
-	});
-
-	auto *shareSongOpen = share->addAction("Open in Spotify");
-	QAction::connect(shareSongOpen, &QAction::triggered, [this](bool /*checked*/)
-	{
-		UrlUtils::open(QString("https://open.spotify.com/playlist/%1")
-				.arg(QString::fromStdString(this->playlist.id)),
-			LinkType::Web, MainWindow::find(parentWidget()));
-	});
+	addMenu(shareMenu());
 
 	if (lib::developer_mode::enabled)
 	{
-		auto *devMenu = addMenu(Icon::get("folder-txt"), "Developer");
-
-		const auto playlistId = QString::fromStdString(playlist.id);
-		QAction::connect(devMenu->addAction(playlistId), &QAction::triggered,
-			[playlistId](bool /*checked*/)
-			{
-				QApplication::clipboard()->setText(playlistId);
-			});
-
-		QAction::connect(devMenu->addAction("As JSON"), &QAction::triggered,
-			[this](bool /*checked*/)
-			{
-				nlohmann::json json = this->playlist;
-				QMessageBox::information(MainWindow::find(parentWidget()), "JSON",
-					QString::fromStdString(json.dump(4)));
-			});
+		addMenu(devMenu());
 	}
 
 	const auto cached = cache.get_playlist(playlist.id);
@@ -86,6 +56,37 @@ Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playl
 			tracksLoaded(items);
 		});
 	}
+}
+
+auto Menu::Playlist::shareMenu() -> QMenu *
+{
+	auto *menu = new QMenu("Share", this);
+	menu->setIcon(Icon::get("document-share"));
+
+	auto *copyLink = menu->addAction("Copy playlist link");
+	QAction::connect(copyLink, &QAction::triggered,
+		this, &Menu::Playlist::onCopyLink);
+
+	auto *openInSpotify = menu->addAction("Open in Spotify");
+	QAction::connect(openInSpotify, &QAction::triggered,
+		this, &Menu::Playlist::onOpenInSpotify);
+
+	return menu;
+}
+
+auto Menu::Playlist::devMenu() -> QMenu *
+{
+	auto *menu = new QMenu("Developer", this);
+	menu->setIcon(Icon::get("folder-txt"));
+
+	const auto playlistId = QString::fromStdString(playlist.id);
+	QAction::connect(menu->addAction(playlistId), &QAction::triggered,
+		this, &Menu::Playlist::onCopyId);
+
+	QAction::connect(menu->addAction("As JSON"), &QAction::triggered,
+		this, &Menu::Playlist::onShowJson);
+
+	return menu;
 }
 
 void Menu::Playlist::tracksLoaded(const std::vector<lib::spt::track> &items)
@@ -182,4 +183,36 @@ void Menu::Playlist::onRefresh(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	mainWindow->getSongsTree()->refreshPlaylist(playlist);
+}
+
+void Menu::Playlist::onCopyLink(bool /*checked*/) const
+{
+	QApplication::clipboard()->setText(QString("https://open.spotify.com/playlist/%1")
+		.arg(QString::fromStdString(playlist.id)));
+
+	auto *mainWindow = MainWindow::find(parentWidget());
+	if (mainWindow != nullptr)
+	{
+		mainWindow->setStatus("Link copied to clipboard");
+	}
+}
+
+void Menu::Playlist::onOpenInSpotify(bool /*checked*/) const
+{
+	auto url = QString("https://open.spotify.com/playlist/%1")
+		.arg(QString::fromStdString(playlist.id));
+
+	UrlUtils::open(url, LinkType::Web, MainWindow::find(parentWidget()));
+}
+
+void Menu::Playlist::onCopyId(bool /*checked*/) const
+{
+	QApplication::clipboard()->setText(QString::fromStdString(playlist.id));
+}
+
+void Menu::Playlist::onShowJson(bool /*checked*/) const
+{
+	nlohmann::json json = playlist;
+	QMessageBox::information(MainWindow::find(parentWidget()), "JSON",
+		QString::fromStdString(json.dump(4)));
 }

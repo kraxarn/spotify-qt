@@ -32,8 +32,15 @@ namespace Menu
 
 		void tracksLoaded(const std::vector<lib::spt::track> &items);
 
+		auto shareMenu() -> QMenu *;
+		auto devMenu() -> QMenu *;
+
 		void onShuffle(bool checked);
 		void onEdit(bool checked);
 		void onRefresh(bool checked);
+		void onCopyLink(bool checked) const;
+		void onOpenInSpotify(bool checked) const;
+		void onCopyId(bool checked) const;
+		void onShowJson(bool checked) const;
 	};
 }
