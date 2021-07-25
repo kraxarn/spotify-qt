@@ -8,9 +8,11 @@ AboutPage::AboutPage(lib::settings &settings, lib::cache &cache, QWidget *parent
 	addTab(systemInfo(), "System information");
 	addTab(cacheInfo(), "Cache");
 	addTab(configPreview(), "Config preview");
-#ifndef USE_KCRASH
-	addTab(crashLogs(cache), "Crashes");
-#endif
+
+	if (lib::crash_handler::is_init())
+	{
+		addTab(crashLogs(cache), "Crashes");
+	}
 }
 
 auto AboutPage::about() -> QWidget *
