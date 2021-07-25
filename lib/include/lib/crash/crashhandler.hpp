@@ -5,8 +5,10 @@
 #include "lib/cache/jsoncache.hpp"
 
 #ifdef __linux__
+#ifdef __LP64__
 #ifdef IS_GNU_CXX
 #define USE_GCC_CRASH_HANDLER
+#endif
 #endif
 #endif
 
