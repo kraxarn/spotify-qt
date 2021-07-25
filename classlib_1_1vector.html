@@ -86,6 +86,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ac54a6a64d3e2a89092b00d6d81c0300f"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ac54a6a64d3e2a89092b00d6d81c0300f"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1vector.html#ac54a6a64d3e2a89092b00d6d81c0300f">sub</a> (const std::vector&lt; T &gt; &amp;vec, size_t pos, size_t len) -&gt; std::vector&lt; T &gt;</td></tr>
 <tr class="separator:ac54a6a64d3e2a89092b00d6d81c0300f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3989baffc142e95ea96da199c81d15f1"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a3989baffc142e95ea96da199c81d15f1"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1vector.html#a3989baffc142e95ea96da199c81d15f1">index_of</a> (const std::vector&lt; T &gt; &amp;vec, const T &amp;item) -&gt; size_t</td></tr>
+<tr class="separator:a3989baffc142e95ea96da199c81d15f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="abd6f4bb72d24e728392a4fb104e3b22c"></a>
@@ -177,6 +180,53 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Combined vector </dd></dl>
+
+</div>
+</div>
+<a id="a3989baffc142e95ea96da199c81d15f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3989baffc142e95ea96da199c81d15f1">&#9670;&nbsp;</a></span>index_of()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static auto lib::vector::index_of </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>vec</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>item</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt; size_t
+		</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get index of specific item </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vec</td><td>Vector to search in </td></tr>
+    <tr><td class="paramname">item</td><td>Item to search for </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Index if found, otherwise size </dd></dl>
 
 </div>
 </div>
