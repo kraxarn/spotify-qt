@@ -39,12 +39,18 @@ namespace lib
 		/** Log crash to file, if cache instance is set, and stderr */
 		static void log(const lib::crash_info &info);
 
+		/** Crash handler has been initialized */
+		static auto is_init() -> bool;
+
 	private:
 		/** Static class */
 		crash_handler() = default;
 
 		/** How far back to trace */
 		static constexpr size_t backtrace_size = 16;
+
+		/** Crash handler has been successfully initialized */
+		static bool initialized;
 
 		/** Cache instance */
 		static lib::cache *cache;

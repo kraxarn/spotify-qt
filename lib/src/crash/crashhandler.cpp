@@ -2,6 +2,8 @@
 
 lib::cache *lib::crash_handler::cache = nullptr;
 
+bool lib::crash_handler::initialized = false;
+
 auto lib::crash_handler::init() -> bool
 {
 #ifdef USE_GCC_CRASH_HANDLER
@@ -21,6 +23,7 @@ auto lib::crash_handler::init() -> bool
 			success = false;
 		}
 	}
+	initialized = success;
 	return success;
 #endif
 	return false;
@@ -38,6 +41,11 @@ void lib::crash_handler::log(const lib::crash_info &info)
 		cache->add_crash(info);
 	}
 	std::cerr << info.to_string() << std::endl;
+}
+
+auto lib::crash_handler::is_init() -> bool
+{
+	return initialized;
 }
 
 #ifdef USE_GCC_CRASH_HANDLER
