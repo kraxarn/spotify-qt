@@ -4,9 +4,9 @@ lib::cache *lib::crash_handler::cache = nullptr;
 
 bool lib::crash_handler::initialized = false;
 
+#ifdef USE_GCC_CRASH_HANDLER
 auto lib::crash_handler::init() -> bool
 {
-#ifdef USE_GCC_CRASH_HANDLER
 	std::array<int, 5> signals{{
 		SIGABRT, // Abnormal termination
 		SIGFPE,  // Erroneous arithmetic operation
@@ -25,9 +25,13 @@ auto lib::crash_handler::init() -> bool
 	}
 	initialized = success;
 	return success;
-#endif
+}
+#else
+auto lib::crash_handler::init() -> bool
+{
 	return false;
 }
+#endif
 
 void lib::crash_handler::set_cache(lib::cache &c)
 {
