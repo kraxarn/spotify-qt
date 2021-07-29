@@ -91,19 +91,19 @@ auto View::Artist::AlbumsList::groupToString(lib::album_group albumGroup) -> QSt
 	switch (albumGroup)
 	{
 		case lib::album_group::album:
-			return {"Albums"};
+			return QStringLiteral("Albums");
 
 		case lib::album_group::single:
-			return {"Singles"};
+			return QStringLiteral("Singles");
 
 		case lib::album_group::compilation:
-			return {"Compilations"};
+			return QStringLiteral("Compilations");
 
 		case lib::album_group::appears_on:
-			return {"Appears On"};
+			return QStringLiteral("Appears On");
 
 		case lib::album_group::none:
-			return {"Other"};
+			return QStringLiteral("Other");
 
 		default:
 			return {};
