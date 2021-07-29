@@ -49,10 +49,11 @@ void View::Artist::AlbumsList::setAlbums(const std::vector<lib::spt::album> &alb
 		// Extra spacing is intentional so year doesn't overlap with scrollbar
 		const auto year = releaseDate.toString("yyyy    ");
 
+		const auto albumName = QString::fromStdString(album.name);
+
 		auto *group = groups.at(album.album_group);
 		auto *item = new QTreeWidgetItem(group, {
-			QString::fromStdString(album.name),
-			year.isEmpty() ? QString() : year
+			albumName, year.isEmpty() ? QString() : year
 		});
 
 		HttpUtils::getAlbum(album.image, httpClient, cache, [item](const QPixmap &image)
@@ -64,8 +65,11 @@ void View::Artist::AlbumsList::setAlbums(const std::vector<lib::spt::album> &alb
 		});
 
 		item->setData(0, RoleAlbumId, QString::fromStdString(album.id));
+
+		item->setToolTip(0, albumName);
 		item->setToolTip(1, QLocale::system()
 			.toString(releaseDate.date(), QLocale::FormatType::ShortFormat));
+
 		group->addChild(item);
 	}
 
