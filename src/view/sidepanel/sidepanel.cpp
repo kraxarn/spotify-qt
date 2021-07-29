@@ -22,6 +22,9 @@ View::SidePanel::SidePanel::SidePanel(spt::Spotify &spotify, const lib::settings
 
 	QTabBar::connect(title, &QTabBar::currentChanged,
 		this, &View::SidePanel::SidePanel::setCurrentIndex);
+
+	QTabBar::connect(title, &QTabBar::tabMoved,
+		this, &View::SidePanel::SidePanel::onTabMoved);
 }
 
 void View::SidePanel::SidePanel::addTab(QWidget *widget, const QString &icon,
@@ -110,4 +113,16 @@ void View::SidePanel::SidePanel::openLyrics(const lib::spt::track &track)
 	addTab(view, "view-media-lyrics",
 		QString::fromStdString(track.title()));
 	view->open(track);
+}
+
+void View::SidePanel::SidePanel::onTabMoved(int from, int to)
+{
+	auto *fromWidget = stack->widget(from);
+	if (fromWidget == nullptr)
+	{
+		return;
+	}
+
+	stack->removeWidget(fromWidget);
+	stack->insertWidget(to, fromWidget);
 }

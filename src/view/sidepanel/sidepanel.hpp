@@ -48,6 +48,8 @@ namespace View
 
 			void setCurrentIndex(int index);
 			void setCurrentWidget(QWidget *widget);
+
+			void onTabMoved(int from, int to);
 		};
 	}
 }
