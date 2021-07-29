@@ -12,4 +12,6 @@ View::Artist::Title::Title(QWidget *parent)
 	auto titleFont = font();
 	titleFont.setPointSize(pointSize);
 	setFont(titleFont);
+
+	setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Minimum);
 }
