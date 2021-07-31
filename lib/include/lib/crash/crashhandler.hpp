@@ -1,6 +1,5 @@
 #pragma once
 
-#include "lib/log.hpp"
 #include "lib/crash/crashinfo.hpp"
 #include "lib/cache/jsoncache.hpp"
 
