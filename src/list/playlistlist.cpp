@@ -230,8 +230,10 @@ void PlaylistList::order(lib::playlist_order order)
 			break;
 	}
 
-	for (auto *item : items)
+	for (i = 0; i < items.size(); i++)
 	{
+		auto *item = items.at(i);
+		item->setData(DataRole::RoleIndex, i);
 		addItem(item);
 	}
 }
