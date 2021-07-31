@@ -9,7 +9,8 @@ AboutPage::AboutPage(lib::settings &settings, lib::cache &cache, QWidget *parent
 	addTab(cacheInfo(), "Cache");
 	addTab(configPreview(), "Config preview");
 
-	if (lib::crash_handler::is_init())
+	if (lib::crash_handler::is_init()
+		|| !cache.get_all_crashes().empty())
 	{
 		addTab(crashLogs(cache), "Crashes");
 	}
