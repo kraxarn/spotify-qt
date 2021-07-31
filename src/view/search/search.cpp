@@ -88,8 +88,11 @@ void View::Search::Search::search()
 	if (searchText.startsWith("spotify:")
 		|| searchText.startsWith("https://open.spotify.com/"))
 	{
+		// Length of "https://"
+		constexpr int protocolLength = 8;
+
 		auto parts = searchText.startsWith("https://open.spotify.com/")
-			? searchText.right(searchText.length() - 8).split('/')
+			? searchText.right(searchText.length() - protocolLength).split('/')
 			: searchText.split(':');
 
 		if (parts.length() >= 3)
