@@ -80,7 +80,7 @@ protected:
 private:
 	// Qt Widgets
 	TracksList *songs = nullptr;
-	QToolBar *toolBar = nullptr;
+	MainToolBar *toolBar = nullptr;
 
 	QSizeGrip *bottomLeftResize = nullptr;
 	QSizeGrip *bottomRightResize = nullptr;

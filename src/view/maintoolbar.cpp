@@ -1,4 +1,5 @@
 #include "maintoolbar.hpp"
+#include "mainwindow.hpp"
 
 MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings,
 	const lib::http_client &httpClient, lib::cache &cache, QWidget *parent)
@@ -7,7 +8,7 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings,
 	settings(settings),
 	QToolBar("Media controls", parent)
 {
-	auto *mainWindow = dynamic_cast<MainWindow *>(parent);
+	auto *mainWindow = MainWindow::find(parent);
 	if (mainWindow == nullptr)
 	{
 		return;

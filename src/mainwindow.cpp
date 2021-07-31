@@ -184,12 +184,7 @@ void MainWindow::setBorderless(bool enabled)
 	try
 	{
 		setWindowFlag(Qt::FramelessWindowHint, enabled);
-
-		auto *mainToolbar = dynamic_cast<MainToolBar *>(toolBar);
-		if (mainToolbar != nullptr)
-		{
-			mainToolbar->setBorderless(enabled);
-		}
+		toolBar->setBorderless(enabled);
 	}
 	catch (const std::exception &e)
 	{
@@ -243,11 +238,9 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 {
 	current.playback = playback;
 
-	auto *mainToolBar = dynamic_cast<MainToolBar *>(toolBar);
-
 	if (!current.playback.item.is_valid())
 	{
-		mainToolBar->setPlaying(false);
+		toolBar->setPlaying(false);
 		contextView->resetCurrentlyPlaying();
 		setWindowTitle("spotify-qt");
 		return;
@@ -287,17 +280,17 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 		}
 	}
 
-	mainToolBar->setProgress(current.playback);
-	mainToolBar->setPlaying(current.playback.is_playing);
+	toolBar->setProgress(current.playback);
+	toolBar->setPlaying(current.playback.is_playing);
 
 	if (!settings.general.pulse_volume)
 	{
 		constexpr int volumeStep = 5;
-		mainToolBar->setVolume(current.playback.volume() / volumeStep);
+		toolBar->setVolume(current.playback.volume() / volumeStep);
 	}
 
-	mainToolBar->setRepeat(current.playback.repeat);
-	mainToolBar->setShuffle(current.playback.shuffle);
+	toolBar->setRepeat(current.playback.repeat);
+	toolBar->setShuffle(current.playback.shuffle);
 }
 
 auto MainWindow::createCentralWidget() -> QWidget *
@@ -454,7 +447,9 @@ void MainWindow::reloadTrayIcon()
 
 void MainWindow::setFixedWidthTime(bool value)
 {
-	((MainToolBar *) toolBar)->setPositionFont(value ? QFont("monospace") : QFont());
+	toolBar->setPositionFont(value
+		? QFont("monospace")
+		: QFont());
 }
 
 void MainWindow::toggleTrackNumbers(bool enabled)
@@ -482,11 +477,7 @@ auto MainWindow::getCurrentUser() -> lib::spt::user
 
 void MainWindow::setSearchChecked(bool checked)
 {
-	auto *mainToolBar = dynamic_cast<MainToolBar *>(toolBar);
-	if (mainToolBar != nullptr)
-	{
-		mainToolBar->setSearchChecked(checked);
-	}
+	toolBar->setSearchChecked(checked);
 }
 
 auto MainWindow::getSongsTree() -> TracksList *

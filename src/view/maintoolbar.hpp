@@ -1,7 +1,7 @@
 #pragma once
 
 #include "lib/settings.hpp"
-#include "mainwindow.hpp"
+
 #include "menu/mainmenu.hpp"
 #include "spotify/spotify.hpp"
 #include "util/icon.hpp"
