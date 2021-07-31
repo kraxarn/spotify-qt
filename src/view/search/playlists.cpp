@@ -31,6 +31,7 @@ void View::Search::Playlists::onItemClicked(QListWidgetItem *item)
 	{
 		auto *mainWindow = MainWindow::find(this->parentWidget());
 		mainWindow->getSongsTree()->load(playlist);
+		mainWindow->setCurrentPlaylistItem(-1);
 	});
 }
 
