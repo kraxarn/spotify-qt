@@ -30,6 +30,7 @@ View::Artist::Artist::Artist(lib::spt::api &spotify, const std::string &artistId
 	// Genres
 	genres = new QLabel(QString(), this);
 	genres->setWordWrap(true);
+	genres->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Minimum);
 	layout->addWidget(genres);
 
 	// Tabs
