@@ -11,7 +11,7 @@ View::Context::Context::Context(lib::spt::api &spotify, spt::Current &current,
 	title = new View::Context::Title(spotify, current, cache, this);
 	setTitleBarWidget(title);
 
-	setFeatures(QDockWidget::NoDockWidgetFeatures);
+	setFeatures(QDockWidget::DockWidgetMovable | DockWidgetFloatable);
 }
 
 void View::Context::Context::updateContextIcon()
