@@ -73,53 +73,52 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;lib/log.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;lib/crash/crashinfo.hpp&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;lib/cache/jsoncache.hpp&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifdef __linux__</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifdef __amd64__</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifdef IS_GNU_CXX</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define USE_GCC_CRASH_HANDLER</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;lib/crash/crashinfo.hpp&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;lib/cache/jsoncache.hpp&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifdef __linux__</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifdef __amd64__</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifdef IS_GNU_CXX</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define USE_GCC_CRASH_HANDLER</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#ifdef USE_GCC_CRASH_HANDLER</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;execinfo.h&gt;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">namespace </span>lib</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classlib_1_1crash__handler.html">   27</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classlib_1_1crash__handler.html">crash_handler</a></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    {</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classlib_1_1crash__handler.html#a25aebe0cfaa407547794d6fb223291f0">   34</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1crash__handler.html#a25aebe0cfaa407547794d6fb223291f0">init</a>() -&gt; bool;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classlib_1_1crash__handler.html#aa41586cb01fdc4ff5ce5690692b4c57a">   37</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1crash__handler.html#aa41586cb01fdc4ff5ce5690692b4c57a">set_cache</a>(<a class="code" href="classlib_1_1cache.html">lib::cache</a> &amp;<a class="code" href="classlib_1_1cache.html">cache</a>);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classlib_1_1crash__handler.html#aa9774f6b3516f2695df9f17fb9015584">   40</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1crash__handler.html#aa9774f6b3516f2695df9f17fb9015584">log</a>(<span class="keyword">const</span> <a class="code" href="classlib_1_1crash__info.html">lib::crash_info</a> &amp;info);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classlib_1_1crash__handler.html#a4868650f958b93eae12a82cbea1ad151">   43</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1crash__handler.html#a4868650f958b93eae12a82cbea1ad151">is_init</a>() -&gt; bool;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <a class="code" href="classlib_1_1crash__handler.html">crash_handler</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">static</span> constexpr <span class="keywordtype">size_t</span> backtrace_size = 16;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">bool</span> initialized;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keyword">static</span> <a class="code" href="classlib_1_1cache.html">lib::cache</a> *<a class="code" href="classlib_1_1cache.html">cache</a>;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#ifdef USE_GCC_CRASH_HANDLER</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> handle(<span class="keywordtype">int</span> signal, <span class="keyword">struct</span> sigcontext context);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    };</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#ifdef USE_GCC_CRASH_HANDLER</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;execinfo.h&gt;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">namespace </span>lib</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classlib_1_1crash__handler.html">   26</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classlib_1_1crash__handler.html">crash_handler</a></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    {</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classlib_1_1crash__handler.html#a25aebe0cfaa407547794d6fb223291f0">   33</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1crash__handler.html#a25aebe0cfaa407547794d6fb223291f0">init</a>() -&gt; bool;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classlib_1_1crash__handler.html#aa41586cb01fdc4ff5ce5690692b4c57a">   36</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1crash__handler.html#aa41586cb01fdc4ff5ce5690692b4c57a">set_cache</a>(<a class="code" href="classlib_1_1cache.html">lib::cache</a> &amp;<a class="code" href="classlib_1_1cache.html">cache</a>);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="classlib_1_1crash__handler.html#aa9774f6b3516f2695df9f17fb9015584">   39</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1crash__handler.html#aa9774f6b3516f2695df9f17fb9015584">log</a>(<span class="keyword">const</span> <a class="code" href="classlib_1_1crash__info.html">lib::crash_info</a> &amp;info);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classlib_1_1crash__handler.html#a4868650f958b93eae12a82cbea1ad151">   42</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1crash__handler.html#a4868650f958b93eae12a82cbea1ad151">is_init</a>() -&gt; bool;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <a class="code" href="classlib_1_1crash__handler.html">crash_handler</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">static</span> constexpr <span class="keywordtype">size_t</span> backtrace_size = 16;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">bool</span> initialized;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keyword">static</span> <a class="code" href="classlib_1_1cache.html">lib::cache</a> *<a class="code" href="classlib_1_1cache.html">cache</a>;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#ifdef USE_GCC_CRASH_HANDLER</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> handle(<span class="keywordtype">int</span> signal, <span class="keyword">struct</span> sigcontext context);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    };</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
 <div class="ttc" id="aclasslib_1_1cache_html"><div class="ttname"><a href="classlib_1_1cache.html">lib::cache</a></div><div class="ttdef"><b>Definition:</b> cache.hpp:17</div></div>
-<div class="ttc" id="aclasslib_1_1crash__handler_html"><div class="ttname"><a href="classlib_1_1crash__handler.html">lib::crash_handler</a></div><div class="ttdef"><b>Definition:</b> crashhandler.hpp:28</div></div>
+<div class="ttc" id="aclasslib_1_1crash__handler_html"><div class="ttname"><a href="classlib_1_1crash__handler.html">lib::crash_handler</a></div><div class="ttdef"><b>Definition:</b> crashhandler.hpp:27</div></div>
 <div class="ttc" id="aclasslib_1_1crash__handler_html_a25aebe0cfaa407547794d6fb223291f0"><div class="ttname"><a href="classlib_1_1crash__handler.html#a25aebe0cfaa407547794d6fb223291f0">lib::crash_handler::init</a></div><div class="ttdeci">static auto init() -&gt; bool</div></div>
 <div class="ttc" id="aclasslib_1_1crash__handler_html_a4868650f958b93eae12a82cbea1ad151"><div class="ttname"><a href="classlib_1_1crash__handler.html#a4868650f958b93eae12a82cbea1ad151">lib::crash_handler::is_init</a></div><div class="ttdeci">static auto is_init() -&gt; bool</div></div>
 <div class="ttc" id="aclasslib_1_1crash__handler_html_aa41586cb01fdc4ff5ce5690692b4c57a"><div class="ttname"><a href="classlib_1_1crash__handler.html#aa41586cb01fdc4ff5ce5690692b4c57a">lib::crash_handler::set_cache</a></div><div class="ttdeci">static void set_cache(lib::cache &amp;cache)</div></div>
