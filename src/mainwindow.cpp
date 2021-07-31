@@ -57,7 +57,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	timer->start(tickMs);
 	splash.showMessage("Welcome!");
 
-	// Check if should start client
+	// Start client if set
 	initClient();
 
 	// Start media controller if specified
