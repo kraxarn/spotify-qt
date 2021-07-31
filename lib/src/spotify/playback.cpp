@@ -31,7 +31,7 @@ void lib::spt::to_json(nlohmann::json &j, const playback &p)
 	};
 }
 
-nlohmann::json lib::spt::playback::metadata() const
+auto lib::spt::playback::metadata() const -> nlohmann::json
 {
 	auto artist_names = entity::combine_names(item.artists);
 
@@ -47,7 +47,7 @@ nlohmann::json lib::spt::playback::metadata() const
 	};
 }
 
-int lib::spt::playback::volume() const
+auto lib::spt::playback::volume() const -> int
 {
 	return device.volume_percent;
 }

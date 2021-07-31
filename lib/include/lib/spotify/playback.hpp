@@ -19,12 +19,12 @@ namespace lib
 			/**
 			 * Metadata for MPRIS
 			 */
-			nlohmann::json metadata() const;
+			auto metadata() const -> nlohmann::json;
 
 			/**
 			 * Current volume, fetched from active device
 			 */
-			int volume() const;
+			auto volume() const -> int;
 
 			/**
 			 * Context currently playing from
