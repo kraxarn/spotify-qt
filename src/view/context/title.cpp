@@ -151,7 +151,8 @@ auto View::Context::Title::playlist(const std::string &id) -> lib::spt::playlist
 			return playlist;
 		}
 	}
-	return lib::spt::playlist();
+
+	return {};
 }
 
 auto View::Context::Title::playlistNameFromSaved(const std::string &id) -> std::string
