@@ -2,8 +2,10 @@
 
 void lib::spt::from_json(const nlohmann::json &j, playback &p)
 {
-	if (!j.is_object() || j.at("item").is_null())
+	if (!j.is_object() || !j.contains("item"))
+	{
 		return;
+	}
 
 	j.at("progress_ms").get_to(p.progress_ms);
 	j.at("item").get_to(p.item);
