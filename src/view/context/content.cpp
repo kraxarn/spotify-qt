@@ -24,6 +24,9 @@ View::Context::Content::Content(lib::spt::api &spotify, spt::Current &current,
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QLabel::connect(this, &QWidget::customContextMenuRequested,
 		this, &View::Context::Content::onSongMenu);
+
+	// Context doesn't make sense to resize vertically
+	setFixedHeight(layout->minimumSize().height());
 }
 
 void View::Context::Content::onSongMenu(const QPoint &pos)
