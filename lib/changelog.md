@@ -30,9 +30,12 @@ Versions use major.minor scheming. New versions are released together with spoti
 * Removed `vector::remove_if`.
 
 ### v0.4 (spotify-qt v3.6)
-* Added enums: `album_group`, `client_type`, `follow_type`, `repeat_state`.
 * Paths in `paths` now return `filesystem::path` instead of `std::string`.
 * Setting `general.hidden_song_headers` is now a `std::unordered_set` instead of `std::vector`.
+* Version is now defined in `lib/libversion.hpp`.
+* Reworked `cache`.
+
+* Added enums: `album_group`, `client_type`, `follow_type`, `repeat_state`.
 * Added `general.last_device` setting.
 * Added Spotify classes: `album`, `artist`, `audio_features`, `device`, `playback`, `playlist`, 
   `search_results`, `track`, `user`.
@@ -41,23 +44,24 @@ Versions use major.minor scheming. New versions are released together with spoti
 * Added `entity` type for saving id and name of various entities.
 * Added `api` as a Spotify Web API wrapper.
 * Added `json`.
-* Version is now defined in `lib/libversion.hpp`.
-* Removed deprecated `locale`.
 * Added `random`.
-* Reworked `cache`.
+
+* Removed deprecated `locale`.
 
 ### v0.3 (spotify-qt v3.5)
-* Added xor encryption/decryption support.
-* Added time and size formatting.
-* Added vector utilities.
 * All headers are now in an "include" folder.
 * `general.song_header_resize_mode` is now `general.track_list_resize_mode`.
-* Removed `general.spotify_playback_order` setting.
+
+* Added `cipher`.
+* Added `fmt::time` and `fmt::size`.
+* Added `vector`.
+
+* Removed `general.spotify_playback_order`.
 
 ### v0.2 (spotify-qt v3.4)
-* Added settings.
-* Added formatting.
-* Added logging (`log`, `log_message`).
+* Added `settings`.
+* Added `fmt`.
+* Added `log`.
 * Added `date_time`.
 
 ### v0.1 (spotify-qt v3.3)
