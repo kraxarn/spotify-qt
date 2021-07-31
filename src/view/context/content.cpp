@@ -12,7 +12,7 @@ View::Context::Content::Content(lib::spt::api &spotify, spt::Current &current,
 	layout->setAlignment(Qt::AlignBottom);
 
 	album = new QLabel(this);
-	album->setFixedSize(64, 64);
+	album->setFixedSize(albumSize, albumSize);
 
 	layout->addWidget(album);
 	nowPlaying = new View::Context::NowPlaying(this);

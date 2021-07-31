@@ -33,6 +33,9 @@ namespace View
 			void setAlbum(const QPixmap &pixmap);
 
 		private:
+			/** Width and height of album */
+			static constexpr int albumSize = 64;
+
 			lib::spt::api &spotify;
 			spt::Current &current;
 			const lib::cache &cache;
