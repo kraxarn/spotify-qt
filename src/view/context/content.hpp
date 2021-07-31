@@ -21,6 +21,8 @@ namespace View
 	{
 		class Content: public QWidget
 		{
+		Q_OBJECT
+
 		public:
 			Content(lib::spt::api &spotify, spt::Current &current,
 				const lib::cache &cache, QWidget *parent);

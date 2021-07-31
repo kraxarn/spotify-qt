@@ -11,6 +11,8 @@ namespace View
 	{
 		class NowPlaying: public QWidget
 		{
+		Q_OBJECT
+
 		public:
 			NowPlaying(QWidget *parent);
 
