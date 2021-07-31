@@ -60,9 +60,12 @@ void lib::crash_handler::handle(int signal, struct sigcontext context)
 	info.signal = signal;
 	if (signal == SIGSEGV)
 	{
-		// TODO: Print this in hex
-		info.info = lib::fmt::format("faulty address at {} from {}",
-			context.cr2, context.rip);
+		std::stringstream stream;
+		stream << "faulty address at 0x"
+			<< std::hex << context.cr2
+			<< " from 0x" << context.rip;
+
+		info.info = stream.str();
 	}
 
 	auto trace_size = backtrace(trace.data(), backtrace_size);
