@@ -14,17 +14,16 @@ auto lib::crash_handler::init() -> bool
 		SIGSEGV, // Invalid access to storage
 		SIGSYS,  // Bad system call
 	}};
-	auto success = true;
+	initialized = true;
 	auto handler = reinterpret_cast<__sighandler_t>(lib::crash_handler::handle);
 	for (const auto s : signals)
 	{
 		if (signal(s, handler) == nullptr)
 		{
-			success = false;
+			initialized = false;
 		}
 	}
-	initialized = success;
-	return success;
+	return initialized;
 }
 #else
 auto lib::crash_handler::init() -> bool
