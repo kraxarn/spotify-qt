@@ -26,7 +26,7 @@ namespace lib
 			/**
 			 * Order to display playlists in
 			 */
-			lib::playlist_order playlist_order = playlist_order_default;
+			lib::playlist_order playlist_order = lib::playlist_order::none;
 
 			/**
 			 * Last viewed playlist

@@ -116,7 +116,7 @@ void PlaylistList::load(const std::vector<lib::spt::playlist> &playlists)
 	}
 
 	// Sort
-	if (settings.general.playlist_order != lib::playlist_order_default)
+	if (settings.general.playlist_order != lib::playlist_order::none)
 	{
 		order(settings.general.playlist_order);
 	}
@@ -170,7 +170,7 @@ void PlaylistList::order(lib::playlist_order order)
 
 	switch (order)
 	{
-		case lib::playlist_order_default:
+		case lib::playlist_order::none:
 			std::sort(items.begin(), items.end(),
 				[](QListWidgetItem *i1, QListWidgetItem *i2) -> bool
 				{
@@ -179,7 +179,7 @@ void PlaylistList::order(lib::playlist_order order)
 				});
 			break;
 
-		case lib::playlist_order_alphabetical:
+		case lib::playlist_order::alphabetical:
 			std::sort(items.begin(), items.end(),
 				[](QListWidgetItem *i1, QListWidgetItem *i2) -> bool
 				{
@@ -187,7 +187,7 @@ void PlaylistList::order(lib::playlist_order order)
 				});
 			break;
 
-		case lib::playlist_order_recent:
+		case lib::playlist_order::recent:
 			// TODO: Currently sorts by when tracks where added, not when playlist was last played
 			mainWindow = MainWindow::find(parentWidget());
 			if (mainWindow == nullptr)
@@ -211,7 +211,7 @@ void PlaylistList::order(lib::playlist_order order)
 			});
 			break;
 
-		case lib::playlist_order_custom:
+		case lib::playlist_order::custom:
 			i = 0;
 			for (auto &playlist : settings.general.custom_playlist_order)
 			{

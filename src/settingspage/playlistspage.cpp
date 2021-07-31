@@ -24,7 +24,7 @@ auto PlaylistsPage::order() -> QWidget *
 	plOrder->addItems({
 		"Default", "Alphabetical", "Recent", "Custom"
 	});
-	plOrder->setCurrentIndex(settings.general.playlist_order);
+	plOrder->setCurrentIndex(static_cast<int>(settings.general.playlist_order));
 	typeContainer->addWidget(plOrder);
 	layout->addLayout(typeContainer);
 
@@ -82,8 +82,8 @@ auto PlaylistsPage::title() -> QString
 auto PlaylistsPage::save() -> bool
 {
 	// Custom playlist order
-	auto playlistOrder = (lib::playlist_order) plOrder->currentIndex();
-	if (playlistOrder == lib::playlist_order_custom)
+	auto playlistOrder = static_cast<lib::playlist_order>(plOrder->currentIndex());
+	if (playlistOrder == lib::playlist_order::custom)
 	{
 		std::vector<std::string> order;
 		for (auto i = 0; i < plList->count(); i++)
@@ -96,7 +96,7 @@ auto PlaylistsPage::save() -> bool
 	// Playlist stuff
 	auto *mainWindow = MainWindow::find(parentWidget());
 	if ((settings.general.playlist_order != playlistOrder
-		|| playlistOrder == lib::playlist_order_custom)
+		|| playlistOrder == lib::playlist_order::custom)
 		&& mainWindow != nullptr)
 	{
 		mainWindow->orderPlaylists(playlistOrder);
