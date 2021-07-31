@@ -4,11 +4,13 @@ Versions use major.minor scheming. New versions are released together with spoti
 * Minor releases contain minor changes and bug fixes and should never require changes to be made.
 * Pre-release and beta releases may contain breaking changes, even if it's a minor release.
 
-### v0.5 (spotify-qt v3.7)
+
+## v0.5 (spotify-qt v3.7)
 * `cache` is now abstract, and previous implementation has been moved to `json_cache`.
 * Reworked `audio_feature`.
 * Version is now defined in `CMakeLists.txt` (still as `LIB_VERSION`).
 * `spt::album` and `spt::artist` now inherits `spt::entity`.
+
 
 * Added `crash_handler` (GCC amd64 only).
 * Added `qt` settings.
@@ -22,18 +24,22 @@ Versions use major.minor scheming. New versions are released together with spoti
 * Added `vector::index_of`.
 * Added `qt::system_info`.
 
+
 * Moved `spotify_error` to `spt::error`.
 * Moved `seconds_since_epoch` to `date_time`.
 * Moved `lib::qt::sytem` to `lib::system` (no longer depends on Qt).
 
+
 * Removed `general.show_context_info` (always enabled).
 * Removed `vector::remove_if`.
 
-### v0.4 (spotify-qt v3.6)
+
+## v0.4 (spotify-qt v3.6)
 * Paths in `paths` now return `filesystem::path` instead of `std::string`.
 * Setting `general.hidden_song_headers` is now a `std::unordered_set` instead of `std::vector`.
 * Version is now defined in `lib/libversion.hpp`.
 * Reworked `cache`.
+
 
 * Added enums: `album_group`, `client_type`, `follow_type`, `repeat_state`.
 * Added `general.last_device` setting.
@@ -46,23 +52,28 @@ Versions use major.minor scheming. New versions are released together with spoti
 * Added `json`.
 * Added `random`.
 
+
 * Removed deprecated `locale`.
 
-### v0.3 (spotify-qt v3.5)
+
+## v0.3 (spotify-qt v3.5)
 * All headers are now in an "include" folder.
 * `general.song_header_resize_mode` is now `general.track_list_resize_mode`.
+
 
 * Added `cipher`.
 * Added `fmt::time` and `fmt::size`.
 * Added `vector`.
 
+
 * Removed `general.spotify_playback_order`.
 
-### v0.2 (spotify-qt v3.4)
+
+## v0.2 (spotify-qt v3.4)
 * Added `settings`.
 * Added `fmt`.
 * Added `log`.
 * Added `date_time`.
 
-### v0.1 (spotify-qt v3.3)
+## v0.1 (spotify-qt v3.3)
 * Initial version.
