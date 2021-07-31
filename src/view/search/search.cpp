@@ -9,7 +9,6 @@ View::Search::Search::Search(lib::spt::api &spotify, lib::cache &cache,
 	QWidget(parent)
 {
 	auto *layout = new QVBoxLayout();
-	layout->setContentsMargins(-1, 0, -1, 0);
 	searchBox = new QLineEdit(this);
 	layout->addWidget(searchBox);
 	setLayout(layout);
