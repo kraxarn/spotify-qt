@@ -277,8 +277,9 @@ auto PlaylistList::at(int index) -> lib::spt::playlist
 	auto *i = item(index);
 	if (i == nullptr)
 	{
-		return lib::spt::playlist();
+		return {};
 	}
+
 	return at(i->data(RolePlaylistId).toString().toStdString());
 }
 
@@ -291,5 +292,6 @@ auto PlaylistList::at(const std::string &id) -> lib::spt::playlist
 			return playlist;
 		}
 	}
-	return lib::spt::playlist();
+
+	return {};
 }
