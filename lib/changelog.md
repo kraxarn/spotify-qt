@@ -4,6 +4,31 @@ Versions use major.minor scheming. New versions are released together with spoti
 * Minor releases contain minor changes and bug fixes and should never require changes to be made.
 * Pre-release and beta releases may contain breaking changes, even if it's a minor release.
 
+### v0.5 (spotify-qt v3.7)
+* `cache` is now abstract, and previous implementation has been moved to `json_cache`.
+* Reworked `audio_feature`.
+* Version is now defined in `CMakeLists.txt` (still as `LIB_VERSION`).
+* `spt::album` and `spt::artist` now inherits `spt::entity`.
+
+* Added `crash_handler` (GCC amd64 only).
+* Added `qt` settings.
+* Added `http_client`, and `qt::http_client`.
+* Added `spt::auth`, and `qt::spt::auth`.
+* Added `spt::playlist::is_up_to_date`.
+* Added `track_info` and `lyrics`.
+* Added `image`.
+* Added `strings::replace_all`.
+* Added `lib::system::window_sytem`.
+* Added `vector::index_of`.
+* Added `qt::system_info`.
+
+* Moved `spotify_error` to `spt::error`.
+* Moved `seconds_since_epoch` to `date_time`.
+* Moved `lib::qt::sytem` to `lib::system` (no longer depends on Qt).
+
+* Removed `general.show_context_info` (always enabled).
+* Removed `vector::remove_if`.
+
 ### v0.4 (spotify-qt v3.6)
 * Added enums: `album_group`, `client_type`, `follow_type`, `repeat_state`.
 * Paths in `paths` now return `filesystem::path` instead of `std::string`.
