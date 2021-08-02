@@ -18,14 +18,16 @@ public:
 
 private:
 	// General
-	QCheckBox *itfDark = nullptr;
-	QCheckBox *itfIcFallback = nullptr;
 	QCheckBox *itfMonoTime = nullptr;
 	QCheckBox *itfRelativeAdded = nullptr;
 	QCheckBox *itfTrackNum = nullptr;
-	QComboBox *itfStyle = nullptr;
 	QComboBox *itfResizeMode = nullptr;
 	QCheckBox *titleBar = nullptr;
+
+	// Appearance
+	QComboBox *itfStyle = nullptr;
+	QCheckBox *itfDark = nullptr;
+	QCheckBox *itfIcFallback = nullptr;
 
 	// Tray icon
 	QCheckBox *itfTrayAlbum = nullptr;
@@ -34,6 +36,7 @@ private:
 	QCheckBox *itfTrayNotify = nullptr;
 
 	auto general() -> QWidget *;
+	auto appearance() -> QWidget *;
 	auto trayIcon() -> QWidget *;
 
 	static auto hasIconTheme() -> bool;

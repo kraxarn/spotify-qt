@@ -5,10 +5,63 @@ InterfacePage::InterfacePage(lib::settings &settings, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
 	addTab(general(), "General");
+	addTab(appearance(), "Appearance");
 	addTab(trayIcon(), "Tray icon");
 }
 
 auto InterfacePage::general() -> QWidget *
+{
+	auto *layout = tabContent();
+	auto *comboBoxLayout = new QGridLayout();
+
+	// Column resize
+	auto *resizeLabel = new QLabel("Track column resize", this);
+	resizeLabel->setToolTip("How to resize the columns in the track list\n"
+							"Fit width (default): Adjust column width to fill width of list\n"
+							"Fit content: Adjust column width to show all content\n"
+							"Custom: No auto resize");
+	comboBoxLayout->addWidget(resizeLabel, 0, 0);
+
+	itfResizeMode = new QComboBox(this);
+	itfResizeMode->addItems({
+		"Fit width",
+		"Fit content",
+		"Custom",
+	});
+	itfResizeMode->setCurrentIndex(settings.general.track_list_resize_mode);
+	comboBoxLayout->addWidget(itfResizeMode, 0, 1);
+	layout->addLayout(comboBoxLayout);
+
+	// Monospace remaining time
+	itfMonoTime = new QCheckBox("Fixed width remaining time", this);
+	itfMonoTime->setToolTip("Use a fixed width for remaining time to avoid resizing");
+	itfMonoTime->setChecked(settings.general.fixed_width_time);
+	layout->addWidget(itfMonoTime);
+
+	// Track numbers
+	itfTrackNum = new QCheckBox("Show track numbers", this);
+	itfTrackNum->setToolTip("Show track numbers next to tracks in the list");
+	itfTrackNum->setChecked(settings.general.track_numbers == lib::context_all);
+	layout->addWidget(itfTrackNum);
+
+	// Relative added date
+	itfRelativeAdded = new QCheckBox("Relative added dates", this);
+	itfRelativeAdded->setToolTip("Relative added dates compared to current date,\n"
+								 "for example \"... ago\"");
+	itfRelativeAdded->setChecked(settings.general.relative_added);
+	layout->addWidget(itfRelativeAdded);
+
+	// System title bar
+	const auto &qtSettings = settings.qt_const();
+	titleBar = new QCheckBox("System title bar", this);
+	titleBar->setToolTip("Show system title bar and window borders");
+	titleBar->setChecked(qtSettings.system_title_bar);
+	layout->addWidget(titleBar);
+
+	return WidgetUtils::layoutToWidget(layout, this);
+}
+
+auto InterfacePage::appearance() -> QWidget *
 {
 	auto *layout = tabContent();
 	auto *comboBoxLayout = new QGridLayout();
@@ -41,23 +94,6 @@ auto InterfacePage::general() -> QWidget *
 
 	layout->addLayout(comboBoxLayout);
 
-	// Column resize
-	auto *resizeLabel = new QLabel("Track column resize", this);
-	resizeLabel->setToolTip("How to resize the columns in the track list\n"
-							"Fit width (default): Adjust column width to fill width of list\n"
-							"Fit content: Adjust column width to show all content\n"
-							"Custom: No auto resize");
-	comboBoxLayout->addWidget(resizeLabel, 1, 0);
-
-	itfResizeMode = new QComboBox(this);
-	itfResizeMode->addItems({
-		"Fit width",
-		"Fit content",
-		"Custom",
-	});
-	itfResizeMode->setCurrentIndex(settings.general.track_list_resize_mode);
-	comboBoxLayout->addWidget(itfResizeMode, 1, 1);
-
 	// Dark theme
 	itfDark = new QCheckBox("Dark theme", this);
 	itfDark->setToolTip("Use custom dark theme");
@@ -68,37 +104,11 @@ auto InterfacePage::general() -> QWidget *
 	// Always use fallback icons (if system icons are an option)
 	if (hasIconTheme())
 	{
-		itfIcFallback = new QCheckBox("Always use built-in icons", this);
+		itfIcFallback = new QCheckBox("Use bundled icons", this);
 		itfIcFallback->setToolTip("Always use bundled icons, even if system icons are available");
 		itfIcFallback->setChecked(settings.general.fallback_icons);
 		layout->addWidget(itfIcFallback);
 	}
-
-	// Monospace remaining time
-	itfMonoTime = new QCheckBox("Fixed width remaining time", this);
-	itfMonoTime->setToolTip("Use a fixed width for remaining time to avoid resizing");
-	itfMonoTime->setChecked(settings.general.fixed_width_time);
-	layout->addWidget(itfMonoTime);
-
-	// Track numbers
-	itfTrackNum = new QCheckBox("Show track numbers", this);
-	itfTrackNum->setToolTip("Show track numbers next to tracks in the list");
-	itfTrackNum->setChecked(settings.general.track_numbers == lib::context_all);
-	layout->addWidget(itfTrackNum);
-
-	// Relative added date
-	itfRelativeAdded = new QCheckBox("Relative added dates", this);
-	itfRelativeAdded->setToolTip("Relative added dates compared to current date,\n"
-								 "for example \"... ago\"");
-	itfRelativeAdded->setChecked(settings.general.relative_added);
-	layout->addWidget(itfRelativeAdded);
-
-	// System title bar
-	const auto &qtSettings = settings.qt_const();
-	titleBar = new QCheckBox("System title bar", this);
-	titleBar->setToolTip("Show system title bar and window borders");
-	titleBar->setChecked(qtSettings.system_title_bar);
-	layout->addWidget(titleBar);
 
 	return WidgetUtils::layoutToWidget(layout, this);
 }
