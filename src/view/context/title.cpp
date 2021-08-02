@@ -19,6 +19,7 @@ View::Context::Title::Title(lib::spt::api &spotify, spt::Current &current,
 	info = new QLabel(this);
 	info->setToolTip("Currently playing from");
 	info->setVisible(false);
+	info->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
 
 	layout->addWidget(icon);
 	layout->addWidget(info, 1);
