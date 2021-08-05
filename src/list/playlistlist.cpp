@@ -166,6 +166,12 @@ void PlaylistList::order(lib::playlist_order order)
 		items.insert(i, takeItem(0));
 	}
 
+	if (order == lib::playlist_order::custom
+		&& settings.general.custom_playlist_order.empty())
+	{
+		order = lib::playlist_order::none;
+	}
+
 	QMap<QString, int> customOrder;
 	MainWindow *mainWindow;
 
