@@ -86,6 +86,7 @@ auto PlaylistsPage::save() -> bool
 	if (playlistOrder == lib::playlist_order::custom)
 	{
 		std::vector<std::string> order;
+		order.reserve(plList->count());
 		for (auto i = 0; i < plList->count(); i++)
 		{
 			order.push_back(plList->item(i)->data(RolePlaylistId).toString().toStdString());
