@@ -31,12 +31,12 @@ void PlaylistList::showEvent(QShowEvent */*event*/)
 	}
 
 	const auto &cached = cache.get_playlists();
-	if (cached.empty())
+	if (!cached.empty())
 	{
-		return;
+		load(cached);
 	}
 
-	load(cached);
+	refresh();
 }
 
 auto PlaylistList::getItemIndex(QListWidgetItem *item) -> int
