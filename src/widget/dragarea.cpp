@@ -56,8 +56,14 @@ void DragArea::menu(const QPoint &pos)
 		emit this->mainWindow->showMinimized();
 	});
 
-	auto *maximize = menu->addAction(Icon::get("window-maximize-symbolic"),
-		"Maximize");
+	const auto isMaximized = mainWindow->isMaximized();
+	auto *maximize = menu->addAction(Icon::get(isMaximized
+			? "window-restore"
+			: "window-maximize-symbolic"),
+		isMaximized
+			? "Restore"
+			: "Maximize");
+
 	QAction::connect(maximize, &QAction::triggered, [this](bool /*checked*/)
 	{
 		if (mainWindow->isMaximized())
