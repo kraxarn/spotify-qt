@@ -63,6 +63,7 @@ void settings::from_json(const nlohmann::json &json)
 	setValue(a, "refresh_token", account.refresh_token);
 
 	// General
+	setValue(g, "custom_playlist_order", general.custom_playlist_order);
 	setValue(g, "fallback_icons", general.fallback_icons);
 	setValue(g, "fixed_width_time", general.fixed_width_time);
 	setValue(g, "last_device", general.last_device);
