@@ -66,6 +66,7 @@ void settings::from_json(const nlohmann::json &json)
 	setValue(g, "custom_playlist_order", general.custom_playlist_order);
 	setValue(g, "fallback_icons", general.fallback_icons);
 	setValue(g, "fixed_width_time", general.fixed_width_time);
+	setValue(g, "hidden_song_headers", general.hidden_song_headers);
 	setValue(g, "last_device", general.last_device);
 	setValue(g, "last_playlist", general.last_playlist);
 	setValue(g, "last_version", general.last_version);
