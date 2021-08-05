@@ -48,6 +48,7 @@
         <file>res/ic/light/window-close-symbolic.svg</file>
         <file>res/ic/light/window-maximize-symbolic.svg</file>
         <file>res/ic/light/window-minimize-symbolic.svg</file>
+        <file>res/ic/light/window-restore.svg</file>
         <file>res/ic/light/window.svg</file>
         <!-- Dark icons -->
         <file>res/ic/dark/application-exit.svg</file>
@@ -96,6 +97,7 @@
         <file>res/ic/dark/window-close-symbolic.svg</file>
         <file>res/ic/dark/window-maximize-symbolic.svg</file>
         <file>res/ic/dark/window-minimize-symbolic.svg</file>
+        <file>res/ic/dark/window-restore.svg</file>
         <file>res/ic/dark/window.svg</file>
         <!-- Logos -->
         <file>res/logo/spotify-qt-symbolic-dark.svg</file>
