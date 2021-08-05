@@ -40,6 +40,11 @@ void View::Crashes::showEvent(QShowEvent */*event*/)
 
 void View::Crashes::logItemChanged(QListWidgetItem *current, QListWidgetItem */*previous*/)
 {
+	if (current == nullptr)
+	{
+		return;
+	}
+
 	auto role = static_cast<int>(ListItem::Crash::Role::StackTrace);
 	log->setPlainText(current->data(role).toString());
 }
