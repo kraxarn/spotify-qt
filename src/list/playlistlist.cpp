@@ -106,6 +106,7 @@ void PlaylistList::load(const std::vector<lib::spt::playlist> &playlists)
 		item->setToolTip(doc.toPlainText());
 
 		item->setData(RolePlaylistId, QString::fromStdString(playlist.id));
+		item->setData(RoleDefaultIndex, i);
 		item->setData(RoleIndex, i++);
 
 		if (playlist.id == lastItem)
@@ -174,8 +175,8 @@ void PlaylistList::order(lib::playlist_order order)
 			std::sort(items.begin(), items.end(),
 				[](QListWidgetItem *i1, QListWidgetItem *i2) -> bool
 				{
-					return i1->data(RoleIndex).toInt()
-						< i2->data(RoleIndex).toInt();
+					return i1->data(RoleDefaultIndex).toInt()
+						< i2->data(RoleDefaultIndex).toInt();
 				});
 			break;
 
