@@ -1,7 +1,7 @@
 #include "widget/maintoolbar.hpp"
 #include "mainwindow.hpp"
 
-MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings,
+MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	const lib::http_client &httpClient, lib::cache &cache, QWidget *parent)
 	: parent(parent),
 	spotify(spotify),

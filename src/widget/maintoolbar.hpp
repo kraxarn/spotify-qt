@@ -18,7 +18,7 @@ class MainToolBar: public QToolBar
 Q_OBJECT
 
 public:
-	MainToolBar(spt::Spotify &spotify, lib::settings &settings,
+	MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 		const lib::http_client &httpClient, lib::cache &cache, QWidget *parent);
 
 	void showTitleBarButtons(bool show);
@@ -53,7 +53,7 @@ private:
 	QAction *repeat = nullptr;
 	VolumeButton *volumeButton = nullptr;
 
-	spt::Spotify &spotify;
+	lib::spt::api &spotify;
 	lib::settings &settings;
 
 	DragArea *leftSpacer = nullptr;

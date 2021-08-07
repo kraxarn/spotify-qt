@@ -2,7 +2,7 @@
 
 #include "mainwindow.hpp"
 
-VolumeButton::VolumeButton(lib::settings &settings, spt::Spotify &spotify, QWidget *parent)
+VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWidget *parent)
 	: settings(settings),
 	spotify(spotify),
 	volume(new QSlider(this)),

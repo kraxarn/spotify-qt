@@ -1,10 +1,9 @@
 #pragma once
 
-class VolumeButton;
+#include "lib/spotify/api.hpp"
 
 #include "client/clienthelper.hpp"
 #include "util/icon.hpp"
-#include "spotify/spotify.hpp"
 
 #include <QMenu>
 #include <QSlider>
@@ -17,7 +16,7 @@ class VolumeButton: public QToolButton
 Q_OBJECT
 
 public:
-	VolumeButton(lib::settings &settings, spt::Spotify &spotify, QWidget *parent);
+	VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWidget *parent);
 	~VolumeButton();
 
 	void updateIcon();
@@ -29,5 +28,5 @@ protected:
 private:
 	QSlider *volume;
 	lib::settings &settings;
-	spt::Spotify &spotify;
+	lib::spt::api &spotify;
 };
