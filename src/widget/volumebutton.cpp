@@ -1,5 +1,4 @@
 #include "volumebutton.hpp"
-
 #include "mainwindow.hpp"
 
 VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWidget *parent)
@@ -10,17 +9,17 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 {
 	// Volume slider
 	volume->setOrientation(Qt::Orientation::Vertical);
-	volume->setFixedHeight(100);
-	volume->setMinimum(0);
-	volume->setMaximum(20);
-	volume->setValue(settings.general.last_volume > 0
+	volume->setFixedHeight(height);
+	volume->setMinimum(minimum);
+	volume->setMaximum(maximum);
+	volume->setValue(settings.general.last_volume > minimum
 		? settings.general.last_volume
-		: spt::ClientHelper::getVolume() * 20);
+		: static_cast<int>(spt::ClientHelper::getVolume() * 20.F));
 
 	// Layout for volume slider
-	auto volumeMenu = new QMenu(this);
-	volumeMenu->setContentsMargins(2, 6, 2, 6);
-	auto volumeLayout = new QVBoxLayout();
+	auto *volumeMenu = new QMenu(this);
+	volumeMenu->setContentsMargins(vMargin, hMargin, vMargin, hMargin);
+	auto *volumeLayout = new QVBoxLayout();
 	volumeLayout->addWidget(volume);
 	volumeMenu->setLayout(volumeLayout);
 
@@ -29,7 +28,7 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 	setPopupMode(QToolButton::InstantPopup);
 	setMenu(volumeMenu);
 
-	QAbstractSlider::connect(volume, &QAbstractSlider::valueChanged, [this](int value)
+	QAbstractSlider::connect(volume, &QAbstractSlider::valueChanged, [this](int /*value*/)
 	{
 		updateIcon();
 	});
@@ -39,7 +38,7 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 		// If using PulseAudio for volume control, update on every tick
 		QSlider::connect(volume, &QAbstractSlider::valueChanged, [](int value)
 		{
-			spt::ClientHelper::setVolume((float) value * 0.05f);
+			spt::ClientHelper::setVolume(static_cast<float>(value) * 0.05f);
 		});
 	}
 	else
@@ -47,12 +46,12 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 		// If using Spotify for volume control, only update on release
 		QSlider::connect(volume, &QAbstractSlider::sliderReleased, [this]()
 		{
-			this->spotify.set_volume(volume->value() * 5,
+			this->spotify.set_volume(volume->value() * step,
 				[this](const std::string &status)
 				{
 					if (!status.empty())
 					{
-						auto window = MainWindow::find(parentWidget());
+						auto *window = MainWindow::find(parentWidget());
 						if (window != nullptr)
 						{
 							window->status(lib::fmt::format("Failed to set volume: {}",
@@ -78,9 +77,13 @@ void VolumeButton::wheelEvent(QWheelEvent *event)
 
 void VolumeButton::updateIcon()
 {
-	auto vol = volume->value() * 5;
+	auto vol = volume->value();
 	setIcon(Icon::get(QString("audio-volume-%1")
-		.arg(vol < 33 ? "low" : vol > 66 ? "high" : "medium")));
+		.arg(vol < lowVolume
+			? "low"
+			: vol > highVolume
+				? "high"
+				: "medium")));
 }
 
 void VolumeButton::setVolume(int value)
