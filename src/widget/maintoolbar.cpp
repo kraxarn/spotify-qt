@@ -1,4 +1,4 @@
-#include "maintoolbar.hpp"
+#include "widget/maintoolbar.hpp"
 #include "mainwindow.hpp"
 
 MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings,

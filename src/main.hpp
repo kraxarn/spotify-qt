@@ -29,9 +29,9 @@
 #include "util/imageutils.hpp"
 #include "util/styleutils.hpp"
 #include "view/context/context.hpp"
-#include "view/maintoolbar.hpp"
 #include "view/sidepanel/sidepanel.hpp"
 #include "view/trayicon.hpp"
+#include "widget//maintoolbar.hpp"
 
 #include <QMainWindow>
 #include <QSplitter>
