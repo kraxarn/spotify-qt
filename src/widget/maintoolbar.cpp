@@ -32,62 +32,17 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings,
 	// Media controls
 	addSeparator();
 	auto *previous = addAction(Icon::get("media-skip-backward"), "Previous");
+	QAction::connect(previous, &QAction::triggered,
+		this, &MainToolBar::onPrevious);
+
 	playPause = addAction(Icon::get("media-playback-start"), "Play");
 	playPause->setShortcut(QKeySequence("Space"));
-	QAction::connect(playPause, &QAction::triggered, [this, mainWindow](bool /*checked*/)
-	{
-		auto &current = mainWindow->getCurrentPlayback();
-		current.is_playing = !current.is_playing;
-		mainWindow->refreshed(current);
-
-		auto callback = [this, mainWindow](const std::string &status)
-		{
-			if (status.empty())
-			{
-				return;
-			}
-
-			mainWindow->status(lib::fmt::format("Failed to {} playback: {}",
-				this->playPause->iconText() == "Pause" ? "pause" : "resume",
-				status), true);
-		};
-
-		if (current.is_playing)
-		{
-			this->spotify.resume(callback);
-		}
-		else
-		{
-			this->spotify.pause(callback);
-		}
-	});
+	QAction::connect(playPause, &QAction::triggered,
+		this, &MainToolBar::onPlayPause);
 
 	auto *next = addAction(Icon::get("media-skip-forward"), "Next");
-	QAction::connect(previous, &QAction::triggered, [this, mainWindow](bool /*checked*/)
-	{
-		this->spotify.previous([mainWindow](const std::string &status)
-		{
-			if (!status.empty())
-			{
-				mainWindow->status(lib::fmt::format("Failed to go to previous track: {}",
-					status), true);
-			}
-			mainWindow->refresh();
-		});
-	});
-
-	QAction::connect(next, &QAction::triggered, [this, mainWindow](bool /*checked*/)
-	{
-		this->spotify.next([mainWindow](const std::string &status)
-		{
-			if (!status.empty())
-			{
-				mainWindow->status(lib::fmt::format("Failed to go to next track: {}",
-					status), true);
-			}
-			mainWindow->refresh();
-		});
-	});
+	QAction::connect(next, &QAction::triggered,
+		this, &MainToolBar::onNext);
 
 	addSeparator();
 	leftSpacer = new DragArea(this);
@@ -96,25 +51,7 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings,
 	// Progress
 	progress = new ClickableSlider(Qt::Horizontal, this);
 	QSlider::connect(progress, &QAbstractSlider::sliderReleased,
-		this, [this, mainWindow]()
-		{
-			this->spotify.seek(progress->value(),
-				[mainWindow](const std::string &status)
-				{
-					if (!status.empty())
-					{
-						mainWindow->status(lib::fmt::format("Failed to seek: {}",
-							status), true);
-					}
-
-#ifdef USE_DBUS
-					if (mainWindow->getMediaPlayer() != nullptr)
-					{
-						mainWindow->getMediaPlayer()->stateUpdated();
-					}
-#endif
-				});
-		});
+		this, &MainToolBar::onProgressReleased);
 
 	addWidget(progress);
 	addSeparator();
@@ -132,42 +69,13 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings,
 	// Shuffle and repeat toggles
 	shuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle");
 	shuffle->setCheckable(true);
-	QAction::connect(shuffle, &QAction::triggered, [this, mainWindow](bool checked)
-	{
-		auto &current = mainWindow->getCurrentPlayback();
-		current.shuffle = !current.shuffle;
-		mainWindow->refreshed(current);
-
-		this->spotify.set_shuffle(checked, [mainWindow](const std::string &status)
-		{
-			if (!status.empty())
-			{
-				mainWindow->status(lib::fmt::format("Failed to toggle shuffle: {}",
-					status), true);
-			}
-		});
-	});
+	QAction::connect(shuffle, &QAction::triggered,
+		this, &MainToolBar::onShuffle);
 
 	repeat = addAction(Icon::get("media-playlist-repeat"), "Repeat");
 	repeat->setCheckable(true);
-	QAction::connect(repeat, &QAction::triggered, [this, mainWindow](bool checked)
-	{
-		auto &current = mainWindow->getCurrentPlayback();
-		auto repeatMode = checked
-			? lib::repeat_state::context
-			: lib::repeat_state::off;
-		current.repeat = repeatMode;
-		mainWindow->refreshed(current);
-
-		this->spotify.set_repeat(repeatMode, [mainWindow](const std::string &status)
-		{
-			if (!status.empty())
-			{
-				mainWindow->status(lib::fmt::format("Failed to toggle repeat: {}",
-					status), true);
-			}
-		});
-	});
+	QAction::connect(repeat, &QAction::triggered,
+		this, &MainToolBar::onRepeat);
 
 	// Volume
 	volumeButton = new VolumeButton(settings, spotify, this);
@@ -176,10 +84,8 @@ MainToolBar::MainToolBar(spt::Spotify &spotify, lib::settings &settings,
 	// Title bar buttons
 	titleBarSeparator = addSeparator();
 	minimize = addAction(Icon::get("window-minimize-symbolic"), "Minimize");
-	QAction::connect(minimize, &QAction::triggered, [mainWindow](bool /*checked*/)
-	{
-		emit mainWindow->showMinimized();
-	});
+	QAction::connect(minimize, &QAction::triggered,
+		this, &MainToolBar::onMinimize);
 
 	close = addAction(Icon::get("window-close-symbolic"), "Close");
 	QAction::connect(close, &QAction::triggered, &QCoreApplication::quit);
@@ -271,4 +177,128 @@ void MainToolBar::setBorderless(bool enabled)
 		delete leftResize;
 		delete rightResize;
 	}
+}
+
+void MainToolBar::onPlayPause(bool /*checked*/)
+{
+	auto *mainWindow = MainWindow::find(parentWidget());
+	auto &current = mainWindow->getCurrentPlayback();
+
+	current.is_playing = !current.is_playing;
+	mainWindow->refreshed(current);
+
+	auto callback = [this, mainWindow](const std::string &status)
+	{
+		if (status.empty())
+		{
+			return;
+		}
+
+		mainWindow->status(lib::fmt::format("Failed to {} playback: {}",
+			this->playPause->iconText() == "Pause" ? "pause" : "resume",
+			status), true);
+	};
+
+	if (current.is_playing)
+	{
+		spotify.resume(callback);
+	}
+	else
+	{
+		spotify.pause(callback);
+	}
+}
+
+void MainToolBar::onPrevious(bool /*checked*/)
+{
+	this->spotify.previous([this](const std::string &status)
+	{
+		auto *mainWindow = MainWindow::find(this->parentWidget());
+		if (!status.empty())
+		{
+			mainWindow->status(lib::fmt::format("Failed to go to previous track: {}",
+				status), true);
+		}
+		mainWindow->refresh();
+	});
+}
+
+void MainToolBar::onNext(bool /*checked*/)
+{
+	spotify.next([this](const std::string &status)
+	{
+		auto *mainWindow = MainWindow::find(this->parentWidget());
+		if (!status.empty())
+		{
+			mainWindow->status(lib::fmt::format("Failed to go to next track: {}",
+				status), true);
+		}
+		mainWindow->refresh();
+	});
+}
+
+void MainToolBar::onProgressReleased()
+{
+	spotify.seek(progress->value(), [this](const std::string &status)
+	{
+		auto *mainWindow = MainWindow::find(this->parentWidget());
+
+		if (!status.empty())
+		{
+			mainWindow->status(lib::fmt::format("Failed to seek: {}",
+				status), true);
+		}
+
+#ifdef USE_DBUS
+		if (mainWindow->getMediaPlayer() != nullptr)
+		{
+			mainWindow->getMediaPlayer()->stateUpdated();
+		}
+#endif
+	});
+}
+
+void MainToolBar::onShuffle(bool checked)
+{
+	auto *mainWindow = MainWindow::find(parentWidget());
+	auto &current = mainWindow->getCurrentPlayback();
+
+	current.shuffle = !current.shuffle;
+	mainWindow->refreshed(current);
+
+	spotify.set_shuffle(checked, [mainWindow](const std::string &status)
+	{
+		if (!status.empty())
+		{
+			mainWindow->status(lib::fmt::format("Failed to toggle shuffle: {}",
+				status), true);
+		}
+	});
+}
+
+void MainToolBar::onRepeat(bool checked)
+{
+	auto *mainWindow = MainWindow::find(parentWidget());
+	auto &current = mainWindow->getCurrentPlayback();
+	auto repeatMode = checked
+		? lib::repeat_state::context
+		: lib::repeat_state::off;
+
+	current.repeat = repeatMode;
+	mainWindow->refreshed(current);
+
+	spotify.set_repeat(repeatMode, [mainWindow](const std::string &status)
+	{
+		if (!status.empty())
+		{
+			mainWindow->status(lib::fmt::format("Failed to toggle repeat: {}",
+				status), true);
+		}
+	});
+}
+
+void MainToolBar::onMinimize(bool /*checked*/)
+{
+	auto *mainWindow = MainWindow::find(parentWidget());
+	emit mainWindow->showMinimized();
 }

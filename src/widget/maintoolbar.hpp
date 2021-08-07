@@ -36,6 +36,14 @@ protected:
 	void resizeEvent(QResizeEvent *event) override;
 
 private:
+	void onPlayPause(bool checked);
+	void onPrevious(bool checked);
+	void onNext(bool checked);
+	void onProgressReleased();
+	void onShuffle(bool checked);
+	void onRepeat(bool checked);
+	void onMinimize(bool checked);
+
 	QAction *search = nullptr;
 	QAction *playPause = nullptr;
 	QWidget *parent = nullptr;
