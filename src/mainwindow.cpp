@@ -5,6 +5,7 @@
 #include "util/font.hpp"
 #include "menu/mainmenubar.hpp"
 #include "util/appconfig.hpp"
+#include "lib/cache/dbcache.hpp"
 
 #ifdef __WIN32__
 	#include "windows.h"
@@ -28,6 +29,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 	}
 #endif
 
+	lib::db_cache dbCache(paths);
 	Style::apply(this, settings);
 
 	// Update player status
@@ -93,7 +95,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 		event->accept();
 	}
 }
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0) 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr *result)
 #else
 bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, long *result)
@@ -107,7 +109,7 @@ bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, long *r
 			{
 				case 0: //Next Track
 				{
-					spotify.next([this](const std::string &status) 
+					spotify.next([this](const std::string &status)
 					{
 						if (!status.empty())
 						{
@@ -122,7 +124,7 @@ bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, long *r
 
 				case 1: //Previous Track
 				{
-					spotify.previous([this](const std::string &status) 
+					spotify.previous([this](const std::string &status)
 					{
 						if (!status.empty())
 						{
@@ -146,7 +148,7 @@ bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, long *r
 						{
 							return;
 						}
-				
+
 						StatusMessage::error(QString("Failed to stop playback: %1")
 							.arg(QString::fromStdString(status)));
 					};
