@@ -31,7 +31,8 @@
 #include "view/context/context.hpp"
 #include "view/sidepanel/sidepanel.hpp"
 #include "view/trayicon.hpp"
-#include "widget//maintoolbar.hpp"
+#include "widget/hiddensizegrip.hpp"
+#include "widget/maintoolbar.hpp"
 
 #include <QMainWindow>
 #include <QSplitter>

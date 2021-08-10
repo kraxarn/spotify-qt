@@ -216,12 +216,7 @@ void MainWindow::setBorderless(bool enabled)
 
 void MainWindow::addSizeGrip(const std::function<QPoint(const QRect &)> &position)
 {
-	constexpr int size = 16;
-
-	auto *sizeGrip = new QSizeGrip(this);
-	sizeGrip->resize(size, size);
-	sizeGrip->move(position(geometry()) - position(sizeGrip->geometry()));
-
+	auto *sizeGrip = new HiddenSizeGrip(position, this);
 	resizeGrips.append(sizeGrip);
 }
 
