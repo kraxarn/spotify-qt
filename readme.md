@@ -2,7 +2,7 @@
     <img src=".github/img/logo.svg"/>
 </p>
 
-![spotify-qt with breeze dark](.github/img/spotify-qt.png)
+![spotify-qt with dark theme](.github/img/spotify-qt.png)
 
 [![Linux Build](https://github.com/kraxarn/spotify-qt/actions/workflows/linux.yml/badge.svg)](
 https://github.com/kraxarn/spotify-qt/actions/workflows/linux.yml)
