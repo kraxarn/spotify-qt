@@ -53,7 +53,7 @@ void DragArea::menu(const QPoint &pos)
 		"Minimize");
 	QAction::connect(minimize, &QAction::triggered, [this](bool /*checked*/)
 	{
-		emit this->mainWindow->showMinimized();
+		mainWindow->setWindowState(Qt::WindowMinimized);
 	});
 
 	const auto isMaximized = isWindowMaximized();
