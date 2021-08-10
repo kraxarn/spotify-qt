@@ -19,4 +19,6 @@ private:
 	QPoint dragPosition;
 
 	void menu(const QPoint &pos);
+
+	auto isWindowMaximized() -> bool;
 };

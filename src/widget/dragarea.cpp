@@ -56,7 +56,7 @@ void DragArea::menu(const QPoint &pos)
 		emit this->mainWindow->showMinimized();
 	});
 
-	const auto isMaximized = mainWindow->isMaximized();
+	const auto isMaximized = isWindowMaximized();
 	auto *maximize = menu->addAction(Icon::get(isMaximized
 			? "window-restore"
 			: "window-maximize-symbolic"),
@@ -66,7 +66,7 @@ void DragArea::menu(const QPoint &pos)
 
 	QAction::connect(maximize, &QAction::triggered, [this](bool /*checked*/)
 	{
-		if (mainWindow->isMaximized())
+		if (this->isWindowMaximized())
 		{
 			mainWindow->resize(MainWindow::defaultSize());
 		}
@@ -81,4 +81,20 @@ void DragArea::menu(const QPoint &pos)
 	QAction::connect(close, &QAction::triggered, &QCoreApplication::quit);
 
 	menu->popup(mapToGlobal(pos));
+}
+
+auto DragArea::isWindowMaximized() -> bool
+{
+	/*
+	 * TODO
+	 * Maximized windows can't be reliably detected
+	 * (see documentation for QWidget::isMaximized)
+	 * so for now we just assume "larger than default = maximized"
+	 */
+
+	const auto currentSize = mainWindow->size();
+	const auto defaultSize = MainWindow::defaultSize();
+
+	return currentSize.width() > defaultSize.width()
+		&& currentSize.height() > defaultSize.height();
 }
