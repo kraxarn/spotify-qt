@@ -20,8 +20,8 @@ namespace View
 			void setNoPlaying();
 
 		private:
-			static constexpr float nameScale = 1.05F;
-			static constexpr float artistScale = 0.95F;
+			static constexpr float nameScale = 1.1F;
+			static constexpr float artistScale = 0.9F;
 
 			QVBoxLayout *layout = nullptr;
 
