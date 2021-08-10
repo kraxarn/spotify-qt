@@ -162,23 +162,6 @@ void MainToolBar::setSearchChecked(bool checked)
 	search->setChecked(checked);
 }
 
-void MainToolBar::setBorderless(bool enabled)
-{
-	if (enabled)
-	{
-		leftResize = new QSizeGrip(this);
-		insertWidget(actions().front(), leftResize);
-
-		rightResize = new QSizeGrip(this);
-		addWidget(rightResize);
-	}
-	else
-	{
-		delete leftResize;
-		delete rightResize;
-	}
-}
-
 void MainToolBar::onPlayPause(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());

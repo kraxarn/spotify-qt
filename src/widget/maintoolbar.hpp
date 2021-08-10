@@ -30,7 +30,6 @@ public:
 	void setShuffle(bool shuffle);
 	void setPositionFont(const QFont &font);
 	void setSearchChecked(bool checked);
-	void setBorderless(bool enabled);
 
 protected:
 	void resizeEvent(QResizeEvent *event) override;
@@ -62,7 +61,4 @@ private:
 	QAction *titleBarSeparator = nullptr;
 	QAction *minimize = nullptr;
 	QAction *close = nullptr;
-
-	QSizeGrip *leftResize = nullptr;
-	QSizeGrip *rightResize = nullptr;
 };
