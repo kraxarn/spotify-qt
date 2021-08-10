@@ -53,6 +53,7 @@ public:
 	QListWidgetItem *getPlaylistItem(int index);
 	void orderPlaylists(lib::playlist_order order);
 	void setBorderless(bool enabled);
+	void addSizeGrip(const std::function<QPoint(const QRect&)> &position);
 
 	auto startClient() -> bool;
 	void stopClient();
@@ -81,9 +82,7 @@ private:
 	// Qt Widgets
 	TracksList *songs = nullptr;
 	MainToolBar *toolBar = nullptr;
-
-	QSizeGrip *bottomLeftResize = nullptr;
-	QSizeGrip *bottomRightResize = nullptr;
+	QList<QSizeGrip *> resizeGrips;
 
 	// spt
 	spt::ClientHandler *sptClient = nullptr;

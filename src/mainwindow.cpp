@@ -181,32 +181,48 @@ void MainWindow::initDevice()
 
 void MainWindow::setBorderless(bool enabled)
 {
-	try
-	{
-		setWindowFlag(Qt::FramelessWindowHint, enabled);
-		toolBar->setBorderless(enabled);
-	}
-	catch (const std::exception &e)
-	{
-		lib::log::warn("Failed to set borderless: {}", e.what());
-		return;
-	}
+	setWindowFlag(Qt::FramelessWindowHint, enabled);
 
 	if (enabled)
 	{
-		bottomLeftResize = new QSizeGrip(this);
-		bottomLeftResize->move(geometry().bottomLeft()
-			- bottomLeftResize->geometry().bottomLeft());
+		addSizeGrip([](const QRect &rect) -> QPoint
+		{
+			return rect.bottomLeft();
+		});
 
-		bottomRightResize = new QSizeGrip(this);
-		bottomRightResize->move(geometry().bottomRight()
-			- bottomRightResize->geometry().bottomRight());
+		addSizeGrip([](const QRect &rect) -> QPoint
+		{
+			return rect.bottomRight();
+		});
+
+		addSizeGrip([](const QRect &rect) -> QPoint
+		{
+			return rect.topLeft();
+		});
+
+		addSizeGrip([](const QRect &rect) -> QPoint
+		{
+			return rect.topRight();
+		});
 	}
 	else
 	{
-		delete bottomLeftResize;
-		delete bottomRightResize;
+		while (!resizeGrips.isEmpty())
+		{
+			resizeGrips.takeFirst()->deleteLater();
+		}
 	}
+}
+
+void MainWindow::addSizeGrip(const std::function<QPoint(const QRect &)> &position)
+{
+	constexpr int size = 16;
+
+	auto *sizeGrip = new QSizeGrip(this);
+	sizeGrip->resize(size, size);
+	sizeGrip->move(position(geometry()) - position(sizeGrip->geometry()));
+
+	resizeGrips.append(sizeGrip);
 }
 
 void MainWindow::refresh()
