@@ -45,6 +45,11 @@ void DragArea::mouseReleaseEvent(QMouseEvent */*event*/)
 	setCursor(Qt::ArrowCursor);
 }
 
+void DragArea::mouseDoubleClickEvent(QMouseEvent *event)
+{
+	onMaximize(false);
+}
+
 void DragArea::menu(const QPoint &pos)
 {
 	auto *menu = new QMenu(this);
@@ -64,12 +69,8 @@ void DragArea::menu(const QPoint &pos)
 			? "Restore"
 			: "Maximize");
 
-	QAction::connect(maximize, &QAction::triggered, [this](bool /*checked*/)
-	{
-		mainWindow->setWindowState(isWindowMaximized()
-			? Qt::WindowNoState
-			: Qt::WindowMaximized);
-	});
+	QAction::connect(maximize, &QAction::triggered,
+		this, &DragArea::onMaximize);
 
 	auto *close = menu->addAction(Icon::get("window-close-symbolic"),
 		"Close");
@@ -81,4 +82,11 @@ void DragArea::menu(const QPoint &pos)
 auto DragArea::isWindowMaximized() -> bool
 {
 	return mainWindow->windowState() == Qt::WindowMaximized;
+}
+
+void DragArea::onMaximize(bool /*checked*/)
+{
+	mainWindow->setWindowState(isWindowMaximized()
+		? Qt::WindowNoState
+		: Qt::WindowMaximized);
 }
