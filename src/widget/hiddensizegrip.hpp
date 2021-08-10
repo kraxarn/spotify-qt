@@ -13,5 +13,5 @@ protected:
 	void paintEvent(QPaintEvent *event) override;
 
 private:
-	static constexpr int size = 16;
+	static constexpr int size = 12;
 };
