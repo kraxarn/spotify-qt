@@ -44,8 +44,8 @@ auto View::Context::NowPlaying::newLabel(float scale) -> QLabel *
 	label->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
 
 	auto font = label->font();
-	auto pointSize = static_cast<float>(font.pointSize()) * scale;
-	font.setPointSize(static_cast<int>(pointSize));
+	auto pointSize = font.pointSizeF() * scale;
+	font.setPointSizeF(pointSize);
 	label->setFont(font);
 
 	layout->addWidget(label);
