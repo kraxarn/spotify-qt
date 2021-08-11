@@ -15,13 +15,13 @@ void View::Context::NowPlaying::setTrack(const lib::spt::track &track)
 	if (name != nullptr)
 	{
 		name->setVisible(true);
-		name->setText(QString::fromStdString(track.name));
+		setText(name, track.name);
 	}
 
 	if (artist != nullptr)
 	{
 		const auto names = lib::spt::entity::combine_names(track.artists);
-		artist->setText(QString::fromStdString(names));
+		setText(artist, names);
 	}
 }
 
@@ -34,7 +34,7 @@ void View::Context::NowPlaying::setNoPlaying()
 
 	if (artist != nullptr)
 	{
-		artist->setText("No music playing");
+		setText(artist, "No music playing");
 	}
 }
 
@@ -50,4 +50,11 @@ auto View::Context::NowPlaying::newLabel(float scale) -> QLabel *
 
 	layout->addWidget(label);
 	return label;
+}
+
+void View::Context::NowPlaying::setText(QLabel *label, const std::string &text)
+{
+	auto qText = QString::fromStdString(text);
+	label->setText(qText);
+	label->setToolTip(qText);
 }

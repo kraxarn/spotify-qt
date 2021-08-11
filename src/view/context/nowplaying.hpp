@@ -29,6 +29,7 @@ namespace View
 			QLabel *name = nullptr;
 
 			auto newLabel(float scale) -> QLabel *;
+			static void setText(QLabel *label, const std::string &text);
 		};
 	}
 }
