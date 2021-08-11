@@ -4,6 +4,8 @@
 
 #include <QSizeGrip>
 
+#include <functional>
+
 class HiddenSizeGrip: public QSizeGrip
 {
 public:
