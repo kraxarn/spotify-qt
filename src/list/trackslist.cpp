@@ -312,6 +312,7 @@ void TracksList::load(const lib::spt::playlist &playlist)
 	spotify.playlist(playlist.id, [this, snapshot](const lib::spt::playlist &loadedPlaylist)
 	{
 		if (this->isEnabled()
+			&& this->topLevelItemCount() == loadedPlaylist.tracks_total
 			&& loadedPlaylist.is_up_to_date(snapshot))
 		{
 			return;
