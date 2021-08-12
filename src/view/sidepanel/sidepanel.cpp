@@ -28,10 +28,22 @@ View::SidePanel::SidePanel::SidePanel(spt::Spotify &spotify, const lib::settings
 }
 
 void View::SidePanel::SidePanel::addTab(QWidget *widget, const QString &icon,
-	const QString &tabTitle)
+	const QString &tabTitle, const QString &tabId)
 {
+	for(int i=0; i<title->count(); i++)
+	{
+		if(title->tabData(i).isValid() && title->tabData(i) == tabId)
+		{
+			// If possible, reuse an existing tab for the same id
+			setCurrentWidget(stack->widget(i));
+			setVisible(true);
+			return;
+		}
+	}
+
 	auto index = stack->addWidget(widget);
 	title->insertTab(index, Icon::get(icon), tabTitle);
+	title->setTabData(index, tabId);
 
 	setCurrentIndex(index);
 	setVisible(true);
@@ -66,7 +78,7 @@ void View::SidePanel::SidePanel::setCurrentWidget(QWidget *widget)
 void View::SidePanel::SidePanel::openArtist(const std::string &artistId)
 {
 	auto *view = new View::Artist::Artist(spotify, artistId, cache, httpClient, parent);
-	addTab(view, "view-media-artist", "...");
+	addTab(view, "view-media-artist", "...", QString::fromStdString(artistId));
 }
 
 void View::SidePanel::SidePanel::setTabText(QWidget *widget, const QString &text)
@@ -88,7 +100,7 @@ void View::SidePanel::SidePanel::openSearch()
 
 	if (stack->indexOf(searchView) < 0)
 	{
-		addTab(searchView, "edit-find", "Search");
+		addTab(searchView, "edit-find", "Search", "search-tab-id");
 	}
 
 	setCurrentWidget(searchView);
@@ -104,14 +116,14 @@ void View::SidePanel::SidePanel::openAudioFeatures(const lib::spt::track &track)
 {
 	auto *view = new View::AudioFeatures(spotify, track.id, this);
 	addTab(view, "view-statistics",
-		QString::fromStdString(track.title()));
+		QString::fromStdString(track.title()), QString::fromStdString(track.id + "-statistics"));
 }
 
 void View::SidePanel::SidePanel::openLyrics(const lib::spt::track &track)
 {
 	auto *view = new LyricsView(httpClient, cache, this);
 	addTab(view, "view-media-lyrics",
-		QString::fromStdString(track.title()));
+		QString::fromStdString(track.title()), QString::fromStdString(track.id + "-lyrics"));
 	view->open(track);
 }
 
