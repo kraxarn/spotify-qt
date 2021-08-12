@@ -54,6 +54,7 @@ public:
 	void orderPlaylists(lib::playlist_order order);
 	void setBorderless(bool enabled);
 	void addSizeGrip(const std::function<QPoint(const QRect&)> &position);
+	void minimize();
 
 	auto startClient() -> bool;
 	void stopClient();

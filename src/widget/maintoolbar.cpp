@@ -283,5 +283,5 @@ void MainToolBar::onRepeat(bool checked)
 void MainToolBar::onMinimize(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-	mainWindow->setWindowState(Qt::WindowMinimized);
+    mainWindow->minimize();
 }

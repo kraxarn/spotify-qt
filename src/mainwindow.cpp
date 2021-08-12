@@ -220,6 +220,16 @@ void MainWindow::addSizeGrip(const std::function<QPoint(const QRect &)> &positio
 	resizeGrips.append(sizeGrip);
 }
 
+void MainWindow::minimize()
+{
+	// HACK: Qt windows that are restored are sometimes still marked minimized
+	// so we have to remove that flag if present before trying to minimize.
+	//
+	// See https://github.com/kraxarn/spotify-qt/issues/103
+	setWindowState(windowState() & ~Qt::WindowMinimized);
+	setWindowState(windowState() | Qt::WindowMinimized);
+}
+
 void MainWindow::refresh()
 {
 	constexpr int msInSec = 1000;
