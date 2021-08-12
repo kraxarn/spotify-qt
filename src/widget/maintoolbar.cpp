@@ -283,5 +283,10 @@ void MainToolBar::onRepeat(bool checked)
 void MainToolBar::onMinimize(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-	mainWindow->setWindowState(Qt::WindowMinimized);
+	// HACK: Qt windows that are restored are sometimes still marked minimized
+	// so we have to remove that flag if present before trying to minimize.
+	//
+	// See https://github.com/kraxarn/spotify-qt/issues/103
+	mainWindow->setWindowState(mainWindow->windowState() & ~Qt::WindowMinimized);
+	mainWindow->setWindowState(mainWindow->windowState() | Qt::WindowMinimized);
 }
