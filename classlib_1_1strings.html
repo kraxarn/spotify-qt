@@ -115,8 +115,10 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a0b5337226c1e413711e62b5e9fb4931b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a0b5337226c1e413711e62b5e9fb4931b"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#a0b5337226c1e413711e62b5e9fb4931b">to_string</a> (const T value, const int precision) -&gt; std::string</td></tr>
 <tr class="separator:a0b5337226c1e413711e62b5e9fb4931b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e11df1d2817a24dce01971c7d55dbac"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#a2e11df1d2817a24dce01971c7d55dbac">replace_all</a> (const std::string &amp;str, char oldVal, char newVal) -&gt; std::string</td></tr>
-<tr class="separator:a2e11df1d2817a24dce01971c7d55dbac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7886123f981729204fb510831474f216"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#a7886123f981729204fb510831474f216">replace_all</a> (const std::string &amp;str, char old_val, char new_val) -&gt; std::string</td></tr>
+<tr class="separator:a7886123f981729204fb510831474f216"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6d5b3b4d17e6966ecdb537786d40165"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#af6d5b3b4d17e6966ecdb537786d40165">replace_all</a> (const std::string &amp;str, const std::string &amp;old_val, const std::string &amp;new_val) -&gt; std::string</td></tr>
+<tr class="separator:af6d5b3b4d17e6966ecdb537786d40165"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>String utilities </p>
@@ -464,8 +466,8 @@ template&lt;typename String &gt; </div>
 
 </div>
 </div>
-<a id="a2e11df1d2817a24dce01971c7d55dbac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e11df1d2817a24dce01971c7d55dbac">&#9670;&nbsp;</a></span>replace_all()</h2>
+<a id="a7886123f981729204fb510831474f216"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7886123f981729204fb510831474f216">&#9670;&nbsp;</a></span>replace_all() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -483,13 +485,13 @@ template&lt;typename String &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">char&#160;</td>
-          <td class="paramname"><em>oldVal</em>, </td>
+          <td class="paramname"><em>old_val</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">char&#160;</td>
-          <td class="paramname"><em>newVal</em>&#160;</td>
+          <td class="paramname"><em>new_val</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -506,12 +508,63 @@ template&lt;typename String &gt; </div>
 <p>Replace all occurrences of a value in a string </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">str</td><td>String to replace in </td></tr>
-    <tr><td class="paramname">oldVal</td><td>Old value </td></tr>
-    <tr><td class="paramname">newVal</td><td>New value </td></tr>
+    <tr><td class="paramname">old_val</td><td>Old value </td></tr>
+    <tr><td class="paramname">new_val</td><td>New value </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>New string with value replaced </dd></dl>
+
+</div>
+</div>
+<a id="af6d5b3b4d17e6966ecdb537786d40165"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6d5b3b4d17e6966ecdb537786d40165">&#9670;&nbsp;</a></span>replace_all() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static auto lib::strings::replace_all </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>old_val</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>new_val</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt;  std::string</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Replace all occurrences of a string in another string </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>String to replace in </td></tr>
+    <tr><td class="paramname">old_val</td><td>Old string </td></tr>
+    <tr><td class="paramname">new_val</td><td>New string </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New string with string replaced </dd></dl>
 
 </div>
 </div>
