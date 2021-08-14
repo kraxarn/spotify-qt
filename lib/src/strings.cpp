@@ -183,3 +183,18 @@ auto strings::replace_all(const std::string &str, char old_val, char new_val) ->
 	std::replace(val.begin(), val.end(), old_val, new_val);
 	return val;
 }
+
+auto strings::replace_all(const std::string &str, const std::string &old_val,
+	const std::string &new_val) -> std::string
+{
+	std::string val = str;
+	size_t pos = val.find(old_val);
+
+	while (pos != std::string::npos)
+	{
+		val.replace(pos, old_val.size(), new_val);
+		pos = val.find(old_val, pos + old_val.size());
+	}
+
+	return val;
+}

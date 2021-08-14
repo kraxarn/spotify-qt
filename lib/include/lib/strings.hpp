@@ -175,6 +175,16 @@ namespace lib
 		static auto replace_all(const std::string &str,
 			char old_val, char new_val) -> std::string;
 
+		/**
+		 * Replace all occurrences of a string in another string
+		 * @param str String to replace in
+		 * @param old_val Old string
+		 * @param new_val New string
+		 * @return New string with string replaced
+		 */
+		static auto replace_all(const std::string &str,
+			const std::string &old_val, const std::string &new_val) -> std::string;
+
 	private:
 		/**
 		 * Trim beginning of string
