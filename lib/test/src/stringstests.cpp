@@ -246,3 +246,24 @@ TEST_CASE("strings::to_string")
 	CHECK_EQ(lib::strings::to_string(pi, 0), "3");
 	CHECK_EQ(lib::strings::to_string(pi, 3), "3.142");
 }
+
+TEST_CASE("strings::replace_all")
+{
+	SUBCASE("char")
+	{
+		std::string val("a,b,c");
+
+		CHECK_EQ(lib::strings::replace_all(val, 'c', 'd'), "a,b,d");
+		CHECK_EQ(lib::strings::replace_all(val, ',', ' '), "a b c");
+		CHECK_EQ(lib::strings::replace_all(val, 'd', 'c'), "a,b,c");
+	}
+
+	SUBCASE("string")
+	{
+		std::string val("abc, def, ghi");
+
+		CHECK_EQ(lib::strings::replace_all(val, "ghi", "jkl"), "abc, def, jkl");
+		CHECK_EQ(lib::strings::replace_all(val, ", ", "->"), "abc->def->ghi");
+		CHECK_EQ(lib::strings::replace_all(val, "adg", "mno"), "abc, def, ghi");
+	}
+}
