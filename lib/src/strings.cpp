@@ -177,9 +177,9 @@ auto strings::last_index_of(const std::string &str, const std::string &keyword) 
 		: result;
 }
 
-auto strings::replace_all(const std::string &str, char oldVal, char newVal) -> std::string
+auto strings::replace_all(const std::string &str, char old_val, char new_val) -> std::string
 {
 	std::string val = str;
-	std::replace(val.begin(), val.end(), oldVal, newVal);
+	std::replace(val.begin(), val.end(), old_val, new_val);
 	return val;
 }

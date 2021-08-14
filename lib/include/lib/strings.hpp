@@ -168,12 +168,12 @@ namespace lib
 		/**
 		 * Replace all occurrences of a value in a string
 		 * @param str String to replace in
-		 * @param oldVal Old value
-		 * @param newVal New value
+		 * @param old_val Old value
+		 * @param new_val New value
 		 * @return New string with value replaced
 		 */
 		static auto replace_all(const std::string &str,
-			char oldVal, char newVal) -> std::string;
+			char old_val, char new_val) -> std::string;
 
 	private:
 		/**
