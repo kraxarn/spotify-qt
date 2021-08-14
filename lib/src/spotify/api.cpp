@@ -295,12 +295,16 @@ void api::put(const std::string &url, const nlohmann::json &body,
 								return;
 							}
 
-							this->set_device(device, [this, url, body, callback]
+							// Remember old device to replace in new URL
+							const auto &old_device = settings.general.last_device;
+
+							this->set_device(device, [this, url, body, callback, device, old_device]
 								(const std::string &status)
 							{
 								if (status.empty())
 								{
-									this->put(url, body, callback);
+									this->put(lib::strings::replace_all(url, old_device, device.id),
+										body, callback);
 								}
 							});
 						});
