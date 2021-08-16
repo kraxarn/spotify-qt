@@ -7,15 +7,15 @@ void StyleUtils::applyPalette(lib::palette palette)
 	QPalette p;
 	switch (palette)
 	{
-		case lib::palette_app:
+		case lib::palette::app:
 			p = QApplication::palette();
 			break;
 
-		case lib::palette_style:
+		case lib::palette::style:
 			p = QApplication::style()->standardPalette();
 			break;
 
-		case lib::palette_dark:
+		case lib::palette::dark:
 			p = DarkPalette();
 			break;
 	}

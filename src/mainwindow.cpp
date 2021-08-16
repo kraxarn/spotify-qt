@@ -17,7 +17,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	StyleUtils::applyPalette(settings.general.style_palette);
 
 	// Custom dark theme
-	if (settings.general.style_palette == lib::palette_dark)
+	if (settings.general.style_palette == lib::palette::dark)
 	{
 		setStyleSheet(DarkPalette::getDarkStylesheet());
 	}

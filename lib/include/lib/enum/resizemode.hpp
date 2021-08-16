@@ -5,19 +5,21 @@ namespace lib
 	/**
 	 * How to resize columns in lists
 	 */
-	enum resize_mode
+	enum class resize_mode
 	{
 		/**
 		 * Resize to fit current size
 		 */
-		resize_auto,
+		auto_size,
+
 		/**
 		 * Resize to fit current content
 		 */
-		resize_fit_content,
+		fit_content,
+
 		/**
 		 * No automatic resizing
 		 */
-		resize_custom,
+		custom,
 	};
 }

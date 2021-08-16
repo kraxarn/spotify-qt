@@ -24,7 +24,7 @@ TracksList::TracksList(spt::Spotify &spotify, lib::settings &settings, lib::cach
 	setAllColumnsShowFocus(true);
 	setColumnCount(columnCount);
 	setHeaderLabels({
-		settings.general.track_numbers == lib::context_all ? "#" : "",
+		settings.general.track_numbers == lib::spotify_context::all ? "#" : "",
 		"Title", "Artist", "Album", "Length", "Added"
 	});
 	header()->setSectionsMovable(false);
@@ -173,7 +173,7 @@ void TracksList::headerMenu(const QPoint &pos)
 
 void TracksList::resizeEvent(QResizeEvent *event)
 {
-	if (settings.general.track_list_resize_mode != lib::resize_auto)
+	if (settings.general.track_list_resize_mode != lib::resize_mode::auto_size)
 	{
 		return;
 	}
@@ -210,15 +210,15 @@ void TracksList::updateResizeMode(lib::resize_mode mode)
 
 	switch (mode)
 	{
-		case lib::resize_auto:
+		case lib::resize_mode::auto_size:
 			resizeMode = QHeaderView::Fixed;
 			break;
 
-		case lib::resize_fit_content:
+		case lib::resize_mode::fit_content:
 			resizeMode = QHeaderView::ResizeToContents;
 			break;
 
-		case lib::resize_custom:
+		case lib::resize_mode::custom:
 			resizeMode = QHeaderView::Interactive;
 			break;
 
@@ -247,7 +247,7 @@ void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::str
 		const auto &track = tracks.at(i);
 
 		auto *item = new ListItem::Track({
-			settings.general.track_numbers == lib::context_all
+			settings.general.track_numbers == lib::spotify_context::all
 				? QString("%1").arg(i + 1, fieldWidth)
 				: QString(),
 			QString::fromStdString(track.name),

@@ -21,7 +21,7 @@ namespace lib
 			/**
 			 * Palette for app
 			 */
-			palette style_palette = palette_app;
+			lib::palette style_palette = lib::palette::app;
 
 			/**
 			 * Order to display playlists in
@@ -56,7 +56,7 @@ namespace lib
 			/**
 			 * In which contexts to show track numbers
 			 */
-			spotify_context track_numbers = context_all;
+			lib::spotify_context track_numbers = lib::spotify_context::all;
 
 			/**
 			 * Use bundled icons instead of system icons
@@ -122,7 +122,7 @@ namespace lib
 			/**
 			 * How to resize track list headers
 			 */
-			resize_mode track_list_resize_mode = resize_auto;
+			lib::resize_mode track_list_resize_mode = lib::resize_mode::auto_size;
 
 			/**
 			 * Which column to sort by in track list

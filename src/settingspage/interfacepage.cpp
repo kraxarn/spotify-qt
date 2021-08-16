@@ -28,7 +28,7 @@ auto InterfacePage::general() -> QWidget *
 		"Fit content",
 		"Custom",
 	});
-	itfResizeMode->setCurrentIndex(settings.general.track_list_resize_mode);
+	itfResizeMode->setCurrentIndex(static_cast<int>(settings.general.track_list_resize_mode));
 	comboBoxLayout->addWidget(itfResizeMode, 0, 1);
 	layout->addLayout(comboBoxLayout);
 
@@ -41,7 +41,7 @@ auto InterfacePage::general() -> QWidget *
 	// Track numbers
 	itfTrackNum = new QCheckBox("Show track numbers", this);
 	itfTrackNum->setToolTip("Show track numbers next to tracks in the list");
-	itfTrackNum->setChecked(settings.general.track_numbers == lib::context_all);
+	itfTrackNum->setChecked(settings.general.track_numbers == lib::spotify_context::all);
 	layout->addWidget(itfTrackNum);
 
 	// Relative added date
@@ -215,8 +215,8 @@ auto InterfacePage::save() -> bool
 			mainWindow->toggleTrackNumbers(itfTrackNum->isChecked());
 		}
 		settings.general.track_numbers = itfTrackNum->isChecked()
-			? lib::context_all
-			: lib::context_none;
+			? lib::spotify_context::all
+			: lib::spotify_context::none;
 	}
 
 	// Other interface stuff

@@ -7,31 +7,31 @@ namespace lib
 	 * @note These can be combined (where it makes sense), and therefore uses
 	 * bit order
 	 */
-	enum spotify_context
+	enum class spotify_context
 	{
 		/**
 		 * No context
 		 */
-		context_none = 0,
+		none = 0,
 
 		/**
 		 * All contexts, used for some settings
 		 */
-		context_all = 1,
+		all = 1,
 
 		/**
 		 * Tracks in an album
 		 */
-		context_album = 2,
+		album = 2,
 
 		/**
 		 * Top tracks from an artist
 		 */
-		context_artist = 4,
+		artist = 4,
 
 		/**
 		 * Tracks in a playlist
 		 */
-		context_playlist = 8
+		playlist = 8
 	};
 }

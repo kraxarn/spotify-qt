@@ -226,12 +226,12 @@ void settings::remove_tokens()
 
 auto settings::get_dark_theme() const -> bool
 {
-	return general.style_palette == palette_dark;
+	return general.style_palette == lib::palette::dark;
 }
 
 void settings::set_dark_theme(bool value)
 {
-	general.style_palette = value ? palette_dark : palette_app;
+	general.style_palette = value ? lib::palette::dark : lib::palette::app;
 }
 
 auto settings::validate() const -> std::map<std::string, std::vector<std::string>>
