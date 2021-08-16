@@ -1,4 +1,4 @@
-#include "widget/maintoolbar.hpp"
+#include "view/maintoolbar.hpp"
 #include "mainwindow.hpp"
 
 MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
@@ -283,5 +283,5 @@ void MainToolBar::onRepeat(bool checked)
 void MainToolBar::onMinimize(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-    mainWindow->minimize();
+	mainWindow->minimize();
 }
