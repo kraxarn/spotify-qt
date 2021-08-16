@@ -95,6 +95,12 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 
 void MainToolBar::resizeEvent(QResizeEvent */*event*/)
 {
+	if (!leftSpacer->isVisible()
+		&& !rightSpacer->isVisible())
+	{
+		return;
+	}
+
 	const auto width = size().width();
 	const auto spacerWidth = width / 6;
 
