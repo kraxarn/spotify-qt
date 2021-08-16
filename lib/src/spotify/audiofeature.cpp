@@ -6,55 +6,55 @@
  * Web API, but has been removed in the new design.
  */
 
-lib::spt::audio_feature::audio_feature(::audio_feature feature, float value)
+lib::spt::audio_feature::audio_feature(lib::audio_feature feature, float value)
 	: feature(feature),
 	value(value)
 {
 	switch (feature)
 	{
-		case ::audio_feature::acousticness:
+		case lib::audio_feature::acousticness:
 			name = acousticness();
 			break;
 
-		case ::audio_feature::danceability:
+		case lib::audio_feature::danceability:
 			name = danceability();
 			break;
 
-		case ::audio_feature::energy:
+		case lib::audio_feature::energy:
 			name = energy();
 			break;
 
-		case ::audio_feature::instrumentalness:
+		case lib::audio_feature::instrumentalness:
 			name = instrumentalness();
 			break;
 
-		case ::audio_feature::key:
+		case lib::audio_feature::key:
 			break;
 
-		case ::audio_feature::liveness:
+		case lib::audio_feature::liveness:
 			name = liveness();
 			break;
 
-		case ::audio_feature::loudness:
+		case lib::audio_feature::loudness:
 			name = loudness(minimum, maximum);
 			break;
 
-		case ::audio_feature::mode:
+		case lib::audio_feature::mode:
 			break;
 
-		case ::audio_feature::speechiness:
+		case lib::audio_feature::speechiness:
 			name = speechiness();
 			break;
 
-		case ::audio_feature::tempo:
+		case lib::audio_feature::tempo:
 			name = tempo(maximum);
 			break;
 
-		case ::audio_feature::valence:
+		case lib::audio_feature::valence:
 			name = valence();
 			break;
 
-		case ::audio_feature::time_signature:
+		case lib::audio_feature::time_signature:
 			name = time_signature(maximum);
 			break;
 
@@ -64,8 +64,8 @@ lib::spt::audio_feature::audio_feature(::audio_feature feature, float value)
 	}
 }
 
-lib::spt::audio_feature::audio_feature(audio_key key)
-	: feature(::audio_feature::key),
+lib::spt::audio_feature::audio_feature(lib::audio_key key)
+	: feature(lib::audio_feature::key),
 	name(to_string(key)),
 	value(static_cast<float>(key))
 {
@@ -75,12 +75,12 @@ lib::spt::audio_feature::audio_feature(audio_key key)
 	maximum = static_cast<float>(audio_key::b);
 }
 
-lib::spt::audio_feature::audio_feature(audio_mode mode)
-	: feature(::audio_feature::mode),
+lib::spt::audio_feature::audio_feature(lib::audio_mode mode)
+	: feature(lib::audio_feature::mode),
 	name(to_string(mode)),
 	value(static_cast<float>(mode))
 {
-	// These values doesn't really make sense here,
+	// These values don't really make sense here,
 	// but it looks better
 	minimum = static_cast<float>(audio_mode::minor);
 	maximum = static_cast<float>(audio_mode::major);
@@ -225,43 +225,43 @@ auto lib::spt::audio_feature::get_feature() const -> std::string
 {
 	switch (feature)
 	{
-		case ::audio_feature::unknown:
+		case lib::audio_feature::unknown:
 			return "Unknown";
 
-		case ::audio_feature::acousticness:
+		case lib::audio_feature::acousticness:
 			return "Acousticness";
 
-		case ::audio_feature::danceability:
+		case lib::audio_feature::danceability:
 			return "Danceability";
 
-		case ::audio_feature::energy:
+		case lib::audio_feature::energy:
 			return "Energy";
 
-		case ::audio_feature::instrumentalness:
+		case lib::audio_feature::instrumentalness:
 			return "Instrumentalness";
 
-		case ::audio_feature::key:
+		case lib::audio_feature::key:
 			return "Key";
 
-		case ::audio_feature::liveness:
+		case lib::audio_feature::liveness:
 			return "Liveness";
 
-		case ::audio_feature::loudness:
+		case lib::audio_feature::loudness:
 			return "Loudness";
 
-		case ::audio_feature::mode:
+		case lib::audio_feature::mode:
 			return "Mode";
 
-		case ::audio_feature::speechiness:
+		case lib::audio_feature::speechiness:
 			return "Speechiness";
 
-		case ::audio_feature::tempo:
+		case lib::audio_feature::tempo:
 			return "Tempo";
 
-		case ::audio_feature::time_signature:
+		case lib::audio_feature::time_signature:
 			return "Time signature";
 
-		case ::audio_feature::valence:
+		case lib::audio_feature::valence:
 			return "Valence";
 
 		default:
@@ -297,15 +297,15 @@ auto lib::spt::audio_feature::get_description() const -> std::string
 	}
 
 	std::string suffix;
-	if (feature == ::audio_feature::loudness)
+	if (feature == lib::audio_feature::loudness)
 	{
 		suffix = " dB";
 	}
-	else if (feature == ::audio_feature::tempo)
+	else if (feature == lib::audio_feature::tempo)
 	{
 		suffix = " BPM";
 	}
-	else if (feature == ::audio_feature::time_signature)
+	else if (feature == lib::audio_feature::time_signature)
 	{
 		suffix = " m";
 	}
@@ -313,44 +313,44 @@ auto lib::spt::audio_feature::get_description() const -> std::string
 	return lib::fmt::format("{}{}", get_value(), suffix);
 }
 
-auto lib::spt::audio_feature::to_string(audio_key key) -> std::string
+auto lib::spt::audio_feature::to_string(lib::audio_key key) -> std::string
 {
 	switch (key)
 	{
-		case audio_key::c:
+		case lib::audio_key::c:
 			return "C";
 
-		case audio_key::c_sharp:
+		case lib::audio_key::c_sharp:
 			return "C♯, D♭";
 
-		case audio_key::d:
+		case lib::audio_key::d:
 			return "D";
 
-		case audio_key::d_sharp:
+		case lib::audio_key::d_sharp:
 			return "D♯, E♭";
 
-		case audio_key::e:
+		case lib::audio_key::e:
 			return "E";
 
-		case audio_key::f:
+		case lib::audio_key::f:
 			return "F";
 
-		case audio_key::f_sharp:
+		case lib::audio_key::f_sharp:
 			return "F♯, G♭";
 
-		case audio_key::g:
+		case lib::audio_key::g:
 			return "G";
 
-		case audio_key::g_sharp:
+		case lib::audio_key::g_sharp:
 			return "G♯, A♭";
 
-		case audio_key::a:
+		case lib::audio_key::a:
 			return "A";
 
-		case audio_key::a_sharp:
+		case lib::audio_key::a_sharp:
 			return "A♯, B♭";
 
-		case audio_key::b:
+		case lib::audio_key::b:
 			return "B";
 
 		default:
@@ -358,14 +358,14 @@ auto lib::spt::audio_feature::to_string(audio_key key) -> std::string
 	}
 }
 
-auto lib::spt::audio_feature::to_string(audio_mode mode) -> std::string
+auto lib::spt::audio_feature::to_string(lib::audio_mode mode) -> std::string
 {
 	switch (mode)
 	{
-		case audio_mode::minor:
+		case lib::audio_mode::minor:
 			return "Minor";
 
-		case audio_mode::major:
+		case lib::audio_mode::major:
 			return "Major";
 
 		default:

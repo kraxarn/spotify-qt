@@ -19,7 +19,7 @@ namespace lib
 			 * @param feature Category
 			 * @param value Value
 			 */
-			audio_feature(::audio_feature feature, float value);
+			audio_feature(lib::audio_feature feature, float value);
 
 			/** Audio feature with key */
 			explicit audio_feature(audio_key key);
@@ -60,7 +60,7 @@ namespace lib
 			auto get_description() const -> std::string;
 
 		private:
-			::audio_feature feature = ::audio_feature::unknown;
+			lib::audio_feature feature = lib::audio_feature::unknown;
 			float minimum = 0.F;
 			float maximum = 1.F;
 			float value = 0.F;

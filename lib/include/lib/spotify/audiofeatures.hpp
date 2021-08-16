@@ -25,11 +25,11 @@ namespace lib
 
 			auto items() const -> const std::vector<lib::spt::audio_feature> &;
 
-			void add(::audio_feature feature, float value);
+			void add(lib::audio_feature feature, float value);
 			void add(audio_key key);
 			void add(audio_mode mode);
 
-			static auto to_audio_feature(const std::string &feature) -> ::audio_feature;
+			static auto to_audio_feature(const std::string &feature) -> lib::audio_feature;
 
 		private:
 			std::vector<lib::spt::audio_feature> values;
