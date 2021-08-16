@@ -29,7 +29,7 @@ namespace View
 			void openSearch();
 			void closeSearch();
 
-			void addTab(QWidget *widget, const QString &icon, const QString &tabTitle);
+			void addTab(QWidget *widget, const QString &icon, const QString &tabTitle, const QString &tabId);
 			void removeTab(int index);
 
 			void setTabText(QWidget *widget, const QString &text);

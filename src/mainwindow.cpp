@@ -576,7 +576,7 @@ void MainWindow::setSearchVisible(bool visible)
 
 void MainWindow::addSidePanelTab(QWidget *widget, const QString &title)
 {
-	dynamic_cast<View::SidePanel::SidePanel *>(sidePanel)->addTab(widget, "folder-txt", title);
+	dynamic_cast<View::SidePanel::SidePanel *>(sidePanel)->addTab(widget, "folder-txt", title, title);
 }
 
 void MainWindow::refreshPlaylists()
