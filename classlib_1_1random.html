@@ -79,18 +79,18 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:abe830fe508c1ec06d0ce691d2dfee12c"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:abe830fe508c1ec06d0ce691d2dfee12c"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1random.html#abe830fe508c1ec06d0ce691d2dfee12c">next</a> (T min, T max)</td></tr>
-<tr class="separator:abe830fe508c1ec06d0ce691d2dfee12c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb69258942322a3f19094ce7dfe7f9ce"><td class="memItemLeft" align="right" valign="top"><a id="adb69258942322a3f19094ce7dfe7f9ce"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>next_int</b> (int min, int max)</td></tr>
-<tr class="separator:adb69258942322a3f19094ce7dfe7f9ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a6870faaa9accd2673393296a402ad9"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a8a6870faaa9accd2673393296a402ad9"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1random.html#a8a6870faaa9accd2673393296a402ad9">next</a> (T min, T max) -&gt; T</td></tr>
+<tr class="separator:a8a6870faaa9accd2673393296a402ad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cfa71fb1d1b2181ae9b5d073aa2f65d"><td class="memItemLeft" align="right" valign="top"><a id="a6cfa71fb1d1b2181ae9b5d073aa2f65d"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>next_int</b> (int min, int max) -&gt; int</td></tr>
+<tr class="separator:a6cfa71fb1d1b2181ae9b5d073aa2f65d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Random number generator </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="abe830fe508c1ec06d0ce691d2dfee12c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe830fe508c1ec06d0ce691d2dfee12c">&#9670;&nbsp;</a></span>next()</h2>
+<a id="a8a6870faaa9accd2673393296a402ad9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a6870faaa9accd2673393296a402ad9">&#9670;&nbsp;</a></span>next()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -101,7 +101,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">T lib::random::next </td>
+          <td class="memname">auto lib::random::next </td>
           <td>(</td>
           <td class="paramtype">T&#160;</td>
           <td class="paramname"><em>min</em>, </td>
@@ -115,7 +115,8 @@ template&lt;typename T &gt; </div>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td> -&gt; T
+		</td>
         </tr>
       </table>
   </td>

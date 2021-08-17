@@ -89,7 +89,7 @@ $(function() {
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format, <span class="keyword">typename</span> Arg, <span class="keyword">typename</span>... Args&gt;</div>
 <div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classlib_1_1log.html#afe551f6a31aee9f7cb1a14b40e50daa4">   23</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1log.html#afe551f6a31aee9f7cb1a14b40e50daa4">info</a>(<span class="keyword">const</span> Format &amp;<a class="code" href="classlib_1_1fmt.html">fmt</a>, <span class="keyword">const</span> Arg &amp;arg, Args &amp;&amp;... args)</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        {</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classlib_1_1log.html#afe551f6a31aee9f7cb1a14b40e50daa4">info</a>(<a class="code" href="classlib_1_1fmt.html#ae7622b4dbd5bd42aed59939aace7bddc">fmt::format</a>(<a class="code" href="classlib_1_1fmt.html">fmt</a>, arg, args...));</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classlib_1_1log.html#afe551f6a31aee9f7cb1a14b40e50daa4">info</a>(<a class="code" href="classlib_1_1fmt.html#aeddcd7b2020dc3deaee006f3a069a4bd">fmt::format</a>(<a class="code" href="classlib_1_1fmt.html">fmt</a>, arg, args...));</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        }</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format&gt;</div>
@@ -101,7 +101,7 @@ $(function() {
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format, <span class="keyword">typename</span> Arg, <span class="keyword">typename</span>... Args&gt;</div>
 <div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classlib_1_1log.html#ad6c8f913d62cc4d89bbfa27a3369a89b">   41</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1log.html#ad6c8f913d62cc4d89bbfa27a3369a89b">warn</a>(<span class="keyword">const</span> Format &amp;<a class="code" href="classlib_1_1fmt.html">fmt</a>, <span class="keyword">const</span> Arg &amp;arg, Args &amp;&amp;... args)</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        {</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classlib_1_1log.html#ad6c8f913d62cc4d89bbfa27a3369a89b">warn</a>(<a class="code" href="classlib_1_1fmt.html#ae7622b4dbd5bd42aed59939aace7bddc">fmt::format</a>(<a class="code" href="classlib_1_1fmt.html">fmt</a>, arg, args...));</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classlib_1_1log.html#ad6c8f913d62cc4d89bbfa27a3369a89b">warn</a>(<a class="code" href="classlib_1_1fmt.html#aeddcd7b2020dc3deaee006f3a069a4bd">fmt::format</a>(<a class="code" href="classlib_1_1fmt.html">fmt</a>, arg, args...));</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        }</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format&gt;</div>
@@ -116,7 +116,7 @@ $(function() {
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format, <span class="keyword">typename</span> Arg, <span class="keyword">typename</span>... Args&gt;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> error(<span class="keyword">const</span> Format &amp;<a class="code" href="classlib_1_1fmt.html">fmt</a>, <span class="keyword">const</span> Arg &amp;arg, Args &amp;&amp;... args)</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">return</span> error(<a class="code" href="classlib_1_1fmt.html#ae7622b4dbd5bd42aed59939aace7bddc">fmt::format</a>(<a class="code" href="classlib_1_1fmt.html">fmt</a>, arg, args...));</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">return</span> error(<a class="code" href="classlib_1_1fmt.html#aeddcd7b2020dc3deaee006f3a069a4bd">fmt::format</a>(<a class="code" href="classlib_1_1fmt.html">fmt</a>, arg, args...));</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        }</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format&gt;</div>
@@ -128,40 +128,42 @@ $(function() {
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format, <span class="keyword">typename</span> Arg, <span class="keyword">typename</span>... Args&gt;</div>
 <div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classlib_1_1log.html#a6faeebb4fdad6162e122a5941e8ae323">   78</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1log.html#a6faeebb4fdad6162e122a5941e8ae323">dev</a>(<span class="keyword">const</span> Format &amp;<a class="code" href="classlib_1_1fmt.html">fmt</a>, <span class="keyword">const</span> Arg &amp;arg, Args &amp;&amp;... args)</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        {</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classlib_1_1log.html#a6faeebb4fdad6162e122a5941e8ae323">dev</a>(<a class="code" href="classlib_1_1fmt.html#ae7622b4dbd5bd42aed59939aace7bddc">fmt::format</a>(<a class="code" href="classlib_1_1fmt.html">fmt</a>, arg, args...));</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classlib_1_1log.html#a6faeebb4fdad6162e122a5941e8ae323">dev</a>(<a class="code" href="classlib_1_1fmt.html#aeddcd7b2020dc3deaee006f3a069a4bd">fmt::format</a>(<a class="code" href="classlib_1_1fmt.html">fmt</a>, arg, args...));</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        }</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format&gt;</div>
 <div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="classlib_1_1log.html#af971c261aeceb74c0e806a9ea3e5867e">   88</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1log.html#af971c261aeceb74c0e806a9ea3e5867e">dev</a>(<span class="keyword">const</span> Format &amp;<a class="code" href="classlib_1_1fmt.html">fmt</a>)</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        {</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <span class="keywordflow">if</span> (!<a class="code" href="classlib_1_1developer__mode.html#a4e7ebe8ced9b779470c4b03ae1f7192d">developer_mode::enabled</a>)</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            message(log_type::verbose, <a class="code" href="classlib_1_1fmt.html">fmt</a>);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        }</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="classlib_1_1log.html#a231101ae3058d7f333f1a39519e7bcd9">  100</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> std::vector&lt;log_message&gt; &amp;<a class="code" href="classlib_1_1log.html#a231101ae3058d7f333f1a39519e7bcd9">get_messages</a>();</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="classlib_1_1log.html#aac5793c9eb61c61b83bf738a75d90919">  105</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1log.html#aac5793c9eb61c61b83bf738a75d90919">clear</a>();</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00111"></a><span class="lineno"><a class="line" href="classlib_1_1log.html#a7372d15a115a450ddcf7b22ad3c2232a">  111</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1log.html#a7372d15a115a450ddcf7b22ad3c2232a">set_log_to_stdout</a>(<span class="keywordtype">bool</span> value);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <a class="code" href="classlib_1_1log.html">log</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <span class="keyword">static</span> std::vector&lt;log_message&gt; messages;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">bool</span> log_to_stdout;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> message(log_type log_type, <span class="keyword">const</span> std::string &amp;message);</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    };</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;}</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            }</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            message(log_type::verbose, <a class="code" href="classlib_1_1fmt.html">fmt</a>);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        }</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="classlib_1_1log.html#a411addc82b83f8c72cc6fb4e7173939d">  102</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1log.html#a411addc82b83f8c72cc6fb4e7173939d">get_messages</a>() -&gt; <span class="keyword">const</span> std::vector&lt;log_message&gt; &amp;;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="classlib_1_1log.html#aac5793c9eb61c61b83bf738a75d90919">  107</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1log.html#aac5793c9eb61c61b83bf738a75d90919">clear</a>();</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="classlib_1_1log.html#a7372d15a115a450ddcf7b22ad3c2232a">  113</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1log.html#a7372d15a115a450ddcf7b22ad3c2232a">set_log_to_stdout</a>(<span class="keywordtype">bool</span> value);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <a class="code" href="classlib_1_1log.html">log</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        <span class="keyword">static</span> std::vector&lt;log_message&gt; messages;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">bool</span> log_to_stdout;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> message(log_type log_type, <span class="keyword">const</span> std::string &amp;message);</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    };</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;}</div>
 <div class="ttc" id="aclasslib_1_1developer__mode_html_a4e7ebe8ced9b779470c4b03ae1f7192d"><div class="ttname"><a href="classlib_1_1developer__mode.html#a4e7ebe8ced9b779470c4b03ae1f7192d">lib::developer_mode::enabled</a></div><div class="ttdeci">static bool enabled</div><div class="ttdef"><b>Definition:</b> developermode.hpp:17</div></div>
 <div class="ttc" id="aclasslib_1_1fmt_html"><div class="ttname"><a href="classlib_1_1fmt.html">lib::fmt</a></div><div class="ttdef"><b>Definition:</b> format.hpp:16</div></div>
-<div class="ttc" id="aclasslib_1_1fmt_html_ae7622b4dbd5bd42aed59939aace7bddc"><div class="ttname"><a href="classlib_1_1fmt.html#ae7622b4dbd5bd42aed59939aace7bddc">lib::fmt::format</a></div><div class="ttdeci">static std::string format(const Format &amp;fmt)</div><div class="ttdef"><b>Definition:</b> format.hpp:24</div></div>
+<div class="ttc" id="aclasslib_1_1fmt_html_aeddcd7b2020dc3deaee006f3a069a4bd"><div class="ttname"><a href="classlib_1_1fmt.html#aeddcd7b2020dc3deaee006f3a069a4bd">lib::fmt::format</a></div><div class="ttdeci">static auto format(const Format &amp;fmt) -&gt; std::string</div><div class="ttdef"><b>Definition:</b> format.hpp:24</div></div>
 <div class="ttc" id="aclasslib_1_1log_html"><div class="ttname"><a href="classlib_1_1log.html">lib::log</a></div><div class="ttdef"><b>Definition:</b> log.hpp:17</div></div>
-<div class="ttc" id="aclasslib_1_1log_html_a231101ae3058d7f333f1a39519e7bcd9"><div class="ttname"><a href="classlib_1_1log.html#a231101ae3058d7f333f1a39519e7bcd9">lib::log::get_messages</a></div><div class="ttdeci">static const std::vector&lt; log_message &gt; &amp; get_messages()</div></div>
 <div class="ttc" id="aclasslib_1_1log_html_a3b352feba3bddb212d53a40db6e69b75"><div class="ttname"><a href="classlib_1_1log.html#a3b352feba3bddb212d53a40db6e69b75">lib::log::warn</a></div><div class="ttdeci">static void warn(const Format &amp;fmt)</div><div class="ttdef"><b>Definition:</b> log.hpp:50</div></div>
+<div class="ttc" id="aclasslib_1_1log_html_a411addc82b83f8c72cc6fb4e7173939d"><div class="ttname"><a href="classlib_1_1log.html#a411addc82b83f8c72cc6fb4e7173939d">lib::log::get_messages</a></div><div class="ttdeci">static auto get_messages() -&gt; const std::vector&lt; log_message &gt; &amp;</div></div>
 <div class="ttc" id="aclasslib_1_1log_html_a6faeebb4fdad6162e122a5941e8ae323"><div class="ttname"><a href="classlib_1_1log.html#a6faeebb4fdad6162e122a5941e8ae323">lib::log::dev</a></div><div class="ttdeci">static void dev(const Format &amp;fmt, const Arg &amp;arg, Args &amp;&amp;... args)</div><div class="ttdef"><b>Definition:</b> log.hpp:78</div></div>
 <div class="ttc" id="aclasslib_1_1log_html_a7372d15a115a450ddcf7b22ad3c2232a"><div class="ttname"><a href="classlib_1_1log.html#a7372d15a115a450ddcf7b22ad3c2232a">lib::log::set_log_to_stdout</a></div><div class="ttdeci">static void set_log_to_stdout(bool value)</div></div>
 <div class="ttc" id="aclasslib_1_1log_html_a7cf72a4b661e07ea524f08a006324964"><div class="ttname"><a href="classlib_1_1log.html#a7cf72a4b661e07ea524f08a006324964">lib::log::info</a></div><div class="ttdeci">static void info(const Format &amp;fmt)</div><div class="ttdef"><b>Definition:</b> log.hpp:32</div></div>

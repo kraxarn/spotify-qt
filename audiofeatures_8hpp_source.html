@@ -95,11 +95,11 @@ $(function() {
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            <span class="keyword">auto</span> items() <span class="keyword">const</span> -&gt; <span class="keyword">const</span> std::vector&lt;lib::spt::audio_feature&gt; &amp;;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            <span class="keywordtype">void</span> add(::<a class="code" href="classlib_1_1spt_1_1audio__feature.html">audio_feature</a> feature, <span class="keywordtype">float</span> value);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            <span class="keywordtype">void</span> add(lib::audio_feature feature, <span class="keywordtype">float</span> value);</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            <span class="keywordtype">void</span> add(audio_key key);</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            <span class="keywordtype">void</span> add(audio_mode mode);</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <span class="keyword">static</span> <span class="keyword">auto</span> to_audio_feature(<span class="keyword">const</span> std::string &amp;feature) -&gt; <a class="code" href="classlib_1_1spt_1_1audio__feature.html">::audio_feature</a>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <span class="keyword">static</span> <span class="keyword">auto</span> to_audio_feature(<span class="keyword">const</span> std::string &amp;feature) -&gt; lib::audio_feature;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            std::vector&lt;lib::spt::audio_feature&gt; values;</div>
@@ -108,7 +108,6 @@ $(function() {
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keywordtype">void</span> from_json(<span class="keyword">const</span> nlohmann::json &amp;j, <a class="code" href="classlib_1_1spt_1_1audio__features.html">audio_features</a> &amp;a);</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    }</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
-<div class="ttc" id="aclasslib_1_1spt_1_1audio__feature_html"><div class="ttname"><a href="classlib_1_1spt_1_1audio__feature.html">lib::spt::audio_feature</a></div><div class="ttdef"><b>Definition:</b> audiofeature.hpp:15</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1audio__features_html"><div class="ttname"><a href="classlib_1_1spt_1_1audio__features.html">lib::spt::audio_features</a></div><div class="ttdef"><b>Definition:</b> audiofeatures.hpp:22</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
