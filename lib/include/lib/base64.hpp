@@ -21,14 +21,14 @@ namespace lib
 		 * @param str String to encode
 		 * @return Encoded string
 		 */
-		static std::string encode(const std::string &str);
+		static auto encode(const std::string &str) -> std::string;
 
 		/**
 		 * Decode string from base64
 		 * @param str String to decode
 		 * @return Decoded string
 		 */
-		static std::string decode(const std::string &str);
+		static auto decode(const std::string &str) -> std::string;
 
 	private:
 		/**
@@ -39,6 +39,6 @@ namespace lib
 		/**
 		 * Get Base64 charset (64 chars)
 		 */
-		static std::string get_charset();
+		static auto get_charset() -> std::string;
 	};
 }

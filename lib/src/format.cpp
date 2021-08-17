@@ -2,7 +2,7 @@
 
 using namespace lib;
 
-std::string fmt::time(int ms)
+auto fmt::time(int ms) -> std::string
 {
 	auto seconds = ms / 1000;
 
@@ -13,7 +13,7 @@ std::string fmt::time(int ms)
 		format("{}{}", s < 10 ? "0" : "", s % 60));
 }
 
-std::string fmt::size(unsigned int bytes)
+auto fmt::size(unsigned int bytes) -> std::string
 {
 	if (bytes >= 1000000000)
 		return format("{} GB", bytes / 1000000000);

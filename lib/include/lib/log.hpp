@@ -97,7 +97,7 @@ namespace lib
 		 * Get all messages that has been logged since application start
 		 * @return Log messages
 		 */
-		static const std::vector<log_message> &get_messages();
+		static auto get_messages() -> const std::vector<log_message> &;
 
 		/**
 		 * Clears all messages in the log

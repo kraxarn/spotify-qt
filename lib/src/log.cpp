@@ -20,7 +20,7 @@ void log::message(log_type log_type, const std::string &message)
 		std::cerr << msg.to_string() << std::endl;
 }
 
-const std::vector<log_message> &log::get_messages()
+auto log::get_messages() -> const std::vector<log_message> &
 {
 	return messages;
 }

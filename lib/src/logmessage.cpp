@@ -15,13 +15,13 @@ log_message::log_message(log_type log_type, const std::string &message)
 {
 }
 
-std::string log_message::to_string() const
+auto log_message::to_string() const -> std::string
 {
 	return fmt::format("[{}] [{}] {}", get_time(),
 		get_type_short(), message);
 }
 
-std::string log_message::get_type_short() const
+auto log_message::get_type_short() const -> std::string
 {
 	switch (logType)
 	{
@@ -41,12 +41,12 @@ std::string log_message::get_type_short() const
 	return std::string();
 }
 
-std::string log_message::get_time() const
+auto log_message::get_time() const -> std::string
 {
 	return time.to_time();
 }
 
-std::string log_message::get_type() const
+auto log_message::get_type() const -> std::string
 {
 	switch (logType)
 	{
@@ -66,7 +66,7 @@ std::string log_message::get_type() const
 	return std::string();
 }
 
-std::string log_message::get_message() const
+auto log_message::get_message() const -> std::string
 {
 	return message;
 }

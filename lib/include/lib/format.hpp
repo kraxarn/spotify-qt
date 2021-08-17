@@ -21,7 +21,7 @@ namespace lib
 		 * @return string
 		 */
 		template<typename Format>
-		static std::string format(const Format &fmt)
+		static auto format(const Format &fmt) -> std::string
 		{
 			return fmt;
 		}
@@ -34,7 +34,7 @@ namespace lib
 		 * @return Formatted string
 		 */
 		template<typename Format, typename Arg, typename... Args>
-		static std::string format(const Format &fmt, const Arg &arg, Args &&... args)
+		static auto format(const Format &fmt, const Arg &arg, Args &&... args) -> std::string
 		{
 			return format(collect(fmt, arg), args...);
 		}
@@ -43,13 +43,13 @@ namespace lib
 		 * Format time as M:SS
 		 * @param ms Milliseconds
 		 */
-		static std::string time(int ms);
+		static auto time(int ms) -> std::string;
 
 		/**
 		 * Format size as B, kB, MB or GB (bytes)
 		 * @param bytes Bytes
 		 */
-		static std::string size(unsigned int bytes);
+		static auto size(unsigned int bytes) -> std::string;
 
 		/**
 		 * Format as k or M
@@ -65,7 +65,7 @@ namespace lib
 		 * @return Formatted string
 		 */
 		template<typename Format>
-		static std::string collect(const Format &fmt, const std::string &arg)
+		static auto collect(const Format &fmt, const std::string &arg) -> std::string
 		{
 			auto str = std::string(fmt);
 			auto index = str.find("{}");
@@ -82,7 +82,7 @@ namespace lib
 		 * @return Formatted string
 		 */
 		template<typename Format, typename Arg>
-		static std::string collect(const Format &fmt, const Arg &arg)
+		static auto collect(const Format &fmt, const Arg &arg) -> std::string
 		{
 			return collect(fmt, std::to_string(arg));
 		}
@@ -94,7 +94,7 @@ namespace lib
 		 * @return Formatted string
 		 */
 		template<typename Format>
-		static std::string collect(const Format &fmt, const char *arg)
+		static auto collect(const Format &fmt, const char *arg) -> std::string
 		{
 			return collect(fmt, std::string(arg));
 		}
@@ -106,7 +106,7 @@ namespace lib
 		 * @return Formatted string
 		 */
 		template<typename Format>
-		static std::string collect(const Format &fmt, bool arg)
+		static auto collect(const Format &fmt, bool arg) -> std::string
 		{
 			return collect(fmt, arg ? "true" : "false");
 		}
@@ -118,7 +118,7 @@ namespace lib
 		 * @return Formatted string
 		 */
 		template<typename Format>
-		static std::string collect(const Format &fmt, const nlohmann::json &arg)
+		static auto collect(const Format &fmt, const nlohmann::json &arg) -> std::string
 		{
 			return collect(fmt, arg.dump());
 		}

@@ -32,31 +32,31 @@ namespace lib
 		 * Format message as [time] [type] message
 		 * @return Formatted message
 		 */
-		std::string to_string() const;
+		auto to_string() const -> std::string;
 
 		/**
 		 * log_type as 4 character string
 		 * @return Type of log
 		 */
-		std::string get_type_short() const;
+		auto get_type_short() const -> std::string;
 
 		/**
 		 * Get the time the message was logged at
 		 * @return Time as locale formatted string
 		 */
-		std::string get_time() const;
+		auto get_time() const -> std::string;
 
 		/**
 		 * log_type as a full string
 		 * @return Type of log
 		 */
-		std::string get_type() const;
+		auto get_type() const -> std::string;
 
 		/**
 		 * Get logged message
 		 * @return Message
 		 */
-		std::string get_message() const;
+		auto get_message() const -> std::string;
 
 	private:
 		/**

@@ -1,6 +1,6 @@
 #include "lib/json.hpp"
 
-nlohmann::json lib::json::combine(const nlohmann::json &item1, const nlohmann::json &item2)
+auto lib::json::combine(const nlohmann::json &item1, const nlohmann::json &item2) -> nlohmann::json
 {
 	auto item = nlohmann::json::array();
 
@@ -12,7 +12,7 @@ nlohmann::json lib::json::combine(const nlohmann::json &item1, const nlohmann::j
 	return item;
 }
 
-nlohmann::json lib::json::load(const ghc::filesystem::path &path)
+auto lib::json::load(const ghc::filesystem::path &path) -> nlohmann::json
 {
 	std::ifstream file(path);
 	if (!file.is_open() || file.bad())

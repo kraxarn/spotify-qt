@@ -22,8 +22,8 @@ namespace lib
 		 * @return If an item was found
 		 */
 		template<typename T>
-		static bool get_property(const nlohmann::json &json,
-			const std::initializer_list<std::string> &names, T &item)
+		static auto get_property(const nlohmann::json &json,
+			const std::initializer_list<std::string> &names, T &item) -> bool
 		{
 			for (auto &name : names)
 			{
@@ -42,7 +42,8 @@ namespace lib
 		 * @param item2 Second array
 		 * @return Combined array, or an empty one on failure
 		 */
-		static nlohmann::json combine(const nlohmann::json &item1, const nlohmann::json &item2);
+		static auto combine(const nlohmann::json &item1,
+			const nlohmann::json &item2) -> nlohmann::json;
 
 		/**
 		 * Get item from JSON if found
@@ -62,7 +63,7 @@ namespace lib
 		 * @param path Path to json file, including extension
 		 * @return JSON object, or null object on failure
 		 */
-		static nlohmann::json load(const ghc::filesystem::path &path);
+		static auto load(const ghc::filesystem::path &path) -> nlohmann::json;
 
 		/**
 		 * Convenience method to parse generic class from JSON,

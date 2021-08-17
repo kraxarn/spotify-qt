@@ -19,13 +19,13 @@ namespace lib
 		 * @param max Upper bound
 		 */
 		template<typename T>
-		T next(T min, T max)
+		auto next(T min, T max) -> T
 		{
 			std::uniform_int_distribution<T> distribution(min, max);
 			return distribution(rng);
 		}
 
-		int next_int(int min, int max);
+		auto next_int(int min, int max) -> int;
 
 	private:
 		std::random_device device;

@@ -2,7 +2,7 @@
 
 using namespace lib;
 
-std::string base64::encode(const std::string &str)
+auto base64::encode(const std::string &str) -> std::string
 {
 	auto charset = get_charset();
 	std::string out;
@@ -25,7 +25,7 @@ std::string base64::encode(const std::string &str)
 	return out;
 }
 
-std::string base64::decode(const std::string &str)
+auto base64::decode(const std::string &str) -> std::string
 {
 	auto charset = get_charset();
 	std::string out;
@@ -49,7 +49,7 @@ std::string base64::decode(const std::string &str)
 	return out;
 }
 
-std::string base64::get_charset()
+auto base64::get_charset() -> std::string
 {
 	return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 }
