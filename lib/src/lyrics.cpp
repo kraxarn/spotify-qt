@@ -18,16 +18,16 @@ void lib::lyrics::get(const spt::track &track, lib::callback<lib::spt::track_inf
 
 	try
 	{
-		http.post(url, body.dump(), headers, [url, callback]
-			(const std::string &result)
-		{
-			if (result.empty())
+		http.post(url, body.dump(), headers,
+			[url, callback](const std::string &result)
 			{
-				callback(lib::spt::track_info());
-				return;
-			}
-			callback(nlohmann::json::parse(result));
-		});
+				if (result.empty())
+				{
+					callback(lib::spt::track_info());
+					return;
+				}
+				callback(nlohmann::json::parse(result));
+			});
 	}
 	catch (const std::exception &e)
 	{

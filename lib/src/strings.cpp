@@ -26,11 +26,11 @@ auto strings::trim(std::string &str) -> std::string
 
 void strings::trim_begin(std::string &str)
 {
-	str.erase(str.begin(), std::find_if(str.begin(), str.end(), []
-		(unsigned char chr) -> bool
-	{
-		return std::isspace(chr) == 0;
-	}));
+	str.erase(str.begin(), std::find_if(str.begin(), str.end(),
+		[](unsigned char chr) -> bool
+		{
+			return std::isspace(chr) == 0;
+		}));
 }
 
 void strings::trim_end(std::string &str)

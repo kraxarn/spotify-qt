@@ -44,9 +44,8 @@ void lib::qt::http_client::get(const std::string &url, const lib::headers &heade
 		});
 }
 
-void lib::qt::http_client::put(const std::string &url, const std::string &body, const lib::headers
-&headers,
-	lib::callback<std::string> &callback) const
+void lib::qt::http_client::put(const std::string &url, const std::string &body,
+	const lib::headers &headers, lib::callback<std::string> &callback) const
 {
 	auto data = body.empty()
 		? QByteArray()
@@ -87,9 +86,8 @@ auto lib::qt::http_client::post(const std::string &url, const lib::headers &head
 	return reply->readAll().toStdString();
 }
 
-void lib::qt::http_client::del(const std::string &url, const std::string &body, const lib::headers
-&headers,
-	lib::callback<std::string> &callback) const
+void lib::qt::http_client::del(const std::string &url, const std::string &body,
+	const lib::headers &headers, lib::callback<std::string> &callback) const
 {
 	auto data = body.empty()
 		? QByteArray()

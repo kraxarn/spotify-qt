@@ -28,7 +28,7 @@ auto lib::date_time::parse(const std::string &value) -> lib::date_time
 	// First try to parse as full date and time
 	date.parse(value, ISO_DATE_TIME_FORMAT);
 
-	// Then try to pars as date only
+	// Then try to parse as date only
 	if (!date.is_valid())
 	{
 		date.parse(value, ISO_DATE_FORMAT);

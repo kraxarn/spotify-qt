@@ -25,7 +25,7 @@ namespace lib
 		static auto get_property(const nlohmann::json &json,
 			const std::initializer_list<std::string> &names, T &item) -> bool
 		{
-			for (auto &name : names)
+			for (const auto &name : names)
 			{
 				if (json.contains(name) && !json.at(name).is_null())
 				{

@@ -55,7 +55,7 @@ void api::play_tracks(int track_index, const std::string &context,
 {
 	lib::log::dev("Playing track {} from {}", track_index, context);
 
-	nlohmann::json body = {
+	nlohmann::json body{
 		{"context_uri", context},
 		{"offset", {
 			{"position", track_index}
@@ -84,7 +84,7 @@ void api::play_tracks(int track_index, const std::vector<std::string> &all,
 		items = all;
 	}
 
-	nlohmann::json body = {
+	nlohmann::json body{
 		{"uris", items},
 		{"offset", {
 			{"position", track_index}
@@ -104,7 +104,7 @@ void api::play_tracks(const std::string &context, lib::callback<std::string> &ca
 {
 	lib::log::dev("Playing track from {}", context);
 
-	nlohmann::json body = {
+	nlohmann::json body{
 		{"context_uri", context}
 	};
 

@@ -2,12 +2,12 @@
 
 void lib::spt::to_json(nlohmann::json &j, const user &u)
 {
-	j = nlohmann::json({
+	j = nlohmann::json{
 		{"display_name", u.display_name},
 		{"id", u.id},
 		{"image", u.image},
 		{"product", u.product}
-	});
+	};
 }
 
 void lib::spt::from_json(const nlohmann::json &j, user &u)
@@ -19,9 +19,11 @@ void lib::spt::from_json(const nlohmann::json &j, user &u)
 
 	j.at("display_name").get_to(u.display_name);
 	j.at("id").get_to(u.id);
-	const auto& images = j.at("images");
-	if (!images.empty()) {
+	j.at("product").get_to(u.product);
+
+	const auto &images = j.at("images");
+	if (!images.empty())
+	{
 		images.back().at("url").get_to(u.image);
 	}
-	j.at("product").get_to(u.product);
 }
