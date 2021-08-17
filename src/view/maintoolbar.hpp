@@ -22,6 +22,7 @@ public:
 		const lib::http_client &httpClient, lib::cache &cache, QWidget *parent);
 
 	void showTitleBarButtons(bool show);
+	void updateSpacerSizes();
 	void setPlaying(bool playing);
 	void setProgress(int current, int duration);
 	void setProgress(const lib::spt::playback &playback);
@@ -33,6 +34,7 @@ public:
 
 protected:
 	void resizeEvent(QResizeEvent *event) override;
+	void showEvent(QShowEvent *event) override;
 
 private:
 	void onPlayPause(bool checked);

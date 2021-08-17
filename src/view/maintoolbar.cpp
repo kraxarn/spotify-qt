@@ -89,11 +89,31 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 
 	close = addAction(Icon::get("window-close-symbolic"), "Close");
 	QAction::connect(close, &QAction::triggered, &QCoreApplication::quit);
-
-	showTitleBarButtons(!settings.qt_const().system_title_bar);
 }
 
 void MainToolBar::resizeEvent(QResizeEvent */*event*/)
+{
+	updateSpacerSizes();
+}
+
+void MainToolBar::showEvent(QShowEvent */*event*/)
+{
+	showTitleBarButtons(!settings.qt_const().system_title_bar);
+	updateSpacerSizes();
+}
+
+void MainToolBar::showTitleBarButtons(bool show)
+{
+	titleBarSeparator->setVisible(show);
+
+	minimize->setVisible(show);
+	close->setVisible(show);
+
+	leftSpacer->setVisible(show);
+	rightSpacer->setVisible(show);
+}
+
+void MainToolBar::updateSpacerSizes()
 {
 	if (!leftSpacer->isVisible()
 		&& !rightSpacer->isVisible())
@@ -106,17 +126,6 @@ void MainToolBar::resizeEvent(QResizeEvent */*event*/)
 
 	leftSpacer->setMinimumWidth(spacerWidth);
 	rightSpacer->setMinimumWidth(spacerWidth);
-}
-
-void MainToolBar::showTitleBarButtons(bool show)
-{
-	titleBarSeparator->setVisible(show);
-
-	minimize->setVisible(show);
-	close->setVisible(show);
-
-	leftSpacer->setVisible(show);
-	rightSpacer->setVisible(show);
 }
 
 void MainToolBar::setPlaying(bool playing)
