@@ -15,7 +15,7 @@ auto lib::json_cache::get_album_image(const std::string &url) const -> std::vect
 		std::ios::binary);
 	if (!file.is_open() || file.bad())
 	{
-		return std::vector<unsigned char>();
+		return {};
 	}
 
 	return std::vector<unsigned char>(std::istreambuf_iterator<char>(file),
@@ -46,7 +46,7 @@ auto lib::json_cache::get_playlists() const -> std::vector<lib::spt::playlist>
 		log::warn("Failed to load playlists from cache: {}", e.what());
 	}
 
-	return std::vector<lib::spt::playlist>();
+	return {};
 }
 
 void lib::json_cache::set_playlists(const std::vector<spt::playlist> &playlists)
@@ -69,7 +69,7 @@ auto lib::json_cache::get_playlist(const std::string &id) const -> lib::spt::pla
 		log::warn("Failed to load playlist from cache: {}", e.what());
 	}
 
-	return lib::spt::playlist();
+	return {};
 }
 
 void lib::json_cache::set_playlist(const spt::playlist &playlist)

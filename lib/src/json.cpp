@@ -22,7 +22,7 @@ auto lib::json::load(const ghc::filesystem::path &path) -> nlohmann::json
 	if (!file.is_open() || file.bad())
 	{
 		// File not found errors fail silently
-		return nlohmann::json();
+		return {};
 	}
 
 	try
@@ -37,7 +37,7 @@ auto lib::json::load(const ghc::filesystem::path &path) -> nlohmann::json
 			path.string(), e.what());
 	}
 
-	return nlohmann::json();
+	return {};
 }
 
 void lib::json::save(const ghc::filesystem::path &path, const nlohmann::json &json)

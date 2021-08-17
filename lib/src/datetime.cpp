@@ -104,7 +104,7 @@ auto lib::date_time::format(const char *format) const -> std::string
 {
 	if (!is_valid())
 	{
-		return std::string();
+		return {};
 	}
 
 	constexpr size_t buffer_size = 64;

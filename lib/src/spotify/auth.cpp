@@ -86,5 +86,5 @@ auto lib::spt::auth::get(const std::string &code, const std::string &redirect_ur
 	refresh_token.get_to(settings.account.refresh_token);
 
 	// Everything hopefully went fine
-	return std::string();
+	return {};
 }

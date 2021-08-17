@@ -38,7 +38,7 @@ auto log_message::get_type_short() const -> std::string
 			return "dev ";
 	}
 
-	return std::string();
+	return {};
 }
 
 auto log_message::get_time() const -> std::string
@@ -63,7 +63,7 @@ auto log_message::get_type() const -> std::string
 			return "Developer";
 	}
 
-	return std::string();
+	return {};
 }
 
 auto log_message::get_message() const -> std::string

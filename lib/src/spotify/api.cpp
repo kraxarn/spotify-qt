@@ -93,7 +93,7 @@ auto api::parse_json(const std::string &url, const std::string &data) -> nlohman
 	// No data, no response, no error
 	if (data.empty())
 	{
-		return nlohmann::json();
+		return {};
 	}
 
 	auto json = nlohmann::json::parse(data);
@@ -130,12 +130,12 @@ auto api::error_message(const std::string &url, const std::string &data) -> std:
 	catch (const std::exception &e)
 	{
 		lib::log::warn("{} failed: {}", url, e.what());
-		return std::string();
+		return {};
 	}
 
 	if (json.is_null() || !json.is_object() || !json.contains("error"))
 	{
-		return std::string();
+		return {};
 	}
 
 	auto message = json.at("error").at("message").get<std::string>();
@@ -183,7 +183,7 @@ auto api::follow_type_string(lib::follow_type type) -> std::string
 			return "user";
 	}
 
-	return std::string();
+	return {};
 }
 
 void api::set_current_device(const std::string &id)

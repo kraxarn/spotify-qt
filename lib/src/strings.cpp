@@ -6,7 +6,7 @@ auto strings::join(const std::vector<std::string> &strings, const char *separato
 {
 	if (strings.empty())
 	{
-		return std::string();
+		return {};
 	}
 
 	return std::accumulate(std::next(strings.begin()), strings.end(), strings[0],
