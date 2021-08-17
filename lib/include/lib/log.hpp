@@ -88,7 +88,9 @@ namespace lib
 		static void dev(const Format &fmt)
 		{
 			if (!developer_mode::enabled)
+			{
 				return;
+			}
 
 			message(log_type::verbose, fmt);
 		}

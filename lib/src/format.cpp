@@ -16,13 +16,19 @@ auto fmt::time(int ms) -> std::string
 auto fmt::size(unsigned int bytes) -> std::string
 {
 	if (bytes >= 1000000000)
+	{
 		return format("{} GB", bytes / 1000000000);
+	}
 
 	if (bytes >= 1000000)
+	{
 		return format("{} MB", bytes / 1000000);
+	}
 
 	if (bytes >= 1000)
+	{
 		return format("{} kB", bytes / 1000);
+	}
 
 	return format("{} B", bytes);
 }

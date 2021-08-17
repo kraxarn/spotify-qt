@@ -126,7 +126,9 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 
 	// Treat 1970-01-01 as no date
 	if (lib::strings::starts_with(t.added_at, "1970-01-01"))
+	{
 		t.added_at = std::string();
+	}
 }
 
 auto lib::spt::track::title() const -> std::string

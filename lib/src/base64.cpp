@@ -19,9 +19,13 @@ auto base64::encode(const std::string &str) -> std::string
 		}
 	}
 	if (val_b > -6)
+	{
 		out.push_back(charset[((val << 8) >> (val_b + 8)) & 0x3F]);
+	}
 	while (out.size() % 4)
+	{
 		out.push_back('=');
+	}
 	return out;
 }
 
@@ -31,13 +35,17 @@ auto base64::decode(const std::string &str) -> std::string
 	std::string out;
 	std::vector<int> T(256, -1);
 	for (int i = 0; i < 64; i++)
+	{
 		T[charset[i]] = i;
+	}
 	int val = 0;
 	int val_b = -8;
 	for (unsigned char c : str)
 	{
 		if (T[c] == -1)
+		{
 			break;
+		}
 		val = (val << 6) + T[c];
 		val_b += 6;
 		if (val_b >= 0)

@@ -14,7 +14,9 @@ void lib::spt::to_json(nlohmann::json &j, const device &d)
 void lib::spt::from_json(const nlohmann::json &j, device &d)
 {
 	if (!j.is_object())
+	{
 		return;
+	}
 
 	j.at("id").get_to(d.id);
 	j.at("name").get_to(d.name);

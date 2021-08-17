@@ -55,7 +55,9 @@ namespace lib
 		static void get(const nlohmann::json &json, const std::string &key, T &item)
 		{
 			if (json.contains(key) && !json.at(key).is_null())
+			{
 				json.at(key).get_to(item);
+			}
 		}
 
 		/**

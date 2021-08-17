@@ -5,9 +5,13 @@ auto lib::json::combine(const nlohmann::json &item1, const nlohmann::json &item2
 	auto item = nlohmann::json::array();
 
 	if (item1.is_array())
+	{
 		item.insert(item.end(), item1.begin(), item1.end());
+	}
 	if (item2.is_array())
+	{
 		item.insert(item.end(), item2.begin(), item2.end());
+	}
 
 	return item;
 }

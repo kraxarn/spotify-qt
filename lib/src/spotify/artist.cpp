@@ -15,7 +15,9 @@ void lib::spt::to_json(nlohmann::json &j, const artist &a)
 void lib::spt::from_json(const nlohmann::json &j, artist &a)
 {
 	if (!j.is_object())
+	{
 		return;
+	}
 
 	j.at("id").get_to(a.id);
 	j.at("popularity").get_to(a.popularity);
@@ -28,9 +30,13 @@ void lib::spt::from_json(const nlohmann::json &j, artist &a)
 		auto followers = j.at("followers");
 
 		if (followers.is_object())
+		{
 			followers.at("total").get_to(a.followers);
+		}
 		else if (followers.is_number_integer())
+		{
 			followers.get_to(a.followers);
+		}
 	}
 
 	if (j.contains("image"))

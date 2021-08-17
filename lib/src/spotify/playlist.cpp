@@ -20,7 +20,9 @@ void lib::spt::to_json(nlohmann::json &j, const playlist &p)
 void lib::spt::from_json(const nlohmann::json &j, playlist &p)
 {
 	if (!j.is_object())
+	{
 		return;
+	}
 
 	j.at("collaborative").get_to(p.collaborative);
 	j.at("description").get_to(p.description);
@@ -37,7 +39,9 @@ void lib::spt::from_json(const nlohmann::json &j, playlist &p)
 	{
 		auto tracks = j.at("tracks");
 		if (tracks.is_array())
+		{
 			tracks.get_to(p.tracks);
+		}
 		else if (tracks.is_object())
 		{
 			tracks.at("href").get_to(p.tracks_href);
