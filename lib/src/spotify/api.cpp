@@ -210,6 +210,11 @@ void api::get(const std::string &url, lib::callback<nlohmann::json> &callback)
 					? nlohmann::json()
 					: nlohmann::json::parse(response));
 			}
+			catch (const nlohmann::json::parse_error &e)
+			{
+				lib::log::error("{} failed to parse: {}", url, e.what());
+				lib::log::dev("JSON: {}", response);
+			}
 			catch (const std::exception &e)
 			{
 				lib::log::error("{} failed: {}", url, e.what());
