@@ -1,5 +1,7 @@
 #pragma once
 
+#include "lib/enum/audioquality.hpp"
+
 #include <string>
 
 namespace lib
@@ -54,9 +56,9 @@ namespace lib
 
 			/**
 			 * Bitrate for Spotify client
-			 * @note Required to be 96, 160 or 320
+			 * @note Required to be normal, high or very_high
 			 */
-			int bitrate = 320;
+			lib::audio_quality bitrate = lib::audio_quality::very_high;
 
 			/**
 			 * Max items allowed to be queued

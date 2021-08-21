@@ -1,7 +1,8 @@
 #pragma once
 
 #include "settingspage.hpp"
-#include "../util/icon.hpp"
+#include "lib/enum/audioquality.hpp"
+#include "util/icon.hpp"
 #include "client/clienthelper.hpp"
 #include "view/clienthandlerlogview.hpp"
 #include "client/clienthandler.hpp"
@@ -38,10 +39,6 @@ private:
 	QLabel *clientStatus = nullptr;
 
 	lib::paths *paths = nullptr;
-
-	static constexpr int low = 96;
-	static constexpr int medium = 160;
-	static constexpr int high = 320;
 
 	void globalConfigToggle(int state);
 	void startClientToggle(int state);

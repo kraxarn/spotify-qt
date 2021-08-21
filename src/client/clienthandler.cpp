@@ -93,7 +93,7 @@ auto ClientHandler::start() -> QString
 
 	// Common arguments
 	QStringList arguments({
-		"--bitrate", QString::number(settings.spotify.bitrate),
+		"--bitrate", QString::number(static_cast<int>(settings.spotify.bitrate)),
 		"--username", username,
 		"--password", password
 	});

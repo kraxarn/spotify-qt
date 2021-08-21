@@ -163,7 +163,9 @@ auto SpotifyPage::config() -> QWidget *
 		"Low (96 kbit/s)", "Medium (160 kbit/s)", "High (320 kbit/s)"
 	});
 	auto bitrate = settings.spotify.bitrate;
-	sptBitrate->setCurrentIndex(bitrate == low ? 0 : bitrate == medium ? 1 : 2);
+	sptBitrate->setCurrentIndex(bitrate == lib::audio_quality::normal
+		? 0 : bitrate == lib::audio_quality::high
+			? 1 : 2);
 	sptLayout->addWidget(sptBitrate, 1, 1);
 
 	// Backend
@@ -268,7 +270,10 @@ auto SpotifyPage::save() -> bool
 	if (sptBitrate != nullptr)
 	{
 		auto bitrate = sptBitrate->currentIndex();
-		settings.spotify.bitrate = bitrate == 0 ? low : bitrate == 1 ? medium : high;
+		settings.spotify.bitrate = bitrate == 0
+			? lib::audio_quality::normal : bitrate == 1
+				? lib::audio_quality::high
+				: lib::audio_quality::very_high;
 	}
 	if (sptAlways != nullptr)
 	{
