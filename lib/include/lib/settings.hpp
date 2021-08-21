@@ -109,12 +109,6 @@ namespace lib
 		 */
 		auto file_path() const -> std::string;
 
-		/**
-		 * Validate settings to make sure they are valid
-		 * @return Errors
-		 */
-		auto validate() const -> std::map<std::string, std::vector<std::string>>;
-
 	private:
 		/**
 		 * paths implementation

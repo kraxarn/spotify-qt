@@ -102,23 +102,6 @@ void settings::from_json(const nlohmann::json &json)
 	// Qt widgets
 	// TODO: This should be loaded dynamically for non-Qt clients
 	lib::json::get(json, "Qt", qt_settings);
-
-	// Validate
-	auto errors = validate();
-
-	for (auto &error : errors)
-	{
-		log::error("One or more invalid {} settings found, restoring defaults",
-			error.first);
-	}
-	if (errors.find("General") != errors.end())
-	{
-		general = setting::general{};
-	}
-	if (errors.find("Spotify") != errors.end())
-	{
-		spotify = setting::spotify{};
-	}
 }
 
 void settings::load()
@@ -232,27 +215,4 @@ auto settings::get_dark_theme() const -> bool
 void settings::set_dark_theme(bool value)
 {
 	general.style_palette = value ? lib::palette::dark : lib::palette::app;
-}
-
-auto settings::validate() const -> std::map<std::string, std::vector<std::string>>
-{
-	std::map<std::string, std::vector<std::string>> errors;
-
-	// Refresh interval needs to be 1-60
-	if (general.refresh_interval < 1 || general.refresh_interval > 60)
-	{
-		errors["General"] = {
-			"refresh_interval"
-		};
-	}
-
-	// Bitrate needs to be 96/160/320
-	if (spotify.bitrate != 96 && spotify.bitrate != 160 && spotify.bitrate != 320)
-	{
-		errors["Spotify"] = {
-			"bitrate"
-		};
-	}
-
-	return errors;
 }
