@@ -3,10 +3,10 @@
 LogView::LogView(QWidget *parent)
 	: QWidget(parent)
 {
-	auto layout = new QVBoxLayout();
+	auto *layout = new QVBoxLayout();
 	setLayout(layout);
 
-	auto list = new QTreeWidget(this);
+	auto *list = new QTreeWidget(this);
 	list->setHeaderLabels({
 		"Time", "Type", "Message"
 	});
@@ -16,14 +16,14 @@ LogView::LogView(QWidget *parent)
 	list->setAllColumnsShowFocus(true);
 	layout->addWidget(list, 1);
 
-	auto buttons = new QHBoxLayout();
+	auto *buttons = new QHBoxLayout();
 	buttons->setAlignment(Qt::AlignRight);
 
-	auto copyToClipboard = new QPushButton("Copy to clipboard", this);
+	auto *copyToClipboard = new QPushButton("Copy to clipboard", this);
 	buttons->addWidget(copyToClipboard);
 	QPushButton::connect(copyToClipboard, &QPushButton::clicked, this, &LogView::copyToClipboard);
 
-	auto save = new QPushButton("Save...", this);
+	auto *save = new QPushButton("Save...", this);
 	buttons->addWidget(save);
 	QPushButton::connect(save, &QPushButton::clicked, this, &LogView::saveToFile);
 

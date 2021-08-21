@@ -4,15 +4,15 @@ OpenLinkDialog::OpenLinkDialog(const QString &link, LinkType linkType, QWidget *
 	: linkType(linkType),
 	QDialog(parent)
 {
-	auto layout = new QVBoxLayout();
+	auto *layout = new QVBoxLayout();
 	setLayout(layout);
 	setWindowTitle("Link error");
 
-	auto title = new QLabel(titleText(), this);
+	auto *title = new QLabel(titleText(), this);
 	title->setWordWrap(true);
 	layout->addWidget(title);
 
-	auto textLink = new QTextEdit(link, this);
+	auto *textLink = new QTextEdit(link, this);
 	textLink->setReadOnly(true);
 	layout->addWidget(textLink);
 

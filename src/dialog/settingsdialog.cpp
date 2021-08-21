@@ -7,7 +7,7 @@ SettingsDialog::SettingsDialog(lib::settings &settings, lib::cache &cache, QWidg
 	setStyleSheet(parent->styleSheet());
 
 	// Main layout
-	auto mainLayout = new QHBoxLayout();
+	auto *mainLayout = new QHBoxLayout();
 
 	// List of categories
 	stack = new QStackedWidget(this);
@@ -32,27 +32,27 @@ SettingsDialog::SettingsDialog(lib::settings &settings, lib::cache &cache, QWidg
 	mainLayout->addWidget(categories);
 
 	// Side layout
-	auto stackLayout = new QVBoxLayout();
+	auto *stackLayout = new QVBoxLayout();
 	mainLayout->addLayout(stackLayout, 1);
 
 	// Stack to show categories
 	stackLayout->addWidget(stack, 1);
 
 	// Buttons
-	auto buttons = new QDialogButtonBox();
-	auto okButton = buttons->addButton(QDialogButtonBox::Ok);
-	QPushButton::connect(okButton, &QPushButton::clicked, [this](bool checked)
+	auto *buttons = new QDialogButtonBox();
+	auto *okButton = buttons->addButton(QDialogButtonBox::Ok);
+	QPushButton::connect(okButton, &QPushButton::clicked, [this](bool /*checked*/)
 	{
 		if (applySettings())
 			accept();
 	});
-	auto applyButton = buttons->addButton(QDialogButtonBox::Apply);
-	QPushButton::connect(applyButton, &QPushButton::clicked, [this](bool checked)
+	auto *applyButton = buttons->addButton(QDialogButtonBox::Apply);
+	QPushButton::connect(applyButton, &QPushButton::clicked, [this](bool /*checked*/)
 	{
 		applySettings();
 	});
-	auto cancelButton = buttons->addButton(QDialogButtonBox::Cancel);
-	QPushButton::connect(cancelButton, &QPushButton::clicked, [this](bool checked)
+	auto *cancelButton = buttons->addButton(QDialogButtonBox::Cancel);
+	QPushButton::connect(cancelButton, &QPushButton::clicked, [this](bool /*checked*/)
 	{
 		accept();
 	});

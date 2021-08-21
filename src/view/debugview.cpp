@@ -4,7 +4,7 @@ DebugView::DebugView(const lib::settings &settings, QWidget *parent)
 	: settings(settings),
 	QWidget(parent)
 {
-	auto layout = new QVBoxLayout(this);
+	auto *layout = new QVBoxLayout(this);
 	layout->setAlignment(Qt::AlignTop);
 	setLayout(layout);
 
@@ -12,7 +12,7 @@ DebugView::DebugView(const lib::settings &settings, QWidget *parent)
 	urlPath->setPlaceholderText("https://api.spotify.com/v1/");
 	layout->addWidget(urlPath);
 
-	auto urlLayout = new QHBoxLayout();
+	auto *urlLayout = new QHBoxLayout();
 
 	requestType = new QComboBox(this);
 	requestType->addItems({
@@ -20,7 +20,7 @@ DebugView::DebugView(const lib::settings &settings, QWidget *parent)
 	});
 	urlLayout->addWidget(requestType, 1);
 
-	auto sendButton = new QPushButton("Send", this);
+	auto *sendButton = new QPushButton("Send", this);
 	QPushButton::connect(sendButton, &QPushButton::clicked, this, &DebugView::sendRequest);
 	urlLayout->addWidget(sendButton);
 

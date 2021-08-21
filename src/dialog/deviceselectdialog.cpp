@@ -5,7 +5,7 @@ DeviceSelectDialog::DeviceSelectDialog(const std::vector<lib::spt::device> &devi
 	: devices(devices),
 	QDialog(parent)
 {
-	auto layout = new QVBoxLayout();
+	auto *layout = new QVBoxLayout();
 	setLayout(layout);
 	setWindowTitle("Select device");
 
@@ -20,14 +20,15 @@ DeviceSelectDialog::DeviceSelectDialog(const std::vector<lib::spt::device> &devi
 			accept();
 		});
 
-	auto buttons = new QDialogButtonBox();
-	auto okButton = buttons->addButton(QDialogButtonBox::Ok);
-	QPushButton::connect(okButton, &QPushButton::clicked, [this](bool checked)
+	auto *buttons = new QDialogButtonBox();
+	auto *okButton = buttons->addButton(QDialogButtonBox::Ok);
+	QPushButton::connect(okButton, &QPushButton::clicked, [this](bool /*checked*/)
 	{
 		accept();
 	});
-	auto cancelButton = buttons->addButton(QDialogButtonBox::Cancel);
-	QPushButton::connect(cancelButton, &QPushButton::clicked, [this](bool checked)
+
+	auto *cancelButton = buttons->addButton(QDialogButtonBox::Cancel);
+	QPushButton::connect(cancelButton, &QPushButton::clicked, [this](bool /*checked*/)
 	{
 		reject();
 	});
