@@ -92,6 +92,7 @@ void DebugView::sendRequest(bool /*checked*/)
 
 	jsonResponse->setPlainText(jsonParseError.error == QJsonParseError::NoError
 		? json.toJson(QJsonDocument::JsonFormat::Indented)
-		: QString("Failed to parse JSON: %1").arg(jsonParseError.errorString()));
+		: QString("Failed to parse JSON: %1\n%2")
+			.arg(jsonParseError.errorString(), replyBody));
 	tabs->setCurrentIndex(1);
 }
