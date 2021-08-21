@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../spotify/spotify.hpp"
+#include "lib/settings.hpp"
 
 #include <QComboBox>
 #include <QHBoxLayout>
@@ -12,6 +12,9 @@
 #include <QTabWidget>
 #include <QPushButton>
 #include <QMessageBox>
+#include <QJsonParseError>
+#include <QNetworkReply>
+#include <QCoreApplication>
 
 class DebugView: public QWidget
 {
