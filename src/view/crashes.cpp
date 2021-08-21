@@ -45,6 +45,6 @@ void View::Crashes::logItemChanged(QListWidgetItem *current, QListWidgetItem */*
 		return;
 	}
 
-	auto role = static_cast<int>(ListItem::Crash::Role::StackTrace);
+	auto role = static_cast<int>(CrashRole::StackTrace);
 	log->setPlainText(current->data(role).toString());
 }
