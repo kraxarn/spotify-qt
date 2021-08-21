@@ -39,20 +39,20 @@ namespace mp
 	public:
 		MediaPlayerPlayer(lib::spt::api &spotify, QObject *parent);
 
-		bool canControl() const;
-		QMap<QString, QVariant> metadata() const;
+		auto canControl() const -> bool;
+		auto metadata() const -> QMap<QString, QVariant>;
 
-		double getVolume() const;
+		auto getVolume() const -> double;
 		void setVolume(double value) const;
 
-		qlonglong position() const;
+		auto position() const -> qlonglong;
 
-		QString playbackStatus() const;
+		auto playbackStatus() const -> QString;
 
-		double playbackRate() const;
+		auto playbackRate() const -> double;
 		void setPlaybackRate(double value) const;
 
-		bool shuffle() const;
+		auto shuffle() const -> bool;
 		void setShuffle(bool value) const;
 
 		void setCurrentPlayback(const lib::spt::playback &playback);
@@ -84,7 +84,7 @@ namespace mp
 		lib::spt::api &spotify;
 		std::function<void(const std::string &result)> callback;
 
-		lib::spt::playback currentPlayback() const;
+		auto currentPlayback() const -> lib::spt::playback;
 	};
 }
 

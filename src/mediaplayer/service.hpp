@@ -18,7 +18,7 @@ namespace mp
 	public:
 		Service(lib::spt::api &spotify, QObject *parent);
 
-		lib::spt::playback currentPlayback();
+		auto currentPlayback() -> lib::spt::playback;
 		static void signalPropertiesChange(const QObject *adaptor, const QVariantMap &properties);
 		void metadataChanged();
 		void currentSourceChanged(const lib::spt::playback &playback);
@@ -26,7 +26,7 @@ namespace mp
 		void seekableChanged();
 		void volumeChanged();
 		void tick(qint64 newPos);
-		bool isValid();
+		auto isValid() -> bool;
 
 	private:
 		lib::spt::api &spotify;
