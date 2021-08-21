@@ -14,7 +14,9 @@ bool KWallet::isEnabled()
 {
 	auto call = dbus.call(QDBus::Block, "isEnabled");
 	if (call.type() != QDBusMessage::ReplyMessage)
+	{
 		return false;
+	}
 
 	return call.arguments().at(0).toBool();
 }
@@ -32,7 +34,9 @@ bool KWallet::getWallet()
 		.arguments().at(0).toString();
 
 	if (walletName.isEmpty())
+	{
 		return false;
+	}
 
 	// Wallet handle
 	walletHandle = dbus
@@ -48,10 +52,14 @@ bool KWallet::getWallet()
 bool KWallet::unlock()
 {
 	if (unlocked())
+	{
 		return true;
+	}
 
 	if (!isEnabled())
+	{
 		return false;
+	}
 
 	return getWallet();
 }
@@ -59,7 +67,9 @@ bool KWallet::unlock()
 bool KWallet::writePassword(const QString &password)
 {
 	if (!unlocked() && !unlock())
+	{
 		return false;
+	}
 
 	dbus.callWithArgumentList(QDBus::Block, "writePassword", {
 		walletHandle, appName, username, password, appName

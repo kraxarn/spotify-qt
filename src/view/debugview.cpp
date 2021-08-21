@@ -62,7 +62,9 @@ void DebugView::sendRequest(bool /*checked*/)
 	}
 
 	if (networkManager == nullptr)
+	{
 		networkManager = new QNetworkAccessManager(this);
+	}
 
 	QNetworkRequest request(QString("https://api.spotify.com/v1/%1").arg(urlPath->text()));
 	request.setRawHeader("Authorization",
@@ -74,7 +76,9 @@ void DebugView::sendRequest(bool /*checked*/)
 		requestType->currentText().toUtf8(), jsonData);
 
 	while (!reply->isFinished())
+	{
 		QCoreApplication::processEvents();
+	}
 	auto replyBody = reply->readAll();
 	reply->deleteLater();
 

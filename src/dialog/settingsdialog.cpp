@@ -44,7 +44,9 @@ SettingsDialog::SettingsDialog(lib::settings &settings, lib::cache &cache, QWidg
 	QPushButton::connect(okButton, &QPushButton::clicked, [this](bool /*checked*/)
 	{
 		if (applySettings())
+		{
 			accept();
+		}
 	});
 	auto *applyButton = buttons->addButton(QDialogButtonBox::Apply);
 	QPushButton::connect(applyButton, &QPushButton::clicked, [this](bool /*checked*/)

@@ -61,7 +61,9 @@ void LogView::saveToFile()
 		"Logs (*.log)");
 
 	if (fileName.isEmpty())
+	{
 		return;
+	}
 
 	QFile out(fileName);
 	out.open(QIODevice::WriteOnly);
