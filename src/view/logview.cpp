@@ -31,7 +31,7 @@ LogView::LogView(QWidget *parent)
 
 	for (const auto &message : lib::log::get_messages())
 	{
-		auto item = new QTreeWidgetItem({
+		auto *item = new QTreeWidgetItem({
 			QString::fromStdString(message.get_time()),
 			QString::fromStdString(message.get_type()),
 			QString::fromStdString(message.get_message())
