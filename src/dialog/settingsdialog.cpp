@@ -66,7 +66,7 @@ SettingsDialog::SettingsDialog(lib::settings &settings, lib::cache &cache, QWidg
 	resize(620, 400);
 }
 
-bool SettingsDialog::applySettings()
+auto SettingsDialog::applySettings() -> bool
 {
 	// Check all pages
 	for (auto &page : pages)

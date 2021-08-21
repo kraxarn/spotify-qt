@@ -31,11 +31,11 @@ Q_OBJECT
 public:
 	MediaPlayer(lib::spt::api &spotify, QObject *parent);
 
-	bool canQuit() const;
-	bool hasTrackList() const;
-	QString identity() const;
-	QStringList supportedUriSchemas() const;
-	QStringList supportedMimeTypes() const;
+	auto canQuit() const -> bool;
+	auto hasTrackList() const -> bool;
+	auto identity() const -> QString;
+	auto supportedUriSchemas() const -> QStringList;
+	auto supportedMimeTypes() const -> QStringList;
 
 public slots:
 	Q_NOREPLY void Quit() const;

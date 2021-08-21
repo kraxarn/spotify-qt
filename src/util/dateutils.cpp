@@ -48,22 +48,22 @@ QString DateUtils::toRelative(const QDateTime &date)
 		.arg(unit, amount == 1 ? "" : "s");
 }
 
-QString DateUtils::toRelative(const std::string &date)
+auto DateUtils::toRelative(const std::string &date) -> QString
 {
 	return toRelative(fromIso(date));
 }
 
-bool DateUtils::isEmpty(const QDateTime &date)
+auto DateUtils::isEmpty(const QDateTime &date) -> bool
 {
 	return date.toSecsSinceEpoch() <= 0;
 }
 
-QDateTime DateUtils::fromIso(const QString &date)
+auto DateUtils::fromIso(const QString &date) -> QDateTime
 {
 	return QDateTime::fromString(date, Qt::ISODate);
 }
 
-QDateTime DateUtils::fromIso(const std::string &date)
+auto DateUtils::fromIso(const std::string &date) -> QDateTime
 {
 	return fromIso(QString::fromStdString(date));
 }

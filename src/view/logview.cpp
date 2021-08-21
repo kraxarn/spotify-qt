@@ -41,7 +41,7 @@ LogView::LogView(QWidget *parent)
 	}
 }
 
-QString LogView::collectLogs()
+auto LogView::collectLogs() -> QString
 {
 	QStringList items;
 	for (auto &message : lib::log::get_messages())

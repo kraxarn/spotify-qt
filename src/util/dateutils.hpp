@@ -6,15 +6,11 @@
 class DateUtils
 {
 public:
-	static QString toRelative(const QDateTime &date);
-
-	static QString toRelative(const std::string &date);
-
-	static bool isEmpty(const QDateTime &date);
-
-	static QDateTime fromIso(const QString &date);
-
-	static QDateTime fromIso(const std::string &date);
+	static auto toRelative(const QDateTime &date) -> QString;
+	static auto toRelative(const std::string &date) -> QString;
+	static auto isEmpty(const QDateTime &date) -> bool;
+	static auto fromIso(const QString &date) -> QDateTime;
+	static auto fromIso(const std::string &date) -> QDateTime;
 
 private:
 	DateUtils() = default;

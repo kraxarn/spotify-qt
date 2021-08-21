@@ -37,7 +37,7 @@ DeviceSelectDialog::DeviceSelectDialog(const std::vector<lib::spt::device> &devi
 	layout->addWidget(buttons);
 }
 
-lib::spt::device DeviceSelectDialog::selectedDevice()
+auto DeviceSelectDialog::selectedDevice() -> lib::spt::device
 {
 	if (list->selectedItems().isEmpty())
 	{

@@ -23,27 +23,27 @@ void MediaPlayer::Raise() const
 	}
 }
 
-bool MediaPlayer::canQuit() const
+auto MediaPlayer::canQuit() const -> bool
 {
 	return true;
 }
 
-QString MediaPlayer::identity() const
+auto MediaPlayer::identity() const -> QString
 {
 	return QCoreApplication::applicationName();
 }
 
-QStringList MediaPlayer::supportedUriSchemas() const
+auto MediaPlayer::supportedUriSchemas() const -> QStringList
 {
 	return QStringList("spotify");
 }
 
-QStringList MediaPlayer::supportedMimeTypes() const
+auto MediaPlayer::supportedMimeTypes() const -> QStringList
 {
 	return {};
 }
 
-bool MediaPlayer::hasTrackList() const
+auto MediaPlayer::hasTrackList() const -> bool
 {
 	return false;
 }

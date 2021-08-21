@@ -10,7 +10,7 @@ KWallet::KWallet(const QString &username)
 {
 }
 
-bool KWallet::isEnabled()
+auto KWallet::isEnabled() -> bool
 {
 	auto call = dbus.call(QDBus::Block, "isEnabled");
 	if (call.type() != QDBusMessage::ReplyMessage)
@@ -21,12 +21,12 @@ bool KWallet::isEnabled()
 	return call.arguments().at(0).toBool();
 }
 
-bool KWallet::unlocked() const
+auto KWallet::unlocked() const -> bool
 {
 	return !walletName.isEmpty() && walletHandle > 0;
 }
 
-bool KWallet::getWallet()
+auto KWallet::getWallet() -> bool
 {
 	// Wallet name
 	walletName = dbus
@@ -49,7 +49,7 @@ bool KWallet::getWallet()
 	return walletHandle > 0;
 }
 
-bool KWallet::unlock()
+auto KWallet::unlock() -> bool
 {
 	if (unlocked())
 	{
@@ -64,7 +64,7 @@ bool KWallet::unlock()
 	return getWallet();
 }
 
-bool KWallet::writePassword(const QString &password)
+auto KWallet::writePassword(const QString &password) -> bool
 {
 	if (!unlocked() && !unlock())
 	{
@@ -78,7 +78,7 @@ bool KWallet::writePassword(const QString &password)
 	return true;
 }
 
-QString KWallet::readPassword()
+auto KWallet::readPassword() -> QString
 {
 	if (!unlocked() && !unlock())
 	{
