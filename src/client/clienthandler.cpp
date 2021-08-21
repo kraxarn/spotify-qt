@@ -28,7 +28,7 @@ auto spt::ClientHandler::start() -> QString
 	// Don't start if already running
 	if (!settings.spotify.always_start && isRunning())
 	{
-		return QString();
+		return {};
 	}
 
 	// Check if empty
@@ -48,7 +48,7 @@ auto spt::ClientHandler::start() -> QString
 	if (settings.spotify.global_config && clientType == lib::client_type::spotifyd)
 	{
 		process->start(path, QStringList());
-		return QString();
+		return {};
 	}
 
 	// Check if username exists
@@ -139,7 +139,7 @@ auto spt::ClientHandler::start() -> QString
 		arguments.join(' ').toStdString());
 
 	process->start(path, arguments);
-	return QString();
+	return {};
 }
 
 auto spt::ClientHandler::waitForStarted() const -> bool

@@ -75,7 +75,9 @@ bool KWallet::writePassword(const QString &password)
 QString KWallet::readPassword()
 {
 	if (!unlocked() && !unlock())
-		return QString();
+	{
+		return {};
+	}
 
 	return dbus
 		.callWithArgumentList(QDBus::Block, "readPassword", {

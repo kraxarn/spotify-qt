@@ -36,7 +36,7 @@ QStringList MediaPlayer::supportedUriSchemas() const
 
 QStringList MediaPlayer::supportedMimeTypes() const
 {
-	return QStringList();
+	return {};
 }
 
 bool MediaPlayer::hasTrackList() const

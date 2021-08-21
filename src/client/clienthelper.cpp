@@ -6,13 +6,13 @@ auto spt::ClientHelper::clientExec(const QString &path, const QStringList &argum
 	QFileInfo file(path);
 	if (!file.exists())
 	{
-		return QString();
+		return {};
 	}
 
 	// Check if either client
 	if (getClientType(path) == lib::client_type::none)
 	{
-		return QString();
+		return {};
 	}
 
 	// Prepare process
@@ -127,7 +127,7 @@ auto spt::ClientHelper::getSinkInfo() -> QString
 {
 	if (!QFileInfo::exists("/usr/bin/pactl"))
 	{
-		return QString();
+		return {};
 	}
 	QProcess process;
 
@@ -145,7 +145,7 @@ auto spt::ClientHelper::getSinkInfo() -> QString
 		}
 	}
 
-	return QString();
+	return {};
 }
 
 auto spt::ClientHelper::getVolume() -> float

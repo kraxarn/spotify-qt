@@ -36,7 +36,9 @@ DeviceSelectDialog::DeviceSelectDialog(const std::vector<lib::spt::device> &devi
 lib::spt::device DeviceSelectDialog::selectedDevice()
 {
 	if (list->selectedItems().isEmpty())
-		return lib::spt::device();
+	{
+		return {};
+	}
 
 	for (auto &device : devices)
 	{
@@ -44,5 +46,5 @@ lib::spt::device DeviceSelectDialog::selectedDevice()
 			return device;
 	}
 
-	return lib::spt::device();
+	return {};
 }
