@@ -14,4 +14,11 @@ public:
 
 private:
 	DateUtils() = default;
+
+	static constexpr unsigned int secsInMinute = 60;
+	static constexpr unsigned int secsInHour = secsInMinute * 60;
+	static constexpr unsigned int secsInDay = secsInHour * 24;
+	static constexpr unsigned int secsInWeek = secsInDay * 7;
+	static constexpr unsigned int secsInMonth = secsInWeek * 4.35;
+	static constexpr unsigned int secsInYear = secsInMonth * 12;
 };

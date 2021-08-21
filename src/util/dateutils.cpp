@@ -1,45 +1,38 @@
 #include "dateutils.hpp"
 
-#define SECS_IN_YEAR 31557600
-#define SECS_IN_MONTH 2629800
-#define SECS_IN_WEEK 604800
-#define SECS_IN_DAY 86400
-#define SECS_IN_HOUR 3600
-#define SECS_IN_MINUTE 60
-
-QString DateUtils::toRelative(const QDateTime &date)
+auto DateUtils::toRelative(const QDateTime &date) -> QString
 {
 	auto amount = date.secsTo(QDateTime::currentDateTimeUtc());
 	QString unit = "second";
 
-	if (amount >= SECS_IN_YEAR)
+	if (amount >= secsInYear)
 	{
-		amount /= SECS_IN_YEAR;
+		amount /= secsInYear;
 		unit = "year";
 	}
-	else if (amount >= SECS_IN_MONTH)
+	else if (amount >= secsInMonth)
 	{
-		amount /= SECS_IN_MONTH;
+		amount /= secsInMonth;
 		unit = "month";
 	}
-	else if (amount >= SECS_IN_WEEK)
+	else if (amount >= secsInWeek)
 	{
-		amount /= SECS_IN_WEEK;
+		amount /= secsInWeek;
 		unit = "week";
 	}
-	else if (amount >= SECS_IN_DAY)
+	else if (amount >= secsInDay)
 	{
-		amount /= SECS_IN_DAY;
+		amount /= secsInDay;
 		unit = "day";
 	}
-	else if (amount >= SECS_IN_HOUR)
+	else if (amount >= secsInHour)
 	{
-		amount /= SECS_IN_HOUR;
+		amount /= secsInHour;
 		unit = "hour";
 	}
-	else if (amount >= SECS_IN_MINUTE)
+	else if (amount >= secsInMinute)
 	{
-		amount /= SECS_IN_MINUTE;
+		amount /= secsInMinute;
 		unit = "minute";
 	}
 
