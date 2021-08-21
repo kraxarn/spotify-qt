@@ -174,7 +174,7 @@ auto spt::ClientHelper::getVolume() -> float
 		{
 			continue;
 		}
-		return v / 100.F;
+		return static_cast<float>(v) / 100.F;
 	}
 
 	return 1.F;
