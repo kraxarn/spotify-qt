@@ -140,7 +140,7 @@ void SetupDialog::newServerConnection()
 	}
 	else
 	{
-		// Otherwise re-enable fields
+		// Otherwise, re-enable fields
 		clientId->setDisabled(false);
 		clientSecret->setDisabled(false);
 	}

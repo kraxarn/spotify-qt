@@ -253,7 +253,7 @@ void SongMenu::remFromPlaylist(bool /*checked*/)
 				return;
 			}
 
-			// i doesn't necessarily match item index depending on sorting order
+			// It doesn't necessarily match item index depending on sorting order
 			mainWindow->getSongsTree()->takeTopLevelItem(i);
 			mainWindow->status(lib::fmt::format("Removed {} - {} from \"{}\"",
 				track.name,
