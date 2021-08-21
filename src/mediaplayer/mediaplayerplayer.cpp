@@ -83,7 +83,7 @@ void mp::MediaPlayerPlayer::setVolume(double value) const
 
 auto mp::MediaPlayerPlayer::position() const -> qint64
 {
-	return currentPlayback().progress_ms * 1000;
+	return static_cast<qint64>(currentPlayback().progress_ms * 1000);
 }
 
 auto mp::MediaPlayerPlayer::playbackStatus() const -> QString
