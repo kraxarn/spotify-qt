@@ -441,7 +441,7 @@ auto MainWindow::currentTracks() -> std::vector<std::string>
 
 	for (int i = 0; i < songs->topLevelItemCount(); i++)
 	{
-		auto track = songs->topLevelItem(i)->data(0, RoleTrack)
+		auto track = songs->topLevelItem(i)->data(0, static_cast<int>(DataRole::Track))
 			.value<lib::spt::track>();
 		if (!track.is_valid())
 		{
@@ -479,7 +479,8 @@ void MainWindow::toggleTrackNumbers(bool enabled)
 	{
 		auto *item = songs->topLevelItem(i);
 		item->setText(0, enabled
-			? QString("%1").arg(item->data(0, RoleIndex).toInt() + 1, 3)
+			? QString("%1").arg(item->data(0, static_cast<int>(DataRole::Index))
+				.toInt() + 1, 3)
 			: QString());
 	}
 }

@@ -37,7 +37,8 @@ void View::Search::Tracks::add(const lib::spt::track &track)
 		trackAlbum,
 	});
 
-	item->setData(0, RoleTrack, QVariant::fromValue(track));
+	item->setData(0, static_cast<int>(DataRole::Track),
+		QVariant::fromValue(track));
 	item->setToolTip(0, trackName);
 	item->setToolTip(1, trackArtist);
 }
@@ -45,7 +46,8 @@ void View::Search::Tracks::add(const lib::spt::track &track)
 void View::Search::Tracks::onItemActivated(QTreeWidgetItem *item, int /*column*/)
 {
 	// Do we want it to continue playing results?
-	const auto &track = item->data(0, RoleTrack).value<lib::spt::track>();
+	const auto &track = item->data(0, static_cast<int>(DataRole::Track))
+		.value<lib::spt::track>();
 	auto trackId = lib::spt::api::to_uri("track", track.id);
 
 	spotify.play_tracks(0, {trackId}, [this](const std::string &status)
@@ -64,7 +66,8 @@ void View::Search::Tracks::onItemActivated(QTreeWidgetItem *item, int /*column*/
 void View::Search::Tracks::onContextMenu(const QPoint &pos)
 {
 	auto *item = itemAt(pos);
-	const auto &track = item->data(0, RoleTrack).value<lib::spt::track>();
+	const auto &track = item->data(0, static_cast<int>(DataRole::Track))
+		.value<lib::spt::track>();
 	if (!track.is_valid())
 	{
 		return;

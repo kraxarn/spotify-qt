@@ -62,7 +62,8 @@ auto PlaylistsPage::order() -> QWidget *
 	{
 		auto *mainItem = mainWindow->getPlaylistItem(i);
 		auto *listItem = new QListWidgetItem(mainItem->text());
-		listItem->setData(DataRole::RolePlaylistId, mainItem->data(DataRole::RolePlaylistId));
+		listItem->setData(static_cast<int>(DataRole::PlaylistId),
+			mainItem->data(static_cast<int>(DataRole::PlaylistId)));
 		plList->addItem(listItem);
 	}
 
@@ -89,7 +90,8 @@ auto PlaylistsPage::save() -> bool
 		order.reserve(plList->count());
 		for (auto i = 0; i < plList->count(); i++)
 		{
-			order.push_back(plList->item(i)->data(RolePlaylistId).toString().toStdString());
+			order.push_back(plList->item(i)->data(static_cast<int>(DataRole::PlaylistId))
+				.toString().toStdString());
 		}
 		settings.general.custom_playlist_order = order;
 	}

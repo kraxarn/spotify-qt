@@ -58,13 +58,14 @@ void TracksList::menu(const QPoint &pos)
 		return;
 	}
 
-	const auto &track = item->data(0, RoleTrack).value<lib::spt::track>();
+	const auto &track = item->data(0, static_cast<int>(DataRole::Track))
+		.value<lib::spt::track>();
 	if (!track.is_valid())
 	{
 		return;
 	}
 
-	auto index = item->data(0, RoleIndex).toInt();
+	auto index = item->data(0, static_cast<int>(DataRole::Index)).toInt();
 	auto *songMenu = new SongMenu(track, spotify, cache, index, parentWidget());
 	songMenu->popup(mapToGlobal(pos));
 }
@@ -79,7 +80,7 @@ void TracksList::clicked(QTreeWidgetItem *item, int /*column*/)
 	auto *mainWindow = MainWindow::find(parentWidget());
 
 	bool indexFound;
-	auto trackIndex = item->data(0, RoleIndex).toInt(&indexFound);
+	auto trackIndex = item->data(0, static_cast<int>(DataRole::Index)).toInt(&indexFound);
 	if (!indexFound)
 	{
 		mainWindow->setStatus("Failed to start playback: track not found", true);

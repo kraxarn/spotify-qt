@@ -34,7 +34,7 @@ void View::Search::Albums::add(const lib::spt::album &album)
 		}
 	});
 
-	item->setData(0, RoleAlbumId, id);
+	item->setData(0, static_cast<int>(DataRole::AlbumId), id);
 	item->setToolTip(0, name);
 	item->setToolTip(1, artist);
 	addTopLevelItem(item);
@@ -43,7 +43,8 @@ void View::Search::Albums::add(const lib::spt::album &album)
 void View::Search::Albums::onItemClicked(QTreeWidgetItem *item, int /*column*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-	const auto albumId = item->data(0, RoleAlbumId).toString().toStdString();
+	const auto albumId = item->data(0, static_cast<int>(DataRole::AlbumId))
+		.toString().toStdString();
 
 	if (!mainWindow->loadAlbum(albumId))
 	{
@@ -54,7 +55,7 @@ void View::Search::Albums::onItemClicked(QTreeWidgetItem *item, int /*column*/)
 void View::Search::Albums::onContextMenu(const QPoint &pos)
 {
 	auto *item = itemAt(pos);
-	const auto &albumId = item->data(0, RoleAlbumId).toString();
+	const auto &albumId = item->data(0, static_cast<int>(DataRole::AlbumId)).toString();
 	if (albumId.isEmpty())
 	{
 		return;

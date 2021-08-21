@@ -20,13 +20,14 @@ void View::Search::Playlists::add(const lib::spt::playlist &playlist)
 	auto playlistId = QString::fromStdString(playlist.id);
 
 	auto *item = new QListWidgetItem(playlistName, this);
-	item->setData(RolePlaylistId, playlistId);
+	item->setData(static_cast<int>(DataRole::PlaylistId), playlistId);
 	item->setToolTip(playlistName);
 }
 
 void View::Search::Playlists::onItemClicked(QListWidgetItem *item)
 {
-	auto playlistId = item->data(RolePlaylistId).toString().toStdString();
+	auto playlistId = item->data(static_cast<int>(DataRole::PlaylistId))
+		.toString().toStdString();
 	spotify.playlist(playlistId, [this](const lib::spt::playlist &playlist)
 	{
 		auto *mainWindow = MainWindow::find(this->parentWidget());
@@ -38,7 +39,8 @@ void View::Search::Playlists::onItemClicked(QListWidgetItem *item)
 void View::Search::Playlists::onContextMenu(const QPoint &pos)
 {
 	auto *item = itemAt(pos);
-	auto playlistId = item->data(RolePlaylistId).toString().toStdString();
+	auto playlistId = item->data(static_cast<int>(DataRole::PlaylistId))
+		.toString().toStdString();
 
 	spotify.playlist(playlistId, [this, pos](const lib::spt::playlist &playlist)
 	{

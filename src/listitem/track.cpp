@@ -11,10 +11,10 @@ ListItem::Track::Track(const QStringList &strings,
 	auto addedAt = QDateTime::fromString(QString::fromStdString(track.added_at),
 		Qt::DateFormat::ISODate);
 
-	setData(0, RoleTrack, QVariant::fromValue(track));
-	setData(0, RoleIndex, index);
-	setData(0, RoleAddedDate, addedAt);
-	setData(0, RoleLength, track.duration);
+	setData(0, static_cast<int>(DataRole::Track), QVariant::fromValue(track));
+	setData(0, static_cast<int>(DataRole::Index), index);
+	setData(0, static_cast<int>(DataRole::AddedDate), addedAt);
+	setData(0, static_cast<int>(DataRole::Length), track.duration);
 
 	if (track.is_local || !track.is_playable)
 	{
@@ -62,19 +62,22 @@ auto ListItem::Track::operator<(const QTreeWidgetItem &item) const -> bool
 	// Track number
 	if (column == 0)
 	{
-		return data(0, RoleIndex).toInt() < item.data(0, RoleIndex).toInt();
+		return data(0, static_cast<int>(DataRole::Index)).toInt()
+			< item.data(0, static_cast<int>(DataRole::Index)).toInt();
 	}
 
 	// Length
 	if (column == 4)
 	{
-		return data(0, RoleLength).toInt() < item.data(0, RoleLength).toInt();
+		return data(0, static_cast<int>(DataRole::Length)).toInt()
+			< item.data(0, static_cast<int>(DataRole::Length)).toInt();
 	}
 
 	// Added
 	if (column == 5)
 	{
-		return data(0, RoleAddedDate).toDateTime() < item.data(0, RoleAddedDate).toDateTime();
+		return data(0, static_cast<int>(DataRole::AddedDate)).toDateTime()
+			< item.data(0, static_cast<int>(DataRole::AddedDate)).toDateTime();
 	}
 
 	return removePrefix(text(column))

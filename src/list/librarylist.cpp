@@ -53,13 +53,13 @@ void LibraryList::clicked(QTreeWidgetItem *item, int /*column*/)
 	if (item->parent() != nullptr)
 	{
 		auto data = item->data(0, 0x100).toString().toStdString();
-		switch (item->data(0, 0x101).toInt())
+		switch (static_cast<DataRole>(item->data(0, 0x101).toInt()))
 		{
-			case RoleArtistId:
+			case DataRole::ArtistId:
 				mainWindow->openArtist(data);
 				break;
 
-			case RoleAlbumId:
+			case DataRole::AlbumId:
 				mainWindow->loadAlbum(data);
 				break;
 		}
@@ -206,7 +206,7 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 			results.reserve(artists.size());
 			for (const auto &artist : artists)
 			{
-				results.emplace_back(artist.name, artist.id, RoleArtistId);
+				results.emplace_back(artist.name, artist.id, DataRole::ArtistId);
 			}
 			LibraryList::itemsLoaded(results, item);
 		});
@@ -219,7 +219,7 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 			results.reserve(albums.size());
 			for (const auto &album : albums)
 			{
-				results.emplace_back(album.album.name, album.album.id, RoleAlbumId);
+				results.emplace_back(album.album.name, album.album.id, DataRole::AlbumId);
 			}
 			LibraryList::itemsLoaded(results, item);
 		});
@@ -232,7 +232,7 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 			results.reserve(artists.size());
 			for (const auto &artist : artists)
 			{
-				results.emplace_back(artist.name, artist.id, RoleArtistId);
+				results.emplace_back(artist.name, artist.id, DataRole::ArtistId);
 			}
 			LibraryList::itemsLoaded(results, item);
 		});
@@ -267,7 +267,7 @@ void LibraryList::itemsLoaded(std::vector<ListItem::Library> &items, QTreeWidget
 			QString::fromStdString(result.name)
 		});
 		child->setData(0, 0x100, QString::fromStdString(result.id));
-		child->setData(0, 0x101, result.role);
+		child->setData(0, 0x101, static_cast<int>(result.role));
 		item->addChild(child);
 	}
 }

@@ -22,7 +22,7 @@ View::Artist::TracksList::TracksList(lib::spt::api &spotify, lib::cache &cache,
 void View::Artist::TracksList::addTrack(const lib::spt::track &track)
 {
 	auto *item = new QListWidgetItem(QString::fromStdString(track.name), this);
-	item->setData(RoleTrack, QVariant::fromValue(track));
+	item->setData(static_cast<int>(DataRole::Track), QVariant::fromValue(track));
 
 	HttpUtils::getAlbum(track.image, httpClient, cache, [item](const QPixmap &image)
 	{
@@ -37,11 +37,13 @@ void View::Artist::TracksList::onActivated(QListWidgetItem *currentItem)
 {
 	auto index = 0;
 	std::vector<std::string> uris;
-	auto currentTrackId = currentItem->data(RoleTrack).value<lib::spt::track>().id;
+	auto currentTrackId = currentItem->data(static_cast<int>(DataRole::Track))
+		.value<lib::spt::track>().id;
 
 	for (auto i = 0; i < count(); i++)
 	{
-		const auto trackId = this->item(i)->data(RoleTrack).value<lib::spt::track>().id;
+		const auto trackId = this->item(i)->data(static_cast<int>(DataRole::Track))
+			.value<lib::spt::track>().id;
 		if (trackId == currentTrackId)
 		{
 			index = i;
@@ -65,7 +67,8 @@ void View::Artist::TracksList::onActivated(QListWidgetItem *currentItem)
 void View::Artist::TracksList::onContextMenu(const QPoint &pos)
 {
 	auto *item = itemAt(pos);
-	const auto &track = item->data(RoleTrack).value<lib::spt::track>();
+	const auto &track = item->data(static_cast<int>(DataRole::Track))
+		.value<lib::spt::track>();
 	if (!track.is_valid())
 	{
 		return;

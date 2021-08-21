@@ -14,12 +14,13 @@ void View::Search::Artists::add(const lib::spt::artist &artist)
 	auto id = QString::fromStdString(artist.id);
 
 	auto *item = new QListWidgetItem(name, this);
-	item->setData(RoleArtistId, id);
+	item->setData(static_cast<int>(DataRole::ArtistId), id);
 	item->setToolTip(name);
 }
 
 void View::Search::Artists::onItemClicked(QListWidgetItem *item)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-	mainWindow->openArtist(item->data(RoleArtistId).toString().toStdString());
+	mainWindow->openArtist(item->data(static_cast<int>(DataRole::ArtistId))
+		.toString().toStdString());
 }

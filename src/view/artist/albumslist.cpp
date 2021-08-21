@@ -36,7 +36,8 @@ View::Artist::AlbumsList::AlbumsList(lib::spt::api &spotify, lib::cache &cache,
 
 auto View::Artist::AlbumsList::albumId(QTreeWidgetItem *item) -> std::string
 {
-	return item->data(0, RoleAlbumId).toString().toStdString();
+	return item->data(0, static_cast<int>(DataRole::AlbumId))
+		.toString().toStdString();
 }
 
 void View::Artist::AlbumsList::setAlbums(const std::vector<lib::spt::album> &albums)
@@ -64,7 +65,8 @@ void View::Artist::AlbumsList::setAlbums(const std::vector<lib::spt::album> &alb
 			}
 		});
 
-		item->setData(0, RoleAlbumId, QString::fromStdString(album.id));
+		item->setData(0, static_cast<int>(DataRole::AlbumId),
+			QString::fromStdString(album.id));
 
 		item->setToolTip(0, albumName);
 		item->setToolTip(1, QLocale::system()
@@ -152,7 +154,7 @@ void View::Artist::AlbumsList::onItemDoubleClicked(QTreeWidgetItem *item, int /*
 void View::Artist::AlbumsList::onContextMenu(const QPoint &pos)
 {
 	auto *item = itemAt(pos);
-	auto albumId = item->data(0, RoleAlbumId).toString();
+	auto albumId = item->data(0, static_cast<int>(DataRole::AlbumId)).toString();
 	if (albumId.isEmpty())
 	{
 		return;

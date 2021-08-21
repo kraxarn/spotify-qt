@@ -84,7 +84,8 @@ SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 	auto *playlistItem = mainWindow->getCurrentPlaylistItem();
 	if (playlistItem != nullptr)
 	{
-		currentPlaylist = mainWindow->getPlaylist(playlistItem->data(RoleIndex).toInt());
+		const auto playlistIndex = playlistItem->data(static_cast<int>(DataRole::Index)).toInt();
+		currentPlaylist = mainWindow->getPlaylist(playlistIndex);
 	}
 
 	auto currentUserId = mainWindow->getCurrentUser().id;
@@ -240,7 +241,8 @@ void SongMenu::remFromPlaylist(bool /*checked*/)
 			for (i = 0; i < mainWindow->getSongsTree()->topLevelItemCount(); i++)
 			{
 				item = mainWindow->getSongsTree()->topLevelItem(i);
-				if (item->data(0, RoleTrack).value<lib::spt::track>().id == track.id)
+				if (item->data(0, static_cast<int>(DataRole::Track))
+					.value<lib::spt::track>().id == track.id)
 				{
 					break;
 				}

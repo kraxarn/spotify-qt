@@ -117,7 +117,8 @@ void View::Artist::Artist::relatedArtistsLoaded(const std::vector<lib::spt::arti
 	for (const auto &related : artists)
 	{
 		auto *item = new QListWidgetItem(QString::fromStdString(related.name), relatedList);
-		item->setData(RoleArtistId, QString::fromStdString(related.id));
+		item->setData(static_cast<int>(DataRole::ArtistId),
+			QString::fromStdString(related.id));
 	}
 
 	relatedList->setEnabled(true);
@@ -126,7 +127,10 @@ void View::Artist::Artist::relatedArtistsLoaded(const std::vector<lib::spt::arti
 void View::Artist::Artist::relatedClick(QListWidgetItem *item)
 {
 	relatedList->setEnabled(false);
-	MainWindow::find(parentWidget())->openArtist(item->data(RoleArtistId)
+
+	auto *mainWindow = MainWindow::find(parentWidget());
+	mainWindow->openArtist(item->data(static_cast<int>(DataRole::ArtistId))
 		.toString().toStdString());
+
 	relatedList->setEnabled(true);
 }
