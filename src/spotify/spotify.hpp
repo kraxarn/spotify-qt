@@ -1,10 +1,5 @@
 #pragma once
 
-namespace spt
-{
-	class Spotify;
-}
-
 #include "dialog/deviceselectdialog.hpp"
 #include "lib/enum/followtype.hpp"
 #include "lib/qt/httpclient.hpp"

@@ -1,4 +1,5 @@
 #include "mediaplayerplayer.hpp"
+#include "service.hpp"
 
 #ifdef USE_DBUS
 

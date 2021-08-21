@@ -2,16 +2,12 @@
 
 #ifdef USE_DBUS
 
-namespace mp
-{
-	class Service;
-}
-
-#include "spotify/spotify.hpp"
+#include "lib/spotify/api.hpp"
 #include "mediaplayer.hpp"
 #include "mediaplayerplayer.hpp"
 
 #include <QDBusContext>
+#include <QMetaClassInfo>
 
 namespace mp
 {

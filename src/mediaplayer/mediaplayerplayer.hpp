@@ -2,14 +2,7 @@
 
 #ifdef USE_DBUS
 
-namespace mp
-{
-	class MediaPlayerPlayer;
-}
-
-#include "mainwindow.hpp"
-#include "spotify/spotify.hpp"
-#include "service.hpp"
+#include "lib/spotify/api.hpp"
 #include "util/jsonutils.hpp"
 
 #include <QCoreApplication>
@@ -18,6 +11,7 @@ namespace mp
 #include <QDBusError>
 #include <QDBusInterface>
 #include <QVariantMap>
+#include <QJsonObject>
 
 namespace mp
 {
