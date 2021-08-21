@@ -1,6 +1,7 @@
 #pragma once
 
 #include "enum/datarole.hpp"
+#include "enum/column.hpp"
 #include "lib/spotify/track.hpp"
 #include "util/dateutils.hpp"
 #include "lib/settings.hpp"

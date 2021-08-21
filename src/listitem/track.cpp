@@ -19,14 +19,14 @@ ListItem::Track::Track(const QStringList &strings,
 	if (track.is_local || !track.is_playable)
 	{
 		setDisabled(true);
-		setToolTip(1, track.is_local
+		setToolTip(static_cast<int>(Column::Title), track.is_local
 			? "Local track"
 			: "Unavailable");
 	}
 
 	// Artist
 	auto names = lib::spt::entity::combine_names(track.artists, "\n");
-	setToolTip(2, QString::fromStdString(names));
+	setToolTip(static_cast<int>(Column::Artist), QString::fromStdString(names));
 
 	// Title, album
 	for (auto i = 1; i < strings.length() - 2; i++)
@@ -57,31 +57,31 @@ ListItem::Track::Track(const QStringList &strings,
 
 auto ListItem::Track::operator<(const QTreeWidgetItem &item) const -> bool
 {
-	auto column = treeWidget()->sortColumn();
+	auto column = static_cast<Column>(treeWidget()->sortColumn());
 
 	// Track number
-	if (column == 0)
+	if (column == Column::Index)
 	{
 		return data(0, static_cast<int>(DataRole::Index)).toInt()
 			< item.data(0, static_cast<int>(DataRole::Index)).toInt();
 	}
 
 	// Length
-	if (column == 4)
+	if (column == Column::Length)
 	{
 		return data(0, static_cast<int>(DataRole::Length)).toInt()
 			< item.data(0, static_cast<int>(DataRole::Length)).toInt();
 	}
 
 	// Added
-	if (column == 5)
+	if (column == Column::Added)
 	{
 		return data(0, static_cast<int>(DataRole::AddedDate)).toDateTime()
 			< item.data(0, static_cast<int>(DataRole::AddedDate)).toDateTime();
 	}
 
-	return removePrefix(text(column))
-		.compare(removePrefix(item.text(column)),
+	return removePrefix(text(static_cast<int>(column)))
+		.compare(removePrefix(item.text(static_cast<int>(column))),
 			Qt::CaseInsensitive) < 0;
 }
 
