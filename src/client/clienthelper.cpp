@@ -169,7 +169,7 @@ auto spt::ClientHelper::getVolume() -> float
 		{
 			continue;
 		}
-		auto v = p.left(p.length() - 1).toInt(&ok);
+		auto v = p.leftRef(p.length() - 1).toInt(&ok);
 		if (!ok)
 		{
 			continue;
