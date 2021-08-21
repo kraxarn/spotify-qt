@@ -8,12 +8,6 @@ Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playl
 	spotify(spotify),
 	QMenu(parent)
 {
-	auto *window = MainWindow::find(parent);
-	if (window == nullptr)
-	{
-		return;
-	}
-
 	tracksAction = addAction("... tracks");
 	tracksAction->setEnabled(false);
 	byAction = addAction("By ...");
