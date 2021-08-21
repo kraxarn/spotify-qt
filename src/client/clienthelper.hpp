@@ -12,19 +12,12 @@ namespace spt
 	{
 	public:
 		static auto availableBackends(const QString &path) -> QStringList;
-
 		static auto getClientType(const QString &path) -> lib::client_type;
-
 		static auto supportsPulse(const QString &path) -> bool;
-
 		static auto version(const QString &path) -> QString;
-
 		static auto isRunning(const QString &path) -> bool;
-
 		static auto getSinkInfo() -> QString;
-
 		static auto getVolume() -> float;
-
 		static void setVolume(float value);
 
 	private:

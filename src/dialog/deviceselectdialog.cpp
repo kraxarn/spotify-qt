@@ -14,10 +14,11 @@ DeviceSelectDialog::DeviceSelectDialog(const std::vector<lib::spt::device> &devi
 		list->addItem(QString::fromStdString(device.name));
 	layout->addWidget(list);
 
-	QListWidget::connect(list, &QListWidget::itemDoubleClicked, [this](QListWidgetItem *item)
-	{
-		accept();
-	});
+	QListWidget::connect(list, &QListWidget::itemDoubleClicked,
+		[this](QListWidgetItem */*item*/)
+		{
+			accept();
+		});
 
 	auto buttons = new QDialogButtonBox();
 	auto okButton = buttons->addButton(QDialogButtonBox::Ok);

@@ -1,17 +1,13 @@
-#ifdef USE_DBUS
-
 #include "kwallet.hpp"
 
-#include <utility>
+#ifdef USE_DBUS
 
-KWallet::KWallet(QString username)
-	: walletName(),
-	walletHandle(0),
-	username(std::move(username)),
+KWallet::KWallet(const QString &username)
+	: username(QString(username)),
 	dbus("org.kde.kwalletd5", "/modules/kwalletd5",
-		"org.kde.KWallet", QDBusConnection::sessionBus())
+		"org.kde.KWallet", QDBusConnection::sessionBus()),
+	appName(QCoreApplication::applicationName())
 {
-	appName = QCoreApplication::applicationName();
 }
 
 bool KWallet::isEnabled()

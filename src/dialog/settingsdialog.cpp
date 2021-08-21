@@ -12,7 +12,7 @@ SettingsDialog::SettingsDialog(lib::settings &settings, lib::cache &cache, QWidg
 	// List of categories
 	stack = new QStackedWidget(this);
 	categories = new QListWidget(this);
-	pages = QList<SettingsPage*>({
+	pages = QList<SettingsPage *>({
 		new ApplicationPage(settings, this),
 		new InterfacePage(settings, this),
 		new SpotifyPage(settings, this),
@@ -27,7 +27,8 @@ SettingsDialog::SettingsDialog(lib::settings &settings, lib::cache &cache, QWidg
 	}
 	categories->setCurrentRow(0);
 	categories->setMaximumWidth(160);
-	QListWidget::connect(categories, &QListWidget::currentRowChanged, this, &SettingsDialog::categoryChanged);
+	QListWidget::connect(categories, &QListWidget::currentRowChanged,
+		this, &SettingsDialog::categoryChanged);
 	mainLayout->addWidget(categories);
 
 	// Side layout

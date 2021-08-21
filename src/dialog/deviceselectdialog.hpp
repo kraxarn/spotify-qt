@@ -9,13 +9,14 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
-class DeviceSelectDialog : public QDialog
+class DeviceSelectDialog: public QDialog
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
-	DeviceSelectDialog(const std::vector<lib::spt::device> &devices, QWidget *parent = nullptr);
-	lib::spt::device selectedDevice();
+	DeviceSelectDialog(const std::vector<lib::spt::device> &devices, QWidget *parent);
+
+	auto selectedDevice() -> lib::spt::device;
 
 private:
 	std::vector<lib::spt::device> devices;

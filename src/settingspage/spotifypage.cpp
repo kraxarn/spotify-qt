@@ -23,15 +23,15 @@ auto SpotifyPage::spotify() -> QWidget *
 	auto *sptPathBrowse = new QPushButton("...", this);
 	sptPathBrowse->setMaximumWidth(40);
 	sptPathBrowse->setFlat(true);
-	QAbstractButton::connect(sptPathBrowse, &QAbstractButton::clicked, [this]
-		(bool /*checked*/)
-	{
-		auto filePath = QFileDialog::getOpenFileName(this, "Client path", "/");
-		if (!filePath.isEmpty() && sptPath != nullptr)
+	QAbstractButton::connect(sptPathBrowse, &QAbstractButton::clicked,
+		[this](bool /*checked*/)
 		{
-			sptPath->setText(filePath);
-		}
-	});
+			auto filePath = QFileDialog::getOpenFileName(this, "Client path", "/");
+			if (!filePath.isEmpty() && sptPath != nullptr)
+			{
+				sptPath->setText(filePath);
+			}
+		});
 	sptPathLayout->addWidget(sptPathBrowse);
 	content->addLayout(sptPathLayout);
 
@@ -231,8 +231,10 @@ auto SpotifyPage::save() -> bool
 	}
 
 	// librespot has no global config support
-	if (sptGlobal != nullptr && sptVersion != nullptr
-		&& sptGlobal->isChecked() && sptVersion->text() == "librespot")
+	if (sptGlobal != nullptr
+		&& sptVersion != nullptr
+		&& sptGlobal->isChecked()
+		&& sptVersion->text() == "librespot")
 	{
 		warning("librespot",
 			"Global config is not available when using librespot");

@@ -2,9 +2,8 @@
 
 #ifdef USE_DBUS
 
-class MediaPlayer;
-
-#include "../spotify/spotify.hpp"
+#include "lib/spotify/api.hpp"
+#include "util/parent.hpp"
 #include "mediaplayerplayer.hpp"
 
 #include <QCoreApplication>
@@ -13,6 +12,7 @@ class MediaPlayer;
 #include <QDBusError>
 #include <QDBusInterface>
 #include <QStringList>
+#include <QMainWindow>
 
 class MediaPlayer: public QDBusAbstractAdaptor
 {
@@ -29,7 +29,7 @@ Q_OBJECT
 	Q_PROPERTY(bool HasTrackList READ hasTrackList)
 
 public:
-	explicit MediaPlayer(spt::Spotify *spotify, QObject *parent);
+	MediaPlayer(lib::spt::api &spotify, QObject *parent);
 
 	bool canQuit() const;
 	bool hasTrackList() const;
@@ -43,8 +43,7 @@ public slots:
 
 private:
 	QDBusConnection dBus;
-	spt::Spotify *spotify;
-	QObject *parent;
+	lib::spt::api &spotify;
 };
 
 #endif

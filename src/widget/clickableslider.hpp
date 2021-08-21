@@ -8,8 +8,10 @@ class ClickableSlider: public QSlider
 {
 public:
 	ClickableSlider(Qt::Orientation orientation, QWidget *parent);
+
 protected:
 	void mousePressEvent(QMouseEvent *ev) override;
+
 private:
 	int valueFromPos(const QPoint &pos);
 };

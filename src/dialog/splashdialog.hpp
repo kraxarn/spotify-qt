@@ -13,5 +13,6 @@ Q_OBJECT
 
 public:
 	SplashDialog();
+
 	void showMessage(const QString &message);
 };

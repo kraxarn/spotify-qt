@@ -56,8 +56,8 @@ void LogView::saveToFile()
 	auto fileName = QFileDialog::getSaveFileName(this,
 		"Select location",
 		QString("%1/spotify-qt-%2.log")
-			.arg(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first())
-			.arg(QDateTime::currentDateTime().toString("yyyyMMdd")),
+			.arg(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first(),
+				QDateTime::currentDateTime().toString("yyyyMMdd")),
 		"Logs (*.log)");
 
 	if (fileName.isEmpty())

@@ -20,7 +20,7 @@ Q_OBJECT
 
 public:
 	PlaylistEditDialog(lib::spt::api &spotify, const lib::spt::playlist &playlist,
-		int selectedIndex, QWidget *parent = nullptr);
+		int selectedIndex, QWidget *parent);
 
 private:
 	QLineEdit *name;

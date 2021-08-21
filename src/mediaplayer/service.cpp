@@ -1,4 +1,5 @@
 #include "service.hpp"
+#include "mainwindow.hpp"
 
 #ifdef USE_DBUS
 
@@ -14,6 +15,7 @@ mp::Service::Service(lib::spt::api &spotify, QObject *parent)
 		lib::log::warn("Failed to register D-Bus service, is another instance running?");
 		return;
 	}
+
 	new MediaPlayer(spotify, this);
 	playerPlayer = new MediaPlayerPlayer(spotify, this);
 	if (!QDBusConnection::sessionBus()
@@ -28,9 +30,9 @@ void mp::Service::signalPropertiesChange(const QObject *adaptor, const QVariantM
 	QDBusMessage msg = QDBusMessage::createSignal("/org/mpris/MediaPlayer2",
 		"org.freedesktop.DBus.Properties", "PropertiesChanged");
 
-	msg << adaptor->metaObject()->classInfo(0).value();
-	msg << properties;
-	msg << QStringList();
+	msg << adaptor->metaObject()->classInfo(0).value()
+		<< properties
+		<< QStringList();
 
 	QDBusConnection::sessionBus().send(msg);
 }
@@ -69,7 +71,8 @@ void mp::Service::tick(qint64 newPos)
 
 auto mp::Service::currentPlayback() -> lib::spt::playback
 {
-	return ((MainWindow *) parent())->currentPlayback();
+	auto *mainWindow = dynamic_cast<MainWindow *>(parent());
+	return mainWindow->currentPlayback();
 }
 
 auto mp::Service::isValid() -> bool

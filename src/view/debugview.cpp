@@ -42,7 +42,7 @@ DebugView::DebugView(const lib::settings &settings, QWidget *parent)
 	layout->addWidget(tabs, 1);
 }
 
-void DebugView::sendRequest(bool)
+void DebugView::sendRequest(bool /*checked*/)
 {
 	// Similar to Spotify, but without refresh handling etc.
 
@@ -70,8 +70,8 @@ void DebugView::sendRequest(bool)
 			.arg(QString::fromStdString(settings.account.access_token)).toUtf8());
 
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-	auto reply = networkManager
-		->sendCustomRequest(request, requestType->currentText().toUtf8(), jsonData);
+	auto *reply = networkManager->sendCustomRequest(request,
+		requestType->currentText().toUtf8(), jsonData);
 
 	while (!reply->isFinished())
 		QCoreApplication::processEvents();

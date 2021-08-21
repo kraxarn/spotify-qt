@@ -1,8 +1,8 @@
 #include "menu/album.hpp"
 #include "mainwindow.hpp"
 
-Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache, const std::string &albumId,
-	QWidget *parent)
+Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache,
+	const std::string &albumId, QWidget *parent)
 	: albumId(albumId),
 	spotify(spotify),
 	QMenu(parent)

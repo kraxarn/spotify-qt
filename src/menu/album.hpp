@@ -14,8 +14,8 @@ namespace Menu
 	Q_OBJECT
 
 	public:
-		Album(lib::spt::api &spotify, lib::cache &cache, const std::string &albumId,
-			QWidget *parent);
+		Album(lib::spt::api &spotify, lib::cache &cache,
+			const std::string &albumId, QWidget *parent);
 
 	private:
 		std::vector<lib::spt::track> tracks;

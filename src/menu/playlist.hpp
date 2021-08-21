@@ -16,8 +16,8 @@ namespace Menu
 	Q_OBJECT
 
 	public:
-		Playlist(lib::spt::api &spotify, const lib::spt::playlist &playlist, lib::cache &cache,
-			QWidget *parent = nullptr);
+		Playlist(lib::spt::api &spotify, const lib::spt::playlist &playlist,
+			lib::cache &cache, QWidget *parent);
 
 	private:
 		lib::spt::playlist playlist;

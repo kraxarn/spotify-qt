@@ -18,7 +18,7 @@ class DebugView: public QWidget
 Q_OBJECT
 
 public:
-	explicit DebugView(const lib::settings &settings, QWidget *parent);
+	DebugView(const lib::settings &settings, QWidget *parent);
 
 private:
 	QComboBox *requestType = nullptr;

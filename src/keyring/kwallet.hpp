@@ -7,24 +7,26 @@
 
 class KWallet
 {
+public:
+	explicit KWallet(const QString &username);
+
+	auto isEnabled() -> bool;
+	auto unlocked() const -> bool;
+	auto unlock() -> bool;
+
+	auto writePassword(const QString &password) -> bool;
+	auto readPassword() -> QString;
+
 private:
 	QString walletName;
-	int walletHandle;
+	int walletHandle = 0;
+
 	QDBusInterface dbus;
+
 	QString username;
 	QString appName;
 
-	bool getWallet();
-
-public:
-	explicit KWallet(QString username);
-
-	bool isEnabled();
-	bool unlocked() const;
-	bool unlock();
-
-	bool writePassword(const QString &password);
-	QString readPassword();
+	auto getWallet() -> bool;
 };
 
 #endif

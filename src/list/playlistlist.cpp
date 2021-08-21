@@ -1,6 +1,5 @@
 #include "playlistlist.hpp"
-
-#include "../mainwindow.hpp"
+#include "mainwindow.hpp"
 
 PlaylistList::PlaylistList(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
 	QWidget *parent)

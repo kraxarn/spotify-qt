@@ -2,9 +2,10 @@
 
 #ifdef USE_DBUS
 
-MediaPlayer::MediaPlayer(spt::Spotify *spotify, QObject *parent)
-	: spotify(spotify), parent(parent),
-	dBus(QDBusConnection::sessionBus()), QDBusAbstractAdaptor(parent)
+MediaPlayer::MediaPlayer(lib::spt::api &spotify, QObject *parent)
+	: spotify(spotify),
+	dBus(QDBusConnection::sessionBus()),
+	QDBusAbstractAdaptor(parent)
 {
 }
 
@@ -15,8 +16,11 @@ void MediaPlayer::Quit() const
 
 void MediaPlayer::Raise() const
 {
-	if (parent != nullptr)
-		((QWidget *) parent)->raise();
+	auto *window = Parent::findObject<QMainWindow>(parent());
+	if (window != nullptr)
+	{
+		window->raise();
+	}
 }
 
 bool MediaPlayer::canQuit() const
@@ -26,7 +30,7 @@ bool MediaPlayer::canQuit() const
 
 QString MediaPlayer::identity() const
 {
-	return "spotify-qt";
+	return QCoreApplication::applicationName();
 }
 
 QStringList MediaPlayer::supportedUriSchemas() const

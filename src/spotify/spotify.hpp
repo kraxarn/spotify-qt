@@ -7,17 +7,17 @@ namespace spt
 
 #include "dialog/deviceselectdialog.hpp"
 #include "lib/enum/followtype.hpp"
+#include "lib/qt/httpclient.hpp"
 #include "lib/settings.hpp"
+#include "lib/spotify/api.hpp"
 #include "lib/spotify/artist.hpp"
 #include "lib/spotify/device.hpp"
 #include "lib/spotify/playback.hpp"
 #include "lib/spotify/playlist.hpp"
 #include "lib/spotify/searchresults.hpp"
 #include "lib/spotify/user.hpp"
-#include "thirdparty/json.hpp"
-#include "lib/spotify/api.hpp"
 #include "lib/strings.hpp"
-#include "lib/qt/httpclient.hpp"
+#include "thirdparty/json.hpp"
 
 #include <QCoreApplication>
 #include <QDateTime>

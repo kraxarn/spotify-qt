@@ -83,7 +83,7 @@ namespace mp
 		void Play() const;
 		void Seek(qint64 offset) const;
 		void SetPosition(const QDBusObjectPath &trackId, qint64 position) const;
-		void OpenUri(QString uri) const;
+		void OpenUri(const QString &uri) const;
 
 	private:
 		QDBusConnection dBus;

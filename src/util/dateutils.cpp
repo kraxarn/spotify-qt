@@ -45,8 +45,7 @@ QString DateUtils::toRelative(const QDateTime &date)
 
 	return QString("%1 %2%3 ago")
 		.arg(amount)
-		.arg(unit)
-		.arg(amount == 1 ? "" : "s");
+		.arg(unit, amount == 1 ? "" : "s");
 }
 
 QString DateUtils::toRelative(const std::string &date)
