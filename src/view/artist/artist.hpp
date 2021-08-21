@@ -14,7 +14,7 @@
 #include "view/artist/title.hpp"
 #include "view/artist/trackslist.hpp"
 
-#include "util/widgetutils.hpp"
+#include "util/parent.hpp"
 
 #include <QDockWidget>
 #include <QLabel>

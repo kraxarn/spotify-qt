@@ -27,6 +27,7 @@
 #include "util/httputils.hpp"
 #include "util/icon.hpp"
 #include "util/imageutils.hpp"
+#include "util/parent.hpp"
 #include "util/styleutils.hpp"
 #include "view/context/context.hpp"
 #include "view/maintoolbar.hpp"

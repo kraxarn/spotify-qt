@@ -22,18 +22,6 @@ public:
 	static auto createDockWidget(QWidget *widget, const QString &title,
 		const QMargins &margins, QWidget *parent) -> QDockWidget *;
 
-	/** Find parent widget of specified type */
-	template<typename T>
-	static auto find(QWidget *from) -> T *
-	{
-		auto *w = from;
-		while (w != nullptr && typeid(*w) != typeid(T))
-		{
-			w = w->parentWidget();
-		}
-		return dynamic_cast<T *>(w);
-	}
-
 private:
 	WidgetUtils() = default;
 };

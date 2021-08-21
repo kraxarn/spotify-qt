@@ -63,7 +63,7 @@ void View::Artist::Artist::artistLoaded(const lib::spt::artist &loadedArtist)
 {
 	artist = loadedArtist;
 
-	auto *sidePanel = WidgetUtils::find<View::SidePanel::SidePanel>(parentWidget());
+	auto *sidePanel = Parent::findWidget<View::SidePanel::SidePanel>(parentWidget());
 	if (sidePanel != nullptr)
 	{
 		sidePanel->setTabText(this, QString::fromStdString(artist.name));

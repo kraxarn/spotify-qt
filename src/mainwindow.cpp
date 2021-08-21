@@ -628,7 +628,7 @@ void MainWindow::orderPlaylists(lib::playlist_order order)
 
 auto MainWindow::find(QWidget *from) -> MainWindow *
 {
-	return WidgetUtils::find<MainWindow>(from);
+	return Parent::findWidget<MainWindow>(from);
 }
 
 auto MainWindow::defaultSize() -> QSize
