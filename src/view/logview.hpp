@@ -19,7 +19,7 @@ public:
 	explicit LogView(QWidget *parent);
 
 private:
-	QString collectLogs();
+	static QString collectLogs();
 	void saveToFile();
-	void copyToClipboard();
+	static void copyToClipboard();
 };
