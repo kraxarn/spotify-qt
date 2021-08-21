@@ -20,8 +20,7 @@ namespace mp
 	Q_OBJECT
 
 	public:
-		Service(spt::Spotify *spotify, QObject *parent);
-		virtual ~Service();
+		Service(lib::spt::api &spotify, QObject *parent);
 
 		lib::spt::playback currentPlayback();
 		static void signalPropertiesChange(const QObject *adaptor, const QVariantMap &properties);
@@ -34,8 +33,8 @@ namespace mp
 		bool isValid();
 
 	private:
-		spt::Spotify *spotify;
-		MediaPlayerPlayer *playerPlayer;
+		lib::spt::api &spotify;
+		MediaPlayerPlayer *playerPlayer = nullptr;
 	};
 }
 

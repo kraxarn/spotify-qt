@@ -1,12 +1,10 @@
-#include "../mainwindow.hpp"
 #include "clienthandler.hpp"
+#include "mainwindow.hpp"
 
-using namespace spt;
+QList<QPair<QDateTime, QString>> spt::ClientHandler::log;
 
-QList<QPair<QDateTime, QString>> ClientHandler::log;
-
-ClientHandler::ClientHandler(const lib::settings &settings, const lib::paths &paths,
-	QWidget *parent)
+spt::ClientHandler::ClientHandler(const lib::settings &settings,
+	const lib::paths &paths, QWidget *parent)
 	: settings(settings),
 	parentWidget(parent),
 	paths(paths),
@@ -17,7 +15,7 @@ ClientHandler::ClientHandler(const lib::settings &settings, const lib::paths &pa
 	clientType = spt::ClientHelper::getClientType(path);
 }
 
-ClientHandler::~ClientHandler()
+spt::ClientHandler::~ClientHandler()
 {
 	if (process != nullptr)
 	{
@@ -25,7 +23,7 @@ ClientHandler::~ClientHandler()
 	}
 }
 
-auto ClientHandler::start() -> QString
+auto spt::ClientHandler::start() -> QString
 {
 	// Don't start if already running
 	if (!settings.spotify.always_start && isRunning())
@@ -144,7 +142,7 @@ auto ClientHandler::start() -> QString
 	return QString();
 }
 
-auto ClientHandler::waitForStarted() const -> bool
+auto spt::ClientHandler::waitForStarted() const -> bool
 {
 	if (process == nullptr)
 	{
@@ -154,24 +152,24 @@ auto ClientHandler::waitForStarted() const -> bool
 	return process->waitForStarted(timeout);
 }
 
-auto ClientHandler::availableBackends() -> QStringList
+auto spt::ClientHandler::availableBackends() -> QStringList
 {
 	return spt::ClientHelper::availableBackends(path);
 }
 
-auto ClientHandler::supportsPulse() -> bool
+auto spt::ClientHandler::supportsPulse() -> bool
 {
 	return spt::ClientHelper::supportsPulse(path);
 }
 
-auto ClientHandler::isRunning() const -> bool
+auto spt::ClientHandler::isRunning() const -> bool
 {
 	return process == nullptr
 		? spt::ClientHelper::isRunning(path)
 		: process->isOpen();
 }
 
-void ClientHandler::logOutput(const QByteArray &output)
+void spt::ClientHandler::logOutput(const QByteArray &output)
 {
 	for (auto &line : QString(output).split('\n'))
 	{
@@ -183,17 +181,17 @@ void ClientHandler::logOutput(const QByteArray &output)
 	}
 }
 
-void ClientHandler::readyRead() const
+void spt::ClientHandler::readyRead() const
 {
 	logOutput(process->readAllStandardOutput());
 }
 
-void ClientHandler::readyError() const
+void spt::ClientHandler::readyError() const
 {
 	logOutput(process->readAllStandardError());
 }
 
-auto ClientHandler::getLog() -> const QList<QPair<QDateTime, QString>> &
+auto spt::ClientHandler::getLog() -> const QList<QPair<QDateTime, QString>> &
 {
 	return log;
 }

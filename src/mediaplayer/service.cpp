@@ -2,13 +2,12 @@
 
 #ifdef USE_DBUS
 
-using namespace mp;
-
 #define SERVICE_NAME "org.mpris.MediaPlayer2.spotify-qt"
 #define SERVICE_PATH "/org/mpris/MediaPlayer2"
 
-Service::Service(spt::Spotify *spotify, QObject *parent)
-	: spotify(spotify), playerPlayer(nullptr), QObject(parent)
+mp::Service::Service(lib::spt::api &spotify, QObject *parent)
+	: spotify(spotify),
+	QObject(parent)
 {
 	if (!QDBusConnection::sessionBus().registerService(SERVICE_NAME))
 	{
@@ -24,9 +23,7 @@ Service::Service(spt::Spotify *spotify, QObject *parent)
 	}
 }
 
-Service::~Service() = default;
-
-void Service::signalPropertiesChange(const QObject *adaptor, const QVariantMap &properties)
+void mp::Service::signalPropertiesChange(const QObject *adaptor, const QVariantMap &properties)
 {
 	QDBusMessage msg = QDBusMessage::createSignal("/org/mpris/MediaPlayer2",
 		"org.freedesktop.DBus.Properties", "PropertiesChanged");
@@ -38,44 +35,44 @@ void Service::signalPropertiesChange(const QObject *adaptor, const QVariantMap &
 	QDBusConnection::sessionBus().send(msg);
 }
 
-void Service::metadataChanged()
+void mp::Service::metadataChanged()
 {
 	emit playerPlayer->emitMetadataChange();
 }
 
-void Service::currentSourceChanged(const lib::spt::playback &playback)
+void mp::Service::currentSourceChanged(const lib::spt::playback &playback)
 {
 	playerPlayer->setCurrentPlayback(playback);
 	emit playerPlayer->currentSourceChanged();
 	emit playerPlayer->totalTimeChanged();
 }
 
-void Service::stateUpdated()
+void mp::Service::stateUpdated()
 {
 	emit playerPlayer->stateUpdated();
 }
 
-void Service::seekableChanged()
+void mp::Service::seekableChanged()
 {
 	emit playerPlayer->seekableChanged(true);
 }
 
-void Service::volumeChanged()
+void mp::Service::volumeChanged()
 {
 	emit playerPlayer->volumeChanged();
 }
 
-void Service::tick(qint64 newPos)
+void mp::Service::tick(qint64 newPos)
 {
 	emit playerPlayer->tick(newPos);
 }
 
-lib::spt::playback Service::currentPlayback()
+auto mp::Service::currentPlayback() -> lib::spt::playback
 {
 	return ((MainWindow *) parent())->currentPlayback();
 }
 
-auto Service::isValid() -> bool
+auto mp::Service::isValid() -> bool
 {
 	return playerPlayer != nullptr;
 }
