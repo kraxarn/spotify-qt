@@ -160,7 +160,7 @@ auto SpotifyPage::config() -> QWidget *
 	sptLayout->addWidget(new QLabel("Quality", sptGroup), 1, 0);
 	sptBitrate = new QComboBox(sptGroup);
 	sptBitrate->addItems({
-		"Low (96 kbit/s)", "Medium (160 kbit/s)", "High (320 kbit/s)"
+		"Normal (96 kbit/s)", "High (160 kbit/s)", "Very high (320 kbit/s)"
 	});
 	auto bitrate = settings.spotify.bitrate;
 	sptBitrate->setCurrentIndex(bitrate == lib::audio_quality::normal
