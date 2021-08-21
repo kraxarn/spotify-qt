@@ -16,45 +16,49 @@ mp::MediaPlayerPlayer::MediaPlayerPlayer(lib::spt::api &spotify, QObject *parent
 
 void mp::MediaPlayerPlayer::Next() const
 {
-	spotify->next(callback);
+	spotify.next(callback);
 }
 
 void mp::MediaPlayerPlayer::Pause() const
 {
-	spotify->pause(callback);
+	spotify.pause(callback);
 }
 
 void mp::MediaPlayerPlayer::Play() const
 {
-	spotify->resume(callback);
+	spotify.resume(callback);
 }
 
 void mp::MediaPlayerPlayer::PlayPause() const
 {
 	if (currentPlayback().is_playing)
-		spotify->pause(callback);
+	{
+		spotify.pause(callback);
+	}
 	else
-		spotify->resume(callback);
+	{
+		spotify.resume(callback);
+	}
 }
 
 void mp::MediaPlayerPlayer::Previous() const
 {
-	spotify->previous(callback);
+	spotify.previous(callback);
 }
 
 void mp::MediaPlayerPlayer::Seek(qint64 offset) const
 {
-	spotify->seek(offset, callback);
+	spotify.seek(static_cast<int>(offset), callback);
 }
 
 void mp::MediaPlayerPlayer::SetPosition(const QDBusObjectPath &/*trackId*/, qint64 position) const
 {
-	spotify->seek(position, callback);
+	spotify.seek(static_cast<int>(position), callback);
 }
 
 void mp::MediaPlayerPlayer::Stop() const
 {
-	spotify->pause(callback);
+	spotify.pause(callback);
 }
 
 auto mp::MediaPlayerPlayer::canControl() const -> bool
@@ -74,7 +78,7 @@ auto mp::MediaPlayerPlayer::getVolume() const -> double
 
 void mp::MediaPlayerPlayer::setVolume(double value) const
 {
-	spotify->set_volume((int) (value * 100), callback);
+	spotify.set_volume((int) (value * 100), callback);
 }
 
 auto mp::MediaPlayerPlayer::position() const -> qint64
@@ -110,7 +114,7 @@ auto mp::MediaPlayerPlayer::shuffle() const -> bool
 
 void mp::MediaPlayerPlayer::setShuffle(bool value) const
 {
-	spotify->set_shuffle(value, callback);
+	spotify.set_shuffle(value, callback);
 }
 
 void mp::MediaPlayerPlayer::emitMetadataChange() const

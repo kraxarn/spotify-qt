@@ -123,7 +123,7 @@ void MainWindow::initMediaController()
 		return;
 	}
 
-	mediaPlayer = new mp::Service(spotify, this);
+	mediaPlayer = new mp::Service(*spotify, this);
 	// Check if something went wrong during init
 	if (!mediaPlayer->isValid())
 	{

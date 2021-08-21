@@ -37,7 +37,7 @@ namespace mp
 		Q_PROPERTY(bool Shuffle READ shuffle WRITE setShuffle)
 
 	public:
-		explicit MediaPlayerPlayer(spt::Spotify *spotify, QObject *parent);
+		MediaPlayerPlayer(lib::spt::api &spotify, QObject *parent);
 
 		bool canControl() const;
 		QMap<QString, QVariant> metadata() const;
