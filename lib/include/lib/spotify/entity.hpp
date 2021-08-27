@@ -29,6 +29,12 @@ namespace lib
 			std::string name;
 
 			/**
+			 * Check if entity is valid,
+			 * cam be overridden with custom checks
+			 */
+			virtual auto is_valid() const -> bool;
+
+			/**
 			 * Combine names to a comma separated string
 			 * @param entities Entities to combine
 			 */

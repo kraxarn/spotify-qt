@@ -69,7 +69,7 @@ namespace lib
 			/**
 			 * Has a valid name and artist
 			 */
-			auto is_valid() const -> bool;
+			auto is_valid() const -> bool override;
 		};
 
 		/**

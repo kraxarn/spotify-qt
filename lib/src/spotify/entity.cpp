@@ -34,6 +34,11 @@ void lib::spt::from_json(const nlohmann::json &j, entity &e)
 	}
 }
 
+auto lib::spt::entity::is_valid() const -> bool
+{
+	return !id.empty() && !name.empty();
+}
+
 auto lib::spt::entity::combine_names(const std::vector<entity> &entities,
 	const char *separator) -> std::string
 {
