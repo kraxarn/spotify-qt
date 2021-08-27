@@ -23,6 +23,7 @@ namespace Menu
 		lib::ddg::api ddg;
 		QAction *loading = nullptr;
 
+		void onAboutToShow();
 		void onDuckDuckGo(bool checked);
 		void onLoaded(const lib::ddg::results &results);
 	};

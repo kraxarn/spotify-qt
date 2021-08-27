@@ -10,12 +10,23 @@ Menu::ArtistLinks::ArtistLinks(const lib::spt::artist &artist,
 	setIcon(Icon::get("edit-find"));
 	setTitle("Links");
 
+	QMenu::connect(this, &QMenu::aboutToShow,
+		this, &Menu::ArtistLinks::onAboutToShow);
+
 	auto *duckDuckGo = addAction("Search on DuckDuckGo");
 	QAction::connect(duckDuckGo, &QAction::triggered,
 		this, &Menu::ArtistLinks::onDuckDuckGo);
 
 	loading = addAction("Searching...");
 	loading->setEnabled(false);
+}
+
+void Menu::ArtistLinks::onAboutToShow()
+{
+	if (!loading->isVisible() || !artist.is_valid())
+	{
+		return;
+	}
 
 	ddg.search(artist, [this](const lib::ddg::results &results)
 	{
@@ -31,10 +42,7 @@ void Menu::ArtistLinks::onDuckDuckGo(bool /*checked*/)
 
 void Menu::ArtistLinks::onLoaded(const lib::ddg::results &results)
 {
-	if (loading != nullptr)
-	{
-		loading->setVisible(false);
-	}
+	loading->setVisible(false);
 
 	for (const auto &item: results.content)
 	{
