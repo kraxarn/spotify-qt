@@ -8,6 +8,9 @@ void lib::ddg::from_json(const nlohmann::json &j, results &r)
 	}
 
 	const auto &infobox = j.at("Infobox");
-	infobox.at("content").get_to(r.content);
-	infobox.at("meta").get_to(r.meta);
+	if (infobox.is_object())
+	{
+		infobox.at("content").get_to(r.content);
+		infobox.at("meta").get_to(r.meta);
+	}
 }
