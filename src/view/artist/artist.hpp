@@ -9,7 +9,6 @@
 #include "view/artist/albumslist.hpp"
 #include "view/artist/cover.hpp"
 #include "view/artist/playbutton.hpp"
-#include "view/artist/searchmenu.hpp"
 #include "view/artist/sharemenu.hpp"
 #include "view/artist/title.hpp"
 #include "view/artist/trackslist.hpp"

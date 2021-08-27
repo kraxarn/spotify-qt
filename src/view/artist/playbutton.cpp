@@ -1,8 +1,10 @@
 #include "view/artist/playbutton.hpp"
 #include "mainwindow.hpp"
 
-View::Artist::PlayButton::PlayButton(lib::spt::api &spotify, QWidget *parent)
+View::Artist::PlayButton::PlayButton(lib::spt::api &spotify,
+	const lib::http_client &httpClient, QWidget *parent)
 	: spotify(spotify),
+	httpClient(httpClient),
 	QToolButton(parent)
 {
 	setEnabled(false);
@@ -26,7 +28,7 @@ auto View::Artist::PlayButton::contextMenu() -> QMenu *
 	QAction::connect(follow, &QAction::triggered,
 		this, &View::Artist::PlayButton::onFollow);
 
-	menu->addMenu(new View::Artist::SearchMenu(artist, menu));
+	menu->addMenu(new Menu::ArtistLinks(artist, httpClient, menu));
 	menu->addMenu(new View::Artist::ShareMenu(artist, menu));
 
 	return menu;

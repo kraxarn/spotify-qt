@@ -23,7 +23,7 @@ View::Artist::Artist::Artist(lib::spt::api &spotify, const std::string &artistId
 	title->addWidget(name, 1);
 
 	// Context menu
-	context = new View::Artist::PlayButton(spotify, this);
+	context = new View::Artist::PlayButton(spotify, httpClient, this);
 	title->addWidget(context);
 	layout->addLayout(title);
 
