@@ -17,6 +17,7 @@ Menu::ArtistLinks::ArtistLinks(const lib::spt::artist &artist,
 	QAction::connect(duckDuckGo, &QAction::triggered,
 		this, &Menu::ArtistLinks::onDuckDuckGo);
 
+	addSeparator();
 	loading = addAction("Searching...");
 	loading->setEnabled(false);
 }
