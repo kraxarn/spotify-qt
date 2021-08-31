@@ -9,7 +9,7 @@ void lib::ddg::api::search(const lib::spt::artist &artist,
 	lib::callback<lib::ddg::results> &callback)
 {
 	const auto url = lib::fmt::format("https://api.duckduckgo.com"
-									  "?q={}%20(band)"
+									  "?q={}"
 									  "&format=json"
 									  "&t=spotify-qt", artist.name);
 
