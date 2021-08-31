@@ -1,6 +1,6 @@
 #include "lib/search/link.hpp"
 
-auto lib::ddg::link::get_url() const -> std::string
+auto lib::ddg::link::url() const -> std::string
 {
 	std::string base_url;
 

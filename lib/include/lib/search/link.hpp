@@ -32,7 +32,7 @@ namespace lib
 			/**
 			 * Get link to profile page
 			 */
-			auto get_url() const -> std::string;
+			auto url() const -> std::string;
 		};
 
 		/** JSON -> Link */
