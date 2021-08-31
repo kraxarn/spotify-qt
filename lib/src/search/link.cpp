@@ -41,7 +41,12 @@ void lib::ddg::from_json(const nlohmann::json &j, link &l)
 	}
 
 	j.at("label").get_to(l.label);
-	j.at("value").get_to(l.value);
+
+	const auto &value = j.at("value");
+	if (value.is_string())
+	{
+		value.get_to(l.value);
+	}
 
 	const auto &data_type = j.at("data_type").get<std::string>();
 	if (data_type == "string")
