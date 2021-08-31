@@ -27,7 +27,6 @@ var searchData=
   ['get_5ftracks_82',['get_tracks',['../classlib_1_1json__cache.html#a1e3873235803dd0b254a13abcd9e00f1',1,'lib::json_cache::get_tracks()'],['../classlib_1_1cache.html#ae815079f4baa7d0a7856135ff2cd908b',1,'lib::cache::get_tracks()']]],
   ['get_5ftype_83',['get_type',['../classlib_1_1log__message.html#abcbc740676cacc4bf432a9a75271fa7b',1,'lib::log_message']]],
   ['get_5ftype_5fshort_84',['get_type_short',['../classlib_1_1log__message.html#aa2b0e7cdc799bbba74078f32e5e34cd8',1,'lib::log_message']]],
-  ['get_5furl_85',['get_url',['../classlib_1_1ddg_1_1link.html#ae53732f870563a8489fbf386c940e52f',1,'lib::ddg::link']]],
-  ['get_5fvalue_86',['get_value',['../classlib_1_1spt_1_1audio__feature.html#a6ad5e61e3d3e7bbe953e1f583ea59b14',1,'lib::spt::audio_feature']]],
-  ['get_5fyear_87',['get_year',['../classlib_1_1date__time.html#a097138ebea3ea58a0a4d3cfb8c7e4f64',1,'lib::date_time']]]
+  ['get_5fvalue_85',['get_value',['../classlib_1_1spt_1_1audio__feature.html#a6ad5e61e3d3e7bbe953e1f583ea59b14',1,'lib::spt::audio_feature']]],
+  ['get_5fyear_86',['get_year',['../classlib_1_1date__time.html#a097138ebea3ea58a0a4d3cfb8c7e4f64',1,'lib::date_time']]]
 ];

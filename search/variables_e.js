@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['settings_441',['settings',['../classlib_1_1spt_1_1api.html#a5a058e247f84895b9ee98f7b5a6ed756',1,'lib::spt::api']]],
-  ['shuffle_442',['shuffle',['../classlib_1_1spt_1_1playback.html#a593d145ce768c35439952a27ab29294d',1,'lib::spt::playback']]],
-  ['signal_443',['signal',['../classlib_1_1crash__info.html#a58bc7d2a0b45b541b913382fe0c3b57c',1,'lib::crash_info']]],
-  ['snapshot_444',['snapshot',['../classlib_1_1spt_1_1playlist.html#ae2eff6fa44f518622c1df2ecfe677f62',1,'lib::spt::playlist']]],
-  ['spotify_445',['spotify',['../classlib_1_1settings.html#a15cb6ff4193e655f271d8d76787c2507',1,'lib::settings']]],
-  ['stack_5ftrace_446',['stack_trace',['../classlib_1_1crash__info.html#a6470c0cfcaea6a053ddd9da81e626ef2',1,'lib::crash_info']]]
+  ['settings_439',['settings',['../classlib_1_1spt_1_1api.html#a5a058e247f84895b9ee98f7b5a6ed756',1,'lib::spt::api']]],
+  ['shuffle_440',['shuffle',['../classlib_1_1spt_1_1playback.html#a593d145ce768c35439952a27ab29294d',1,'lib::spt::playback']]],
+  ['signal_441',['signal',['../classlib_1_1crash__info.html#a58bc7d2a0b45b541b913382fe0c3b57c',1,'lib::crash_info']]],
+  ['snapshot_442',['snapshot',['../classlib_1_1spt_1_1playlist.html#ae2eff6fa44f518622c1df2ecfe677f62',1,'lib::spt::playlist']]],
+  ['spotify_443',['spotify',['../classlib_1_1settings.html#a15cb6ff4193e655f271d8d76787c2507',1,'lib::settings']]],
+  ['stack_5ftrace_444',['stack_trace',['../classlib_1_1crash__info.html#a6470c0cfcaea6a053ddd9da81e626ef2',1,'lib::crash_info']]]
 ];
