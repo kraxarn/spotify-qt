@@ -53,7 +53,7 @@ void Menu::ArtistLinks::onLoaded(const lib::ddg::results &results)
 			continue;
 		}
 
-		auto *action = addAction(QString::fromStdString(item.label));
+		auto *action = addAction(QString::fromStdString(item.title()));
 		QAction::connect(action, &QAction::triggered, [this, item](bool /*checked*/)
 		{
 			UrlUtils::open(item.url(), LinkType::Web, this);

@@ -33,6 +33,30 @@ auto lib::ddg::link::url() const -> std::string
 	return lib::fmt::format(base_url, value);
 }
 
+auto lib::ddg::link::title() const -> std::string
+{
+	switch (data_type)
+	{
+		case artist_profile::twitter:
+			return "Twitter";
+
+		case artist_profile::instagram:
+			return "Instagram";
+
+		case artist_profile::facebook:
+			return "Facebook";
+
+		case artist_profile::youtube:
+			return "YouTube";
+
+		case artist_profile::soundcloud:
+			return "SoundCloud";
+
+		default:
+			return label;
+	}
+}
+
 void lib::ddg::from_json(const nlohmann::json &j, link &l)
 {
 	if (!j.is_object())

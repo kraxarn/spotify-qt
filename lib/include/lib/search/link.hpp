@@ -33,6 +33,11 @@ namespace lib
 			 * Get link to profile page
 			 */
 			auto url() const -> std::string;
+
+			/**
+			 * Get title for profile page
+			 */
+			auto title() const -> std::string;
 		};
 
 		/** JSON -> Link */
