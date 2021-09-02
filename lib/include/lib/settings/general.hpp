@@ -133,6 +133,11 @@ namespace lib
 			 * ID of last selected device
 			 */
 			std::string last_device;
+
+			/**
+			 * Keep track index after re-sorting track list on another column
+			 */
+			bool keep_track_index = true;
 		};
 	}
 }
