@@ -1,10 +1,9 @@
 #pragma once
 
-#include "spotify/spotify.hpp"
 #include "lib/cache.hpp"
+#include "lib/set.hpp"
 #include "spotify/current.hpp"
 #include "menu/songmenu.hpp"
-#include "lib/set.hpp"
 #include "enum/column.hpp"
 
 #include <QListWidget>
@@ -15,7 +14,7 @@ class TracksList: public QTreeWidget
 Q_OBJECT
 
 public:
-	TracksList(spt::Spotify &spotify, lib::settings &settings, lib::cache &cache,
+	TracksList(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
 		QWidget *parent);
 
 	void updateResizeMode(lib::resize_mode mode);
@@ -60,8 +59,7 @@ private:
 	// lib
 	lib::settings &settings;
 	lib::cache &cache;
-	// spt
-	spt::Spotify &spotify;
+	lib::spt::api &spotify;
 	// std
 	std::unordered_map<std::string, QTreeWidgetItem *> trackItems;
 	// qt
