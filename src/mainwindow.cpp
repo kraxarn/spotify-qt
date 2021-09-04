@@ -273,7 +273,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 	{
 		if (current.playback.is_playing)
 		{
-			songs->setPlayingTrackItem(currPlaying.id);
+			mainContent->getTracksList()->setPlayingTrackItem(currPlaying.id);
 		}
 
 		contextView->setCurrentlyPlaying(currPlaying);
@@ -317,7 +317,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 auto MainWindow::createCentralWidget() -> QWidget *
 {
 	// All widgets in container
-	songs = new TracksList(*spotify, settings, cache, this);
+	mainContent = new MainContent(*spotify, settings, cache, this);
 	sidePanel = new View::SidePanel::SidePanel(*spotify, settings, cache,
 		*httpClient, this);
 
@@ -337,7 +337,7 @@ auto MainWindow::createCentralWidget() -> QWidget *
 	// Right side panel
 	addDockWidget(Qt::RightDockWidgetArea, sidePanel);
 
-	return songs;
+	return mainContent;
 }
 
 auto MainWindow::startClient() -> bool
@@ -376,7 +376,7 @@ auto MainWindow::loadAlbum(const std::string &albumId, const std::string &trackI
 {
 	spotify->album(albumId, [this, trackId](const lib::spt::album &album)
 	{
-		this->songs->load(album, trackId);
+		mainContent->getTracksList()->load(album, trackId);
 	});
 	return true;
 }
@@ -436,12 +436,15 @@ void MainWindow::openArtist(const std::string &artistId)
 
 auto MainWindow::currentTracks() -> std::vector<std::string>
 {
-	std::vector<std::string> tracks;
-	tracks.reserve(songs->topLevelItemCount());
+	const auto *tracksList = mainContent->getTracksList();
+	const auto tracksCount = tracksList->topLevelItemCount();
 
-	for (int i = 0; i < songs->topLevelItemCount(); i++)
+	std::vector<std::string> tracks;
+	tracks.reserve(tracksCount);
+
+	for (int i = 0 ; i < tracksCount ; i++)
 	{
-		auto track = songs->topLevelItem(i)->data(0, static_cast<int>(DataRole::Track))
+		auto track = tracksList->topLevelItem(i)->data(0, static_cast<int>(DataRole::Track))
 			.value<lib::spt::track>();
 		if (!track.is_valid())
 		{
@@ -475,9 +478,11 @@ void MainWindow::setFixedWidthTime(bool value)
 
 void MainWindow::toggleTrackNumbers(bool enabled)
 {
-	for (int i = 0; i < songs->topLevelItemCount(); i++)
+	const auto *tracksList = mainContent->getTracksList();
+
+	for (int i = 0 ; i < tracksList->topLevelItemCount() ; i++)
 	{
-		auto *item = songs->topLevelItem(i);
+		auto *item = tracksList->topLevelItem(i);
 		item->setText(0, enabled
 			? QString("%1").arg(item->data(0, static_cast<int>(DataRole::Index))
 				.toInt() + 1, 3)
@@ -504,7 +509,7 @@ void MainWindow::setSearchChecked(bool checked)
 
 auto MainWindow::getSongsTree() -> TracksList *
 {
-	return songs;
+	return mainContent->getTracksList();
 }
 
 auto MainWindow::getSptContext() const -> std::string
