@@ -108,10 +108,6 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a04325ef56364db92cbf38d175006a80f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a531ac77b4dc9cacd25bf7a4493bd62dd"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#a531ac77b4dc9cacd25bf7a4493bd62dd">capitalize</a> (const std::string &amp;str) -&gt; std::string</td></tr>
 <tr class="separator:a531ac77b4dc9cacd25bf7a4493bd62dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab69b626c3b8831b501596648ab3479d6"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#ab69b626c3b8831b501596648ab3479d6">index_of</a> (const std::string &amp;str, const std::string &amp;keyword) -&gt; unsigned long</td></tr>
-<tr class="separator:ab69b626c3b8831b501596648ab3479d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3835f55b581fa1851245c1e460b39bd8"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#a3835f55b581fa1851245c1e460b39bd8">last_index_of</a> (const std::string &amp;str, const std::string &amp;keyword) -&gt; unsigned long</td></tr>
-<tr class="separator:a3835f55b581fa1851245c1e460b39bd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b5337226c1e413711e62b5e9fb4931b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a0b5337226c1e413711e62b5e9fb4931b"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#a0b5337226c1e413711e62b5e9fb4931b">to_string</a> (const T value, const int precision) -&gt; std::string</td></tr>
 <tr class="separator:a0b5337226c1e413711e62b5e9fb4931b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -246,50 +242,6 @@ template&lt;typename String &gt; </div>
 
 </div>
 </div>
-<a id="ab69b626c3b8831b501596648ab3479d6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab69b626c3b8831b501596648ab3479d6">&#9670;&nbsp;</a></span>index_of()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static auto lib::strings::index_of </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>str</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>keyword</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> -&gt;  unsigned long</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Get index of a string in another string </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">str</td><td>String to search in </td></tr>
-    <tr><td class="paramname">keyword</td><td>String to search for </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Index of result, or -1 on no result </dd></dl>
-
-</div>
-</div>
 <a id="a4b06f72037132980e7fda8921050fa68"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4b06f72037132980e7fda8921050fa68">&#9670;&nbsp;</a></span>join()</h2>
 
@@ -331,50 +283,6 @@ template&lt;typename String &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Joined string </dd></dl>
-
-</div>
-</div>
-<a id="a3835f55b581fa1851245c1e460b39bd8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3835f55b581fa1851245c1e460b39bd8">&#9670;&nbsp;</a></span>last_index_of()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static auto lib::strings::last_index_of </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>str</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>keyword</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> -&gt;  unsigned long</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Get last index of a string in another string </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">str</td><td>String to search in </td></tr>
-    <tr><td class="paramname">keyword</td><td>String to search for </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Index of result, or -1 on no result </dd></dl>
 
 </div>
 </div>
