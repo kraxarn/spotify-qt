@@ -134,23 +134,6 @@ namespace lib
 		static auto capitalize(const std::string &str) -> std::string;
 
 		/**
-		 * Get index of a string in another string
-		 * @param str String to search in
-		 * @param keyword String to search for
-		 * @return Index of result, or -1 on no result
-		 */
-		static auto index_of(const std::string &str, const std::string &keyword) -> unsigned long;
-
-		/**
-		 * Get last index of a string in another string
-		 * @param str String to search in
-		 * @param keyword String to search for
-		 * @return Index of result, or -1 on no result
-		 */
-		static auto last_index_of(const std::string &str,
-			const std::string &keyword) -> unsigned long;
-
-		/**
 		 * Parse value as string with specified precision
 		 * @param value Value to stringify
 		 * @param precision Precision (number of digits)

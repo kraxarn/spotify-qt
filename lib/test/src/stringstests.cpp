@@ -225,20 +225,6 @@ TEST_CASE("strings::capitalize")
 	CHECK_EQ(lib::strings::capitalize("hello world"), "Hello world");
 }
 
-TEST_CASE("strings::index_of")
-{
-	CHECK_EQ(lib::strings::index_of("aa,bb,aa", "aa"), 0);
-	CHECK_EQ(lib::strings::index_of("aa,bb,aa", "bb"), 3);
-	CHECK_EQ(lib::strings::index_of("aa,bb,aa", "cc"), -1);
-}
-
-TEST_CASE("strings::last_index_of")
-{
-	CHECK_EQ(lib::strings::last_index_of("aa,bb,aa", "aa"), 6);
-	CHECK_EQ(lib::strings::last_index_of("aa,bb,aa", "bb"), 3);
-	CHECK_EQ(lib::strings::last_index_of("aa,bb,aa", "cc"), -1);
-}
-
 TEST_CASE("strings::to_string")
 {
 	constexpr double pi = 3.14159265;

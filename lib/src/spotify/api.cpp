@@ -161,8 +161,8 @@ auto api::to_uri(const std::string &type, const std::string &id) -> std::string
 
 auto api::to_id(const std::string &id) -> std::string
 {
-	auto i = lib::strings::last_index_of(id, ":");
-	return i >= 0
+	auto i = id.rfind(':');
+	return i != std::string::npos
 		? id.substr(i + 1)
 		: id;
 }
