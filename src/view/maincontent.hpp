@@ -1,6 +1,7 @@
 #pragma once
 
 #include "list/trackslist.hpp"
+#include "widget/statusmessage.hpp"
 
 #include <QVBoxLayout>
 
@@ -17,5 +18,6 @@ public:
 private:
 	QVBoxLayout *layout = nullptr;
 
-	TracksList *tracks;
+	TracksList *tracks = nullptr;
+	StatusMessage *status = nullptr;
 };
