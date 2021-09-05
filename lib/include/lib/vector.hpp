@@ -53,7 +53,7 @@ namespace lib
 			}
 
 			// If size+len is larger than element count, stop as last element
-			if (len < 0 || pos + len > vec.size())
+			if (pos + len > vec.size())
 			{
 				len = vec.size() - 1;
 			}
