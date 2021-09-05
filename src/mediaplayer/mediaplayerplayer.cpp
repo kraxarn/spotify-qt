@@ -8,7 +8,7 @@ mp::MediaPlayerPlayer::MediaPlayerPlayer(lib::spt::api &spotify, QObject *parent
 	dBus(QDBusConnection::sessionBus()),
 	spotify(spotify)
 {
-	callback = [](const std::string &result)
+	callback = [](const std::string &/*result*/)
 	{
 		// We trust that the error message has already been logged somewhere
 	};
@@ -167,7 +167,7 @@ void mp::MediaPlayerPlayer::tick(qint64 newPos)
 	emit Seeked(newPos * 1000);
 }
 
-void mp::MediaPlayerPlayer::setCurrentPlayback(const lib::spt::playback &playback)
+void mp::MediaPlayerPlayer::setCurrentPlayback(const lib::spt::playback &/*playback*/)
 {
 }
 

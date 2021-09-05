@@ -45,7 +45,7 @@ void DragArea::mouseReleaseEvent(QMouseEvent */*event*/)
 	setCursor(Qt::ArrowCursor);
 }
 
-void DragArea::mouseDoubleClickEvent(QMouseEvent *event)
+void DragArea::mouseDoubleClickEvent(QMouseEvent */*event*/)
 {
 	onMaximize(false);
 }
