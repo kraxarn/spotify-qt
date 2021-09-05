@@ -52,12 +52,12 @@ void ConfigView::reload()
 	clear();
 
 	const auto &json = settings.to_json();
-	for (const auto &i : json.items())
+	for (const auto &i: json.items())
 	{
 		auto *item = new QTreeWidgetItem(this);
 		item->setText(0, QString::fromStdString(i.key()));
 
-		for (const auto &ii : i.value().items())
+		for (const auto &ii: i.value().items())
 		{
 			auto *child = new QTreeWidgetItem(item);
 			child->setText(0, QString::fromStdString(ii.key()));

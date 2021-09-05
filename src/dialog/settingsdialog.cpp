@@ -20,7 +20,7 @@ SettingsDialog::SettingsDialog(lib::settings &settings, lib::cache &cache, QWidg
 		new AboutPage(settings, cache, this)
 	});
 
-	for (auto &page : pages)
+	for (auto &page: pages)
 	{
 		new QListWidgetItem(page->icon(), page->title(), categories);
 		stack->addWidget(page);
@@ -69,7 +69,7 @@ SettingsDialog::SettingsDialog(lib::settings &settings, lib::cache &cache, QWidg
 auto SettingsDialog::applySettings() -> bool
 {
 	// Check all pages
-	for (auto &page : pages)
+	for (auto &page: pages)
 	{
 		if (!page->save())
 		{

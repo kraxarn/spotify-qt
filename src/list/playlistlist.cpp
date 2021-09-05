@@ -97,7 +97,7 @@ void PlaylistList::load(const std::vector<lib::spt::playlist> &playlists)
 	clear();
 	auto i = 0;
 	QTextDocument doc;
-	for (const auto &playlist : playlists)
+	for (const auto &playlist: playlists)
 	{
 		auto *item = new QListWidgetItem(QString::fromStdString(playlist.name), this);
 
@@ -221,7 +221,7 @@ void PlaylistList::order(lib::playlist_order order)
 
 		case lib::playlist_order::custom:
 			i = 0;
-			for (auto &playlist : settings.general.custom_playlist_order)
+			for (auto &playlist: settings.general.custom_playlist_order)
 			{
 				customOrder[QString::fromStdString(playlist)] = i++;
 			}
@@ -239,7 +239,7 @@ void PlaylistList::order(lib::playlist_order order)
 	}
 
 	i = 0;
-	for (auto *item : items)
+	for (auto *item: items)
 	{
 		item->setData(static_cast<int>(DataRole::Index), i++);
 		addItem(item);
@@ -269,9 +269,9 @@ auto PlaylistList::allArtists() -> std::unordered_set<std::string>
 		auto playlistId = item(i)->data(static_cast<int>(DataRole::PlaylistId))
 			.toString().toStdString();
 
-		for (auto &track : cache.get_playlist(playlistId).tracks)
+		for (auto &track: cache.get_playlist(playlistId).tracks)
 		{
-			for (const auto &artist : track.artists)
+			for (const auto &artist: track.artists)
 			{
 				artists.insert(artist.name);
 			}
@@ -294,7 +294,7 @@ auto PlaylistList::at(int index) -> lib::spt::playlist
 
 auto PlaylistList::at(const std::string &id) -> lib::spt::playlist
 {
-	for (const auto &playlist : cache.get_playlists())
+	for (const auto &playlist: cache.get_playlists())
 	{
 		if (lib::strings::ends_with(id, playlist.id))
 		{

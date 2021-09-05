@@ -74,7 +74,7 @@ void MainMenu::refreshDevices()
 		}
 
 		// Clear all entries
-		for (auto &action : deviceMenu->actions())
+		for (auto &action: deviceMenu->actions())
 		{
 			deviceMenu->removeAction(action);
 		}
@@ -87,7 +87,7 @@ void MainMenu::refreshDevices()
 		}
 
 		// Update devices
-		for (const auto &device : devices)
+		for (const auto &device: devices)
 		{
 			auto *action = deviceMenu->addAction(QString::fromStdString(device.name));
 			action->setCheckable(true);

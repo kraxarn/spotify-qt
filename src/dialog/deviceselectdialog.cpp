@@ -10,7 +10,7 @@ DeviceSelectDialog::DeviceSelectDialog(const std::vector<lib::spt::device> &devi
 	setWindowTitle("Select device");
 
 	list = new QListWidget(this);
-	for (const auto &device : devices)
+	for (const auto &device: devices)
 	{
 		list->addItem(QString::fromStdString(device.name));
 	}
@@ -44,7 +44,7 @@ auto DeviceSelectDialog::selectedDevice() -> lib::spt::device
 		return {};
 	}
 
-	for (auto &device : devices)
+	for (auto &device: devices)
 	{
 		if (device.name == list->selectedItems().first()->text().toStdString())
 		{

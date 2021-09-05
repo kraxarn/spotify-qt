@@ -104,7 +104,7 @@ void LibraryList::clicked(QTreeWidgetItem *item, int /*column*/)
 				auto all = mainWindow->allArtists();
 				std::vector<lib::spt::track> tracks;
 
-				for (const auto &album : releases)
+				for (const auto &album: releases)
 				{
 					if (all.find(album.artist) != all.end())
 					{
@@ -113,7 +113,7 @@ void LibraryList::clicked(QTreeWidgetItem *item, int /*column*/)
 							{
 								std::vector<lib::spt::track> tracks;
 								tracks.reserve(results.size());
-								for (const auto &result : results)
+								for (const auto &result: results)
 								{
 									lib::spt::track track = result;
 									track.added_at = album.release_date;
@@ -156,7 +156,7 @@ void LibraryList::doubleClicked(QTreeWidgetItem *item, int /*column*/)
 		// Get id of all tracks
 		std::vector<std::string> trackIds;
 		trackIds.reserve(tracks.size());
-		for (const auto &track : tracks)
+		for (const auto &track: tracks)
 		{
 			trackIds.push_back(lib::spt::api::to_uri("track", track.id));
 		}
@@ -199,7 +199,7 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 		{
 			std::vector<ListItem::Library> results;
 			results.reserve(artists.size());
-			for (const auto &artist : artists)
+			for (const auto &artist: artists)
 			{
 				results.emplace_back(artist.name, artist.id, DataRole::ArtistId);
 			}
@@ -212,7 +212,7 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 		{
 			std::vector<ListItem::Library> results;
 			results.reserve(albums.size());
-			for (const auto &album : albums)
+			for (const auto &album: albums)
 			{
 				results.emplace_back(album.album.name, album.album.id, DataRole::AlbumId);
 			}
@@ -225,7 +225,7 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 		{
 			std::vector<ListItem::Library> results;
 			results.reserve(artists.size());
-			for (const auto &artist : artists)
+			for (const auto &artist: artists)
 			{
 				results.emplace_back(artist.name, artist.id, DataRole::ArtistId);
 			}
@@ -256,7 +256,7 @@ void LibraryList::itemsLoaded(std::vector<ListItem::Library> &items, QTreeWidget
 	}
 
 	// Add all to the list
-	for (auto &result : items)
+	for (auto &result: items)
 	{
 		auto *child = new QTreeWidgetItem(item, {
 			QString::fromStdString(result.name)

@@ -47,7 +47,7 @@ auto CacheView::fullName(const QString &folderName) -> QString
 
 void CacheView::folderSize(const QString &path, unsigned int *count, unsigned int *size)
 {
-	for (auto &file : QDir(path).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Files))
+	for (auto &file: QDir(path).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Files))
 	{
 		if (file.isDir())
 		{
@@ -71,7 +71,7 @@ void CacheView::menu(const QPoint &pos)
 
 	auto *menu = new QMenu(this);
 	QAction::connect(menu->addAction(Icon::get("folder-temp"),
-		"Open folder"),
+			"Open folder"),
 		&QAction::triggered, [this, folder](bool /*checked*/)
 		{
 			UrlUtils::open(folder, LinkType::Path, this);
@@ -84,7 +84,7 @@ void CacheView::reload()
 	clear();
 
 	QDir cacheDir(QString::fromStdString(paths.cache()));
-	for (auto &dir : cacheDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
+	for (auto &dir: cacheDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
 	{
 		auto *item = new QTreeWidgetItem(this);
 		item->setText(0, fullName(dir.baseName()));

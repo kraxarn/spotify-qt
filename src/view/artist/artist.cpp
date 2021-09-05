@@ -105,7 +105,7 @@ void View::Artist::Artist::artistLoaded(const lib::spt::artist &loadedArtist)
 
 void View::Artist::Artist::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
 {
-	for (const auto &track : tracks)
+	for (const auto &track: tracks)
 	{
 		topTracksList->addTrack(track);
 	}
@@ -114,7 +114,7 @@ void View::Artist::Artist::topTracksLoaded(const std::vector<lib::spt::track> &t
 
 void View::Artist::Artist::relatedArtistsLoaded(const std::vector<lib::spt::artist> &artists)
 {
-	for (const auto &related : artists)
+	for (const auto &related: artists)
 	{
 		auto *item = new QListWidgetItem(QString::fromStdString(related.name), relatedList);
 		item->setData(static_cast<int>(DataRole::ArtistId),

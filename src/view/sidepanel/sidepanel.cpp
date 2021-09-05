@@ -30,9 +30,9 @@ View::SidePanel::SidePanel::SidePanel(spt::Spotify &spotify, const lib::settings
 void View::SidePanel::SidePanel::addTab(QWidget *widget, const QString &icon,
 	const QString &tabTitle, const QString &tabId)
 {
-	for(int i=0; i<title->count(); i++)
+	for (int i = 0; i < title->count(); i++)
 	{
-		if(title->tabData(i).isValid() && title->tabData(i) == tabId)
+		if (title->tabData(i).isValid() && title->tabData(i) == tabId)
 		{
 			// If possible, reuse an existing tab for the same id
 			setCurrentWidget(stack->widget(i));

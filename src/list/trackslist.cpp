@@ -33,7 +33,7 @@ TracksList::TracksList(lib::spt::api &spotify, lib::settings &settings, lib::cac
 	updateResizeMode(settings.general.track_list_resize_mode);
 
 	// Hide specified columns
-	for (const auto &value : settings.general.hidden_song_headers)
+	for (const auto &value: settings.general.hidden_song_headers)
 	{
 		header()->setSectionHidden(value + 1, true);
 	}

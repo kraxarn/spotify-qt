@@ -47,7 +47,7 @@ void View::Search::Library::addResults(const std::string &query,
 	clear();
 	auto q = lib::strings::to_lower(query);
 
-	for (const auto &track : tracks)
+	for (const auto &track: tracks)
 	{
 		if (lib::strings::contains(lib::strings::to_lower(track.name), q)
 			|| lib::strings::contains(lib::strings::to_lower(track.album.name), q)

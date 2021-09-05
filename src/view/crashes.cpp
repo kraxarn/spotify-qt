@@ -22,7 +22,7 @@ View::Crashes::Crashes(lib::cache &cache, QWidget *parent)
 void View::Crashes::showEvent(QShowEvent */*event*/)
 {
 	list->clear();
-	for (const auto &crash : cache.get_all_crashes())
+	for (const auto &crash: cache.get_all_crashes())
 	{
 		list->addItem(new ListItem::Crash(crash, list));
 	}

@@ -171,7 +171,7 @@ auto spt::ClientHandler::isRunning() const -> bool
 
 void spt::ClientHandler::logOutput(const QByteArray &output)
 {
-	for (auto &line : QString(output).split('\n'))
+	for (auto &line: QString(output).split('\n'))
 	{
 		if (line.isEmpty())
 		{

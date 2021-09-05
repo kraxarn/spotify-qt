@@ -89,7 +89,7 @@ SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 	}
 
 	auto currentUserId = mainWindow->getCurrentUser().id;
-	for (auto &playlist : cache.get_playlists())
+	for (auto &playlist: cache.get_playlists())
 	{
 		if (!playlist.collaborative && playlist.owner_id != currentUserId)
 		{
@@ -116,7 +116,7 @@ SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 	else if (track.artists.size() > 1)
 	{
 		auto *artistsMenu = addMenu(Icon::get("view-media-artist"), "View artist");
-		for (const auto &artist : track.artists)
+		for (const auto &artist: track.artists)
 		{
 			if (fromArtist != nullptr && fromArtist->id == artist.id)
 			{
@@ -190,7 +190,7 @@ void SongMenu::addToPlaylist(QAction *action)
 			[this, playlistId](const std::vector<lib::spt::track> &tracks)
 			{
 				auto *mainWindow = MainWindow::find(this->parentWidget());
-				for (const auto &item : tracks)
+				for (const auto &item: tracks)
 				{
 					if (lib::strings::ends_with(track.id, item.id))
 					{

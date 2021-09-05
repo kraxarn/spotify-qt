@@ -91,7 +91,7 @@ void Menu::Playlist::tracksLoaded(const std::vector<lib::spt::track> &items)
 	tracks = items;
 
 	auto duration = 0U;
-	for (const auto &track : tracks)
+	for (const auto &track: tracks)
 	{
 		duration += track.duration;
 	}

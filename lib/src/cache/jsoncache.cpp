@@ -101,7 +101,7 @@ auto lib::json_cache::all_tracks() const -> std::map<std::string, std::vector<li
 		return results;
 	}
 
-	for (const auto &entry : ghc::filesystem::directory_iterator(dir))
+	for (const auto &entry: ghc::filesystem::directory_iterator(dir))
 	{
 		auto id = entry.path().filename().replace_extension().string();
 		results[id] = get_tracks(id);
@@ -145,7 +145,7 @@ auto lib::json_cache::get_all_crashes() const -> std::vector<lib::crash_info>
 		return results;
 	}
 
-	for (const auto &entry : ghc::filesystem::directory_iterator(dir))
+	for (const auto &entry: ghc::filesystem::directory_iterator(dir))
 	{
 		results.push_back(lib::json::load<lib::crash_info>(entry.path()));
 	}

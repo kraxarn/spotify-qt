@@ -38,9 +38,9 @@ void TracksCacheDialog::open()
 {
 	tree->clear();
 
-	for (const auto &pair : cache.all_tracks())
+	for (const auto &pair: cache.all_tracks())
 	{
-		for (const auto &track : pair.second)
+		for (const auto &track: pair.second)
 		{
 			new QTreeWidgetItem(tree, {
 				QString::fromStdString(track.name),

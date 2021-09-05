@@ -79,7 +79,7 @@ auto DeveloperMenu::dialogMenu() -> QMenu *
 		new WhatsNewDialog(settings, httpClient, mainWindow),
 	};
 
-	for (auto *dialog : dialogs)
+	for (auto *dialog: dialogs)
 	{
 		addMenuItem(menu, dialog->metaObject()->className(), [dialog]()
 		{

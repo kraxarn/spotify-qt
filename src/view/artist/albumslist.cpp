@@ -44,7 +44,7 @@ void View::Artist::AlbumsList::setAlbums(const std::vector<lib::spt::album> &alb
 {
 	setEnabled(false);
 
-	for (const auto &album : albums)
+	for (const auto &album: albums)
 	{
 		const auto releaseDate = DateUtils::fromIso(album.release_date);
 		// Extra spacing is intentional so year doesn't overlap with scrollbar
@@ -78,7 +78,7 @@ void View::Artist::AlbumsList::setAlbums(const std::vector<lib::spt::album> &alb
 	setEnabled(true);
 
 	// Expand first group with items
-	for (const auto &group : groups)
+	for (const auto &group: groups)
 	{
 		if (group.second->childCount() > 0)
 		{
