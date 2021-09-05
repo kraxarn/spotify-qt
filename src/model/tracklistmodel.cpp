@@ -41,7 +41,7 @@ auto TrackListModel::data(const QModelIndex &index, int role) const -> QVariant
 {
 	if (index.row() < 0 || static_cast<size_t>(index.row()) >= tracks.size())
 	{
-		return QVariant();
+		return {};
 	}
 
 	switch (static_cast<TrackListRole>(role))
@@ -53,7 +53,7 @@ auto TrackListModel::data(const QModelIndex &index, int role) const -> QVariant
 			return index.row();
 	}
 
-	return QVariant();
+	return {};
 }
 
 auto TrackListModel::data(const QModelIndex &index) const -> QVariant
