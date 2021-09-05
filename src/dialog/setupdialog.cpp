@@ -130,13 +130,13 @@ void SetupDialog::newServerConnection()
 	// Close it all down if ok
 	if (status.isEmpty())
 	{
-		this->settings.account.client_id = clientIdText
-			.toStdString();
-		this->settings.account.client_secret = clientSecretText
-			.toStdString();
-		this->settings.save();
+		settings.account.client_id = clientIdText.toStdString();
+		settings.account.client_secret = clientSecretText.toStdString();
+		settings.save();
+
 		server->close();
-		delete server;
+		server->deleteLater();
+
 		accept();
 	}
 	else
