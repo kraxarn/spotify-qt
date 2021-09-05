@@ -19,7 +19,6 @@ namespace Menu
 
 	private:
 		const lib::spt::artist &artist;
-		const lib::http_client &httpClient;
 		lib::ddg::api ddg;
 		QAction *loading = nullptr;
 
