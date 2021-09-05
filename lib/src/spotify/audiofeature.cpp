@@ -69,7 +69,7 @@ lib::spt::audio_feature::audio_feature(lib::audio_key key)
 	value(static_cast<float>(key)),
 	name(to_string(key))
 {
-	// These values doesn't really make sense here,
+	// These values don't really make sense here,
 	// but it looks better
 	minimum = static_cast<float>(audio_key::c);
 	maximum = static_cast<float>(audio_key::b);
