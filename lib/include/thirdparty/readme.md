@@ -49,7 +49,7 @@ SOFTWARE.
 ```
 
 ## [json](https://github.com/nlohmann/json)
-v3.9.1, used for parsing settings and responses from the Spotify API.
+v3.10.2, used for parsing settings and responses from the Spotify API.
 ```
 MIT License 
 
