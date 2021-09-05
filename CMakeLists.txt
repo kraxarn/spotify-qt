@@ -98,6 +98,11 @@ set(LIB_QT_IMPL ON)
 add_subdirectory(lib)
 target_link_libraries(spotify-qt PRIVATE spotify-qt-lib)
 
+# Enable all compiler warnings under GCC
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+	target_compile_options(spotify-qt PRIVATE -Wall -Wextra)
+endif ()
+
 # D-Bus support is optional
 if (Qt5DBus_FOUND)
 	target_compile_definitions(spotify-qt PRIVATE USE_DBUS)

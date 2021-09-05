@@ -26,9 +26,12 @@ target_include_directories(spotify-qt-lib PUBLIC
 # Version macros
 target_compile_definitions(spotify-qt-lib PUBLIC LIB_VERSION="v${PROJECT_VERSION}")
 
-# Check if using GCC for crash handler support
+# Check if using GCC
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+	# Used by crash handler
 	target_compile_definitions(spotify-qt-lib PRIVATE IS_GNU_CXX)
+	# Enable all compiler warnings
+	target_compile_options(spotify-qt-lib PRIVATE -Wall -Wextra)
 endif ()
 
 # Link optional libraries
