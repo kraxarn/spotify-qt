@@ -36,6 +36,11 @@ StatusMessage::StatusMessage(QWidget *parent)
 
 void StatusMessage::showStatus(MessageType messageType, const QString &text)
 {
+	if (text.isNull() || text.isEmpty())
+	{
+		return;
+	}
+
 	if (timer->isActive())
 	{
 		timer->stop();
