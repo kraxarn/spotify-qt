@@ -1,5 +1,5 @@
 ## [doctest](https://github.com/onqtam/doctest)
-v2.4.4, used for unit testing.
+v2.4.6, used for unit testing.
 ```
 The MIT License (MIT)
 
