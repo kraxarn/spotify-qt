@@ -185,16 +185,16 @@ void MainToolBar::onPlayPause(bool /*checked*/)
 	current.is_playing = !current.is_playing;
 	mainWindow->refreshed(current);
 
-	auto callback = [this, mainWindow](const std::string &status)
+	auto callback = [this](const std::string &status)
 	{
 		if (status.empty())
 		{
 			return;
 		}
 
-		mainWindow->status(lib::fmt::format("Failed to {} playback: {}",
-			this->playPause->iconText() == "Pause" ? "pause" : "resume",
-			status), true);
+		StatusMessage::error(QString("Failed to %1 playback: %2")
+			.arg(playPause->iconText() == "Pause" ? "pause" : "resume")
+			.arg(QString::fromStdString(status)));
 	};
 
 	if (current.is_playing)
@@ -211,12 +211,14 @@ void MainToolBar::onPrevious(bool /*checked*/)
 {
 	this->spotify.previous([this](const std::string &status)
 	{
-		auto *mainWindow = MainWindow::find(this->parentWidget());
 		if (!status.empty())
 		{
-			mainWindow->status(lib::fmt::format("Failed to go to previous track: {}",
-				status), true);
+			StatusMessage::error(QString("Failed to go to previous track: %1")
+				.arg(QString::fromStdString(status)));
+			return;
 		}
+
+		auto *mainWindow = MainWindow::find(this->parentWidget());
 		mainWindow->refresh();
 	});
 }
@@ -225,12 +227,14 @@ void MainToolBar::onNext(bool /*checked*/)
 {
 	spotify.next([this](const std::string &status)
 	{
-		auto *mainWindow = MainWindow::find(this->parentWidget());
 		if (!status.empty())
 		{
-			mainWindow->status(lib::fmt::format("Failed to go to next track: {}",
-				status), true);
+			StatusMessage::error(QString("Failed to go to next track: %1")
+				.arg(QString::fromStdString(status)));
+			return;
 		}
+
+		auto *mainWindow = MainWindow::find(this->parentWidget());
 		mainWindow->refresh();
 	});
 }
@@ -239,15 +243,15 @@ void MainToolBar::onProgressReleased()
 {
 	spotify.seek(progress->value(), [this](const std::string &status)
 	{
-		auto *mainWindow = MainWindow::find(this->parentWidget());
-
 		if (!status.empty())
 		{
-			mainWindow->status(lib::fmt::format("Failed to seek: {}",
-				status), true);
+			StatusMessage::error(QString("Failed to seek: %1")
+				.arg(QString::fromStdString(status)));
+			return;
 		}
 
 #ifdef USE_DBUS
+		auto *mainWindow = MainWindow::find(this->parentWidget());
 		if (mainWindow->getMediaPlayer() != nullptr)
 		{
 			mainWindow->getMediaPlayer()->stateUpdated();
@@ -264,13 +268,15 @@ void MainToolBar::onShuffle(bool checked)
 	current.shuffle = !current.shuffle;
 	mainWindow->refreshed(current);
 
-	spotify.set_shuffle(checked, [mainWindow](const std::string &status)
+	spotify.set_shuffle(checked, [](const std::string &status)
 	{
-		if (!status.empty())
+		if (status.empty())
 		{
-			mainWindow->status(lib::fmt::format("Failed to toggle shuffle: {}",
-				status), true);
+			return;
 		}
+
+		StatusMessage::error(QString("Failed to toggle shuffle: %1")
+			.arg(QString::fromStdString(status)));
 	});
 }
 
@@ -285,13 +291,15 @@ void MainToolBar::onRepeat(bool checked)
 	current.repeat = repeatMode;
 	mainWindow->refreshed(current);
 
-	spotify.set_repeat(repeatMode, [mainWindow](const std::string &status)
+	spotify.set_repeat(repeatMode, [](const std::string &status)
 	{
-		if (!status.empty())
+		if (status.empty())
 		{
-			mainWindow->status(lib::fmt::format("Failed to toggle repeat: {}",
-				status), true);
+			return;
 		}
+
+		StatusMessage::error(QString("Failed to toggle repeat: %1")
+			.arg(QString::fromStdString(status)));
 	});
 }
 

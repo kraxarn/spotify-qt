@@ -47,17 +47,15 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 		QSlider::connect(volume, &QAbstractSlider::sliderReleased, [this]()
 		{
 			this->spotify.set_volume(volume->value() * step,
-				[this](const std::string &status)
+				[](const std::string &status)
 				{
-					if (!status.empty())
+					if (status.empty())
 					{
-						auto *window = MainWindow::find(parentWidget());
-						if (window != nullptr)
-						{
-							window->status(lib::fmt::format("Failed to set volume: {}",
-								status), true);
-						}
+						return;
 					}
+
+					StatusMessage::error(QString("Failed to set volume: %1")
+						.arg(QString::fromStdString(status)));
 				});
 		});
 	}

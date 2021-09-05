@@ -135,8 +135,7 @@ void Menu::Playlist::onShuffle(bool /*checked*/)
 {
 	if (tracks.empty())
 	{
-		auto *mainWindow = MainWindow::find(parentWidget());
-		mainWindow->setStatus("No tracks found to shuffle", true);
+		StatusMessage::warn(QStringLiteral("No tracks found to shuffle"));
 		return;
 	}
 
@@ -146,17 +145,15 @@ void Menu::Playlist::onShuffle(bool /*checked*/)
 		{
 			if (!status.empty())
 			{
-				auto *mainWindow = MainWindow::find(this->parentWidget());
-				mainWindow->status(status, true);
+				StatusMessage::error(QString::fromStdString(status));
 				return;
 			}
 
-			spotify.set_shuffle(true, [this](const std::string &status)
+			spotify.set_shuffle(true, [](const std::string &status)
 			{
 				if (!status.empty())
 				{
-					auto *mainWindow = MainWindow::find(this->parentWidget());
-					mainWindow->status(status, true);
+					StatusMessage::error(QString::fromStdString(status));
 				}
 			});
 		});
@@ -188,12 +185,7 @@ void Menu::Playlist::onRefresh(bool /*checked*/)
 void Menu::Playlist::onCopyLink(bool /*checked*/) const
 {
 	QApplication::clipboard()->setText(playlistUrl());
-
-	auto *mainWindow = MainWindow::find(parentWidget());
-	if (mainWindow != nullptr)
-	{
-		mainWindow->setStatus("Link copied to clipboard");
-	}
+	StatusMessage::info(QStringLiteral("Link copied to clipboard"));
 }
 
 void Menu::Playlist::onOpenInSpotify(bool /*checked*/) const

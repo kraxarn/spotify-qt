@@ -47,10 +47,10 @@ SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 
 	auto *share = addMenu(Icon::get("document-share"), "Share");
 	auto *shareSongLink = share->addAction("Copy song link");
-	QAction::connect(shareSongLink, &QAction::triggered, [this, mainWindow](bool /*checked*/)
+	QAction::connect(shareSongLink, &QAction::triggered, [this](bool /*checked*/)
 	{
 		QApplication::clipboard()->setText(this->getTrackUrl());
-		mainWindow->setStatus("Link copied to clipboard");
+		StatusMessage::info(QStringLiteral("Link copied to clipboard"));
 	});
 
 	auto *shareSongOpen = share->addAction("Open in Spotify");
@@ -150,12 +150,14 @@ void SongMenu::like(bool /*checked*/)
 {
 	auto callback = [this](const std::string &status)
 	{
-		if (!status.empty())
+		if (status.empty())
 		{
-			auto *mainWindow = MainWindow::find(this->parentWidget());
-			mainWindow->status(lib::fmt::format("Failed to {}: {}",
-				isLiked ? "dislike" : "like", status), true);
+			return;
 		}
+
+		StatusMessage::error(QString("Failed to %1: %2")
+			.arg(isLiked ? "dislike" : "like")
+			.arg(QString::fromStdString(status)));
 	};
 
 	if (isLiked)
@@ -171,9 +173,9 @@ void SongMenu::like(bool /*checked*/)
 void SongMenu::addToQueue(bool /*checked*/)
 {
 	auto uri = lib::spt::api::to_uri("track", track.id);
-	spotify.add_to_queue(uri, [this](const std::string &status)
+	spotify.add_to_queue(uri, [](const std::string &status)
 	{
-		MainWindow::find(this->parentWidget())->status(status, true);
+		StatusMessage::error(QString::fromStdString(status));
 	});
 }
 
@@ -206,14 +208,15 @@ void SongMenu::addToPlaylist(QAction *action)
 
 				// Actually add
 				auto plTrack = lib::spt::api::to_uri("track", track.id);
-				spotify.add_to_playlist(playlistId, plTrack, [mainWindow](const std::string &result)
+				spotify.add_to_playlist(playlistId, plTrack, [](const std::string &result)
 				{
 					if (result.empty())
 					{
 						return;
 					}
-					mainWindow->status(lib::fmt::format("Failed to add track to playlist: {}",
-						result), true);
+
+					StatusMessage::error(QString("Failed to add track to playlist: %1")
+						.arg(QString::fromStdString(result)));
 				});
 			});
 	});
@@ -226,16 +229,15 @@ void SongMenu::remFromPlaylist(bool /*checked*/)
 		[this](const std::string &status)
 		{
 			// Remove from Spotify
-			auto *mainWindow = MainWindow::find(this->parentWidget());
-
 			if (!status.empty())
 			{
-				mainWindow->status(lib::fmt::format(
-					"Failed to remove track from playlist: {}", status), true);
+				StatusMessage::error(QString("Failed to remove track from playlist: %1")
+					.arg(QString::fromStdString(status)));
 				return;
 			}
 
 			// Remove from interface
+			auto *mainWindow = MainWindow::find(this->parentWidget());
 			QTreeWidgetItem *item = nullptr;
 			int i;
 			for (i = 0; i < mainWindow->getSongsTree()->topLevelItemCount(); i++)
@@ -251,16 +253,16 @@ void SongMenu::remFromPlaylist(bool /*checked*/)
 
 			if (item == nullptr)
 			{
-				mainWindow->setStatus("Failed to remove track, not found in playlist", true);
+				StatusMessage::warn(QStringLiteral("Failed to remove track from list"));
 				return;
 			}
 
 			// It doesn't necessarily match item index depending on sorting order
 			mainWindow->getSongsTree()->takeTopLevelItem(i);
-			mainWindow->status(lib::fmt::format("Removed {} - {} from \"{}\"",
-				track.name,
-				lib::spt::entity::combine_names(track.artists),
-				currentPlaylist.name));
+
+			StatusMessage::info(QString("Removed %1 from \"%2\"")
+				.arg(QString::fromStdString(track.title()))
+				.arg(QString::fromStdString(currentPlaylist.name)));
 		});
 }
 

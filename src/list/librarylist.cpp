@@ -145,13 +145,7 @@ void LibraryList::tracksLoaded(const std::string &id, const std::vector<lib::spt
 
 void LibraryList::doubleClicked(QTreeWidgetItem *item, int /*column*/)
 {
-	auto *mainWindow = MainWindow::find(parentWidget());
-	if (mainWindow == nullptr)
-	{
-		return;
-	}
-
-	auto callback = [this, mainWindow](const std::vector<lib::spt::track> &tracks)
+	auto callback = [this](const std::vector<lib::spt::track> &tracks)
 	{
 		// If none were found, don't do anything
 		if (tracks.empty())
@@ -168,15 +162,16 @@ void LibraryList::doubleClicked(QTreeWidgetItem *item, int /*column*/)
 		}
 
 		// Play in context of all tracks
-		this->spotify.play_tracks(0, trackIds,
-			[mainWindow](const std::string &status)
+		this->spotify.play_tracks(0, trackIds, [](const std::string &status)
+		{
+			if (status.empty())
 			{
-				if (!status.empty())
-				{
-					mainWindow->status(lib::fmt::format("Failed to start playback: {}",
-						status), true);
-				}
-			});
+				return;
+			}
+
+			StatusMessage::error(QString("Failed to start playback: %1")
+				.arg(QString::fromStdString(status)));
+		});
 	};
 
 	// Fetch all tracks in list

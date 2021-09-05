@@ -27,8 +27,6 @@ public:
 
 	//endregion
 
-	void setStatus(const QString &message, bool important = false);
-	void status(const std::string &message, bool important = false);
 	lib::spt::playback currentPlayback() const;
 	void openLyrics(const lib::spt::track &track);
 	void reloadTrayIcon();

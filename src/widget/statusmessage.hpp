@@ -19,6 +19,10 @@ public:
 	void showStatus(MessageType messageType, const QString &text);
 	static void show(MessageType messageType, const QString &text);
 
+	static void info(const QString &text);
+	static void warn(const QString &text);
+	static void error(const QString &text);
+
 private:
 	QHBoxLayout *layout = nullptr;
 

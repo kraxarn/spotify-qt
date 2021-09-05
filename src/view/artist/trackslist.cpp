@@ -51,16 +51,15 @@ void View::Artist::TracksList::onActivated(QListWidgetItem *currentItem)
 		uris.push_back(lib::spt::api::to_uri("track", trackId));
 	}
 
-	spotify.play_tracks(index, uris, [this](const std::string &result)
+	spotify.play_tracks(index, uris, [](const std::string &result)
 	{
 		if (result.empty())
 		{
 			return;
 		}
 
-		auto *mainWindow = MainWindow::find(this->parentWidget());
-		mainWindow->status(lib::fmt::format("Failed to start playback: {}",
-			result), true);
+		StatusMessage::error(QString("Failed to start playback: %1")
+			.arg(QString::fromStdString(result)));
 	});
 }
 

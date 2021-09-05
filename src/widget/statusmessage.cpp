@@ -75,6 +75,21 @@ void StatusMessage::show(MessageType messageType, const QString &text)
 	instance->showStatus(messageType, text);
 }
 
+void StatusMessage::info(const QString &text)
+{
+	StatusMessage::show(MessageType::Information, text);
+}
+
+void StatusMessage::warn(const QString &text)
+{
+	StatusMessage::show(MessageType::Warning, text);
+}
+
+void StatusMessage::error(const QString &text)
+{
+	StatusMessage::show(MessageType::Error, text);
+}
+
 auto StatusMessage::getIcon(MessageType messageType) -> QIcon
 {
 	switch (messageType)

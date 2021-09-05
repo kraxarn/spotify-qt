@@ -48,7 +48,7 @@ void View::Search::Albums::onItemClicked(QTreeWidgetItem *item, int /*column*/)
 
 	if (!mainWindow->loadAlbum(albumId))
 	{
-		mainWindow->setStatus(QString("Failed to load album"), true);
+		StatusMessage::error(QStringLiteral("Failed to load album"));
 	}
 }
 

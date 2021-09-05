@@ -50,16 +50,15 @@ void View::Search::Tracks::onItemActivated(QTreeWidgetItem *item, int /*column*/
 		.value<lib::spt::track>();
 	auto trackId = lib::spt::api::to_uri("track", track.id);
 
-	spotify.play_tracks(0, {trackId}, [this](const std::string &status)
+	spotify.play_tracks(0, {trackId}, [](const std::string &status)
 	{
 		if (status.empty())
 		{
 			return;
 		}
 
-		auto *mainWindow = MainWindow::find(this->parentWidget());
-		mainWindow->status(lib::fmt::format("Failed to play track: {}",
-			status), true);
+		StatusMessage::error(QString("Failed to play track: %1")
+			.arg(QString::fromStdString(status)));
 	});
 }
 

@@ -124,7 +124,7 @@ void View::Artist::AlbumsList::onItemClicked(QTreeWidgetItem *item, int /*column
 	auto *mainWindow = MainWindow::find(parentWidget());
 	if (!mainWindow->loadAlbum(id))
 	{
-		mainWindow->setStatus(QString("Failed to load album"), true);
+		StatusMessage::error(QStringLiteral("Failed to load album"));
 	}
 }
 
@@ -138,16 +138,15 @@ void View::Artist::AlbumsList::onItemDoubleClicked(QTreeWidgetItem *item, int /*
 	}
 
 	spotify.play_tracks(lib::spt::api::to_uri("album", id),
-		[this](const std::string &result)
+		[](const std::string &result)
 		{
 			if (result.empty())
 			{
 				return;
 			}
 
-			auto *mainWindow = MainWindow::find(this->parentWidget());
-			mainWindow->status(lib::fmt::format("Failed to start playback: {}",
-				result), true);
+			StatusMessage::error(QString("Failed to start playback: %1")
+				.arg(QString::fromStdString(result)));
 		});
 }
 

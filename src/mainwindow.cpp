@@ -82,7 +82,8 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	setBorderless(!settings.qt_const().system_title_bar);
 
 	// Welcome
-	setStatus("Welcome to spotify-qt!");
+	StatusMessage::show(MessageType::Information,
+		QStringLiteral("Welcome to spotify-qt!"));
 	splash.finish(this);
 }
 
@@ -390,32 +391,6 @@ void MainWindow::saveTracksToCache(const std::string &id,
 	const std::vector<lib::spt::track> &tracks)
 {
 	cache.set_tracks(id, tracks);
-}
-
-void MainWindow::setStatus(const QString &message, bool important)
-{
-	if (message.isNull() || message.isEmpty())
-	{
-		return;
-	}
-
-	if (trayIcon != nullptr && settings.general.tray_notifications)
-	{
-		if (important)
-		{
-			trayIcon->message(message);
-		}
-	}
-	else
-	{
-		const int messageTimeout = 5000;
-		statusBar()->showMessage(message, messageTimeout);
-	}
-}
-
-void MainWindow::status(const std::string &message, bool important)
-{
-	setStatus(QString::fromStdString(message), important);
 }
 
 void MainWindow::setAlbumImage(const std::string &url)

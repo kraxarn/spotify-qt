@@ -83,7 +83,7 @@ void TracksList::clicked(QTreeWidgetItem *item, int /*column*/)
 	auto trackIndex = item->data(0, static_cast<int>(DataRole::Index)).toInt(&indexFound);
 	if (!indexFound)
 	{
-		mainWindow->setStatus("Failed to start playback: track not found", true);
+		StatusMessage::error(QStringLiteral("Failed to start playback: track not found"));
 		return;
 	}
 
@@ -91,8 +91,8 @@ void TracksList::clicked(QTreeWidgetItem *item, int /*column*/)
 	{
 		if (!status.empty())
 		{
-			mainWindow->status(lib::fmt::format("Failed to start playback: {}",
-				status), true);
+			StatusMessage::error(QString("Failed to start playback: %1")
+				.arg(QString::fromStdString(status)));
 		}
 		else
 		{

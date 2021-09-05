@@ -101,17 +101,13 @@ void MainMenu::refreshDevices()
 void MainMenu::deviceSelected(QAction *action)
 {
 	spotify.set_device(action->data().toString().toStdString(),
-		[this, action](const std::string &status)
+		[action](const std::string &status)
 		{
 			if (!status.empty())
 			{
 				action->setChecked(false);
-				auto *window = MainWindow::find(this->parentWidget());
-				if (window != nullptr)
-				{
-					window->status(lib::fmt::format("Failed to set device: {}",
-						status), true);
-				}
+				StatusMessage::error(QString("Failed to set device: %1")
+					.arg(QString::fromStdString(status)));
 			}
 			else
 			{

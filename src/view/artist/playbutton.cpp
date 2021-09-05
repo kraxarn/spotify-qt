@@ -81,19 +81,16 @@ void View::Artist::PlayButton::onFollow(bool /*checked*/)
 	auto isFollowing = follow->text().contains("Unfollow");
 	updateFollow(!isFollowing);
 
-	auto callback = [this, isFollowing](const std::string &status)
+	auto callback = [isFollowing](const std::string &status)
 	{
 		if (status.empty())
 		{
 			return;
 		}
 
-		auto *mainWindow = MainWindow::find(this->parentWidget());
-		if (mainWindow != nullptr)
-		{
-			mainWindow->status(lib::fmt::format("Failed to {}: {}",
-				isFollowing ? "unfollow" : "follow", status));
-		}
+		StatusMessage::error(QString("Failed to %1: %2")
+			.arg(isFollowing ? "unfollow" : "follow")
+			.arg(QString::fromStdString(status)));
 	};
 
 	if (isFollowing)

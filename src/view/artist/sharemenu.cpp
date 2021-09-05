@@ -23,7 +23,7 @@ void View::Artist::ShareMenu::onCopyArtistLink(bool /*checked*/)
 		.arg(QString::fromStdString(artist.id));
 
 	QApplication::clipboard()->setText(artistLink);
-	MainWindow::find(parentWidget())->setStatus("Link copied to clipboard");
+	StatusMessage::info(QStringLiteral("Link copied to clipboard"));
 }
 
 void View::Artist::ShareMenu::onOpenInSpotify(bool /*checked*/)

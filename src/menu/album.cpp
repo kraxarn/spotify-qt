@@ -35,8 +35,7 @@ void Menu::Album::shuffle(bool /*checked*/)
 {
 	if (tracks.empty())
 	{
-		auto *mainWindow = MainWindow::find(parentWidget());
-		mainWindow->setStatus("No tracks found to shuffle", true);
+		StatusMessage::warn(QStringLiteral("No tracks found to shuffle"));
 		return;
 	}
 
@@ -44,16 +43,15 @@ void Menu::Album::shuffle(bool /*checked*/)
 	spotify.play_tracks(initialIndex, lib::spt::api::to_uri("album", albumId),
 		[this](const std::string &status)
 		{
-			auto *mainWindow = MainWindow::find(this->parentWidget());
 			if (!status.empty())
 			{
-				mainWindow->status(status, true);
+				StatusMessage::error(QString::fromStdString(status));
 				return;
 			}
 
-			spotify.set_shuffle(true, [mainWindow](const std::string &status)
+			spotify.set_shuffle(true, [](const std::string &status)
 			{
-				mainWindow->status(status, true);
+				StatusMessage::error(QString::fromStdString(status));
 			});
 		});
 }
@@ -62,7 +60,7 @@ void Menu::Album::shareAlbum(bool /*checked*/)
 {
 	QApplication::clipboard()->setText(QString("https://open.spotify.com/album/%1")
 		.arg(QString::fromStdString(albumId)));
-	MainWindow::find(parentWidget())->setStatus("Link copied to clipboard");
+	StatusMessage::info(QStringLiteral("Link copied to clipboard"));
 }
 
 void Menu::Album::shareOpen(bool /*checked*/)
