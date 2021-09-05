@@ -1,8 +1,8 @@
 #include "debugview.hpp"
 
 DebugView::DebugView(const lib::settings &settings, QWidget *parent)
-	: settings(settings),
-	QWidget(parent)
+	: QWidget(parent),
+	settings(settings)
 {
 	auto *layout = new QVBoxLayout(this);
 	layout->setAlignment(Qt::AlignTop);

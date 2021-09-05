@@ -4,8 +4,8 @@
 #include "lib/log.hpp"
 
 DragArea::DragArea(QWidget *parent)
-	: mainWindow(MainWindow::find(parent)),
-	QWidget(parent)
+	: QWidget(parent),
+	mainWindow(MainWindow::find(parent))
 {
 	if (mainWindow == nullptr)
 	{

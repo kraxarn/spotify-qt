@@ -1,8 +1,8 @@
 #include "view/crashes.hpp"
 
 View::Crashes::Crashes(lib::cache &cache, QWidget *parent)
-	: cache(cache),
-	QWidget(parent)
+	: QWidget(parent),
+	cache(cache)
 {
 	auto *layout = new QHBoxLayout(this);
 

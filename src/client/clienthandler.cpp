@@ -5,10 +5,10 @@ QList<QPair<QDateTime, QString>> spt::ClientHandler::log;
 
 spt::ClientHandler::ClientHandler(const lib::settings &settings,
 	const lib::paths &paths, QWidget *parent)
-	: settings(settings),
+	: QObject(parent),
 	parentWidget(parent),
-	paths(paths),
-	QObject(parent)
+	settings(settings),
+	paths(paths)
 {
 	path = QString::fromStdString(settings.spotify.path);
 	process = new QProcess(parent);

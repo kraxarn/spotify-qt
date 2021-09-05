@@ -3,11 +3,11 @@
 
 View::Artist::TracksList::TracksList(lib::spt::api &spotify, lib::cache &cache,
 	const lib::http_client &httpClient, const lib::spt::artist &artist, QWidget *parent)
-	: spotify(spotify),
+	: QListWidget(parent),
+	spotify(spotify),
 	cache(cache),
 	httpClient(httpClient),
-	artist(artist),
-	QListWidget(parent)
+	artist(artist)
 {
 	setEnabled(false);
 

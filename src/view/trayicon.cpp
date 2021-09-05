@@ -1,9 +1,9 @@
 #include "trayicon.hpp"
 
 TrayIcon::TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QWidget *parent)
-	: spotify(spotify),
-	settings(settings),
-	QSystemTrayIcon(parent)
+	: QSystemTrayIcon(parent),
+	spotify(spotify),
+	settings(settings)
 {
 	callback = [this](const std::string &result)
 	{

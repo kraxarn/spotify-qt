@@ -3,9 +3,9 @@
 
 View::Artist::PlayButton::PlayButton(lib::spt::api &spotify,
 	const lib::http_client &httpClient, QWidget *parent)
-	: spotify(spotify),
-	httpClient(httpClient),
-	QToolButton(parent)
+	: QToolButton(parent),
+	spotify(spotify),
+	httpClient(httpClient)
 {
 	setEnabled(false);
 	setIcon(Icon::get("media-playback-start"));

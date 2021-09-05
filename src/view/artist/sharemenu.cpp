@@ -2,8 +2,8 @@
 #include "mainwindow.hpp"
 
 View::Artist::ShareMenu::ShareMenu(const lib::spt::artist &artist, QWidget *parent)
-	: artist(artist),
-	QMenu(parent)
+	: QMenu(parent),
+	artist(artist)
 {
 	setIcon(Icon::get("document-share"));
 	setTitle("Share");

@@ -3,9 +3,9 @@
 
 View::Search::Library::Library(lib::spt::api &spotify,
 	lib::cache &cache, QWidget *parent)
-	: spotify(spotify),
-	cache(cache),
-	View::Search::Tracks(spotify, cache, parent)
+	: View::Search::Tracks(spotify, cache, parent),
+	spotify(spotify),
+	cache(cache)
 {
 }
 

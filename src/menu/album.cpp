@@ -3,9 +3,9 @@
 
 Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache,
 	const std::string &albumId, QWidget *parent)
-	: albumId(albumId),
-	spotify(spotify),
-	QMenu(parent)
+	: QMenu(parent),
+	albumId(albumId),
+	spotify(spotify)
 {
 	trackCount = addAction("...");
 	trackCount->setEnabled(false);

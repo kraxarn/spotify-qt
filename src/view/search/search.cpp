@@ -3,10 +3,10 @@
 
 View::Search::Search::Search(lib::spt::api &spotify, lib::cache &cache,
 	const lib::http_client &httpClient, QWidget *parent)
-	: spotify(spotify),
+	: QWidget(parent),
+	spotify(spotify),
 	cache(cache),
-	httpClient(httpClient),
-	QWidget(parent)
+	httpClient(httpClient)
 {
 	auto *layout = new QVBoxLayout();
 	searchBox = new QLineEdit(this);

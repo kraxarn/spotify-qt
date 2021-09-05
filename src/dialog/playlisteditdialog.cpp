@@ -2,9 +2,9 @@
 
 PlaylistEditDialog::PlaylistEditDialog(lib::spt::api &spotify, const lib::spt::playlist &playlist,
 	int selectedIndex, QWidget *parent)
-	: spotify(spotify),
-	playlist(playlist),
-	QDialog(parent)
+	: QDialog(parent),
+	spotify(spotify),
+	playlist(playlist)
 {
 	const auto &playlistName = QString::fromStdString(playlist.name);
 	const auto &playlistDescription = QString::fromStdString(playlist.description);

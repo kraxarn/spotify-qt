@@ -1,8 +1,8 @@
 #include "trackscachedialog.hpp"
 
 TracksCacheDialog::TracksCacheDialog(lib::cache &cache, QWidget *parent)
-	: cache(cache),
-	QDialog(parent)
+	: QDialog(parent),
+	cache(cache)
 {
 	resize(400, 300);
 	setWindowTitle("Tracks cache");

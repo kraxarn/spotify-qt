@@ -3,9 +3,9 @@
 #ifdef USE_DBUS
 
 MediaPlayer::MediaPlayer(lib::spt::api &spotify, QObject *parent)
-	: spotify(spotify),
+	: QDBusAbstractAdaptor(parent),
 	dBus(QDBusConnection::sessionBus()),
-	QDBusAbstractAdaptor(parent)
+	spotify(spotify)
 {
 }
 

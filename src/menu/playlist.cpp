@@ -3,10 +3,10 @@
 
 Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playlist,
 	lib::cache &cache, QWidget *parent)
-	: playlist(playlist),
+	: QMenu(parent),
+	playlist(playlist),
 	cache(cache),
-	spotify(spotify),
-	QMenu(parent)
+	spotify(spotify)
 {
 	tracksAction = addAction("... tracks");
 	tracksAction->setEnabled(false);

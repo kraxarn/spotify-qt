@@ -23,10 +23,10 @@ SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 	const lib::cache &cache, const lib::spt::artist *fromArtist,
 	int index, QWidget *parent)
-	: track(track),
-	index(index),
+	: QMenu(parent),
 	spotify(spotify),
-	QMenu(parent)
+	track(track),
+	index(index)
 {
 	auto *mainWindow = MainWindow::find(parent);
 	if (mainWindow == nullptr)

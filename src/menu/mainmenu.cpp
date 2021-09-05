@@ -3,10 +3,10 @@
 
 MainMenu::MainMenu(lib::spt::api &spotify, lib::settings &settings,
 	const lib::http_client &httpClient, lib::cache &cache, QWidget *parent)
-	: settings(settings),
+	: QMenu(parent),
 	spotify(spotify),
-	cache(cache),
-	QMenu(parent)
+	settings(settings),
+	cache(cache)
 {
 	// Update notifier
 	about = addAction(Icon::get("help-about"), QString("Checking for updates..."));

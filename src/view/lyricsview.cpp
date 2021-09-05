@@ -2,9 +2,9 @@
 
 LyricsView::LyricsView(const lib::http_client &httpClient,
 	lib::cache &cache, QWidget *parent)
-	: cache(cache),
-	lyrics(httpClient),
-	QTextEdit(parent)
+	: QTextEdit(parent),
+	cache(cache),
+	lyrics(httpClient)
 {
 	setReadOnly(true);
 }

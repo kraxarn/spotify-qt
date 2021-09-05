@@ -1,7 +1,8 @@
 #include "setupdialog.hpp"
 
 SetupDialog::SetupDialog(lib::settings &settings, QWidget *parent)
-	: settings(settings), QDialog(parent)
+	: QDialog(parent),
+	settings(settings)
 {
 	// Auth
 	auth = new lib::qt::spt::auth(settings, this);

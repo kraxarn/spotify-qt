@@ -2,9 +2,9 @@
 #include "mainwindow.hpp"
 
 View::Search::Playlists::Playlists(lib::spt::api &spotify, lib::cache &cache, QWidget *parent)
-	: spotify(spotify),
-	cache(cache),
-	QListWidget(parent)
+	: QListWidget(parent),
+	spotify(spotify),
+	cache(cache)
 {
 	QListWidget::connect(this, &QListWidget::itemClicked,
 		this, &View::Search::Playlists::onItemClicked);

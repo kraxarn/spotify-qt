@@ -3,10 +3,10 @@
 
 View::Artist::AlbumsList::AlbumsList(lib::spt::api &spotify, lib::cache &cache,
 	const lib::http_client &httpClient, QWidget *parent)
-	: spotify(spotify),
+	: QTreeWidget(parent),
+	spotify(spotify),
 	cache(cache),
-	httpClient(httpClient),
-	QTreeWidget(parent)
+	httpClient(httpClient)
 {
 	setEnabled(false);
 	setColumnCount(2);

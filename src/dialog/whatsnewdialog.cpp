@@ -3,9 +3,9 @@
 
 WhatsNewDialog::WhatsNewDialog(lib::settings &settings,
 	const lib::http_client &httpClient, QWidget *parent)
-	: settings(settings),
-	httpClient(httpClient),
-	QDialog(parent)
+	: QDialog(parent),
+	settings(settings),
+	httpClient(httpClient)
 {
 	auto *layout = new QVBoxLayout();
 	auto *title = new QLabel(QString("spotify-qt was updated to version %1")

@@ -1,8 +1,8 @@
 #include "loader.hpp"
 
 Loader::Loader(QLabel *parent)
-	: label(parent),
-	QObject(parent)
+	: QObject(parent),
+	label(parent)
 {
 	labelText = label->text();
 	limit = label->text().length();

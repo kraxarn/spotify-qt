@@ -3,10 +3,10 @@
 
 PlaylistList::PlaylistList(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
 	QWidget *parent)
-	: spotify(spotify),
-	settings(settings),
+	: QListWidget(parent),
+	spotify(spotify),
 	cache(cache),
-	QListWidget(parent)
+	settings(settings)
 {
 	// Set default selected playlist
 	setCurrentRow(0);

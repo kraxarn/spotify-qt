@@ -4,10 +4,10 @@
 
 TracksList::TracksList(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
 	QWidget *parent)
-	: spotify(spotify),
+	: QTreeWidget(parent),
 	settings(settings),
 	cache(cache),
-	QTreeWidget(parent)
+	spotify(spotify)
 {
 	constexpr int emptyPixmapSize = 64;
 	constexpr int columnCount = 5;

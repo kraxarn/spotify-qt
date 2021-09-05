@@ -2,9 +2,9 @@
 #include "mainwindow.hpp"
 
 View::Search::Tracks::Tracks(lib::spt::api &spotify, lib::cache &cache, QWidget *parent)
-	: spotify(spotify),
-	cache(cache),
-	View::Search::SearchTabTree({"Title", "Artist", "Album"}, parent)
+	: View::Search::SearchTabTree({"Title", "Artist", "Album"}, parent),
+	spotify(spotify),
+	cache(cache)
 {
 	// Hide "Album" by default
 	header()->setSectionHidden(header()->count() - 1, true);

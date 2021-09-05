@@ -2,10 +2,10 @@
 #include "mainwindow.hpp"
 
 VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWidget *parent)
-	: settings(settings),
-	spotify(spotify),
+	: QToolButton(parent),
 	volume(new QSlider(this)),
-	QToolButton(parent)
+	settings(settings),
+	spotify(spotify)
 {
 	// Volume slider
 	volume->setOrientation(Qt::Orientation::Vertical);

@@ -2,8 +2,8 @@
 #include "mainwindow.hpp"
 
 LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
-	: spotify(spotify),
-	QTreeWidget(parent)
+	: QTreeWidget(parent),
+	spotify(spotify)
 {
 	addTopLevelItems({
 		TreeUtils::itemWithNoChildren(this, recentlyPlayed,

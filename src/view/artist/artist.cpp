@@ -3,11 +3,11 @@
 
 View::Artist::Artist::Artist(lib::spt::api &spotify, const std::string &artistId,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
-	: spotify(spotify),
+	: QWidget(parent),
 	artistId(std::string(artistId)),
+	spotify(spotify),
 	cache(cache),
-	httpClient(httpClient),
-	QWidget(parent)
+	httpClient(httpClient)
 {
 	layout = new QVBoxLayout();
 	layout->setContentsMargins(-1, 0, -1, 0);

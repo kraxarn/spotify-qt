@@ -3,9 +3,9 @@
 #ifdef USE_DBUS
 
 KWallet::KWallet(const QString &username)
-	: username(QString(username)),
-	dbus("org.kde.kwalletd5", "/modules/kwalletd5",
-		"org.kde.KWallet", QDBusConnection::sessionBus()),
+	: dbus("org.kde.kwalletd5", "/modules/kwalletd5",
+	"org.kde.KWallet", QDBusConnection::sessionBus()),
+	username(QString(username)),
 	appName(QCoreApplication::applicationName())
 {
 }

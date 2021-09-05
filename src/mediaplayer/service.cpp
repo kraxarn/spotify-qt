@@ -7,8 +7,8 @@
 #define SERVICE_PATH "/org/mpris/MediaPlayer2"
 
 mp::Service::Service(lib::spt::api &spotify, QObject *parent)
-	: spotify(spotify),
-	QObject(parent)
+	: QObject(parent),
+	spotify(spotify)
 {
 	if (!QDBusConnection::sessionBus().registerService(SERVICE_NAME))
 	{

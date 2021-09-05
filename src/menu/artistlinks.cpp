@@ -2,10 +2,9 @@
 
 Menu::ArtistLinks::ArtistLinks(const lib::spt::artist &artist,
 	const lib::http_client &httpClient, QWidget *parent)
-	: artist(artist),
-	httpClient(httpClient),
-	ddg(httpClient),
-	QMenu(parent)
+	: QMenu(parent),
+	artist(artist),
+	ddg(httpClient)
 {
 	setIcon(Icon::get("edit-find"));
 	setTitle("Links");

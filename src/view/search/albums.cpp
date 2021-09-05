@@ -3,10 +3,10 @@
 
 View::Search::Albums::Albums(lib::spt::api &spotify, lib::cache &cache,
 	const lib::http_client &httpClient, QWidget *parent)
-	: spotify(spotify),
+	: View::Search::SearchTabTree({"Title", "Artist"}, parent),
+	spotify(spotify),
 	cache(cache),
-	httpClient(httpClient),
-	View::Search::SearchTabTree({"Title", "Artist"}, parent)
+	httpClient(httpClient)
 {
 	QTreeWidget::connect(this, &QTreeWidget::itemClicked,
 		this, &View::Search::Albums::onItemClicked);

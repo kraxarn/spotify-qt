@@ -1,8 +1,8 @@
 #include "settingsdialog.hpp"
 
 SettingsDialog::SettingsDialog(lib::settings &settings, lib::cache &cache, QWidget *parent)
-	: settings(settings),
-	QDialog(parent)
+	: QDialog(parent),
+	settings(settings)
 {
 	setStyleSheet(parent->styleSheet());
 

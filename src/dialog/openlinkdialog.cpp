@@ -1,8 +1,8 @@
 #include "openlinkdialog.hpp"
 
 OpenLinkDialog::OpenLinkDialog(const QString &link, LinkType linkType, QWidget *parent)
-	: linkType(linkType),
-	QDialog(parent)
+	: QDialog(parent),
+	linkType(linkType)
 {
 	auto *layout = new QVBoxLayout();
 	setLayout(layout);

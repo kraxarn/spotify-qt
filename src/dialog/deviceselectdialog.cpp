@@ -2,8 +2,8 @@
 
 DeviceSelectDialog::DeviceSelectDialog(const std::vector<lib::spt::device> &devices,
 	QWidget *parent)
-	: devices(devices),
-	QDialog(parent)
+	: QDialog(parent),
+	devices(devices)
 {
 	auto *layout = new QVBoxLayout();
 	setLayout(layout);

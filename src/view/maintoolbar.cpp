@@ -3,10 +3,10 @@
 
 MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	const lib::http_client &httpClient, lib::cache &cache, QWidget *parent)
-	: parent(parent),
+	: QToolBar("Media controls", parent),
+	parent(parent),
 	spotify(spotify),
-	settings(settings),
-	QToolBar("Media controls", parent)
+	settings(settings)
 {
 	auto *mainWindow = MainWindow::find(parent);
 	if (mainWindow == nullptr)

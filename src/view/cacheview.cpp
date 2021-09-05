@@ -1,8 +1,8 @@
 #include "cacheview.hpp"
 
 CacheView::CacheView(const lib::paths &paths, QWidget *parent)
-	: paths(paths),
-	QTreeWidget(parent)
+	: QTreeWidget(parent),
+	paths(paths)
 {
 	setHeaderLabels({
 		"Folder",

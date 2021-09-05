@@ -2,12 +2,12 @@
 
 View::SidePanel::SidePanel::SidePanel(spt::Spotify &spotify, const lib::settings &settings,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
-	: spotify(spotify),
-	settings(settings),
+	: QDockWidget(parent),
 	parent(parent),
+	spotify(spotify),
+	settings(settings),
 	cache(cache),
-	httpClient(httpClient),
-	QDockWidget(parent)
+	httpClient(httpClient)
 {
 	title = new View::SidePanel::Title(this);
 	setTitleBarWidget(title);

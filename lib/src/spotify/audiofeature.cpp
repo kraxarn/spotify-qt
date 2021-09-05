@@ -66,8 +66,8 @@ lib::spt::audio_feature::audio_feature(lib::audio_feature feature, float value)
 
 lib::spt::audio_feature::audio_feature(lib::audio_key key)
 	: feature(lib::audio_feature::key),
-	name(to_string(key)),
-	value(static_cast<float>(key))
+	value(static_cast<float>(key)),
+	name(to_string(key))
 {
 	// These values doesn't really make sense here,
 	// but it looks better
@@ -77,8 +77,8 @@ lib::spt::audio_feature::audio_feature(lib::audio_key key)
 
 lib::spt::audio_feature::audio_feature(lib::audio_mode mode)
 	: feature(lib::audio_feature::mode),
-	name(to_string(mode)),
-	value(static_cast<float>(mode))
+	value(static_cast<float>(mode)),
+	name(to_string(mode))
 {
 	// These values don't really make sense here,
 	// but it looks better

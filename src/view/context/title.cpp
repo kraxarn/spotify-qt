@@ -4,10 +4,10 @@
 
 View::Context::Title::Title(lib::spt::api &spotify, spt::Current &current,
 	const lib::cache &cache, QWidget *parent)
-	: spotify(spotify),
+	: QWidget(parent),
+	spotify(spotify),
 	current(current),
-	cache(cache),
-	QWidget(parent)
+	cache(cache)
 {
 	auto *layout = new QHBoxLayout(this);
 	layout->setSpacing(spacing);

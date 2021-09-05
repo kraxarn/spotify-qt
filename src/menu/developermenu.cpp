@@ -3,11 +3,11 @@
 
 DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
-	: spotify(spotify),
+	: QMenu("Developer", parent),
 	settings(settings),
+	spotify(spotify),
 	cache(cache),
-	httpClient(httpClient),
-	QMenu("Developer", parent)
+	httpClient(httpClient)
 {
 	setIcon(Icon::get("folder-txt"));
 
