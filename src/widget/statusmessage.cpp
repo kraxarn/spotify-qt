@@ -5,7 +5,7 @@ StatusMessage *StatusMessage::instance = nullptr;
 StatusMessage::StatusMessage(QWidget *parent)
 	: QWidget(parent)
 {
-	setVisible(false);
+	setFixedHeight(0);
 
 	layout = new QHBoxLayout(this);
 	layout->setContentsMargins(12, 0, 12, 0);
@@ -28,6 +28,10 @@ StatusMessage::StatusMessage(QWidget *parent)
 	QTimer::connect(timer, &QTimer::timeout,
 		this, &StatusMessage::onTimerTimeout);
 
+	timeLine = new QTimeLine(animationDuration, this);
+	QTimeLine::connect(timeLine, &QTimeLine::frameChanged,
+		this, &StatusMessage::onTimeLineFrameChanged);
+
 	if (instance == nullptr)
 	{
 		instance = this;
@@ -41,10 +45,7 @@ void StatusMessage::showStatus(MessageType messageType, const QString &text)
 		return;
 	}
 
-	if (timer->isActive())
-	{
-		timer->stop();
-	}
+	timer->stop();
 
 	const auto iconSize = static_cast<int>(static_cast<float>(size().height()) * 0.75F);
 	const auto pixmap = getIcon(messageType).pixmap(iconSize, iconSize);
@@ -55,13 +56,31 @@ void StatusMessage::showStatus(MessageType messageType, const QString &text)
 	setPalette(colors);
 
 	message->setText(text);
-	setVisible(true);
+	showAnimated();
 
 	const auto interval = getInterval(messageType);
 	if (interval >= 0)
 	{
 		timer->start(interval);
 	}
+}
+
+void StatusMessage::showAnimated()
+{
+	animate(0, height);
+}
+
+void StatusMessage::hideAnimated()
+{
+	animate(height, 0);
+}
+
+void StatusMessage::animate(int from, int to)
+{
+	timeLine->stop();
+
+	timeLine->setFrameRange(from, to);
+	timeLine->start();
 }
 
 void StatusMessage::show(MessageType messageType, const QString &text)
@@ -148,10 +167,15 @@ auto StatusMessage::getInterval(MessageType messageType) -> int
 void StatusMessage::onClose(bool /*checked*/)
 {
 	timer->stop();
-	setVisible(false);
+	hideAnimated();
 }
 
 void StatusMessage::onTimerTimeout()
 {
-	setVisible(false);
+	hideAnimated();
+}
+
+void StatusMessage::onTimeLineFrameChanged(int value)
+{
+	setFixedHeight(value);
 }

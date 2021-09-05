@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QTimer>
+#include <QTimeLine>
 
 class StatusMessage: public QWidget
 {
@@ -24,6 +25,9 @@ public:
 	static void error(const QString &text);
 
 private:
+	static constexpr int height = 36;
+	static constexpr int animationDuration = 400;
+
 	QHBoxLayout *layout = nullptr;
 
 	QLabel *icon = nullptr;
@@ -31,6 +35,7 @@ private:
 	QPushButton *close = nullptr;
 
 	QTimer *timer = nullptr;
+	QTimeLine *timeLine = nullptr;
 
 	// This may or may not be a good idea
 	static StatusMessage *instance;
@@ -39,6 +44,11 @@ private:
 	static auto getColor(MessageType messageType) -> QColor;
 	static auto getInterval(MessageType messageType) -> int;
 
+	void showAnimated();
+	void hideAnimated();
+	void animate(int from, int to);
+
 	void onClose(bool checked);
 	void onTimerTimeout();
+	void onTimeLineFrameChanged(int value);
 };
