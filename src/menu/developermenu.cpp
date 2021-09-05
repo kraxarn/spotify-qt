@@ -53,6 +53,7 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	addMenu(infoMenu());
 	addMenu(dialogMenu());
 	addMenu(crashMenu());
+	addMenu(statusMenu());
 }
 
 void DeveloperMenu::addMenuItem(QMenu *menu, const QString &text,
@@ -129,6 +130,28 @@ auto DeveloperMenu::crashMenu() -> QMenu *
 	addMenuItem(menu, "qFatal", []()
 	{
 		qFatal("debug crash");
+	});
+
+	return menu;
+}
+
+auto DeveloperMenu::statusMenu() -> QMenu *
+{
+	auto *menu = new QMenu("Status message", this);
+
+	addMenuItem(menu, "Information", []()
+	{
+		StatusMessage::show(MessageType::Information, "Information");
+	});
+
+	addMenuItem(menu, "Warning", []()
+	{
+		StatusMessage::show(MessageType::Warning, "Warning");
+	});
+
+	addMenuItem(menu, "Error", []()
+	{
+		StatusMessage::show(MessageType::Error, "Error");
 	});
 
 	return menu;

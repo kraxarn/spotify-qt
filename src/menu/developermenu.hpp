@@ -33,4 +33,5 @@ private:
 	auto dialogMenu() -> QMenu *;
 	auto infoMenu() -> QMenu *;
 	auto crashMenu() -> QMenu *;
+	auto statusMenu() -> QMenu *;
 };
