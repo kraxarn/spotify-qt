@@ -22,7 +22,7 @@ namespace lib
 		template<typename Format, typename Arg, typename... Args>
 		static void info(const Format &fmt, const Arg &arg, Args &&... args)
 		{
-			return info(fmt::format(fmt, arg, args...));
+			info(fmt::format(fmt, arg, args...));
 		}
 
 		/**
@@ -40,7 +40,7 @@ namespace lib
 		template<typename Format, typename Arg, typename... Args>
 		static void warn(const Format &fmt, const Arg &arg, Args &&... args)
 		{
-			return warn(fmt::format(fmt, arg, args...));
+			warn(fmt::format(fmt, arg, args...));
 		}
 
 		/**
@@ -58,7 +58,7 @@ namespace lib
 		template<typename Format, typename Arg, typename... Args>
 		static void error(const Format &fmt, const Arg &arg, Args &&... args)
 		{
-			return error(fmt::format(fmt, arg, args...));
+			error(fmt::format(fmt, arg, args...));
 		}
 
 		/**
@@ -77,7 +77,7 @@ namespace lib
 		template<typename Format, typename Arg, typename... Args>
 		static void debug(const Format &fmt, const Arg &arg, Args &&... args)
 		{
-			return debug(fmt::format(fmt, arg, args...));
+			debug(fmt::format(fmt, arg, args...));
 		}
 
 		/**
