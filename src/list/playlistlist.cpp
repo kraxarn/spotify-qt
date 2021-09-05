@@ -248,8 +248,8 @@ void PlaylistList::order(lib::playlist_order order)
 
 auto PlaylistList::latestTrack(const std::vector<lib::spt::track> &tracks) -> int
 {
-	auto latest = 0;
-	for (int i = 0; i < tracks.size(); i++)
+	size_t latest = 0;
+	for (size_t i = 0; i < tracks.size(); i++)
 	{
 		if (DateUtils::fromIso(tracks[i].added_at)
 			> DateUtils::fromIso(tracks[latest].added_at))

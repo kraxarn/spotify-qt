@@ -72,7 +72,7 @@ void api::play_tracks(int track_index, const std::vector<std::string> &all,
 
 	auto maxQueue = settings.spotify.max_queue;
 	std::vector<std::string> items;
-	if (all.size() > maxQueue)
+	if (all.size() > static_cast<size_t>(maxQueue))
 	{
 		lib::log::info("Attempting to queue {} tracks, but only {} allowed",
 			all.size(), maxQueue);

@@ -243,8 +243,9 @@ void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::str
 
 	setSortingEnabled(false);
 
-	for (int i = 0; i < tracks.size(); i++)
+	for (size_t i = 0; i < tracks.size(); i++)
 	{
+		const auto index = static_cast<int>(i);
 		const auto &track = tracks.at(i);
 
 		auto *item = new ListItem::Track({
@@ -261,7 +262,7 @@ void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::str
 				? DateUtils::toRelative(track.added_at)
 				: QLocale().toString(DateUtils::fromIso(track.added_at).date(),
 					QLocale::ShortFormat)
-		}, track, emptyIcon, i);
+		}, track, emptyIcon, index);
 
 		if (!anyHasDate && !track.added_at.empty())
 		{
@@ -273,7 +274,7 @@ void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::str
 			setPlayingTrackItem(item);
 		}
 
-		insertTopLevelItem(i, item);
+		insertTopLevelItem(index, item);
 		trackItems[track.id] = item;
 
 		if (!selectedId.empty() && track.id == selectedId)

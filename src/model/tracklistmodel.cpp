@@ -39,7 +39,7 @@ auto TrackListModel::columnCount(const QModelIndex &/*parent*/) const -> int
 
 auto TrackListModel::data(const QModelIndex &index, int role) const -> QVariant
 {
-	if (index.row() < 0 || index.row() >= tracks.size())
+	if (index.row() < 0 || static_cast<size_t>(index.row()) >= tracks.size())
 	{
 		return QVariant();
 	}
