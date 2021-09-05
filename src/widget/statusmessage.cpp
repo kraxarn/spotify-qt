@@ -25,6 +25,7 @@ StatusMessage::StatusMessage(QWidget *parent)
 		this, &StatusMessage::onClose);
 
 	timer = new QTimer(this);
+	timer->setSingleShot(true);
 	QTimer::connect(timer, &QTimer::timeout,
 		this, &StatusMessage::onTimerTimeout);
 
