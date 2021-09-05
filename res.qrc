@@ -8,6 +8,9 @@
         <file>res/ic/light/audio-volume-low.svg</file>
         <file>res/ic/light/audio-volume-medium.svg</file>
         <file>res/ic/light/configure.svg</file>
+        <file>res/ic/light/data-error.svg</file>
+        <file>res/ic/light/data-information.svg</file>
+        <file>res/ic/light/data-warning.svg</file>
         <file>res/ic/light/description.svg</file>
         <file>res/ic/light/document-edit.svg</file>
         <file>res/ic/light/document-share.svg</file>
@@ -57,6 +60,9 @@
         <file>res/ic/dark/audio-volume-low.svg</file>
         <file>res/ic/dark/audio-volume-medium.svg</file>
         <file>res/ic/dark/configure.svg</file>
+        <file>res/ic/dark/data-error.svg</file>
+        <file>res/ic/dark/data-information.svg</file>
+        <file>res/ic/dark/data-warning.svg</file>
         <file>res/ic/dark/description.svg</file>
         <file>res/ic/dark/document-edit.svg</file>
         <file>res/ic/dark/document-share.svg</file>
