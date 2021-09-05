@@ -125,20 +125,6 @@ auto InterfacePage::trayIcon() -> QWidget *
 	itfTrayIcon->setChecked(settings.general.tray_icon);
 	content->addWidget(itfTrayIcon);
 
-	// Desktop notifications
-	itfTrayNotify = new QCheckBox("Desktop notifications", this);
-	itfTrayNotify->setToolTip("Replace status bar with desktop notifications\n"
-							  "(suppresses any non-error messages)");
-	itfTrayNotify->setChecked(settings.general.tray_notifications);
-	content->addWidget(itfTrayNotify);
-	QCheckBox::connect(itfTrayNotify, &QCheckBox::stateChanged, [this](int state)
-	{
-		if (state == Qt::CheckState::Checked && itfTrayIcon != nullptr)
-		{
-			itfTrayIcon->setChecked(true);
-		}
-	});
-
 	// Invert tray icon
 	itfTrayInvert = new QCheckBox("Invert icon", this);
 	itfTrayInvert->setToolTip("Invert colors in tray icon to be visible on light backgrounds");
@@ -239,31 +225,16 @@ auto InterfacePage::save() -> bool
 		settings.general.relative_added = itfRelativeAdded->isChecked();
 	}
 
-	// Desktop notifications and tray icon
-	if (itfTrayNotify != nullptr && itfTrayIcon != nullptr
-		&& itfTrayNotify->isChecked() && !itfTrayIcon->isChecked())
-	{
-		itfTrayIcon->setChecked(true);
-		info("Desktop Notifications",
-			"Desktop notifications requires tray icon to be enabled, so it was enabled");
-	}
-
 	// Check if tray icon needs to be reloaded
 	auto reloadTray = itfTrayIcon != nullptr
-		&& itfTrayNotify != nullptr
 		&& itfTrayInvert != nullptr
 		&& (settings.general.tray_icon != itfTrayIcon->isChecked()
-			|| settings.general.tray_notifications != itfTrayNotify->isChecked()
 			|| settings.general.tray_light_icon != itfTrayInvert->isChecked());
 
 	// Apply
 	if (itfTrayIcon != nullptr)
 	{
 		settings.general.tray_icon = itfTrayIcon->isChecked();
-	}
-	if (itfTrayNotify != nullptr)
-	{
-		settings.general.tray_notifications = itfTrayNotify->isChecked();
 	}
 	if (itfTrayInvert != nullptr)
 	{

@@ -104,11 +104,6 @@ namespace lib
 			bool tray_light_icon = false;
 
 			/**
-			 * Show notifications as desktop notifications
-			 */
-			bool tray_notifications = false;
-
-			/**
 			 * Volume last set
 			 * @note Should be 0-20, representing 0-100% as steps of 5
 			 */

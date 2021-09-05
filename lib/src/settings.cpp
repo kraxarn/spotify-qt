@@ -85,7 +85,6 @@ void settings::from_json(const nlohmann::json &json)
 	setValue(g, "tray_album_art", general.tray_album_art);
 	setValue(g, "tray_icon", general.tray_icon);
 	setValue(g, "tray_light_icon", general.tray_light_icon);
-	setValue(g, "tray_notifications", general.tray_notifications);
 
 	// Spotify
 	setValue(s, "always_start", spotify.always_start);
@@ -162,7 +161,6 @@ auto settings::to_json() const -> nlohmann::json
 			{"tray_album_art", general.tray_album_art},
 			{"tray_icon", general.tray_icon},
 			{"tray_light_icon", general.tray_light_icon},
-			{"tray_notifications", general.tray_notifications},
 		}},
 		{"Spotify", {
 			{"always_start", spotify.always_start},
