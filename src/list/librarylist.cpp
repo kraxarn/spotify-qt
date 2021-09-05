@@ -62,6 +62,14 @@ void LibraryList::clicked(QTreeWidgetItem *item, int /*column*/)
 			case DataRole::AlbumId:
 				mainWindow->loadAlbum(data);
 				break;
+
+			case DataRole::Track:
+			case DataRole::Index:
+			case DataRole::PlaylistId:
+			case DataRole::AddedDate:
+			case DataRole::Length:
+			case DataRole::DefaultIndex:
+				break;
 		}
 	}
 	else
