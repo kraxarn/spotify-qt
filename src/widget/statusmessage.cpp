@@ -47,7 +47,6 @@ void StatusMessage::showStatus(MessageType messageType, const QString &text)
 
 	timer->stop();
 
-	const auto iconSize = static_cast<int>(static_cast<float>(size().height()) * 0.75F);
 	const auto pixmap = getIcon(messageType).pixmap(iconSize, iconSize);
 	icon->setPixmap(pixmap);
 

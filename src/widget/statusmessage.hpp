@@ -26,6 +26,7 @@ public:
 
 private:
 	static constexpr int height = 36;
+	static constexpr int iconSize = height * 0.75;
 	static constexpr int animationDuration = 400;
 
 	QHBoxLayout *layout = nullptr;
