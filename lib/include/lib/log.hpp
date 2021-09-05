@@ -75,9 +75,9 @@ namespace lib
 		 * @note developer_mode needs to be enabled
 		 */
 		template<typename Format, typename Arg, typename... Args>
-		static void dev(const Format &fmt, const Arg &arg, Args &&... args)
+		static void debug(const Format &fmt, const Arg &arg, Args &&... args)
 		{
-			return dev(fmt::format(fmt, arg, args...));
+			return debug(fmt::format(fmt, arg, args...));
 		}
 
 		/**
@@ -85,7 +85,7 @@ namespace lib
 		 * @note developer_mode needs to be enabled
 		 */
 		template<typename Format>
-		static void dev(const Format &fmt)
+		static void debug(const Format &fmt)
 		{
 			if (!developer_mode::enabled)
 			{

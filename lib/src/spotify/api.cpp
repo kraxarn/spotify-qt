@@ -15,7 +15,7 @@ void api::refresh(bool force)
 	if (!force
 		&& lib::date_time::seconds_since_epoch() - settings.account.last_refresh < s_in_hour)
 	{
-		lib::log::dev("Last refresh was less than an hour ago, not refreshing access token");
+		lib::log::debug("Last refresh was less than an hour ago, not refreshing access token");
 		last_auth = settings.account.last_refresh;
 		return;
 	}
@@ -69,7 +69,7 @@ auto api::auth_headers() -> lib::headers
 	auto last_refresh = lib::date_time::seconds_since_epoch() - last_auth;
 	if (last_refresh >= secsInHour)
 	{
-		lib::log::dev("Access token probably expired, refreshing");
+		lib::log::debug("Access token probably expired, refreshing");
 		try
 		{
 			refresh();
@@ -213,7 +213,7 @@ void api::get(const std::string &url, lib::callback<nlohmann::json> &callback)
 			catch (const nlohmann::json::parse_error &e)
 			{
 				lib::log::error("{} failed to parse: {}", url, e.what());
-				lib::log::dev("JSON: {}", response);
+				lib::log::debug("JSON: {}", response);
 			}
 			catch (const std::exception &e)
 			{

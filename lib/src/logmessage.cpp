@@ -35,7 +35,7 @@ auto log_message::get_type_short() const -> std::string
 			return "err ";
 
 		case log_type::verbose:
-			return "dev ";
+			return "dbg ";
 	}
 
 	return {};
@@ -60,7 +60,7 @@ auto log_message::get_type() const -> std::string
 			return "Error";
 
 		case log_type::verbose:
-			return "Developer";
+			return "Debug";
 	}
 
 	return {};

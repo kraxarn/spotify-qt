@@ -43,17 +43,17 @@ TEST_CASE("log")
 		verify_messages();
 	}
 
-	SUBCASE("dev")
+	SUBCASE("debug")
 	{
 		init_log();
 
-		lib::log::dev("hello world");
-		lib::log::dev("hello {}", "world");
+		lib::log::debug("hello world");
+		lib::log::debug("hello {}", "world");
 		CHECK_EQ(lib::log::get_messages().size(), 0);
 
 		lib::developer_mode::enabled = true;
-		lib::log::dev("hello world");
-		lib::log::dev("hello {}", "world");
+		lib::log::debug("hello world");
+		lib::log::debug("hello {}", "world");
 		verify_messages();
 	}
 }

@@ -53,7 +53,7 @@ auto api::play_tracks_url() -> std::string
 void api::play_tracks(int track_index, const std::string &context,
 	lib::callback<std::string> &callback)
 {
-	lib::log::dev("Playing track {} from {}", track_index, context);
+	lib::log::debug("Playing track {} from {}", track_index, context);
 
 	nlohmann::json body{
 		{"context_uri", context},
@@ -68,7 +68,7 @@ void api::play_tracks(int track_index, const std::string &context,
 void api::play_tracks(int track_index, const std::vector<std::string> &all,
 	lib::callback<std::string> &callback)
 {
-	lib::log::dev("Playing track {} ({} total)", track_index, all.size());
+	lib::log::debug("Playing track {} ({} total)", track_index, all.size());
 
 	auto maxQueue = settings.spotify.max_queue;
 	std::vector<std::string> items;
@@ -102,7 +102,7 @@ void api::play_tracks(int track_index, const std::initializer_list<std::string> 
 
 void api::play_tracks(const std::string &context, lib::callback<std::string> &callback)
 {
-	lib::log::dev("Playing track from {}", context);
+	lib::log::debug("Playing track from {}", context);
 
 	nlohmann::json body{
 		{"context_uri", context}
