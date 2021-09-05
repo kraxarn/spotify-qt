@@ -2,8 +2,7 @@
 #include "lib/cache/jsoncache.hpp"
 
 lib::json_cache::json_cache(const lib::paths &paths)
-	: paths(paths),
-	cache()
+	: paths(paths)
 {
 }
 
