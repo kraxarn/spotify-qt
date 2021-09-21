@@ -92,7 +92,8 @@ namespace lib
 			/**
 			 * Compare snapshot and check if playlist is up to date
 			 */
-			auto is_up_to_date(const std::string &snapshot) const -> bool;
+			auto is_up_to_date(const std::string &snapshot,
+				const lib::spt::user &current_user) const -> bool;
 		};
 
 		void to_json(nlohmann::json &j, const playlist &p);
