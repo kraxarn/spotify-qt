@@ -310,19 +310,25 @@ void TracksList::load(const lib::spt::playlist &playlist)
 		setEnabled(false);
 	}
 
-	const auto &snapshot = playlist.snapshot;
-	spotify.playlist(playlist.id, [this, snapshot](const lib::spt::playlist &loadedPlaylist)
-	{
-		if (this->isEnabled()
-			&& this->topLevelItemCount() == loadedPlaylist.tracks_total
-			&& loadedPlaylist.is_up_to_date(snapshot))
-		{
-			return;
-		}
-		this->refreshPlaylist(loadedPlaylist);
-	});
-
 	auto *mainWindow = MainWindow::find(parentWidget());
+
+	const auto &snapshot = playlist.snapshot;
+	spotify.playlist(playlist.id,
+		[this, snapshot, mainWindow](const lib::spt::playlist &loadedPlaylist)
+		{
+			const auto &currentUser = mainWindow != nullptr
+				? mainWindow->getCurrentUser()
+				: lib::spt::user();
+
+			if (this->isEnabled()
+				&& this->topLevelItemCount() == loadedPlaylist.tracks_total
+				&& loadedPlaylist.is_up_to_date(snapshot, currentUser))
+			{
+				return;
+			}
+			this->refreshPlaylist(loadedPlaylist);
+		});
+
 	if (mainWindow != nullptr)
 	{
 		mainWindow->setSptContext(playlist);
