@@ -30,7 +30,7 @@ public:
 	lib::spt::playback currentPlayback() const;
 	void openLyrics(const lib::spt::track &track);
 	void reloadTrayIcon();
-	lib::spt::user getCurrentUser();
+	auto getCurrentUser() const -> const lib::spt::user &;
 	void setFixedWidthTime(bool value);
 	std::vector<lib::spt::track> loadTracksFromCache(const std::string &id);
 	void saveTracksToCache(const std::string &id, const std::vector<lib::spt::track> &tracks);
@@ -51,7 +51,7 @@ public:
 	QListWidgetItem *getPlaylistItem(int index);
 	void orderPlaylists(lib::playlist_order order);
 	void setBorderless(bool enabled);
-	void addSizeGrip(const std::function<QPoint(const QRect&)> &position);
+	void addSizeGrip(const std::function<QPoint(const QRect &)> &position);
 	void minimize();
 
 	auto startClient() -> bool;

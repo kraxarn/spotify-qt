@@ -472,7 +472,7 @@ auto MainWindow::currentPlayback() const -> lib::spt::playback
 	return current.playback;
 }
 
-auto MainWindow::getCurrentUser() -> lib::spt::user
+auto MainWindow::getCurrentUser() const -> const lib::spt::user &
 {
 	return currentUser;
 }
