@@ -43,7 +43,7 @@ free to, just please open an issue, or get in contact with me, so I can add it t
 | -------- | ------- | ---------- |
 | Arch (or Arch-based) | [![AUR](https://repology.org/badge/version-for-repo/aur/spotify-qt.svg?header=AUR)](https://aur.archlinux.org/packages/spotify-qt) | [kraxarn](https://github.com/kraxarn) |
 | Haiku | [![HaikuPorts](https://repology.org/badge/version-for-repo/haikuports_master/spotify-qt.svg?header=HaikuPorts)](https://github.com/haikuports/haikuports/tree/master/media-sound/spotify_qt) | [Begasus](https://github.com/Begasus) |
-| NetBSD | [![pkgsrc](https://repology.org/badge/version-for-repo/pkgsrc_current/spotify-qt.svg?header=pkgsrc)](https://pkgsrc.se/audio/spotify-qt) | [voidpin](https://github.com/voidpin) |
+| NetBSD | [![pkgsrc](https://repology.org/badge/version-for-repo/pkgsrc_current/spotify-qt.svg?header=pkgsrc)](https://pkgsrc.se/audio/spotify-qt) | [pin](https://codeberg.org/pin) |
 | FreeBSD | [![FreeBSD Ports](https://repology.org/badge/version-for-repo/freebsd/spotify-qt.svg?header=FreeBSD%20Ports)](https://www.freshports.org/audio/spotify-qt) | [ehaupt](https://github.com/ehaupt) |
 | DragonflyBSD | [![DPorts](https://repology.org/badge/version-for-repo/dports/spotify-qt.svg?header=DPorts)](https://github.com/DragonFlyBSD/DPorts/blob/master/audio/spotify-qt/Makefile) | [ehaupt](https://github.com/ehaupt) |
 | Void Linux | [![Void Linux](https://repology.org/badge/version-for-repo/void_x86_64/spotify-qt.svg?header=Void%20Linux)](https://github.com/void-linux/void-packages/blob/master/srcpkgs/spotify-qt/template) | [abenson](https://github.com/abenson) |
