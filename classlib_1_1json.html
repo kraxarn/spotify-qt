@@ -94,6 +94,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:aac77ec391011b3a8745245272987c99a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa45d39432785ccca3c0157b8e01439b3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1json.html#aa45d39432785ccca3c0157b8e01439b3">save</a> (const ghc::filesystem::path &amp;path, const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>)</td></tr>
 <tr class="separator:aa45d39432785ccca3c0157b8e01439b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2a176518327d25b2681d7e7ad1a94f8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1json.html#ab2a176518327d25b2681d7e7ad1a94f8">find_item</a> (const std::string &amp;name, const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>, std::string &amp;item)</td></tr>
+<tr class="separator:ab2a176518327d25b2681d7e7ad1a94f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>JSON utilities </p>
@@ -139,6 +141,56 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Combined array, or an empty one on failure </dd></dl>
+
+</div>
+</div>
+<a id="ab2a176518327d25b2681d7e7ad1a94f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2a176518327d25b2681d7e7ad1a94f8">&#9670;&nbsp;</a></span>find_item()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void lib::json::find_item </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const nlohmann::json &amp;&#160;</td>
+          <td class="paramname"><em>json</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>item</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Find the last value in an "item"s array, or from "item" directly </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Name of item to search for, excluding s-suffix </td></tr>
+    <tr><td class="paramname">json</td><td>JSON to search in </td></tr>
+    <tr><td class="paramname">item</td><td>String to output to </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

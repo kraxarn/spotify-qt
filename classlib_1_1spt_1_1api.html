@@ -207,6 +207,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>track_audio_features<
 <tr class="memitem:adf690e251c98a3e574738559ae73cd85"><td class="memItemLeft" align="right" valign="top"><a id="adf690e251c98a3e574738559ae73cd85"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>me</b> (lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1user.html">lib::spt::user</a> &gt; &amp;callback)</td></tr>
 <tr class="separator:adf690e251c98a3e574738559ae73cd85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f56416580d89ca435ab3ce15a37fa14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a0f56416580d89ca435ab3ce15a37fa14">show</a> (const std::string &amp;show_id, lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1show.html">lib::spt::show</a> &gt; &amp;callback)</td></tr>
+<tr class="separator:a0f56416580d89ca435ab3ce15a37fa14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affbc53b6d3e30b164a0d29fc1e89a166"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#affbc53b6d3e30b164a0d29fc1e89a166">show_episodes</a> (const <a class="el" href="classlib_1_1spt_1_1show.html">lib::spt::show</a> &amp;<a class="el" href="classlib_1_1spt_1_1show.html">show</a>, lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1episode.html">lib::spt::episode</a> &gt;&gt; &amp;callback)</td></tr>
+<tr class="separator:affbc53b6d3e30b164a0d29fc1e89a166"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a294dd5d87ca2258de4235a3eb5285285"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a294dd5d87ca2258de4235a3eb5285285">refresh</a> (bool force=false)</td></tr>
 <tr class="separator:a294dd5d87ca2258de4235a3eb5285285"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -1266,6 +1270,64 @@ Temporarily protected </dd></dl>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a0f56416580d89ca435ab3ce15a37fa14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f56416580d89ca435ab3ce15a37fa14">&#9670;&nbsp;</a></span>show()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::spt::api::show </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>show_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1show.html">lib::spt::show</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get a show </p>
+
+</div>
+</div>
+<a id="affbc53b6d3e30b164a0d29fc1e89a166"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affbc53b6d3e30b164a0d29fc1e89a166">&#9670;&nbsp;</a></span>show_episodes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::spt::api::show_episodes </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classlib_1_1spt_1_1show.html">lib::spt::show</a> &amp;&#160;</td>
+          <td class="paramname"><em>show</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1episode.html">lib::spt::episode</a> &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get episodes in a show </p>
 
 </div>
 </div>
