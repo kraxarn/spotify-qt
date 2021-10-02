@@ -232,6 +232,23 @@ void TracksList::updateResizeMode(lib::resize_mode mode)
 	resizeHeaders(size());
 }
 
+auto TracksList::getAddedText(const std::string &date) const -> QString
+{
+	if (date.empty())
+	{
+		return {};
+	}
+
+	if (settings.general.relative_added)
+	{
+		return DateUtils::toRelative(date);
+	}
+
+	const auto locale = QLocale::system();
+	const auto parsed = DateUtils::fromIso(date).date();
+	return locale.toString(parsed, QLocale::ShortFormat);
+}
+
 void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::string &selectedId)
 {
 	clear();
@@ -256,12 +273,7 @@ void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::str
 			QString::fromStdString(lib::spt::entity::combine_names(track.artists)),
 			QString::fromStdString(track.album.name),
 			QString::fromStdString(lib::fmt::time(track.duration)),
-			track.added_at.empty()
-				? QString()
-				: settings.general.relative_added
-				? DateUtils::toRelative(track.added_at)
-				: QLocale().toString(DateUtils::fromIso(track.added_at).date(),
-					QLocale::ShortFormat)
+			getAddedText(track.added_at),
 		}, track, emptyIcon, index);
 
 		if (!anyHasDate && !track.added_at.empty())

@@ -55,6 +55,7 @@ private:
 	void headerMenu(const QPoint &pos);
 	void resizeHeaders(const QSize &newSize);
 	auto getCurrent() -> const spt::Current &;
+	auto getAddedText(const std::string &date) const -> QString;
 
 	// lib
 	lib::settings &settings;
