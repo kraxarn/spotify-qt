@@ -81,9 +81,6 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	initDevice();
 	setBorderless(!settings.qt_const().system_title_bar);
 
-	// Welcome
-	StatusMessage::show(MessageType::Information,
-		QStringLiteral("Welcome to spotify-qt!"));
 	splash.finish(this);
 }
 
