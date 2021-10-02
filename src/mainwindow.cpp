@@ -505,6 +505,11 @@ void MainWindow::setSptContext(const lib::spt::album &album)
 	playlistList->setCurrentRow(-1);
 }
 
+void MainWindow::setSptContext(const lib::spt::show &show)
+{
+	setSptContext(lib::spt::api::to_uri("show", show.id));
+}
+
 void MainWindow::setNoSptContext()
 {
 	setSptContext(std::string());

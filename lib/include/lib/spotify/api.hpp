@@ -17,6 +17,7 @@
 #include "lib/spotify/track.hpp"
 #include "lib/spotify/audiofeatures.hpp"
 #include "lib/spotify/savedalbum.hpp"
+#include "lib/spotify/episode.hpp"
 #include "lib/spotify/callback.hpp"
 #include "lib/httpclient.hpp"
 #include "lib/datetime.hpp"
@@ -267,6 +268,18 @@ namespace lib
 			//region User Profile
 
 			void me(lib::callback<lib::spt::user> &callback);
+
+			//endregion
+
+			//region Shows
+
+			/** Get a show */
+			void show(const std::string &show_id,
+				lib::callback<lib::spt::show> &callback);
+
+			/** Get episodes in a show */
+			void show_episodes(const lib::spt::show &show,
+				lib::callback<std::vector<lib::spt::episode>> &callback);
 
 			//endregion
 

@@ -7,6 +7,7 @@ void lib::spt::to_json(nlohmann::json &j, const search_results &s)
 		{"artists", s.artists},
 		{"tracks", s.tracks},
 		{"playlists", s.playlists},
+		{"shows", s.shows},
 	};
 }
 
@@ -21,4 +22,5 @@ void lib::spt::from_json(const nlohmann::json &j, search_results &s)
 	j.at("artists").at("items").get_to(s.artists);
 	j.at("playlists").at("items").get_to(s.playlists);
 	j.at("tracks").at("items").get_to(s.tracks);
+	j.at("shows").at("items").get_to(s.shows);
 }

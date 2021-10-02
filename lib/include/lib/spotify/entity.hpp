@@ -19,6 +19,11 @@ namespace lib
 			entity() = default;
 
 			/**
+			 * Manually construct a entity
+			 */
+			entity(std::string id, std::string name);
+
+			/**
 			 * Entity ID
 			 */
 			std::string id;

@@ -1,4 +1,11 @@
 #include "lib/spotify/entity.hpp"
+#include <utility>
+
+lib::spt::entity::entity(std::string id, std::string name)
+	: id(std::move(id)),
+	name(std::move(name))
+{
+}
 
 void lib::spt::to_json(nlohmann::json &j, const entity &e)
 {
@@ -44,7 +51,7 @@ auto lib::spt::entity::combine_names(const std::vector<entity> &entities,
 {
 	std::vector<std::string> names;
 	names.reserve(entities.size());
-	for (const auto &entity : entities)
+	for (const auto &entity: entities)
 	{
 		names.push_back(entity.name);
 	}

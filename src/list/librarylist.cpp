@@ -69,6 +69,7 @@ void LibraryList::clicked(QTreeWidgetItem *item, int /*column*/)
 			case DataRole::AddedDate:
 			case DataRole::Length:
 			case DataRole::DefaultIndex:
+			case DataRole::ShowId:
 				break;
 		}
 	}

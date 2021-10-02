@@ -6,5 +6,6 @@ enum class SearchTab: int
 	Artists = 1,
 	Albums = 2,
 	Playlists = 3,
-	Library = 4,
+	Shows = 4,
+	Library = 5,
 };

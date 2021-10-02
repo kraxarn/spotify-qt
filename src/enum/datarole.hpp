@@ -10,4 +10,5 @@ enum class DataRole: int
 	AddedDate = 0x105,    // 261
 	Length = 0x106,       // 262
 	DefaultIndex = 0x107, // 263
+	ShowId = 0x108,       // 264
 };

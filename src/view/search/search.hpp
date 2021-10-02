@@ -9,6 +9,7 @@
 #include "view/search/albums.hpp"
 #include "view/search/playlists.hpp"
 #include "view/search/library.hpp"
+#include "view/search/shows.hpp"
 
 #include <QDockWidget>
 #include <QLineEdit>
@@ -42,6 +43,7 @@ namespace View
 			View::Search::Albums *albums = nullptr;
 			View::Search::Playlists *playlists = nullptr;
 			View::Search::Library *library = nullptr;
+			View::Search::Shows *shows = nullptr;
 
 			void search();
 

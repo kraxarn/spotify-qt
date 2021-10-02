@@ -4,6 +4,7 @@
 #include "lib/spotify/artist.hpp"
 #include "lib/spotify/playlist.hpp"
 #include "lib/spotify/track.hpp"
+#include "lib/spotify/show.hpp"
 
 #include <vector>
 
@@ -38,6 +39,11 @@ namespace lib
 			 * Playlists found
 			 */
 			std::vector<lib::spt::playlist> playlists;
+
+			/**
+			 * Shows/podcasts found
+			 */
+			std::vector<lib::spt::show> shows;
 		};
 
 		/**

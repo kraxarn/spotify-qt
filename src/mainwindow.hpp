@@ -59,6 +59,7 @@ public:
 
 	void setSptContext(const lib::spt::playlist &playlist);
 	void setSptContext(const lib::spt::album &album);
+	void setSptContext(const lib::spt::show &show);
 	void setNoSptContext();
 
 	// Getters for private properties

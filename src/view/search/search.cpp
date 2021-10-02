@@ -23,12 +23,14 @@ View::Search::Search::Search(lib::spt::api &spotify, lib::cache &cache,
 	tracks = new View::Search::Tracks(spotify, cache, this);
 	albums = new View::Search::Albums(spotify, cache, httpClient, this);
 	library = new View::Search::Library(spotify, cache, this);
+	shows = new View::Search::Shows(spotify, this);
 
 	// Add all tabs
 	tabs->addTab(tracks, "Tracks");
 	tabs->addTab(artists, "Artists");
 	tabs->addTab(albums, "Albums");
 	tabs->addTab(playlists, "Playlists");
+	tabs->addTab(shows, "Podcasts");
 	tabs->addTab(library, "Library");
 
 	// Start searching when pressing enter
@@ -74,6 +76,7 @@ void View::Search::Search::search()
 	albums->clear();
 	playlists->clear();
 	library->clear();
+	shows->clear();
 
 	// Disable search box while searching
 	searchBox->setEnabled(false);
@@ -133,6 +136,14 @@ void View::Search::Search::search()
 				});
 				i = SearchTab::Playlists;
 			}
+			else if (cat == "show")
+			{
+				spotify.show(id, [this](const lib::spt::show &show)
+				{
+					shows->add(show);
+				});
+				i = SearchTab::Shows;
+			}
 
 			tabs->setCurrentIndex(static_cast<int>(i));
 			searchBox->setEnabled(true);
@@ -158,27 +169,33 @@ void View::Search::Search::search()
 void View::Search::Search::resultsLoaded(const lib::spt::search_results &results)
 {
 	// Albums
-	for (const auto &album : results.albums)
+	for (const auto &album: results.albums)
 	{
 		albums->add(album);
 	}
 
 	// Artists
-	for (const auto &artist : results.artists)
+	for (const auto &artist: results.artists)
 	{
 		artists->add(artist);
 	}
 
 	// Playlists
-	for (const auto &playlist : results.playlists)
+	for (const auto &playlist: results.playlists)
 	{
 		playlists->add(playlist);
 	}
 
 	// Tracks
-	for (const auto &track : results.tracks)
+	for (const auto &track: results.tracks)
 	{
 		tracks->add(track);
+	}
+
+	// Shows/podcasts
+	for (const auto &show: results.shows)
+	{
+		shows->add(show);
 	}
 
 	// Search done
