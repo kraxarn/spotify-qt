@@ -30,23 +30,27 @@ void View::Search::Shows::onItemClicked(QListWidgetItem *item)
 		.toString()
 		.toStdString();
 
-	spotify.show(showId, [this](const lib::spt::show &show)
+	auto *mainWindow = MainWindow::find(parentWidget());
+	auto *tracksList = mainWindow->getSongsTree();
+	tracksList->setEnabled(false);
+
+	spotify.show(showId, [this, mainWindow, tracksList](const lib::spt::show &show)
 	{
 		spotify.show_episodes(show,
-			[this, show](const std::vector<lib::spt::episode> &episodes)
-		{
-			// Pretend episodes are track before showing in list
-			std::vector<lib::spt::track> tracks;
-			tracks.reserve(episodes.size());
-			for (const auto &episode : episodes)
+			[show, mainWindow, tracksList](const std::vector<lib::spt::episode> &episodes)
 			{
-				tracks.push_back(episode.to_track(show));
-			}
+				// Pretend episodes are tracks before showing in list
+				std::vector<lib::spt::track> tracks;
+				tracks.reserve(episodes.size());
+				for (const auto &episode: episodes)
+				{
+					tracks.insert(tracks.begin(), episode.to_track(show));
+				}
 
-			auto *mainWindow = MainWindow::find(this->parentWidget());
-			mainWindow->setSptContext(show);
-			mainWindow->getSongsTree()->load(tracks);
-		});
+				mainWindow->setSptContext(show);
+				tracksList->load(tracks);
+				tracksList->setEnabled(true);
+			});
 	});
 }
 
