@@ -102,6 +102,13 @@ auto DeveloperMenu::infoMenu() -> QMenu *
 			QString::fromStdString(json.dump(4)));
 	});
 
+	addMenuItem(menu, "Playback (MPRIS)", [mainWindow]()
+	{
+		nlohmann::json json = mainWindow->currentPlayback().metadata();
+		QMessageBox::information(mainWindow, "Metadata",
+			QString::fromStdString(json.dump(4)));
+	});
+
 	addMenuItem(menu, "Context", [mainWindow]()
 	{
 		QMessageBox::information(mainWindow, "Context",
