@@ -53,3 +53,31 @@ void lib::json::save(const ghc::filesystem::path &path, const nlohmann::json &js
 			path.string(), e.what());
 	}
 }
+
+void lib::json::find_item(const std::string &name, const nlohmann::json &json, std::string &item)
+{
+	const auto &singular = name;
+	const auto &plural = lib::fmt::format("{}s", singular);
+
+	if (json.contains(plural))
+	{
+		const auto &items = json.at(plural);
+		if (items.is_array() && !items.empty())
+		{
+			const auto &last_item = items.back();
+			if (last_item.is_string())
+			{
+				last_item.get_to(item);
+			}
+			else if (last_item.contains("url"))
+			{
+				// Assume URL is a string
+				last_item.at("url").get_to(item);
+			}
+		}
+	}
+	else if (json.contains(singular))
+	{
+		json.at(singular).get_to(item);
+	}
+}

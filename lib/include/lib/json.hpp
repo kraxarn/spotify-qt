@@ -25,7 +25,7 @@ namespace lib
 		static auto get_property(const nlohmann::json &json,
 			const std::initializer_list<std::string> &names, T &item) -> bool
 		{
-			for (const auto &name : names)
+			for (const auto &name: names)
 			{
 				if (json.contains(name) && !json.at(name).is_null())
 				{
@@ -88,6 +88,15 @@ namespace lib
 		 * @param item Item to save
 		 */
 		static void save(const ghc::filesystem::path &path, const nlohmann::json &json);
+
+		/**
+		 * Find the last value in an "item"s array, or from "item" directly
+		 * @param name Name of item to search for, excluding s-suffix
+		 * @param json JSON to search in
+		 * @param item String to output to
+		 */
+		static void find_item(const std::string &name,
+			const nlohmann::json &json, std::string &item);
 
 	private:
 		json() = default;
