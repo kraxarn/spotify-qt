@@ -1,23 +1,5 @@
 #include "lib/spotify/show.hpp"
 
-void lib::spt::to_json(nlohmann::json &j, const show &s)
-{
-	j = nlohmann::json{
-		{"available_markets", s.available_markets},
-		{"description", s.description},
-		{"explicit", s.is_explicit},
-		{"external_urls", s.external_urls},
-		{"href", s.href},
-		{"html_description", s.html_description},
-		{"image", s.image},
-		{"is_externally_hosted", s.is_externally_hosted},
-		{"languages", s.languages},
-		{"media_type", lib::enums<lib::media_type>::to_string(s.media_type)},
-		{"publisher", s.publisher},
-		{"uri", s.uri},
-	};
-}
-
 void lib::spt::from_json(const nlohmann::json &j, show &s)
 {
 	if (!j.is_object())

@@ -93,9 +93,6 @@ namespace lib
 			auto to_track(const lib::spt::show &show) const -> lib::spt::track;
 		};
 
-		/** Episode -> JSON */
-		void to_json(nlohmann::json &j, const episode &e);
-
 		/** JSON -> Episode */
 		void from_json(const nlohmann::json &j, episode &e);
 	}

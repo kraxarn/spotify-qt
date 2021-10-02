@@ -77,9 +77,6 @@ namespace lib
 			std::string uri;
 		};
 
-		/** Show -> JSON */
-		void to_json(nlohmann::json &j, const show &s);
-
 		/** JSON -> Show */
 		void from_json(const nlohmann::json &j, show &s);
 	}

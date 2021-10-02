@@ -1,27 +1,5 @@
 #include "lib/spotify/episode.hpp"
 
-void lib::spt::to_json(nlohmann::json &j, const episode &e)
-{
-	j = nlohmann::json{
-		{"audio_preview_url", e.audio_preview_url},
-		{"description", e.description},
-		{"duration_ms", e.duration_ms},
-		{"explicit", e.is_explicit},
-		{"external_urls", e.external_urls},
-		{"href", e.href},
-		{"html_description", e.html_description},
-		{"id", e.id},
-		{"image", e.image},
-		{"is_externally_hosted", e.is_externally_hosted},
-		{"is_playable", e.is_playable},
-		{"languages", e.languages},
-		{"name", e.name},
-		{"release_date", e.release_date},
-		{"release_date_precision", e.release_date_precision},
-		{"uri", e.uri},
-	};
-}
-
 void lib::spt::from_json(const nlohmann::json &j, episode &e)
 {
 	if (!j.is_object())
