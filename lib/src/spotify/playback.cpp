@@ -40,7 +40,7 @@ auto lib::spt::playback::metadata() const -> nlohmann::json
 	return {
 		{"xesam:title", item.name},
 		{"xesam:artist", artist_names},
-		{"xesam:album", item.album},
+		{"xesam:album", item.album.name},
 		{"xesam:albumArtist", artist_names},
 		{"xesam:url", lib::fmt::format("https://open.spotify.com/track/{}", item.id)},
 		{"mpris:length", item.duration * 1000},
