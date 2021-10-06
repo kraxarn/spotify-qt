@@ -266,6 +266,9 @@ void SongMenu::remFromPlaylist(bool /*checked*/)
 			// It doesn't necessarily match item index depending on sorting order
 			mainWindow->getSongsTree()->takeTopLevelItem(i);
 
+            // Refresh the playlist automatically to prevent issues with songs being skipped
+            mainWindow->getSongsTree()->refreshPlaylist(currentPlaylist);
+
 			StatusMessage::info(QString("Removed %1 from \"%2\"")
 				.arg(QString::fromStdString(track.title()))
 				.arg(QString::fromStdString(currentPlaylist.name)));
