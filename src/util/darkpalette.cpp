@@ -37,3 +37,11 @@ auto DarkPalette::getDarkStylesheet() -> QString
 	styleFile.close();
 	return data;
 }
+
+void DarkPalette::addFonts()
+{
+	QFontDatabase::addApplicationFont(":/res/font/NotoSans-Regular.ttf");
+	QFontDatabase::addApplicationFont(":/res/font/NotoSansMono-Regular.ttf");
+
+	QApplication::setFont(QFont("Noto Sans Regular", fontPointSize));
+}

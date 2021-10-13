@@ -66,6 +66,8 @@ auto InterfacePage::appearance() -> QWidget *
 	auto *layout = tabContent();
 	auto *comboBoxLayout = new QGridLayout();
 
+	const auto &qt = settings.qt_const();
+
 	// Style
 	auto *styleLabel = new QLabel("Style", this);
 	styleLabel->setToolTip("Qt style to use\n"
@@ -109,6 +111,12 @@ auto InterfacePage::appearance() -> QWidget *
 		itfIcFallback->setChecked(settings.general.fallback_icons);
 		layout->addWidget(itfIcFallback);
 	}
+
+	// Custom font
+	itfFont = new QCheckBox(QStringLiteral("Custom font"), this);
+	itfFont->setToolTip(QStringLiteral("Use custom Noto Sans font"));
+	itfFont->setChecked(qt.custom_font);
+	layout->addWidget(itfFont);
 
 	return WidgetUtils::layoutToWidget(layout, this);
 }
@@ -256,6 +264,15 @@ auto InterfacePage::save() -> bool
 		}
 		qtSettings.system_title_bar = titleBar->isChecked();
 	}
+	if (itfFont != nullptr)
+	{
+		if (qtSettings.custom_font != itfFont->isChecked())
+		{
+			info(itfFont->text(), "Please restart the application to change font");
+		}
+
+		qtSettings.custom_font = itfFont->isChecked();
+	}
 
 	// Reload if needed
 	if (reloadTray && mainWindow != nullptr)
@@ -290,6 +307,11 @@ void InterfacePage::darkThemeToggle(bool checked)
 	else
 	{
 		itfStyle->setCurrentIndex(0);
+	}
+
+	if (itfFont != nullptr)
+	{
+		itfFont->setChecked(checked);
 	}
 }
 

@@ -15,6 +15,11 @@ namespace lib
 			 * Show system borders and title bar
 			 */
 			bool system_title_bar = false;
+
+			/**
+			 * Use custom font when using custom dark theme
+			 */
+			bool custom_font = true;
 		};
 
 		void to_json(nlohmann::json &j, const qt &q);

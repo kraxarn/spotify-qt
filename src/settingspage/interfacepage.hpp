@@ -28,6 +28,7 @@ private:
 	QComboBox *itfStyle = nullptr;
 	QCheckBox *itfDark = nullptr;
 	QCheckBox *itfIcFallback = nullptr;
+	QCheckBox *itfFont = nullptr;
 
 	// Tray icon
 	QCheckBox *itfTrayAlbum = nullptr;
