@@ -15,22 +15,25 @@ an actual Spotify client running, for example [spotifyd](https://github.com/Spot
 which can be configured from within the app. Also like other clients, controlling music playback
 requires Spotify Premium.
 
-Note that the project is undergoing some refactoring in preparation for v4.0. This won't affect 
-the overall experience, but the changes for each release might be smaller than usual, due to it 
-not being worth noting the underlying changes.
-
 Check out the [spotify-qt-quick](https://github.com/kraxarn/spotify-qt-quick) repo if you're
 interested in a Qt Quick UI.
 
 #### Contributions are very welcome!
 
+## Goals
+
+* Fast, light on resources, and small file size.
+* Portable, and supporting as many platforms and architectures as possible.
+* Customizable.
+
+## Non-goals
+
+* Having the same features as the official client.
+
 ## Supported platforms
 
-Tested: Linux, Windows
-
-Supported: macOS, *BSD, Haiku, any
-platform [officially supported](https://en.wikipedia.org/wiki/List_of_platforms_supported_by_Qt) by
-Qt
+Any system with a C++11 compiler and Qt is supported, but only Linux and Windows is regularly being
+tested, so if an issue occurs on your favorite platform, please report it.
 
 ## Installing
 
@@ -51,15 +54,15 @@ free to, just please open an issue, or get in contact with me, so I can add it t
 | openSUSE | [![openSUSE Multimedia:Apps Tumbleweed package](https://repology.org/badge/version-for-repo/opensuse_multimedia_apps_tumbleweed/spotify-qt.svg?header=openSUSE)](https://software.opensuse.org//download.html?project=multimedia%3Aapps&package=spotify-qt) | [KaratekHD](https://github.com/KaratekHD)
 | Other (Linux) | [![Snapcraft](https://snapcraft.io//spotify-qt/badge.svg)](https://snapcraft.io/spotify-qt) | [kraxarn](https://github.com/kraxarn) |
 
-The snap version can be installed by simply running  `snap install spotify-qt`, 
-if that's your thing.
+The snap version can be installed by simply running  `snap install spotify-qt`, if that's your
+thing.
 
 ## Building yourself
 
 Make sure you have Qt (5.9+/6.0+) with SVG support, CMake (3.5+) and various build tools like
-`make`, `g++` and `git`. Keep in mind that the master branch is unstable at all times.
-Therefore, it's recommended to use the stable branch, which is updated after each new stable
-release, only including important bug fixes, unless you want to try out new features.
+`make`, `g++` and `git`. Keep in mind that the master branch is unstable at all times. Therefore,
+it's recommended to use the stable branch, which is updated after each new stable release, only
+including important bug fixes, unless you want to try out new features.
 
 ```
 git clone --branch stable https://github.com/kraxarn/spotify-qt.git
