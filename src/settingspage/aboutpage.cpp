@@ -1,13 +1,15 @@
 #include "aboutpage.hpp"
 #include "mainwindow.hpp"
 
-AboutPage::AboutPage(lib::settings &settings, lib::cache &cache, QWidget *parent)
+AboutPage::AboutPage(lib::settings &settings, lib::cache &cache,
+	const lib::http_client &httpClient, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
 	addTab(about(), "General");
 	addTab(systemInfo(), "System information");
 	addTab(cacheInfo(), "Cache");
 	addTab(configPreview(), "Config preview");
+	addTab(contributors(httpClient), "Contributors");
 
 	if (lib::crash_handler::is_init()
 		|| !cache.get_all_crashes().empty())
@@ -80,6 +82,11 @@ auto AboutPage::configPreview() -> QWidget *
 auto AboutPage::crashLogs(lib::cache &cache) -> QWidget *
 {
 	return new View::Crashes(cache, this);
+}
+
+auto AboutPage::contributors(const lib::http_client &httpClient) -> QWidget *
+{
+	return new List::Contributors(httpClient);
 }
 
 auto AboutPage::icon() -> QIcon

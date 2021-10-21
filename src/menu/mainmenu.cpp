@@ -6,7 +6,8 @@ MainMenu::MainMenu(lib::spt::api &spotify, lib::settings &settings,
 	: QMenu(parent),
 	spotify(spotify),
 	settings(settings),
-	cache(cache)
+	cache(cache),
+	httpClient(httpClient)
 {
 	// Update notifier
 	about = addAction(Icon::get("help-about"), QString("Checking for updates..."));
@@ -32,12 +33,8 @@ MainMenu::MainMenu(lib::spt::api &spotify, lib::settings &settings,
 	// Refresh and settings
 	auto *openSettings = MenuUtils::createAction("configure",
 		"Settings...", this, QKeySequence::Preferences);
-	QAction::connect(openSettings, &QAction::triggered, [this]()
-	{
-		SettingsDialog dialog(this->settings, this->cache,
-			MainWindow::find(parentWidget()));
-		dialog.exec();
-	});
+	QAction::connect(openSettings, &QAction::triggered,
+		this, &MainMenu::onOpenSettings);
 	addAction(openSettings);
 
 	// Debug options if enabled
@@ -187,4 +184,12 @@ void MainMenu::checkForUpdate(const std::string &data)
 				MainWindow::find(this->parentWidget()));
 		});
 	}
+}
+
+void MainMenu::onOpenSettings(bool /*checked*/)
+{
+	auto *parent = MainWindow::find(parentWidget());
+
+	SettingsDialog dialog(settings, cache, httpClient, parent);
+	dialog.exec();
 }

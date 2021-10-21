@@ -40,8 +40,8 @@ class SettingsDialog: public QDialog
 Q_OBJECT
 
 public:
-	explicit SettingsDialog(lib::settings &settings, lib::cache &cache,
-		QWidget *parent = nullptr);
+	SettingsDialog(lib::settings &settings, lib::cache &cache,
+		const lib::http_client &httpClient, QWidget *parent);
 
 private:
 	void categoryChanged(int row);
@@ -52,5 +52,5 @@ private:
 	QListWidget *categories = nullptr;
 	QStackedWidget *stack = nullptr;
 
-	QList<SettingsPage*> pages;
+	QList<SettingsPage *> pages;
 };

@@ -1,6 +1,7 @@
 #include "settingsdialog.hpp"
 
-SettingsDialog::SettingsDialog(lib::settings &settings, lib::cache &cache, QWidget *parent)
+SettingsDialog::SettingsDialog(lib::settings &settings, lib::cache &cache,
+	const lib::http_client &httpClient, QWidget *parent)
 	: QDialog(parent),
 	settings(settings)
 {
@@ -17,7 +18,7 @@ SettingsDialog::SettingsDialog(lib::settings &settings, lib::cache &cache, QWidg
 		new InterfacePage(settings, this),
 		new SpotifyPage(settings, this),
 		new PlaylistsPage(settings, this),
-		new AboutPage(settings, cache, this)
+		new AboutPage(settings, cache, httpClient, this)
 	});
 
 	for (auto &page: pages)

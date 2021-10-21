@@ -20,6 +20,7 @@ private:
 	lib::spt::api &spotify;
 	lib::settings &settings;
 	lib::cache &cache;
+	const lib::http_client &httpClient;
 	QAction *about;
 	QMenu *deviceMenu;
 
@@ -27,4 +28,6 @@ private:
 	void deviceSelected(QAction *action);
 	void logOut(bool checked);
 	void checkForUpdate(const std::string &data);
+
+	void onOpenSettings(bool checked);
 };
