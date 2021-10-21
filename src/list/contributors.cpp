@@ -3,6 +3,8 @@
 List::Contributors::Contributors(const lib::http_client &httpClient)
 	: httpClient(httpClient)
 {
+	QListWidget::connect(this, &QListWidget::itemDoubleClicked,
+		this, &List::Contributors::onItemDoubleClicked);
 }
 
 void List::Contributors::showEvent(QShowEvent *event)
@@ -22,6 +24,14 @@ void List::Contributors::showEvent(QShowEvent *event)
 				auto *item = new QListWidgetItem(this);
 				item->setText(QString::fromStdString(contributor.login));
 
+				item->setToolTip(QString("%1 %2")
+					.arg(contributor.contributions)
+					.arg(contributor.contributions == 1
+						? QStringLiteral("contribution")
+						: QStringLiteral("contributions")));
+
+				item->setData(urlRole, QString::fromStdString(contributor.html_url));
+
 				httpClient.get(contributor.avatar_url, lib::headers(),
 					[item](const std::string &str)
 					{
@@ -32,4 +42,16 @@ void List::Contributors::showEvent(QShowEvent *event)
 					});
 			}
 		});
+}
+
+void List::Contributors::onItemDoubleClicked(QListWidgetItem *item)
+{
+	if (item == nullptr)
+	{
+		return;
+	}
+
+	const auto url = item->data(urlRole).toString();
+	lib::log::debug("{}", parentWidget()->metaObject()->className());
+	UrlUtils::open(url, LinkType::Web, parentWidget());
 }

@@ -18,6 +18,16 @@ namespace lib
 			 * URL to avatar
 			 */
 			std::string avatar_url;
+
+			/**
+			 * URL to user's profile
+			 */
+			std::string html_url;
+
+			/**
+			 * Number of contributions
+			 */
+			int contributions;
 		};
 
 		void from_json(const nlohmann::json &j, contributor &c);
