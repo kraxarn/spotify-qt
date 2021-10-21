@@ -22,7 +22,7 @@ namespace lib
 			 * @param callback Response callback, empty if failed
 			 */
 			void contributors(const std::string &owner, const std::string &repo,
-				lib::callback<std::vector<lib::gh::contributor>> &callback);
+				lib::callback<std::vector<lib::gh::contributor>> &callback) const;
 
 		private:
 			const lib::http_client &http_client;
