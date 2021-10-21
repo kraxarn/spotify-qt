@@ -2,6 +2,8 @@
 
 #include "lib/github/api.hpp"
 #include "util/urlutils.hpp"
+#include "util/parent.hpp"
+#include "dialog/settingsdialog.hpp"
 
 #include <QListWidget>
 
