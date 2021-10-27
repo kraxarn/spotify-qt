@@ -87,6 +87,13 @@ void View::Search::Search::search()
 	// Search in library cache until tab is selected
 	library->searchCache(searchText.toStdString());
 
+	// Don't actually search if nothing to search on
+	if (searchText.isEmpty())
+	{
+		searchBox->setEnabled(true);
+		return;
+	}
+
 	// Check if spotify uri
 	if (searchText.startsWith("spotify:")
 		|| searchText.startsWith("https://open.spotify.com/"))
