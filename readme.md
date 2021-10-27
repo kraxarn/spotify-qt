@@ -32,7 +32,7 @@ interested in a Qt Quick UI.
 
 ## Supported platforms
 
-Any system with a C++11 compiler and Qt is supported, but only Linux and Windows is regularly being
+Any system with a C++11 compiler and Qt is supported, but only Linux and Windows are regularly being
 tested, so if an issue occurs on your favorite platform, please report it.
 
 ## Installing
