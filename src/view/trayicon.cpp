@@ -1,7 +1,7 @@
-#include "qttrayicon.hpp"
+#include "trayicon.hpp"
 #include "mainwindow.hpp"
 
-QtTrayIcon::QtTrayIcon(lib::spt::api &spotify, const lib::settings &settings, QWidget *parent)
+TrayIcon::TrayIcon(lib::spt::api &spotify, const lib::settings &settings, QWidget *parent)
 	: QSystemTrayIcon(parent),
 	spotify(spotify),
 	settings(settings)
@@ -19,16 +19,16 @@ QtTrayIcon::QtTrayIcon(lib::spt::api &spotify, const lib::settings &settings, QW
 	const auto previousIcon = Icon::get("media-skip-backward");
 	previous = contextMenu->addAction(previousIcon, "Previous");
 	QAction::connect(previous, &QAction::triggered,
-		this, &QtTrayIcon::onPrevious);
+		this, &TrayIcon::onPrevious);
 
 	const auto playPauseIcon = Icon::get("media-playback-start");
 	playPause = contextMenu->addAction(playPauseIcon, "Play");
 	QAction::connect(playPause, &QAction::triggered,
-		this, &QtTrayIcon::onPlayPause);
+		this, &TrayIcon::onPlayPause);
 
 	next = contextMenu->addAction(Icon::get("media-skip-forward"), "Next");
 	QAction::connect(next, &QAction::triggered,
-		this, &QtTrayIcon::onNext);
+		this, &TrayIcon::onNext);
 
 	contextMenu->addSeparator();
 	auto *quit = contextMenu->addAction(Icon::get("application-exit"), "Quit");
@@ -39,18 +39,18 @@ QtTrayIcon::QtTrayIcon(lib::spt::api &spotify, const lib::settings &settings, QW
 	show();
 
 	QSystemTrayIcon::connect(this, &QSystemTrayIcon::activated,
-		this, &QtTrayIcon::onActivated);
+		this, &TrayIcon::onActivated);
 
 	QMenu::connect(contextMenu, &QMenu::aboutToShow,
-		this, &QtTrayIcon::onMenuAboutToShow);
+		this, &TrayIcon::onMenuAboutToShow);
 }
 
-QtTrayIcon::~QtTrayIcon()
+TrayIcon::~TrayIcon()
 {
 	contextMenu->deleteLater();
 }
 
-void QtTrayIcon::message(const QString &message)
+void TrayIcon::message(const QString &message)
 {
 	if (message.isNull() || message.isEmpty())
 	{
@@ -60,17 +60,18 @@ void QtTrayIcon::message(const QString &message)
 	showMessage("spotify-qt", message);
 }
 
-void QtTrayIcon::message(const QString &message, const QIcon &icon)
+void TrayIcon::message(const QString &message, const QPixmap &pixmap)
 {
 	if (message.isNull() || message.isEmpty())
 	{
 		return;
 	}
 
+	QIcon icon(pixmap);
 	showMessage("spotify-qt", message, icon, messageIconTimeout);
 }
 
-auto QtTrayIcon::playback() -> lib::spt::playback
+auto TrayIcon::playback() -> lib::spt::playback
 {
 	auto *mainWindow = qobject_cast<MainWindow *>(this->parent());
 	if (mainWindow == nullptr)
@@ -80,12 +81,12 @@ auto QtTrayIcon::playback() -> lib::spt::playback
 	return mainWindow->currentPlayback();
 }
 
-void QtTrayIcon::setPixmap(const QPixmap &pixmap)
+void TrayIcon::setPixmap(const QPixmap &pixmap)
 {
 	setIcon(ImageUtils::mask(pixmap));
 }
 
-void QtTrayIcon::setDefaultPixmap()
+void TrayIcon::setDefaultPixmap()
 {
 	constexpr int iconSize = 64;
 
@@ -94,12 +95,12 @@ void QtTrayIcon::setDefaultPixmap()
 		.pixmap(iconSize, iconSize));
 }
 
-void QtTrayIcon::onPrevious(bool /*checked*/)
+void TrayIcon::onPrevious(bool /*checked*/)
 {
 	spotify.previous(callback);
 }
 
-void QtTrayIcon::onPlayPause(bool /*checked*/)
+void TrayIcon::onPlayPause(bool /*checked*/)
 {
 	if (playback().is_playing)
 	{
@@ -111,12 +112,12 @@ void QtTrayIcon::onPlayPause(bool /*checked*/)
 	}
 }
 
-void QtTrayIcon::onNext(bool /*checked*/)
+void TrayIcon::onNext(bool /*checked*/)
 {
 	spotify.next(callback);
 }
 
-void QtTrayIcon::onActivated(ActivationReason reason)
+void TrayIcon::onActivated(ActivationReason reason)
 {
 	if (reason != ActivationReason::Trigger)
 	{
@@ -130,7 +131,7 @@ void QtTrayIcon::onActivated(ActivationReason reason)
 	}
 }
 
-void QtTrayIcon::onMenuAboutToShow()
+void TrayIcon::onMenuAboutToShow()
 {
 	auto current = playback();
 	auto isPlaying = current.is_playing;

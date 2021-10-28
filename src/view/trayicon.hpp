@@ -1,25 +1,21 @@
 #pragma once
 
-#include "lib/spotify/playback.hpp"
 #include "lib/spotify/api.hpp"
 #include "util/icon.hpp"
 
 #include <QMenu>
 #include <QSystemTrayIcon>
 
-/**
- * Tray icon using Qt
- */
-class QtTrayIcon: public QSystemTrayIcon
+class TrayIcon: public QSystemTrayIcon
 {
 Q_OBJECT
 
 public:
-	QtTrayIcon(lib::spt::api &spotify, const lib::settings &settings, QWidget *parent);
-	~QtTrayIcon() override;
+	TrayIcon(lib::spt::api &spotify, const lib::settings &settings, QWidget *parent);
+	~TrayIcon() override;
 
 	void message(const QString &message);
-	void message(const QString &message, const QIcon &icon);
+	void message(const QString &message, const QPixmap &pixmap);
 
 	void setPixmap(const QPixmap &pixmap);
 	void setDefaultPixmap();

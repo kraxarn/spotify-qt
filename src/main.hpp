@@ -32,7 +32,7 @@
 #include "view/maincontent.hpp"
 #include "view/maintoolbar.hpp"
 #include "view/sidepanel/sidepanel.hpp"
-#include "view/trayicon/qttrayicon.hpp"
+#include "view/trayicon.hpp"
 #include "widget/hiddensizegrip.hpp"
 
 #include <QMainWindow>

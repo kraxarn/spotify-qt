@@ -71,7 +71,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	// Create tray icon if specified
 	if (settings.general.tray_icon)
 	{
-		trayIcon = new QtTrayIcon(*spotify, settings, this);
+		trayIcon = new TrayIcon(*spotify, settings, this);
 	}
 
 	// If new version has been detected, show what's new dialog
@@ -314,8 +314,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 					if (settings.general.notify_track_change && trackChange)
 					{
 						const auto message = QString::fromStdString(currPlaying.details());
-						QIcon icon(image);
-						trayIcon->message(message, icon);
+						trayIcon->message(message, image);
 					}
 				});
 		}
@@ -460,7 +459,7 @@ void MainWindow::reloadTrayIcon()
 
 	if (settings.general.tray_icon)
 	{
-		trayIcon = new QtTrayIcon(*spotify, settings, this);
+		trayIcon = new TrayIcon(*spotify, settings, this);
 	}
 }
 
