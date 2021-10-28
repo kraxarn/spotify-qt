@@ -1,9 +1,10 @@
 #pragma once
 
 #include "settingspage.hpp"
-#include "../util/icon.hpp"
+#include "util/icon.hpp"
 
 #include <QStyleFactory>
+#include <QGroupBox>
 
 class InterfacePage: public SettingsPage
 {
@@ -31,7 +32,7 @@ private:
 	QCheckBox *customFont = nullptr;
 
 	// Tray icon
-	QCheckBox *trayEnabled = nullptr;
+	QGroupBox *trayEnabled = nullptr;
 	QCheckBox *albumInTray = nullptr;
 	QCheckBox *invertTrayIcon = nullptr;
 	QCheckBox *notifyTrackChange = nullptr;

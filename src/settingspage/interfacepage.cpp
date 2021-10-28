@@ -128,29 +128,33 @@ auto InterfacePage::trayIcon() -> QWidget *
 	content->setAlignment(Qt::AlignTop);
 
 	// Tray icon settings
-	// TODO: Group this (as it's required for other settings)
-	trayEnabled = new QCheckBox("Enabled", this);
+	trayEnabled = new QGroupBox("Enabled", this);
+	trayEnabled->setCheckable(true);
 	trayEnabled->setToolTip("Add an icon to the system tray for quick access");
 	trayEnabled->setChecked(settings.general.tray_icon);
 	content->addWidget(trayEnabled);
+
+	// Container for options
+	auto *trayOptions = new QVBoxLayout();
+	trayEnabled->setLayout(trayOptions);
 
 	// Invert tray icon
 	invertTrayIcon = new QCheckBox("Invert icon", this);
 	invertTrayIcon->setToolTip("Invert colors in tray icon to be visible on light backgrounds");
 	invertTrayIcon->setChecked(settings.general.tray_light_icon);
-	content->addWidget(invertTrayIcon);
+	trayOptions->addWidget(invertTrayIcon);
 
 	// Album art in tray
 	albumInTray = new QCheckBox("Album art as icon", this);
 	albumInTray->setToolTip("Show album art of current track in tray icon");
 	albumInTray->setChecked(settings.general.tray_album_art);
-	content->addWidget(albumInTray);
+	trayOptions->addWidget(albumInTray);
 
 	// Notify on track change
 	notifyTrackChange = new QCheckBox("Show notification on track change", this);
 	notifyTrackChange->setToolTip("Show desktop notification when a new track starts playing");
 	notifyTrackChange->setChecked(settings.general.notify_track_change);
-	content->addWidget(notifyTrackChange);
+	trayOptions->addWidget(notifyTrackChange);
 
 	return WidgetUtils::layoutToWidget(content, this);
 }
