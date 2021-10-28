@@ -18,27 +18,31 @@ public:
 
 private:
 	// General
-	QCheckBox *itfMonoTime = nullptr;
-	QCheckBox *itfRelativeAdded = nullptr;
-	QCheckBox *itfTrackNum = nullptr;
-	QComboBox *itfResizeMode = nullptr;
-	QCheckBox *titleBar = nullptr;
+	QComboBox *resizeMode = nullptr;
+	QCheckBox *monoTime = nullptr;
+	QCheckBox *trackNumbers = nullptr;
+	QCheckBox *relativeAdded = nullptr;
+	QCheckBox *systemTitleBar = nullptr;
 
 	// Appearance
-	QComboBox *itfStyle = nullptr;
-	QCheckBox *itfDark = nullptr;
-	QCheckBox *itfIcFallback = nullptr;
-	QCheckBox *itfFont = nullptr;
+	QComboBox *qtStyle = nullptr;
+	QCheckBox *darkTheme = nullptr;
+	QCheckBox *iconFallback = nullptr;
+	QCheckBox *customFont = nullptr;
 
 	// Tray icon
-	QCheckBox *itfTrayAlbum = nullptr;
-	QCheckBox *itfTrayIcon = nullptr;
-	QCheckBox *itfTrayInvert = nullptr;
-	QCheckBox *itfNotifyTrack = nullptr;
+	QCheckBox *trayEnabled = nullptr;
+	QCheckBox *albumInTray = nullptr;
+	QCheckBox *invertTrayIcon = nullptr;
+	QCheckBox *notifyTrackChange = nullptr;
 
 	auto general() -> QWidget *;
 	auto appearance() -> QWidget *;
 	auto trayIcon() -> QWidget *;
+
+	void saveGeneral();
+	void saveAppearance();
+	void saveTrayIcon();
 
 	static auto hasIconTheme() -> bool;
 	static auto defaultStyle() -> QString;

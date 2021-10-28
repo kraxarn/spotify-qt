@@ -22,41 +22,41 @@ auto InterfacePage::general() -> QWidget *
 							"Custom: No auto resize");
 	comboBoxLayout->addWidget(resizeLabel, 0, 0);
 
-	itfResizeMode = new QComboBox(this);
-	itfResizeMode->addItems({
+	resizeMode = new QComboBox(this);
+	resizeMode->addItems({
 		"Fit width",
 		"Fit content",
 		"Custom",
 	});
-	itfResizeMode->setCurrentIndex(static_cast<int>(settings.general.track_list_resize_mode));
-	comboBoxLayout->addWidget(itfResizeMode, 0, 1);
+	resizeMode->setCurrentIndex(static_cast<int>(settings.general.track_list_resize_mode));
+	comboBoxLayout->addWidget(resizeMode, 0, 1);
 	layout->addLayout(comboBoxLayout);
 
 	// Monospace remaining time
-	itfMonoTime = new QCheckBox("Fixed width remaining time", this);
-	itfMonoTime->setToolTip("Use a fixed width for remaining time to avoid resizing");
-	itfMonoTime->setChecked(settings.general.fixed_width_time);
-	layout->addWidget(itfMonoTime);
+	monoTime = new QCheckBox("Fixed width remaining time", this);
+	monoTime->setToolTip("Use a fixed width for remaining time to avoid resizing");
+	monoTime->setChecked(settings.general.fixed_width_time);
+	layout->addWidget(monoTime);
 
 	// Track numbers
-	itfTrackNum = new QCheckBox("Show track numbers", this);
-	itfTrackNum->setToolTip("Show track numbers next to tracks in the list");
-	itfTrackNum->setChecked(settings.general.track_numbers == lib::spotify_context::all);
-	layout->addWidget(itfTrackNum);
+	trackNumbers = new QCheckBox("Show track numbers", this);
+	trackNumbers->setToolTip("Show track numbers next to tracks in the list");
+	trackNumbers->setChecked(settings.general.track_numbers == lib::spotify_context::all);
+	layout->addWidget(trackNumbers);
 
 	// Relative added date
-	itfRelativeAdded = new QCheckBox("Relative added dates", this);
-	itfRelativeAdded->setToolTip("Relative added dates compared to current date,\n"
-								 "for example \"... ago\"");
-	itfRelativeAdded->setChecked(settings.general.relative_added);
-	layout->addWidget(itfRelativeAdded);
+	relativeAdded = new QCheckBox("Relative added dates", this);
+	relativeAdded->setToolTip("Relative added dates compared to current date,\n"
+							  "for example \"... ago\"");
+	relativeAdded->setChecked(settings.general.relative_added);
+	layout->addWidget(relativeAdded);
 
 	// System title bar
 	const auto &qtSettings = settings.qt_const();
-	titleBar = new QCheckBox("System title bar", this);
-	titleBar->setToolTip("Show system title bar and window borders");
-	titleBar->setChecked(qtSettings.system_title_bar);
-	layout->addWidget(titleBar);
+	systemTitleBar = new QCheckBox("System title bar", this);
+	systemTitleBar->setToolTip("Show system title bar and window borders");
+	systemTitleBar->setChecked(qtSettings.system_title_bar);
+	layout->addWidget(systemTitleBar);
 
 	return WidgetUtils::layoutToWidget(layout, this);
 }
@@ -76,47 +76,47 @@ auto InterfacePage::appearance() -> QWidget *
 
 	auto styles = QStyleFactory::keys();
 
-	itfStyle = new QComboBox(this);
-	itfStyle->addItem("Default");
-	itfStyle->addItems(styles);
-	comboBoxLayout->addWidget(itfStyle, 0, 1);
+	qtStyle = new QComboBox(this);
+	qtStyle->addItem("Default");
+	qtStyle->addItems(styles);
+	comboBoxLayout->addWidget(qtStyle, 0, 1);
 
 	if (styles.contains(QString::fromStdString(settings.general.style)))
 	{
-		itfStyle->setCurrentText(QString::fromStdString(settings.general.style));
+		qtStyle->setCurrentText(QString::fromStdString(settings.general.style));
 	}
 	else if (styles.contains(QApplication::style()->objectName()))
 	{
-		itfStyle->setCurrentText(QApplication::style()->objectName());
+		qtStyle->setCurrentText(QApplication::style()->objectName());
 	}
 	else
 	{
-		itfStyle->setCurrentIndex(0);
+		qtStyle->setCurrentIndex(0);
 	}
 
 	layout->addLayout(comboBoxLayout);
 
 	// Dark theme
-	itfDark = new QCheckBox("Dark theme", this);
-	itfDark->setToolTip("Use custom dark theme");
-	itfDark->setChecked(settings.get_dark_theme());
-	QCheckBox::connect(itfDark, &QCheckBox::toggled, this, &InterfacePage::darkThemeToggle);
-	layout->addWidget(itfDark);
+	darkTheme = new QCheckBox("Dark theme", this);
+	darkTheme->setToolTip("Use custom dark theme");
+	darkTheme->setChecked(settings.get_dark_theme());
+	QCheckBox::connect(darkTheme, &QCheckBox::toggled, this, &InterfacePage::darkThemeToggle);
+	layout->addWidget(darkTheme);
 
 	// Always use fallback icons (if system icons are an option)
 	if (hasIconTheme())
 	{
-		itfIcFallback = new QCheckBox("Use bundled icons", this);
-		itfIcFallback->setToolTip("Always use bundled icons, even if system icons are available");
-		itfIcFallback->setChecked(settings.general.fallback_icons);
-		layout->addWidget(itfIcFallback);
+		iconFallback = new QCheckBox("Use bundled icons", this);
+		iconFallback->setToolTip("Always use bundled icons, even if system icons are available");
+		iconFallback->setChecked(settings.general.fallback_icons);
+		layout->addWidget(iconFallback);
 	}
 
 	// Custom font
-	itfFont = new QCheckBox(QStringLiteral("Custom font"), this);
-	itfFont->setToolTip(QStringLiteral("Use custom Noto Sans font"));
-	itfFont->setChecked(qt.custom_font);
-	layout->addWidget(itfFont);
+	customFont = new QCheckBox(QStringLiteral("Custom font"), this);
+	customFont->setToolTip(QStringLiteral("Use custom Noto Sans font"));
+	customFont->setChecked(qt.custom_font);
+	layout->addWidget(customFont);
 
 	return WidgetUtils::layoutToWidget(layout, this);
 }
@@ -128,28 +128,29 @@ auto InterfacePage::trayIcon() -> QWidget *
 	content->setAlignment(Qt::AlignTop);
 
 	// Tray icon settings
-	itfTrayIcon = new QCheckBox("Enabled", this);
-	itfTrayIcon->setToolTip("Add an icon to the system tray for quick access");
-	itfTrayIcon->setChecked(settings.general.tray_icon);
-	content->addWidget(itfTrayIcon);
+	// TODO: Group this (as it's required for other settings)
+	trayEnabled = new QCheckBox("Enabled", this);
+	trayEnabled->setToolTip("Add an icon to the system tray for quick access");
+	trayEnabled->setChecked(settings.general.tray_icon);
+	content->addWidget(trayEnabled);
 
 	// Invert tray icon
-	itfTrayInvert = new QCheckBox("Invert icon", this);
-	itfTrayInvert->setToolTip("Invert colors in tray icon to be visible on light backgrounds");
-	itfTrayInvert->setChecked(settings.general.tray_light_icon);
-	content->addWidget(itfTrayInvert);
+	invertTrayIcon = new QCheckBox("Invert icon", this);
+	invertTrayIcon->setToolTip("Invert colors in tray icon to be visible on light backgrounds");
+	invertTrayIcon->setChecked(settings.general.tray_light_icon);
+	content->addWidget(invertTrayIcon);
 
 	// Album art in tray
-	itfTrayAlbum = new QCheckBox("Album art as icon", this);
-	itfTrayAlbum->setToolTip("Show album art of current track in tray icon");
-	itfTrayAlbum->setChecked(settings.general.tray_album_art);
-	content->addWidget(itfTrayAlbum);
+	albumInTray = new QCheckBox("Album art as icon", this);
+	albumInTray->setToolTip("Show album art of current track in tray icon");
+	albumInTray->setChecked(settings.general.tray_album_art);
+	content->addWidget(albumInTray);
 
 	// Notify on track change
-	itfNotifyTrack = new QCheckBox("Show notification on track change", this);
-	itfNotifyTrack->setToolTip("Show desktop notification when a new track starts playing");
-	itfNotifyTrack->setChecked(settings.general.notify_track_change);
-	content->addWidget(itfNotifyTrack);
+	notifyTrackChange = new QCheckBox("Show notification on track change", this);
+	notifyTrackChange->setToolTip("Show desktop notification when a new track starts playing");
+	notifyTrackChange->setChecked(settings.general.notify_track_change);
+	content->addWidget(notifyTrackChange);
 
 	return WidgetUtils::layoutToWidget(content, this);
 }
@@ -164,131 +165,154 @@ auto InterfacePage::title() -> QString
 	return "Interface";
 }
 
-auto InterfacePage::save() -> bool
+void InterfacePage::saveGeneral()
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 
-	// Set theme
-	if (itfDark != nullptr
-		&& itfDark->isChecked() != settings.get_dark_theme())
+	if (resizeMode != nullptr)
 	{
-		QMessageBox::information(this, "Dark Theme",
-			"Please restart the application to fully apply selected theme");
-		settings.set_dark_theme(itfDark->isChecked());
-		StyleUtils::applyPalette(settings.general.style_palette);
-	}
+		auto newResizeMode = static_cast<lib::resize_mode>(resizeMode->currentIndex());
 
-	// Set style
-	if (itfStyle != nullptr
-		&& itfStyle->currentText() != QString::fromStdString(settings.general.style))
-	{
-		QApplication::setStyle(itfStyle->currentIndex() == 0
-			? defaultStyle()
-			: itfStyle->currentText());
-
-		settings.general.style = itfStyle->currentIndex() == 0
-			? std::string()
-			: itfStyle->currentText().toStdString();
-	}
-
-	// Track list resize mode
-	if (itfResizeMode != nullptr)
-	{
-		auto resizeMode = static_cast<lib::resize_mode>(itfResizeMode->currentIndex());
 		if (mainWindow != nullptr
-			&& settings.general.track_list_resize_mode != resizeMode)
+			&& settings.general.track_list_resize_mode != newResizeMode)
 		{
-			auto *tracksList = dynamic_cast<TracksList *>(mainWindow->getSongsTree());
+			auto *tracksList = mainWindow->getSongsTree();
 			if (tracksList != nullptr)
 			{
-				tracksList->updateResizeMode(resizeMode);
+				tracksList->updateResizeMode(newResizeMode);
 			}
 		}
-		settings.general.track_list_resize_mode = resizeMode;
+
+		settings.general.track_list_resize_mode = newResizeMode;
 	}
 
-	// Track numbers
-	if (itfTrackNum != nullptr)
+	if (monoTime != nullptr)
 	{
 		if (mainWindow != nullptr)
 		{
-			mainWindow->toggleTrackNumbers(itfTrackNum->isChecked());
+			mainWindow->setFixedWidthTime(monoTime->isChecked());
 		}
-		settings.general.track_numbers = itfTrackNum->isChecked()
+
+		settings.general.fixed_width_time = monoTime->isChecked();
+	}
+
+	if (trackNumbers != nullptr)
+	{
+		if (mainWindow != nullptr)
+		{
+			mainWindow->toggleTrackNumbers(trackNumbers->isChecked());
+		}
+
+		settings.general.track_numbers = trackNumbers->isChecked()
 			? lib::spotify_context::all
 			: lib::spotify_context::none;
 	}
 
-	// Other interface stuff
-	if (itfIcFallback != nullptr)
+	if (relativeAdded != nullptr)
 	{
-		settings.general.fallback_icons = itfIcFallback->isChecked();
+		settings.general.relative_added = relativeAdded->isChecked();
 	}
 
-	if (itfMonoTime != nullptr)
+	if (systemTitleBar != nullptr)
 	{
-		if (mainWindow != nullptr)
+		auto &qtSettings = settings.qt();
+
+		if (qtSettings.system_title_bar != systemTitleBar->isChecked())
 		{
-			mainWindow->setFixedWidthTime(itfMonoTime->isChecked());
-		}
-		settings.general.fixed_width_time = itfMonoTime->isChecked();
-	}
-
-	if (itfRelativeAdded != nullptr)
-	{
-		settings.general.relative_added = itfRelativeAdded->isChecked();
-	}
-
-	// Check if tray icon needs to be reloaded
-	auto reloadTray = itfTrayIcon != nullptr
-		&& itfTrayInvert != nullptr
-		&& (settings.general.tray_icon != itfTrayIcon->isChecked()
-			|| settings.general.tray_light_icon != itfTrayInvert->isChecked());
-
-	// Apply
-	if (itfTrayIcon != nullptr)
-	{
-		settings.general.tray_icon = itfTrayIcon->isChecked();
-	}
-	if (itfTrayInvert != nullptr)
-	{
-		settings.general.tray_light_icon = itfTrayInvert->isChecked();
-	}
-	if (itfTrayAlbum != nullptr)
-	{
-		settings.general.tray_album_art = itfTrayAlbum->isChecked();
-	}
-	if (itfNotifyTrack != nullptr)
-	{
-		settings.general.notify_track_change = itfNotifyTrack->isChecked();
-	}
-
-	// Qt specific
-	auto &qtSettings = settings.qt();
-	if (titleBar != nullptr)
-	{
-		if (qtSettings.system_title_bar != titleBar->isChecked())
-		{
-			info(titleBar->text(),
+			info(systemTitleBar->text(),
 				"Please restart the application to toggle system title bar");
 		}
-		qtSettings.system_title_bar = titleBar->isChecked();
+
+		qtSettings.system_title_bar = systemTitleBar->isChecked();
 	}
-	if (itfFont != nullptr)
+}
+
+void InterfacePage::saveAppearance()
+{
+	if (qtStyle != nullptr
+		&& qtStyle->currentText() != QString::fromStdString(settings.general.style))
 	{
-		if (qtSettings.custom_font != itfFont->isChecked())
+		QApplication::setStyle(qtStyle->currentIndex() == 0
+			? defaultStyle()
+			: qtStyle->currentText());
+
+		settings.general.style = qtStyle->currentIndex() == 0
+			? std::string()
+			: qtStyle->currentText().toStdString();
+	}
+
+	if (darkTheme != nullptr
+		&& darkTheme->isChecked() != settings.get_dark_theme())
+	{
+		info("Dark Theme",
+			"Please restart the application to fully apply selected theme");
+
+		settings.set_dark_theme(darkTheme->isChecked());
+		StyleUtils::applyPalette(settings.general.style_palette);
+	}
+
+	if (iconFallback != nullptr)
+	{
+		settings.general.fallback_icons = iconFallback->isChecked();
+	}
+
+	if (customFont != nullptr)
+	{
+		auto &qtSettings = settings.qt();
+
+		if (qtSettings.custom_font != customFont->isChecked())
 		{
-			info(itfFont->text(), "Please restart the application to change font");
+			info(customFont->text(), "Please restart the application to change font");
 		}
 
-		qtSettings.custom_font = itfFont->isChecked();
+		qtSettings.custom_font = customFont->isChecked();
+	}
+}
+
+void InterfacePage::saveTrayIcon()
+{
+	// Check if tray icon needs to be reloaded
+	auto reloadTray = trayEnabled != nullptr
+		&& invertTrayIcon != nullptr
+		&& (settings.general.tray_icon != trayEnabled->isChecked()
+			|| settings.general.tray_light_icon != invertTrayIcon->isChecked());
+
+	if (trayEnabled != nullptr)
+	{
+		settings.general.tray_icon = trayEnabled->isChecked();
+	}
+
+	if (albumInTray != nullptr)
+	{
+		settings.general.tray_album_art = albumInTray->isChecked();
+	}
+
+	if (invertTrayIcon != nullptr)
+	{
+		settings.general.tray_light_icon = invertTrayIcon->isChecked();
+	}
+
+	if (notifyTrackChange != nullptr)
+	{
+		settings.general.notify_track_change = notifyTrackChange->isChecked();
 	}
 
 	// Reload if needed
-	if (reloadTray && mainWindow != nullptr)
+	if (reloadTray)
 	{
-		mainWindow->reloadTrayIcon();
+		auto *mainWindow = MainWindow::find(parentWidget());
+		if (mainWindow != nullptr)
+		{
+			mainWindow->reloadTrayIcon();
+		}
 	}
+}
+
+auto InterfacePage::save() -> bool
+{
+	saveGeneral();
+	saveAppearance();
+	saveTrayIcon();
 
 	return true;
 }
@@ -300,28 +324,28 @@ auto InterfacePage::hasIconTheme() -> bool
 
 void InterfacePage::darkThemeToggle(bool checked)
 {
-	if (itfStyle == nullptr)
+	if (qtStyle == nullptr)
 	{
 		return;
 	}
 
 	if (checked)
 	{
-		itfStyle->setCurrentText("Fusion");
+		qtStyle->setCurrentText("Fusion");
 
-		if (itfIcFallback != nullptr)
+		if (iconFallback != nullptr)
 		{
-			itfIcFallback->setChecked(true);
+			iconFallback->setChecked(true);
 		}
 	}
 	else
 	{
-		itfStyle->setCurrentIndex(0);
+		qtStyle->setCurrentIndex(0);
 	}
 
-	if (itfFont != nullptr)
+	if (customFont != nullptr)
 	{
-		itfFont->setChecked(checked);
+		customFont->setChecked(checked);
 	}
 }
 
@@ -348,5 +372,5 @@ auto InterfacePage::defaultStyle() -> QString
 	}
 
 	// Assume Fusion
-	return QString("Fusion");
+	return QStringLiteral("Fusion");
 }
