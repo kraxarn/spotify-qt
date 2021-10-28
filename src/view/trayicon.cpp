@@ -88,12 +88,22 @@ void TrayIcon::message(const QString &message)
 	showMessage("spotify-qt", message);
 }
 
+void TrayIcon::message(const QString &message, const QIcon &icon)
+{
+	if (message.isNull() || message.isEmpty())
+	{
+		return;
+	}
+
+	showMessage("spotify-qt", message, icon, messageIconTimeout);
+}
+
 auto TrayIcon::playback() -> lib::spt::playback
 {
 	auto *mainWindow = dynamic_cast<MainWindow *>(this->parent());
 	if (mainWindow == nullptr)
 	{
-		return lib::spt::playback();
+		return {};
 	}
 	return mainWindow->currentPlayback();
 }

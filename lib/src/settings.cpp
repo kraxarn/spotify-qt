@@ -74,6 +74,7 @@ void settings::from_json(const nlohmann::json &json)
 	setValue(g, "last_version", general.last_version);
 	setValue(g, "last_volume", general.last_volume);
 	setValue(g, "media_controller", general.media_controller);
+	setValue(g, "notify_track_change", general.notify_track_change);
 	setValue(g, "playlist_order", general.playlist_order);
 	setValue(g, "pulse_volume", general.pulse_volume);
 	setValue(g, "refresh_interval", general.refresh_interval);
@@ -150,6 +151,7 @@ auto settings::to_json() const -> nlohmann::json
 			{"last_version", general.last_version},
 			{"last_volume", general.last_volume},
 			{"media_controller", general.media_controller},
+			{"notify_track_change", general.notify_track_change},
 			{"playlist_order", general.playlist_order},
 			{"pulse_volume", general.pulse_volume},
 			{"refresh_interval", general.refresh_interval},

@@ -34,6 +34,7 @@ private:
 	QCheckBox *itfTrayAlbum = nullptr;
 	QCheckBox *itfTrayIcon = nullptr;
 	QCheckBox *itfTrayInvert = nullptr;
+	QCheckBox *itfNotifyTrack = nullptr;
 
 	auto general() -> QWidget *;
 	auto appearance() -> QWidget *;

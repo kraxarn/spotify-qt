@@ -260,6 +260,10 @@ void MainWindow::refresh()
 
 void MainWindow::refreshed(const lib::spt::playback &playback)
 {
+	const auto trackChange = playback.is_playing
+		&& current.playback.is_playing
+		&& playback.item.id != current.playback.item.id;
+
 	current.playback = playback;
 
 	if (!current.playback.item.is_valid())
@@ -291,14 +295,27 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 		}
 #endif
 
-		if (trayIcon != nullptr && settings.general.tray_album_art)
+		if (trayIcon != nullptr
+			&& (settings.general.tray_album_art || settings.general.notify_track_change))
 		{
-			HttpUtils::getAlbum(current.playback.item.image, *httpClient,
-				cache, [this](const QPixmap &image)
+			HttpUtils::getAlbum(current.playback.item.image, *httpClient, cache,
+				[this, &currPlaying, trackChange](const QPixmap &image)
 				{
-					if (this->trayIcon != nullptr)
+					if (trayIcon == nullptr)
+					{
+						return;
+					}
+
+					if (settings.general.tray_album_art)
 					{
 						trayIcon->setPixmap(image);
+					}
+
+					if (settings.general.notify_track_change && trackChange)
+					{
+						const auto message = QString::fromStdString(currPlaying.details());
+						QIcon icon(image);
+						trayIcon->message(message, icon);
 					}
 				});
 		}
@@ -419,7 +436,7 @@ auto MainWindow::currentTracks() -> std::vector<std::string>
 	std::vector<std::string> tracks;
 	tracks.reserve(tracksCount);
 
-	for (int i = 0 ; i < tracksCount ; i++)
+	for (int i = 0; i < tracksCount; i++)
 	{
 		auto track = tracksList->topLevelItem(i)->data(0, static_cast<int>(DataRole::Track))
 			.value<lib::spt::track>();
@@ -457,7 +474,7 @@ void MainWindow::toggleTrackNumbers(bool enabled)
 {
 	const auto *tracksList = mainContent->getTracksList();
 
-	for (int i = 0 ; i < tracksList->topLevelItemCount() ; i++)
+	for (int i = 0; i < tracksList->topLevelItemCount(); i++)
 	{
 		auto *item = tracksList->topLevelItem(i);
 		item->setText(0, enabled

@@ -145,6 +145,12 @@ auto InterfacePage::trayIcon() -> QWidget *
 	itfTrayAlbum->setChecked(settings.general.tray_album_art);
 	content->addWidget(itfTrayAlbum);
 
+	// Notify on track change
+	itfNotifyTrack = new QCheckBox("Show notification on track change", this);
+	itfNotifyTrack->setToolTip("Show desktop notification when a new track starts playing");
+	itfNotifyTrack->setChecked(settings.general.notify_track_change);
+	content->addWidget(itfNotifyTrack);
+
 	return WidgetUtils::layoutToWidget(content, this);
 }
 
@@ -251,6 +257,10 @@ auto InterfacePage::save() -> bool
 	if (itfTrayAlbum != nullptr)
 	{
 		settings.general.tray_album_art = itfTrayAlbum->isChecked();
+	}
+	if (itfNotifyTrack != nullptr)
+	{
+		settings.general.notify_track_change = itfNotifyTrack->isChecked();
 	}
 
 	// Qt specific

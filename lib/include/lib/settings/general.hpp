@@ -128,6 +128,11 @@ namespace lib
 			 * ID of last selected device
 			 */
 			std::string last_device;
+
+			/**
+			 * Show a notification on track change
+			 */
+			bool notify_track_change = false;
 		};
 	}
 }

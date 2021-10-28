@@ -19,10 +19,18 @@ public:
 	~TrayIcon() override;
 
 	void message(const QString &message);
+	void message(const QString &message, const QIcon &icon);
+
 	void setPixmap(const QPixmap &pixmap);
 	void setDefaultPixmap();
 
 private:
+	/**
+	 * How long in milliseconds to show notifications with icons,
+	 * for example when notifying about track changes
+	 */
+	static constexpr int messageIconTimeout = 6000;
+
 	auto playback() -> lib::spt::playback;
 
 	QMenu *contextMenu;
