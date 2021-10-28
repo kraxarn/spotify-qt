@@ -100,7 +100,7 @@ private:
 	QNetworkAccessManager *network = nullptr;
 
 	// Other
-	TrayIcon *trayIcon = nullptr;
+	QtTrayIcon *trayIcon = nullptr;
 	int refreshCount = -1;
 	bool stateValid = true;
 	QDockWidget *sidePanel = nullptr;

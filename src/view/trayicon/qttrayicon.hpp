@@ -1,22 +1,22 @@
 #pragma once
 
-class TrayIcon;
-
-#include "mainwindow.hpp"
 #include "lib/spotify/playback.hpp"
-#include "spotify/spotify.hpp"
+#include "lib/spotify/api.hpp"
 #include "util/icon.hpp"
 
 #include <QMenu>
 #include <QSystemTrayIcon>
 
-class TrayIcon: private QSystemTrayIcon
+/**
+ * Tray icon using Qt
+ */
+class QtTrayIcon: public QSystemTrayIcon
 {
 Q_OBJECT
 
 public:
-	TrayIcon(spt::Spotify *spotify, const lib::settings &settings, QWidget *parent);
-	~TrayIcon() override;
+	QtTrayIcon(lib::spt::api &spotify, const lib::settings &settings, QWidget *parent);
+	~QtTrayIcon() override;
 
 	void message(const QString &message);
 	void message(const QString &message, const QIcon &icon);
@@ -33,11 +33,21 @@ private:
 
 	auto playback() -> lib::spt::playback;
 
-	QMenu *contextMenu;
-	QAction *playPause;
-	QAction *currentTrack;
-	spt::Spotify *spotify;
+	QAction *previous = nullptr;
+	QAction *playPause = nullptr;
+	QAction *next = nullptr;
+
+	QMenu *contextMenu = nullptr;
+
+	QAction *currentTrack = nullptr;
+	lib::spt::api &spotify;
 	const lib::settings &settings;
 
 	std::function<void(const std::string &result)> callback;
+
+	void onPrevious(bool checked);
+	void onPlayPause(bool checked);
+	void onNext(bool checked);
+	void onActivated(ActivationReason reason);
+	void onMenuAboutToShow();
 };

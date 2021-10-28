@@ -71,7 +71,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	// Create tray icon if specified
 	if (settings.general.tray_icon)
 	{
-		trayIcon = new TrayIcon(spotify, settings, this);
+		trayIcon = new QtTrayIcon(*spotify, settings, this);
 	}
 
 	// If new version has been detected, show what's new dialog
@@ -155,7 +155,7 @@ void MainWindow::initDevice()
 	spotify->devices([this](const std::vector<lib::spt::device> &devices)
 	{
 		// Don't select a new device if one is currently active
-		for (const auto &device : devices)
+		for (const auto &device: devices)
 		{
 			if (device.is_active)
 			{
@@ -170,7 +170,7 @@ void MainWindow::initDevice()
 		}
 		else
 		{
-			for (const auto &device : devices)
+			for (const auto &device: devices)
 			{
 				if (device.id == this->settings.general.last_device)
 				{
@@ -457,9 +457,10 @@ void MainWindow::reloadTrayIcon()
 		delete trayIcon;
 		trayIcon = nullptr;
 	}
+
 	if (settings.general.tray_icon)
 	{
-		trayIcon = new TrayIcon(spotify, settings, this);
+		trayIcon = new QtTrayIcon(*spotify, settings, this);
 	}
 }
 
