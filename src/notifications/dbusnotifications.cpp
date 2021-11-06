@@ -26,7 +26,7 @@ auto DbusNotifications::getCapabilities() -> QList<QString>
 }
 
 void DbusNotifications::notify(const QString &title, const QString &message,
-	const QString &imagePath, int timeout)
+	const QByteArray &imageData, int timeout)
 {
 	const auto capabilities = getCapabilities();
 
@@ -61,7 +61,7 @@ void DbusNotifications::notify(const QString &title, const QString &message,
 
 	QVariantMap hints;
 	hints["suppress-sound"] = true;
-	hints["image-path"] = imagePath;
+	hints["image-data"] = imageData;
 
 	QDBusInterface interface(SERVICE_NAME, SERVICE_PATH, SERVICE_NAME, dbus);
 	auto response = interface.call("Notify", appName, notificationId, appIcon, summary,
@@ -85,6 +85,13 @@ void DbusNotifications::notify(const QString &title, const QString &message,
 			}
 		}
 	}
+}
+
+void DbusNotifications::notify(const QString &title, const QString &message,
+	const QPixmap &image, int timeout)
+{
+	const auto imageData = ImageUtils::pixmapToByteArray(image, "PNG");
+	notify(title, message, imageData, timeout);
 }
 
 auto DbusNotifications::isConnected() -> bool

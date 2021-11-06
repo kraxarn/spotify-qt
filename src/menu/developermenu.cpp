@@ -204,11 +204,13 @@ auto DeveloperMenu::notificationsMenu() -> QMenu *
 
 	addMenuItem(menu, "Notify", []()
 	{
+		QPixmap image(64, 64);
+		image.fill();
+
 		DbusNotifications notifications;
 		notifications.notify(QStringLiteral("Title"),
 			QStringLiteral("<b>Bold text</b><br/>Normal text"),
-			QString(),
-			-1);
+			image, -1);
 	});
 
 	return menu;

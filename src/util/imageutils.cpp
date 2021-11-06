@@ -87,3 +87,12 @@ auto ImageUtils::pieShape(const QImage &img, const QVariant &data) -> QPolygonF
 			return QPolygonF();
 	}
 }
+
+auto ImageUtils::pixmapToByteArray(const QPixmap &pixmap, const char *format) -> QByteArray
+{
+	QByteArray data;
+	QBuffer buffer(&data);
+	buffer.open(QIODevice::WriteOnly);
+	pixmap.save(&buffer, format);
+	return data;
+}

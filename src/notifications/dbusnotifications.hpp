@@ -4,6 +4,8 @@
 
 #include "lib/log.hpp"
 
+#include "util/imageutils.hpp"
+
 #include <QList>
 #include <QTextDocument>
 #include <QDBusConnection>
@@ -23,7 +25,10 @@ public:
 	auto getCapabilities() -> QList<QString>;
 
 	void notify(const QString &title, const QString &message,
-		const QString &imagePath, int timeout);
+		const QByteArray &imageData, int timeout);
+
+	void notify(const QString &title, const QString &message,
+		const QPixmap &image, int timeout);
 
 private:
 	QDBusConnection dbus;
