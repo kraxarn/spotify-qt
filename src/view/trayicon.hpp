@@ -34,10 +34,9 @@ public:
 
 private:
 	/**
-	 * How long in milliseconds to show notifications with icons,
-	 * for example when notifying about track changes
+	 * How long in milliseconds to show notifications about tracks
 	 */
-	static constexpr int messageIconTimeout = 6000;
+	static constexpr int messageTrackTimeout = 6000;
 
 	auto playback() -> lib::spt::playback;
 

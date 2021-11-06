@@ -22,7 +22,8 @@ public:
 
 	auto getCapabilities() -> QList<QString>;
 
-	void notify(const QString &title, const QString &message, const QString &imagePath);
+	void notify(const QString &title, const QString &message,
+		const QString &imagePath, int timeout);
 
 private:
 	QDBusConnection dbus;

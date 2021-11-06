@@ -26,7 +26,7 @@ auto DbusNotifications::getCapabilities() -> QList<QString>
 }
 
 void DbusNotifications::notify(const QString &title, const QString &message,
-	const QString &imagePath)
+	const QString &imagePath, int timeout)
 {
 	const auto capabilities = getCapabilities();
 
@@ -51,7 +51,6 @@ void DbusNotifications::notify(const QString &title, const QString &message,
 	const auto appName = QCoreApplication::applicationName();
 	const auto appIcon = QStringLiteral("spotify-qt");
 	const auto summary = QString(title);
-	const int timeout = -1;
 
 	// Some notification systems also supports icons here
 	const QStringList actions{
