@@ -74,7 +74,10 @@ void TrayIcon::message(const lib::spt::track &track, const QPixmap &pixmap)
 	const auto message = QString::fromStdString(artists);
 
 #ifdef USE_DBUS
-	notifications.notify(title, message, pixmap, messageTrackTimeout);
+	// We still need the pixmap to be cached, we just read from file instead
+	Q_UNUSED(pixmap);
+	const auto imageUrl = QString::fromStdString(cache.get_album_image_path(track.image));
+	notifications.notify(title, message, imageUrl, messageTrackTimeout);
 #else
 	QIcon icon(pixmap);
 	showMessage(title, message, icon, messageTrackTimeout);

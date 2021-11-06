@@ -2,9 +2,7 @@
 
 #include "lib/spotify/api.hpp"
 #include "lib/cache.hpp"
-
 #include "util/icon.hpp"
-#include "util/imageutils.hpp"
 
 #include <QMenu>
 #include <QSystemTrayIcon>
