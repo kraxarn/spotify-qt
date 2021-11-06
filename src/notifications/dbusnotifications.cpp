@@ -82,7 +82,6 @@ void DbusNotifications::notify(const QString &title, const QString &message,
 			if (ok)
 			{
 				notificationId = id;
-				lib::log::debug("Notification ID: {}", id);
 			}
 		}
 	}
