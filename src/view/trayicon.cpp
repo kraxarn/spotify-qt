@@ -4,6 +4,9 @@
 TrayIcon::TrayIcon(lib::spt::api &spotify, const lib::settings &settings,
 	const lib::cache &cache, QWidget *parent)
 	: QSystemTrayIcon(parent),
+#ifdef USE_DBUS
+	notifications(this),
+#endif
 	spotify(spotify),
 	settings(settings),
 	cache(cache)
@@ -45,6 +48,29 @@ TrayIcon::TrayIcon(lib::spt::api &spotify, const lib::settings &settings,
 
 	QMenu::connect(contextMenu, &QMenu::aboutToShow,
 		this, &TrayIcon::onMenuAboutToShow);
+
+#ifdef USE_DBUS
+	notifications.setOnAction([this](NotificationAction action)
+	{
+		switch (action)
+		{
+			case NotificationAction::Default:
+				break;
+
+			case NotificationAction::Previous:
+				onPrevious(false);
+				break;
+
+			case NotificationAction::PlayPause:
+				onPlayPause(false);
+				break;
+
+			case NotificationAction::Next:
+				onNext(false);
+				break;
+		}
+	});
+#endif
 }
 
 TrayIcon::~TrayIcon()

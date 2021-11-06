@@ -193,22 +193,22 @@ auto DeveloperMenu::statusMenu() -> QMenu *
 auto DeveloperMenu::notificationsMenu() -> QMenu *
 {
 	auto *menu = new QMenu("Notifications", this);
-	auto *mainWindow = MainWindow::find(parentWidget());
 
-	addMenuItem(menu, "Capabilities", [mainWindow]()
+	addMenuItem(menu, "Capabilities", [this]()
 	{
-		DbusNotifications notifications;
+		DbusNotifications notifications(this);
+		auto *mainWindow = MainWindow::find(parentWidget());
+
 		QMessageBox::information(mainWindow, QStringLiteral("Capabilities"),
 			notifications.getCapabilities().join('\n'));
 	});
 
-	addMenuItem(menu, "Notify", []()
+	addMenuItem(menu, "Notify", [this]()
 	{
-		DbusNotifications notifications;
+		DbusNotifications notifications(this);
 		notifications.notify(QStringLiteral("Title"),
 			QStringLiteral("<b>Bold text</b><br/>Normal text"),
-			QString(),
-			-1);
+			QString(), -1);
 	});
 
 	return menu;

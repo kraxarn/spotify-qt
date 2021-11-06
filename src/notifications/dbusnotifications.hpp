@@ -4,6 +4,10 @@
 
 #include "lib/log.hpp"
 
+#include "enum/notificationaction.hpp"
+
+#include <utility>
+
 #include <QList>
 #include <QTextDocument>
 #include <QDBusConnection>
@@ -15,21 +19,29 @@
  * Notifications using d-bus through the
  * org.freedesktop.Notifications interface
  */
-class DbusNotifications
+class DbusNotifications: public QObject
 {
+Q_OBJECT
+
 public:
-	DbusNotifications();
+	DbusNotifications(QObject *parent);
 
 	auto getCapabilities() -> QList<QString>;
 
 	void notify(const QString &title, const QString &message,
 		const QString &imagePath, int timeout);
 
+	void setOnAction(std::function<void(NotificationAction)> callback);
+
 private:
 	QDBusConnection dbus;
-	unsigned int notificationId = 0;
+	uint notificationId = 0;
+
+	std::function<void(NotificationAction)> onAction;
 
 	auto isConnected() -> bool;
+
+	void onActionInvoked(uint id, const QString &actionKey);
 };
 
 #endif

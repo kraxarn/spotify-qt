@@ -2,12 +2,20 @@
 
 #ifdef USE_DBUS
 
-#define SERVICE_NAME "org.freedesktop.Notifications"
-#define SERVICE_PATH "/org/freedesktop/Notifications"
+#define SERVICE_NAME QStringLiteral("org.freedesktop.Notifications")
+#define SERVICE_PATH QStringLiteral("/org/freedesktop/Notifications")
 
-DbusNotifications::DbusNotifications()
-	: dbus(QDBusConnection::sessionBus())
+#define DEFAULT_KEY QStringLiteral("default")
+#define PREVIOUS_KEY QStringLiteral("backward")
+#define PAUSE_KEY QStringLiteral("pause")
+#define NEXT_KEY QStringLiteral("next")
+
+DbusNotifications::DbusNotifications(QObject *parent)
+	: QObject(parent),
+	dbus(QDBusConnection::sessionBus())
 {
+	dbus.connect(SERVICE_NAME, SERVICE_PATH, SERVICE_NAME, QStringLiteral("ActionInvoked"),
+		this, SLOT(onActionInvoked(uint, QString)));
 }
 
 auto DbusNotifications::getCapabilities() -> QList<QString>
@@ -54,9 +62,18 @@ void DbusNotifications::notify(const QString &title, const QString &message,
 
 	// Some notification systems also supports icons here
 	const QStringList actions{
-		"⏮️",
-		"⏯️",
-		"⏭️",
+		// Clicking the notification
+		DEFAULT_KEY,
+		QString(),
+		// Previous track
+		PREVIOUS_KEY,
+		QStringLiteral("Previous️"),
+		// Play/Pause
+		PAUSE_KEY,
+		QStringLiteral("Pause"),
+		// Next track
+		NEXT_KEY,
+		QStringLiteral("Next"),
 	};
 
 	QVariantMap hints;
@@ -96,6 +113,46 @@ auto DbusNotifications::isConnected() -> bool
 
 	lib::log::warn("Notification service failed: Not connected");
 	return false;
+}
+
+void DbusNotifications::setOnAction(std::function<void(NotificationAction)> callback)
+{
+	onAction = std::move(callback);
+}
+
+void DbusNotifications::onActionInvoked(uint id, const QString &actionKey)
+{
+	if (id != notificationId)
+	{
+		lib::log::warn("Notification ID mismatch, ignoring action");
+		return;
+	}
+
+	if (!onAction)
+	{
+		return;
+	}
+
+	if (actionKey == DEFAULT_KEY)
+	{
+		onAction(NotificationAction::Default);
+	}
+	else if (actionKey == PREVIOUS_KEY)
+	{
+		onAction(NotificationAction::Previous);
+	}
+	else if (actionKey == PAUSE_KEY)
+	{
+		onAction(NotificationAction::PlayPause);
+	}
+	else if (actionKey == NEXT_KEY)
+	{
+		onAction(NotificationAction::Next);
+	}
+	else
+	{
+		lib::log::warn("Unknown key action: {}", actionKey.toStdString());
+	}
 }
 
 #endif

@@ -46,14 +46,14 @@ private:
 
 	QMenu *contextMenu = nullptr;
 
+#ifdef USE_DBUS
+	DbusNotifications notifications;
+#endif
+
 	QAction *currentTrack = nullptr;
 	lib::spt::api &spotify;
 	const lib::settings &settings;
 	const lib::cache &cache;
-
-#ifdef USE_DBUS
-	DbusNotifications notifications;
-#endif
 
 	std::function<void(const std::string &result)> callback;
 
