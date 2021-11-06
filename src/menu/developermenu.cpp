@@ -50,6 +50,26 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 			});
 	});
 
+	addMenuItem(this, "Show track notification", [this]()
+	{
+		auto *mainWindow = MainWindow::find(parentWidget());
+
+		auto *trayIcon = mainWindow->getTrayIcon();
+		if (trayIcon == nullptr)
+		{
+			StatusMessage::warn(QStringLiteral("Tray icon not loaded"));
+			return;
+		}
+
+		const auto &track = mainWindow->currentPlayback().item;
+
+		HttpUtils::getAlbum(track.image, this->httpClient, this->cache,
+			[trayIcon, &track](const QPixmap &pixmap)
+			{
+				trayIcon->message(track, pixmap);
+			});
+	});
+
 	addMenu(infoMenu());
 	addMenu(dialogMenu());
 	addMenu(crashMenu());
