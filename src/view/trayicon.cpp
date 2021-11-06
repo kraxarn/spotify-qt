@@ -1,10 +1,12 @@
 #include "trayicon.hpp"
 #include "mainwindow.hpp"
 
-TrayIcon::TrayIcon(lib::spt::api &spotify, const lib::settings &settings, QWidget *parent)
+TrayIcon::TrayIcon(lib::spt::api &spotify, const lib::settings &settings,
+	const lib::cache &cache, QWidget *parent)
 	: QSystemTrayIcon(parent),
 	spotify(spotify),
-	settings(settings)
+	settings(settings),
+	cache(cache)
 {
 	callback = [this](const std::string &result)
 	{
@@ -72,7 +74,9 @@ void TrayIcon::message(const lib::spt::track &track, const QPixmap &pixmap)
 	const auto message = QString::fromStdString(artists);
 
 #ifdef USE_DBUS
-	notifications.notify(title, message);
+	// Hopefully in cache already
+	const auto imageUrl = QString::fromStdString(cache.get_album_image_path(track.image));
+	notifications.notify(title, message, imageUrl);
 #else
 	QIcon icon(pixmap);
 	showMessage(title, message, icon, messageIconTimeout);

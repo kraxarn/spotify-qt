@@ -21,6 +21,7 @@ namespace lib
 		explicit json_cache(const paths &paths);
 
 		auto get_album_image(const std::string &url) const -> std::vector<unsigned char> override;
+		auto get_album_image_path(const std::string &url) const -> std::string override;
 		void set_album_image(const std::string &url,
 			const std::vector<unsigned char> &data) override;
 

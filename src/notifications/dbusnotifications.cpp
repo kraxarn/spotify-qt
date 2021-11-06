@@ -25,7 +25,8 @@ auto DbusNotifications::getCapabilities() -> QList<QString>
 		.toStringList();
 }
 
-void DbusNotifications::notify(const QString &title, const QString &message)
+void DbusNotifications::notify(const QString &title, const QString &message,
+	const QString &imagePath)
 {
 	const auto capabilities = getCapabilities();
 
@@ -46,8 +47,6 @@ void DbusNotifications::notify(const QString &title, const QString &message)
 		}
 	}
 
-	// TODO: Image
-
 	// Notify arguments
 	const auto appName = QCoreApplication::applicationName();
 	const auto appIcon = QStringLiteral("spotify-qt");
@@ -61,9 +60,9 @@ void DbusNotifications::notify(const QString &title, const QString &message)
 		"⏭️",
 	};
 
-	// Force notification to be silent
 	QVariantMap hints;
 	hints["suppress-sound"] = true;
+	hints["image-path"] = imagePath;
 
 	QDBusInterface interface(SERVICE_NAME, SERVICE_PATH, SERVICE_NAME, dbus);
 	auto response = interface.call("Notify", appName, notificationId, appIcon, summary,

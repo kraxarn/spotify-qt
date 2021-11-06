@@ -1,6 +1,7 @@
 #pragma once
 
 #include "lib/spotify/api.hpp"
+#include "lib/cache.hpp"
 #include "util/icon.hpp"
 
 #include <QMenu>
@@ -15,7 +16,8 @@ class TrayIcon: public QSystemTrayIcon
 Q_OBJECT
 
 public:
-	TrayIcon(lib::spt::api &spotify, const lib::settings &settings, QWidget *parent);
+	TrayIcon(lib::spt::api &spotify, const lib::settings &settings,
+		const lib::cache &cache, QWidget *parent);
 	~TrayIcon() override;
 
 	void message(const QString &message);
@@ -48,6 +50,7 @@ private:
 	QAction *currentTrack = nullptr;
 	lib::spt::api &spotify;
 	const lib::settings &settings;
+	const lib::cache &cache;
 
 #ifdef USE_DBUS
 	DbusNotifications notifications;

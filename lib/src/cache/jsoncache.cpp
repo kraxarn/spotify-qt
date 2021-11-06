@@ -10,8 +10,7 @@ lib::json_cache::json_cache(const lib::paths &paths)
 
 auto lib::json_cache::get_album_image(const std::string &url) const -> std::vector<unsigned char>
 {
-	std::ifstream file(path("album", get_url_id(url), ""),
-		std::ios::binary);
+	std::ifstream file(get_album_image_path(url), std::ios::binary);
 	if (!file.is_open() || file.bad())
 	{
 		return {};
@@ -19,6 +18,11 @@ auto lib::json_cache::get_album_image(const std::string &url) const -> std::vect
 
 	return std::vector<unsigned char>(std::istreambuf_iterator<char>(file),
 		std::istreambuf_iterator<char>());
+}
+
+auto lib::json_cache::get_album_image_path(const std::string &url) const -> std::string
+{
+	return path("album", get_url_id(url), "");
 }
 
 void lib::json_cache::set_album_image(const std::string &url,

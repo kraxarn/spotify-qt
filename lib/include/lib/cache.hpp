@@ -32,6 +32,14 @@ namespace lib
 		-> std::vector<unsigned char> = 0;
 
 		/**
+		 * Get path to album image on disk
+		 * @param url URL to album image
+		 * @return Path, or empty string if not supported
+		 */
+		virtual auto get_album_image_path(const std::string &url) const
+		-> std::string = 0;
+
+		/**
 		 * Set album image data
 		 * @param id Album ID
 		 * @param data Binary JPEG data to save

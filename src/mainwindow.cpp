@@ -71,7 +71,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	// Create tray icon if specified
 	if (settings.general.tray_icon)
 	{
-		trayIcon = new TrayIcon(*spotify, settings, this);
+		trayIcon = new TrayIcon(*spotify, settings, cache, this);
 	}
 
 	// If new version has been detected, show what's new dialog
@@ -458,7 +458,7 @@ void MainWindow::reloadTrayIcon()
 
 	if (settings.general.tray_icon)
 	{
-		trayIcon = new TrayIcon(*spotify, settings, this);
+		trayIcon = new TrayIcon(*spotify, settings, cache, this);
 	}
 }
 

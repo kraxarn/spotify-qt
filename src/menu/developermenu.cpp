@@ -206,7 +206,8 @@ auto DeveloperMenu::notificationsMenu() -> QMenu *
 	{
 		DbusNotifications notifications;
 		notifications.notify(QStringLiteral("Title"),
-			QStringLiteral("<b>Bold text</b><br/>Normal text"));
+			QStringLiteral("<b>Bold text</b><br/>Normal text"),
+			QString());
 	});
 
 	return menu;
