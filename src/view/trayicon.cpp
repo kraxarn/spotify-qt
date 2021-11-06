@@ -60,15 +60,23 @@ void TrayIcon::message(const QString &message)
 	showMessage("spotify-qt", message);
 }
 
-void TrayIcon::message(const QString &message, const QPixmap &pixmap)
+void TrayIcon::message(const lib::spt::track &track, const QPixmap &pixmap)
 {
-	if (message.isNull() || message.isEmpty())
+	if (!track.is_valid())
 	{
 		return;
 	}
 
+	const auto title = QString::fromStdString(track.name);
+	const auto artists = lib::spt::entity::combine_names(track.artists);
+	const auto message = QString::fromStdString(artists);
+
+#ifdef USE_DBUS
+	notifications.notify(title, message);
+#else
 	QIcon icon(pixmap);
-	showMessage("spotify-qt", message, icon, messageIconTimeout);
+	showMessage(title, message, icon, messageIconTimeout);
+#endif
 }
 
 auto TrayIcon::playback() -> lib::spt::playback

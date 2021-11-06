@@ -10,6 +10,10 @@
 #include "lib/spotify/api.hpp"
 #include "lib/httpclient.hpp"
 
+#ifdef USE_DBUS
+#include "notifications/dbusnotifications.hpp"
+#endif
+
 #include <QMenu>
 #include <QMainWindow>
 
@@ -34,4 +38,8 @@ private:
 	auto infoMenu() -> QMenu *;
 	auto crashMenu() -> QMenu *;
 	auto statusMenu() -> QMenu *;
+
+#ifdef USE_DBUS
+	auto notificationsMenu() -> QMenu *;
+#endif
 };

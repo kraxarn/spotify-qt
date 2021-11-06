@@ -30,6 +30,7 @@ public:
 	lib::spt::playback currentPlayback() const;
 	void openLyrics(const lib::spt::track &track);
 	void reloadTrayIcon();
+	auto getTrayIcon() -> TrayIcon *;
 	auto getCurrentUser() const -> const lib::spt::user &;
 	void setFixedWidthTime(bool value);
 	std::vector<lib::spt::track> loadTracksFromCache(const std::string &id);

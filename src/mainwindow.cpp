@@ -313,8 +313,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 
 					if (settings.general.notify_track_change && trackChange)
 					{
-						const auto message = QString::fromStdString(currPlaying.details());
-						trayIcon->message(message, image);
+						trayIcon->message(currPlaying, image);
 					}
 				});
 		}
@@ -461,6 +460,11 @@ void MainWindow::reloadTrayIcon()
 	{
 		trayIcon = new TrayIcon(*spotify, settings, this);
 	}
+}
+
+TrayIcon *MainWindow::getTrayIcon()
+{
+	return trayIcon;
 }
 
 void MainWindow::setFixedWidthTime(bool value)
