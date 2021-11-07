@@ -92,6 +92,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac0f8712abc0810fe9a8061e4f6907972"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b179d106e8382310bdf037942eefbbe"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#a9b179d106e8382310bdf037942eefbbe">get_album_image</a> (const std::string &amp;url) const -&gt; std::vector&lt; unsigned char &gt;=0</td></tr>
 <tr class="separator:a9b179d106e8382310bdf037942eefbbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5936f081d2b7c47b4ab1663ca985665"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#ad5936f081d2b7c47b4ab1663ca985665">get_album_image_path</a> (const std::string &amp;url) const -&gt; std::string=0</td></tr>
+<tr class="separator:ad5936f081d2b7c47b4ab1663ca985665"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bccdd7a8dc24fae23075d21e7986fbf"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#a9bccdd7a8dc24fae23075d21e7986fbf">set_album_image</a> (const std::string &amp;url, const std::vector&lt; unsigned char &gt; &amp;data)=0</td></tr>
 <tr class="separator:a9bccdd7a8dc24fae23075d21e7986fbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:accf5de31dfc45b881c2ee65cd58e7e05"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1cache.html#accf5de31dfc45b881c2ee65cd58e7e05">get_playlists</a> () const -&gt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &gt;=0</td></tr>
@@ -234,13 +236,48 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Get album image data </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">id</td><td>Album ID </td></tr>
+    <tr><td class="paramname">url</td><td>URL to album image </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Binary JPEG data, or an empty vector if none </dd></dl>
 
 <p>Implemented in <a class="el" href="classlib_1_1json__cache.html#ad50703b1752cb952c057f0d4e1ee0ac3">lib::json_cache</a>.</p>
+
+</div>
+</div>
+<a id="ad5936f081d2b7c47b4ab1663ca985665"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5936f081d2b7c47b4ab1663ca985665">&#9670;&nbsp;</a></span>get_album_image_path()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual auto lib::cache::get_album_image_path </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em></td><td>)</td>
+          <td> const -&gt;  std::string</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get path to album image on disk </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>URL to album image </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Path, or empty string if not supported </dd></dl>
+
+<p>Implemented in <a class="el" href="classlib_1_1json__cache.html#a3e2bac0d430edf87a70f021fb40f6e48">lib::json_cache</a>.</p>
 
 </div>
 </div>
@@ -440,7 +477,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Set album image data </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">id</td><td>Album ID </td></tr>
+    <tr><td class="paramname">url</td><td>URL to album image </td></tr>
     <tr><td class="paramname">data</td><td>Binary JPEG data to save </td></tr>
   </table>
   </dd>
