@@ -59,20 +59,24 @@ void DbusNotifications::notify(const QString &title, const QString &message,
 	const auto summary = QString(title);
 
 	// Some notification systems also supports icons here
-	const QStringList actions{
-		// Clicking the notification
-		DEFAULT_KEY,
-		QString(),
-		// Previous track
-		PREVIOUS_KEY,
-		QStringLiteral("Previous️"),
-		// Play/Pause
-		PAUSE_KEY,
-		QStringLiteral("Pause"),
-		// Next track
-		NEXT_KEY,
-		QStringLiteral("Next"),
-	};
+	QStringList actions;
+	if (onAction)
+	{
+		actions.append({
+			// Clicking the notification
+			DEFAULT_KEY,
+			QString(),
+			// Previous track
+			PREVIOUS_KEY,
+			QStringLiteral("Previous️"),
+			// Play/Pause
+			PAUSE_KEY,
+			QStringLiteral("Pause"),
+			// Next track
+			NEXT_KEY,
+			QStringLiteral("Next"),
+		});
+	}
 
 	QVariantMap hints;
 	hints["suppress-sound"] = true;
@@ -114,13 +118,12 @@ auto DbusNotifications::isConnected() -> bool
 
 void DbusNotifications::setOnAction(std::function<void(NotificationAction)> callback)
 {
-	if (!onAction)
-	{
-		if (!dbus.connect(SERVICE_NAME, SERVICE_PATH, SERVICE_NAME, QStringLiteral("ActionInvoked"),
+	if (!onAction
+		&& !dbus.connect(SERVICE_NAME, SERVICE_PATH, SERVICE_NAME, QStringLiteral("ActionInvoked"),
 			this, SLOT(onActionInvoked(uint, QString))))
-		{
-			lib::log::warn("Failed to connect to notification action service");
-		}
+	{
+		lib::log::warn("Failed to connect to notification action service");
+		return;
 	}
 
 	onAction = std::move(callback);
