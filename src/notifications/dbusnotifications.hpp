@@ -24,7 +24,7 @@ class DbusNotifications: public QObject
 Q_OBJECT
 
 public:
-	DbusNotifications(QObject *parent);
+	explicit DbusNotifications(QObject *parent);
 
 	auto getCapabilities() -> QList<QString>;
 
