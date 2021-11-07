@@ -5,6 +5,8 @@
 #define SERVICE_NAME QStringLiteral("org.freedesktop.Notifications")
 #define SERVICE_PATH QStringLiteral("/org/freedesktop/Notifications")
 
+#define INTERFACE() QDBusInterface(SERVICE_NAME, SERVICE_PATH, SERVICE_NAME, dbus)
+
 #define DEFAULT_KEY QStringLiteral("default")
 #define PREVIOUS_KEY QStringLiteral("backward")
 #define PAUSE_KEY QStringLiteral("pause")
@@ -25,9 +27,7 @@ auto DbusNotifications::getCapabilities() -> QList<QString>
 		return {};
 	}
 
-	QDBusInterface interface(SERVICE_NAME, SERVICE_PATH, SERVICE_NAME, dbus);
-
-	return interface.call("GetCapabilities")
+	return INTERFACE().call("GetCapabilities")
 		.arguments()
 		.at(0)
 		.toStringList();
@@ -80,8 +80,7 @@ void DbusNotifications::notify(const QString &title, const QString &message,
 	hints["suppress-sound"] = true;
 	hints["image-path"] = imagePath;
 
-	QDBusInterface interface(SERVICE_NAME, SERVICE_PATH, SERVICE_NAME, dbus);
-	auto response = interface.call("Notify", appName, notificationId, appIcon, summary,
+	auto response = INTERFACE().call("Notify", appName, notificationId, appIcon, summary,
 		body, actions, hints, timeout);
 
 	if (response.type() == QDBusMessage::ErrorMessage)
