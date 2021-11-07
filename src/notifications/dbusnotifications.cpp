@@ -16,8 +16,6 @@ DbusNotifications::DbusNotifications(QObject *parent)
 	: QObject(parent),
 	dbus(QDBusConnection::sessionBus())
 {
-	dbus.connect(SERVICE_NAME, SERVICE_PATH, SERVICE_NAME, QStringLiteral("ActionInvoked"),
-		this, SLOT(onActionInvoked(uint, QString)));
 }
 
 auto DbusNotifications::getCapabilities() -> QList<QString>
@@ -116,6 +114,15 @@ auto DbusNotifications::isConnected() -> bool
 
 void DbusNotifications::setOnAction(std::function<void(NotificationAction)> callback)
 {
+	if (!onAction)
+	{
+		if (!dbus.connect(SERVICE_NAME, SERVICE_PATH, SERVICE_NAME, QStringLiteral("ActionInvoked"),
+			this, SLOT(onActionInvoked(uint, QString))))
+		{
+			lib::log::warn("Failed to connect to notification action service");
+		}
+	}
+
 	onAction = std::move(callback);
 }
 
