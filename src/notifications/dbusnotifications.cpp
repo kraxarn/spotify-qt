@@ -121,13 +121,7 @@ void DbusNotifications::setOnAction(std::function<void(NotificationAction)> call
 
 void DbusNotifications::onActionInvoked(uint id, const QString &actionKey)
 {
-	if (id != notificationId)
-	{
-		lib::log::warn("Notification ID mismatch, ignoring action");
-		return;
-	}
-
-	if (!onAction)
+	if (id != notificationId || !onAction)
 	{
 		return;
 	}
