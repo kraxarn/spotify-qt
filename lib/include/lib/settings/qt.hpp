@@ -1,6 +1,6 @@
 #pragma once
 
-#include "thirdparty/json.hpp"
+#include "lib/json.hpp"
 
 namespace lib
 {
