@@ -69,8 +69,8 @@ auto main(int argc, char *argv[]) -> int
 
 	if (parser.isSet("paths"))
 	{
-		lib::log::info("Config: {}", paths.config_file());
-		lib::log::info("Cache:  {}", paths.cache());
+		lib::log::info("Config: {}", paths.config_file().string());
+		lib::log::info("Cache:  {}", paths.cache().string());
 		return 0;
 	}
 
