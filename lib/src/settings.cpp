@@ -34,25 +34,9 @@ auto lib::settings::qt_const() const -> const setting::qt &
 
 void settings::from_json(const nlohmann::json &json)
 {
-	auto s = json.at("Spotify");
-
-	// Account
 	lib::json::get(json, "Account", account);
-
-	// General
 	lib::json::get(json, "General", general);
-
-	// Spotify
-	setValue(s, "always_start", spotify.always_start);
-	setValue(s, "backend", spotify.backend);
-	setValue(s, "bitrate", spotify.bitrate);
-	setValue(s, "disable_discovery", spotify.disable_discovery);
-	setValue(s, "global_config", spotify.global_config);
-	setValue(s, "keyring_password", spotify.keyring_password);
-	setValue(s, "max_queue", spotify.max_queue);
-	setValue(s, "path", spotify.path);
-	setValue(s, "start_client", spotify.start_client);
-	setValue(s, "username", spotify.username);
+	lib::json::get(json, "Spotify", spotify);
 
 	// Qt widgets
 	// TODO: This should be loaded dynamically for non-Qt clients
@@ -89,18 +73,7 @@ auto settings::to_json() const -> nlohmann::json
 	return {
 		{"Account", account},
 		{"General", general},
-		{"Spotify", {
-			{"always_start", spotify.always_start},
-			{"backend", spotify.backend},
-			{"bitrate", spotify.bitrate},
-			{"disable_discovery", spotify.disable_discovery},
-			{"global_config", spotify.global_config},
-			{"keyring_password", spotify.keyring_password},
-			{"max_queue", spotify.max_queue},
-			{"path", spotify.path},
-			{"start_client", spotify.start_client},
-			{"username", spotify.username},
-		}},
+		{"Spotify", spotify},
 		{"Qt", qt_settings},
 	};
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "lib/json.hpp"
 #include "lib/enum/audioquality.hpp"
 
 #include <string>
@@ -65,5 +66,9 @@ namespace lib
 			 */
 			int max_queue = 500;
 		};
+
+		void to_json(nlohmann::json &j, const spotify &s);
+
+		void from_json(const nlohmann::json &j, spotify &s);
 	}
 }
