@@ -1,5 +1,6 @@
 #pragma once
 
+#include "lib/json.hpp"
 #include "lib/enum/palette.hpp"
 #include "lib/enum/playlistorder.hpp"
 #include "lib/enum/spotifycontext.hpp"
@@ -134,5 +135,9 @@ namespace lib
 			 */
 			bool notify_track_change = false;
 		};
+
+		void to_json(nlohmann::json &j, const general &g);
+
+		void from_json(const nlohmann::json &j, general &g);
 	}
 }
