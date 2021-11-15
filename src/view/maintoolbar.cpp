@@ -98,7 +98,7 @@ void MainToolBar::resizeEvent(QResizeEvent */*event*/)
 
 void MainToolBar::showEvent(QShowEvent */*event*/)
 {
-	showTitleBarButtons(!settings.qt_const().system_title_bar);
+	showTitleBarButtons(!settings.qt().system_title_bar);
 	updateSpacerSizes();
 }
 

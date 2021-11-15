@@ -18,19 +18,15 @@ auto settings::file_path() const -> std::string
 	return ghc::filesystem::path(file_name()).parent_path().string();
 }
 
-//region qt
-
 auto lib::settings::qt() -> setting::qt &
 {
-	return qt_settings;
-}
+	if (!qt_settings)
+	{
+		qt_settings = std::unique_ptr<lib::setting::qt>(new lib::setting::qt());
+	}
 
-auto lib::settings::qt_const() const -> const setting::qt &
-{
-	return qt_settings;
+	return *qt_settings;
 }
-
-//endregion
 
 void settings::from_json(const nlohmann::json &json)
 {
@@ -38,9 +34,11 @@ void settings::from_json(const nlohmann::json &json)
 	lib::json::get(json, "General", general);
 	lib::json::get(json, "Spotify", spotify);
 
-	// Qt widgets
-	// TODO: This should be loaded dynamically for non-Qt clients
-	lib::json::get(json, "Qt", qt_settings);
+	if (json.contains("Qt"))
+	{
+		qt_settings = std::unique_ptr<lib::setting::qt>(new lib::setting::qt());
+		lib::json::get(json, "Qt", *qt_settings);
+	}
 }
 
 void settings::load()
@@ -70,12 +68,18 @@ void settings::load()
 
 auto settings::to_json() const -> nlohmann::json
 {
-	return {
+	auto json = nlohmann::json{
 		{"Account", account},
 		{"General", general},
 		{"Spotify", spotify},
-		{"Qt", qt_settings},
 	};
+
+	if (qt_settings)
+	{
+		json["Qt"] = *qt_settings;
+	}
+
+	return json;
 }
 
 void settings::save()

@@ -52,10 +52,9 @@ auto InterfacePage::general() -> QWidget *
 	layout->addWidget(relativeAdded);
 
 	// System title bar
-	const auto &qtSettings = settings.qt_const();
 	systemTitleBar = new QCheckBox("System title bar", this);
 	systemTitleBar->setToolTip("Show system title bar and window borders");
-	systemTitleBar->setChecked(qtSettings.system_title_bar);
+	systemTitleBar->setChecked(settings.qt().system_title_bar);
 	layout->addWidget(systemTitleBar);
 
 	return WidgetUtils::layoutToWidget(layout, this);
@@ -66,7 +65,7 @@ auto InterfacePage::appearance() -> QWidget *
 	auto *layout = tabContent();
 	auto *comboBoxLayout = new QGridLayout();
 
-	const auto &qt = settings.qt_const();
+	const auto &qt = settings.qt();
 
 	// Style
 	auto *styleLabel = new QLabel("Style", this);

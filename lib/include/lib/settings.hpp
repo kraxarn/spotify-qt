@@ -71,11 +71,6 @@ namespace lib
 		auto qt() -> setting::qt &;
 
 		/**
-		 * Qt settings (constant)
-		 */
-		auto qt_const() const -> const setting::qt &;
-
-		/**
 		 * Reset client_id and client_secret properties
 		 */
 		void remove_client();
@@ -124,7 +119,7 @@ namespace lib
 		/**
 		 * Qt settings
 		 */
-		setting::qt qt_settings;
+		std::unique_ptr<setting::qt> qt_settings;
 
 		/**
 		 * Set value from JSON in a "safe" way

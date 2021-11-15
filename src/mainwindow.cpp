@@ -21,7 +21,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	{
 		setStyleSheet(DarkPalette::getDarkStylesheet());
 
-		if (settings.qt_const().custom_font)
+		if (settings.qt().custom_font)
 		{
 			DarkPalette::addFonts();
 		}
@@ -84,7 +84,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	});
 
 	initDevice();
-	setBorderless(!settings.qt_const().system_title_bar);
+	setBorderless(!settings.qt().system_title_bar);
 
 	splash.finish(this);
 }
