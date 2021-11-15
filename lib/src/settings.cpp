@@ -34,16 +34,11 @@ auto lib::settings::qt_const() const -> const setting::qt &
 
 void settings::from_json(const nlohmann::json &json)
 {
-	auto a = json.at("Account");
 	auto g = json.at("General");
 	auto s = json.at("Spotify");
 
 	// Account
-	setValue(a, "access_token", account.access_token);
-	setValue(a, "client_id", account.client_id);
-	setValue(a, "client_secret", account.client_secret);
-	setValue(a, "last_refresh", account.last_refresh);
-	setValue(a, "refresh_token", account.refresh_token);
+	lib::json::get(json, "Account", account);
 
 	// General
 	setValue(g, "custom_playlist_order", general.custom_playlist_order);
@@ -115,13 +110,7 @@ void settings::load()
 auto settings::to_json() const -> nlohmann::json
 {
 	return {
-		{"Account", {
-			{"access_token", account.access_token},
-			{"client_id", account.client_id},
-			{"client_secret", account.client_secret},
-			{"last_refresh", account.last_refresh},
-			{"refresh_token", account.refresh_token},
-		}},
+		{"Account", account},
 		{"General", {
 			{"custom_playlist_order", general.custom_playlist_order},
 			{"fallback_icons", general.fallback_icons},

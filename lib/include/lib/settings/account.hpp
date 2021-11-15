@@ -1,5 +1,7 @@
 #pragma once
 
+#include "lib/json.hpp"
+
 #include <string>
 
 namespace lib
@@ -36,5 +38,9 @@ namespace lib
 			 */
 			long last_refresh = 0;
 		};
+
+		void to_json(nlohmann::json &j, const account &a);
+
+		void from_json(const nlohmann::json &j, account &a);
 	}
 }
