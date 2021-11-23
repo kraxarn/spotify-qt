@@ -9,6 +9,7 @@
 #include "lib/settings.hpp"
 #include "lib/spotify/api.hpp"
 #include "lib/httpclient.hpp"
+#include "view/debugview.hpp"
 
 #ifdef USE_DBUS
 #include "notifications/dbusnotifications.hpp"
