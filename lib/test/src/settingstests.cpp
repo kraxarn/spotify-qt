@@ -4,11 +4,6 @@
 #include "lib/paths/paths.hpp"
 #include "thirdparty/filesystem.hpp"
 
-#ifdef __linux__
-
-#define CONFIG_FILE "/tmp/spotify-qt.json"
-#define CACHE_DIR "/tmp/spotify-qt/cache"
-
 class test_paths: public lib::paths
 {
 public:
@@ -24,12 +19,12 @@ public:
 
 	auto config_file() const -> ghc::filesystem::path override
 	{
-		return CONFIG_FILE;
+		return ghc::filesystem::temp_directory_path() / "spotify-qt.json";
 	}
 
 	auto cache() const -> ghc::filesystem::path override
 	{
-		return CACHE_DIR;
+		return ghc::filesystem::temp_directory_path() / "cache";
 	}
 };
 
@@ -37,9 +32,9 @@ TEST_CASE("settings")
 {
 	test_paths paths;
 
-	auto read_settings = []() -> nlohmann::json
+	auto read_settings = [&paths]() -> nlohmann::json
 	{
-		std::ifstream file(CONFIG_FILE);
+		std::ifstream file(paths.config_file());
 		nlohmann::json json;
 		file >> json;
 
@@ -78,5 +73,3 @@ TEST_CASE("settings")
 		CHECK(json.at("Qt").is_object());
 	}
 }
-
-#endif
