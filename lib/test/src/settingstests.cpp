@@ -4,6 +4,8 @@
 #include "lib/paths/paths.hpp"
 #include "thirdparty/filesystem.hpp"
 
+#ifdef __linux__
+
 #define CONFIG_FILE "/tmp/spotify-qt.json"
 #define CACHE_DIR "/tmp/spotify-qt/cache"
 
@@ -76,3 +78,5 @@ TEST_CASE("settings")
 		CHECK(json.at("Qt").is_object());
 	}
 }
+
+#endif
