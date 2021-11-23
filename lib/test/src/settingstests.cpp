@@ -19,7 +19,7 @@ public:
 
 	~test_paths()
 	{
-		ghc::filesystem::remove("spotify-qt.json");
+		ghc::filesystem::remove(config_file());
 	}
 
 	auto config_file() const -> ghc::filesystem::path override
