@@ -1,21 +1,11 @@
 #include "aboutpage.hpp"
 #include "mainwindow.hpp"
 
-AboutPage::AboutPage(lib::settings &settings, lib::cache &cache,
-	const lib::http_client &httpClient, QWidget *parent)
+AboutPage::AboutPage(lib::settings &settings, const lib::http_client &httpClient, QWidget *parent)
 	: SettingsPage(settings, parent)
 {
 	addTab(about(), "General");
-	addTab(systemInfo(), "System information");
-	addTab(cacheInfo(), "Cache");
-	addTab(configPreview(), "Config preview");
 	addTab(contributors(httpClient), "Contributors");
-
-	if (lib::crash_handler::is_init()
-		|| !cache.get_all_crashes().empty())
-	{
-		addTab(crashLogs(cache), "Crashes");
-	}
 }
 
 auto AboutPage::about() -> QWidget *
@@ -58,30 +48,6 @@ auto AboutPage::about() -> QWidget *
 	}
 
 	return WidgetUtils::layoutToWidget(layout, this);
-}
-
-auto AboutPage::systemInfo() -> QWidget *
-{
-	return new SystemInfoView(this);
-}
-
-auto AboutPage::cacheInfo() -> QWidget *
-{
-	if (paths == nullptr)
-	{
-		paths = new QtPaths(this);
-	}
-	return new CacheView(*paths, this);
-}
-
-auto AboutPage::configPreview() -> QWidget *
-{
-	return new ConfigView(settings, this);
-}
-
-auto AboutPage::crashLogs(lib::cache &cache) -> QWidget *
-{
-	return new View::Crashes(cache, this);
 }
 
 auto AboutPage::contributors(const lib::http_client &httpClient) -> QWidget *

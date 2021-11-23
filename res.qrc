@@ -18,6 +18,7 @@
         <file>res/ic/light/draw-brush.svg</file>
         <file>res/ic/light/draw-donut.svg</file>
         <file>res/ic/light/edit-find.svg</file>
+        <file>res/ic/light/exception.svg</file>
         <file>res/ic/light/folder-temp.svg</file>
         <file>res/ic/light/folder-txt.svg</file>
         <file>res/ic/light/go-down.svg</file>
@@ -70,6 +71,7 @@
         <file>res/ic/dark/draw-brush.svg</file>
         <file>res/ic/dark/draw-donut.svg</file>
         <file>res/ic/dark/edit-find.svg</file>
+        <file>res/ic/dark/exception.svg</file>
         <file>res/ic/dark/folder-temp.svg</file>
         <file>res/ic/dark/folder-txt.svg</file>
         <file>res/ic/dark/go-down.svg</file>
