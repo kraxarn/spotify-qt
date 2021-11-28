@@ -5,7 +5,6 @@ SystemInfoView::SystemInfoView(QWidget *parent)
 {
 	auto *layout = new QVBoxLayout();
 	setLayout(layout);
-	setWindowTitle("System info");
 
 	auto *textInfo = new QTextEdit(this);
 	textInfo->setHtml(systemInfo().to_html());
