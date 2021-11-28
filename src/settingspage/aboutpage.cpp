@@ -34,7 +34,7 @@ auto AboutPage::about() -> QWidget *
 
 	// Build info
 #ifdef GIT_COMMIT
-	layout->addWidget(new QLabel(QString("Commit %1, development build").arg(GIT_COMMIT), this),
+	layout->addWidget(new QLabel(QString("Commit %1").arg(GIT_COMMIT), this),
 		0, Qt::AlignHCenter);
 #endif
 

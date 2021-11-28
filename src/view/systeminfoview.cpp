@@ -34,7 +34,7 @@ auto SystemInfoView::systemInfo() -> lib::qt::system_info
 
 	// spotify-qt version
 #ifdef GIT_COMMIT
-	info.add("App version", QString("%1-dev (%2) - lib %3")
+	info.add("App version", QString("%1 (%2) - lib %3")
 		.arg(APP_VERSION, GIT_COMMIT, LIB_VERSION));
 #else
 	info.add("App version", APP_VERSION);
