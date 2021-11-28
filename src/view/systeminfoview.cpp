@@ -20,7 +20,7 @@ SystemInfoView::SystemInfoView(QWidget *parent)
 	infoAbout->setWordWrap(true);
 	infoLayout->addWidget(infoAbout, 1);
 
-	auto *copy = new QPushButton("Copy to clipboard", this);
+	auto *copy = new QPushButton(QStringLiteral("Copy to clipboard"), this);
 	QPushButton::connect(copy, &QPushButton::clicked,
 		this, &SystemInfoView::copyToClipboard);
 	infoLayout->addWidget(copy);
@@ -34,10 +34,10 @@ auto SystemInfoView::systemInfo() -> lib::qt::system_info
 
 	// spotify-qt version
 #ifdef GIT_COMMIT
-	info.add("App version", QString("%1 (%2) - lib %3")
+	info.add(QStringLiteral("App version"), QString("%1 (%2) - lib %3")
 		.arg(APP_VERSION, GIT_COMMIT, LIB_VERSION));
 #else
-	info.add("App version", APP_VERSION);
+	info.add(QStringLiteral("App version"), APP_VERSION);
 #endif
 
 	// Device
@@ -47,7 +47,7 @@ auto SystemInfoView::systemInfo() -> lib::qt::system_info
 		auto device = mainWindow->getCurrentPlayback().device;
 		if (!device.name.empty() && !device.type.empty())
 		{
-			info.add("Device",
+			info.add(QStringLiteral("Device"),
 				QString::fromStdString(lib::fmt::format("{} ({})",
 					device.name, device.type)));
 		}
@@ -55,16 +55,16 @@ auto SystemInfoView::systemInfo() -> lib::qt::system_info
 
 	// Qt D-Bus support
 #ifdef USE_DBUS
-	info.add("D-Bus support", "Yes");
+	info.add(QStringLiteral("D-Bus support"), QStringLiteral("Yes"));
 #else
-	info.add("D-Bus support", "No");
+	info.add(QStringLiteral("D-Bus support"), QStringLiteral("No"));
 #endif
 
 	// KCrash support
 #ifdef USE_KCRASH
-	info.add("KCrash support", "Yes");
+	info.add(QStringLiteral("KCrash support"), QStringLiteral("Yes"));
 #else
-	info.add("KCrash support", "No");
+	info.add(QStringLiteral("KCrash support"), QStringLiteral("No"));
 #endif
 
 	return info;
