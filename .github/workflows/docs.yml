@@ -9,16 +9,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Build documentation
       - name: Build
         uses: mattnotmitt/doxygen-action@v1
         with:
           working-directory: 'docs/'
 
-      # Deploy documentation to Pages
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
