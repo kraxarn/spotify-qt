@@ -1,7 +1,7 @@
-#include "troubleshootpage.hpp"
+#include "settingspage/troubleshootpage.hpp"
 
 TroubleshootPage::TroubleshootPage(lib::settings &settings, lib::cache &cache, QWidget *parent)
-	: SettingsPage(settings, parent),
+	: SettingsPage::Base(settings, parent),
 	cache(cache)
 {
 	addTab(systemInfo(), "System information");

@@ -1,10 +1,10 @@
 #pragma once
 
 #include "util/icon.hpp"
-#include "settingspage.hpp"
+#include "settingspage/base.hpp"
 #include "list/contributors.hpp"
 
-class AboutPage: public SettingsPage
+class AboutPage: public SettingsPage::Base
 {
 public:
 	AboutPage(lib::settings &settings, const lib::http_client &httpClient, QWidget *parent);

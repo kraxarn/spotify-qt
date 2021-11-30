@@ -1,6 +1,6 @@
 #pragma once
 
-#include "settingspage.hpp"
+#include "settingspage/base.hpp"
 #include "lib/enum/audioquality.hpp"
 #include "util/icon.hpp"
 #include "client/clienthelper.hpp"
@@ -13,7 +13,7 @@
 #include <QPushButton>
 #include <QFileDialog>
 
-class SpotifyPage: public SettingsPage
+class SpotifyPage: public SettingsPage::Base
 {
 public:
 	SpotifyPage(lib::settings &settings, QWidget *parent);

@@ -2,11 +2,11 @@
 
 #include "util/icon.hpp"
 #include "lib/settings.hpp"
-#include "settingspage.hpp"
+#include "settingspage/base.hpp"
 #include "view/logview.hpp"
 #include "util/widgetutils.hpp"
 
-class ApplicationPage: public SettingsPage
+class ApplicationPage: public SettingsPage::Base
 {
 public:
 	ApplicationPage(lib::settings &settings, QWidget *parent);

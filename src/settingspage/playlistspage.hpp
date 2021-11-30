@@ -1,12 +1,12 @@
 #pragma once
 
-#include "settingspage.hpp"
+#include "settingspage/base.hpp"
 #include "util/icon.hpp"
 
 #include <QComboBox>
 #include <QListWidget>
 
-class PlaylistsPage: public SettingsPage
+class PlaylistsPage: public SettingsPage::Base
 {
 public:
 	PlaylistsPage(lib::settings &settings, QWidget *parent);

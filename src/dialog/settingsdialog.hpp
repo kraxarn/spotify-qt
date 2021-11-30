@@ -6,7 +6,7 @@
 #include "settingspage/applicationpage.hpp"
 #include "settingspage/interfacepage.hpp"
 #include "settingspage/playlistspage.hpp"
-#include "settingspage/settingspage.hpp"
+#include "settingspage/base.hpp"
 #include "settingspage/spotifypage.hpp"
 #include "settingspage/troubleshootpage.hpp"
 #include "client/clienthandler.hpp"
@@ -53,5 +53,5 @@ private:
 	QListWidget *categories = nullptr;
 	QStackedWidget *stack = nullptr;
 
-	QList<SettingsPage *> pages;
+	QList<SettingsPage::Base *> pages;
 };

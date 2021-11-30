@@ -1,12 +1,12 @@
 #pragma once
 
-#include "settingspage.hpp"
+#include "settingspage/base.hpp"
 #include "util/icon.hpp"
 
 #include <QStyleFactory>
 #include <QGroupBox>
 
-class InterfacePage: public SettingsPage
+class InterfacePage: public SettingsPage::Base
 {
 Q_OBJECT
 

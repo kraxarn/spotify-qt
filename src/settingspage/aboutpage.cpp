@@ -1,8 +1,8 @@
-#include "aboutpage.hpp"
+#include "settingspage/aboutpage.hpp"
 #include "mainwindow.hpp"
 
 AboutPage::AboutPage(lib::settings &settings, const lib::http_client &httpClient, QWidget *parent)
-	: SettingsPage(settings, parent)
+	: SettingsPage::Base(settings, parent)
 {
 	addTab(about(), "General");
 	addTab(contributors(httpClient), "Contributors");

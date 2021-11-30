@@ -5,13 +5,13 @@
 
 #include "util/icon.hpp"
 #include "lib/qtpaths.hpp"
-#include "settingspage/settingspage.hpp"
+#include "settingspage/base.hpp"
 #include "view/configview.hpp"
 #include "view/cacheview.hpp"
 #include "view/crashes.hpp"
 #include "view/systeminfoview.hpp"
 
-class TroubleshootPage: public SettingsPage
+class TroubleshootPage: public SettingsPage::Base
 {
 public:
 	TroubleshootPage(lib::settings &settings, lib::cache &cache, QWidget *parent);

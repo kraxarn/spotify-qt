@@ -1,8 +1,8 @@
-#include "interfacepage.hpp"
+#include "settingspage/interfacepage.hpp"
 #include "mainwindow.hpp"
 
 InterfacePage::InterfacePage(lib::settings &settings, QWidget *parent)
-	: SettingsPage(settings, parent)
+	: SettingsPage::Base(settings, parent)
 {
 	addTab(general(), "General");
 	addTab(appearance(), "Appearance");

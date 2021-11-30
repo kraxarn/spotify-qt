@@ -1,7 +1,7 @@
-#include "applicationpage.hpp"
+#include "settingspage/applicationpage.hpp"
 
 ApplicationPage::ApplicationPage(lib::settings &settings, QWidget *parent)
-	: SettingsPage(settings, parent)
+	: SettingsPage::Base(settings, parent)
 {
 	addTab(app(), "General");
 	addTab(appLogs(), "Logs");
