@@ -1,14 +1,16 @@
-#include "settingspage/aboutpage.hpp"
+#include "settingspage/about.hpp"
 #include "mainwindow.hpp"
 
-AboutPage::AboutPage(lib::settings &settings, const lib::http_client &httpClient, QWidget *parent)
+SettingsPage::About::About(lib::settings &settings,
+	const lib::http_client &httpClient,
+	QWidget *parent)
 	: SettingsPage::Base(settings, parent)
 {
 	addTab(about(), "General");
 	addTab(contributors(httpClient), "Contributors");
 }
 
-auto AboutPage::about() -> QWidget *
+auto SettingsPage::About::about() -> QWidget *
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	auto *layout = tabContent();
@@ -50,22 +52,22 @@ auto AboutPage::about() -> QWidget *
 	return WidgetUtils::layoutToWidget(layout, this);
 }
 
-auto AboutPage::contributors(const lib::http_client &httpClient) -> QWidget *
+auto SettingsPage::About::contributors(const lib::http_client &httpClient) -> QWidget *
 {
 	return new List::Contributors(httpClient);
 }
 
-auto AboutPage::icon() -> QIcon
+auto SettingsPage::About::icon() -> QIcon
 {
 	return Icon::get("help-about");
 }
 
-auto AboutPage::title() -> QString
+auto SettingsPage::About::title() -> QString
 {
 	return "About";
 }
 
-auto AboutPage::save() -> bool
+auto SettingsPage::About::save() -> bool
 {
 	return true;
 }

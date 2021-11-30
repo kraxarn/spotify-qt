@@ -19,7 +19,7 @@ SettingsDialog::SettingsDialog(lib::settings &settings, lib::cache &cache,
 		new SpotifyPage(settings, this),
 		new PlaylistsPage(settings, this),
 		new TroubleshootPage(settings, cache, this),
-		new AboutPage(settings, httpClient, this),
+		new SettingsPage::About(settings, httpClient, this),
 	});
 
 	for (auto &page: pages)

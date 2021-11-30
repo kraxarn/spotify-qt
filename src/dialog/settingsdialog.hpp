@@ -2,7 +2,7 @@
 
 #include "keyring/kwallet.hpp"
 #include "mainwindow.hpp"
-#include "settingspage/aboutpage.hpp"
+#include "settingspage/about.hpp"
 #include "settingspage/applicationpage.hpp"
 #include "settingspage/interfacepage.hpp"
 #include "settingspage/playlistspage.hpp"
