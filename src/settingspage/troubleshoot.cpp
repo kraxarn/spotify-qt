@@ -1,6 +1,7 @@
-#include "settingspage/troubleshootpage.hpp"
+#include "settingspage/troubleshoot.hpp"
 
-TroubleshootPage::TroubleshootPage(lib::settings &settings, lib::cache &cache, QWidget *parent)
+SettingsPage::Troubleshoot::Troubleshoot(lib::settings &settings,
+	lib::cache &cache, QWidget *parent)
 	: SettingsPage::Base(settings, parent),
 	cache(cache)
 {
@@ -15,17 +16,17 @@ TroubleshootPage::TroubleshootPage(lib::settings &settings, lib::cache &cache, Q
 	}
 }
 
-auto TroubleshootPage::systemInfo() -> QWidget *
+auto SettingsPage::Troubleshoot::systemInfo() -> QWidget *
 {
 	return new SystemInfoView(this);
 }
 
-auto TroubleshootPage::configPreview() -> QWidget *
+auto SettingsPage::Troubleshoot::configPreview() -> QWidget *
 {
 	return new ConfigView(settings, this);
 }
 
-auto TroubleshootPage::cacheInfo() -> QWidget *
+auto SettingsPage::Troubleshoot::cacheInfo() -> QWidget *
 {
 	if (paths == nullptr)
 	{
@@ -34,22 +35,22 @@ auto TroubleshootPage::cacheInfo() -> QWidget *
 	return new CacheView(*paths, this);
 }
 
-auto TroubleshootPage::crashLogs() -> QWidget *
+auto SettingsPage::Troubleshoot::crashLogs() -> QWidget *
 {
 	return new View::Crashes(cache, this);
 }
 
-auto TroubleshootPage::icon() -> QIcon
+auto SettingsPage::Troubleshoot::icon() -> QIcon
 {
 	return Icon::get("exception");
 }
 
-auto TroubleshootPage::title() -> QString
+auto SettingsPage::Troubleshoot::title() -> QString
 {
 	return QStringLiteral("Troubleshooting");
 }
 
-auto TroubleshootPage::save() -> bool
+auto SettingsPage::Troubleshoot::save() -> bool
 {
 	return true;
 }
