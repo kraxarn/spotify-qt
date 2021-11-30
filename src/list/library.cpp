@@ -1,7 +1,7 @@
-#include "librarylist.hpp"
+#include "list/library.hpp"
 #include "mainwindow.hpp"
 
-LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
+List::Library::Library(spt::Spotify &spotify, QWidget *parent)
 	: QTreeWidget(parent),
 	spotify(spotify)
 {
@@ -26,14 +26,14 @@ LibraryList::LibraryList(spt::Spotify &spotify, QWidget *parent)
 	setCurrentItem(nullptr);
 
 	QTreeWidget::connect(this, &QTreeWidget::itemClicked,
-		this, &LibraryList::clicked);
+		this, &List::Library::clicked);
 	QTreeWidget::connect(this, &QTreeWidget::itemDoubleClicked,
-		this, &LibraryList::doubleClicked);
+		this, &List::Library::doubleClicked);
 	QTreeWidget::connect(this, &QTreeWidget::itemExpanded,
-		this, &LibraryList::expanded);
+		this, &List::Library::expanded);
 }
 
-void LibraryList::clicked(QTreeWidgetItem *item, int /*column*/)
+void List::Library::clicked(QTreeWidgetItem *item, int /*column*/)
 {
 	if (item != nullptr
 		&& item->parent() == nullptr
@@ -139,7 +139,7 @@ void LibraryList::clicked(QTreeWidgetItem *item, int /*column*/)
 	}
 }
 
-void LibraryList::tracksLoaded(const std::string &id, const std::vector<lib::spt::track> &tracks)
+void List::Library::tracksLoaded(const std::string &id, const std::vector<lib::spt::track> &tracks)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 
@@ -152,7 +152,7 @@ void LibraryList::tracksLoaded(const std::string &id, const std::vector<lib::spt
 	mainWindow->getSongsTree()->setEnabled(true);
 }
 
-void LibraryList::doubleClicked(QTreeWidgetItem *item, int /*column*/)
+void List::Library::doubleClicked(QTreeWidgetItem *item, int /*column*/)
 {
 	auto callback = [this](const std::vector<lib::spt::track> &tracks)
 	{
@@ -198,7 +198,7 @@ void LibraryList::doubleClicked(QTreeWidgetItem *item, int /*column*/)
 	}
 }
 
-void LibraryList::expanded(QTreeWidgetItem *item)
+void List::Library::expanded(QTreeWidgetItem *item)
 {
 	item->takeChildren();
 
@@ -212,7 +212,7 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 			{
 				results.emplace_back(artist.name, artist.id, DataRole::ArtistId);
 			}
-			LibraryList::itemsLoaded(results, item);
+			List::Library::itemsLoaded(results, item);
 		});
 	}
 	else if (item->text(0) == savedAlbums)
@@ -225,7 +225,7 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 			{
 				results.emplace_back(album.album.name, album.album.id, DataRole::AlbumId);
 			}
-			LibraryList::itemsLoaded(results, item);
+			List::Library::itemsLoaded(results, item);
 		});
 	}
 	else if (item->text(0) == followedArtists)
@@ -238,12 +238,12 @@ void LibraryList::expanded(QTreeWidgetItem *item)
 			{
 				results.emplace_back(artist.name, artist.id, DataRole::ArtistId);
 			}
-			LibraryList::itemsLoaded(results, item);
+			List::Library::itemsLoaded(results, item);
 		});
 	}
 }
 
-void LibraryList::itemsLoaded(std::vector<ListItem::Library> &items, QTreeWidgetItem *item)
+void List::Library::itemsLoaded(std::vector<ListItem::Library> &items, QTreeWidgetItem *item)
 {
 	std::sort(items.begin(), items.end(),
 		[](const ListItem::Library &x, const ListItem::Library &y) -> bool

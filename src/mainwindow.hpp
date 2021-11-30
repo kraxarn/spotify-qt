@@ -106,7 +106,7 @@ private:
 	bool stateValid = true;
 	QDockWidget *sidePanel = nullptr;
 
-	LibraryList *libraryList = nullptr;
+	List::Library *libraryList = nullptr;
 	PlaylistList *playlistList = nullptr;
 	View::Context::Context *contextView = nullptr;
 

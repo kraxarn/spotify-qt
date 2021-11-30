@@ -13,7 +13,7 @@
 #include "dialog/settingsdialog.hpp"
 #include "dialog/splashdialog.hpp"
 #include "dialog/whatsnewdialog.hpp"
-#include "list/librarylist.hpp"
+#include "list/library.hpp"
 #include "list/playlistlist.hpp"
 #include "listitem/track.hpp"
 #include "mediaplayer/service.hpp"
