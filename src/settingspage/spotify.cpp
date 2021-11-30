@@ -1,7 +1,7 @@
-#include "settingspage/spotifypage.hpp"
+#include "settingspage/spotify.hpp"
 #include "mainwindow.hpp"
 
-SpotifyPage::SpotifyPage(lib::settings &settings, QWidget *parent)
+SettingsPage::Spotify::Spotify(lib::settings &settings, QWidget *parent)
 	: SettingsPage::Base(settings, parent)
 {
 	addTab(spotify(), "General");
@@ -9,7 +9,7 @@ SpotifyPage::SpotifyPage(lib::settings &settings, QWidget *parent)
 	addTab(logs(), "Logs");
 }
 
-auto SpotifyPage::spotify() -> QWidget *
+auto SettingsPage::Spotify::spotify() -> QWidget *
 {
 	auto *content = new QVBoxLayout();
 	content->setAlignment(Qt::AlignTop);
@@ -50,7 +50,7 @@ auto SpotifyPage::spotify() -> QWidget *
 							"(only closes when using app config)");
 	sptAppStart->setChecked(settings.spotify.start_client);
 	QCheckBox::connect(sptAppStart, &QCheckBox::stateChanged,
-		this, &SpotifyPage::startClientToggle);
+		this, &SettingsPage::Spotify::startClientToggle);
 	content->addWidget(sptAppStart);
 
 	// Always start
@@ -67,7 +67,7 @@ auto SpotifyPage::spotify() -> QWidget *
 	statusLayout->addWidget(startClient);
 
 	QAbstractButton::connect(startClient, &QAbstractButton::clicked,
-		this, &SpotifyPage::restartClient);
+		this, &SettingsPage::Spotify::restartClient);
 
 	clientStatus = new QLabel(this);
 	clientStatus->setEnabled(false);
@@ -78,14 +78,14 @@ auto SpotifyPage::spotify() -> QWidget *
 	return WidgetUtils::layoutToWidget(content, this);
 }
 
-auto SpotifyPage::isClientRunning() const -> bool
+auto SettingsPage::Spotify::isClientRunning() const -> bool
 {
 	const auto *clientHandler = getClientHandler();
 	return clientHandler != nullptr
 		&& clientHandler->isRunning();
 }
 
-void SpotifyPage::updateClientStatus()
+void SettingsPage::Spotify::updateClientStatus()
 {
 	auto running = isClientRunning();
 	setClientStatus(true,
@@ -93,7 +93,7 @@ void SpotifyPage::updateClientStatus()
 		running ? "Running" : "Not running");
 }
 
-void SpotifyPage::restartClient(bool /*checked*/)
+void SettingsPage::Spotify::restartClient(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	if (mainWindow != nullptr)
@@ -130,7 +130,7 @@ void SpotifyPage::restartClient(bool /*checked*/)
 	updateClientStatus();
 }
 
-auto SpotifyPage::config() -> QWidget *
+auto SettingsPage::Spotify::config() -> QWidget *
 {
 	auto *content = new QVBoxLayout();
 	content->setAlignment(Qt::AlignTop);
@@ -140,7 +140,8 @@ auto SpotifyPage::config() -> QWidget *
 	sptGlobal->setToolTip("Use spotifyd.conf file in ~/.config/spotifyd, /etc or "
 						  "/etc/xdg/spotifyd (spotifyd only)");
 	sptGlobal->setChecked(settings.spotify.global_config);
-	QCheckBox::connect(sptGlobal, &QCheckBox::stateChanged, this, &SpotifyPage::globalConfigToggle);
+	QCheckBox::connect(sptGlobal, &QCheckBox::stateChanged,
+		this, &SettingsPage::Spotify::globalConfigToggle);
 	content->addWidget(sptGlobal);
 
 	// Box and layout for all app specific settings
@@ -195,22 +196,22 @@ auto SpotifyPage::config() -> QWidget *
 	return WidgetUtils::layoutToWidget(content, this);
 }
 
-auto SpotifyPage::logs() -> QWidget *
+auto SettingsPage::Spotify::logs() -> QWidget *
 {
 	return new ClientHandlerLogView(MainWindow::find(parentWidget()));
 }
 
-auto SpotifyPage::icon() -> QIcon
+auto SettingsPage::Spotify::icon() -> QIcon
 {
 	return Icon::get("headphones");
 }
 
-auto SpotifyPage::title() -> QString
+auto SettingsPage::Spotify::title() -> QString
 {
 	return "Spotify";
 }
 
-auto SpotifyPage::save() -> bool
+auto SettingsPage::Spotify::save() -> bool
 {
 	// Check spotify client path
 	if (sptPath != nullptr && !sptPath->text().isEmpty())
@@ -292,7 +293,7 @@ auto SpotifyPage::save() -> bool
 	return true;
 }
 
-void SpotifyPage::globalConfigToggle(int state)
+void SettingsPage::Spotify::globalConfigToggle(int state)
 {
 	if (sptGroup == nullptr)
 	{
@@ -302,7 +303,7 @@ void SpotifyPage::globalConfigToggle(int state)
 	sptGroup->setEnabled(state == Qt::Unchecked);
 }
 
-void SpotifyPage::startClientToggle(int state)
+void SettingsPage::Spotify::startClientToggle(int state)
 {
 	if (sptAlways == nullptr)
 	{
@@ -312,7 +313,7 @@ void SpotifyPage::startClientToggle(int state)
 	sptAlways->setEnabled(state == Qt::Checked);
 }
 
-auto SpotifyPage::sptConfigExists() -> bool
+auto SettingsPage::Spotify::sptConfigExists() -> bool
 {
 	// Config is either ~/.config/spotifyd/spotifyd.conf or /etc/spotifyd/spotifyd.conf
 	return QFile(QString("%1/.config/spotifyd/spotifyd.conf")
@@ -320,7 +321,7 @@ auto SpotifyPage::sptConfigExists() -> bool
 		|| QFile("/etc/spotifyd/spotifyd.conf").exists();
 }
 
-auto SpotifyPage::backends() -> QStringList
+auto SettingsPage::Spotify::backends() -> QStringList
 {
 	if (paths == nullptr)
 	{
@@ -329,7 +330,7 @@ auto SpotifyPage::backends() -> QStringList
 	return spt::ClientHandler(settings, *paths, this).availableBackends();
 }
 
-auto SpotifyPage::getClientHandler() const -> const spt::ClientHandler *
+auto SettingsPage::Spotify::getClientHandler() const -> const spt::ClientHandler *
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	return mainWindow == nullptr
@@ -337,7 +338,8 @@ auto SpotifyPage::getClientHandler() const -> const spt::ClientHandler *
 		: mainWindow->getClientHandler();
 }
 
-void SpotifyPage::setClientStatus(bool enabled, const QString &start, const QString &status)
+void SettingsPage::Spotify::setClientStatus(bool enabled,
+	const QString &start, const QString &status)
 {
 	if (startClient != nullptr)
 	{
