@@ -340,7 +340,7 @@ auto MainWindow::createCentralWidget() -> QWidget *
 		*httpClient, this);
 
 	libraryList = new List::Library(*spotify, this);
-	playlistList = new PlaylistList(*spotify, settings, cache, this);
+	playlistList = new List::Playlist(*spotify, settings, cache, this);
 	contextView = new View::Context::Context(*spotify, current, cache, this);
 
 	// Left side panel

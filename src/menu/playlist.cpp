@@ -26,7 +26,7 @@ Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playl
 		this, &Menu::Playlist::onEdit);
 
 	auto *refresh = addAction(Icon::get("view-refresh"), "Refresh");
-	refresh->setVisible(dynamic_cast<PlaylistList *>(parentWidget()) != nullptr);
+	refresh->setVisible(dynamic_cast<List::Playlist *>(parentWidget()) != nullptr);
 	QAction::connect(refresh, &QAction::triggered,
 		this, &Menu::Playlist::onRefresh);
 

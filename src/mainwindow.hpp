@@ -107,7 +107,7 @@ private:
 	QDockWidget *sidePanel = nullptr;
 
 	List::Library *libraryList = nullptr;
-	PlaylistList *playlistList = nullptr;
+	List::Playlist *playlistList = nullptr;
 	View::Context::Context *contextView = nullptr;
 
 #ifdef USE_DBUS

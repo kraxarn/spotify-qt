@@ -14,7 +14,7 @@
 #include "dialog/splashdialog.hpp"
 #include "dialog/whatsnewdialog.hpp"
 #include "list/library.hpp"
-#include "list/playlistlist.hpp"
+#include "list/playlist.hpp"
 #include "listitem/track.hpp"
 #include "mediaplayer/service.hpp"
 #include "menu/mainmenu.hpp"

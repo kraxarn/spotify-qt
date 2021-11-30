@@ -1,8 +1,8 @@
-#include "playlistlist.hpp"
+#include "list/playlist.hpp"
 #include "mainwindow.hpp"
 
-PlaylistList::PlaylistList(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
-	QWidget *parent)
+List::Playlist::Playlist(lib::spt::api &spotify, lib::settings &settings,
+	lib::cache &cache, QWidget *parent)
 	: QListWidget(parent),
 	spotify(spotify),
 	cache(cache),
@@ -12,16 +12,16 @@ PlaylistList::PlaylistList(lib::spt::api &spotify, lib::settings &settings, lib:
 	setCurrentRow(0);
 
 	QListWidget::connect(this, &QListWidget::itemClicked,
-		this, &PlaylistList::clicked);
+		this, &List::Playlist::clicked);
 	QListWidget::connect(this, &QListWidget::itemDoubleClicked,
-		this, &PlaylistList::doubleClicked);
+		this, &List::Playlist::doubleClicked);
 
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested,
-		this, &PlaylistList::menu);
+		this, &List::Playlist::menu);
 }
 
-void PlaylistList::showEvent(QShowEvent */*event*/)
+void List::Playlist::showEvent(QShowEvent */*event*/)
 {
 	// Playlists are already loaded, don't load from cache
 	if (count() > 0)
@@ -38,14 +38,14 @@ void PlaylistList::showEvent(QShowEvent */*event*/)
 	refresh();
 }
 
-auto PlaylistList::getItemIndex(QListWidgetItem *item) -> int
+auto List::Playlist::getItemIndex(QListWidgetItem *item) -> int
 {
 	return item == nullptr
 		? currentRow()
 		: item->data(static_cast<int>(DataRole::Index)).toInt();
 }
 
-void PlaylistList::clicked(QListWidgetItem *item)
+void List::Playlist::clicked(QListWidgetItem *item)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	if (item != nullptr)
@@ -57,7 +57,7 @@ void PlaylistList::clicked(QListWidgetItem *item)
 	mainWindow->getSongsTree()->load(currentPlaylist);
 }
 
-void PlaylistList::doubleClicked(QListWidgetItem *item)
+void List::Playlist::doubleClicked(QListWidgetItem *item)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	const auto &currentPlaylist = mainWindow->getPlaylist(getItemIndex(item));
@@ -76,7 +76,7 @@ void PlaylistList::doubleClicked(QListWidgetItem *item)
 		});
 }
 
-void PlaylistList::menu(const QPoint &pos)
+void List::Playlist::menu(const QPoint &pos)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	const auto &playlist = mainWindow->getPlaylist(getItemIndex(itemAt(pos)));
@@ -84,7 +84,7 @@ void PlaylistList::menu(const QPoint &pos)
 	menu->popup(mapToGlobal(pos));
 }
 
-void PlaylistList::load(const std::vector<lib::spt::playlist> &playlists)
+void List::Playlist::load(const std::vector<lib::spt::playlist> &playlists)
 {
 	QListWidgetItem *activeItem = nullptr;
 	const lib::spt::playlist *activePlaylist = nullptr;
@@ -145,7 +145,7 @@ void PlaylistList::load(const std::vector<lib::spt::playlist> &playlists)
 	}
 }
 
-void PlaylistList::refresh()
+void List::Playlist::refresh()
 {
 	spotify.playlists([this](const std::vector<lib::spt::playlist> &items)
 	{
@@ -154,7 +154,7 @@ void PlaylistList::refresh()
 	});
 }
 
-void PlaylistList::order(lib::playlist_order order)
+void List::Playlist::order(lib::playlist_order order)
 {
 	QList<QListWidgetItem *> items;
 	items.reserve(count());
@@ -246,7 +246,7 @@ void PlaylistList::order(lib::playlist_order order)
 	}
 }
 
-auto PlaylistList::latestTrack(const std::vector<lib::spt::track> &tracks) -> int
+auto List::Playlist::latestTrack(const std::vector<lib::spt::track> &tracks) -> int
 {
 	size_t latest = 0;
 	for (size_t i = 0; i < tracks.size(); i++)
@@ -260,7 +260,7 @@ auto PlaylistList::latestTrack(const std::vector<lib::spt::track> &tracks) -> in
 	return latest;
 }
 
-auto PlaylistList::allArtists() -> std::unordered_set<std::string>
+auto List::Playlist::allArtists() -> std::unordered_set<std::string>
 {
 	std::unordered_set<std::string> artists;
 
@@ -281,7 +281,7 @@ auto PlaylistList::allArtists() -> std::unordered_set<std::string>
 	return artists;
 }
 
-auto PlaylistList::at(int index) -> lib::spt::playlist
+auto List::Playlist::at(int index) -> lib::spt::playlist
 {
 	auto *i = item(index);
 	if (i == nullptr)
@@ -292,7 +292,7 @@ auto PlaylistList::at(int index) -> lib::spt::playlist
 	return at(i->data(static_cast<int>(DataRole::PlaylistId)).toString().toStdString());
 }
 
-auto PlaylistList::at(const std::string &id) -> lib::spt::playlist
+auto List::Playlist::at(const std::string &id) -> lib::spt::playlist
 {
 	for (const auto &playlist: cache.get_playlists())
 	{
