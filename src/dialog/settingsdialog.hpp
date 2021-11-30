@@ -3,7 +3,7 @@
 #include "keyring/kwallet.hpp"
 #include "mainwindow.hpp"
 #include "settingspage/about.hpp"
-#include "settingspage/applicationpage.hpp"
+#include "settingspage/application.hpp"
 #include "settingspage/interfacepage.hpp"
 #include "settingspage/playlistspage.hpp"
 #include "settingspage/base.hpp"

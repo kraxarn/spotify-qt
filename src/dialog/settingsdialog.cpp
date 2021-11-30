@@ -14,7 +14,7 @@ SettingsDialog::SettingsDialog(lib::settings &settings, lib::cache &cache,
 	stack = new QStackedWidget(this);
 	categories = new QListWidget(this);
 	pages = QList<SettingsPage::Base *>({
-		new ApplicationPage(settings, this),
+		new SettingsPage::Application(settings, this),
 		new InterfacePage(settings, this),
 		new SpotifyPage(settings, this),
 		new PlaylistsPage(settings, this),

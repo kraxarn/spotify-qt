@@ -1,13 +1,13 @@
-#include "settingspage/applicationpage.hpp"
+#include "settingspage/application.hpp"
 
-ApplicationPage::ApplicationPage(lib::settings &settings, QWidget *parent)
+SettingsPage::Application::Application(lib::settings &settings, QWidget *parent)
 	: SettingsPage::Base(settings, parent)
 {
 	addTab(app(), "General");
 	addTab(appLogs(), "Logs");
 }
 
-auto ApplicationPage::app() -> QWidget *
+auto SettingsPage::Application::app() -> QWidget *
 {
 	auto *layout = tabContent();
 	auto *comboBoxLayout = new QGridLayout();
@@ -74,22 +74,22 @@ auto ApplicationPage::app() -> QWidget *
 	return WidgetUtils::layoutToWidget(layout, this);
 }
 
-auto ApplicationPage::appLogs() -> QWidget *
+auto SettingsPage::Application::appLogs() -> QWidget *
 {
 	return new LogView(this);
 }
 
-auto ApplicationPage::icon() -> QIcon
+auto SettingsPage::Application::icon() -> QIcon
 {
 	return Icon::get("window");
 }
 
-auto ApplicationPage::title() -> QString
+auto SettingsPage::Application::title() -> QString
 {
 	return "Application";
 }
 
-auto ApplicationPage::save() -> bool
+auto SettingsPage::Application::save() -> bool
 {
 	// Media controller
 	if (appMedia != nullptr)
@@ -144,7 +144,7 @@ auto ApplicationPage::save() -> bool
 	return true;
 }
 
-auto ApplicationPage::isPulse() -> bool
+auto SettingsPage::Application::isPulse() -> bool
 {
 	// Assume /usr/bin/pactl
 	return QFileInfo("/usr/bin/pactl").isExecutable();
