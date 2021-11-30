@@ -4,7 +4,7 @@
 #include "mainwindow.hpp"
 #include "settingspage/about.hpp"
 #include "settingspage/application.hpp"
-#include "settingspage/interfacepage.hpp"
+#include "settingspage/interface.hpp"
 #include "settingspage/playlistspage.hpp"
 #include "settingspage/base.hpp"
 #include "settingspage/spotifypage.hpp"

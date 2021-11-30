@@ -1,7 +1,7 @@
-#include "settingspage/interfacepage.hpp"
+#include "settingspage/interface.hpp"
 #include "mainwindow.hpp"
 
-InterfacePage::InterfacePage(lib::settings &settings, QWidget *parent)
+SettingsPage::Interface::Interface(lib::settings &settings, QWidget *parent)
 	: SettingsPage::Base(settings, parent)
 {
 	addTab(general(), "General");
@@ -9,7 +9,7 @@ InterfacePage::InterfacePage(lib::settings &settings, QWidget *parent)
 	addTab(trayIcon(), "Tray icon");
 }
 
-auto InterfacePage::general() -> QWidget *
+auto SettingsPage::Interface::general() -> QWidget *
 {
 	auto *layout = tabContent();
 	auto *comboBoxLayout = new QGridLayout();
@@ -60,7 +60,7 @@ auto InterfacePage::general() -> QWidget *
 	return WidgetUtils::layoutToWidget(layout, this);
 }
 
-auto InterfacePage::appearance() -> QWidget *
+auto SettingsPage::Interface::appearance() -> QWidget *
 {
 	auto *layout = tabContent();
 	auto *comboBoxLayout = new QGridLayout();
@@ -99,7 +99,8 @@ auto InterfacePage::appearance() -> QWidget *
 	darkTheme = new QCheckBox("Dark theme", this);
 	darkTheme->setToolTip("Use custom dark theme");
 	darkTheme->setChecked(settings.get_dark_theme());
-	QCheckBox::connect(darkTheme, &QCheckBox::toggled, this, &InterfacePage::darkThemeToggle);
+	QCheckBox::connect(darkTheme, &QCheckBox::toggled,
+		this, &SettingsPage::Interface::darkThemeToggle);
 	layout->addWidget(darkTheme);
 
 	// Always use fallback icons (if system icons are an option)
@@ -120,7 +121,7 @@ auto InterfacePage::appearance() -> QWidget *
 	return WidgetUtils::layoutToWidget(layout, this);
 }
 
-auto InterfacePage::trayIcon() -> QWidget *
+auto SettingsPage::Interface::trayIcon() -> QWidget *
 {
 	// Main container for everything
 	auto *content = new QVBoxLayout();
@@ -158,17 +159,17 @@ auto InterfacePage::trayIcon() -> QWidget *
 	return WidgetUtils::layoutToWidget(content, this);
 }
 
-auto InterfacePage::icon() -> QIcon
+auto SettingsPage::Interface::icon() -> QIcon
 {
 	return Icon::get("draw-brush");
 }
 
-auto InterfacePage::title() -> QString
+auto SettingsPage::Interface::title() -> QString
 {
 	return "Interface";
 }
 
-void InterfacePage::saveGeneral()
+void SettingsPage::Interface::saveGeneral()
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 
@@ -230,7 +231,7 @@ void InterfacePage::saveGeneral()
 	}
 }
 
-void InterfacePage::saveAppearance()
+void SettingsPage::Interface::saveAppearance()
 {
 	if (qtStyle != nullptr
 		&& qtStyle->currentText() != QString::fromStdString(settings.general.style))
@@ -272,7 +273,7 @@ void InterfacePage::saveAppearance()
 	}
 }
 
-void InterfacePage::saveTrayIcon()
+void SettingsPage::Interface::saveTrayIcon()
 {
 	// Check if tray icon needs to be reloaded
 	auto reloadTray = trayEnabled != nullptr
@@ -311,7 +312,7 @@ void InterfacePage::saveTrayIcon()
 	}
 }
 
-auto InterfacePage::save() -> bool
+auto SettingsPage::Interface::save() -> bool
 {
 	saveGeneral();
 	saveAppearance();
@@ -320,12 +321,12 @@ auto InterfacePage::save() -> bool
 	return true;
 }
 
-auto InterfacePage::hasIconTheme() -> bool
+auto SettingsPage::Interface::hasIconTheme() -> bool
 {
 	return !QIcon::fromTheme("media-playback-start").isNull();
 }
 
-void InterfacePage::darkThemeToggle(bool checked)
+void SettingsPage::Interface::darkThemeToggle(bool checked)
 {
 	if (qtStyle == nullptr)
 	{
@@ -352,7 +353,7 @@ void InterfacePage::darkThemeToggle(bool checked)
 	}
 }
 
-auto InterfacePage::defaultStyle() -> QString
+auto SettingsPage::Interface::defaultStyle() -> QString
 {
 	// Find default style on KDE
 	const auto &path = QStandardPaths::locate(QStandardPaths::GenericConfigLocation,
