@@ -38,15 +38,18 @@ TracksList::TracksList(lib::spt::api &spotify, lib::settings &settings, lib::cac
 	}
 
 	// Play tracks on click or enter/special key
-	QTreeWidget::connect(this, &QTreeWidget::itemActivated, this, &TracksList::clicked);
+	QTreeWidget::connect(this, &QTreeWidget::itemActivated,
+		this, &TracksList::clicked);
 
 	// Song context menu
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QWidget::connect(this, &QWidget::customContextMenuRequested, this, &TracksList::menu);
+	QWidget::connect(this, &QWidget::customContextMenuRequested,
+		this, &TracksList::menu);
 
 	// Songs header context menu
 	header()->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QLabel::connect(header(), &QWidget::customContextMenuRequested, this, &TracksList::headerMenu);
+	QLabel::connect(header(), &QWidget::customContextMenuRequested,
+		this, &TracksList::headerMenu);
 }
 
 void TracksList::menu(const QPoint &pos)
