@@ -5,7 +5,7 @@
 #include "settingspage/about.hpp"
 #include "settingspage/application.hpp"
 #include "settingspage/interface.hpp"
-#include "settingspage/playlistspage.hpp"
+#include "settingspage/playlists.hpp"
 #include "settingspage/base.hpp"
 #include "settingspage/spotifypage.hpp"
 #include "settingspage/troubleshootpage.hpp"

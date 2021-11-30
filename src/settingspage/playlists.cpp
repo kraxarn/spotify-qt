@@ -1,13 +1,13 @@
-#include "settingspage/playlistspage.hpp"
+#include "settingspage/playlists.hpp"
 #include "mainwindow.hpp"
 
-PlaylistsPage::PlaylistsPage(lib::settings &settings, QWidget *parent)
+SettingsPage::Playlists::Playlists(lib::settings &settings, QWidget *parent)
 	: SettingsPage::Base(settings, parent)
 {
 	addTab(order(), "Order");
 }
 
-auto PlaylistsPage::order() -> QWidget *
+auto SettingsPage::Playlists::order() -> QWidget *
 {
 	auto *layout = new QVBoxLayout();
 
@@ -33,7 +33,7 @@ auto PlaylistsPage::order() -> QWidget *
 	layout->addWidget(plHint);
 
 	QComboBox::connect(plOrder, QOverload<int>::of(&QComboBox::currentIndexChanged),
-		this, &PlaylistsPage::playlistOrderChanged);
+		this, &SettingsPage::Playlists::playlistOrderChanged);
 
 	auto *mainWindow = MainWindow::find(parentWidget());
 
@@ -41,18 +41,18 @@ auto PlaylistsPage::order() -> QWidget *
 	plList = new QListWidget(this);
 	plListLayout->addWidget(plList, 1);
 	QListWidget::connect(plList, &QListWidget::currentRowChanged, this,
-		&PlaylistsPage::playlistItemChanged);
+		&SettingsPage::Playlists::playlistItemChanged);
 
 	auto *buttons = new QToolBar(this);
 	buttons->setOrientation(Qt::Vertical);
 
 	plBtnUp = buttons->addAction(Icon::get("go-up"), "Up");
 	plBtnUp->setEnabled(false);
-	QAction::connect(plBtnUp, &QAction::triggered, this, &PlaylistsPage::playlistUp);
+	QAction::connect(plBtnUp, &QAction::triggered, this, &SettingsPage::Playlists::playlistUp);
 
 	plBtnDown = buttons->addAction(Icon::get("go-down"), "Down");
 	plBtnDown->setEnabled(false);
-	QAction::connect(plBtnDown, &QAction::triggered, this, &PlaylistsPage::playlistDown);
+	QAction::connect(plBtnDown, &QAction::triggered, this, &SettingsPage::Playlists::playlistDown);
 
 	plListLayout->addWidget(buttons);
 	layout->addLayout(plListLayout, 1);
@@ -70,17 +70,17 @@ auto PlaylistsPage::order() -> QWidget *
 	return WidgetUtils::layoutToWidget(layout, this);
 }
 
-auto PlaylistsPage::icon() -> QIcon
+auto SettingsPage::Playlists::icon() -> QIcon
 {
 	return Icon::get("view-media-playlist");
 }
 
-auto PlaylistsPage::title() -> QString
+auto SettingsPage::Playlists::title() -> QString
 {
 	return "Playlists";
 }
 
-auto PlaylistsPage::save() -> bool
+auto SettingsPage::Playlists::save() -> bool
 {
 	// Custom playlist order
 	auto playlistOrder = static_cast<lib::playlist_order>(plOrder->currentIndex());
@@ -109,7 +109,7 @@ auto PlaylistsPage::save() -> bool
 	return true;
 }
 
-void PlaylistsPage::playlistOrderChanged(int index)
+void SettingsPage::Playlists::playlistOrderChanged(int index)
 {
 	for (auto i = 0; i < plListLayout->count(); i++)
 	{
@@ -119,7 +119,7 @@ void PlaylistsPage::playlistOrderChanged(int index)
 	plHint->setText(plHints.at(index));
 }
 
-void PlaylistsPage::playlistMove(int steps)
+void SettingsPage::Playlists::playlistMove(int steps)
 {
 	auto row = plList->currentRow();
 	auto *item = plList->takeItem(row);
@@ -127,17 +127,17 @@ void PlaylistsPage::playlistMove(int steps)
 	plList->setCurrentItem(item);
 }
 
-void PlaylistsPage::playlistUp()
+void SettingsPage::Playlists::playlistUp()
 {
 	playlistMove(-1);
 }
 
-void PlaylistsPage::playlistDown()
+void SettingsPage::Playlists::playlistDown()
 {
 	playlistMove(1);
 }
 
-void PlaylistsPage::playlistItemChanged(int row)
+void SettingsPage::Playlists::playlistItemChanged(int row)
 {
 	plBtnUp->setEnabled(row > 0);
 	plBtnDown->setEnabled(row < plList->count() - 1);
