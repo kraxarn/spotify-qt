@@ -52,6 +52,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	toolBar = new MainToolBar(*spotify, settings,
 		*httpClient, cache, this);
 	addToolBar(Qt::ToolBarArea::TopToolBarArea, toolBar);
+	setContextMenuPolicy(Qt::NoContextMenu);
 
 	// Update player status
 	splash.showMessage("Refreshing...");
