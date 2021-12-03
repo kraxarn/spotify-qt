@@ -505,7 +505,7 @@ void MainWindow::setSearchChecked(bool checked)
 	toolBar->setSearchChecked(checked);
 }
 
-auto MainWindow::getSongsTree() -> TracksList *
+auto MainWindow::getSongsTree() -> List::Tracks *
 {
 	return mainContent->getTracksList();
 }

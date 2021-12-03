@@ -65,7 +65,7 @@ public:
 
 	// Getters for private properties
 	void setSearchChecked(bool checked);
-	TracksList *getSongsTree();
+	List::Tracks *getSongsTree();
 	std::string getSptContext() const;
 	lib::spt::playback &getCurrentPlayback();
 	const spt::Current &getCurrent();

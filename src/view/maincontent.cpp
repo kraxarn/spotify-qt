@@ -10,11 +10,11 @@ MainContent::MainContent(lib::spt::api &spotify, lib::settings &settings,
 	status = new StatusMessage(this);
 	layout->addWidget(status);
 
-	tracks = new TracksList(spotify, settings, cache, this);
+	tracks = new List::Tracks(spotify, settings, cache, this);
 	layout->addWidget(tracks, 1);
 }
 
-auto MainContent::getTracksList() const -> TracksList *
+auto MainContent::getTracksList() const -> List::Tracks *
 {
 	return tracks;
 }

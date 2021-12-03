@@ -1,6 +1,6 @@
 #pragma once
 
-#include "list/trackslist.hpp"
+#include "list/tracks.hpp"
 #include "widget/statusmessage.hpp"
 
 #include <QVBoxLayout>
@@ -13,11 +13,11 @@ public:
 	MainContent(lib::spt::api &spotify, lib::settings &settings,
 		lib::cache &cache, QWidget *parent);
 
-	auto getTracksList() const -> TracksList *;
+	auto getTracksList() const -> List::Tracks *;
 
 private:
 	QVBoxLayout *layout = nullptr;
 
-	TracksList *tracks = nullptr;
+	List::Tracks *tracks = nullptr;
 	StatusMessage *status = nullptr;
 };

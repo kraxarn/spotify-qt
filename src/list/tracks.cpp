@@ -1,7 +1,7 @@
-#include "trackslist.hpp"
+#include "tracks.hpp"
 #include "mainwindow.hpp"
 
-TracksList::TracksList(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
+List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
 	QWidget *parent)
 	: QTreeWidget(parent),
 	settings(settings),
@@ -39,20 +39,20 @@ TracksList::TracksList(lib::spt::api &spotify, lib::settings &settings, lib::cac
 
 	// Play tracks on click or enter/special key
 	QTreeWidget::connect(this, &QTreeWidget::itemActivated,
-		this, &TracksList::clicked);
+		this, &List::Tracks::clicked);
 
 	// Song context menu
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested,
-		this, &TracksList::menu);
+		this, &List::Tracks::menu);
 
 	// Songs header context menu
 	header()->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QLabel::connect(header(), &QWidget::customContextMenuRequested,
-		this, &TracksList::headerMenu);
+		this, &List::Tracks::headerMenu);
 }
 
-void TracksList::menu(const QPoint &pos)
+void List::Tracks::menu(const QPoint &pos)
 {
 	auto *item = itemAt(pos);
 	if (item == nullptr)
@@ -72,7 +72,7 @@ void TracksList::menu(const QPoint &pos)
 	songMenu->popup(mapToGlobal(pos));
 }
 
-void TracksList::clicked(QTreeWidgetItem *item, int /*column*/)
+void List::Tracks::clicked(QTreeWidgetItem *item, int /*column*/)
 {
 	if (item->isDisabled())
 	{
@@ -116,7 +116,7 @@ void TracksList::clicked(QTreeWidgetItem *item, int /*column*/)
 	}
 }
 
-void TracksList::headerMenu(const QPoint &pos)
+void List::Tracks::headerMenu(const QPoint &pos)
 {
 	auto *menu = new QMenu(header());
 	auto *showHeaders = menu->addMenu(Icon::get("visibility"), "Columns to show");
@@ -174,7 +174,7 @@ void TracksList::headerMenu(const QPoint &pos)
 	menu->popup(header()->mapToGlobal(pos));
 }
 
-void TracksList::resizeEvent(QResizeEvent *event)
+void List::Tracks::resizeEvent(QResizeEvent *event)
 {
 	if (settings.general.track_list_resize_mode != lib::resize_mode::auto_size)
 	{
@@ -184,7 +184,7 @@ void TracksList::resizeEvent(QResizeEvent *event)
 	resizeHeaders(event->size());
 }
 
-void TracksList::resizeHeaders(const QSize &newSize)
+void List::Tracks::resizeHeaders(const QSize &newSize)
 {
 	constexpr int indexSize = 60;
 	constexpr int lengthSize = 70;
@@ -207,7 +207,7 @@ void TracksList::resizeHeaders(const QSize &newSize)
 	header()->resizeSection(static_cast<int>(Column::Added), addedSize);
 }
 
-void TracksList::updateResizeMode(lib::resize_mode mode)
+void List::Tracks::updateResizeMode(lib::resize_mode mode)
 {
 	QHeaderView::ResizeMode resizeMode;
 
@@ -234,7 +234,7 @@ void TracksList::updateResizeMode(lib::resize_mode mode)
 	resizeHeaders(size());
 }
 
-auto TracksList::getAddedText(const std::string &date) const -> QString
+auto List::Tracks::getAddedText(const std::string &date) const -> QString
 {
 	if (date.empty())
 	{
@@ -251,7 +251,7 @@ auto TracksList::getAddedText(const std::string &date) const -> QString
 	return locale.toString(parsed, QLocale::ShortFormat);
 }
 
-void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::string &selectedId)
+void List::Tracks::load(const std::vector<lib::spt::track> &tracks, const std::string &selectedId)
 {
 	clear();
 	trackItems.clear();
@@ -304,12 +304,12 @@ void TracksList::load(const std::vector<lib::spt::track> &tracks, const std::str
 			static_cast<int>(Column::Added)));
 }
 
-void TracksList::load(const std::vector<lib::spt::track> &tracks)
+void List::Tracks::load(const std::vector<lib::spt::track> &tracks)
 {
 	load(tracks, std::string());
 }
 
-void TracksList::load(const lib::spt::playlist &playlist)
+void List::Tracks::load(const lib::spt::playlist &playlist)
 {
 	const auto &tracks = playlist.tracks.empty()
 		? cache.get_playlist(playlist.id).tracks
@@ -352,7 +352,7 @@ void TracksList::load(const lib::spt::playlist &playlist)
 	settings.save();
 }
 
-void TracksList::refreshPlaylist(const lib::spt::playlist &playlist)
+void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	if (lib::spt::api::to_uri("playlist", playlist.id) != mainWindow->getSptContext())
@@ -371,7 +371,7 @@ void TracksList::refreshPlaylist(const lib::spt::playlist &playlist)
 		});
 }
 
-void TracksList::load(const lib::spt::album &album, const std::string &trackId)
+void List::Tracks::load(const lib::spt::album &album, const std::string &trackId)
 {
 	auto tracks = cache.get_tracks(album.id);
 	if (!tracks.empty())
@@ -398,7 +398,7 @@ void TracksList::load(const lib::spt::album &album, const std::string &trackId)
 		});
 }
 
-void TracksList::setPlayingTrackItem(QTreeWidgetItem *item)
+void List::Tracks::setPlayingTrackItem(QTreeWidgetItem *item)
 {
 	if (playingTrackItem != nullptr)
 	{
@@ -414,14 +414,14 @@ void TracksList::setPlayingTrackItem(QTreeWidgetItem *item)
 	playingTrackItem = item;
 }
 
-void TracksList::setPlayingTrackItem(const std::string &itemId)
+void List::Tracks::setPlayingTrackItem(const std::string &itemId)
 {
 	setPlayingTrackItem(trackItems.find(itemId) != trackItems.end()
 		? trackItems[itemId]
 		: nullptr);
 }
 
-auto TracksList::getCurrent() -> const spt::Current &
+auto List::Tracks::getCurrent() -> const spt::Current &
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	return mainWindow->getCurrent();
