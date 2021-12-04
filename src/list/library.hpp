@@ -14,10 +14,10 @@ namespace List
 	Q_OBJECT
 
 	public:
-		Library(spt::Spotify &spotify, QWidget *parent);
+		Library(lib::spt::api &spotify, QWidget *parent);
 
 	private:
-		spt::Spotify &spotify;
+		lib::spt::api &spotify;
 
 		static constexpr const char *followedArtists = "Followed Artists";
 		static constexpr const char *newReleases = "New Releases";

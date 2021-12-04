@@ -19,9 +19,8 @@ namespace View
 		Q_OBJECT
 
 		public:
-			explicit SidePanel(spt::Spotify &spotify, const lib::settings &settings,
-				lib::cache &cache, const lib::http_client &httpClient,
-				QWidget *parent);
+			SidePanel(lib::spt::api &spotify, const lib::settings &settings, lib::cache &cache,
+				const lib::http_client &httpClient, QWidget *parent);
 
 			void openArtist(const std::string &artistId);
 			void openAudioFeatures(const lib::spt::track &track);
@@ -29,7 +28,9 @@ namespace View
 			void openSearch();
 			void closeSearch();
 
-			void addTab(QWidget *widget, const QString &icon, const QString &tabTitle, const QString &tabId);
+			void addTab(QWidget *widget, const QString &icon,
+				const QString &tabTitle, const QString &tabId);
+
 			void removeTab(int index);
 
 			void setTabText(QWidget *widget, const QString &text);
@@ -41,7 +42,7 @@ namespace View
 			QWidget *parent = nullptr;
 			QWidget *searchView = nullptr;
 
-			spt::Spotify &spotify;
+			lib::spt::api &spotify;
 			const lib::settings &settings;
 			lib::cache &cache;
 			const lib::http_client &httpClient;

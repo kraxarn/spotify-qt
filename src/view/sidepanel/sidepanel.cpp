@@ -1,6 +1,6 @@
 #include "view/sidepanel/sidepanel.hpp"
 
-View::SidePanel::SidePanel::SidePanel(spt::Spotify &spotify, const lib::settings &settings,
+View::SidePanel::SidePanel::SidePanel(lib::spt::api &spotify, const lib::settings &settings,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
 	: QDockWidget(parent),
 	parent(parent),

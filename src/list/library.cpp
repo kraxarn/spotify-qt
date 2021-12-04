@@ -1,7 +1,7 @@
 #include "list/library.hpp"
 #include "mainwindow.hpp"
 
-List::Library::Library(spt::Spotify &spotify, QWidget *parent)
+List::Library::Library(lib::spt::api &spotify, QWidget *parent)
 	: QTreeWidget(parent),
 	spotify(spotify)
 {
