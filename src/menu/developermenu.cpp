@@ -98,7 +98,7 @@ auto DeveloperMenu::dialogMenu() -> QMenu *
 	std::vector<QDialog *> dialogs = {
 		new Dialog::DeviceSelect({}, mainWindow),
 		new Dialog::OpenLink("/", LinkType::Path, mainWindow),
-		new SetupDialog(settings, mainWindow),
+		new Dialog::Setup(settings, mainWindow),
 		new TracksCacheDialog(cache, mainWindow),
 		new WhatsNewDialog(settings, httpClient, mainWindow),
 	};

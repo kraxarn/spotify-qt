@@ -5,7 +5,7 @@
 #include <QCoreApplication>
 
 #include "mainwindow.hpp"
-#include "dialog/setupdialog.hpp"
+#include "dialog/setup.hpp"
 
 #ifdef USE_KCRASH
 #include <kcrash.h>
@@ -78,7 +78,7 @@ auto main(int argc, char *argv[]) -> int
 	if (settings.account.refresh_token.empty()
 		|| parser.isSet("reset-credentials"))
 	{
-		SetupDialog dialog(settings);
+		Dialog::Setup dialog(settings, nullptr);
 		if (dialog.exec() == QDialog::Rejected)
 		{
 			return 0;

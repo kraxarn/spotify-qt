@@ -2,7 +2,7 @@
 
 #include "dialog/deviceselect.hpp"
 #include "dialog/openlink.hpp"
-#include "dialog/setupdialog.hpp"
+#include "dialog/setup.hpp"
 #include "dialog/trackscachedialog.hpp"
 #include "dialog/whatsnewdialog.hpp"
 #include "util/icon.hpp"

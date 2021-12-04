@@ -1,6 +1,6 @@
-#include "setupdialog.hpp"
+#include "dialog/setup.hpp"
 
-SetupDialog::SetupDialog(lib::settings &settings, QWidget *parent)
+Dialog::Setup::Setup(lib::settings &settings, QWidget *parent)
 	: QDialog(parent),
 	settings(settings)
 {
@@ -35,16 +35,16 @@ SetupDialog::SetupDialog(lib::settings &settings, QWidget *parent)
 	// Add buttons
 	auto *cancelButton = new QPushButton("Cancel");
 	QAbstractButton::connect(cancelButton, &QAbstractButton::clicked,
-		this, &SetupDialog::cancel);
+		this, &Dialog::Setup::cancel);
 
 	auto *dashboardButton = new QPushButton("Spotify Dashboard");
 	QAbstractButton::connect(dashboardButton, &QAbstractButton::clicked,
-		this, &SetupDialog::spotifyDashboard);
+		this, &Dialog::Setup::spotifyDashboard);
 
 	auto *authButton = new QPushButton("Authenticate");
 	server = nullptr;
 	QAbstractButton::connect(authButton, &QAbstractButton::clicked,
-		this, &SetupDialog::authenticate);
+		this, &Dialog::Setup::authenticate);
 
 	auto *buttonBox = new QHBoxLayout();
 	buttonBox->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
@@ -55,23 +55,23 @@ SetupDialog::SetupDialog(lib::settings &settings, QWidget *parent)
 	setLayout(mainLayout);
 }
 
-SetupDialog::~SetupDialog()
+Dialog::Setup::~Setup()
 {
 	delete auth;
 }
 
-void SetupDialog::cancel(bool /*checked*/)
+void Dialog::Setup::cancel(bool /*checked*/)
 {
 	reject();
 }
 
-void SetupDialog::spotifyDashboard(bool /*checked*/)
+void Dialog::Setup::spotifyDashboard(bool /*checked*/)
 {
 	QString url("https://developer.spotify.com/dashboard/applications");
 	UrlUtils::open(url, LinkType::Web, this);
 }
 
-void SetupDialog::authenticate(bool /*checked*/)
+void Dialog::Setup::authenticate(bool /*checked*/)
 {
 	clientIdText = clientId->text().trimmed();
 	clientSecretText = clientSecret->text().trimmed();
@@ -92,13 +92,13 @@ void SetupDialog::authenticate(bool /*checked*/)
 			return;
 		}
 		QTcpServer::connect(server, &QTcpServer::newConnection,
-			this, &SetupDialog::newServerConnection);
+			this, &Dialog::Setup::newServerConnection);
 	}
 	auto url = lib::qt::spt::auth::url(clientIdText, redirect);
 	UrlUtils::open(url, LinkType::Web, this);
 }
 
-void SetupDialog::newServerConnection()
+void Dialog::Setup::newServerConnection()
 {
 	// Read
 	auto *socket = server->nextPendingConnection();
