@@ -1,7 +1,5 @@
 #pragma once
 
-#include "mainwindow.hpp"
-#include "spotify/spotify.hpp"
 #include "logview.hpp"
 #include "lib/qt/systeminfo.hpp"
 

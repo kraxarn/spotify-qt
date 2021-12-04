@@ -4,6 +4,7 @@
 #include "menu/songmenu.hpp"
 
 #include <QLabel>
+#include <QVBoxLayout>
 
 namespace View
 {

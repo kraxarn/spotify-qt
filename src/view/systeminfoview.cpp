@@ -1,4 +1,5 @@
 #include "systeminfoview.hpp"
+#include "mainwindow.hpp"
 
 SystemInfoView::SystemInfoView(QWidget *parent)
 	: QWidget(parent)

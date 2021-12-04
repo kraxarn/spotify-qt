@@ -1,8 +1,6 @@
 #pragma once
 
-#include "lib/spotify/playlist.hpp"
-#include "lib/spotify/playlistdetails.hpp"
-#include "spotify/spotify.hpp"
+#include "lib/spotify/api.hpp"
 
 #include <QCheckBox>
 #include <QDialog>
@@ -13,6 +11,7 @@
 #include <QPushButton>
 #include <QTextEdit>
 #include <QVBoxLayout>
+#include <QLineEdit>
 
 class PlaylistEditDialog: public QDialog
 {

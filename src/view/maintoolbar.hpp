@@ -3,7 +3,6 @@
 #include "lib/settings.hpp"
 
 #include "menu/mainmenu.hpp"
-#include "spotify/spotify.hpp"
 #include "util/icon.hpp"
 #include "widget/volumebutton.hpp"
 #include "widget/clickableslider.hpp"

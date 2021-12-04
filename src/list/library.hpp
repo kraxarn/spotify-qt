@@ -1,6 +1,7 @@
 #pragma once
 
-#include "spotify/spotify.hpp"
+#include "lib/spotify/api.hpp"
+
 #include "util/treeutils.hpp"
 #include "listitem/library.hpp"
 

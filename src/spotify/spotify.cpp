@@ -1,4 +1,4 @@
-#include "spotify.hpp"
+#include "spotify/spotify.hpp"
 
 using namespace spt;
 

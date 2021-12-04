@@ -1,10 +1,11 @@
 #pragma once
 
-#include "spotify/spotify.hpp"
-#include "util/icon.hpp"
+#include "lib/spotify/api.hpp"
 #include "lib/strings.hpp"
-#include "enum/datarole.hpp"
 #include "lib/cache.hpp"
+
+#include "util/icon.hpp"
+#include "enum/datarole.hpp"
 
 #include <utility>
 
