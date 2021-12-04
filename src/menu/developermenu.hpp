@@ -1,7 +1,7 @@
 #pragma once
 
 #include "dialog/deviceselect.hpp"
-#include "dialog/openlinkdialog.hpp"
+#include "dialog/openlink.hpp"
 #include "dialog/setupdialog.hpp"
 #include "dialog/trackscachedialog.hpp"
 #include "dialog/whatsnewdialog.hpp"

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "enum/linktype.hpp"
-#include "dialog/openlinkdialog.hpp"
+#include "dialog/openlink.hpp"
 
 #include <QString>
 #include <QWidget>

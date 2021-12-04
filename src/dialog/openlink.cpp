@@ -1,6 +1,6 @@
-#include "openlinkdialog.hpp"
+#include "dialog/openlink.hpp"
 
-OpenLinkDialog::OpenLinkDialog(const QString &link, LinkType linkType, QWidget *parent)
+Dialog::OpenLink::OpenLink(const QString &link, LinkType linkType, QWidget *parent)
 	: QDialog(parent),
 	linkType(linkType)
 {
@@ -33,7 +33,7 @@ OpenLinkDialog::OpenLinkDialog(const QString &link, LinkType linkType, QWidget *
 	layout->addWidget(buttons);
 }
 
-auto OpenLinkDialog::titleText() -> QString
+auto Dialog::OpenLink::titleText() -> QString
 {
 	return QString("A default %1 browser could not be found. "
 				   "Please try copying and pasting the following link in a %1 browser manually.")

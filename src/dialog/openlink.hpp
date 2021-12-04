@@ -11,15 +11,18 @@
 #include <QTextEdit>
 #include <QVBoxLayout>
 
-class OpenLinkDialog: public QDialog
+namespace Dialog
 {
-Q_OBJECT
+	class OpenLink: public QDialog
+	{
+	Q_OBJECT
 
-public:
-	OpenLinkDialog(const QString &link, LinkType linkType, QWidget *parent = nullptr);
+	public:
+		OpenLink(const QString &link, LinkType linkType, QWidget *parent);
 
-private:
-	LinkType linkType;
+	private:
+		LinkType linkType;
 
-	auto titleText() -> QString;
-};
+		auto titleText() -> QString;
+	};
+}

@@ -4,7 +4,7 @@ void UrlUtils::open(const QString &url, LinkType linkType, QWidget *parent)
 {
 	if (!QDesktopServices::openUrl(QUrl(url)))
 	{
-		OpenLinkDialog(url, linkType, parent).exec();
+		Dialog::OpenLink(url, linkType, parent).exec();
 	}
 }
 
