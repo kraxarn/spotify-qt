@@ -190,6 +190,6 @@ void MainMenu::onOpenSettings(bool /*checked*/)
 {
 	auto *parent = MainWindow::find(parentWidget());
 
-	SettingsDialog dialog(settings, cache, httpClient, parent);
+	Dialog::Settings dialog(settings, cache, httpClient, parent);
 	dialog.exec();
 }

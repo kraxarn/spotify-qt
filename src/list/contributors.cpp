@@ -52,7 +52,7 @@ void List::Contributors::onItemDoubleClicked(QListWidgetItem *item)
 	}
 
 	const auto url = item->data(urlRole).toString();
-	auto *parent = Parent::findWidget<SettingsDialog>(parentWidget());
+	auto *parent = Parent::findWidget<Dialog::Settings>(parentWidget());
 	if (parent != nullptr)
 	{
 		UrlUtils::open(url, LinkType::Web, parent);

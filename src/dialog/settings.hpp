@@ -36,22 +36,25 @@
 #include <QStyleFactory>
 #include <QVBoxLayout>
 
-class SettingsDialog: public QDialog
+namespace Dialog
 {
-Q_OBJECT
+	class Settings: public QDialog
+	{
+	Q_OBJECT
 
-public:
-	SettingsDialog(lib::settings &settings, lib::cache &cache,
-		const lib::http_client &httpClient, QWidget *parent);
+	public:
+		Settings(lib::settings &settings, lib::cache &cache,
+			const lib::http_client &httpClient, QWidget *parent);
 
-private:
-	void categoryChanged(int row);
-	auto applySettings() -> bool;
+	private:
+		void categoryChanged(int row);
+		auto applySettings() -> bool;
 
-	lib::settings &settings;
+		lib::settings &settings;
 
-	QListWidget *categories = nullptr;
-	QStackedWidget *stack = nullptr;
+		QListWidget *categories = nullptr;
+		QStackedWidget *stack = nullptr;
 
-	QList<SettingsPage::Base *> pages;
-};
+		QList<SettingsPage::Base *> pages;
+	};
+}

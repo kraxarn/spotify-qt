@@ -1,6 +1,6 @@
-#include "settingsdialog.hpp"
+#include "dialog/settings.hpp"
 
-SettingsDialog::SettingsDialog(lib::settings &settings, lib::cache &cache,
+Dialog::Settings::Settings(lib::settings &settings, lib::cache &cache,
 	const lib::http_client &httpClient, QWidget *parent)
 	: QDialog(parent),
 	settings(settings)
@@ -30,7 +30,7 @@ SettingsDialog::SettingsDialog(lib::settings &settings, lib::cache &cache,
 	categories->setCurrentRow(0);
 	categories->setMaximumWidth(160);
 	QListWidget::connect(categories, &QListWidget::currentRowChanged,
-		this, &SettingsDialog::categoryChanged);
+		this, &Dialog::Settings::categoryChanged);
 	mainLayout->addWidget(categories);
 
 	// Side layout
@@ -68,7 +68,7 @@ SettingsDialog::SettingsDialog(lib::settings &settings, lib::cache &cache,
 	resize(620, 400);
 }
 
-auto SettingsDialog::applySettings() -> bool
+auto Dialog::Settings::applySettings() -> bool
 {
 	// Check all pages
 	for (auto &page: pages)
@@ -85,7 +85,7 @@ auto SettingsDialog::applySettings() -> bool
 	return true;
 }
 
-void SettingsDialog::categoryChanged(int row)
+void Dialog::Settings::categoryChanged(int row)
 {
 	stack->setCurrentIndex(row);
 }

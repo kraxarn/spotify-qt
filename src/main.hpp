@@ -10,7 +10,7 @@
 #include "lib/crash/crashhandler.hpp"
 
 #include "spotifyclient/runner.hpp"
-#include "dialog/settingsdialog.hpp"
+#include "dialog/settings.hpp"
 #include "dialog/splashdialog.hpp"
 #include "dialog/whatsnewdialog.hpp"
 #include "list/library.hpp"
