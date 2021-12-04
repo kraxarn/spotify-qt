@@ -35,3 +35,10 @@ At least in practise. A lot of older code doesn't follow this.
 |        | util/         | Various utilities. |
 |        | view/         | Various views, usually not reused. |
 |        | widget/       | Other various custom widgets, can be reused. |
+
+## Namespaces
+To better scope different parts of the UI, most classes are scoped to their respective directories,
+following a similar naming scheme, except starting with an upper-case letter. For example,
+all classes in the `dialog/` should be in a `Dialog` namespace. The only exception to this is
+classes in the `util/`, `view/` and `widget/` folders. If those folders contain sub-folders 
+however, the namespace should reflect the name of the sub-folder.
