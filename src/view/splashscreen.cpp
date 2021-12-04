@@ -1,6 +1,6 @@
-#include "splashdialog.hpp"
+#include "view/splashscreen.hpp"
 
-SplashDialog::SplashDialog()
+SplashScreen::SplashScreen()
 {
 	QPixmap background(104, 104);
 	background.fill(QColor::fromRgb(0x4caf50));
@@ -14,7 +14,7 @@ SplashDialog::SplashDialog()
 	setPixmap(QPixmap::fromImage(image));
 }
 
-void SplashDialog::showMessage(const QString &message)
+void SplashScreen::showMessage(const QString &message)
 {
 	emit QSplashScreen::showMessage(message,
 		Qt::AlignBottom, QColor::fromRgb(0x212121));

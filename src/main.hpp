@@ -11,7 +11,7 @@
 
 #include "spotifyclient/runner.hpp"
 #include "dialog/settings.hpp"
-#include "dialog/splashdialog.hpp"
+#include "view/splashscreen.hpp"
 #include "dialog/whatsnewdialog.hpp"
 #include "list/library.hpp"
 #include "list/playlist.hpp"

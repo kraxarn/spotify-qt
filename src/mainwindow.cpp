@@ -8,7 +8,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	lib::crash_handler::set_cache(cache);
 
 	// Splash
-	SplashDialog splash;
+	SplashScreen splash;
 	splash.show();
 	splash.showMessage("Please wait...");
 

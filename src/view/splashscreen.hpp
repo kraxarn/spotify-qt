@@ -7,12 +7,12 @@
 #include <QPixmap>
 #include <QPainter>
 
-class SplashDialog: public QSplashScreen
+class SplashScreen: public QSplashScreen
 {
 Q_OBJECT
 
 public:
-	SplashDialog();
+	SplashScreen();
 
 	void showMessage(const QString &message);
 };
