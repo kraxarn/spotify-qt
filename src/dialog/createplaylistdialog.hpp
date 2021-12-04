@@ -14,9 +14,11 @@ public:
 	auto playlistName() -> std::string;
 	auto playlistDescription() -> std::string;
 	auto playlistPublic() -> bool;
+	auto playlistCollaborative() -> bool;
 
 private:
 	QLineEdit *name_editfield;
 	QLineEdit *description_editfield;
 	QCheckBox *public_checkbox;
+	QCheckBox *collaborative_checkbox;
 };

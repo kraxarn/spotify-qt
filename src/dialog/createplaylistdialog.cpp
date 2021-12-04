@@ -19,6 +19,7 @@ CreatePlaylistDialog::CreatePlaylistDialog(QWidget *parent)
 	name_editfield = new QLineEdit;
 	description_editfield = new QLineEdit;
 	public_checkbox = new QCheckBox;
+	collaborative_checkbox = new QCheckBox;
 
 	name_editfield->setPlaceholderText("Playlist name");
 	description_editfield->setPlaceholderText("Playlist description");
@@ -26,6 +27,7 @@ CreatePlaylistDialog::CreatePlaylistDialog(QWidget *parent)
 	formsLayout->addRow("Name", name_editfield);
 	formsLayout->addRow("Description", description_editfield);
 	formsLayout->addRow("Public", public_checkbox);
+	formsLayout->addRow("Collaborative", collaborative_checkbox);
 
 	layout->addWidget(formsWidget);
 
@@ -65,4 +67,9 @@ auto CreatePlaylistDialog::playlistDescription() -> std::string
 auto CreatePlaylistDialog::playlistPublic() -> bool
 {
 	return public_checkbox->isChecked();
+}
+
+auto CreatePlaylistDialog::playlistCollaborative() -> bool
+{
+	return collaborative_checkbox->isChecked();
 }

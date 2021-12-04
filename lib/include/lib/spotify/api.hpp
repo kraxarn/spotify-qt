@@ -229,7 +229,8 @@ namespace lib
 			//region Playlists
 
 			void create_playlist(const std::string &name, const std::string &description,
-				const bool is_public, lib::callback<lib::spt::playlist> &callback);
+				const bool is_public, bool is_collaborative,
+				lib::callback<lib::spt::playlist> &callback);
 
 			void playlists(lib::callback<std::vector<lib::spt::playlist>> &callback);
 

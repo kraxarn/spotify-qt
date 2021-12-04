@@ -298,6 +298,7 @@ void SongMenu::addToNewPlaylist()
 		create_playlist_dialog->playlistName(),
 		create_playlist_dialog->playlistDescription(),
 		create_playlist_dialog->playlistPublic(),
+		create_playlist_dialog->playlistCollaborative(),
 		[this] (lib::spt::playlist playlist)
 		{
 			auto& playlist_id = playlist.id;

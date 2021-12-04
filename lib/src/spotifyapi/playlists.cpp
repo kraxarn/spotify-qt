@@ -12,12 +12,13 @@ using namespace lib::spt;
 
 void api::create_playlist(const std::string &name,
 	const std::string &description, const bool is_public,
-	lib::callback<lib::spt::playlist> &callback)
+	const bool is_collaborative, lib::callback<lib::spt::playlist> &callback)
 {
 	post(lib::fmt::format("me/playlists"), {
 			{"name", name},
 			{"description", description},
-			{"public", is_public}
+			{"public", is_public},
+			{"collaborative", is_collaborative},
 		}, callback);
 }
 
