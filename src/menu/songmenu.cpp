@@ -288,17 +288,17 @@ auto SongMenu::getTrackUrl() const -> QString
 
 void SongMenu::addToNewPlaylist()
 {
-	auto *create_playlist_dialog = new CreatePlaylistDialog(this);
-	create_playlist_dialog->exec();
+	CreatePlaylistDialog create_playlist_dialog {this};
+	create_playlist_dialog.exec();
 
-	if (create_playlist_dialog->result() == QDialog::Rejected)
+	if (create_playlist_dialog.result() == QDialog::Rejected)
 		return;
 
 	spotify.create_playlist(
-		create_playlist_dialog->playlistName(),
-		create_playlist_dialog->playlistDescription(),
-		create_playlist_dialog->playlistPublic(),
-		create_playlist_dialog->playlistCollaborative(),
+		create_playlist_dialog.playlistName(),
+		create_playlist_dialog.playlistDescription(),
+		create_playlist_dialog.playlistPublic(),
+		create_playlist_dialog.playlistCollaborative(),
 		[this] (lib::spt::playlist playlist)
 		{
 			auto& playlist_id = playlist.id;
