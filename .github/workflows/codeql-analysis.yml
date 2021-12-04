@@ -27,7 +27,9 @@ jobs:
           languages: 'cpp'
 
       - name: Install dependencies
-        run: sudo apt install qt5-default libqt5svg5-dev -y
+        run: |
+          sudo apt update
+          sudo apt install qt5-default libqt5svg5-dev -y
 
       - name: Autobuild
         uses: github/codeql-action/autobuild@v1
