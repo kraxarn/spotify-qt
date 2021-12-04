@@ -302,6 +302,9 @@ void SongMenu::addToNewPlaylist()
 		{
 			auto& playlist_id = playlist.id;
 			performAddToPlaylist(playlist_id);
+
+			auto *mainWindow = MainWindow::find(parentWidget());
+			mainWindow->refreshPlaylists();
 		});
 }
 
