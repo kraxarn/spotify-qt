@@ -379,7 +379,14 @@ namespace lib
 			/**
 			 * POST request
 			 * @param url URL to request
+			 * @param json JSON body or null if no body
 			 * @param callback Error message, or empty if none
+			 */
+			void post(const std::string &url, const nlohmann::json &json,
+				lib::callback<nlohmann::json> &callback);
+
+			/**
+			 * Convenience method for POST request with no body
 			 */
 			void post(const std::string &url, lib::callback<std::string> &callback);
 
