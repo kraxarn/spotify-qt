@@ -3,6 +3,7 @@
 #include <QFormLayout>
 #include <QDialogButtonBox>
 #include <QPushButton>
+#include <QMessageBox>
 
 CreatePlaylistDialog::CreatePlaylistDialog(QWidget *parent)
 	: QDialog(parent)
@@ -11,15 +12,20 @@ CreatePlaylistDialog::CreatePlaylistDialog(QWidget *parent)
 	setLayout(layout);
 	setWindowTitle("Create new playlist");
 
-	auto *formsWidget = new QWidget();
-	auto *formsLayout = new QFormLayout(this);
+	auto *formsWidget = new QWidget;
+	auto *formsLayout = new QFormLayout;
 	formsWidget->setLayout(formsLayout);
 
 	name_editfield = new QLineEdit;
 	description_editfield = new QLineEdit;
+	public_checkbox = new QCheckBox;
+
+	name_editfield->setPlaceholderText("Playlist name");
+	description_editfield->setPlaceholderText("Playlist description");
 
 	formsLayout->addRow("Name", name_editfield);
 	formsLayout->addRow("Description", description_editfield);
+	formsLayout->addRow("Public", public_checkbox);
 
 	layout->addWidget(formsWidget);
 
@@ -28,6 +34,13 @@ CreatePlaylistDialog::CreatePlaylistDialog(QWidget *parent)
 	auto *okButton = buttons->addButton(QDialogButtonBox::Ok);
 	QPushButton::connect(okButton, &QPushButton::clicked, [this](bool /*checked*/)
 	{
+		if (name_editfield->text().isEmpty()) {
+			QMessageBox::information(
+				this, "Information",
+				"Please enter a playlist name. It may not be empty.");
+			return;
+		}
+
 		accept();
 	});
 
@@ -47,4 +60,9 @@ auto CreatePlaylistDialog::playlistName() -> std::string
 auto CreatePlaylistDialog::playlistDescription() -> std::string
 {
 	return description_editfield->text().toStdString();
+}
+
+auto CreatePlaylistDialog::playlistPublic() -> bool
+{
+	return public_checkbox->isChecked();
 }

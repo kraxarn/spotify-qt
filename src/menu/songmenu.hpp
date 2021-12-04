@@ -51,10 +51,12 @@ private:
 	QAction *toggleLiked = nullptr;
 
 	auto getTrackUrl() const -> QString;
+	auto performAddToPlaylist(std::string& playlistid) const -> void;
 
 	void like(bool checked);
 	void addToQueue(bool checked);
 	void addToPlaylist(QAction *action);
+	void addToNewPlaylist();
 	void remFromPlaylist(bool checked);
 	void openTrackFeatures(bool checked);
 	void openLyrics(bool checked);

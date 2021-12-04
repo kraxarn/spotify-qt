@@ -2,6 +2,7 @@
 
 #include <QDialog>
 #include <QLineEdit>
+#include <QCheckBox>
 
 class CreatePlaylistDialog : public QDialog
 {
@@ -12,8 +13,10 @@ public:
 
 	auto playlistName() -> std::string;
 	auto playlistDescription() -> std::string;
+	auto playlistPublic() -> bool;
 
 private:
 	QLineEdit *name_editfield;
 	QLineEdit *description_editfield;
+	QCheckBox *public_checkbox;
 };
