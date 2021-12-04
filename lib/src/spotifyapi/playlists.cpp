@@ -10,6 +10,17 @@ using namespace lib::spt;
 // playlists/{playlist_id}/tracks
 // playlists/{playlist_id}/images
 
+void api::create_playlist(const std::string &name,
+	const std::string &description, const bool is_public,
+	lib::callback<lib::spt::playlist> &callback)
+{
+	post(lib::fmt::format("me/playlists"), {
+			{"name", name},
+			{"description", description},
+			{"public", is_public}
+		}, callback);
+}
+
 void api::playlists(lib::callback<std::vector<lib::spt::playlist>> &callback)
 {
 	get_items("me/playlists?limit=50", callback);
