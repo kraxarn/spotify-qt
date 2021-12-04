@@ -171,7 +171,7 @@ void Menu::Playlist::onEdit(bool /*checked*/)
 		editDialog->deleteLater();
 	}
 
-	editDialog = new PlaylistEditDialog(spotify, playlist, -1,
+	editDialog = new Dialog::PlaylistEdit(spotify, playlist, -1,
 		MainWindow::find(parentWidget()));
 
 	if (editDialog->exec() == QDialog::Accepted)

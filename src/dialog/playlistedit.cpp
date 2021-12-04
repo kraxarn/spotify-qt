@@ -1,6 +1,6 @@
-#include "playlisteditdialog.hpp"
+#include "dialog/playlistedit.hpp"
 
-PlaylistEditDialog::PlaylistEditDialog(lib::spt::api &spotify, const lib::spt::playlist &playlist,
+Dialog::PlaylistEdit::PlaylistEdit(lib::spt::api &spotify, const lib::spt::playlist &playlist,
 	int selectedIndex, QWidget *parent)
 	: QDialog(parent),
 	spotify(spotify),
@@ -51,17 +51,18 @@ PlaylistEditDialog::PlaylistEditDialog(lib::spt::api &spotify, const lib::spt::p
 	// Dialog buttons
 	auto *buttons = new QDialogButtonBox(this);
 	buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+
 	QDialogButtonBox::connect(buttons, &QDialogButtonBox::accepted,
-		this, &PlaylistEditDialog::yes);
+		this, &Dialog::PlaylistEdit::yes);
 
 	QDialogButtonBox::connect(buttons, &QDialogButtonBox::rejected,
-		this, &PlaylistEditDialog::no);
+		this, &Dialog::PlaylistEdit::no);
 
 	layout->addWidget(buttons);
 	setLayout(layout);
 }
 
-void PlaylistEditDialog::yes()
+void Dialog::PlaylistEdit::yes()
 {
 	lib::spt::playlist_details pl(playlist);
 	pl.name = name->text().toStdString();
@@ -83,7 +84,7 @@ void PlaylistEditDialog::yes()
 	});
 }
 
-void PlaylistEditDialog::no()
+void Dialog::PlaylistEdit::no()
 {
 	reject();
 }
