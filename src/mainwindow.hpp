@@ -69,7 +69,7 @@ public:
 	std::string getSptContext() const;
 	lib::spt::playback &getCurrentPlayback();
 	const spt::Current &getCurrent();
-	auto getClientHandler() -> const spt::ClientHandler *;
+	auto getSpotifyRunner() -> const SpotifyClient::Runner *;
 	void resetLibraryPlaylist() const;
 
 #ifdef USE_DBUS
@@ -80,27 +80,22 @@ protected:
 	void closeEvent(QCloseEvent *event) override;
 
 private:
-	// Qt Widgets
 	MainContent *mainContent = nullptr;
 	MainToolBar *toolBar = nullptr;
 	QList<QSizeGrip *> resizeGrips;
 
-	// spt
-	spt::ClientHandler *sptClient = nullptr;
+	SpotifyClient::Runner *spotifyRunner = nullptr;
+
 	spt::Spotify *spotify = nullptr;
 	spt::Current current;
 
-	// lib
 	lib::settings &settings;
 	lib::paths &paths;
 	lib::json_cache cache;
 	lib::spt::user currentUser;
 	lib::http_client *httpClient = nullptr;
 
-	// Non-Widget Qt
 	QNetworkAccessManager *network = nullptr;
-
-	// Other
 	TrayIcon *trayIcon = nullptr;
 	int refreshCount = -1;
 	bool stateValid = true;

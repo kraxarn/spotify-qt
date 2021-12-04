@@ -363,8 +363,8 @@ auto MainWindow::startClient() -> bool
 {
 	stopClient();
 
-	sptClient = new spt::ClientHandler(settings, paths, this);
-	auto status = sptClient->start();
+	spotifyRunner = new SpotifyClient::Runner(settings, paths, this);
+	auto status = spotifyRunner->start();
 	if (!status.isEmpty())
 	{
 		QMessageBox::warning(this, "Client error",
@@ -377,8 +377,8 @@ auto MainWindow::startClient() -> bool
 
 void MainWindow::stopClient()
 {
-	delete sptClient;
-	sptClient = nullptr;
+	delete spotifyRunner;
+	spotifyRunner = nullptr;
 }
 
 void MainWindow::openAudioFeaturesWidget(const lib::spt::track &track)
@@ -552,9 +552,9 @@ auto MainWindow::getCurrent() -> const spt::Current &
 	return current;
 }
 
-auto MainWindow::getClientHandler() -> const spt::ClientHandler *
+auto MainWindow::getSpotifyRunner() -> const SpotifyClient::Runner *
 {
-	return sptClient;
+	return spotifyRunner;
 }
 
 #ifdef USE_DBUS

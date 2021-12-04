@@ -3,9 +3,8 @@
 #include "settingspage/base.hpp"
 #include "lib/enum/audioquality.hpp"
 #include "util/icon.hpp"
-#include "client/clienthelper.hpp"
 #include "view/clienthandlerlogview.hpp"
-#include "client/clienthandler.hpp"
+#include "spotifyclient/runner.hpp"
 
 #include <QComboBox>
 #include <QGroupBox>
@@ -51,7 +50,7 @@ namespace SettingsPage
 		void restartClient(bool checked);
 		auto isClientRunning() const -> bool;
 
-		auto getClientHandler() const -> const spt::ClientHandler *;
+		auto getClientRunner() const -> const SpotifyClient::Runner *;
 		void setClientStatus(bool enabled, const QString &start, const QString &status);
 
 		auto spotify() -> QWidget *;

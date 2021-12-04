@@ -1,6 +1,6 @@
 #pragma once
 
-#include "client/clienthandler.hpp"
+#include "spotifyclient/runner.hpp"
 
 #include <QApplication>
 #include <QClipboard>

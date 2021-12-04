@@ -2,7 +2,7 @@
 
 #include "lib/spotify/api.hpp"
 
-#include "client/clienthelper.hpp"
+#include "spotifyclient/runner.hpp"
 #include "util/icon.hpp"
 
 #include <QMenu>

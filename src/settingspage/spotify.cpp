@@ -80,7 +80,7 @@ auto SettingsPage::Spotify::spotify() -> QWidget *
 
 auto SettingsPage::Spotify::isClientRunning() const -> bool
 {
-	const auto *clientHandler = getClientHandler();
+	const auto *clientHandler = getClientRunner();
 	return clientHandler != nullptr
 		&& clientHandler->isRunning();
 }
@@ -112,7 +112,7 @@ void SettingsPage::Spotify::restartClient(bool /*checked*/)
 			}
 			else
 			{
-				const auto *clientHandler = getClientHandler();
+				const auto *clientHandler = getClientRunner();
 				if (clientHandler != nullptr)
 				{
 					auto success = clientHandler->waitForStarted();
@@ -327,15 +327,17 @@ auto SettingsPage::Spotify::backends() -> QStringList
 	{
 		paths = new QtPaths(this);
 	}
-	return spt::ClientHandler(settings, *paths, this).availableBackends();
+
+	return SpotifyClient::Runner(settings, *paths, this)
+		.availableBackends();
 }
 
-auto SettingsPage::Spotify::getClientHandler() const -> const spt::ClientHandler *
+auto SettingsPage::Spotify::getClientRunner() const -> const SpotifyClient::Runner *
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	return mainWindow == nullptr
 		? nullptr
-		: mainWindow->getClientHandler();
+		: mainWindow->getSpotifyRunner();
 }
 
 void SettingsPage::Spotify::setClientStatus(bool enabled,

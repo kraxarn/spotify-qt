@@ -9,7 +9,7 @@
 #include "lib/qt/httpclient.hpp"
 #include "lib/crash/crashhandler.hpp"
 
-#include "client/clienthandler.hpp"
+#include "spotifyclient/runner.hpp"
 #include "dialog/settingsdialog.hpp"
 #include "dialog/splashdialog.hpp"
 #include "dialog/whatsnewdialog.hpp"

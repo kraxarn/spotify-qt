@@ -2,7 +2,8 @@
 
 #include "lib/enum/clienttype.hpp"
 #include "lib/settings.hpp"
-#include "clienthelper.hpp"
+
+#include "spotifyclient/clienthelper.hpp"
 #include "keyring/kwallet.hpp"
 
 #include <QDateTime>
@@ -12,20 +13,25 @@
 #include <QProcess>
 #include <QStringList>
 
-namespace spt
+namespace SpotifyClient
 {
-	class ClientHandler: public QObject
+	/**
+	 * Manages any running spotify client instance
+	 */
+	class Runner: public QObject
 	{
 	Q_OBJECT
 
 	public:
-		ClientHandler(const lib::settings &settings, const lib::paths &paths, QWidget *parent);
-		~ClientHandler() override;
+		Runner(const lib::settings &settings, const lib::paths &paths, QWidget *parent);
+		~Runner() override;
 
 		auto start() -> QString;
 		auto waitForStarted() const -> bool;
+
 		/** Wrapper for spt::ClientHelper::availableBackends */
 		auto availableBackends() -> QStringList;
+
 		static auto getLog() -> const QList<QPair<QDateTime, QString>> &;
 		auto isRunning() const -> bool;
 
@@ -40,6 +46,7 @@ namespace spt
 
 		/** Wrapper for spt::ClientHelper::supportsPulse */
 		auto supportsPulse() -> bool;
+
 		void readyRead() const;
 		void readyError() const;
 		static void logOutput(const QByteArray &output);

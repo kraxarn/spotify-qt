@@ -1,9 +1,9 @@
-#include "clienthandler.hpp"
+#include "spotifyclient/runner.hpp"
 #include "mainwindow.hpp"
 
-QList<QPair<QDateTime, QString>> spt::ClientHandler::log;
+QList<QPair<QDateTime, QString>> SpotifyClient::Runner::log;
 
-spt::ClientHandler::ClientHandler(const lib::settings &settings,
+SpotifyClient::Runner::Runner(const lib::settings &settings,
 	const lib::paths &paths, QWidget *parent)
 	: QObject(parent),
 	parentWidget(parent),
@@ -15,7 +15,7 @@ spt::ClientHandler::ClientHandler(const lib::settings &settings,
 	clientType = spt::ClientHelper::getClientType(path);
 }
 
-spt::ClientHandler::~ClientHandler()
+SpotifyClient::Runner::~Runner()
 {
 	if (process != nullptr)
 	{
@@ -23,7 +23,7 @@ spt::ClientHandler::~ClientHandler()
 	}
 }
 
-auto spt::ClientHandler::start() -> QString
+auto SpotifyClient::Runner::start() -> QString
 {
 	// Don't start if already running
 	if (!settings.spotify.always_start && isRunning())
@@ -132,8 +132,11 @@ auto spt::ClientHandler::start() -> QString
 		arguments.append("--disable-discovery");
 	}
 
-	QProcess::connect(process, &QProcess::readyReadStandardOutput, this, &ClientHandler::readyRead);
-	QProcess::connect(process, &QProcess::readyReadStandardError, this, &ClientHandler::readyError);
+	QProcess::connect(process, &QProcess::readyReadStandardOutput,
+		this, &Runner::readyRead);
+
+	QProcess::connect(process, &QProcess::readyReadStandardError,
+		this, &Runner::readyError);
 
 	lib::log::debug("starting: {} {}", path.toStdString(),
 		arguments.join(' ').toStdString());
@@ -142,34 +145,35 @@ auto spt::ClientHandler::start() -> QString
 	return {};
 }
 
-auto spt::ClientHandler::waitForStarted() const -> bool
+auto SpotifyClient::Runner::waitForStarted() const -> bool
 {
 	if (process == nullptr)
 	{
 		return false;
 	}
+
 	constexpr int timeout = 3 * 1000;
 	return process->waitForStarted(timeout);
 }
 
-auto spt::ClientHandler::availableBackends() -> QStringList
+auto SpotifyClient::Runner::availableBackends() -> QStringList
 {
 	return spt::ClientHelper::availableBackends(path);
 }
 
-auto spt::ClientHandler::supportsPulse() -> bool
+auto SpotifyClient::Runner::supportsPulse() -> bool
 {
 	return spt::ClientHelper::supportsPulse(path);
 }
 
-auto spt::ClientHandler::isRunning() const -> bool
+auto SpotifyClient::Runner::isRunning() const -> bool
 {
 	return process == nullptr
 		? spt::ClientHelper::isRunning(path)
 		: process->isOpen();
 }
 
-void spt::ClientHandler::logOutput(const QByteArray &output)
+void SpotifyClient::Runner::logOutput(const QByteArray &output)
 {
 	for (auto &line: QString(output).split('\n'))
 	{
@@ -181,17 +185,17 @@ void spt::ClientHandler::logOutput(const QByteArray &output)
 	}
 }
 
-void spt::ClientHandler::readyRead() const
+void SpotifyClient::Runner::readyRead() const
 {
 	logOutput(process->readAllStandardOutput());
 }
 
-void spt::ClientHandler::readyError() const
+void SpotifyClient::Runner::readyError() const
 {
 	logOutput(process->readAllStandardError());
 }
 
-auto spt::ClientHandler::getLog() -> const QList<QPair<QDateTime, QString>> &
+auto SpotifyClient::Runner::getLog() -> const QList<QPair<QDateTime, QString>> &
 {
 	return log;
 }

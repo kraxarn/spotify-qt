@@ -17,7 +17,7 @@ ClientHandlerLogView::ClientHandlerLogView(QWidget *parent)
 void ClientHandlerLogView::showEvent(QShowEvent */*event*/)
 {
 	clear();
-	for (const auto &line : spt::ClientHandler::getLog())
+	for (const auto &line: SpotifyClient::Runner::getLog())
 	{
 		auto *item = new QTreeWidgetItem(this);
 		item->setText(0, line.first.time().toString());
@@ -34,7 +34,7 @@ void ClientHandlerLogView::menu(const QPoint &pos)
 		[](bool /*checked*/)
 		{
 			QStringList list;
-			for (const auto &line : spt::ClientHandler::getLog())
+			for (const auto &line: SpotifyClient::Runner::getLog())
 			{
 				list.append(QString("[%1] %2").arg(line.first.time().toString(),
 					line.second));
