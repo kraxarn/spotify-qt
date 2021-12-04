@@ -96,7 +96,7 @@ auto DeveloperMenu::dialogMenu() -> QMenu *
 	auto *mainWindow = MainWindow::find(parentWidget());
 
 	std::vector<QDialog *> dialogs = {
-		new DeviceSelectDialog({}, mainWindow),
+		new Dialog::DeviceSelect({}, mainWindow),
 		new OpenLinkDialog("/", LinkType::Path, mainWindow),
 		new SetupDialog(settings, mainWindow),
 		new TracksCacheDialog(cache, mainWindow),

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "dialog/deviceselectdialog.hpp"
+#include "dialog/deviceselect.hpp"
 #include "lib/enum/followtype.hpp"
 #include "lib/qt/httpclient.hpp"
 #include "lib/settings.hpp"

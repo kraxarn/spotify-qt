@@ -11,7 +11,7 @@ Spotify::Spotify(lib::settings &settings,
 void Spotify::select_device(const std::vector<lib::spt::device> &devices,
 	lib::callback<lib::spt::device> &callback)
 {
-	DeviceSelectDialog dialog(devices, dynamic_cast<QWidget *>(parent()));
+	Dialog::DeviceSelect dialog(devices, dynamic_cast<QWidget *>(parent()));
 
 	if (dialog.exec() == QDialog::Accepted)
 	{

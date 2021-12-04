@@ -1,6 +1,6 @@
 #pragma once
 
-#include "dialog/deviceselectdialog.hpp"
+#include "dialog/deviceselect.hpp"
 #include "dialog/openlinkdialog.hpp"
 #include "dialog/setupdialog.hpp"
 #include "dialog/trackscachedialog.hpp"

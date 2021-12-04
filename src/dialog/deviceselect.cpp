@@ -1,6 +1,6 @@
-#include "deviceselectdialog.hpp"
+#include "dialog/deviceselect.hpp"
 
-DeviceSelectDialog::DeviceSelectDialog(const std::vector<lib::spt::device> &devices,
+Dialog::DeviceSelect::DeviceSelect(const std::vector<lib::spt::device> &devices,
 	QWidget *parent)
 	: QDialog(parent),
 	devices(devices)
@@ -37,7 +37,7 @@ DeviceSelectDialog::DeviceSelectDialog(const std::vector<lib::spt::device> &devi
 	layout->addWidget(buttons);
 }
 
-auto DeviceSelectDialog::selectedDevice() -> lib::spt::device
+auto Dialog::DeviceSelect::selectedDevice() -> lib::spt::device
 {
 	if (list->selectedItems().isEmpty())
 	{
