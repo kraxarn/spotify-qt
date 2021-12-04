@@ -14,7 +14,7 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 	volume->setMaximum(maximum);
 	volume->setValue(settings.general.last_volume > minimum
 		? settings.general.last_volume
-		: static_cast<int>(spt::ClientHelper::getVolume() * 20.F));
+		: static_cast<int>(SpotifyClient::Helper::getVolume() * 20.F));
 
 	// Layout for volume slider
 	auto *volumeMenu = new QMenu(this);
@@ -38,7 +38,7 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 		// If using PulseAudio for volume control, update on every tick
 		QSlider::connect(volume, &QAbstractSlider::valueChanged, [](int value)
 		{
-			spt::ClientHelper::setVolume(static_cast<float>(value) * 0.05f);
+			SpotifyClient::Helper::setVolume(static_cast<float>(value) * 0.05f);
 		});
 	}
 	else

@@ -3,7 +3,7 @@
 #include "lib/enum/clienttype.hpp"
 #include "lib/settings.hpp"
 
-#include "spotifyclient/clienthelper.hpp"
+#include "spotifyclient/helper.hpp"
 #include "keyring/kwallet.hpp"
 
 #include <QDateTime>

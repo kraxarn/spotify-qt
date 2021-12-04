@@ -1,6 +1,6 @@
-#include "clienthelper.hpp"
+#include "spotifyclient/helper.hpp"
 
-auto spt::ClientHelper::clientExec(const QString &path, const QStringList &arguments) -> QString
+auto SpotifyClient::Helper::clientExec(const QString &path, const QStringList &arguments) -> QString
 {
 	// Check if it exists
 	QFileInfo file(path);
@@ -10,7 +10,7 @@ auto spt::ClientHelper::clientExec(const QString &path, const QStringList &argum
 	}
 
 	// Check if either client
-	if (getClientType(path) == lib::client_type::none)
+	if (clientType(path) == lib::client_type::none)
 	{
 		return {};
 	}
@@ -26,19 +26,19 @@ auto spt::ClientHelper::clientExec(const QString &path, const QStringList &argum
 	return process.readAllStandardOutput().trimmed();
 }
 
-auto spt::ClientHelper::availableBackends(const QString &path) -> QStringList
+auto SpotifyClient::Helper::availableBackends(const QString &path) -> QStringList
 {
 	QStringList items;
-	auto clientType = getClientType(path);
+	auto type = clientType(path);
 
-	if (clientType == lib::client_type::librespot)
+	if (type == lib::client_type::librespot)
 	{
 		auto result = clientExec(path, QStringList({
 			"--name", "",
 			"--backend", "?"
 		}));
 
-		for (auto &line : result.split('\n'))
+		for (auto &line: result.split('\n'))
 		{
 			if (!line.startsWith("-"))
 			{
@@ -49,13 +49,13 @@ auto spt::ClientHelper::availableBackends(const QString &path) -> QStringList
 				.trimmed());
 		}
 	}
-	else if (clientType == lib::client_type::spotifyd)
+	else if (type == lib::client_type::spotifyd)
 	{
 		auto result = clientExec(path, QStringList({
 			"--help",
 		}));
 
-		for (auto &line : result.split('\n'))
+		for (auto &line: result.split('\n'))
 		{
 			if (!line.contains("audio backend"))
 			{
@@ -74,42 +74,67 @@ auto spt::ClientHelper::availableBackends(const QString &path) -> QStringList
 	return items;
 }
 
-auto spt::ClientHelper::getClientType(const QString &path) -> lib::client_type
+auto SpotifyClient::Helper::clientType(const QString &path) -> lib::client_type
 {
 	auto baseName = QFileInfo(path).baseName().toLower();
 
-	return baseName == "spotifyd"
-		? lib::client_type::spotifyd
-		: baseName == "librespot"
-			? lib::client_type::librespot
-			: lib::client_type::none;
+	if (baseName == "spotifyd")
+	{
+		return lib::client_type::spotifyd;
+	}
+
+	if (baseName == "librespot")
+	{
+		return lib::client_type::librespot;
+	}
+
+	return lib::client_type::none;
 }
 
-auto spt::ClientHelper::supportsPulse(const QString &path) -> bool
+auto SpotifyClient::Helper::supportsPulse(const QString &path) -> bool
 {
-	return clientExec(path, getClientType(path) == lib::client_type::librespot
-		? QStringList({
+	auto type = clientType(path);
+	QStringList args;
+
+	if (type == lib::client_type::librespot)
+	{
+		args = QStringList{
 			"--name", "",
 			"--backend", "?"
-		}) : QStringList({
+		};
+	}
+	else if (type == lib::client_type::spotifyd)
+	{
+		args = QStringList{
 			"--help"
-		}))
+		};
+	}
+
+	return clientExec(path, args)
 		.contains("pulseaudio");
 }
 
-auto spt::ClientHelper::version(const QString &path) -> QString
+auto SpotifyClient::Helper::version(const QString &path) -> QString
 {
-	auto clientType = getClientType(path);
+	auto type = clientType(path);
 
-	return clientType == lib::client_type::spotifyd
-		? clientExec(path, {
+	if (type == lib::client_type::spotifyd)
+	{
+		return clientExec(path, {
 			"--version"
-		}) : clientType == lib::client_type::librespot
-			? "librespot"
-			: QString();
+		});
+	}
+
+	if (type == lib::client_type::librespot)
+	{
+		// librespot doesn't provide version information
+		return "librespot";
+	}
+
+	return {};
 }
 
-auto spt::ClientHelper::isRunning(const QString &path) -> bool
+auto SpotifyClient::Helper::running(const QString &path) -> bool
 {
 	if (path.isEmpty() || !QFile("/usr/bin/ps").exists())
 	{
@@ -123,7 +148,7 @@ auto spt::ClientHelper::isRunning(const QString &path) -> bool
 	return QString(out).contains(path);
 }
 
-auto spt::ClientHelper::getSinkInfo() -> QString
+auto SpotifyClient::Helper::sinkInfo() -> QString
 {
 	if (!QFileInfo::exists("/usr/bin/pactl"))
 	{
@@ -137,7 +162,7 @@ auto spt::ClientHelper::getSinkInfo() -> QString
 	});
 	process.waitForFinished();
 	auto sinks = QString(process.readAllStandardOutput()).split("Sink Input #");
-	for (auto &sink : sinks)
+	for (auto &sink: sinks)
 	{
 		if (sink.contains("Spotify"))
 		{
@@ -148,9 +173,9 @@ auto spt::ClientHelper::getSinkInfo() -> QString
 	return {};
 }
 
-auto spt::ClientHelper::getVolume() -> float
+auto SpotifyClient::Helper::getVolume() -> float
 {
-	auto sink = getSinkInfo();
+	auto sink = sinkInfo();
 	if (sink.isEmpty())
 	{
 		return 1.F;
@@ -163,7 +188,7 @@ auto spt::ClientHelper::getVolume() -> float
 	}
 
 	bool ok;
-	for (auto &p : sink.right(sink.length() - i).split(' '))
+	for (auto &p: sink.right(sink.length() - i).split(' '))
 	{
 		if (!p.endsWith('%'))
 		{
@@ -180,9 +205,9 @@ auto spt::ClientHelper::getVolume() -> float
 	return 1.F;
 }
 
-void spt::ClientHelper::setVolume(float value)
+void SpotifyClient::Helper::setVolume(float value)
 {
-	auto sink = getSinkInfo();
+	auto sink = sinkInfo();
 	if (sink.isEmpty())
 	{
 		return;

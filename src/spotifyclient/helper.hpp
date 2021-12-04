@@ -6,22 +6,25 @@
 #include <QFileInfo>
 #include <QProcess>
 
-namespace spt
+namespace SpotifyClient
 {
-	class ClientHelper
+	/**
+	 * Helper functions for interacting with a Spotify client
+	 */
+	class Helper
 	{
 	public:
 		static auto availableBackends(const QString &path) -> QStringList;
-		static auto getClientType(const QString &path) -> lib::client_type;
+		static auto clientType(const QString &path) -> lib::client_type;
 		static auto supportsPulse(const QString &path) -> bool;
 		static auto version(const QString &path) -> QString;
-		static auto isRunning(const QString &path) -> bool;
-		static auto getSinkInfo() -> QString;
+		static auto running(const QString &path) -> bool;
+		static auto sinkInfo() -> QString;
 		static auto getVolume() -> float;
 		static void setVolume(float value);
 
 	private:
-		ClientHelper() = default;
+		Helper() = default;
 
 		static auto clientExec(const QString &path, const QStringList &arguments) -> QString;
 	};

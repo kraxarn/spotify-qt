@@ -38,7 +38,8 @@ auto SettingsPage::Spotify::spotify() -> QWidget *
 	sptVersion = new QLabel("(no client provided)", this);
 	if (!settings.spotify.path.empty())
 	{
-		auto client = spt::ClientHelper::version(QString::fromStdString(settings.spotify.path));
+		const auto path = QString::fromStdString(settings.spotify.path);
+		const auto client = SpotifyClient::Helper::version(path);
 		sptVersion->setText(client);
 	}
 	sptVersion->setEnabled(false);
@@ -216,7 +217,7 @@ auto SettingsPage::Spotify::save() -> bool
 	// Check spotify client path
 	if (sptPath != nullptr && !sptPath->text().isEmpty())
 	{
-		auto client = spt::ClientHelper::version(sptPath->text());
+		auto client = SpotifyClient::Helper::version(sptPath->text());
 		if (client.isEmpty())
 		{
 			applyFail("spotifyd path");

@@ -12,7 +12,7 @@ SpotifyClient::Runner::Runner(const lib::settings &settings,
 {
 	path = QString::fromStdString(settings.spotify.path);
 	process = new QProcess(parent);
-	clientType = spt::ClientHelper::getClientType(path);
+	clientType = SpotifyClient::Helper::clientType(path);
 }
 
 SpotifyClient::Runner::~Runner()
@@ -158,18 +158,18 @@ auto SpotifyClient::Runner::waitForStarted() const -> bool
 
 auto SpotifyClient::Runner::availableBackends() -> QStringList
 {
-	return spt::ClientHelper::availableBackends(path);
+	return SpotifyClient::Helper::availableBackends(path);
 }
 
 auto SpotifyClient::Runner::supportsPulse() -> bool
 {
-	return spt::ClientHelper::supportsPulse(path);
+	return SpotifyClient::Helper::supportsPulse(path);
 }
 
 auto SpotifyClient::Runner::isRunning() const -> bool
 {
 	return process == nullptr
-		? spt::ClientHelper::isRunning(path)
+		? SpotifyClient::Helper::running(path)
 		: process->isOpen();
 }
 
