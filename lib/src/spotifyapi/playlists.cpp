@@ -14,7 +14,7 @@ void api::create_playlist(const std::string &name,
 	const std::string &description, const bool is_public,
 	const bool is_collaborative, lib::callback<lib::spt::playlist> &callback)
 {
-	post(lib::fmt::format("me/playlists"), {
+	post("me/playlists", {
 			{"name", name},
 			{"description", description},
 			{"public", is_public},
