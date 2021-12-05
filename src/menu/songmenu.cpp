@@ -1,7 +1,6 @@
 #include "songmenu.hpp"
 
 #include "mainwindow.hpp"
-#include "dialog/createplaylistdialog.hpp"
 
 SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 	const lib::cache &cache, QWidget *parent)
@@ -288,17 +287,19 @@ auto SongMenu::getTrackUrl() const -> QString
 
 void SongMenu::addToNewPlaylist()
 {
-	CreatePlaylistDialog create_playlist_dialog {this};
-	create_playlist_dialog.exec();
+	bool ok;
+	auto playlistName = QInputDialog::getText(
+		this, "New playlist", "Playlist name",
+		QLineEdit::Normal, "New playlist", &ok);
 
-	if (create_playlist_dialog.result() == QDialog::Rejected)
+	if (!ok)
+	{
 		return;
+	}
 
 	spotify.create_playlist(
-		create_playlist_dialog.playlistName(),
-		create_playlist_dialog.playlistDescription(),
-		create_playlist_dialog.playlistPublic(),
-		create_playlist_dialog.playlistCollaborative(),
+		playlistName.toStdString(), /* description */{},
+		/* public */false, /* collaborative */false,
 		[this] (lib::spt::playlist playlist)
 		{
 			auto& playlist_id = playlist.id;
