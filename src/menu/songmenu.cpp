@@ -79,7 +79,13 @@ SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 
 	// Add to playlist
 	addSeparator();
+
 	auto *addPlaylist = addMenu(Icon::get("list-add"), "Add to playlist");
+
+	auto *new_playlist = addPlaylist->addAction("New playlist");
+	new_playlist->setData({});
+
+	addPlaylist->addSeparator();
 
 	auto *playlistItem = mainWindow->getCurrentPlaylistItem();
 	if (playlistItem != nullptr)
@@ -100,6 +106,7 @@ SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 		auto *action = addPlaylist->addAction(QString::fromStdString(playlist.name));
 		action->setData(QString::fromStdString(playlist.id));
 	}
+
 	QMenu::connect(addPlaylist, &QMenu::triggered, this, &SongMenu::addToPlaylist);
 
 	// Remove from playlist
@@ -181,51 +188,15 @@ void SongMenu::addToQueue(bool /*checked*/)
 
 void SongMenu::addToPlaylist(QAction *action)
 {
-	auto playlistId = action->data().toString().toStdString();
-
-	// Check if it's already in the playlist
-	spotify.playlist(playlistId, [this, playlistId](const lib::spt::playlist &playlist)
+	if (action->data().type() != QVariant::String)
 	{
-		auto playlistName = playlist.name;
-
-		this->spotify.playlist_tracks(playlist,
-			[this, playlistId, playlistName](const std::vector<lib::spt::track> &tracks)
-			{
-				auto *mainWindow = MainWindow::find(this->parentWidget());
-				for (const auto &item: tracks)
-				{
-					if (lib::strings::ends_with(track.id, item.id))
-					{
-						auto result = QMessageBox::information(mainWindow, "Duplicate",
-							"Track is already in the playlist, do you want to add it anyway?",
-							QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-
-						if (result == QMessageBox::No)
-						{
-							return;
-						}
-						break;
-					}
-				}
-
-				// Actually add
-				auto plTrack = lib::spt::api::to_uri("track", track.id);
-				spotify.add_to_playlist(playlistId, plTrack,
-					[this, playlistName](const std::string &result)
-					{
-						if (!result.empty())
-						{
-							StatusMessage::error(QString("Failed to add track to playlist: %1")
-								.arg(QString::fromStdString(result)));
-							return;
-						}
-
-						StatusMessage::info(QString("Added %1 to \"%2\"")
-							.arg(QString::fromStdString(track.title()))
-							.arg(QString::fromStdString(playlistName)));
-					});
-			});
-	});
+		addToNewPlaylist();
+	}
+	else
+	{
+		auto playlistId = action->data().toString().toStdString();
+		performAddToPlaylist(playlistId);
+	}
 }
 
 void SongMenu::remFromPlaylist(bool /*checked*/)
@@ -312,4 +283,76 @@ auto SongMenu::getTrackUrl() const -> QString
 {
 	auto str = lib::fmt::format("https://open.spotify.com/track/{}", trackUri);
 	return QString::fromStdString(str);
+}
+
+void SongMenu::addToNewPlaylist()
+{
+	bool ok;
+	auto playlistName = QInputDialog::getText(
+		this, "New playlist", "Playlist name",
+		QLineEdit::Normal, "New playlist", &ok);
+
+	if (!ok)
+	{
+		return;
+	}
+
+	spotify.create_playlist(
+		playlistName.toStdString(), /* description */{},
+		/* public */false, /* collaborative */false,
+		[this] (lib::spt::playlist playlist)
+		{
+			auto& playlist_id = playlist.id;
+			performAddToPlaylist(playlist_id);
+
+			auto *mainWindow = MainWindow::find(parentWidget());
+			mainWindow->refreshPlaylists();
+		});
+}
+
+auto SongMenu::performAddToPlaylist(std::string& playlistId) const -> void
+{
+	// Check if it's already in the playlist
+	spotify.playlist(playlistId, [this, playlistId](const lib::spt::playlist &playlist)
+	{
+		auto playlistName = playlist.name;
+
+		this->spotify.playlist_tracks(playlist,
+			[this, playlistId, playlistName](const std::vector<lib::spt::track> &tracks)
+			{
+				auto *mainWindow = MainWindow::find(this->parentWidget());
+				for (const auto &item: tracks)
+				{
+					if (lib::strings::ends_with(track.id, item.id))
+					{
+						auto result = QMessageBox::information(mainWindow, "Duplicate",
+							"Track is already in the playlist, do you want to add it anyway?",
+							QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+
+						if (result == QMessageBox::No)
+						{
+							return;
+						}
+						break;
+					}
+				}
+
+				// Actually add
+				auto plTrack = lib::spt::api::to_uri("track", track.id);
+				spotify.add_to_playlist(playlistId, plTrack,
+					[this, playlistName](const std::string &result)
+					{
+						if (!result.empty())
+						{
+							StatusMessage::error(QString("Failed to add track to playlist: %1")
+								.arg(QString::fromStdString(result)));
+							return;
+						}
+
+						StatusMessage::info(QString("Added %1 to \"%2\"")
+							.arg(QString::fromStdString(track.title()))
+							.arg(QString::fromStdString(playlistName)));
+					});
+			});
+	});
 }

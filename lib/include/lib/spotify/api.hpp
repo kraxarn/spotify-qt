@@ -228,6 +228,10 @@ namespace lib
 
 			//region Playlists
 
+			void create_playlist(const std::string &name, const std::string &description,
+				const bool is_public, bool is_collaborative,
+				lib::callback<lib::spt::playlist> &callback);
+
 			void playlists(lib::callback<std::vector<lib::spt::playlist>> &callback);
 
 			void playlist(const std::string &playlist_id,
@@ -379,7 +383,14 @@ namespace lib
 			/**
 			 * POST request
 			 * @param url URL to request
+			 * @param json JSON body or null if no body
 			 * @param callback Error message, or empty if none
+			 */
+			void post(const std::string &url, const nlohmann::json &json,
+				lib::callback<nlohmann::json> &callback);
+
+			/**
+			 * Convenience method for POST request with no body
 			 */
 			void post(const std::string &url, lib::callback<std::string> &callback);
 

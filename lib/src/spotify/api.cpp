@@ -343,6 +343,38 @@ void api::post(const std::string &url, lib::callback<std::string> &callback)
 	});
 }
 
+void api::post(const std::string &url, const nlohmann::json &json,
+	lib::callback<nlohmann::json> &callback)
+{
+	auto headers = auth_headers();
+	headers["Content-Type"] = "application/json";
+
+	auto data = json.is_null()
+		? std::string()
+		: json.dump();
+
+	http.post(to_full_url(url), data, headers,
+		[url, callback](const std::string &response)
+		{
+			try
+			{
+				callback(response.empty()
+					? nlohmann::json()
+					: nlohmann::json::parse(response));
+			}
+			catch (const nlohmann::json::parse_error &e)
+			{
+				lib::log::error("{} failed to parse: {}", url, e.what());
+				lib::log::debug("JSON: {}", response);
+			}
+			catch (const std::exception &e)
+			{
+				lib::log::error("{} failed: {}", url, e.what());
+			}
+		});
+}
+
+
 //endregion
 
 //region DELETE
