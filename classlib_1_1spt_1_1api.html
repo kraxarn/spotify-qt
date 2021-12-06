@@ -177,6 +177,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>top_tracks</b> (lib::
 <tr class="separator:abd52d73893c4175cc039557b51dda56e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae8d9a1ea500342ccb9a4fd0468b3395"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#aae8d9a1ea500342ccb9a4fd0468b3395">add_to_queue</a> (const std::string &amp;uri, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
 <tr class="separator:aae8d9a1ea500342ccb9a4fd0468b3395"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f09d0f1a68a6f3f82d216e6728d8272"><td class="memItemLeft" align="right" valign="top"><a id="a6f09d0f1a68a6f3f82d216e6728d8272"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>create_playlist</b> (const std::string &amp;name, const std::string &amp;description, const bool is_public, bool is_collaborative, lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &gt; &amp;callback)</td></tr>
+<tr class="separator:a6f09d0f1a68a6f3f82d216e6728d8272"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5871faebdb0c92b86b3a3028ac228e27"><td class="memItemLeft" align="right" valign="top"><a id="a5871faebdb0c92b86b3a3028ac228e27"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>playlists</b> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &gt;&gt; &amp;callback)</td></tr>
 <tr class="separator:a5871faebdb0c92b86b3a3028ac228e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -235,6 +238,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:ae6de5354ebff77d8d21124141dfa8d09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1370bf233537673881fc2867adc433bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a1370bf233537673881fc2867adc433bf">put</a> (const std::string &amp;url, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
 <tr class="separator:a1370bf233537673881fc2867adc433bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebe2c2e0bfc8f2b3343e41a69d5c610c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#aebe2c2e0bfc8f2b3343e41a69d5c610c">post</a> (const std::string &amp;url, const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>, lib::callback&lt; nlohmann::json &gt; &amp;callback)</td></tr>
+<tr class="separator:aebe2c2e0bfc8f2b3343e41a69d5c610c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64f1734b8278db05880989f44a70e552"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a64f1734b8278db05880989f44a70e552">post</a> (const std::string &amp;url, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
 <tr class="separator:a64f1734b8278db05880989f44a70e552"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f97861134a29ce268d5730ef9c251a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a3f97861134a29ce268d5730ef9c251a7">del</a> (const std::string &amp;url, const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
@@ -830,8 +835,58 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
+<a id="aebe2c2e0bfc8f2b3343e41a69d5c610c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebe2c2e0bfc8f2b3343e41a69d5c610c">&#9670;&nbsp;</a></span>post() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::spt::api::post </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const nlohmann::json &amp;&#160;</td>
+          <td class="paramname"><em>json</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; nlohmann::json &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>POST request </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>URL to request </td></tr>
+    <tr><td class="paramname">json</td><td>JSON body or null if no body </td></tr>
+    <tr><td class="paramname">callback</td><td>Error message, or empty if none </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a64f1734b8278db05880989f44a70e552"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64f1734b8278db05880989f44a70e552">&#9670;&nbsp;</a></span>post()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a64f1734b8278db05880989f44a70e552">&#9670;&nbsp;</a></span>post() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -863,13 +918,7 @@ Temporarily protected </dd></dl>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>POST request </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">url</td><td>URL to request </td></tr>
-    <tr><td class="paramname">callback</td><td>Error message, or empty if none </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Convenience method for POST request with no body </p>
 
 </div>
 </div>
