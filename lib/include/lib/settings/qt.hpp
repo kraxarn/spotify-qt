@@ -20,6 +20,17 @@ namespace lib
 			 * Use custom font when using custom dark theme
 			 */
 			bool custom_font = true;
+
+			/**
+			 * Mirror buttons in title bar
+			 * (requires system_title_bar to be false)
+			 */
+			bool mirror_title_bar
+#ifdef __APPLE__
+				= true;
+#else
+				= false;
+#endif
 		};
 
 		void to_json(nlohmann::json &j, const qt &q);

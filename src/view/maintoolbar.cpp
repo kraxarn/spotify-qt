@@ -4,7 +4,6 @@
 MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	const lib::http_client &httpClient, lib::cache &cache, QWidget *parent)
 	: QToolBar("Media controls", parent),
-	parent(parent),
 	spotify(spotify),
 	settings(settings)
 {
@@ -16,13 +15,12 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	setMovable(false);
 
 	// Menu
-	auto *menu = new QToolButton(this);
+	menu = new QToolButton(this);
 	menu->setText("Menu");
 	menu->setIcon(Icon::get("application-menu"));
 	menu->setPopupMode(QToolButton::InstantPopup);
 	menu->setMenu(new MainMenu(spotify, settings,
 		httpClient, cache, mainWindow));
-	addWidget(menu);
 
 	// Search
 	search = addAction(Icon::get("edit-find"), "Search");
@@ -30,8 +28,8 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	QAction::connect(search, &QAction::triggered, mainWindow, &MainWindow::setSearchVisible);
 
 	// Media controls
-	addSeparator();
-	auto *previous = addAction(Icon::get("media-skip-backward"), "Previous");
+	auto *mediaControlsSeparator = addSeparator();
+	previous = addAction(Icon::get("media-skip-backward"), "Previous");
 	QAction::connect(previous, &QAction::triggered,
 		this, &MainToolBar::onPrevious);
 
@@ -40,7 +38,7 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	QAction::connect(playPause, &QAction::triggered,
 		this, &MainToolBar::onPlayPause);
 
-	auto *next = addAction(Icon::get("media-skip-forward"), "Next");
+	next = addAction(Icon::get("media-skip-forward"), "Next");
 	QAction::connect(next, &QAction::triggered,
 		this, &MainToolBar::onNext);
 
@@ -83,12 +81,34 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 
 	// Title bar buttons
 	titleBarSeparator = addSeparator();
-	minimize = addAction(Icon::get("window-minimize-symbolic"), "Minimize");
+
+	minimize = new QAction(Icon::get("window-minimize-symbolic"),
+		QStringLiteral("Minimize"), this);
+
 	QAction::connect(minimize, &QAction::triggered,
 		this, &MainToolBar::onMinimize);
 
-	close = addAction(Icon::get("window-close-symbolic"), "Close");
+	close = new QAction(Icon::get("window-close-symbolic"),
+		QStringLiteral("Close"), this);
+
 	QAction::connect(close, &QAction::triggered, &QCoreApplication::quit);
+
+	if (settings.qt().mirror_title_bar)
+	{
+		insertAction(mediaControlsSeparator, minimize);
+		insertAction(minimize, close);
+
+		addAction(search);
+		addWidget(menu);
+	}
+	else
+	{
+		insertAction(mediaControlsSeparator, search);
+		insertWidget(search, menu);
+
+		addAction(minimize);
+		addAction(close);
+	}
 }
 
 void MainToolBar::resizeEvent(QResizeEvent */*event*/)

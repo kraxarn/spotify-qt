@@ -25,7 +25,6 @@ namespace SettingsPage
 		QCheckBox *monoTime = nullptr;
 		QCheckBox *trackNumbers = nullptr;
 		QCheckBox *relativeAdded = nullptr;
-		QCheckBox *systemTitleBar = nullptr;
 
 		// Appearance
 		QComboBox *qtStyle = nullptr;
@@ -39,13 +38,19 @@ namespace SettingsPage
 		QCheckBox *invertTrayIcon = nullptr;
 		QCheckBox *notifyTrackChange = nullptr;
 
+		// Title bar
+		QGroupBox *appTitleBar = nullptr;
+		QCheckBox *mirrorTitleBar = nullptr;
+
 		auto general() -> QWidget *;
 		auto appearance() -> QWidget *;
 		auto trayIcon() -> QWidget *;
+		auto titleBar() -> QWidget *;
 
 		void saveGeneral();
 		void saveAppearance();
 		void saveTrayIcon();
+		void saveTitleBar();
 
 		static auto hasIconTheme() -> bool;
 		static auto defaultStyle() -> QString;

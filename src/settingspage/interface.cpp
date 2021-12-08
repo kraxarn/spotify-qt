@@ -7,6 +7,7 @@ SettingsPage::Interface::Interface(lib::settings &settings, QWidget *parent)
 	addTab(general(), "General");
 	addTab(appearance(), "Appearance");
 	addTab(trayIcon(), "Tray icon");
+	addTab(titleBar(), "Title bar");
 }
 
 auto SettingsPage::Interface::general() -> QWidget *
@@ -50,12 +51,6 @@ auto SettingsPage::Interface::general() -> QWidget *
 							  "for example \"... ago\"");
 	relativeAdded->setChecked(settings.general.relative_added);
 	layout->addWidget(relativeAdded);
-
-	// System title bar
-	systemTitleBar = new QCheckBox("System title bar", this);
-	systemTitleBar->setToolTip("Show system title bar and window borders");
-	systemTitleBar->setChecked(settings.qt().system_title_bar);
-	layout->addWidget(systemTitleBar);
 
 	return WidgetUtils::layoutToWidget(layout, this);
 }
@@ -159,6 +154,32 @@ auto SettingsPage::Interface::trayIcon() -> QWidget *
 	return WidgetUtils::layoutToWidget(content, this);
 }
 
+auto SettingsPage::Interface::titleBar() -> QWidget *
+{
+	const auto &qt = settings.qt();
+
+	auto *content = new QVBoxLayout();
+	content->setAlignment(Qt::AlignTop);
+
+	// System title bar settings
+	appTitleBar = new QGroupBox("Application title bar", this);
+	appTitleBar->setToolTip("Embed custom title bar in application");
+	appTitleBar->setCheckable(true);
+	appTitleBar->setChecked(!qt.system_title_bar);
+	content->addWidget(appTitleBar);
+
+	// Container for options
+	auto *titleBarOptions = new QVBoxLayout();
+	appTitleBar->setLayout(titleBarOptions);
+
+	mirrorTitleBar = new QCheckBox("Mirror buttons", this);
+	mirrorTitleBar->setToolTip("Mirror buttons and show close/minimize on the left side");
+	mirrorTitleBar->setChecked(qt.mirror_title_bar);
+	titleBarOptions->addWidget(mirrorTitleBar);
+
+	return WidgetUtils::layoutToWidget(content, this);
+}
+
 auto SettingsPage::Interface::icon() -> QIcon
 {
 	return Icon::get("draw-brush");
@@ -215,19 +236,6 @@ void SettingsPage::Interface::saveGeneral()
 	if (relativeAdded != nullptr)
 	{
 		settings.general.relative_added = relativeAdded->isChecked();
-	}
-
-	if (systemTitleBar != nullptr)
-	{
-		auto &qtSettings = settings.qt();
-
-		if (qtSettings.system_title_bar != systemTitleBar->isChecked())
-		{
-			info(systemTitleBar->text(),
-				"Please restart the application to toggle system title bar");
-		}
-
-		qtSettings.system_title_bar = systemTitleBar->isChecked();
 	}
 }
 
@@ -312,11 +320,33 @@ void SettingsPage::Interface::saveTrayIcon()
 	}
 }
 
+void SettingsPage::Interface::saveTitleBar()
+{
+	auto &qt = settings.qt();
+
+	if ((appTitleBar != nullptr && qt.system_title_bar == appTitleBar->isChecked())
+		|| (mirrorTitleBar != nullptr && qt.mirror_title_bar != mirrorTitleBar->isChecked()))
+	{
+		info("Title bar", "Please restart the application to reload title bar");
+	}
+
+	if (appTitleBar != nullptr)
+	{
+		qt.system_title_bar = !appTitleBar->isChecked();
+	}
+
+	if (mirrorTitleBar != nullptr)
+	{
+		qt.mirror_title_bar = mirrorTitleBar->isChecked();
+	}
+}
+
 auto SettingsPage::Interface::save() -> bool
 {
 	saveGeneral();
 	saveAppearance();
 	saveTrayIcon();
+	saveTitleBar();
 
 	return true;
 }
