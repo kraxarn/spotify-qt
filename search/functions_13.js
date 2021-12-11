@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['warn_427',['warn',['../classlib_1_1log.html#ad6c8f913d62cc4d89bbfa27a3369a89b',1,'lib::log::warn(const Format &amp;fmt, const Arg &amp;arg, Args &amp;&amp;... args)'],['../classlib_1_1log.html#a3b352feba3bddb212d53a40db6e69b75',1,'lib::log::warn(const Format &amp;fmt)']]],
-  ['window_5fsystem_428',['window_system',['../classlib_1_1system.html#aeaa9b8818fb24942d2f6e58bf544db05',1,'lib::system']]]
+  ['value_434',['value',['../classlib_1_1optional.html#a2c06b902c4842eb433811075c32cf3b1',1,'lib::optional']]],
+  ['value_5for_435',['value_or',['../classlib_1_1optional.html#a6d46047d9dab74d53342cc4719250475',1,'lib::optional']]],
+  ['volume_436',['volume',['../classlib_1_1spt_1_1playback.html#a788f323394b808b2698413d1460d9b8c',1,'lib::spt::playback']]]
 ];

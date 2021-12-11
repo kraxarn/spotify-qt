@@ -16,5 +16,6 @@ var searchData=
   ['count_32',['count',['../classlib_1_1fmt.html#a64de843df1a553d391314623db80b3c2',1,'lib::fmt']]],
   ['crash_5fhandler_33',['crash_handler',['../classlib_1_1crash__handler.html',1,'lib']]],
   ['crash_5finfo_34',['crash_info',['../classlib_1_1crash__info.html',1,'lib']]],
-  ['current_5fplayback_35',['current_playback',['../classlib_1_1spt_1_1api.html#a273712e8625afb13c404ae910de8a63a',1,'lib::spt::api']]]
+  ['create_5fplaylist_35',['create_playlist',['../classlib_1_1spt_1_1api.html#ae6d859577d0d4fd809d3dfc3a3045805',1,'lib::spt::api']]],
+  ['current_5fplayback_36',['current_playback',['../classlib_1_1spt_1_1api.html#a273712e8625afb13c404ae910de8a63a',1,'lib::spt::api']]]
 ];

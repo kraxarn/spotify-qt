@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['qt_162',['qt',['../classlib_1_1settings.html#ae2e514cf3a79cda0aaf27a98c04eb028',1,'lib::settings']]]
+  ['qt_165',['qt',['../classlib_1_1settings.html#ae2e514cf3a79cda0aaf27a98c04eb028',1,'lib::settings']]]
 ];

@@ -73,74 +73,90 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;thirdparty/json.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;lib/log.hpp&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;thirdparty/filesystem.hpp&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;lib/log.hpp&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;lib/optional.hpp&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;thirdparty/json.hpp&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;thirdparty/filesystem.hpp&quot;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span>lib</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classlib_1_1json.html">   14</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classlib_1_1json.html">json</a></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    {</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#a4f3baf9ef6499421dbd9e2b27a47bdfc">   25</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1json.html#a4f3baf9ef6499421dbd9e2b27a47bdfc">get_property</a>(<span class="keyword">const</span> nlohmann::json &amp;<a class="code" href="classlib_1_1json.html">json</a>,</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            <span class="keyword">const</span> std::initializer_list&lt;std::string&gt; &amp;names, T &amp;item) -&gt; <span class="keywordtype">bool</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        {</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;name: names)</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                <span class="keywordflow">if</span> (<a class="code" href="classlib_1_1json.html">json</a>.contains(name) &amp;&amp; !<a class="code" href="classlib_1_1json.html">json</a>.at(name).is_null())</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                {</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                    <a class="code" href="classlib_1_1json.html">json</a>.at(name).get_to(item);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                }</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            }</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        }</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#ade9ccec547de0f122a331390b94ed6be">   45</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1json.html#ade9ccec547de0f122a331390b94ed6be">combine</a>(<span class="keyword">const</span> nlohmann::json &amp;item1,</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <span class="keyword">const</span> nlohmann::json &amp;item2) -&gt; nlohmann::json;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#a301b8eb203e2c032ef1ab73fdc3dfe21">   55</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1json.html#a301b8eb203e2c032ef1ab73fdc3dfe21">get</a>(<span class="keyword">const</span> nlohmann::json &amp;<a class="code" href="classlib_1_1json.html">json</a>, <span class="keyword">const</span> std::string &amp;key, T &amp;item)</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="classlib_1_1json.html">json</a>.contains(key) &amp;&amp; !<a class="code" href="classlib_1_1json.html">json</a>.at(key).is_null())</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            {</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                <a class="code" href="classlib_1_1json.html">json</a>.at(key).get_to(item);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        }</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#ad63b9e906fb9d2c4ecfa88953ed35bfa">   68</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1json.html#ad63b9e906fb9d2c4ecfa88953ed35bfa">load</a>(<span class="keyword">const</span> ghc::filesystem::path &amp;path) -&gt; nlohmann::json;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#aac77ec391011b3a8745245272987c99a">   75</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1json.html#aac77ec391011b3a8745245272987c99a">load</a>(<span class="keyword">const</span> ghc::filesystem::path &amp;path) -&gt; T</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        {</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <span class="keyword">auto</span> <a class="code" href="classlib_1_1json.html">json</a> = <a class="code" href="classlib_1_1json.html#ad63b9e906fb9d2c4ecfa88953ed35bfa">load</a>(path);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="classlib_1_1json.html">json</a>.is_null())</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            {</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                <span class="keywordflow">return</span> T();</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            }</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classlib_1_1json.html">json</a>;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        }</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#aa45d39432785ccca3c0157b8e01439b3">   90</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1json.html#aa45d39432785ccca3c0157b8e01439b3">save</a>(<span class="keyword">const</span> ghc::filesystem::path &amp;path, <span class="keyword">const</span> nlohmann::json &amp;<a class="code" href="classlib_1_1json.html">json</a>);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#ab2a176518327d25b2681d7e7ad1a94f8">   98</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1json.html#ab2a176518327d25b2681d7e7ad1a94f8">find_item</a>(<span class="keyword">const</span> std::string &amp;name,</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <span class="keyword">const</span> nlohmann::json &amp;<a class="code" href="classlib_1_1json.html">json</a>, std::string &amp;item);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <a class="code" href="classlib_1_1json.html">json</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    };</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;}</div>
-<div class="ttc" id="aclasslib_1_1json_html"><div class="ttname"><a href="classlib_1_1json.html">lib::json</a></div><div class="ttdef"><b>Definition:</b> json.hpp:15</div></div>
-<div class="ttc" id="aclasslib_1_1json_html_a301b8eb203e2c032ef1ab73fdc3dfe21"><div class="ttname"><a href="classlib_1_1json.html#a301b8eb203e2c032ef1ab73fdc3dfe21">lib::json::get</a></div><div class="ttdeci">static void get(const nlohmann::json &amp;json, const std::string &amp;key, T &amp;item)</div><div class="ttdef"><b>Definition:</b> json.hpp:55</div></div>
-<div class="ttc" id="aclasslib_1_1json_html_a4f3baf9ef6499421dbd9e2b27a47bdfc"><div class="ttname"><a href="classlib_1_1json.html#a4f3baf9ef6499421dbd9e2b27a47bdfc">lib::json::get_property</a></div><div class="ttdeci">static auto get_property(const nlohmann::json &amp;json, const std::initializer_list&lt; std::string &gt; &amp;names, T &amp;item) -&gt; bool</div><div class="ttdef"><b>Definition:</b> json.hpp:25</div></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span>lib</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classlib_1_1json.html">   16</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classlib_1_1json.html">json</a></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#a4f3baf9ef6499421dbd9e2b27a47bdfc">   27</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1json.html#a4f3baf9ef6499421dbd9e2b27a47bdfc">get_property</a>(<span class="keyword">const</span> nlohmann::json &amp;<a class="code" href="classlib_1_1json.html">json</a>,</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            <span class="keyword">const</span> std::initializer_list&lt;std::string&gt; &amp;names, T &amp;item) -&gt; <span class="keywordtype">bool</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;name: names)</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                <span class="keywordflow">if</span> (<a class="code" href="classlib_1_1json.html">json</a>.contains(name) &amp;&amp; !<a class="code" href="classlib_1_1json.html">json</a>.at(name).is_null())</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                    <a class="code" href="classlib_1_1json.html">json</a>.at(name).get_to(item);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                }</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            }</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        }</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#ade9ccec547de0f122a331390b94ed6be">   47</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1json.html#ade9ccec547de0f122a331390b94ed6be">combine</a>(<span class="keyword">const</span> nlohmann::json &amp;item1,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keyword">const</span> nlohmann::json &amp;item2) -&gt; nlohmann::json;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#a301b8eb203e2c032ef1ab73fdc3dfe21">   57</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1json.html#a301b8eb203e2c032ef1ab73fdc3dfe21">get</a>(<span class="keyword">const</span> nlohmann::json &amp;<a class="code" href="classlib_1_1json.html">json</a>, <span class="keyword">const</span> std::string &amp;key, T &amp;item)</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        {</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="classlib_1_1json.html">json</a>.contains(key) &amp;&amp; !<a class="code" href="classlib_1_1json.html">json</a>.at(key).is_null())</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            {</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                <a class="code" href="classlib_1_1json.html">json</a>.at(key).get_to(item);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        }</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#ad63b9e906fb9d2c4ecfa88953ed35bfa">   70</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1json.html#ad63b9e906fb9d2c4ecfa88953ed35bfa">load</a>(<span class="keyword">const</span> ghc::filesystem::path &amp;path) -&gt; nlohmann::json;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#aac77ec391011b3a8745245272987c99a">   77</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1json.html#aac77ec391011b3a8745245272987c99a">load</a>(<span class="keyword">const</span> ghc::filesystem::path &amp;path) -&gt; T</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        {</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <span class="keyword">auto</span> <a class="code" href="classlib_1_1json.html">json</a> = <a class="code" href="classlib_1_1json.html#ad63b9e906fb9d2c4ecfa88953ed35bfa">load</a>(path);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="classlib_1_1json.html">json</a>.is_null())</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            {</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                <span class="keywordflow">return</span> T();</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classlib_1_1json.html">json</a>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        }</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#aa45d39432785ccca3c0157b8e01439b3">   92</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1json.html#aa45d39432785ccca3c0157b8e01439b3">save</a>(<span class="keyword">const</span> ghc::filesystem::path &amp;path, <span class="keyword">const</span> nlohmann::json &amp;<a class="code" href="classlib_1_1json.html">json</a>);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="classlib_1_1json.html#ab2a176518327d25b2681d7e7ad1a94f8">  100</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1json.html#ab2a176518327d25b2681d7e7ad1a94f8">find_item</a>(<span class="keyword">const</span> std::string &amp;name,</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            <span class="keyword">const</span> nlohmann::json &amp;<a class="code" href="classlib_1_1json.html">json</a>, std::string &amp;item);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1set.html">set</a>(nlohmann::json &amp;<a class="code" href="classlib_1_1json.html">json</a>, <span class="keyword">const</span> std::string &amp;key,</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            <span class="keyword">const</span> <a class="code" href="classlib_1_1optional.html">lib::optional&lt;T&gt;</a> &amp;value)</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        {</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            <span class="keywordflow">if</span> (value.<a class="code" href="classlib_1_1optional.html#ab0952765b67f681607c56018da407252">has_value</a>())</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            {</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;                <a class="code" href="classlib_1_1json.html">json</a>[key] = value.<a class="code" href="classlib_1_1optional.html#a2c06b902c4842eb433811075c32cf3b1">value</a>();</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        }</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        json() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    };</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;}</div>
+<div class="ttc" id="aclasslib_1_1json_html"><div class="ttname"><a href="classlib_1_1json.html">lib::json</a></div><div class="ttdef"><b>Definition:</b> json.hpp:17</div></div>
+<div class="ttc" id="aclasslib_1_1json_html_a301b8eb203e2c032ef1ab73fdc3dfe21"><div class="ttname"><a href="classlib_1_1json.html#a301b8eb203e2c032ef1ab73fdc3dfe21">lib::json::get</a></div><div class="ttdeci">static void get(const nlohmann::json &amp;json, const std::string &amp;key, T &amp;item)</div><div class="ttdef"><b>Definition:</b> json.hpp:57</div></div>
+<div class="ttc" id="aclasslib_1_1json_html_a4f3baf9ef6499421dbd9e2b27a47bdfc"><div class="ttname"><a href="classlib_1_1json.html#a4f3baf9ef6499421dbd9e2b27a47bdfc">lib::json::get_property</a></div><div class="ttdeci">static auto get_property(const nlohmann::json &amp;json, const std::initializer_list&lt; std::string &gt; &amp;names, T &amp;item) -&gt; bool</div><div class="ttdef"><b>Definition:</b> json.hpp:27</div></div>
 <div class="ttc" id="aclasslib_1_1json_html_aa45d39432785ccca3c0157b8e01439b3"><div class="ttname"><a href="classlib_1_1json.html#aa45d39432785ccca3c0157b8e01439b3">lib::json::save</a></div><div class="ttdeci">static void save(const ghc::filesystem::path &amp;path, const nlohmann::json &amp;json)</div></div>
-<div class="ttc" id="aclasslib_1_1json_html_aac77ec391011b3a8745245272987c99a"><div class="ttname"><a href="classlib_1_1json.html#aac77ec391011b3a8745245272987c99a">lib::json::load</a></div><div class="ttdeci">static auto load(const ghc::filesystem::path &amp;path) -&gt; T</div><div class="ttdef"><b>Definition:</b> json.hpp:75</div></div>
+<div class="ttc" id="aclasslib_1_1json_html_aac77ec391011b3a8745245272987c99a"><div class="ttname"><a href="classlib_1_1json.html#aac77ec391011b3a8745245272987c99a">lib::json::load</a></div><div class="ttdeci">static auto load(const ghc::filesystem::path &amp;path) -&gt; T</div><div class="ttdef"><b>Definition:</b> json.hpp:77</div></div>
 <div class="ttc" id="aclasslib_1_1json_html_ab2a176518327d25b2681d7e7ad1a94f8"><div class="ttname"><a href="classlib_1_1json.html#ab2a176518327d25b2681d7e7ad1a94f8">lib::json::find_item</a></div><div class="ttdeci">static void find_item(const std::string &amp;name, const nlohmann::json &amp;json, std::string &amp;item)</div></div>
 <div class="ttc" id="aclasslib_1_1json_html_ad63b9e906fb9d2c4ecfa88953ed35bfa"><div class="ttname"><a href="classlib_1_1json.html#ad63b9e906fb9d2c4ecfa88953ed35bfa">lib::json::load</a></div><div class="ttdeci">static auto load(const ghc::filesystem::path &amp;path) -&gt; nlohmann::json</div></div>
 <div class="ttc" id="aclasslib_1_1json_html_ade9ccec547de0f122a331390b94ed6be"><div class="ttname"><a href="classlib_1_1json.html#ade9ccec547de0f122a331390b94ed6be">lib::json::combine</a></div><div class="ttdeci">static auto combine(const nlohmann::json &amp;item1, const nlohmann::json &amp;item2) -&gt; nlohmann::json</div></div>
+<div class="ttc" id="aclasslib_1_1optional_html"><div class="ttname"><a href="classlib_1_1optional.html">lib::optional</a></div><div class="ttdef"><b>Definition:</b> optional.hpp:13</div></div>
+<div class="ttc" id="aclasslib_1_1optional_html_a2c06b902c4842eb433811075c32cf3b1"><div class="ttname"><a href="classlib_1_1optional.html#a2c06b902c4842eb433811075c32cf3b1">lib::optional::value</a></div><div class="ttdeci">auto value() const -&gt; T &amp;</div><div class="ttdef"><b>Definition:</b> optional.hpp:39</div></div>
+<div class="ttc" id="aclasslib_1_1optional_html_ab0952765b67f681607c56018da407252"><div class="ttname"><a href="classlib_1_1optional.html#ab0952765b67f681607c56018da407252">lib::optional::has_value</a></div><div class="ttdeci">auto has_value() const -&gt; bool</div><div class="ttdef"><b>Definition:</b> optional.hpp:31</div></div>
+<div class="ttc" id="aclasslib_1_1set_html"><div class="ttname"><a href="classlib_1_1set.html">lib::set</a></div><div class="ttdef"><b>Definition:</b> set.hpp:8</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
