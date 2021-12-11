@@ -6,6 +6,7 @@ add_executable(spotify-qt-lib-test
 	src/main.cpp
 	src/base64tests.cpp
 	src/datetimetests.cpp
+	src/enumstests.cpp
 	src/formattests.cpp
 	src/imagetests.cpp
 	src/jsontests.cpp

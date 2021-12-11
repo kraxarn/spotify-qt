@@ -2,6 +2,8 @@
 
 #include "lib/enum/mediatype.hpp"
 
+#include <string>
+
 namespace lib
 {
 	/**
@@ -20,6 +22,19 @@ namespace lib
 		static auto parse(const std::string &str) -> T
 		{
 			return enum_from_string(str);
+		}
+
+		/**
+		 * If value has flag, eg. "value & flag == flag"
+		 * @param value Enum value
+		 * @param flag Enum flag to check value for
+		 * @return Value contains flag
+		 */
+		static auto has_flag(T value, T flag) -> bool
+		{
+			const auto v = static_cast<unsigned int>(value);
+			const auto f = static_cast<unsigned int>(flag);
+			return (v & f) == f;
 		}
 
 	private:
