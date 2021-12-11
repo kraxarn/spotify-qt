@@ -3,58 +3,47 @@
 
 #include <array>
 
-TEST_CASE("strings::join")
+TEST_CASE("strings")
 {
-	auto result = lib::strings::join({
-		"a", "bb", "ccc",
-	}, ", ");
-	CHECK_EQ(result, "a, bb, ccc");
-}
+	SUBCASE("join")
+	{
+		auto result = lib::strings::join({
+			"a", "bb", "ccc",
+		}, ", ");
 
-TEST_CASE("strings::contains")
-{
+		CHECK_EQ(result, "a, bb, ccc");
+	}
+
 	SUBCASE("contains")
 	{
 		CHECK(lib::strings::contains("aa,bb,cc", "aa"));
-	}
-
-	SUBCASE("does not contain")
-	{
 		CHECK_FALSE(lib::strings::contains("aa,bb,cc", "dd"));
 	}
-}
 
-TEST_CASE("strings::trim")
-{
-	auto verify_trimmed = [](std::string &str, const char *expected = "aa")
+	SUBCASE("trim")
 	{
-		CHECK_EQ(lib::strings::trim(str), "aa");
-		CHECK_EQ(str, "aa");
-	};
+		auto verify_trimmed = [](std::string &str, const char *expected = "aa")
+		{
+			CHECK_EQ(lib::strings::trim(str), "aa");
+			CHECK_EQ(str, "aa");
+		};
 
-	SUBCASE("left")
-	{
+		// Left
 		std::string str("  aa");
 		verify_trimmed(str);
-	}
 
-	SUBCASE("right")
-	{
-		std::string str("aa  ");
+		// Right
+		str = "aa  ";
+		verify_trimmed(str);
+
+		// Left and right
+		str = "  aa  ";
 		verify_trimmed(str);
 	}
 
-	SUBCASE("both")
+	SUBCASE("split")
 	{
-		std::string str("  aa  ");
-		verify_trimmed(str);
-	}
-}
-
-TEST_CASE("strings::split")
-{
-	SUBCASE("with delimiter")
-	{
+		// With delimiter
 		auto expected = std::array<std::string, 3>{
 			"a", "bb", "ccc",
 		};
@@ -65,29 +54,22 @@ TEST_CASE("strings::split")
 		{
 			CHECK_EQ(results[i], expected[i]);
 		}
-	}
 
-	SUBCASE("without delimiter")
-	{
-		auto results = lib::strings::split("a,bb,ccc", '.');
+		// Without delimiter
+		results = lib::strings::split("a,bb,ccc", '.');
 		CHECK_EQ(results.size(), 1);
 		CHECK_EQ(results[0], "a,bb,ccc");
-	}
 
-	SUBCASE("empty string")
-	{
-		auto results = lib::strings::split(std::string(), ',');
+		// Empty string
+		results = lib::strings::split(std::string(), ',');
 		CHECK_EQ(results.size(), 1);
 		CHECK(results[0].empty());
-	}
 
-	SUBCASE("long delimiter")
-	{
-		// with delimiter
-		auto expected = std::array<std::string, 3>{
+		// String delimiter
+		expected = std::array<std::string, 3>{
 			"a", "bb", "ccc",
 		};
-		auto results = lib::strings::split("a, bb, ccc", ", ");
+		results = lib::strings::split("a, bb, ccc", ", ");
 
 		CHECK_EQ(results.size(), expected.size());
 		for (auto i = 0; i < results.size(); i++)
@@ -95,159 +77,114 @@ TEST_CASE("strings::split")
 			CHECK_EQ(results[i], expected[i]);
 		}
 
-		// without delimiter
+		// Without string delimiter
 		CHECK_EQ(lib::strings::split("a, bb, ccc", ". ").at(0), "a, bb, ccc");
-		// empty string
+
+		// Empty string delimiter
 		CHECK(lib::strings::split(std::string(), ";").at(0).empty());
 	}
-}
 
-TEST_CASE("strings::starts_with")
-{
-	SUBCASE("starts with")
+	SUBCASE("starts_with")
 	{
 		CHECK(lib::strings::starts_with("aa,bb,cc", "aa"));
-	}
-
-	SUBCASE("does not start with")
-	{
 		CHECK_FALSE(lib::strings::starts_with("aa,bb,cc", "ab"));
 	}
-}
 
-TEST_CASE("strings::remove")
-{
-	auto verify_removed = [](std::string &str, const std::string &substr,
-		const std::string &expected)
+	SUBCASE("remove")
 	{
-		CHECK_EQ(lib::strings::remove(str, substr), expected);
-		CHECK_EQ(str, expected);
-	};
+		auto verify_removed = [](std::string &str,
+			const std::string &substr, const std::string &expected)
+		{
+			CHECK_EQ(lib::strings::remove(str, substr), expected);
+			CHECK_EQ(str, expected);
+		};
 
-	SUBCASE("start")
-	{
+		// Start
 		std::string str("aa,bb,cc");
 		verify_removed(str, "aa", ",bb,cc");
-	}
 
-	SUBCASE("middle")
-	{
-		std::string str("aa,bb,cc");
+		// Middle
+		str = "aa,bb,cc";
 		verify_removed(str, "bb", "aa,,cc");
-	}
 
-	SUBCASE("end")
-	{
-		std::string str("aa,bb,cc");
+		// End
+		str = "aa,bb,cc";
 		verify_removed(str, "cc", "aa,bb,");
 	}
-}
 
-TEST_CASE("strings::ends_with")
-{
-	SUBCASE("ends with")
+	SUBCASE("ends_with")
 	{
 		CHECK(lib::strings::ends_with("aa,bb,cc", "cc"));
-	}
-
-	SUBCASE("does not end with")
-	{
 		CHECK_FALSE(lib::strings::ends_with("aa,bb,cc", "bc"));
 	}
-}
 
-TEST_CASE("strings::try_to_int")
-{
-	SUBCASE("is int")
+	SUBCASE("try_to_int")
 	{
+		// Valid
 		auto i = 0;
 		CHECK(lib::strings::try_to_int("10", i));
 		CHECK_EQ(i, 10);
-	}
 
-	SUBCASE("is not int")
-	{
-		auto i = 0;
+		// Invalid
+		i = 0;
 		CHECK_FALSE(lib::strings::try_to_int("a", i));
 		CHECK_EQ(i, 0);
-	}
 
-	SUBCASE("overflow")
-	{
-		int i = 0;
+		// Overflow
+		i = 0;
 		CHECK_THROWS(lib::strings::try_to_int(std::to_string(INT64_MAX), i));
 		CHECK_EQ(i, 0);
 	}
-}
 
-TEST_CASE("strings::left")
-{
-	SUBCASE("contains")
+	SUBCASE("left")
 	{
 		CHECK_EQ(lib::strings::left("aa,bb,cc", 2), "aa");
-	}
-
-	SUBCASE("too long")
-	{
 		CHECK_EQ(lib::strings::left("aa", 5), "aa");
 	}
-}
 
-TEST_CASE("strings::right")
-{
-	SUBCASE("contains")
+	SUBCASE("right")
 	{
 		CHECK_EQ(lib::strings::right("aa,bb,cc", 2), "cc");
-	}
-
-	SUBCASE("too long")
-	{
 		CHECK_EQ(lib::strings::right("aa", 5), "aa");
 	}
-}
 
-TEST_CASE("strings::to_lower")
-{
-	std::string str("aa,BB,Cc");
-	CHECK_EQ(lib::strings::to_lower(str), "aa,bb,cc");
-}
-
-TEST_CASE("strings::to_upper")
-{
-	std::string str("aa,BB,Cc");
-	CHECK_EQ(lib::strings::to_upper(str), "AA,BB,CC");
-}
-
-TEST_CASE("strings::capitalize")
-{
-	CHECK_EQ(lib::strings::capitalize("Hello World"), "Hello world");
-	CHECK_EQ(lib::strings::capitalize("HELLO WORLD"), "Hello world");
-	CHECK_EQ(lib::strings::capitalize("hello world"), "Hello world");
-}
-
-TEST_CASE("strings::to_string")
-{
-	constexpr double pi = 3.14159265;
-
-	CHECK_EQ(lib::strings::to_string(pi, 0), "3");
-	CHECK_EQ(lib::strings::to_string(pi, 3), "3.142");
-}
-
-TEST_CASE("strings::replace_all")
-{
-	SUBCASE("char")
+	SUBCASE("to_lower")
 	{
-		std::string val("a,b,c");
+		std::string str("aa,BB,Cc");
+		CHECK_EQ(lib::strings::to_lower(str), "aa,bb,cc");
+	}
 
+	SUBCASE("to_upper")
+	{
+		std::string str("aa,BB,Cc");
+		CHECK_EQ(lib::strings::to_upper(str), "AA,BB,CC");
+	}
+
+	SUBCASE("capitalize")
+	{
+		CHECK_EQ(lib::strings::capitalize("Hello World"), "Hello world");
+		CHECK_EQ(lib::strings::capitalize("HELLO WORLD"), "Hello world");
+		CHECK_EQ(lib::strings::capitalize("hello world"), "Hello world");
+	}
+
+	SUBCASE("to_string")
+	{
+		constexpr double pi = 3.14159265;
+
+		CHECK_EQ(lib::strings::to_string(pi, 0), "3");
+		CHECK_EQ(lib::strings::to_string(pi, 3), "3.142");
+	}
+
+	SUBCASE("replace_all")
+	{
+		// Char
+		std::string val("a,b,c");
 		CHECK_EQ(lib::strings::replace_all(val, 'c', 'd'), "a,b,d");
 		CHECK_EQ(lib::strings::replace_all(val, ',', ' '), "a b c");
 		CHECK_EQ(lib::strings::replace_all(val, 'd', 'c'), "a,b,c");
-	}
 
-	SUBCASE("string")
-	{
-		std::string val("abc, def, ghi");
-
+		// String
+		val = "abc, def, ghi";
 		CHECK_EQ(lib::strings::replace_all(val, "ghi", "jkl"), "abc, def, jkl");
 		CHECK_EQ(lib::strings::replace_all(val, ", ", "->"), "abc->def->ghi");
 		CHECK_EQ(lib::strings::replace_all(val, "adg", "mno"), "abc, def, ghi");

@@ -28,15 +28,17 @@ TEST_CASE("json")
 	SUBCASE("combine")
 	{
 		nlohmann::json item1{
-			1, 2, 3
+			1, 2, 3,
 		};
 		nlohmann::json item2{
-			4, 5, 6
+			4, 5, 6,
 		};
 
 		auto combined = lib::json::combine(item1, item2);
 		for (auto i = 0; i < item1.size() + item2.size(); i++)
+		{
 			CHECK_EQ(combined.at(i), i + 1);
+		}
 	}
 
 	SUBCASE("get")
@@ -58,7 +60,7 @@ TEST_CASE("json")
 				{{"url", "image1url"}},
 				{{"url", "image2url"}},
 				{{"url", "image3url"}},
-			}}
+			}},
 		};
 
 		std::string result;
@@ -80,7 +82,7 @@ TEST_CASE("json")
 				"item1",
 				"item2",
 				"item3",
-			}}
+			}},
 		};
 
 		result.clear();

@@ -8,7 +8,7 @@ add_executable(spotify-qt-lib-test
 	src/datetimetests.cpp
 	src/formattests.cpp
 	src/imagetests.cpp
-	src/jsonutils.cpp
+	src/jsontests.cpp
 	src/logtests.cpp
 	src/optionaltests.cpp
 	src/settingstests.cpp

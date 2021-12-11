@@ -15,8 +15,10 @@ TEST_CASE("log")
 		auto messages = lib::log::get_messages();
 		CHECK_EQ(messages.size(), 2);
 
-		for (auto &message : messages)
+		for (auto &message: messages)
+		{
 			CHECK_EQ(message.get_message(), "hello world");
+		}
 	};
 
 	SUBCASE("info")

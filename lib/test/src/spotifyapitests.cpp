@@ -1,7 +1,7 @@
 #include "thirdparty/doctest.h"
 #include "lib/spotify/api.hpp"
 
-TEST_CASE("spotify_api")
+TEST_CASE("spt::api")
 {
 	SUBCASE("to_uri")
 	{
