@@ -190,14 +190,14 @@ void SongMenu::onAddToQueue(bool /*checked*/)
 
 void SongMenu::onAddToPlaylist(QAction *action)
 {
-	if (action->data().canConvert<QString>())
+	auto playlistId = action->data().toString();
+	if (playlistId.isEmpty())
 	{
 		addToNewPlaylist();
 	}
 	else
 	{
-		auto playlistId = action->data().toString().toStdString();
-		addToPlaylist(playlistId);
+		addToPlaylist(playlistId.toStdString());
 	}
 }
 
