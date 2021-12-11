@@ -287,30 +287,25 @@ auto SongMenu::getTrackUrl() const -> QString
 
 void SongMenu::addToNewPlaylist()
 {
-	bool ok;
-	auto playlistName = QInputDialog::getText(
-		this, "New playlist", "Playlist name",
-		QLineEdit::Normal, "New playlist", &ok);
+	auto playlistName = QInputDialog::getText(this, "New playlist",
+		"Playlist name", QLineEdit::Normal, "New playlist");
 
-	if (!ok)
+	if (playlistName.isEmpty())
 	{
 		return;
 	}
 
-	spotify.create_playlist(
-		playlistName.toStdString(), /* description */{},
-		/* public */false, /* collaborative */false,
-		[this] (lib::spt::playlist playlist)
+	spotify.create_playlist(playlistName.toStdString(), lib::optional<std::string>(),
+		lib::optional<bool>(), lib::optional<bool>(),
+		[this](const lib::spt::playlist &playlist)
 		{
-			auto& playlist_id = playlist.id;
-			performAddToPlaylist(playlist_id);
-
+			performAddToPlaylist(playlist.id);
 			auto *mainWindow = MainWindow::find(parentWidget());
 			mainWindow->refreshPlaylists();
 		});
 }
 
-auto SongMenu::performAddToPlaylist(std::string& playlistId) const -> void
+void SongMenu::performAddToPlaylist(const std::string &playlistId) const
 {
 	// Check if it's already in the playlist
 	spotify.playlist(playlistId, [this, playlistId](const lib::spt::playlist &playlist)

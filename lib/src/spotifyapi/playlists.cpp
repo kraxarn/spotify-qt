@@ -6,16 +6,21 @@
 // playlists/{playlist_id}/tracks
 // playlists/{playlist_id}/images
 
-void api::create_playlist(const std::string &name,
-	const std::string &description, const bool is_public,
-	const bool is_collaborative, lib::callback<lib::spt::playlist> &callback)
+void lib::spt::api::create_playlist(const std::string &name,
+	const lib::optional<std::string> &description,
+	const lib::optional<bool> &is_public,
+	const lib::optional<bool> &is_collaborative,
+	lib::callback<lib::spt::playlist> &callback)
 {
-	post("me/playlists", {
-			{"name", name},
-			{"description", description},
-			{"public", is_public},
-			{"collaborative", is_collaborative},
-		}, callback);
+	nlohmann::json json{
+		{"name", name},
+	};
+
+	lib::json::set(json, "description", description);
+	lib::json::set(json, "public", is_public);
+	lib::json::set(json, "collaborative", is_collaborative);
+
+	post("me/playlists", json, callback);
 }
 
 void lib::spt::api::playlists(lib::callback<std::vector<lib::spt::playlist>> &callback)

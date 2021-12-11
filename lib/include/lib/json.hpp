@@ -1,7 +1,9 @@
 #pragma once
 
-#include "thirdparty/json.hpp"
 #include "lib/log.hpp"
+#include "lib/optional.hpp"
+
+#include "thirdparty/json.hpp"
 #include "thirdparty/filesystem.hpp"
 
 #include <fstream>
@@ -97,6 +99,16 @@ namespace lib
 		 */
 		static void find_item(const std::string &name,
 			const nlohmann::json &json, std::string &item);
+
+		template<typename T>
+		static void set(nlohmann::json &json, const std::string &key,
+			const lib::optional<T> &value)
+		{
+			if (value.has_value())
+			{
+				json[key] = value.value();
+			}
+		}
 
 	private:
 		json() = default;

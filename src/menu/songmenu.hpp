@@ -51,7 +51,7 @@ private:
 	QAction *toggleLiked = nullptr;
 
 	auto getTrackUrl() const -> QString;
-	auto performAddToPlaylist(std::string& playlistid) const -> void;
+	void performAddToPlaylist(const std::string &playlistId) const;
 
 	void like(bool checked);
 	void addToQueue(bool checked);
