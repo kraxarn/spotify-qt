@@ -52,7 +52,7 @@ auto SettingsPage::Interface::general() -> QWidget *
 	relativeAdded->setChecked(settings.general.relative_added);
 	layout->addWidget(relativeAdded);
 
-	return WidgetUtils::layoutToWidget(layout, this);
+	return Widget::layoutToWidget(layout, this);
 }
 
 auto SettingsPage::Interface::appearance() -> QWidget *
@@ -113,7 +113,7 @@ auto SettingsPage::Interface::appearance() -> QWidget *
 	customFont->setChecked(qt.custom_font);
 	layout->addWidget(customFont);
 
-	return WidgetUtils::layoutToWidget(layout, this);
+	return Widget::layoutToWidget(layout, this);
 }
 
 auto SettingsPage::Interface::trayIcon() -> QWidget *
@@ -151,7 +151,7 @@ auto SettingsPage::Interface::trayIcon() -> QWidget *
 	notifyTrackChange->setChecked(settings.general.notify_track_change);
 	trayOptions->addWidget(notifyTrackChange);
 
-	return WidgetUtils::layoutToWidget(content, this);
+	return Widget::layoutToWidget(content, this);
 }
 
 auto SettingsPage::Interface::titleBar() -> QWidget *
@@ -177,7 +177,7 @@ auto SettingsPage::Interface::titleBar() -> QWidget *
 	mirrorTitleBar->setChecked(qt.mirror_title_bar);
 	titleBarOptions->addWidget(mirrorTitleBar);
 
-	return WidgetUtils::layoutToWidget(content, this);
+	return Widget::layoutToWidget(content, this);
 }
 
 auto SettingsPage::Interface::icon() -> QIcon

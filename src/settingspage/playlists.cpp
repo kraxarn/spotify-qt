@@ -67,7 +67,7 @@ auto SettingsPage::Playlists::order() -> QWidget *
 		plList->addItem(listItem);
 	}
 
-	return WidgetUtils::layoutToWidget(layout, this);
+	return Widget::layoutToWidget(layout, this);
 }
 
 auto SettingsPage::Playlists::icon() -> QIcon

@@ -5,7 +5,7 @@
 #include <QLayout>
 #include <QGroupBox>
 
-class WidgetUtils
+class Widget
 {
 public:
 	/** Wrap layout in widget */
@@ -23,5 +23,5 @@ public:
 		const QMargins &margins, QWidget *parent) -> QDockWidget *;
 
 private:
-	WidgetUtils() = default;
+	Widget() = default;
 };

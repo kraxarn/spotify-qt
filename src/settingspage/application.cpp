@@ -71,7 +71,7 @@ auto SettingsPage::Application::app() -> QWidget *
 	appWhatsNew->setChecked(settings.general.show_changelog);
 	layout->addWidget(appWhatsNew);
 
-	return WidgetUtils::layoutToWidget(layout, this);
+	return Widget::layoutToWidget(layout, this);
 }
 
 auto SettingsPage::Application::appLogs() -> QWidget *

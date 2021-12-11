@@ -4,7 +4,7 @@
 #include "lib/settings.hpp"
 #include "settingspage/base.hpp"
 #include "view/logview.hpp"
-#include "util/widgetutils.hpp"
+#include "util/widget.hpp"
 
 namespace SettingsPage
 {

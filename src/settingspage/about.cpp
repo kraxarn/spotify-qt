@@ -49,7 +49,7 @@ auto SettingsPage::About::about() -> QWidget *
 			0, Qt::AlignHCenter);
 	}
 
-	return WidgetUtils::layoutToWidget(layout, this);
+	return Widget::layoutToWidget(layout, this);
 }
 
 auto SettingsPage::About::contributors(const lib::http_client &httpClient) -> QWidget *
