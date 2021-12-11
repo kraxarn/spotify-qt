@@ -1,6 +1,6 @@
 #include "widget/docktitle.hpp"
 
-Widget::DockTitle::DockTitle(const QString &title, QDockWidget *parent)
+DockTitle::DockTitle(const QString &title, QDockWidget *parent)
 	: QLabel(title, parent)
 {
 	parent->setTitleBarWidget(this);
@@ -9,7 +9,7 @@ Widget::DockTitle::DockTitle(const QString &title, QDockWidget *parent)
 	setContentsMargins(margins());
 }
 
-auto Widget::DockTitle::margins() -> QMargins
+auto DockTitle::margins() -> QMargins
 {
 	return {
 		marginHorizontal,
