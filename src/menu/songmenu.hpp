@@ -51,16 +51,19 @@ private:
 	QAction *toggleLiked = nullptr;
 
 	auto getTrackUrl() const -> QString;
-	void performAddToPlaylist(const std::string &playlistId) const;
-
-	void like(bool checked);
-	void addToQueue(bool checked);
-	void addToPlaylist(QAction *action);
-	void addToNewPlaylist();
-	void remFromPlaylist(bool checked);
-	void openTrackFeatures(bool checked);
-	void openLyrics(bool checked);
 	void viewArtist(const lib::spt::entity &artist);
-	void openAlbum(bool checked);
 	void setLiked(bool liked);
+
+	void addToPlaylist(const std::string &playlistId) const;
+	void addToNewPlaylist();
+
+	void onAudioFeatures(bool checked);
+	void onLyrics(bool checked);
+	void onCopySongLink(bool checked);
+	void onOpenInSpotify(bool checked);
+	void onLike(bool checked);
+	void onAddToQueue(bool checked);
+	void onAddToPlaylist(QAction *action);
+	void onRemoveFromPlaylist(bool checked);
+	void onOpenAlbum(bool checked);
 };
