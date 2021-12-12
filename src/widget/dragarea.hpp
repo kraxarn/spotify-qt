@@ -9,6 +9,8 @@ class DragArea: public QWidget
 public:
 	explicit DragArea(QWidget *parent);
 
+	DragArea(QWidget *target, QWidget *parent);
+
 protected:
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
@@ -16,7 +18,7 @@ protected:
 	void mouseDoubleClickEvent(QMouseEvent *event) override;
 
 private:
-	QMainWindow *mainWindow = nullptr;
+	QWidget *target;
 	QPoint dragPosition;
 
 	void menu(const QPoint &pos);

@@ -43,7 +43,7 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 		this, &MainToolBar::onNext);
 
 	addSeparator();
-	leftSpacer = new DragArea(this);
+	leftSpacer = new DragArea(mainWindow, this);
 	addWidget(leftSpacer);
 
 	// Progress
@@ -60,7 +60,7 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	}
 	addWidget(position);
 
-	rightSpacer = new DragArea(this);
+	rightSpacer = new DragArea(mainWindow, this);
 	addWidget(rightSpacer);
 	addSeparator();
 

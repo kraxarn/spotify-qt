@@ -1,20 +1,26 @@
 #include "dragarea.hpp"
-
 #include "mainwindow.hpp"
-#include "lib/log.hpp"
 
 DragArea::DragArea(QWidget *parent)
-	: QWidget(parent),
-	mainWindow(MainWindow::find(parent))
+	: DragArea(parent, parent)
 {
-	if (mainWindow == nullptr)
-	{
-		lib::log::error("DragArea: MainWindow not found");
-	}
+}
 
-	setContextMenuPolicy(Qt::CustomContextMenu);
-	QWidget::connect(this, &QWidget::customContextMenuRequested,
-		this, &DragArea::menu);
+DragArea::DragArea(QWidget *target, QWidget *parent)
+	: QWidget(parent),
+	target(target)
+{
+	// Only show context menu on main window
+	if (qobject_cast<QMainWindow *>(target) != nullptr)
+	{
+		setContextMenuPolicy(Qt::CustomContextMenu);
+		QWidget::connect(this, &QWidget::customContextMenuRequested,
+			this, &DragArea::menu);
+	}
+	else
+	{
+		setContextMenuPolicy(Qt::NoContextMenu);
+	}
 }
 
 void DragArea::mousePressEvent(QMouseEvent *event)
@@ -24,7 +30,7 @@ void DragArea::mousePressEvent(QMouseEvent *event)
 		return QWidget::mousePressEvent(event);
 	}
 
-	dragPosition = event->globalPos() - mainWindow->frameGeometry().topLeft();
+	dragPosition = event->globalPos() - target->frameGeometry().topLeft();
 	event->accept();
 }
 
@@ -36,7 +42,7 @@ void DragArea::mouseMoveEvent(QMouseEvent *event)
 	}
 
 	setCursor(Qt::SizeAllCursor);
-	mainWindow->move(event->globalPos() - dragPosition);
+	target->move(event->globalPos() - dragPosition);
 	event->accept();
 }
 
@@ -58,7 +64,11 @@ void DragArea::menu(const QPoint &pos)
 		"Minimize");
 	QAction::connect(minimize, &QAction::triggered, [this](bool /*checked*/)
 	{
-		static_cast<MainWindow *>(mainWindow)->minimize();
+		auto *mainWindow = dynamic_cast<MainWindow *>(target);
+		if (mainWindow != nullptr)
+		{
+			mainWindow->minimize();
+		}
 	});
 
 	const auto isMaximized = isWindowMaximized();
@@ -81,12 +91,12 @@ void DragArea::menu(const QPoint &pos)
 
 auto DragArea::isWindowMaximized() -> bool
 {
-	return mainWindow->windowState() == Qt::WindowMaximized;
+	return target->windowState() == Qt::WindowMaximized;
 }
 
 void DragArea::onMaximize(bool /*checked*/)
 {
-	mainWindow->setWindowState(isWindowMaximized()
+	target->setWindowState(isWindowMaximized()
 		? Qt::WindowNoState
 		: Qt::WindowMaximized);
 }
