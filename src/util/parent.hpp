@@ -16,7 +16,7 @@ public:
 		{
 			w = w->parentWidget();
 		}
-		return dynamic_cast<T *>(w);
+		return qobject_cast<T *>(w);
 	}
 
 	/**
@@ -30,7 +30,7 @@ public:
 		{
 			w = w->parent();
 		}
-		return dynamic_cast<T *>(w);
+		return qobject_cast<T *>(w);
 	}
 
 private:
