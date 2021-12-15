@@ -85,6 +85,8 @@ static auto&#160;</td><td class="memItemRight" valign="bottom"><b>to_string</b> 
 <tr class="memitem:a46b4f42b4dcb2fc6fe1f93238e42fcb9"><td class="memItemLeft" align="right" valign="top"><a id="a46b4f42b4dcb2fc6fe1f93238e42fcb9"></a>
 static auto&#160;</td><td class="memItemRight" valign="bottom"><b>parse</b> (const std::string &amp;str) -&gt; T</td></tr>
 <tr class="separator:a46b4f42b4dcb2fc6fe1f93238e42fcb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25cfa6d8989dbb1c6f56aec5e239d076"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1enums.html#a25cfa6d8989dbb1c6f56aec5e239d076">has_flag</a> (T value, T flag) -&gt; bool</td></tr>
+<tr class="separator:a25cfa6d8989dbb1c6f56aec5e239d076"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename T&gt;<br />
@@ -96,7 +98,55 @@ class lib::enums&lt; T &gt;</h3>
   </table>
   </dd>
 </dl>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a25cfa6d8989dbb1c6f56aec5e239d076"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25cfa6d8989dbb1c6f56aec5e239d076">&#9670;&nbsp;</a></span>has_flag()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static auto <a class="el" href="classlib_1_1enums.html">lib::enums</a>&lt; T &gt;::has_flag </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>flag</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt; bool
+		</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>If value has flag, eg. "value &amp; flag == flag" </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>Enum value </td></tr>
+    <tr><td class="paramname">flag</td><td>Enum flag to check value for </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Value contains flag </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>/github/workspace/lib/include/lib/<a class="el" href="enums_8hpp_source.html">enums.hpp</a></li>
 </ul>
 </div><!-- contents -->
