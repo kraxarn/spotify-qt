@@ -27,7 +27,7 @@ auto SettingsPage::Application::app() -> QWidget *
 	appRefresh->setValidator(new QIntValidator(minRefreshInterval,
 		maxRefreshInterval, this));
 	comboBoxLayout->addWidget(appRefresh, 0, 1);
-	comboBoxLayout->addWidget(new QLabel("seconds"), 0, 2);
+	comboBoxLayout->addWidget(new QLabel("seconds", this), 0, 2);
 
 	// Max queue
 	auto *maxQueueLabel = new QLabel("Queue limit", this);
