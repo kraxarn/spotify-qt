@@ -27,6 +27,48 @@ View::SidePanel::SidePanel::SidePanel(lib::spt::api &spotify, const lib::setting
 		this, &View::SidePanel::SidePanel::onTabMoved);
 }
 
+void View::SidePanel::SidePanel::openArtist(const std::string &artistId)
+{
+	auto *view = new View::Artist::Artist(spotify, artistId, cache, httpClient, parent);
+	addTab(view, "view-media-artist", "...", QString::fromStdString(artistId));
+}
+
+void View::SidePanel::SidePanel::openAudioFeatures(const lib::spt::track &track)
+{
+	auto *view = new View::AudioFeatures(spotify, track.id, this);
+	addTab(view, "view-statistics",
+		QString::fromStdString(track.title()), QString::fromStdString(track.id + "-statistics"));
+}
+
+void View::SidePanel::SidePanel::openLyrics(const lib::spt::track &track)
+{
+	auto *view = new LyricsView(httpClient, cache, this);
+	addTab(view, "view-media-lyrics",
+		QString::fromStdString(track.title()), QString::fromStdString(track.id + "-lyrics"));
+	view->open(track);
+}
+
+void View::SidePanel::SidePanel::openSearch()
+{
+	if (searchView == nullptr)
+	{
+		searchView = new View::Search::Search(spotify, cache, httpClient, parent);
+	}
+
+	if (stack->indexOf(searchView) < 0)
+	{
+		addTab(searchView, "edit-find", "Search", "search-tab-id");
+	}
+
+	setCurrentWidget(searchView);
+	setVisible(true);
+}
+
+void View::SidePanel::SidePanel::closeSearch()
+{
+	removeTab(stack->indexOf(searchView));
+}
+
 void View::SidePanel::SidePanel::addTab(QWidget *widget, const QString &icon,
 	const QString &tabTitle, const QString &tabId)
 {
@@ -75,12 +117,6 @@ void View::SidePanel::SidePanel::setCurrentWidget(QWidget *widget)
 	}
 }
 
-void View::SidePanel::SidePanel::openArtist(const std::string &artistId)
-{
-	auto *view = new View::Artist::Artist(spotify, artistId, cache, httpClient, parent);
-	addTab(view, "view-media-artist", "...", QString::fromStdString(artistId));
-}
-
 void View::SidePanel::SidePanel::setTabText(QWidget *widget, const QString &text)
 {
 	auto index = stack->indexOf(widget);
@@ -89,42 +125,6 @@ void View::SidePanel::SidePanel::setTabText(QWidget *widget, const QString &text
 		return;
 	}
 	title->setTabText(index, text);
-}
-
-void View::SidePanel::SidePanel::openSearch()
-{
-	if (searchView == nullptr)
-	{
-		searchView = new View::Search::Search(spotify, cache, httpClient, parent);
-	}
-
-	if (stack->indexOf(searchView) < 0)
-	{
-		addTab(searchView, "edit-find", "Search", "search-tab-id");
-	}
-
-	setCurrentWidget(searchView);
-	setVisible(true);
-}
-
-void View::SidePanel::SidePanel::closeSearch()
-{
-	removeTab(stack->indexOf(searchView));
-}
-
-void View::SidePanel::SidePanel::openAudioFeatures(const lib::spt::track &track)
-{
-	auto *view = new View::AudioFeatures(spotify, track.id, this);
-	addTab(view, "view-statistics",
-		QString::fromStdString(track.title()), QString::fromStdString(track.id + "-statistics"));
-}
-
-void View::SidePanel::SidePanel::openLyrics(const lib::spt::track &track)
-{
-	auto *view = new LyricsView(httpClient, cache, this);
-	addTab(view, "view-media-lyrics",
-		QString::fromStdString(track.title()), QString::fromStdString(track.id + "-lyrics"));
-	view->open(track);
 }
 
 void View::SidePanel::SidePanel::onTabMoved(int from, int to)
