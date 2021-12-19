@@ -20,7 +20,7 @@ Dialog::WhatsNew::WhatsNew(lib::settings &settings,
 	layout->addWidget(title);
 	text = new QTextEdit();
 	text->setReadOnly(true);
-	text->setPlainText("...");
+	text->setPlainText("Loading changes...");
 
 	layout->addWidget(text, 1);
 	auto *buttons = new QDialogButtonBox(this);
@@ -53,40 +53,25 @@ void Dialog::WhatsNew::onOk(bool /*checked*/)
 	accept();
 }
 
-void Dialog::WhatsNew::open()
+void Dialog::WhatsNew::showEvent(QShowEvent *event)
 {
-	auto url = lib::fmt::format("https://api.github.com/repos/kraxarn/spotify-qt/releases/tags/{}",
-		APP_VERSION);
+	lib::gh::api(httpClient).release(ORG_NAME, APP_NAME, APP_VERSION,
+		[this](const lib::gh::release &release)
+		{
+			onReleaseInfo(release);
+		});
 
-	httpClient.get(url, lib::headers(), [this](const std::string &body)
-	{
-		if (body.empty())
-		{
-			failed("No response from server");
-			return;
-		}
-
-		try
-		{
-			auto json = nlohmann::json::parse(body);
-			this->onReleaseInfo(json);
-		}
-		catch (const std::exception &e)
-		{
-			failed(e.what());
-		}
-	});
+	QDialog::showEvent(event);
 }
 
-void Dialog::WhatsNew::onReleaseInfo(const nlohmann::json &json)
+void Dialog::WhatsNew::onReleaseInfo(const lib::gh::release &release)
 {
-	const auto &jsonBody = json.at("body");
-	if (jsonBody.is_null() || !jsonBody.is_string())
+	auto body = QString::fromStdString(release.body);
+	if (body.isEmpty())
 	{
-		failed("No release info");
+		text->setText(QStringLiteral("No changes for this release"));
 		return;
 	}
-	auto body = QString::fromStdString(jsonBody.get<std::string>());
 
 	// Markdown formatting only supports Qt 5.14
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
@@ -94,12 +79,4 @@ void Dialog::WhatsNew::onReleaseInfo(const nlohmann::json &json)
 #else
 	text->setText(body);
 #endif
-
-	QDialog::open();
-}
-
-void Dialog::WhatsNew::failed(const std::string &reason)
-{
-	lib::log::error("Failed to fetch what's new in \"{}\": {}",
-		APP_VERSION, reason);
 }
