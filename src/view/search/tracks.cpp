@@ -45,12 +45,42 @@ void Search::Tracks::add(const lib::spt::track &track)
 
 void Search::Tracks::onItemActivated(QTreeWidgetItem *item, int /*column*/)
 {
-	// Do we want it to continue playing results?
-	const auto &track = item->data(0, static_cast<int>(DataRole::Track))
+	const auto &selectedItem = item->data(0, static_cast<int>(DataRole::Track))
 		.value<lib::spt::track>();
-	auto trackId = lib::spt::api::to_uri("track", track.id);
+	auto selectedIndex = -1;
 
-	spotify.play_tracks(0, {trackId}, [](const std::string &status)
+	const auto itemCount = topLevelItemCount();
+	std::vector<std::string> trackUris;
+	trackUris.reserve(itemCount);
+
+	for (auto i = 0; i < itemCount; i++)
+	{
+		const auto *current = topLevelItem(i);
+		const auto &track = current->data(0, static_cast<int>(DataRole::Track))
+			.value<lib::spt::track>();
+
+		if (!track.is_valid())
+		{
+			continue;
+		}
+
+		if (selectedIndex < 0 && track.id == selectedItem.id)
+		{
+			selectedIndex = i;
+		}
+
+		trackUris.push_back(lib::spt::api::to_uri("track", track.id));
+	}
+
+	// Track wasn't found in list somehow, only play found track
+	if (selectedIndex < 0)
+	{
+		selectedIndex = 0;
+		trackUris.clear();
+		trackUris.push_back(lib::spt::api::to_uri("track", selectedItem.id));
+	}
+
+	spotify.play_tracks(selectedIndex, trackUris, [](const std::string &status)
 	{
 		if (status.empty())
 		{
