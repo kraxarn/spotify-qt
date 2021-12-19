@@ -116,7 +116,10 @@ void View::SidePanel::SidePanel::addTab(QWidget *widget, const QString &icon,
 void View::SidePanel::SidePanel::removeTab(int index)
 {
 	title->removeTab(index);
-	stack->removeWidget(stack->widget(index));
+
+	auto *widget = stack->widget(index);
+	stack->removeWidget(widget);
+	widget->deleteLater();
 
 	if (title->count() <= 0)
 	{
