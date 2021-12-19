@@ -1,10 +1,6 @@
 var searchData=
 [
-  ['settings_498',['settings',['../classlib_1_1spt_1_1api.html#a5a058e247f84895b9ee98f7b5a6ed756',1,'lib::spt::api']]],
-  ['shows_499',['shows',['../classlib_1_1spt_1_1search__results.html#a04606a5c13267ef4eef854de5f7088d7',1,'lib::spt::search_results']]],
-  ['shuffle_500',['shuffle',['../classlib_1_1spt_1_1playback.html#a593d145ce768c35439952a27ab29294d',1,'lib::spt::playback']]],
-  ['signal_501',['signal',['../classlib_1_1crash__info.html#a58bc7d2a0b45b541b913382fe0c3b57c',1,'lib::crash_info']]],
-  ['snapshot_502',['snapshot',['../classlib_1_1spt_1_1playlist.html#ae2eff6fa44f518622c1df2ecfe677f62',1,'lib::spt::playlist']]],
-  ['spotify_503',['spotify',['../classlib_1_1settings.html#a15cb6ff4193e655f271d8d76787c2507',1,'lib::settings']]],
-  ['stack_5ftrace_504',['stack_trace',['../classlib_1_1crash__info.html#a6470c0cfcaea6a053ddd9da81e626ef2',1,'lib::crash_info']]]
+  ['release_5fdate_500',['release_date',['../classlib_1_1spt_1_1album.html#a12f19a9ab0139d5033d22a9839e7a73f',1,'lib::spt::album::release_date()'],['../classlib_1_1spt_1_1episode.html#a0d0de9b2cb481e736687378657027601',1,'lib::spt::episode::release_date()']]],
+  ['release_5fdate_5fprecision_501',['release_date_precision',['../classlib_1_1spt_1_1episode.html#a95f5dbabcd8082ef5fca20dbd2fda89e',1,'lib::spt::episode']]],
+  ['repeat_502',['repeat',['../classlib_1_1spt_1_1playback.html#aa9f346fa0c4f0c68ed0b9c808315c57d',1,'lib::spt::playback']]]
 ];

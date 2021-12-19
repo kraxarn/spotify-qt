@@ -84,6 +84,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7278c354d46b5b3a903d5e0796d272d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42146a538391103bf5e850232a961ac2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1gh_1_1api.html#a42146a538391103bf5e850232a961ac2">contributors</a> (const std::string &amp;owner, const std::string &amp;repo, lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1gh_1_1contributor.html">lib::gh::contributor</a> &gt;&gt; &amp;callback) const</td></tr>
 <tr class="separator:a42146a538391103bf5e850232a961ac2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a549f211719ba4289a66651136446163e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1gh_1_1api.html#a549f211719ba4289a66651136446163e">release</a> (const std::string &amp;owner, const std::string &amp;repo, const std::string &amp;tag, lib::callback&lt; <a class="el" href="classlib_1_1gh_1_1release.html">lib::gh::release</a> &gt; &amp;callback) const</td></tr>
+<tr class="separator:a549f211719ba4289a66651136446163e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>GitHub API </p>
@@ -124,6 +126,55 @@ Public Member Functions</h2></td></tr>
     <tr><td class="paramname">owner</td><td>Repository owner </td></tr>
     <tr><td class="paramname">repo</td><td>Repository name </td></tr>
     <tr><td class="paramname">callback</td><td>Response callback, empty if failed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a549f211719ba4289a66651136446163e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a549f211719ba4289a66651136446163e">&#9670;&nbsp;</a></span>release()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::gh::api::release </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>owner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>repo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>tag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; <a class="el" href="classlib_1_1gh_1_1release.html">lib::gh::release</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Release information </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">owner</td><td>Repository owner </td></tr>
+    <tr><td class="paramname">repo</td><td>Repository name </td></tr>
+    <tr><td class="paramname">tag</td><td>Tag for release to get </td></tr>
+    <tr><td class="paramname">callback</td><td></td></tr>
   </table>
   </dd>
 </dl>

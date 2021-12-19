@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['value_511',['value',['../classlib_1_1ddg_1_1link.html#a1bdc7b4a2715a4c1bc5d08ce6e9cbca3',1,'lib::ddg::link']]],
-  ['volume_5fpercent_512',['volume_percent',['../classlib_1_1spt_1_1device.html#a4660cde6df9a480e5594d8252413140b',1,'lib::spt::device']]]
+  ['uri_515',['uri',['../classlib_1_1spt_1_1context.html#a9d23cd4d63d8d0d402c2642d96a4f45e',1,'lib::spt::context::uri()'],['../classlib_1_1spt_1_1episode.html#ab1ed5181414e6e9f689b0ca3c43a21c5',1,'lib::spt::episode::uri()'],['../classlib_1_1spt_1_1show.html#ae43aac9864ad3c1a2c34cbf875e1d37a',1,'lib::spt::show::uri()']]]
 ];
