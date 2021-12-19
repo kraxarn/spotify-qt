@@ -7,11 +7,6 @@
 
 #define INTERFACE() QDBusInterface(SERVICE_NAME, SERVICE_PATH, SERVICE_NAME, dbus)
 
-#define DEFAULT_KEY QStringLiteral("default")
-#define PREVIOUS_KEY QStringLiteral("backward")
-#define PAUSE_KEY QStringLiteral("pause")
-#define NEXT_KEY QStringLiteral("next")
-
 DbusNotifications::DbusNotifications(QObject *parent)
 	: QObject(parent),
 	dbus(QDBusConnection::sessionBus())
@@ -57,26 +52,7 @@ void DbusNotifications::notify(const QString &title, const QString &message,
 	const auto appName = QCoreApplication::applicationName();
 	const auto appIcon = QStringLiteral("spotify-qt");
 	const auto summary = QString(title);
-
-	// Some notification systems also supports icons here
 	QStringList actions;
-	if (onAction)
-	{
-		actions.append({
-			// Clicking the notification
-			DEFAULT_KEY,
-			QString(),
-			// Previous track
-			PREVIOUS_KEY,
-			QStringLiteral("Previous️"),
-			// Play/Pause
-			PAUSE_KEY,
-			QStringLiteral("Pause"),
-			// Next track
-			NEXT_KEY,
-			QStringLiteral("Next"),
-		});
-	}
 
 	QVariantMap hints;
 	hints["suppress-sound"] = true;
@@ -114,48 +90,6 @@ auto DbusNotifications::isConnected() -> bool
 
 	lib::log::warn("Notification service failed: Not connected");
 	return false;
-}
-
-void DbusNotifications::setOnAction(std::function<void(NotificationAction)> callback)
-{
-	if (!onAction
-		&& !dbus.connect(SERVICE_NAME, SERVICE_PATH, SERVICE_NAME, QStringLiteral("ActionInvoked"),
-			this, SLOT(onActionInvoked(uint, QString))))
-	{
-		lib::log::warn("Failed to connect to notification action service");
-		return;
-	}
-
-	onAction = std::move(callback);
-}
-
-void DbusNotifications::onActionInvoked(uint id, const QString &actionKey)
-{
-	if (id != notificationId || !onAction)
-	{
-		return;
-	}
-
-	if (actionKey == DEFAULT_KEY)
-	{
-		onAction(NotificationAction::Default);
-	}
-	else if (actionKey == PREVIOUS_KEY)
-	{
-		onAction(NotificationAction::Previous);
-	}
-	else if (actionKey == PAUSE_KEY)
-	{
-		onAction(NotificationAction::PlayPause);
-	}
-	else if (actionKey == NEXT_KEY)
-	{
-		onAction(NotificationAction::Next);
-	}
-	else
-	{
-		lib::log::warn("Unknown key action: {}", actionKey.toStdString());
-	}
 }
 
 #endif

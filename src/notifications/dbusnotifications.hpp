@@ -31,8 +31,6 @@ public:
 	void notify(const QString &title, const QString &message,
 		const QString &imagePath, int timeout);
 
-	void setOnAction(std::function<void(NotificationAction)> callback);
-
 private:
 	QDBusConnection dbus;
 	uint notificationId = 0;
@@ -40,8 +38,6 @@ private:
 	std::function<void(NotificationAction)> onAction;
 
 	auto isConnected() -> bool;
-
-	void onActionInvoked(uint id, const QString &actionKey);
 };
 
 #endif
