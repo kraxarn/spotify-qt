@@ -100,7 +100,7 @@ auto SpotifyClient::Runner::start() -> QString
 	if (clientType == lib::client_type::librespot)
 	{
 		arguments.append({
-			"--name", "spotify-qt (librespot)",
+			"--name", QString("%1 (librespot)").arg(APP_NAME),
 			"--initial-volume", "100",
 			"--autoplay",
 			"--cache", QString::fromStdString(paths.cache() / "librespot"),
@@ -110,7 +110,7 @@ auto SpotifyClient::Runner::start() -> QString
 	{
 		arguments.append({
 			"--no-daemon",
-			"--device-name", "spotify-qt (spotifyd)",
+			"--device-name", QString("%1 (spotifyd)").arg(APP_NAME),
 		});
 	}
 

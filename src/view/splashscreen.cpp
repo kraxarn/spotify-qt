@@ -9,7 +9,9 @@ SplashScreen::SplashScreen()
 	QPainter painter(&image);
 	painter.drawPixmap(0, 0,
 		ImageUtils::mask(background, MaskShape::App, QVariant()));
-	painter.drawPixmap(12, 12, Icon::get("logo:spotify-qt").pixmap(80, 80));
+	painter.drawPixmap(12, 12, Icon::get(QString("logo:%1")
+		.arg(APP_ICON))
+		.pixmap(80, 80));
 
 	setPixmap(QPixmap::fromImage(image));
 }

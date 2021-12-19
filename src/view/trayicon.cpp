@@ -62,7 +62,7 @@ void TrayIcon::message(const QString &message)
 		return;
 	}
 
-	showMessage("spotify-qt", message);
+	showMessage(APP_NAME, message);
 }
 
 void TrayIcon::message(const lib::spt::track &track, const QPixmap &pixmap)
@@ -106,7 +106,8 @@ void TrayIcon::setDefaultPixmap()
 {
 	constexpr int iconSize = 64;
 
-	setIcon(Icon::get(QString("logo:spotify-qt-symbolic-%1")
+	setIcon(Icon::get(QString("logo:%1-symbolic-%2")
+		.arg(APP_ICON)
 		.arg(settings.general.tray_light_icon ? "light" : "dark"))
 		.pixmap(iconSize, iconSize));
 }

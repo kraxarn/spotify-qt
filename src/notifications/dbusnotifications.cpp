@@ -50,7 +50,7 @@ void DbusNotifications::notify(const QString &title, const QString &message,
 
 	// Notify arguments
 	const auto appName = QCoreApplication::applicationName();
-	const auto appIcon = QStringLiteral("spotify-qt");
+	const auto appIcon = QStringLiteral(APP_NAME);
 	const auto summary = QString(title);
 	QStringList actions;
 

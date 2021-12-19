@@ -11,13 +11,13 @@ Dialog::Setup::Setup(lib::settings &settings, QWidget *parent)
 	auto *mainLayout = new QVBoxLayout();
 
 	// Welcome text
-	auto *welcomeText = new QLabel(
-		"Welcome to spotify-qt!\n"
+	auto *welcomeText = new QLabel(QString(
+		"Welcome to %1!\n"
 		"Before using the app, you need to setup your Spotify Web API keys.\n"
 		"You can do this by opening the Spotify Dashboard, create a new app and \n"
 		"set the redirect uri (not website) to http://localhost:8888.\n"
-		"Then, enter your Client ID and secret below from the same application page:",
-		this);
+		"Then, enter your Client ID and secret below from the same application page:")
+		.arg(APP_NAME), this);
 	mainLayout->addWidget(welcomeText);
 
 	// Client ID
@@ -121,7 +121,7 @@ void Dialog::Setup::newServerConnection()
 	// Write
 	socket->write(QString("HTTP/1.1 200 OK\r\n\r\n%1")
 		.arg(status.isEmpty()
-			? "success, you can now return to spotify-qt"
+			? QString("success, you can now return to %1").arg(APP_NAME)
 			: QString("failed to authenticate: %1").arg(status)).toUtf8());
 	socket->flush();
 	socket->waitForBytesWritten(3000);

@@ -45,8 +45,8 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	}
 
 	// Setup main window
-	setWindowTitle("spotify-qt");
-	setWindowIcon(Icon::get("logo:spotify-qt"));
+	setWindowTitle(APP_NAME);
+	setWindowIcon(Icon::get(QString("logo:%1").arg(APP_ICON)));
 	resize(defaultSize());
 	setCentralWidget(createCentralWidget());
 	toolBar = new MainToolBar(*spotify, settings,
@@ -165,7 +165,7 @@ void MainWindow::initDevice()
 		}
 
 		if (devices.size() == 1
-			&& lib::strings::starts_with(devices.front().name, "spotify-qt"))
+			&& lib::strings::starts_with(devices.front().name, APP_NAME))
 		{
 			spotify->set_device(devices.front(), {});
 		}
@@ -271,13 +271,13 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 	{
 		toolBar->setPlaying(false);
 		contextView->resetCurrentlyPlaying();
-		setWindowTitle("spotify-qt");
+		setWindowTitle(APP_NAME);
 		return;
 	}
 
 	const auto &currPlaying = current.playback.item;
 	if (contextView->getCurrentlyPlaying().id != currPlaying.id
-		|| windowTitle() == "spotify-qt")
+		|| windowTitle() == APP_NAME)
 	{
 		if (current.playback.is_playing)
 		{

@@ -19,12 +19,16 @@ auto SettingsPage::About::about() -> QWidget *
 	// Logo
 	constexpr int logoSize = 96;
 	auto *titleLogo = new QLabel();
-	titleLogo->setPixmap(Icon::get("logo:spotify-qt").pixmap(logoSize, logoSize));
+	titleLogo->setPixmap(Icon::get(QString("logo:%1")
+		.arg(APP_ICON))
+		.pixmap(logoSize, logoSize));
 	layout->addWidget(titleLogo, 0, Qt::AlignHCenter);
 
 	// Title
 	constexpr float appNameFontMulti = 1.5F;
-	auto *titleAppName = new QLabel(QString("spotify-qt %1").arg(APP_VERSION));
+	auto *titleAppName = new QLabel(QString("%1 %2")
+		.arg(APP_NAME)
+		.arg(APP_VERSION));
 	auto appNameFont = titleAppName->font();
 	appNameFont.setPointSize((int) (appNameFont.pointSizeF() * appNameFontMulti));
 	titleAppName->setFont(appNameFont);

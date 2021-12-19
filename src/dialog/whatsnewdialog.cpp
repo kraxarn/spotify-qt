@@ -8,8 +8,8 @@ WhatsNewDialog::WhatsNewDialog(lib::settings &settings,
 	httpClient(httpClient)
 {
 	auto *layout = new QVBoxLayout();
-	auto *title = new QLabel(QString("spotify-qt was updated to version %1")
-		.arg(APP_VERSION));
+	auto *title = new QLabel(QString("%1 was updated to version %2")
+		.arg(APP_NAME, APP_VERSION));
 
 	auto titleFont = title->font();
 	constexpr float titleFontMulti = 1.5F;
@@ -37,7 +37,7 @@ WhatsNewDialog::WhatsNewDialog(lib::settings &settings,
 	layout->addWidget(buttons);
 	setLayout(layout);
 	resize(500, 400);
-	setWindowTitle(QString("spotify-qt %1").arg(APP_VERSION));
+	setWindowTitle(QString("%1 %2").arg(APP_NAME, APP_VERSION));
 }
 
 void WhatsNewDialog::onDontShowAgain(bool /*checked*/)

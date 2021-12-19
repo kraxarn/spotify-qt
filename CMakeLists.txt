@@ -69,8 +69,11 @@ if (GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
 	target_compile_definitions(spotify-qt PRIVATE GIT_COMMIT="${GIT_COMMIT}")
 endif ()
 
-# Version macros
+# App related definitions
 target_compile_definitions(spotify-qt PRIVATE APP_VERSION="v${PROJECT_VERSION}")
+target_compile_definitions(spotify-qt PRIVATE APP_NAME="${PROJECT_NAME}")
+target_compile_definitions(spotify-qt PRIVATE APP_ICON="${PROJECT_NAME}")
+target_compile_definitions(spotify-qt PRIVATE ORG_NAME="kraxarn")
 
 # Set install targets for 'make install'
 install(TARGETS spotify-qt RUNTIME DESTINATION bin)

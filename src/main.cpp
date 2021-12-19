@@ -17,7 +17,7 @@ auto main(int argc, char *argv[]) -> int
 {
 	// Set name for settings etc.
 	QCoreApplication::setOrganizationName("kraxarn");
-	QCoreApplication::setApplicationName("spotify-qt");
+	QCoreApplication::setApplicationName(APP_NAME);
 	QCoreApplication::setApplicationVersion(APP_VERSION);
 
 	// High-DPI support
