@@ -1,6 +1,6 @@
-#include "view/sidepanel/sidepanel.hpp"
+#include "view/sidepanel/view.hpp"
 
-View::SidePanel::SidePanel::SidePanel(lib::spt::api &spotify, const lib::settings &settings,
+SidePanel::View::View(lib::spt::api &spotify, const lib::settings &settings,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
 	: QDockWidget(parent),
 	spotify(spotify),
@@ -8,7 +8,7 @@ View::SidePanel::SidePanel::SidePanel(lib::spt::api &spotify, const lib::setting
 	cache(cache),
 	httpClient(httpClient)
 {
-	title = new View::SidePanel::Title(this);
+	title = new SidePanel::Title(this);
 	setTitleBarWidget(title);
 
 	stack = new QStackedWidget(this);
@@ -17,30 +17,30 @@ View::SidePanel::SidePanel::SidePanel(lib::spt::api &spotify, const lib::setting
 	setVisible(false);
 
 	QTabBar::connect(title, &QTabBar::tabCloseRequested,
-		this, &View::SidePanel::SidePanel::removeTab);
+		this, &SidePanel::View::removeTab);
 
 	QTabBar::connect(title, &QTabBar::currentChanged,
-		this, &View::SidePanel::SidePanel::setCurrentIndex);
+		this, &SidePanel::View::setCurrentIndex);
 
 	QTabBar::connect(title, &QTabBar::tabMoved,
-		this, &View::SidePanel::SidePanel::onTabMoved);
+		this, &SidePanel::View::onTabMoved);
 }
 
-void View::SidePanel::SidePanel::openArtist(const std::string &artistId)
+void SidePanel::View::openArtist(const std::string &artistId)
 {
-	auto *view = new View::Artist::Artist(spotify, artistId, cache, httpClient, this);
+	auto *view = new Artist::View(spotify, artistId, cache, httpClient, this);
 	addTab(view, "view-media-artist", "...",
 		SidePanelType::Artist, QString::fromStdString(artistId));
 }
 
-void View::SidePanel::SidePanel::openAudioFeatures(const lib::spt::track &track)
+void SidePanel::View::openAudioFeatures(const lib::spt::track &track)
 {
-	auto *view = new View::AudioFeatures(spotify, track.id, this);
+	auto *view = new ::View::AudioFeatures(spotify, track.id, this);
 	addTab(view, "view-statistics", QString::fromStdString(track.title()),
 		SidePanelType::AudioFeatures, QString::fromStdString(track.id));
 }
 
-void View::SidePanel::SidePanel::openLyrics(const lib::spt::track &track)
+void SidePanel::View::openLyrics(const lib::spt::track &track)
 {
 	auto *view = new LyricsView(httpClient, cache, this);
 	addTab(view, "view-media-lyrics", QString::fromStdString(track.title()),
@@ -48,28 +48,29 @@ void View::SidePanel::SidePanel::openLyrics(const lib::spt::track &track)
 	view->open(track);
 }
 
-void View::SidePanel::SidePanel::openSearch()
+void SidePanel::View::openSearch()
 {
 	if (searchView == nullptr)
 	{
-		searchView = new View::Search::Search(spotify, cache, httpClient, this);
+		searchView = new Search::View(spotify, cache, httpClient, this);
 	}
 
 	if (stack->indexOf(searchView) < 0)
 	{
-		addTab(searchView, "edit-find", "Search", SidePanelType::Search, QString());
+		addTab(searchView, "edit-find", "Search",
+			SidePanelType::Search, QString());
 	}
 
 	setCurrentWidget(searchView);
 	setVisible(true);
 }
 
-void View::SidePanel::SidePanel::closeSearch()
+void SidePanel::View::closeSearch()
 {
 	removeTab(stack->indexOf(searchView));
 }
 
-auto View::SidePanel::SidePanel::findTab(SidePanelType type, const QString &name) -> QWidget *
+auto SidePanel::View::findTab(SidePanelType type, const QString &name) -> QWidget *
 {
 	switch (type)
 	{
@@ -77,13 +78,13 @@ auto View::SidePanel::SidePanel::findTab(SidePanelType type, const QString &name
 			return find<QWidget *>(name);
 
 		case SidePanelType::Artist:
-			return find<View::Artist::Artist *>(name);
+			return find<Artist::View *>(name);
 
 		case SidePanelType::Search:
-			return find<View::Search::Search *>(name);
+			return find<Search::View *>(name);
 
 		case SidePanelType::AudioFeatures:
-			return find<View::AudioFeatures *>(name);
+			return find<::View::AudioFeatures *>(name);
 
 		case SidePanelType::Lyrics:
 			return find<LyricsView *>(name);
@@ -93,7 +94,7 @@ auto View::SidePanel::SidePanel::findTab(SidePanelType type, const QString &name
 	}
 }
 
-void View::SidePanel::SidePanel::addTab(QWidget *widget, const QString &icon,
+void SidePanel::View::addTab(QWidget *widget, const QString &icon,
 	const QString &tabTitle, SidePanelType type, const QString &name)
 {
 	auto *current = findTab(type, name);
@@ -112,7 +113,7 @@ void View::SidePanel::SidePanel::addTab(QWidget *widget, const QString &icon,
 	setVisible(true);
 }
 
-void View::SidePanel::SidePanel::removeTab(int index)
+void SidePanel::View::removeTab(int index)
 {
 	title->removeTab(index);
 
@@ -126,13 +127,13 @@ void View::SidePanel::SidePanel::removeTab(int index)
 	}
 }
 
-void View::SidePanel::SidePanel::setCurrentIndex(int index)
+void SidePanel::View::setCurrentIndex(int index)
 {
 	title->setCurrentIndex(index);
 	stack->setCurrentIndex(index);
 }
 
-void View::SidePanel::SidePanel::setCurrentWidget(QWidget *widget)
+void SidePanel::View::setCurrentWidget(QWidget *widget)
 {
 	auto index = stack->indexOf(widget);
 	if (index >= 0)
@@ -141,7 +142,7 @@ void View::SidePanel::SidePanel::setCurrentWidget(QWidget *widget)
 	}
 }
 
-void View::SidePanel::SidePanel::setTabText(QWidget *widget, const QString &text)
+void SidePanel::View::setTabText(QWidget *widget, const QString &text)
 {
 	auto index = stack->indexOf(widget);
 	if (index < 0)
@@ -151,7 +152,7 @@ void View::SidePanel::SidePanel::setTabText(QWidget *widget, const QString &text
 	title->setTabText(index, text);
 }
 
-void View::SidePanel::SidePanel::onTabMoved(int from, int to)
+void SidePanel::View::onTabMoved(int from, int to)
 {
 	auto *fromWidget = stack->widget(from);
 	if (fromWidget == nullptr)

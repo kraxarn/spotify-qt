@@ -3,17 +3,14 @@
 #include <QTabBar>
 #include <QMouseEvent>
 
-namespace View
+namespace SidePanel
 {
-	namespace SidePanel
+	class Title: public QTabBar
 	{
-		class Title: public QTabBar
-		{
-		public:
-			explicit Title(QWidget *parent);
+	public:
+		explicit Title(QWidget *parent);
 
-		protected:
-			void mouseReleaseEvent(QMouseEvent *event) override;
-		};
-	}
+	protected:
+		void mouseReleaseEvent(QMouseEvent *event) override;
+	};
 }

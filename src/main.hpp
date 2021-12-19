@@ -31,7 +31,7 @@
 #include "view/context/view.hpp"
 #include "view/maincontent.hpp"
 #include "view/maintoolbar.hpp"
-#include "view/sidepanel/sidepanel.hpp"
+#include "view/sidepanel/view.hpp"
 #include "view/trayicon.hpp"
 #include "widget/hiddensizegrip.hpp"
 
