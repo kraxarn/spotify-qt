@@ -41,7 +41,6 @@ namespace View
 			View::SidePanel::Title *title = nullptr;
 			QStackedWidget *stack = nullptr;
 
-			QWidget *parent = nullptr;
 			QWidget *searchView = nullptr;
 
 			lib::spt::api &spotify;

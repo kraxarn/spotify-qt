@@ -3,7 +3,6 @@
 View::SidePanel::SidePanel::SidePanel(lib::spt::api &spotify, const lib::settings &settings,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
 	: QDockWidget(parent),
-	parent(parent),
 	spotify(spotify),
 	settings(settings),
 	cache(cache),
@@ -29,7 +28,7 @@ View::SidePanel::SidePanel::SidePanel(lib::spt::api &spotify, const lib::setting
 
 void View::SidePanel::SidePanel::openArtist(const std::string &artistId)
 {
-	auto *view = new View::Artist::Artist(spotify, artistId, cache, httpClient, parent);
+	auto *view = new View::Artist::Artist(spotify, artistId, cache, httpClient, this);
 	addTab(view, "view-media-artist", "...",
 		SidePanelType::Artist, QString::fromStdString(artistId));
 }
@@ -53,7 +52,7 @@ void View::SidePanel::SidePanel::openSearch()
 {
 	if (searchView == nullptr)
 	{
-		searchView = new View::Search::Search(spotify, cache, httpClient, parent);
+		searchView = new View::Search::Search(spotify, cache, httpClient, this);
 	}
 
 	if (stack->indexOf(searchView) < 0)
