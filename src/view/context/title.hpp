@@ -12,38 +12,35 @@
 #include <QLabel>
 #include <QMenu>
 
-namespace View
+namespace Context
 {
-	namespace Context
+	class Title: public QWidget
 	{
-		class Title: public QWidget
-		{
-		Q_OBJECT
+	Q_OBJECT
 
-		public:
-			Title(lib::spt::api &spotify, spt::Current &current,
-				const lib::cache &cache, QWidget *parent);
+	public:
+		Title(lib::spt::api &spotify, spt::Current &current,
+			const lib::cache &cache, QWidget *parent);
 
-			void updateIcon();
+		void updateIcon();
 
-		private:
-			QLabel *icon = nullptr;
-			QLabel *info = nullptr;
+	private:
+		QLabel *icon = nullptr;
+		QLabel *info = nullptr;
 
-			lib::spt::api &spotify;
-			spt::Current &current;
-			const lib::cache &cache;
+		lib::spt::api &spotify;
+		spt::Current &current;
+		const lib::cache &cache;
 
-			static constexpr int spacing = 16;
+		static constexpr int spacing = 16;
 
-			void onMenu(const QPoint &pos);
-			void onInfoOpen(bool checked);
+		void onMenu(const QPoint &pos);
+		void onInfoOpen(bool checked);
 
-			auto getIcon() const -> QIcon;
+		auto getIcon() const -> QIcon;
 
-			auto playlist(const std::string &id) -> lib::spt::playlist;
-			auto playlistNameFromSaved(const std::string &id) -> std::string;
-			void playlistName(const std::string &id, lib::callback<std::string> &callback);
-		};
-	}
+		auto playlist(const std::string &id) -> lib::spt::playlist;
+		auto playlistNameFromSaved(const std::string &id) -> std::string;
+		void playlistName(const std::string &id, lib::callback<std::string> &callback);
+	};
 }

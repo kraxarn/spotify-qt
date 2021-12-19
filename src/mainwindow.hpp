@@ -103,7 +103,7 @@ private:
 
 	List::Library *libraryList = nullptr;
 	List::Playlist *playlistList = nullptr;
-	View::Context::Context *contextView = nullptr;
+	Context::View *contextView = nullptr;
 
 #ifdef USE_DBUS
 	mp::Service *mediaPlayer = nullptr;

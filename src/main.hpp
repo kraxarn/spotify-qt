@@ -28,7 +28,7 @@
 #include "util/imageutils.hpp"
 #include "util/parent.hpp"
 #include "util/styleutils.hpp"
-#include "view/context/context.hpp"
+#include "view/context/view.hpp"
 #include "view/maincontent.hpp"
 #include "view/maintoolbar.hpp"
 #include "view/sidepanel/sidepanel.hpp"

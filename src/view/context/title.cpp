@@ -2,7 +2,7 @@
 
 #include "mainwindow.hpp"
 
-View::Context::Title::Title(lib::spt::api &spotify, spt::Current &current,
+Context::Title::Title(lib::spt::api &spotify, spt::Current &current,
 	const lib::cache &cache, QWidget *parent)
 	: QWidget(parent),
 	spotify(spotify),
@@ -26,10 +26,10 @@ View::Context::Title::Title(lib::spt::api &spotify, spt::Current &current,
 
 	info->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(info, &QWidget::customContextMenuRequested,
-		this, &View::Context::Title::onMenu);
+		this, &Context::Title::onMenu);
 }
 
-void View::Context::Title::onMenu(const QPoint &pos)
+void Context::Title::onMenu(const QPoint &pos)
 {
 	if (info == nullptr)
 	{
@@ -48,12 +48,12 @@ void View::Context::Title::onMenu(const QPoint &pos)
 	auto *open = menu->addAction(getIcon(), QString("Open %1")
 		.arg(QString::fromStdString(current.playback.context.type)));
 	QAction::connect(open, &QAction::triggered,
-		this, &View::Context::Title::onInfoOpen);
+		this, &Context::Title::onInfoOpen);
 
 	menu->popup(info->mapToGlobal(pos));
 }
 
-void View::Context::Title::onInfoOpen(bool /*checked*/)
+void Context::Title::onInfoOpen(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	const auto &type = current.playback.context.type;
@@ -77,7 +77,7 @@ void View::Context::Title::onInfoOpen(bool /*checked*/)
 	}
 }
 
-auto View::Context::Title::getIcon() const -> QIcon
+auto Context::Title::getIcon() const -> QIcon
 {
 	return Icon::get(QString("view-media-%1")
 		.arg(current.playback.context.type.empty()
@@ -87,7 +87,7 @@ auto View::Context::Title::getIcon() const -> QIcon
 				: QString::fromStdString(current.playback.context.type)));
 }
 
-void View::Context::Title::updateIcon()
+void Context::Title::updateIcon()
 {
 	auto callback = [this](const std::string &currentName)
 	{
@@ -127,7 +127,7 @@ void View::Context::Title::updateIcon()
 			: current.playback.item.artists.front().name;
 
 		auto id = lib::spt::api::to_id(current.playback.context.uri);
-		for (const auto &artist : current.playback.item.artists)
+		for (const auto &artist: current.playback.item.artists)
 		{
 			if (artist.id == id)
 			{
@@ -143,9 +143,9 @@ void View::Context::Title::updateIcon()
 	}
 }
 
-auto View::Context::Title::playlist(const std::string &id) -> lib::spt::playlist
+auto Context::Title::playlist(const std::string &id) -> lib::spt::playlist
 {
-	for (const auto &playlist : cache.get_playlists())
+	for (const auto &playlist: cache.get_playlists())
 	{
 		if (lib::strings::ends_with(id, playlist.id))
 		{
@@ -156,12 +156,12 @@ auto View::Context::Title::playlist(const std::string &id) -> lib::spt::playlist
 	return {};
 }
 
-auto View::Context::Title::playlistNameFromSaved(const std::string &id) -> std::string
+auto Context::Title::playlistNameFromSaved(const std::string &id) -> std::string
 {
 	return playlist(id).name;
 }
 
-void View::Context::Title::playlistName(const std::string &id, lib::callback<std::string> &callback)
+void Context::Title::playlistName(const std::string &id, lib::callback<std::string> &callback)
 {
 	const auto &name = playlistNameFromSaved(id);
 	if (!name.empty())

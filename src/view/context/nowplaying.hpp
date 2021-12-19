@@ -6,31 +6,28 @@
 #include <QLabel>
 #include <QVBoxLayout>
 
-namespace View
+namespace Context
 {
-	namespace Context
+	class NowPlaying: public QWidget
 	{
-		class NowPlaying: public QWidget
-		{
-		Q_OBJECT
+	Q_OBJECT
 
-		public:
-			NowPlaying(QWidget *parent);
+	public:
+		NowPlaying(QWidget *parent);
 
-			void setTrack(const lib::spt::track &track);
-			void setNoPlaying();
+		void setTrack(const lib::spt::track &track);
+		void setNoPlaying();
 
-		private:
-			static constexpr float nameScale = 1.1F;
-			static constexpr float artistScale = 0.9F;
+	private:
+		static constexpr float nameScale = 1.1F;
+		static constexpr float artistScale = 0.9F;
 
-			QVBoxLayout *layout = nullptr;
+		QVBoxLayout *layout = nullptr;
 
-			QLabel *artist = nullptr;
-			QLabel *name = nullptr;
+		QLabel *artist = nullptr;
+		QLabel *name = nullptr;
 
-			auto newLabel(float scale) -> QLabel *;
-			static void setText(QLabel *label, const std::string &text);
-		};
-	}
+		auto newLabel(float scale) -> QLabel *;
+		static void setText(QLabel *label, const std::string &text);
+	};
 }

@@ -342,7 +342,7 @@ auto MainWindow::createCentralWidget() -> QWidget *
 
 	libraryList = new List::Library(*spotify, this);
 	playlistList = new List::Playlist(*spotify, settings, cache, this);
-	contextView = new View::Context::Context(*spotify, current, cache, this);
+	contextView = new Context::View(*spotify, current, cache, this);
 
 	// Left side panel
 	addDockWidget(Qt::LeftDockWidgetArea,

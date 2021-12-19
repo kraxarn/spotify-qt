@@ -1,6 +1,6 @@
 #include "nowplaying.hpp"
 
-View::Context::NowPlaying::NowPlaying(QWidget *parent)
+Context::NowPlaying::NowPlaying(QWidget *parent)
 	: QWidget(parent)
 {
 	layout = new QVBoxLayout(this);
@@ -10,7 +10,7 @@ View::Context::NowPlaying::NowPlaying(QWidget *parent)
 	artist = newLabel(artistScale);
 }
 
-void View::Context::NowPlaying::setTrack(const lib::spt::track &track)
+void Context::NowPlaying::setTrack(const lib::spt::track &track)
 {
 	if (name != nullptr)
 	{
@@ -25,7 +25,7 @@ void View::Context::NowPlaying::setTrack(const lib::spt::track &track)
 	}
 }
 
-void View::Context::NowPlaying::setNoPlaying()
+void Context::NowPlaying::setNoPlaying()
 {
 	if (name != nullptr)
 	{
@@ -38,7 +38,7 @@ void View::Context::NowPlaying::setNoPlaying()
 	}
 }
 
-auto View::Context::NowPlaying::newLabel(float scale) -> QLabel *
+auto Context::NowPlaying::newLabel(float scale) -> QLabel *
 {
 	auto *label = new QLabel(this);
 	label->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
@@ -52,7 +52,7 @@ auto View::Context::NowPlaying::newLabel(float scale) -> QLabel *
 	return label;
 }
 
-void View::Context::NowPlaying::setText(QLabel *label, const std::string &text)
+void Context::NowPlaying::setText(QLabel *label, const std::string &text)
 {
 	auto qText = QString::fromStdString(text);
 	label->setText(qText);

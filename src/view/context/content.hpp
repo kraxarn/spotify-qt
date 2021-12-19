@@ -15,39 +15,36 @@
 #include <QLabel>
 #include <QMenu>
 
-namespace View
+namespace Context
 {
-	namespace Context
+	class Content: public QWidget
 	{
-		class Content: public QWidget
-		{
-		Q_OBJECT
+	Q_OBJECT
 
-		public:
-			Content(lib::spt::api &spotify, spt::Current &current,
-				const lib::cache &cache, QWidget *parent);
+	public:
+		Content(lib::spt::api &spotify, spt::Current &current,
+			const lib::cache &cache, QWidget *parent);
 
-			void reset();
+		void reset();
 
-			auto getCurrentlyPlaying() const -> const lib::spt::track &;
-			void setCurrentlyPlaying(const lib::spt::track &track);
+		auto getCurrentlyPlaying() const -> const lib::spt::track &;
+		void setCurrentlyPlaying(const lib::spt::track &track);
 
-			void setAlbum(const QPixmap &pixmap);
+		void setAlbum(const QPixmap &pixmap);
 
-		private:
-			/** Width and height of album */
-			static constexpr int albumSize = 64;
+	private:
+		/** Width and height of album */
+		static constexpr int albumSize = 64;
 
-			lib::spt::api &spotify;
-			spt::Current &current;
-			const lib::cache &cache;
+		lib::spt::api &spotify;
+		spt::Current &current;
+		const lib::cache &cache;
 
-			lib::spt::track currentlyPlaying;
+		lib::spt::track currentlyPlaying;
 
-			QLabel *album = nullptr;
-			View::Context::NowPlaying *nowPlaying = nullptr;
+		QLabel *album = nullptr;
+		NowPlaying *nowPlaying = nullptr;
 
-			void onSongMenu(const QPoint &pos);
-		};
-	}
+		void onSongMenu(const QPoint &pos);
+	};
 }

@@ -1,6 +1,6 @@
 #include "view/context/content.hpp"
 
-View::Context::Content::Content(lib::spt::api &spotify, spt::Current &current,
+Context::Content::Content(lib::spt::api &spotify, spt::Current &current,
 	const lib::cache &cache, QWidget *parent)
 	: QWidget(parent),
 	spotify(spotify),
@@ -15,7 +15,7 @@ View::Context::Content::Content(lib::spt::api &spotify, spt::Current &current,
 	album->setFixedSize(albumSize, albumSize);
 
 	layout->addWidget(album);
-	nowPlaying = new View::Context::NowPlaying(this);
+	nowPlaying = new Context::NowPlaying(this);
 	layout->addWidget(nowPlaying);
 
 	reset();
@@ -23,13 +23,13 @@ View::Context::Content::Content(lib::spt::api &spotify, spt::Current &current,
 	// Show menu when clicking
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QLabel::connect(this, &QWidget::customContextMenuRequested,
-		this, &View::Context::Content::onSongMenu);
+		this, &Context::Content::onSongMenu);
 
 	// Context doesn't make sense to resize vertically
 	setFixedHeight(layout->minimumSize().height());
 }
 
-void View::Context::Content::onSongMenu(const QPoint &pos)
+void Context::Content::onSongMenu(const QPoint &pos)
 {
 	auto track = current.playback.item;
 	if (track.name.empty()
@@ -42,7 +42,7 @@ void View::Context::Content::onSongMenu(const QPoint &pos)
 	menu->popup(mapToGlobal(pos));
 }
 
-void View::Context::Content::reset()
+void Context::Content::reset()
 {
 	if (album != nullptr)
 	{
@@ -55,7 +55,7 @@ void View::Context::Content::reset()
 	}
 }
 
-void View::Context::Content::setAlbum(const QPixmap &pixmap)
+void Context::Content::setAlbum(const QPixmap &pixmap)
 {
 	if (album != nullptr)
 	{
@@ -63,12 +63,12 @@ void View::Context::Content::setAlbum(const QPixmap &pixmap)
 	}
 }
 
-auto View::Context::Content::getCurrentlyPlaying() const -> const lib::spt::track &
+auto Context::Content::getCurrentlyPlaying() const -> const lib::spt::track &
 {
 	return currentlyPlaying;
 }
 
-void View::Context::Content::setCurrentlyPlaying(const lib::spt::track &track)
+void Context::Content::setCurrentlyPlaying(const lib::spt::track &track)
 {
 	if (nowPlaying != nullptr)
 	{
