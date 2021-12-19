@@ -1,6 +1,6 @@
 #include "view/artist/title.hpp"
 
-View::Artist::Title::Title(QWidget *parent)
+Artist::Title::Title(QWidget *parent)
 	: QLabel("...", parent)
 {
 	setWordWrap(true);

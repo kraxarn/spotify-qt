@@ -1,7 +1,7 @@
-#include "view/artist/artist.hpp"
+#include "view/artist/view.hpp"
 #include "mainwindow.hpp"
 
-View::Artist::Artist::Artist(lib::spt::api &spotify, const std::string &artistId,
+Artist::View::View(lib::spt::api &spotify, const std::string &artistId,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
 	: QWidget(parent),
 	artistId(std::string(artistId)),
@@ -14,16 +14,16 @@ View::Artist::Artist::Artist(lib::spt::api &spotify, const std::string &artistId
 	setLayout(layout);
 
 	// Placeholder for cover image
-	coverLabel = new View::Artist::Cover(this);
+	coverLabel = new Artist::Cover(this);
 	layout->addWidget(coverLabel);
 
 	// Artist name title
 	title = new QHBoxLayout();
-	name = new View::Artist::Title(this);
+	name = new Artist::Title(this);
 	title->addWidget(name, 1);
 
 	// Context menu
-	context = new View::Artist::PlayButton(spotify, httpClient, this);
+	context = new Artist::PlayButton(spotify, httpClient, this);
 	title->addWidget(context);
 	layout->addLayout(title);
 
@@ -38,19 +38,19 @@ View::Artist::Artist::Artist(lib::spt::api &spotify, const std::string &artistId
 	layout->addWidget(tabs);
 
 	// Top tracks
-	topTracksList = new View::Artist::TracksList(spotify, cache,
+	topTracksList = new Artist::TracksList(spotify, cache,
 		httpClient, artist, tabs);
 	tabs->addTab(topTracksList, "Popular");
 
 	// Albums
-	albumList = new View::Artist::AlbumsList(spotify, cache, httpClient, this);
+	albumList = new Artist::AlbumsList(spotify, cache, httpClient, this);
 	tabs->addTab(albumList, "Discography");
 
 	// Related artists
 	relatedList = new QListWidget(tabs);
 	relatedList->setEnabled(false);
-	QListWidget::connect(relatedList, &QListWidget::itemClicked, this,
-		&View::Artist::Artist::relatedClick);
+	QListWidget::connect(relatedList, &QListWidget::itemClicked,
+		this, &Artist::View::relatedClick);
 	tabs->addTab(relatedList, "Related");
 
 	spotify.artist(this->artistId, [this](const lib::spt::artist &loadedArtist)
@@ -59,11 +59,11 @@ View::Artist::Artist::Artist(lib::spt::api &spotify, const std::string &artistId
 	});
 }
 
-void View::Artist::Artist::artistLoaded(const lib::spt::artist &loadedArtist)
+void Artist::View::artistLoaded(const lib::spt::artist &loadedArtist)
 {
 	artist = loadedArtist;
 
-	auto *sidePanel = Parent::findWidget<View::SidePanel::SidePanel>(parentWidget());
+	auto *sidePanel = Parent::findWidget<SidePanel::View>(parentWidget());
 	if (sidePanel != nullptr)
 	{
 		sidePanel->setTabText(this, QString::fromStdString(artist.name));
@@ -103,7 +103,7 @@ void View::Artist::Artist::artistLoaded(const lib::spt::artist &loadedArtist)
 	});
 }
 
-void View::Artist::Artist::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
+void Artist::View::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
 {
 	for (const auto &track: tracks)
 	{
@@ -112,7 +112,7 @@ void View::Artist::Artist::topTracksLoaded(const std::vector<lib::spt::track> &t
 	topTracksList->setEnabled(true);
 }
 
-void View::Artist::Artist::relatedArtistsLoaded(const std::vector<lib::spt::artist> &artists)
+void Artist::View::relatedArtistsLoaded(const std::vector<lib::spt::artist> &artists)
 {
 	for (const auto &related: artists)
 	{
@@ -124,7 +124,7 @@ void View::Artist::Artist::relatedArtistsLoaded(const std::vector<lib::spt::arti
 	relatedList->setEnabled(true);
 }
 
-void View::Artist::Artist::relatedClick(QListWidgetItem *item)
+void Artist::View::relatedClick(QListWidgetItem *item)
 {
 	relatedList->setEnabled(false);
 

@@ -7,27 +7,24 @@
 
 #include <QListWidget>
 
-namespace View
+namespace Artist
 {
-	namespace Artist
+	class TracksList: public QListWidget
 	{
-		class TracksList: public QListWidget
-		{
-		public:
-			TracksList(lib::spt::api &spotify, lib::cache &cache,
-				const lib::http_client &httpClient, const lib::spt::artist &artist,
-				QWidget *parent);
+	public:
+		TracksList(lib::spt::api &spotify, lib::cache &cache,
+			const lib::http_client &httpClient, const lib::spt::artist &artist,
+			QWidget *parent);
 
-			void addTrack(const lib::spt::track &track);
+		void addTrack(const lib::spt::track &track);
 
-		private:
-			lib::spt::api &spotify;
-			lib::cache &cache;
-			const lib::http_client &httpClient;
-			const lib::spt::artist &artist;
+	private:
+		lib::spt::api &spotify;
+		lib::cache &cache;
+		const lib::http_client &httpClient;
+		const lib::spt::artist &artist;
 
-			void onActivated(QListWidgetItem *item);
-			void onContextMenu(const QPoint &pos);
-		};
-	}
+		void onActivated(QListWidgetItem *item);
+		void onContextMenu(const QPoint &pos);
+	};
 }

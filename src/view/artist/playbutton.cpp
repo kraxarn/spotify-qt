@@ -1,7 +1,7 @@
 #include "view/artist/playbutton.hpp"
 #include "mainwindow.hpp"
 
-View::Artist::PlayButton::PlayButton(lib::spt::api &spotify,
+Artist::PlayButton::PlayButton(lib::spt::api &spotify,
 	const lib::http_client &httpClient, QWidget *parent)
 	: QToolButton(parent),
 	spotify(spotify),
@@ -13,10 +13,10 @@ View::Artist::PlayButton::PlayButton(lib::spt::api &spotify,
 	setPopupMode(QToolButton::MenuButtonPopup);
 
 	QAbstractButton::connect(this, &QAbstractButton::clicked,
-		this, &View::Artist::PlayButton::onClicked);
+		this, &Artist::PlayButton::onClicked);
 }
 
-auto View::Artist::PlayButton::contextMenu() -> QMenu *
+auto Artist::PlayButton::contextMenu() -> QMenu *
 {
 	auto *menu = new QMenu(this);
 
@@ -26,15 +26,15 @@ auto View::Artist::PlayButton::contextMenu() -> QMenu *
 	follow = menu->addAction(Icon::get("non-starred-symbolic"), "Follow");
 	follow->setEnabled(false);
 	QAction::connect(follow, &QAction::triggered,
-		this, &View::Artist::PlayButton::onFollow);
+		this, &Artist::PlayButton::onFollow);
 
 	menu->addMenu(new Menu::ArtistLinks(artist, httpClient, menu));
-	menu->addMenu(new View::Artist::ShareMenu(artist, menu));
+	menu->addMenu(new Artist::ShareMenu(artist, menu));
 
 	return menu;
 }
 
-void View::Artist::PlayButton::updateFollow(bool isFollowing)
+void Artist::PlayButton::updateFollow(bool isFollowing)
 {
 	follow->setIcon(Icon::get(QString("%1starred-symbolic")
 		.arg(isFollowing ? "" : "non-")));
@@ -44,7 +44,7 @@ void View::Artist::PlayButton::updateFollow(bool isFollowing)
 			.right(follow->text().length() - follow->text().indexOf(' '))));
 }
 
-void View::Artist::PlayButton::setArtist(const lib::spt::artist &loadedArtist)
+void Artist::PlayButton::setArtist(const lib::spt::artist &loadedArtist)
 {
 	artist = loadedArtist;
 
@@ -70,13 +70,13 @@ void View::Artist::PlayButton::setArtist(const lib::spt::artist &loadedArtist)
 	setEnabled(true);
 }
 
-void View::Artist::PlayButton::onClicked(bool /*checked*/)
+void Artist::PlayButton::onClicked(bool /*checked*/)
 {
 	const auto uri = lib::spt::api::to_uri("artist", artist.id);
 	spotify.play_tracks(uri, {});
 }
 
-void View::Artist::PlayButton::onFollow(bool /*checked*/)
+void Artist::PlayButton::onFollow(bool /*checked*/)
 {
 	auto isFollowing = follow->text().contains("Unfollow");
 	updateFollow(!isFollowing);

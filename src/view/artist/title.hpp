@@ -4,19 +4,16 @@
 
 #include <QLabel>
 
-namespace View
+namespace Artist
 {
-	namespace Artist
+	class Title: public QLabel
 	{
-		class Title: public QLabel
-		{
-		Q_OBJECT
+	Q_OBJECT
 
-		public:
-			explicit Title(QWidget *parent);
+	public:
+		explicit Title(QWidget *parent);
 
-		private:
-			static constexpr int pointSize = 24;
-		};
-	}
+	private:
+		static constexpr int pointSize = 24;
+	};
 }

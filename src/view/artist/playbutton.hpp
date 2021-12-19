@@ -10,31 +10,28 @@
 #include <QToolButton>
 #include <QMenu>
 
-namespace View
+namespace Artist
 {
-	namespace Artist
+	class PlayButton: public QToolButton
 	{
-		class PlayButton: public QToolButton
-		{
-		public:
-			PlayButton(lib::spt::api &spotify,
-				const lib::http_client &httpClient, QWidget *parent);
+	public:
+		PlayButton(lib::spt::api &spotify,
+			const lib::http_client &httpClient, QWidget *parent);
 
-			void updateFollow(bool isFollowing);
-			void setArtist(const lib::spt::artist &artist);
+		void updateFollow(bool isFollowing);
+		void setArtist(const lib::spt::artist &artist);
 
-		private:
-			lib::spt::api &spotify;
-			const lib::http_client &httpClient;
-			lib::spt::artist artist;
+	private:
+		lib::spt::api &spotify;
+		const lib::http_client &httpClient;
+		lib::spt::artist artist;
 
-			QAction *popularity = nullptr;
-			QAction *follow = nullptr;
+		QAction *popularity = nullptr;
+		QAction *follow = nullptr;
 
-			auto contextMenu() -> QMenu *;
+		auto contextMenu() -> QMenu *;
 
-			void onClicked(bool checked);
-			void onFollow(bool checked);
-		};
-	}
+		void onClicked(bool checked);
+		void onFollow(bool checked);
+	};
 }

@@ -9,31 +9,28 @@
 
 #include <map>
 
-namespace View
+namespace Artist
 {
-	namespace Artist
+	class AlbumsList: public QTreeWidget
 	{
-		class AlbumsList: public QTreeWidget
-		{
-		public:
-			AlbumsList(lib::spt::api &spotify, lib::cache &cache,
-				const lib::http_client &httpClient, QWidget *parent);
+	public:
+		AlbumsList(lib::spt::api &spotify, lib::cache &cache,
+			const lib::http_client &httpClient, QWidget *parent);
 
-			void setAlbums(const std::vector<lib::spt::album> &albums);
+		void setAlbums(const std::vector<lib::spt::album> &albums);
 
-		private:
-			lib::spt::api &spotify;
-			lib::cache &cache;
-			const lib::http_client &httpClient;
+	private:
+		lib::spt::api &spotify;
+		lib::cache &cache;
+		const lib::http_client &httpClient;
 
-			std::map<lib::album_group, QTreeWidgetItem *> groups;
+		std::map<lib::album_group, QTreeWidgetItem *> groups;
 
-			static auto albumId(QTreeWidgetItem *item) -> std::string;
-			static auto groupToString(lib::album_group albumGroup) -> QString;
+		static auto albumId(QTreeWidgetItem *item) -> std::string;
+		static auto groupToString(lib::album_group albumGroup) -> QString;
 
-			void onItemClicked(QTreeWidgetItem *item, int column);
-			void onItemDoubleClicked(QTreeWidgetItem *item, int column);
-			void onContextMenu(const QPoint &pos);
-		};
-	}
+		void onItemClicked(QTreeWidgetItem *item, int column);
+		void onItemDoubleClicked(QTreeWidgetItem *item, int column);
+		void onContextMenu(const QPoint &pos);
+	};
 }

@@ -1,7 +1,7 @@
 #include "trackslist.hpp"
 #include "mainwindow.hpp"
 
-View::Artist::TracksList::TracksList(lib::spt::api &spotify, lib::cache &cache,
+Artist::TracksList::TracksList(lib::spt::api &spotify, lib::cache &cache,
 	const lib::http_client &httpClient, const lib::spt::artist &artist, QWidget *parent)
 	: QListWidget(parent),
 	spotify(spotify),
@@ -12,14 +12,14 @@ View::Artist::TracksList::TracksList(lib::spt::api &spotify, lib::cache &cache,
 	setEnabled(false);
 
 	QListWidget::connect(this, &QListWidget::itemActivated,
-		this, &View::Artist::TracksList::onActivated);
+		this, &Artist::TracksList::onActivated);
 
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested,
-		this, &View::Artist::TracksList::onContextMenu);
+		this, &Artist::TracksList::onContextMenu);
 }
 
-void View::Artist::TracksList::addTrack(const lib::spt::track &track)
+void Artist::TracksList::addTrack(const lib::spt::track &track)
 {
 	auto *item = new QListWidgetItem(QString::fromStdString(track.name), this);
 	item->setData(static_cast<int>(DataRole::Track), QVariant::fromValue(track));
@@ -33,7 +33,7 @@ void View::Artist::TracksList::addTrack(const lib::spt::track &track)
 	});
 }
 
-void View::Artist::TracksList::onActivated(QListWidgetItem *currentItem)
+void Artist::TracksList::onActivated(QListWidgetItem *currentItem)
 {
 	auto index = 0;
 	std::vector<std::string> uris;
@@ -63,7 +63,7 @@ void View::Artist::TracksList::onActivated(QListWidgetItem *currentItem)
 	});
 }
 
-void View::Artist::TracksList::onContextMenu(const QPoint &pos)
+void Artist::TracksList::onContextMenu(const QPoint &pos)
 {
 	auto *item = itemAt(pos);
 	const auto &track = item->data(static_cast<int>(DataRole::Track))

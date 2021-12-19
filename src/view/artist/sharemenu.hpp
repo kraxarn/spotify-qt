@@ -6,20 +6,17 @@
 #include <QMenu>
 #include <QClipboard>
 
-namespace View
+namespace Artist
 {
-	namespace Artist
+	class ShareMenu: public QMenu
 	{
-		class ShareMenu: public QMenu
-		{
-		public:
-			ShareMenu(const lib::spt::artist &artist, QWidget *parent);
+	public:
+		ShareMenu(const lib::spt::artist &artist, QWidget *parent);
 
-		private:
-			const lib::spt::artist &artist;
+	private:
+		const lib::spt::artist &artist;
 
-			void onCopyArtistLink(bool checked);
-			void onOpenInSpotify(bool checked);
-		};
-	}
+		void onCopyArtistLink(bool checked);
+		void onOpenInSpotify(bool checked);
+	};
 }
