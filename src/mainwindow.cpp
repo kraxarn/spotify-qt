@@ -463,7 +463,7 @@ void MainWindow::reloadTrayIcon()
 	}
 }
 
-TrayIcon *MainWindow::getTrayIcon()
+auto MainWindow::getTrayIcon() -> TrayIcon *
 {
 	return trayIcon;
 }
@@ -647,7 +647,7 @@ auto MainWindow::defaultSize() -> QSize
 
 	return {
 		width,
-		height
+		height,
 	};
 }
 
