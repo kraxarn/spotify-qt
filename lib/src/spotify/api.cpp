@@ -279,6 +279,8 @@ void api::put(const std::string &url, const nlohmann::json &body,
 			if (lib::strings::contains(error, "No active device found")
 				|| lib::strings::contains(error, "Device not found"))
 			{
+				set_current_device(std::string());
+
 				devices([this, url, body, error, callback]
 					(const std::vector<lib::spt::device> &devices)
 				{
