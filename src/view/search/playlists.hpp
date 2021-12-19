@@ -5,25 +5,22 @@
 
 #include <QListWidget>
 
-namespace View
+namespace Search
 {
-	namespace Search
+	class Playlists: public QListWidget
 	{
-		class Playlists: public QListWidget
-		{
-		Q_OBJECT
+	Q_OBJECT
 
-		public:
-			Playlists(lib::spt::api &spotify, lib::cache &cache, QWidget *parent);
+	public:
+		Playlists(lib::spt::api &spotify, lib::cache &cache, QWidget *parent);
 
-			void add(const lib::spt::playlist &playlist);
+		void add(const lib::spt::playlist &playlist);
 
-		private:
-			lib::spt::api &spotify;
-			lib::cache &cache;
+	private:
+		lib::spt::api &spotify;
+		lib::cache &cache;
 
-			void onItemClicked(QListWidgetItem *item);
-			void onContextMenu(const QPoint &pos);
-		};
-	}
+		void onItemClicked(QListWidgetItem *item);
+		void onContextMenu(const QPoint &pos);
+	};
 }

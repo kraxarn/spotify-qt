@@ -1,22 +1,22 @@
 #include "view/search/albums.hpp"
 #include "mainwindow.hpp"
 
-View::Search::Albums::Albums(lib::spt::api &spotify, lib::cache &cache,
+Search::Albums::Albums(lib::spt::api &spotify, lib::cache &cache,
 	const lib::http_client &httpClient, QWidget *parent)
-	: View::Search::SearchTabTree({"Title", "Artist"}, parent),
+	: Search::SearchTabTree({"Title", "Artist"}, parent),
 	spotify(spotify),
 	cache(cache),
 	httpClient(httpClient)
 {
 	QTreeWidget::connect(this, &QTreeWidget::itemClicked,
-		this, &View::Search::Albums::onItemClicked);
+		this, &Search::Albums::onItemClicked);
 
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested,
-		this, &View::Search::Albums::onContextMenu);
+		this, &Search::Albums::onContextMenu);
 }
 
-void View::Search::Albums::add(const lib::spt::album &album)
+void Search::Albums::add(const lib::spt::album &album)
 {
 	auto id = QString::fromStdString(album.id);
 	auto name = QString::fromStdString(album.name);
@@ -40,7 +40,7 @@ void View::Search::Albums::add(const lib::spt::album &album)
 	addTopLevelItem(item);
 }
 
-void View::Search::Albums::onItemClicked(QTreeWidgetItem *item, int /*column*/)
+void Search::Albums::onItemClicked(QTreeWidgetItem *item, int /*column*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	const auto albumId = item->data(0, static_cast<int>(DataRole::AlbumId))
@@ -52,7 +52,7 @@ void View::Search::Albums::onItemClicked(QTreeWidgetItem *item, int /*column*/)
 	}
 }
 
-void View::Search::Albums::onContextMenu(const QPoint &pos)
+void Search::Albums::onContextMenu(const QPoint &pos)
 {
 	auto *item = itemAt(pos);
 	const auto &albumId = item->data(0, static_cast<int>(DataRole::AlbumId)).toString();

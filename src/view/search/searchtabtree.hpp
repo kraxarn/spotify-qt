@@ -4,18 +4,15 @@
 #include <QHeaderView>
 #include <QResizeEvent>
 
-namespace View
+namespace Search
 {
-	namespace Search
+	class SearchTabTree: public QTreeWidget
 	{
-		class SearchTabTree: public QTreeWidget
-		{
-		Q_OBJECT
+	Q_OBJECT
 
-		protected:
-			SearchTabTree(const QStringList &headers, QWidget *parent);
+	protected:
+		SearchTabTree(const QStringList &headers, QWidget *parent);
 
-			void resizeEvent(QResizeEvent *event) override;
-		};
-	}
+		void resizeEvent(QResizeEvent *event) override;
+	};
 }

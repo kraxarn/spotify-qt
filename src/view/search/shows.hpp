@@ -10,24 +10,21 @@
 #include <QListWidget>
 #include <QTextDocument>
 
-namespace View
+namespace Search
 {
-	namespace Search
+	class Shows: public QListWidget
 	{
-		class Shows: public QListWidget
-		{
-		Q_OBJECT
+	Q_OBJECT
 
-		public:
-			Shows(lib::spt::api &spotify, QWidget *parent);
+	public:
+		Shows(lib::spt::api &spotify, QWidget *parent);
 
-			void add(const lib::spt::show &show);
+		void add(const lib::spt::show &show);
 
-		private:
-			lib::spt::api &spotify;
+	private:
+		lib::spt::api &spotify;
 
-			void onItemClicked(QListWidgetItem *item);
-			void onContextMenu(const QPoint &pos);
-		};
-	}
+		void onItemClicked(QListWidgetItem *item);
+		void onContextMenu(const QPoint &pos);
+	};
 }

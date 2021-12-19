@@ -1,7 +1,7 @@
-#include "view/search/search.hpp"
+#include "view/search/view.hpp"
 #include "mainwindow.hpp"
 
-View::Search::Search::Search(lib::spt::api &spotify, lib::cache &cache,
+Search::View::View(lib::spt::api &spotify, lib::cache &cache,
 	const lib::http_client &httpClient, QWidget *parent)
 	: QWidget(parent),
 	spotify(spotify),
@@ -18,12 +18,12 @@ View::Search::Search::Search(lib::spt::api &spotify, lib::cache &cache,
 	layout->addWidget(tabs);
 
 	// Tab content
-	artists = new View::Search::Artists(this);
-	playlists = new View::Search::Playlists(spotify, cache, this);
-	tracks = new View::Search::Tracks(spotify, cache, this);
-	albums = new View::Search::Albums(spotify, cache, httpClient, this);
-	library = new View::Search::Library(spotify, cache, this);
-	shows = new View::Search::Shows(spotify, this);
+	artists = new Search::Artists(this);
+	playlists = new Search::Playlists(spotify, cache, this);
+	tracks = new Search::Tracks(spotify, cache, this);
+	albums = new Search::Albums(spotify, cache, httpClient, this);
+	library = new Search::Library(spotify, cache, this);
+	shows = new Search::Shows(spotify, this);
 
 	// Add all tabs
 	tabs->addTab(tracks, "Tracks");
@@ -35,15 +35,15 @@ View::Search::Search::Search(lib::spt::api &spotify, lib::cache &cache,
 
 	// Start searching when pressing enter
 	QLineEdit::connect(searchBox, &QLineEdit::returnPressed,
-		this, &View::Search::Search::search);
+		this, &Search::View::search);
 
 	// Searching in library is a separate request,
 	// so only actually search once requested
 	QTabWidget::connect(tabs, &QTabWidget::currentChanged,
-		this, &View::Search::Search::onIndexChanged);
+		this, &Search::View::onIndexChanged);
 }
 
-void View::Search::Search::showEvent(QShowEvent *event)
+void Search::View::showEvent(QShowEvent *event)
 {
 	QWidget::showEvent(event);
 
@@ -57,7 +57,7 @@ void View::Search::Search::showEvent(QShowEvent *event)
 	searchBox->selectAll();
 }
 
-void View::Search::Search::hideEvent(QHideEvent *event)
+void Search::View::hideEvent(QHideEvent *event)
 {
 	QWidget::hideEvent(event);
 
@@ -68,7 +68,7 @@ void View::Search::Search::hideEvent(QHideEvent *event)
 	}
 }
 
-void View::Search::Search::search()
+void Search::View::search()
 {
 	// Empty all previous results
 	tracks->clear();
@@ -173,7 +173,7 @@ void View::Search::Search::search()
 	}
 }
 
-void View::Search::Search::resultsLoaded(const lib::spt::search_results &results)
+void Search::View::resultsLoaded(const lib::spt::search_results &results)
 {
 	// Albums
 	for (const auto &album: results.albums)
@@ -209,7 +209,7 @@ void View::Search::Search::resultsLoaded(const lib::spt::search_results &results
 	searchBox->setEnabled(true);
 }
 
-void View::Search::Search::onIndexChanged(int index)
+void Search::View::onIndexChanged(int index)
 {
 	if (static_cast<SearchTab>(index) == SearchTab::Library)
 	{

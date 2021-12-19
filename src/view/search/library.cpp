@@ -1,15 +1,15 @@
 #include "view/search/library.hpp"
-#include "view/search/search.hpp"
+#include "view/search/view.hpp"
 
-View::Search::Library::Library(lib::spt::api &spotify,
+Search::Library::Library(lib::spt::api &spotify,
 	lib::cache &cache, QWidget *parent)
-	: View::Search::Tracks(spotify, cache, parent),
+	: Search::Tracks(spotify, cache, parent),
 	spotify(spotify),
 	cache(cache)
 {
 }
 
-void View::Search::Library::searchCache(const std::string &query)
+void Search::Library::searchCache(const std::string &query)
 {
 	if (query.empty())
 	{
@@ -20,7 +20,7 @@ void View::Search::Library::searchCache(const std::string &query)
 	addResults(query, cache.get_tracks("liked_tracks"));
 }
 
-void View::Search::Library::search(const std::string &query)
+void Search::Library::search(const std::string &query)
 {
 	// To avoid an "unnecessary" request, don't search the same thing twice
 	if (query == lastQuery)
@@ -41,7 +41,7 @@ void View::Search::Library::search(const std::string &query)
 	});
 }
 
-void View::Search::Library::addResults(const std::string &query,
+void Search::Library::addResults(const std::string &query,
 	const std::vector<lib::spt::track> &tracks)
 {
 	clear();

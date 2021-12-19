@@ -1,14 +1,14 @@
 #include "view/search/artists.hpp"
 #include "mainwindow.hpp"
 
-View::Search::Artists::Artists(QWidget *parent)
+Search::Artists::Artists(QWidget *parent)
 	: QListWidget(parent)
 {
 	QListWidget::connect(this, &QListWidget::itemClicked,
-		this, &View::Search::Artists::onItemClicked);
+		this, &Search::Artists::onItemClicked);
 }
 
-void View::Search::Artists::add(const lib::spt::artist &artist)
+void Search::Artists::add(const lib::spt::artist &artist)
 {
 	auto name = QString::fromStdString(artist.name);
 	auto id = QString::fromStdString(artist.id);
@@ -18,7 +18,7 @@ void View::Search::Artists::add(const lib::spt::artist &artist)
 	item->setToolTip(name);
 }
 
-void View::Search::Artists::onItemClicked(QListWidgetItem *item)
+void Search::Artists::onItemClicked(QListWidgetItem *item)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	mainWindow->openArtist(item->data(static_cast<int>(DataRole::ArtistId))

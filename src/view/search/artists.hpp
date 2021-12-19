@@ -4,21 +4,18 @@
 
 #include <QListWidget>
 
-namespace View
+namespace Search
 {
-	namespace Search
+	class Artists: public QListWidget
 	{
-		class Artists: public QListWidget
-		{
-		Q_OBJECT
+	Q_OBJECT
 
-		public:
-			explicit Artists(QWidget *parent);
+	public:
+		explicit Artists(QWidget *parent);
 
-			void add(const lib::spt::artist &artist);
+		void add(const lib::spt::artist &artist);
 
-		private:
-			void onItemClicked(QListWidgetItem *item);
-		};
-	}
+	private:
+		void onItemClicked(QListWidgetItem *item);
+	};
 }

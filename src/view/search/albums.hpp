@@ -4,27 +4,24 @@
 #include "lib/cache.hpp"
 #include "view/search/searchtabtree.hpp"
 
-namespace View
+namespace Search
 {
-	namespace Search
+	class Albums: public SearchTabTree
 	{
-		class Albums: public SearchTabTree
-		{
-		Q_OBJECT
+	Q_OBJECT
 
-		public:
-			Albums(lib::spt::api &spotify, lib::cache &cache,
-				const lib::http_client &httpClient, QWidget *parent);
+	public:
+		Albums(lib::spt::api &spotify, lib::cache &cache,
+			const lib::http_client &httpClient, QWidget *parent);
 
-			void add(const lib::spt::album &album);
+		void add(const lib::spt::album &album);
 
-		private:
-			lib::spt::api &spotify;
-			lib::cache &cache;
-			const lib::http_client &httpClient;
+	private:
+		lib::spt::api &spotify;
+		lib::cache &cache;
+		const lib::http_client &httpClient;
 
-			void onItemClicked(QTreeWidgetItem *item, int column);
-			void onContextMenu(const QPoint &pos);
-		};
-	}
+		void onItemClicked(QTreeWidgetItem *item, int column);
+		void onContextMenu(const QPoint &pos);
+	};
 }

@@ -1,6 +1,6 @@
 #include "view/search/searchtabtree.hpp"
 
-View::Search::SearchTabTree::SearchTabTree(const QStringList &headers, QWidget *parent)
+Search::SearchTabTree::SearchTabTree(const QStringList &headers, QWidget *parent)
 	: QTreeWidget(parent)
 {
 	setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -12,7 +12,7 @@ View::Search::SearchTabTree::SearchTabTree(const QStringList &headers, QWidget *
 	setHeaderLabels(headers);
 }
 
-void View::Search::SearchTabTree::resizeEvent(QResizeEvent *event)
+void Search::SearchTabTree::resizeEvent(QResizeEvent *event)
 {
 	QAbstractItemView::resizeEvent(event);
 

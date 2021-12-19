@@ -1,20 +1,20 @@
 #include "view/search/shows.hpp"
 #include "mainwindow.hpp"
 
-View::Search::Shows::Shows(lib::spt::api &spotify,
+Search::Shows::Shows(lib::spt::api &spotify,
 	QWidget *parent)
 	: QListWidget(parent),
 	spotify(spotify)
 {
 	QListWidget::connect(this, &QListWidget::itemClicked,
-		this, &View::Search::Shows::onItemClicked);
+		this, &Search::Shows::onItemClicked);
 
 	setContextMenuPolicy(Qt::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested,
-		this, &View::Search::Shows::onContextMenu);
+		this, &Search::Shows::onContextMenu);
 }
 
-void View::Search::Shows::add(const lib::spt::show &show)
+void Search::Shows::add(const lib::spt::show &show)
 {
 	auto id = QString::fromStdString(show.id);
 	auto name = QString::fromStdString(show.name);
@@ -24,7 +24,7 @@ void View::Search::Shows::add(const lib::spt::show &show)
 	item->setToolTip(name);
 }
 
-void View::Search::Shows::onItemClicked(QListWidgetItem *item)
+void Search::Shows::onItemClicked(QListWidgetItem *item)
 {
 	auto showId = item->data(static_cast<int>(DataRole::ShowId))
 		.toString()
@@ -54,7 +54,7 @@ void View::Search::Shows::onItemClicked(QListWidgetItem *item)
 	});
 }
 
-void View::Search::Shows::onContextMenu(const QPoint &pos)
+void Search::Shows::onContextMenu(const QPoint &pos)
 {
 	auto *item = itemAt(pos);
 	auto showId = item->data(static_cast<int>(DataRole::ShowId))

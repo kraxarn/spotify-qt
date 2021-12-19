@@ -5,31 +5,28 @@
 #include "view/search/searchtabtree.hpp"
 #include "enum/column.hpp"
 
-namespace View
+namespace Search
 {
-	namespace Search
+	class Tracks: public SearchTabTree
 	{
-		class Tracks: public SearchTabTree
-		{
-		Q_OBJECT
+	Q_OBJECT
 
-		public:
-			Tracks(lib::spt::api &spotify, lib::cache &cache, QWidget *parent);
+	public:
+		Tracks(lib::spt::api &spotify, lib::cache &cache, QWidget *parent);
 
-			void add(const lib::spt::track &track);
+		void add(const lib::spt::track &track);
 
-		protected:
-			void resizeEvent(QResizeEvent *event) override;
+	protected:
+		void resizeEvent(QResizeEvent *event) override;
 
-		private:
-			/** When to show album column */
-			static constexpr int albumWidthThreshold = 340;
+	private:
+		/** When to show album column */
+		static constexpr int albumWidthThreshold = 340;
 
-			lib::spt::api &spotify;
-			lib::cache &cache;
+		lib::spt::api &spotify;
+		lib::cache &cache;
 
-			void onItemActivated(QTreeWidgetItem *item, int column);
-			void onContextMenu(const QPoint &pos);
-		};
-	}
+		void onItemActivated(QTreeWidgetItem *item, int column);
+		void onContextMenu(const QPoint &pos);
+	};
 }
