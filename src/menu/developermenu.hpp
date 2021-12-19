@@ -4,7 +4,7 @@
 #include "dialog/openlink.hpp"
 #include "dialog/setup.hpp"
 #include "dialog/trackscachedialog.hpp"
-#include "dialog/whatsnewdialog.hpp"
+#include "dialog/whatsnew.hpp"
 #include "util/icon.hpp"
 #include "lib/settings.hpp"
 #include "lib/spotify/api.hpp"

@@ -101,7 +101,7 @@ auto DeveloperMenu::dialogMenu() -> QMenu *
 		new Dialog::OpenLink("/", LinkType::Path, mainWindow),
 		new Dialog::Setup(settings, mainWindow),
 		new TracksCacheDialog(cache, mainWindow),
-		new WhatsNewDialog(settings, httpClient, mainWindow),
+		new Dialog::WhatsNew(settings, httpClient, mainWindow),
 		new Dialog::CreatePlaylist(settings, mainWindow),
 	};
 

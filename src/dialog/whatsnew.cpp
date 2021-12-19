@@ -1,7 +1,7 @@
-#include "whatsnewdialog.hpp"
+#include "dialog/whatsnew.hpp"
 #include "mainwindow.hpp"
 
-WhatsNewDialog::WhatsNewDialog(lib::settings &settings,
+Dialog::WhatsNew::WhatsNew(lib::settings &settings,
 	const lib::http_client &httpClient, QWidget *parent)
 	: QDialog(parent),
 	settings(settings),
@@ -28,11 +28,11 @@ WhatsNewDialog::WhatsNewDialog(lib::settings &settings,
 	auto *dontShowAgain = buttons->addButton("Don't show again",
 		QDialogButtonBox::RejectRole);
 	QPushButton::connect(dontShowAgain, &QPushButton::clicked,
-		this, &WhatsNewDialog::onDontShowAgain);
+		this, &Dialog::WhatsNew::onDontShowAgain);
 
 	auto *ok = buttons->addButton(QDialogButtonBox::Ok);
 	QPushButton::connect(ok, &QPushButton::clicked,
-		this, &WhatsNewDialog::onOk);
+		this, &Dialog::WhatsNew::onOk);
 
 	layout->addWidget(buttons);
 	setLayout(layout);
@@ -40,7 +40,7 @@ WhatsNewDialog::WhatsNewDialog(lib::settings &settings,
 	setWindowTitle(QString("%1 %2").arg(APP_NAME, APP_VERSION));
 }
 
-void WhatsNewDialog::onDontShowAgain(bool /*checked*/)
+void Dialog::WhatsNew::onDontShowAgain(bool /*checked*/)
 {
 	settings.general.show_changelog = false;
 	settings.save();
@@ -48,12 +48,12 @@ void WhatsNewDialog::onDontShowAgain(bool /*checked*/)
 	reject();
 }
 
-void WhatsNewDialog::onOk(bool /*checked*/)
+void Dialog::WhatsNew::onOk(bool /*checked*/)
 {
 	accept();
 }
 
-void WhatsNewDialog::open()
+void Dialog::WhatsNew::open()
 {
 	auto url = lib::fmt::format("https://api.github.com/repos/kraxarn/spotify-qt/releases/tags/{}",
 		APP_VERSION);
@@ -78,7 +78,7 @@ void WhatsNewDialog::open()
 	});
 }
 
-void WhatsNewDialog::onReleaseInfo(const nlohmann::json &json)
+void Dialog::WhatsNew::onReleaseInfo(const nlohmann::json &json)
 {
 	const auto &jsonBody = json.at("body");
 	if (jsonBody.is_null() || !jsonBody.is_string())
@@ -98,7 +98,7 @@ void WhatsNewDialog::onReleaseInfo(const nlohmann::json &json)
 	QDialog::open();
 }
 
-void WhatsNewDialog::failed(const std::string &reason)
+void Dialog::WhatsNew::failed(const std::string &reason)
 {
 	lib::log::error("Failed to fetch what's new in \"{}\": {}",
 		APP_VERSION, reason);

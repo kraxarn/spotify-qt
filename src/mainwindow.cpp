@@ -143,7 +143,7 @@ void MainWindow::initWhatsNew()
 		&& !settings.general.last_version.empty()
 		&& settings.general.last_version != APP_VERSION)
 	{
-		auto *dialog = new WhatsNewDialog(settings, *httpClient, this);
+		auto *dialog = new Dialog::WhatsNew(settings, *httpClient, this);
 		dialog->open();
 	}
 
