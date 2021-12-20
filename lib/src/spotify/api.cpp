@@ -1,4 +1,5 @@
 #include "lib/spotify/api.hpp"
+#include "lib/uri.hpp"
 
 using namespace lib::spt;
 
@@ -197,6 +198,29 @@ auto api::get_current_device() const -> const std::string &
 	return settings.general.last_device;
 }
 
+auto lib::spt::api::get_device_url(const std::string &url,
+	const lib::spt::device &device) -> std::string
+{
+	lib::uri uri(url);
+	auto params = uri.get_search_params();
+
+	auto device_ids = params.find("device_ids");
+	if (device_ids != params.end())
+	{
+		device_ids->second = device.id;
+	}
+	else
+	{
+		params.insert({
+			"device_ids",
+			device.id,
+		});
+	}
+
+	uri.set_search_params(params);
+	return uri.get_url();
+}
+
 //region GET
 
 void api::get(const std::string &url, lib::callback<nlohmann::json> &callback)
@@ -281,16 +305,12 @@ void api::put(const std::string &url, const nlohmann::json &body,
 
 			if (noDevice || invalidDevice)
 			{
-				// Remember old device before possible reset
-				// Ideally, we just get the device ID from the url when needed instead
-				const auto &old_device = get_current_device();
-
 				if (invalidDevice)
 				{
 					set_current_device(std::string());
 				}
 
-				devices([this, url, body, error, old_device, callback]
+				devices([this, url, body, error, callback]
 					(const std::vector<lib::spt::device> &devices)
 				{
 					if (devices.empty())
@@ -302,7 +322,7 @@ void api::put(const std::string &url, const nlohmann::json &body,
 					}
 					else
 					{
-						this->select_device(devices, [this, url, body, callback, old_device, error]
+						this->select_device(devices, [this, url, body, callback, error]
 							(const lib::spt::device &device)
 						{
 							if (device.id.empty())
@@ -311,13 +331,12 @@ void api::put(const std::string &url, const nlohmann::json &body,
 								return;
 							}
 
-							this->set_device(device, [this, url, body, callback, device, old_device]
+							this->set_device(device, [this, url, body, callback, device]
 								(const std::string &status)
 							{
 								if (status.empty())
 								{
-									this->put(lib::strings::replace_all(url, old_device, device.id),
-										body, callback);
+									this->put(get_device_url(url, device), body, callback);
 								}
 							});
 						});

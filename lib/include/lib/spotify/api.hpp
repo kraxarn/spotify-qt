@@ -322,6 +322,14 @@ namespace lib
 			 */
 			static auto to_id(const std::string &id) -> std::string;
 
+			/**
+			 * Get new URL with device ID added, or replaced
+			 * @param url URL to modify
+			 * @param device Device to add/replace
+			 */
+			static auto get_device_url(const std::string &url,
+				const lib::spt::device &device) -> std::string;
+
 		protected:
 			/**
 			 * Allow use to select device, by default, none is chosen
