@@ -276,12 +276,21 @@ void api::put(const std::string &url, const nlohmann::json &body,
 		{
 			auto error = error_message(url, response);
 
-			if (lib::strings::contains(error, "No active device found")
-				|| lib::strings::contains(error, "Device not found"))
-			{
-				set_current_device(std::string());
+			const auto noDevice = lib::strings::contains(error, "No active device found");
+			const auto invalidDevice = lib::strings::contains(error, "Device not found");
 
-				devices([this, url, body, error, callback]
+			if (noDevice || invalidDevice)
+			{
+				// Remember old device before possible reset
+				// Ideally, we just get the device ID from the url when needed instead
+				const auto &old_device = get_current_device();
+
+				if (invalidDevice)
+				{
+					set_current_device(std::string());
+				}
+
+				devices([this, url, body, error, old_device, callback]
 					(const std::vector<lib::spt::device> &devices)
 				{
 					if (devices.empty())
@@ -293,7 +302,7 @@ void api::put(const std::string &url, const nlohmann::json &body,
 					}
 					else
 					{
-						this->select_device(devices, [this, url, body, callback, error]
+						this->select_device(devices, [this, url, body, callback, old_device, error]
 							(const lib::spt::device &device)
 						{
 							if (device.id.empty())
@@ -301,9 +310,6 @@ void api::put(const std::string &url, const nlohmann::json &body,
 								callback(error);
 								return;
 							}
-
-							// Remember old device to replace in new URL
-							const auto &old_device = settings.general.last_device;
 
 							this->set_device(device, [this, url, body, callback, device, old_device]
 								(const std::string &status)
