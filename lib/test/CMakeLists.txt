@@ -16,6 +16,7 @@ add_executable(spotify-qt-lib-test
 	src/spotifyapitests.cpp
 	src/stringstests.cpp
 	src/systemtests.cpp
-	src/vectortests.cpp)
+	src/vectortests.cpp
+	src/uritests.cpp)
 
 target_link_libraries(spotify-qt-lib-test PRIVATE spotify-qt-lib)
