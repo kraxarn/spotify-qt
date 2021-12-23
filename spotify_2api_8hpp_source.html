@@ -219,7 +219,7 @@ $(function() {
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160; </div>
 <div class="line"><a name="l00219"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#abd52d73893c4175cc039557b51dda56e">  219</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#abd52d73893c4175cc039557b51dda56e">recently_played</a>(lib::callback&lt;std::vector&lt;lib::spt::track&gt;&gt; &amp;callback);</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
-<div class="line"><a name="l00225"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#aae8d9a1ea500342ccb9a4fd0468b3395">  225</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#aae8d9a1ea500342ccb9a4fd0468b3395">add_to_queue</a>(<span class="keyword">const</span> std::string &amp;uri, lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a name="l00225"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#aae8d9a1ea500342ccb9a4fd0468b3395">  225</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#aae8d9a1ea500342ccb9a4fd0468b3395">add_to_queue</a>(<span class="keyword">const</span> std::string &amp;<a class="code" href="classlib_1_1uri.html">uri</a>, lib::callback&lt;std::string&gt; &amp;callback);</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160; </div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;            <span class="comment">//endregion</span></div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160; </div>
@@ -290,78 +290,81 @@ $(function() {
 <div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160; </div>
 <div class="line"><a name="l00323"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ad91955a68b747dd0955fc3fcbe9ef508">  323</a></span>&#160;            <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1spt_1_1api.html#ad91955a68b747dd0955fc3fcbe9ef508">to_id</a>(<span class="keyword">const</span> std::string &amp;<span class="keywordtype">id</span>) -&gt; std::string;</div>
 <div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160; </div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;        <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00331"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#aed0d8133140221ebdd84d5efc795fda5">  331</a></span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#aed0d8133140221ebdd84d5efc795fda5">select_device</a>(<span class="keyword">const</span> std::vector&lt;lib::spt::device&gt; &amp;<a class="code" href="classlib_1_1spt_1_1api.html#a8f4ac4109908607c0ebd16b9425b9ef9">devices</a>,</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;                lib::callback&lt;lib::spt::device&gt; &amp;callback);</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160; </div>
-<div class="line"><a name="l00337"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ad241152c1673308341d7180a0be4a357">  337</a></span>&#160;            <span class="keywordtype">long</span> <a class="code" href="classlib_1_1spt_1_1api.html#ad241152c1673308341d7180a0be4a357">last_auth</a> = 0;</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160; </div>
-<div class="line"><a name="l00342"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a5a058e247f84895b9ee98f7b5a6ed756">  342</a></span>&#160;            <a class="code" href="classlib_1_1settings.html">lib::settings</a> &amp;<a class="code" href="classlib_1_1spt_1_1api.html#a5a058e247f84895b9ee98f7b5a6ed756">settings</a>;</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160; </div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;            <span class="comment">//region GET</span></div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160; </div>
-<div class="line"><a name="l00352"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a8235c4f96e74fa58a5e1f12795b9612d">  352</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#a8235c4f96e74fa58a5e1f12795b9612d">get</a>(<span class="keyword">const</span> std::string &amp;response,</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;                lib::callback&lt;nlohmann::json&gt; &amp;callback);</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160; </div>
-<div class="line"><a name="l00362"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#af8c249ba34558bb06a807f13aace0554">  362</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#af8c249ba34558bb06a807f13aace0554">get_items</a>(<span class="keyword">const</span> std::string &amp;url,</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;                lib::callback&lt;nlohmann::json&gt; &amp;callback);</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160; </div>
-<div class="line"><a name="l00368"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a348f5279b629971c0b8e2097b333b5e7">  368</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#a348f5279b629971c0b8e2097b333b5e7">get_items</a>(<span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> std::string &amp;key,</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;                lib::callback&lt;nlohmann::json&gt; &amp;callback);</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160; </div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;            <span class="comment">//endregion</span></div>
+<div class="line"><a name="l00330"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a3e7ca30f08a9a8bd9af49a2c5e87a353">  330</a></span>&#160;            <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1spt_1_1api.html#a3e7ca30f08a9a8bd9af49a2c5e87a353">get_device_url</a>(<span class="keyword">const</span> std::string &amp;url,</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;                <span class="keyword">const</span> <a class="code" href="classlib_1_1spt_1_1device.html">lib::spt::device</a> &amp;<a class="code" href="classlib_1_1spt_1_1device.html">device</a>) -&gt; std::string;</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160; </div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;        <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00339"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#aed0d8133140221ebdd84d5efc795fda5">  339</a></span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#aed0d8133140221ebdd84d5efc795fda5">select_device</a>(<span class="keyword">const</span> std::vector&lt;lib::spt::device&gt; &amp;<a class="code" href="classlib_1_1spt_1_1api.html#a8f4ac4109908607c0ebd16b9425b9ef9">devices</a>,</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;                lib::callback&lt;lib::spt::device&gt; &amp;callback);</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160; </div>
+<div class="line"><a name="l00345"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ad241152c1673308341d7180a0be4a357">  345</a></span>&#160;            <span class="keywordtype">long</span> <a class="code" href="classlib_1_1spt_1_1api.html#ad241152c1673308341d7180a0be4a357">last_auth</a> = 0;</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160; </div>
+<div class="line"><a name="l00350"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a5a058e247f84895b9ee98f7b5a6ed756">  350</a></span>&#160;            <a class="code" href="classlib_1_1settings.html">lib::settings</a> &amp;<a class="code" href="classlib_1_1spt_1_1api.html#a5a058e247f84895b9ee98f7b5a6ed756">settings</a>;</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160; </div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;            <span class="comment">//region GET</span></div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160; </div>
+<div class="line"><a name="l00360"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a8235c4f96e74fa58a5e1f12795b9612d">  360</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#a8235c4f96e74fa58a5e1f12795b9612d">get</a>(<span class="keyword">const</span> std::string &amp;response,</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;                lib::callback&lt;nlohmann::json&gt; &amp;callback);</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160; </div>
+<div class="line"><a name="l00370"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#af8c249ba34558bb06a807f13aace0554">  370</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#af8c249ba34558bb06a807f13aace0554">get_items</a>(<span class="keyword">const</span> std::string &amp;url,</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;                lib::callback&lt;nlohmann::json&gt; &amp;callback);</div>
 <div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160; </div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;            <span class="comment">//region PUT</span></div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160; </div>
-<div class="line"><a name="l00381"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ae6de5354ebff77d8d21124141dfa8d09">  381</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#ae6de5354ebff77d8d21124141dfa8d09">put</a>(<span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> nlohmann::json &amp;body,</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;                lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160; </div>
-<div class="line"><a name="l00387"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a1370bf233537673881fc2867adc433bf">  387</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#a1370bf233537673881fc2867adc433bf">put</a>(<span class="keyword">const</span> std::string &amp;url, lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160; </div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;            <span class="comment">//endregion</span></div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160; </div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;            <span class="comment">//region POST</span></div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160; </div>
-<div class="line"><a name="l00399"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#aebe2c2e0bfc8f2b3343e41a69d5c610c">  399</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#aebe2c2e0bfc8f2b3343e41a69d5c610c">post</a>(<span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> nlohmann::json &amp;<a class="code" href="classlib_1_1json.html">json</a>,</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;                lib::callback&lt;nlohmann::json&gt; &amp;callback);</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160; </div>
-<div class="line"><a name="l00405"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a64f1734b8278db05880989f44a70e552">  405</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#a64f1734b8278db05880989f44a70e552">post</a>(<span class="keyword">const</span> std::string &amp;url, lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160; </div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;            <span class="comment">//endregion</span></div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160; </div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;            <span class="comment">//region DELETE</span></div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160; </div>
-<div class="line"><a name="l00417"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a3f97861134a29ce268d5730ef9c251a7">  417</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#a3f97861134a29ce268d5730ef9c251a7">del</a>(<span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> nlohmann::json &amp;<a class="code" href="classlib_1_1json.html">json</a>,</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;                lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160; </div>
-<div class="line"><a name="l00423"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ae1c1d6b6d175f6897eee141d502ca313">  423</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#ae1c1d6b6d175f6897eee141d502ca313">del</a>(<span class="keyword">const</span> std::string &amp;url, lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160; </div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;            <span class="comment">//endregion</span></div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160; </div>
-<div class="line"><a name="l00431"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#affa5db54d3cb40ede82e59dee74deddf">  431</a></span>&#160;            <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1spt_1_1api.html#affa5db54d3cb40ede82e59dee74deddf">follow_type_string</a>(lib::follow_type type) -&gt; std::string;</div>
+<div class="line"><a name="l00376"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a348f5279b629971c0b8e2097b333b5e7">  376</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#a348f5279b629971c0b8e2097b333b5e7">get_items</a>(<span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> std::string &amp;key,</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;                lib::callback&lt;nlohmann::json&gt; &amp;callback);</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160; </div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;            <span class="comment">//endregion</span></div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160; </div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;            <span class="comment">//region PUT</span></div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160; </div>
+<div class="line"><a name="l00389"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ae6de5354ebff77d8d21124141dfa8d09">  389</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#ae6de5354ebff77d8d21124141dfa8d09">put</a>(<span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> nlohmann::json &amp;body,</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;                lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160; </div>
+<div class="line"><a name="l00395"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a1370bf233537673881fc2867adc433bf">  395</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#a1370bf233537673881fc2867adc433bf">put</a>(<span class="keyword">const</span> std::string &amp;url, lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160; </div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;            <span class="comment">//endregion</span></div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160; </div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;            <span class="comment">//region POST</span></div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160; </div>
+<div class="line"><a name="l00407"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#aebe2c2e0bfc8f2b3343e41a69d5c610c">  407</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#aebe2c2e0bfc8f2b3343e41a69d5c610c">post</a>(<span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> nlohmann::json &amp;<a class="code" href="classlib_1_1json.html">json</a>,</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;                lib::callback&lt;nlohmann::json&gt; &amp;callback);</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160; </div>
+<div class="line"><a name="l00413"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a64f1734b8278db05880989f44a70e552">  413</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#a64f1734b8278db05880989f44a70e552">post</a>(<span class="keyword">const</span> std::string &amp;url, lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160; </div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;            <span class="comment">//endregion</span></div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160; </div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;            <span class="comment">//region DELETE</span></div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160; </div>
+<div class="line"><a name="l00425"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a3f97861134a29ce268d5730ef9c251a7">  425</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#a3f97861134a29ce268d5730ef9c251a7">del</a>(<span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> nlohmann::json &amp;<a class="code" href="classlib_1_1json.html">json</a>,</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;                lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160; </div>
+<div class="line"><a name="l00431"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ae1c1d6b6d175f6897eee141d502ca313">  431</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classlib_1_1spt_1_1api.html#ae1c1d6b6d175f6897eee141d502ca313">del</a>(<span class="keyword">const</span> std::string &amp;url, lib::callback&lt;std::string&gt; &amp;callback);</div>
 <div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160; </div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;            <span class="keyword">const</span> <a class="code" href="classlib_1_1http__client.html">lib::http_client</a> &amp;http;</div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160; </div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;            <span class="keyword">auto</span> request_refresh(<span class="keyword">const</span> std::string &amp;post_data,</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;                <span class="keyword">const</span> std::string &amp;authorization) -&gt; std::string;</div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160; </div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;            <span class="keyword">static</span> <span class="keyword">auto</span> parse_json(<span class="keyword">const</span> std::string &amp;url,</div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;                <span class="keyword">const</span> std::string &amp;data) -&gt; nlohmann::json;</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160; </div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;            <span class="keyword">static</span> <span class="keyword">auto</span> error_message(<span class="keyword">const</span> std::string &amp;url,</div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;                <span class="keyword">const</span> std::string &amp;data) -&gt; std::string;</div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160; </div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;            <span class="keyword">auto</span> auth_headers() -&gt; lib::headers;</div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160; </div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;            <span class="keyword">static</span> <span class="keyword">auto</span> to_full_url(<span class="keyword">const</span> std::string &amp;relative_url) -&gt; std::string;</div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160; </div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;            <span class="keywordtype">void</span> set_current_device(<span class="keyword">const</span> std::string &amp;<span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160; </div>
-<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;            <span class="keyword">auto</span> get_current_device() const -&gt; const std::<span class="keywordtype">string</span> &amp;;</div>
-<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;        };</div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;    }</div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;}</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;            <span class="comment">//endregion</span></div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160; </div>
+<div class="line"><a name="l00439"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#affa5db54d3cb40ede82e59dee74deddf">  439</a></span>&#160;            <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1spt_1_1api.html#affa5db54d3cb40ede82e59dee74deddf">follow_type_string</a>(lib::follow_type type) -&gt; std::string;</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160; </div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;            <span class="keyword">const</span> <a class="code" href="classlib_1_1http__client.html">lib::http_client</a> &amp;http;</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160; </div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;            <span class="keyword">auto</span> request_refresh(<span class="keyword">const</span> std::string &amp;post_data,</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;                <span class="keyword">const</span> std::string &amp;authorization) -&gt; std::string;</div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160; </div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;            <span class="keyword">static</span> <span class="keyword">auto</span> parse_json(<span class="keyword">const</span> std::string &amp;url,</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;                <span class="keyword">const</span> std::string &amp;data) -&gt; nlohmann::json;</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160; </div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;            <span class="keyword">static</span> <span class="keyword">auto</span> error_message(<span class="keyword">const</span> std::string &amp;url,</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;                <span class="keyword">const</span> std::string &amp;data) -&gt; std::string;</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160; </div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;            <span class="keyword">auto</span> auth_headers() -&gt; lib::headers;</div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160; </div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;            <span class="keyword">static</span> <span class="keyword">auto</span> to_full_url(<span class="keyword">const</span> std::string &amp;relative_url) -&gt; std::string;</div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160; </div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;            <span class="keywordtype">void</span> set_current_device(<span class="keyword">const</span> std::string &amp;<span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160; </div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;            <span class="keyword">auto</span> get_current_device() const -&gt; const std::<span class="keywordtype">string</span> &amp;;</div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;        };</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;    }</div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;}</div>
 <div class="ttc" id="aclasslib_1_1http__client_html"><div class="ttname"><a href="classlib_1_1http__client.html">lib::http_client</a></div><div class="ttdef"><b>Definition:</b> httpclient.hpp:20</div></div>
 <div class="ttc" id="aclasslib_1_1json_html"><div class="ttname"><a href="classlib_1_1json.html">lib::json</a></div><div class="ttdef"><b>Definition:</b> json.hpp:17</div></div>
 <div class="ttc" id="aclasslib_1_1optional_html"><div class="ttname"><a href="classlib_1_1optional.html">lib::optional</a></div><div class="ttdef"><b>Definition:</b> optional.hpp:13</div></div>
@@ -376,9 +379,10 @@ $(function() {
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_a294dd5d87ca2258de4235a3eb5285285"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a294dd5d87ca2258de4235a3eb5285285">lib::spt::api::refresh</a></div><div class="ttdeci">void refresh(bool force=false)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_a348f5279b629971c0b8e2097b333b5e7"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a348f5279b629971c0b8e2097b333b5e7">lib::spt::api::get_items</a></div><div class="ttdeci">void get_items(const std::string &amp;url, const std::string &amp;key, lib::callback&lt; nlohmann::json &gt; &amp;callback)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_a36c1458cde31e74bc4f4486ad4c542b9"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a36c1458cde31e74bc4f4486ad4c542b9">lib::spt::api::set_device</a></div><div class="ttdeci">void set_device(const lib::spt::device &amp;device, lib::callback&lt; std::string &gt; &amp;callback)</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1api_html_a3e7ca30f08a9a8bd9af49a2c5e87a353"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a3e7ca30f08a9a8bd9af49a2c5e87a353">lib::spt::api::get_device_url</a></div><div class="ttdeci">static auto get_device_url(const std::string &amp;url, const lib::spt::device &amp;device) -&gt; std::string</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_a3f97861134a29ce268d5730ef9c251a7"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a3f97861134a29ce268d5730ef9c251a7">lib::spt::api::del</a></div><div class="ttdeci">void del(const std::string &amp;url, const nlohmann::json &amp;json, lib::callback&lt; std::string &gt; &amp;callback)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_a40991941ba40216746d52ff1ae353404"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a40991941ba40216746d52ff1ae353404">lib::spt::api::play_tracks</a></div><div class="ttdeci">void play_tracks(const std::string &amp;context, lib::callback&lt; std::string &gt; &amp;callback)</div></div>
-<div class="ttc" id="aclasslib_1_1spt_1_1api_html_a5a058e247f84895b9ee98f7b5a6ed756"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a5a058e247f84895b9ee98f7b5a6ed756">lib::spt::api::settings</a></div><div class="ttdeci">lib::settings &amp; settings</div><div class="ttdef"><b>Definition:</b> api.hpp:342</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1api_html_a5a058e247f84895b9ee98f7b5a6ed756"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a5a058e247f84895b9ee98f7b5a6ed756">lib::spt::api::settings</a></div><div class="ttdeci">lib::settings &amp; settings</div><div class="ttdef"><b>Definition:</b> api.hpp:350</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_a60f5838cd80f0d677fe4dd972dccf0fd"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a60f5838cd80f0d677fe4dd972dccf0fd">lib::spt::api::play_tracks</a></div><div class="ttdeci">void play_tracks(int track_index, const std::initializer_list&lt; std::string &gt; &amp;all, lib::callback&lt; std::string &gt; &amp;callback)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_a6441af8171fdc04cdc497d3e93a93739"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a6441af8171fdc04cdc497d3e93a93739">lib::spt::api::set_volume</a></div><div class="ttdeci">void set_volume(int volume, lib::callback&lt; std::string &gt; &amp;callback)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_a64f1734b8278db05880989f44a70e552"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a64f1734b8278db05880989f44a70e552">lib::spt::api::post</a></div><div class="ttdeci">void post(const std::string &amp;url, lib::callback&lt; std::string &gt; &amp;callback)</div></div>
@@ -395,7 +399,7 @@ $(function() {
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_abca1449ba0890522b37d52ff70be8c15"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#abca1449ba0890522b37d52ff70be8c15">lib::spt::api::play_tracks_url</a></div><div class="ttdeci">auto play_tracks_url() -&gt; std::string</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_abd52d73893c4175cc039557b51dda56e"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#abd52d73893c4175cc039557b51dda56e">lib::spt::api::recently_played</a></div><div class="ttdeci">void recently_played(lib::callback&lt; std::vector&lt; lib::spt::track &gt;&gt; &amp;callback)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_ac0c5cca7517e86ab3db837cb528e321a"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#ac0c5cca7517e86ab3db837cb528e321a">lib::spt::api::api</a></div><div class="ttdeci">api(lib::settings &amp;settings, const lib::http_client &amp;http_client)</div></div>
-<div class="ttc" id="aclasslib_1_1spt_1_1api_html_ad241152c1673308341d7180a0be4a357"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#ad241152c1673308341d7180a0be4a357">lib::spt::api::last_auth</a></div><div class="ttdeci">long last_auth</div><div class="ttdef"><b>Definition:</b> api.hpp:337</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1api_html_ad241152c1673308341d7180a0be4a357"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#ad241152c1673308341d7180a0be4a357">lib::spt::api::last_auth</a></div><div class="ttdeci">long last_auth</div><div class="ttdef"><b>Definition:</b> api.hpp:345</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_ad91955a68b747dd0955fc3fcbe9ef508"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#ad91955a68b747dd0955fc3fcbe9ef508">lib::spt::api::to_id</a></div><div class="ttdeci">static auto to_id(const std::string &amp;id) -&gt; std::string</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_ae1c1d6b6d175f6897eee141d502ca313"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#ae1c1d6b6d175f6897eee141d502ca313">lib::spt::api::del</a></div><div class="ttdeci">void del(const std::string &amp;url, lib::callback&lt; std::string &gt; &amp;callback)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_ae6d859577d0d4fd809d3dfc3a3045805"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#ae6d859577d0d4fd809d3dfc3a3045805">lib::spt::api::create_playlist</a></div><div class="ttdeci">void create_playlist(const std::string &amp;name, const lib::optional&lt; std::string &gt; &amp;description, const lib::optional&lt; bool &gt; &amp;is_public, const lib::optional&lt; bool &gt; &amp;is_collaborative, lib::callback&lt; lib::spt::playlist &gt; &amp;callback)</div></div>
@@ -414,6 +418,7 @@ $(function() {
 <div class="ttc" id="aclasslib_1_1spt_1_1playlist_html"><div class="ttname"><a href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a></div><div class="ttdef"><b>Definition:</b> playlist.hpp:17</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1show_html"><div class="ttname"><a href="classlib_1_1spt_1_1show.html">lib::spt::show</a></div><div class="ttdef"><b>Definition:</b> show.hpp:16</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1track_html"><div class="ttname"><a href="classlib_1_1spt_1_1track.html">lib::spt::track</a></div><div class="ttdef"><b>Definition:</b> track.hpp:18</div></div>
+<div class="ttc" id="aclasslib_1_1uri_html"><div class="ttname"><a href="classlib_1_1uri.html">lib::uri</a></div><div class="ttdef"><b>Definition:</b> uri.hpp:11</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
