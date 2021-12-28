@@ -1,8 +1,7 @@
 #include "lib/strings.hpp"
 
-using namespace lib;
-
-auto strings::join(const std::vector<std::string> &strings, const char *separator) -> std::string
+auto lib::strings::join(const std::vector<std::string> &strings,
+	const char *separator) -> std::string
 {
 	if (strings.empty())
 	{
@@ -16,7 +15,7 @@ auto strings::join(const std::vector<std::string> &strings, const char *separato
 		});
 }
 
-auto strings::trim(std::string &str) -> std::string
+auto lib::strings::trim(std::string &str) -> std::string
 {
 	trim_begin(str);
 	trim_end(str);
@@ -24,7 +23,7 @@ auto strings::trim(std::string &str) -> std::string
 	return str;
 }
 
-void strings::trim_begin(std::string &str)
+void lib::strings::trim_begin(std::string &str)
 {
 	str.erase(str.begin(), std::find_if(str.begin(), str.end(),
 		[](unsigned char chr) -> bool
@@ -33,7 +32,7 @@ void strings::trim_begin(std::string &str)
 		}));
 }
 
-void strings::trim_end(std::string &str)
+void lib::strings::trim_end(std::string &str)
 {
 	str.erase(std::find_if(str.rbegin(), str.rend(), [](unsigned char chr) -> bool
 	{
@@ -41,7 +40,7 @@ void strings::trim_end(std::string &str)
 	}).base(), str.end());
 }
 
-auto strings::split(const std::string &str,
+auto lib::strings::split(const std::string &str,
 	const std::string &delimiter) -> std::vector<std::string>
 {
 	std::vector<std::string> vec;
@@ -67,7 +66,7 @@ auto strings::split(const std::string &str,
 	return vec;
 }
 
-auto strings::split(const std::string &str, char delimiter) -> std::vector<std::string>
+auto lib::strings::split(const std::string &str, char delimiter) -> std::vector<std::string>
 {
 	std::vector<std::string> vec;
 	std::istringstream stream(str);
@@ -86,12 +85,12 @@ auto strings::split(const std::string &str, char delimiter) -> std::vector<std::
 	return vec;
 }
 
-auto strings::starts_with(const std::string &str, const std::string &start) -> bool
+auto lib::strings::starts_with(const std::string &str, const std::string &start) -> bool
 {
 	return str.find(start, 0) == 0;
 }
 
-auto strings::remove(std::string &str, const std::string &substr) -> std::string
+auto lib::strings::remove(std::string &str, const std::string &substr) -> std::string
 {
 	auto pos = str.find(substr);
 	if (pos != std::string::npos)
@@ -101,13 +100,13 @@ auto strings::remove(std::string &str, const std::string &substr) -> std::string
 	return str;
 }
 
-auto strings::ends_with(const std::string &str, const std::string &end) -> bool
+auto lib::strings::ends_with(const std::string &str, const std::string &end) -> bool
 {
 	return str.length() >= end.length()
 		&& str.compare(str.length() - end.length(), end.length(), end) == 0;
 }
 
-auto strings::try_to_int(const std::string &str, int &value) -> bool
+auto lib::strings::try_to_int(const std::string &str, int &value) -> bool
 {
 	try
 	{
@@ -120,21 +119,21 @@ auto strings::try_to_int(const std::string &str, int &value) -> bool
 	}
 }
 
-auto strings::left(const std::string &str, size_t n) -> std::string
+auto lib::strings::left(const std::string &str, size_t n) -> std::string
 {
 	return str.length() < n
 		? str
 		: str.substr(0, n);
 }
 
-auto strings::right(const std::string &str, size_t n) -> std::string
+auto lib::strings::right(const std::string &str, size_t n) -> std::string
 {
 	return str.length() < n
 		? str
 		: str.substr(str.length() - n);
 }
 
-auto strings::to_lower(const std::string &str) -> std::string
+auto lib::strings::to_lower(const std::string &str) -> std::string
 {
 	std::string val(str);
 	std::transform(val.begin(), val.end(), val.begin(), [](unsigned char c) -> unsigned char
@@ -144,7 +143,7 @@ auto strings::to_lower(const std::string &str) -> std::string
 	return val;
 }
 
-auto strings::to_upper(const std::string &str) -> std::string
+auto lib::strings::to_upper(const std::string &str) -> std::string
 {
 	std::string val(str);
 	std::transform(val.begin(), val.end(), val.begin(), [](unsigned char c) -> unsigned char
@@ -154,21 +153,21 @@ auto strings::to_upper(const std::string &str) -> std::string
 	return val;
 }
 
-auto strings::capitalize(const std::string &str) -> std::string
+auto lib::strings::capitalize(const std::string &str) -> std::string
 {
 	return lib::fmt::format("{}{}",
 		to_upper(str.substr(0, 1)),
 		to_lower(str.substr(1)));
 }
 
-auto strings::replace_all(const std::string &str, char old_val, char new_val) -> std::string
+auto lib::strings::replace_all(const std::string &str, char old_val, char new_val) -> std::string
 {
 	std::string val = str;
 	std::replace(val.begin(), val.end(), old_val, new_val);
 	return val;
 }
 
-auto strings::replace_all(const std::string &str, const std::string &old_val,
+auto lib::strings::replace_all(const std::string &str, const std::string &old_val,
 	const std::string &new_val) -> std::string
 {
 	std::string val = str;

@@ -1,8 +1,7 @@
 #include "lib/spotify/api.hpp"
 
-using namespace lib::spt;
-
-void api::search(const std::string &query, lib::callback<lib::spt::search_results> &callback)
+void lib::spt::api::search(const std::string &query,
+	lib::callback<lib::spt::search_results> &callback)
 {
 	get(lib::fmt::format("search"
 						 "?q={}"

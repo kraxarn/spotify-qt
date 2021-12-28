@@ -1,14 +1,12 @@
 #include "spotify/spotify.hpp"
 
-using namespace spt;
-
-Spotify::Spotify(lib::settings &settings,
+spt::Spotify::Spotify(lib::settings &settings,
 	const lib::http_client &httpClient, QObject *parent)
 	: QObject(parent), lib::spt::api(settings, httpClient)
 {
 }
 
-void Spotify::select_device(const std::vector<lib::spt::device> &devices,
+void spt::Spotify::select_device(const std::vector<lib::spt::device> &devices,
 	lib::callback<lib::spt::device> &callback)
 {
 	Dialog::DeviceSelect dialog(devices, dynamic_cast<QWidget *>(parent()));
@@ -23,7 +21,7 @@ void Spotify::select_device(const std::vector<lib::spt::device> &devices,
 	}
 }
 
-auto Spotify::tryRefresh() -> bool
+auto spt::Spotify::tryRefresh() -> bool
 {
 	auto *parentWidget = dynamic_cast<QWidget *>(parent());
 

@@ -1,12 +1,10 @@
 #include "lib/log.hpp"
 
-using namespace lib;
+std::vector<lib::log_message> lib::log::messages = std::vector<log_message>();
 
-std::vector<log_message> log::messages = std::vector<log_message>();
+bool lib::log::log_to_stdout = true;
 
-bool log::log_to_stdout = true;
-
-void log::message(log_type log_type, const std::string &message)
+void lib::log::message(log_type log_type, const std::string &message)
 {
 	log_message msg(log_type, message);
 	messages.push_back(msg);
@@ -26,17 +24,17 @@ void log::message(log_type log_type, const std::string &message)
 	}
 }
 
-auto log::get_messages() -> const std::vector<log_message> &
+auto lib::log::get_messages() -> const std::vector<log_message> &
 {
 	return messages;
 }
 
-void log::clear()
+void lib::log::clear()
 {
 	messages.clear();
 }
 
-void log::set_log_to_stdout(bool value)
+void lib::log::set_log_to_stdout(bool value)
 {
 	log_to_stdout = value;
 }

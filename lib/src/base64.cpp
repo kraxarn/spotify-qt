@@ -1,14 +1,12 @@
 #include "lib/base64.hpp"
 
-using namespace lib;
-
-auto base64::encode(const std::string &str) -> std::string
+auto lib::base64::encode(const std::string &str) -> std::string
 {
 	auto charset = get_charset();
 	std::string out;
 	int val = 0;
 	int val_b = -6;
-	for (unsigned char c : str)
+	for (unsigned char c: str)
 	{
 		val = (val << 8) + c;
 		val_b += 8;
@@ -29,7 +27,7 @@ auto base64::encode(const std::string &str) -> std::string
 	return out;
 }
 
-auto base64::decode(const std::string &str) -> std::string
+auto lib::base64::decode(const std::string &str) -> std::string
 {
 	auto charset = get_charset();
 	std::string out;
@@ -40,7 +38,7 @@ auto base64::decode(const std::string &str) -> std::string
 	}
 	int val = 0;
 	int val_b = -8;
-	for (unsigned char c : str)
+	for (unsigned char c: str)
 	{
 		if (T[c] == -1)
 		{
@@ -57,7 +55,7 @@ auto base64::decode(const std::string &str) -> std::string
 	return out;
 }
 
-auto base64::get_charset() -> std::string
+auto lib::base64::get_charset() -> std::string
 {
 	return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 }

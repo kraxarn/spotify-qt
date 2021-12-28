@@ -1,19 +1,17 @@
 #include "lib/settings.hpp"
 
-using namespace lib;
-
-settings::settings(const paths &paths)
+lib::settings::settings(const paths &paths)
 	: path(paths)
 {
 	load();
 }
 
-auto settings::file_name() const -> std::string
+auto lib::settings::file_name() const -> std::string
 {
 	return path.config_file();
 }
 
-auto settings::file_path() const -> std::string
+auto lib::settings::file_path() const -> std::string
 {
 	return ghc::filesystem::path(file_name()).parent_path().string();
 }
@@ -28,7 +26,7 @@ auto lib::settings::qt() -> setting::qt &
 	return *qt_settings;
 }
 
-void settings::from_json(const nlohmann::json &json)
+void lib::settings::from_json(const nlohmann::json &json)
 {
 	lib::json::get(json, "Account", account);
 	lib::json::get(json, "General", general);
@@ -41,7 +39,7 @@ void settings::from_json(const nlohmann::json &json)
 	}
 }
 
-void settings::load()
+void lib::settings::load()
 {
 	auto name = file_name();
 
@@ -66,7 +64,7 @@ void settings::load()
 	file.close();
 }
 
-auto settings::to_json() const -> nlohmann::json
+auto lib::settings::to_json() const -> nlohmann::json
 {
 	auto json = nlohmann::json{
 		{"Account", account},
@@ -82,7 +80,7 @@ auto settings::to_json() const -> nlohmann::json
 	return json;
 }
 
-void settings::save()
+void lib::settings::save()
 {
 	std::lock_guard<std::mutex> lock(mutex);
 
@@ -97,24 +95,24 @@ void settings::save()
 	file.close();
 }
 
-void settings::remove_client()
+void lib::settings::remove_client()
 {
 	account.client_id = std::string();
 	account.client_secret = std::string();
 }
 
-void settings::remove_tokens()
+void lib::settings::remove_tokens()
 {
 	account.access_token = std::string();
 	account.refresh_token = std::string();
 }
 
-auto settings::get_dark_theme() const -> bool
+auto lib::settings::get_dark_theme() const -> bool
 {
 	return general.style_palette == lib::palette::dark;
 }
 
-void settings::set_dark_theme(bool value)
+void lib::settings::set_dark_theme(bool value)
 {
 	general.style_palette = value ? lib::palette::dark : lib::palette::app;
 }

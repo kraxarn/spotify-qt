@@ -1,11 +1,9 @@
 #include "lib/spotify/api.hpp"
 
-using namespace lib::spt;
-
 // Currently unavailable:
 // me/player/currently-playing
 
-void api::current_playback(lib::callback<lib::spt::playback> &callback)
+void lib::spt::api::current_playback(lib::callback<lib::spt::playback> &callback)
 {
 	get("me/player", [callback](const nlohmann::json &json)
 	{
@@ -15,7 +13,7 @@ void api::current_playback(lib::callback<lib::spt::playback> &callback)
 
 //region set_device
 
-void api::set_device(const std::string &device_id, lib::callback<std::string> &callback)
+void lib::spt::api::set_device(const std::string &device_id, lib::callback<std::string> &callback)
 {
 	set_current_device(device_id);
 	put("me/player", {
@@ -25,14 +23,14 @@ void api::set_device(const std::string &device_id, lib::callback<std::string> &c
 	}, callback);
 }
 
-void api::set_device(const device &device, lib::callback<std::string> &callback)
+void lib::spt::api::set_device(const device &device, lib::callback<std::string> &callback)
 {
 	set_device(device.id, callback);
 }
 
 //endregion
 
-void api::devices(lib::callback<std::vector<lib::spt::device>> &callback)
+void lib::spt::api::devices(lib::callback<std::vector<lib::spt::device>> &callback)
 {
 	get("me/player/devices", [callback](const nlohmann::json &json)
 	{
@@ -42,7 +40,7 @@ void api::devices(lib::callback<std::vector<lib::spt::device>> &callback)
 
 //region play_tracks
 
-auto api::play_tracks_url() -> std::string
+auto lib::spt::api::play_tracks_url() -> std::string
 {
 	return get_current_device().empty()
 		? "me/player/play"
@@ -50,7 +48,7 @@ auto api::play_tracks_url() -> std::string
 			get_current_device());
 }
 
-void api::play_tracks(int track_index, const std::string &context,
+void lib::spt::api::play_tracks(int track_index, const std::string &context,
 	lib::callback<std::string> &callback)
 {
 	lib::log::debug("Playing track {} from {}", track_index, context);
@@ -65,7 +63,7 @@ void api::play_tracks(int track_index, const std::string &context,
 	put(play_tracks_url(), body, callback);
 }
 
-void api::play_tracks(int track_index, const std::vector<std::string> &all,
+void lib::spt::api::play_tracks(int track_index, const std::vector<std::string> &all,
 	lib::callback<std::string> &callback)
 {
 	lib::log::debug("Playing track {} ({} total)", track_index, all.size());
@@ -94,13 +92,13 @@ void api::play_tracks(int track_index, const std::vector<std::string> &all,
 	put(play_tracks_url(), body, callback);
 }
 
-void api::play_tracks(int track_index, const std::initializer_list<std::string> &all,
+void lib::spt::api::play_tracks(int track_index, const std::initializer_list<std::string> &all,
 	lib::callback<std::string> &callback)
 {
 	play_tracks(track_index, std::vector<std::string>(all), callback);
 }
 
-void api::play_tracks(const std::string &context, lib::callback<std::string> &callback)
+void lib::spt::api::play_tracks(const std::string &context, lib::callback<std::string> &callback)
 {
 	lib::log::debug("Playing track from {}", context);
 
@@ -113,32 +111,32 @@ void api::play_tracks(const std::string &context, lib::callback<std::string> &ca
 
 //endregion
 
-void api::resume(lib::callback<std::string> &callback)
+void lib::spt::api::resume(lib::callback<std::string> &callback)
 {
 	put(play_tracks_url(), callback);
 }
 
-void api::pause(lib::callback<std::string> &callback)
+void lib::spt::api::pause(lib::callback<std::string> &callback)
 {
 	put("me/player/pause", callback);
 }
 
-void api::next(lib::callback<std::string> &callback)
+void lib::spt::api::next(lib::callback<std::string> &callback)
 {
 	post("me/player/next", callback);
 }
 
-void api::previous(lib::callback<std::string> &callback)
+void lib::spt::api::previous(lib::callback<std::string> &callback)
 {
 	post("me/player/previous", callback);
 }
 
-void api::seek(int position, lib::callback<std::string> &callback)
+void lib::spt::api::seek(int position, lib::callback<std::string> &callback)
 {
 	put(lib::fmt::format("me/player/seek?position_ms={}", position), callback);
 }
 
-void api::set_repeat(lib::repeat_state state, lib::callback<std::string> &callback)
+void lib::spt::api::set_repeat(lib::repeat_state state, lib::callback<std::string> &callback)
 {
 	std::string repeat;
 	switch (state)
@@ -159,22 +157,22 @@ void api::set_repeat(lib::repeat_state state, lib::callback<std::string> &callba
 	put(lib::fmt::format("me/player/repeat?state={}", repeat), callback);
 }
 
-void api::set_volume(int volume, lib::callback<std::string> &callback)
+void lib::spt::api::set_volume(int volume, lib::callback<std::string> &callback)
 {
 	put(lib::fmt::format("me/player/volume?volume_percent={}", volume), callback);
 }
 
-void api::set_shuffle(bool enabled, lib::callback<std::string> &callback)
+void lib::spt::api::set_shuffle(bool enabled, lib::callback<std::string> &callback)
 {
 	put(lib::fmt::format("me/player/shuffle?state={}", enabled), callback);
 }
 
-void api::recently_played(lib::callback<std::vector<lib::spt::track>> &callback)
+void lib::spt::api::recently_played(lib::callback<std::vector<lib::spt::track>> &callback)
 {
 	get_items("me/player/recently-played?limit=50", callback);
 }
 
-void api::add_to_queue(const std::string &uri, lib::callback<std::string> &callback)
+void lib::spt::api::add_to_queue(const std::string &uri, lib::callback<std::string> &callback)
 {
 	post(lib::fmt::format("me/player/queue?uri={}", uri), callback);
 }

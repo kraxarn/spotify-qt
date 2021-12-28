@@ -1,8 +1,6 @@
 #include "lib/logmessage.hpp"
 
-using namespace lib;
-
-log_message::log_message(const date_time &time, log_type log_type,
+lib::log_message::log_message(const date_time &time, log_type log_type,
 	const std::string &message)
 	: time(time),
 	logType(log_type),
@@ -10,18 +8,18 @@ log_message::log_message(const date_time &time, log_type log_type,
 {
 }
 
-log_message::log_message(log_type log_type, const std::string &message)
+lib::log_message::log_message(log_type log_type, const std::string &message)
 	: log_message(date_time::now(), log_type, message)
 {
 }
 
-auto log_message::to_string() const -> std::string
+auto lib::log_message::to_string() const -> std::string
 {
 	return fmt::format("[{}] [{}] {}", get_time(),
 		get_type_short(), message);
 }
 
-auto log_message::get_type_short() const -> std::string
+auto lib::log_message::get_type_short() const -> std::string
 {
 	switch (logType)
 	{
@@ -41,12 +39,12 @@ auto log_message::get_type_short() const -> std::string
 	return {};
 }
 
-auto log_message::get_time() const -> std::string
+auto lib::log_message::get_time() const -> std::string
 {
 	return time.to_time();
 }
 
-auto log_message::get_type() const -> std::string
+auto lib::log_message::get_type() const -> std::string
 {
 	switch (logType)
 	{
@@ -66,7 +64,7 @@ auto log_message::get_type() const -> std::string
 	return {};
 }
 
-auto log_message::get_message() const -> std::string
+auto lib::log_message::get_message() const -> std::string
 {
 	return message;
 }

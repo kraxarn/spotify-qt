@@ -1,8 +1,6 @@
 #include "lib/format.hpp"
 
-using namespace lib;
-
-auto fmt::time(int ms) -> std::string
+auto lib::fmt::time(int ms) -> std::string
 {
 	auto seconds = ms / 1000;
 
@@ -13,7 +11,7 @@ auto fmt::time(int ms) -> std::string
 		format("{}{}", s < 10 ? "0" : "", s % 60));
 }
 
-auto fmt::size(unsigned int bytes) -> std::string
+auto lib::fmt::size(unsigned int bytes) -> std::string
 {
 	if (bytes >= 1000000000)
 	{
@@ -33,7 +31,7 @@ auto fmt::size(unsigned int bytes) -> std::string
 	return format("{} B", bytes);
 }
 
-auto fmt::count(unsigned int count) -> std::string
+auto lib::fmt::count(unsigned int count) -> std::string
 {
 	if (count >= 1000000)
 	{

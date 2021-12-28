@@ -1,7 +1,5 @@
 #include "lib/spotify/api.hpp"
 
-using namespace lib::spt;
-
 // Currently unavailable:
 // browse/featured-playlists
 // browse/categories
@@ -10,7 +8,7 @@ using namespace lib::spt;
 // recommendations
 // recommendations/available-genre-seeds
 
-void api::new_releases(lib::callback<std::vector<lib::spt::album>> &callback)
+void lib::spt::api::new_releases(lib::callback<std::vector<lib::spt::album>> &callback)
 {
 	get_items("browse/new-releases?limit=50", "albums", callback);
 }
