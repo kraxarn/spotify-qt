@@ -3,7 +3,7 @@
 #include "lib/spotify/api.hpp"
 #include "lib/cache.hpp"
 #include "enum/datarole.hpp"
-#include "util/httputils.hpp"
+#include "util/http.hpp"
 
 #include <QListWidget>
 

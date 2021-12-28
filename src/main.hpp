@@ -23,7 +23,7 @@
 #include "spotify/current.hpp"
 #include "spotify/spotify.hpp"
 #include "util/dateutils.hpp"
-#include "util/httputils.hpp"
+#include "util/http.hpp"
 #include "util/icon.hpp"
 #include "util/imageutils.hpp"
 #include "util/parent.hpp"

@@ -9,7 +9,7 @@
 #include <string>
 #include <QPixmap>
 
-class HttpUtils
+class Http
 {
 public:
 	/**
@@ -19,7 +19,7 @@ public:
 		lib::cache &cache, lib::callback<QPixmap> &callback);
 
 private:
-	HttpUtils() = default;
+	Http() = default;
 
 	static auto defaultIcon() -> QPixmap;
 };

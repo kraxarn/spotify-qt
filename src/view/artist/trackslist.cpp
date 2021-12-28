@@ -24,7 +24,7 @@ void Artist::TracksList::addTrack(const lib::spt::track &track)
 	auto *item = new QListWidgetItem(QString::fromStdString(track.name), this);
 	item->setData(static_cast<int>(DataRole::Track), QVariant::fromValue(track));
 
-	HttpUtils::getAlbum(track.image, httpClient, cache, [item](const QPixmap &image)
+	Http::getAlbum(track.image, httpClient, cache, [item](const QPixmap &image)
 	{
 		if (item != nullptr)
 		{

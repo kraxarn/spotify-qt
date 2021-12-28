@@ -57,7 +57,7 @@ void Artist::AlbumsList::setAlbums(const std::vector<lib::spt::album> &albums)
 			albumName, year.isEmpty() ? QString() : year
 		});
 
-		HttpUtils::getAlbum(album.image, httpClient, cache, [item](const QPixmap &image)
+		Http::getAlbum(album.image, httpClient, cache, [item](const QPixmap &image)
 		{
 			if (item != nullptr)
 			{

@@ -299,7 +299,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 		if (trayIcon != nullptr
 			&& (settings.general.tray_album_art || settings.general.notify_track_change))
 		{
-			HttpUtils::getAlbum(current.playback.item.image, *httpClient, cache,
+			Http::getAlbum(current.playback.item.image, *httpClient, cache,
 				[this, &currPlaying, trackChange](const QPixmap &image)
 				{
 					if (trayIcon == nullptr)
@@ -413,7 +413,7 @@ void MainWindow::saveTracksToCache(const std::string &id,
 
 void MainWindow::setAlbumImage(const std::string &url)
 {
-	HttpUtils::getAlbum(url, *httpClient, cache, [this](const QPixmap &image)
+	Http::getAlbum(url, *httpClient, cache, [this](const QPixmap &image)
 	{
 		if (this->contextView != nullptr)
 		{
