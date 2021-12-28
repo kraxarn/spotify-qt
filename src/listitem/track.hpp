@@ -3,7 +3,7 @@
 #include "enum/datarole.hpp"
 #include "enum/column.hpp"
 #include "lib/spotify/track.hpp"
-#include "util/dateutils.hpp"
+#include "util/datetime.hpp"
 #include "lib/settings.hpp"
 #include "lib/spotify/entity.hpp"
 #include "metatypes.hpp"

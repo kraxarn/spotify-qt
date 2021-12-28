@@ -1,6 +1,6 @@
-#include "dateutils.hpp"
+#include "util/datetime.hpp"
 
-auto DateUtils::toRelative(const QDateTime &date) -> QString
+auto DateTime::toRelative(const QDateTime &date) -> QString
 {
 	auto amount = date.secsTo(QDateTime::currentDateTimeUtc());
 	QString unit = "second";
@@ -41,22 +41,22 @@ auto DateUtils::toRelative(const QDateTime &date) -> QString
 		.arg(unit, amount == 1 ? "" : "s");
 }
 
-auto DateUtils::toRelative(const std::string &date) -> QString
+auto DateTime::toRelative(const std::string &date) -> QString
 {
-	return toRelative(fromIso(date));
+	return toRelative(parseIso(date));
 }
 
-auto DateUtils::isEmpty(const QDateTime &date) -> bool
+auto DateTime::isEmpty(const QDateTime &date) -> bool
 {
 	return date.toSecsSinceEpoch() <= 0;
 }
 
-auto DateUtils::fromIso(const QString &date) -> QDateTime
+auto DateTime::parseIso(const QString &date) -> QDateTime
 {
 	return QDateTime::fromString(date, Qt::ISODate);
 }
 
-auto DateUtils::fromIso(const std::string &date) -> QDateTime
+auto DateTime::parseIso(const std::string &date) -> QDateTime
 {
-	return fromIso(QString::fromStdString(date));
+	return parseIso(QString::fromStdString(date));
 }

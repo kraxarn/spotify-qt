@@ -48,7 +48,7 @@ ListItem::Track::Track(const QStringList &strings,
 	}
 
 	// Added
-	if (!DateUtils::isEmpty(addedAt))
+	if (!DateTime::isEmpty(addedAt))
 	{
 		setToolTip(strings.length() - 1,
 			QLocale().toString(addedAt.date()));

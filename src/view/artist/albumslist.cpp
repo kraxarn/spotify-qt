@@ -46,7 +46,7 @@ void Artist::AlbumsList::setAlbums(const std::vector<lib::spt::album> &albums)
 
 	for (const auto &album: albums)
 	{
-		const auto releaseDate = DateUtils::fromIso(album.release_date);
+		const auto releaseDate = DateTime::parseIso(album.release_date);
 		// Extra spacing is intentional so year doesn't overlap with scrollbar
 		const auto year = releaseDate.toString("yyyy    ");
 

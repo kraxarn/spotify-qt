@@ -243,11 +243,11 @@ auto List::Tracks::getAddedText(const std::string &date) const -> QString
 
 	if (settings.general.relative_added)
 	{
-		return DateUtils::toRelative(date);
+		return DateTime::toRelative(date);
 	}
 
 	const auto locale = QLocale::system();
-	const auto parsed = DateUtils::fromIso(date).date();
+	const auto parsed = DateTime::parseIso(date).date();
 	return locale.toString(parsed, QLocale::ShortFormat);
 }
 

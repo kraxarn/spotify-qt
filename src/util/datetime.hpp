@@ -3,17 +3,36 @@
 #include <QString>
 #include <QDateTime>
 
-class DateUtils
+class DateTime
 {
 public:
+	/**
+	 * Format date as "... ago"
+	 */
 	static auto toRelative(const QDateTime &date) -> QString;
+
+	/**
+	 * Format ISO date as "... ago"
+	 */
 	static auto toRelative(const std::string &date) -> QString;
+
+	/**
+	 * Is date empty (1970-01-01)
+	 */
 	static auto isEmpty(const QDateTime &date) -> bool;
-	static auto fromIso(const QString &date) -> QDateTime;
-	static auto fromIso(const std::string &date) -> QDateTime;
+
+	/**
+	 * Parse ISO date
+	 */
+	static auto parseIso(const QString &date) -> QDateTime;
+
+	/**
+	 * Parse ISO date
+	 */
+	static auto parseIso(const std::string &date) -> QDateTime;
 
 private:
-	DateUtils() = default;
+	DateTime() = default;
 
 	static constexpr unsigned int secsInMinute = 60;
 	static constexpr unsigned int secsInHour = secsInMinute * 60;

@@ -22,7 +22,7 @@
 #include "menu/songmenu.hpp"
 #include "spotify/current.hpp"
 #include "spotify/spotify.hpp"
-#include "util/dateutils.hpp"
+#include "util/datetime.hpp"
 #include "util/http.hpp"
 #include "util/icon.hpp"
 #include "util/imageutils.hpp"
