@@ -218,7 +218,7 @@ auto lib::spt::api::get_device_url(const std::string &url,
 	}
 
 	uri.set_search_params(params);
-	return uri.get_url();
+	return uri.pathname();
 }
 
 //region GET
