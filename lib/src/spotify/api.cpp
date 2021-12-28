@@ -199,9 +199,11 @@ auto lib::spt::api::get_current_device() const -> const std::string &
 auto lib::spt::api::get_device_url(const std::string &url,
 	const lib::spt::device &device) -> std::string
 {
-	lib::uri uri(url);
-	auto params = uri.get_search_params();
+	lib::uri uri(lib::strings::starts_with(url, "https://")
+		? url
+		: to_full_url(url));
 
+	auto params = uri.get_search_params();
 	auto device_ids = params.find("device_ids");
 	if (device_ids != params.end())
 	{
