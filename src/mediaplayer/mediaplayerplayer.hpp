@@ -3,7 +3,7 @@
 #ifdef USE_DBUS
 
 #include "lib/spotify/api.hpp"
-#include "util/jsonutils.hpp"
+#include "util/json.hpp"
 
 #include <QCoreApplication>
 #include <QDBusAbstractAdaptor>

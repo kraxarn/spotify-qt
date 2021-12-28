@@ -5,7 +5,7 @@
 #include <QJsonDocument>
 #include <QVariantMap>
 
-class JsonUtils
+class Json
 {
 public:
 	/**
@@ -25,5 +25,5 @@ public:
 	}
 
 private:
-	JsonUtils() = default;
+	Json() = default;
 };
