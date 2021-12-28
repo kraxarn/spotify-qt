@@ -16,7 +16,7 @@
 auto main(int argc, char *argv[]) -> int
 {
 	// Set name for settings etc.
-	QCoreApplication::setOrganizationName("kraxarn");
+	QCoreApplication::setOrganizationName(ORG_NAME);
 	QCoreApplication::setApplicationName(APP_NAME);
 	QCoreApplication::setApplicationVersion(APP_VERSION);
 
