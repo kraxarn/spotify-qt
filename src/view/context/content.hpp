@@ -7,7 +7,7 @@
 #include "spotify/current.hpp"
 #include "menu/songmenu.hpp"
 #include "util/icon.hpp"
-#include "util/imageutils.hpp"
+#include "util/image.hpp"
 #include "view/context/nowplaying.hpp"
 
 #include <QWidget>

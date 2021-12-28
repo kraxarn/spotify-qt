@@ -8,7 +8,7 @@ SplashScreen::SplashScreen()
 	QImage image(background.size(), QImage::Format_ARGB32);
 	QPainter painter(&image);
 	painter.drawPixmap(0, 0,
-		ImageUtils::mask(background, MaskShape::App, QVariant()));
+		Image::mask(background, MaskShape::App, QVariant()));
 	painter.drawPixmap(12, 12, Icon::get(QString("logo:%1")
 		.arg(APP_ICON))
 		.pixmap(80, 80));

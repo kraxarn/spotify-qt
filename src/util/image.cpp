@@ -1,6 +1,6 @@
-#include "imageutils.hpp"
+#include "util/image.hpp"
 
-auto ImageUtils::mask(const QPixmap &source, MaskShape shape,
+auto Image::mask(const QPixmap &source, MaskShape shape,
 	const QVariant &data) -> QPixmap
 {
 	if (source.isNull())
@@ -31,7 +31,7 @@ auto ImageUtils::mask(const QPixmap &source, MaskShape shape,
 	return QPixmap::fromImage(out);
 }
 
-auto ImageUtils::appShape(const QImage &img) -> QPolygonF
+auto Image::appShape(const QImage &img) -> QPolygonF
 {
 	auto width = (float) img.width();
 	auto height = (float) img.height();
@@ -50,7 +50,7 @@ auto ImageUtils::appShape(const QImage &img) -> QPolygonF
 		<< QPointF(0, quarterHeight);
 }
 
-auto ImageUtils::pieShape(const QImage &img, const QVariant &data) -> QPolygonF
+auto Image::pieShape(const QImage &img, const QVariant &data) -> QPolygonF
 {
 	auto width = (float) img.width();
 	auto height = (float) img.height();

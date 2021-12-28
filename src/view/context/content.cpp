@@ -59,7 +59,7 @@ void Context::Content::setAlbum(const QPixmap &pixmap)
 {
 	if (album != nullptr)
 	{
-		album->setPixmap(ImageUtils::mask(pixmap));
+		album->setPixmap(Image::mask(pixmap));
 	}
 }
 

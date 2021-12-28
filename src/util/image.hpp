@@ -7,15 +7,17 @@
 #include <QPainterPath>
 #include <QVariant>
 
-class ImageUtils
+class Image
 {
 public:
-	/** Mask image using specified shape */
+	/**
+	 * Mask image using specified shape
+	 */
 	static auto mask(const QPixmap &source, MaskShape shape = MaskShape::App,
 		const QVariant &data = QVariant()) -> QPixmap;
 
 private:
-	ImageUtils() = default;
+	Image() = default;
 
 	/** Get shape for MaskShape::App */
 	static auto appShape(const QImage &img) -> QPolygonF;

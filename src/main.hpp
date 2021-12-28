@@ -25,7 +25,7 @@
 #include "util/datetime.hpp"
 #include "util/http.hpp"
 #include "util/icon.hpp"
-#include "util/imageutils.hpp"
+#include "util/image.hpp"
 #include "util/parent.hpp"
 #include "util/styleutils.hpp"
 #include "view/context/view.hpp"
