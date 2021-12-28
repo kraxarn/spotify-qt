@@ -1,6 +1,6 @@
-#include "menuutils.hpp"
+#include "util/menu.hpp"
 
-auto MenuUtils::createAction(const QString &iconName, const QString &text,
+auto Menu::createAction(const QString &iconName, const QString &text,
 	QObject *parent, QKeySequence::StandardKey shortcut) -> QAction *
 {
 	auto *action = new QAction(Icon::get(iconName), text, parent);
@@ -11,7 +11,7 @@ auto MenuUtils::createAction(const QString &iconName, const QString &text,
 	return action;
 }
 
-auto MenuUtils::createAction(const QString &iconName, const QString &text,
+auto Menu::createAction(const QString &iconName, const QString &text,
 	QObject *parent) -> QAction *
 {
 	return createAction(iconName, text, parent, QKeySequence::UnknownKey);

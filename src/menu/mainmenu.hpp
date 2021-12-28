@@ -3,7 +3,7 @@
 #include "lib/spotify/api.hpp"
 
 #include "menu/developermenu.hpp"
-#include "util/menuutils.hpp"
+#include "util/menu.hpp"
 
 #include <QMenu>
 #include <QMessageBox>
