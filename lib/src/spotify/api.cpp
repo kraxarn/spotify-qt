@@ -218,7 +218,8 @@ auto lib::spt::api::get_device_url(const std::string &url,
 	}
 
 	uri.set_search_params(params);
-	return uri.pathname();
+	auto pathname = uri.pathname();
+	return lib::strings::remove(pathname, "/v1/");
 }
 
 //region GET
