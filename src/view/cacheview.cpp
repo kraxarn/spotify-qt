@@ -74,7 +74,7 @@ void CacheView::menu(const QPoint &pos)
 			"Open folder"),
 		&QAction::triggered, [this, folder](bool /*checked*/)
 		{
-			UrlUtils::open(folder, LinkType::Path, this);
+			Url::open(folder, LinkType::Path, this);
 		});
 	menu->popup(mapToGlobal(pos));
 }

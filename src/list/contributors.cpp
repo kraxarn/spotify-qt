@@ -55,6 +55,6 @@ void List::Contributors::onItemDoubleClicked(QListWidgetItem *item)
 	auto *parent = Parent::findWidget<Dialog::Settings>(parentWidget());
 	if (parent != nullptr)
 	{
-		UrlUtils::open(url, LinkType::Web, parent);
+		Url::open(url, LinkType::Web, parent);
 	}
 }

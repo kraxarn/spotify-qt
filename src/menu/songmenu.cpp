@@ -363,5 +363,5 @@ void SongMenu::onCopySongLink(bool /*checked*/)
 void SongMenu::onOpenInSpotify(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-	UrlUtils::open(getTrackUrl(), LinkType::Web, mainWindow);
+	Url::open(getTrackUrl(), LinkType::Web, mainWindow);
 }

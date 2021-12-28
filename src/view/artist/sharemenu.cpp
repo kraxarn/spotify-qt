@@ -29,5 +29,5 @@ void Artist::ShareMenu::onCopyArtistLink(bool /*checked*/)
 void Artist::ShareMenu::onOpenInSpotify(bool /*checked*/)
 {
 	const auto url = lib::fmt::format("https://open.spotify.com/artist/{}", artist.id);
-	UrlUtils::open(url, LinkType::Web, MainWindow::find(parentWidget()));
+	Url::open(url, LinkType::Web, MainWindow::find(parentWidget()));
 }

@@ -43,6 +43,5 @@ void Menu::Show::onCopyLink(bool /*checked*/) const
 
 void Menu::Show::onOpenInSpotify(bool /*checked*/) const
 {
-	UrlUtils::open(showUrl(), LinkType::Web,
-		MainWindow::find(parentWidget()));
+	Url::open(showUrl(), LinkType::Web, MainWindow::find(parentWidget()));
 }

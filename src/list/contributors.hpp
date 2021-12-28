@@ -1,7 +1,7 @@
 #pragma once
 
 #include "lib/github/api.hpp"
-#include "util/urlutils.hpp"
+#include "util/url.hpp"
 #include "util/parent.hpp"
 #include "dialog/settings.hpp"
 

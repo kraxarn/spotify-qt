@@ -37,7 +37,7 @@ void Menu::ArtistLinks::onAboutToShow()
 void Menu::ArtistLinks::onDuckDuckGo(bool /*checked*/)
 {
 	const auto url = lib::fmt::format("https://duckduckgo.com/?t=spotify-qt&q={}", artist.name);
-	UrlUtils::open(url, LinkType::Web, this);
+	Url::open(url, LinkType::Web, this);
 }
 
 void Menu::ArtistLinks::onLoaded(const lib::ddg::results &results)
@@ -55,7 +55,7 @@ void Menu::ArtistLinks::onLoaded(const lib::ddg::results &results)
 		auto *action = addAction(QString::fromStdString(item.title()));
 		QAction::connect(action, &QAction::triggered, [this, item](bool /*checked*/)
 		{
-			UrlUtils::open(item.url(), LinkType::Web, this);
+			Url::open(item.url(), LinkType::Web, this);
 		});
 	}
 }

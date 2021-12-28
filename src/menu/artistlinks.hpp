@@ -5,7 +5,7 @@
 #include "lib/search/api.hpp"
 
 #include "util/icon.hpp"
-#include "util/urlutils.hpp"
+#include "util/url.hpp"
 
 #include <QMenu>
 

@@ -195,8 +195,7 @@ void Menu::Playlist::onCopyLink(bool /*checked*/) const
 
 void Menu::Playlist::onOpenInSpotify(bool /*checked*/) const
 {
-	UrlUtils::open(playlistUrl(), LinkType::Web,
-		MainWindow::find(parentWidget()));
+	Url::open(playlistUrl(), LinkType::Web, MainWindow::find(parentWidget()));
 }
 
 void Menu::Playlist::onCopyId(bool /*checked*/) const

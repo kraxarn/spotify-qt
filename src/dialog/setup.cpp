@@ -68,7 +68,7 @@ void Dialog::Setup::cancel(bool /*checked*/)
 void Dialog::Setup::spotifyDashboard(bool /*checked*/)
 {
 	QString url("https://developer.spotify.com/dashboard/applications");
-	UrlUtils::open(url, LinkType::Web, this);
+	Url::open(url, LinkType::Web, this);
 }
 
 void Dialog::Setup::authenticate(bool /*checked*/)
@@ -95,7 +95,7 @@ void Dialog::Setup::authenticate(bool /*checked*/)
 			this, &Dialog::Setup::newServerConnection);
 	}
 	auto url = lib::qt::spt::auth::url(clientIdText, redirect);
-	UrlUtils::open(url, LinkType::Web, this);
+	Url::open(url, LinkType::Web, this);
 }
 
 void Dialog::Setup::newServerConnection()

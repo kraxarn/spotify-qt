@@ -1,6 +1,6 @@
 #pragma once
 
-#include "util/urlutils.hpp"
+#include "util/url.hpp"
 #include "util/icon.hpp"
 
 #include <QTreeWidget>

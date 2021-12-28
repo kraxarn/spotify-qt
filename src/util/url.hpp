@@ -7,15 +7,19 @@
 #include <QWidget>
 #include <QDesktopServices>
 
-class UrlUtils
+class Url
 {
 public:
-	/** Open URL of specific type */
+	/**
+	 * Open URL of specific type
+	 */
 	static void open(const QString &url, LinkType linkType, QWidget *parent);
 
-	/** Open URL as std::string of specific type */
+	/**
+	 * Open URL of specific type
+	 */
 	static void open(const std::string &url, LinkType linkType, QWidget *parent);
 
 private:
-	UrlUtils() = default;
+	Url() = default;
 };

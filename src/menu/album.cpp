@@ -65,7 +65,7 @@ void Menu::Album::shareAlbum(bool /*checked*/)
 
 void Menu::Album::shareOpen(bool /*checked*/)
 {
-	UrlUtils::open(QString("https://open.spotify.com/album/%1")
+	Url::open(QString("https://open.spotify.com/album/%1")
 			.arg(QString::fromStdString(albumId)), LinkType::Web,
 		MainWindow::find(parentWidget()));
 }
