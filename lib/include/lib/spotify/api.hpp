@@ -297,18 +297,6 @@ namespace lib
 
 			//endregion
 
-			//region Lyrics
-
-			/**
-			 * Get lyrics for a specific track
-			 * @note Unofficial endpoint
-			 * @param track Track to get lyrics for
-			 * @param callback Callback with lyrics
-			 */
-			void lyrics(const lib::spt::track &track, lib::callback<std::string> &callback);
-
-			//endregion
-
 			/**
 			 * Refresh access token with refresh token
 			 * @return Refresh was successful

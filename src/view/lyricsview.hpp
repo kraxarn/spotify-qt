@@ -1,6 +1,7 @@
 #pragma once
 
-#include "lib/spotify/api.hpp"
+#include "lib/httpclient.hpp"
+#include "lib/spotify/track.hpp"
 #include "lib/lyrics.hpp"
 #include "lib/cache.hpp"
 
@@ -11,11 +12,12 @@ class LyricsView: public QTextEdit
 Q_OBJECT
 
 public:
-	LyricsView(lib::spt::api &spotify, lib::cache &cache, QWidget *parent);
+	LyricsView(const lib::http_client &httpClient,
+		lib::cache &cache, QWidget *parent);
 
 	void open(const lib::spt::track &track);
 
 private:
-	lib::spt::api &spotify;
 	lib::cache &cache;
+	lib::lyrics lyrics;
 };

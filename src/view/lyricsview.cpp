@@ -1,9 +1,10 @@
 #include "lyricsview.hpp"
 
-LyricsView::LyricsView(lib::spt::api &spotify, lib::cache &cache, QWidget *parent)
+LyricsView::LyricsView(const lib::http_client &httpClient,
+	lib::cache &cache, QWidget *parent)
 	: QTextEdit(parent),
-	spotify(spotify),
-	cache(cache)
+	cache(cache),
+	lyrics(httpClient)
 {
 	setReadOnly(true);
 }
@@ -19,13 +20,14 @@ void LyricsView::open(const lib::spt::track &track)
 
 	setPlainText("Searching...");
 
-	spotify.lyrics(track, [this, &track](const std::string &response)
+	lyrics.get(track, [this, &track](const lib::spt::track_info &info)
 	{
-		if (response.empty())
+		if (!info.is_valid())
 		{
 			this->setPlainText("No results");
 			return;
 		}
-		this->setPlainText(QString::fromStdString(response));
+		this->setPlainText(QString::fromStdString(info.lyrics));
+		this->cache.set_track_info(track, info);
 	});
 }

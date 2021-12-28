@@ -42,7 +42,7 @@ void SidePanel::View::openAudioFeatures(const lib::spt::track &track)
 
 void SidePanel::View::openLyrics(const lib::spt::track &track)
 {
-	auto *view = new LyricsView(spotify, cache, this);
+	auto *view = new LyricsView(httpClient, cache, this);
 	addTab(view, "view-media-lyrics", QString::fromStdString(track.title()),
 		SidePanelType::Lyrics, QString::fromStdString(track.id));
 	view->open(track);
