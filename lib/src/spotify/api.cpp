@@ -334,6 +334,7 @@ void lib::spt::api::put(const std::string &url, const nlohmann::json &body,
 							{
 								if (status.empty())
 								{
+									set_current_device(device.id);
 									this->put(get_device_url(url, device), body, callback);
 								}
 							});
