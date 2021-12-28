@@ -299,7 +299,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 		if (trayIcon != nullptr
 			&& (settings.general.tray_album_art || settings.general.notify_track_change))
 		{
-			Http::getAlbum(current.playback.item.image, *httpClient, cache,
+			Http::getAlbum(current.playback.item.image, *httpClient, cache, false,
 				[this, &currPlaying, trackChange](const QPixmap &image)
 				{
 					if (trayIcon == nullptr)
