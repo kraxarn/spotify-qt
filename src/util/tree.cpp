@@ -1,6 +1,6 @@
-#include "treeutils.hpp"
+#include "util/tree.hpp"
 
-auto TreeUtils::itemWithChildren(QTreeWidget *tree,
+auto Tree::itemWithChildren(QTreeWidget *tree,
 	const QString &name, const QString &toolTip,
 	const QStringList &childrenItems) -> QTreeWidgetItem *
 {
@@ -8,22 +8,24 @@ auto TreeUtils::itemWithChildren(QTreeWidget *tree,
 		name
 	});
 	item->setToolTip(0, toolTip);
-	for (const auto &child : childrenItems)
+	for (const auto &child: childrenItems)
 	{
-		item->addChild(new QTreeWidgetItem(item, {child}));
+		item->addChild(new QTreeWidgetItem(item, {
+			child,
+		}));
 	}
 
 	return item;
 }
 
-auto TreeUtils::itemWithNoChildren(QTreeWidget *tree, const QString &name,
+auto Tree::itemWithNoChildren(QTreeWidget *tree, const QString &name,
 	const QString &toolTip) -> QTreeWidgetItem *
 {
 	return itemWithChildren(tree, name, toolTip,
 		QStringList());
 }
 
-auto TreeUtils::itemWithEmptyChild(QTreeWidget *tree, const QString &name,
+auto Tree::itemWithEmptyChild(QTreeWidget *tree, const QString &name,
 	const QString &toolTip) -> QTreeWidgetItem *
 {
 	return itemWithChildren(tree, name, toolTip,

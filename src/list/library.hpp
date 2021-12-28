@@ -2,7 +2,7 @@
 
 #include "lib/spotify/api.hpp"
 
-#include "util/treeutils.hpp"
+#include "util/tree.hpp"
 #include "listitem/library.hpp"
 
 #include <QTreeWidget>

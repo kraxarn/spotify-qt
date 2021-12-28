@@ -6,19 +6,19 @@ List::Library::Library(lib::spt::api &spotify, QWidget *parent)
 	spotify(spotify)
 {
 	addTopLevelItems({
-		TreeUtils::itemWithNoChildren(this, recentlyPlayed,
+		Tree::itemWithNoChildren(this, recentlyPlayed,
 			"Most recently played tracks from any device"),
-		TreeUtils::itemWithNoChildren(this, savedTracks,
+		Tree::itemWithNoChildren(this, savedTracks,
 			"Liked and saved tracks"),
-		TreeUtils::itemWithNoChildren(this, topTracks,
+		Tree::itemWithNoChildren(this, topTracks,
 			"Most played tracks for the past 6 months"),
-		TreeUtils::itemWithNoChildren(this, newReleases,
+		Tree::itemWithNoChildren(this, newReleases,
 			"New albums from artists you listen to"),
-		TreeUtils::itemWithEmptyChild(this, savedAlbums,
+		Tree::itemWithEmptyChild(this, savedAlbums,
 			"Liked and saved albums"),
-		TreeUtils::itemWithEmptyChild(this, topArtists,
+		Tree::itemWithEmptyChild(this, topArtists,
 			"Most played artists for the past 6 months"),
-		TreeUtils::itemWithEmptyChild(this, followedArtists,
+		Tree::itemWithEmptyChild(this, followedArtists,
 			"Artists you're currently following")
 	});
 

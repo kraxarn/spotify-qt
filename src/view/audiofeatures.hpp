@@ -1,6 +1,5 @@
 #pragma once
 
-#include "util/treeutils.hpp"
 #include "lib/spotify/api.hpp"
 
 #include <QAbstractItemView>
