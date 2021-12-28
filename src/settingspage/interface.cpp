@@ -260,7 +260,7 @@ void SettingsPage::Interface::saveAppearance()
 			"Please restart the application to fully apply selected theme");
 
 		settings.set_dark_theme(darkTheme->isChecked());
-		StyleUtils::applyPalette(settings.general.style_palette);
+		Style::applyPalette(settings.general.style_palette);
 	}
 
 	if (iconFallback != nullptr)

@@ -8,7 +8,7 @@
 #include <QWidget>
 #include <QStyle>
 
-class StyleUtils
+class Style
 {
 public:
 	/** Apply specified palette to current application */
@@ -21,7 +21,7 @@ public:
 	static auto getDarkBackground() -> bool;
 
 private:
-	StyleUtils() = default;
+	Style() = default;
 
 	static bool darkBackground;
 };

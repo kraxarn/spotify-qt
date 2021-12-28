@@ -1,7 +1,7 @@
 #pragma once
 
 #include "lib/settings.hpp"
-#include "util/styleutils.hpp"
+#include "util/style.hpp"
 
 #include <QIcon>
 #include <QString>

@@ -27,7 +27,7 @@
 #include "util/icon.hpp"
 #include "util/image.hpp"
 #include "util/parent.hpp"
-#include "util/styleutils.hpp"
+#include "util/style.hpp"
 #include "view/context/view.hpp"
 #include "view/maincontent.hpp"
 #include "view/maintoolbar.hpp"

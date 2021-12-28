@@ -11,7 +11,7 @@ auto Icon::get(const QString &name) -> QIcon
 	}
 
 	auto fallback = QString(":/res/ic/%1/%2.svg")
-		.arg(StyleUtils::getDarkBackground() ? "dark" : "light", name);
+		.arg(Style::getDarkBackground() ? "dark" : "light", name);
 
 	return useFallbackIcons
 		? QIcon(fallback)
