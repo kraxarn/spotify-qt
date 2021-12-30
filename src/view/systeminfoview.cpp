@@ -1,5 +1,7 @@
 #include "systeminfoview.hpp"
+
 #include "mainwindow.hpp"
+#include "util/appinstalltype.hpp"
 
 SystemInfoView::SystemInfoView(QWidget *parent)
 	: QWidget(parent)
@@ -66,6 +68,12 @@ auto SystemInfoView::systemInfo() -> lib::qt::system_info
 #else
 	info.add(QStringLiteral("KCrash support"), QStringLiteral("No"));
 #endif
+
+	// App install type
+	if (AppInstallType::get() != InstallType::Unknown)
+	{
+		info.add(QStringLiteral("Install type"), AppInstallType::getString());
+	}
 
 	return info;
 }

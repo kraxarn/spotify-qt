@@ -1,4 +1,5 @@
 #include "util/icon.hpp"
+#include "util/appinstalltype.hpp"
 #include "lib/qtpaths.hpp"
 
 #include <QApplication>
@@ -19,6 +20,13 @@ auto main(int argc, char *argv[]) -> int
 	QCoreApplication::setOrganizationName(ORG_NAME);
 	QCoreApplication::setApplicationName(APP_NAME);
 	QCoreApplication::setApplicationVersion(APP_VERSION);
+
+	// Set installation type
+	if (argc > 0)
+	{
+		const auto installType = AppInstallType::getInstallType(argv[0]);
+		AppInstallType::set(installType);
+	}
 
 	// High-DPI support
 	// These flags are deprecated and always enabled in Qt 6 and newer
