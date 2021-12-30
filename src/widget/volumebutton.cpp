@@ -47,7 +47,10 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 	QAbstractSlider::connect(volume, &QAbstractSlider::valueChanged,
 		this, &VolumeButton::onVolumeValueChanged);
 
-	QSlider::connect(volume, &QAbstractSlider::sliderReleased,
+	QAbstractSlider::connect(volume, &QAbstractSlider::sliderPressed,
+		this, &VolumeButton::onVolumeSliderPressed);
+
+	QAbstractSlider::connect(volume, &QAbstractSlider::sliderReleased,
 		this, &VolumeButton::onVolumeSliderReleased);
 }
 
@@ -97,6 +100,11 @@ auto VolumeButton::getVolumeInfo(int value) -> QString
 
 void VolumeButton::setVolume(int value)
 {
+	if (changing)
+	{
+		return;
+	}
+
 	volume->setValue(value);
 }
 
@@ -105,8 +113,14 @@ void VolumeButton::onVolumeValueChanged(int value)
 	update(value);
 }
 
+void VolumeButton::onVolumeSliderPressed()
+{
+	changing = true;
+}
+
 void VolumeButton::onVolumeSliderReleased()
 {
+	changing = false;
 	setSpotifyVolume(volume->value());
 }
 

@@ -42,6 +42,7 @@ private:
 	/** Threshold for high volume icon */
 	static constexpr int highVolume = static_cast<int>(step * (2.0 / 3.0));
 
+	bool changing = false;
 	QSlider *volume;
 	QPushButton *volumeUp;
 	QPushButton *volumeDown;
@@ -75,6 +76,7 @@ private:
 	void changeVolume(int steps);
 
 	void onVolumeValueChanged(int value);
+	void onVolumeSliderPressed();
 	void onVolumeSliderReleased();
 	void onVolumeUp(bool checked);
 	void onVolumeDown(bool checked);
