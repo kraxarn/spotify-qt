@@ -323,11 +323,8 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 	toolBar->setProgress(current.playback);
 	toolBar->setPlaying(current.playback.is_playing);
 
-	if (!settings.general.pulse_volume)
-	{
-		constexpr int volumeStep = 5;
-		toolBar->setVolume(current.playback.volume() / volumeStep);
-	}
+	constexpr int volumeStep = 5;
+	toolBar->setVolume(current.playback.volume() / volumeStep);
 
 	toolBar->setRepeat(current.playback.repeat);
 	toolBar->setShuffle(current.playback.shuffle);

@@ -12,9 +12,7 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 	volume->setFixedHeight(height);
 	volume->setMinimum(minimum);
 	volume->setMaximum(maximum);
-	volume->setValue(settings.general.last_volume > minimum
-		? settings.general.last_volume
-		: static_cast<int>(SpotifyClient::Helper::getVolume() * 20.F));
+	volume->setValue(settings.general.last_volume);
 
 	// Layout for volume slider
 	auto *volumeMenu = new QMenu(this);
@@ -33,32 +31,21 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 		updateIcon();
 	});
 
-	if (settings.general.pulse_volume)
+	// Update volume on release
+	QSlider::connect(volume, &QAbstractSlider::sliderReleased, [this]()
 	{
-		// If using PulseAudio for volume control, update on every tick
-		QSlider::connect(volume, &QAbstractSlider::valueChanged, [](int value)
-		{
-			SpotifyClient::Helper::setVolume(static_cast<float>(value) * 0.05f);
-		});
-	}
-	else
-	{
-		// If using Spotify for volume control, only update on release
-		QSlider::connect(volume, &QAbstractSlider::sliderReleased, [this]()
-		{
-			this->spotify.set_volume(volume->value() * step,
-				[](const std::string &status)
+		this->spotify.set_volume(volume->value() * step,
+			[](const std::string &status)
+			{
+				if (status.empty())
 				{
-					if (status.empty())
-					{
-						return;
-					}
+					return;
+				}
 
-					StatusMessage::error(QString("Failed to set volume: %1")
-						.arg(QString::fromStdString(status)));
-				});
-		});
-	}
+				StatusMessage::error(QString("Failed to set volume: %1")
+					.arg(QString::fromStdString(status)));
+			});
+	});
 }
 
 VolumeButton::~VolumeButton()

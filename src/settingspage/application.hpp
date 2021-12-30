@@ -30,8 +30,6 @@ namespace SettingsPage
 		static constexpr int minMaxQueue = 1;
 		static constexpr int maxMaxQueue = 1000;
 
-		static auto isPulse() -> bool;
-
 		auto app() -> QWidget *;
 		auto appLogs() -> QWidget *;
 	};

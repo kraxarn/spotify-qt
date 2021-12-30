@@ -91,29 +91,6 @@ auto SpotifyClient::Helper::clientType(const QString &path) -> lib::client_type
 	return lib::client_type::none;
 }
 
-auto SpotifyClient::Helper::supportsPulse(const QString &path) -> bool
-{
-	auto type = clientType(path);
-	QStringList args;
-
-	if (type == lib::client_type::librespot)
-	{
-		args = QStringList{
-			"--name", "",
-			"--backend", "?"
-		};
-	}
-	else if (type == lib::client_type::spotifyd)
-	{
-		args = QStringList{
-			"--help"
-		};
-	}
-
-	return clientExec(path, args)
-		.contains("pulseaudio");
-}
-
 auto SpotifyClient::Helper::version(const QString &path) -> QString
 {
 	auto type = clientType(path);
@@ -146,80 +123,4 @@ auto SpotifyClient::Helper::running(const QString &path) -> bool
 	ps.waitForFinished();
 	auto out = ps.readAllStandardOutput();
 	return QString(out).contains(path);
-}
-
-auto SpotifyClient::Helper::sinkInfo() -> QString
-{
-	if (!QFileInfo::exists("/usr/bin/pactl"))
-	{
-		return {};
-	}
-	QProcess process;
-
-	// Find what sink to use
-	process.start("/usr/bin/pactl", {
-		"list", "sink-inputs"
-	});
-	process.waitForFinished();
-	auto sinks = QString(process.readAllStandardOutput()).split("Sink Input #");
-	for (auto &sink: sinks)
-	{
-		if (sink.contains("Spotify"))
-		{
-			return sink;
-		}
-	}
-
-	return {};
-}
-
-auto SpotifyClient::Helper::getVolume() -> float
-{
-	auto sink = sinkInfo();
-	if (sink.isEmpty())
-	{
-		return 1.F;
-	}
-
-	auto i = sink.indexOf("Volume:");
-	if (i < 0)
-	{
-		return 1.F;
-	}
-
-	bool ok;
-	for (auto &p: sink.right(sink.length() - i).split(' '))
-	{
-		if (!p.endsWith('%'))
-		{
-			continue;
-		}
-		auto v = p.left(p.length() - 1).toInt(&ok);
-		if (!ok)
-		{
-			continue;
-		}
-		return static_cast<float>(v) / 100.F;
-	}
-
-	return 1.F;
-}
-
-void SpotifyClient::Helper::setVolume(float value)
-{
-	auto sink = sinkInfo();
-	if (sink.isEmpty())
-	{
-		return;
-	}
-
-	// Sink was found, get id
-	auto left = sink.left(sink.indexOf('\n'));
-	auto sinkId = left.right(left.length() - left.lastIndexOf('#') - 1);
-	QProcess process;
-	process.start("/usr/bin/pactl", {
-		"set-sink-input-volume", sinkId, QString::number(value, 'f', 2)
-	});
-
-	process.waitForFinished();
 }

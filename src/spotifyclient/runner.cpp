@@ -115,11 +115,6 @@ auto SpotifyClient::Runner::start() -> QString
 	}
 
 	auto backend = QString::fromStdString(settings.spotify.backend);
-	if (backend.isEmpty() && supportsPulse())
-	{
-		backend = "pulseaudio";
-	}
-
 	if (!backend.isEmpty())
 	{
 		arguments.append({
@@ -159,11 +154,6 @@ auto SpotifyClient::Runner::waitForStarted() const -> bool
 auto SpotifyClient::Runner::availableBackends() -> QStringList
 {
 	return SpotifyClient::Helper::availableBackends(path);
-}
-
-auto SpotifyClient::Runner::supportsPulse() -> bool
-{
-	return SpotifyClient::Helper::supportsPulse(path);
 }
 
 auto SpotifyClient::Runner::isRunning() const -> bool

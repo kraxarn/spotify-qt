@@ -44,9 +44,6 @@ namespace SpotifyClient
 		const lib::paths &paths;
 		lib::client_type clientType;
 
-		/** Wrapper for spt::ClientHelper::supportsPulse */
-		auto supportsPulse() -> bool;
-
 		void readyRead() const;
 		void readyError() const;
 		static void logOutput(const QByteArray &output);

@@ -75,11 +75,6 @@ namespace lib
 			bool media_controller = false;
 
 			/**
-			 * Use PulseAudio for volume control
-			 */
-			bool pulse_volume = false;
-
-			/**
 			 * Use relative time for added dates
 			 */
 			bool relative_added = true;
