@@ -12,7 +12,14 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 	volume->setFixedHeight(height);
 	volume->setMinimum(minimum);
 	volume->setMaximum(maximum);
-	volume->setValue(settings.general.last_volume);
+
+	// Assume no volume is full volume
+	auto volumeValue = settings.general.last_volume;
+	if (volumeValue == minimum)
+	{
+		volumeValue = maximum;
+	}
+	volume->setValue(volumeValue);
 
 	// Layout for volume slider
 	auto *volumeMenu = new QMenu(this);
@@ -22,7 +29,7 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 	volumeMenu->setLayout(volumeLayout);
 
 	setText(QStringLiteral("Volume"));
-	updateIcon(volume->value());
+	updateIcon(volumeValue);
 	setPopupMode(QToolButton::InstantPopup);
 	setMenu(volumeMenu);
 
