@@ -104,8 +104,19 @@ auto SpotifyClient::Helper::version(const QString &path) -> QString
 
 	if (type == lib::client_type::librespot)
 	{
-		// librespot doesn't provide version information
-		return "librespot";
+		const auto versionInfo = clientExec(path, {
+			"--version"
+		});
+
+		if (versionInfo.startsWith(QStringLiteral("error:")))
+		{
+			return QStringLiteral("librespot");
+		}
+
+		const auto stop = versionInfo.indexOf('(');
+		return stop > 0
+			? versionInfo.left(stop - 1)
+			: QStringLiteral("librespot");
 	}
 
 	return {};
