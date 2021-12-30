@@ -74,6 +74,7 @@ target_compile_definitions(spotify-qt PRIVATE APP_VERSION="v${PROJECT_VERSION}")
 target_compile_definitions(spotify-qt PRIVATE APP_NAME="${PROJECT_NAME}")
 target_compile_definitions(spotify-qt PRIVATE APP_ICON="${PROJECT_NAME}")
 target_compile_definitions(spotify-qt PRIVATE ORG_NAME="kraxarn")
+target_compile_definitions(spotify-qt PRIVATE BUILD_TYPE="${CMAKE_BUILD_TYPE}")
 
 # Set install targets for 'make install'
 install(TARGETS spotify-qt RUNTIME DESTINATION bin)

@@ -75,6 +75,9 @@ auto SystemInfoView::systemInfo() -> lib::qt::system_info
 		info.add(QStringLiteral("Install type"), AppInstallType::getString());
 	}
 
+	// CMake build type
+	info.add(QStringLiteral("Build type"), QStringLiteral(BUILD_TYPE));
+
 	return info;
 }
 
