@@ -47,10 +47,10 @@ void Context::View::setCurrentlyPlaying(const lib::spt::track &track) const
 	}
 }
 
-void Context::View::setAlbum(const QPixmap &pixmap) const
+void Context::View::setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage) const
 {
 	if (content != nullptr)
 	{
-		content->setAlbum(pixmap);
+		content->setAlbum(albumEntity, albumImage);
 	}
 }

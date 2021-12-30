@@ -21,7 +21,7 @@ namespace Context
 		auto getCurrentlyPlaying() const -> const lib::spt::track &;
 		void setCurrentlyPlaying(const lib::spt::track &track) const;
 
-		void setAlbum(const QPixmap &pixmap) const;
+		void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage) const;
 
 	private:
 		Title *title = nullptr;

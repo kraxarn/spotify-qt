@@ -55,11 +55,12 @@ void Context::Content::reset()
 	}
 }
 
-void Context::Content::setAlbum(const QPixmap &pixmap)
+void Context::Content::setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage)
 {
 	if (album != nullptr)
 	{
-		album->setPixmap(Image::mask(pixmap));
+		album->setPixmap(Image::mask(albumImage));
+		album->setToolTip(QString::fromStdString(albumEntity.name));
 	}
 }
 

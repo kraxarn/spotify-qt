@@ -117,6 +117,6 @@ private:
 
 	// Methods
 	QWidget *createCentralWidget();
-	void setAlbumImage(const std::string &url);
+	void setAlbumImage(const lib::spt::entity &albumEntity, const std::string &albumImageUrl);
 	void setSptContext(const std::string &uri);
 };

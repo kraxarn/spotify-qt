@@ -30,7 +30,7 @@ namespace Context
 		auto getCurrentlyPlaying() const -> const lib::spt::track &;
 		void setCurrentlyPlaying(const lib::spt::track &track);
 
-		void setAlbum(const QPixmap &pixmap);
+		void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage);
 
 	private:
 		/** Width and height of album */

@@ -285,7 +285,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 		}
 
 		contextView->setCurrentlyPlaying(currPlaying);
-		setAlbumImage(currPlaying.image);
+		setAlbumImage(currPlaying.album, currPlaying.image);
 		setWindowTitle(QString::fromStdString(currPlaying.title()));
 		contextView->updateContextIcon();
 
@@ -408,15 +408,17 @@ void MainWindow::saveTracksToCache(const std::string &id,
 	cache.set_tracks(id, tracks);
 }
 
-void MainWindow::setAlbumImage(const std::string &url)
+void MainWindow::setAlbumImage(const lib::spt::entity &albumEntity,
+	const std::string &albumImageUrl)
 {
-	Http::getAlbum(url, *httpClient, cache, [this](const QPixmap &image)
-	{
-		if (this->contextView != nullptr)
+	Http::getAlbum(albumImageUrl, *httpClient, cache,
+		[this, albumEntity](const QPixmap &image)
 		{
-			contextView->setAlbum(image);
-		}
-	});
+			if (contextView != nullptr)
+			{
+				contextView->setAlbum(albumEntity, image);
+			}
+		});
 }
 
 void MainWindow::openArtist(const std::string &artistId)
