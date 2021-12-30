@@ -27,6 +27,8 @@ protected:
 private:
 	/** Height of volume slider widget */
 	static constexpr int height = 100;
+	/** Width of menu */
+	static constexpr int width = 44;
 
 	/** Minimum volume */
 	static constexpr int minimum = 0;
@@ -35,24 +37,22 @@ private:
 	/** How much each step adjusts volume */
 	static constexpr int step = 100 / maximum;
 
-	/** Vertical margins */
-	static constexpr int vMargin = 2;
-	/** Horizontal margins */
-	static constexpr int hMargin = 6;
-
 	/** Threshold for low volume icon */
-	static constexpr int lowVolume = step / 3;
+	static constexpr int lowVolume = static_cast<int>(step * (1.0 / 3.0));
 	/** Threshold for high volume icon */
-	static constexpr int highVolume = step / 3 * 2;
+	static constexpr int highVolume = static_cast<int>(step * (2.0 / 3.0));
 
 	QSlider *volume;
+	QPushButton *volumeUp;
+	QPushButton *volumeDown;
+
 	lib::settings &settings;
 	lib::spt::api &spotify;
 
 	/**
-	 * Update icon and tooltip
+	 * Update widgets on value change
 	 */
-	void updateIcon(int value);
+	void update(int value);
 
 	/**
 	 * Volume level, "low", "medium", or "high"
@@ -64,6 +64,20 @@ private:
 	 */
 	static auto getVolumeInfo(int value) -> QString;
 
+	/**
+	 * Send request to set volume
+	 */
+	void setSpotifyVolume(int value);
+
+	/**
+	 * Modify volume with set number of steps
+	 */
+	void changeVolume(int steps);
+
 	void onVolumeValueChanged(int value);
 	void onVolumeSliderReleased();
+	void onVolumeUp(bool checked);
+	void onVolumeDown(bool checked);
+
+	auto createButton(const QString &text) -> QPushButton *;
 };
