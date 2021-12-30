@@ -34,6 +34,25 @@ void lib::json_cache::set_album_image(const std::string &url,
 		std::ostream_iterator<char>(file));
 }
 
+auto lib::json_cache::get_album(const std::string &album_id) const -> lib::spt::album
+{
+	try
+	{
+		return lib::json::load(path("albumInfo", album_id, "json"));
+	}
+	catch (const std::exception &e)
+	{
+		lib::log::warn("Failed to load album from cache: {}", e.what());
+	}
+
+	return {};
+}
+
+void lib::json_cache::set_album(const lib::spt::album &album)
+{
+	lib::json::save(path("albumInfo", album.id, "json"), album);
+}
+
 //endregion
 
 //region playlists

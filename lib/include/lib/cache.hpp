@@ -47,6 +47,19 @@ namespace lib
 		virtual void set_album_image(const std::string &url,
 			const std::vector<unsigned char> &data) = 0;
 
+		/**
+		 * Get an album
+		 * @param album_id ID of album
+		 * @return Album, or invalid entity on failure
+		 */
+		virtual auto get_album(const std::string &album_id) const -> lib::spt::album = 0;
+
+		/**
+		 * Save an album to cache
+		 * @param album Album to save
+		 */
+		virtual void set_album(const lib::spt::album &album) = 0;
+
 		//endregion
 
 		//region playlists

@@ -25,6 +25,9 @@ namespace lib
 		void set_album_image(const std::string &url,
 			const std::vector<unsigned char> &data) override;
 
+		auto get_album(const std::string &album_id) const -> lib::spt::album override;
+		void set_album(const spt::album &album) override;
+
 		auto get_playlists() const -> std::vector<lib::spt::playlist> override;
 		void set_playlists(const std::vector<spt::playlist> &playlists) override;
 
