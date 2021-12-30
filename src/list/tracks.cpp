@@ -251,7 +251,8 @@ auto List::Tracks::getAddedText(const std::string &date) const -> QString
 	return locale.toString(parsed, QLocale::ShortFormat);
 }
 
-void List::Tracks::load(const std::vector<lib::spt::track> &tracks, const std::string &selectedId)
+void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
+	const std::string &selectedId, const std::string &addedAt)
 {
 	clear();
 	trackItems.clear();
@@ -267,6 +268,10 @@ void List::Tracks::load(const std::vector<lib::spt::track> &tracks, const std::s
 		const auto index = static_cast<int>(i);
 		const auto &track = tracks.at(i);
 
+		const auto &added = track.added_at.empty() && !addedAt.empty()
+			? addedAt
+			: track.added_at;
+
 		auto *item = new ListItem::Track({
 			settings.general.track_numbers == lib::spotify_context::all
 				? QString("%1").arg(i + 1, fieldWidth)
@@ -275,10 +280,10 @@ void List::Tracks::load(const std::vector<lib::spt::track> &tracks, const std::s
 			QString::fromStdString(lib::spt::entity::combine_names(track.artists)),
 			QString::fromStdString(track.album.name),
 			QString::fromStdString(lib::fmt::time(track.duration)),
-			getAddedText(track.added_at),
+			getAddedText(added),
 		}, track, emptyIcon, index);
 
-		if (!anyHasDate && !track.added_at.empty())
+		if (!anyHasDate && !added.empty())
 		{
 			anyHasDate = true;
 		}
@@ -307,6 +312,11 @@ void List::Tracks::load(const std::vector<lib::spt::track> &tracks, const std::s
 void List::Tracks::load(const std::vector<lib::spt::track> &tracks)
 {
 	load(tracks, std::string());
+}
+
+void List::Tracks::load(const std::vector<lib::spt::track> &tracks, const std::string &selectedId)
+{
+	load(tracks, selectedId, std::string());
 }
 
 void List::Tracks::load(const lib::spt::playlist &playlist)
@@ -376,7 +386,7 @@ void List::Tracks::load(const lib::spt::album &album, const std::string &trackId
 	auto tracks = cache.get_tracks(album.id);
 	if (!tracks.empty())
 	{
-		load(tracks, trackId);
+		load(tracks, trackId, album.release_date);
 	}
 	else
 	{
@@ -386,7 +396,7 @@ void List::Tracks::load(const lib::spt::album &album, const std::string &trackId
 	spotify.album_tracks(album,
 		[this, album, trackId](const std::vector<lib::spt::track> &tracks)
 		{
-			this->load(tracks, trackId);
+			this->load(tracks, trackId, album.release_date);
 			this->setEnabled(true);
 			cache.set_tracks(album.id, tracks);
 
