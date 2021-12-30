@@ -1,7 +1,10 @@
 #include "widget/clickableslider.hpp"
 
+#include <QApplication>
+
 ClickableSlider::ClickableSlider(Qt::Orientation orientation, QWidget *parent)
-	: QSlider(orientation, parent)
+	: QSlider(orientation, parent),
+	enabled(!styleHasClickSupport())
 {
 }
 
@@ -49,7 +52,9 @@ auto ClickableSlider::valueFromPos(const QPoint &pos) -> int
 		sliderMax - sliderMin, styleOption.upsideDown);
 }
 
-void ClickableSlider::setUpdateOnClickEnabled(bool value)
+auto ClickableSlider::styleHasClickSupport() -> bool
 {
-	enabled = value;
+	// TODO: This would be better to do automatically, but this work for now
+	const auto &style = QApplication::style()->objectName();
+	return style == "kvantum" || style == "kvantum-dark";
 }
