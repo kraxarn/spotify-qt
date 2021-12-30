@@ -42,14 +42,11 @@ void Search::Albums::add(const lib::spt::album &album)
 
 void Search::Albums::onItemClicked(QTreeWidgetItem *item, int /*column*/)
 {
-	auto *mainWindow = MainWindow::find(parentWidget());
 	const auto albumId = item->data(0, static_cast<int>(DataRole::AlbumId))
 		.toString().toStdString();
 
-	if (!mainWindow->loadAlbum(albumId))
-	{
-		StatusMessage::error(QStringLiteral("Failed to load album"));
-	}
+	auto *mainWindow = MainWindow::find(parentWidget());
+	mainWindow->loadAlbum(albumId);
 }
 
 void Search::Albums::onContextMenu(const QPoint &pos)

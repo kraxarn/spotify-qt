@@ -122,10 +122,7 @@ void Artist::AlbumsList::onItemClicked(QTreeWidgetItem *item, int /*column*/)
 	}
 
 	auto *mainWindow = MainWindow::find(parentWidget());
-	if (!mainWindow->loadAlbum(id))
-	{
-		StatusMessage::error(QStringLiteral("Failed to load album"));
-	}
+	mainWindow->loadAlbum(id);
 }
 
 void Artist::AlbumsList::onItemDoubleClicked(QTreeWidgetItem *item, int /*column*/)

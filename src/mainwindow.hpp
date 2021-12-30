@@ -16,8 +16,7 @@ public:
 	//region Deprecated
 
 	/** @deprecated Use TracksList.load instead */
-	bool loadAlbum(const std::string &albumId,
-		const std::string &trackId = std::string());
+	void loadAlbum(const std::string &albumId, const std::string &trackId = std::string());
 
 	/** @deprecated Use SidePanel.openArtist instead */
 	void openArtist(const std::string &artistId);

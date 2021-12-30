@@ -388,13 +388,21 @@ void MainWindow::openLyrics(const lib::spt::track &track)
 	dynamic_cast<SidePanel::View *>(sidePanel)->openLyrics(track);
 }
 
-auto MainWindow::loadAlbum(const std::string &albumId, const std::string &trackId) -> bool
+void MainWindow::loadAlbum(const std::string &albumId, const std::string &trackId)
 {
-	spotify->album(albumId, [this, trackId](const lib::spt::album &album)
+	auto *tracksList = mainContent->getTracksList();
+
+	const auto album = cache.get_album(albumId);
+	if (album.is_valid())
 	{
-		mainContent->getTracksList()->load(album, trackId);
+		tracksList->load(album, trackId);
+		return;
+	}
+
+	spotify->album(albumId, [tracksList, trackId](const lib::spt::album &album)
+	{
+		tracksList->load(album, trackId);
 	});
-	return true;
 }
 
 auto MainWindow::loadTracksFromCache(const std::string &id) -> std::vector<lib::spt::track>

@@ -398,7 +398,9 @@ void List::Tracks::load(const lib::spt::album &album, const std::string &trackId
 		{
 			this->load(tracks, trackId, album.release_date);
 			this->setEnabled(true);
+
 			cache.set_tracks(album.id, tracks);
+			cache.set_album(album);
 
 			auto *mainWindow = MainWindow::find(this->parentWidget());
 			if (mainWindow != nullptr)
