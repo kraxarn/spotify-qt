@@ -204,15 +204,15 @@ auto lib::spt::api::get_device_url(const std::string &url,
 		: to_full_url(url));
 
 	auto params = uri.get_search_params();
-	auto device_ids = params.find("device_ids");
-	if (device_ids != params.end())
+	auto device_id = params.find("device_id");
+	if (device_id != params.end())
 	{
-		device_ids->second = device.id;
+		device_id->second = device.id;
 	}
 	else
 	{
 		params.insert({
-			"device_ids",
+			"device_id",
 			device.id,
 		});
 	}
