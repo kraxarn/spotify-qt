@@ -21,31 +21,16 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 	volumeLayout->addWidget(volume);
 	volumeMenu->setLayout(volumeLayout);
 
-	setText("Volume");
-	updateIcon();
+	setText(QStringLiteral("Volume"));
+	updateIcon(volume->value());
 	setPopupMode(QToolButton::InstantPopup);
 	setMenu(volumeMenu);
 
-	QAbstractSlider::connect(volume, &QAbstractSlider::valueChanged, [this](int /*value*/)
-	{
-		updateIcon();
-	});
+	QAbstractSlider::connect(volume, &QAbstractSlider::valueChanged,
+		this, &VolumeButton::onVolumeValueChanged);
 
-	// Update volume on release
-	QSlider::connect(volume, &QAbstractSlider::sliderReleased, [this]()
-	{
-		this->spotify.set_volume(volume->value() * step,
-			[](const std::string &status)
-			{
-				if (status.empty())
-				{
-					return;
-				}
-
-				StatusMessage::error(QString("Failed to set volume: %1")
-					.arg(QString::fromStdString(status)));
-			});
-	});
+	QSlider::connect(volume, &QAbstractSlider::sliderReleased,
+		this, &VolumeButton::onVolumeSliderReleased);
 }
 
 VolumeButton::~VolumeButton()
@@ -60,18 +45,45 @@ void VolumeButton::wheelEvent(QWheelEvent *event)
 	event->accept();
 }
 
-void VolumeButton::updateIcon()
+void VolumeButton::updateIcon(int value)
 {
-	auto vol = volume->value();
 	setIcon(Icon::get(QString("audio-volume-%1")
-		.arg(vol < lowVolume
-			? "low"
-			: vol > highVolume
-				? "high"
-				: "medium")));
+		.arg(getVolumeLevel(value))));
+}
+
+auto VolumeButton::getVolumeLevel(int value) -> QString
+{
+	if (value < lowVolume)
+	{
+		return QStringLiteral("low");
+	}
+
+	if (value > highVolume)
+	{
+		return QStringLiteral("high");
+	}
+
+	return QStringLiteral("medium");
 }
 
 void VolumeButton::setVolume(int value)
 {
 	volume->setValue(value);
+}
+
+void VolumeButton::onVolumeValueChanged(int value)
+{
+	updateIcon(value);
+}
+
+void VolumeButton::onVolumeSliderReleased()
+{
+	spotify.set_volume(volume->value() * step, [](const std::string &status)
+	{
+		if (!status.empty())
+		{
+			StatusMessage::error(QString("Failed to set volume: %1")
+				.arg(QString::fromStdString(status)));
+		}
+	});
 }
