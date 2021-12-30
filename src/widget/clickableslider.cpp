@@ -1,22 +1,22 @@
-#include "clickableslider.hpp"
+#include "widget/clickableslider.hpp"
 
 ClickableSlider::ClickableSlider(Qt::Orientation orientation, QWidget *parent)
 	: QSlider(orientation, parent)
 {
 }
 
-void ClickableSlider::mousePressEvent(QMouseEvent *ev)
+void ClickableSlider::mousePressEvent(QMouseEvent *event)
 {
-	QSlider::mousePressEvent(ev);
+	QSlider::mousePressEvent(event);
 
-	if (ev->button() == Qt::LeftButton)
+	if (enabled && event->button() == Qt::LeftButton)
 	{
-		setValue(valueFromPos(ev->pos()));
+		setValue(valueFromPos(event->pos()));
 	}
 	emit sliderReleased();
 }
 
-int ClickableSlider::valueFromPos(const QPoint &pos)
+auto ClickableSlider::valueFromPos(const QPoint &pos) -> int
 {
 	QStyleOptionSlider styleOption;
 	initStyleOption(&styleOption);
@@ -47,4 +47,9 @@ int ClickableSlider::valueFromPos(const QPoint &pos)
 	auto posVal = orientation() == Qt::Horizontal ? posRect.x() : posRect.y();
 	return QStyle::sliderValueFromPosition(minimum(), maximum(), posVal - sliderMin,
 		sliderMax - sliderMin, styleOption.upsideDown);
+}
+
+void ClickableSlider::setUpdateOnClickEnabled(bool value)
+{
+	enabled = value;
 }

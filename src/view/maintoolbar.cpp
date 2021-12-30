@@ -51,6 +51,14 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	QSlider::connect(progress, &QAbstractSlider::sliderReleased,
 		this, &MainToolBar::onProgressReleased);
 
+	// At least kvantum has built-in support already
+	// Best would be to detect this automatically
+	if (settings.general.style == "kvantum"
+		|| settings.general.style == "kvantum-dark")
+	{
+		static_cast<ClickableSlider *>(progress)->setUpdateOnClickEnabled(false);
+	}
+
 	addWidget(progress);
 	addSeparator();
 	position = new QLabel("0:00/0:00", this);

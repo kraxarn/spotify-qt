@@ -9,9 +9,16 @@ class ClickableSlider: public QSlider
 public:
 	ClickableSlider(Qt::Orientation orientation, QWidget *parent);
 
+	/**
+	 * Enable/disable custom click handling
+	 */
+	void setUpdateOnClickEnabled(bool value);
+
 protected:
-	void mousePressEvent(QMouseEvent *ev) override;
+	void mousePressEvent(QMouseEvent *event) override;
 
 private:
-	int valueFromPos(const QPoint &pos);
+	bool enabled = true;
+
+	auto valueFromPos(const QPoint &pos) -> int;
 };
