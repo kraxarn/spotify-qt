@@ -56,6 +56,8 @@ void VolumeButton::updateIcon(int value)
 {
 	setIcon(Icon::get(QString("audio-volume-%1")
 		.arg(getVolumeLevel(value))));
+
+	setToolTip(getVolumeInfo(value));
 }
 
 auto VolumeButton::getVolumeLevel(int value) -> QString
@@ -71,6 +73,12 @@ auto VolumeButton::getVolumeLevel(int value) -> QString
 	}
 
 	return QStringLiteral("medium");
+}
+
+auto VolumeButton::getVolumeInfo(int value) -> QString
+{
+	return QString("%1 %")
+		.arg(value * step);
 }
 
 void VolumeButton::setVolume(int value)

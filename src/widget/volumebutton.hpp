@@ -19,7 +19,6 @@ public:
 	VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWidget *parent);
 	~VolumeButton() override;
 
-	void updateIcon(int value);
 	void setVolume(int value);
 
 protected:
@@ -51,9 +50,19 @@ private:
 	lib::spt::api &spotify;
 
 	/**
+	 * Update icon and tooltip
+	 */
+	void updateIcon(int value);
+
+	/**
 	 * Volume level, "low", "medium", or "high"
 	 */
 	static auto getVolumeLevel(int value) -> QString;
+
+	/**
+	 * "{volume percentage} %"
+	 */
+	static auto getVolumeInfo(int value) -> QString;
 
 	void onVolumeValueChanged(int value);
 	void onVolumeSliderReleased();
