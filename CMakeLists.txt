@@ -46,15 +46,15 @@ if (USE_KCRASH)
 	find_package(KF5Crash QUIET)
 endif ()
 
-# Glob source files
-file(GLOB_RECURSE SRC_FILES "src/*.[hc]pp")
-
-# Add all source files to main executable
+# Create main executable
 if (ANDROID)
 	add_library(spotify-qt SHARED ${SRC_FILES} res.qrc)
 else ()
 	add_executable(spotify-qt ${SRC_FILES} ${LIB_SRC} res.qrc)
 endif ()
+
+# Collect source files
+add_subdirectory(src)
 
 # Headers are in src/
 target_include_directories(spotify-qt PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")

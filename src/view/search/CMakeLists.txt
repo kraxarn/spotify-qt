@@ -1,0 +1,9 @@
+target_sources(${PROJECT_NAME} PRIVATE
+	${CMAKE_CURRENT_SOURCE_DIR}/albums.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/artists.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/library.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/playlists.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/searchtabtree.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/shows.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/tracks.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/view.cpp)
