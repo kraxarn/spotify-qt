@@ -38,7 +38,7 @@ auto lib::json_cache::get_album(const std::string &album_id) const -> lib::spt::
 {
 	try
 	{
-		return lib::json::load(path("albumInfo", album_id, "json"));
+		return lib::json::load(path("albuminfo", album_id, "json"));
 	}
 	catch (const std::exception &e)
 	{
@@ -50,7 +50,7 @@ auto lib::json_cache::get_album(const std::string &album_id) const -> lib::spt::
 
 void lib::json_cache::set_album(const lib::spt::album &album)
 {
-	lib::json::save(path("albumInfo", album.id, "json"), album);
+	lib::json::save(path("albuminfo", album.id, "json"), album);
 }
 
 //endregion

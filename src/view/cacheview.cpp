@@ -23,7 +23,7 @@ auto CacheView::fullName(const QString &folderName) -> QString
 		return QStringLiteral("Album covers");
 	}
 
-	if (folderName == "albumInfo")
+	if (folderName == "albuminfo")
 	{
 		return QStringLiteral("Albums");
 	}
