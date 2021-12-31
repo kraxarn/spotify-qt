@@ -96,6 +96,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3e2bac0d430edf87a70f021fb40f6e48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19d4c2911e7b013d70c8e5204ee4da89"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1json__cache.html#a19d4c2911e7b013d70c8e5204ee4da89">set_album_image</a> (const std::string &amp;url, const std::vector&lt; unsigned char &gt; &amp;data) override</td></tr>
 <tr class="separator:a19d4c2911e7b013d70c8e5204ee4da89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b8da4c5fce9e92d5584ba45cca8a982"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1json__cache.html#a6b8da4c5fce9e92d5584ba45cca8a982">get_album</a> (const std::string &amp;album_id) const -&gt; <a class="el" href="classlib_1_1spt_1_1album.html">lib::spt::album</a> override</td></tr>
+<tr class="separator:a6b8da4c5fce9e92d5584ba45cca8a982"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af89108691e2ed8ba61bb1967c6b8b797"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1json__cache.html#af89108691e2ed8ba61bb1967c6b8b797">set_album</a> (const <a class="el" href="classlib_1_1spt_1_1album.html">spt::album</a> &amp;album) override</td></tr>
+<tr class="separator:af89108691e2ed8ba61bb1967c6b8b797"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9846115d8f81f295e9e5c38dfaceb9d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1json__cache.html#ab9846115d8f81f295e9e5c38dfaceb9d">get_playlists</a> () const -&gt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &gt; override</td></tr>
 <tr class="separator:ab9846115d8f81f295e9e5c38dfaceb9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42dccd28fef69ce926c0aab7e078c7bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1json__cache.html#a42dccd28fef69ce926c0aab7e078c7bf">set_playlists</a> (const std::vector&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">spt::playlist</a> &gt; &amp;playlists) override</td></tr>
@@ -217,6 +221,41 @@ Public Member Functions</h2></td></tr>
 <p>Get all tracks saved in cache </p><dl class="section return"><dt>Returns</dt><dd>Map as id: tracks </dd></dl>
 
 <p>Implements <a class="el" href="classlib_1_1cache.html#a8b27797210a4dfa64900974f7d0704e8">lib::cache</a>.</p>
+
+</div>
+</div>
+<a id="a6b8da4c5fce9e92d5584ba45cca8a982"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b8da4c5fce9e92d5584ba45cca8a982">&#9670;&nbsp;</a></span>get_album()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto lib::json_cache::get_album </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>album_id</em></td><td>)</td>
+          <td> const -&gt;  <a class="el" href="classlib_1_1spt_1_1album.html">lib::spt::album</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get an album </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">album_id</td><td>ID of album </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Album, or invalid entity on failure </dd></dl>
+
+<p>Implements <a class="el" href="classlib_1_1cache.html#ad55c7040e0d72c55c3ffbdc2a5a469e1">lib::cache</a>.</p>
 
 </div>
 </div>
@@ -448,6 +487,40 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>JSON stored in cache, or an empty object if none </dd></dl>
 
 <p>Implements <a class="el" href="classlib_1_1cache.html#ae815079f4baa7d0a7856135ff2cd908b">lib::cache</a>.</p>
+
+</div>
+</div>
+<a id="af89108691e2ed8ba61bb1967c6b8b797"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af89108691e2ed8ba61bb1967c6b8b797">&#9670;&nbsp;</a></span>set_album()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::json_cache::set_album </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classlib_1_1spt_1_1album.html">spt::album</a> &amp;&#160;</td>
+          <td class="paramname"><em>album</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Save an album to cache </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">album</td><td>Album to save </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classlib_1_1cache.html#a56a560740c23e23c0058025447ab6222">lib::cache</a>.</p>
 
 </div>
 </div>
