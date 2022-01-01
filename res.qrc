@@ -36,6 +36,7 @@
         <file>res/ic/light/media-playback-pause.svg</file>
         <file>res/ic/light/media-playback-start.svg</file>
         <file>res/ic/light/media-playlist-append.svg</file>
+        <file>res/ic/light/media-playlist-repeat-song.svg</file>
         <file>res/ic/light/media-playlist-repeat.svg</file>
         <file>res/ic/light/media-playlist-shuffle.svg</file>
         <file>res/ic/light/media-skip-backward.svg</file>
@@ -92,6 +93,7 @@
         <file>res/ic/dark/media-playback-pause.svg</file>
         <file>res/ic/dark/media-playback-start.svg</file>
         <file>res/ic/dark/media-playlist-append.svg</file>
+        <file>res/ic/dark/media-playlist-repeat-song.svg</file>
         <file>res/ic/dark/media-playlist-repeat.svg</file>
         <file>res/ic/dark/media-playlist-shuffle.svg</file>
         <file>res/ic/dark/media-skip-backward.svg</file>

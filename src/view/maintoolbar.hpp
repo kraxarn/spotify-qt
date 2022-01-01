@@ -26,6 +26,7 @@ public:
 	void setProgress(const lib::spt::playback &playback);
 	void setVolume(int volume);
 	void setRepeat(lib::repeat_state state);
+	auto toggleRepeat() -> lib::repeat_state;
 	void setShuffle(bool shuffle);
 	void setPositionFont(const QFont &font);
 	void setSearchChecked(bool checked);
@@ -37,6 +38,9 @@ protected:
 private:
 	void updateSpacerSizes();
 
+	static auto getNextRepeatState(lib::repeat_state repeatState) -> lib::repeat_state;
+	static auto getRepeatIcon(lib::repeat_state repeatState) -> QIcon;
+
 	void onPlayPause(bool checked);
 	void onPrevious(bool checked);
 	void onNext(bool checked);
@@ -44,6 +48,8 @@ private:
 	void onShuffle(bool checked);
 	void onRepeat(bool checked);
 	void onMinimize(bool checked);
+
+	lib::repeat_state repeatState = lib::repeat_state::off;
 
 	QToolButton *menu;
 	QAction *search;
