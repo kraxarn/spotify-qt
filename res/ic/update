@@ -32,7 +32,8 @@ if not os.path.isdir(repo_dir):
 		"--branch", latest,
 		f"https://github.com/{REPO}.git",
 		repo_dir,
-	], stdout=subprocess.DEVNULL)
+	], stdout=subprocess.DEVNULL,
+		stderr=subprocess.DEVNULL)
 
 icon_folders = [
 	"actions",
