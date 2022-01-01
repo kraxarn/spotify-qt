@@ -92,4 +92,4 @@ for filename in os.listdir(os.path.join(os.getcwd(), "dark")):
 	if copy_icon(filename, IconType.DARK):
 		copies += 1
 
-print("%i %s updated", copies, "icon" if copies == 1 else "icons")
+print("%i %s updated" % (copies, "icon" if copies == 1 else "icons"))
