@@ -71,6 +71,8 @@ def find_icon(folder_name: str, icon_name: str) -> typing.Optional[str]:
 
 def copy_icon(icon_name: str, icon_type: IconType) -> bool:
 	source_path = find_icon(icon_type.source_name(), icon_name)
+	if source_path is None and icon_type == IconType.DARK:
+		source_path = find_icon(IconType.LIGHT.source_name(), icon_name)
 	if source_path is None:
 		print(f"Error: failed to find source for {icon_type.source_name()}/{filename}")
 		return False
