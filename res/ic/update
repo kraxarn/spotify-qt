@@ -13,7 +13,7 @@ import requests
 
 REPO: typing.Final[str] = "KDE/breeze-icons"
 
-with open("version") as f:
+with open("version", "r") as f:
 	current = f.read()
 
 latest: str = requests.get(f"https://api.github.com/repos/{REPO}/tags").json()[0]["name"]
@@ -89,3 +89,6 @@ for filename in os.listdir(os.path.join(os.getcwd(), "dark")):
 		copies += 1
 
 print("%i %s updated" % (copies, "icon" if copies == 1 else "icons"))
+
+with open("version", "w") as f:
+	f.write(latest)
