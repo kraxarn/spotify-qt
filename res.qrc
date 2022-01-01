@@ -52,9 +52,9 @@
         <file>res/ic/light/view-sort-ascending.svg</file>
         <file>res/ic/light/view-statistics.svg</file>
         <file>res/ic/light/visibility.svg</file>
-        <file>res/ic/light/window-close-symbolic.svg</file>
-        <file>res/ic/light/window-maximize-symbolic.svg</file>
-        <file>res/ic/light/window-minimize-symbolic.svg</file>
+        <file>res/ic/light/window-close.svg</file>
+        <file>res/ic/light/window-maximize.svg</file>
+        <file>res/ic/light/window-minimize.svg</file>
         <file>res/ic/light/window-restore.svg</file>
         <file>res/ic/light/window.svg</file>
         <!-- Dark icons -->
@@ -108,9 +108,9 @@
         <file>res/ic/dark/view-sort-ascending.svg</file>
         <file>res/ic/dark/view-statistics.svg</file>
         <file>res/ic/dark/visibility.svg</file>
-        <file>res/ic/dark/window-close-symbolic.svg</file>
-        <file>res/ic/dark/window-maximize-symbolic.svg</file>
-        <file>res/ic/dark/window-minimize-symbolic.svg</file>
+        <file>res/ic/dark/window-close.svg</file>
+        <file>res/ic/dark/window-maximize.svg</file>
+        <file>res/ic/dark/window-minimize.svg</file>
         <file>res/ic/dark/window-restore.svg</file>
         <file>res/ic/dark/window.svg</file>
         <!-- Logos -->

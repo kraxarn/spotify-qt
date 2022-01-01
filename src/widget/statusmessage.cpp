@@ -18,7 +18,7 @@ StatusMessage::StatusMessage(QWidget *parent)
 
 	close = new QPushButton(this);
 	close->setFlat(true);
-	close->setIcon(Icon::get("window-close-symbolic"));
+	close->setIcon(Icon::get("window-close"));
 	layout->addWidget(close);
 
 	QAbstractButton::connect(close, &QAbstractButton::clicked,

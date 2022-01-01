@@ -60,7 +60,7 @@ void DragArea::menu(const QPoint &pos)
 {
 	auto *menu = new QMenu(this);
 
-	auto *minimize = menu->addAction(Icon::get("window-minimize-symbolic"),
+	auto *minimize = menu->addAction(Icon::get("window-minimize"),
 		"Minimize");
 	QAction::connect(minimize, &QAction::triggered, [this](bool /*checked*/)
 	{
@@ -74,7 +74,7 @@ void DragArea::menu(const QPoint &pos)
 	const auto isMaximized = isWindowMaximized();
 	auto *maximize = menu->addAction(Icon::get(isMaximized
 			? "window-restore"
-			: "window-maximize-symbolic"),
+			: "window-maximize"),
 		isMaximized
 			? "Restore"
 			: "Maximize");
@@ -82,7 +82,7 @@ void DragArea::menu(const QPoint &pos)
 	QAction::connect(maximize, &QAction::triggered,
 		this, &DragArea::onMaximize);
 
-	auto *close = menu->addAction(Icon::get("window-close-symbolic"),
+	auto *close = menu->addAction(Icon::get("window-close"),
 		"Close");
 	QAction::connect(close, &QAction::triggered, &QCoreApplication::quit);
 

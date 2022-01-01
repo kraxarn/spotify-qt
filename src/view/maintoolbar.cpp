@@ -82,13 +82,13 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	// Title bar buttons
 	titleBarSeparator = addSeparator();
 
-	minimize = new QAction(Icon::get("window-minimize-symbolic"),
+	minimize = new QAction(Icon::get("window-minimize"),
 		QStringLiteral("Minimize"), this);
 
 	QAction::connect(minimize, &QAction::triggered,
 		this, &MainToolBar::onMinimize);
 
-	close = new QAction(Icon::get("window-close-symbolic"),
+	close = new QAction(Icon::get("window-close"),
 		QStringLiteral("Close"), this);
 
 	QAction::connect(close, &QAction::triggered, &QCoreApplication::quit);
