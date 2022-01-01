@@ -1,0 +1,5 @@
+target_sources(${PROJECT_NAME} PUBLIC
+	${CMAKE_CURRENT_SOURCE_DIR}/account.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/general.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/qt.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/spotify.hpp)

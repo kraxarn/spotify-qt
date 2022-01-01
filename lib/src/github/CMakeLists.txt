@@ -1,0 +1,4 @@
+target_sources(${PROJECT_NAME} PUBLIC
+	${CMAKE_CURRENT_SOURCE_DIR}/api.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/contributor.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/release.cpp)
