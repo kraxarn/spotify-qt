@@ -34,10 +34,6 @@ if not os.path.isdir(repo_dir):
 		repo_dir,
 	], stdout=subprocess.DEVNULL)
 
-icon_sizes = {
-	"non-starred-symbolic": "symbolic",
-}
-
 icon_folders = [
 	"actions",
 	"status",
