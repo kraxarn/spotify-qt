@@ -11,17 +11,16 @@
 #include <QVBoxLayout>
 #include <QToolBar>
 #include <QLabel>
+#include <QDialogButtonBox>
 
 namespace Dialog
 {
 	class Base: public QDialog
 	{
 	protected:
-		Base(lib::settings &settings, QWidget *parent);
+		explicit Base(QWidget *parent);
 
-		void addLayout(QLayout *layout);
-
-		void addActions(DialogAction dialogAction);
+		void addAction(DialogAction dialogAction);
 
 		void setTitle(const QString &text);
 
@@ -29,17 +28,21 @@ namespace Dialog
 		virtual void onApply(bool checked);
 		virtual void onCancel(bool checked);
 
+		template<typename T>
+		auto layout() -> T *
+		{
+			if (QDialog::layout() == nullptr)
+			{
+				new T(this);
+			}
+
+			return qobject_cast<T *>(QDialog::layout());
+		}
+
 	private:
-		static constexpr int contentMargins = 4;
-
-		lib::settings &settings;
-
-		QToolBar *toolBar;
-		QVBoxLayout *layout;
-		QLabel *title;
-
-		QAction *ok = nullptr;
-		QAction *apply = nullptr;
-		QAction *cancel = nullptr;
+		QDialogButtonBox *buttonBox = nullptr;
+		QPushButton *ok = nullptr;
+		QPushButton *apply = nullptr;
+		QPushButton *cancel = nullptr;
 	};
 }

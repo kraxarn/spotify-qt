@@ -7,13 +7,6 @@ auto Widget::layoutToWidget(QLayout *layout, QWidget *parent) -> QWidget *
 	return widget;
 }
 
-auto Widget::toFrame(QLayout *layout, QWidget *parent) -> QFrame *
-{
-	auto *frame = new QFrame(parent);
-	frame->setLayout(layout);
-	return frame;
-}
-
 auto Widget::createDockWidget(QWidget *widget, QWidget *parent) -> QDockWidget *
 {
 	auto *dock = new QDockWidget(parent);

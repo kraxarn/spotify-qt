@@ -102,7 +102,7 @@ auto DeveloperMenu::dialogMenu() -> QMenu *
 		new Dialog::Setup(settings, mainWindow),
 		new TracksCacheDialog(cache, mainWindow),
 		new Dialog::WhatsNew(settings, httpClient, mainWindow),
-		new Dialog::CreatePlaylist(settings, mainWindow),
+		new Dialog::CreatePlaylist(mainWindow),
 	};
 
 	for (auto *dialog: dialogs)

@@ -1,32 +1,14 @@
 #include "dialog/base.hpp"
+#include <QPushButton>
 
-#include "util/widget.hpp"
-
-Dialog::Base::Base(lib::settings &settings, QWidget *parent)
-	: QDialog(parent),
-	settings(settings)
+Dialog::Base::Base(QWidget *parent)
+	: QDialog(parent)
 {
-	setWindowFlag(Qt::FramelessWindowHint, !settings.qt().system_title_bar);
-	setModal(true);
-
-	layout = new QVBoxLayout(this);
-
-	toolBar = new QToolBar(this);
-	toolBar->setContentsMargins(0, 0, 0, 0);
-	layout->addWidget(toolBar);
-
-	title = new QLabel(this);
-	toolBar->addWidget(title);
-
-	auto *dragArea = new DragArea(this);
-	dragArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	dragArea->setMinimumWidth(100);
-	toolBar->addWidget(dragArea);
 }
 
 void Dialog::Base::onOk(bool /*checked*/)
 {
-	close();
+	accept();
 }
 
 void Dialog::Base::onApply(bool /*checked*/)
@@ -35,40 +17,43 @@ void Dialog::Base::onApply(bool /*checked*/)
 
 void Dialog::Base::onCancel(bool /*checked*/)
 {
-	close();
+	accept();
 }
 
-void Dialog::Base::addLayout(QLayout *content)
+void Dialog::Base::addAction(DialogAction dialogAction)
 {
-	auto *frame = Widget::toFrame(content, this);
-	frame->setContentsMargins(contentMargins, contentMargins, contentMargins, contentMargins);
-	frame->setFrameShape(QFrame::StyledPanel);
-	layout->addWidget(frame, 1);
-}
+	if (QDialog::layout() == nullptr)
+	{
+		return;
+	}
 
-void Dialog::Base::addActions(DialogAction dialogAction)
-{
+	if (buttonBox == nullptr)
+	{
+		buttonBox = new QDialogButtonBox(this);
+		QDialog::layout()->addWidget(buttonBox);
+	}
+
 	if (dialogAction == DialogAction::Ok && ok == nullptr)
 	{
-		ok = toolBar->addAction(Icon::get("dialog-ok"), "OK");
-		QAction::connect(ok, &QAction::triggered,
+		ok = buttonBox->addButton(QDialogButtonBox::Ok);
+		QPushButton::connect(ok, &QPushButton::clicked,
 			this, &Dialog::Base::onOk);
 	}
 	else if (dialogAction == DialogAction::Apply && apply == nullptr)
 	{
-		apply = toolBar->addAction(Icon::get("document-save"), "Apply");
-		QAction::connect(apply, &QAction::triggered,
+		apply = buttonBox->addButton(QDialogButtonBox::Apply);
+		QPushButton::connect(apply, &QPushButton::clicked,
 			this, &Dialog::Base::onApply);
 	}
 	else if (dialogAction == DialogAction::Cancel && cancel == nullptr)
 	{
-		cancel = toolBar->addAction(Icon::get("dialog-cancel"), "Cancel");
-		QAction::connect(cancel, &QAction::triggered,
+		cancel = buttonBox->addButton(QDialogButtonBox::Cancel);
+		QPushButton::connect(cancel, &QPushButton::clicked,
 			this, &Dialog::Base::onCancel);
 	}
 }
 
 void Dialog::Base::setTitle(const QString &text)
 {
-	title->setText(text);
+	setWindowTitle(text);
 }

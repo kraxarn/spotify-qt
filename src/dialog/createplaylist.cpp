@@ -3,21 +3,19 @@
 
 #include <QVBoxLayout>
 
-Dialog::CreatePlaylist::CreatePlaylist(lib::settings &settings, QWidget *parent)
-	: Base(settings, parent)
+Dialog::CreatePlaylist::CreatePlaylist(QWidget *parent)
+	: Base(parent)
 {
 	setTitle("Create playlist");
 
-	addActions(DialogAction::Ok);
-	addActions(DialogAction::Cancel);
-
-	auto *layout = new QVBoxLayout();
+	auto *layout = Base::layout<QVBoxLayout>();
 	layout->addWidget(new QLabel("Playlist name", this));
 
 	playlistName = new QLineEdit(this);
 	layout->addWidget(playlistName);
 
-	addLayout(layout);
+	addAction(DialogAction::Ok);
+	addAction(DialogAction::Cancel);
 }
 
 void Dialog::CreatePlaylist::showEvent(QShowEvent *event)

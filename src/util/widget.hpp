@@ -11,9 +11,6 @@ public:
 	/** Wrap layout in widget */
 	static auto layoutToWidget(QLayout *layout, QWidget *parent) -> QWidget *;
 
-	/** Wrap layout in frame */
-	static auto toFrame(QLayout *layout, QWidget *parent) -> QFrame *;
-
 	/** Wrap widget in dock widget */
 	static auto createDockWidget(QWidget *widget, QWidget *parent) -> QDockWidget *;
 

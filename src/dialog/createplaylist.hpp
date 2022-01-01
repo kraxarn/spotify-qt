@@ -11,7 +11,7 @@ namespace Dialog
 	Q_OBJECT
 
 	public:
-		CreatePlaylist(lib::settings &settings, QWidget *parent);
+		explicit CreatePlaylist(QWidget *parent);
 
 	protected:
 		void showEvent(QShowEvent *event) override;
