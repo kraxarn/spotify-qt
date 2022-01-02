@@ -1,6 +1,5 @@
 #pragma once
 
-#include "logview.hpp"
 #include "lib/qt/systeminfo.hpp"
 
 #include <QFile>
