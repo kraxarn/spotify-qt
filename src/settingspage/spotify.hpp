@@ -3,7 +3,6 @@
 #include "settingspage/base.hpp"
 #include "lib/enum/audioquality.hpp"
 #include "util/icon.hpp"
-#include "view/clienthandlerlogview.hpp"
 #include "spotifyclient/runner.hpp"
 
 #include <QComboBox>
@@ -55,6 +54,5 @@ namespace SettingsPage
 
 		auto spotify() -> QWidget *;
 		auto config() -> QWidget *;
-		auto logs() -> QWidget *;
 	};
 }

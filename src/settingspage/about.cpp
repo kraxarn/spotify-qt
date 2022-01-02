@@ -1,5 +1,6 @@
 #include "settingspage/about.hpp"
 #include "mainwindow.hpp"
+#include "util/widget.hpp"
 
 SettingsPage::About::About(lib::settings &settings,
 	const lib::http_client &httpClient,

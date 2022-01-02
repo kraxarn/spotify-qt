@@ -1,12 +1,12 @@
 #include "settingspage/spotify.hpp"
 #include "mainwindow.hpp"
+#include "util/widget.hpp"
 
 SettingsPage::Spotify::Spotify(lib::settings &settings, QWidget *parent)
 	: SettingsPage::Base(settings, parent)
 {
 	addTab(spotify(), "General");
 	addTab(config(), "Configuration");
-	addTab(logs(), "Logs");
 }
 
 auto SettingsPage::Spotify::spotify() -> QWidget *
@@ -195,11 +195,6 @@ auto SettingsPage::Spotify::config() -> QWidget *
 	sptLayout->addWidget(sptDiscovery, 4, 0);
 
 	return Widget::layoutToWidget(content, this);
-}
-
-auto SettingsPage::Spotify::logs() -> QWidget *
-{
-	return new ClientHandlerLogView(MainWindow::find(parentWidget()));
 }
 
 auto SettingsPage::Spotify::icon() -> QIcon

@@ -2,6 +2,7 @@
 
 #include "lib/enum/clienttype.hpp"
 #include "lib/settings.hpp"
+#include "lib/logmessage.hpp"
 
 #include "spotifyclient/helper.hpp"
 #include "keyring/kwallet.hpp"
@@ -32,20 +33,20 @@ namespace SpotifyClient
 		/** Wrapper for spt::ClientHelper::availableBackends */
 		auto availableBackends() -> QStringList;
 
-		static auto getLog() -> const QList<QPair<QDateTime, QString>> &;
+		static auto getLog() -> const std::vector<lib::log_message> &;
 		auto isRunning() const -> bool;
 
 	private:
 		QProcess *process = nullptr;
 		QWidget *parentWidget = nullptr;
 		QString path;
-		static QList<QPair<QDateTime, QString>> log;
+		static std::vector<lib::log_message> log;
 		const lib::settings &settings;
 		const lib::paths &paths;
 		lib::client_type clientType;
 
 		void readyRead() const;
 		void readyError() const;
-		static void logOutput(const QByteArray &output);
+		static void logOutput(const QByteArray &output, lib::log_type logType);
 	};
 }

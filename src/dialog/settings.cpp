@@ -1,5 +1,13 @@
 #include "dialog/settings.hpp"
 
+#include "settingspage/about.hpp"
+#include "settingspage/application.hpp"
+#include "settingspage/interface.hpp"
+#include "settingspage/playlists.hpp"
+#include "settingspage/spotify.hpp"
+#include "settingspage/troubleshoot.hpp"
+#include "settingspage/logs.hpp"
+
 Dialog::Settings::Settings(lib::settings &settings, lib::cache &cache,
 	const lib::http_client &httpClient, QWidget *parent)
 	: QDialog(parent),
@@ -18,6 +26,7 @@ Dialog::Settings::Settings(lib::settings &settings, lib::cache &cache,
 		new SettingsPage::Interface(settings, this),
 		new SettingsPage::Spotify(settings, this),
 		new SettingsPage::Playlists(settings, this),
+		new SettingsPage::Logs(settings, this),
 		new SettingsPage::Troubleshoot(settings, cache, this),
 		new SettingsPage::About(settings, httpClient, this),
 	});

@@ -29,6 +29,11 @@ namespace lib
 		log_message(log_type log_type, const std::string &message);
 
 		/**
+		 * Instance with default values, only use if required
+		 */
+		log_message() = default;
+
+		/**
 		 * Format message as [time] [type] message
 		 * @return Formatted message
 		 */

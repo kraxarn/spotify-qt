@@ -4,7 +4,6 @@ SettingsPage::Application::Application(lib::settings &settings, QWidget *parent)
 	: SettingsPage::Base(settings, parent)
 {
 	addTab(app(), "General");
-	addTab(appLogs(), "Logs");
 }
 
 auto SettingsPage::Application::app() -> QWidget *
@@ -62,11 +61,6 @@ auto SettingsPage::Application::app() -> QWidget *
 	layout->addWidget(appWhatsNew);
 
 	return Widget::layoutToWidget(layout, this);
-}
-
-auto SettingsPage::Application::appLogs() -> QWidget *
-{
-	return new LogView(this);
 }
 
 auto SettingsPage::Application::icon() -> QIcon

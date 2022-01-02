@@ -1,4 +1,5 @@
 #include "mainwindow.hpp"
+#include "util/widget.hpp"
 
 MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	: settings(settings),

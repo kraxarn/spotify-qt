@@ -1,5 +1,6 @@
 #include "settingspage/interface.hpp"
 #include "mainwindow.hpp"
+#include "util/widget.hpp"
 
 SettingsPage::Interface::Interface(lib::settings &settings, QWidget *parent)
 	: SettingsPage::Base(settings, parent)
