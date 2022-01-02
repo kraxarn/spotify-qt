@@ -30,6 +30,12 @@ Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playl
 	QAction::connect(refresh, &QAction::triggered,
 		this, &Menu::Playlist::onRefresh);
 
+	followAction = addAction(Icon::get("non-starred-symbolic"), "Follow");
+	followAction->setEnabled(false);
+
+	QAction::connect(followAction, &QAction::triggered,
+		this, &Menu::Playlist::onFollow);
+
 	addMenu(shareMenu());
 
 	if (lib::developer_mode::enabled)
@@ -55,6 +61,20 @@ Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playl
 			tracksLoaded(items);
 		});
 	}
+}
+
+void Menu::Playlist::showEvent(QShowEvent *event)
+{
+	QWidget::showEvent(event);
+
+	auto *mainWindow = MainWindow::find(parentWidget());
+
+	spotify.is_following_playlist(playlist.id, {
+		mainWindow->getCurrentUser().id,
+	}, [this](const std::vector<bool> &follows)
+	{
+		isFollowingLoaded(follows);
+	});
 }
 
 auto Menu::Playlist::shareMenu() -> QMenu *
@@ -130,6 +150,24 @@ void Menu::Playlist::tracksLoaded(const std::vector<lib::spt::track> &items)
 	}
 }
 
+void Menu::Playlist::isFollowingLoaded(const std::vector<bool> &follows)
+{
+	if (follows.empty())
+	{
+		followAction->setVisible(false);
+		return;
+	}
+
+	followAction->setEnabled(true);
+	if (!follows.at(0))
+	{
+		return;
+	}
+
+	followAction->setIcon(Icon::get(QStringLiteral("starred-symbolic")));
+	followAction->setText(QStringLiteral("Unfollow"));
+}
+
 auto Menu::Playlist::playlistUrl() const -> QString
 {
 	return QString("https://open.spotify.com/playlist/%1")
@@ -185,6 +223,36 @@ void Menu::Playlist::onRefresh(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	mainWindow->getSongsTree()->refreshPlaylist(playlist);
+}
+
+void Menu::Playlist::onFollow(bool /*checked*/)
+{
+	const auto isFollowing = followAction->text() == "Unfollow";
+
+	auto callback = [this, isFollowing](const std::string &status)
+	{
+		if (!status.empty())
+		{
+			StatusMessage::error(QString("Failed to %1: %2")
+				.arg(isFollowing
+					? QStringLiteral("unfollow")
+					: QStringLiteral("follow"))
+				.arg(QString::fromStdString(status)));
+			return;
+		}
+
+		auto *mainWindow = MainWindow::find(parentWidget());
+		mainWindow->refreshPlaylists();
+	};
+
+	if (isFollowing)
+	{
+		spotify.unfollow_playlist(playlist.id, callback);
+	}
+	else
+	{
+		spotify.follow_playlist(playlist.id, callback);
+	}
 }
 
 void Menu::Playlist::onCopyLink(bool /*checked*/) const

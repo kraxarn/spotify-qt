@@ -86,6 +86,16 @@ namespace lib
 			void is_following(lib::follow_type type, const std::vector<std::string> &ids,
 				lib::callback<std::vector<bool>> &callback);
 
+			void follow_playlist(const std::string &playlist_id,
+				lib::callback<std::string> &callback);
+
+			void unfollow_playlist(const std::string &playlist_id,
+				lib::callback<std::string> &callback);
+
+			void is_following_playlist(const std::string &playlist_id,
+				const std::vector<std::string> &user_ids,
+				lib::callback<std::vector<bool>> &callback);
+
 			//endregion
 
 			//region Library
