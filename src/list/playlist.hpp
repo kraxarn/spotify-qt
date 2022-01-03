@@ -19,12 +19,12 @@ namespace List
 
 		void load(const std::vector<lib::spt::playlist> &items);
 		void refresh();
-		void order(lib::playlist_order order);
+		void order(lib::playlist_order item1);
 
 		auto allArtists() -> std::unordered_set<std::string>;
 
 		auto at(int index) -> lib::spt::playlist;
-		auto at(const std::string &id) -> lib::spt::playlist;
+		auto at(const std::string &playlistId) -> lib::spt::playlist;
 
 	protected:
 		void showEvent(QShowEvent *event) override;
@@ -39,6 +39,6 @@ namespace List
 		void doubleClicked(QListWidgetItem *item);
 		void menu(const QPoint &pos);
 
-		static auto latestTrack(const std::vector<lib::spt::track> &tracks) -> int;
+		static auto latestTrack(const std::vector<lib::spt::track> &tracks) -> size_t;
 	};
 }

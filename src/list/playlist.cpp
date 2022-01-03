@@ -95,7 +95,7 @@ void List::Playlist::load(const std::vector<lib::spt::playlist> &playlists)
 
 	// Add all playlists
 	clear();
-	auto i = 0;
+	auto index = 0;
 	QTextDocument doc;
 	for (const auto &playlist: playlists)
 	{
@@ -105,8 +105,8 @@ void List::Playlist::load(const std::vector<lib::spt::playlist> &playlists)
 		item->setToolTip(doc.toPlainText());
 
 		item->setData(static_cast<int>(DataRole::PlaylistId), QString::fromStdString(playlist.id));
-		item->setData(static_cast<int>(DataRole::DefaultIndex), i);
-		item->setData(static_cast<int>(DataRole::Index), i++);
+		item->setData(static_cast<int>(DataRole::DefaultIndex), index);
+		item->setData(static_cast<int>(DataRole::Index), index++);
 
 		if (playlist.id == lastItem)
 		{
@@ -129,7 +129,7 @@ void List::Playlist::load(const std::vector<lib::spt::playlist> &playlists)
 		}
 		if (!playlists.empty())
 		{
-			activePlaylist = &playlists.at(0);
+			activePlaylist = playlists.data();
 		}
 	}
 
@@ -183,18 +183,18 @@ void List::Playlist::order(lib::playlist_order order)
 	{
 		case lib::playlist_order::none:
 			std::sort(items.begin(), items.end(),
-				[](QListWidgetItem *i1, QListWidgetItem *i2) -> bool
+				[](QListWidgetItem *item1, QListWidgetItem *item2) -> bool
 				{
-					return i1->data(static_cast<int>(DataRole::DefaultIndex)).toInt()
-						< i2->data(static_cast<int>(DataRole::DefaultIndex)).toInt();
+					return item1->data(static_cast<int>(DataRole::DefaultIndex)).toInt()
+						< item2->data(static_cast<int>(DataRole::DefaultIndex)).toInt();
 				});
 			break;
 
 		case lib::playlist_order::alphabetical:
 			std::sort(items.begin(), items.end(),
-				[](QListWidgetItem *i1, QListWidgetItem *i2) -> bool
+				[](QListWidgetItem *item1, QListWidgetItem *item2) -> bool
 				{
-					return i1->text() < i2->text();
+					return item1->text() < item2->text();
 				});
 			break;
 
@@ -208,33 +208,33 @@ void List::Playlist::order(lib::playlist_order order)
 			}
 
 			std::sort(items.begin(), items.end(), [this]
-				(QListWidgetItem *i1, QListWidgetItem *i2) -> bool
+				(QListWidgetItem *item1, QListWidgetItem *item2) -> bool
 			{
-				auto id1 = i1->data(static_cast<int>(DataRole::PlaylistId))
+				auto id1 = item1->data(static_cast<int>(DataRole::PlaylistId))
 					.toString().toStdString();
-				auto id2 = i2->data(static_cast<int>(DataRole::PlaylistId))
+				auto id2 = item2->data(static_cast<int>(DataRole::PlaylistId))
 					.toString().toStdString();
 
-				auto t1 = this->cache.get_playlist(id1).tracks;
-				auto t2 = this->cache.get_playlist(id2).tracks;
+				auto track1 = this->cache.get_playlist(id1).tracks;
+				auto track2 = this->cache.get_playlist(id2).tracks;
 
-				return !t1.empty() && !t2.empty()
-					&& DateTime::parseIso(t1.at(latestTrack(t1)).added_at)
-						> DateTime::parseIso(t2.at(latestTrack(t2)).added_at);
+				return !track1.empty() && !track2.empty()
+					&& DateTime::parseIso(track1.at(latestTrack(track1)).added_at)
+						> DateTime::parseIso(track2.at(latestTrack(track2)).added_at);
 			});
 			break;
 
 		case lib::playlist_order::custom:
-			auto i = 0;
+			auto index = 0;
 			for (auto &playlist: settings.general.custom_playlist_order)
 			{
-				customOrder[QString::fromStdString(playlist)] = i++;
+				customOrder[QString::fromStdString(playlist)] = index++;
 			}
 			std::sort(items.begin(), items.end(),
-				[customOrder](QListWidgetItem *i1, QListWidgetItem *i2) -> bool
+				[customOrder](QListWidgetItem *item1, QListWidgetItem *item2) -> bool
 				{
-					auto id1 = i1->data(static_cast<int>(DataRole::PlaylistId)).toString();
-					auto id2 = i2->data(static_cast<int>(DataRole::PlaylistId)).toString();
+					auto id1 = item1->data(static_cast<int>(DataRole::PlaylistId)).toString();
+					auto id2 = item2->data(static_cast<int>(DataRole::PlaylistId)).toString();
 
 					return customOrder.contains(id1)
 						&& customOrder.contains(id2)
@@ -243,10 +243,10 @@ void List::Playlist::order(lib::playlist_order order)
 			break;
 	}
 
-	auto i = 0;
+	auto index = 0;
 	for (auto *item: items)
 	{
-		item->setData(static_cast<int>(DataRole::Index), i++);
+		item->setData(static_cast<int>(DataRole::Index), index++);
 		addItem(item);
 		if (item == selectedItem)
 		{
@@ -255,7 +255,7 @@ void List::Playlist::order(lib::playlist_order order)
 	}
 }
 
-auto List::Playlist::latestTrack(const std::vector<lib::spt::track> &tracks) -> int
+auto List::Playlist::latestTrack(const std::vector<lib::spt::track> &tracks) -> size_t
 {
 	size_t latest = 0;
 	for (size_t i = 0; i < tracks.size(); i++)
@@ -292,20 +292,20 @@ auto List::Playlist::allArtists() -> std::unordered_set<std::string>
 
 auto List::Playlist::at(int index) -> lib::spt::playlist
 {
-	auto *i = item(index);
-	if (i == nullptr)
+	auto *listItem = item(index);
+	if (listItem == nullptr)
 	{
 		return {};
 	}
 
-	return at(i->data(static_cast<int>(DataRole::PlaylistId)).toString().toStdString());
+	return at(listItem->data(static_cast<int>(DataRole::PlaylistId)).toString().toStdString());
 }
 
-auto List::Playlist::at(const std::string &id) -> lib::spt::playlist
+auto List::Playlist::at(const std::string &playlistId) -> lib::spt::playlist
 {
 	for (const auto &playlist: cache.get_playlists())
 	{
-		if (lib::strings::ends_with(id, playlist.id))
+		if (lib::strings::ends_with(playlistId, playlist.id))
 		{
 			return playlist;
 		}
