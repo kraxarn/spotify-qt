@@ -297,7 +297,7 @@ void Menu::Track::addToPlaylist(const std::string &playlistId) const
 	// Check if it's already in the playlist
 	spotify.playlist(playlistId, [this, playlistId](const lib::spt::playlist &playlist)
 	{
-		auto playlistName = playlist.name;
+		const auto playlistName = QString::fromStdString(playlist.name);
 
 		this->spotify.playlist_tracks(playlist,
 			[this, playlistId, playlistName](const std::vector<lib::spt::track> &tracks)
@@ -322,7 +322,7 @@ void Menu::Track::addToPlaylist(const std::string &playlistId) const
 				// Actually add
 				auto plTrack = lib::spt::api::to_uri("track", track.id);
 				spotify.add_to_playlist(playlistId, plTrack,
-					[this, playlistName](const std::string &result)
+					[playlistName](const std::string &result)
 					{
 						if (!result.empty())
 						{
@@ -331,9 +331,7 @@ void Menu::Track::addToPlaylist(const std::string &playlistId) const
 							return;
 						}
 
-						StatusMessage::info(QString("Added %1 to \"%2\"")
-							.arg(QString::fromStdString(track.title()))
-							.arg(QString::fromStdString(playlistName)));
+						StatusMessage::info(QString("Added to %1").arg(playlistName));
 					});
 			});
 	});
