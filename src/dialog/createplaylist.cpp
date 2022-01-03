@@ -60,8 +60,10 @@ void Dialog::CreatePlaylist::onOk(bool /*checked*/)
 			}
 
 			const auto trackUri = lib::spt::api::to_uri("track", trackId);
+			const auto playlistName = QString::fromStdString(playlist.name);
+
 			spotify.add_to_playlist(playlist.id, trackUri,
-				[this](const std::string &result)
+				[this, playlistName](const std::string &result)
 				{
 					if (!result.empty())
 					{
@@ -71,6 +73,7 @@ void Dialog::CreatePlaylist::onOk(bool /*checked*/)
 
 					auto *mainWindow = MainWindow::find(parentWidget());
 					mainWindow->refreshPlaylists();
+					StatusMessage::info(QString("Added to %1").arg(playlistName));
 					Base::onOk({});
 				});
 		});
