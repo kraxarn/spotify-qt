@@ -9,6 +9,12 @@ Artist::Cover::Cover(QWidget *parent)
 
 void Artist::Cover::setJpeg(const QByteArray &jpeg)
 {
+	if (jpeg.isEmpty())
+	{
+		setFixedHeight(0);
+		return;
+	}
+
 	cover.loadFromData(jpeg, "jpeg");
 	scaleCover(width());
 }

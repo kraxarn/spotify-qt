@@ -70,10 +70,18 @@ void Artist::View::artistLoaded(const lib::spt::artist &loadedArtist)
 	}
 
 	// Get cover image
-	httpClient.get(artist.image, lib::headers(), [this](const std::string &data)
+	if (artist.image.empty())
 	{
-		coverLabel->setJpeg(QByteArray::fromStdString(data));
-	});
+		coverLabel->setJpeg({});
+	}
+	else
+	{
+		httpClient.get(artist.image, lib::headers(),
+			[this](const std::string &data)
+			{
+				coverLabel->setJpeg(QByteArray::fromStdString(data));
+			});
+	}
 
 	// Artist name title
 	name->setText(QString::fromStdString(artist.name));
