@@ -120,32 +120,5 @@ namespace lib
 		 * Qt settings
 		 */
 		std::unique_ptr<setting::qt> qt_settings;
-
-		/**
-		 * Set value from JSON in a "safe" way
-		 * @param json JSON object to try and find value from
-		 * @param key Key of value in root of JSON
-		 * @param value Value to write to
-		 * @deprecated Use lib::json::get
-		 */
-		template<typename T>
-		static void setValue(const nlohmann::json &json, const std::string &key,
-			T &value)
-		{
-			if (!json.contains(key))
-			{
-				return;
-			}
-
-			try
-			{
-				json.at(key).get_to(value);
-			}
-			catch (const nlohmann::json::exception &e)
-			{
-				log::error("Failed to parse settings for key: {} ({})",
-					key, e.what());
-			}
-		}
 	};
 }
