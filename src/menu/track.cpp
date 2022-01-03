@@ -1,5 +1,6 @@
 #include "menu/track.hpp"
 #include "mainwindow.hpp"
+#include "dialog/createplaylist.hpp"
 
 Menu::Track::Track(const lib::spt::track &track, lib::spt::api &spotify,
 	const lib::cache &cache, QWidget *parent)
@@ -188,14 +189,14 @@ void Menu::Track::onAddToQueue(bool /*checked*/)
 
 void Menu::Track::onAddToPlaylist(QAction *action)
 {
-	auto playlistId = action->data().toString();
-	if (playlistId.isEmpty())
+	const auto &data = action->data();
+	if (!data.isValid())
 	{
 		addToNewPlaylist();
 	}
 	else
 	{
-		addToPlaylist(playlistId.toStdString());
+		addToPlaylist(data.toString().toStdString());
 	}
 }
 
@@ -287,22 +288,8 @@ auto Menu::Track::getTrackUrl() const -> QString
 
 void Menu::Track::addToNewPlaylist()
 {
-	auto playlistName = QInputDialog::getText(this, "New playlist",
-		"Playlist name", QLineEdit::Normal, "New playlist");
-
-	if (playlistName.isEmpty())
-	{
-		return;
-	}
-
-	spotify.create_playlist(playlistName.toStdString(), lib::optional<std::string>(),
-		lib::optional<bool>(), lib::optional<bool>(),
-		[this](const lib::spt::playlist &playlist)
-		{
-			addToPlaylist(playlist.id);
-			auto *mainWindow = MainWindow::find(parentWidget());
-			mainWindow->refreshPlaylists();
-		});
+	auto *createPlaylist = new Dialog::CreatePlaylist(track.id, spotify, window());
+	createPlaylist->open();
 }
 
 void Menu::Track::addToPlaylist(const std::string &playlistId) const

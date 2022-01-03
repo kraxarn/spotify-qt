@@ -28,6 +28,8 @@ namespace Dialog
 		virtual void onApply(bool checked);
 		virtual void onCancel(bool checked);
 
+		auto okButton() const -> QAbstractButton *;
+
 		template<typename T>
 		auto layout() -> T *
 		{

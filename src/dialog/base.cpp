@@ -57,3 +57,8 @@ void Dialog::Base::setTitle(const QString &text)
 {
 	setWindowTitle(text);
 }
+
+auto Dialog::Base::okButton() const -> QAbstractButton *
+{
+	return ok;
+}
