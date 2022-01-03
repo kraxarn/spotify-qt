@@ -25,12 +25,15 @@ void lib::spt::from_json(const nlohmann::json &j, playlist &p)
 	}
 
 	j.at("collaborative").get_to(p.collaborative);
-	j.at("description").get_to(p.description);
 	j.at("id").get_to(p.id);
 	j.at("name").get_to(p.name);
+
+	lib::json::get(j, "description", p.description);
+
 	lib::json::get_property(j, {
 		"is_public", "public"
 	}, p.is_public);
+
 	lib::json::get_property(j, {
 		"snapshot", "snapshot_id"
 	}, p.snapshot);
