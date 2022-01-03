@@ -35,7 +35,6 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	splash.showMessage("Connecting...");
 	httpClient = new lib::qt::http_client(this);
 	spotify = new spt::Spotify(settings, *httpClient, this);
-	network = new QNetworkAccessManager(this);
 
 	// Check connection
 	stateValid = spotify->tryRefresh();

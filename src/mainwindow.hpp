@@ -94,7 +94,6 @@ private:
 	lib::spt::user currentUser;
 	lib::http_client *httpClient = nullptr;
 
-	QNetworkAccessManager *network = nullptr;
 	TrayIcon *trayIcon = nullptr;
 	int refreshCount = -1;
 	bool stateValid = true;
