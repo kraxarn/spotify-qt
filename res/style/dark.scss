@@ -200,7 +200,7 @@ MainWindow {
 }
 
 LeftSidePanel {
-	LibraryList, PlaylistList {
+	List::Library, List::Playlist {
 		color: $sidebar-foreground-color;
 		background-color: $sidebar-background-color;
 		@include selection-foreground($sidebar-foreground-color);
@@ -211,7 +211,7 @@ LeftSidePanel {
 	}
 }
 
-SettingsDialog {
+Dialog::Settings {
 	background-color: $background-color;
 
 	QListWidget {
@@ -225,7 +225,7 @@ SettingsDialog {
 	}
 }
 
-ArtistView {
+Artist::View {
 	QToolButton {
 		&, &::menu-button {
 			@include button-style();
@@ -233,6 +233,6 @@ ArtistView {
 	}
 }
 
-WhatsNewDialog {
+Dialog::WhatsNew {
 	background-color: $sidebar-background-color;
 }
