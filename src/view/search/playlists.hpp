@@ -21,6 +21,7 @@ namespace Search
 		lib::cache &cache;
 
 		void onItemClicked(QListWidgetItem *item);
+		void onItemDoubleClicked(QListWidgetItem *item);
 		void onContextMenu(const QPoint &pos);
 	};
 }

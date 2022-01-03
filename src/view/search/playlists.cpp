@@ -9,6 +9,9 @@ Search::Playlists::Playlists(lib::spt::api &spotify, lib::cache &cache, QWidget 
 	QListWidget::connect(this, &QListWidget::itemClicked,
 		this, &Search::Playlists::onItemClicked);
 
+	QListWidget::connect(this, &QListWidget::itemDoubleClicked,
+		this, &Search::Playlists::onItemDoubleClicked);
+
 	setContextMenuPolicy(Qt::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested,
 		this, &Search::Playlists::onContextMenu);
@@ -34,6 +37,22 @@ void Search::Playlists::onItemClicked(QListWidgetItem *item)
 		mainWindow->getSongsTree()->load(playlist);
 		mainWindow->setCurrentPlaylistItem(-1);
 	});
+}
+
+void Search::Playlists::onItemDoubleClicked(QListWidgetItem *item)
+{
+	auto playlistId = item->data(static_cast<int>(DataRole::PlaylistId))
+		.toString().toStdString();
+
+	spotify.play_tracks(lib::spt::api::to_uri("playlist", playlistId),
+		[](const std::string &result)
+		{
+			if (!result.empty())
+			{
+				StatusMessage::error(QString("Failed to start playlist playback: %1")
+					.arg(QString::fromStdString(result)));
+			}
+		});
 }
 
 void Search::Playlists::onContextMenu(const QPoint &pos)
