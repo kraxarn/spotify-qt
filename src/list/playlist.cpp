@@ -159,10 +159,15 @@ void List::Playlist::order(lib::playlist_order order)
 	QList<QListWidgetItem *> items;
 	items.reserve(count());
 
-	auto i = 0;
-	while (item(0) != nullptr)
+	QListWidgetItem *selectedItem = nullptr;
+	while (count() > 0)
 	{
-		items.insert(i, takeItem(0));
+		auto *current = item(0);
+		if (selectedItem == nullptr && current->isSelected())
+		{
+			selectedItem = current;
+		}
+		items.append(takeItem(0));
 	}
 
 	if (order == lib::playlist_order::custom
@@ -220,7 +225,7 @@ void List::Playlist::order(lib::playlist_order order)
 			break;
 
 		case lib::playlist_order::custom:
-			i = 0;
+			auto i = 0;
 			for (auto &playlist: settings.general.custom_playlist_order)
 			{
 				customOrder[QString::fromStdString(playlist)] = i++;
@@ -238,11 +243,15 @@ void List::Playlist::order(lib::playlist_order order)
 			break;
 	}
 
-	i = 0;
+	auto i = 0;
 	for (auto *item: items)
 	{
 		item->setData(static_cast<int>(DataRole::Index), i++);
 		addItem(item);
+		if (item == selectedItem)
+		{
+			item->setSelected(true);
+		}
 	}
 }
 
