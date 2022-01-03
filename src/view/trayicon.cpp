@@ -4,9 +4,6 @@
 TrayIcon::TrayIcon(lib::spt::api &spotify, const lib::settings &settings,
 	const lib::cache &cache, QWidget *parent)
 	: QSystemTrayIcon(parent),
-#ifdef USE_DBUS
-	notifications(this),
-#endif
 	spotify(spotify),
 	settings(settings),
 	cache(cache)
@@ -76,15 +73,8 @@ void TrayIcon::message(const lib::spt::track &track, const QPixmap &pixmap)
 	const auto artists = lib::spt::entity::combine_names(track.artists);
 	const auto message = QString::fromStdString(artists);
 
-#ifdef USE_DBUS
-	// We still need the pixmap to be cached, we just read from file instead
-	Q_UNUSED(pixmap);
-	const auto imageUrl = QString::fromStdString(cache.get_album_image_path(track.image));
-	notifications.notify(title, message, imageUrl, messageTrackTimeout);
-#else
 	QIcon icon(pixmap);
 	showMessage(title, message, icon, messageTrackTimeout);
-#endif
 }
 
 auto TrayIcon::playback() -> lib::spt::playback

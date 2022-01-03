@@ -7,10 +7,6 @@
 #include <QMenu>
 #include <QSystemTrayIcon>
 
-#ifdef USE_DBUS
-#include "notifications/dbusnotifications.hpp"
-#endif
-
 class TrayIcon: public QSystemTrayIcon
 {
 Q_OBJECT
@@ -45,10 +41,6 @@ private:
 	QAction *next = nullptr;
 
 	QMenu *contextMenu = nullptr;
-
-#ifdef USE_DBUS
-	DbusNotifications notifications;
-#endif
 
 	QAction *currentTrack = nullptr;
 	lib::spt::api &spotify;

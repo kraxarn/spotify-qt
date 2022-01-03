@@ -75,10 +75,6 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	addMenu(dialogMenu());
 	addMenu(crashMenu());
 	addMenu(statusMenu());
-
-#ifdef USE_DBUS
-	addMenu(notificationsMenu());
-#endif
 }
 
 void DeveloperMenu::addMenuItem(QMenu *menu, const QString &text,
@@ -189,31 +185,3 @@ auto DeveloperMenu::statusMenu() -> QMenu *
 
 	return menu;
 }
-
-#ifdef USE_DBUS
-
-auto DeveloperMenu::notificationsMenu() -> QMenu *
-{
-	auto *menu = new QMenu("Notifications", this);
-
-	addMenuItem(menu, "Capabilities", [this]()
-	{
-		DbusNotifications notifications(this);
-		auto *mainWindow = MainWindow::find(parentWidget());
-
-		QMessageBox::information(mainWindow, QStringLiteral("Capabilities"),
-			notifications.getCapabilities().join('\n'));
-	});
-
-	addMenuItem(menu, "Notify", [this]()
-	{
-		DbusNotifications notifications(this);
-		notifications.notify(QStringLiteral("Title"),
-			QStringLiteral("<b>Bold text</b><br/>Normal text"),
-			QString(), -1);
-	});
-
-	return menu;
-}
-
-#endif
