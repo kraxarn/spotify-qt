@@ -3,7 +3,7 @@
 #include "lib/cache.hpp"
 #include "lib/set.hpp"
 #include "spotify/current.hpp"
-#include "menu/songmenu.hpp"
+#include "menu/track.hpp"
 #include "enum/column.hpp"
 
 #include <QListWidget>

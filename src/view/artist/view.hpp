@@ -4,7 +4,7 @@
 #include "lib/spotify/api.hpp"
 
 #include "menu/album.hpp"
-#include "menu/songmenu.hpp"
+#include "menu/track.hpp"
 
 #include "view/artist/albumslist.hpp"
 #include "view/artist/cover.hpp"

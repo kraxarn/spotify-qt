@@ -1,26 +1,25 @@
-#include "songmenu.hpp"
-
+#include "menu/track.hpp"
 #include "mainwindow.hpp"
 
-SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
+Menu::Track::Track(const lib::spt::track &track, lib::spt::api &spotify,
 	const lib::cache &cache, QWidget *parent)
-	: SongMenu(track, spotify, cache, nullptr, parent)
+	: Menu::Track(track, spotify, cache, nullptr, parent)
 {
 }
 
-SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
+Menu::Track::Track(const lib::spt::track &track, lib::spt::api &spotify,
 	const lib::cache &cache, const lib::spt::artist *fromArtist, QWidget *parent)
-	: SongMenu(track, spotify, cache, fromArtist, -1, parent)
+	: Menu::Track(track, spotify, cache, fromArtist, -1, parent)
 {
 }
 
-SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
+Menu::Track::Track(const lib::spt::track &track, lib::spt::api &spotify,
 	const lib::cache &cache, int index, QWidget *parent)
-	: SongMenu(track, spotify, cache, nullptr, index, parent)
+	: Menu::Track(track, spotify, cache, nullptr, index, parent)
 {
 }
 
-SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
+Menu::Track::Track(const lib::spt::track &track, lib::spt::api &spotify,
 	const lib::cache &cache, const lib::spt::artist *fromArtist,
 	int index, QWidget *parent)
 	: QMenu(parent),
@@ -31,30 +30,29 @@ SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 	auto *mainWindow = MainWindow::find(parent);
 	if (mainWindow == nullptr)
 	{
-		lib::log::warn("Parent is not MainWindow, SongMenu won't work properly");
 		return;
 	}
 
 	trackUri = lib::spt::api::to_id(track.id);
 	auto *trackFeatures = addAction(Icon::get("view-statistics"), "Audio features");
 	QAction::connect(trackFeatures, &QAction::triggered,
-		this, &SongMenu::onAudioFeatures);
+		this, &Menu::Track::onAudioFeatures);
 
 	if (lib::developer_mode::enabled)
 	{
 		auto *lyrics = addAction(Icon::get("view-media-lyrics"), "Lyrics");
 		QAction::connect(lyrics, &QAction::triggered,
-			this, &SongMenu::onLyrics);
+			this, &Menu::Track::onLyrics);
 	}
 
 	auto *share = addMenu(Icon::get("document-share"), "Share");
 	auto *shareSongLink = share->addAction("Copy song link");
 	QAction::connect(shareSongLink, &QAction::triggered,
-		this, &SongMenu::onCopySongLink);
+		this, &Menu::Track::onCopySongLink);
 
 	auto *shareSongOpen = share->addAction("Open in Spotify");
 	QAction::connect(shareSongOpen, &QAction::triggered,
-		this, &SongMenu::onOpenInSpotify);
+		this, &Menu::Track::onOpenInSpotify);
 
 	// Add/remove liked
 	addSeparator();
@@ -62,7 +60,7 @@ SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 	toggleLiked->setEnabled(false);
 	setLiked(false);
 	QAction::connect(toggleLiked, &QAction::triggered,
-		this, &SongMenu::onLike);
+		this, &Menu::Track::onLike);
 
 	spotify.is_saved_track({trackUri}, [this](const std::vector<bool> &likes)
 	{
@@ -74,7 +72,7 @@ SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 	// Add to queue
 	auto *addQueue = addAction(Icon::get("media-playlist-append"), "Add to queue");
 	QAction::connect(addQueue, &QAction::triggered,
-		this, &SongMenu::onAddToQueue);
+		this, &Menu::Track::onAddToQueue);
 
 	// Add to playlist
 	addSeparator();
@@ -106,14 +104,14 @@ SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 	}
 
 	QMenu::connect(addPlaylist, &QMenu::triggered,
-		this, &SongMenu::onAddToPlaylist);
+		this, &Menu::Track::onAddToPlaylist);
 
 	// Remove from playlist
 	auto *remPlaylist = addAction(Icon::get("list-remove"), "Remove from playlist");
 	remPlaylist->setVisible(index >= 0 && mainWindow->getCurrentPlaylistItem() != nullptr);
 
 	QAction::connect(remPlaylist, &QAction::triggered,
-		this, &SongMenu::onRemoveFromPlaylist);
+		this, &Menu::Track::onRemoveFromPlaylist);
 
 	addSeparator();
 	if (track.artists.size() == 1 && fromArtist != nullptr
@@ -152,10 +150,10 @@ SongMenu::SongMenu(const lib::spt::track &track, lib::spt::api &spotify,
 	auto *goAlbum = addAction(Icon::get("view-media-album-cover"), "Open album");
 	goAlbum->setVisible(track.album.id.length() > 1);
 	QAction::connect(goAlbum, &QAction::triggered,
-		this, &SongMenu::onOpenAlbum);
+		this, &Menu::Track::onOpenAlbum);
 }
 
-void SongMenu::onLike(bool /*checked*/)
+void Menu::Track::onLike(bool /*checked*/)
 {
 	auto callback = [this](const std::string &status)
 	{
@@ -179,7 +177,7 @@ void SongMenu::onLike(bool /*checked*/)
 	}
 }
 
-void SongMenu::onAddToQueue(bool /*checked*/)
+void Menu::Track::onAddToQueue(bool /*checked*/)
 {
 	auto uri = lib::spt::api::to_uri("track", track.id);
 	spotify.add_to_queue(uri, [](const std::string &status)
@@ -188,7 +186,7 @@ void SongMenu::onAddToQueue(bool /*checked*/)
 	});
 }
 
-void SongMenu::onAddToPlaylist(QAction *action)
+void Menu::Track::onAddToPlaylist(QAction *action)
 {
 	auto playlistId = action->data().toString();
 	if (playlistId.isEmpty())
@@ -201,7 +199,7 @@ void SongMenu::onAddToPlaylist(QAction *action)
 	}
 }
 
-void SongMenu::onRemoveFromPlaylist(bool /*checked*/)
+void Menu::Track::onRemoveFromPlaylist(bool /*checked*/)
 {
 	spotify.remove_from_playlist(currentPlaylist.id,
 		lib::spt::api::to_uri("track", track.id), index,
@@ -248,30 +246,30 @@ void SongMenu::onRemoveFromPlaylist(bool /*checked*/)
 		});
 }
 
-void SongMenu::onAudioFeatures(bool /*checked*/)
+void Menu::Track::onAudioFeatures(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	mainWindow->openAudioFeaturesWidget(track);
 }
 
-void SongMenu::onLyrics(bool /*checked*/)
+void Menu::Track::onLyrics(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	mainWindow->openLyrics(track);
 }
 
-void SongMenu::viewArtist(const lib::spt::entity &artist)
+void Menu::Track::viewArtist(const lib::spt::entity &artist)
 {
 	MainWindow::find(parentWidget())->openArtist(artist.id);
 }
 
-void SongMenu::onOpenAlbum(bool /*checked*/)
+void Menu::Track::onOpenAlbum(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	mainWindow->loadAlbum(track.album.id, lib::spt::api::to_uri("track", track.id));
 }
 
-void SongMenu::setLiked(bool liked)
+void Menu::Track::setLiked(bool liked)
 {
 	isLiked = liked;
 
@@ -281,13 +279,13 @@ void SongMenu::setLiked(bool liked)
 		? "Unlike" : "Like");
 }
 
-auto SongMenu::getTrackUrl() const -> QString
+auto Menu::Track::getTrackUrl() const -> QString
 {
 	auto str = lib::fmt::format("https://open.spotify.com/track/{}", trackUri);
 	return QString::fromStdString(str);
 }
 
-void SongMenu::addToNewPlaylist()
+void Menu::Track::addToNewPlaylist()
 {
 	auto playlistName = QInputDialog::getText(this, "New playlist",
 		"Playlist name", QLineEdit::Normal, "New playlist");
@@ -307,7 +305,7 @@ void SongMenu::addToNewPlaylist()
 		});
 }
 
-void SongMenu::addToPlaylist(const std::string &playlistId) const
+void Menu::Track::addToPlaylist(const std::string &playlistId) const
 {
 	// Check if it's already in the playlist
 	spotify.playlist(playlistId, [this, playlistId](const lib::spt::playlist &playlist)
@@ -354,13 +352,13 @@ void SongMenu::addToPlaylist(const std::string &playlistId) const
 	});
 }
 
-void SongMenu::onCopySongLink(bool /*checked*/)
+void Menu::Track::onCopySongLink(bool /*checked*/)
 {
 	QApplication::clipboard()->setText(getTrackUrl());
 	StatusMessage::info(QStringLiteral("Link copied to clipboard"));
 }
 
-void SongMenu::onOpenInSpotify(bool /*checked*/)
+void Menu::Track::onOpenInSpotify(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	Url::open(getTrackUrl(), LinkType::Web, mainWindow);

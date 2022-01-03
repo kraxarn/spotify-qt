@@ -102,6 +102,6 @@ void Search::Tracks::onContextMenu(const QPoint &pos)
 		return;
 	}
 
-	auto *menu = new SongMenu(track, spotify, cache, parentWidget());
+	auto *menu = new Menu::Track(track, spotify, cache, parentWidget());
 	menu->popup(mapToGlobal(pos));
 }

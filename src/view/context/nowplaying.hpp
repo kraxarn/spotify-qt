@@ -1,7 +1,7 @@
 #pragma once
 
 #include "lib/spotify/track.hpp"
-#include "menu/songmenu.hpp"
+#include "menu/track.hpp"
 
 #include <QLabel>
 #include <QVBoxLayout>

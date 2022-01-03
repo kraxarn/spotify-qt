@@ -73,6 +73,6 @@ void Artist::TracksList::onContextMenu(const QPoint &pos)
 		return;
 	}
 
-	auto *songMenu = new SongMenu(track, spotify, cache, &artist, parentWidget());
+	auto *songMenu = new Menu::Track(track, spotify, cache, &artist, parentWidget());
 	songMenu->popup(mapToGlobal(pos));
 }

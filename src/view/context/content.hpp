@@ -5,7 +5,7 @@
 #include "lib/cache.hpp"
 
 #include "spotify/current.hpp"
-#include "menu/songmenu.hpp"
+#include "menu/track.hpp"
 #include "util/icon.hpp"
 #include "util/image.hpp"
 #include "view/context/nowplaying.hpp"

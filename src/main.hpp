@@ -19,7 +19,7 @@
 #include "mediaplayer/service.hpp"
 #include "menu/mainmenu.hpp"
 #include "menu/playlist.hpp"
-#include "menu/songmenu.hpp"
+#include "menu/track.hpp"
 #include "spotify/current.hpp"
 #include "spotify/spotify.hpp"
 #include "util/datetime.hpp"
