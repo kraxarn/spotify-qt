@@ -12,6 +12,7 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QTcpSocket>
 #include <QTcpServer>
 #include <QUrl>
 #include <QVBoxLayout>
