@@ -229,7 +229,10 @@ void List::Library::expanded(QTreeWidgetItem *item)
 			results.reserve(savedAlbums.size());
 			for (const auto &savedAlbum: savedAlbums)
 			{
-				results.emplace_back(savedAlbum.album, savedAlbum.album.artist, DataRole::AlbumId);
+				const auto &album = savedAlbum.album;
+				const auto tooltip = lib::fmt::format("{}\nBy {}",
+					album.name, album.artist);
+				results.emplace_back(album, tooltip, DataRole::AlbumId);
 			}
 			List::Library::itemsLoaded(results, item);
 		});
