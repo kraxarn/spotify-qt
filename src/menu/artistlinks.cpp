@@ -40,9 +40,24 @@ void Menu::ArtistLinks::onDuckDuckGo(bool /*checked*/)
 	Url::open(url, LinkType::Web, this);
 }
 
+void Menu::ArtistLinks::addLink(const std::string &title, const std::string &url)
+{
+	auto *action = addAction(QString::fromStdString(title));
+	QAction::connect(action, &QAction::triggered, [this, url](bool /*checked*/)
+	{
+		Url::open(url, LinkType::Web, this);
+	});
+}
+
 void Menu::ArtistLinks::onLoaded(const lib::ddg::results &results)
 {
 	loading->setVisible(false);
+
+	if (!results.abstract_source.empty()
+		&& !results.abstract_url.empty())
+	{
+		addLink(results.abstract_source, results.abstract_url);
+	}
 
 	for (const auto &item: results.content)
 	{
@@ -52,10 +67,6 @@ void Menu::ArtistLinks::onLoaded(const lib::ddg::results &results)
 			continue;
 		}
 
-		auto *action = addAction(QString::fromStdString(item.title()));
-		QAction::connect(action, &QAction::triggered, [this, item](bool /*checked*/)
-		{
-			Url::open(item.url(), LinkType::Web, this);
-		});
+		addLink(item.title(), item.url());
 	}
 }

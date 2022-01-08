@@ -22,6 +22,8 @@ namespace Menu
 		lib::ddg::api ddg;
 		QAction *loading = nullptr;
 
+		void addLink(const std::string &title, const std::string &url);
+
 		void onAboutToShow();
 		void onDuckDuckGo(bool checked);
 		void onLoaded(const lib::ddg::results &results);

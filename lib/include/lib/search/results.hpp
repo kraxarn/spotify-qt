@@ -20,6 +20,16 @@ namespace lib
 			 * Metadata about search
 			 */
 			std::vector<lib::ddg::link> meta;
+
+			/**
+			 * Source for abstract text
+			 */
+			std::string abstract_source;
+
+			/**
+			 * Source for abstract text
+			 */
+			std::string abstract_url;
 		};
 
 		/** JSON -> Results */
