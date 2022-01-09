@@ -24,5 +24,6 @@ namespace Log
 
 		void onCopyToClipboard(bool checked);
 		void onSaveToFile(bool checked);
+		void onMenuRequested(const QPoint &pos);
 	};
 }

@@ -1,5 +1,6 @@
 #include "view/log/base.hpp"
 #include "metatypes.hpp"
+#include "util/icon.hpp"
 
 #include <QVBoxLayout>
 #include <QPushButton>
@@ -8,6 +9,7 @@
 #include <QStandardPaths>
 #include <QDateTime>
 #include <QFileDialog>
+#include <QMenu>
 
 Log::Base::Base(QWidget *parent)
 	: QWidget(parent)
@@ -41,6 +43,10 @@ Log::Base::Base(QWidget *parent)
 
 	QPushButton::connect(save, &QPushButton::clicked,
 		this, &Log::Base::onSaveToFile);
+
+	list->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+	QWidget::connect(list, &QWidget::customContextMenuRequested,
+		this, &Log::Base::onMenuRequested);
 }
 
 void Log::Base::showEvent(QShowEvent *event)
@@ -110,4 +116,28 @@ void Log::Base::onSaveToFile(bool /*checked*/)
 	out.open(QIODevice::WriteOnly);
 	out.write(collectLogs().toUtf8());
 	out.close();
+}
+
+void Log::Base::onMenuRequested(const QPoint &pos)
+{
+	auto *item = list->itemAt(pos);
+	if (item == nullptr)
+	{
+		return;
+	}
+
+	auto *menu = new QMenu(this);
+
+	auto *copyToClipboard = menu->addAction(Icon::get(QStringLiteral("edit-copy")),
+		QStringLiteral("Copy to clipboard"));
+
+	QAction::connect(copyToClipboard, &QAction::triggered, [item](bool /*checked*/)
+	{
+		const auto &data = item->data(0, messageRole);
+		const auto &message = data.value<lib::log_message>();
+
+		QApplication::clipboard()->setText(QString::fromStdString(message.to_string()));
+	});
+
+	menu->popup(list->mapToGlobal(pos));
 }
