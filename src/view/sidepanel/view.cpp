@@ -81,7 +81,7 @@ auto SidePanel::View::findTab(SidePanelType type, const QString &name) -> QWidge
 			return find<Artist::View *>(name);
 
 		case SidePanelType::Search:
-			return find<Search::View *>(name);
+			return nullptr;
 
 		case SidePanelType::AudioFeatures:
 			return find<::View::AudioFeatures *>(name);
@@ -119,7 +119,11 @@ void SidePanel::View::removeTab(int index)
 
 	auto *widget = stack->widget(index);
 	stack->removeWidget(widget);
-	widget->deleteLater();
+
+	if (widget != searchView)
+	{
+		widget->deleteLater();
+	}
 
 	if (title->count() <= 0)
 	{
