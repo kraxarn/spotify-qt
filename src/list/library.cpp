@@ -2,9 +2,10 @@
 #include "mainwindow.hpp"
 #include "enum/libraryrole.hpp"
 
-List::Library::Library(lib::spt::api &spotify, QWidget *parent)
+List::Library::Library(lib::spt::api &spotify, lib::cache &cache, QWidget *parent)
 	: QTreeWidget(parent),
-	spotify(spotify)
+	spotify(spotify),
+	cache(cache)
 {
 	addTopLevelItems({
 		Tree::itemWithNoChildren(this, recentlyPlayed,
@@ -27,14 +28,18 @@ List::Library::Library(lib::spt::api &spotify, QWidget *parent)
 	setCurrentItem(nullptr);
 
 	QTreeWidget::connect(this, &QTreeWidget::itemClicked,
-		this, &List::Library::clicked);
+		this, &List::Library::onClicked);
 	QTreeWidget::connect(this, &QTreeWidget::itemDoubleClicked,
-		this, &List::Library::doubleClicked);
+		this, &List::Library::onDoubleClicked);
 	QTreeWidget::connect(this, &QTreeWidget::itemExpanded,
-		this, &List::Library::expanded);
+		this, &List::Library::onExpanded);
+
+	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+	QWidget::connect(this, &QWidget::customContextMenuRequested,
+		this, &List::Library::onMenuRequested);
 }
 
-void List::Library::clicked(QTreeWidgetItem *item, int /*column*/)
+void List::Library::onClicked(QTreeWidgetItem *item, int /*column*/)
 {
 	if (item != nullptr
 		&& item->parent() == nullptr
@@ -158,7 +163,7 @@ void List::Library::tracksLoaded(const std::string &id, const std::vector<lib::s
 	mainWindow->getSongsTree()->setEnabled(true);
 }
 
-void List::Library::doubleClicked(QTreeWidgetItem *item, int /*column*/)
+void List::Library::onDoubleClicked(QTreeWidgetItem *item, int /*column*/)
 {
 	auto callback = [this](const std::vector<lib::spt::track> &tracks)
 	{
@@ -204,7 +209,7 @@ void List::Library::doubleClicked(QTreeWidgetItem *item, int /*column*/)
 	}
 }
 
-void List::Library::expanded(QTreeWidgetItem *item)
+void List::Library::onExpanded(QTreeWidgetItem *item)
 {
 	item->takeChildren();
 
@@ -284,4 +289,35 @@ void List::Library::itemsLoaded(std::vector<ListItem::Library> &items, QTreeWidg
 		child->setData(0, static_cast<int>(LibraryRole::DataRole), result.getRole());
 		item->addChild(child);
 	}
+}
+
+void List::Library::onMenuRequested(const QPoint &pos)
+{
+	auto *item = itemAt(pos);
+	if (item == nullptr)
+	{
+		return;
+	}
+
+	const auto roleVariant = item->data(0, static_cast<int>(LibraryRole::DataRole));
+	if (!roleVariant.canConvert<int>())
+	{
+		return;
+	}
+
+	// Currently, only albums have a context menu
+	if (static_cast<DataRole>(roleVariant.toInt()) != DataRole::AlbumId)
+	{
+		return;
+	}
+
+	const auto idVariant = item->data(0, static_cast<int>(LibraryRole::EntityId));
+	if (!idVariant.canConvert<QString>())
+	{
+		return;
+	}
+
+	const auto entityId = idVariant.toString().toStdString();
+	auto *menu = new Menu::Album(spotify, cache, entityId, this);
+	menu->popup(mapToGlobal(pos));
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "lib/spotify/api.hpp"
+#include "lib/cache.hpp"
 
 #include "util/tree.hpp"
 #include "listitem/library.hpp"
@@ -15,10 +16,11 @@ namespace List
 	Q_OBJECT
 
 	public:
-		Library(lib::spt::api &spotify, QWidget *parent);
+		Library(lib::spt::api &spotify, lib::cache &cache, QWidget *parent);
 
 	private:
 		lib::spt::api &spotify;
+		lib::cache &cache;
 
 		static constexpr const char *followedArtists = "Followed Artists";
 		static constexpr const char *newReleases = "New Releases";
@@ -28,9 +30,10 @@ namespace List
 		static constexpr const char *topArtists = "Top Artists";
 		static constexpr const char *topTracks = "Top Tracks";
 
-		void clicked(QTreeWidgetItem *item, int column);
-		void doubleClicked(QTreeWidgetItem *item, int column);
-		void expanded(QTreeWidgetItem *item);
+		void onClicked(QTreeWidgetItem *item, int column);
+		void onDoubleClicked(QTreeWidgetItem *item, int column);
+		void onExpanded(QTreeWidgetItem *item);
+		void onMenuRequested(const QPoint &pos);
 
 		void tracksLoaded(const std::string &id, const std::vector<lib::spt::track> &tracks);
 		static void itemsLoaded(std::vector<ListItem::Library> &items, QTreeWidgetItem *item);
