@@ -10,15 +10,27 @@
 #include <QCheckBox>
 #include <QClipboard>
 
-class ConfigView: public QTreeWidget
+class ConfigView: public QWidget
 {
 public:
 	ConfigView(const lib::settings &settings, QWidget *parent);
 
+protected:
+	void showEvent(QShowEvent *event) override;
+
 private:
+	QTreeWidget *tree;
+	QHBoxLayout *footer;
+
 	const lib::settings &settings;
 
-	void showEvent(QShowEvent *event) override;
-	void menu(const QPoint &pos);
+	/**
+	 * Settings, with private information removed, as JSON
+	 */
+	auto safeSettings() -> QString;
+
 	void reload();
+
+	void onMenuRequested(const QPoint &pos);
+	void onCopyToClipboard(bool checked);
 };

@@ -1,25 +1,45 @@
 #include "configview.hpp"
 
 ConfigView::ConfigView(const lib::settings &settings, QWidget *parent)
-	: QTreeWidget(parent),
+	: QWidget(parent),
 	settings(settings)
 {
-	setHeaderLabels({
+	auto *layout = new QVBoxLayout(this);
+	tree = new QTreeWidget(this);
+	layout->addWidget(tree, 1);
+
+	tree->setHeaderLabels({
 		"Key",
 		"Value"
 	});
 
-	header()->setSectionsMovable(false);
-	header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+	tree->header()->setSectionsMovable(false);
+	tree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QWidget::connect(this, &QWidget::customContextMenuRequested, this, &ConfigView::menu);
+	tree->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+	QWidget::connect(tree, &QWidget::customContextMenuRequested,
+		this, &ConfigView::onMenuRequested);
+
+	footer = new QHBoxLayout();
+	layout->addLayout(footer);
+
+	auto *notice = new QLabel(QStringLiteral(
+			"Account information, and other sensitive information, "
+			"is automatically removed from the output"),
+		this);
+	notice->setWordWrap(true);
+	footer->addWidget(notice, 1);
+
+	auto *copyToClipboard = new QPushButton(QStringLiteral("Copy to clipboard"), this);
+	QPushButton::connect(copyToClipboard, &QPushButton::clicked,
+		this, &ConfigView::onCopyToClipboard);
+	footer->addWidget(copyToClipboard);
 }
 
-void ConfigView::menu(const QPoint &pos)
+void ConfigView::onMenuRequested(const QPoint &pos)
 {
 	auto *menu = new QMenu(this);
-	auto *item = itemAt(pos);
+	auto *item = tree->itemAt(pos);
 
 	if (item != nullptr)
 	{
@@ -44,17 +64,17 @@ void ConfigView::menu(const QPoint &pos)
 			Url::open(this->settings.file_name(), LinkType::Path, this);
 		});
 
-	menu->popup(mapToGlobal(pos));
+	menu->popup(tree->mapToGlobal(pos));
 }
 
 void ConfigView::reload()
 {
-	clear();
+	tree->clear();
 
 	const auto &json = settings.to_json();
 	for (const auto &i: json.items())
 	{
-		auto *item = new QTreeWidgetItem(this);
+		auto *item = new QTreeWidgetItem(tree);
 		item->setText(0, QString::fromStdString(i.key()));
 
 		for (const auto &ii: i.value().items())
@@ -70,4 +90,30 @@ void ConfigView::reload()
 void ConfigView::showEvent(QShowEvent * /*event*/)
 {
 	reload();
+}
+
+auto ConfigView::safeSettings() -> QString
+{
+	auto copy = settings.to_json();
+
+	// Account
+	copy.erase("Account");
+
+	// General
+	auto &general = copy.at("General");
+	general.erase("custom_playlist_order");
+	general.erase("last_device");
+	general.erase("last_playlist");
+
+	// Spotify
+	auto &spotify = copy.at("Spotify");
+	spotify.erase("path");
+	spotify.erase("username");
+
+	return QString::fromStdString(copy.dump(4));
+}
+
+void ConfigView::onCopyToClipboard(bool /*checked*/)
+{
+	QApplication::clipboard()->setText(safeSettings());
 }
