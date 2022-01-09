@@ -6,6 +6,7 @@ import os
 import pathlib
 import shutil
 import subprocess
+import sys
 import tempfile
 import typing
 
@@ -17,7 +18,7 @@ with open("version", "r") as f:
 	current = f.read()
 
 latest: str = requests.get(f"https://api.github.com/repos/{REPO}/tags").json()[0]["name"]
-if latest == current:
+if latest == current and "--force" not in sys.argv:
 	print("Already up-to-date")
 	exit(0)
 
