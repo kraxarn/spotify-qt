@@ -48,15 +48,23 @@ void Log::Base::showEvent(QShowEvent *event)
 	QWidget::showEvent(event);
 
 	list->clear();
-	for (const auto &message: getMessages())
+	for (const auto &logMessage: getMessages())
 	{
+		const auto time = QString::fromStdString(logMessage.get_time());
+		const auto type = QString::fromStdString(logMessage.get_type());
+		const auto message = QString::fromStdString(logMessage.get_message());
+
 		auto *item = new QTreeWidgetItem({
-			QString::fromStdString(message.get_time()),
-			QString::fromStdString(message.get_type()),
-			QString::fromStdString(message.get_message()),
+			time,
+			type,
+			message,
 		});
 
-		item->setData(0, messageRole, QVariant::fromValue(message));
+		item->setToolTip(0, time);
+		item->setToolTip(1, type);
+		item->setToolTip(2, message);
+
+		item->setData(0, messageRole, QVariant::fromValue(logMessage));
 		list->addTopLevelItem(item);
 	}
 }
