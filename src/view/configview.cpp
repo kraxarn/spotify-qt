@@ -43,17 +43,21 @@ void ConfigView::onMenuRequested(const QPoint &pos)
 
 	if (item != nullptr)
 	{
-		QAction::connect(menu->addAction("Copy key"),
-			&QAction::triggered, [item](bool /*checked*/)
-			{
-				QApplication::clipboard()->setText(item->text(0));
-			});
+		auto *copyKey = menu->addAction(Icon::get(QStringLiteral("edit-copy")),
+			QStringLiteral("Copy key"));
 
-		QAction::connect(menu->addAction("Copy value"),
-			&QAction::triggered, [item](bool /*checked*/)
-			{
-				QApplication::clipboard()->setText(item->text(1));
-			});
+		QAction::connect(copyKey, &QAction::triggered, [item](bool /*checked*/)
+		{
+			QApplication::clipboard()->setText(item->text(0));
+		});
+
+		auto *copyValue = menu->addAction(Icon::get(QStringLiteral("edit-copy")),
+			QStringLiteral("Copy value"));
+
+		QAction::connect(copyValue, &QAction::triggered, [item](bool /*checked*/)
+		{
+			QApplication::clipboard()->setText(item->text(1));
+		});
 
 		menu->addSeparator();
 	}
