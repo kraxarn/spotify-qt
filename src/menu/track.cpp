@@ -108,10 +108,14 @@ Menu::Track::Track(const lib::spt::track &track, lib::spt::api &spotify,
 		this, &Menu::Track::onAddToPlaylist);
 
 	// Remove from playlist
-	auto *remPlaylist = addAction(Icon::get("list-remove"), "Remove from playlist");
-	remPlaylist->setVisible(index >= 0 && mainWindow->getCurrentPlaylistItem() != nullptr);
+	auto *removeFromPlaylist = addAction(Icon::get(QStringLiteral("list-remove")),
+		QStringLiteral("Remove from playlist"));
 
-	QAction::connect(remPlaylist, &QAction::triggered,
+	removeFromPlaylist->setVisible(index >= 0
+		&& playlistItem != nullptr
+		&& (currentPlaylist.collaborative || currentPlaylist.owner_id == currentUserId));
+
+	QAction::connect(removeFromPlaylist, &QAction::triggered,
 		this, &Menu::Track::onRemoveFromPlaylist);
 
 	addSeparator();
