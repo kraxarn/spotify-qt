@@ -245,8 +245,7 @@ void Menu::Track::onRemoveFromPlaylist(bool /*checked*/)
 			// Refresh the playlist automatically to prevent issues with songs being skipped
 			mainWindow->getSongsTree()->refreshPlaylist(currentPlaylist);
 
-			StatusMessage::info(QString("Removed %1 from \"%2\"")
-				.arg(QString::fromStdString(track.title()))
+			StatusMessage::info(QString("Removed from %1")
 				.arg(QString::fromStdString(currentPlaylist.name)));
 		});
 }
