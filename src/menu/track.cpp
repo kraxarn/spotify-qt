@@ -168,7 +168,7 @@ void Menu::Track::onLike(bool /*checked*/)
 		}
 
 		StatusMessage::error(QString("Failed to %1: %2")
-			.arg(isLiked ? "dislike" : "onLike")
+			.arg(isLiked ? "unlike" : "like")
 			.arg(QString::fromStdString(status)));
 	};
 
