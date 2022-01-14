@@ -260,7 +260,7 @@ void lib::spt::api::get_items(const std::string &url, const std::string &key,
 	{
 		if (!key.empty() && !json.contains(key))
 		{
-			lib::log::error(R"(no such key "{}" in "{}" ({}))", key, json.dump());
+			lib::log::error(R"(no such key "{}" in "{}")", key, json.dump());
 		}
 
 		const auto &content = key.empty() ? json : json.at(key);
