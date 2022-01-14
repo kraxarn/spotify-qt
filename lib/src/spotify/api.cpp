@@ -263,10 +263,11 @@ void lib::spt::api::get_items(const std::string &url, const std::string &key,
 			lib::log::error(R"(no such key "{}" in "{}" ({}))", key, json.dump());
 		}
 
-		const auto &items = (key.empty() ? json : json.at(key)).at("items");
-		if (json.contains("next") && json.at("next").is_string())
+		const auto &content = key.empty() ? json : json.at(key);
+		const auto &items = content.at("items");
+		if (content.contains("next") && content.at("next").is_string())
 		{
-			const auto &next = json.at("next").get<std::string>();
+			const auto &next = content.at("next").get<std::string>();
 			get_items(next, key, [items, callback](const nlohmann::json &next)
 			{
 				callback(lib::json::combine(items, next));
