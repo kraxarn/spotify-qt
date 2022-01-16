@@ -4,6 +4,33 @@ Versions use major.minor scheming. New versions are released together with spoti
 * Minor releases contain minor changes and bug fixes and should never require changes to be made.
 * Pre-release and beta releases may contain breaking changes, even if it's a minor release.
 
+## v0.6 (spotify-qt v3.8)
+
+* `palette`, `resize_mode`, and `spotify_context` are now enum classes.
+* Renamed `log::dev` to `log::debug`.
+* Added `enums` for serializing, and deserializing, enums.
+* Added `optional` as a basic `std::optional` implementation.
+* Added `uri` for basic URI manipulation.
+* Added `gh::api` as a GitHub API wrapper.
+* Added `ddg::api` as a DuckDuckGo API wrapper.
+* Added `cache::get_album_image_path`.
+* Added `cache::get_album` and `cache::set_album`.
+* Added `artist_profile`, `audio_quality`, and `media_type` enums.
+* Added `json::find_item`, and `json::set`.
+* Added `qt.custom_font`, and `qt.mirror_title_bar`.
+* Added `spt::api::follow_playlist` and `spt::api::unfollow_playlist`.
+* Added `spt::api::is_following_playlist`.
+* Added `spt::api::create_playlist`.
+* Added `spt::api::show` and `spt::api::show_episodes`.
+* Added `spt::episode` and `spt::show`.
+* Removed `cipher`.
+* Removed `ghc::filesystem` support for `fmt::format`.
+* Removed `settings::qt_const` (now dynamically created).
+* Removed `settings::validate`, and `settings::set_value`
+* Removed `general.pulse_volume` (broken with PipeWire).
+* Removed `general.tray_notifications` (use in-app notifications).
+* Removed `strings::index_of`, and `strings::last_index_of`.
+
 ## v0.5 (spotify-qt v3.7)
 
 * `cache` is now abstract, and previous implementation has been moved to `json_cache`.
@@ -35,7 +62,7 @@ Versions use major.minor scheming. New versions are released together with spoti
 * Reworked `cache`.
 * Added enums: `album_group`, `client_type`, `follow_type`, `repeat_state`.
 * Added `general.last_device` setting.
-* Added Spotify classes: `album`, `artist`, `audio_features`, `device`, `playback`, `playlist`, 
+* Added Spotify classes: `album`, `artist`, `audio_features`, `device`, `playback`, `playlist`,
   `search_results`, `track`, `user`.
 * Added Spotify helper classes: `context`, `playlist_details`, `saved_album`.
 * Added `callback<T>` for asynchronous callbacks.
