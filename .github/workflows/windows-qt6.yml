@@ -1,0 +1,41 @@
+name: Windows (Qt 6, x64)
+
+on: workflow_dispatch
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: "6.2.2"
+          arch: "win64_mingw"
+
+      - name: Create Build Environment
+        run: cmake -E make_directory ${{runner.workspace}}/build
+
+      - name: Configure CMake
+        working-directory: ${{runner.workspace}}/build
+        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_QT6=ON -DUSE_TESTS=ON
+
+      - name: Build
+        run: cmake --build . --config $BUILD_TYPE
+
+      - name: Test
+        run: ./lib/test/spotify-qt-lib-test.exe
+
+      - name: Package
+        run: windeployqt ./spotify-qt.exe
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: spotify-qt
+          path: ./spotify-qt/
