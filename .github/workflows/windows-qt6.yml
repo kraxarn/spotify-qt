@@ -32,10 +32,10 @@ jobs:
         run: ./lib/test/spotify-qt-lib-test.exe
 
       - name: Package
-        run: windeployqt ./spotify-qt.exe
+        run: windeployqt ${{runner.workspace}}/build/spotify-qt.exe --dir ${{runner.workspace}}/bin
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: spotify-qt
-          path: ./spotify-qt/
+          path: ${{runner.workspace}}/bin
