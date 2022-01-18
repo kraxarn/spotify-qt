@@ -1,4 +1,5 @@
 #include "lib/uri.hpp"
+#include <regex>
 
 lib::uri::uri(const std::string &url)
 {
@@ -100,4 +101,24 @@ void lib::uri::set_search_params(const std::map<std::string, std::string> &param
 
 	new_url.append(stream.str());
 	set_url(new_url);
+}
+
+auto lib::uri::encode(const std::string &uri) -> std::string
+{
+	std::ostringstream stream;
+	std::regex regex("[!'\\(\\)*-.0-9A-Za-z_~]");
+
+	for (const char &c: uri)
+	{
+		if (std::regex_match(std::string(1, c), regex))
+		{
+			stream << c;
+		}
+		else
+		{
+			stream << "%" << std::uppercase << std::hex << (0xff & c);
+		}
+	}
+
+	return stream.str();
 }

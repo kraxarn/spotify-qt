@@ -91,4 +91,9 @@ TEST_CASE("uri")
 		uri.set_search_params({});
 		CHECK_EQ(uri.get_url(), "https://example.com");
 	}
+
+	SUBCASE("encode")
+	{
+		CHECK_EQ(lib::uri::encode("/Hello, World/"), "%2FHello%2C%20World%2F");
+	}
 }

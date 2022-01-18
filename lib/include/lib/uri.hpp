@@ -55,6 +55,11 @@ namespace lib
 		 */
 		void set_search_params(const std::map<std::string, std::string> &params);
 
+		/**
+		 * Encode URI component
+		 */
+		static auto encode(const std::string &uri) -> std::string;
+
 	private:
 		std::string url;
 	};
