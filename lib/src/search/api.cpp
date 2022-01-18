@@ -15,6 +15,14 @@ void lib::ddg::api::search(const lib::spt::artist &artist,
 
 	http.get(url, lib::headers(), [callback](const std::string &result)
 	{
-		callback(nlohmann::json::parse(result));
+		try
+		{
+			callback(nlohmann::json::parse(result));
+		}
+		catch (const std::exception &e)
+		{
+			lib::log::error("Search failed: {}", e.what());
+			callback({});
+		}
 	});
 }
