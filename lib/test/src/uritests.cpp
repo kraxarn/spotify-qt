@@ -94,6 +94,6 @@ TEST_CASE("uri")
 
 	SUBCASE("encode")
 	{
-		CHECK_EQ(lib::uri::encode("/Hello, World/"), "%2FHello%2C%20World%2F");
+		CHECK_EQ(lib::uri::encode("/Hello World/"), "%2FHello%20World%2F");
 	}
 }
