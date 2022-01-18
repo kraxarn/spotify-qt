@@ -14,7 +14,7 @@ auto lib::qt::http_client::request(const std::string &url,
 	QNetworkRequest request(QUrl(QString::fromStdString(url)));
 
 	// Set headers
-	for (const auto &header : headers)
+	for (const auto &header: headers)
 	{
 		request.setRawHeader(QByteArray::fromStdString(header.first),
 			QByteArray::fromStdString(header.second));
@@ -29,6 +29,12 @@ void lib::qt::http_client::await(QNetworkReply *reply, lib::callback<QByteArray>
 	QNetworkReply::connect(reply, &QNetworkReply::finished, this,
 		[reply, callback]()
 		{
+			if (reply->error() != QNetworkReply::NoError)
+			{
+				lib::log::error("Request failed: {}",
+					reply->errorString().toStdString());
+			}
+
 			callback(reply->readAll());
 			reply->deleteLater();
 		});
