@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['encode_332',['encode',['../classlib_1_1base64.html#aeeb6bb12f6ec040c3acd6019185db7c8',1,'lib::base64']]],
+  ['encode_332',['encode',['../classlib_1_1base64.html#aeeb6bb12f6ec040c3acd6019185db7c8',1,'lib::base64::encode()'],['../classlib_1_1uri.html#abb660a6fcee23c60ab2274ecfa426a8f',1,'lib::uri::encode()']]],
   ['ends_5fwith_333',['ends_with',['../classlib_1_1strings.html#a1020c4cf7a5e92f3d6ce405a48da9886',1,'lib::strings']]],
   ['entity_334',['entity',['../classlib_1_1spt_1_1entity.html#ad4fe6b9638d0291cdf6e212aa9ba926c',1,'lib::spt::entity']]],
   ['env_335',['env',['../classlib_1_1system.html#a569afc248641fbeeb5d52e72552c6d2a',1,'lib::system']]],

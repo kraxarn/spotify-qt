@@ -1,7 +1,7 @@
 var searchData=
 [
   ['enabled_54',['enabled',['../classlib_1_1developer__mode.html#a4e7ebe8ced9b779470c4b03ae1f7192d',1,'lib::developer_mode']]],
-  ['encode_55',['encode',['../classlib_1_1base64.html#aeeb6bb12f6ec040c3acd6019185db7c8',1,'lib::base64']]],
+  ['encode_55',['encode',['../classlib_1_1base64.html#aeeb6bb12f6ec040c3acd6019185db7c8',1,'lib::base64::encode()'],['../classlib_1_1uri.html#abb660a6fcee23c60ab2274ecfa426a8f',1,'lib::uri::encode()']]],
   ['ends_5fwith_56',['ends_with',['../classlib_1_1strings.html#a1020c4cf7a5e92f3d6ce405a48da9886',1,'lib::strings']]],
   ['entity_57',['entity',['../classlib_1_1spt_1_1entity.html#ad4fe6b9638d0291cdf6e212aa9ba926c',1,'lib::spt::entity::entity()'],['../classlib_1_1spt_1_1entity.html',1,'lib::spt::entity']]],
   ['enums_58',['enums',['../classlib_1_1enums.html',1,'lib']]],
