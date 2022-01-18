@@ -108,15 +108,17 @@ auto lib::uri::encode(const std::string &uri) -> std::string
 	std::ostringstream stream;
 	std::regex regex("[!'\\(\\)*-.0-9A-Za-z_~]");
 
-	for (const char &c: uri)
+	for (size_t i = 0; i < uri.size(); i++)
 	{
-		if (std::regex_match(std::string(1, c), regex))
+		const auto &str = uri.substr(i, 1);
+
+		if (std::regex_match(str, regex))
 		{
-			stream << c;
+			stream << str;
 		}
 		else
 		{
-			stream << "%" << std::uppercase << std::hex << (0xff & c);
+			stream << "%" << std::uppercase << std::hex << (0xff & str.at(0));
 		}
 	}
 
