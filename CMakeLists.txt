@@ -34,6 +34,11 @@ if (POLICY CMP0072)
 	cmake_policy(SET CMP0072 NEW)
 endif ()
 
+# Qt 6 requires C++17 under MSVC
+if (QT_VERSION_MAJOR EQUAL 6 AND MSVC)
+	set(CMAKE_CXX_STANDARD 17)
+endif ()
+
 # Find Qt
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Widgets Network Gui Svg REQUIRED)
 if (USE_DBUS)
