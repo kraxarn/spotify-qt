@@ -25,11 +25,11 @@ jobs:
             cmake
             mingw-w64-x86_64-toolchain
             mingw-w64-x86_64-cmake
-            mingw-w64-x86_64-qt6-base
-            mingw-w64-x86_64-qt6-svg
+            mingw-w64-x86_64-qt5-base
+            mingw-w64-x86_64-qt5-svg
 
       - name: Configure CMake
-        run: cmake . -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_QT6=ON -DUSE_TESTS=ON
+        run: cmake . -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_QT6=OFF -DUSE_TESTS=ON
 
       - name: Build
         run: cmake --build . --config $BUILD_TYPE
@@ -43,15 +43,15 @@ jobs:
           ./copydlldeps.sh --infile ./spotify-qt.exe \
             --destdir ./spotify-qt/ \
             --recursivesrcdir /mingw64/bin/ \
-            --enforcedir /mingw64/share/qt6/plugins/generic/ \
-            --enforcedir /mingw64/share/qt6/plugins/iconengines/ \
-            --enforcedir /mingw64/share/qt6/plugins/imageformats/ \
-            --enforcedir /mingw64/share/qt6/plugins/platforms/ \
-            --enforcedir /mingw64/share/qt6/plugins/styles/ \
+            --enforcedir /mingw64/share/qt5/plugins/generic/ \
+            --enforcedir /mingw64/share/qt5/plugins/iconengines/ \
+            --enforcedir /mingw64/share/qt5/plugins/imageformats/ \
+            --enforcedir /mingw64/share/qt5/plugins/platforms/ \
+            --enforcedir /mingw64/share/qt5/plugins/styles/ \
             --enforcedir /mingw64/bin/libcrypto-1_1-x64.dll \
             --enforcedir /mingw64/bin/libjpeg-8.dll \
             --enforcedir /mingw64/bin/libssl-1_1-x64.dll \
-            --enforcedir /mingw64/bin/Qt6Svg.dll \
+            --enforcedir /mingw64/bin/Qt5Svg.dll \
             --copy
           cp ./spotify-qt.exe ./spotify-qt/
 
