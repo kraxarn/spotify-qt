@@ -71,7 +71,7 @@ void Context::Content::setAlbumJpg(const lib::spt::entity &albumEntity, const st
 		lib::log::info("setting album through jpegggg???");
 		auto pixmap = QPixmap();
 		pixmap.loadFromData(QByteArray::fromStdString(data), "jpeg");
-		pixmap = pixmap.scaled(128, 128, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+		pixmap = pixmap.scaled(300, 300, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
 		album->setPixmap(pixmap);
 		album->setToolTip(QString::fromStdString(albumEntity.name));
 	}

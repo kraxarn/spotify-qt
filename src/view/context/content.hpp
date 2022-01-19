@@ -35,7 +35,7 @@ namespace Context
 
 	private:
 		/** Width and height of album */
-		static constexpr int albumSize = 128;
+		static constexpr int albumSize = 300;
 
 		lib::spt::api &spotify;
 		spt::Current &current;
