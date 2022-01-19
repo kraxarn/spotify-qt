@@ -32,7 +32,7 @@ jobs:
         run: |
           curl https://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-qt6-base-6.1.3-2-any.pkg.tar.zst -o qt6-base.pkg.tar.zst
           curl https://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-qt6-svg-6.1.3-1-any.pkg.tar.zst -o qt6-svg-pkg.tar.zst
-          pacman -U qt6-base.pkg.tar.zst qt6-svg-pkg.tar.zst
+          pacman --noconfirm -U qt6-base.pkg.tar.zst qt6-svg-pkg.tar.zst
 
       - name: Configure CMake
         run: cmake . -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_QT6=ON -DUSE_TESTS=ON
