@@ -16,7 +16,7 @@ jobs:
 
       - name: Cache Qt
         id: cache-qt
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ../Qt
           key: qt-${{env.QT_VERSION}}-${{env.QT_ARCH}}
