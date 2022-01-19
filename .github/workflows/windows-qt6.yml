@@ -18,12 +18,8 @@ jobs:
           version: "6.2.2"
           arch: "win64_mingw"
 
-      - name: Create Build Environment
-        run: cmake -E make_directory ${{runner.workspace}}/build
-
       - name: Configure CMake
-        working-directory: ${{runner.workspace}}/build
-        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_QT6=ON -DUSE_TESTS=ON
+        run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_QT6=ON -DUSE_TESTS=ON
 
       - name: Build
         run: cmake --build . --config $BUILD_TYPE
@@ -32,10 +28,10 @@ jobs:
         run: ./lib/test/spotify-qt-lib-test.exe
 
       - name: Package
-        run: windeployqt ${{runner.workspace}}/build/spotify-qt.exe --dir ${{runner.workspace}}/bin
+        run: windeployqt ${{runner.workspace}}/build/spotify-qt.exe --dir ${{runner.workspace}}/out
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: spotify-qt
-          path: ${{runner.workspace}}/bin
+          path: ${{runner.workspace}}/out
