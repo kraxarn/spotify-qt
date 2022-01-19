@@ -54,3 +54,11 @@ void Context::View::setAlbum(const lib::spt::entity &albumEntity, const QPixmap 
 		content->setAlbum(albumEntity, albumImage);
 	}
 }
+
+void Context::View::setAlbum(const lib::spt::entity &albumEntity, const std::string &data) const
+{
+	if (content != nullptr)
+	{
+		content->setAlbumJpg(albumEntity, data);
+	}
+}

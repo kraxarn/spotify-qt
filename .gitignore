@@ -216,3 +216,4 @@ build/
 
 # Idea based stuff
 .idea/
+.vscode/

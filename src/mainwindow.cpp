@@ -420,11 +420,11 @@ void MainWindow::setAlbumImage(const lib::spt::entity &albumEntity,
 	const std::string &albumImageUrl)
 {
 	Http::getAlbum(albumImageUrl, *httpClient, cache,
-		[this, albumEntity](const QPixmap &image)
+		[this, albumEntity](const std::string &data)
 		{
 			if (contextView != nullptr)
 			{
-				contextView->setAlbum(albumEntity, image);
+				contextView->setAlbum(albumEntity, data);
 			}
 		});
 }
