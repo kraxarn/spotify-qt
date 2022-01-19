@@ -4,6 +4,8 @@ on: workflow_dispatch
 
 env:
   BUILD_TYPE: Release
+  QT_VERSION: "6.2.2"
+  QT_ARCH: "win64_mingw"
 
 jobs:
   build:
@@ -12,11 +14,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Cache Qt
+        id: cache-qt
+        uses: actions/cache@v1
+        with:
+          path: ../Qt
+          key: qt-${{env.QT_VERSION}}-${{env.QT_ARCH}}
+
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
-          version: "6.2.2"
-          arch: "win64_mingw"
+          version: $QT_VERSION
+          arch: $QT_ARCH
 
       - name: Configure CMake
         run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_QT6=ON -DUSE_TESTS=ON
