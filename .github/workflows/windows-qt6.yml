@@ -25,8 +25,8 @@ jobs:
         uses: jurplel/install-qt-action@v2
         with:
           cached: ${{steps.cache-qt.outputs.cache-hit}}
-          version: $QT_VERSION
-          arch: $QT_ARCH
+          version: ${{env.QT_VERSION}}
+          arch: ${{env.QT_ARCH}}
 
       - name: Configure CMake
         run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_QT6=ON -DUSE_TESTS=ON
