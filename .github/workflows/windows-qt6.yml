@@ -5,7 +5,7 @@ on: workflow_dispatch
 env:
   BUILD_TYPE: Release
   QT_VERSION: "6.2.2"
-  QT_ARCH: "win64_mingw"
+  QT_ARCH: "win64_msvc2019_64"
 
 jobs:
   build:
