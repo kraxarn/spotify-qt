@@ -34,9 +34,6 @@ jobs:
       - name: Build
         run: cmake --build .
 
-      - name: Test
-        run: ./lib/test/spotify-qt-lib-test.exe
-
       - name: Package
         run: windeployqt ${{runner.workspace}}/spotify-qt.exe --dir ${{runner.workspace}}/build
 
