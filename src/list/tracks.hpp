@@ -59,6 +59,11 @@ namespace List
 		void resizeEvent(QResizeEvent *event) override;
 
 	private:
+		/**
+		 * Offset index for header items
+		 */
+		static constexpr int titleOffset = 100;
+
 		lib::settings &settings;
 		lib::cache &cache;
 		lib::spt::api &spotify;
@@ -75,5 +80,6 @@ namespace List
 		void onMenu(const QPoint &pos);
 		void onClicked(QTreeWidgetItem *item, int column);
 		void onHeaderMenu(const QPoint &pos);
+		void onHeaderMenuTriggered(QAction *action);
 	};
 }

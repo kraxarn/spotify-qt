@@ -125,7 +125,6 @@ void List::Tracks::onHeaderMenu(const QPoint &pos)
 		"Title", "Artist", "Album", "Length", "Added"
 	});
 	const auto &headers = this->settings.general.hidden_song_headers;
-	constexpr int titleOffset = 100;
 
 	for (int i = 0; i < headerTitles.size(); i++)
 	{
@@ -140,38 +139,40 @@ void List::Tracks::onHeaderMenu(const QPoint &pos)
 		sortTitle->setData(QVariant(titleOffset + i));
 	}
 
-	QMenu::connect(menu, &QMenu::triggered, [this](QAction *action)
-	{
-		int i = action->data().toInt();
-
-		// Columns to show
-		if (i < titleOffset)
-		{
-			header()->setSectionHidden(i + 1, !action->isChecked());
-			if (action->isChecked())
-			{
-				this->settings.general.hidden_song_headers.erase(i);
-			}
-			else
-			{
-				this->settings.general.hidden_song_headers.emplace(i);
-			}
-			this->settings.save();
-			return;
-		}
-
-		// Sort by
-		i -= titleOffset;
-		if (this->settings.general.song_header_sort_by == i)
-		{
-			i = -1;
-		}
-		header()->setSortIndicator(i + 1, Qt::AscendingOrder);
-		this->settings.general.song_header_sort_by = i;
-		this->settings.save();
-	});
+	QMenu::connect(menu, &QMenu::triggered, this, &List::Tracks::onHeaderMenuTriggered);
 
 	menu->popup(header()->mapToGlobal(pos));
+}
+
+void List::Tracks::onHeaderMenuTriggered(QAction *action)
+{
+	int i = action->data().toInt();
+
+	// Columns to show
+	if (i < titleOffset)
+	{
+		header()->setSectionHidden(i + 1, !action->isChecked());
+		if (action->isChecked())
+		{
+			this->settings.general.hidden_song_headers.erase(i);
+		}
+		else
+		{
+			this->settings.general.hidden_song_headers.emplace(i);
+		}
+		this->settings.save();
+		return;
+	}
+
+	// Sort by
+	i -= titleOffset;
+	if (this->settings.general.song_header_sort_by == i)
+	{
+		i = -1;
+	}
+	header()->setSortIndicator(i + 1, Qt::AscendingOrder);
+	this->settings.general.song_header_sort_by = i;
+	this->settings.save();
 }
 
 void List::Tracks::resizeEvent(QResizeEvent *event)
