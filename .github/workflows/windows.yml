@@ -55,7 +55,7 @@ jobs:
             --enforcedir /mingw64/bin/libcrypto-1_1-x64.dll \
             --enforcedir /mingw64/bin/libjpeg-8.dll \
             --enforcedir /mingw64/bin/libssl-1_1-x64.dll \
-            --enforcedir /mingw64/bin/Qt5Svg.dll \
+            --enforcedir /mingw64/bin/Qt6Svg.dll \
             --copy
           cp ./spotify-qt.exe ./spotify-qt/
 
