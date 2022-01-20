@@ -32,7 +32,7 @@ jobs:
         run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_QT6=ON
 
       - name: Build
-        run: cmake --build .
+        run: cmake --build . --config $BUILD_TYPE
 
 #      - name: Package
 #        run: windeployqt ${{runner.workspace}}/spotify-qt.exe --dir ${{runner.workspace}}/build
