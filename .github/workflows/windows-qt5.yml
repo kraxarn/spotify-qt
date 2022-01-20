@@ -1,0 +1,44 @@
+name: Windows (Qt 5, x86)
+
+on: workflow_dispatch
+
+env:
+  BUILD_TYPE: Release
+  QT_VERSION: "5.15.2"
+  QT_ARCH: "win32_msvc2017"
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache Qt
+        id: cache-qt
+        uses: actions/cache@v2
+        with:
+          path: ${{runner.workspace}}/Qt
+          key: qt-${{env.QT_VERSION}}-${{env.QT_ARCH}}
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          cached: ${{steps.cache-qt.outputs.cache-hit}}
+          version: ${{env.QT_VERSION}}
+          arch: ${{env.QT_ARCH}}
+
+      - name: Configure CMake
+        run: cmake . -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+      - name: Build
+        run: cmake --build . --config ${{env.BUILD_TYPE}}
+
+      - name: Package
+        run: windeployqt ${{runner.workspace}}/spotify-qt/${{env.BUILD_TYPE}}/spotify-qt.exe
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: spotify-qt
+          path: ${{runner.workspace}}/spotify-qt/${{env.BUILD_TYPE}}
