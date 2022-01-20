@@ -41,4 +41,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: spotify-qt
-          path: ${{runner.workspace}}
+          path: ${{runner.workspace}}/spotify-qt/$BUILD_TYPE
