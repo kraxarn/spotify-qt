@@ -34,11 +34,11 @@ jobs:
       - name: Build
         run: cmake --build .
 
-      - name: Package
-        run: windeployqt ${{runner.workspace}}/spotify-qt.exe --dir ${{runner.workspace}}/build
+#      - name: Package
+#        run: windeployqt ${{runner.workspace}}/spotify-qt.exe --dir ${{runner.workspace}}/build
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: spotify-qt
-          path: ${{runner.workspace}}/build
+          path: ${{runner.workspace}}
