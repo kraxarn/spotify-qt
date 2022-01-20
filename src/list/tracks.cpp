@@ -39,20 +39,20 @@ List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache
 
 	// Play tracks on click or enter/special key
 	QTreeWidget::connect(this, &QTreeWidget::itemActivated,
-		this, &List::Tracks::clicked);
+		this, &List::Tracks::onClicked);
 
 	// Song context menu
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested,
-		this, &List::Tracks::menu);
+		this, &List::Tracks::onMenu);
 
 	// Songs header context menu
 	header()->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QLabel::connect(header(), &QWidget::customContextMenuRequested,
-		this, &List::Tracks::headerMenu);
+		this, &List::Tracks::onHeaderMenu);
 }
 
-void List::Tracks::menu(const QPoint &pos)
+void List::Tracks::onMenu(const QPoint &pos)
 {
 	auto *item = itemAt(pos);
 	if (item == nullptr)
@@ -72,7 +72,7 @@ void List::Tracks::menu(const QPoint &pos)
 	songMenu->popup(mapToGlobal(pos));
 }
 
-void List::Tracks::clicked(QTreeWidgetItem *item, int /*column*/)
+void List::Tracks::onClicked(QTreeWidgetItem *item, int /*column*/)
 {
 	if (item->isDisabled())
 	{
@@ -116,7 +116,7 @@ void List::Tracks::clicked(QTreeWidgetItem *item, int /*column*/)
 	}
 }
 
-void List::Tracks::headerMenu(const QPoint &pos)
+void List::Tracks::onHeaderMenu(const QPoint &pos)
 {
 	auto *menu = new QMenu(header());
 	auto *showHeaders = menu->addMenu(Icon::get("visibility"), "Columns to show");

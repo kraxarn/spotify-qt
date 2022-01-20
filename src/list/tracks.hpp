@@ -59,21 +59,21 @@ namespace List
 		void resizeEvent(QResizeEvent *event) override;
 
 	private:
-		void menu(const QPoint &pos);
-		void clicked(QTreeWidgetItem *item, int column);
-		void headerMenu(const QPoint &pos);
-		void resizeHeaders(const QSize &newSize);
-		auto getCurrent() -> const spt::Current &;
-		auto getAddedText(const std::string &date) const -> QString;
-
-		// lib
 		lib::settings &settings;
 		lib::cache &cache;
 		lib::spt::api &spotify;
-		// std
+
 		std::unordered_map<std::string, QTreeWidgetItem *> trackItems;
-		// qt
+
 		QTreeWidgetItem *playingTrackItem = nullptr;
 		QIcon emptyIcon;
+
+		auto getCurrent() -> const spt::Current &;
+		auto getAddedText(const std::string &date) const -> QString;
+		void resizeHeaders(const QSize &newSize);
+
+		void onMenu(const QPoint &pos);
+		void onClicked(QTreeWidgetItem *item, int column);
+		void onHeaderMenu(const QPoint &pos);
 	};
 }
