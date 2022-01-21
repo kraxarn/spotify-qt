@@ -54,6 +54,8 @@ endif ()
 # Create main executable
 if (ANDROID)
 	add_library(spotify-qt SHARED ${SRC_FILES} res.qrc)
+elseif (MSVC)
+	add_executable(spotify-qt WIN32 ${SRC_FILES} ${LIB_SRC} res.qrc)
 else ()
 	add_executable(spotify-qt ${SRC_FILES} ${LIB_SRC} res.qrc)
 endif ()
@@ -90,7 +92,7 @@ if (UNIX)
 endif ()
 
 # Don't show console window under windows
-if (WIN32)
+if (WIN32 AND NOT MSVC)
 	target_link_options(spotify-qt PRIVATE -mwindows)
 endif ()
 
@@ -114,7 +116,7 @@ endif ()
 
 # Disable "secure" warnings on MSVC
 if (MSVC)
-	target_compile_definitions(spotify-qt PRIVATE _CRT_SECURE_NO_WARNINGS)
+	target_compile_definitions(spotify-qt PUBLIC _CRT_SECURE_NO_WARNINGS)
 endif ()
 
 # D-Bus support is optional
