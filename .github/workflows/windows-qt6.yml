@@ -1,6 +1,6 @@
 name: Windows (Qt 6, x64)
 
-on: workflow_dispatch
+on: [ push, pull_request ]
 
 env:
   BUILD_TYPE: Release
