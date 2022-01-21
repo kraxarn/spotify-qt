@@ -37,7 +37,7 @@ jobs:
         run: cmake --build . --config ${{env.BUILD_TYPE}}
 
       - name: Package
-        run: windeployqt ${{runner.workspace}}/spotify-qt/${{env.BUILD_TYPE}}/spotify-qt.exe
+        run: windeployqt --no-opengl-sw ${{runner.workspace}}/spotify-qt/${{env.BUILD_TYPE}}/spotify-qt.exe
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
