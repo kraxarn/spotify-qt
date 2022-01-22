@@ -58,6 +58,17 @@ namespace lib
 		static auto count(unsigned int count) -> std::string;
 
 	private:
+		/** Milliseconds in a second */
+		static constexpr int msInSec = 1000;
+		/** Seconds in a minute */
+		static constexpr int secsInMin = 60;
+		/** Kilo, 1,000 */
+		static constexpr int kilo = 1000;
+		/** Mega, 1,000,000 */
+		static constexpr int mega = 1000000;
+		/** Giga, 1,000,000,000 */
+		static constexpr int giga = 1000000000;
+
 		/**
 		 * Format string into another string
 		 * @param fmt String with {} to replace
@@ -69,8 +80,11 @@ namespace lib
 		{
 			auto str = std::string(fmt);
 			auto index = str.find("{}");
+
 			if (index == std::string::npos)
+			{
 				return str;
+			}
 
 			return str.replace(index, 2, arg);
 		}

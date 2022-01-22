@@ -2,30 +2,30 @@
 
 auto lib::fmt::time(int ms) -> std::string
 {
-	auto seconds = ms / 1000;
+	auto seconds = ms / msInSec;
 
-	auto m = seconds / 60;
-	auto s = seconds % 60;
+	auto m = seconds / secsInMin;
+	auto s = seconds % secsInMin;
 
 	return format("{}:{}", m,
-		format("{}{}", s < 10 ? "0" : "", s % 60));
+		format("{}{}", s < 10 ? "0" : "", s % secsInMin));
 }
 
 auto lib::fmt::size(unsigned int bytes) -> std::string
 {
-	if (bytes >= 1000000000)
+	if (bytes >= giga)
 	{
-		return format("{} GB", bytes / 1000000000);
+		return format("{} GB", bytes / giga);
 	}
 
-	if (bytes >= 1000000)
+	if (bytes >= mega)
 	{
-		return format("{} MB", bytes / 1000000);
+		return format("{} MB", bytes / mega);
 	}
 
-	if (bytes >= 1000)
+	if (bytes >= kilo)
 	{
-		return format("{} kB", bytes / 1000);
+		return format("{} kB", bytes / kilo);
 	}
 
 	return format("{} B", bytes);
@@ -33,14 +33,14 @@ auto lib::fmt::size(unsigned int bytes) -> std::string
 
 auto lib::fmt::count(unsigned int count) -> std::string
 {
-	if (count >= 1000000)
+	if (count >= mega)
 	{
-		return format("{}M", count / 1000000);
+		return format("{}M", count / mega);
 	}
 
-	if (count >= 1000)
+	if (count >= kilo)
 	{
-		return format("{}k", count / 1000);
+		return format("{}k", count / kilo);
 	}
 
 	return format("{}", count);
