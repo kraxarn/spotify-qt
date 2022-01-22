@@ -1,8 +1,6 @@
 #include "thirdparty/doctest.h"
 #include "lib/format.hpp"
 
-#include <limits>
-
 TEST_CASE("fmt::format")
 {
 	SUBCASE("std::string")
@@ -25,13 +23,15 @@ TEST_CASE("fmt::format")
 
 	SUBCASE("to_string")
 	{
-		CHECK_EQ(lib::fmt::format("int: {}", (int)2147483647),
+		CHECK_EQ(lib::fmt::format("int: {}", (int) 2147483647),
 			"int: 2147483647");
-		CHECK_EQ(lib::fmt::format("long long: {}", (long long)9223372036854775807),
+		CHECK_EQ(lib::fmt::format("long long: {}", (long long) 9223372036854775807),
 			"long long: 9223372036854775807");
 
-		CHECK_NOTHROW(lib::fmt::format("float: {}", std::numeric_limits<float>::max()));
-		CHECK_NOTHROW(lib::fmt::format("double: {}", std::numeric_limits<double>::max()));
+		CHECK_EQ(lib::fmt::format("float: {}", 0.123456F),
+			"float: 0.123456");
+		CHECK_EQ(lib::fmt::format("double: {}", 0.123456),
+			"double: 0.123456");
 
 		CHECK_EQ(lib::fmt::format("json: {}", nlohmann::json{
 			{"a", 1},
