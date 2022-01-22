@@ -114,11 +114,6 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 	target_compile_options(spotify-qt PRIVATE -Wall -Wextra)
 endif ()
 
-# Disable "secure" warnings on MSVC
-if (MSVC)
-	target_compile_definitions(spotify-qt PUBLIC _CRT_SECURE_NO_WARNINGS)
-endif ()
-
 # D-Bus support is optional
 if (Qt5DBus_FOUND)
 	target_compile_definitions(spotify-qt PRIVATE USE_DBUS)

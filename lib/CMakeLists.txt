@@ -37,6 +37,11 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 	target_compile_options(spotify-qt-lib PRIVATE -Wall -Wextra)
 endif ()
 
+# Disable "secure" warnings on MSVC
+if (MSVC)
+	target_compile_definitions(spotify-qt PRIVATE _CRT_SECURE_NO_WARNINGS)
+endif ()
+
 # Link optional libraries
 if (LIB_QT_LIBRARIES)
 	target_link_libraries(spotify-qt-lib PRIVATE ${LIB_QT_LIBRARIES})
