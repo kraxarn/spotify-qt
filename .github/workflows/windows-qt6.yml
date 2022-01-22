@@ -36,6 +36,9 @@ jobs:
       - name: Build
         run: cmake --build . --config ${{env.BUILD_TYPE}}
 
+      - name: Test
+        run: ${{runner.workspace}}/spotify-qt/lib/test/${{env.BUILD_TYPE}}/spotify-qt-lib-test.exe
+
       - name: Package
         run: windeployqt --no-opengl-sw ${{runner.workspace}}/spotify-qt/${{env.BUILD_TYPE}}/spotify-qt.exe
 
