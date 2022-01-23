@@ -7,7 +7,7 @@
 
 namespace lib
 {
-	class fmt2
+	class fmt
 	{
 	public:
 		template<typename Format, typename Arg, typename... Args>
