@@ -3,6 +3,8 @@
 #include "lib/enum/artistprofile.hpp"
 #include "lib/format.hpp"
 
+#include "thirdparty/json.hpp"
+
 #include <string>
 
 namespace lib

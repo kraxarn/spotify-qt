@@ -1,10 +1,5 @@
 #pragma once
 
-#include "enum/logtype.hpp"
-
-#include "thirdparty/json.hpp"
-#include "thirdparty/filesystem.hpp"
-
 #include <string>
 
 namespace lib

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "lib/enum/logtype.hpp"
-#include "lib/format.hpp"
+#include "lib/fmt.hpp"
 #include "lib/logmessage.hpp"
 #include "lib/developermode.hpp"
 

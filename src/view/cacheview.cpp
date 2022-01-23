@@ -1,4 +1,5 @@
-#include "cacheview.hpp"
+#include "view/cacheview.hpp"
+#include "lib/format.hpp"
 
 CacheView::CacheView(const lib::paths &paths, QWidget *parent)
 	: QTreeWidget(parent),
@@ -106,7 +107,7 @@ void CacheView::reload()
 
 		item->setData(0, 0x100, dir.absoluteFilePath());
 		item->setText(1, QString::number(count));
-		item->setText(2, QString::fromStdString(lib::fmt::size(size)));
+		item->setText(2, QString::fromStdString(lib::format::size(size)));
 	}
 
 	header()->resizeSections(QHeaderView::ResizeToContents);

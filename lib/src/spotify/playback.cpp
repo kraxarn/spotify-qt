@@ -1,4 +1,5 @@
 #include "lib/spotify/playback.hpp"
+#include "lib/fmt.hpp"
 
 void lib::spt::from_json(const nlohmann::json &j, playback &p)
 {

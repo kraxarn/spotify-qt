@@ -185,8 +185,8 @@ void MainToolBar::setPlaying(bool playing)
 void MainToolBar::setProgress(int current, int duration)
 {
 	position->setText(QString("%1/%2")
-		.arg(QString::fromStdString(lib::fmt::time(current)),
-			QString::fromStdString(lib::fmt::time(duration))));
+		.arg(QString::fromStdString(lib::format::time(current)),
+			QString::fromStdString(lib::format::time(duration))));
 
 	progress->setValue(current);
 	progress->setMaximum(duration);

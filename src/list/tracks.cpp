@@ -1,4 +1,4 @@
-#include "tracks.hpp"
+#include "list/tracks.hpp"
 #include "mainwindow.hpp"
 
 List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
@@ -280,7 +280,7 @@ void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
 			QString::fromStdString(track.name),
 			QString::fromStdString(lib::spt::entity::combine_names(track.artists)),
 			QString::fromStdString(track.album.name),
-			QString::fromStdString(lib::fmt::time(track.duration)),
+			QString::fromStdString(lib::format::time(track.duration)),
 			getAddedText(added),
 		}, track, emptyIcon, index);
 

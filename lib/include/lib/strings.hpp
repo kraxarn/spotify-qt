@@ -1,7 +1,5 @@
 #pragma once
 
-#include "lib/format.hpp"
-
 #include <iterator>
 #include <sstream>
 #include <string>

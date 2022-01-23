@@ -56,7 +56,7 @@ void Artist::PlayButton::setArtist(const lib::spt::artist &loadedArtist)
 	popularity->setText(QString("%1% popularity").arg(artist.popularity));
 
 	auto followers = lib::fmt::format("Follow ({} follower{})",
-		lib::fmt::count(artist.followers),
+		lib::format::count(artist.followers),
 		artist.followers == 1 ? "" : "s");
 	follow->setText(QString::fromStdString(followers));
 
