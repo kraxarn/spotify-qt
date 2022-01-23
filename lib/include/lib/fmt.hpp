@@ -19,29 +19,46 @@ namespace lib
 		}
 
 	private:
+		/**
+		 * Format with no arguments
+		 */
 		static void vformat(const std::string &str, std::stringstream &stream, size_t &index)
 		{
+			stream << str.substr(index);
 		}
 
+		/**
+		 * Format with multiple arguments
+		 */
 		template<typename Arg, typename... Args>
 		static void vformat(const std::string &str, std::stringstream &stream, size_t &index,
 			const Arg &arg, Args &&... args)
 		{
-			collect(str, stream, index, arg);
+			replace(str, stream, index, arg);
 			vformat(str, stream, index, args...);
 		}
 
+		/**
+		 * Format with single argument
+		 */
 		template<typename Arg>
-		static void collect(const std::string &str, std::stringstream &stream,
+		static void replace(const std::string &str, std::stringstream &stream,
 			size_t &index, const Arg &arg)
 		{
 			const auto next = str.find("{}", index);
+
+			if (next == std::string::npos)
+			{
+				stream << str.substr(index);
+				index = str.size();
+				return;
+			}
 
 			stream
 				<< str.substr(index, next - index)
 				<< arg;
 
-			index += next + 2;
+			index = next + 2;
 		}
 	};
 }
