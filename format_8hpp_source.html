@@ -73,79 +73,31 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;enum/logtype.hpp&quot;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;thirdparty/json.hpp&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;thirdparty/filesystem.hpp&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span>lib</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classlib_1_1fmt.html">   15</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classlib_1_1fmt.html">fmt</a></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format&gt;</div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classlib_1_1fmt.html#aeddcd7b2020dc3deaee006f3a069a4bd">   24</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1fmt.html#aeddcd7b2020dc3deaee006f3a069a4bd">format</a>(<span class="keyword">const</span> Format &amp;<a class="code" href="classlib_1_1fmt.html">fmt</a>) -&gt; std::string</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        {</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classlib_1_1fmt.html">fmt</a>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        }</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format, <span class="keyword">typename</span> Arg, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classlib_1_1fmt.html#a30e61cc95969570a550f1536ea0244c8">   37</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1fmt.html#a30e61cc95969570a550f1536ea0244c8">format</a>(<span class="keyword">const</span> Format &amp;<a class="code" href="classlib_1_1fmt.html">fmt</a>, <span class="keyword">const</span> Arg &amp;arg, Args &amp;&amp;... args) -&gt; std::string</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        {</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classlib_1_1fmt.html#aeddcd7b2020dc3deaee006f3a069a4bd">format</a>(collect(<a class="code" href="classlib_1_1fmt.html">fmt</a>, arg), args...);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        }</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="classlib_1_1fmt.html#a9f3d7b84905ab170ea3ea2db914751e2">   46</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1fmt.html#a9f3d7b84905ab170ea3ea2db914751e2">time</a>(<span class="keywordtype">int</span> ms) -&gt; std::string;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classlib_1_1fmt.html#ad40282de6108d7b9ffa86d2ef05f19a9">   52</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1fmt.html#ad40282de6108d7b9ffa86d2ef05f19a9">size</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> bytes) -&gt; std::string;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="classlib_1_1fmt.html#a64de843df1a553d391314623db80b3c2">   58</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1fmt.html#a64de843df1a553d391314623db80b3c2">count</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classlib_1_1fmt.html#a64de843df1a553d391314623db80b3c2">count</a>) -&gt; std::string;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format&gt;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> collect(<span class="keyword">const</span> Format &amp;<a class="code" href="classlib_1_1fmt.html">fmt</a>, <span class="keyword">const</span> std::string &amp;arg) -&gt; std::string</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        {</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keyword">auto</span> str = std::string(<a class="code" href="classlib_1_1fmt.html">fmt</a>);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <span class="keyword">auto</span> index = str.find(<span class="stringliteral">&quot;{}&quot;</span>);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <span class="keywordflow">if</span> (index == std::string::npos)</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                <span class="keywordflow">return</span> str;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            <span class="keywordflow">return</span> str.replace(index, 2, arg);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        }</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format, <span class="keyword">typename</span> Arg&gt;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> collect(<span class="keyword">const</span> Format &amp;<a class="code" href="classlib_1_1fmt.html">fmt</a>, <span class="keyword">const</span> Arg &amp;arg) -&gt; std::string</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <span class="keywordflow">return</span> collect(<a class="code" href="classlib_1_1fmt.html">fmt</a>, std::to_string(arg));</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format&gt;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> collect(<span class="keyword">const</span> Format &amp;fmt, <span class="keyword">const</span> <span class="keywordtype">char</span> *arg) -&gt; std::string</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        {</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <span class="keywordflow">return</span> collect(fmt, std::string(arg));</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        }</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format&gt;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> collect(<span class="keyword">const</span> Format &amp;fmt, <span class="keywordtype">bool</span> arg) -&gt; std::string</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        {</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            <span class="keywordflow">return</span> collect(fmt, arg ? <span class="stringliteral">&quot;true&quot;</span> : <span class="stringliteral">&quot;false&quot;</span>);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        }</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format&gt;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> collect(<span class="keyword">const</span> Format &amp;fmt, <span class="keyword">const</span> nlohmann::json &amp;arg) -&gt; std::string</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        {</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            <span class="keywordflow">return</span> collect(fmt, arg.dump());</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        }</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    };</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;}</div>
-<div class="ttc" id="aclasslib_1_1fmt_html"><div class="ttname"><a href="classlib_1_1fmt.html">lib::fmt</a></div><div class="ttdef"><b>Definition:</b> format.hpp:16</div></div>
-<div class="ttc" id="aclasslib_1_1fmt_html_a30e61cc95969570a550f1536ea0244c8"><div class="ttname"><a href="classlib_1_1fmt.html#a30e61cc95969570a550f1536ea0244c8">lib::fmt::format</a></div><div class="ttdeci">static auto format(const Format &amp;fmt, const Arg &amp;arg, Args &amp;&amp;... args) -&gt; std::string</div><div class="ttdef"><b>Definition:</b> format.hpp:37</div></div>
-<div class="ttc" id="aclasslib_1_1fmt_html_a64de843df1a553d391314623db80b3c2"><div class="ttname"><a href="classlib_1_1fmt.html#a64de843df1a553d391314623db80b3c2">lib::fmt::count</a></div><div class="ttdeci">static auto count(unsigned int count) -&gt; std::string</div></div>
-<div class="ttc" id="aclasslib_1_1fmt_html_a9f3d7b84905ab170ea3ea2db914751e2"><div class="ttname"><a href="classlib_1_1fmt.html#a9f3d7b84905ab170ea3ea2db914751e2">lib::fmt::time</a></div><div class="ttdeci">static auto time(int ms) -&gt; std::string</div></div>
-<div class="ttc" id="aclasslib_1_1fmt_html_ad40282de6108d7b9ffa86d2ef05f19a9"><div class="ttname"><a href="classlib_1_1fmt.html#ad40282de6108d7b9ffa86d2ef05f19a9">lib::fmt::size</a></div><div class="ttdeci">static auto size(unsigned int bytes) -&gt; std::string</div></div>
-<div class="ttc" id="aclasslib_1_1fmt_html_aeddcd7b2020dc3deaee006f3a069a4bd"><div class="ttname"><a href="classlib_1_1fmt.html#aeddcd7b2020dc3deaee006f3a069a4bd">lib::fmt::format</a></div><div class="ttdeci">static auto format(const Format &amp;fmt) -&gt; std::string</div><div class="ttdef"><b>Definition:</b> format.hpp:24</div></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>lib</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;{</div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classlib_1_1format.html">   10</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classlib_1_1format.html">format</a></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    {</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classlib_1_1format.html#aee2feab1a2062726968dcd5b0566a578">   17</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1format.html#aee2feab1a2062726968dcd5b0566a578">time</a>(<span class="keywordtype">int</span> milliseconds) -&gt; std::string;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classlib_1_1format.html#a5c2623a303947450960328e1adeb7397">   23</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1format.html#a5c2623a303947450960328e1adeb7397">size</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> bytes) -&gt; std::string;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classlib_1_1format.html#a02211c25ce4df8b92ae9603d80323d64">   29</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="classlib_1_1format.html#a02211c25ce4df8b92ae9603d80323d64">count</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classlib_1_1format.html#a02211c25ce4df8b92ae9603d80323d64">count</a>) -&gt; std::string;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> msInSec = 1000;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> secsInMin = 60;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> kilo = 1000;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> mega = 1000000;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> giga = 1000000000;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    };</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}</div>
+<div class="ttc" id="aclasslib_1_1format_html"><div class="ttname"><a href="classlib_1_1format.html">lib::format</a></div><div class="ttdef"><b>Definition:</b> format.hpp:11</div></div>
+<div class="ttc" id="aclasslib_1_1format_html_a02211c25ce4df8b92ae9603d80323d64"><div class="ttname"><a href="classlib_1_1format.html#a02211c25ce4df8b92ae9603d80323d64">lib::format::count</a></div><div class="ttdeci">static auto count(unsigned int count) -&gt; std::string</div></div>
+<div class="ttc" id="aclasslib_1_1format_html_a5c2623a303947450960328e1adeb7397"><div class="ttname"><a href="classlib_1_1format.html#a5c2623a303947450960328e1adeb7397">lib::format::size</a></div><div class="ttdeci">static auto size(unsigned int bytes) -&gt; std::string</div></div>
+<div class="ttc" id="aclasslib_1_1format_html_aee2feab1a2062726968dcd5b0566a578"><div class="ttname"><a href="classlib_1_1format.html#aee2feab1a2062726968dcd5b0566a578">lib::format::time</a></div><div class="ttdeci">static auto time(int milliseconds) -&gt; std::string</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

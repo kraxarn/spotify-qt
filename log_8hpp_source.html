@@ -74,7 +74,7 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;lib/enum/logtype.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;lib/format.hpp&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;lib/fmt.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;lib/logmessage.hpp&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;lib/developermode.hpp&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
@@ -89,7 +89,7 @@ $(function() {
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format, <span class="keyword">typename</span> Arg, <span class="keyword">typename</span>... Args&gt;</div>
 <div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classlib_1_1log.html#afe551f6a31aee9f7cb1a14b40e50daa4">   23</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1log.html#afe551f6a31aee9f7cb1a14b40e50daa4">info</a>(<span class="keyword">const</span> Format &amp;<a class="code" href="classlib_1_1fmt.html">fmt</a>, <span class="keyword">const</span> Arg &amp;arg, Args &amp;&amp;... args)</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        {</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            <a class="code" href="classlib_1_1log.html#afe551f6a31aee9f7cb1a14b40e50daa4">info</a>(<a class="code" href="classlib_1_1fmt.html#aeddcd7b2020dc3deaee006f3a069a4bd">fmt::format</a>(<a class="code" href="classlib_1_1fmt.html">fmt</a>, arg, args...));</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            <a class="code" href="classlib_1_1log.html#afe551f6a31aee9f7cb1a14b40e50daa4">info</a>(fmt::format(<a class="code" href="classlib_1_1fmt.html">fmt</a>, arg, args...));</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        }</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format&gt;</div>
@@ -101,7 +101,7 @@ $(function() {
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format, <span class="keyword">typename</span> Arg, <span class="keyword">typename</span>... Args&gt;</div>
 <div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classlib_1_1log.html#ad6c8f913d62cc4d89bbfa27a3369a89b">   41</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1log.html#ad6c8f913d62cc4d89bbfa27a3369a89b">warn</a>(<span class="keyword">const</span> Format &amp;<a class="code" href="classlib_1_1fmt.html">fmt</a>, <span class="keyword">const</span> Arg &amp;arg, Args &amp;&amp;... args)</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        {</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <a class="code" href="classlib_1_1log.html#ad6c8f913d62cc4d89bbfa27a3369a89b">warn</a>(<a class="code" href="classlib_1_1fmt.html#aeddcd7b2020dc3deaee006f3a069a4bd">fmt::format</a>(<a class="code" href="classlib_1_1fmt.html">fmt</a>, arg, args...));</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <a class="code" href="classlib_1_1log.html#ad6c8f913d62cc4d89bbfa27a3369a89b">warn</a>(fmt::format(<a class="code" href="classlib_1_1fmt.html">fmt</a>, arg, args...));</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        }</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format&gt;</div>
@@ -116,7 +116,7 @@ $(function() {
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format, <span class="keyword">typename</span> Arg, <span class="keyword">typename</span>... Args&gt;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> error(<span class="keyword">const</span> Format &amp;<a class="code" href="classlib_1_1fmt.html">fmt</a>, <span class="keyword">const</span> Arg &amp;arg, Args &amp;&amp;... args)</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            error(<a class="code" href="classlib_1_1fmt.html#aeddcd7b2020dc3deaee006f3a069a4bd">fmt::format</a>(<a class="code" href="classlib_1_1fmt.html">fmt</a>, arg, args...));</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            error(fmt::format(<a class="code" href="classlib_1_1fmt.html">fmt</a>, arg, args...));</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        }</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format&gt;</div>
@@ -128,7 +128,7 @@ $(function() {
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format, <span class="keyword">typename</span> Arg, <span class="keyword">typename</span>... Args&gt;</div>
 <div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classlib_1_1log.html#a1999e6aa2a97ce318f453e91eeeac081">   78</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlib_1_1log.html#a1999e6aa2a97ce318f453e91eeeac081">debug</a>(<span class="keyword">const</span> Format &amp;<a class="code" href="classlib_1_1fmt.html">fmt</a>, <span class="keyword">const</span> Arg &amp;arg, Args &amp;&amp;... args)</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        {</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <a class="code" href="classlib_1_1log.html#a1999e6aa2a97ce318f453e91eeeac081">debug</a>(<a class="code" href="classlib_1_1fmt.html#aeddcd7b2020dc3deaee006f3a069a4bd">fmt::format</a>(<a class="code" href="classlib_1_1fmt.html">fmt</a>, arg, args...));</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <a class="code" href="classlib_1_1log.html#a1999e6aa2a97ce318f453e91eeeac081">debug</a>(fmt::format(<a class="code" href="classlib_1_1fmt.html">fmt</a>, arg, args...));</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        }</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Format&gt;</div>
@@ -159,8 +159,7 @@ $(function() {
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    };</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;}</div>
 <div class="ttc" id="aclasslib_1_1developer__mode_html_a4e7ebe8ced9b779470c4b03ae1f7192d"><div class="ttname"><a href="classlib_1_1developer__mode.html#a4e7ebe8ced9b779470c4b03ae1f7192d">lib::developer_mode::enabled</a></div><div class="ttdeci">static bool enabled</div><div class="ttdef"><b>Definition:</b> developermode.hpp:17</div></div>
-<div class="ttc" id="aclasslib_1_1fmt_html"><div class="ttname"><a href="classlib_1_1fmt.html">lib::fmt</a></div><div class="ttdef"><b>Definition:</b> format.hpp:16</div></div>
-<div class="ttc" id="aclasslib_1_1fmt_html_aeddcd7b2020dc3deaee006f3a069a4bd"><div class="ttname"><a href="classlib_1_1fmt.html#aeddcd7b2020dc3deaee006f3a069a4bd">lib::fmt::format</a></div><div class="ttdeci">static auto format(const Format &amp;fmt) -&gt; std::string</div><div class="ttdef"><b>Definition:</b> format.hpp:24</div></div>
+<div class="ttc" id="aclasslib_1_1fmt_html"><div class="ttname"><a href="classlib_1_1fmt.html">lib::fmt</a></div><div class="ttdef"><b>Definition:</b> fmt.hpp:11</div></div>
 <div class="ttc" id="aclasslib_1_1log_html"><div class="ttname"><a href="classlib_1_1log.html">lib::log</a></div><div class="ttdef"><b>Definition:</b> log.hpp:17</div></div>
 <div class="ttc" id="aclasslib_1_1log_html_a1999e6aa2a97ce318f453e91eeeac081"><div class="ttname"><a href="classlib_1_1log.html#a1999e6aa2a97ce318f453e91eeeac081">lib::log::debug</a></div><div class="ttdeci">static void debug(const Format &amp;fmt, const Arg &amp;arg, Args &amp;&amp;... args)</div><div class="ttdef"><b>Definition:</b> log.hpp:78</div></div>
 <div class="ttc" id="aclasslib_1_1log_html_a3b352feba3bddb212d53a40db6e69b75"><div class="ttname"><a href="classlib_1_1log.html#a3b352feba3bddb212d53a40db6e69b75">lib::log::warn</a></div><div class="ttdeci">static void warn(const Format &amp;fmt)</div><div class="ttdef"><b>Definition:</b> log.hpp:50</div></div>

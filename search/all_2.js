@@ -13,7 +13,7 @@ var searchData=
   ['contributions_32',['contributions',['../classlib_1_1gh_1_1contributor.html#afb6d312970c05ed73ae6903a405e14a7',1,'lib::gh::contributor']]],
   ['contributor_33',['contributor',['../classlib_1_1gh_1_1contributor.html',1,'lib::gh']]],
   ['contributors_34',['contributors',['../classlib_1_1gh_1_1api.html#a42146a538391103bf5e850232a961ac2',1,'lib::gh::api']]],
-  ['count_35',['count',['../classlib_1_1fmt.html#a64de843df1a553d391314623db80b3c2',1,'lib::fmt']]],
+  ['count_35',['count',['../classlib_1_1format.html#a02211c25ce4df8b92ae9603d80323d64',1,'lib::format']]],
   ['crash_5fhandler_36',['crash_handler',['../classlib_1_1crash__handler.html',1,'lib']]],
   ['crash_5finfo_37',['crash_info',['../classlib_1_1crash__info.html',1,'lib']]],
   ['create_5fplaylist_38',['create_playlist',['../classlib_1_1spt_1_1api.html#ae6d859577d0d4fd809d3dfc3a3045805',1,'lib::spt::api']]],
