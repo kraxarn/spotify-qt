@@ -1,5 +1,7 @@
 #pragma once
 
+#include "thirdparty/json.hpp"
+
 #include <string>
 #include <sstream>
 
@@ -56,9 +58,34 @@ namespace lib
 
 			stream
 				<< str.substr(index, next - index)
-				<< arg;
+				<< to_string(arg);
 
 			index = next + 2;
+		}
+
+		/**
+		 * Generic formatter
+		 */
+		template<typename Arg>
+		static auto to_string(const Arg &arg) -> const Arg &
+		{
+			return arg;
+		}
+
+		/**
+		 * Format bool as "true" or "false"
+		 */
+		static auto to_string(const bool arg) -> const char *
+		{
+			return arg ? "true" : "false";
+		}
+
+		/**
+		 * Format json by dumping content
+		 */
+		static auto to_string(const nlohmann::json &json) -> std::string
+		{
+			return json.dump();
 		}
 	};
 }
