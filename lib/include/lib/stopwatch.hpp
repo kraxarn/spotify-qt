@@ -19,7 +19,7 @@ namespace lib
 		 * Construct a new stopwatch
 		 * @note Doesn't start it
 		 */
-		stopwatch() = default;
+		stopwatch();
 
 		/**
 		 * Start stopwatch
