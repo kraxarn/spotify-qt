@@ -29,9 +29,6 @@ public:
 	static void getAlbum(const std::string &url, const lib::http_client &httpClient,
 		lib::cache &cache, lib::callback<QPixmap> &callback);
 
-	static void getAlbum(const std::string &url, const lib::http_client &httpClient,
-		lib::cache &cache, lib::callback<std::string> &callback);
-
 private:
 	Http() = default;
 

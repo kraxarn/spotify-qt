@@ -48,26 +48,6 @@ void Http::getAlbum(const std::string &url, const lib::http_client &httpClient,
 	getAlbum(url, httpClient, cache, true, callback);
 }
 
-void Http::getAlbum(const std::string &url, const lib::http_client &httpClient,
-	lib::cache &cache, lib::callback<std::string> &callback)
-{
-	httpClient.get(url, lib::headers(),
-		[&cache, url, callback](const std::string &str)
-		{
-			auto data = QByteArray::fromStdString(str);
-			if (!lib::image::is_jpeg(std::vector<unsigned char>(data.begin(), data.end())))
-			{
-				lib::log::warn("Album art from \"{}\" is not a valid JPEG image",
-					url);
-				return;
-			}
-			cache.set_album_image(url,
-				std::vector<unsigned char>(data.begin(), data.end()));
-
-			callback(data.toStdString());
-		});
-}
-
 auto Http::defaultIcon() -> QPixmap
 {
 	constexpr int iconSize = 64;

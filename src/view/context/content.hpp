@@ -31,11 +31,10 @@ namespace Context
 		void setCurrentlyPlaying(const lib::spt::track &track);
 
 		void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage);
-		void setAlbumJpg(const lib::spt::entity &albumEntity, const std::string &data);
 
 	private:
 		/** Width and height of album */
-		static constexpr int albumSize = 300;
+		static constexpr int albumSize = 64;
 
 		lib::spt::api &spotify;
 		spt::Current &current;
