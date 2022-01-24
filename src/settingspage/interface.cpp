@@ -53,6 +53,12 @@ auto SettingsPage::Interface::general() -> QWidget *
 	relativeAdded->setChecked(settings.general.relative_added);
 	layout->addWidget(relativeAdded);
 
+	// Expandable album cover
+	expandAlbumCover = new QCheckBox("Expandable Album Cover", this);
+	expandAlbumCover->setToolTip("If the currently playing album cover will be an icon or a dynamic size.");
+	expandAlbumCover->setChecked(settings.general.expand_album_cover);
+	layout->addWidget(expandAlbumCover);
+
 	return Widget::layoutToWidget(layout, this);
 }
 
@@ -308,6 +314,11 @@ void SettingsPage::Interface::saveTrayIcon()
 	if (notifyTrackChange != nullptr)
 	{
 		settings.general.notify_track_change = notifyTrackChange->isChecked();
+	}
+
+	if (expandAlbumCover != nullptr)
+	{
+		settings.general.expand_album_cover = expandAlbumCover->isChecked();
 	}
 
 	// Reload if needed

@@ -129,6 +129,11 @@ namespace lib
 			 * Show a notification on track change
 			 */
 			bool notify_track_change = false;
+
+			/**
+			 * Album art will dynamically expand or else remain size of icon
+			 */
+			bool expand_album_cover = false;
 		};
 
 		void to_json(nlohmann::json &j, const general &g);

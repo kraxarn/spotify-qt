@@ -25,6 +25,7 @@ void lib::setting::to_json(nlohmann::json &j, const general &g)
 		{"tray_album_art", g.tray_album_art},
 		{"tray_icon", g.tray_icon},
 		{"tray_light_icon", g.tray_light_icon},
+		{"expand_album_cover ", g.expand_album_cover},
 	};
 }
 
@@ -57,4 +58,5 @@ void lib::setting::from_json(const nlohmann::json &j, general &g)
 	lib::json::get(j, "tray_album_art", g.tray_album_art);
 	lib::json::get(j, "tray_icon", g.tray_icon);
 	lib::json::get(j, "tray_light_icon", g.tray_light_icon);
+	lib::json::get(j, "expand_album_cover ", g.expand_album_cover);
 }
