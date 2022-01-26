@@ -42,7 +42,7 @@ TEST_CASE("fmt::format")
 
 	SUBCASE("float")
 	{
-		constexpr float val = 0.123456;
+		constexpr float val = 0.123456F;
 		CHECK_EQ(lib::fmt::format("float: {}", val), "float: 0.123456");
 	}
 
