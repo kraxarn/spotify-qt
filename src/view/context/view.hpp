@@ -1,7 +1,7 @@
 #pragma once
 
 #include "view/context/title.hpp"
-#include "view/context/content.hpp"
+#include "view/context/horizcontent.hpp"
 
 #include <QDockWidget>
 
@@ -25,6 +25,6 @@ namespace Context
 
 	private:
 		Title *title = nullptr;
-		Content *content = nullptr;
+		HorizContent *content = nullptr;
 	};
 }
