@@ -9,11 +9,13 @@
 #include "util/icon.hpp"
 #include "util/image.hpp"
 #include "view/context/nowplaying.hpp"
+#include "view/context/albumcover.hpp"
 
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMenu>
+#include <QResizeEvent>
 
 namespace Context
 {
@@ -34,7 +36,7 @@ namespace Context
 
 	private:
 		/** Width and height of album */
-		static constexpr int albumSize = 64;
+		static constexpr int albumSize = 300;
 
 		lib::spt::api &spotify;
 		spt::Current &current;
@@ -42,7 +44,7 @@ namespace Context
 
 		lib::spt::track currentlyPlaying;
 
-		QLabel *album = nullptr;
+		AlbumCover *album = nullptr;
 		NowPlaying *nowPlaying = nullptr;
 
 		void onSongMenu(const QPoint &pos);

@@ -7,12 +7,11 @@ Context::HorizContent::HorizContent(lib::spt::api &spotify, spt::Current &curren
 	current(current),
 	cache(cache)
 {
-	auto *layout = new QVBoxLayout(this);
+	auto *layout = new QBoxLayout(QVBoxLayout::Direction::BottomToTop, this);
 	layout->setSpacing(0);
 	layout->setAlignment(Qt::AlignBottom);
 
-	album = new QLabel(this);
-	album->setFixedSize(albumSize, albumSize);
+	album = new AlbumCover(this);
 
 	layout->addWidget(album);
 	nowPlaying = new Context::NowPlaying(this);
@@ -24,9 +23,6 @@ Context::HorizContent::HorizContent(lib::spt::api &spotify, spt::Current &curren
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QLabel::connect(this, &QWidget::customContextMenuRequested,
 		this, &Context::HorizContent::onSongMenu);
-
-	// Context doesn't make sense to resize vertically
-	setFixedHeight(layout->minimumSize().height());
 }
 
 void Context::HorizContent::onSongMenu(const QPoint &pos)
@@ -59,7 +55,12 @@ void Context::HorizContent::setAlbum(const lib::spt::entity &albumEntity, const 
 {
 	if (album != nullptr)
 	{
-		album->setPixmap(Image::mask(albumImage));
+		// auto scaledPixmap = scaleAlbum(300, albumImage);
+		// auto = albumImage
+		
+		lib::log::info("this is a test");
+		album->setPixmap(albumImage);
+		// album->setPixmap(Image::mask(albumImage));
 		album->setToolTip(QString::fromStdString(albumEntity.name));
 	}
 }
@@ -77,3 +78,40 @@ void Context::HorizContent::setCurrentlyPlaying(const lib::spt::track &track)
 	}
 	currentlyPlaying = track;
 }
+
+// QPixmap Context::HorizContent::scaleAlbum(int width, const QPixmap &albumImage)
+// {
+// 	lib::log::info("scaling");
+// 	// auto pixmap = albumImage.scaled(width, width,
+// 	// 	Qt::KeepAspectRatioByExpanding);
+// 	auto pixmap = albumImage.scaled(width, width, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+// 	const auto adjust = pixmap.height() - width;
+// 	lib::log::info(std::to_string(adjust));
+// 	if (adjust > 0)
+// 	{
+// 		pixmap = pixmap.copy(0, adjust / 2,
+// 			width, width);
+// 	}
+
+// 	return pixmap;
+
+// 	// setFixedHeight(pixmap.height());
+// 	// QLabel::setPixmap(pixmap);
+// }
+
+// void Context::HorizContent::resizeEvent(QResizeEvent *event)
+// {
+// 	// if (album.isNull())
+// 	// {
+// 	// 	QWidget::resizeEvent(event);
+// 	// 	return;
+// 	// }
+// 	lib::log::info("resizing");
+
+// 	const QPixmap* tempPixmap = album->pixmap();
+// 	auto newSize = event->size().width();
+// 	lib::log::info(std::to_string(newSize));
+// 	auto scaledPixmap = scaleAlbum(newSize, *tempPixmap);
+// 	album->setPixmap(scaledPixmap);
+// }
