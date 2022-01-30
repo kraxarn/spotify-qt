@@ -17,7 +17,7 @@ TEST_CASE("track")
 		track1.artists.emplace_back("artist_id", "artist_name");
 
 		lib::spt::image image;
-		image.width = static_cast<int>(lib::image_size::small);
+		image.width = lib::spt::image::size_small;
 		image.height = image.width;
 		image.url = "image_url";
 		track1.images.push_back(image);
