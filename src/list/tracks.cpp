@@ -1,4 +1,4 @@
-#include "tracks.hpp"
+#include "list/tracks.hpp"
 #include "mainwindow.hpp"
 
 List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
@@ -39,20 +39,20 @@ List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache
 
 	// Play tracks on click or enter/special key
 	QTreeWidget::connect(this, &QTreeWidget::itemActivated,
-		this, &List::Tracks::clicked);
+		this, &List::Tracks::onClicked);
 
 	// Song context menu
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested,
-		this, &List::Tracks::menu);
+		this, &List::Tracks::onMenu);
 
 	// Songs header context menu
 	header()->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QLabel::connect(header(), &QWidget::customContextMenuRequested,
-		this, &List::Tracks::headerMenu);
+		this, &List::Tracks::onHeaderMenu);
 }
 
-void List::Tracks::menu(const QPoint &pos)
+void List::Tracks::onMenu(const QPoint &pos)
 {
 	auto *item = itemAt(pos);
 	if (item == nullptr)
@@ -72,7 +72,7 @@ void List::Tracks::menu(const QPoint &pos)
 	songMenu->popup(mapToGlobal(pos));
 }
 
-void List::Tracks::clicked(QTreeWidgetItem *item, int /*column*/)
+void List::Tracks::onClicked(QTreeWidgetItem *item, int /*column*/)
 {
 	if (item->isDisabled())
 	{
@@ -116,7 +116,7 @@ void List::Tracks::clicked(QTreeWidgetItem *item, int /*column*/)
 	}
 }
 
-void List::Tracks::headerMenu(const QPoint &pos)
+void List::Tracks::onHeaderMenu(const QPoint &pos)
 {
 	auto *menu = new QMenu(header());
 	auto *showHeaders = menu->addMenu(Icon::get("visibility"), "Columns to show");
@@ -125,7 +125,6 @@ void List::Tracks::headerMenu(const QPoint &pos)
 		"Title", "Artist", "Album", "Length", "Added"
 	});
 	const auto &headers = this->settings.general.hidden_song_headers;
-	constexpr int titleOffset = 100;
 
 	for (int i = 0; i < headerTitles.size(); i++)
 	{
@@ -140,38 +139,40 @@ void List::Tracks::headerMenu(const QPoint &pos)
 		sortTitle->setData(QVariant(titleOffset + i));
 	}
 
-	QMenu::connect(menu, &QMenu::triggered, [this](QAction *action)
-	{
-		int i = action->data().toInt();
-
-		// Columns to show
-		if (i < titleOffset)
-		{
-			header()->setSectionHidden(i + 1, !action->isChecked());
-			if (action->isChecked())
-			{
-				this->settings.general.hidden_song_headers.erase(i);
-			}
-			else
-			{
-				this->settings.general.hidden_song_headers.emplace(i);
-			}
-			this->settings.save();
-			return;
-		}
-
-		// Sort by
-		i -= titleOffset;
-		if (this->settings.general.song_header_sort_by == i)
-		{
-			i = -1;
-		}
-		header()->setSortIndicator(i + 1, Qt::AscendingOrder);
-		this->settings.general.song_header_sort_by = i;
-		this->settings.save();
-	});
+	QMenu::connect(menu, &QMenu::triggered, this, &List::Tracks::onHeaderMenuTriggered);
 
 	menu->popup(header()->mapToGlobal(pos));
+}
+
+void List::Tracks::onHeaderMenuTriggered(QAction *action)
+{
+	int i = action->data().toInt();
+
+	// Columns to show
+	if (i < titleOffset)
+	{
+		header()->setSectionHidden(i + 1, !action->isChecked());
+		if (action->isChecked())
+		{
+			this->settings.general.hidden_song_headers.erase(i);
+		}
+		else
+		{
+			this->settings.general.hidden_song_headers.emplace(i);
+		}
+		this->settings.save();
+		return;
+	}
+
+	// Sort by
+	i -= titleOffset;
+	if (this->settings.general.song_header_sort_by == i)
+	{
+		i = -1;
+	}
+	header()->setSortIndicator(i + 1, Qt::AscendingOrder);
+	this->settings.general.song_header_sort_by = i;
+	this->settings.save();
 }
 
 void List::Tracks::resizeEvent(QResizeEvent *event)
@@ -279,7 +280,7 @@ void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
 			QString::fromStdString(track.name),
 			QString::fromStdString(lib::spt::entity::combine_names(track.artists)),
 			QString::fromStdString(track.album.name),
-			QString::fromStdString(lib::fmt::time(track.duration)),
+			QString::fromStdString(lib::format::time(track.duration)),
 			getAddedText(added),
 		}, track, emptyIcon, index);
 

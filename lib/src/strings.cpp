@@ -1,4 +1,5 @@
 #include "lib/strings.hpp"
+#include "lib/fmt.hpp"
 
 auto lib::strings::join(const std::vector<std::string> &strings,
 	const char *separator) -> std::string

@@ -2,7 +2,6 @@
 
 #include "lib/datetime.hpp"
 #include "lib/enum/logtype.hpp"
-#include "lib/format.hpp"
 
 namespace lib
 {

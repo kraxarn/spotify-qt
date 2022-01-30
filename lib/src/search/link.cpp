@@ -1,4 +1,5 @@
 #include "lib/search/link.hpp"
+#include "lib/fmt.hpp"
 
 auto lib::ddg::link::url() const -> std::string
 {

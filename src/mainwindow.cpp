@@ -285,7 +285,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 		}
 
 		contextView->setCurrentlyPlaying(currPlaying);
-		setAlbumImage(currPlaying.album, currPlaying.image);
+		setAlbumImage(currPlaying.album, currPlaying.image_small());
 		setWindowTitle(QString::fromStdString(currPlaying.title()));
 		contextView->updateContextIcon();
 
@@ -299,7 +299,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 		if (trayIcon != nullptr
 			&& (settings.general.tray_album_art || settings.general.notify_track_change))
 		{
-			Http::getAlbum(current.playback.item.image, *httpClient, cache, false,
+			Http::getAlbum(current.playback.item.image_small(), *httpClient, cache, false,
 				[this, &currPlaying, trackChange](const QPixmap &image)
 				{
 					if (trayIcon == nullptr)

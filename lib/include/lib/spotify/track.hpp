@@ -2,6 +2,7 @@
 
 #include "lib/format.hpp"
 #include "lib/spotify/entity.hpp"
+#include "lib/spotify/image.hpp"
 
 #include "thirdparty/json.hpp"
 
@@ -14,7 +15,7 @@ namespace lib
 		/**
 		 * A music track
 		 */
-		class track : public entity
+		class track: public entity
 		{
 		public:
 			track() = default;
@@ -50,9 +51,9 @@ namespace lib
 			std::vector<entity> artists;
 
 			/**
-			 * URL to cover of album
+			 * URLs to cover of album
 			 */
-			std::string image;
+			std::vector<lib::spt::image> images;
 
 			/**
 			 * Format track as "{artist} - {name}" or "(no track)"
@@ -65,6 +66,16 @@ namespace lib
 			 * @note Multiple artists are separated using commas
 			 */
 			auto details() const -> std::string;
+
+			/**
+			 * 64x64, or smallest image
+			 */
+			auto image_small() const -> std::string;
+
+			/**
+			 * 300x300, or largest image
+			 */
+			auto image_large() const -> std::string;
 
 			/**
 			 * Has a valid name and artist

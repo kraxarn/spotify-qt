@@ -2,6 +2,8 @@
 
 #include "lib/strings.hpp"
 
+#include <map>
+
 namespace lib
 {
 	/**

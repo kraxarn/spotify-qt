@@ -10,7 +10,7 @@ void lib::spt::to_json(nlohmann::json &j, const track &t)
 		{"album", t.album},
 		{"artists", t.artists},
 		{"name", t.name},
-		{"image", t.image},
+		{"images", t.images},
 		{"duration", t.duration},
 		{"is_local", t.is_local},
 		{"is_playable", t.is_playable},
@@ -28,7 +28,6 @@ void from_cache(const nlohmann::json &j, lib::spt::track &t)
 	j.at("id").get_to(t.id);
 	j.at("name").get_to(t.name);
 	j.at("duration").get_to(t.duration);
-	j.at("image").get_to(t.image);
 	j.at("is_local").get_to(t.is_local);
 	j.at("added_at").get_to(t.added_at);
 	lib::json::get(j, "is_playable", t.is_playable);
@@ -67,6 +66,21 @@ void from_cache(const nlohmann::json &j, lib::spt::track &t)
 		t.artists.push_back(artist);
 	}
 	t.artists.shrink_to_fit();
+
+	if (j.contains("image"))
+	{
+		lib::spt::image image;
+		j.at("image").get_to(image.url);
+		image.height = lib::spt::image::size_small;
+		image.width = image.height;
+
+		t.images.push_back(image);
+	}
+	else if (j.contains("images"))
+	{
+		j.at("images").get_to(t.images);
+	}
+	t.images.shrink_to_fit();
 }
 
 void lib::spt::from_json(const nlohmann::json &j, track &t)
@@ -76,8 +90,8 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 		return;
 	}
 
-	// If json contains image, track is loaded from cache
-	if (j.contains("image"))
+	// Duration in cache is "duration" and "duration_ms" from API
+	if (j.contains("duration"))
 	{
 		from_cache(j, t);
 		return;
@@ -98,6 +112,7 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 	if (track.contains("artists"))
 	{
 		track.at("artists").get_to(t.artists);
+		t.artists.shrink_to_fit();
 	}
 
 	if (track.contains("album"))
@@ -110,7 +125,8 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 			const auto &images = album.at("images");
 			if (images.is_array() && !images.empty())
 			{
-				album.at("images").back().at("url").get_to(t.image);
+				images.get_to(t.images);
+				t.images.shrink_to_fit();
 			}
 		}
 	}
@@ -143,6 +159,38 @@ auto lib::spt::track::details() const -> std::string
 	return is_valid()
 		? lib::fmt::format("{}\n{}", name, entity::combine_names(artists))
 		: std::string("(no track)");
+}
+
+auto lib::spt::track::image_small() const -> std::string
+{
+	for (const auto &image: images)
+	{
+		if (image.width == lib::spt::image::size_small
+			|| image.height == lib::spt::image::size_small)
+		{
+			return image.url;
+		}
+	}
+
+	return images.empty()
+		? std::string()
+		: images.back().url;
+}
+
+auto lib::spt::track::image_large() const -> std::string
+{
+	for (const auto &image: images)
+	{
+		if (image.width == lib::spt::image::size_large
+			|| image.height == lib::spt::image::size_large)
+		{
+			return image.url;
+		}
+	}
+
+	return images.empty()
+		? std::string()
+		: images.front().url;
 }
 
 auto lib::spt::track::is_valid() const -> bool

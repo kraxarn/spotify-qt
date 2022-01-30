@@ -1,11 +1,11 @@
 #pragma once
 
-#include "thirdparty/json.hpp"
 #include "lib/spotify/track.hpp"
 #include "lib/spotify/device.hpp"
-#include "lib/format.hpp"
 #include "lib/spotify/context.hpp"
 #include "lib/enum/repeatstate.hpp"
+
+#include "thirdparty/json.hpp"
 
 namespace lib
 {

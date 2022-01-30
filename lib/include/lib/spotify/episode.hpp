@@ -52,9 +52,9 @@ namespace lib
 			std::string html_description;
 
 			/**
-			 * URL to cover art
+			 * URLs to cover art
 			 */
-			std::string image;
+			std::vector<lib::spt::image> images;
 
 			/**
 			 * Hosted outside of Spotify's CDN

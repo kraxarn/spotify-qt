@@ -5,7 +5,7 @@ namespace lib
 	/**
 	 * Audio qualities offered by Spotify in kbit/s
 	 */
-	enum class audio_quality
+	enum class audio_quality: short
 	{
 		/**
 		 * Low quality

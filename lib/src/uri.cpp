@@ -1,4 +1,7 @@
 #include "lib/uri.hpp"
+
+#include "lib/fmt.hpp"
+
 #include <regex>
 
 lib::uri::uri(const std::string &url)

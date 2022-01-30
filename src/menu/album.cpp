@@ -39,7 +39,9 @@ void Menu::Album::shuffle(bool /*checked*/)
 		return;
 	}
 
-	auto initialIndex = lib::random().next_int(0, tracks.size());
+	const auto initialIndex = lib::random()
+		.next_int(0, static_cast<int>(tracks.size()));
+
 	spotify.play_tracks(initialIndex, lib::spt::api::to_uri("album", albumId),
 		[this](const std::string &status)
 		{

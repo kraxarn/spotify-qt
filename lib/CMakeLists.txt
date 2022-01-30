@@ -23,6 +23,9 @@ target_include_directories(spotify-qt-lib PUBLIC
 	"${CMAKE_CURRENT_SOURCE_DIR}/include"
 	${LIB_QT_HEADERS})
 
+# Third-party libraries
+add_subdirectory(thirdparty)
+
 # Version macros
 target_compile_definitions(spotify-qt-lib PUBLIC LIB_VERSION="v${PROJECT_VERSION}")
 
@@ -32,6 +35,11 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 	target_compile_definitions(spotify-qt-lib PRIVATE IS_GNU_CXX)
 	# Enable all compiler warnings
 	target_compile_options(spotify-qt-lib PRIVATE -Wall -Wextra)
+endif ()
+
+# Disable "secure" warnings on MSVC
+if (MSVC)
+	target_compile_definitions(spotify-qt PRIVATE _CRT_SECURE_NO_WARNINGS)
 endif ()
 
 # Link optional libraries

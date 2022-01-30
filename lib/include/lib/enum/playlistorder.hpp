@@ -5,7 +5,7 @@ namespace lib
 	/**
 	 * Order to show playlists in
 	 */
-	enum class playlist_order
+	enum class playlist_order: char
 	{
 		/**
 		 * As they are fetched from the Spotify API

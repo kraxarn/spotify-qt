@@ -1,4 +1,5 @@
 #include "lib/logmessage.hpp"
+#include "lib/fmt.hpp"
 
 lib::log_message::log_message(const date_time &time, log_type log_type,
 	const std::string &message)
@@ -15,7 +16,7 @@ lib::log_message::log_message(log_type log_type, const std::string &message)
 
 auto lib::log_message::to_string() const -> std::string
 {
-	return fmt::format("[{}] [{}] {}", get_time(),
+	return lib::fmt::format("[{}] [{}] {}", get_time(),
 		get_type_short(), message);
 }
 

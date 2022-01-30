@@ -13,7 +13,7 @@ void Http::getAlbum(const std::string &url, const lib::http_client &httpClient,
 	if (lib::image::is_jpeg(data))
 	{
 		QPixmap img;
-		img.loadFromData(data.data(), data.size(), "jpeg");
+		img.loadFromData(data.data(), static_cast<unsigned int>(data.size()), "jpeg");
 		callback(img);
 		return;
 	}
