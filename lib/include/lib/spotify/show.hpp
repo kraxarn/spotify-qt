@@ -4,6 +4,7 @@
 #include "lib/enum/mediatype.hpp"
 #include "lib/json.hpp"
 #include "lib/enums.hpp"
+#include "lib/spotify/image.hpp"
 
 namespace lib
 {
@@ -47,9 +48,9 @@ namespace lib
 			std::string html_description;
 
 			/**
-			 * Cover art
+			 * Cover arts
 			 */
-			std::string image;
+			std::vector<lib::spt::image> images;
 
 			/**
 			 * Hosted outside of Spotify's CDN
