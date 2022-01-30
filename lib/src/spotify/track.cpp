@@ -112,6 +112,7 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 	if (track.contains("artists"))
 	{
 		track.at("artists").get_to(t.artists);
+		t.artists.shrink_to_fit();
 	}
 
 	if (track.contains("album"))
