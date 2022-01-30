@@ -7,7 +7,7 @@ namespace lib
 	 * @note These can be combined (where it makes sense), and therefore uses
 	 * bit order
 	 */
-	enum class spotify_context
+	enum class spotify_context: char
 	{
 		/**
 		 * No context

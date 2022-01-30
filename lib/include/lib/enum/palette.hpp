@@ -7,7 +7,7 @@ namespace lib
 	 * @note Mostly Qt specific, but palette_app and palette_dark can work as a
 	 * dark theme toggle
 	 */
-	enum class palette
+	enum class palette: char
 	{
 		/**
 		 * Default app palette

@@ -5,7 +5,7 @@ namespace lib
 	/**
 	 * Various image sizes
 	 */
-	enum class image_size
+	enum class image_size: short
 	{
 		/**
 		 * Unexpected size

@@ -7,7 +7,7 @@ namespace lib
 	 * @note I'm no musician, so I have no idea what this means, or if it's accurate
 	 * @see https://en.wikipedia.org/wiki/Pitch_class
 	 */
-	enum class audio_key
+	enum class audio_key: char
 	{
 		/** C */
 		c = 0,
