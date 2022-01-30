@@ -56,7 +56,7 @@ namespace lib
 		/**
 		 * Seconds since 1970-01-01
 		 */
-		static auto seconds_since_epoch() -> long;
+		static auto seconds_since_epoch() -> unsigned long;
 
 		/**
 		 * If the current instance represents a valid date

@@ -63,10 +63,12 @@ auto lib::date_time::now_utc() -> lib::date_time
 	return date;
 }
 
-auto lib::date_time::seconds_since_epoch() -> long
+auto lib::date_time::seconds_since_epoch() -> unsigned long
 {
-	return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now()
-		.time_since_epoch()).count();
+	const auto now = std::chrono::system_clock::now();
+	const auto time_since_epoch = now.time_since_epoch();
+	const auto seconds = std::chrono::duration_cast<std::chrono::seconds>(time_since_epoch);
+	return static_cast<unsigned long>(seconds.count());
 }
 
 auto lib::date_time::is_valid() const -> bool
