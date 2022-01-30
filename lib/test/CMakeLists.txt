@@ -14,6 +14,7 @@ add_executable(spotify-qt-lib-test
 	src/logtests.cpp
 	src/optionaltests.cpp
 	src/settingstests.cpp
+	src/spotify/tracktests.cpp
 	src/spotifyapitests.cpp
 	src/stopwatchtests.cpp
 	src/stringstests.cpp
