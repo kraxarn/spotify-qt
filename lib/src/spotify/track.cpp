@@ -71,7 +71,7 @@ void from_cache(const nlohmann::json &j, lib::spt::track &t)
 	{
 		lib::spt::image image;
 		j.at("image").get_to(image.url);
-		image.height = static_cast<int>(lib::image_size::small);
+		image.height = lib::spt::image::size_small;
 		image.width = image.height;
 
 		t.images.push_back(image);
@@ -165,7 +165,8 @@ auto lib::spt::track::image_small() const -> std::string
 {
 	for (const auto &image: images)
 	{
-		if (image.is_size(image_size::small))
+		if (image.width == lib::spt::image::size_small
+			|| image.height == lib::spt::image::size_small)
 		{
 			return image.url;
 		}
@@ -180,7 +181,8 @@ auto lib::spt::track::image_large() const -> std::string
 {
 	for (const auto &image: images)
 	{
-		if (image.is_size(image_size::medium))
+		if (image.width == lib::spt::image::size_large
+			|| image.height == lib::spt::image::size_large)
 		{
 			return image.url;
 		}

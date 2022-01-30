@@ -1,7 +1,4 @@
 #pragma once
-
-#include "lib/enum/imagesize.hpp"
-
 #include <thirdparty/json.hpp>
 
 namespace lib
@@ -29,16 +26,14 @@ namespace lib
 			int width = 0;
 
 			/**
-			 * Get image size
+			 * Size of small images, 64x64
 			 */
-			auto size() const -> lib::image_size;
+			static constexpr int size_small = 64;
 
 			/**
-			 * If image is of specific size
-			 * @param size Size to check
-			 * @return Image is of size
+			 * Size of large images, 300x300
 			 */
-			auto is_size(lib::image_size image_size) const -> bool;
+			static constexpr int size_large = 300;
 		};
 
 		void from_json(const nlohmann::json &j, image &i);
