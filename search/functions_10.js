@@ -1,7 +1,7 @@
 var searchData=
 [
   ['save_439',['save',['../classlib_1_1settings.html#a8dd0f510173f8faf1aa02b657ad29ff7',1,'lib::settings::save()'],['../classlib_1_1json.html#aa45d39432785ccca3c0157b8e01439b3',1,'lib::json::save()']]],
-  ['seconds_5fsince_5fepoch_440',['seconds_since_epoch',['../classlib_1_1date__time.html#a99a6bbeb54bfaefd7476b4b1b5a4d82b',1,'lib::date_time']]],
+  ['seconds_5fsince_5fepoch_440',['seconds_since_epoch',['../classlib_1_1date__time.html#adfd78352b99fcb252bfc78d5578955b4',1,'lib::date_time']]],
   ['seek_441',['seek',['../classlib_1_1spt_1_1api.html#aed68ce4103f82a1ed4dbb61dd8627112',1,'lib::spt::api']]],
   ['select_5fdevice_442',['select_device',['../classlib_1_1spt_1_1api.html#aed0d8133140221ebdd84d5efc795fda5',1,'lib::spt::api']]],
   ['set_5falbum_443',['set_album',['../classlib_1_1json__cache.html#af89108691e2ed8ba61bb1967c6b8b797',1,'lib::json_cache::set_album()'],['../classlib_1_1cache.html#a56a560740c23e23c0058025447ab6222',1,'lib::cache::set_album()']]],
@@ -22,7 +22,7 @@ var searchData=
   ['settings_458',['settings',['../classlib_1_1settings.html#adb2eacf4134e51934d779cb6d933c6a9',1,'lib::settings']]],
   ['show_459',['show',['../classlib_1_1spt_1_1api.html#a0f56416580d89ca435ab3ce15a37fa14',1,'lib::spt::api']]],
   ['show_5fepisodes_460',['show_episodes',['../classlib_1_1spt_1_1api.html#affbc53b6d3e30b164a0d29fc1e89a166',1,'lib::spt::api']]],
-  ['size_461',['size',['../classlib_1_1format.html#a5c2623a303947450960328e1adeb7397',1,'lib::format::size()'],['../classlib_1_1spt_1_1image.html#a02c42c7188d09e8e20882c57259e1a13',1,'lib::spt::image::size()']]],
+  ['size_461',['size',['../classlib_1_1format.html#a5c2623a303947450960328e1adeb7397',1,'lib::format']]],
   ['split_462',['split',['../classlib_1_1strings.html#ac28d3f45f0ec324ec627cc1855f40569',1,'lib::strings::split(const std::string &amp;str, const std::string &amp;delimiter) -&gt; std::vector&lt; std::string &gt;'],['../classlib_1_1strings.html#a8eb65123d86e7e0f3fb834f0c13c4d95',1,'lib::strings::split(const std::string &amp;str, char delimiter) -&gt; std::vector&lt; std::string &gt;']]],
   ['start_463',['start',['../classlib_1_1stopwatch.html#ae42cfa37e0452feae50ab338cef759f6',1,'lib::stopwatch']]],
   ['starts_5fwith_464',['starts_with',['../classlib_1_1strings.html#a36c370982807a4d49343ec3811d184f9',1,'lib::strings']]],

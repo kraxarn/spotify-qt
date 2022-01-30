@@ -68,21 +68,14 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classlib_1_1spt_1_1image-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">lib::spt::image Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a02c42c7188d09e8e20882c57259e1a13"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1image.html#a02c42c7188d09e8e20882c57259e1a13">size</a> () const -&gt; lib::image_size</td></tr>
-<tr class="separator:a02c42c7188d09e8e20882c57259e1a13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae707433ea5f39ef9248fa9f6372ea02e"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1image.html#ae707433ea5f39ef9248fa9f6372ea02e">is_size</a> (lib::image_size image_size) const -&gt; bool</td></tr>
-<tr class="separator:ae707433ea5f39ef9248fa9f6372ea02e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a4036d348703fb72aff5dd1900559c7b0"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1image.html#a4036d348703fb72aff5dd1900559c7b0">url</a></td></tr>
@@ -91,51 +84,14 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a94ca7b594e3aef7582f71c7a47be1d8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae972caf6c19f4aa19cebd98c57b4adbc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1image.html#ae972caf6c19f4aa19cebd98c57b4adbc">width</a> = 0</td></tr>
 <tr class="separator:ae972caf6c19f4aa19cebd98c57b4adbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a65016896f02a42915f896d2de663ca86"><td class="memItemLeft" align="right" valign="top">static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1image.html#a65016896f02a42915f896d2de663ca86">size_small</a> = 64</td></tr>
+<tr class="separator:a65016896f02a42915f896d2de663ca86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac20c45ee21888b0065a3c8914e21cd1b"><td class="memItemLeft" align="right" valign="top">static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1image.html#ac20c45ee21888b0065a3c8914e21cd1b">size_large</a> = 300</td></tr>
+<tr class="separator:ac20c45ee21888b0065a3c8914e21cd1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="ae707433ea5f39ef9248fa9f6372ea02e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae707433ea5f39ef9248fa9f6372ea02e">&#9670;&nbsp;</a></span>is_size()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto lib::spt::image::is_size </td>
-          <td>(</td>
-          <td class="paramtype">lib::image_size&#160;</td>
-          <td class="paramname"><em>image_size</em></td><td>)</td>
-          <td> const -&gt;  bool</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>If image is of specific size </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">size</td><td>Size to check </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Image is of size </dd></dl>
-
-</div>
-</div>
-<a id="a02c42c7188d09e8e20882c57259e1a13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02c42c7188d09e8e20882c57259e1a13">&#9670;&nbsp;</a></span>size()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto lib::spt::image::size </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const -&gt;  lib::image_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get image size </p>
-
-</div>
-</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="a94ca7b594e3aef7582f71c7a47be1d8a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a94ca7b594e3aef7582f71c7a47be1d8a">&#9670;&nbsp;</a></span>height</h2>
@@ -149,6 +105,52 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Image height in pixels </p>
+
+</div>
+</div>
+<a id="ac20c45ee21888b0065a3c8914e21cd1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac20c45ee21888b0065a3c8914e21cd1b">&#9670;&nbsp;</a></span>size_large</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr int lib::spt::image::size_large = 300</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Size of large images, 300x300 </p>
+
+</div>
+</div>
+<a id="a65016896f02a42915f896d2de663ca86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65016896f02a42915f896d2de663ca86">&#9670;&nbsp;</a></span>size_small</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr int lib::spt::image::size_small = 64</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Size of small images, 64x64 </p>
 
 </div>
 </div>
