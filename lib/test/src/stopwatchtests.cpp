@@ -11,7 +11,7 @@ TEST_CASE("stopwatch")
 		CHECK_EQ(stopwatch.elapsed<lib::stopwatch::ms, int>(), 0);
 
 		stopwatch.start();
-		CHECK_LT(stopwatch.elapsed<lib::stopwatch::ms, int>(), 0);
+		CHECK_NE(stopwatch.elapsed<lib::stopwatch::ms, int>(), 0);
 	}
 
 	SUBCASE("instant")
