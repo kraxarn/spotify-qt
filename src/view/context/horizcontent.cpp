@@ -9,13 +9,13 @@ Context::HorizContent::HorizContent(lib::spt::api &spotify, spt::Current &curren
 {
 	auto *layout = new QBoxLayout(QVBoxLayout::Direction::BottomToTop, this);
 	layout->setSpacing(0);
-	layout->setAlignment(Qt::AlignBottom);
+	// layout->setAlignment(Qt::AlignBottom);
 
 	album = new AlbumCover(this);
 
 	layout->addWidget(album);
-	nowPlaying = new Context::NowPlaying(this);
-	layout->addWidget(nowPlaying);
+	// nowPlaying = new Context::NowPlaying(this);
+	// layout->addWidget(nowPlaying);
 
 	reset();
 
@@ -58,9 +58,8 @@ void Context::HorizContent::setAlbum(const lib::spt::entity &albumEntity, const 
 		// auto scaledPixmap = scaleAlbum(300, albumImage);
 		// auto = albumImage
 		
-		lib::log::info("this is a test");
+		// lib::log::info("this is a test");
 		album->setPixmap(albumImage);
-		// album->setPixmap(Image::mask(albumImage));
 		album->setToolTip(QString::fromStdString(albumEntity.name));
 	}
 }
@@ -100,18 +99,12 @@ void Context::HorizContent::setCurrentlyPlaying(const lib::spt::track &track)
 // 	// QLabel::setPixmap(pixmap);
 // }
 
-// void Context::HorizContent::resizeEvent(QResizeEvent *event)
-// {
-// 	// if (album.isNull())
-// 	// {
-// 	// 	QWidget::resizeEvent(event);
-// 	// 	return;
-// 	// }
-// 	lib::log::info("resizing");
-
-// 	const QPixmap* tempPixmap = album->pixmap();
-// 	auto newSize = event->size().width();
-// 	lib::log::info(std::to_string(newSize));
-// 	auto scaledPixmap = scaleAlbum(newSize, *tempPixmap);
-// 	album->setPixmap(scaledPixmap);
-// }
+void Context::HorizContent::resizeEvent(QResizeEvent *event)
+{
+	auto newWidth = event->size().width();
+	auto newHeight = event->size().height();
+	lib::log::info("width and height: " + std::to_string(newWidth) + ", " + std::to_string(newHeight));
+	
+	QWidget::setFixedHeight(newWidth);
+	album->scaleCover(newWidth, newHeight);
+}

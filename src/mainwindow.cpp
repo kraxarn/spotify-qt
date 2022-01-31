@@ -419,7 +419,7 @@ void MainWindow::saveTracksToCache(const std::string &id,
 void MainWindow::setAlbumImage(const lib::spt::entity &albumEntity,
 	const std::string &albumImageUrl)
 {
-	Http::getAlbum(albumImageUrl, *httpClient, cache,
+	Http::getAlbum(current.playback.item.image_large(), *httpClient, cache,
 		[this, albumEntity](const QPixmap &image)
 		{
 			if (contextView != nullptr)

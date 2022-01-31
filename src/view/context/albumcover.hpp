@@ -14,14 +14,15 @@ namespace Context
 
 		void setPixmap(const QPixmap &pixmap);
 
-	protected:
-		void resizeEvent(QResizeEvent *event) override;
+	// protected:
+		// void resizeEvent(QResizeEvent *event) override;
+		void scaleCover(int width, int height);
 
 	private:
 		static constexpr int maxHeight = 160;
 
 		QPixmap cover;
 
-		void scaleCover(int width);
+		// void scaleCover(int width);
 	};
 }

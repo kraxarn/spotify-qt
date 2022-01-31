@@ -34,9 +34,12 @@ namespace Context
 
 		void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage);
 
+	protected:
+		void resizeEvent(QResizeEvent *event);
+
 	private:
 		/** Width and height of album */
-		static constexpr int albumSize = 300;
+		// static constexpr int albumSize = 300;
 
 		lib::spt::api &spotify;
 		spt::Current &current;
