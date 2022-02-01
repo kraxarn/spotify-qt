@@ -339,7 +339,7 @@ auto MainWindow::createCentralWidget() -> QWidget *
 
 	libraryList = new List::Library(*spotify, cache, this);
 	playlistList = new List::Playlist(*spotify, settings, cache, this);
-	contextView = new Context::View(*spotify, current, cache, this);
+	contextView = new Context::View(*spotify, settings, current, cache, this);
 
 	// Left side panel
 	addDockWidget(Qt::LeftDockWidgetArea,
@@ -494,6 +494,11 @@ void MainWindow::toggleTrackNumbers(bool enabled)
 				.toInt() + 1, 3)
 			: QString());
 	}
+}
+
+void MainWindow::toggleExpandableAlbum(bool shouldBeExpandable)
+{
+	contextView->reloadAlbumContent(shouldBeExpandable);
 }
 
 //region Getters

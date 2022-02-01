@@ -244,6 +244,14 @@ void SettingsPage::Interface::saveGeneral()
 	{
 		settings.general.relative_added = relativeAdded->isChecked();
 	}
+
+	if (expandAlbumCover != nullptr)
+	{
+		if (mainWindow != nullptr)
+		{
+			mainWindow->toggleExpandableAlbum(expandAlbumCover->isChecked());
+		}
+	}
 }
 
 void SettingsPage::Interface::saveAppearance()
