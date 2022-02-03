@@ -37,12 +37,6 @@ void Context::View::reloadAlbumContent(bool shouldBeExpandable)
 		content = nullptr;
 		horizContent = nullptr;
 	}	
-	else 
-	{
-		lib::log::info("this should never fire");
-		free(content);
-		free(horizContent);
-	}
 	 
 	if (albumShouldBeExpandable)
 	{

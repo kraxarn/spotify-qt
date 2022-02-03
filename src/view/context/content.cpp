@@ -77,3 +77,9 @@ void Context::Content::setCurrentlyPlaying(const lib::spt::track &track)
 	}
 	currentlyPlaying = track;
 }
+
+Context::Content::~Content()
+{
+	free(album);
+	free(nowPlaying);
+}

@@ -10,6 +10,7 @@
 #include "util/image.hpp"
 #include "view/context/nowplaying.hpp"
 #include "view/context/albumcover.hpp"
+#include "view/context/abstractalbumcontent.hpp"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -21,13 +22,13 @@ namespace Context
 {
 	class HorizContent: public QWidget
 	{
-	Q_OBJECT
 
 	public:
 		HorizContent(lib::spt::api &spotify, spt::Current &current,
 			const lib::cache &cache, QWidget *parent);
 
 		void reset();
+		~HorizContent();
 
 		auto getCurrentlyPlaying() const -> const lib::spt::track &;
 		void setCurrentlyPlaying(const lib::spt::track &track);
