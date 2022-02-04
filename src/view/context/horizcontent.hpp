@@ -20,7 +20,7 @@
 
 namespace Context
 {
-	class HorizContent: public QWidget
+	class HorizContent: public AbstractAlbumContent
 	{
 
 	public:

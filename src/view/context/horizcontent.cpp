@@ -2,7 +2,7 @@
 
 Context::HorizContent::HorizContent(lib::spt::api &spotify, spt::Current &current,
 	const lib::cache &cache, QWidget *parent)
-	: QWidget(parent),
+	: AbstractAlbumContent(parent),
 	spotify(spotify),
 	current(current),
 	cache(cache)
@@ -84,6 +84,6 @@ void Context::HorizContent::resizeEvent(QResizeEvent *event)
 
 Context::HorizContent::~HorizContent()
 {
-	free(album);
-	free(nowPlaying);
+	delete album;
+	delete nowPlaying;
 }

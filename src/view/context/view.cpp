@@ -32,8 +32,8 @@ void Context::View::reloadAlbumContent(bool shouldBeExpandable)
 	albumShouldBeExpandable = shouldBeExpandable;
 	if (content == nullptr || horizContent == nullptr)
 	{
-		free(content);
-		free(horizContent);
+		delete content;
+		delete horizContent;
 		content = nullptr;
 		horizContent = nullptr;
 	}	
