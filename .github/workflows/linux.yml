@@ -1,0 +1,52 @@
+name: Linux
+
+on: [ push, pull_request ]
+
+env:
+  BUILD_TYPE: Release
+  QT_VERSION: "6.2.2"
+  QT_ARCH: "gcc_64"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache Qt
+        id: cache-qt
+        uses: actions/cache@v2
+        with:
+          path: ${{runner.workspace}}/Qt
+          key: qt-${{env.QT_VERSION}}-${{env.QT_ARCH}}
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          cached: ${{steps.cache-qt.outputs.cache-hit}}
+          version: ${{env.QT_VERSION}}
+          arch: ${{env.QT_ARCH}}
+
+      - name: Configure CMake
+        run: cmake . -G "${{env.CMAKE_GENERATOR}}" -A ${{env.CMAKE_ARCH}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_INSTALL_PREFIX=/usr -DUSE_QT6=ON
+
+      - name: Build
+        run: cmake --build . --config ${{env.BUILD_TYPE}}
+
+      - name: Install
+        run: make DESTDIR="${{runner.workspace}}/dist" install
+
+      - name: Download linuxdeployqt
+        run: |
+          curl https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage -o ${{runner.workspace}}/linuxdeployqt
+          chmod +x ${{runner.workspace}}/linuxdeployqt
+
+      - name: Package
+        run: ${{runner.workspace}}/linuxdeployqt ${{runner.workspace}}/dist/usr/bin/spotify-qt -appimage
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: spotify-qt
+          path: ${{runner.workspace}}/spotify-qt.AppImage
