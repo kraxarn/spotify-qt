@@ -61,7 +61,7 @@ void Context::NowPlaying::setText(QLabel *label, const std::string &text)
 
 Context::NowPlaying::~NowPlaying()
 {
-	free(layout);
-	free(artist);
-	free(name);
+	delete layout;
+	delete artist;
+	delete name;
 }

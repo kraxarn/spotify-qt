@@ -84,6 +84,6 @@ void Context::HorizContent::resizeEvent(QResizeEvent *event)
 
 Context::HorizContent::~HorizContent()
 {
-	free(album);
-	free(nowPlaying);
+	delete album;
+	delete nowPlaying;
 }

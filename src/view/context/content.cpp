@@ -80,6 +80,6 @@ void Context::Content::setCurrentlyPlaying(const lib::spt::track &track)
 
 Context::Content::~Content()
 {
-	free(album);
-	free(nowPlaying);
+	delete album;
+	delete nowPlaying;
 }

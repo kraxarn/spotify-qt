@@ -10,7 +10,6 @@
 #include "util/image.hpp"
 #include "view/context/nowplaying.hpp"
 #include "view/context/albumcover.hpp"
-#include "view/context/abstractalbumcontent.hpp"
 
 #include <QWidget>
 #include <QHBoxLayout>
