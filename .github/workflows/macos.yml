@@ -21,17 +21,12 @@ jobs:
       - name: Configure CMake
         shell: bash
         working-directory: ${{runner.workspace}}/build
-        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_QT6=ON -DUSE_TESTS=ON
+        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_QT6=ON
 
       - name: Build
         working-directory: ${{runner.workspace}}/build
         shell: bash
         run: cmake --build . --config $BUILD_TYPE
-
-      - name: Test
-        working-directory: ${{runner.workspace}}/build/lib/test
-        shell: bash
-        run: ${{runner.workspace}}/build/lib/test/spotify-qt-lib-test
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
