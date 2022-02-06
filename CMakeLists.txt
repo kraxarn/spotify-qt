@@ -56,6 +56,15 @@ if (ANDROID)
 	add_library(spotify-qt SHARED ${SRC_FILES} res.qrc)
 elseif (MSVC)
 	add_executable(spotify-qt WIN32 ${SRC_FILES} ${LIB_SRC} res.qrc)
+elseif (APPLE)
+	add_executable(spotify-qt MACOSX_BUNDLE ${SRC_FILES} ${LIB_SRC} res.qrc)
+	set_target_properties(spotify-qt PROPERTIES
+		BUNDLE True
+		MACOSX_BUNDLE_GUI_IDENTIFIER com.kraxarn.spotify-qt
+		MACOSX_BUNDLE_BUNDLE_NAME spotify-qt
+		MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+		MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION}
+		MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/cmake/customtemplate.plist.in)
 else ()
 	add_executable(spotify-qt ${SRC_FILES} ${LIB_SRC} res.qrc)
 endif ()
