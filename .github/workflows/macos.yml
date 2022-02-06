@@ -34,11 +34,14 @@ jobs:
       - name: Build
         run: cmake --build . --config $BUILD_TYPE
 
-      - name: Install
-        run: make DESTDIR="${{runner.workspace}}/dist" install
+      - name: Package
+        run: |
+          mkdir -p spotify-qt.app/Contents/MacOs
+          cp ${{runner.workspace}}/build/spotify-qt spotify-qt.app/Contents/MacOs/
+          macdeployqt spotify-qt.app -dmg
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: spotify-qt
-          path: ${{runner.workspace}}/dist
+          path: ${{runner.workspace}}/spotify-qt.app
