@@ -29,14 +29,15 @@ with open("../.github/workflows/linux.yml") as file:
 	# Get current from file
 	for line in file:
 		if "QT_VERSION" in line:
-			version = line[line.index("\"") + 1:line.rindex("\"")]
+			version = "v{0}".format(line[line.index("\"") + 1:line.rindex("\"")])
 			break
 	# Get latest stable from API
 	for tags in requests.get("https://api.github.com/repos/qt/qtbase/tags").json():
 		if "-" not in tags["name"]:
 			latest = tags["name"]
+			break
 	# Check
 	if latest == version:
 		print(f"Qt is up-to-date ({version})")
 	else:
-		print(f"Qt {latest} is available (current is{version})")
+		print(f"Qt {latest} is available (current is {version})")
