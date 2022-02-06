@@ -9,8 +9,7 @@ env:
 
 jobs:
   build:
-    # https://github.com/probonopd/linuxdeployqt/issues/377
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -38,16 +37,8 @@ jobs:
       - name: Install
         run: make DESTDIR="${{runner.workspace}}/dist" install
 
-      - name: Download linuxdeployqt
-        run: |
-          curl -L https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage -o ${{runner.workspace}}/linuxdeployqt
-          chmod +x ${{runner.workspace}}/linuxdeployqt
-
-      - name: Package
-        run: ${{runner.workspace}}/linuxdeployqt ${{runner.workspace}}/dist/usr/bin/spotify-qt -appimage
-
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: spotify-qt
-          path: ${{runner.workspace}}/spotify-qt.AppImage
+          path: ${{runner.workspace}}/dist
