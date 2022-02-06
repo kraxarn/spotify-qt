@@ -13,9 +13,6 @@ an actual Spotify client running, for example [spotifyd](https://github.com/Spot
 which can be configured from within the app. Also like other clients, controlling music playback
 requires Spotify Premium.
 
-Check out the [spotify-qt-quick](https://github.com/kraxarn/spotify-qt-quick) repo if you're
-interested in a Qt Quick UI.
-
 #### Contributions are very welcome!
 
 ## Goals
