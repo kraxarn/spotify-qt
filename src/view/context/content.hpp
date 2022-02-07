@@ -26,7 +26,7 @@ namespace Context
 			const lib::cache &cache, QWidget *parent);
 
 		void reset();
-		~Content();
+		void remove();
 
 		auto getCurrentlyPlaying() const -> const lib::spt::track &;
 		void setCurrentlyPlaying(const lib::spt::track &track);

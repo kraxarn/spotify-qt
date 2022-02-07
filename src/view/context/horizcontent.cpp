@@ -82,8 +82,7 @@ void Context::HorizContent::resizeEvent(QResizeEvent *event)
 	album->scaleCover(newWidth, newHeight);
 }
 
-Context::HorizContent::~HorizContent()
+void Context::HorizContent::remove()
 {
-	delete album;
-	delete nowPlaying;
+	QObject::deleteLater();
 }

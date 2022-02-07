@@ -32,8 +32,7 @@ Context::Content::Content(lib::spt::api &spotify, spt::Current &current,
 void Context::Content::onSongMenu(const QPoint &pos)
 {
 	auto track = current.playback.item;
-	if (track.name.empty()
-		&& track.artists.empty())
+	if (track.name.empty() && track.artists.empty())
 	{
 		return;
 	}
@@ -78,8 +77,7 @@ void Context::Content::setCurrentlyPlaying(const lib::spt::track &track)
 	currentlyPlaying = track;
 }
 
-Context::Content::~Content()
+void Context::Content::remove()
 {
-	delete album;
-	delete nowPlaying;
+	QObject::deleteLater();
 }

@@ -30,13 +30,18 @@ Context::View::View(lib::spt::api &spotify, lib::settings &settings, spt::Curren
 void Context::View::reloadAlbumContent(bool shouldBeExpandable)
 {
 	albumShouldBeExpandable = shouldBeExpandable;
-	if (content == nullptr || horizContent == nullptr)
+	if (content != nullptr)
 	{
-		delete content;
-		delete horizContent;
-		content = nullptr;
-		horizContent = nullptr;
+		content->remove();
 	}	
+
+	if (horizContent != nullptr)
+	{
+		horizContent->remove();
+	}
+
+	content = nullptr;
+	horizContent = nullptr;
 	 
 	if (albumShouldBeExpandable)
 	{
