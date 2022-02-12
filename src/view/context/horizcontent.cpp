@@ -81,8 +81,3 @@ void Context::HorizContent::resizeEvent(QResizeEvent *event)
 	QWidget::setFixedHeight(newWidth);
 	album->scaleCover(newWidth, newHeight);
 }
-
-void Context::HorizContent::remove()
-{
-	QObject::deleteLater();
-}

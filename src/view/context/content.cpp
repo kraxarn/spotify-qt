@@ -76,8 +76,3 @@ void Context::Content::setCurrentlyPlaying(const lib::spt::track &track)
 	}
 	currentlyPlaying = track;
 }
-
-void Context::Content::remove()
-{
-	QObject::deleteLater();
-}

@@ -32,12 +32,12 @@ void Context::View::reloadAlbumContent(bool shouldBeExpandable)
 	albumShouldBeExpandable = shouldBeExpandable;
 	if (content != nullptr)
 	{
-		content->remove();
+		content->deleteLater();
 	}	
 
 	if (horizContent != nullptr)
 	{
-		horizContent->remove();
+		horizContent->deleteLater();
 	}
 
 	content = nullptr;
@@ -85,7 +85,7 @@ auto Context::View::getCurrentlyPlaying() const -> const lib::spt::track &
 	{
 		return content->getCurrentlyPlaying();
 	}
-	throw std::runtime_error("No content");
+	qFatal("No content");
 }
 
 void Context::View::setCurrentlyPlaying(const lib::spt::track &track) const

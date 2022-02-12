@@ -27,7 +27,6 @@ namespace Context
 			const lib::cache &cache, QWidget *parent);
 
 		void reset();
-		void remove();
 
 		auto getCurrentlyPlaying() const -> const lib::spt::track &;
 		void setCurrentlyPlaying(const lib::spt::track &track);
@@ -38,9 +37,6 @@ namespace Context
 		void resizeEvent(QResizeEvent *event);
 
 	private:
-		/** Width and height of album */
-		// static constexpr int albumSize = 300;
-
 		lib::spt::api &spotify;
 		spt::Current &current;
 		const lib::cache &cache;
