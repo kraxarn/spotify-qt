@@ -93,7 +93,6 @@ target_compile_definitions(spotify-qt PRIVATE ORG_NAME="kraxarn")
 target_compile_definitions(spotify-qt PRIVATE BUILD_TYPE="${CMAKE_BUILD_TYPE}")
 
 # Set install targets for 'make install'
-install(TARGETS spotify-qt RUNTIME DESTINATION bin)
 if (UNIX)
 	# Install icons and desktop shortcut on unix-like
 	install(FILES res/logo/spotify-qt.svg DESTINATION share/icons/hicolor/scalable/apps)
