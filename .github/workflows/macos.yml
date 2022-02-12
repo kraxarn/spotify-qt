@@ -35,13 +35,12 @@ jobs:
         run: cmake --build . --config $BUILD_TYPE
 
       - name: Package
-        run: |
-          mkdir -p spotify-qt.app/Contents/MacOs
-          cp ${{runner.workspace}}/build/spotify-qt spotify-qt.app/Contents/MacOs/
-          macdeployqt spotify-qt.app -dmg
+        run: macdeployqt spotify-qt.app -dmg
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: spotify-qt
-          path: ${{runner.workspace}}/spotify-qt.app
+          path: |
+            ${{runner.workspace}}/spotify-qt.app
+            ${{runner.workspace}}/spotify-qt.dmg
