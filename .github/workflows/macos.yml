@@ -33,7 +33,7 @@ jobs:
 
       - name: Configure CMake
         working-directory: ${{runner.workspace}}/build
-        run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_QT6=ON
+        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_QT6=ON
 
       - name: Build
         working-directory: ${{runner.workspace}}/build
