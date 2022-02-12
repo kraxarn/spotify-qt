@@ -98,6 +98,9 @@ if (UNIX)
 	# Install icons and desktop shortcut on unix-like
 	install(FILES res/logo/spotify-qt.svg DESTINATION share/icons/hicolor/scalable/apps)
 	install(FILES res/app/spotify-qt.desktop DESTINATION share/applications)
+elseif (APPLE)
+	# macOS bundling
+	install(TARGETS spotify-qt BUNDLE DESTINATION bin)
 endif ()
 
 # Don't show console window under windows
