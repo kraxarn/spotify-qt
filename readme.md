@@ -52,6 +52,17 @@ free to, just please open an issue, or get in contact with me, so I can add it t
 The snap version can be installed by simply running  `snap install spotify-qt`, if that's your
 thing.
 
+## Configuring
+
+* open https://developer.spotify.com/dashboard/
+* create a new application
+* goto **edit settings** in the app overview
+* add `http://localhost:8888` in **Redirect URIs** section
+
+    ![spotify-qt with dark theme](.github/img/spotify_dashboard-redirect_uri.png)
+
+* launch Spotify-qt and copy/paste **Client ID** and **Client Secret**, you should be able to login
+
 ## Building yourself
 
 Make sure you have Qt (5.9+/6.0+) with SVG support, CMake (3.5+) and various build tools like
