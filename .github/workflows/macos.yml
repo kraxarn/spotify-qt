@@ -28,19 +28,24 @@ jobs:
           version: ${{env.QT_VERSION}}
           arch: ${{env.QT_ARCH}}
 
+      - name: Create Build Environment
+        run: cmake -E make_directory ${{runner.workspace}}/build
+
       - name: Configure CMake
+        working-directory: ${{runner.workspace}}/build
         run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_QT6=ON
 
       - name: Build
+        working-directory: ${{runner.workspace}}/build
         run: cmake --build . --config $BUILD_TYPE
 
       - name: Package
-        run: macdeployqt spotify-qt.app -dmg
+        run: macdeployqt ${{runner.workspace}}/spotify-qt.app -dmg -verbose=2
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: spotify-qt
           path: |
-            ${{runner.workspace}}/spotify-qt.app
-            ${{runner.workspace}}/spotify-qt.dmg
+            ${{runner.workspace}}/build/spotify-qt.app
+            ${{runner.workspace}}/build/spotify-qt.dmg
