@@ -17,7 +17,6 @@ namespace Context
 
 		void setTrack(const lib::spt::track &track);
 		void setNoPlaying();
-		~NowPlaying();
 
 	private:
 		static constexpr float nameScale = 1.1F;

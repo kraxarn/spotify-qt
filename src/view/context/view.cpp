@@ -30,13 +30,18 @@ Context::View::View(lib::spt::api &spotify, lib::settings &settings, spt::Curren
 void Context::View::reloadAlbumContent(bool shouldBeExpandable)
 {
 	albumShouldBeExpandable = shouldBeExpandable;
-	if (content == nullptr || horizContent == nullptr)
+	if (content != nullptr)
 	{
-		delete content;
-		delete horizContent;
-		content = nullptr;
-		horizContent = nullptr;
+		content->deleteLater();
 	}	
+
+	if (horizContent != nullptr)
+	{
+		horizContent->deleteLater();
+	}
+
+	content = nullptr;
+	horizContent = nullptr;
 	 
 	if (albumShouldBeExpandable)
 	{
@@ -80,7 +85,7 @@ auto Context::View::getCurrentlyPlaying() const -> const lib::spt::track &
 	{
 		return content->getCurrentlyPlaying();
 	}
-	throw std::runtime_error("No content");
+	qFatal("No content");
 }
 
 void Context::View::setCurrentlyPlaying(const lib::spt::track &track) const

@@ -58,10 +58,3 @@ void Context::NowPlaying::setText(QLabel *label, const std::string &text)
 	label->setText(qText);
 	label->setToolTip(qText);
 }
-
-Context::NowPlaying::~NowPlaying()
-{
-	free(layout);
-	free(artist);
-	free(name);
-}

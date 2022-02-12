@@ -1,5 +1,4 @@
 #include "view/context/albumcover.hpp"
-using namespace lib;
 
 Context::AlbumCover::AlbumCover(QWidget *parent)
 	: QLabel(parent)
