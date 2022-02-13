@@ -9,7 +9,7 @@
     <key>CFBundleExecutable</key>
     <string>spotify-qt</string>
     <key>CFBundleIconFile</key>
-    <string>res/app/512.png</string>
+    <string>spotify-qt.icns</string>
     <key>CFBundleIdentifier</key>
     <string>com.kraxarn.spotify-qt</string>
     <key>CFBundleInfoDictionaryVersion</key>

@@ -103,6 +103,9 @@ endif ()
 if (APPLE)
 	# macOS bundling
 	install(TARGETS spotify-qt BUNDLE DESTINATION bin)
+	# Bundle icon
+	set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/res/app/spotify-qt.icns PROPERTIES
+		MACOSX_PACKAGE_LOCATION "Resources")
 else ()
 	# Binary for other targets
 	install(TARGETS spotify-qt RUNTIME DESTINATION bin)
