@@ -6,6 +6,7 @@
 
 [![Linux Build](https://github.com/kraxarn/spotify-qt/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/kraxarn/spotify-qt/actions/workflows/ubuntu.yml)
 [![Windows Build](https://github.com/kraxarn/spotify-qt/actions/workflows/windows-qt6.yml/badge.svg)](https://github.com/kraxarn/spotify-qt/actions/workflows/windows-qt6.yml)
+[![macOS Build](https://github.com/kraxarn/spotify-qt/actions/workflows/macos.yml/badge.svg)](https://github.com/kraxarn/spotify-qt/actions/workflows/macos.yml)
 
 An unofficial Spotify client using Qt as a simpler, lighter alternative to the official client,
 inspired by [spotify-tui](https://github.com/Rigellute/spotify-tui). Much like spotify-tui, you need
