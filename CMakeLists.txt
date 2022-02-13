@@ -62,7 +62,8 @@ endif ()
 if (ANDROID)
 	add_library(spotify-qt SHARED ${SRC_FILES} res.qrc)
 elseif (MSVC)
-	add_executable(spotify-qt WIN32 ${SRC_FILES} ${LIB_SRC} res.qrc)
+	add_executable(spotify-qt WIN32 ${SRC_FILES} ${LIB_SRC} res.qrc
+		${CMAKE_CURRENT_SOURCE_DIR}/res/app/app.rc)
 elseif (APPLE)
 	add_executable(spotify-qt MACOSX_BUNDLE ${SRC_FILES} ${LIB_SRC} res.qrc)
 	set_target_properties(spotify-qt PROPERTIES
