@@ -44,7 +44,7 @@ jobs:
           chmod +x ${{runner.workspace}}/linuxdeployqt
 
       - name: Package
-        run: ${{runner.workspace}}/linuxdeployqt ${{runner.workspace}}/dist/usr/bin/spotify-qt -appimage -verbose=2
+        run: ${{runner.workspace}}/linuxdeployqt ${{runner.workspace}}/dist/usr/share/applications/spotify-qt.desktop -appimage -verbose=2
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
