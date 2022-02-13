@@ -65,10 +65,14 @@ elseif (MSVC)
 	add_executable(spotify-qt WIN32 ${SRC_FILES} ${LIB_SRC} res.qrc
 		${CMAKE_CURRENT_SOURCE_DIR}/res/app/app.rc)
 elseif (APPLE)
-	add_executable(spotify-qt MACOSX_BUNDLE ${SRC_FILES} ${LIB_SRC} res.qrc)
+	set(APP_ICNS ${CMAKE_CURRENT_SOURCE_DIR}/res/app/spotify-qt.icns)
+	add_executable(spotify-qt MACOSX_BUNDLE ${SRC_FILES} ${LIB_SRC} res.qrc ${APP_ICNS})
+	# Load properties from Info.plist file
 	set_target_properties(spotify-qt PROPERTIES
-		MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/res/app/Info.plist
-		MACOSX_BUNDLE_ICON_FILE ${CMAKE_CURRENT_SOURCE_DIR}/res/app/spotify-qt.icns)
+		MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/res/app/Info.plist)
+	# Copy icon file to Resources folder
+	set_source_files_properties(${APP_ICNS} PROPERTIES
+		MACOSX_PACKAGE_LOCATION "Resources")
 else ()
 	add_executable(spotify-qt ${SRC_FILES} ${LIB_SRC} res.qrc)
 endif ()
