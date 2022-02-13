@@ -67,7 +67,8 @@ elseif (MSVC)
 elseif (APPLE)
 	add_executable(spotify-qt MACOSX_BUNDLE ${SRC_FILES} ${LIB_SRC} res.qrc)
 	set_target_properties(spotify-qt PROPERTIES
-		MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/res/app/Info.plist)
+		MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/res/app/Info.plist
+		MACOSX_BUNDLE_ICON_FILE ${CMAKE_CURRENT_SOURCE_DIR}/res/app/spotify-qt.icns)
 else ()
 	add_executable(spotify-qt ${SRC_FILES} ${LIB_SRC} res.qrc)
 endif ()
@@ -104,9 +105,6 @@ endif ()
 if (APPLE)
 	# macOS bundling
 	install(TARGETS spotify-qt BUNDLE DESTINATION bin)
-	# Bundle icon
-	set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/res/app/spotify-qt.icns PROPERTIES
-		MACOSX_PACKAGE_LOCATION "Resources")
 else ()
 	# Binary for other targets
 	install(TARGETS spotify-qt RUNTIME DESTINATION bin)
