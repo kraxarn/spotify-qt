@@ -46,6 +46,9 @@ jobs:
       - name: Package
         run: ${{runner.workspace}}/linuxdeployqt ${{runner.workspace}}/dist/usr/share/applications/spotify-qt.desktop -appimage -verbose=2
 
+      - name: Find
+        run: find "${{runner.workspace}}" -name "*.AppImage" -print
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
