@@ -39,6 +39,13 @@ if (QT_VERSION_MAJOR EQUAL 6 AND MSVC)
 	set(CMAKE_CXX_STANDARD 17)
 endif ()
 
+# Set target macOS version
+if (APPLE)
+	# Qt 6.2 supports 10.14 and Qt 5.15 supports 10.13
+	# As automated builds are only Qt 6 for now, target that version
+	set(CMAKE_OSX_DEPLOYMENT_TARGET "10.14")
+endif ()
+
 # Find Qt
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Widgets Network Gui Svg REQUIRED)
 if (USE_DBUS)
