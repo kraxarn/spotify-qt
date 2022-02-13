@@ -4,7 +4,7 @@
 
 ![spotify-qt with dark theme](.github/img/spotify-qt.png)
 
-[![Linux Build](https://github.com/kraxarn/spotify-qt/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/kraxarn/spotify-qt/actions/workflows/ubuntu.yml)
+[![Linux Build](https://github.com/kraxarn/spotify-qt/actions/workflows/linux.yml/badge.svg)](https://github.com/kraxarn/spotify-qt/actions/workflows/linux.yml)
 [![Windows Build](https://github.com/kraxarn/spotify-qt/actions/workflows/windows-qt6.yml/badge.svg)](https://github.com/kraxarn/spotify-qt/actions/workflows/windows-qt6.yml)
 [![macOS Build](https://github.com/kraxarn/spotify-qt/actions/workflows/macos.yml/badge.svg)](https://github.com/kraxarn/spotify-qt/actions/workflows/macos.yml)
 
