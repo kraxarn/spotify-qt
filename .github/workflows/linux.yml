@@ -43,11 +43,11 @@ jobs:
           curl -L https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage -o ${{runner.workspace}}/linuxdeployqt
           chmod +x ${{runner.workspace}}/linuxdeployqt
 
-#      - name: Package
-#        run: ${{runner.workspace}}/linuxdeployqt ${{runner.workspace}}/dist/usr/bin/spotify-qt -appimage
+      - name: Package
+        run: ${{runner.workspace}}/linuxdeployqt ${{runner.workspace}}/dist/usr/bin/spotify-qt -appimage -verbose=2
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: spotify-qt
-          path: ${{runner.workspace}}/dist
+          path: ${{runner.workspace}}/spotify-qt.AppImage
