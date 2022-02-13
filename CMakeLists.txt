@@ -88,14 +88,15 @@ target_compile_definitions(spotify-qt PRIVATE ORG_NAME="kraxarn")
 target_compile_definitions(spotify-qt PRIVATE BUILD_TYPE="${CMAKE_BUILD_TYPE}")
 
 # Set install targets for 'make install'
+install(TARGETS spotify-qt RUNTIME DESTINATION bin)
 if (UNIX)
-	# Install main binary file
-	install(TARGETS spotify-qt RUNTIME DESTINATION bin)
-	# Install icons and desktop shortcut
+	# Install icons and desktop shortcut on unix-like
 	install(FILES res/logo/spotify-qt.svg DESTINATION share/icons/hicolor/scalable/apps)
 	install(FILES res/app/spotify-qt.desktop DESTINATION share/applications)
-elseif (APPLE)
-	# macOS bundling
+endif ()
+
+# macOS bundling
+if (APPLE)
 	install(TARGETS spotify-qt BUNDLE DESTINATION bin)
 endif ()
 
