@@ -129,6 +129,11 @@ namespace lib
 			 * Show a notification on track change
 			 */
 			bool notify_track_change = false;
+
+			/**
+			 * Close to system tray instead of quitting when the close button is pressed
+			 */
+			bool close_to_tray = false;
 		};
 
 		void to_json(nlohmann::json &j, const general &g);
