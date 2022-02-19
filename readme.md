@@ -51,7 +51,8 @@ free to, just please open an issue, or get in contact with me, so I can add it t
 | Other (Linux)        | [![Snapcraft](https://snapcraft.io//spotify-qt/badge.svg)](https://snapcraft.io/spotify-qt)                                                                                                                                                                 | [kraxarn](https://github.com/kraxarn)               |
 
 The snap version can be installed by simply running  `snap install spotify-qt`, if that's your
-thing.
+thing. If you want to try out new features, you can download unstable builds automatically built 
+every day from [spotify-qt-nightly](https://kraxarn.github.io/spotify-qt-nightly).
 
 ## Configuring
 
