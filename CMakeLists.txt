@@ -18,11 +18,27 @@ option(USE_DBUS "Use D-Bus integration" ON)
 # Optional KCrash support
 option(USE_KCRASH "Use KCrash integration" ON)
 
-# Optional Qt 6 support
-if (DEFINED USE_QT6)
+# Find requested Qt version
+option(USE_QT6 "Force Qt 6" OFF)
+option(USE_QT5 "Force Qt 5" OFF)
+
+if (USE_QT5)
+	# Forcing Qt 5
+	set(QT_VERSION_MAJOR 5)
+elseif (USE_QT6)
+	# Forcing Qt 6
 	set(QT_VERSION_MAJOR 6)
 else ()
-	set(QT_VERSION_MAJOR 5)
+	# Auto detect, but prefer Qt 5
+	find_package(Qt5 COMPONENTS Core QUIET)
+	if (Qt5Core_FOUND)
+		set(QT_VERSION_MAJOR 5)
+	else ()
+		find_package(Qt6 COMPONENTS Core QUIET)
+		if (Qt6Core_FOUND)
+			set(QT_VERSION_MAJOR 6)
+		endif ()
+	endif ()
 endif ()
 
 # Prefer new OpenGL
