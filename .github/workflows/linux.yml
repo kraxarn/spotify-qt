@@ -30,10 +30,13 @@ jobs:
           arch: ${{env.QT_ARCH}}
 
       - name: Configure CMake
-        run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr
+        run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr -DUSE_TESTS=ON
 
       - name: Build
         run: cmake --build . --config $BUILD_TYPE
+
+      - name: Test
+        run: ${{runner.workspace}}/spotify-qt/lib/test/spotify-qt-lib-test
 
       - name: Install
         run: make DESTDIR="${{runner.workspace}}/dist" install
