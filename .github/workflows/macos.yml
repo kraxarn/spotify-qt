@@ -33,11 +33,14 @@ jobs:
 
       - name: Configure CMake
         working-directory: ${{runner.workspace}}/build
-        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_TESTS=ON
 
       - name: Build
         working-directory: ${{runner.workspace}}/build
         run: cmake --build . --config $BUILD_TYPE
+
+      - name: Test
+        run: ${{runner.workspace}}/build/lib/test/spotify-qt-lib-test
 
       - name: Package
         run: macdeployqt ${{runner.workspace}}/build/spotify-qt.app -dmg -verbose=2
