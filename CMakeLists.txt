@@ -13,14 +13,10 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Optional D-Bus support
-if (NOT DEFINED USE_DBUS)
-	set(USE_DBUS 1)
-endif ()
+option(USE_DBUS "Use D-Bus integration" ON)
 
 # Optional KCrash support
-if (NOT DEFINED USE_KCRASH)
-	set(USE_KCRASH 1)
-endif ()
+option(USE_KCRASH "Use KCrash integration" ON)
 
 # Optional Qt 6 support
 if (DEFINED USE_QT6)
