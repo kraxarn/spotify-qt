@@ -31,7 +31,7 @@ jobs:
           arch: ${{env.QT_ARCH}}
 
       - name: Configure CMake
-        run: cmake . -G "${{env.CMAKE_GENERATOR}}" -A ${{env.CMAKE_ARCH}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DUSE_QT6=ON -DUSE_TESTS=ON
+        run: cmake . -G "${{env.CMAKE_GENERATOR}}" -A ${{env.CMAKE_ARCH}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DUSE_TESTS=ON
 
       - name: Build
         run: cmake --build . --config ${{env.BUILD_TYPE}}
