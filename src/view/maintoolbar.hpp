@@ -48,6 +48,7 @@ private:
 	void onShuffle(bool checked);
 	void onRepeat(bool checked);
 	void onMinimize(bool checked);
+	void onClose(bool checked);
 
 	lib::repeat_state repeatState = lib::repeat_state::off;
 

@@ -152,6 +152,11 @@ auto SettingsPage::Interface::trayIcon() -> QWidget *
 	notifyTrackChange->setChecked(settings.general.notify_track_change);
 	trayOptions->addWidget(notifyTrackChange);
 
+	closeToTray = new QCheckBox("Close to system tray instead of quitting", this);
+	closeToTray->setToolTip("The app will remain active with the icon in system tray after the close button is pressed");
+	closeToTray->setChecked(settings.general.close_to_tray);
+	trayOptions->addWidget(closeToTray);
+
 	return Widget::layoutToWidget(content, this);
 }
 
@@ -308,6 +313,11 @@ void SettingsPage::Interface::saveTrayIcon()
 	if (notifyTrackChange != nullptr)
 	{
 		settings.general.notify_track_change = notifyTrackChange->isChecked();
+	}
+
+	if (closeToTray != nullptr)
+	{
+		settings.general.close_to_tray = closeToTray->isChecked();
 	}
 
 	// Reload if needed
