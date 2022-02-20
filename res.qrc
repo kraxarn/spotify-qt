@@ -123,8 +123,5 @@
         <file>res/logo/spotify-qt.svg</file>
         <!-- QSS -->
         <file>res/style/dark.qss</file>
-        <!-- Fonts -->
-        <file>res/font/NotoSans-Regular.ttf</file>
-        <file>res/font/NotoSansMono-Regular.ttf</file>
     </qresource>
 </RCC>
