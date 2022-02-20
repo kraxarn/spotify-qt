@@ -61,8 +61,6 @@ auto SettingsPage::Interface::appearance() -> QWidget *
 	auto *layout = tabContent();
 	auto *comboBoxLayout = new QGridLayout();
 
-	const auto &qt = settings.qt();
-
 	// Style
 	auto *styleLabel = new QLabel("Style", this);
 	styleLabel->setToolTip("Qt style to use\n"
@@ -107,12 +105,6 @@ auto SettingsPage::Interface::appearance() -> QWidget *
 		iconFallback->setChecked(settings.general.fallback_icons);
 		layout->addWidget(iconFallback);
 	}
-
-	// Custom font
-	customFont = new QCheckBox(QStringLiteral("Custom font"), this);
-	customFont->setToolTip(QStringLiteral("Use custom Noto Sans font"));
-	customFont->setChecked(qt.custom_font);
-	layout->addWidget(customFont);
 
 	return Widget::layoutToWidget(layout, this);
 }
@@ -273,18 +265,6 @@ void SettingsPage::Interface::saveAppearance()
 	{
 		settings.general.fallback_icons = iconFallback->isChecked();
 	}
-
-	if (customFont != nullptr)
-	{
-		auto &qtSettings = settings.qt();
-
-		if (qtSettings.custom_font != customFont->isChecked())
-		{
-			info(customFont->text(), "Please restart the application to change font");
-		}
-
-		qtSettings.custom_font = customFont->isChecked();
-	}
 }
 
 void SettingsPage::Interface::saveTrayIcon()
@@ -386,11 +366,6 @@ void SettingsPage::Interface::darkThemeToggle(bool checked)
 	else
 	{
 		qtStyle->setCurrentIndex(0);
-	}
-
-	if (customFont != nullptr)
-	{
-		customFont->setChecked(checked);
 	}
 }
 

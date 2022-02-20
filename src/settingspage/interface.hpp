@@ -30,7 +30,6 @@ namespace SettingsPage
 		QComboBox *qtStyle = nullptr;
 		QCheckBox *darkTheme = nullptr;
 		QCheckBox *iconFallback = nullptr;
-		QCheckBox *customFont = nullptr;
 
 		// Tray icon
 		QGroupBox *trayEnabled = nullptr;

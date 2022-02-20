@@ -21,11 +21,6 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	if (settings.general.style_palette == lib::palette::dark)
 	{
 		setStyleSheet(DarkPalette::getDarkStylesheet());
-
-		if (settings.qt().custom_font)
-		{
-			DarkPalette::addFonts();
-		}
 	}
 
 	// Check for dark background
