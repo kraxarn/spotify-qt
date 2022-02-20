@@ -2,6 +2,8 @@
 #include "mainwindow.hpp"
 #include "util/widget.hpp"
 
+#include <QFontDialog>
+
 SettingsPage::Interface::Interface(lib::settings &settings, QWidget *parent)
 	: SettingsPage::Base(settings, parent)
 {
@@ -61,6 +63,8 @@ auto SettingsPage::Interface::appearance() -> QWidget *
 	auto *layout = tabContent();
 	auto *comboBoxLayout = new QGridLayout();
 
+	const auto &qtSettings = settings.qt();
+
 	// Style
 	auto *styleLabel = new QLabel("Style", this);
 	styleLabel->setToolTip("Qt style to use\n"
@@ -88,6 +92,42 @@ auto SettingsPage::Interface::appearance() -> QWidget *
 	}
 
 	layout->addLayout(comboBoxLayout);
+
+	// Custom font
+	auto *fontLayout = new QHBoxLayout();
+	layout->addLayout(fontLayout);
+
+	auto *fontLabel = new QLabel(QStringLiteral("Font"), this);
+	fontLayout->addWidget(fontLabel, 1);
+
+	currentFont = new QLabel(this);
+	fontLayout->addWidget(currentFont);
+
+	if (qtSettings.custom_font_name.empty() && qtSettings.custom_font_size <= 0)
+	{
+		currentFont->setText(getDefaultFontName());
+	}
+	else
+	{
+		const auto family = QString::fromStdString(qtSettings.custom_font_name);
+		currentFont->setText(getFontName(family, qtSettings.custom_font_size));
+	}
+
+	auto *selectFont = new QToolButton(this);
+	selectFont->setIcon(Icon::get("document-edit"));
+	selectFont->setToolTip(QStringLiteral("Select font"));
+	fontLayout->addWidget(selectFont);
+
+	QToolButton::connect(selectFont, &QAbstractButton::clicked,
+		this, &SettingsPage::Interface::onSelectFont);
+
+	auto *resetFont = new QToolButton(this);
+	resetFont->setIcon(Icon::get("edit-undo"));
+	resetFont->setToolTip(QStringLiteral("Reset font to system default"));
+	fontLayout->addWidget(resetFont);
+
+	QToolButton::connect(resetFont, &QAbstractButton::clicked,
+		this, &SettingsPage::Interface::onResetFont);
 
 	// Dark theme
 	darkTheme = new QCheckBox("Dark theme", this);
@@ -239,6 +279,8 @@ void SettingsPage::Interface::saveGeneral()
 
 void SettingsPage::Interface::saveAppearance()
 {
+	auto &qtSettings = settings.qt();
+
 	if (qtStyle != nullptr
 		&& qtStyle->currentText() != QString::fromStdString(settings.general.style))
 	{
@@ -265,6 +307,20 @@ void SettingsPage::Interface::saveAppearance()
 	{
 		settings.general.fallback_icons = iconFallback->isChecked();
 	}
+
+	if (!fontName.isEmpty())
+	{
+		const auto appFont = QApplication::font();
+		if (appFont.family() != fontName || appFont.pointSize() != fontSize)
+		{
+			QApplication::setFont(fontSize > 0
+				? QFont(fontName, fontSize)
+				: QFont(fontName));
+		}
+	}
+
+	qtSettings.custom_font_name = fontName.toStdString();
+	qtSettings.custom_font_size = fontSize;
 }
 
 void SettingsPage::Interface::saveTrayIcon()
@@ -342,6 +398,27 @@ auto SettingsPage::Interface::save() -> bool
 	return true;
 }
 
+void SettingsPage::Interface::onSelectFont(bool /*checked*/)
+{
+	bool fontSelected;
+	const auto font = QFontDialog::getFont(&fontSelected, this);
+	if (!fontSelected)
+	{
+		return;
+	}
+
+	currentFont->setText(getFontName(font));
+	fontName = font.family();
+	fontSize = font.pointSize();
+}
+
+void SettingsPage::Interface::onResetFont(bool /*checked*/)
+{
+	currentFont->setText(getDefaultFontName());
+	fontName = QString();
+	fontSize = 0;
+}
+
 auto SettingsPage::Interface::hasIconTheme() -> bool
 {
 	return !QIcon::fromTheme("media-playback-start").isNull();
@@ -393,4 +470,27 @@ auto SettingsPage::Interface::defaultStyle() -> QString
 
 	// Assume Fusion
 	return QStringLiteral("Fusion");
+}
+
+auto SettingsPage::Interface::getFontName(const QString &family, int pointSize) -> QString
+{
+	return QString("%1 %2pt")
+		.arg(family)
+		.arg(pointSize);
+}
+
+auto SettingsPage::Interface::getFontName(const QFont &font) -> QString
+{
+	return getFontName(font.family(), font.pointSize());
+}
+
+auto SettingsPage::Interface::getDefaultFontName() -> QString
+{
+	return QString("<i>%1</i>")
+		.arg(getFontName(getDefaultFont()));
+}
+
+auto SettingsPage::Interface::getDefaultFont() -> QFont
+{
+	return QFontDatabase::systemFont(QFontDatabase::GeneralFont);
 }

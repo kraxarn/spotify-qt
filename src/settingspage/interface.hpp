@@ -30,6 +30,10 @@ namespace SettingsPage
 		QComboBox *qtStyle = nullptr;
 		QCheckBox *darkTheme = nullptr;
 		QCheckBox *iconFallback = nullptr;
+		QLabel *currentFont = nullptr;
+
+		QString fontName;
+		int fontSize = 0;
 
 		// Tray icon
 		QGroupBox *trayEnabled = nullptr;
@@ -52,8 +56,16 @@ namespace SettingsPage
 		void saveTrayIcon();
 		void saveTitleBar();
 
+		void onSelectFont(bool checked);
+		void onResetFont(bool checked);
+
 		static auto hasIconTheme() -> bool;
 		static auto defaultStyle() -> QString;
 		void darkThemeToggle(bool checked);
+
+		static auto getFontName(const QString &family, int pointSize) -> QString;
+		static auto getFontName(const QFont &font) -> QString;
+		static auto getDefaultFontName() -> QString;
+		static auto getDefaultFont() -> QFont;
 	};
 }

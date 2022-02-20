@@ -23,6 +23,16 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 		setStyleSheet(DarkPalette::getDarkStylesheet());
 	}
 
+	// Custom font
+	const auto &qtSettings = settings.qt();
+	if (!qtSettings.custom_font_name.empty())
+	{
+		const auto fontName = QString::fromStdString(qtSettings.custom_font_name);
+		QApplication::setFont(qtSettings.custom_font_size > 0
+			? QFont(fontName, qtSettings.custom_font_size)
+			: QFont(fontName));
+	}
+
 	// Check for dark background
 	Style::setDarkBackground(this);
 
