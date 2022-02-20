@@ -308,7 +308,11 @@ void SettingsPage::Interface::saveAppearance()
 		settings.general.fallback_icons = iconFallback->isChecked();
 	}
 
-	if (!fontName.isEmpty())
+	if (fontName.isEmpty())
+	{
+		QApplication::setFont(getDefaultFont());
+	}
+	else
 	{
 		const auto appFont = QApplication::font();
 		if (appFont.family() != fontName || appFont.pointSize() != fontSize)
