@@ -43,7 +43,7 @@ auto DateTime::toRelative(const QDateTime &date) -> QString
 
 auto DateTime::toRelative(const std::string &date) -> QString
 {
-	const auto parsed = parseIso(date);
+	const auto parsed = parseIsoDate(date);
 
 	return parsed.isValid()
 		? toRelative(parsed)

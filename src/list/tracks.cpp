@@ -248,7 +248,7 @@ auto List::Tracks::getAddedText(const std::string &date) const -> QString
 	}
 
 	const auto locale = QLocale::system();
-	const auto parsed = DateTime::parseIso(date).date();
+	const auto parsed = DateTime::parseIsoDate(date).date();
 
 	return parsed.isValid()
 		? locale.toString(parsed, QLocale::ShortFormat)
