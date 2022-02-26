@@ -25,7 +25,7 @@ SOFTWARE.
 ```
 
 ## [filesystem](https://github.com/gulrak/filesystem)
-v1.4.0, used for creating and managing directories used by settings, cache etc.
+v1.5.10, used for creating and managing directories used by settings, cache etc.
 ```
 Copyright (c) 2018, Steffen Schümann <s.schuemann@pobox.com>
 
