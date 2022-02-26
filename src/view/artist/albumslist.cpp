@@ -46,7 +46,7 @@ void Artist::AlbumsList::setAlbums(const std::vector<lib::spt::album> &albums)
 
 	for (const auto &album: albums)
 	{
-		const auto releaseDate = DateTime::parseIso(album.release_date);
+		const auto releaseDate = DateTime::parseIsoDate(album.release_date);
 		// Extra spacing is intentional so year doesn't overlap with scrollbar
 		const auto year = releaseDate.toString("yyyy    ");
 
@@ -68,9 +68,14 @@ void Artist::AlbumsList::setAlbums(const std::vector<lib::spt::album> &albums)
 		item->setData(0, static_cast<int>(DataRole::AlbumId),
 			QString::fromStdString(album.id));
 
+		// We don't want to show added "-01" in tooltip
+		const auto fullReleaseDate = DateTime::parseIso(album.release_date);
+		const auto releaseDateToolTip = fullReleaseDate.isValid()
+			? QLocale::system().toString(fullReleaseDate.date(), QLocale::ShortFormat)
+			: QString::fromStdString(album.release_date);
+
 		item->setToolTip(0, albumName);
-		item->setToolTip(1, QLocale::system()
-			.toString(releaseDate.date(), QLocale::FormatType::ShortFormat));
+		item->setToolTip(1, releaseDateToolTip);
 
 		group->addChild(item);
 	}
