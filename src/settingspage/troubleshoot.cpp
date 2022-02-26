@@ -5,14 +5,14 @@ SettingsPage::Troubleshoot::Troubleshoot(lib::settings &settings,
 	: SettingsPage::Base(settings, parent),
 	cache(cache)
 {
-	addTab(systemInfo(), "System information");
-	addTab(configPreview(), "Config preview");
-	addTab(cacheInfo(), "Cache");
+	addTab(systemInfo(), QStringLiteral("System"));
+	addTab(configPreview(), QStringLiteral("Config"));
+	addTab(cacheInfo(), QStringLiteral("Cache"));
 
 	if (lib::crash_handler::is_init()
 		|| !cache.get_all_crashes().empty())
 	{
-		addTab(crashLogs(), "Crashes");
+		addTab(crashLogs(), QStringLiteral("Crashes"));
 	}
 }
 
