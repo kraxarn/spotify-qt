@@ -60,3 +60,14 @@ auto DateTime::parseIso(const std::string &date) -> QDateTime
 {
 	return parseIso(QString::fromStdString(date));
 }
+
+auto DateTime::parseIsoDate(const QString &date) -> QDateTime
+{
+	return parseIso(date
+		+ QString("-01").repeated(2 - date.count('-')));
+}
+
+auto DateTime::parseIsoDate(const std::string &date) -> QDateTime
+{
+	return parseIsoDate(QString::fromStdString(date));
+}
