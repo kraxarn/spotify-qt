@@ -43,7 +43,11 @@ auto DateTime::toRelative(const QDateTime &date) -> QString
 
 auto DateTime::toRelative(const std::string &date) -> QString
 {
-	return toRelative(parseIso(date));
+	const auto parsed = parseIso(date);
+
+	return parsed.isValid()
+		? toRelative(parsed)
+		: QString();
 }
 
 auto DateTime::isEmpty(const QDateTime &date) -> bool

@@ -249,7 +249,10 @@ auto List::Tracks::getAddedText(const std::string &date) const -> QString
 
 	const auto locale = QLocale::system();
 	const auto parsed = DateTime::parseIso(date).date();
-	return locale.toString(parsed, QLocale::ShortFormat);
+
+	return parsed.isValid()
+		? locale.toString(parsed, QLocale::ShortFormat)
+		: QString();
 }
 
 void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
