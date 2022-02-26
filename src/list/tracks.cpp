@@ -146,33 +146,33 @@ void List::Tracks::onHeaderMenu(const QPoint &pos)
 
 void List::Tracks::onHeaderMenuTriggered(QAction *action)
 {
-	int i = action->data().toInt();
+	int index = action->data().toInt();
 
 	// Columns to show
-	if (i < titleOffset)
+	if (index < titleOffset)
 	{
-		header()->setSectionHidden(i + 1, !action->isChecked());
+		header()->setSectionHidden(index + 1, !action->isChecked());
 		if (action->isChecked())
 		{
-			this->settings.general.hidden_song_headers.erase(i);
+			settings.general.hidden_song_headers.erase(index);
 		}
 		else
 		{
-			this->settings.general.hidden_song_headers.emplace(i);
+			settings.general.hidden_song_headers.emplace(index);
 		}
-		this->settings.save();
+		settings.save();
 		return;
 	}
 
 	// Sort by
-	i -= titleOffset;
-	if (this->settings.general.song_header_sort_by == i)
+	index -= titleOffset;
+	if (settings.general.song_header_sort_by == index)
 	{
-		i = -1;
+		index = -1;
 	}
-	header()->setSortIndicator(i + 1, Qt::AscendingOrder);
-	this->settings.general.song_header_sort_by = i;
-	this->settings.save();
+	header()->setSortIndicator(index + 1, Qt::AscendingOrder);
+	settings.general.song_header_sort_by = index;
+	settings.save();
 }
 
 void List::Tracks::resizeEvent(QResizeEvent *event)
