@@ -50,7 +50,7 @@ TEST_CASE("strings")
 		auto results = lib::strings::split("a,bb,ccc", ',');
 
 		CHECK_EQ(results.size(), expected.size());
-		for (auto i = 0; i < results.size(); i++)
+		for (size_t i = 0; i < results.size(); i++)
 		{
 			CHECK_EQ(results[i], expected[i]);
 		}
@@ -72,7 +72,7 @@ TEST_CASE("strings")
 		results = lib::strings::split("a, bb, ccc", ", ");
 
 		CHECK_EQ(results.size(), expected.size());
-		for (auto i = 0; i < results.size(); i++)
+		for (size_t i = 0; i < results.size(); i++)
 		{
 			CHECK_EQ(results[i], expected[i]);
 		}

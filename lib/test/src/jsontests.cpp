@@ -35,7 +35,7 @@ TEST_CASE("json")
 		};
 
 		auto combined = lib::json::combine(item1, item2);
-		for (auto i = 0; i < item1.size() + item2.size(); i++)
+		for (size_t i = 0; i < item1.size() + item2.size(); i++)
 		{
 			CHECK_EQ(combined.at(i), i + 1);
 		}
