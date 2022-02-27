@@ -95,7 +95,7 @@ void CacheView::reload()
 {
 	clear();
 
-	QDir cacheDir(QString::fromStdString(paths.cache()));
+	QDir cacheDir(QString::fromStdString(paths.cache().string()));
 	for (auto &dir: cacheDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
 	{
 		auto *item = new QTreeWidgetItem(this);
