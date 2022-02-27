@@ -206,12 +206,12 @@ auto lib::json_cache::file(const std::string &entity_id,
 auto lib::json_cache::path(const std::string &type, const std::string &entity_id,
 	const std::string &extension) const -> std::string
 {
-	return dir(type) / file(id, extension);
+	return (dir(type) / file(entity_id, extension)).string();
 }
 
 auto lib::json_cache::get_url_id(const ghc::filesystem::path &path) -> std::string
 {
-	return path.stem();
+	return path.stem().string();
 }
 
 //endregion
