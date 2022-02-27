@@ -16,8 +16,10 @@ auto lib::json_cache::get_album_image(const std::string &url) const -> std::vect
 		return {};
 	}
 
-	return std::vector<unsigned char>(std::istreambuf_iterator<char>(file),
-		std::istreambuf_iterator<char>());
+	return {
+		std::istreambuf_iterator<char>(file),
+		std::istreambuf_iterator<char>(),
+	};
 }
 
 auto lib::json_cache::get_album_image_path(const std::string &url) const -> std::string
@@ -80,11 +82,11 @@ void lib::json_cache::set_playlists(const std::vector<spt::playlist> &playlists)
 
 //region playlist
 
-auto lib::json_cache::get_playlist(const std::string &id) const -> lib::spt::playlist
+auto lib::json_cache::get_playlist(const std::string &playlist_id) const -> lib::spt::playlist
 {
 	try
 	{
-		return json::load(path("playlist", id, "json"));
+		return json::load(path("playlist", playlist_id, "json"));
 	}
 	catch (const std::exception &e)
 	{
@@ -103,19 +105,21 @@ void lib::json_cache::set_playlist(const spt::playlist &playlist)
 
 //region tracks
 
-auto lib::json_cache::get_tracks(const std::string &id) const -> std::vector<lib::spt::track>
+auto lib::json_cache::get_tracks(const std::string &entity_id) const -> std::vector<lib::spt::track>
 {
-	return lib::json::load<std::vector<lib::spt::track>>(path("tracks", id, "json"));
+	const auto tracks_path = path("tracks", entity_id, "json");
+	return lib::json::load<std::vector<lib::spt::track>>(tracks_path);
 }
 
-void lib::json_cache::set_tracks(const std::string &id, const std::vector<lib::spt::track> &tracks)
+void lib::json_cache::set_tracks(const std::string &entity_id,
+	const std::vector<lib::spt::track> &tracks)
 {
-	lib::json::save(path("tracks", id, "json"), tracks);
+	lib::json::save(path("tracks", entity_id, "json"), tracks);
 }
 
 auto lib::json_cache::all_tracks() const -> std::map<std::string, std::vector<lib::spt::track>>
 {
-	auto dir = ghc::filesystem::path(paths.cache()) / "tracks";
+	auto dir = paths.cache() / "tracks";
 	std::map<std::string, std::vector<lib::spt::track>> results;
 
 	if (!ghc::filesystem::exists(dir))
@@ -125,8 +129,8 @@ auto lib::json_cache::all_tracks() const -> std::map<std::string, std::vector<li
 
 	for (const auto &entry: ghc::filesystem::directory_iterator(dir))
 	{
-		auto id = entry.path().filename().replace_extension().string();
-		results[id] = get_tracks(id);
+		auto entity_id = entry.path().filename().replace_extension().string();
+		results[entity_id] = get_tracks(entity_id);
 	}
 
 	return results;
@@ -191,16 +195,16 @@ auto lib::json_cache::dir(const std::string &type) const -> ghc::filesystem::pat
 	return file_dir;
 }
 
-auto lib::json_cache::file(const std::string &id,
+auto lib::json_cache::file(const std::string &entity_id,
 	const std::string &extension) -> std::string
 {
 	return extension.empty()
-		? id
-		: fmt::format("{}.{}", id, extension);
+		? entity_id
+		: fmt::format("{}.{}", entity_id, extension);
 }
 
-auto lib::json_cache::path(const std::string &type, const std::string &id,
-	const std::string &extension) const -> ghc::filesystem::path
+auto lib::json_cache::path(const std::string &type, const std::string &entity_id,
+	const std::string &extension) const -> std::string
 {
 	return dir(type) / file(id, extension);
 }
