@@ -17,6 +17,14 @@ def log(lib_name: str, current_version: str, latest_version: str):
 		success = False
 
 
+def get_latest_tag(repo_name: str, include_prerelease: bool) -> str:
+	tags = requests.get(f"https://api.github.com/repos/{repo_name}/tags").json()
+	for tag in tags:
+		if include_prerelease or "-" not in tag["name"]:
+			return tag["name"]
+	return ""
+
+
 # lib/thirdparty
 
 with open("../lib/thirdparty/readme.md", "r") as file:
@@ -35,13 +43,6 @@ with open("../lib/thirdparty/readme.md", "r") as file:
 
 # .github/workflows
 
-def get_latest_qt_version() -> str:
-	for tags in requests.get("https://api.github.com/repos/qt/qtbase/tags").json():
-		if "-" not in tags["name"]:
-			return tags["name"]
-	return ""
-
-
 def get_qt_version_from_workflow(filename: str) -> typing.Optional[str]:
 	with open(filename, "r") as file:
 		for line in file:
@@ -50,7 +51,7 @@ def get_qt_version_from_workflow(filename: str) -> typing.Optional[str]:
 	return None
 
 
-latest = get_latest_qt_version()
+latest_qt = get_latest_tag("qt/qtbase", False)
 workflows_dir = os.fsencode("../.github/workflows/")
 
 for file in os.listdir(workflows_dir):
@@ -59,6 +60,13 @@ for file in os.listdir(workflows_dir):
 	version = get_qt_version_from_workflow(file_path)
 	if version is None or version.startswith("v5"):
 		continue
-	log(f"Qt ({basename})", version, latest)
+	log(f"Qt ({basename})", version, latest_qt)
+
+# res/ic
+
+latest_ic = get_latest_tag("KDE/breeze-icons", True)
+with open("ic/version", "r") as f:
+	current_ic = f.read()
+log("breeze-icons", current_ic, latest_ic)
 
 exit(0 if success else 1)
