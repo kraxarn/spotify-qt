@@ -16,7 +16,7 @@ var searchData=
   ['set_5fsearch_5fparams_13',['set_search_params',['../classlib_1_1uri.html#a173327af4fd0d9e0cb7d764a8e1f06d7',1,'lib::uri']]],
   ['set_5fshuffle_14',['set_shuffle',['../classlib_1_1spt_1_1api.html#af58d77d78d2f690e1d006be63b946aa0',1,'lib::spt::api']]],
   ['set_5ftrack_5finfo_15',['set_track_info',['../classlib_1_1cache.html#a37acca6f61a2221a6886d83489d33d6c',1,'lib::cache::set_track_info()'],['../classlib_1_1json__cache.html#aa57ed3a6b32472729370f284701795ef',1,'lib::json_cache::set_track_info()']]],
-  ['set_5ftracks_16',['set_tracks',['../classlib_1_1cache.html#aa9ea636918559924df89df0e63346768',1,'lib::cache::set_tracks()'],['../classlib_1_1json__cache.html#aa07720ce5635da256df28220c3d292a9',1,'lib::json_cache::set_tracks()']]],
+  ['set_5ftracks_16',['set_tracks',['../classlib_1_1cache.html#af22e2e0c592b3863b12185996558a7ae',1,'lib::cache::set_tracks()'],['../classlib_1_1json__cache.html#ae549753f040a9db1e89d7fdaa2a5d979',1,'lib::json_cache::set_tracks()']]],
   ['set_5furl_17',['set_url',['../classlib_1_1uri.html#ae730b8f715f5191e80f4049e85bd320c',1,'lib::uri']]],
   ['set_5fvolume_18',['set_volume',['../classlib_1_1spt_1_1api.html#a6441af8171fdc04cdc497d3e93a93739',1,'lib::spt::api']]],
   ['settings_19',['settings',['../classlib_1_1settings.html#adb2eacf4134e51934d779cb6d933c6a9',1,'lib::settings']]],
