@@ -2,6 +2,7 @@
 #include "thirdparty/doctest.h"
 
 #include <vector>
+#include <string>
 
 TEST_CASE("vector")
 {
@@ -55,13 +56,22 @@ TEST_CASE("vector")
 
 	SUBCASE("index_of")
 	{
-		std::vector<int> vec = {
+		std::vector<int> vec1 = {
 			1, 2, 3
 		};
 
-		CHECK_EQ(lib::vector::index_of(vec, 1), 0);
-		CHECK_EQ(lib::vector::index_of(vec, 2), 1);
-		CHECK_EQ(lib::vector::index_of(vec, 3), 2);
-		CHECK_EQ(lib::vector::index_of(vec, 4), vec.size());
+		CHECK_EQ(lib::vector::index_of(vec1, 1), 0);
+		CHECK_EQ(lib::vector::index_of(vec1, 2), 1);
+		CHECK_EQ(lib::vector::index_of(vec1, 3), 2);
+		CHECK_EQ(lib::vector::index_of(vec1, 4), vec1.size());
+
+		std::vector<std::string> vec2 = {
+			"item1",
+			"item2",
+			"item3",
+		};
+
+		CHECK_EQ(lib::vector::index_of(vec2, std::string("item1")), 0);
+		CHECK_EQ(lib::vector::index_of(vec2, std::string("item0")), vec1.size());
 	}
 }
