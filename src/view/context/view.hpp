@@ -2,7 +2,7 @@
 
 #include "view/context/title.hpp"
 #include "view/context/horizcontent.hpp"
-#include "view/context/contentinterface.hpp"
+#include "view/context/abstractcontent.hpp"
 #include "view/context/content.hpp"
 #include "lib/settings.hpp"
 
@@ -35,7 +35,6 @@ namespace Context
 		const lib::cache &cache;
 
 		Title *title = nullptr;
-		ContentInterface *horizContent = nullptr;
-		Content *content = nullptr;
+		AbstractContent *albumContent = nullptr;
 	};
 }

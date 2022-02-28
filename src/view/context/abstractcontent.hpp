@@ -19,20 +19,28 @@
 
 namespace Context
 {
-	class ContentInterface: public QWidget
+	class AbstractContent: public QWidget
 	{
 
 	Q_OBJECT
 
 	public:
-		ContentInterface(QWidget *parent) : QWidget(parent) {}
+		AbstractContent(QWidget *parent) : QWidget(parent) {}
 
 		virtual void reset() = 0;
+		
+		auto getCurrentlyPlaying() const -> const lib::spt::track &
+		{
+			return currentlyPlaying;
+		}
 
 		virtual void setCurrentlyPlaying(const lib::spt::track &track) = 0;
 
 		virtual void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage) = 0;
 
-		virtual ~ContentInterface() {};
+		virtual ~AbstractContent() {};
+
+	protected:
+		lib::spt::track currentlyPlaying;
 	};
 }

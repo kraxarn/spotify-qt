@@ -1,9 +1,9 @@
 #include "view/context/horizcontent.hpp"
-#include "view/context/contentinterface.hpp"
+#include "view/context/abstractcontent.hpp"
 
 Context::HorizContent::HorizContent(lib::spt::api &spotify, spt::Current &current,
 	const lib::cache &cache, QWidget *parent)
-	: ContentInterface(parent),
+	: AbstractContent(parent),
 	spotify(spotify),
 	current(current),
 	cache(cache)
@@ -60,7 +60,7 @@ void Context::HorizContent::setAlbum(const lib::spt::entity &albumEntity, const 
 	}
 }
 
-// auto Context::HorizContent::getCurrentlyPlaying() const -> const lib::spt::track &
+// auto Context::AbstractContent::getCurrentlyPlaying() const -> const lib::spt::track &
 // {
 // 	return currentlyPlaying;
 // }

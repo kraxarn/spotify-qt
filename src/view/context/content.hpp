@@ -9,6 +9,7 @@
 #include "util/icon.hpp"
 #include "util/image.hpp"
 #include "view/context/nowplaying.hpp"
+#include "view/context/abstractcontent.hpp"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -17,9 +18,8 @@
 
 namespace Context
 {
-	class Content: public QWidget
+	class Content: public AbstractContent
 	{
-	Q_OBJECT
 
 	public:
 		Content(lib::spt::api &spotify, spt::Current &current,
@@ -27,7 +27,7 @@ namespace Context
 
 		void reset();
 
-		auto getCurrentlyPlaying() const -> const lib::spt::track &;
+		// lib::spt::track& getCurrentlyPlaying() const;
 		void setCurrentlyPlaying(const lib::spt::track &track);
 
 		void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage);
@@ -39,8 +39,6 @@ namespace Context
 		lib::spt::api &spotify;
 		spt::Current &current;
 		const lib::cache &cache;
-
-		lib::spt::track currentlyPlaying;
 
 		QLabel *album = nullptr;
 		NowPlaying *nowPlaying = nullptr;

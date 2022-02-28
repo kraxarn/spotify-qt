@@ -1,8 +1,9 @@
 #include "view/context/content.hpp"
+#include "view/context/abstractcontent.hpp"
 
 Context::Content::Content(lib::spt::api &spotify, spt::Current &current,
 	const lib::cache &cache, QWidget *parent)
-	: QWidget(parent),
+	: AbstractContent(parent),
 	spotify(spotify),
 	current(current),
 	cache(cache)
@@ -61,11 +62,6 @@ void Context::Content::setAlbum(const lib::spt::entity &albumEntity, const QPixm
 		album->setPixmap(Image::mask(albumImage));
 		album->setToolTip(QString::fromStdString(albumEntity.name));
 	}
-}
-
-auto Context::Content::getCurrentlyPlaying() const -> const lib::spt::track &
-{
-	return currentlyPlaying;
 }
 
 void Context::Content::setCurrentlyPlaying(const lib::spt::track &track)

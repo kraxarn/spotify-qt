@@ -10,7 +10,7 @@
 #include "util/image.hpp"
 #include "view/context/nowplaying.hpp"
 #include "view/context/albumcover.hpp"
-#include "view/context/contentinterface.hpp"
+#include "view/context/abstractcontent.hpp"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -20,7 +20,7 @@
 
 namespace Context
 {
-	class HorizContent: public ContentInterface
+	class HorizContent: public AbstractContent
 	{
 
 	public:
@@ -32,16 +32,13 @@ namespace Context
 		void setCurrentlyPlaying(const lib::spt::track &track);
 
 		void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage);
-
-	protected:
-		void resizeEvent(QResizeEvent *event);
+	
+		void resizeEvent(QResizeEvent *event); 
 
 	private:
 		lib::spt::api &spotify;
 		spt::Current &current;
 		const lib::cache &cache;
-
-		lib::spt::track currentlyPlaying;
 
 		AlbumCover *album = nullptr;
 		NowPlaying *nowPlaying = nullptr;

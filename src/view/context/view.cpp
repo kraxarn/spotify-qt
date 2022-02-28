@@ -9,17 +9,7 @@ Context::View::View(lib::spt::api &spotify, lib::settings &settings, spt::Curren
 	cache(cache)
 {
 	// check if user wants a scalable album image or not
-	albumShouldBeExpandable = settings.general.expand_album_cover;
-	if (albumShouldBeExpandable)
-	{
-		horizContent = new Context::HorizContent(spotify, current, cache, this);
-		setWidget(horizContent);
-	}
-	else 
-	{
-		content = new Context::Content(spotify, current, cache, this);
-		setWidget(content);
-	}
+	reloadAlbumContent(settings.general.expand_album_cover);
 
 	title = new Context::Title(spotify, current, cache, this);
 	setTitleBarWidget(title);
@@ -30,29 +20,16 @@ Context::View::View(lib::spt::api &spotify, lib::settings &settings, spt::Curren
 void Context::View::reloadAlbumContent(bool shouldBeExpandable)
 {
 	albumShouldBeExpandable = shouldBeExpandable;
-	if (content != nullptr)
-	{
-		content->deleteLater();
-	}	
-
-	if (horizContent != nullptr)
-	{
-		horizContent->deleteLater();
-	}
-
-	content = nullptr;
-	horizContent = nullptr;
 	 
 	if (albumShouldBeExpandable)
 	{
-		horizContent = new Context::HorizContent(spotify, current, cache, this);
-		setWidget(horizContent);
+		albumContent = new Context::HorizContent(spotify, current, cache, this);
 	}
 	else 
 	{
-		content = new Context::Content(spotify, current, cache, this);
-		setWidget(content);
+		albumContent = new Context::Content(spotify, current, cache, this);
 	}
+	setWidget(albumContent);
 }
 
 void Context::View::updateContextIcon()
@@ -65,50 +42,20 @@ void Context::View::updateContextIcon()
 
 void Context::View::resetCurrentlyPlaying() const
 {
-	if (albumShouldBeExpandable && horizContent != nullptr)
-	{
-		horizContent->reset();
-	}
-	else if(!albumShouldBeExpandable && content != nullptr)
-	{
-		content->reset();
-	}
+	albumContent->reset();
 }
 
 auto Context::View::getCurrentlyPlaying() const -> const lib::spt::track &
 {
-	const lib::spt::track imsad = lib::spt::track();
-	if (albumShouldBeExpandable && horizContent != nullptr)
-	{
-		return imsad;
-	}
-	else if(!albumShouldBeExpandable && content != nullptr)
-	{
-		return content->getCurrentlyPlaying();
-	}
-	qFatal("No content");
+	return albumContent->getCurrentlyPlaying();
 }
 
 void Context::View::setCurrentlyPlaying(const lib::spt::track &track) const
 {
-	if (albumShouldBeExpandable && horizContent != nullptr)
-	{
-		horizContent->setCurrentlyPlaying(track);
-	}
-	else if(!albumShouldBeExpandable && content != nullptr)
-	{
-		content->setCurrentlyPlaying(track);
-	}
+	albumContent->setCurrentlyPlaying(track);
 }
 
 void Context::View::setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage) const
 {
-	if (albumShouldBeExpandable && horizContent != nullptr)
-	{
-		horizContent->setAlbum(albumEntity, albumImage);
-	}
-	else if(!albumShouldBeExpandable && content != nullptr)
-	{
-		content->setAlbum(albumEntity, albumImage);
-	}
+	albumContent->setAlbum(albumEntity, albumImage);
 }

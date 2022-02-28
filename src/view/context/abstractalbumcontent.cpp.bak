@@ -1,6 +1,0 @@
-#include "view/context/abstractalbumcontent.hpp"
-
-Context::AbstractAlbumContent::AbstractAlbumContent(QWidget *parent)
-	: QWidget(parent)
-{
-}
