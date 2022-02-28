@@ -8,7 +8,7 @@ lib::settings::settings(const paths &paths)
 
 auto lib::settings::file_name() const -> std::string
 {
-	return path.config_file();
+	return path.config_file().string();
 }
 
 auto lib::settings::file_path() const -> std::string

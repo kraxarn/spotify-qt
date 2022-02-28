@@ -4,9 +4,9 @@ on: [ push, pull_request ]
 
 env:
   BUILD_TYPE: Release
-  QT_VERSION: "6.2.2"
+  QT_VERSION: "6.2.3"
   QT_ARCH: "win64_msvc2019_64"
-  CMAKE_GENERATOR: "Visual Studio 16 2019"
+  CMAKE_GENERATOR: "Visual Studio 17 2022"
   CMAKE_ARCH: "x64"
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
           arch: ${{env.QT_ARCH}}
 
       - name: Configure CMake
-        run: cmake . -G "${{env.CMAKE_GENERATOR}}" -A ${{env.CMAKE_ARCH}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DUSE_QT6=ON -DUSE_TESTS=ON
+        run: cmake . -G "${{env.CMAKE_GENERATOR}}" -A ${{env.CMAKE_ARCH}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DUSE_TESTS=ON
 
       - name: Build
         run: cmake --build . --config ${{env.BUILD_TYPE}}

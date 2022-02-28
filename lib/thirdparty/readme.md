@@ -1,5 +1,7 @@
 ## [doctest](https://github.com/onqtam/doctest)
-v2.4.6, used for unit testing.
+
+v2.4.8, used for unit testing.
+
 ```
 The MIT License (MIT)
 
@@ -25,7 +27,9 @@ SOFTWARE.
 ```
 
 ## [filesystem](https://github.com/gulrak/filesystem)
-v1.4.0, used for creating and managing directories used by settings, cache etc.
+
+v1.5.10, used for creating and managing directories used by settings, cache etc.
+
 ```
 Copyright (c) 2018, Steffen Schümann <s.schuemann@pobox.com>
 
@@ -49,7 +53,9 @@ SOFTWARE.
 ```
 
 ## [json](https://github.com/nlohmann/json)
+
 v3.10.5, used for parsing settings and responses from the Spotify API.
+
 ```
 MIT License 
 

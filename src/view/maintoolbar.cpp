@@ -25,6 +25,7 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	// Search
 	search = addAction(Icon::get("edit-find"), "Search");
 	search->setCheckable(true);
+	search->setShortcut(QKeySequence::Find);
 	QAction::connect(search, &QAction::triggered, mainWindow, &MainWindow::setSearchVisible);
 
 	// Media controls
@@ -91,7 +92,7 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	close = new QAction(Icon::get("window-close"),
 		QStringLiteral("Close"), this);
 
-	QAction::connect(close, &QAction::triggered, &QCoreApplication::quit);
+	QAction::connect(close, &QAction::triggered, this, &MainToolBar::onClose);
 
 	if (settings.qt().mirror_title_bar)
 	{
@@ -359,4 +360,17 @@ void MainToolBar::onMinimize(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	mainWindow->minimize();
+}
+
+void MainToolBar::onClose(bool /*checked*/)
+{
+	auto *mainWindow = MainWindow::find(parentWidget());
+	if (settings.general.close_to_tray && mainWindow->getTrayIcon() != nullptr)
+	{
+		mainWindow->setVisible(false);
+	}
+	else
+	{
+		QCoreApplication::quit();
+	}
 }

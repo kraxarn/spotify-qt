@@ -13,20 +13,32 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Optional D-Bus support
-if (NOT DEFINED USE_DBUS)
-	set(USE_DBUS 1)
-endif ()
+option(USE_DBUS "Use D-Bus integration" ON)
 
 # Optional KCrash support
-if (NOT DEFINED USE_KCRASH)
-	set(USE_KCRASH 1)
-endif ()
+option(USE_KCRASH "Use KCrash integration" ON)
 
-# Optional Qt 6 support
-if (DEFINED USE_QT6)
+# Find requested Qt version
+option(USE_QT6 "Force Qt 6" OFF)
+option(USE_QT5 "Force Qt 5" OFF)
+
+if (USE_QT5)
+	# Forcing Qt 5
+	set(QT_VERSION_MAJOR 5)
+elseif (USE_QT6)
+	# Forcing Qt 6
 	set(QT_VERSION_MAJOR 6)
 else ()
-	set(QT_VERSION_MAJOR 5)
+	# Auto detect, but prefer Qt 5
+	find_package(Qt5 COMPONENTS Core QUIET)
+	if (Qt5Core_FOUND)
+		set(QT_VERSION_MAJOR 5)
+	else ()
+		find_package(Qt6 COMPONENTS Core QUIET)
+		if (Qt6Core_FOUND)
+			set(QT_VERSION_MAJOR 6)
+		endif ()
+	endif ()
 endif ()
 
 # Prefer new OpenGL
@@ -37,6 +49,13 @@ endif ()
 # Qt 6 requires C++17 under MSVC
 if (QT_VERSION_MAJOR EQUAL 6 AND MSVC)
 	set(CMAKE_CXX_STANDARD 17)
+endif ()
+
+# Set target macOS version
+if (APPLE)
+	# Qt 6.2 supports 10.14 and Qt 5.15 supports 10.13
+	# As automated builds are only Qt 6 for now, target that version
+	set(CMAKE_OSX_DEPLOYMENT_TARGET "10.14")
 endif ()
 
 # Find Qt
@@ -55,7 +74,17 @@ endif ()
 if (ANDROID)
 	add_library(spotify-qt SHARED ${SRC_FILES} res.qrc)
 elseif (MSVC)
-	add_executable(spotify-qt WIN32 ${SRC_FILES} ${LIB_SRC} res.qrc)
+	add_executable(spotify-qt WIN32 ${SRC_FILES} ${LIB_SRC} res.qrc
+		${CMAKE_CURRENT_SOURCE_DIR}/res/app/app.rc)
+elseif (APPLE)
+	set(APP_ICNS ${CMAKE_CURRENT_SOURCE_DIR}/res/app/spotify-qt.icns)
+	add_executable(spotify-qt MACOSX_BUNDLE ${SRC_FILES} ${LIB_SRC} res.qrc ${APP_ICNS})
+	# Load properties from Info.plist file
+	set_target_properties(spotify-qt PROPERTIES
+		MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/res/app/Info.plist)
+	# Copy icon file to Resources folder
+	set_source_files_properties(${APP_ICNS} PROPERTIES
+		MACOSX_PACKAGE_LOCATION "Resources")
 else ()
 	add_executable(spotify-qt ${SRC_FILES} ${LIB_SRC} res.qrc)
 endif ()
@@ -83,12 +112,18 @@ target_compile_definitions(spotify-qt PRIVATE APP_ICON="${PROJECT_NAME}")
 target_compile_definitions(spotify-qt PRIVATE ORG_NAME="kraxarn")
 target_compile_definitions(spotify-qt PRIVATE BUILD_TYPE="${CMAKE_BUILD_TYPE}")
 
-# Set install targets for 'make install'
-install(TARGETS spotify-qt RUNTIME DESTINATION bin)
+# Install icons and desktop shortcut on unix-like
 if (UNIX)
-	# Install icons and desktop shortcut on unix-like
 	install(FILES res/logo/spotify-qt.svg DESTINATION share/icons/hicolor/scalable/apps)
 	install(FILES res/app/spotify-qt.desktop DESTINATION share/applications)
+endif ()
+
+if (APPLE)
+	# macOS bundling
+	install(TARGETS spotify-qt BUNDLE DESTINATION bin)
+else ()
+	# Binary for other targets
+	install(TARGETS spotify-qt RUNTIME DESTINATION bin)
 endif ()
 
 # Don't show console window under windows

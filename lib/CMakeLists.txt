@@ -9,6 +9,8 @@ if (LIB_QT_IMPL)
 	add_subdirectory(qt)
 endif ()
 
+option(USE_TESTS "Build with unit tests" OFF)
+
 # Source files
 file(GLOB MAIN_SRC "src/*.cpp")
 file(GLOB SUB_SRC "src/*/*.cpp")

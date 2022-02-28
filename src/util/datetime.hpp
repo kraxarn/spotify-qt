@@ -31,6 +31,16 @@ public:
 	 */
 	static auto parseIso(const std::string &date) -> QDateTime;
 
+	/**
+	 * Parse date as YYYY-MM-DD, YYYY-MM, or YYYY
+	 */
+	static auto parseIsoDate(const QString &date) -> QDateTime;
+
+	/**
+	 * Parse date as YYYY-MM-DD, YYYY-MM, or YYYY
+	 */
+	static auto parseIsoDate(const std::string &date) -> QDateTime;
+
 private:
 	DateTime() = default;
 

@@ -103,7 +103,7 @@ auto SpotifyClient::Runner::start() -> QString
 			"--name", QString("%1 (librespot)").arg(APP_NAME),
 			"--initial-volume", "100",
 			"--autoplay",
-			"--cache", QString::fromStdString(paths.cache() / "librespot"),
+			"--cache", QString::fromStdString((paths.cache() / "librespot").string()),
 		});
 	}
 	else if (clientType == lib::client_type::spotifyd)

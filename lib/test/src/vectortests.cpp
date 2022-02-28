@@ -12,7 +12,7 @@ TEST_CASE("vector")
 			return false;
 		}
 
-		for (auto i = 0; i < v1.size(); i++)
+		for (size_t i = 0; i < v1.size(); i++)
 		{
 			if (v1.at(i) != v2.at(i))
 			{

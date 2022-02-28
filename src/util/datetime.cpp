@@ -43,7 +43,11 @@ auto DateTime::toRelative(const QDateTime &date) -> QString
 
 auto DateTime::toRelative(const std::string &date) -> QString
 {
-	return toRelative(parseIso(date));
+	const auto parsed = parseIsoDate(date);
+
+	return parsed.isValid()
+		? toRelative(parsed)
+		: QString();
 }
 
 auto DateTime::isEmpty(const QDateTime &date) -> bool
@@ -59,4 +63,15 @@ auto DateTime::parseIso(const QString &date) -> QDateTime
 auto DateTime::parseIso(const std::string &date) -> QDateTime
 {
 	return parseIso(QString::fromStdString(date));
+}
+
+auto DateTime::parseIsoDate(const QString &date) -> QDateTime
+{
+	return parseIso(date
+		+ QString("-01").repeated(2 - date.count('-')));
+}
+
+auto DateTime::parseIsoDate(const std::string &date) -> QDateTime
+{
+	return parseIsoDate(QString::fromStdString(date));
 }

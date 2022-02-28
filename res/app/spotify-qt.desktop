@@ -2,6 +2,7 @@
 Type=Application
 Name=spotify-qt
 GenericName=Music Player
+Comment=Lightweight Spotify client using Qt
 Icon=spotify-qt
 Exec=spotify-qt
 Terminal=false

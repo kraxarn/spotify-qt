@@ -21,11 +21,16 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	if (settings.general.style_palette == lib::palette::dark)
 	{
 		setStyleSheet(DarkPalette::getDarkStylesheet());
+	}
 
-		if (settings.qt().custom_font)
-		{
-			DarkPalette::addFonts();
-		}
+	// Custom font
+	const auto &qtSettings = settings.qt();
+	if (!qtSettings.custom_font_name.empty())
+	{
+		const auto fontName = QString::fromStdString(qtSettings.custom_font_name);
+		QApplication::setFont(qtSettings.custom_font_size > 0
+			? QFont(fontName, qtSettings.custom_font_size)
+			: QFont(fontName));
 	}
 
 	// Check for dark background
@@ -92,8 +97,16 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-	delete trayIcon;
-	event->accept();
+	if (settings.general.close_to_tray && trayIcon != nullptr)
+	{
+		event->ignore();
+		this->setVisible(false);
+	}
+	else
+	{
+		delete trayIcon;
+		event->accept();
+	}
 }
 
 void MainWindow::initClient()

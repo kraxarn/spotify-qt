@@ -29,6 +29,9 @@ namespace SettingsPage
 		auto systemInfo() -> QWidget *;
 		auto configPreview() -> QWidget *;
 		auto cacheInfo() -> QWidget *;
+		auto developerMode() -> QWidget *;
 		auto crashLogs() -> QWidget *;
+
+		static void onDevModeClicked(bool checked);
 	};
 }

@@ -31,11 +31,11 @@ namespace lib
 		auto get_playlists() const -> std::vector<lib::spt::playlist> override;
 		void set_playlists(const std::vector<spt::playlist> &playlists) override;
 
-		auto get_playlist(const std::string &id) const -> lib::spt::playlist override;
+		auto get_playlist(const std::string &playlist_id) const -> lib::spt::playlist override;
 		void set_playlist(const spt::playlist &playlist) override;
 
-		auto get_tracks(const std::string &id) const -> std::vector<lib::spt::track> override;
-		void set_tracks(const std::string &id,
+		auto get_tracks(const std::string &entity_id) const -> std::vector<lib::spt::track> override;
+		void set_tracks(const std::string &entity_id,
 			const std::vector<lib::spt::track> &tracks) override;
 		auto all_tracks() const -> std::map<std::string, std::vector<lib::spt::track>> override;
 
@@ -57,13 +57,13 @@ namespace lib
 		/**
 		 * Get file name for id
 		 */
-		static auto file(const std::string &id, const std::string &extension) -> std::string;
+		static auto file(const std::string &entity_id, const std::string &extension) -> std::string;
 
 		/**
 		 * Get full file path for cache type and id
 		 */
-		auto path(const std::string &type, const std::string &id,
-			const std::string &extension) const -> ghc::filesystem::path;
+		auto path(const std::string &type, const std::string &entity_id,
+			const std::string &extension) const -> std::string;
 
 		/**
 		 * Get basename of path

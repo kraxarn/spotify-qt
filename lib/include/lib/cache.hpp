@@ -80,10 +80,10 @@ namespace lib
 
 		/**
 		 * Loads tracks from a cached playlist
-		 * @param id Playlist ID
+		 * @param playlist_id Playlist ID
 		 * @return Tracks or an empty vector on failure
 		 */
-		virtual auto get_playlist(const std::string &id) const -> lib::spt::playlist = 0;
+		virtual auto get_playlist(const std::string &playlist_id) const -> lib::spt::playlist = 0;
 
 		/**
 		 * Save playlist to cache
@@ -97,17 +97,17 @@ namespace lib
 
 		/**
 		 * Get tracks saved in cache
-		 * @param id Id of album for example
+		 * @param entity_id Entity ID, for example, album
 		 * @return JSON stored in cache, or an empty object if none
 		 */
-		virtual auto get_tracks(const std::string &id) const -> std::vector<lib::spt::track> = 0;
+		virtual auto get_tracks(const std::string &entity_id) const -> std::vector<lib::spt::track> = 0;
 
 		/**
 		 * Save tracks to cache
-		 * @param id Id of album for example
+		 * @param entity_id Entity ID, for example, album
 		 * @param tracks Tracks to save
 		 */
-		virtual void set_tracks(const std::string &id,
+		virtual void set_tracks(const std::string &entity_id,
 			const std::vector<lib::spt::track> &tracks) = 0;
 
 		/**

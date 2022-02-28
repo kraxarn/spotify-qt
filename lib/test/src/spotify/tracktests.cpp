@@ -36,7 +36,7 @@ TEST_CASE("track")
 		CHECK_EQ(track1.album.name, track2.album.name);
 
 		CHECK_EQ(track1.artists.size(), track2.artists.size());
-		for (auto i = 0; i < track1.artists.size(); i++)
+		for (size_t i = 0; i < track1.artists.size(); i++)
 		{
 			const auto &artist1 = track1.artists.at(i);
 			const auto &artist2 = track2.artists.at(i);
@@ -46,7 +46,7 @@ TEST_CASE("track")
 		}
 
 		CHECK_EQ(track1.images.size(), track2.images.size());
-		for (auto i = 0; i < track1.images.size(); i++)
+		for (size_t i = 0; i < track1.images.size(); i++)
 		{
 			const auto &image1 = track1.images.at(i);
 			const auto &image2 = track2.images.at(i);

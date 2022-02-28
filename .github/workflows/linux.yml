@@ -1,42 +1,56 @@
-name: Ubuntu
+name: Linux
 
-on: [push, pull_request]
+on: [ push, pull_request ]
 
 env:
   BUILD_TYPE: Release
+  QT_VERSION: "5.15.2"
+  QT_ARCH: "gcc_64"
 
 jobs:
   build:
-    # Ubuntu 18.04 is supported until April 2023
-    # See: https://wiki.ubuntu.com/Releases
+    # https://github.com/probonopd/linuxdeployqt/issues/377
     runs-on: ubuntu-18.04
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Create Build Environment
-      run: cmake -E make_directory ${{runner.workspace}}/build
+      - name: Cache Qt
+        id: cache-qt
+        uses: actions/cache@v2
+        with:
+          path: ${{runner.workspace}}/Qt
+          key: qt-${{env.QT_VERSION}}-${{env.QT_ARCH}}
 
-    - name: Install Dependencies
-      run: sudo apt update && sudo apt install build-essential qt5-default libqt5svg5-dev -y
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          cached: ${{steps.cache-qt.outputs.cache-hit}}
+          version: ${{env.QT_VERSION}}
+          arch: ${{env.QT_ARCH}}
 
-    - name: Configure CMake
-      shell: bash
-      working-directory: ${{runner.workspace}}/build
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_TESTS=ON
+      - name: Configure CMake
+        run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr -DUSE_TESTS=ON
 
-    - name: Build
-      working-directory: ${{runner.workspace}}/build
-      shell: bash
-      run: cmake --build . --config $BUILD_TYPE
+      - name: Build
+        run: cmake --build . --config $BUILD_TYPE
 
-    - name: Test
-      working-directory: ${{runner.workspace}}/build/lib/test
-      shell: bash
-      run: ${{runner.workspace}}/build/lib/test/spotify-qt-lib-test
+      - name: Test
+        run: ${{runner.workspace}}/spotify-qt/lib/test/spotify-qt-lib-test
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: spotify-qt
-        path: ${{runner.workspace}}/build/spotify-qt
+      - name: Install
+        run: make DESTDIR="${{runner.workspace}}/dist" install
+
+      - name: Download linuxdeployqt
+        run: |
+          curl -L https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage -o ${{runner.workspace}}/linuxdeployqt
+          chmod +x ${{runner.workspace}}/linuxdeployqt
+
+      - name: Package
+        run: ${{runner.workspace}}/linuxdeployqt ${{runner.workspace}}/dist/usr/share/applications/spotify-qt.desktop -appimage -verbose=2
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: spotify-qt
+          path: ${{runner.workspace}}/spotify-qt/spotify-qt-*.AppImage

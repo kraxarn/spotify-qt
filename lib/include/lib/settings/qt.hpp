@@ -17,9 +17,15 @@ namespace lib
 			bool system_title_bar = false;
 
 			/**
-			 * Use custom font when using custom dark theme
+			 * Use a custom font instead of system default
 			 */
-			bool custom_font = true;
+			std::string custom_font_name;
+
+			/**
+			 * Use a custom font size instead of system default
+			 * @note 0 if not set
+			 */
+			int custom_font_size = 0;
 
 			/**
 			 * Mirror buttons in title bar

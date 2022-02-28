@@ -1,0 +1,42 @@
+name: Ubuntu
+
+on: [push, pull_request]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    # Ubuntu 18.04 is supported until April 2023
+    # See: https://wiki.ubuntu.com/Releases
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Create Build Environment
+      run: cmake -E make_directory ${{runner.workspace}}/build
+
+    - name: Install Dependencies
+      run: sudo apt update && sudo apt install build-essential qt5-default libqt5svg5-dev -y
+
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{runner.workspace}}/build
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_TESTS=ON
+
+    - name: Build
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: cmake --build . --config $BUILD_TYPE
+
+    - name: Test
+      working-directory: ${{runner.workspace}}/build/lib/test
+      shell: bash
+      run: ${{runner.workspace}}/build/lib/test/spotify-qt-lib-test
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: spotify-qt
+        path: ${{runner.workspace}}/build/spotify-qt
