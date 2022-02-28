@@ -77,9 +77,10 @@ void Context::View::resetCurrentlyPlaying() const
 
 auto Context::View::getCurrentlyPlaying() const -> const lib::spt::track &
 {
+	const lib::spt::track imsad = lib::spt::track();
 	if (albumShouldBeExpandable && horizContent != nullptr)
 	{
-		return horizContent->getCurrentlyPlaying();
+		return imsad;
 	}
 	else if(!albumShouldBeExpandable && content != nullptr)
 	{
