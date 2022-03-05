@@ -41,29 +41,29 @@ Menu::Track::Track(const QList<PlaylistTrack> &tracks, lib::spt::api &spotify,
 	const auto isSingle = tracks.length() == 1;
 	const auto &singleTrack = tracks.at(0).second;
 
-	auto *trackFeatures = addAction(Icon::get("view-statistics"), "Audio features");
-	trackFeatures->setVisible(isSingle);
-	QAction::connect(trackFeatures, &QAction::triggered,
-		this, &Menu::Track::onAudioFeatures);
-
-	if (lib::developer_mode::enabled)
+	if (isSingle)
 	{
-		auto *lyrics = addAction(Icon::get("view-media-lyrics"), "Lyrics");
-		lyrics->setVisible(isSingle);
-		QAction::connect(lyrics, &QAction::triggered,
-			this, &Menu::Track::onLyrics);
+		auto *trackFeatures = addAction(Icon::get("view-statistics"), "Audio features");
+		QAction::connect(trackFeatures, &QAction::triggered,
+			this, &Menu::Track::onAudioFeatures);
+
+		if (lib::developer_mode::enabled)
+		{
+			auto *lyrics = addAction(Icon::get("view-media-lyrics"), "Lyrics");
+			QAction::connect(lyrics, &QAction::triggered,
+				this, &Menu::Track::onLyrics);
+		}
+
+		auto *share = addMenu(Icon::get("document-share"), "Share");
+
+		auto *shareSongLink = share->addAction("Copy song link");
+		QAction::connect(shareSongLink, &QAction::triggered,
+			this, &Menu::Track::onCopySongLink);
+
+		auto *shareSongOpen = share->addAction("Open in Spotify");
+		QAction::connect(shareSongOpen, &QAction::triggered,
+			this, &Menu::Track::onOpenInSpotify);
 	}
-
-	auto *share = addMenu(Icon::get("document-share"), "Share");
-	share->setVisible(isSingle);
-
-	auto *shareSongLink = share->addAction("Copy song link");
-	QAction::connect(shareSongLink, &QAction::triggered,
-		this, &Menu::Track::onCopySongLink);
-
-	auto *shareSongOpen = share->addAction("Open in Spotify");
-	QAction::connect(shareSongOpen, &QAction::triggered,
-		this, &Menu::Track::onOpenInSpotify);
 
 	// Add/remove liked
 	addSeparator();
