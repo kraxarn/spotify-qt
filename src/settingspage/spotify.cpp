@@ -311,10 +311,12 @@ void SettingsPage::Spotify::startClientToggle(int state)
 
 auto SettingsPage::Spotify::sptConfigExists() -> bool
 {
-	// Config is either ~/.config/spotifyd/spotifyd.conf or /etc/spotifyd/spotifyd.conf
+	// Config is either ~/.config/spotifyd/spotifyd.conf or /etc/spotifyd/spotifyd.conf or /etc/xdg/spotifyd/spotifyd.conf or ~\AppData\Roaming\spotifyd\spotifyd.conf
 	return QFile(QString("%1/.config/spotifyd/spotifyd.conf")
 		.arg(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0])).exists()
-		|| QFile("/etc/spotifyd/spotifyd.conf").exists();
+		|| QFile("/etc/spotifyd/spotifyd.conf").exists()
+		|| QFile("/etc/xdg/spotifyd/spotifyd.conf").exists()
+		|| QFile("%1\\AppData\\Roaming\\spotifyd\\spotifyd.conf").exists();
 }
 
 auto SettingsPage::Spotify::backends() -> QStringList
