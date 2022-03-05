@@ -211,6 +211,8 @@ auto Menu::Track::getArtistObject(const lib::spt::artist *fromArtist) -> QObject
 		{
 			this->viewArtist(artist);
 		});
+
+		return action;
 	}
 
 	// Multiple artists
