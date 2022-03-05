@@ -40,7 +40,7 @@ void Menu::AddToPlaylist::onAboutToShow()
 
 		// Create main action
 		auto *action = addAction(QString::fromStdString(playlist.name));
-		action->setData(QString::fromStdString(playlist.id));
+		action->setData(QVariant::fromValue(playlist));
 	}
 }
 
@@ -48,13 +48,13 @@ void Menu::AddToPlaylist::onTriggered(QAction *action)
 {
 	const auto &data = action->data();
 
-	if (!data.isValid())
+	if (data.canConvert<lib::spt::playlist>())
 	{
-		addToNewPlaylist();
+		addToPlaylist(data.value<lib::spt::playlist>());
 	}
 	else
 	{
-		addToPlaylist(data.toString().toStdString());
+		addToNewPlaylist();
 	}
 }
 
@@ -85,56 +85,52 @@ void Menu::AddToPlaylist::addToNewPlaylist()
 	createPlaylist->open();
 }
 
-void Menu::AddToPlaylist::addToPlaylist(const std::string &playlistId)
+void Menu::AddToPlaylist::addToPlaylist(const lib::spt::playlist &playlist)
 {
-	spotify.playlist(playlistId, [this, playlistId](const lib::spt::playlist &playlist)
-	{
-		const auto playlistName = QString::fromStdString(playlist.name);
+	// Check existing tracks for any overlap
+	this->spotify.playlist_tracks(playlist,
+		[this, playlist](const std::vector<lib::spt::track> &playlistTracks)
+		{
+			auto filteredTrackIds = getFilteredTrackIds(playlistTracks);
+			auto response = DuplicateTrackResponse::AddAll;
 
-		// Check existing tracks for any overlap
-		this->spotify.playlist_tracks(playlist,
-			[this, playlistId, playlistName](const std::vector<lib::spt::track> &playlistTracks)
+			if (playlistTracks.size() != filteredTrackIds.size())
 			{
-				auto filteredTrackIds = getFilteredTrackIds(playlistTracks);
-				auto response = DuplicateTrackResponse::AddAll;
+				auto *dialog = new Dialog::DuplicatePlaylistTrack(window());
+				dialog->exec();
+				response = dialog->response();
+			}
 
-				if (playlistTracks.size() != filteredTrackIds.size())
+			if (response == DuplicateTrackResponse::None)
+			{
+				return;
+			}
+
+			// Actually add
+			const auto &toAdd = response == DuplicateTrackResponse::AddAll
+				? trackIds
+				: filteredTrackIds;
+
+			std::vector<std::string> trackUris;
+			trackUris.reserve(toAdd.size());
+
+			for (const auto &trackId: toAdd)
+			{
+				trackUris.push_back(lib::spt::api::to_uri("track", trackId));
+			}
+
+			spotify.add_to_playlist(playlist.id, trackUris,
+				[playlist](const std::string &result)
 				{
-					auto *dialog = new Dialog::DuplicatePlaylistTrack(window());
-					dialog->exec();
-					response = dialog->response();
-				}
-
-				if (response == DuplicateTrackResponse::None)
-				{
-					return;
-				}
-
-				// Actually add
-				const auto &toAdd = response == DuplicateTrackResponse::AddAll
-					? trackIds
-					: filteredTrackIds;
-
-				std::vector<std::string> trackUris;
-				trackUris.reserve(toAdd.size());
-
-				for (const auto &trackId: toAdd)
-				{
-					trackUris.push_back(lib::spt::api::to_uri("track", trackId));
-				}
-
-				spotify.add_to_playlist(playlistId, trackUris,
-					[playlistName](const std::string &result)
+					if (!result.empty())
 					{
-						if (!result.empty())
-						{
-							StatusMessage::error(QString("Failed to add track to playlist: %1")
-								.arg(QString::fromStdString(result)));
-							return;
-						}
+						StatusMessage::error(QString("Failed to add track to playlist: %1")
+							.arg(QString::fromStdString(result)));
+						return;
+					}
 
-						StatusMessage::info(QString("Added to %1").arg(playlistName));
-					});
-			});
-	});
+					StatusMessage::info(QString("Added to %1")
+						.arg(QString::fromStdString(playlist.name)));
+				});
+		});
 }

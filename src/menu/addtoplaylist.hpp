@@ -25,6 +25,6 @@ namespace Menu
 		-> std::vector<std::string>;
 
 		void addToNewPlaylist();
-		void addToPlaylist(const std::string &playlistId);
+		void addToPlaylist(const lib::spt::playlist &playlist);
 	};
 }
