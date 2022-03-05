@@ -86,8 +86,11 @@ void Menu::Album::tracksLoaded(const std::vector<lib::spt::track> &items)
 	constexpr unsigned int msToMin = 1000U * secInMin;
 	auto minutes = duration / msToMin;
 
-	trackCount->setText(QString("%1 tracks, %2%3 m")
+	trackCount->setText(QString("%1 %2, %3%4 m")
 		.arg(tracks.size())
+		.arg(tracks.size() == 1
+			? QStringLiteral("track")
+			: QStringLiteral("tracks"))
 		.arg(minutes >= secInMin
 			? QString("%1 h ").arg(minutes / secInMin)
 			: QString())
