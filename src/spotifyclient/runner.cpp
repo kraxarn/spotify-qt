@@ -47,7 +47,7 @@ auto SpotifyClient::Runner::start() -> QString
 	// If using global config, just start
 	if (settings.spotify.global_config && clientType == lib::client_type::spotifyd)
 	{
-		process->start(path, QStringList());
+		process->start(path, QStringList({"--no-daemon"}));
 		return {};
 	}
 
