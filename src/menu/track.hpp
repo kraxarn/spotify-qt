@@ -60,9 +60,6 @@ namespace Menu
 		auto getArtistObject(const lib::spt::artist *fromArtist) -> QObject *;
 		auto getAlbumAction() -> QAction *;
 
-		auto getTracksNotInSelection(const std::vector<lib::spt::track> &selection) const
-		-> QList<PlaylistTrack>;
-
 		auto anyInPlaylist() const -> bool;
 		auto getTrackIds() const -> std::vector<std::string>;
 
@@ -72,16 +69,12 @@ namespace Menu
 		/** All tracks have the same album */
 		auto allSameAlbum() const -> bool;
 
-		void addToPlaylist(const std::string &playlistTracks) const;
-		void addToNewPlaylist();
-
 		void onAudioFeatures(bool checked);
 		void onLyrics(bool checked);
 		void onCopySongLink(bool checked);
 		void onOpenInSpotify(bool checked);
 		void onLike(bool checked);
 		void onAddToQueue(bool checked);
-		void onAddToPlaylist(QAction *action);
 		void onRemoveFromPlaylist(bool checked);
 		void onOpenAlbum(bool checked);
 	};
