@@ -13,7 +13,7 @@ namespace lib
 		/**
 		 * Playlist
 		 */
-		class playlist
+		class playlist: public entity
 		{
 		public:
 			playlist() = default;
@@ -24,19 +24,9 @@ namespace lib
 			std::string description;
 
 			/**
-			 * Playlist ID
-			 */
-			std::string id;
-
-			/**
 			 * URL to playlist image
 			 */
 			std::string image;
-
-			/**
-			 * Name of playlist
-			 */
-			std::string name;
 
 			/**
 			 * Snapshot ID
