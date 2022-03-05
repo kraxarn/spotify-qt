@@ -99,5 +99,5 @@ for filename in os.listdir(os.path.join(get_icon_dir(), "dark")):
 
 print("%i %s updated" % (updates, "icon" if updates == 1 else "icons"))
 
-with open("version", "w") as f:
+with open(get_icon_dir().joinpath("version"), "w") as f:
 	f.write(latest)
