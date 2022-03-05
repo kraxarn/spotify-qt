@@ -107,7 +107,7 @@ namespace lib
 			void add_saved_tracks(const std::vector<std::string> &track_ids,
 				lib::callback<std::string> &callback);
 
-			void remove_saved_track(const std::string &track_id,
+			void remove_saved_tracks(const std::vector<std::string> &track_ids,
 				lib::callback<std::string> &callback);
 
 			void is_saved_track(const std::vector<std::string> &track_ids,

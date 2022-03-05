@@ -23,13 +23,11 @@ void lib::spt::api::add_saved_tracks(const std::vector<std::string> &track_ids,
 	}, callback);
 }
 
-void lib::spt::api::remove_saved_track(const std::string &track_id,
+void lib::spt::api::remove_saved_tracks(const std::vector<std::string> &track_ids,
 	lib::callback<std::string> &callback)
 {
 	del("me/tracks", {
-		{"ids", {
-			lib::spt::api::to_id(track_id),
-		}}
+		{"ids", track_ids},
 	}, callback);
 }
 
