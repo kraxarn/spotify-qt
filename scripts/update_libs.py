@@ -65,7 +65,7 @@ for file in os.listdir(workflows_dir):
 # res/ic
 
 latest_ic = get_latest_tag("KDE/breeze-icons", True)
-with open("ic/version", "r") as f:
+with open("../res/ic/version", "r") as f:
 	current_ic = f.read()
 log("breeze-icons", current_ic, latest_ic)
 
