@@ -1,14 +1,34 @@
 #include "menu/album.hpp"
+
 #include "mainwindow.hpp"
+#include "menu/addtoplaylist.hpp"
 
 Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache,
 	const std::string &albumId, QWidget *parent)
 	: QMenu(parent),
 	albumId(albumId),
-	spotify(spotify)
+	spotify(spotify),
+	cache(cache)
 {
 	trackCount = addAction("...");
 	trackCount->setEnabled(false);
+	addSeparator();
+
+	auto *playShuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle play");
+
+	QAction::connect(playShuffle, &QAction::triggered,
+		this, &Menu::Album::onShuffle);
+
+	auto *share = addMenu(Icon::get("document-share"), "Share");
+	auto *sharePlaylist = share->addAction("Copy album link");
+
+	QAction::connect(sharePlaylist, &QAction::triggered,
+		this, &Menu::Album::onCopyLink);
+
+	auto *shareSongOpen = share->addAction("Open in Spotify");
+
+	QAction::connect(shareSongOpen, &QAction::triggered,
+		this, &Menu::Album::onOpenInSpotify);
 
 	tracksLoaded(cache.get_tracks(albumId));
 	spotify.album(albumId, [this](const lib::spt::album &album)
@@ -18,20 +38,9 @@ Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache,
 			this->tracksLoaded(items);
 		});
 	});
-
-	addSeparator();
-	auto *playShuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle play");
-	QAction::connect(playShuffle, &QAction::triggered, this, &Menu::Album::shuffle);
-
-	auto *share = addMenu(Icon::get("document-share"), "Share");
-	auto *sharePlaylist = share->addAction("Copy album link");
-	QAction::connect(sharePlaylist, &QAction::triggered, this, &Menu::Album::shareAlbum);
-
-	auto *shareSongOpen = share->addAction("Open in Spotify");
-	QAction::connect(shareSongOpen, &QAction::triggered, this, &Menu::Album::shareOpen);
 }
 
-void Menu::Album::shuffle(bool /*checked*/)
+void Menu::Album::onShuffle(bool /*checked*/)
 {
 	if (tracks.empty())
 	{
@@ -58,14 +67,14 @@ void Menu::Album::shuffle(bool /*checked*/)
 		});
 }
 
-void Menu::Album::shareAlbum(bool /*checked*/)
+void Menu::Album::onCopyLink(bool /*checked*/)
 {
 	QApplication::clipboard()->setText(QString("https://open.spotify.com/album/%1")
 		.arg(QString::fromStdString(albumId)));
 	StatusMessage::info(QStringLiteral("Link copied to clipboard"));
 }
 
-void Menu::Album::shareOpen(bool /*checked*/)
+void Menu::Album::onOpenInSpotify(bool /*checked*/)
 {
 	Url::open(QString("https://open.spotify.com/album/%1")
 			.arg(QString::fromStdString(albumId)), LinkType::Web,
@@ -75,6 +84,12 @@ void Menu::Album::shareOpen(bool /*checked*/)
 void Menu::Album::tracksLoaded(const std::vector<lib::spt::track> &items)
 {
 	tracks = items;
+
+	if (addToPlaylist == nullptr)
+	{
+		addToPlaylist = new Menu::AddToPlaylist(getTrackIds(), spotify, cache, this);
+		addMenu(addToPlaylist);
+	}
 
 	auto duration = 0U;
 	for (auto &track: tracks)
@@ -95,4 +110,17 @@ void Menu::Album::tracksLoaded(const std::vector<lib::spt::track> &items)
 			? QString("%1 h ").arg(minutes / secInMin)
 			: QString())
 		.arg(minutes % secInMin));
+}
+
+auto Menu::Album::getTrackIds() const -> std::vector<std::string>
+{
+	std::vector<std::string> trackIds;
+	trackIds.reserve(tracks.size());
+
+	for (const auto &track: tracks)
+	{
+		trackIds.push_back(track.id);
+	}
+
+	return trackIds;
 }

@@ -21,12 +21,16 @@ namespace Menu
 		std::vector<lib::spt::track> tracks;
 		std::string albumId;
 		lib::spt::api &spotify;
+		lib::cache &cache;
+
 		QAction *trackCount = nullptr;
+		QMenu *addToPlaylist = nullptr;
 
 		void tracksLoaded(const std::vector<lib::spt::track> &items);
+		auto getTrackIds() const -> std::vector<std::string>;
 
-		void shuffle(bool checked);
-		void shareAlbum(bool checked);
-		void shareOpen(bool checked);
+		void onShuffle(bool checked);
+		void onCopyLink(bool checked);
+		void onOpenInSpotify(bool checked);
 	};
 }
