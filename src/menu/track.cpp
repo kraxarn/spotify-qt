@@ -474,7 +474,8 @@ auto Menu::Track::allSameAlbum() const -> bool
 	const auto &first = tracks.cbegin()->second.album;
 	for (auto iter = tracks.cbegin() + 1; iter != tracks.cend(); iter++)
 	{
-		if (first.id != iter->second.album.id)
+		// Albums may not have an id set, so use name instead
+		if (first.name != iter->second.album.name)
 		{
 			return false;
 		}
