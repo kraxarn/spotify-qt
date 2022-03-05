@@ -4,9 +4,10 @@
 #include <QVBoxLayout>
 #include <QMessageBox>
 
-Dialog::CreatePlaylist::CreatePlaylist(std::string trackId, lib::spt::api &spotify, QWidget *parent)
+Dialog::CreatePlaylist::CreatePlaylist(std::vector<std::string> trackIds,
+	lib::spt::api &spotify, QWidget *parent)
 	: Base(parent),
-	trackId(std::move(trackId)),
+	trackIds(std::move(trackIds)),
 	spotify(spotify)
 {
 	setTitle("Create playlist");
@@ -59,10 +60,9 @@ void Dialog::CreatePlaylist::onOk(bool /*checked*/)
 				return;
 			}
 
-			const auto trackUri = lib::spt::api::to_uri("track", trackId);
 			const auto playlistName = QString::fromStdString(playlist.name);
 
-			spotify.add_to_playlist(playlist.id, trackUri,
+			spotify.add_to_playlist(playlist.id, getTrackUris(),
 				[this, playlistName](const std::string &result)
 				{
 					if (!result.empty())
@@ -88,6 +88,19 @@ auto Dialog::CreatePlaylist::getPlaylistName() const -> QString
 	}
 
 	return defaultName;
+}
+
+auto Dialog::CreatePlaylist::getTrackUris() const -> std::vector<std::string>
+{
+	std::vector<std::string> uris;
+	uris.reserve(trackIds.size());
+
+	for (const auto &trackId: trackIds)
+	{
+		uris.push_back(lib::spt::api::to_uri("track", trackId));
+	}
+
+	return uris;
 }
 
 void Dialog::CreatePlaylist::showError(const QString &message)

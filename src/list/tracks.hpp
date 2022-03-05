@@ -78,7 +78,7 @@ namespace List
 		void resizeHeaders(const QSize &newSize);
 
 		void onMenu(const QPoint &pos);
-		void onClicked(QTreeWidgetItem *item, int column);
+		void onDoubleClicked(QTreeWidgetItem *item, int column);
 		void onHeaderMenu(const QPoint &pos);
 		void onHeaderMenuTriggered(QAction *action);
 	};

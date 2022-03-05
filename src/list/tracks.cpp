@@ -18,6 +18,7 @@ List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache
 
 	setEditTriggers(QAbstractItemView::NoEditTriggers);
 	setSelectionBehavior(QAbstractItemView::SelectRows);
+	setSelectionMode(QAbstractItemView::ExtendedSelection);
 	setSortingEnabled(true);
 	setRootIsDecorated(false);
 	setAllColumnsShowFocus(true);
@@ -38,8 +39,8 @@ List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache
 	}
 
 	// Play tracks on click or enter/special key
-	QTreeWidget::connect(this, &QTreeWidget::itemActivated,
-		this, &List::Tracks::onClicked);
+	QTreeWidget::connect(this, &QTreeWidget::itemDoubleClicked,
+		this, &List::Tracks::onDoubleClicked);
 
 	// Song context menu
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
@@ -54,25 +55,35 @@ List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache
 
 void List::Tracks::onMenu(const QPoint &pos)
 {
-	auto *item = itemAt(pos);
-	if (item == nullptr)
+	const auto &items = selectedItems();
+
+	QList<PlaylistTrack> tracks;
+	tracks.reserve(items.size());
+
+	for (const auto *item: items)
+	{
+		const auto track = item->data(0, static_cast<int>(DataRole::Track))
+			.value<lib::spt::track>();
+
+		if (!track.is_valid())
+		{
+			continue;
+		}
+
+		auto index = item->data(0, static_cast<int>(DataRole::Index)).toInt();
+		tracks.push_back(PlaylistTrack(index, track));
+	}
+
+	if (tracks.isEmpty())
 	{
 		return;
 	}
 
-	const auto &track = item->data(0, static_cast<int>(DataRole::Track))
-		.value<lib::spt::track>();
-	if (!track.is_valid())
-	{
-		return;
-	}
-
-	auto index = item->data(0, static_cast<int>(DataRole::Index)).toInt();
-	auto *songMenu = new Menu::Track(track, spotify, cache, index, parentWidget());
+	auto *songMenu = new Menu::Track(tracks, spotify, cache, parentWidget());
 	songMenu->popup(mapToGlobal(pos));
 }
 
-void List::Tracks::onClicked(QTreeWidgetItem *item, int /*column*/)
+void List::Tracks::onDoubleClicked(QTreeWidgetItem *item, int /*column*/)
 {
 	if (item->isDisabled())
 	{
