@@ -74,17 +74,22 @@ void lib::spt::api::add_to_playlist(const std::string &playlist_id,
 }
 
 void lib::spt::api::remove_from_playlist(const std::string &playlist_id,
-	const std::string &track_id, int pos,
+	const std::vector<std::pair<int, std::string>> &track_index_uris,
 	lib::callback<std::string> &callback)
 {
+	auto tracks = nlohmann::json::array();
+
+	for (const auto &track: track_index_uris)
+	{
+		tracks.push_back({
+			{"uri", track.second},
+			{"positions", {
+				track.first,
+			}},
+		});
+	}
+
 	del(lib::fmt::format("playlists/{}/tracks", playlist_id), {
-		{"tracks", {
-			{
-				{"uri", track_id},
-				{"positions", {
-					pos
-				}}
-			}
-		}}
+		{"tracks", tracks},
 	}, callback);
 }
