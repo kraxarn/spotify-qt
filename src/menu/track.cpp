@@ -159,9 +159,8 @@ Menu::Track::Track(const QList<PlaylistTrack> &tracks, lib::spt::api &spotify,
 
 auto Menu::Track::getRemoveFromPlaylistAction(const std::string &currentUserId) -> QAction *
 {
-	if (!anyInPlaylist()
-		&& currentPlaylist.is_valid()
-		&& (currentPlaylist.collaborative || currentPlaylist.owner_id == currentUserId))
+	if (!anyInPlaylist() || !currentPlaylist.is_valid()
+		|| (!currentPlaylist.collaborative && currentPlaylist.owner_id != currentUserId))
 	{
 		return nullptr;
 	}
