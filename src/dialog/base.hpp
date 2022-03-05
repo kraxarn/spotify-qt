@@ -21,6 +21,7 @@ namespace Dialog
 		explicit Base(QWidget *parent);
 
 		void addAction(DialogAction dialogAction);
+		auto addButton(const QString &text, QDialogButtonBox::ButtonRole role) -> QPushButton *;
 
 		void setTitle(const QString &text);
 
@@ -46,5 +47,7 @@ namespace Dialog
 		QPushButton *ok = nullptr;
 		QPushButton *apply = nullptr;
 		QPushButton *cancel = nullptr;
+
+		auto getButtonBox() -> QDialogButtonBox *;
 	};
 }
