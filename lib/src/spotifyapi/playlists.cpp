@@ -65,11 +65,12 @@ void lib::spt::api::playlist_tracks(const lib::spt::playlist &playlist,
 	}
 }
 
-void lib::spt::api::add_to_playlist(const std::string &playlist_id, const std::string &track_id,
+void lib::spt::api::add_to_playlist(const std::string &playlist_id,
+	const std::vector<std::string> &track_uris,
 	lib::callback<std::string> &callback)
 {
 	post(lib::fmt::format("playlists/{}/tracks?uris={}",
-		playlist_id, track_id), callback);
+		playlist_id, lib::strings::join(track_uris, ",")), callback);
 }
 
 void lib::spt::api::remove_from_playlist(const std::string &playlist_id,
