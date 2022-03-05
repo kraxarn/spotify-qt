@@ -53,7 +53,7 @@ void Dialog::Base::addAction(DialogAction dialogAction)
 auto Dialog::Base::addButton(const QString &text,
 	QDialogButtonBox::ButtonRole role) -> QPushButton *
 {
-	getButtonBox()->addButton(text, role);
+	return getButtonBox()->addButton(text, role);
 }
 
 void Dialog::Base::setTitle(const QString &text)
