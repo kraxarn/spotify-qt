@@ -14,7 +14,12 @@ import requests
 
 REPO: typing.Final[str] = "KDE/breeze-icons"
 
-with open("version", "r") as f:
+
+def get_icon_dir() -> pathlib.Path:
+	return pathlib.Path.cwd().parent.joinpath("res", "ic")
+
+
+with open(get_icon_dir().joinpath("version"), "r") as f:
 	current = f.read()
 
 latest: str = requests.get(f"https://api.github.com/repos/{REPO}/tags").json()[0]["name"]
@@ -78,7 +83,7 @@ def copy_icon(icon_name: str, icon_type: IconType) -> bool:
 	if source_path is None:
 		print(f"Error: failed to find source for {icon_type.source_name()}/{filename}")
 		return False
-	target_path = os.path.join(os.getcwd(), icon_type.target_name(), icon_name)
+	target_path = get_icon_dir().joinpath(icon_type.target_name(), icon_name)
 	if filecmp.cmp(source_path, target_path):
 		return False
 	shutil.copy(source_path, target_path)
@@ -86,7 +91,7 @@ def copy_icon(icon_name: str, icon_type: IconType) -> bool:
 
 
 updates = 0
-for filename in os.listdir(os.path.join(os.getcwd(), "dark")):
+for filename in os.listdir(os.path.join(get_icon_dir(), "dark")):
 	if copy_icon(filename, IconType.LIGHT):
 		updates += 1
 	if copy_icon(filename, IconType.DARK):
