@@ -1,0 +1,11 @@
+linux_task:
+  env:
+    BUILD_TYPE: "Release"
+    QT_VERSION: "5.15.2"
+    QT_ARCH: "gcc_64"
+  container:
+    image: ubuntu:18.04
+    cpu: 8
+  install_qt:
+    - python3 -m pip install aqtinstall
+    - python3 -m aqt install-qt linux desktop "$QT_VERSION" "$QT_ARCH" -O "$HOME/Qt"
