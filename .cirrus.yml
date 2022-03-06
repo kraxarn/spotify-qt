@@ -6,17 +6,17 @@ linux_task:
   container:
     image: ubuntu:18.04
     cpu: 8
-  install_dependencies_task:
+  install_dependencies_script:
     - sudo apt update
     - sudo apt install build-essential -y
-  install_qt_task:
+  install_qt_script:
     - python3 -m pip install aqtinstall
     - python3 -m aqt install-qt linux desktop "$QT_VERSION" "$QT_ARCH" -O "$HOME/Qt"
     - export Qt5_DIR="$HOME/Qt/$QT_VERSION"
-  build_task:
+  build_script:
     - cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr -DUSE_TESTS=ON
     - cmake --build . --config $BUILD_TYPE
-  test_task:
+  test_script:
     - "./spotify-qt/lib/test/spotify-qt-lib-test"
   upload_artifacts:
     path: "spotify-qt/*"
