@@ -21,6 +21,7 @@ linux_task:
   install_qt_script:
     - python3 -m aqt install-qt linux desktop "$QT_VERSION" "$QT_ARCH" -O "$HOME/Qt"
   build_script:
+    - echo "qt_dir = $Qt5_DIR"
     - cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr -DUSE_TESTS=ON
     - cmake --build . --config $BUILD_TYPE
   test_script:
