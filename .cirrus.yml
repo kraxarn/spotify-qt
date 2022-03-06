@@ -5,7 +5,7 @@ linux_task:
     QT_VERSION: "5.15.2"
     QT_ARCH: "gcc_64"
     # Qt
-    Qt5_DIR: "$HOME/Qt/$QT_VERSION"
+    Qt5_DIR: "$HOME/Qt/$QT_VERSION/$QT_ARCH"
     QT_PLUGIN_PATH: "Qt5_DIR/plugins"
     # System
     LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$Qt5_DIR/lib"
@@ -21,7 +21,6 @@ linux_task:
   install_qt_script:
     - python3 -m aqt install-qt linux desktop "$QT_VERSION" "$QT_ARCH" -O "$HOME/Qt"
   build_script:
-    - echo "qt_dir = $Qt5_DIR"
     - cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr -DUSE_TESTS=ON
     - cmake --build . --config $BUILD_TYPE
   test_script:
