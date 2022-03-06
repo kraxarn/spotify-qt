@@ -12,7 +12,11 @@ linux_task:
     - python3 -m pip install aqtinstall
   install_qt_script:
     - python3 -m aqt install-qt linux desktop "$QT_VERSION" "$QT_ARCH" -O "$HOME/Qt"
-    - export Qt5_DIR="$HOME/Qt/$QT_VERSION"
+    - QT_PATH="$HOME/Qt/$QT_VERSION"
+    - export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$QT_PATH/lib"
+    - export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$QT_PATH/lib/pkgconfig"
+    - export Qt5_DIR="$QT_PATH"
+    - export QT_PLUGIN_PATH="$QT_PATH/plugins"
   build_script:
     - cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr -DUSE_TESTS=ON
     - cmake --build . --config $BUILD_TYPE
