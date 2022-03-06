@@ -10,8 +10,8 @@ linux_task:
     - apt update
     - apt install build-essential -y
   install_qt_script:
-    - python3 -m pip install aqtinstall
-    - python3 -m aqt install-qt linux desktop "$QT_VERSION" "$QT_ARCH" -O "$HOME/Qt"
+    - python -m pip install aqtinstall
+    - python -m aqt install-qt linux desktop "$QT_VERSION" "$QT_ARCH" -O "$HOME/Qt"
     - export Qt5_DIR="$HOME/Qt/$QT_VERSION"
   build_script:
     - cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr -DUSE_TESTS=ON
