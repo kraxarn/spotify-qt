@@ -8,9 +8,9 @@ linux_task:
     cpu: 8
   install_dependencies_script:
     - apt update
-    - apt install build-essential python3 python3-pip -y
-  install_qt_script:
+    - apt install build-essential python3 python3-pip cmake -y
     - python3 -m pip install aqtinstall
+  install_qt_script:
     - python3 -m aqt install-qt linux desktop "$QT_VERSION" "$QT_ARCH" -O "$HOME/Qt"
     - export Qt5_DIR="$HOME/Qt/$QT_VERSION"
   build_script:
