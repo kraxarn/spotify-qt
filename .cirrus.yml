@@ -1,8 +1,16 @@
 linux_task:
   env:
+    # Build configuration
     BUILD_TYPE: "Release"
     QT_VERSION: "5.15.2"
     QT_ARCH: "gcc_64"
+    # Qt
+    Qt5_DIR: "$HOME/Qt/$QT_VERSION"
+    QT_PLUGIN_PATH: "Qt5_DIR/plugins"
+    # System
+    LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$Qt5_DIR/lib"
+    PKG_CONFIG_PATH: "$PKG_CONFIG_PATH:$Qt5_DIR/lib/pkgconfig"
+    PATH: "$PATH:$Qt5_DIR/bin"
   container:
     image: ubuntu:18.04
     cpu: 8
@@ -12,14 +20,7 @@ linux_task:
     - python3 -m pip install aqtinstall
   install_qt_script:
     - python3 -m aqt install-qt linux desktop "$QT_VERSION" "$QT_ARCH" -O "$HOME/Qt"
-    - QT_PATH="$HOME/Qt/$QT_VERSION"
-    - export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$QT_PATH/lib"
-    - export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$QT_PATH/lib/pkgconfig"
-    - export PATH="$PATH:$QT_PATH/bin"
-    - export Qt5_DIR="$QT_PATH"
-    - export QT_PLUGIN_PATH="$QT_PATH/plugins"
   build_script:
-    - echo "$Qt5_DIR"
     - cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr -DUSE_TESTS=ON
     - cmake --build . --config $BUILD_TYPE
   test_script:
