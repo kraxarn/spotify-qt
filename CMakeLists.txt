@@ -41,6 +41,11 @@ else ()
 	endif ()
 endif ()
 
+# Check if Qt was found
+if (NOT QT_VERSION_MAJOR)
+	message(FATAL_ERROR "Qt not found, please install Qt 5/6 first")
+endif ()
+
 # Prefer new OpenGL
 if (POLICY CMP0072)
 	cmake_policy(SET CMP0072 NEW)
