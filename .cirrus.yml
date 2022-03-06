@@ -16,7 +16,7 @@ linux_task:
     cpu: 8
   install_dependencies_script:
     - apt update
-    - apt install build-essential python3 python3-pip cmake curl fuse kmod -y
+    - apt install build-essential python3 python3-pip cmake curl libfuse-dev kmod -y
     - apt install libgl1-mesa-dev libxkbcommon-x11-0 libpulse-dev libxcb-util1 libxcb-glx0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-render0 libxcb-shape0 libxcb-shm0 libxcb-sync1 libxcb-xfixes0 libxcb-xinerama0 libxcb1 -y
     - modprobe fuse
     - python3 -m pip install aqtinstall
