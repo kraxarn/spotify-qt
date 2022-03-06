@@ -133,12 +133,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>saved_albums</b> (lib
 <tr class="memitem:a549190fb118ee8b93d953749534624ea"><td class="memItemLeft" align="right" valign="top"><a id="a549190fb118ee8b93d953749534624ea" name="a549190fb118ee8b93d953749534624ea"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>saved_tracks</b> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;callback)</td></tr>
 <tr class="separator:a549190fb118ee8b93d953749534624ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6af6692c459e54cf5bfe15ea48c9ab6"><td class="memItemLeft" align="right" valign="top"><a id="ab6af6692c459e54cf5bfe15ea48c9ab6" name="ab6af6692c459e54cf5bfe15ea48c9ab6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>add_saved_track</b> (const std::string &amp;track_id, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:ab6af6692c459e54cf5bfe15ea48c9ab6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adfd2811d1d105a146907b4030912fc1c"><td class="memItemLeft" align="right" valign="top"><a id="adfd2811d1d105a146907b4030912fc1c" name="adfd2811d1d105a146907b4030912fc1c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>remove_saved_track</b> (const std::string &amp;track_id, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:adfd2811d1d105a146907b4030912fc1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcaefb99bcfd07a4ecaa91efea82e49b"><td class="memItemLeft" align="right" valign="top"><a id="adcaefb99bcfd07a4ecaa91efea82e49b" name="adcaefb99bcfd07a4ecaa91efea82e49b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>add_saved_tracks</b> (const std::vector&lt; std::string &gt; &amp;track_ids, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:adcaefb99bcfd07a4ecaa91efea82e49b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21fc73a21414699593b44d1e1c17c9b0"><td class="memItemLeft" align="right" valign="top"><a id="a21fc73a21414699593b44d1e1c17c9b0" name="a21fc73a21414699593b44d1e1c17c9b0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>remove_saved_tracks</b> (const std::vector&lt; std::string &gt; &amp;track_ids, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a21fc73a21414699593b44d1e1c17c9b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5ae05de44a4673591aa0b472ab382f6"><td class="memItemLeft" align="right" valign="top"><a id="aa5ae05de44a4673591aa0b472ab382f6" name="aa5ae05de44a4673591aa0b472ab382f6"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>is_saved_track</b> (const std::vector&lt; std::string &gt; &amp;track_ids, lib::callback&lt; std::vector&lt; bool &gt; &gt; &amp;callback)</td></tr>
 <tr class="separator:aa5ae05de44a4673591aa0b472ab382f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -200,12 +200,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>edit_playlist</b> (co
 <tr class="memitem:a8a8597efa397b0941d4b3a301a3fd9c4"><td class="memItemLeft" align="right" valign="top"><a id="a8a8597efa397b0941d4b3a301a3fd9c4" name="a8a8597efa397b0941d4b3a301a3fd9c4"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>playlist_tracks</b> (const <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &amp;<a class="el" href="classlib_1_1spt_1_1playlist.html">playlist</a>, lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;callback)</td></tr>
 <tr class="separator:a8a8597efa397b0941d4b3a301a3fd9c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf0b14d534672c1424b5985381ab7dd7"><td class="memItemLeft" align="right" valign="top"><a id="aaf0b14d534672c1424b5985381ab7dd7" name="aaf0b14d534672c1424b5985381ab7dd7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>add_to_playlist</b> (const std::string &amp;playlist_id, const std::string &amp;track_id, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:aaf0b14d534672c1424b5985381ab7dd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a747d28bd5330a3660d7ec37103048974"><td class="memItemLeft" align="right" valign="top"><a id="a747d28bd5330a3660d7ec37103048974" name="a747d28bd5330a3660d7ec37103048974"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>remove_from_playlist</b> (const std::string &amp;playlist_id, const std::string &amp;track_id, int pos, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a747d28bd5330a3660d7ec37103048974"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a785de2dbae1847aa8bfcc40e15d15a5c"><td class="memItemLeft" align="right" valign="top"><a id="a785de2dbae1847aa8bfcc40e15d15a5c" name="a785de2dbae1847aa8bfcc40e15d15a5c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>add_to_playlist</b> (const std::string &amp;playlist_id, const std::vector&lt; std::string &gt; &amp;track_uris, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a785de2dbae1847aa8bfcc40e15d15a5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4946bcaa782bf1b6408627f5d162eab5"><td class="memItemLeft" align="right" valign="top"><a id="a4946bcaa782bf1b6408627f5d162eab5" name="a4946bcaa782bf1b6408627f5d162eab5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>remove_from_playlist</b> (const std::string &amp;playlist_id, const std::vector&lt; std::pair&lt; int, std::string &gt; &gt; &amp;track_index_uris, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a4946bcaa782bf1b6408627f5d162eab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54577b28fb5db9a3fa466e8626ebf975"><td class="memItemLeft" align="right" valign="top"><a id="a54577b28fb5db9a3fa466e8626ebf975" name="a54577b28fb5db9a3fa466e8626ebf975"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>search</b> (const std::string &amp;query, lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1search__results.html">lib::spt::search_results</a> &gt; &amp;callback)</td></tr>
 <tr class="separator:a54577b28fb5db9a3fa466e8626ebf975"><td class="memSeparator" colspan="2">&#160;</td></tr>
