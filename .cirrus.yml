@@ -30,5 +30,5 @@ linux_task:
   package_script:
     - curl -L https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage -o $CIRRUS_WORKING_DIR/linuxdeployqt
     - chmod +x $CIRRUS_WORKING_DIR/linuxdeployqt
-  upload_artifacts:
+  artifacts:
     path: "spotify-qt/*"
