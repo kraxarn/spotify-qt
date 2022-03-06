@@ -279,18 +279,31 @@ void Menu::Track::onLike(bool /*checked*/)
 	}
 }
 
+void Menu::Track::addToQueue(const QList<PlaylistTrack>::const_iterator &begin,
+	const QList<PlaylistTrack>::const_iterator &end)
+{
+	if (begin == end)
+	{
+		return;
+	}
+
+	const auto uri = lib::spt::api::api::to_uri("track", begin->second.id);
+	spotify.add_to_queue(uri, [this, begin, end](const std::string &status)
+	{
+		if (!status.empty())
+		{
+			StatusMessage::error(QString::fromStdString(status));
+			return;
+		}
+
+		addToQueue(begin + 1, end);
+	});
+}
+
 void Menu::Track::onAddToQueue(bool /*checked*/)
 {
 	// The API only supports adding a single track at once
-	for (const auto &track: tracks)
-	{
-		// TODO: Could end up in the incorrect order
-		const auto uri = lib::spt::api::api::to_uri("track", track.second.id);
-		spotify.add_to_queue(uri, [](const std::string &status)
-		{
-			StatusMessage::error(QString::fromStdString(status));
-		});
-	}
+	addToQueue(tracks.cbegin(), tracks.cend());
 }
 
 void Menu::Track::onRemoveFromPlaylist(bool /*checked*/)

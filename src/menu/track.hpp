@@ -56,6 +56,9 @@ namespace Menu
 		void viewArtist(const lib::spt::entity &artist);
 		void setLiked(bool liked);
 
+		void addToQueue(const QList<PlaylistTrack>::const_iterator &begin,
+			const QList<PlaylistTrack>::const_iterator &end);
+
 		auto getRemoveFromPlaylistAction(const std::string &currentUserId) -> QAction *;
 		auto getArtistObject(const lib::spt::artist *fromArtist) -> QObject *;
 		auto getAlbumAction() -> QAction *;
