@@ -25,11 +25,11 @@ linux_task:
     - cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr -DUSE_TESTS=ON
     - make -j8
   test_script:
-    - "$CIRRUS_WORKING_DIR/spotify-qt/lib/test/spotify-qt-lib-test"
+    - "$CIRRUS_WORKING_DIR/lib/test/spotify-qt-lib-test"
   install_script:
     - make DESTDIR="$CIRRUS_WORKING_DIR/dist" install
   package_script:
     - curl -L https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage -o $CIRRUS_WORKING_DIR/linuxdeployqt
     - chmod +x $CIRRUS_WORKING_DIR/linuxdeployqt
   artifacts:
-    path: "spotify-qt/*"
+    path: "dist/*"
