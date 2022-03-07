@@ -3,10 +3,7 @@
 
 Context::HorizContent::HorizContent(lib::spt::api &spotify, spt::Current &current,
 	const lib::cache &cache, QWidget *parent)
-	: AbstractContent(parent),
-	spotify(spotify),
-	current(current),
-	cache(cache)
+	: AbstractContent(spotify, current, cache, parent)
 {
 	auto *layout = new QBoxLayout(QVBoxLayout::Direction::BottomToTop, this);
 	layout->setSpacing(0);
@@ -25,31 +22,31 @@ Context::HorizContent::HorizContent(lib::spt::api &spotify, spt::Current &curren
 		this, &Context::HorizContent::onSongMenu);
 }
 
-void Context::HorizContent::onSongMenu(const QPoint &pos)
-{
-	auto track = current.playback.item;
-	if (track.name.empty()
-		&& track.artists.empty())
-	{
-		return;
-	}
+// void Context::HorizContent::onSongMenu(const QPoint &pos)
+// {
+// 	auto track = current.playback.item;
+// 	if (track.name.empty()
+// 		&& track.artists.empty())
+// 	{
+// 		return;
+// 	}
 
-	auto *menu = new Menu::Track(track, spotify, cache, parentWidget());
-	menu->popup(mapToGlobal(pos));
-}
+// 	auto *menu = new Menu::Track(track, spotify, cache, parentWidget());
+// 	menu->popup(mapToGlobal(pos));
+// }
 
-void Context::HorizContent::reset()
-{
-	if (album != nullptr)
-	{
-		album->setPixmap(Icon::get("media-optical-audio").pixmap(album->size()));
-	}
+// void Context::HorizContent::reset()
+// {
+// 	if (album != nullptr)
+// 	{
+// 		album->setPixmap(Icon::get("media-optical-audio").pixmap(album->size()));
+// 	}
 
-	if (nowPlaying != nullptr)
-	{
-		nowPlaying->setNoPlaying();
-	}
-}
+// 	if (nowPlaying != nullptr)
+// 	{
+// 		nowPlaying->setNoPlaying();
+// 	}
+// }
 
 void Context::HorizContent::setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage)
 {
@@ -65,14 +62,14 @@ void Context::HorizContent::setAlbum(const lib::spt::entity &albumEntity, const 
 // 	return currentlyPlaying;
 // }
 
-void Context::HorizContent::setCurrentlyPlaying(const lib::spt::track &track)
-{
-	if (nowPlaying != nullptr)
-	{
-		nowPlaying->setTrack(track);
-	}
-	currentlyPlaying = track;
-}
+// void Context::HorizContent::setCurrentlyPlaying(const lib::spt::track &track)
+// {
+// 	if (nowPlaying != nullptr)
+// 	{
+// 		nowPlaying->setTrack(track);
+// 	}
+// 	currentlyPlaying = track;
+// }
 
 void Context::HorizContent::resizeEvent(QResizeEvent *event)
 {

@@ -3,10 +3,7 @@
 
 Context::Content::Content(lib::spt::api &spotify, spt::Current &current,
 	const lib::cache &cache, QWidget *parent)
-	: AbstractContent(parent),
-	spotify(spotify),
-	current(current),
-	cache(cache)
+	: AbstractContent(spotify, current, cache, parent)
 {
 	auto *layout = new QHBoxLayout(this);
 	layout->setSpacing(0);
@@ -30,31 +27,6 @@ Context::Content::Content(lib::spt::api &spotify, spt::Current &current,
 	setFixedHeight(layout->minimumSize().height());
 }
 
-void Context::Content::onSongMenu(const QPoint &pos)
-{
-	auto track = current.playback.item;
-	if (track.name.empty() && track.artists.empty())
-	{
-		return;
-	}
-
-	auto *menu = new Menu::Track(track, spotify, cache, parentWidget());
-	menu->popup(mapToGlobal(pos));
-}
-
-void Context::Content::reset()
-{
-	if (album != nullptr)
-	{
-		album->setPixmap(Icon::get("media-optical-audio").pixmap(album->size()));
-	}
-
-	if (nowPlaying != nullptr)
-	{
-		nowPlaying->setNoPlaying();
-	}
-}
-
 void Context::Content::setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage)
 {
 	if (album != nullptr)
@@ -62,13 +34,4 @@ void Context::Content::setAlbum(const lib::spt::entity &albumEntity, const QPixm
 		album->setPixmap(Image::mask(albumImage));
 		album->setToolTip(QString::fromStdString(albumEntity.name));
 	}
-}
-
-void Context::Content::setCurrentlyPlaying(const lib::spt::track &track)
-{
-	if (nowPlaying != nullptr)
-	{
-		nowPlaying->setTrack(track);
-	}
-	currentlyPlaying = track;
 }

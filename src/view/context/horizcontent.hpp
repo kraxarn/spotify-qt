@@ -36,13 +36,13 @@ namespace Context
 		void resizeEvent(QResizeEvent *event); 
 
 	private:
-		lib::spt::api &spotify;
-		spt::Current &current;
-		const lib::cache &cache;
+		// lib::spt::api &spotify;
+		// spt::Current &current;
+		// const lib::cache &cache;
 
-		AlbumCover *album = nullptr;
-		NowPlaying *nowPlaying = nullptr;
+		// AlbumCover *album = nullptr;
+		// NowPlaying *nowPlaying = nullptr;
 
-		void onSongMenu(const QPoint &pos);
+		// void onSongMenu(const QPoint &pos);
 	};
 }

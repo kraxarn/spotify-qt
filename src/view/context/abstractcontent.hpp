@@ -25,19 +25,29 @@ namespace Context
 	Q_OBJECT
 
 	public:
-		AbstractContent(QWidget *parent);
+		AbstractContent(lib::spt::api &spotify, spt::Current &current,
+	const lib::cache &cache, QWidget *parent);
 
-		virtual void reset() = 0;
+		void reset();
 		
 		auto getCurrentlyPlaying() const -> const lib::spt::track &;
 
-		virtual void setCurrentlyPlaying(const lib::spt::track &track) = 0;
+		void setCurrentlyPlaying(const lib::spt::track &track);
 
 		virtual void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage) = 0;
 
 		virtual ~AbstractContent() {};
 
 	protected:
+		lib::spt::api &spotify;
+		spt::Current &current;
+		const lib::cache &cache;
+
+		QLabel *album = nullptr;
+		NowPlaying *nowPlaying = nullptr;
+		
 		lib::spt::track currentlyPlaying;
+		void onSongMenu(const QPoint &pos);
+	
 	};
 }
