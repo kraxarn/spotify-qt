@@ -36,13 +36,6 @@ namespace Context
 		void resizeEvent(QResizeEvent *event); 
 
 	private:
-		// lib::spt::api &spotify;
-		// spt::Current &current;
-		// const lib::cache &cache;
-
-		// AlbumCover *album = nullptr;
-		// NowPlaying *nowPlaying = nullptr;
-
-		// void onSongMenu(const QPoint &pos);
+		AlbumCover *album = nullptr;
 	};
 }

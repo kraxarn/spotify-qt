@@ -16,7 +16,7 @@ Context::Content::Content(lib::spt::api &spotify, spt::Current &current,
 	nowPlaying = new Context::NowPlaying(this);
 	layout->addWidget(nowPlaying);
 
-	reset();
+	AbstractContent::reset();
 
 	// Show menu when clicking
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
