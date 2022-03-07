@@ -8,7 +8,6 @@ Context::View::View(lib::spt::api &spotify, lib::settings &settings, spt::Curren
 	current(current),
 	cache(cache)
 {
-	// check if user wants a scalable album image or not
 	reloadAlbumContent(settings.general.expand_album_cover);
 
 	title = new Context::Title(spotify, current, cache, this);
@@ -21,6 +20,7 @@ void Context::View::reloadAlbumContent(bool shouldBeExpandable)
 {
 	albumShouldBeExpandable = shouldBeExpandable;
 	 
+	// check if user wants a scalable album image or not
 	if (albumShouldBeExpandable)
 	{
 		albumContent = new Context::HorizContent(spotify, current, cache, this);

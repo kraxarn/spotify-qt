@@ -25,14 +25,11 @@ namespace Context
 	Q_OBJECT
 
 	public:
-		AbstractContent(QWidget *parent) : QWidget(parent) {}
+		AbstractContent(QWidget *parent);
 
 		virtual void reset() = 0;
 		
-		auto getCurrentlyPlaying() const -> const lib::spt::track &
-		{
-			return currentlyPlaying;
-		}
+		auto getCurrentlyPlaying() const -> const lib::spt::track &;
 
 		virtual void setCurrentlyPlaying(const lib::spt::track &track) = 0;
 
