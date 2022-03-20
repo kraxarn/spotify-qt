@@ -34,7 +34,7 @@ namespace Context
 
 		void setCurrentlyPlaying(const lib::spt::track &track);
 
-		virtual void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage) = 0;
+		void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage);
 
 		virtual ~AbstractContent() {};
 
@@ -43,7 +43,7 @@ namespace Context
 		spt::Current &current;
 		const lib::cache &cache;
 
-		QLabel *album = nullptr;
+		AlbumCover *album = nullptr;
 		NowPlaying *nowPlaying = nullptr;
 		
 		lib::spt::track currentlyPlaying;

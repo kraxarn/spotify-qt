@@ -22,15 +22,6 @@ Context::HorizContent::HorizContent(lib::spt::api &spotify, spt::Current &curren
 		this, &Context::HorizContent::onSongMenu);
 }
 
-void Context::HorizContent::setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage)
-{
-	if (album != nullptr)
-	{
-		album->setPixmap(albumImage);
-		album->setToolTip(QString::fromStdString(albumEntity.name));
-	}
-}
-
 void Context::HorizContent::resizeEvent(QResizeEvent *event)
 {
 	auto newWidth = event->size().width();

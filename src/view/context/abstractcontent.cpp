@@ -14,6 +14,15 @@ auto Context::AbstractContent::getCurrentlyPlaying() const -> const lib::spt::tr
 	return currentlyPlaying;
 }
 
+void Context::AbstractContent::setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage)
+{
+	if (album != nullptr)
+	{
+		album->setPixmap(Image::mask(albumImage));
+		album->setToolTip(QString::fromStdString(albumEntity.name));
+	}
+}
+
 void Context::AbstractContent::onSongMenu(const QPoint &pos)
 {
 	auto track = current.playback.item;

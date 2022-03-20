@@ -9,7 +9,7 @@ Context::Content::Content(lib::spt::api &spotify, spt::Current &current,
 	layout->setSpacing(0);
 	layout->setAlignment(Qt::AlignBottom);
 
-	album = new QLabel(this);
+	album = new AlbumCover(this);
 	album->setFixedSize(albumSize, albumSize);
 
 	layout->addWidget(album);
@@ -25,13 +25,4 @@ Context::Content::Content(lib::spt::api &spotify, spt::Current &current,
 
 	// Context doesn't make sense to resize vertically
 	setFixedHeight(layout->minimumSize().height());
-}
-
-void Context::Content::setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage)
-{
-	if (album != nullptr)
-	{
-		album->setPixmap(Image::mask(albumImage));
-		album->setToolTip(QString::fromStdString(albumEntity.name));
-	}
 }

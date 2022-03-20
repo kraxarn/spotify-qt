@@ -25,16 +25,9 @@ namespace Context
 		Content(lib::spt::api &spotify, spt::Current &current,
 			const lib::cache &cache, QWidget *parent);
 
-		void reset();
-
-		void setCurrentlyPlaying(const lib::spt::track &track);
-
-		void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage);
 
 	private:
 		/** Width and height of album */
 		static constexpr int albumSize = 64;
-
-		QLabel *album = nullptr;
 	};
 }
