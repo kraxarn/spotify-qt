@@ -38,6 +38,7 @@ public:
 	void refresh();
 	void refreshed(const lib::spt::playback &playback);
 	void toggleTrackNumbers(bool enabled);
+	void toggleExpandableAlbum(bool shouldBeExpandable);
 	bool isValid() const;
 	void setSearchVisible(bool visible);
 	void addSidePanelTab(QWidget *widget, const QString &title);

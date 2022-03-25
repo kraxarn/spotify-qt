@@ -40,6 +40,7 @@ namespace SettingsPage
 		QCheckBox *albumInTray = nullptr;
 		QCheckBox *invertTrayIcon = nullptr;
 		QCheckBox *notifyTrackChange = nullptr;
+		QCheckBox *expandAlbumCover = nullptr;
 		QCheckBox *closeToTray = nullptr;
 
 		// Title bar

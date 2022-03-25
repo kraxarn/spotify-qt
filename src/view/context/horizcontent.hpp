@@ -9,25 +9,24 @@
 #include "util/icon.hpp"
 #include "util/image.hpp"
 #include "view/context/nowplaying.hpp"
+#include "view/context/albumcover.hpp"
 #include "view/context/abstractcontent.hpp"
 
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMenu>
+#include <QResizeEvent>
 
 namespace Context
 {
-	class Content: public AbstractContent
+	class HorizContent: public AbstractContent
 	{
 
 	public:
-		Content(lib::spt::api &spotify, spt::Current &current,
+		HorizContent(lib::spt::api &spotify, spt::Current &current,
 			const lib::cache &cache, QWidget *parent);
 
-
-	private:
-		/** Width and height of album */
-		static constexpr int albumSize = 64;
+		void resizeEvent(QResizeEvent *event); 
 	};
 }

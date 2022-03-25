@@ -1,16 +1,14 @@
-#include "view/context/content.hpp"
+#include "view/context/horizcontent.hpp"
 #include "view/context/abstractcontent.hpp"
 
-Context::Content::Content(lib::spt::api &spotify, spt::Current &current,
+Context::HorizContent::HorizContent(lib::spt::api &spotify, spt::Current &current,
 	const lib::cache &cache, QWidget *parent)
 	: AbstractContent(spotify, current, cache, parent)
 {
-	auto *layout = new QHBoxLayout(this);
+	auto *layout = new QBoxLayout(QVBoxLayout::Direction::BottomToTop, this);
 	layout->setSpacing(0);
-	layout->setAlignment(Qt::AlignBottom);
 
 	album = new AlbumCover(this);
-	album->setFixedSize(albumSize, albumSize);
 
 	layout->addWidget(album);
 	nowPlaying = new Context::NowPlaying(this);
@@ -21,8 +19,14 @@ Context::Content::Content(lib::spt::api &spotify, spt::Current &current,
 	// Show menu when clicking
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QLabel::connect(this, &QWidget::customContextMenuRequested,
-		this, &Context::Content::onSongMenu);
+		this, &Context::HorizContent::onSongMenu);
+}
 
-	// Context doesn't make sense to resize vertically
-	setFixedHeight(layout->minimumSize().height());
+void Context::HorizContent::resizeEvent(QResizeEvent *event)
+{
+	auto newWidth = event->size().width();
+	auto newHeight = event->size().height();
+	
+	QWidget::setFixedHeight(newWidth);
+	album->scaleCover(newWidth, newHeight);
 }

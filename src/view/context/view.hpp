@@ -1,7 +1,10 @@
 #pragma once
 
 #include "view/context/title.hpp"
+#include "view/context/horizcontent.hpp"
+#include "view/context/abstractcontent.hpp"
 #include "view/context/content.hpp"
+#include "lib/settings.hpp"
 
 #include <QDockWidget>
 
@@ -12,7 +15,7 @@ namespace Context
 	Q_OBJECT
 
 	public:
-		View(lib::spt::api &spotify, spt::Current &current,
+		View(lib::spt::api &spotify, lib::settings &settings, spt::Current &current,
 			const lib::cache &cache, QWidget *parent);
 
 		void updateContextIcon();
@@ -22,9 +25,16 @@ namespace Context
 		void setCurrentlyPlaying(const lib::spt::track &track) const;
 
 		void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage) const;
+		void reloadAlbumContent(bool shouldBeExpandable);
 
 	private:
+		bool albumShouldBeExpandable = false;
+
+		lib::spt::api &spotify;
+		spt::Current &current;
+		const lib::cache &cache;
+
 		Title *title = nullptr;
-		Content *content = nullptr;
+		AbstractContent *albumContent = nullptr;
 	};
 }

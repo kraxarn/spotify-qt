@@ -352,7 +352,7 @@ auto MainWindow::createCentralWidget() -> QWidget *
 
 	libraryList = new List::Library(*spotify, cache, this);
 	playlistList = new List::Playlist(*spotify, settings, cache, this);
-	contextView = new Context::View(*spotify, current, cache, this);
+	contextView = new Context::View(*spotify, settings, current, cache, this);
 
 	// Left side panel
 	addDockWidget(Qt::LeftDockWidgetArea,
@@ -432,7 +432,7 @@ void MainWindow::saveTracksToCache(const std::string &id,
 void MainWindow::setAlbumImage(const lib::spt::entity &albumEntity,
 	const std::string &albumImageUrl)
 {
-	Http::getAlbum(albumImageUrl, *httpClient, cache,
+	Http::getAlbum(current.playback.item.image_large(), *httpClient, cache,
 		[this, albumEntity](const QPixmap &image)
 		{
 			if (contextView != nullptr)
@@ -507,6 +507,11 @@ void MainWindow::toggleTrackNumbers(bool enabled)
 				.toInt() + 1, 3)
 			: QString());
 	}
+}
+
+void MainWindow::toggleExpandableAlbum(bool shouldBeExpandable)
+{
+	contextView->reloadAlbumContent(shouldBeExpandable);
 }
 
 //region Getters

@@ -1,17 +1,35 @@
 #include "view/context/view.hpp"
 #include "mainwindow.hpp"
 
-Context::View::View(lib::spt::api &spotify, spt::Current &current,
+Context::View::View(lib::spt::api &spotify, lib::settings &settings, spt::Current &current,
 	const lib::cache &cache, QWidget *parent)
-	: QDockWidget(parent)
+	: QDockWidget(parent),
+	spotify(spotify),
+	current(current),
+	cache(cache)
 {
-	content = new Context::Content(spotify, current, cache, this);
-	setWidget(content);
+	reloadAlbumContent(settings.general.expand_album_cover);
 
 	title = new Context::Title(spotify, current, cache, this);
 	setTitleBarWidget(title);
 
 	setFeatures(QDockWidget::DockWidgetMovable | DockWidgetFloatable);
+}
+
+void Context::View::reloadAlbumContent(bool shouldBeExpandable)
+{
+	albumShouldBeExpandable = shouldBeExpandable;
+	 
+	// check if user wants a scalable album image or not
+	if (albumShouldBeExpandable)
+	{
+		albumContent = new Context::HorizContent(spotify, current, cache, this);
+	}
+	else 
+	{
+		albumContent = new Context::Content(spotify, current, cache, this);
+	}
+	setWidget(albumContent);
 }
 
 void Context::View::updateContextIcon()
@@ -24,33 +42,20 @@ void Context::View::updateContextIcon()
 
 void Context::View::resetCurrentlyPlaying() const
 {
-	if (content != nullptr)
-	{
-		content->reset();
-	}
+	albumContent->reset();
 }
 
 auto Context::View::getCurrentlyPlaying() const -> const lib::spt::track &
 {
-	if (content == nullptr)
-	{
-		throw std::runtime_error("No content");
-	}
-	return content->getCurrentlyPlaying();
+	return albumContent->getCurrentlyPlaying();
 }
 
 void Context::View::setCurrentlyPlaying(const lib::spt::track &track) const
 {
-	if (content != nullptr)
-	{
-		content->setCurrentlyPlaying(track);
-	}
+	albumContent->setCurrentlyPlaying(track);
 }
 
 void Context::View::setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage) const
 {
-	if (content != nullptr)
-	{
-		content->setAlbum(albumEntity, albumImage);
-	}
+	albumContent->setAlbum(albumEntity, albumImage);
 }

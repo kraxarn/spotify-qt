@@ -216,3 +216,9 @@ build/
 
 # Idea based stuff
 .idea/
+
+# VSCode based stuff
+.vscode/
+
+# Assorted
+run.sh
