@@ -56,27 +56,19 @@ Dialog::AddToPlaylist::AddToPlaylist(lib::spt::api &spotify,
 void Dialog::AddToPlaylist::ask(lib::spt::api &spotify, const lib::spt::playlist &playlist,
 	const std::vector<std::string> &trackIds, QWidget *parent)
 {
-	auto callback = [&spotify, trackIds, parent](const std::vector<lib::spt::track> &playlistTracks)
-	{
-		auto *dialog = new Dialog::AddToPlaylist(spotify, playlistTracks, trackIds, parent);
-
-		if (!dialog->shouldAsk())
+	spotify.playlist_tracks(playlist,
+		[&spotify, trackIds, parent](const std::vector<lib::spt::track> &playlistTracks)
 		{
-			dialog->addTracks(trackIds);
-			return;
-		}
+			auto *dialog = new Dialog::AddToPlaylist(spotify, playlistTracks, trackIds, parent);
 
-		dialog->open();
-	};
+			if (!dialog->shouldAsk())
+			{
+				dialog->addTracks(trackIds);
+				return;
+			}
 
-	if (playlist.tracks.empty())
-	{
-		spotify.playlist_tracks(playlist, callback);
-	}
-	else
-	{
-		callback(playlist.tracks);
-	}
+			dialog->open();
+		});
 }
 
 auto Dialog::AddToPlaylist::shouldAsk() -> bool
