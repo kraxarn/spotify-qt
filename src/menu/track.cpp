@@ -139,7 +139,7 @@ auto Menu::Track::getRemoveFromPlaylistAction(const std::string &currentUserId) 
 		return nullptr;
 	}
 
-	const auto icon = Icon::get("list-remove");
+	const auto icon = Icon::get(QStringLiteral("list-remove"));
 	const auto text = QStringLiteral("Remove from playlist");
 
 	auto *action = new QAction(icon, text, this);
