@@ -95,6 +95,13 @@ Menu::Track::Track(const QList<PlaylistTrack> &tracks, lib::spt::api &spotify,
 	addSeparator();
 	addMenu(new Menu::AddToPlaylist(getTrackIds(), spotify, cache, this));
 
+	auto *playlistItem = mainWindow->getCurrentPlaylistItem();
+	if (playlistItem != nullptr)
+	{
+		const auto playlistIndex = playlistItem->data(static_cast<int>(DataRole::Index)).toInt();
+		currentPlaylist = mainWindow->getPlaylist(playlistIndex);
+	}
+
 	// Remove from playlist
 	const auto &currentUserId = mainWindow->getCurrentUser().id;
 	auto *removeFromPlaylist = getRemoveFromPlaylistAction(currentUserId);
