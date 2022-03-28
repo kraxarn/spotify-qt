@@ -100,7 +100,7 @@ auto DeveloperMenu::dialogMenu() -> QMenu *
 		new TracksCacheDialog(cache, mainWindow),
 		new Dialog::WhatsNew(settings, httpClient, mainWindow),
 		new Dialog::CreatePlaylist({}, spotify, mainWindow),
-		new Dialog::AddToPlaylist(spotify, {}, {}, mainWindow),
+		new Dialog::AddToPlaylist(spotify, lib::spt::playlist(), {}, {}, mainWindow),
 	};
 
 	for (auto *dialog: dialogs)

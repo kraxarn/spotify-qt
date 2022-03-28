@@ -6,11 +6,12 @@
 #include <QPushButton>
 #include <utility>
 
-Dialog::AddToPlaylist::AddToPlaylist(lib::spt::api &spotify,
+Dialog::AddToPlaylist::AddToPlaylist(lib::spt::api &spotify, lib::spt::playlist playlist,
 	const std::vector<lib::spt::track> &playlistTracks,
 	std::vector<std::string> trackIds, QWidget *parent)
 	: Base(parent),
 	spotify(spotify),
+	playlist(std::move(playlist)),
 	trackIdsToAdd(std::move(trackIds))
 {
 	setTitle(QStringLiteral("Duplicate"));
@@ -57,9 +58,10 @@ void Dialog::AddToPlaylist::ask(lib::spt::api &spotify, const lib::spt::playlist
 	const std::vector<std::string> &trackIds, QWidget *parent)
 {
 	spotify.playlist_tracks(playlist,
-		[&spotify, trackIds, parent](const std::vector<lib::spt::track> &playlistTracks)
+		[&spotify, playlist, trackIds, parent](const std::vector<lib::spt::track> &playlistTracks)
 		{
-			auto *dialog = new Dialog::AddToPlaylist(spotify, playlistTracks, trackIds, parent);
+			auto *dialog = new Dialog::AddToPlaylist(spotify, playlist,
+				playlistTracks, trackIds, parent);
 
 			if (!dialog->shouldAsk())
 			{

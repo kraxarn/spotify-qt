@@ -8,10 +8,9 @@ namespace Dialog
 	class AddToPlaylist: public Base
 	{
 	public:
-		AddToPlaylist(lib::spt::api &spotify,
+		AddToPlaylist(lib::spt::api &spotify, lib::spt::playlist playlist,
 			const std::vector<lib::spt::track> &playlistTracks,
-			std::vector<std::string> trackIds,
-			QWidget *parent);
+			std::vector<std::string> trackIds, QWidget *parent);
 
 		static void ask(lib::spt::api &spotify, const lib::spt::playlist &playlist,
 			const std::vector<std::string> &trackIds, QWidget *parent);
