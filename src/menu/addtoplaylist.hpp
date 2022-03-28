@@ -21,9 +21,6 @@ namespace Menu
 		void onAboutToShow();
 		void onTriggered(QAction *action);
 
-		auto getFilteredTrackIds(const std::vector<lib::spt::track> &tracks)
-		-> std::vector<std::string>;
-
 		void addToNewPlaylist();
 		void addToPlaylist(const lib::spt::playlist &playlist);
 	};

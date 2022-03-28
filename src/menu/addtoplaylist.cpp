@@ -1,9 +1,8 @@
 #include "menu/addtoplaylist.hpp"
-
 #include "mainwindow.hpp"
 #include "util/icon.hpp"
 #include "dialog/createplaylist.hpp"
-#include "dialog/duplicateplaylisttrack.hpp"
+#include "dialog/addtoplaylist.hpp"
 
 Menu::AddToPlaylist::AddToPlaylist(std::vector<std::string> trackIds, lib::spt::api &spotify,
 	const lib::cache &cache, QWidget *parent)
@@ -58,27 +57,6 @@ void Menu::AddToPlaylist::onTriggered(QAction *action)
 	}
 }
 
-auto Menu::AddToPlaylist::getFilteredTrackIds(const std::vector<lib::spt::track> &tracks)
--> std::vector<std::string>
-{
-	std::vector<std::string> results;
-
-	for (const auto &trackId: trackIds)
-	{
-		for (const auto &track: tracks)
-		{
-			if (trackId == track.id)
-			{
-				break;
-			}
-		}
-
-		results.push_back(trackId);
-	}
-
-	return results;
-}
-
 void Menu::AddToPlaylist::addToNewPlaylist()
 {
 	auto *createPlaylist = new Dialog::CreatePlaylist(trackIds, spotify, window());
@@ -87,50 +65,5 @@ void Menu::AddToPlaylist::addToNewPlaylist()
 
 void Menu::AddToPlaylist::addToPlaylist(const lib::spt::playlist &playlist)
 {
-	// Check existing tracks for any overlap
-	this->spotify.playlist_tracks(playlist,
-		[this, playlist](const std::vector<lib::spt::track> &playlistTracks)
-		{
-			auto filteredTrackIds = getFilteredTrackIds(playlistTracks);
-			auto response = DuplicateTrackResponse::AddAll;
-
-			if (playlistTracks.size() != filteredTrackIds.size())
-			{
-				auto *dialog = new Dialog::DuplicatePlaylistTrack(window());
-				dialog->exec();
-				response = dialog->response();
-			}
-
-			if (response == DuplicateTrackResponse::None)
-			{
-				return;
-			}
-
-			// Actually add
-			const auto &toAdd = response == DuplicateTrackResponse::AddAll
-				? trackIds
-				: filteredTrackIds;
-
-			std::vector<std::string> trackUris;
-			trackUris.reserve(toAdd.size());
-
-			for (const auto &trackId: toAdd)
-			{
-				trackUris.push_back(lib::spt::api::to_uri("track", trackId));
-			}
-
-			spotify.add_to_playlist(playlist.id, trackUris,
-				[playlist](const std::string &result)
-				{
-					if (!result.empty())
-					{
-						StatusMessage::error(QString("Failed to add track to playlist: %1")
-							.arg(QString::fromStdString(result)));
-						return;
-					}
-
-					StatusMessage::info(QString("Added to %1")
-						.arg(QString::fromStdString(playlist.name)));
-				});
-		});
+	new Dialog::AddToPlaylist(spotify, playlist, trackIds, window());
 }

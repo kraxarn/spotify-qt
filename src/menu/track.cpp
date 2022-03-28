@@ -1,6 +1,6 @@
 #include "menu/track.hpp"
 
-#include "dialog/duplicateplaylisttrack.hpp"
+#include "dialog/addtoplaylist.hpp"
 #include "mainwindow.hpp"
 #include "menu/addtoplaylist.hpp"
 
