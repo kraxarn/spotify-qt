@@ -8,11 +8,13 @@ namespace Dialog
 	class AddToPlaylist: public Base
 	{
 	public:
-		AddToPlaylist(lib::spt::api &spotify, lib::spt::playlist playlist,
-			std::vector<std::string> trackIds, QWidget *parent);
+		AddToPlaylist(lib::spt::api &spotify,
+			const std::vector<lib::spt::track> &playlistTracks,
+			std::vector<std::string> trackIds,
+			QWidget *parent);
 
-	protected:
-		void showEvent(QShowEvent *playlistTracks) override;
+		static void ask(lib::spt::api &spotify, const lib::spt::playlist &playlist,
+			const std::vector<std::string> &trackIds, QWidget *parent);
 
 	private:
 		lib::spt::api &spotify;
@@ -21,7 +23,6 @@ namespace Dialog
 		std::vector<std::string> trackIdsToAdd;
 
 		auto shouldAsk() -> bool;
-		void ask();
 
 		auto getTrackIdsNotInPlaylist() -> std::vector<std::string>;
 

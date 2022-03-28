@@ -65,5 +65,5 @@ void Menu::AddToPlaylist::addToNewPlaylist()
 
 void Menu::AddToPlaylist::addToPlaylist(const lib::spt::playlist &playlist)
 {
-	new Dialog::AddToPlaylist(spotify, playlist, trackIds, window());
+	Dialog::AddToPlaylist::ask(spotify, playlist, trackIds, window());
 }
