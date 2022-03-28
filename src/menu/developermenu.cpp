@@ -1,6 +1,7 @@
 #include "developermenu.hpp"
 #include "mainwindow.hpp"
 #include "dialog/createplaylist.hpp"
+#include "dialog/addtoplaylist.hpp"
 
 DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
@@ -99,6 +100,7 @@ auto DeveloperMenu::dialogMenu() -> QMenu *
 		new TracksCacheDialog(cache, mainWindow),
 		new Dialog::WhatsNew(settings, httpClient, mainWindow),
 		new Dialog::CreatePlaylist({}, spotify, mainWindow),
+		new Dialog::AddToPlaylist(spotify, lib::spt::playlist(), {}, mainWindow),
 	};
 
 	for (auto *dialog: dialogs)
