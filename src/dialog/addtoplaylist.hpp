@@ -7,6 +7,8 @@ namespace Dialog
 {
 	class AddToPlaylist: public Base
 	{
+	Q_OBJECT
+
 	public:
 		AddToPlaylist(lib::spt::api &spotify, lib::spt::playlist playlist,
 			const std::vector<lib::spt::track> &playlistTracks,

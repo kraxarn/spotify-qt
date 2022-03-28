@@ -9,6 +9,8 @@ namespace Menu
 {
 	class AddToPlaylist: public QMenu
 	{
+	Q_OBJECT
+
 	public:
 		AddToPlaylist(std::vector<std::string> trackIds, lib::spt::api &spotify,
 			const lib::cache &cache, QWidget *parent);
