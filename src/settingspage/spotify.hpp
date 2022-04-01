@@ -22,6 +22,9 @@ namespace SettingsPage
 		auto title() -> QString override;
 		auto save() -> bool override;
 
+	protected:
+		void showEvent(QShowEvent *event) override;
+
 	private:
 		QCheckBox *sptAlways = nullptr;
 		QCheckBox *sptAppStart = nullptr;

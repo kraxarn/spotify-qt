@@ -9,6 +9,16 @@ SettingsPage::Spotify::Spotify(lib::settings &settings, QWidget *parent)
 	addTab(config(), "Configuration");
 }
 
+void SettingsPage::Spotify::showEvent(QShowEvent *event)
+{
+	QTabWidget::showEvent(event);
+
+	if (sptBackend != nullptr && sptBackend->count() <= 1)
+	{
+		sptBackend->addItems(backends());
+	}
+}
+
 auto SettingsPage::Spotify::spotify() -> QWidget *
 {
 	auto *content = new QVBoxLayout();
@@ -173,7 +183,6 @@ auto SettingsPage::Spotify::config() -> QWidget *
 	sptLayout->addWidget(new QLabel("Backend", sptGroup), 2, 0);
 	sptBackend = new QComboBox(sptGroup);
 	sptBackend->addItem("Auto");
-	sptBackend->addItems(backends());
 	sptBackend->setCurrentText(QString::fromStdString(settings.spotify.backend));
 	sptLayout->addWidget(sptBackend, 2, 1);
 
