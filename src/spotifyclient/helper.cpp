@@ -26,6 +26,30 @@ auto SpotifyClient::Helper::clientExec(const QString &path, const QStringList &a
 	return process.readAllStandardOutput().trimmed();
 }
 
+auto SpotifyClient::Helper::getSpotifydPossibleValues(const QString &path,
+	const QString &type) -> QStringList
+{
+	const auto result = clientExec(path, QStringList({
+		QStringLiteral("--help"),
+	}));
+
+	for (auto &line: result.split('\n'))
+	{
+		if (!line.contains(type))
+		{
+			continue;
+		}
+
+		return line.right(line.length() - line.indexOf('[') - 1)
+			.remove(QStringLiteral("possible values: "))
+			.remove(']')
+			.trimmed()
+			.split(QStringLiteral(", "));
+	}
+
+	return {};
+}
+
 auto SpotifyClient::Helper::availableBackends(const QString &path) -> QStringList
 {
 	QStringList items;
@@ -51,24 +75,7 @@ auto SpotifyClient::Helper::availableBackends(const QString &path) -> QStringLis
 	}
 	else if (type == lib::client_type::spotifyd)
 	{
-		auto result = clientExec(path, QStringList({
-			"--help",
-		}));
-
-		for (auto &line: result.split('\n'))
-		{
-			if (!line.contains("audio backend"))
-			{
-				continue;
-			}
-
-			items.append(line.right(line.length() - line.indexOf('[') - 1)
-				.remove("possible values: ")
-				.remove(']')
-				.trimmed()
-				.split(", "));
-			break;
-		}
+		items = getSpotifydPossibleValues(path, QStringLiteral("audio backend"));
 	}
 
 	return items;

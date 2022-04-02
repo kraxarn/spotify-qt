@@ -23,5 +23,8 @@ namespace SpotifyClient
 		Helper() = default;
 
 		static auto clientExec(const QString &path, const QStringList &arguments) -> QString;
+
+		static auto getSpotifydPossibleValues(const QString &path,
+			const QString &type) -> QStringList;
 	};
 }
