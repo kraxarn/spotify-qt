@@ -203,9 +203,11 @@ auto SettingsPage::Spotify::config() -> QWidget *
 	sptLayout->addWidget(sptBitrate, 1, 1);
 
 	// Backend
-	sptLayout->addWidget(new QLabel("Backend", sptGroup), 2, 0);
+	auto *backendLabel = new QLabel(QStringLiteral("Audio backend"), sptGroup);
+	sptLayout->addWidget(backendLabel, 2, 0);
+
 	sptBackend = new QComboBox(sptGroup);
-	sptBackend->addItem("Auto");
+	sptBackend->addItem(QStringLiteral("Default"));
 	sptBackend->setCurrentText(QString::fromStdString(settings.spotify.backend));
 	sptLayout->addWidget(sptBackend, 2, 1);
 
