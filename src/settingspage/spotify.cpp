@@ -340,15 +340,14 @@ auto SettingsPage::Spotify::sptConfigExists() -> bool
 		|| QFile::exists(QString(R"(%1\AppData\Roaming\spotifyd\spotifyd.conf)").arg(homeLocation));
 }
 
+auto SettingsPage::Spotify::getPath() const -> QString
+{
+	return QString::fromStdString(settings.spotify.path);
+}
+
 auto SettingsPage::Spotify::backends() -> QStringList
 {
-	if (paths == nullptr)
-	{
-		paths = new QtPaths(this);
-	}
-
-	return SpotifyClient::Runner(settings, *paths, this)
-		.availableBackends();
+	return SpotifyClient::Helper::availableBackends(getPath());
 }
 
 auto SettingsPage::Spotify::getClientRunner() const -> const SpotifyClient::Runner *

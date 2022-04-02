@@ -41,11 +41,11 @@ namespace SettingsPage
 		QPushButton *startClient = nullptr;
 		QLabel *clientStatus = nullptr;
 
-		lib::paths *paths = nullptr;
-
 		void globalConfigToggle(int state);
 		void startClientToggle(int state);
 		static auto sptConfigExists() -> bool;
+
+		auto getPath() const -> QString;
 		auto backends() -> QStringList;
 
 		void updateClientStatus();
