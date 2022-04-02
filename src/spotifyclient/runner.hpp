@@ -30,9 +30,6 @@ namespace SpotifyClient
 		auto start() -> QString;
 		auto waitForStarted() const -> bool;
 
-		/** Wrapper for spt::ClientHelper::availableBackends */
-		auto availableBackends() -> QStringList;
-
 		static auto getLog() -> const std::vector<lib::log_message> &;
 		auto isRunning() const -> bool;
 

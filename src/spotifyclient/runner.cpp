@@ -151,11 +151,6 @@ auto SpotifyClient::Runner::waitForStarted() const -> bool
 	return process->waitForStarted(timeout);
 }
 
-auto SpotifyClient::Runner::availableBackends() -> QStringList
-{
-	return SpotifyClient::Helper::availableBackends(path);
-}
-
 auto SpotifyClient::Runner::isRunning() const -> bool
 {
 	return process == nullptr
