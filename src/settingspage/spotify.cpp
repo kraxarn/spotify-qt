@@ -17,6 +17,18 @@ void SettingsPage::Spotify::showEvent(QShowEvent *event)
 	{
 		sptBackend->addItems(backends());
 	}
+
+	if (sptDeviceType != nullptr && sptDeviceType->count() <= 1)
+	{
+		for (const auto deviceType: deviceTypes())
+		{
+			addDeviceType(deviceType);
+			if (settings.spotify.device_type == deviceType)
+			{
+				sptDeviceType->setCurrentIndex(sptDeviceType->count() - 1);
+			}
+		}
+	}
 }
 
 auto SettingsPage::Spotify::spotify() -> QWidget *
@@ -197,6 +209,14 @@ auto SettingsPage::Spotify::config() -> QWidget *
 	sptBackend->setCurrentText(QString::fromStdString(settings.spotify.backend));
 	sptLayout->addWidget(sptBackend, 2, 1);
 
+	// Device type
+	auto *deviceTypeLabel = new QLabel(QStringLiteral("Device type"), sptGroup);
+	sptLayout->addWidget(deviceTypeLabel, 3, 0);
+
+	sptDeviceType = new QComboBox(sptGroup);
+	sptDeviceType->addItem(QStringLiteral("Default"));
+	sptLayout->addWidget(sptDeviceType, 3, 1);
+
 	// KWallet keyring for password
 #ifdef USE_DBUS
 	if (KWallet(QString::fromStdString(settings.spotify.username)).isEnabled())
@@ -204,7 +224,7 @@ auto SettingsPage::Spotify::config() -> QWidget *
 		sptKeyring = new QCheckBox("Save password in keyring", this);
 		sptKeyring->setToolTip("Store password in keyring (using KWallet)");
 		sptKeyring->setChecked(settings.spotify.keyring_password);
-		sptLayout->addWidget(sptKeyring, 3, 0);
+		sptLayout->addWidget(sptKeyring, 4, 0);
 	}
 #endif
 
@@ -212,7 +232,7 @@ auto SettingsPage::Spotify::config() -> QWidget *
 	sptDiscovery = new QCheckBox("Enable discovery");
 	sptDiscovery->setToolTip("Enable discovery mode (librespot only)");
 	sptDiscovery->setChecked(!settings.spotify.disable_discovery);
-	sptLayout->addWidget(sptDiscovery, 4, 0);
+	sptLayout->addWidget(sptDiscovery, 5, 0);
 
 	return Widget::layoutToWidget(content, this);
 }
@@ -274,6 +294,16 @@ auto SettingsPage::Spotify::save() -> bool
 		settings.spotify.backend = sptBackend->currentIndex() == 0
 			? std::string()
 			: sptBackend->currentText().toStdString();
+	}
+
+	// Device type
+	if (sptDeviceType != nullptr)
+	{
+		const auto &selected = sptDeviceType->currentData();
+
+		settings.spotify.device_type = selected.canConvert<short>()
+			? static_cast<lib::device_type>(selected.value<short>())
+			: lib::device_type::unknown;
 	}
 
 	// Other Spotify stuff
@@ -348,6 +378,32 @@ auto SettingsPage::Spotify::getPath() const -> QString
 auto SettingsPage::Spotify::backends() -> QStringList
 {
 	return SpotifyClient::Helper::availableBackends(getPath());
+}
+
+auto SettingsPage::Spotify::deviceTypes() -> QList<lib::device_type>
+{
+	QList<lib::device_type> deviceTypes{
+		lib::device_type::computer,
+		lib::device_type::speaker,
+	};
+
+	// Always show current, if changed manually
+	const auto current = settings.spotify.device_type;
+	if (current != lib::device_type::unknown && !deviceTypes.contains(current))
+	{
+		deviceTypes.append(current);
+	}
+
+	return deviceTypes;
+}
+
+void SettingsPage::Spotify::addDeviceType(lib::device_type deviceType)
+{
+	const auto deviceTypeString = lib::enums<lib::device_type>::to_string(deviceType);
+	const auto text = QString::fromStdString(lib::strings::capitalize(deviceTypeString));
+	const auto data = static_cast<short>(deviceType);
+
+	sptDeviceType->addItem(text, data);
 }
 
 auto SettingsPage::Spotify::getClientRunner() const -> const SpotifyClient::Runner *

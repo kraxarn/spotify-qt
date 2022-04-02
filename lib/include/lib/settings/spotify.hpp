@@ -2,6 +2,7 @@
 
 #include "lib/json.hpp"
 #include "lib/enum/audioquality.hpp"
+#include "lib/enum/devicetype.hpp"
 
 #include <string>
 
@@ -65,6 +66,11 @@ namespace lib
 			 * Max items allowed to be queued
 			 */
 			int max_queue = 500;
+
+			/**
+			 * Device type for Spotify client
+			 */
+			lib::device_type device_type = device_type::unknown;
 		};
 
 		void to_json(nlohmann::json &j, const spotify &s);

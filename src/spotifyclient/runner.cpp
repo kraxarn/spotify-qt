@@ -127,6 +127,19 @@ auto SpotifyClient::Runner::start() -> QString
 		arguments.append("--disable-discovery");
 	}
 
+	const auto deviceType = settings.spotify.device_type;
+	if (deviceType != lib::device_type::unknown)
+	{
+		const auto deviceTypeString = lib::enums<lib::device_type>::to_string(deviceType);
+		if (!deviceTypeString.empty())
+		{
+			arguments.append({
+				QStringLiteral("--device-type"),
+				QString::fromStdString(deviceTypeString).remove(' '),
+			});
+		}
+	}
+
 	QProcess::connect(process, &QProcess::readyReadStandardOutput,
 		this, &Runner::readyRead);
 

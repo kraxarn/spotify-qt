@@ -31,6 +31,7 @@ namespace SettingsPage
 		QCheckBox *sptGlobal = nullptr;
 		QCheckBox *sptKeyring = nullptr;
 		QComboBox *sptBackend = nullptr;
+		QComboBox *sptDeviceType = nullptr;
 		QComboBox *sptBitrate = nullptr;
 		QGroupBox *sptGroup = nullptr;
 		QLabel *sptVersion = nullptr;
@@ -47,6 +48,9 @@ namespace SettingsPage
 
 		auto getPath() const -> QString;
 		auto backends() -> QStringList;
+
+		auto deviceTypes() -> QList<lib::device_type>;
+		void addDeviceType(lib::device_type deviceType);
 
 		void updateClientStatus();
 		void restartClient(bool checked);
