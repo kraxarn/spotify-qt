@@ -297,8 +297,12 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 			mainContent->getTracksList()->setPlayingTrackItem(currPlaying.id);
 		}
 
+		const auto &albumImageUrl = settings.general.expand_album_cover
+			? currPlaying.image_large()
+			: currPlaying.image_small();
+
 		contextView->setCurrentlyPlaying(currPlaying);
-		setAlbumImage(currPlaying.album, currPlaying.image_small());
+		setAlbumImage(currPlaying.album, albumImageUrl);
 		setWindowTitle(QString::fromStdString(currPlaying.title()));
 		contextView->updateContextIcon();
 
@@ -432,7 +436,7 @@ void MainWindow::saveTracksToCache(const std::string &id,
 void MainWindow::setAlbumImage(const lib::spt::entity &albumEntity,
 	const std::string &albumImageUrl)
 {
-	Http::getAlbum(current.playback.item.image_large(), *httpClient, cache,
+	Http::getAlbum(albumImageUrl, *httpClient, cache,
 		[this, albumEntity](const QPixmap &image)
 		{
 			if (contextView != nullptr)
