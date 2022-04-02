@@ -16,6 +16,10 @@ void SettingsPage::Spotify::showEvent(QShowEvent *event)
 	if (sptBackend != nullptr && sptBackend->count() <= 1)
 	{
 		sptBackend->addItems(backends());
+		if (!settings.spotify.backend.empty())
+		{
+			sptBackend->setCurrentText(QString::fromStdString(settings.spotify.backend));
+		}
 	}
 
 	if (sptDeviceType != nullptr && sptDeviceType->count() <= 1)
@@ -208,7 +212,6 @@ auto SettingsPage::Spotify::config() -> QWidget *
 
 	sptBackend = new QComboBox(sptGroup);
 	sptBackend->addItem(QStringLiteral("Default"));
-	sptBackend->setCurrentText(QString::fromStdString(settings.spotify.backend));
 	sptLayout->addWidget(sptBackend, 2, 1);
 
 	// Device type
