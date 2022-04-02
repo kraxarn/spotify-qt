@@ -14,14 +14,18 @@ namespace lib
 	class enums
 	{
 	public:
-		static auto to_string(T t) -> std::string
+		static auto to_string(T value) -> std::string
 		{
-			return enum_to_string(t);
+			std::string str;
+			enum_to_string(value, str);
+			return str;
 		}
 
 		static auto parse(const std::string &str) -> T
 		{
-			return enum_from_string(str);
+			T value;
+			enum_from_string(str, value);
+			return value;
 		}
 
 		/**
@@ -32,36 +36,37 @@ namespace lib
 		 */
 		static auto has_flag(T value, T flag) -> bool
 		{
-			const auto v = static_cast<unsigned int>(value);
-			const auto f = static_cast<unsigned int>(flag);
-			return (v & f) == f;
+			const auto valueFlag = static_cast<unsigned int>(value);
+			const auto flagFlag = static_cast<unsigned int>(flag);
+			return (valueFlag & flagFlag) == flagFlag;
 		}
 
 	private:
 		// region media_type
 
-		static auto enum_to_string(media_type media_type) -> std::string
+		static void enum_to_string(media_type media_type, std::string &str)
 		{
 			switch (media_type)
 			{
 				case media_type::unknown:
-					return "unknown";
+					str = "unknown";
+					break;
 
 				case media_type::audio:
-					return "audio";
+					str = "audio";
+					break;
 			}
-
-			return std::string();
 		}
 
-		static auto enum_from_string(const std::string &str) -> media_type
+		static void enum_from_string(const std::string &str, media_type &media_type)
 		{
 			if (str == "audio")
 			{
-				return media_type::audio;
+				media_type = media_type::audio;
+				return;
 			}
 
-			return media_type::unknown;
+			media_type = media_type::unknown;
 		}
 
 		//endregion
