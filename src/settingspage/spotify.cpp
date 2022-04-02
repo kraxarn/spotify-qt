@@ -100,8 +100,12 @@ void SettingsPage::Spotify::updateClientStatus()
 {
 	auto running = isClientRunning();
 	setClientStatus(true,
-		running ? "Stop client" : "Start client",
-		running ? "Running" : "Not running");
+		running
+			? QStringLiteral("Stop client")
+			: QStringLiteral("Start client"),
+		running
+			? QStringLiteral("Running")
+			: QStringLiteral("Not running"));
 }
 
 void SettingsPage::Spotify::restartClient(bool /*checked*/)
@@ -115,21 +119,28 @@ void SettingsPage::Spotify::restartClient(bool /*checked*/)
 		}
 		else
 		{
-			setClientStatus(false, "Starting", "Please wait...");
+			setClientStatus(false, QStringLiteral("Starting"),
+				QStringLiteral("Please wait..."));
 
 			if (!mainWindow->startClient())
 			{
-				setClientStatus(true, "Start client", "Failed to start");
+				setClientStatus(true, QStringLiteral("Start client"),
+					QStringLiteral("Failed to start"));
 			}
 			else
 			{
 				const auto *clientHandler = getClientRunner();
 				if (clientHandler != nullptr)
 				{
-					auto success = clientHandler->waitForStarted();
+					const auto success = clientHandler->waitForStarted();
 					setClientStatus(true,
-						success ? "Stop client" : "Start client",
-						success ? "Running" : "Failed to start");
+						success
+							? QStringLiteral("Stop client")
+							: QStringLiteral("Start client"),
+						success
+							? QStringLiteral("Running")
+							: QStringLiteral("Failed to start"));
+
 					return;
 				}
 				updateClientStatus();
