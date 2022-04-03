@@ -156,6 +156,11 @@ auto lib::strings::to_upper(const std::string &str) -> std::string
 
 auto lib::strings::capitalize(const std::string &str) -> std::string
 {
+	if (str.empty())
+	{
+		return str;
+	}
+
 	return lib::fmt::format("{}{}",
 		to_upper(str.substr(0, 1)),
 		to_lower(str.substr(1)));

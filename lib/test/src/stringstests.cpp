@@ -165,6 +165,9 @@ TEST_CASE("strings")
 		CHECK_EQ(lib::strings::capitalize("Hello World"), "Hello world");
 		CHECK_EQ(lib::strings::capitalize("HELLO WORLD"), "Hello world");
 		CHECK_EQ(lib::strings::capitalize("hello world"), "Hello world");
+
+		CHECK_EQ(lib::strings::capitalize(""), "");
+		CHECK_EQ(lib::strings::capitalize("h"), "H");
 	}
 
 	SUBCASE("to_string")
