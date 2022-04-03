@@ -16,6 +16,13 @@ DragArea::DragArea(QWidget *target, QWidget *parent)
 	{
 		setContextMenuPolicy(Qt::NoContextMenu);
 	}
+
+	// startSystemMove only supports Qt 5.15+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+	targetWindow = target->windowHandle();
+#else
+	targetWindow = nullptr;
+#endif
 }
 
 void DragArea::mousePressEvent(QMouseEvent *event)
@@ -24,6 +31,13 @@ void DragArea::mousePressEvent(QMouseEvent *event)
 	{
 		return QWidget::mousePressEvent(event);
 	}
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+	if (targetWindow != nullptr && emit targetWindow->startSystemMove())
+	{
+		return;
+	}
+#endif
 
 	dragPosition = event->globalPos() - target->frameGeometry().topLeft();
 	event->accept();
@@ -36,6 +50,11 @@ void DragArea::mouseMoveEvent(QMouseEvent *event)
 		return QWidget::mouseMoveEvent(event);
 	}
 
+	if (targetWindow != nullptr)
+	{
+		return;
+	}
+
 	setCursor(Qt::SizeAllCursor);
 	target->move(event->globalPos() - dragPosition);
 	event->accept();
@@ -43,6 +62,11 @@ void DragArea::mouseMoveEvent(QMouseEvent *event)
 
 void DragArea::mouseReleaseEvent(QMouseEvent */*event*/)
 {
+	if (targetWindow != nullptr)
+	{
+		return;
+	}
+
 	setCursor(Qt::ArrowCursor);
 }
 

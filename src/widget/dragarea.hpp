@@ -3,6 +3,7 @@
 #include <QAction>
 #include <QMouseEvent>
 #include <QMainWindow>
+#include <QWindow>
 
 class DragArea: public QWidget
 {
@@ -17,6 +18,7 @@ protected:
 
 private:
 	QWidget *target;
+	QWindow *targetWindow;
 	QPoint dragPosition;
 
 	void menu(const QPoint &pos);

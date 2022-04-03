@@ -7,6 +7,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	cache(paths)
 {
 	lib::crash_handler::set_cache(cache);
+	createWinId();
 
 	// Splash
 	SplashScreen splash;
