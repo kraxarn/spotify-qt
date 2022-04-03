@@ -26,7 +26,11 @@ void SettingsPage::Spotify::showEvent(QShowEvent *event)
 	{
 		for (const auto deviceType: deviceTypes())
 		{
-			addDeviceType(deviceType);
+			if (!addDeviceType(deviceType))
+			{
+				continue;
+			}
+
 			if (settings.spotify.device_type == deviceType)
 			{
 				sptDeviceType->setCurrentIndex(sptDeviceType->count() - 1);
@@ -402,13 +406,19 @@ auto SettingsPage::Spotify::deviceTypes() -> QList<lib::device_type>
 	return deviceTypes;
 }
 
-void SettingsPage::Spotify::addDeviceType(lib::device_type deviceType)
+auto SettingsPage::Spotify::addDeviceType(lib::device_type deviceType) -> bool
 {
 	const auto deviceTypeString = lib::enums<lib::device_type>::to_string(deviceType);
+	if (deviceTypeString.empty())
+	{
+		return false;
+	}
+
 	const auto text = QString::fromStdString(lib::strings::capitalize(deviceTypeString));
 	const auto data = static_cast<short>(deviceType);
 
 	sptDeviceType->addItem(text, data);
+	return true;
 }
 
 auto SettingsPage::Spotify::getClientRunner() const -> const SpotifyClient::Runner *

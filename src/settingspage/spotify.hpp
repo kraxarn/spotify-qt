@@ -50,7 +50,7 @@ namespace SettingsPage
 		auto backends() -> QStringList;
 
 		auto deviceTypes() -> QList<lib::device_type>;
-		void addDeviceType(lib::device_type deviceType);
+		auto addDeviceType(lib::device_type deviceType) -> bool;
 
 		void updateClientStatus();
 		void restartClient(bool checked);
