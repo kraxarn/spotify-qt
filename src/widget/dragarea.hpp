@@ -7,8 +7,6 @@
 class DragArea: public QWidget
 {
 public:
-	explicit DragArea(QWidget *parent);
-
 	DragArea(QWidget *target, QWidget *parent);
 
 protected:

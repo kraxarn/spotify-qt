@@ -1,11 +1,6 @@
 #include "dragarea.hpp"
 #include "mainwindow.hpp"
 
-DragArea::DragArea(QWidget *parent)
-	: DragArea(parent, parent)
-{
-}
-
 DragArea::DragArea(QWidget *target, QWidget *parent)
 	: QWidget(parent),
 	target(target)
