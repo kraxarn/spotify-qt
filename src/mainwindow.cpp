@@ -7,7 +7,11 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	cache(paths)
 {
 	lib::crash_handler::set_cache(cache);
+
+	// winId is required for moving the window under Wayland
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
 	createWinId();
+#endif
 
 	// Splash
 	SplashScreen splash;
