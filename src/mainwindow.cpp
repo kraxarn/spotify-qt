@@ -10,7 +10,10 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 
 	// winId is required for moving the window under Wayland
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-	createWinId();
+	if (lib::system::window_system() == lib::window_system::wayland)
+	{
+		createWinId();
+	}
 #endif
 
 	// Splash
