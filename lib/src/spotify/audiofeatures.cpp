@@ -92,7 +92,9 @@ void lib::spt::from_json(const nlohmann::json &j, audio_features &a)
 		return;
 	}
 
-	for (const auto &item : j.items())
+	j.at("uri").get_to(a.track_uri);
+
+	for (const auto &item: j.items())
 	{
 		const auto feature = lib::spt::audio_features::to_audio_feature(item.key());
 		if (feature == lib::audio_feature::unknown)

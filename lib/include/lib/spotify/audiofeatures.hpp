@@ -31,6 +31,8 @@ namespace lib
 
 			static auto to_audio_feature(const std::string &feature) -> lib::audio_feature;
 
+			std::string track_uri;
+
 		private:
 			std::vector<lib::spt::audio_feature> values;
 		};
