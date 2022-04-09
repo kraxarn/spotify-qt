@@ -28,19 +28,22 @@ namespace lib
 			explicit audio_feature(audio_mode mode);
 
 			/**
-			 * Get audio feature
-			 * @return String representation
+			 * Get name of audio feature
 			 */
 			auto get_feature_string() const -> std::string;
 
 			/**
+			 * Get audio feature
+			 */
+			auto get_feature() const -> lib::audio_feature;
+
+			/**
 			 * Get name of value
-			 * @return String representation
 			 */
 			auto get_value_string() const -> std::string;
 
 			/**
-			 * Get raw value
+			 * Get value
 			 */
 			auto get_value() const -> float;
 

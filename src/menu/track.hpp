@@ -65,6 +65,7 @@ namespace Menu
 
 		auto anyInPlaylist() const -> bool;
 		auto getTrackIds() const -> std::vector<std::string>;
+		auto getTracks() const -> std::vector<lib::spt::track>;
 
 		/** All tracks have the same artists */
 		auto allSameArtists() const -> bool;

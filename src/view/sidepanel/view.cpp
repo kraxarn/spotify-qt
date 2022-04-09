@@ -33,11 +33,35 @@ void SidePanel::View::openArtist(const std::string &artistId)
 		SidePanelType::Artist, QString::fromStdString(artistId));
 }
 
-void SidePanel::View::openAudioFeatures(const lib::spt::track &track)
+void SidePanel::View::openAudioFeatures(const std::vector<lib::spt::track> &tracks)
 {
-	auto *view = new ::View::AudioFeatures(spotify, track.id, this);
-	addTab(view, "view-statistics", QString::fromStdString(track.title()),
-		SidePanelType::AudioFeatures, QString::fromStdString(track.id));
+	QWidget *view;
+	QString tabTitle;
+	QString tabId;
+
+	if (tracks.size() == 1)
+	{
+		const auto &track = tracks.front();
+		view = new ::View::AudioFeatures(spotify, track.id, this);
+		tabTitle = QString::fromStdString(track.title());
+		tabId = QString::fromStdString(track.id);
+	}
+	else
+	{
+		std::vector<std::string> trackIds;
+		trackIds.reserve(tracks.size());
+		for (const auto &track: tracks)
+		{
+			trackIds.push_back(track.id);
+			tabId += QString::fromStdString(track.id);
+		}
+
+		view = new ::View::AudioFeatures(spotify, trackIds, this);
+		tabTitle = QString("%1 tracks").arg(tracks.size());
+	}
+
+	addTab(view, "view-statistics", tabTitle,
+		SidePanelType::AudioFeatures, tabId);
 }
 
 void SidePanel::View::openLyrics(const lib::spt::track &track)
@@ -166,4 +190,16 @@ void SidePanel::View::onTabMoved(int from, int to)
 
 	stack->removeWidget(fromWidget);
 	stack->insertWidget(to, fromWidget);
+}
+
+auto SidePanel::View::find(QWidget *widget) -> View *
+{
+	auto *window = widget->window();
+	if (window == nullptr)
+	{
+		return nullptr;
+	}
+
+	return window->findChild<SidePanel::View *>(QString(),
+		Qt::FindDirectChildrenOnly);
 }

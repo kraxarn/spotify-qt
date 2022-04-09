@@ -326,6 +326,11 @@ auto lib::spt::audio_feature::get_feature_string() const -> std::string
 	}
 }
 
+auto lib::spt::audio_feature::get_feature() const -> lib::audio_feature
+{
+	return feature;
+}
+
 auto lib::spt::audio_feature::get_value_string() const -> std::string
 {
 	return name;

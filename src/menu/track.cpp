@@ -1,6 +1,5 @@
 #include "menu/track.hpp"
 
-#include "dialog/addtoplaylist.hpp"
 #include "mainwindow.hpp"
 #include "menu/addtoplaylist.hpp"
 
@@ -42,12 +41,12 @@ Menu::Track::Track(const QList<PlaylistTrack> &tracks, lib::spt::api &spotify,
 	const auto isSingle = tracks.length() == 1;
 	const auto &singleTrack = tracks.at(0).second;
 
+	auto *trackFeatures = addAction(Icon::get("view-statistics"), "Audio features");
+	QAction::connect(trackFeatures, &QAction::triggered,
+		this, &Menu::Track::onAudioFeatures);
+
 	if (isSingle)
 	{
-		auto *trackFeatures = addAction(Icon::get("view-statistics"), "Audio features");
-		QAction::connect(trackFeatures, &QAction::triggered,
-			this, &Menu::Track::onAudioFeatures);
-
 		if (lib::developer_mode::enabled)
 		{
 			auto *lyrics = addAction(Icon::get("view-media-lyrics"), "Lyrics");
@@ -262,6 +261,19 @@ auto Menu::Track::getTrackIds() const -> std::vector<std::string>
 	return trackIds;
 }
 
+auto Menu::Track::getTracks() const -> std::vector<lib::spt::track>
+{
+	std::vector<lib::spt::track> sptTracks;
+	sptTracks.reserve(tracks.size());
+
+	for (const auto &track: tracks)
+	{
+		sptTracks.push_back(track.second);
+	}
+
+	return sptTracks;
+}
+
 void Menu::Track::onLike(bool /*checked*/)
 {
 	auto callback = [this](const std::string &status)
@@ -382,8 +394,13 @@ void Menu::Track::onAudioFeatures(bool /*checked*/)
 		return;
 	}
 
-	auto *mainWindow = MainWindow::find(parentWidget());
-	mainWindow->openAudioFeaturesWidget(tracks.cbegin()->second);
+	auto *sidePanel = SidePanel::View::find(this);
+	if (sidePanel == nullptr)
+	{
+		return;
+	}
+
+	sidePanel->openAudioFeatures(getTracks());
 }
 
 void Menu::Track::onLyrics(bool /*checked*/)

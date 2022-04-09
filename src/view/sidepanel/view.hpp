@@ -22,7 +22,7 @@ namespace SidePanel
 			const lib::http_client &httpClient, QWidget *parent);
 
 		void openArtist(const std::string &artistId);
-		void openAudioFeatures(const lib::spt::track &track);
+		void openAudioFeatures(const std::vector<lib::spt::track> &tracks);
 		void openLyrics(const lib::spt::track &track);
 
 		void openSearch();
@@ -34,6 +34,8 @@ namespace SidePanel
 		void removeTab(int index);
 
 		void setTabText(QWidget *widget, const QString &text);
+
+		static auto find(QWidget *widget) -> View *;
 
 	private:
 		SidePanel::Title *title = nullptr;
