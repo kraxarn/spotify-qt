@@ -89,4 +89,6 @@ void View::AudioFeatures::loaded(const std::vector<lib::spt::audio_features> &fe
 		treeItem->setToolTip(1,
 			QString::fromStdString(item.get_description()));
 	}
+
+	setEnabled(true);
 }
