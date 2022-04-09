@@ -41,9 +41,14 @@ Menu::Track::Track(const QList<PlaylistTrack> &tracks, lib::spt::api &spotify,
 	const auto isSingle = tracks.length() == 1;
 	const auto &singleTrack = tracks.at(0).second;
 
-	auto *trackFeatures = addAction(Icon::get("view-statistics"), "Audio features");
-	QAction::connect(trackFeatures, &QAction::triggered,
-		this, &Menu::Track::onAudioFeatures);
+	if (tracks.length() <= 100)
+	{
+		const auto icon = Icon::get(QStringLiteral("view-statistics"));
+		const auto text = QStringLiteral("Audio features");
+		auto *trackFeatures = addAction(icon, text);
+		QAction::connect(trackFeatures, &QAction::triggered,
+			this, &Menu::Track::onAudioFeatures);
+	}
 
 	if (isSingle)
 	{
