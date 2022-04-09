@@ -14,10 +14,11 @@ var searchData=
   ['append_11',['append',['../classlib_1_1vector.html#abd6f4bb72d24e728392a4fb104e3b22c',1,'lib::vector']]],
   ['artist_12',['artist',['../classlib_1_1spt_1_1album.html#a9213de387c38199a913fc9d3ba2a450e',1,'lib::spt::album::artist()'],['../classlib_1_1spt_1_1artist.html',1,'lib::spt::artist']]],
   ['artists_13',['artists',['../classlib_1_1spt_1_1search__results.html#a18a3ef467a3908d0933139378f9c2a31',1,'lib::spt::search_results::artists()'],['../classlib_1_1spt_1_1track.html#af73cef429ada1ab45d88e78d218c79be',1,'lib::spt::track::artists()']]],
-  ['audio_5ffeature_14',['audio_feature',['../classlib_1_1spt_1_1audio__feature.html#a75c7a1b1b7845394167517b04a25dfdf',1,'lib::spt::audio_feature::audio_feature(lib::audio_feature feature, float value)'],['../classlib_1_1spt_1_1audio__feature.html#ad885b29abcfc07d1f540f3044057e031',1,'lib::spt::audio_feature::audio_feature(audio_key key)'],['../classlib_1_1spt_1_1audio__feature.html#ad8e51ed505a37c8d612ecca21211bddd',1,'lib::spt::audio_feature::audio_feature(audio_mode mode)'],['../classlib_1_1spt_1_1audio__feature.html',1,'lib::spt::audio_feature']]],
+  ['audio_5ffeature_14',['audio_feature',['../classlib_1_1spt_1_1audio__feature.html#ad8e51ed505a37c8d612ecca21211bddd',1,'lib::spt::audio_feature::audio_feature(audio_mode mode)'],['../classlib_1_1spt_1_1audio__feature.html#a75c7a1b1b7845394167517b04a25dfdf',1,'lib::spt::audio_feature::audio_feature(lib::audio_feature feature, float value)'],['../classlib_1_1spt_1_1audio__feature.html#ad885b29abcfc07d1f540f3044057e031',1,'lib::spt::audio_feature::audio_feature(audio_key key)'],['../classlib_1_1spt_1_1audio__feature.html',1,'lib::spt::audio_feature']]],
   ['audio_5ffeatures_15',['audio_features',['../classlib_1_1spt_1_1audio__features.html',1,'lib::spt']]],
   ['audio_5fpreview_5furl_16',['audio_preview_url',['../classlib_1_1spt_1_1episode.html#a786d499202bd420ed08c5738f9d2c3db',1,'lib::spt::episode']]],
   ['auth_17',['auth',['../classlib_1_1spt_1_1auth.html',1,'lib::spt']]],
   ['available_5fmarkets_18',['available_markets',['../classlib_1_1spt_1_1show.html#abca1196cf12ba895eafe336a35907e06',1,'lib::spt::show']]],
-  ['avatar_5furl_19',['avatar_url',['../classlib_1_1gh_1_1contributor.html#ae443c3911f74c8045c03234eb6a8fad0',1,'lib::gh::contributor']]]
+  ['avatar_5furl_19',['avatar_url',['../classlib_1_1gh_1_1contributor.html#ae443c3911f74c8045c03234eb6a8fad0',1,'lib::gh::contributor']]],
+  ['average_20',['average',['../classlib_1_1vector.html#a63e10932af3ec4fe496dc1d3aa9f3c92',1,'lib::vector']]]
 ];
