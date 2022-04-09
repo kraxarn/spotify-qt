@@ -64,6 +64,7 @@ void View::AudioFeatures::loaded(const std::vector<lib::spt::audio_features> &fe
 		const auto feature = frontItem.get_feature();
 		std::vector<float> values;
 		std::string tooltip;
+		constexpr size_t maxTooltip = 5;
 
 		// Loop through other tracks
 		for (const auto &current: features)
@@ -74,7 +75,10 @@ void View::AudioFeatures::loaded(const std::vector<lib::spt::audio_features> &fe
 				if (item.get_feature() == feature)
 				{
 					values.push_back(item.get_value());
-					tooltip += lib::fmt::format("{}\n", item.get_description());
+					if (features.size() <= maxTooltip)
+					{
+						tooltip += lib::fmt::format("{}\n", item.get_description());
+					}
 					break;
 				}
 			}
@@ -88,9 +92,9 @@ void View::AudioFeatures::loaded(const std::vector<lib::spt::audio_features> &fe
 			QString::fromStdString(item.get_value_string()),
 		});
 
-		treeItem->setToolTip(1, QString("%1= %2")
-			.arg(QString::fromStdString(tooltip))
-			.arg(QString::fromStdString(item.get_description())));
+		treeItem->setToolTip(1, QString::fromStdString(tooltip
+			+ (tooltip.empty() ? "" : "= ")
+			+ item.get_description()));
 	}
 
 	setEnabled(true);
