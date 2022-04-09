@@ -66,6 +66,13 @@ void View::AudioFeatures::loaded(const std::vector<lib::spt::audio_features> &fe
 		std::string tooltip;
 		constexpr size_t maxTooltip = 5;
 
+		// TODO: These can't easily be averaged
+		if (feature == lib::audio_feature::key
+			|| feature == lib::audio_feature::mode)
+		{
+			continue;
+		}
+
 		// Loop through other tracks
 		for (const auto &current: features)
 		{
