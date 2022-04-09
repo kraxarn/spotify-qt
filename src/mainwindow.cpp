@@ -669,6 +669,11 @@ void MainWindow::orderPlaylists(lib::playlist_order order)
 
 auto MainWindow::find(QWidget *from) -> MainWindow *
 {
+	auto *active = qobject_cast<MainWindow *>(QApplication::activeWindow());
+	if (active != nullptr)
+	{
+		return active;
+	}
 	return Parent::findWidget<MainWindow>(from);
 }
 
