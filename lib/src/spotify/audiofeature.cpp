@@ -59,7 +59,7 @@ lib::spt::audio_feature::audio_feature(lib::audio_feature feature, float value)
 			break;
 
 		default:
-			lib::log::warn("Invalid value: {}", get_feature());
+			lib::log::warn("Invalid value: {}", get_feature_string());
 			break;
 	}
 }
@@ -221,7 +221,7 @@ auto lib::spt::audio_feature::time_signature(float &max) const -> std::string
 	return lib::fmt::format("{} m", static_cast<int>(value));
 }
 
-auto lib::spt::audio_feature::get_feature() const -> std::string
+auto lib::spt::audio_feature::get_feature_string() const -> std::string
 {
 	switch (feature)
 	{
@@ -269,7 +269,7 @@ auto lib::spt::audio_feature::get_feature() const -> std::string
 	}
 }
 
-auto lib::spt::audio_feature::get_name() const -> std::string
+auto lib::spt::audio_feature::get_value_string() const -> std::string
 {
 	return name;
 }

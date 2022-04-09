@@ -31,13 +31,13 @@ namespace lib
 			 * Get audio feature
 			 * @return String representation
 			 */
-			auto get_feature() const -> std::string;
+			auto get_feature_string() const -> std::string;
 
 			/**
 			 * Get name of value
 			 * @return String representation
 			 */
-			auto get_name() const -> std::string;
+			auto get_value_string() const -> std::string;
 
 			/**
 			 * Get raw value
