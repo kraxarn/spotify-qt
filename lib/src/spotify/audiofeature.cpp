@@ -92,13 +92,22 @@ auto lib::spt::audio_feature::acousticness() const -> std::string
 	constexpr float probably_no = 0.4F;
 	constexpr float probably_yes = 0.7F;
 
-	return value <= no
-		? "Not acoustic"
-		: value <= probably_no
-			? "Probably not acoustic"
-			: value <= probably_yes
-				? "Probably acoustic"
-				: "Acoustic";
+	if (value <= no)
+	{
+		return "Not acoustic";
+	}
+
+	if (value <= probably_no)
+	{
+		return "Probably not acoustic";
+	}
+
+	if (value <= probably_yes)
+	{
+		return "Probably acoustic";
+	}
+
+	return "Acoustic";
 }
 
 auto lib::spt::audio_feature::danceability() const -> std::string
@@ -118,15 +127,27 @@ auto lib::spt::audio_feature::energy() const -> std::string
 	constexpr float medium = 0.8F;
 	constexpr float high = 0.95F;
 
-	return value <= very_low
-		? "Very low"
-		: value <= low
-			? "Low"
-			: value <= medium
-				? "Medium"
-				: value <= high
-					? "High"
-					: "Very high";
+	if (value <= very_low)
+	{
+		return "Very low";
+	}
+
+	if (value <= low)
+	{
+		return "Low";
+	}
+
+	if (value <= medium)
+	{
+		return "Medium";
+	}
+
+	if (value <= high)
+	{
+		return "High";
+	}
+
+	return "Very high";
 }
 
 auto lib::spt::audio_feature::instrumentalness() const -> std::string
@@ -144,13 +165,22 @@ auto lib::spt::audio_feature::liveness() const -> std::string
 	constexpr float probably_no = 0.15F;
 	constexpr float probably_yes = 0.4F;
 
-	return value <= no
-		? "Not live"
-		: value <= probably_no
-			? "Probably not live"
-			: value <= probably_yes
-				? "Probably live"
-				: "Live";
+	if (value <= no)
+	{
+		return "Not live";
+	}
+
+	if (value <= probably_no)
+	{
+		return "Probably not live";
+	}
+
+	if (value <= probably_yes)
+	{
+		return "Probably live";
+	}
+
+	return "Live";
 }
 
 auto lib::spt::audio_feature::loudness(float &min, float &max) const -> std::string
@@ -165,13 +195,22 @@ auto lib::spt::audio_feature::loudness(float &min, float &max) const -> std::str
 	constexpr float quiet = -15.F;
 	constexpr float loud = -2.5F;
 
-	return value <= very_quiet
-		? "Very quiet"
-		: value <= quiet
-			? "Quiet"
-			: value <= loud
-				? "Loud"
-				: "Very loud";
+	if (value <= very_quiet)
+	{
+		return "Very quiet";
+	}
+
+	if (value <= quiet)
+	{
+		return "Quiet";
+	}
+
+	if (value <= loud)
+	{
+		return "Loud";
+	}
+
+	return "Very loud";
 }
 
 auto lib::spt::audio_feature::speechiness() const -> std::string
@@ -179,11 +218,17 @@ auto lib::spt::audio_feature::speechiness() const -> std::string
 	constexpr float speech = 0.6F;
 	constexpr float music = 0.8F;
 
-	return value <= speech
-		? "Speech"
-		: value >= music
-			? "Music"
-			: "Mixed";
+	if (value <= speech)
+	{
+		return "Speech";
+	}
+
+	if (value >= music)
+	{
+		return "Music";
+	}
+
+	return "Mixed";
 }
 
 auto lib::spt::audio_feature::tempo(float &max) const -> std::string
@@ -194,11 +239,17 @@ auto lib::spt::audio_feature::tempo(float &max) const -> std::string
 	constexpr float slow = 60.F;
 	constexpr float fast = 150.F;
 
-	return value <= slow
-		? "Slow"
-		: value >= fast
-			? "Fast"
-			: "Average";
+	if (value <= slow)
+	{
+		return "Slow";
+	}
+
+	if (value >= fast)
+	{
+		return "Fast";
+	}
+
+	return "Average";
 }
 
 auto lib::spt::audio_feature::valence() const -> std::string
@@ -206,11 +257,17 @@ auto lib::spt::audio_feature::valence() const -> std::string
 	constexpr float sad = 0.2F;
 	constexpr float happy = 0.7F;
 
-	return value <= sad
-		? "Sad"
-		: value >= happy
-			? "Happy"
-			: "Mixed";
+	if (value <= sad)
+	{
+		return "Sad";
+	}
+
+	if (value >= happy)
+	{
+		return "Happy";
+	}
+
+	return "Mixed";
 }
 
 auto lib::spt::audio_feature::time_signature(float &max) const -> std::string
