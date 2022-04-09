@@ -1,4 +1,5 @@
 #include "view/sidepanel/view.hpp"
+#include "mainwindow.hpp"
 
 SidePanel::View::View(lib::spt::api &spotify, const lib::settings &settings,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
@@ -194,7 +195,7 @@ void SidePanel::View::onTabMoved(int from, int to)
 
 auto SidePanel::View::find(QWidget *widget) -> View *
 {
-	auto *window = widget->window();
+	auto *window = MainWindow::find(widget);
 	if (window == nullptr)
 	{
 		return nullptr;
