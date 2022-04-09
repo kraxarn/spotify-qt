@@ -11,12 +11,12 @@ public:
 	template<typename T>
 	static auto findWidget(QWidget *from) -> T *
 	{
-		auto *w = from;
-		while (w != nullptr && typeid(*w) != typeid(T))
+		auto *widget = from;
+		while (widget != nullptr && typeid(*widget) != typeid(T))
 		{
-			w = w->parentWidget();
+			widget = widget->parentWidget();
 		}
-		return qobject_cast<T *>(w);
+		return qobject_cast<T *>(widget);
 	}
 
 	/**
@@ -25,12 +25,12 @@ public:
 	template<typename T>
 	static auto findObject(QObject *from) -> T *
 	{
-		auto *w = from;
-		while (w != nullptr && typeid(*w) != typeid(T))
+		auto *object = from;
+		while (object != nullptr && typeid(*object) != typeid(T))
 		{
-			w = w->parent();
+			object = object->parent();
 		}
-		return qobject_cast<T *>(w);
+		return qobject_cast<T *>(object);
 	}
 
 private:
