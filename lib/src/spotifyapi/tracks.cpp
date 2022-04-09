@@ -2,7 +2,6 @@
 
 // Currently unavailable:
 // tracks
-// audio-features
 // audio-analysis/{id}
 
 void lib::spt::api::track(const std::string &id,
@@ -16,4 +15,11 @@ void lib::spt::api::track_audio_features(const std::string &track_id,
 {
 	get(lib::fmt::format("audio-features/{}",
 		lib::spt::api::to_id(track_id)), callback);
+}
+
+void lib::spt::api::track_audio_features(const std::vector<std::string> &track_ids,
+	lib::callback<std::vector<lib::spt::audio_features>> &callback)
+{
+	get(lib::fmt::format("audio-features?ids={}",
+		lib::strings::join(track_ids, ",")), callback);
 }

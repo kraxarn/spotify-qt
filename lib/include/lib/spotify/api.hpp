@@ -288,6 +288,9 @@ namespace lib
 			void track_audio_features(const std::string &track_id,
 				lib::callback<lib::spt::audio_features> &callback);
 
+			void track_audio_features(const std::vector<std::string> &track_ids,
+				lib::callback<std::vector<lib::spt::audio_features>> &callback);
+
 			//endregion
 
 			//region User Profile
