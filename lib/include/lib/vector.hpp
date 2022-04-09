@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <numeric>
 
 namespace lib
 {
@@ -71,6 +72,23 @@ namespace lib
 		static auto index_of(const std::vector<T> &vec, const T &item) -> size_t
 		{
 			return std::distance(vec.begin(), std::find(vec.begin(), vec.end(), item));
+		}
+
+		/**
+		 * Get the average value of all values in a vector
+		 * @param vec Vector of items
+		 * @return Average item, or 0 if empty
+		 */
+		template<typename T>
+		static auto average(const std::vector<T> &vec) -> T
+		{
+			const T init = 0;
+			if (vec.empty())
+			{
+				return init;
+			}
+
+			return std::accumulate(vec.cbegin(), vec.cend(), init) / vec.size();
 		}
 	};
 }

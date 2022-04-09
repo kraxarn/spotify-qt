@@ -74,4 +74,20 @@ TEST_CASE("vector")
 		CHECK_EQ(lib::vector::index_of(vec2, std::string("item1")), 0);
 		CHECK_EQ(lib::vector::index_of(vec2, std::string("item0")), vec1.size());
 	}
+
+	SUBCASE("average")
+	{
+		std::vector<int> vec_empty;
+		CHECK_EQ(lib::vector::average(vec_empty), 0);
+
+		std::vector<int> vec_int = {
+			1, 4, 5, 7,
+		};
+		CHECK_EQ(lib::vector::average(vec_int), 4);
+
+		std::vector<float> vec_float = {
+			1.F, 4.F, 5.F, 7.F,
+		};
+		CHECK_EQ(lib::vector::average(vec_float), 4.25F);
+	}
 }
