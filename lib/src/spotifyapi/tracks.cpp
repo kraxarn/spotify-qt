@@ -4,10 +4,10 @@
 // tracks
 // audio-analysis/{id}
 
-void lib::spt::api::track(const std::string &id,
+void lib::spt::api::track(const std::string &track_id,
 	lib::callback<lib::spt::track> &callback)
 {
-	get(lib::fmt::format("tracks/{}", id), callback);
+	get(lib::fmt::format("tracks/{}", track_id), callback);
 }
 
 void lib::spt::api::track_audio_features(const std::string &track_id,

@@ -264,7 +264,8 @@ namespace lib
 			void playlist_tracks(const lib::spt::playlist &playlist,
 				lib::callback<std::vector<lib::spt::track>> &callback);
 
-			void add_to_playlist(const std::string &playlist_id, const std::vector<std::string> &track_uris,
+			void add_to_playlist(const std::string &playlist_id,
+				const std::vector<std::string> &track_uris,
 				lib::callback<std::string> &callback);
 
 			void remove_from_playlist(const std::string &playlist_id,
@@ -282,7 +283,7 @@ namespace lib
 
 			//region Tracks
 
-			void track(const std::string &id,
+			void track(const std::string &track_id,
 				lib::callback<lib::spt::track> &callback);
 
 			void track_audio_features(const std::string &track_id,
