@@ -403,11 +403,6 @@ void MainWindow::stopClient()
 	spotifyRunner = nullptr;
 }
 
-void MainWindow::openAudioFeaturesWidget(const lib::spt::track &track)
-{
-	dynamic_cast<SidePanel::View *>(sidePanel)->openAudioFeatures(track);
-}
-
 void MainWindow::openLyrics(const lib::spt::track &track)
 {
 	dynamic_cast<SidePanel::View *>(sidePanel)->openLyrics(track);

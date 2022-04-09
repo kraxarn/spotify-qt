@@ -21,9 +21,6 @@ public:
 	/** @deprecated Use SidePanel.openArtist instead */
 	void openArtist(const std::string &artistId);
 
-	/** @deprecated SidePanel.openAudioFeatures instead */
-	void openAudioFeaturesWidget(const lib::spt::track &track);
-
 	//endregion
 
 	lib::spt::playback currentPlayback() const;
