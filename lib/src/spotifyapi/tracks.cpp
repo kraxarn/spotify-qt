@@ -21,5 +21,9 @@ void lib::spt::api::track_audio_features(const std::vector<std::string> &track_i
 	lib::callback<std::vector<lib::spt::audio_features>> &callback)
 {
 	get(lib::fmt::format("audio-features?ids={}",
-		lib::strings::join(track_ids, ",")), callback);
+			lib::strings::join(track_ids, ",")),
+		[callback](const nlohmann::json &json)
+		{
+			callback(json.at("audio_features"));
+		});
 }
