@@ -11,8 +11,12 @@ Artist::TracksList::TracksList(lib::spt::api &spotify, lib::cache &cache,
 {
 	setEnabled(false);
 
-	QListWidget::connect(this, &QListWidget::itemActivated,
-		this, &Artist::TracksList::onActivated);
+	setEditTriggers(QAbstractItemView::NoEditTriggers);
+	setSelectionBehavior(QAbstractItemView::SelectRows);
+	setSelectionMode(QAbstractItemView::ExtendedSelection);
+
+	QListWidget::connect(this, &QListWidget::itemDoubleClicked,
+		this, &Artist::TracksList::onDoubleClicked);
 
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested,
@@ -33,21 +37,24 @@ void Artist::TracksList::addTrack(const lib::spt::track &track)
 	});
 }
 
-void Artist::TracksList::onActivated(QListWidgetItem *currentItem)
+void Artist::TracksList::onDoubleClicked(QListWidgetItem *currentItem)
 {
 	auto index = 0;
 	std::vector<std::string> uris;
-	auto currentTrackId = currentItem->data(static_cast<int>(DataRole::Track))
-		.value<lib::spt::track>().id;
+
+	const auto currentTrackData = currentItem->data(static_cast<int>(DataRole::Track));
+	const auto currentTrackId = currentTrackData.value<lib::spt::track>().id;
 
 	for (auto i = 0; i < count(); i++)
 	{
-		const auto trackId = this->item(i)->data(static_cast<int>(DataRole::Track))
-			.value<lib::spt::track>().id;
+		const auto trackData = item(i)->data(static_cast<int>(DataRole::Track));
+		const auto trackId = trackData.value<lib::spt::track>().id;
+
 		if (trackId == currentTrackId)
 		{
 			index = i;
 		}
+
 		uris.push_back(lib::spt::api::to_uri("track", trackId));
 	}
 
@@ -65,14 +72,24 @@ void Artist::TracksList::onActivated(QListWidgetItem *currentItem)
 
 void Artist::TracksList::onContextMenu(const QPoint &pos)
 {
-	auto *item = itemAt(pos);
-	const auto &track = item->data(static_cast<int>(DataRole::Track))
-		.value<lib::spt::track>();
-	if (!track.is_valid())
+	const auto &items = selectedItems();
+
+	QList<PlaylistTrack> tracks;
+	tracks.reserve(items.size());
+
+	for (const auto *item: items)
 	{
-		return;
+		const auto &trackData = item->data(static_cast<int>(DataRole::Track));
+		const auto &track = trackData.value<lib::spt::track>();
+
+		if (!track.is_valid())
+		{
+			return;
+		}
+
+		tracks.append(PlaylistTrack(-1, track));
 	}
 
-	auto *songMenu = new Menu::Track(track, spotify, cache, &artist, parentWidget());
+	auto *songMenu = new Menu::Track(tracks, spotify, cache, &artist, parentWidget());
 	songMenu->popup(mapToGlobal(pos));
 }

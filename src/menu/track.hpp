@@ -28,22 +28,18 @@ namespace Menu
 			const lib::cache &cache, QWidget *parent);
 
 		/**
-		 * Track menu from artist for a single track
-		 */
-		Track(const lib::spt::track &track, lib::spt::api &spotify,
-			const lib::cache &cache, const lib::spt::artist *fromArtist,
-			QWidget *parent);
-
-		/**
 		 * Track menu from playlist with indexes of tracks in playlist
 		 */
 		Track(const QList<PlaylistTrack> &tracks, lib::spt::api &spotify,
 			const lib::cache &cache, QWidget *parent);
 
-	private:
+		/**
+		 * Track menu from artist
+		 */
 		Track(const QList<PlaylistTrack> &tracks, lib::spt::api &spotify,
 			const lib::cache &cache, const lib::spt::artist *fromArtist, QWidget *parent);
 
+	private:
 		lib::spt::api &spotify;
 		bool isLiked = false;
 

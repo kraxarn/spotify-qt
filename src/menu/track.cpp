@@ -5,13 +5,7 @@
 
 Menu::Track::Track(const lib::spt::track &track, lib::spt::api &spotify,
 	const lib::cache &cache, QWidget *parent)
-	: Menu::Track(track, spotify, cache, nullptr, parent)
-{
-}
-
-Menu::Track::Track(const lib::spt::track &track, lib::spt::api &spotify,
-	const lib::cache &cache, const lib::spt::artist *fromArtist, QWidget *parent)
-	: Menu::Track({PlaylistTrack(-1, track)}, spotify, cache, fromArtist, parent)
+	: Menu::Track({PlaylistTrack(-1, track)}, spotify, cache, nullptr, parent)
 {
 }
 

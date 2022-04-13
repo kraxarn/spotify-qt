@@ -24,7 +24,7 @@ namespace Artist
 		const lib::http_client &httpClient;
 		const lib::spt::artist &artist;
 
-		void onActivated(QListWidgetItem *item);
+		void onDoubleClicked(QListWidgetItem *currentItem);
 		void onContextMenu(const QPoint &pos);
 	};
 }
