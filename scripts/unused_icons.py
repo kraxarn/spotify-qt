@@ -24,8 +24,9 @@ for root, dirs, files in os.walk(source_dir()):
 		if file_path.suffix != ".cpp":
 			continue
 		with open(file_path, "r") as file:
+			content = file.read()
 			for icon_name in icon_names:
-				if icon_name in file.read():
+				if icon_name in content:
 					icon_names.remove(icon_name)
 
 if len(icon_names) == 0:
