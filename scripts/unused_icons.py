@@ -28,6 +28,12 @@ for root, dirs, files in os.walk(source_dir()):
 				if icon_name in file.read():
 					icon_names.remove(icon_name)
 
+if len(icon_names) == 0:
+	print("Found no unused icons")
+	exit(0)
+
 count = len(icon_names)
 suffix = "icon" if count == 1 else "icons"
-print(f"Found {count}/{total_count} unused {suffix}")
+print(f"Found {count}/{total_count} unused {suffix}:")
+print(os.linesep.join(icon_names))
+exit(1)
