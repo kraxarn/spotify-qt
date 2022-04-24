@@ -68,28 +68,26 @@ void VolumeButton::wheelEvent(QWheelEvent *event)
 
 void VolumeButton::update(int value)
 {
-	setIcon(Icon::get(QString("audio-volume-%1")
-		.arg(getVolumeLevel(value))));
-
+	setIcon(getVolumeIcon(value));
 	setToolTip(getVolumeInfo(value));
 
 	volumeUp->setEnabled(value < maximum);
 	volumeDown->setEnabled(value > minimum);
 }
 
-auto VolumeButton::getVolumeLevel(int value) -> QString
+auto VolumeButton::getVolumeIcon(int value) -> QIcon
 {
 	if (value < lowVolume)
 	{
-		return QStringLiteral("low");
+		return Icon::get(QStringLiteral("audio-volume-low"));
 	}
 
 	if (value > highVolume)
 	{
-		return QStringLiteral("high");
+		return Icon::get(QStringLiteral("audio-volume-high"));
 	}
 
-	return QStringLiteral("medium");
+	return Icon::get(QStringLiteral("audio-volume-medium"));
 }
 
 auto VolumeButton::getVolumeInfo(int value) -> QString

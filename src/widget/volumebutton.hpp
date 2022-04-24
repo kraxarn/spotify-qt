@@ -56,9 +56,9 @@ private:
 	void update(int value);
 
 	/**
-	 * Volume level, "low", "medium", or "high"
+	 * Icon for volume level, "audio-volume-low/medium/high"
 	 */
-	static auto getVolumeLevel(int value) -> QString;
+	static auto getVolumeIcon(int value) -> QIcon;
 
 	/**
 	 * "{volume percentage} %"
