@@ -67,6 +67,8 @@
 #define GHC_OS_WIN32
 #elif defined(__CYGWIN__)
 #define GHC_OS_CYGWIN
+#elif defined(__sun) && defined(__SVR4)
+#define GHC_OS_SOLARIS
 #elif defined(__svr4__)
 #define GHC_OS_SYS5R4
 #elif defined(BSD)
@@ -76,7 +78,6 @@
 #include <wasi/api.h>
 #elif defined(__QNX__)
 #define GHC_OS_QNX
-#define GHC_NO_DIRENT_D_TYPE
 #else
 #error "Operating system currently not supported!"
 #endif
@@ -254,6 +255,10 @@
 #include <experimental/string_view>
 #endif
 
+#if !defined(GHC_OS_WINDOWS) && !defined(PATH_MAX)
+#define PATH_MAX 4096
+#endif
+
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Behaviour Switches (see README.md, should match the config in test/filesystem_test.cpp):
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -274,19 +279,19 @@
 // * if this->has_root_directory() and !p.has_root_directory() return -1
 // * if !this->has_root_directory() and p.has_root_directory() return -1
 // * else result of element wise comparison of path iteration where first comparison is != 0 or 0
-//   if all comparisons are 0 (on Windows this implementation does case insensitive root_name()
+//   if all comparisons are 0 (on Windows this implementation does case-insensitive root_name()
 //   comparison)
 #define LWG_2936_BEHAVIOUR
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // LWG #2937 enforces that fs::equivalent emits an error, if !fs::exists(p1)||!exists(p2)
 #define LWG_2937_BEHAVIOUR
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// UTF8-Everywhere is the original behaviour of ghc::filesystem. But since v1.5 the windows
+// UTF8-Everywhere is the original behaviour of ghc::filesystem. But since v1.5 the Windows
 // version defaults to std::wstring storage backend. Still all std::string will be interpreted
-// as UTF-8 encoded. With this define you can enfoce the old behavior on Windows, using
+// as UTF-8 encoded. With this define you can enforce the old behavior on Windows, using
 // std::string as backend and for fs::path::native() and char for fs::path::c_str(). This
-// needs more conversions so it is (an was before v1.5) slower, bot might help keeping source
-// homogeneous in a multi platform project.
+// needs more conversions, so it is (and was before v1.5) slower, bot might help keeping source
+// homogeneous in a multi-platform project.
 // #define GHC_WIN_DISABLE_WSTRING_STORAGE_TYPE
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Raise errors/exceptions when invalid unicode codepoints or UTF-8 sequences are found,
@@ -301,7 +306,7 @@
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // ghc::filesystem version in decimal (major * 10000 + minor * 100 + patch)
-#define GHC_FILESYSTEM_VERSION 10510L
+#define GHC_FILESYSTEM_VERSION 10512L
 
 #if !defined(GHC_WITH_EXCEPTIONS) && (defined(__EXCEPTIONS) || defined(__cpp_exceptions) || defined(_CPPUNWIND))
 #define GHC_WITH_EXCEPTIONS
@@ -1298,6 +1303,65 @@ GHC_FS_API std::error_code make_error_code(portable_error err);
 GHC_FS_API std::error_code make_system_error(uint32_t err = 0);
 #else
 GHC_FS_API std::error_code make_system_error(int err = 0);
+
+template <typename T, typename = int>
+struct has_d_type : std::false_type{};
+
+template <typename T>
+struct has_d_type<T, decltype((void)T::d_type, 0)> : std::true_type {};
+
+template <typename T>
+GHC_INLINE file_type file_type_from_dirent_impl(const T&, std::false_type)
+{
+    return file_type::none;
+}
+
+template <typename T>
+GHC_INLINE file_type file_type_from_dirent_impl(const T& t, std::true_type)
+{
+    switch (t.d_type) {
+#ifdef DT_BLK
+        case DT_BLK:
+            return file_type::block;
+#endif
+#ifdef DT_CHR
+        case DT_CHR:
+            return file_type::character;
+#endif
+#ifdef DT_DIR
+        case DT_DIR:
+            return file_type::directory;
+#endif
+#ifdef DT_FIFO
+        case DT_FIFO:
+            return file_type::fifo;
+#endif
+#ifdef DT_LNK
+        case DT_LNK:
+            return file_type::symlink;
+#endif
+#ifdef DT_REG
+        case DT_REG:
+            return file_type::regular;
+#endif
+#ifdef DT_SOCK
+        case DT_SOCK:
+            return file_type::socket;
+#endif
+#ifdef DT_UNKNOWN
+        case DT_UNKNOWN:
+            return file_type::none;
+#endif
+        default:
+            return file_type::unknown;
+    }
+}
+
+template <class T>
+GHC_INLINE file_type file_type_from_dirent(const T& t)
+{
+    return file_type_from_dirent_impl(t, has_d_type<T>{});
+}
 #endif
 }  // namespace detail
 
@@ -4580,7 +4644,7 @@ GHC_INLINE void last_write_time(const path& p, file_time_type new_time, std::err
 #if defined(__ANDROID_API__) && __ANDROID_API__ < 12
     if (syscall(__NR_utimensat, AT_FDCWD, p.c_str(), times, AT_SYMLINK_NOFOLLOW) != 0) {
 #else
-    if (::utimensat(AT_FDCWD, p.c_str(), times, AT_SYMLINK_NOFOLLOW) != 0) {
+    if (::utimensat((int)AT_FDCWD, p.c_str(), times, AT_SYMLINK_NOFOLLOW) != 0) {
 #endif
         ec = detail::make_system_error();
     }
@@ -5658,48 +5722,16 @@ public:
 
     void copyToDirEntry()
     {
-#ifdef GHC_NO_DIRENT_D_TYPE
-        _dir_entry._symlink_status = file_status();
-        _dir_entry._status = file_status();
-#else
         _dir_entry._symlink_status.permissions(perms::unknown);
-        switch (_entry->d_type) {
-            case DT_BLK:
-                _dir_entry._symlink_status.type(file_type::block);
-                break;
-            case DT_CHR:
-                _dir_entry._symlink_status.type(file_type::character);
-                break;
-            case DT_DIR:
-                _dir_entry._symlink_status.type(file_type::directory);
-                break;
-            case DT_FIFO:
-                _dir_entry._symlink_status.type(file_type::fifo);
-                break;
-            case DT_LNK:
-                _dir_entry._symlink_status.type(file_type::symlink);
-                break;
-            case DT_REG:
-                _dir_entry._symlink_status.type(file_type::regular);
-                break;
-            case DT_SOCK:
-                _dir_entry._symlink_status.type(file_type::socket);
-                break;
-            case DT_UNKNOWN:
-                _dir_entry._symlink_status.type(file_type::none);
-                break;
-            default:
-                _dir_entry._symlink_status.type(file_type::unknown);
-                break;
-        }
-        if (_entry->d_type != DT_LNK) {
+        auto ft = detail::file_type_from_dirent(*_entry);
+        _dir_entry._symlink_status.type(ft);
+        if (ft != file_type::symlink) {
             _dir_entry._status = _dir_entry._symlink_status;
         }
         else {
             _dir_entry._status.type(file_type::none);
             _dir_entry._status.permissions(perms::unknown);
         }
-#endif
         _dir_entry._file_size = static_cast<uintmax_t>(-1);
         _dir_entry._hard_link_count = static_cast<uintmax_t>(-1);
         _dir_entry._last_write_time = 0;
