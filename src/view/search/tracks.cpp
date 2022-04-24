@@ -9,8 +9,12 @@ Search::Tracks::Tracks(lib::spt::api &spotify, lib::cache &cache, QWidget *paren
 	// Hide "Album" by default
 	header()->setSectionHidden(header()->count() - 1, true);
 
-	QTreeWidget::connect(this, &QTreeWidget::itemActivated,
-		this, &Search::Tracks::onItemActivated);
+	setEditTriggers(QAbstractItemView::NoEditTriggers);
+	setSelectionBehavior(QAbstractItemView::SelectRows);
+	setSelectionMode(QAbstractItemView::ExtendedSelection);
+
+	QTreeWidget::connect(this, &QTreeWidget::itemDoubleClicked,
+		this, &Search::Tracks::onItemDoubleClicked);
 
 	setContextMenuPolicy(Qt::CustomContextMenu);
 	QWidget::connect(this, &QTreeWidget::customContextMenuRequested,
@@ -43,7 +47,7 @@ void Search::Tracks::add(const lib::spt::track &track)
 	item->setToolTip(1, trackArtist);
 }
 
-void Search::Tracks::onItemActivated(QTreeWidgetItem *item, int /*column*/)
+void Search::Tracks::onItemDoubleClicked(QTreeWidgetItem *item, int /*column*/)
 {
 	const auto &selectedItem = item->data(0, static_cast<int>(DataRole::Track))
 		.value<lib::spt::track>();
@@ -94,14 +98,24 @@ void Search::Tracks::onItemActivated(QTreeWidgetItem *item, int /*column*/)
 
 void Search::Tracks::onContextMenu(const QPoint &pos)
 {
-	auto *item = itemAt(pos);
-	const auto &track = item->data(0, static_cast<int>(DataRole::Track))
-		.value<lib::spt::track>();
-	if (!track.is_valid())
+	const auto &items = selectedItems();
+
+	QList<PlaylistTrack> tracks;
+	tracks.reserve(items.size());
+
+	for (const auto *item: items)
 	{
-		return;
+		const auto &trackData = item->data(0, static_cast<int>(DataRole::Track));
+		const auto &track = trackData.value<lib::spt::track>();
+
+		if (!track.is_valid())
+		{
+			return;
+		}
+
+		tracks.append(PlaylistTrack(-1, track));
 	}
 
-	auto *menu = new Menu::Track(track, spotify, cache, parentWidget());
-	menu->popup(mapToGlobal(pos));
+	auto *songMenu = new Menu::Track(tracks, spotify, cache, parentWidget());
+	songMenu->popup(mapToGlobal(pos));
 }

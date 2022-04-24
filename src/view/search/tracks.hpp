@@ -26,7 +26,7 @@ namespace Search
 		lib::spt::api &spotify;
 		lib::cache &cache;
 
-		void onItemActivated(QTreeWidgetItem *item, int column);
+		void onItemDoubleClicked(QTreeWidgetItem *item, int column);
 		void onContextMenu(const QPoint &pos);
 	};
 }
