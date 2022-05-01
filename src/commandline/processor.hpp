@@ -2,17 +2,17 @@
 
 #include <QCommandLineParser>
 
-namespace Ipc
+namespace CommandLine
 {
 	/**
-	 * Handles sending various supported IPC messages
+	 * Processes command line options
 	 */
-	class Handler
+	class Processor
 	{
 	public:
 		static auto process(const QCommandLineParser &parser) -> bool;
 
 	private:
-		Handler() = default;
+		Processor() = default;
 	};
 }

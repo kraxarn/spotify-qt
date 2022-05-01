@@ -8,7 +8,8 @@
 #include "mainwindow.hpp"
 #include "dialog/setup.hpp"
 #include "commandline/parser.hpp"
-#include "ipc/handler.hpp"
+#include "commandline/args.hpp"
+#include "commandline/processor.hpp"
 
 #ifdef USE_KCRASH
 #include <kcrash.h>
@@ -64,12 +65,12 @@ auto main(int argc, char *argv[]) -> int
 	// Command line arguments
 	CommandLine::Parser parser(app);
 
-	if (Ipc::Handler::process(parser))
+	if (CommandLine::Processor::process(parser))
 	{
 		return 0;
 	}
 
-	if (parser.isSet("paths"))
+	if (parser.isSet(ARG_LIST_PATHS))
 	{
 		lib::log::info("Config: {}", paths.config_file().string());
 		lib::log::info("Cache:  {}", paths.cache().string());
@@ -77,8 +78,7 @@ auto main(int argc, char *argv[]) -> int
 	}
 
 	// First setup window
-	if (settings.account.refresh_token.empty()
-		|| parser.isSet("reset-credentials"))
+	if (settings.account.refresh_token.empty() || parser.isSet(ARG_FORCE_SETUP))
 	{
 		Dialog::Setup dialog(settings, nullptr);
 		if (dialog.exec() == QDialog::Rejected)
