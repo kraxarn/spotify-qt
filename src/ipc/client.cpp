@@ -16,7 +16,8 @@ void Ipc::Client::send(const QString &message,
 	QLocalSocket::connect(this, &QLocalSocket::readyRead,
 		[this, callback]()
 		{
-			callback(lib::result<QString>::ok(readResponse()));
+			const auto response = Ipc::Client::readResponse(this);
+			callback(lib::result<QString>::ok(response));
 		});
 
 	QLocalSocket::connect(this, &QLocalSocket::errorOccurred,
@@ -31,9 +32,12 @@ void Ipc::Client::send(const QString &message,
 
 auto Ipc::Client::readResponse() -> QString
 {
+	quint32 blockSize;
+	QDataStream in;
+
 	if (blockSize == 0)
 	{
-		if (QLocalSocket::bytesAvailable() < static_cast<qint64>(sizeof(quint32)))
+		if (socket->bytesAvailable() < static_cast<qint64>(sizeof(quint32)))
 		{
 			lib::log::warn("Socket buffer full");
 			return {};
@@ -41,7 +45,7 @@ auto Ipc::Client::readResponse() -> QString
 		in >> blockSize;
 	}
 
-	if (QLocalSocket::bytesAvailable() < blockSize || in.atEnd())
+	if (socket->bytesAvailable() < blockSize || in.atEnd())
 	{
 		lib::log::warn("No data in socket");
 		return {};

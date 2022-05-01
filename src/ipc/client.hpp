@@ -24,7 +24,7 @@ namespace Ipc
 		QDataStream in;
 		quint32 blockSize;
 
-		auto readResponse() -> QString;
+		static auto readResponse(QLocalSocket *socket) -> QString;
 		static auto getErrorMessage(QLocalSocket::LocalSocketError error) -> std::string;
 	};
 }
