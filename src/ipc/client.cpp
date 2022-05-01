@@ -35,15 +35,12 @@ auto Ipc::Client::readResponse() -> QString
 	quint32 blockSize;
 	QDataStream buffer;
 
-	if (blockSize == 0)
+	if (socket->bytesAvailable() < static_cast<qint64>(sizeof(quint32)))
 	{
-		if (socket->bytesAvailable() < static_cast<qint64>(sizeof(quint32)))
-		{
-			lib::log::warn("Socket buffer full");
-			return {};
-		}
-		buffer >> blockSize;
+		lib::log::warn("Socket buffer full");
+		return {};
 	}
+	buffer >> blockSize;
 
 	if (socket->bytesAvailable() < blockSize || buffer.atEnd())
 	{
