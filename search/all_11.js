@@ -13,7 +13,7 @@ var searchData=
   ['set_5fdark_5ftheme_10',['set_dark_theme',['../classlib_1_1settings.html#ad5e6ef0f01c16e379d1cba73986360b3',1,'lib::settings']]],
   ['set_5fdevice_11',['set_device',['../classlib_1_1spt_1_1api.html#a36c1458cde31e74bc4f4486ad4c542b9',1,'lib::spt::api::set_device(const lib::spt::device &amp;device, lib::callback&lt; std::string &gt; &amp;callback)'],['../classlib_1_1spt_1_1api.html#a72a29c46a82d922524541ea794533102',1,'lib::spt::api::set_device(const std::string &amp;device_id, lib::callback&lt; std::string &gt; &amp;callback)']]],
   ['set_5flog_5fto_5fstdout_12',['set_log_to_stdout',['../classlib_1_1log.html#a7372d15a115a450ddcf7b22ad3c2232a',1,'lib::log']]],
-  ['set_5fplaylist_13',['set_playlist',['../classlib_1_1cache.html#ac2e9a9f416596c2995fe083ad38c634c',1,'lib::cache::set_playlist()'],['../classlib_1_1json__cache.html#a4deafacbd0fb264185f2570e14536371',1,'lib::json_cache::set_playlist(const spt::playlist &amp;playlist) override']]],
+  ['set_5fplaylist_13',['set_playlist',['../classlib_1_1json__cache.html#a4deafacbd0fb264185f2570e14536371',1,'lib::json_cache::set_playlist()'],['../classlib_1_1cache.html#ac2e9a9f416596c2995fe083ad38c634c',1,'lib::cache::set_playlist()']]],
   ['set_5fplaylists_14',['set_playlists',['../classlib_1_1json__cache.html#a42dccd28fef69ce926c0aab7e078c7bf',1,'lib::json_cache::set_playlists()'],['../classlib_1_1cache.html#a4475f0b83d56cd92ae1380325d5a4ef5',1,'lib::cache::set_playlists()']]],
   ['set_5frepeat_15',['set_repeat',['../classlib_1_1spt_1_1api.html#a83a3edd5bf3a5d216ca298b63d346df5',1,'lib::spt::api']]],
   ['set_5fsearch_5fparams_16',['set_search_params',['../classlib_1_1uri.html#a173327af4fd0d9e0cb7d764a8e1f06d7',1,'lib::uri']]],
@@ -41,5 +41,6 @@ var searchData=
   ['stopwatch_38',['stopwatch',['../classlib_1_1stopwatch.html',1,'lib::stopwatch'],['../classlib_1_1stopwatch.html#aa6ec45c49a9132d02cdebf23cb192c3b',1,'lib::stopwatch::stopwatch()']]],
   ['strings_39',['strings',['../classlib_1_1strings.html',1,'lib']]],
   ['sub_40',['sub',['../classlib_1_1vector.html#ac54a6a64d3e2a89092b00d6d81c0300f',1,'lib::vector']]],
-  ['system_41',['system',['../classlib_1_1system.html',1,'lib']]]
+  ['success_41',['success',['../classlib_1_1result.html#a74b24c938e04338d3caa5268ae709df1',1,'lib::result']]],
+  ['system_42',['system',['../classlib_1_1system.html',1,'lib']]]
 ];

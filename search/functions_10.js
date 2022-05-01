@@ -28,5 +28,6 @@ var searchData=
   ['starts_5fwith_25',['starts_with',['../classlib_1_1strings.html#a36c370982807a4d49343ec3811d184f9',1,'lib::strings']]],
   ['stop_26',['stop',['../classlib_1_1stopwatch.html#a0fad5dd1ab7332da9497c8e7aa5cb3b6',1,'lib::stopwatch']]],
   ['stopwatch_27',['stopwatch',['../classlib_1_1stopwatch.html#aa6ec45c49a9132d02cdebf23cb192c3b',1,'lib::stopwatch']]],
-  ['sub_28',['sub',['../classlib_1_1vector.html#ac54a6a64d3e2a89092b00d6d81c0300f',1,'lib::vector']]]
+  ['sub_28',['sub',['../classlib_1_1vector.html#ac54a6a64d3e2a89092b00d6d81c0300f',1,'lib::vector']]],
+  ['success_29',['success',['../classlib_1_1result.html#a74b24c938e04338d3caa5268ae709df1',1,'lib::result']]]
 ];
