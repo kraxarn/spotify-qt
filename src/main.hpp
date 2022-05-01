@@ -9,10 +9,9 @@
 #include "lib/qt/httpclient.hpp"
 #include "lib/crash/crashhandler.hpp"
 
-#include "spotifyclient/runner.hpp"
 #include "dialog/settings.hpp"
-#include "view/splashscreen.hpp"
 #include "dialog/whatsnew.hpp"
+#include "ipc/server.hpp"
 #include "list/library.hpp"
 #include "list/playlist.hpp"
 #include "listitem/track.hpp"
@@ -22,6 +21,7 @@
 #include "menu/track.hpp"
 #include "spotify/current.hpp"
 #include "spotify/spotify.hpp"
+#include "spotifyclient/runner.hpp"
 #include "util/datetime.hpp"
 #include "util/http.hpp"
 #include "util/icon.hpp"
@@ -32,6 +32,7 @@
 #include "view/maincontent.hpp"
 #include "view/maintoolbar.hpp"
 #include "view/sidepanel/view.hpp"
+#include "view/splashscreen.hpp"
 #include "view/trayicon.hpp"
 #include "widget/hiddensizegrip.hpp"
 

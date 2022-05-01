@@ -82,6 +82,7 @@ private:
 	QList<QSizeGrip *> resizeGrips;
 
 	SpotifyClient::Runner *spotifyRunner = nullptr;
+	Ipc::Server *ipcServer = nullptr;
 
 	spt::Spotify *spotify = nullptr;
 	spt::Current current;

@@ -57,6 +57,9 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 		return;
 	}
 
+	// IPC server
+	initIpcServer();
+
 	// Setup main window
 	setWindowTitle(APP_NAME);
 	setWindowIcon(Icon::get(QString("logo:%1").arg(APP_ICON)));
@@ -202,6 +205,17 @@ void MainWindow::initDevice()
 			}
 		}
 	});
+}
+
+auto MainWindow::initIpcServer() -> bool
+{
+	if (ipcServer != nullptr)
+	{
+		return true;
+	}
+
+	ipcServer = new Ipc::Server(this);
+	return ipcServer->start();
 }
 
 void MainWindow::setBorderless(bool enabled)
