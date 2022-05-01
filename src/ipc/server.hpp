@@ -17,7 +17,11 @@ namespace Ipc
 		auto start() -> bool;
 
 	private:
+		QLocalSocket *socket = nullptr;
+		QDataStream stream;
+
 		void onNewConnection();
+		void onReadyRead();
 		static void onReadAll(const QString &data);
 	};
 }
