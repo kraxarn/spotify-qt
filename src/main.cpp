@@ -14,6 +14,24 @@
 #include "lib/crash/crashhandler.hpp"
 #endif
 
+auto commandLineOptions() -> QList<QCommandLineOption>
+{
+	return {
+		{
+			QStringLiteral("dev"),
+			QStringLiteral("Enable developer mode for troubleshooting issues."),
+		},
+		{
+			QStringLiteral("reset-credentials"),
+			QStringLiteral("Allows providing new Spotify credentials."),
+		},
+		{
+			QStringLiteral("paths"),
+			QStringLiteral("Print paths for config file and cache."),
+		},
+	};
+}
+
 auto main(int argc, char *argv[]) -> int
 {
 	// Set name for settings etc.
@@ -63,11 +81,7 @@ auto main(int argc, char *argv[]) -> int
 	QCommandLineParser parser;
 	parser.addVersionOption();
 	parser.addHelpOption();
-	parser.addOptions({
-		{"dev", "Enable developer mode for troubleshooting issues."},
-		{"reset-credentials", "Allows providing new Spotify credentials."},
-		{"paths", "Print paths for config file and cache."},
-	});
+	parser.addOptions(commandLineOptions());
 	parser.process(app);
 
 	if (parser.isSet("dev"))
