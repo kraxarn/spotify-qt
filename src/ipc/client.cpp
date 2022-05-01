@@ -19,6 +19,13 @@ void Ipc::Client::send(const QString &message)
 	abort();
 
 	connectToServer(APP_NAME);
+
+	QByteArray outData;
+	QDataStream out(&outData, QIODevice::WriteOnly);
+	out << message;
+
+	write(outData);
+	flush();
 }
 
 void Ipc::Client::setOnSuccess(const std::function<void(const QString &)> &callback)
