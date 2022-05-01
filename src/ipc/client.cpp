@@ -4,94 +4,75 @@
 Ipc::Client::Client(QObject *parent)
 	: QLocalSocket(parent)
 {
-	in.setDevice(this);
+	buffer.setDevice(this);
+
+	QLocalSocket::connect(this, &QLocalSocket::readyRead,
+		this, &Ipc::Client::onReadyRead);
+
+	QLocalSocket::connect(this, &QLocalSocket::errorOccurred,
+		this, &Ipc::Client::onErrorOccurred);
 }
 
-void Ipc::Client::send(const QString &message,
-	const std::function<void(const lib::result<QString> &)> &callback)
+void Ipc::Client::send(const QString &message)
 {
 	blockSize = 0;
 	abort();
 
-	QLocalSocket::connect(this, &QLocalSocket::readyRead,
-		[this, callback]()
-		{
-			const auto response = Ipc::Client::readResponse(this);
-			callback(lib::result<QString>::ok(response));
-		});
-
-	QLocalSocket::connect(this, &QLocalSocket::errorOccurred,
-		[callback](QLocalSocket::LocalSocketError error)
-		{
-			const auto message = Ipc::Client::getErrorMessage(error);
-			callback(lib::result<QString>::fail(message));
-		});
-
 	connectToServer(APP_NAME);
 }
 
-auto Ipc::Client::readResponse() -> QString
+void Ipc::Client::setOnSuccess(const std::function<void(const QString &)> &callback)
 {
-	quint32 blockSize;
-	QDataStream buffer;
-
-	if (socket->bytesAvailable() < static_cast<qint64>(sizeof(quint32)))
-	{
-		lib::log::warn("Socket buffer full");
-		return {};
-	}
-	buffer >> blockSize;
-
-	if (socket->bytesAvailable() < blockSize || buffer.atEnd())
-	{
-		lib::log::warn("No data in socket");
-		return {};
-	}
-
-	QString response;
-	buffer >> response;
-	return response;
+	onSuccess = callback;
 }
 
-auto Ipc::Client::getErrorMessage(QLocalSocket::LocalSocketError error) -> std::string
+void Ipc::Client::setOnError(const std::function<void(const QString &)> &callback)
 {
-	switch (error)
+	onError = callback;
+}
+
+auto Ipc::Client::toString() -> QString
+{
+	QString data;
+	buffer >> data;
+	return data;
+}
+
+void Ipc::Client::onReadyRead()
+{
+	if (blockSize == 0)
 	{
-		case ConnectionRefusedError:
-			return {"connection refused"};
+		if (bytesAvailable() < static_cast<qint64>(sizeof(quint32)))
+		{
+			if (onSuccess)
+			{
+				onSuccess(toString());
+			}
+			return;
+		}
+		buffer >> blockSize;
+	}
 
-		case PeerClosedError:
-			return {"connection closed"};
+	// Not at the end of stream
+	if (bytesAvailable() >= blockSize && !buffer.atEnd())
+	{
+		return;
+	}
 
-		case ServerNotFoundError:
-			return {"server not found"};
-
-		case SocketAccessError:
-			return {"access denied"};
-
-		case SocketResourceError:
-			return {"too many active connections"};
-
-		case SocketTimeoutError:
-			return {"timed out"};
-
-		case DatagramTooLargeError:
-			return {"too much data"};
-
-		case ConnectionError:
-			return {"connection error"};
-
-		case UnsupportedSocketOperationError:
-			return {"not supported"};
-
-		case OperationError:
-			return {"there is already an active operation"};
-
-		case UnknownSocketError:
-			return {"unknown error"};
-
-		default:
-			return {};
+	if (onSuccess)
+	{
+		onSuccess(toString());
 	}
 }
 
+void Ipc::Client::onErrorOccurred(QLocalSocket::LocalSocketError error)
+{
+	const auto message = errorString();
+	lib::log::error("IPC Client error {}: {}",
+		error, message.toStdString());
+
+	if (onError)
+	{
+		onError(message);
+	}
+}

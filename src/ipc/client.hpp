@@ -17,14 +17,21 @@ namespace Ipc
 	public:
 		explicit Client(QObject *parent);
 
-		void send(const QString &message,
-			const std::function<void(const lib::result<QString> &)> &callback);
+		void send(const QString &message);
+
+		void setOnSuccess(const std::function<void(const QString &response)> &callback);
+		void setOnError(const std::function<void(const QString &response)> &callback);
 
 	private:
-		QDataStream in;
+		QDataStream buffer;
 		quint32 blockSize;
 
-		static auto readResponse(QLocalSocket *socket) -> QString;
-		static auto getErrorMessage(QLocalSocket::LocalSocketError error) -> std::string;
+		std::function<void(const QString &response)> onSuccess;
+		std::function<void(const QString &response)> onError;
+
+		auto toString() -> QString;
+
+		void onReadyRead();
+		void onErrorOccurred(QLocalSocket::LocalSocketError error);
 	};
 }
