@@ -112,6 +112,7 @@ private:
 	void initMediaController();
 	void initWhatsNew();
 	void initDevice();
+	auto initIpcServer() -> bool;
 
 	// Methods
 	QWidget *createCentralWidget();
