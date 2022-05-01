@@ -108,15 +108,15 @@ auto main(int argc, char *argv[]) -> int
 	}
 
 	// Create main window
-	MainWindow w(settings, paths);
+	MainWindow window(settings, paths);
 
 	// Show window and run application
-	if (!w.isValid())
+	if (!window.isValid())
 	{
 		return 1;
 	}
 
-	w.show();
+	window.show();
 
 	// Run application
 	return QApplication::exec();
