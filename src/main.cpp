@@ -7,47 +7,13 @@
 
 #include "mainwindow.hpp"
 #include "dialog/setup.hpp"
+#include "commandline.hpp"
 
 #ifdef USE_KCRASH
 #include <kcrash.h>
 #else
 #include "lib/crash/crashhandler.hpp"
 #endif
-
-auto commandLineOptions() -> QList<QCommandLineOption>
-{
-	return {
-		{
-			QStringLiteral("dev"),
-			QStringLiteral("Enable developer mode for troubleshooting issues."),
-		},
-		{
-			QStringLiteral("reset-credentials"),
-			QStringLiteral("Allows providing new Spotify credentials."),
-		},
-		{
-			QStringLiteral("paths"),
-			QStringLiteral("Print paths for config file and cache."),
-		},
-		{
-			QStringLiteral("multiple-instances"),
-			QStringLiteral("Allow multiple instances, disables playback options."),
-		},
-		// Playback options
-		{
-			QStringLiteral("play-pause"),
-			QStringLiteral("Play, or pause, current track.")
-		},
-		{
-			QStringLiteral("previous"),
-			QStringLiteral("Go to the previous track"),
-		},
-		{
-			QStringLiteral("next"),
-			QStringLiteral("Go to the next track"),
-		},
-	};
-}
 
 auto main(int argc, char *argv[]) -> int
 {
@@ -94,19 +60,15 @@ auto main(int argc, char *argv[]) -> int
 	// Check fallback icons
 	Icon::useFallbackIcons = settings.general.fallback_icons;
 
-	// Show version if requested
-	QCommandLineParser parser;
-	parser.addVersionOption();
-	parser.addHelpOption();
-	parser.addOptions(commandLineOptions());
-	parser.process(app);
+	// Command line arguments
+	CommandLine commandLine(app);
 
-	if (parser.isSet("dev"))
+	if (commandLine.isSet("dev"))
 	{
 		lib::developer_mode::enabled = true;
 	}
 
-	if (parser.isSet("paths"))
+	if (commandLine.isSet("paths"))
 	{
 		lib::log::info("Config: {}", paths.config_file().string());
 		lib::log::info("Cache:  {}", paths.cache().string());
@@ -115,7 +77,7 @@ auto main(int argc, char *argv[]) -> int
 
 	// First setup window
 	if (settings.account.refresh_token.empty()
-		|| parser.isSet("reset-credentials"))
+		|| commandLine.isSet("reset-credentials"))
 	{
 		Dialog::Setup dialog(settings, nullptr);
 		if (dialog.exec() == QDialog::Rejected)
