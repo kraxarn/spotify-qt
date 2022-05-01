@@ -8,6 +8,7 @@
 #include "mainwindow.hpp"
 #include "dialog/setup.hpp"
 #include "commandline.hpp"
+#include "ipc/handler.hpp"
 
 #ifdef USE_KCRASH
 #include <kcrash.h>
@@ -63,9 +64,9 @@ auto main(int argc, char *argv[]) -> int
 	// Command line arguments
 	CommandLine commandLine(app);
 
-	if (commandLine.isSet("dev"))
+	if (Ipc::Handler::process(commandLine))
 	{
-		lib::developer_mode::enabled = true;
+		return 0;
 	}
 
 	if (commandLine.isSet("paths"))
