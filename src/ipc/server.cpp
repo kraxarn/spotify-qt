@@ -26,11 +26,14 @@ void Ipc::Server::onNewConnection()
 	QByteArray buffer;
 	QDataStream out(&buffer, QIODevice::WriteOnly);
 
-	out << QStringLiteral("pong"); // TODO
+	out << QStringLiteral("ok");
 
 	auto *socket = nextPendingConnection();
 	QLocalSocket::connect(socket, &QLocalSocket::disconnected,
 		socket, &QLocalSocket::deleteLater);
+
+	const auto data = QString(socket->readAll());
+	lib::log::debug("IPC: {}", data.toStdString());
 
 	socket->write(buffer);
 	socket->flush();
