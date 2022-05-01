@@ -269,6 +269,12 @@ void MainWindow::minimize()
 	setWindowState(windowState() | Qt::WindowMinimized);
 }
 
+auto MainWindow::isIpcServerRunning() const -> bool
+{
+	return ipcServer != nullptr && ipcServer->isListening();
+
+}
+
 void MainWindow::refresh()
 {
 	constexpr int msInSec = 1000;

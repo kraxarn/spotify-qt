@@ -51,6 +51,7 @@ public:
 	void setBorderless(bool enabled);
 	void addSizeGrip(const std::function<QPoint(const QRect &)> &position);
 	void minimize();
+	auto isIpcServerRunning() const -> bool;
 
 	auto startClient() -> bool;
 	void stopClient();

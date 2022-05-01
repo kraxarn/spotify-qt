@@ -78,6 +78,12 @@ auto SystemInfoView::systemInfo() -> lib::qt::system_info
 	// CMake build type
 	info.add(QStringLiteral("Build type"), QStringLiteral(BUILD_TYPE));
 
+	// IPC server info
+	info.add(QStringLiteral("IPC server"),
+		mainWindow != nullptr && mainWindow->isIpcServerRunning()
+			? QStringLiteral("Yes")
+			: QStringLiteral("No"));
+
 	return info;
 }
 
