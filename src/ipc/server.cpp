@@ -23,19 +23,33 @@ auto Ipc::Server::start() -> bool
 
 void Ipc::Server::onNewConnection()
 {
-	QByteArray buffer;
-	QDataStream out(&buffer, QIODevice::WriteOnly);
-
-	out << QStringLiteral("ok");
-
 	auto *socket = nextPendingConnection();
 	QLocalSocket::connect(socket, &QLocalSocket::disconnected,
 		socket, &QLocalSocket::deleteLater);
 
-	const auto data = QString(socket->readAll());
-	lib::log::debug("IPC: {}", data.toStdString());
+	auto *stream = new QDataStream(socket);
 
-	socket->write(buffer);
-	socket->flush();
-	socket->disconnectFromServer();
+	QLocalSocket::connect(socket, &QLocalSocket::readyRead,
+		[socket, stream]()
+		{
+			if (!stream->atEnd())
+			{
+				QString data;
+				*stream >> data;
+				Ipc::Server::onReadAll(data);
+
+				QByteArray buffer;
+				QDataStream out(&buffer, QIODevice::WriteOnly);
+				out << QStringLiteral("ok");
+
+				socket->write(buffer);
+				socket->flush();
+				socket->disconnectFromServer();
+			}
+		});
+}
+
+void Ipc::Server::onReadAll(const QString &data)
+{
+	lib::log::debug("IPC: {}", data.toStdString());
 }

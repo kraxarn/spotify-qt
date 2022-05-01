@@ -18,5 +18,6 @@ namespace Ipc
 
 	private:
 		void onNewConnection();
+		static void onReadAll(const QString &data);
 	};
 }
