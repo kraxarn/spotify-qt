@@ -33,7 +33,7 @@ void Ipc::Client::send(const QString &message,
 auto Ipc::Client::readResponse() -> QString
 {
 	quint32 blockSize;
-	QDataStream in;
+	QDataStream buffer;
 
 	if (blockSize == 0)
 	{
@@ -42,17 +42,17 @@ auto Ipc::Client::readResponse() -> QString
 			lib::log::warn("Socket buffer full");
 			return {};
 		}
-		in >> blockSize;
+		buffer >> blockSize;
 	}
 
-	if (socket->bytesAvailable() < blockSize || in.atEnd())
+	if (socket->bytesAvailable() < blockSize || buffer.atEnd())
 	{
 		lib::log::warn("No data in socket");
 		return {};
 	}
 
 	QString response;
-	in >> response;
+	buffer >> response;
 	return response;
 }
 
