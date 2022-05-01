@@ -9,8 +9,10 @@ Ipc::Client::Client(QObject *parent)
 	QLocalSocket::connect(this, &QLocalSocket::readyRead,
 		this, &Ipc::Client::onReadyRead);
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
 	QLocalSocket::connect(this, &QLocalSocket::errorOccurred,
 		this, &Ipc::Client::onErrorOccurred);
+#endif
 }
 
 void Ipc::Client::send(const QString &message)
