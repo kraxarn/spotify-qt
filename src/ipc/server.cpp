@@ -32,7 +32,7 @@ void Ipc::Server::onNewConnection()
 	QLocalSocket::connect(socket, &QLocalSocket::readyRead,
 		[socket, stream]()
 		{
-			if (!stream->atEnd())
+			if (stream->atEnd())
 			{
 				QString data;
 				*stream >> data;
