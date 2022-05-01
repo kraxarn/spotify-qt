@@ -4,6 +4,7 @@
 Ipc::Server::Server(QObject *parent)
 	: QLocalServer(parent)
 {
+	setMaxPendingConnections(1);
 }
 
 auto Ipc::Server::start() -> bool
