@@ -1,6 +1,6 @@
-#include "commandline.hpp"
+#include "commandline/parser.hpp"
 
-CommandLine::CommandLine(const QCoreApplication &app)
+CommandLine::Parser::Parser(const QCoreApplication &app)
 {
 	addVersionOption();
 	addHelpOption();
@@ -9,7 +9,7 @@ CommandLine::CommandLine(const QCoreApplication &app)
 	process(app);
 }
 
-auto CommandLine::options() -> QList<QCommandLineOption>
+auto CommandLine::Parser::options() -> QList<QCommandLineOption>
 {
 	return {
 		{

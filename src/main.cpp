@@ -7,7 +7,7 @@
 
 #include "mainwindow.hpp"
 #include "dialog/setup.hpp"
-#include "commandline.hpp"
+#include "commandline/parser.hpp"
 #include "ipc/handler.hpp"
 
 #ifdef USE_KCRASH
@@ -62,14 +62,14 @@ auto main(int argc, char *argv[]) -> int
 	Icon::useFallbackIcons = settings.general.fallback_icons;
 
 	// Command line arguments
-	CommandLine commandLine(app);
+	CommandLine::Parser parser(app);
 
-	if (Ipc::Handler::process(commandLine))
+	if (Ipc::Handler::process(parser))
 	{
 		return 0;
 	}
 
-	if (commandLine.isSet("paths"))
+	if (parser.isSet("paths"))
 	{
 		lib::log::info("Config: {}", paths.config_file().string());
 		lib::log::info("Cache:  {}", paths.cache().string());
@@ -78,7 +78,7 @@ auto main(int argc, char *argv[]) -> int
 
 	// First setup window
 	if (settings.account.refresh_token.empty()
-		|| commandLine.isSet("reset-credentials"))
+		|| parser.isSet("reset-credentials"))
 	{
 		Dialog::Setup dialog(settings, nullptr);
 		if (dialog.exec() == QDialog::Rejected)

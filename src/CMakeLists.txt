@@ -1,3 +1,4 @@
+add_subdirectory(commandline)
 add_subdirectory(dialog)
 add_subdirectory(ipc)
 add_subdirectory(keyring)
@@ -15,5 +16,4 @@ add_subdirectory(widget)
 
 target_sources(${PROJECT_NAME} PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/commandline.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/mainwindow.cpp)
