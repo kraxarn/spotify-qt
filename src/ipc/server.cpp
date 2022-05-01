@@ -1,4 +1,5 @@
 #include "server.hpp"
+#include "lib/log.hpp"
 
 Ipc::Server::Server(QObject *parent)
 	: QLocalServer(parent)
@@ -9,6 +10,8 @@ auto Ipc::Server::start() -> bool
 {
 	if (!listen(APP_NAME))
 	{
+		lib::log::error("Failed to start IPC server: {}",
+			errorString().toStdString());
 		return false;
 	}
 
@@ -23,7 +26,7 @@ void Ipc::Server::onNewConnection()
 	QByteArray buffer;
 	QDataStream out(&buffer, QIODevice::WriteOnly);
 
-	out << "pong"; // TODO
+	out << QStringLiteral("pong"); // TODO
 
 	auto *socket = nextPendingConnection();
 	QLocalSocket::connect(socket, &QLocalSocket::disconnected,
