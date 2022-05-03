@@ -1,5 +1,7 @@
 #pragma once
 
+#include "lib/spotify/api.hpp"
+
 #include <QtNetwork>
 
 namespace Ipc
@@ -12,16 +14,17 @@ namespace Ipc
 	Q_OBJECT
 
 	public:
-		explicit Server(QObject *parent);
+		Server(lib::spt::api &spotify, QObject *parent);
 
 		auto start() -> bool;
 
 	private:
 		QLocalSocket *socket = nullptr;
 		QDataStream stream;
+		lib::spt::api &spotify;
 
 		void onNewConnection();
 		void onReadyRead();
-		static void onReadAll(const QString &data);
+		auto onReadAll(const QString &data) -> bool;
 	};
 }

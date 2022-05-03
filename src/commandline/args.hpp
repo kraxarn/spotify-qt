@@ -23,7 +23,6 @@
 
 /**
  * Play/pause currently playing audio
- * @note Not implemented
  */
 #define ARG_PLAY_PAUSE QStringLiteral("play-pause")
 

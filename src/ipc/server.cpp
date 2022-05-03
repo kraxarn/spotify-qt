@@ -1,8 +1,11 @@
 #include "server.hpp"
 #include "lib/log.hpp"
+#include "commandline/args.hpp"
+#include "mainwindow.hpp"
 
-Ipc::Server::Server(QObject *parent)
-	: QLocalServer(parent)
+Ipc::Server::Server(lib::spt::api &spotify, QObject *parent)
+	: QLocalServer(parent),
+	spotify(spotify)
 {
 	setMaxPendingConnections(1);
 }
@@ -41,20 +44,52 @@ void Ipc::Server::onReadyRead()
 		return;
 	}
 
-	QString data;
-	stream >> data;
-	Ipc::Server::onReadAll(data);
-
 	QByteArray buffer;
 	QDataStream out(&buffer, QIODevice::WriteOnly);
-	out << QStringLiteral("ok");
+
+	QString data;
+	stream >> data;
+
+	out << (onReadAll(data)
+		? QStringLiteral("ok")
+		: QStringLiteral("err"));
 
 	socket->write(buffer);
 	socket->flush();
 	socket->disconnectFromServer();
 }
 
-void Ipc::Server::onReadAll(const QString &data)
+auto Ipc::Server::onReadAll(const QString &data) -> bool
 {
-	lib::log::debug("IPC: {}", data.toStdString());
+	if (data == ARG_PLAY_PAUSE)
+	{
+		auto *mainWindow = qobject_cast<MainWindow *>(parent());
+		if (mainWindow == nullptr)
+		{
+			lib::log::warn("{} failed: no window", ARG_PLAY_PAUSE.toStdString());
+			return false;
+		}
+
+		auto callback = [](const std::string &status)
+		{
+			if (!status.empty())
+			{
+				lib::log::warn("{} failed: {}", ARG_PLAY_PAUSE.toStdString(), status);
+			}
+		};
+
+		if (mainWindow->currentPlayback().is_playing)
+		{
+			spotify.pause(callback);
+		}
+		else
+		{
+			spotify.resume(callback);
+		}
+
+		return true;
+	}
+
+	lib::log::warn("Unrecognized command: {}", data.toStdString());
+	return false;
 }

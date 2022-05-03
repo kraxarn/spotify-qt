@@ -214,7 +214,7 @@ auto MainWindow::initIpcServer() -> bool
 		return true;
 	}
 
-	ipcServer = new Ipc::Server(this);
+	ipcServer = new Ipc::Server(*spotify, this);
 	return ipcServer->start();
 }
 
