@@ -28,12 +28,10 @@
 
 /**
  * Go to previous track
- * @note Not implemented
  */
 #define ARG_PREVIOUS_TRACK QStringLiteral("previous")
 
 /**
  * Go to the next track
- * @note Not implemented
  */
 #define ARG_NEXT_TRACK QStringLiteral("next")

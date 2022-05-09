@@ -26,5 +26,6 @@ namespace Ipc
 		void onNewConnection();
 		void onReadyRead();
 		auto onReadAll(const QString &data) -> bool;
+		static void logStatus(const QString &data, const std::string &status);
 	};
 }

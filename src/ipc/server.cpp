@@ -59,23 +59,30 @@ void Ipc::Server::onReadyRead()
 	socket->disconnectFromServer();
 }
 
+void Ipc::Server::logStatus(const QString &data, const std::string &status)
+{
+	if (status.empty())
+	{
+		return;
+	}
+
+	lib::log::warn("{} failed: {}", data.toStdString(), status);
+}
+
 auto Ipc::Server::onReadAll(const QString &data) -> bool
 {
+	auto *mainWindow = qobject_cast<MainWindow *>(parent());
+	if (mainWindow == nullptr)
+	{
+		lib::log::warn("{} failed: no window", ARG_PLAY_PAUSE.toStdString());
+		return false;
+	}
+
 	if (data == ARG_PLAY_PAUSE)
 	{
-		auto *mainWindow = qobject_cast<MainWindow *>(parent());
-		if (mainWindow == nullptr)
+		auto callback = [data](const std::string &status)
 		{
-			lib::log::warn("{} failed: no window", ARG_PLAY_PAUSE.toStdString());
-			return false;
-		}
-
-		auto callback = [](const std::string &status)
-		{
-			if (!status.empty())
-			{
-				lib::log::warn("{} failed: {}", ARG_PLAY_PAUSE.toStdString(), status);
-			}
+			Ipc::Server::logStatus(data, status);
 		};
 
 		if (mainWindow->currentPlayback().is_playing)
@@ -87,6 +94,24 @@ auto Ipc::Server::onReadAll(const QString &data) -> bool
 			spotify.resume(callback);
 		}
 
+		return true;
+	}
+
+	if (data == ARG_PREVIOUS_TRACK)
+	{
+		spotify.previous([data](const std::string &status)
+		{
+			Ipc::Server::logStatus(data, status);
+		});
+		return true;
+	}
+
+	if (data == ARG_NEXT_TRACK)
+	{
+		spotify.next([data](const std::string &status)
+		{
+			Ipc::Server::logStatus(data, status);
+		});
 		return true;
 	}
 
