@@ -74,7 +74,7 @@ auto Ipc::Server::onReadAll(const QString &data) -> bool
 	auto *mainWindow = qobject_cast<MainWindow *>(parent());
 	if (mainWindow == nullptr)
 	{
-		lib::log::warn("{} failed: no window", ARG_PLAY_PAUSE.toStdString());
+		lib::log::warn("{} failed: no window", data.toStdString());
 		return false;
 	}
 
