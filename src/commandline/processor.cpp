@@ -19,5 +19,17 @@ auto CommandLine::Processor::process(const QCommandLineParser &parser) -> bool
 		return true;
 	}
 
+	if (parser.isSet(ARG_PREVIOUS_TRACK))
+	{
+		client.send(ARG_PREVIOUS_TRACK);
+		return true;
+	}
+
+	if (parser.isSet(ARG_NEXT_TRACK))
+	{
+		client.send(ARG_NEXT_TRACK);
+		return true;
+	}
+
 	return false;
 }
