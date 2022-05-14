@@ -3,6 +3,8 @@
 #include "commandline/args.hpp"
 #include "mainwindow.hpp"
 
+#define RESPONSE_OK QStringLiteral("ok")
+
 Ipc::Server::Server(lib::spt::api &spotify, QObject *parent)
 	: QLocalServer(parent),
 	spotify(spotify)
@@ -50,9 +52,7 @@ void Ipc::Server::onReadyRead()
 	QByteArray buffer;
 	QDataStream out(&buffer, QIODevice::WriteOnly);
 
-	out << (onReadAll(data)
-		? QStringLiteral("ok")
-		: QStringLiteral("err"));
+	out << onReadAll(data);
 
 	socket->write(buffer);
 	socket->flush();
@@ -69,13 +69,12 @@ void Ipc::Server::logStatus(const QString &data, const std::string &status)
 	lib::log::warn("{} failed: {}", data.toStdString(), status);
 }
 
-auto Ipc::Server::onReadAll(const QString &data) -> bool
+auto Ipc::Server::onReadAll(const QString &data) -> QString
 {
 	auto *mainWindow = qobject_cast<MainWindow *>(parent());
 	if (mainWindow == nullptr)
 	{
-		lib::log::warn("{} failed: no window", data.toStdString());
-		return false;
+		return QString("%1 failed: no window").arg(data);
 	}
 
 	if (data == ARG_PLAY_PAUSE)
@@ -94,7 +93,7 @@ auto Ipc::Server::onReadAll(const QString &data) -> bool
 			spotify.resume(callback);
 		}
 
-		return true;
+		return RESPONSE_OK;
 	}
 
 	if (data == ARG_PREVIOUS_TRACK)
@@ -103,7 +102,7 @@ auto Ipc::Server::onReadAll(const QString &data) -> bool
 		{
 			Ipc::Server::logStatus(data, status);
 		});
-		return true;
+		return RESPONSE_OK;
 	}
 
 	if (data == ARG_NEXT_TRACK)
@@ -112,9 +111,8 @@ auto Ipc::Server::onReadAll(const QString &data) -> bool
 		{
 			Ipc::Server::logStatus(data, status);
 		});
-		return true;
+		return RESPONSE_OK;
 	}
 
-	lib::log::warn("Unrecognized command: {}", data.toStdString());
-	return false;
+	return QString("Unrecognized command: %1").arg(data);
 }
