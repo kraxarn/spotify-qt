@@ -3,6 +3,8 @@
 #include "lib/log.hpp"
 #include "ipc/client.hpp"
 
+#include <QThread>
+
 auto CommandLine::Processor::process(const QCommandLineParser &parser) -> bool
 {
 	if (parser.isSet(ARG_ENABLE_DEV))
@@ -16,20 +18,36 @@ auto CommandLine::Processor::process(const QCommandLineParser &parser) -> bool
 	if (parser.isSet(ARG_PLAY_PAUSE))
 	{
 		client.send(ARG_PLAY_PAUSE);
-		return true;
 	}
-
-	if (parser.isSet(ARG_PREVIOUS_TRACK))
+	else if (parser.isSet(ARG_PREVIOUS_TRACK))
 	{
 		client.send(ARG_PREVIOUS_TRACK);
-		return true;
 	}
-
-	if (parser.isSet(ARG_NEXT_TRACK))
+	else if (parser.isSet(ARG_NEXT_TRACK))
 	{
 		client.send(ARG_NEXT_TRACK);
-		return true;
+	}
+	else
+	{
+		return false;
 	}
 
-	return false;
+	auto running = true;
+	auto callback = [&running](const QString &response)
+	{
+		lib::log::debug("{}", response.toStdString());
+		running = false;
+	};
+
+	client.setOnSuccess(callback);
+	client.setOnError(callback);
+
+	// TODO: Maybe not a very good way to wait for response?
+	while (running)
+	{
+		QCoreApplication::processEvents();
+		QThread::msleep(10);
+	}
+
+	return true;
 }
