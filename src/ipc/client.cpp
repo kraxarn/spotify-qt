@@ -74,14 +74,10 @@ void Ipc::Client::onReadyRead()
 	}
 }
 
-void Ipc::Client::onErrorOccurred(QLocalSocket::LocalSocketError error)
+void Ipc::Client::onErrorOccurred(QLocalSocket::LocalSocketError /*error*/)
 {
-	const auto message = errorString();
-	lib::log::error("IPC Client error {}: {}",
-		error, message.toStdString());
-
 	if (onError)
 	{
-		onError(message);
+		onError(errorString());
 	}
 }
