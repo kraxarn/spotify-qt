@@ -39,6 +39,9 @@ void Ipc::Server::onNewConnection()
 
 void Ipc::Server::onReadyRead()
 {
+	QByteArray data;
+	stream >> data;
+
 	if (!stream.atEnd())
 	{
 		return;
@@ -46,9 +49,6 @@ void Ipc::Server::onReadyRead()
 
 	QByteArray buffer;
 	QDataStream out(&buffer, QIODevice::WriteOnly);
-
-	QString data;
-	stream >> data;
 
 	out << (onReadAll(data)
 		? QStringLiteral("ok")
