@@ -114,5 +114,11 @@ auto Ipc::Server::onReadAll(const QString &data) -> QString
 		return RESPONSE_OK;
 	}
 
+	if (data == ARG_METADATA)
+	{
+		nlohmann::json playback = mainWindow->getCurrentPlayback();
+		return QString::fromStdString(playback.dump());
+	}
+
 	return QString("Unrecognized command: %1").arg(data);
 }

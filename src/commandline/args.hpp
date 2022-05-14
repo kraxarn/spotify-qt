@@ -35,3 +35,8 @@
  * Go to the next track
  */
 #define ARG_NEXT_TRACK QStringLiteral("next")
+
+/**
+ * Metadata of currently playing track
+ */
+#define ARG_METADATA QStringLiteral("metadata")

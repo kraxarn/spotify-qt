@@ -42,5 +42,9 @@ auto CommandLine::Parser::options() -> QList<QCommandLineOption>
 			ARG_NEXT_TRACK,
 			QStringLiteral("Go to the next track."),
 		},
+		{
+			ARG_METADATA,
+			QStringLiteral("Print currently playing track as json."),
+		},
 	};
 }

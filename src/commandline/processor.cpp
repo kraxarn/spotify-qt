@@ -27,6 +27,10 @@ auto CommandLine::Processor::process(const QCommandLineParser &parser) -> bool
 	{
 		client.send(ARG_NEXT_TRACK);
 	}
+	else if (parser.isSet(ARG_METADATA))
+	{
+		client.send(ARG_METADATA);
+	}
 	else
 	{
 		return false;
