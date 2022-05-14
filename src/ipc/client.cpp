@@ -24,7 +24,7 @@ void Ipc::Client::send(const QString &message)
 
 	QByteArray outData;
 	QDataStream out(&outData, QIODevice::WriteOnly);
-	out << message;
+	out << message.toLocal8Bit();
 
 	write(outData);
 	flush();
