@@ -35,7 +35,7 @@ auto CommandLine::Processor::process(const QCommandLineParser &parser) -> bool
 	auto running = true;
 	auto callback = [&running](const QString &response)
 	{
-		lib::log::debug("{}", response.toStdString());
+		std::cout << response.toStdString() << std::endl;
 		running = false;
 	};
 
