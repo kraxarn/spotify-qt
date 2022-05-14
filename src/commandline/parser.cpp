@@ -36,11 +36,11 @@ auto CommandLine::Parser::options() -> QList<QCommandLineOption>
 		},
 		{
 			ARG_PREVIOUS_TRACK,
-			QStringLiteral("Go to the previous track"),
+			QStringLiteral("Go to the previous track."),
 		},
 		{
 			ARG_NEXT_TRACK,
-			QStringLiteral("Go to the next track"),
+			QStringLiteral("Go to the next track."),
 		},
 	};
 }
