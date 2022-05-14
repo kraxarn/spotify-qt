@@ -35,7 +35,10 @@ auto CommandLine::Processor::process(const QCommandLineParser &parser) -> bool
 	auto running = true;
 	auto callback = [&running](const QString &response)
 	{
-		std::cout << response.toStdString() << std::endl;
+		if (!response.startsWith("QLocalSocket:"))
+		{
+			std::cout << response.toStdString() << std::endl;
+		}
 		running = false;
 	};
 
