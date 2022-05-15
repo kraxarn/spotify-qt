@@ -32,7 +32,7 @@ void Menu::AddToPlaylist::onAboutToShow()
 	addSeparator();
 	for (auto &playlist: cache.get_playlists())
 	{
-		if (!playlist.collaborative && playlist.owner_id != currentUserId)
+		if (playlist.owner_id != currentUserId)
 		{
 			continue;
 		}
