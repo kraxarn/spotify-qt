@@ -45,6 +45,7 @@ namespace lib
 
 			/**
 			 * Collaborative playlist, where anyone can edit it
+			 * @note Collaborative playlists cannot be edited from the Web API
 			 */
 			bool collaborative = false;
 
