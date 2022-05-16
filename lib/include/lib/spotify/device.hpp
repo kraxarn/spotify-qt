@@ -2,6 +2,8 @@
 
 #include "thirdparty/json.hpp"
 
+#include "lib/spotify/entity.hpp"
+
 #include <string>
 
 namespace lib
@@ -11,20 +13,10 @@ namespace lib
 		/**
 		 * Playback device
 		 */
-		class device
+		class device: public entity
 		{
 		public:
 			device() = default;
-
-			/**
-			 * Spotify ID, for example, when selecting
-			 */
-			std::string id;
-
-			/**
-			 * User-friendly name
-			 */
-			std::string name;
 
 			/**
 			 * Device type, for example computer or speaker
