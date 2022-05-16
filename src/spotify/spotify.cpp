@@ -9,16 +9,10 @@ spt::Spotify::Spotify(lib::settings &settings,
 void spt::Spotify::select_device(const std::vector<lib::spt::device> &devices,
 	lib::callback<lib::spt::device> &callback)
 {
-	Dialog::DeviceSelect dialog(devices, dynamic_cast<QWidget *>(parent()));
-
-	if (dialog.exec() == QDialog::Accepted)
-	{
-		auto selected = dialog.selectedDevice();
-		if (!selected.id.empty())
-		{
-			callback(selected);
-		}
-	}
+	auto *parentWidget = dynamic_cast<QWidget *>(parent());
+	auto *dialog = new Dialog::DeviceSelect(devices, parentWidget);
+	QDialog::connect(dialog, &Dialog::DeviceSelect::deviceSelected, callback);
+	dialog->open();
 }
 
 auto spt::Spotify::tryRefresh() -> bool

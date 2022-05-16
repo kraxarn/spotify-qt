@@ -1,6 +1,7 @@
 #pragma once
 
 #include "lib/spotify/device.hpp"
+#include "lib/spotify/callback.hpp"
 
 #include <QDialog>
 #include <QDialogButtonBox>
@@ -18,10 +19,16 @@ namespace Dialog
 	public:
 		DeviceSelect(const std::vector<lib::spt::device> &devices, QWidget *parent);
 
-		auto selectedDevice() -> lib::spt::device;
+	signals:
+		void deviceSelected(const lib::spt::device &device);
 
 	private:
-		std::vector<lib::spt::device> devices;
+		static constexpr int roleDevice = 0x100;
+
 		QListWidget *list;
+
+		void onItemDoubleClicked(QListWidgetItem *item);
+		void onOk(bool checked);
+		void onCancel(bool checked);
 	};
 }
