@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['id_0',['id',['../classlib_1_1spt_1_1device.html#ae5c5717d6589850d59f4de10447eb763',1,'lib::spt::device::id()'],['../classlib_1_1spt_1_1entity.html#aee885e71436770386505526fb446dbe8',1,'lib::spt::entity::id()'],['../classlib_1_1spt_1_1user.html#a3a903d10830bfb230995f5799318bdc1',1,'lib::spt::user::id()']]],
+  ['id_0',['id',['../classlib_1_1spt_1_1entity.html#aee885e71436770386505526fb446dbe8',1,'lib::spt::entity::id()'],['../classlib_1_1spt_1_1user.html#a3a903d10830bfb230995f5799318bdc1',1,'lib::spt::user::id()']]],
   ['image_1',['image',['../classlib_1_1spt_1_1album.html#a9ddfcaaa1236598d3ac692597aafd644',1,'lib::spt::album::image()'],['../classlib_1_1spt_1_1artist.html#a192bafc54f4236530d943731f535c738',1,'lib::spt::artist::image()'],['../classlib_1_1spt_1_1playlist.html#a54d2e594389dd4ae20588b7a28a6745e',1,'lib::spt::playlist::image()'],['../classlib_1_1spt_1_1user.html#ab3268fbf2cf6d5412033c552d494b331',1,'lib::spt::user::image()'],['../classlib_1_1image.html',1,'lib::image'],['../classlib_1_1spt_1_1image.html',1,'lib::spt::image']]],
   ['image_5flarge_2',['image_large',['../classlib_1_1spt_1_1track.html#a0260bcc9a2e8a3efcc972f33919234d5',1,'lib::spt::track']]],
   ['image_5fsmall_3',['image_small',['../classlib_1_1spt_1_1track.html#ac68c0654b17213d3aec3540ee3a680db',1,'lib::spt::track']]],
