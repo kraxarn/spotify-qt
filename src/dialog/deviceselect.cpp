@@ -1,5 +1,6 @@
 #include "dialog/deviceselect.hpp"
-#include "metatypes.hpp"
+
+Q_DECLARE_METATYPE(lib::spt::device)
 
 Dialog::DeviceSelect::DeviceSelect(const std::vector<lib::spt::device> &devices, QWidget *parent)
 	: QDialog(parent)
