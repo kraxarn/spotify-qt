@@ -27,6 +27,6 @@ namespace Context
 		ExpandedContent(lib::spt::api &spotify, spt::Current &current,
 			const lib::cache &cache, QWidget *parent);
 
-		void resizeEvent(QResizeEvent *event);
+		void resizeEvent(QResizeEvent *event) override;
 	};
 }
