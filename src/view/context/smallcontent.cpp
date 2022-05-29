@@ -5,8 +5,7 @@ Context::SmallContent::SmallContent(lib::spt::api &spotify, spt::Current &curren
 	const lib::cache &cache, QWidget *parent)
 	: AbstractContent(spotify, current, cache, parent)
 {
-	auto *layout = new QHBoxLayout(this);
-	layout->setSpacing(0);
+	auto *layout = AbstractContent::layout<QHBoxLayout>();
 	layout->setAlignment(Qt::AlignBottom);
 
 	album = new AlbumCover(this);
