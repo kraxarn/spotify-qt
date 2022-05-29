@@ -325,7 +325,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 			mainContent->getTracksList()->setPlayingTrackItem(currPlaying.id);
 		}
 
-		const auto &albumImageUrl = settings.general.expand_album_cover
+		const auto &albumImageUrl = settings.qt().album_size == lib::album_size::expanded
 			? currPlaying.image_large()
 			: currPlaying.image_small();
 
@@ -536,9 +536,9 @@ void MainWindow::toggleTrackNumbers(bool enabled)
 	}
 }
 
-void MainWindow::toggleExpandableAlbum(bool shouldBeExpandable)
+void MainWindow::toggleExpandableAlbum(lib::album_size albumSize)
 {
-	contextView->reloadAlbumContent(shouldBeExpandable);
+	contextView->setAlbumSize(albumSize);
 }
 
 //region Getters
