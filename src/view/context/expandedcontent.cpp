@@ -5,7 +5,7 @@ Context::ExpandedContent::ExpandedContent(lib::spt::api &spotify, spt::Current &
 	const lib::cache &cache, QWidget *parent)
 	: AbstractContent(spotify, current, cache, parent)
 {
-	auto *layout = AbstractContent::layout<QHBoxLayout>();
+	auto *layout = AbstractContent::layout<QVBoxLayout>();
 
 	album = new AlbumCover(this);
 	layout->addWidget(album);
