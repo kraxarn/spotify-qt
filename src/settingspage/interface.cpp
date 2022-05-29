@@ -18,6 +18,8 @@ auto SettingsPage::Interface::general() -> QWidget *
 	auto *layout = tabContent();
 	auto *comboBoxLayout = new QGridLayout();
 
+	const auto &qtSettings = settings.qt();
+
 	// Column resize
 	auto *resizeLabel = new QLabel("Track column resize", this);
 	resizeLabel->setToolTip("How to resize the columns in the track list\n"
@@ -55,10 +57,11 @@ auto SettingsPage::Interface::general() -> QWidget *
 	relativeAdded->setChecked(settings.general.relative_added);
 	layout->addWidget(relativeAdded);
 
-	// Expandable album cover
-	expandAlbumCover = new QCheckBox("Expandable Album Cover", this);
-	expandAlbumCover->setToolTip("If the currently playing album cover will be an icon or a dynamic size.");
-	expandAlbumCover->setChecked(settings.general.expand_album_cover);
+	// Expanded album cover
+	expandAlbumCover = new QCheckBox(QStringLiteral("Expanded album cover"), this);
+	expandAlbumCover->setToolTip(QStringLiteral(
+		"Expand size of album cover to width of side panel"));
+	expandAlbumCover->setChecked(qtSettings.album_size == lib::album_size::expanded);
 	layout->addWidget(expandAlbumCover);
 
 	return Widget::layoutToWidget(layout, this);
@@ -238,6 +241,8 @@ void SettingsPage::Interface::saveGeneral()
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 
+	auto &qtSettings = settings.qt();
+
 	if (resizeMode != nullptr)
 	{
 		auto newResizeMode = static_cast<lib::resize_mode>(resizeMode->currentIndex());
@@ -284,10 +289,16 @@ void SettingsPage::Interface::saveGeneral()
 
 	if (expandAlbumCover != nullptr)
 	{
-		if (mainWindow != nullptr)
+		const auto albumSize = expandAlbumCover->isChecked()
+			? lib::album_size::expanded
+			: lib::album_size::small;
+
+		if (mainWindow != nullptr && qtSettings.album_size != albumSize)
 		{
-			mainWindow->toggleExpandableAlbum(expandAlbumCover->isChecked());
+			mainWindow->toggleExpandableAlbum(albumSize);
 		}
+
+		qtSettings.album_size = albumSize;
 	}
 }
 
@@ -367,11 +378,6 @@ void SettingsPage::Interface::saveTrayIcon()
 	if (notifyTrackChange != nullptr)
 	{
 		settings.general.notify_track_change = notifyTrackChange->isChecked();
-	}
-
-	if (expandAlbumCover != nullptr)
-	{
-		settings.general.expand_album_cover = expandAlbumCover->isChecked();
 	}
 
 	if (closeToTray != nullptr)
