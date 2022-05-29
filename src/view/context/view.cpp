@@ -18,6 +18,11 @@ Context::View::View(lib::spt::api &spotify, lib::settings &settings, spt::Curren
 
 void Context::View::setAlbumSize(lib::album_size albumSize)
 {
+	if (albumContent != nullptr)
+	{
+		albumContent->deleteLater();
+	}
+
 	if (albumSize == lib::album_size::expanded)
 	{
 		albumContent = new Context::HorizContent(spotify, current, cache, this);
