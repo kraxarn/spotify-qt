@@ -17,11 +17,6 @@ Context::SmallContent::SmallContent(lib::spt::api &spotify, spt::Current &curren
 
 	reset();
 
-	// Show menu when clicking
-	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QLabel::connect(this, &QWidget::customContextMenuRequested,
-		this, &Context::SmallContent::onSongMenu);
-
 	// Context doesn't make sense to resize vertically
 	setFixedHeight(layout->minimumSize().height());
 }

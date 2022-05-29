@@ -14,11 +14,6 @@ Context::ExpandedContent::ExpandedContent(lib::spt::api &spotify, spt::Current &
 	layout->addWidget(nowPlaying);
 
 	reset();
-
-	// Show menu when clicking
-	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QLabel::connect(this, &QWidget::customContextMenuRequested,
-		this, &Context::ExpandedContent::onSongMenu);
 }
 
 void Context::ExpandedContent::resizeEvent(QResizeEvent *event)

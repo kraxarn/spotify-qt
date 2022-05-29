@@ -7,6 +7,10 @@ Context::AbstractContent::AbstractContent(lib::spt::api &spotify, spt::Current &
 	current(current),
 	cache(cache)
 {
+	// Show menu when clicking
+	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+	QLabel::connect(this, &QWidget::customContextMenuRequested,
+		this, &Context::AbstractContent::onSongMenu);
 }
 
 auto Context::AbstractContent::getCurrentlyPlaying() const -> const lib::spt::track &
@@ -14,7 +18,8 @@ auto Context::AbstractContent::getCurrentlyPlaying() const -> const lib::spt::tr
 	return currentlyPlaying;
 }
 
-void Context::AbstractContent::setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage)
+void Context::AbstractContent::setAlbum(const lib::spt::entity &albumEntity,
+	const QPixmap &albumImage)
 {
 	if (album != nullptr)
 	{

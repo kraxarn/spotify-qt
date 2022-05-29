@@ -40,8 +40,6 @@ namespace Context
 
 		lib::spt::track currentlyPlaying;
 
-		void onSongMenu(const QPoint &pos);
-
 		template<typename T>
 		auto layout() -> T *
 		{
@@ -53,5 +51,8 @@ namespace Context
 
 			return qobject_cast<T *>(QWidget::layout());
 		}
+
+	private:
+		void onSongMenu(const QPoint &pos);
 	};
 }
