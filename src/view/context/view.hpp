@@ -1,9 +1,9 @@
 #pragma once
 
 #include "view/context/title.hpp"
-#include "view/context/horizcontent.hpp"
+#include "view/context/expandedcontent.hpp"
 #include "view/context/abstractcontent.hpp"
-#include "view/context/content.hpp"
+#include "view/context/smallcontent.hpp"
 #include "lib/settings.hpp"
 #include "lib/enum/albumsize.hpp"
 

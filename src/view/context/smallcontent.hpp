@@ -18,13 +18,12 @@
 
 namespace Context
 {
-	class Content: public AbstractContent
+	class SmallContent: public AbstractContent
 	{
 
 	public:
-		Content(lib::spt::api &spotify, spt::Current &current,
+		SmallContent(lib::spt::api &spotify, spt::Current &current,
 			const lib::cache &cache, QWidget *parent);
-
 
 	private:
 		/** Width and height of album */
