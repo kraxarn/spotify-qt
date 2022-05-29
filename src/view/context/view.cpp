@@ -8,7 +8,7 @@ Context::View::View(lib::spt::api &spotify, lib::settings &settings, spt::Curren
 	current(current),
 	cache(cache)
 {
-	reloadAlbumContent(settings.general.expand_album_cover);
+	setAlbumSize(settings.qt().album_size);
 
 	title = new Context::Title(spotify, current, cache, this);
 	setTitleBarWidget(title);
@@ -16,19 +16,17 @@ Context::View::View(lib::spt::api &spotify, lib::settings &settings, spt::Curren
 	setFeatures(QDockWidget::DockWidgetMovable | DockWidgetFloatable);
 }
 
-void Context::View::reloadAlbumContent(bool shouldBeExpandable)
+void Context::View::setAlbumSize(lib::album_size albumSize)
 {
-	albumShouldBeExpandable = shouldBeExpandable;
-	 
-	// check if user wants a scalable album image or not
-	if (albumShouldBeExpandable)
+	if (albumSize == lib::album_size::expanded)
 	{
 		albumContent = new Context::HorizContent(spotify, current, cache, this);
 	}
-	else 
+	else
 	{
 		albumContent = new Context::Content(spotify, current, cache, this);
 	}
+
 	setWidget(albumContent);
 }
 

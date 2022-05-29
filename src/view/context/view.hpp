@@ -5,6 +5,7 @@
 #include "view/context/abstractcontent.hpp"
 #include "view/context/content.hpp"
 #include "lib/settings.hpp"
+#include "lib/enum/albumsize.hpp"
 
 #include <QDockWidget>
 
@@ -25,11 +26,9 @@ namespace Context
 		void setCurrentlyPlaying(const lib::spt::track &track) const;
 
 		void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage) const;
-		void reloadAlbumContent(bool shouldBeExpandable);
+		void setAlbumSize(lib::album_size albumSize);
 
 	private:
-		bool albumShouldBeExpandable = false;
-
 		lib::spt::api &spotify;
 		spt::Current &current;
 		const lib::cache &cache;
