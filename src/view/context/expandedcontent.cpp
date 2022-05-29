@@ -7,7 +7,7 @@ Context::ExpandedContent::ExpandedContent(lib::spt::api &spotify, spt::Current &
 {
 	auto *layout = AbstractContent::layout<QVBoxLayout>();
 
-	album = new AlbumCover(this);
+	album = new Context::AlbumCover(this);
 	layout->addWidget(album);
 
 	nowPlaying = new Context::NowPlaying(this);
