@@ -1,6 +1,5 @@
 target_sources(${PROJECT_NAME} PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/abstractcontent.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/albumcover.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/expandedcontent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/nowplaying.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/smallcontent.cpp

@@ -8,7 +8,7 @@ Context::SmallContent::SmallContent(lib::spt::api &spotify, spt::Current &curren
 	auto *layout = AbstractContent::layout<QHBoxLayout>();
 	layout->setAlignment(Qt::AlignBottom);
 
-	album = new Context::AlbumCover(this);
+	album = new QLabel(this);
 	album->setFixedSize(albumSize, albumSize);
 
 	layout->addWidget(album);

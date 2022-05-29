@@ -5,22 +5,22 @@ Context::ExpandedContent::ExpandedContent(lib::spt::api &spotify, spt::Current &
 	const lib::cache &cache, QWidget *parent)
 	: AbstractContent(spotify, current, cache, parent)
 {
-	auto *layout = AbstractContent::layout<QVBoxLayout>();
+	auto *layout = AbstractContent::layout<QGridLayout>();
 
-	album = new Context::AlbumCover(this);
-	layout->addWidget(album);
+	album = new QLabel(this);
+	album->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+	layout->addWidget(album, 0, 0, Qt::AlignBottom);
 
+	// TODO: Add background to text
 	nowPlaying = new Context::NowPlaying(this);
-	layout->addWidget(nowPlaying);
+	layout->addWidget(nowPlaying, 0, 0, Qt::AlignBottom);
 
+	setFixedHeight(width());
 	reset();
 }
 
 void Context::ExpandedContent::resizeEvent(QResizeEvent *event)
 {
-	auto newWidth = event->size().width();
-	auto newHeight = event->size().height();
-
-	QWidget::setFixedHeight(newWidth);
-	album->scaleCover(newWidth, newHeight);
+	AbstractContent::resizeEvent(event);
+	setFixedHeight(width());
 }

@@ -9,7 +9,6 @@
 #include "util/icon.hpp"
 #include "util/image.hpp"
 #include "view/context/nowplaying.hpp"
-#include "view/context/albumcover.hpp"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -35,7 +34,7 @@ namespace Context
 		spt::Current &current;
 		const lib::cache &cache;
 
-		AlbumCover *album = nullptr;
+		QLabel *album = nullptr;
 		NowPlaying *nowPlaying = nullptr;
 
 		lib::spt::track currentlyPlaying;

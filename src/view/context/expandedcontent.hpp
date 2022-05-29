@@ -9,7 +9,6 @@
 #include "util/icon.hpp"
 #include "util/image.hpp"
 #include "view/context/nowplaying.hpp"
-#include "view/context/albumcover.hpp"
 #include "view/context/abstractcontent.hpp"
 
 #include <QWidget>
@@ -28,6 +27,7 @@ namespace Context
 		ExpandedContent(lib::spt::api &spotify, spt::Current &current,
 			const lib::cache &cache, QWidget *parent);
 
+	private:
 		void resizeEvent(QResizeEvent *event) override;
 	};
 }
