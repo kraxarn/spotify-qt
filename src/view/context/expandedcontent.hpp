@@ -22,6 +22,7 @@ namespace Context
 {
 	class ExpandedContent: public AbstractContent
 	{
+	Q_OBJECT
 
 	public:
 		ExpandedContent(lib::spt::api &spotify, spt::Current &current,

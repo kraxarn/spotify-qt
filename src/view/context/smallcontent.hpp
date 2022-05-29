@@ -20,6 +20,7 @@ namespace Context
 {
 	class SmallContent: public AbstractContent
 	{
+	Q_OBJECT
 
 	public:
 		SmallContent(lib::spt::api &spotify, spt::Current &current,

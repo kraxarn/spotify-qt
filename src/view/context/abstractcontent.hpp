@@ -21,22 +21,14 @@ namespace Context
 {
 	class AbstractContent: public QWidget
 	{
-
-	Q_OBJECT
-
 	public:
 		AbstractContent(lib::spt::api &spotify, spt::Current &current,
-	const lib::cache &cache, QWidget *parent);
+			const lib::cache &cache, QWidget *parent);
 
 		void reset();
-		
 		auto getCurrentlyPlaying() const -> const lib::spt::track &;
-
 		void setCurrentlyPlaying(const lib::spt::track &track);
-
 		void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage);
-
-		virtual ~AbstractContent() {};
 
 	protected:
 		lib::spt::api &spotify;
@@ -45,9 +37,8 @@ namespace Context
 
 		AlbumCover *album = nullptr;
 		NowPlaying *nowPlaying = nullptr;
-		
+
 		lib::spt::track currentlyPlaying;
 		void onSongMenu(const QPoint &pos);
-	
 	};
 }
