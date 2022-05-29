@@ -291,7 +291,7 @@ void SettingsPage::Interface::saveGeneral()
 	{
 		const auto albumSize = expandAlbumCover->isChecked()
 			? lib::album_size::expanded
-			: lib::album_size::small;
+			: lib::album_size::fixed;
 
 		if (mainWindow != nullptr && qtSettings.album_size != albumSize)
 		{

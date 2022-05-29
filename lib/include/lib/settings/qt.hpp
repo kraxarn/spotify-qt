@@ -42,7 +42,7 @@ namespace lib
 			/**
 			 * Size of album cover in side panel
 			 */
-			lib::album_size album_size = lib::album_size::small;
+			lib::album_size album_size = lib::album_size::fixed;
 		};
 
 		void to_json(nlohmann::json &j, const qt &q);
