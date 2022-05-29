@@ -1,6 +1,7 @@
 #pragma once
 
 #include "lib/json.hpp"
+#include "lib/enum/albumsize.hpp"
 
 namespace lib
 {
@@ -37,6 +38,11 @@ namespace lib
 #else
 				= false;
 #endif
+
+			/**
+			 * Size of album cover in side panel
+			 */
+			lib::album_size album_size = lib::album_size::small;
 		};
 
 		void to_json(nlohmann::json &j, const qt &q);

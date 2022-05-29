@@ -131,11 +131,6 @@ namespace lib
 			bool notify_track_change = false;
 
 			/**
-			 * Album art will dynamically expand or else remain size of icon
-			 */
-			bool expand_album_cover = false;
-
-			/**
 			 * Close to system tray instead of quitting when the close button is pressed
 			 */
 			bool close_to_tray = false;
