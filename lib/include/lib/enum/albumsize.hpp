@@ -5,16 +5,16 @@ namespace lib
 	/**
 	 * Size of album cover in ui
 	 */
-	enum class album_size: char
+	enum class album_size
 	{
 		/**
 		 * Fixed size, around 64x64
 		 */
-		small = 0,
+		small,
 
 		/**
 		 * Expand size to width of parent content
 		 */
-		expanded = 1,
+		expanded,
 	};
 }
