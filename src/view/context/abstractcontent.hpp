@@ -49,7 +49,6 @@ namespace Context
 			{
 				new T(this);
 				QWidget::layout()->setSpacing(0);
-				QWidget::layout()->setAlignment(Qt::AlignBottom);
 			}
 
 			return qobject_cast<T *>(QWidget::layout());
