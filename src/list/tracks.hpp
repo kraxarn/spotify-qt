@@ -75,11 +75,16 @@ namespace List
 
 		auto getCurrent() -> const spt::Current &;
 		auto getAddedText(const std::string &date) const -> QString;
+		auto getSelectedTrackIds() const -> std::vector<std::string>;
 		void resizeHeaders(const QSize &newSize);
 
 		void onMenu(const QPoint &pos);
 		void onDoubleClicked(QTreeWidgetItem *item, int column);
 		void onHeaderMenu(const QPoint &pos);
 		void onHeaderMenuTriggered(QAction *action);
+
+		void onNewPlaylist();
+		void onDelete();
+		void onPlaySelectedRow();
 	};
 }

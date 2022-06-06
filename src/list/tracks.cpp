@@ -1,5 +1,8 @@
 #include "list/tracks.hpp"
 #include "mainwindow.hpp"
+#include "dialog/createplaylist.hpp"
+
+#include <QShortcut>
 
 List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
 	QWidget *parent)
@@ -51,6 +54,15 @@ List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache
 	header()->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QLabel::connect(header(), &QWidget::customContextMenuRequested,
 		this, &List::Tracks::onHeaderMenu);
+
+	QShortcut::connect(new QShortcut(static_cast<int>(Shortcut::NewPlaylist), this),
+		&QShortcut::activated, this, &List::Tracks::onNewPlaylist);
+
+	QShortcut::connect(new QShortcut(static_cast<int>(Shortcut::Delete), this),
+		&QShortcut::activated, this, &List::Tracks::onDelete);
+
+	QShortcut::connect(new QShortcut(static_cast<int>(Shortcut::PlaySelectedRow), this),
+		&QShortcut::activated, this, &List::Tracks::onPlaySelectedRow);
 }
 
 void List::Tracks::onMenu(const QPoint &pos)
@@ -186,6 +198,89 @@ void List::Tracks::onHeaderMenuTriggered(QAction *action)
 	settings.save();
 }
 
+void List::Tracks::onNewPlaylist()
+{
+	const auto trackIds = getSelectedTrackIds();
+	if (trackIds.empty())
+	{
+		return;
+	}
+
+	auto *dialog = new Dialog::CreatePlaylist(trackIds, spotify, window());
+	dialog->show();
+}
+
+void List::Tracks::onDelete()
+{
+	auto *mainWindow = qobject_cast<MainWindow *>(window());
+	if (mainWindow == nullptr)
+	{
+		return;
+	}
+
+	auto *playlistItem = mainWindow->getCurrentPlaylistItem();
+	if (playlistItem == nullptr)
+	{
+		return;
+	}
+
+	const auto playlistId = playlistItem->data(static_cast<int>(DataRole::PlaylistId))
+		.toString().toStdString();
+
+	if (playlistId.empty())
+	{
+		return;
+	}
+
+	const auto items = selectedItems();
+	if (items.empty())
+	{
+		return;
+	}
+
+	std::vector<std::pair<int, std::string>> tracks;
+	tracks.reserve(items.size());
+
+	for (const auto *item: items)
+	{
+		const auto data = item->data(0, static_cast<int>(DataRole::Track));
+		const auto track = data.value<lib::spt::track>();
+
+		if (!track.is_valid())
+		{
+			continue;
+		}
+
+		auto index = item->data(0, static_cast<int>(DataRole::Index)).toInt();
+		tracks.emplace_back(index, track.id);
+	}
+
+	spotify.remove_from_playlist(playlistId, tracks,
+		[this, items, playlistId](const std::string &status)
+		{
+			if (!status.empty())
+			{
+				StatusMessage::error(QString("Failed to remove track from playlist: %1")
+					.arg(QString::fromStdString(status)));
+				return;
+			}
+
+			for (auto *item: items)
+			{
+				takeTopLevelItem(indexOfTopLevelItem(item));
+			}
+		});
+}
+
+void List::Tracks::onPlaySelectedRow()
+{
+	const auto &items = selectedItems();
+	if (items.length() == 1)
+	{
+		onDoubleClicked(items.first(), 0);
+	}
+}
+
 void List::Tracks::resizeEvent(QResizeEvent *event)
 {
 	if (settings.general.track_list_resize_mode != lib::resize_mode::auto_size)
@@ -264,6 +359,27 @@ auto List::Tracks::getAddedText(const std::string &date) const -> QString
 	return parsed.isValid()
 		? locale.toString(parsed, QLocale::ShortFormat)
 		: QString();
+}
+
+auto List::Tracks::getSelectedTrackIds() const -> std::vector<std::string>
+{
+	const auto &items = selectedItems();
+
+	std::vector<std::string> trackIds;
+	trackIds.reserve(items.size());
+
+	for (const auto *item: items)
+	{
+		const auto data = item->data(0, static_cast<int>(DataRole::Track));
+		const auto track = data.value<lib::spt::track>();
+
+		if (track.is_valid())
+		{
+			trackIds.push_back(track.id);
+		}
+	}
+
+	return trackIds;
 }
 
 void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
