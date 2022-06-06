@@ -38,6 +38,9 @@ protected:
 private:
 	void updateSpacerSizes();
 
+	auto addShortcutAction(const QString &iconName, const QString &title,
+		Shortcut shortcut) -> QAction *;
+
 	static auto getNextRepeatState(lib::repeat_state repeatState) -> lib::repeat_state;
 	static auto getRepeatIcon(lib::repeat_state repeatState) -> QIcon;
 

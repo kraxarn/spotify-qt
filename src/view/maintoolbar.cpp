@@ -31,18 +31,18 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 
 	// Media controls
 	auto *mediaControlsSeparator = addSeparator();
-	previous = addAction(Icon::get("media-skip-backward"), "Previous");
-	previous->setShortcut(static_cast<int>(Shortcut::PreviousTrack));
+	previous = addShortcutAction(QStringLiteral("media-skip-backward"),
+		QStringLiteral("Previous"), Shortcut::PreviousTrack);
 	QAction::connect(previous, &QAction::triggered,
 		this, &MainToolBar::onPrevious);
 
-	playPause = addAction(Icon::get("media-playback-start"), "Play");
-	playPause->setShortcut(static_cast<int>(Shortcut::PlayPause));
+	playPause = addShortcutAction(QStringLiteral("media-playback-start"),
+		QStringLiteral("Play"), Shortcut::PlayPause);
 	QAction::connect(playPause, &QAction::triggered,
 		this, &MainToolBar::onPlayPause);
 
-	next = addAction(Icon::get("media-skip-forward"), "Next");
-	next->setShortcut(static_cast<int>(Shortcut::NextTrack));
+	next = addShortcutAction(QStringLiteral("media-skip-forward"),
+		QStringLiteral("Next"), Shortcut::NextTrack);
 	QAction::connect(next, &QAction::triggered,
 		this, &MainToolBar::onNext);
 
@@ -69,15 +69,15 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	addSeparator();
 
 	// Shuffle and repeat toggles
-	shuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle");
+	shuffle = addShortcutAction(QStringLiteral("media-playlist-shuffle"),
+		QStringLiteral("Shuffle"), Shortcut::Shuffle);
 	shuffle->setCheckable(true);
-	shuffle->setShortcut(static_cast<int>(Shortcut::Shuffle));
 	QAction::connect(shuffle, &QAction::triggered,
 		this, &MainToolBar::onShuffle);
 
-	repeat = addAction(Icon::get("media-playlist-repeat"), "Repeat");
+	repeat = addShortcutAction(QStringLiteral("media-playlist-repeat"),
+		QStringLiteral("Repeat"), Shortcut::Repeat);
 	repeat->setCheckable(true);
-	repeat->setShortcut(static_cast<int>(Shortcut::Repeat));
 	QAction::connect(repeat, &QAction::triggered,
 		this, &MainToolBar::onRepeat);
 
@@ -154,6 +154,17 @@ void MainToolBar::updateSpacerSizes()
 	rightSpacer->setMinimumWidth(spacerWidth);
 }
 
+auto MainToolBar::addShortcutAction(const QString &iconName, const QString &title,
+	Shortcut shortcut) -> QAction *
+{
+	auto *action = addAction(Icon::get(iconName),
+		QStringLiteral("%1 (%2)").arg(title, QKeySequence(static_cast<int>(shortcut))
+			.toString(QKeySequence::NativeText)));
+
+	action->setShortcut(static_cast<int>(shortcut));
+	return action;
+}
+
 auto MainToolBar::getNextRepeatState(lib::repeat_state repeatState) -> lib::repeat_state
 {
 	switch (repeatState)
@@ -182,10 +193,12 @@ auto MainToolBar::getRepeatIcon(lib::repeat_state repeatState) -> QIcon
 void MainToolBar::setPlaying(bool playing)
 {
 	playPause->setIcon(Icon::get(playing
-		? "media-playback-pause"
-		: "media-playback-start"));
+		? QStringLiteral("media-playback-pause")
+		: QStringLiteral("media-playback-start")));
 
-	playPause->setText(playing ? "Pause" : "Play");
+	playPause->setText(QString("%1 (%2)")
+		.arg(playing ? QStringLiteral("Pause") : QStringLiteral("Play"),
+			QKeySequence(static_cast<int>(Shortcut::PlayPause)).toString()));
 }
 
 void MainToolBar::setProgress(int current, int duration)
