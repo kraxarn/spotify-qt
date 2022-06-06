@@ -15,11 +15,18 @@ MainMenu::MainMenu(lib::spt::api &spotify, lib::settings &settings,
 	about->setDisabled(true);
 
 	// Check for updates
-	httpClient.get("https://api.github.com/repos/kraxarn/spotify-qt/releases/latest",
-		lib::headers(), [this](const std::string &data)
-		{
-			this->checkForUpdate(data);
-		});
+	if (settings.general.check_for_updates)
+	{
+		httpClient.get("https://api.github.com/repos/kraxarn/spotify-qt/releases/latest",
+			lib::headers(), [this](const std::string &data)
+			{
+				this->checkForUpdate(data);
+			});
+	}
+	else
+	{
+		about->setVisible(false);
+	}
 
 	// Device selection
 	deviceMenu = new QMenu("Device", this);

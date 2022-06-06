@@ -134,6 +134,11 @@ namespace lib
 			 * Close to system tray instead of quitting when the close button is pressed
 			 */
 			bool close_to_tray = false;
+
+			/**
+			 * Check for updates on start
+			 */
+			bool check_for_updates = true;
 		};
 
 		void to_json(nlohmann::json &j, const general &g);

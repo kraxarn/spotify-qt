@@ -60,6 +60,13 @@ auto SettingsPage::Application::app() -> QWidget *
 	appWhatsNew->setChecked(settings.general.show_changelog);
 	layout->addWidget(appWhatsNew);
 
+	// Check for updates
+	appUpdates = new QCheckBox(QStringLiteral("Check for updates on start"), this);
+	appUpdates->setToolTip(QStringLiteral("Check for updates on start, "
+										  "and show notification in main menu if any"));
+	appUpdates->setChecked(settings.general.check_for_updates);
+	layout->addWidget(appUpdates);
+
 	return Widget::layoutToWidget(layout, this);
 }
 
@@ -113,9 +120,15 @@ auto SettingsPage::Application::save() -> bool
 	}
 
 	// Other application stuff
+
 	if (appWhatsNew != nullptr)
 	{
 		settings.general.show_changelog = appWhatsNew->isChecked();
+	}
+
+	if (appUpdates != nullptr)
+	{
+		settings.general.check_for_updates = appUpdates->isChecked();
 	}
 
 	return true;
