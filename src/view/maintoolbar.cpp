@@ -1,5 +1,6 @@
 #include "view/maintoolbar.hpp"
 #include "mainwindow.hpp"
+#include "enum/shortcut.hpp"
 
 MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	const lib::http_client &httpClient, lib::cache &cache, QWidget *parent)
@@ -31,15 +32,17 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	// Media controls
 	auto *mediaControlsSeparator = addSeparator();
 	previous = addAction(Icon::get("media-skip-backward"), "Previous");
+	previous->setShortcut(static_cast<int>(Shortcut::PreviousTrack));
 	QAction::connect(previous, &QAction::triggered,
 		this, &MainToolBar::onPrevious);
 
 	playPause = addAction(Icon::get("media-playback-start"), "Play");
-	playPause->setShortcut(QKeySequence("Space"));
+	playPause->setShortcut(static_cast<int>(Shortcut::PlayPause));
 	QAction::connect(playPause, &QAction::triggered,
 		this, &MainToolBar::onPlayPause);
 
 	next = addAction(Icon::get("media-skip-forward"), "Next");
+	next->setShortcut(static_cast<int>(Shortcut::NextTrack));
 	QAction::connect(next, &QAction::triggered,
 		this, &MainToolBar::onNext);
 
@@ -68,11 +71,13 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	// Shuffle and repeat toggles
 	shuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle");
 	shuffle->setCheckable(true);
+	shuffle->setShortcut(static_cast<int>(Shortcut::Shuffle));
 	QAction::connect(shuffle, &QAction::triggered,
 		this, &MainToolBar::onShuffle);
 
 	repeat = addAction(Icon::get("media-playlist-repeat"), "Repeat");
 	repeat->setCheckable(true);
+	repeat->setShortcut(static_cast<int>(Shortcut::Repeat));
 	QAction::connect(repeat, &QAction::triggered,
 		this, &MainToolBar::onRepeat);
 
