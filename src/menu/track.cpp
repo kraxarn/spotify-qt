@@ -456,8 +456,8 @@ auto Menu::Track::getTrackUrl() const -> QString
 		return {};
 	}
 
-	const auto trackUri = lib::spt::api::to_uri("tracks", tracks.cbegin()->second.id);
-	auto str = lib::fmt::format("https://open.spotify.com/track/{}", trackUri);
+	const auto trackId = tracks.cbegin()->second.id;
+	auto str = lib::fmt::format("https://open.spotify.com/track/{}", trackId);
 	return QString::fromStdString(str);
 }
 
