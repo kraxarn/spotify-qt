@@ -66,7 +66,8 @@ auto lib::spt::auth::get(const std::string &code, const std::string &redirect_ur
 	}
 	catch (const std::exception &e)
 	{
-		return e.what();
+		lib::log::error(e.what());
+		return reply;
 	}
 
 	if (json.contains("error_description"))
