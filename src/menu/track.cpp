@@ -303,6 +303,10 @@ void Menu::Track::addToQueue(const QList<PlaylistTrack>::const_iterator &begin,
 {
 	if (begin == end)
 	{
+		StatusMessage::info(tracks.size() == 1
+			? QStringLiteral("Added to queue")
+			: QString("%1 tracks added to queue").arg(tracks.size()));
+
 		return;
 	}
 
