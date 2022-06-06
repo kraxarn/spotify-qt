@@ -200,7 +200,8 @@ void MainToolBar::setPlaying(bool playing)
 
 	playPause->setText(QString("%1 (%2)")
 		.arg(playing ? QStringLiteral("Pause") : QStringLiteral("Play"),
-			QKeySequence(static_cast<int>(Shortcut::PlayPause)).toString()));
+			QKeySequence(static_cast<int>(Shortcut::PlayPause))
+				.toString(QKeySequence::NativeText)));
 }
 
 void MainToolBar::setProgress(int current, int duration)
