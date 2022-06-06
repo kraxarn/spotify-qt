@@ -19,6 +19,6 @@ enum class Shortcut: int
 	VolumeUp = Qt::CTRL + Qt::Key_Up,
 	VolumeDown = Qt::CTRL + Qt::Key_Down,
 
-	PlaySelectedRow = Qt::Key_Enter,
+	PlaySelectedRow = Qt::Key_Return,
 	LogOut = Qt::CTRL + Qt::SHIFT + Qt::Key_W,
 };
