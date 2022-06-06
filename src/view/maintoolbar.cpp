@@ -24,7 +24,9 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 		httpClient, cache, mainWindow));
 
 	// Search
-	search = addAction(Icon::get("edit-find"), "Search");
+	search = addAction(Icon::get(QStringLiteral("edit-find")),
+		QString("Search (%1)").arg(QKeySequence(QKeySequence::Find)
+			.toString(QKeySequence::NativeText)));
 	search->setCheckable(true);
 	search->setShortcut(QKeySequence::Find);
 	QAction::connect(search, &QAction::triggered, mainWindow, &MainWindow::setSearchVisible);
