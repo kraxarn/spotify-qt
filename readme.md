@@ -51,7 +51,7 @@ free to, just please open an issue, or get in contact with me, so I can add it t
 | Other (Linux)        | [![Snapcraft](https://snapcraft.io//spotify-qt/badge.svg)](https://snapcraft.io/spotify-qt)                                                                                                                                                                 | [kraxarn](https://github.com/kraxarn)               |
 
 The snap version can be installed by simply running  `snap install spotify-qt`, if that's your
-thing. If you want to try out new features, you can download unstable builds automatically built 
+thing. If you want to try out new features, you can download unstable builds automatically built
 every day from [spotify-qt-nightly](https://kraxarn.github.io/spotify-qt-nightly).
 
 ## Configuring
@@ -61,7 +61,7 @@ every day from [spotify-qt-nightly](https://kraxarn.github.io/spotify-qt-nightly
 * goto **edit settings** in the app overview
 * add `http://localhost:8888` in **Redirect URIs** section
 
-    ![spotify-qt with dark theme](.github/img/spotify_dashboard-redirect_uri.png)
+![spotify dashboard](.github/img/spotify_dashboard-redirect_uri.png)
 
 * launch Spotify-qt and copy/paste **Client ID** and **Client Secret**, you should be able to login
 
