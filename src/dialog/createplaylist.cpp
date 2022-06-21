@@ -60,9 +60,20 @@ void Dialog::CreatePlaylist::onOk(bool /*checked*/)
 				return;
 			}
 
+			const auto trackUris = getTrackUris();
+			if (trackUris.empty())
+			{
+				auto *mainWindow = MainWindow::find(parentWidget());
+				mainWindow->refreshPlaylists();
+
+				StatusMessage::info(QStringLiteral("Playlist created"));
+				Base::onOk({});
+				return;
+			}
+
 			const auto playlistName = QString::fromStdString(playlist.name);
 
-			spotify.add_to_playlist(playlist.id, getTrackUris(),
+			spotify.add_to_playlist(playlist.id, trackUris,
 				[this, playlistName](const std::string &result)
 				{
 					if (!result.empty())

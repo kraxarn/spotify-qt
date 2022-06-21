@@ -201,11 +201,6 @@ void List::Tracks::onHeaderMenuTriggered(QAction *action)
 void List::Tracks::onNewPlaylist()
 {
 	const auto trackIds = getSelectedTrackIds();
-	if (trackIds.empty())
-	{
-		return;
-	}
-
 	auto *dialog = new Dialog::CreatePlaylist(trackIds, spotify, window());
 	dialog->show();
 }
