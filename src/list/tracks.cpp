@@ -58,11 +58,17 @@ List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache
 	QShortcut::connect(new QShortcut(static_cast<int>(Shortcut::NewPlaylist), this),
 		&QShortcut::activated, this, &List::Tracks::onNewPlaylist);
 
-	QShortcut::connect(new QShortcut(static_cast<int>(Shortcut::Delete), this),
-		&QShortcut::activated, this, &List::Tracks::onDelete);
+	auto *deleteTrack = new QShortcut(static_cast<int>(Shortcut::Delete), this);
+	deleteTrack->setContext(Qt::WidgetShortcut);
 
-	QShortcut::connect(new QShortcut(static_cast<int>(Shortcut::PlaySelectedRow), this),
-		&QShortcut::activated, this, &List::Tracks::onPlaySelectedRow);
+	QShortcut::connect(deleteTrack, &QShortcut::activated,
+		this, &List::Tracks::onDelete);
+
+	auto *playSelectedRow = new QShortcut(static_cast<int>(Shortcut::PlaySelectedRow), this);
+	playSelectedRow->setContext(Qt::WidgetShortcut);
+
+	QShortcut::connect(playSelectedRow, &QShortcut::activated,
+		this, &List::Tracks::onPlaySelectedRow);
 }
 
 void List::Tracks::onMenu(const QPoint &pos)
