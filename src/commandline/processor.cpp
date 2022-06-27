@@ -33,7 +33,7 @@ auto CommandLine::Processor::process(const QCommandLineParser &parser) -> bool
 	}
 	else if (parser.isSet(ARG_METADATA))
 	{
-		qInfo() << client.metadata();
+		qInfo().noquote() << client.metadata();
 	}
 	else
 	{

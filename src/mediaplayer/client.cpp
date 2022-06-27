@@ -13,7 +13,7 @@ auto MediaPlayer::Client::callMethod(const QString &name) -> bool
 {
 	if (!interface.isValid())
 	{
-		qInfo() << invalidMessage();
+		qInfo().noquote() << invalidMessage();
 		return false;
 	}
 
