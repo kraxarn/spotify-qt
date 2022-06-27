@@ -1,4 +1,7 @@
 #include "mediaplayer/client.hpp"
+
+#ifdef USE_DBUS
+
 #include "mediaplayer/dbusservice.hpp"
 
 #include <QJsonDocument>
@@ -51,3 +54,5 @@ auto MediaPlayer::Client::metadata() -> QString
 	const auto json = QJsonObject::fromVariantMap(prop.value<QVariantMap>());
 	return QJsonDocument(json).toJson(QJsonDocument::Compact);
 }
+
+#endif
