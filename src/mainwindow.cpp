@@ -57,9 +57,6 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 		return;
 	}
 
-	// IPC server
-	initIpcServer();
-
 	// Setup main window
 	setWindowTitle(APP_NAME);
 	setWindowIcon(Icon::get(QString("logo:%1").arg(APP_ICON)));
@@ -207,17 +204,6 @@ void MainWindow::initDevice()
 	});
 }
 
-auto MainWindow::initIpcServer() -> bool
-{
-	if (ipcServer != nullptr)
-	{
-		return true;
-	}
-
-	ipcServer = new Ipc::Server(*spotify, this);
-	return ipcServer->start();
-}
-
 void MainWindow::setBorderless(bool enabled)
 {
 	setWindowFlag(Qt::FramelessWindowHint, enabled);
@@ -267,12 +253,6 @@ void MainWindow::minimize()
 	// See https://github.com/kraxarn/spotify-qt/issues/103
 	setWindowState(windowState() & ~Qt::WindowMinimized);
 	setWindowState(windowState() | Qt::WindowMinimized);
-}
-
-auto MainWindow::isIpcServerRunning() const -> bool
-{
-	return ipcServer != nullptr && ipcServer->isListening();
-
 }
 
 void MainWindow::refresh()

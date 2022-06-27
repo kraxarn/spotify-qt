@@ -51,7 +51,6 @@ public:
 	void setBorderless(bool enabled);
 	void addSizeGrip(const std::function<QPoint(const QRect &)> &position);
 	void minimize();
-	auto isIpcServerRunning() const -> bool;
 
 	auto startClient() -> bool;
 	void stopClient();
@@ -83,7 +82,6 @@ private:
 	QList<QSizeGrip *> resizeGrips;
 
 	SpotifyClient::Runner *spotifyRunner = nullptr;
-	Ipc::Server *ipcServer = nullptr;
 
 	spt::Spotify *spotify = nullptr;
 	spt::Current current;
@@ -112,7 +110,6 @@ private:
 	void initMediaController();
 	void initWhatsNew();
 	void initDevice();
-	auto initIpcServer() -> bool;
 
 	// Methods
 	QWidget *createCentralWidget();

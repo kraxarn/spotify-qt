@@ -11,7 +11,6 @@
 
 #include "dialog/settings.hpp"
 #include "dialog/whatsnew.hpp"
-#include "ipc/server.hpp"
 #include "list/library.hpp"
 #include "list/playlist.hpp"
 #include "listitem/track.hpp"

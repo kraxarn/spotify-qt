@@ -1,6 +1,5 @@
 add_subdirectory(commandline)
 add_subdirectory(dialog)
-add_subdirectory(ipc)
 add_subdirectory(keyring)
 add_subdirectory(lib)
 add_subdirectory(list)

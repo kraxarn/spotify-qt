@@ -1,9 +1,12 @@
 #include "commandline/processor.hpp"
 #include "commandline/args.hpp"
 #include "lib/log.hpp"
-#include "ipc/client.hpp"
 
-#include <QThread>
+#ifdef USE_DBUS
+#include "mediaplayer/client.hpp"
+#endif
+
+#include <QtDebug>
 
 auto CommandLine::Processor::process(const QCommandLineParser &parser) -> bool
 {
@@ -13,48 +16,30 @@ auto CommandLine::Processor::process(const QCommandLineParser &parser) -> bool
 		return false;
 	}
 
-	Ipc::Client client(nullptr);
+#ifdef USE_DBUS
+	MediaPlayer::Client client;
 
 	if (parser.isSet(ARG_PLAY_PAUSE))
 	{
-		client.send(ARG_PLAY_PAUSE);
+		client.playPause();
 	}
 	else if (parser.isSet(ARG_PREVIOUS_TRACK))
 	{
-		client.send(ARG_PREVIOUS_TRACK);
+		client.previousTrack();
 	}
 	else if (parser.isSet(ARG_NEXT_TRACK))
 	{
-		client.send(ARG_NEXT_TRACK);
+		client.nextTrack();
 	}
 	else if (parser.isSet(ARG_METADATA))
 	{
-		client.send(ARG_METADATA);
+		qInfo() << client.metadata();
 	}
 	else
 	{
 		return false;
 	}
-
-	auto running = true;
-	auto callback = [&running](const QString &response)
-	{
-		if (!response.startsWith("QLocalSocket:"))
-		{
-			std::cout << response.toStdString() << std::endl;
-		}
-		running = false;
-	};
-
-	client.setOnSuccess(callback);
-	client.setOnError(callback);
-
-	// TODO: Maybe not a very good way to wait for response?
-	while (running)
-	{
-		QCoreApplication::processEvents();
-		QThread::msleep(10);
-	}
+#endif
 
 	return true;
 }
