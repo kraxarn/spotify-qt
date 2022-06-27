@@ -11,7 +11,18 @@ MediaPlayer::Client::Client()
 
 auto MediaPlayer::Client::callMethod(const QString &name) -> bool
 {
+	if (!interface.isValid())
+	{
+		qInfo() << invalidMessage();
+		return false;
+	}
+
 	return interface.call(name).type() != QDBusMessage::ErrorMessage;
+}
+
+auto MediaPlayer::Client::invalidMessage() -> QString
+{
+	return QString("%1 needs to be running").arg(APP_NAME);
 }
 
 auto MediaPlayer::Client::playPause() -> bool
@@ -34,7 +45,7 @@ auto MediaPlayer::Client::metadata() -> QString
 	const auto prop = interface.property("Metadata");
 	if (!prop.isValid())
 	{
-		return {};
+		return invalidMessage();
 	}
 
 	const auto json = QJsonObject::fromVariantMap(prop.value<QVariantMap>());

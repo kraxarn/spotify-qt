@@ -21,6 +21,7 @@ namespace MediaPlayer
 		QDBusInterface interface;
 
 		auto callMethod(const QString &name) -> bool;
+		static auto invalidMessage() -> QString;
 	};
 }
 
