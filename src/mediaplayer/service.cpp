@@ -3,8 +3,7 @@
 
 #ifdef USE_DBUS
 
-#define SERVICE_NAME "org.mpris.MediaPlayer2.spotify-qt"
-#define SERVICE_PATH "/org/mpris/MediaPlayer2"
+#include "mediaplayer/dbusservice.hpp"
 
 mp::Service::Service(lib::spt::api &spotify, QObject *parent)
 	: QObject(parent),
