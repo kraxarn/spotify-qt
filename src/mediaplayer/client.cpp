@@ -22,7 +22,7 @@ auto MediaPlayer::Client::callMethod(const QString &name) -> bool
 
 auto MediaPlayer::Client::invalidMessage() -> QString
 {
-	return QString("%1 needs to be running").arg(APP_NAME);
+	return QString("%1 is not running").arg(APP_NAME);
 }
 
 auto MediaPlayer::Client::playPause() -> bool
