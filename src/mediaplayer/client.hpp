@@ -3,7 +3,6 @@
 #ifdef USE_DBUS
 
 #include <QDBusInterface>
-#include <QDBusReply>
 
 namespace MediaPlayer
 {

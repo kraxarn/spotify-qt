@@ -4,6 +4,7 @@
 
 #include "mediaplayer/dbusservice.hpp"
 
+#include <QtDebug>
 #include <QJsonDocument>
 #include <QJsonObject>
 
