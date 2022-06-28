@@ -33,7 +33,7 @@ auto MediaPlayer::identity() const -> QString
 	return QCoreApplication::applicationName();
 }
 
-auto MediaPlayer::supportedUriSchemas() const -> QStringList
+auto MediaPlayer::supportedUriSchemes() const -> QStringList
 {
 	return QStringList("spotify");
 }
