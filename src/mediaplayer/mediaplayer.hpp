@@ -24,7 +24,7 @@ Q_OBJECT
 	Q_PROPERTY(bool CanRaise READ canQuit)
 	Q_PROPERTY(QString Identity READ identity)
 	Q_PROPERTY(QString DesktopEntry READ identity)
-	Q_PROPERTY(QStringList SupportedUriSchemas READ supportedUriSchemas)
+	Q_PROPERTY(QStringList SupportedUriSchemes READ supportedUriSchemes)
 	Q_PROPERTY(QStringList SupportedMimeTypes READ supportedMimeTypes)
 	Q_PROPERTY(bool HasTrackList READ hasTrackList)
 
@@ -34,7 +34,7 @@ public:
 	auto canQuit() const -> bool;
 	auto hasTrackList() const -> bool;
 	auto identity() const -> QString;
-	auto supportedUriSchemas() const -> QStringList;
+	auto supportedUriSchemes() const -> QStringList;
 	auto supportedMimeTypes() const -> QStringList;
 
 public slots:
