@@ -93,8 +93,17 @@ auto mp::MediaPlayerPlayer::playbackStatus() const -> QString
 
 void mp::MediaPlayerPlayer::OpenUri(const QString &uri) const
 {
-	// TODO
-	lib::log::warn("Tried to open \"{}\", but not implemented yet", uri.toStdString());
+	const auto urlPrefix = QStringLiteral("https://open.spotify.com/track/");
+	if (!uri.startsWith(urlPrefix))
+	{
+		lib::log::warn("\"{}\" is not a valid Spotify URL", uri.toStdString());
+		return;
+	}
+
+	const auto trackId = lib::spt::api::url_to_id(uri.toStdString());
+	const auto trackUri = lib::spt::api::to_uri("track", trackId);
+
+	spotify.play_tracks(0, {trackUri}, callback);
 }
 
 auto mp::MediaPlayerPlayer::playbackRate() const -> double

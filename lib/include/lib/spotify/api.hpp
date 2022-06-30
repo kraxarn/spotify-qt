@@ -338,6 +338,14 @@ namespace lib
 			static auto to_id(const std::string &id) -> std::string;
 
 			/**
+			 * Spotify URL (https://open.spotify.com/track/4uLU6hMCjMI75M1A2tKUQC)
+			 * to Spotify ID (4uLU6hMCjMI75M1A2tKUQC)
+			 * @param url Spotify URL
+			 * @return Spotify ID
+			 */
+			static auto url_to_id(const std::string &url) -> std::string;
+
+			/**
 			 * Get new URL with device ID added, or replaced
 			 * @param url URL to modify
 			 * @param device Device to add/replace

@@ -22,6 +22,15 @@ TEST_CASE("spt::api")
 			"4uLU6hMCjMI75M1A2tKUQC");
 	}
 
+	SUBCASE("url_to_id")
+	{
+		CHECK_EQ(lib::spt::api::url_to_id("https://open.spotify.com/track/4uLU6hMCjMI75M1A2tKUQC"),
+			"4uLU6hMCjMI75M1A2tKUQC");
+
+		CHECK_EQ(lib::spt::api::url_to_id("4uLU6hMCjMI75M1A2tKUQC"),
+			"4uLU6hMCjMI75M1A2tKUQC");
+	}
+
 	SUBCASE("get_device_url")
 	{
 		lib::spt::device device;

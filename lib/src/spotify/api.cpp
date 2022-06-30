@@ -166,6 +166,14 @@ auto lib::spt::api::to_id(const std::string &id) -> std::string
 		: id;
 }
 
+auto lib::spt::api::url_to_id(const std::string &url) -> std::string
+{
+	const auto index = url.rfind('/');
+	return index != std::string::npos
+		? url.substr(index + 1)
+		: url;
+}
+
 auto lib::spt::api::to_full_url(const std::string &relative_url) -> std::string
 {
 	return lib::fmt::format("https://api.spotify.com/v1/{}", relative_url);

@@ -13,7 +13,7 @@ MediaPlayer::Client::Client()
 {
 }
 
-auto MediaPlayer::Client::callMethod(const QString &name) -> bool
+auto MediaPlayer::Client::callMethod(const QString &name, const QVariant &arg) -> bool
 {
 	if (!interface.isValid())
 	{
@@ -21,7 +21,11 @@ auto MediaPlayer::Client::callMethod(const QString &name) -> bool
 		return false;
 	}
 
-	return interface.call(name).type() != QDBusMessage::ErrorMessage;
+	const auto response = arg.isValid()
+		? interface.call(name, arg)
+		: interface.call(name);
+
+	return response.type() != QDBusMessage::ErrorMessage;
 }
 
 auto MediaPlayer::Client::invalidMessage() -> QString
@@ -54,6 +58,11 @@ auto MediaPlayer::Client::metadata() -> QString
 
 	const auto json = QJsonObject::fromVariantMap(prop.value<QVariantMap>());
 	return QJsonDocument(json).toJson(QJsonDocument::Compact);
+}
+
+auto MediaPlayer::Client::openUri(const QString &trackUrl) -> bool
+{
+	return callMethod(QStringLiteral("OpenUri"), trackUrl);
 }
 
 #endif

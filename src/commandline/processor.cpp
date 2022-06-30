@@ -37,6 +37,14 @@ auto CommandLine::Processor::process(const QCommandLineParser &parser) -> bool
 	}
 	else
 	{
+		for (const auto &argument: parser.positionalArguments())
+		{
+			if (argument.startsWith("https://open.spotify.com/track/"))
+			{
+				client.openUri(argument);
+				return true;
+			}
+		}
 		return false;
 	}
 #endif
