@@ -35,6 +35,7 @@ namespace mp
 		Q_PROPERTY(bool CanSeek READ canControl)
 		Q_PROPERTY(bool CanControl READ canControl)
 		Q_PROPERTY(bool Shuffle READ shuffle WRITE setShuffle)
+		Q_PROPERTY(QString LoopStatus READ getLoopStatus WRITE setLoopStatus)
 
 	public:
 		MediaPlayerPlayer(lib::spt::api &spotify, QObject *parent);
@@ -54,6 +55,9 @@ namespace mp
 
 		auto shuffle() const -> bool;
 		void setShuffle(bool value) const;
+
+		auto getLoopStatus() const -> QString;
+		void setLoopStatus(const QString &loopStatus);
 
 		void setCurrentPlayback(const lib::spt::playback &playback);
 

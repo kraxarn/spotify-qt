@@ -125,6 +125,48 @@ void mp::MediaPlayerPlayer::setShuffle(bool value) const
 	spotify.set_shuffle(value, callback);
 }
 
+auto mp::MediaPlayerPlayer::getLoopStatus() const -> QString
+{
+	switch (currentPlayback().repeat)
+	{
+		case lib::repeat_state::track:
+			return QStringLiteral("Track");
+
+		case lib::repeat_state::context:
+			return QStringLiteral("Playlist");
+
+		case lib::repeat_state::off:
+			return QStringLiteral("None");
+
+		default:
+			return {};
+	}
+}
+
+void mp::MediaPlayerPlayer::setLoopStatus(const QString &loopStatus)
+{
+	lib::repeat_state repeatState;
+
+	if (loopStatus == QStringLiteral("Track"))
+	{
+		repeatState = lib::repeat_state::track;
+	}
+	else if (loopStatus == QStringLiteral("Playlist"))
+	{
+		repeatState = lib::repeat_state::context;
+	}
+	else if (loopStatus == QStringLiteral("None"))
+	{
+		repeatState = lib::repeat_state::off;
+	}
+	else
+	{
+		return;
+	}
+
+	spotify.set_repeat(repeatState, callback);
+}
+
 void mp::MediaPlayerPlayer::emitMetadataChange() const
 {
 	QVariantMap properties;
