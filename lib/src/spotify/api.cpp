@@ -166,12 +166,23 @@ auto lib::spt::api::to_id(const std::string &id) -> std::string
 		: id;
 }
 
-auto lib::spt::api::url_to_id(const std::string &url) -> std::string
+auto lib::spt::api::url_to_uri(const std::string &url) -> std::string
 {
-	const auto index = url.rfind('/');
-	return index != std::string::npos
-		? url.substr(index + 1)
-		: url;
+	const auto id_index = url.rfind('/');
+	if (id_index == std::string::npos)
+	{
+		return {};
+	}
+
+	const auto type_index = url.rfind('/', id_index - 1);
+	if (type_index == std::string::npos)
+	{
+		return {};
+	}
+
+	return lib::fmt::format("spotify:{}:{}",
+		url.substr(type_index + 1, id_index - type_index - 1),
+		url.substr(id_index + 1));
 }
 
 auto lib::spt::api::to_full_url(const std::string &relative_url) -> std::string

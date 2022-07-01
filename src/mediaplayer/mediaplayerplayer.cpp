@@ -100,9 +100,7 @@ void mp::MediaPlayerPlayer::OpenUri(const QString &uri) const
 		return;
 	}
 
-	const auto trackId = lib::spt::api::url_to_id(uri.toStdString());
-	const auto trackUri = lib::spt::api::to_uri("track", trackId);
-
+	const auto trackUri = lib::spt::api::url_to_uri(uri.toStdString());
 	spotify.play_tracks(0, {trackUri}, callback);
 }
 

@@ -339,11 +339,11 @@ namespace lib
 
 			/**
 			 * Spotify URL (https://open.spotify.com/track/4uLU6hMCjMI75M1A2tKUQC)
-			 * to Spotify ID (4uLU6hMCjMI75M1A2tKUQC)
+			 * to Spotify URI (spotify:track:4uLU6hMCjMI75M1A2tKUQC)
 			 * @param url Spotify URL
-			 * @return Spotify ID
+			 * @return Spotify URI or an empty string if Spotify URL is invalid
 			 */
-			static auto url_to_id(const std::string &url) -> std::string;
+			static auto url_to_uri(const std::string &url) -> std::string;
 
 			/**
 			 * Get new URL with device ID added, or replaced
