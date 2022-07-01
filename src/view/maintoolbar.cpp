@@ -328,9 +328,11 @@ void MainToolBar::onProgressReleased()
 
 #ifdef USE_DBUS
 		auto *mainWindow = MainWindow::find(this->parentWidget());
-		if (mainWindow->getMediaPlayer() != nullptr)
+		auto *mediaPlayer = mainWindow->getMediaPlayer();
+		if (mediaPlayer != nullptr)
 		{
-			mainWindow->getMediaPlayer()->stateUpdated();
+			mediaPlayer->stateUpdated();
+			mediaPlayer->seeked(progress->value());
 		}
 #endif
 	});

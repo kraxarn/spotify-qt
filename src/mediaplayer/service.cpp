@@ -63,9 +63,9 @@ void mp::Service::volumeChanged()
 	emit playerPlayer->volumeChanged();
 }
 
-void mp::Service::tick(qint64 newPos)
+void mp::Service::seeked(qint64 newPos)
 {
-	emit playerPlayer->tick(newPos);
+	emit playerPlayer->seeked(newPos);
 }
 
 auto mp::Service::currentPlayback() -> lib::spt::playback

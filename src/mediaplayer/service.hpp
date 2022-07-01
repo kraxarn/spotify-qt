@@ -25,7 +25,7 @@ namespace mp
 		void stateUpdated();
 		void seekableChanged();
 		void volumeChanged();
-		void tick(qint64 newPos);
+		void seeked(qint64 newPos);
 		auto isValid() -> bool;
 
 	private:

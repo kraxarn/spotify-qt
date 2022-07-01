@@ -67,7 +67,7 @@ namespace mp
 		void totalTimeChanged() const;
 		void seekableChanged(bool seekable) const;
 		void volumeChanged() const;
-		void tick(qint64 newPos);
+		void seeked(qint64 newPos);
 
 	signals:
 		void Seeked(qint64 position);

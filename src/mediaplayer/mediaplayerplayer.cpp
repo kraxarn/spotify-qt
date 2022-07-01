@@ -212,9 +212,9 @@ void mp::MediaPlayerPlayer::volumeChanged() const
 	Service::signalPropertiesChange(this, properties);
 }
 
-void mp::MediaPlayerPlayer::tick(qint64 newPos)
+void mp::MediaPlayerPlayer::seeked(qint64 newPos)
 {
-	emit Seeked(newPos * 1000);
+	emit Seeked(newPos * msInUs);
 }
 
 void mp::MediaPlayerPlayer::setCurrentPlayback(const lib::spt::playback &/*playback*/)
