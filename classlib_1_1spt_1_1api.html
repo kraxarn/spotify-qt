@@ -234,8 +234,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:aafba6d10ca71c7884709d17f128252cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad91955a68b747dd0955fc3fcbe9ef508"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#ad91955a68b747dd0955fc3fcbe9ef508">to_id</a> (const std::string &amp;id) -&gt; std::string</td></tr>
 <tr class="separator:ad91955a68b747dd0955fc3fcbe9ef508"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a974944cc47b6e2d6d557e2ec71f455ff"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a974944cc47b6e2d6d557e2ec71f455ff">url_to_id</a> (const std::string &amp;url) -&gt; std::string</td></tr>
-<tr class="separator:a974944cc47b6e2d6d557e2ec71f455ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31853d9334845772b176b24b9c6fef9c"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a31853d9334845772b176b24b9c6fef9c">url_to_uri</a> (const std::string &amp;url) -&gt; std::string</td></tr>
+<tr class="separator:a31853d9334845772b176b24b9c6fef9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e7ca30f08a9a8bd9af49a2c5e87a353"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a3e7ca30f08a9a8bd9af49a2c5e87a353">get_device_url</a> (const std::string &amp;url, const <a class="el" href="classlib_1_1spt_1_1device.html">lib::spt::device</a> &amp;<a class="el" href="classlib_1_1spt_1_1device.html">device</a>) -&gt; std::string</td></tr>
 <tr class="separator:a3e7ca30f08a9a8bd9af49a2c5e87a353"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -1573,8 +1573,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a974944cc47b6e2d6d557e2ec71f455ff" name="a974944cc47b6e2d6d557e2ec71f455ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a974944cc47b6e2d6d557e2ec71f455ff">&#9670;&nbsp;</a></span>url_to_id()</h2>
+<a id="a31853d9334845772b176b24b9c6fef9c" name="a31853d9334845772b176b24b9c6fef9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31853d9334845772b176b24b9c6fef9c">&#9670;&nbsp;</a></span>url_to_uri()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1583,7 +1583,7 @@ Temporarily protected </dd></dl>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static auto lib::spt::api::url_to_id </td>
+          <td class="memname">static auto lib::spt::api::url_to_uri </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>url</em></td><td>)</td>
@@ -1596,13 +1596,13 @@ Temporarily protected </dd></dl>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Spotify URL (<a href="https://open.spotify.com/track/4uLU6hMCjMI75M1A2tKUQC">https://open.spotify.com/track/4uLU6hMCjMI75M1A2tKUQC</a>) to Spotify ID (4uLU6hMCjMI75M1A2tKUQC) </p><dl class="params"><dt>Parameters</dt><dd>
+<p >Spotify URL (<a href="https://open.spotify.com/track/4uLU6hMCjMI75M1A2tKUQC">https://open.spotify.com/track/4uLU6hMCjMI75M1A2tKUQC</a>) to Spotify URI (spotify:track:4uLU6hMCjMI75M1A2tKUQC) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">url</td><td>Spotify URL </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Spotify ID </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Spotify URI or an empty string if Spotify URL is invalid </dd></dl>
 
 </div>
 </div>
