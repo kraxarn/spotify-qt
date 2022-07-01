@@ -186,8 +186,10 @@ void mp::MediaPlayerPlayer::currentSourceChanged() const
 void mp::MediaPlayerPlayer::stateUpdated() const
 {
 	QVariantMap properties;
-	properties["PlaybackStatus"] = currentPlayback().is_playing ? "Playing" : "Paused";
-	//properties["CanPause"] = true;
+	properties["PlaybackStatus"] = currentPlayback().is_playing
+		? QStringLiteral("Paused")
+		: QStringLiteral("Playing");
+
 	Service::signalPropertiesChange(this, properties);
 }
 

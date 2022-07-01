@@ -286,6 +286,14 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 		&& current.playback.is_playing
 		&& playback.item.id != current.playback.item.id;
 
+#ifdef USE_DBUS
+	if (playback.is_playing != current.playback.is_playing
+		&& mediaPlayer != nullptr)
+	{
+		mediaPlayer->stateUpdated();
+	}
+#endif
+
 	current.playback = playback;
 
 	if (!current.playback.item.is_valid())
