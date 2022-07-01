@@ -48,12 +48,13 @@ void mp::MediaPlayerPlayer::Previous() const
 
 void mp::MediaPlayerPlayer::Seek(qint64 offset) const
 {
-	spotify.seek(static_cast<int>(offset), callback);
+	const auto position = (currentPlayback().progress_ms + offset) * msInUs;
+	spotify.seek(static_cast<int>(position), callback);
 }
 
 void mp::MediaPlayerPlayer::SetPosition(const QDBusObjectPath &/*trackId*/, qint64 position) const
 {
-	spotify.seek(static_cast<int>(position), callback);
+	spotify.seek(static_cast<int>(position * msInUs), callback);
 }
 
 void mp::MediaPlayerPlayer::Stop() const

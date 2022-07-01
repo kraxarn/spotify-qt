@@ -80,6 +80,8 @@ namespace mp
 		void OpenUri(const QString &uri) const;
 
 	private:
+		static constexpr qint64 msInUs = 1000;
+
 		QDBusConnection dBus;
 		lib::spt::api &spotify;
 		std::function<void(const std::string &result)> callback;
