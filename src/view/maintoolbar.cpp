@@ -258,6 +258,14 @@ void MainToolBar::onPlayPause(bool /*checked*/)
 	auto *mainWindow = MainWindow::find(parentWidget());
 	auto &current = mainWindow->getCurrentPlayback();
 
+#ifdef USE_DBUS
+	auto *mediaPlayer = mainWindow->getMediaPlayer();
+	if (mediaPlayer != nullptr)
+	{
+		mediaPlayer->stateUpdated();
+	}
+#endif
+
 	current.is_playing = !current.is_playing;
 	mainWindow->refreshed(current);
 
