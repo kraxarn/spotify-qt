@@ -47,7 +47,8 @@ auto CommandLine::Processor::process(const QCommandLineParser &parser) -> bool
 		}
 		return false;
 	}
+	return true;
 #endif
 
-	return true;
+	return false;
 }
