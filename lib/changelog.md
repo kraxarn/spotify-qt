@@ -4,6 +4,33 @@ Versions use major.minor scheming. New versions are released together with spoti
 * Minor releases contain minor changes and bug fixes and should never require changes to be made.
 * Pre-release and beta releases may contain breaking changes, even if it's a minor release.
 
+## v0.7 (spotify-qt v3.9)
+
+* `add_saved_track` and `remove_saved_track` now supports multiple tracks.
+* `add_to_playlist` and `remove_from_playlist` now supports multiple tracks.
+* `spt::track_audio_features` now supports multiple tracks.
+* `spt::device` and `spt::playlist` now inherits `spt::entity`.
+* `spt::episode` and `spt::show` now supports multiple cover images.
+* `spt::track` now supports multiple album images.
+* `date_time::seconds_since_epoch` now returns an `unsigned long`.
+* Renamed `spt::audio_feature::get_feature` to `get_feature_string`.
+* Renamed `spt::audio_feature::get_name` to `get_value_string`.
+* Moved, and reworked, string formatting from `lib::format` to `lib::fmt`.
+* Reworked `result` into a custom class with ok/fail.
+* `ddg::api::search` now returns an empty object on failure.
+* Added `album_size` and `device_type` enums.
+* Added `general.close_to_tray` and `general.check_for_updates`.
+* Added `qt.custom_font_name` and `qt.custom_font_size`.
+* Added `qt.album_size`.
+* Added `spotify.device_type`.
+* Added `spt::api::url_to_uri`.
+* Added `spt::audio_feature::get_feature`.
+* Added `spt::image` for handling images of multiple sizes.
+* Added `spt::track::image_small` and `spt::track::image_large`.
+* Added `stopwatch`.
+* Added `uri::encode`.
+* Added `vector::average`.
+
 ## v0.6 (spotify-qt v3.8)
 
 * `palette`, `resize_mode`, and `spotify_context` are now enum classes.
