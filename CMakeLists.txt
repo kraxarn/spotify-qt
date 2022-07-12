@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(spotify-qt LANGUAGES CXX VERSION 3.8)
+project(spotify-qt LANGUAGES CXX VERSION 3.9)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
