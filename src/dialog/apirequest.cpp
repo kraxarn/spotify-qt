@@ -4,6 +4,9 @@ Dialog::ApiRequest::ApiRequest(const lib::settings &settings, QWidget *parent)
 	: QDialog(parent),
 	settings(settings)
 {
+	setWindowTitle(QStringLiteral("API request"));
+	resize(400, 500);
+
 	auto *layout = new QVBoxLayout(this);
 	layout->setAlignment(Qt::AlignTop);
 	setLayout(layout);
