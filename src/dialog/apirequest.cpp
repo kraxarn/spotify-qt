@@ -1,7 +1,7 @@
-#include "debugview.hpp"
+#include "dialog/apirequest.hpp"
 
-DebugView::DebugView(const lib::settings &settings, QWidget *parent)
-	: QWidget(parent),
+Dialog::ApiRequest::ApiRequest(const lib::settings &settings, QWidget *parent)
+	: QDialog(parent),
 	settings(settings)
 {
 	auto *layout = new QVBoxLayout(this);
@@ -21,7 +21,8 @@ DebugView::DebugView(const lib::settings &settings, QWidget *parent)
 	urlLayout->addWidget(requestType, 1);
 
 	auto *sendButton = new QPushButton("Send", this);
-	QPushButton::connect(sendButton, &QPushButton::clicked, this, &DebugView::sendRequest);
+	QPushButton::connect(sendButton, &QPushButton::clicked,
+		this, &Dialog::ApiRequest::sendRequest);
 	urlLayout->addWidget(sendButton);
 
 	layout->addLayout(urlLayout);
@@ -42,7 +43,7 @@ DebugView::DebugView(const lib::settings &settings, QWidget *parent)
 	layout->addWidget(tabs, 1);
 }
 
-void DebugView::sendRequest(bool /*checked*/)
+void Dialog::ApiRequest::sendRequest(bool /*checked*/)
 {
 	// Similar to Spotify, but without refresh handling etc.
 

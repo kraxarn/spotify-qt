@@ -9,7 +9,6 @@
 #include "lib/settings.hpp"
 #include "lib/spotify/api.hpp"
 #include "lib/httpclient.hpp"
-#include "view/debugview.hpp"
 
 #include <QMenu>
 #include <QMainWindow>
