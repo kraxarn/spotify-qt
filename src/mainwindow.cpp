@@ -304,6 +304,11 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 		return;
 	}
 
+	if (current.playback.device.is_valid())
+	{
+		settings.general.last_device = current.playback.device.id;
+	}
+
 	const auto &currPlaying = current.playback.item;
 	if (contextView->getCurrentlyPlaying().id != currPlaying.id
 		|| windowTitle() == APP_NAME)
