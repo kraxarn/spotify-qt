@@ -9,7 +9,7 @@ lib::spt::api::api(lib::settings &settings, const lib::http_client &http_client)
 
 void lib::spt::api::refresh(bool force)
 {
-	constexpr long s_in_hour = 60 * 60;
+	constexpr long s_in_hour = 60L * 60L;
 
 	if (!force
 		&& lib::date_time::seconds_since_epoch() - settings.account.last_refresh < s_in_hour)
