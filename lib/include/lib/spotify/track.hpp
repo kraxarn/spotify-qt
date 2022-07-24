@@ -20,6 +20,8 @@ namespace lib
 		public:
 			track() = default;
 
+			virtual ~track() = default;
+
 			/**
 			 * Local track, not streamed from Spotify
 			 */
