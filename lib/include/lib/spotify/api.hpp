@@ -365,7 +365,7 @@ namespace lib
 			/**
 			 * Timestamp of last refresh
 			 */
-			long last_auth = 0;
+			unsigned long last_auth = 0;
 
 			/**
 			 * Settings

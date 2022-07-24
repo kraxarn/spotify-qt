@@ -20,7 +20,7 @@ namespace lib
 		/**
 		 * When did the crash occur
 		 */
-		long timestamp = 0;
+		unsigned long timestamp = 0;
 
 		/**
 		 * Crash signal

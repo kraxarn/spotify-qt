@@ -36,7 +36,7 @@ namespace lib
 			/**
 			 * When access token was last refreshed in unix time
 			 */
-			long last_refresh = 0;
+			unsigned long last_refresh = 0L;
 		};
 
 		void to_json(nlohmann::json &j, const account &a);
