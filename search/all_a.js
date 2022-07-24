@@ -2,7 +2,7 @@ var searchData=
 [
   ['label_0',['label',['../classlib_1_1ddg_1_1link.html#a82b3994d84abc578a010fcbd9adf5425',1,'lib::ddg::link']]],
   ['languages_1',['languages',['../classlib_1_1spt_1_1episode.html#aab6080ce0fdde84aec7213e920e6c7b8',1,'lib::spt::episode::languages()'],['../classlib_1_1spt_1_1show.html#a9a176fc3436010463d53327675de1a06',1,'lib::spt::show::languages()']]],
-  ['last_5fauth_2',['last_auth',['../classlib_1_1spt_1_1api.html#ad241152c1673308341d7180a0be4a357',1,'lib::spt::api']]],
+  ['last_5fauth_2',['last_auth',['../classlib_1_1spt_1_1api.html#a71fa0efe30ccf0163049ea2ce4e419ed',1,'lib::spt::api']]],
   ['left_3',['left',['../classlib_1_1strings.html#aee5892b8c1b9506ddb5c502e3ed1969f',1,'lib::strings']]],
   ['link_4',['link',['../classlib_1_1ddg_1_1link.html',1,'lib::ddg']]],
   ['load_5',['load',['../classlib_1_1settings.html#aed35e74bc89643703e679f0850844da5',1,'lib::settings::load()'],['../classlib_1_1json.html#aac77ec391011b3a8745245272987c99a',1,'lib::json::load(const ghc::filesystem::path &amp;path) -&gt; T'],['../classlib_1_1json.html#ad63b9e906fb9d2c4ecfa88953ed35bfa',1,'lib::json::load(const ghc::filesystem::path &amp;path) -&gt; nlohmann::json']]],
