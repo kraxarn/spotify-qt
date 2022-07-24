@@ -18,42 +18,9 @@ option(USE_DBUS "Use D-Bus integration" ON)
 # Optional KCrash support
 option(USE_KCRASH "Use KCrash integration" ON)
 
-# Find requested Qt version
-option(USE_QT6 "Force Qt 6" OFF)
-option(USE_QT5 "Force Qt 5" OFF)
-
-if (USE_QT5)
-	# Forcing Qt 5
-	set(QT_VERSION_MAJOR 5)
-elseif (USE_QT6)
-	# Forcing Qt 6
-	set(QT_VERSION_MAJOR 6)
-else ()
-	# Auto detect, but prefer Qt 5
-	find_package(Qt5 COMPONENTS Core QUIET)
-	if (Qt5Core_FOUND)
-		set(QT_VERSION_MAJOR 5)
-	else ()
-		find_package(Qt6 COMPONENTS Core QUIET)
-		if (Qt6Core_FOUND)
-			set(QT_VERSION_MAJOR 6)
-		endif ()
-	endif ()
-endif ()
-
-# Check if Qt was found
-if (NOT QT_VERSION_MAJOR)
-	message(FATAL_ERROR "Qt not found, please install Qt 5/6 first")
-endif ()
-
 # Prefer new OpenGL
 if (POLICY CMP0072)
 	cmake_policy(SET CMP0072 NEW)
-endif ()
-
-# Qt 6 requires C++17 under MSVC
-if (QT_VERSION_MAJOR EQUAL 6 AND MSVC)
-	set(CMAKE_CXX_STANDARD 17)
 endif ()
 
 # Set target macOS version
@@ -64,11 +31,11 @@ if (APPLE)
 endif ()
 
 # Find Qt
+include(cmake/FindQt.cmake)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Widgets Network Gui Svg REQUIRED)
 if (USE_DBUS)
 	find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS DBus QUIET)
 endif ()
-message(STATUS "Using Qt ${QT_VERSION_MAJOR}")
 
 # Find KCRash
 if (USE_KCRASH)
