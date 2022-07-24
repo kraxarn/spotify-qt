@@ -38,7 +38,6 @@ public:
 	void toggleExpandableAlbum(lib::album_size albumSize);
 	bool isValid() const;
 	void setSearchVisible(bool visible);
-	void addSidePanelTab(QWidget *widget, const QString &title);
 	void refreshPlaylists();
 	void setCurrentLibraryItem(QTreeWidgetItem *item);
 	lib::spt::playlist getPlaylist(int index);

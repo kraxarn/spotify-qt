@@ -99,9 +99,6 @@ auto SidePanel::View::findTab(SidePanelType type, const QString &name) -> QWidge
 {
 	switch (type)
 	{
-		case SidePanelType::None:
-			return find<QWidget *>(name);
-
 		case SidePanelType::Artist:
 			return find<Artist::View *>(name);
 

@@ -6,11 +6,6 @@
 enum class SidePanelType: char
 {
 	/**
-	 * Other, or unknown, type
-	 */
-	None,
-
-	/**
 	 * Artist, paired with artist ID
 	 */
 	Artist,
