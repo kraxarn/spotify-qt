@@ -25,7 +25,6 @@ namespace Dialog
 
 	public:
 		Setup(lib::settings &settings, QWidget *parent);
-		~Setup() override;
 
 	private:
 		lib::qt::spt::auth *auth;

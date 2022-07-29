@@ -55,11 +55,6 @@ Dialog::Setup::Setup(lib::settings &settings, QWidget *parent)
 	setLayout(mainLayout);
 }
 
-Dialog::Setup::~Setup()
-{
-	delete auth;
-}
-
 void Dialog::Setup::onCancel(bool /*checked*/)
 {
 	reject();
