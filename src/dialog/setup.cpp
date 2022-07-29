@@ -35,16 +35,16 @@ Dialog::Setup::Setup(lib::settings &settings, QWidget *parent)
 	// Add buttons
 	auto *cancelButton = new QPushButton("Cancel");
 	QAbstractButton::connect(cancelButton, &QAbstractButton::clicked,
-		this, &Dialog::Setup::cancel);
+		this, &Dialog::Setup::onCancel);
 
 	auto *dashboardButton = new QPushButton("Spotify Dashboard");
 	QAbstractButton::connect(dashboardButton, &QAbstractButton::clicked,
-		this, &Dialog::Setup::spotifyDashboard);
+		this, &Dialog::Setup::onOpenDashboard);
 
 	auto *authButton = new QPushButton("Authenticate");
 	server = nullptr;
 	QAbstractButton::connect(authButton, &QAbstractButton::clicked,
-		this, &Dialog::Setup::authenticate);
+		this, &Dialog::Setup::onAuthenticate);
 
 	auto *buttonBox = new QHBoxLayout();
 	buttonBox->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
@@ -60,18 +60,18 @@ Dialog::Setup::~Setup()
 	delete auth;
 }
 
-void Dialog::Setup::cancel(bool /*checked*/)
+void Dialog::Setup::onCancel(bool /*checked*/)
 {
 	reject();
 }
 
-void Dialog::Setup::spotifyDashboard(bool /*checked*/)
+void Dialog::Setup::onOpenDashboard(bool /*checked*/)
 {
 	QString url("https://developer.spotify.com/dashboard/applications");
 	Url::open(url, LinkType::Web, this);
 }
 
-void Dialog::Setup::authenticate(bool /*checked*/)
+void Dialog::Setup::onAuthenticate(bool /*checked*/)
 {
 	clientIdText = clientId->text().trimmed();
 	clientSecretText = clientSecret->text().trimmed();
@@ -92,13 +92,13 @@ void Dialog::Setup::authenticate(bool /*checked*/)
 			return;
 		}
 		QTcpServer::connect(server, &QTcpServer::newConnection,
-			this, &Dialog::Setup::newServerConnection);
+			this, &Dialog::Setup::onNewConnection);
 	}
 	auto url = lib::qt::spt::auth::url(clientIdText, redirect);
 	Url::open(url, LinkType::Web, this);
 }
 
-void Dialog::Setup::newServerConnection()
+void Dialog::Setup::onNewConnection()
 {
 	// Read
 	auto *socket = server->nextPendingConnection();
