@@ -18,6 +18,7 @@ namespace spt
 
 		auto listen() -> bool;
 		static auto redirectUrl() -> QString;
+		void openUrl(QWidget *parent) const;
 
 	signals:
 		void success();

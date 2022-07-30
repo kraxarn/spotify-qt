@@ -91,6 +91,5 @@ void Dialog::Setup::onAuthenticate(bool /*checked*/)
 		});
 	}
 
-	auto url = lib::qt::spt::auth::url(clientIdText, spt::AuthServer::redirectUrl());
-	Url::open(url, LinkType::Web, this);
+	auth->openUrl(this);
 }

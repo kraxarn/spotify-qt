@@ -1,4 +1,5 @@
 #include "spotify/authserver.hpp"
+#include "util/url.hpp"
 
 spt::AuthServer::AuthServer(lib::settings &settings, QObject *parent)
 	: QTcpServer(parent),
@@ -17,6 +18,13 @@ auto spt::AuthServer::listen() -> bool
 auto spt::AuthServer::redirectUrl() -> QString
 {
 	return QString("http://localhost:%1").arg(serverPort);
+}
+
+void spt::AuthServer::openUrl(QWidget *parent) const
+{
+	const auto clientId = QString::fromStdString(settings.account.client_id);
+	const auto url = lib::qt::spt::auth::url(clientId, redirectUrl());
+	Url::open(url, LinkType::Web, parent);
 }
 
 void spt::AuthServer::onNewConnection()
