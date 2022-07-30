@@ -36,7 +36,6 @@ namespace Dialog
 		QString redirect;
 		lib::settings &settings;
 
-		void onCancel(bool checked);
 		void onOpenDashboard(bool checked);
 		void onAuthenticate(bool checked);
 		void onNewConnection();

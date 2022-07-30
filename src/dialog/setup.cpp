@@ -35,7 +35,7 @@ Dialog::Setup::Setup(lib::settings &settings, QWidget *parent)
 	// Add buttons
 	auto *cancelButton = new QPushButton("Cancel");
 	QAbstractButton::connect(cancelButton, &QAbstractButton::clicked,
-		this, &Dialog::Setup::onCancel);
+		this, &Dialog::Setup::reject);
 
 	auto *dashboardButton = new QPushButton("Spotify Dashboard");
 	QAbstractButton::connect(dashboardButton, &QAbstractButton::clicked,
@@ -53,11 +53,6 @@ Dialog::Setup::Setup(lib::settings &settings, QWidget *parent)
 	buttonBox->addWidget(authButton);
 	mainLayout->addLayout(buttonBox);
 	setLayout(mainLayout);
-}
-
-void Dialog::Setup::onCancel(bool /*checked*/)
-{
-	reject();
 }
 
 void Dialog::Setup::onOpenDashboard(bool /*checked*/)
