@@ -27,9 +27,9 @@ namespace Dialog
 		Setup(lib::settings &settings, QWidget *parent);
 
 	private:
-		spt::AuthServer *auth;
-		QLineEdit *clientId;
-		QLineEdit *clientSecret;
+		spt::AuthServer *auth = nullptr;
+		QLineEdit *clientId = nullptr;
+		QLineEdit *clientSecret = nullptr;
 		lib::settings &settings;
 
 		void onOpenDashboard(bool checked);
