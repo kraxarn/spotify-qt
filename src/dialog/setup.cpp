@@ -4,9 +4,6 @@ Dialog::Setup::Setup(lib::settings &settings, QWidget *parent)
 	: QDialog(parent),
 	settings(settings)
 {
-	// Auth
-	auth = new lib::qt::spt::auth(settings, this);
-
 	// Main layout
 	auto *mainLayout = new QVBoxLayout();
 
@@ -41,8 +38,7 @@ Dialog::Setup::Setup(lib::settings &settings, QWidget *parent)
 	QAbstractButton::connect(dashboardButton, &QAbstractButton::clicked,
 		this, &Dialog::Setup::onOpenDashboard);
 
-	auto *authButton = new QPushButton("Authenticate");
-	server = nullptr;
+	auto *authButton = new QPushButton(QStringLiteral("Authenticate"));
 	QAbstractButton::connect(authButton, &QAbstractButton::clicked,
 		this, &Dialog::Setup::onAuthenticate);
 
@@ -63,76 +59,38 @@ void Dialog::Setup::onOpenDashboard(bool /*checked*/)
 
 void Dialog::Setup::onAuthenticate(bool /*checked*/)
 {
-	clientIdText = clientId->text().trimmed();
-	clientSecretText = clientSecret->text().trimmed();
+	const auto clientIdText = clientId->text().trimmed();
+	const auto clientSecretText = clientSecret->text().trimmed();
+
+	settings.account.client_id = clientIdText.toStdString();
+	settings.account.client_secret = clientSecretText.toStdString();
+
 	clientId->setDisabled(true);
 	clientSecret->setDisabled(true);
-	redirect = QString("http://localhost:8888");
 
-	if (server == nullptr)
+	if (auth == nullptr)
 	{
-		constexpr int serverPort = 8888;
-		server = new QTcpServer(this);
-		if (!server->listen(QHostAddress::LocalHost, serverPort))
+		auth = new spt::AuthServer(settings, this);
+		if (!auth->listen())
 		{
-			QMessageBox::warning(this,
-				"server error",
-				QString("failed to start a temporary server on port 8888: %1")
-					.arg(server->errorString()));
+			QMessageBox::warning(this, QStringLiteral("Server error"),
+				QString("Failed to start a temporary server on port 8888: %1")
+					.arg(auth->errorString()));
+
 			return;
 		}
-		QTcpServer::connect(server, &QTcpServer::newConnection,
-			this, &Dialog::Setup::onNewConnection);
+
+		spt::AuthServer::connect(auth, &spt::AuthServer::success,
+			this, &Dialog::Setup::accept);
+
+		spt::AuthServer::connect(auth, &spt::AuthServer::failed, [this](const QString &message)
+		{
+			lib::log::error("Authentication failed: {}", message.toStdString());
+			clientId->setDisabled(false);
+			clientSecret->setDisabled(false);
+		});
 	}
-	auto url = lib::qt::spt::auth::url(clientIdText, redirect);
+
+	auto url = lib::qt::spt::auth::url(clientIdText, spt::AuthServer::redirectUrl());
 	Url::open(url, LinkType::Web, this);
-}
-
-void Dialog::Setup::onNewConnection()
-{
-	// Read
-	auto *socket = server->nextPendingConnection();
-	socket->waitForReadyRead();
-	auto response = QString(socket->readAll());
-
-	// Client might want to request favicon or something
-	if (!response.contains("?code="))
-	{
-		socket->close();
-		return;
-	}
-
-	// Do magic with code received
-	// GET /?code=<code> HTTP...
-	auto left = response.left(response.indexOf(" HTTP"));
-	auto code = left.right(left.length() - left.indexOf("?code=") - 6);
-	auto status = auth->get(code, redirect, clientIdText, clientSecretText);
-
-	// Write
-	socket->write(QString("HTTP/1.1 200 OK\r\n\r\n%1")
-		.arg(status.isEmpty()
-			? QString("success, you can now return to %1").arg(APP_NAME)
-			: QString("failed to authenticate: %1").arg(status)).toUtf8());
-	socket->flush();
-	socket->waitForBytesWritten(3000);
-	socket->close();
-
-	// Close it all down if ok
-	if (status.isEmpty())
-	{
-		settings.account.client_id = clientIdText.toStdString();
-		settings.account.client_secret = clientSecretText.toStdString();
-		settings.save();
-
-		server->close();
-		server->deleteLater();
-
-		accept();
-	}
-	else
-	{
-		// Otherwise, re-enable fields
-		clientId->setDisabled(false);
-		clientSecret->setDisabled(false);
-	}
 }

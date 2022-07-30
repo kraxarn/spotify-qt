@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/qt/spotify/auth.hpp"
+#include "spotify/authserver.hpp"
 #include "dialog/openlink.hpp"
 #include "util/url.hpp"
 
@@ -27,17 +27,12 @@ namespace Dialog
 		Setup(lib::settings &settings, QWidget *parent);
 
 	private:
-		lib::qt::spt::auth *auth;
-		QTcpServer *server;
+		spt::AuthServer *auth;
 		QLineEdit *clientId;
 		QLineEdit *clientSecret;
-		QString clientIdText;
-		QString clientSecretText;
-		QString redirect;
 		lib::settings &settings;
 
 		void onOpenDashboard(bool checked);
 		void onAuthenticate(bool checked);
-		void onNewConnection();
 	};
 }
