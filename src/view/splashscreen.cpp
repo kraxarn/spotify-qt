@@ -42,8 +42,8 @@ void SplashScreen::showEvent(QShowEvent *event)
 	}
 	catch (const lib::spt::error &e)
 	{
-		QMessageBox::warning(this, TITLE,
-			QString("%1.\nPlease reauthenticate.").arg(e.what()));
+		QMessageBox::warning(this, TITLE, QString("%1.\nPlease reauthenticate.").arg(e.what()));
+		showMessage(QStringLiteral("Waiting..."));
 
 		spt::AuthServer auth(settings, this);
 		if (auth.listen())
