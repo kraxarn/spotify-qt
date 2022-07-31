@@ -7,7 +7,7 @@ lib::spt::api::api(lib::settings &settings, const lib::http_client &http_client)
 {
 }
 
-void lib::spt::api::refresh(bool force)
+bool lib::spt::api::refresh(bool force)
 {
 	constexpr long s_in_hour = 60L * 60L;
 
@@ -16,7 +16,7 @@ void lib::spt::api::refresh(bool force)
 	{
 		lib::log::debug("Last refresh was less than an hour ago, not refreshing access token");
 		last_auth = settings.account.last_refresh;
-		return;
+		return false;
 	}
 
 	// Make sure we have a refresh token
@@ -58,6 +58,8 @@ void lib::spt::api::refresh(bool force)
 	settings.account.last_refresh = last_auth;
 	settings.account.access_token = json.at("access_token").get<std::string>();
 	settings.save();
+
+	return true;
 }
 
 auto lib::spt::api::auth_headers() -> lib::headers

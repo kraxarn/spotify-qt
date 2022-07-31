@@ -30,8 +30,8 @@ void SplashScreen::showEvent(QShowEvent *event)
 
 	try
 	{
-		spotify.refresh();
-		close(true);
+		const auto refreshed = spotify.refresh();
+		close(true, !refreshed);
 	}
 	catch (const nlohmann::json::exception &e)
 	{
@@ -78,17 +78,14 @@ void SplashScreen::showMessage(const QString &message)
 		Qt::AlignBottom, QColor::fromRgb(foregroundColor));
 }
 
-void SplashScreen::close(bool successful)
+void SplashScreen::close(bool successful, bool wait)
 {
-	// Widgets can't be closed directly after being opened,
-	// therefore waiting is required
-
 	if (successful)
 	{
 		showMessage(QStringLiteral("Welcome!"));
 	}
 
-	QTimer::singleShot(closeTimer, [this, successful]()
+	QTimer::singleShot(wait ? closeTimer : 0, [this, successful]()
 	{
 		if (successful)
 		{
