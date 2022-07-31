@@ -14,34 +14,3 @@ void spt::Spotify::select_device(const std::vector<lib::spt::device> &devices,
 	QDialog::connect(dialog, &Dialog::DeviceSelect::deviceSelected, callback);
 	dialog->open();
 }
-
-auto spt::Spotify::tryRefresh() -> bool
-{
-	auto *parentWidget = dynamic_cast<QWidget *>(parent());
-
-	try
-	{
-		refresh();
-	}
-	catch (const nlohmann::json::exception &e)
-	{
-		QMessageBox::warning(parentWidget, "Connection failed",
-			QString("Failed to parse response from Spotify:\n%1").arg(e.what()));
-		return false;
-	}
-	catch (const lib::spt::error &e)
-	{
-		QMessageBox::warning(parentWidget, "Connection failed",
-			QString("Unexpected response:\n%1").arg(e.what()));
-		return false;
-	}
-	catch (const std::exception &e)
-	{
-		QMessageBox::warning(parentWidget, "Connection failed",
-			QString("Failed to connect to Spotify, check your connection and try again:\n%1")
-				.arg(e.what()));
-		return false;
-	}
-
-	return true;
-}

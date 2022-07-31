@@ -7,7 +7,8 @@ class MainWindow: public QMainWindow
 Q_OBJECT
 
 public:
-	MainWindow(lib::settings &settings, lib::paths &paths);
+	MainWindow(lib::settings &settings, lib::paths &paths,
+		lib::qt::http_client &httpClient, spt::Spotify &spotify);
 
 	static MainWindow *find(QWidget *from);
 	static auto defaultSize() -> QSize;
@@ -36,7 +37,6 @@ public:
 	void refreshed(const lib::spt::playback &playback);
 	void toggleTrackNumbers(bool enabled);
 	void toggleExpandableAlbum(lib::album_size albumSize);
-	bool isValid() const;
 	void setSearchVisible(bool visible);
 	void refreshPlaylists();
 	void setCurrentLibraryItem(QTreeWidgetItem *item);
@@ -82,18 +82,17 @@ private:
 
 	SpotifyClient::Runner *spotifyRunner = nullptr;
 
-	spt::Spotify *spotify = nullptr;
+	spt::Spotify &spotify;
 	spt::Current current;
 
 	lib::settings &settings;
 	lib::paths &paths;
 	lib::json_cache cache;
 	lib::spt::user currentUser;
-	lib::http_client *httpClient = nullptr;
+	lib::http_client &httpClient;
 
 	TrayIcon *trayIcon = nullptr;
 	int refreshCount = -1;
-	bool stateValid = true;
 	QDockWidget *sidePanel = nullptr;
 
 	List::Library *libraryList = nullptr;

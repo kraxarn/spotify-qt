@@ -37,8 +37,6 @@ namespace spt
 		explicit Spotify(lib::settings &settings,
 			const lib::http_client &httpClient, QObject *parent = nullptr);
 
-		auto tryRefresh() -> bool;
-
 	private:
 		void select_device(const std::vector<lib::spt::device> &devices,
 			lib::callback<lib::spt::device> &callback) override;

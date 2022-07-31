@@ -1,10 +1,13 @@
 #include "mainwindow.hpp"
 #include "util/widget.hpp"
 
-MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
-	: settings(settings),
+MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
+	lib::qt::http_client &httpClient, spt::Spotify &spotify)
+	: spotify(spotify),
+	settings(settings),
 	paths(paths),
-	cache(paths)
+	cache(paths),
+	httpClient(httpClient)
 {
 	lib::crash_handler::set_cache(cache);
 
@@ -15,11 +18,6 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 		createWinId();
 	}
 #endif
-
-	// Splash
-	SplashScreen splash;
-	splash.show();
-	splash.showMessage("Please wait...");
 
 	// Apply selected style and palette
 	QApplication::setStyle(QString::fromStdString(settings.general.style));
@@ -44,37 +42,21 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	// Check for dark background
 	Style::setDarkBackground(this);
 
-	// Set Spotify
-	splash.showMessage("Connecting...");
-	httpClient = new lib::qt::http_client(this);
-	spotify = new spt::Spotify(settings, *httpClient, this);
-
-	// Check connection
-	stateValid = spotify->tryRefresh();
-	if (!stateValid)
-	{
-		splash.finish(this);
-		return;
-	}
-
 	// Setup main window
 	setWindowTitle(APP_NAME);
 	setWindowIcon(Icon::get(QString("logo:%1").arg(APP_ICON)));
 	resize(defaultSize());
 	setCentralWidget(createCentralWidget());
-	toolBar = new MainToolBar(*spotify, settings,
-		*httpClient, cache, this);
+	toolBar = new MainToolBar(spotify, settings, httpClient, cache, this);
 	addToolBar(Qt::ToolBarArea::TopToolBarArea, toolBar);
 	setContextMenuPolicy(Qt::NoContextMenu);
 
 	// Update player status
-	splash.showMessage("Refreshing...");
 	auto *timer = new QTimer(this);
 	QTimer::connect(timer, &QTimer::timeout, this, &MainWindow::refresh);
 	refresh();
 	constexpr int tickMs = 1000;
 	timer->start(tickMs);
-	splash.showMessage("Welcome!");
 
 	// Start client if set
 	initClient();
@@ -85,22 +67,20 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths)
 	// Create tray icon if specified
 	if (settings.general.tray_icon)
 	{
-		trayIcon = new TrayIcon(*spotify, settings, cache, this);
+		trayIcon = new TrayIcon(spotify, settings, cache, this);
 	}
 
 	// If new version has been detected, show what's new dialog
 	initWhatsNew();
 
 	// Get current user
-	spotify->me([this](const lib::spt::user &user)
+	spotify.me([this](const lib::spt::user &user)
 	{
 		this->currentUser = user;
 	});
 
 	initDevice();
 	setBorderless(!settings.qt().system_title_bar);
-
-	splash.finish(this);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -130,7 +110,7 @@ void MainWindow::initClient()
 	}
 	else
 	{
-		spotify->devices([this](const std::vector<lib::spt::device> &devices)
+		spotify.devices([this](const std::vector<lib::spt::device> &devices)
 		{
 			if (devices.empty())
 			{
@@ -148,7 +128,7 @@ void MainWindow::initMediaController()
 		return;
 	}
 
-	mediaPlayer = new mp::Service(*spotify, this);
+	mediaPlayer = new mp::Service(spotify, this);
 	// Check if something went wrong during init
 	if (!mediaPlayer->isValid())
 	{
@@ -164,7 +144,7 @@ void MainWindow::initWhatsNew()
 		&& !settings.general.last_version.empty()
 		&& settings.general.last_version != APP_VERSION)
 	{
-		auto *dialog = new Dialog::WhatsNew(settings, *httpClient, this);
+		auto *dialog = new Dialog::WhatsNew(settings, httpClient, this);
 		dialog->open();
 	}
 
@@ -174,7 +154,7 @@ void MainWindow::initWhatsNew()
 
 void MainWindow::initDevice()
 {
-	spotify->devices([this](const std::vector<lib::spt::device> &devices)
+	spotify.devices([this](const std::vector<lib::spt::device> &devices)
 	{
 		// Don't select a new device if one is currently active
 		for (const auto &device: devices)
@@ -188,7 +168,7 @@ void MainWindow::initDevice()
 		if (devices.size() == 1
 			&& lib::strings::starts_with(devices.front().name, APP_NAME))
 		{
-			spotify->set_device(devices.front(), {});
+			spotify.set_device(devices.front(), {});
 		}
 		else
 		{
@@ -196,7 +176,7 @@ void MainWindow::initDevice()
 			{
 				if (device.id == this->settings.general.last_device)
 				{
-					spotify->set_device(device, {});
+					spotify.set_device(device, {});
 					break;
 				}
 			}
@@ -263,7 +243,7 @@ void MainWindow::refresh()
 		|| ++refreshCount >= settings.general.refresh_interval
 		|| current.playback.progress_ms + msInSec > current.playback.item.duration)
 	{
-		spotify->current_playback([this](const lib::spt::playback &playback)
+		spotify.current_playback([this](const lib::spt::playback &playback)
 		{
 			refreshed(playback);
 		});
@@ -337,7 +317,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 		if (trayIcon != nullptr
 			&& (settings.general.tray_album_art || settings.general.notify_track_change))
 		{
-			Http::getAlbum(current.playback.item.image_small(), *httpClient, cache, false,
+			Http::getAlbum(current.playback.item.image_small(), httpClient, cache, false,
 				[this, &currPlaying, trackChange](const QPixmap &image)
 				{
 					if (trayIcon == nullptr)
@@ -371,13 +351,12 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 auto MainWindow::createCentralWidget() -> QWidget *
 {
 	// All widgets in container
-	mainContent = new MainContent(*spotify, settings, cache, this);
-	sidePanel = new SidePanel::View(*spotify, settings, cache,
-		*httpClient, this);
+	mainContent = new MainContent(spotify, settings, cache, this);
+	sidePanel = new SidePanel::View(spotify, settings, cache, httpClient, this);
 
-	libraryList = new List::Library(*spotify, cache, this);
-	playlistList = new List::Playlist(*spotify, settings, cache, this);
-	contextView = new Context::View(*spotify, settings, current, cache, this);
+	libraryList = new List::Library(spotify, cache, this);
+	playlistList = new List::Playlist(spotify, settings, cache, this);
+	contextView = new Context::View(spotify, settings, current, cache, this);
 
 	// Left side panel
 	addDockWidget(Qt::LeftDockWidgetArea,
@@ -432,7 +411,7 @@ void MainWindow::loadAlbum(const std::string &albumId, const std::string &trackI
 		return;
 	}
 
-	spotify->album(albumId, [tracksList, trackId](const lib::spt::album &album)
+	spotify.album(albumId, [tracksList, trackId](const lib::spt::album &album)
 	{
 		tracksList->load(album, trackId);
 	});
@@ -452,14 +431,13 @@ void MainWindow::saveTracksToCache(const std::string &id,
 void MainWindow::setAlbumImage(const lib::spt::entity &albumEntity,
 	const std::string &albumImageUrl)
 {
-	Http::getAlbum(albumImageUrl, *httpClient, cache,
-		[this, albumEntity](const QPixmap &image)
+	Http::getAlbum(albumImageUrl, httpClient, cache, [this, albumEntity](const QPixmap &image)
+	{
+		if (contextView != nullptr)
 		{
-			if (contextView != nullptr)
-			{
-				contextView->setAlbum(albumEntity, image);
-			}
-		});
+			contextView->setAlbum(albumEntity, image);
+		}
+	});
 }
 
 void MainWindow::openArtist(const std::string &artistId)
@@ -499,7 +477,7 @@ void MainWindow::reloadTrayIcon()
 
 	if (settings.general.tray_icon)
 	{
-		trayIcon = new TrayIcon(*spotify, settings, cache, this);
+		trayIcon = new TrayIcon(spotify, settings, cache, this);
 	}
 }
 
@@ -608,11 +586,6 @@ auto MainWindow::getMediaPlayer() -> mp::Service *
 	return mediaPlayer;
 }
 #endif
-
-auto MainWindow::isValid() const -> bool
-{
-	return stateValid;
-}
 
 //endregion
 

@@ -2,6 +2,7 @@
 
 #include "util/icon.hpp"
 #include "util/image.hpp"
+#include "spotify/spotify.hpp"
 
 #include <QSplashScreen>
 #include <QPixmap>
@@ -12,9 +13,14 @@ class SplashScreen: public QSplashScreen
 Q_OBJECT
 
 public:
-	SplashScreen();
+	SplashScreen(lib::settings &settings, spt::Spotify &spotify, QWidget *parent);
 
-	void showMessage(const QString &message);
+signals:
+	void success();
+	void failed();
+
+protected:
+	void showEvent(QShowEvent *event) override;
 
 private:
 	static constexpr int backgroundSize = 104;
@@ -23,4 +29,16 @@ private:
 
 	static constexpr QRgb backgroundColor = 0x4caf50;
 	static constexpr QRgb foregroundColor = 0x212121;
+
+	/**
+	 * Used for waiting for parent to close before closing splash
+	 * (constructor with QWidget is deprecated)
+	 */
+	QWidget *parent;
+
+	lib::settings &settings;
+	spt::Spotify &spotify;
+
+	void showMessage(const QString &message);
+	void close(bool successful);
 };

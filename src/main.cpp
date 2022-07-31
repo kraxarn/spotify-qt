@@ -87,17 +87,22 @@ auto main(int argc, char *argv[]) -> int
 		}
 	}
 
-	// Create main window
-	MainWindow window(settings, paths);
+	lib::qt::http_client httpClient(nullptr);
+	spt::Spotify spotify(settings, httpClient, nullptr);
 
-	// Show window and run application
-	if (!window.isValid())
+	MainWindow window(settings, paths, httpClient, spotify);
+	SplashScreen splash(settings, spotify, &window);
+
+	SplashScreen::connect(&splash, &SplashScreen::success, [&window]()
 	{
-		return 1;
-	}
+		window.show();
+	});
 
-	window.show();
+	SplashScreen::connect(&splash, &SplashScreen::failed, []()
+	{
+		QApplication::exit(1);
+	});
 
-	// Run application
+	splash.show();
 	return QApplication::exec();
 }
