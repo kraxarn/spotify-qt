@@ -34,6 +34,13 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 void MainWindow::showEvent(QShowEvent *event)
 {
 	QWidget::showEvent(event);
+
+	// Ignore restoring window from taskbar for example
+	if (event->spontaneous())
+	{
+		return;
+	}
+
 	Style::apply(this, settings);
 
 	// Update player status
