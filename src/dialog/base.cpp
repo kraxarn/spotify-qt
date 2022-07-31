@@ -17,7 +17,7 @@ void Dialog::Base::onApply(bool /*checked*/)
 
 void Dialog::Base::onCancel(bool /*checked*/)
 {
-	accept();
+	reject();
 }
 
 void Dialog::Base::addAction(DialogAction dialogAction)
