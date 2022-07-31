@@ -80,15 +80,25 @@ void SplashScreen::showMessage(const QString &message)
 
 void SplashScreen::close(bool successful)
 {
+	// Widgets can't be closed directly after being opened,
+	// therefore waiting is required
+
 	if (successful)
 	{
 		showMessage(QStringLiteral("Welcome!"));
-		emit success();
-		finish(parent);
 	}
-	else
+
+	QTimer::singleShot(closeTimer, [this, successful]()
 	{
-		emit failed();
-		QSplashScreen::close();
-	}
+		if (successful)
+		{
+			emit success();
+			finish(parent);
+		}
+		else
+		{
+			emit failed();
+			QSplashScreen::close();
+		}
+	});
 }

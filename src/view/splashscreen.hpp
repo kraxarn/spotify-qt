@@ -30,6 +30,8 @@ private:
 	static constexpr QRgb backgroundColor = 0x4caf50;
 	static constexpr QRgb foregroundColor = 0x212121;
 
+	static constexpr int closeTimer = 100;
+
 	/**
 	 * Used for waiting for parent to close before closing splash
 	 * (constructor with QWidget is deprecated)
