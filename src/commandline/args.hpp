@@ -16,12 +16,6 @@
 #define ARG_LIST_PATHS QStringLiteral("paths")
 
 /**
- * Don't start IPC server on app start
- * @note Not implemented
- */
-#define ARG_DISABLE_IPC QStringLiteral("multiple-instances")
-
-/**
  * Play/pause currently playing audio
  */
 #define ARG_PLAY_PAUSE QStringLiteral("play-pause")

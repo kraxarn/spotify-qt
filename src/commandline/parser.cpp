@@ -25,10 +25,6 @@ auto CommandLine::Parser::options() -> QList<QCommandLineOption>
 			ARG_LIST_PATHS,
 			QStringLiteral("Print paths for config file and cache."),
 		},
-		{
-			ARG_DISABLE_IPC,
-			QStringLiteral("Allow multiple instances, disables playback options."),
-		},
 		// Playback options
 		{
 			ARG_PLAY_PAUSE,
