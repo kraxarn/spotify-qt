@@ -1,11 +1,14 @@
 #include "dialog/setup.hpp"
+#include "util/url.hpp"
+
+#include <QPushButton>
+#include <QMessageBox>
 
 Dialog::Setup::Setup(lib::settings &settings, QWidget *parent)
-	: QDialog(parent),
+	: Base(parent),
 	settings(settings)
 {
-	// Main layout
-	auto *mainLayout = new QVBoxLayout();
+	auto *layout = Base::layout<QVBoxLayout>();
 
 	// Welcome text
 	auto *welcomeText = new QLabel(QString(
@@ -15,45 +18,36 @@ Dialog::Setup::Setup(lib::settings &settings, QWidget *parent)
 		"set the redirect uri (not website) to http://localhost:8888.\n"
 		"Then, enter your Client ID and secret below from the same application page:")
 		.arg(APP_NAME), this);
-	mainLayout->addWidget(welcomeText);
+	layout->addWidget(welcomeText);
 
 	// Client ID
-	clientId = new QLineEdit(QString::fromStdString(settings.account.client_id),
-		this);
-	clientId->setPlaceholderText("Client ID");
-	mainLayout->addWidget(clientId);
+	clientId = new QLineEdit(QString::fromStdString(settings.account.client_id), this);
+	clientId->setPlaceholderText(QStringLiteral("Client ID"));
+	layout->addWidget(clientId);
 
 	// Client secret
-	clientSecret = new QLineEdit(QString::fromStdString(settings.account.client_secret),
-		this);
-	clientSecret->setPlaceholderText("Client secret");
-	mainLayout->addWidget(clientSecret);
+	clientSecret = new QLineEdit(QString::fromStdString(settings.account.client_secret), this);
+	clientSecret->setPlaceholderText(QStringLiteral("Client secret"));
+	layout->addWidget(clientSecret);
 
-	// Add buttons
-	auto *cancelButton = new QPushButton("Cancel");
-	QAbstractButton::connect(cancelButton, &QAbstractButton::clicked,
-		this, &Dialog::Setup::reject);
+	Base::addAction(DialogAction::Cancel);
 
-	auto *dashboardButton = new QPushButton("Spotify Dashboard");
+	auto *dashboardButton = addButton(QStringLiteral("Spotify Dashboard"),
+		QDialogButtonBox::ActionRole);
+
 	QAbstractButton::connect(dashboardButton, &QAbstractButton::clicked,
 		this, &Dialog::Setup::onOpenDashboard);
 
-	auto *authButton = new QPushButton(QStringLiteral("Authenticate"));
+	auto *authButton = addButton(QStringLiteral("Authenticate"),
+		QDialogButtonBox::AcceptRole);
+
 	QAbstractButton::connect(authButton, &QAbstractButton::clicked,
 		this, &Dialog::Setup::onAuthenticate);
-
-	auto *buttonBox = new QHBoxLayout();
-	buttonBox->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
-	buttonBox->addWidget(cancelButton);
-	buttonBox->addWidget(dashboardButton);
-	buttonBox->addWidget(authButton);
-	mainLayout->addLayout(buttonBox);
-	setLayout(mainLayout);
 }
 
 void Dialog::Setup::onOpenDashboard(bool /*checked*/)
 {
-	QString url("https://developer.spotify.com/dashboard/applications");
+	const auto url = QStringLiteral("https://developer.spotify.com/dashboard/applications");
 	Url::open(url, LinkType::Web, this);
 }
 
@@ -86,6 +80,7 @@ void Dialog::Setup::onAuthenticate(bool /*checked*/)
 		spt::AuthServer::connect(auth, &spt::AuthServer::failed, [this](const QString &message)
 		{
 			lib::log::error("Authentication failed: {}", message.toStdString());
+
 			clientId->setDisabled(false);
 			clientSecret->setDisabled(false);
 		});
