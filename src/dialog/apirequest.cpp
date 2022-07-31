@@ -5,43 +5,56 @@ Dialog::ApiRequest::ApiRequest(const lib::settings &settings, QWidget *parent)
 	settings(settings)
 {
 	setWindowTitle(QStringLiteral("API request"));
-	resize(400, 500);
+	resize(width, height);
 
 	auto *layout = new QVBoxLayout(this);
 	layout->setAlignment(Qt::AlignTop);
 	setLayout(layout);
 
-	urlPath = new QLineEdit(this);
-	urlPath->setPlaceholderText("https://api.spotify.com/v1/");
-	layout->addWidget(urlPath);
-
 	auto *urlLayout = new QHBoxLayout();
 
-	requestType = new QComboBox(this);
-	requestType->addItems({
-		"GET", "PUT", "POST", "DELETE"
+	urlType = new QComboBox(this);
+	urlType->addItems({
+		QStringLiteral("https://api.spotify.com/v1/"),
+		QStringLiteral("https://spclient.wg.spotify.com/"),
 	});
-	urlLayout->addWidget(requestType, 1);
+	urlLayout->addWidget(urlType);
 
-	auto *sendButton = new QPushButton("Send", this);
-	QPushButton::connect(sendButton, &QPushButton::clicked,
-		this, &Dialog::ApiRequest::sendRequest);
-	urlLayout->addWidget(sendButton);
+	urlPath = new QLineEdit(this);
+	urlLayout->addWidget(urlPath);
 
 	layout->addLayout(urlLayout);
 
+	auto *requestLayout = new QHBoxLayout();
+
+	requestType = new QComboBox(this);
+	requestType->addItems({
+		QStringLiteral("GET"),
+		QStringLiteral("PUT"),
+		QStringLiteral("POST"),
+		QStringLiteral("DELETE"),
+	});
+	requestLayout->addWidget(requestType, 1);
+
+	auto *sendButton = new QPushButton(QStringLiteral("Send"), this);
+	QPushButton::connect(sendButton, &QPushButton::clicked,
+		this, &Dialog::ApiRequest::sendRequest);
+	requestLayout->addWidget(sendButton);
+
+	layout->addLayout(requestLayout);
+
 	jsonRequest = new QTextEdit(this);
-	jsonRequest->setFontFamily("monospace");
+	jsonRequest->setFontFamily(QStringLiteral("monospace"));
 	jsonRequest->setWordWrapMode(QTextOption::NoWrap);
 
 	jsonResponse = new QTextEdit(this);
 	jsonResponse->setReadOnly(true);
-	jsonResponse->setFontFamily("monospace");
+	jsonResponse->setFontFamily(QStringLiteral("monospace"));
 	jsonResponse->setWordWrapMode(QTextOption::NoWrap);
 
 	tabs = new QTabWidget();
-	tabs->addTab(jsonRequest, "Request");
-	tabs->addTab(jsonResponse, "Response");
+	tabs->addTab(jsonRequest, QStringLiteral("Request"));
+	tabs->addTab(jsonResponse, QStringLiteral("Response"));
 
 	layout->addWidget(tabs, 1);
 }
@@ -70,7 +83,7 @@ void Dialog::ApiRequest::sendRequest(bool /*checked*/)
 		networkManager = new QNetworkAccessManager(this);
 	}
 
-	QNetworkRequest request(QString("https://api.spotify.com/v1/%1").arg(urlPath->text()));
+	QNetworkRequest request(urlType->currentText().append(urlPath->text()));
 	request.setRawHeader("Authorization",
 		QString("Bearer %1")
 			.arg(QString::fromStdString(settings.account.access_token)).toUtf8());

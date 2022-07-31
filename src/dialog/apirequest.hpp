@@ -26,8 +26,12 @@ namespace Dialog
 		ApiRequest(const lib::settings &settings, QWidget *parent);
 
 	private:
-		QComboBox *requestType = nullptr;
+		static constexpr int width = 500;
+		static constexpr int height = 600;
+
+		QComboBox *urlType = nullptr;
 		QLineEdit *urlPath = nullptr;
+		QComboBox *requestType = nullptr;
 		QNetworkAccessManager *networkManager = nullptr;
 		QTextEdit *jsonRequest = nullptr;
 		QTextEdit *jsonResponse = nullptr;
