@@ -45,18 +45,18 @@ void SplashScreen::showEvent(QShowEvent *event)
 		QMessageBox::warning(this, TITLE, QString("%1.\nPlease reauthenticate.").arg(e.what()));
 		showMessage(QStringLiteral("Waiting..."));
 
-		spt::AuthServer auth(settings, this);
-		if (auth.listen())
+		auto *auth = new spt::AuthServer(settings, this);
+		if (auth->listen())
 		{
-			auth.openUrl(this);
+			auth->openUrl(this);
 		}
 
-		spt::AuthServer::connect(&auth, &spt::AuthServer::success, [this]()
+		spt::AuthServer::connect(auth, &spt::AuthServer::success, [this]()
 		{
 			close(true);
 		});
 
-		spt::AuthServer::connect(&auth, &spt::AuthServer::failed, [this](const QString &message)
+		spt::AuthServer::connect(auth, &spt::AuthServer::failed, [this](const QString &message)
 		{
 			QMessageBox::warning(this, TITLE, message);
 			close(false);
