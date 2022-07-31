@@ -19,29 +19,6 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 	}
 #endif
 
-	// Apply selected style and palette
-	QApplication::setStyle(QString::fromStdString(settings.general.style));
-	Style::applyPalette(settings.general.style_palette);
-
-	// Custom dark theme
-	if (settings.general.style_palette == lib::palette::dark)
-	{
-		setStyleSheet(DarkPalette::getDarkStylesheet());
-	}
-
-	// Custom font
-	const auto &qtSettings = settings.qt();
-	if (!qtSettings.custom_font_name.empty())
-	{
-		const auto fontName = QString::fromStdString(qtSettings.custom_font_name);
-		QApplication::setFont(qtSettings.custom_font_size > 0
-			? QFont(fontName, qtSettings.custom_font_size)
-			: QFont(fontName));
-	}
-
-	// Check for dark background
-	Style::setDarkBackground(this);
-
 	// Setup main window
 	setWindowTitle(APP_NAME);
 	setWindowIcon(Icon::get(QString("logo:%1").arg(APP_ICON)));
