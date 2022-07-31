@@ -28,6 +28,14 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 	addToolBar(Qt::ToolBarArea::TopToolBarArea, toolBar);
 	setContextMenuPolicy(Qt::NoContextMenu);
 
+	setBorderless(!settings.qt().system_title_bar);
+}
+
+void MainWindow::showEvent(QShowEvent *event)
+{
+	QWidget::showEvent(event);
+	Style::apply(this, settings);
+
 	// Update player status
 	auto *timer = new QTimer(this);
 	QTimer::connect(timer, &QTimer::timeout, this, &MainWindow::refresh);
@@ -57,7 +65,6 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 	});
 
 	initDevice();
-	setBorderless(!settings.qt().system_title_bar);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

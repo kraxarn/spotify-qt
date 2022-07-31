@@ -13,7 +13,6 @@ public:
 	static MainWindow *find(QWidget *from);
 	static auto defaultSize() -> QSize;
 
-public:
 	//region Deprecated
 
 	/** @deprecated Use TracksList.load instead */
@@ -73,6 +72,7 @@ public:
 #endif
 
 protected:
+	void showEvent(QShowEvent *event) override;
 	void closeEvent(QCloseEvent *event) override;
 
 private:
