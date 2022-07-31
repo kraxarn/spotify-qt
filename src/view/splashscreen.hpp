@@ -42,5 +42,5 @@ private:
 	spt::Spotify &spotify;
 
 	void showMessage(const QString &message);
-	void close(bool successful, bool wait = false);
+	void close(bool successful);
 };

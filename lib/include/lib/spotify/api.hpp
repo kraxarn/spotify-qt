@@ -314,9 +314,8 @@ namespace lib
 
 			/**
 			 * Refresh access token with refresh token
-			 * @return Token was refreshed
 			 */
-			bool refresh(bool force = false);
+			void refresh(bool force = false);
 
 			/**
 			 * Spotify ID (4uLU6hMCjMI75M1A2tKUQC) to Spotify URI

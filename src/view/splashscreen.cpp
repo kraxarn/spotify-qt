@@ -30,8 +30,8 @@ void SplashScreen::showEvent(QShowEvent *event)
 
 	try
 	{
-		const auto refreshed = spotify.refresh();
-		close(true, !refreshed);
+		spotify.refresh();
+		close(true);
 	}
 	catch (const nlohmann::json::exception &e)
 	{
@@ -78,14 +78,18 @@ void SplashScreen::showMessage(const QString &message)
 		Qt::AlignBottom, QColor::fromRgb(foregroundColor));
 }
 
-void SplashScreen::close(bool successful, bool wait)
+void SplashScreen::close(bool successful)
 {
 	if (successful)
 	{
 		showMessage(QStringLiteral("Welcome!"));
 	}
 
-	QTimer::singleShot(wait ? closeTimer : 0, [this, successful]()
+	// If refresh was unnecessary, we get here instantly,
+	// not hiding the splash properly, therefore, we wait
+	// for a small amount of time
+
+	QTimer::singleShot(0, [this, successful]()
 	{
 		if (successful)
 		{
