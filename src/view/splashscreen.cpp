@@ -51,7 +51,7 @@ void SplashScreen::showEvent(QShowEvent *event)
 			auth.openUrl(this);
 		}
 
-		spt::AuthServer::connect(&auth, &spt::AuthServer::success, this, [this]()
+		spt::AuthServer::connect(&auth, &spt::AuthServer::success, [this]()
 		{
 			close(true);
 		});
