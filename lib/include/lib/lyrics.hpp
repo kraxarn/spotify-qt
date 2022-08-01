@@ -39,5 +39,7 @@ namespace lib
 		static auto headers() -> lib::headers;
 		void search(const lib::spt::track &track, lib::callback<int> &callback);
 		void lyric(int lyrics_id, lib::callback<std::vector<lib::lyrics_part>> &callback);
+
+		static auto parse_timestamp(const std::string &timestamp) -> long;
 	};
 }
