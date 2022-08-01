@@ -14,7 +14,11 @@ void lib::lyrics::get(const lib::spt::track &track,
 
 	search(track, [this, callback](const int lyrics_id)
 	{
-		lib::log::debug("Found lyrics: {}", lyrics_id);
+		if (lyrics_id == 0)
+		{
+			callback({});
+			return;
+		}
 		lyric(lyrics_id, callback);
 	});
 }
@@ -45,16 +49,21 @@ void lib::lyrics::search(const lib::spt::track &track, lib::callback<int> &callb
 	{
 		if (response.empty())
 		{
-			lib::log::debug("empty response");
-			callback({});
+			callback(0);
 			return;
 		}
 
 		const auto json = nlohmann::json::parse(response);
+		if (!json.contains("result"))
+		{
+			callback(0);
+			return;
+		}
+
 		const auto songs = json.at("result").at("songs");
 		if (!songs.is_array() || songs.empty())
 		{
-			callback({});
+			callback(0);
 			return;
 		}
 
@@ -78,6 +87,12 @@ void lib::lyrics::lyric(int lyrics_id, lib::callback<std::vector<lib::lyrics_par
 		}
 
 		const auto json = nlohmann::json::parse(response);
+		if (!json.contains("lrc"))
+		{
+			callback({});
+			return;
+		}
+
 		const auto lyric = json.at("lrc").at("lyric");
 		const auto lines = lib::strings::split(lyric, '\n');
 
