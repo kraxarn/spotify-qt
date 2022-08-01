@@ -20,12 +20,12 @@ View::Lyrics::Lyrics(const lib::http_client &httpClient,
 
 void View::Lyrics::open(const lib::spt::track &track)
 {
-	const auto &cached = cache.get_track_info(track);
-	if (cached.is_valid())
-	{
-		setPlainText(QString::fromStdString(cached.lyrics));
-		return;
-	}
+//	const auto &cached = cache.get_track_info(track);
+//	if (cached.is_valid())
+//	{
+//		setPlainText(QString::fromStdString(cached.lyrics));
+//		return;
+//	}
 
 	status->setText(QStringLiteral("Searching..."));
 
