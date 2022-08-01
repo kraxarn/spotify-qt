@@ -19,7 +19,8 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 	}
 #endif
 
-	// Setup main window
+	Style::apply(this, settings);
+
 	setWindowTitle(APP_NAME);
 	setWindowIcon(Icon::get(QString("logo:%1").arg(APP_ICON)));
 	resize(defaultSize());
@@ -40,8 +41,6 @@ void MainWindow::showEvent(QShowEvent *event)
 	{
 		return;
 	}
-
-	Style::apply(this, settings);
 
 	// Update player status
 	auto *timer = new QTimer(this);
