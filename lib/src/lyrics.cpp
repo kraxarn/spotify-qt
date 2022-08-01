@@ -1,55 +1,94 @@
 #include "lib/lyrics.hpp"
 #include "lib/uri.hpp"
-#include "lib/spotify/api.hpp"
 
 lib::lyrics::lyrics(const lib::http_client &http_client)
 	: http(http_client)
 {
 }
 
-void lib::lyrics::get(const spt::track &track, lib::callback<lib::spt::track_info> &callback)
+void lib::lyrics::get(const lib::spt::track &track,
+	lib::callback<std::vector<lib::lyrics_part>> &callback)
 {
 	// Based off:
 	// https://github.com/spicetify/spicetify-cli/blob/master/CustomApps/lyrics-plus
 
-	const auto duration = track.duration / 1000.0;
-	lib::uri uri("https://apic-desktop.musixmatch.com/ws/1.1/macro.subtitles.get");
+	search(track, [this, callback](const int lyrics_id)
+	{
+		lib::log::debug("Found lyrics: {}", lyrics_id);
+		lyric(lyrics_id, callback);
+	});
+}
 
+auto lib::lyrics::headers() -> lib::headers
+{
+	return {
+		{"Content-Type", "application/json"},
+		{
+			"User-Agent",
+			"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/102.1",
+		},
+	};
+}
+
+void lib::lyrics::search(const lib::spt::track &track, lib::callback<int> &callback)
+{
+	lib::uri uri("https://music.xianqiao.wang/neteaseapiv2/search");
 	uri.set_search_params({
-		{"format", "json"},
-		{"namespace", "lyrics_richsynched"},
-		{"subtitle_format", "mxm"},
-		{"app_id", "web-desktop-app-v1.0"},
-		{"q_album", lib::uri::encode(track.album.name)},
-		{"q_artist", lib::uri::encode(track.artists.front().name)},
-		{"q_artists", lib::uri::encode(track.artists.front().name)},
-		{"q_track", lib::uri::encode(track.name)},
-		{"track_spotify_id", lib::uri::encode(lib::spt::api::to_uri("track", track.id))},
-		{"q_duration", std::to_string(duration)},
-		{"f_subtitle_length", std::to_string(static_cast<int>(duration))},
-		{"usertoken", "220731b2962dde74b84ecd92b9a36194267992d61b163d7ed443f0"},
+		{"limit", "10"},
+		{"type", "1"},
+		{"keywords", lib::fmt::format("{} {}",
+			lib::uri::encode(track.name),
+			lib::uri::encode(track.artists.front().name))},
 	});
 
-	lib::headers headers{
-		{"authority", "apic-desktop.musixmatch.com"},
-		{"cookie", "x-mxm-token-guid="},
-	};
-
-	try
+	http.get(uri.get_url(), headers(), [callback](const std::string &response)
 	{
-		http.post(uri.get_url(), headers, [callback](const std::string &result)
+		if (response.empty())
 		{
-			if (result.empty())
-			{
-				callback(lib::spt::track_info());
-				return;
-			}
-			callback(nlohmann::json::parse(result));
-		});
-	}
-	catch (const std::exception &e)
+			lib::log::debug("empty response");
+			callback({});
+			return;
+		}
+
+		const auto json = nlohmann::json::parse(response);
+		const auto songs = json.at("result").at("songs");
+		if (!songs.is_array() || songs.empty())
+		{
+			callback({});
+			return;
+		}
+
+		callback(songs.front().at("id"));
+	});
+}
+
+void lib::lyrics::lyric(int lyrics_id, lib::callback<std::vector<lib::lyrics_part>> &callback)
+{
+	lib::uri uri("https://music.xianqiao.wang/neteaseapiv2/lyric");
+	uri.set_search_params({
+		{"id", std::to_string(lyrics_id)},
+	});
+
+	http.get(uri.get_url(), headers(), [callback](const std::string &response)
 	{
-		lib::log::error("Failed to get lyrics: {}", e.what());
-		callback(lib::spt::track_info());
-	}
+		if (response.empty())
+		{
+			callback({});
+			return;
+		}
+
+		const auto json = nlohmann::json::parse(response);
+		const auto lyric = json.at("lrc").at("lyric");
+		const auto lines = lib::strings::split(lyric, '\n');
+
+		std::vector<lib::lyrics_part> lyrics;
+		lyrics.reserve(lines.size());
+
+		for (const auto &line: lines)
+		{
+			lyrics.emplace_back(0, line);
+		}
+
+		callback(lyrics);
+	});
 }

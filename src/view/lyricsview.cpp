@@ -20,14 +20,22 @@ void LyricsView::open(const lib::spt::track &track)
 
 	setPlainText("Searching...");
 
-	lyrics.get(track, [this, &track](const lib::spt::track_info &info)
+	lyrics.get(track, [this](const std::vector<lib::lyrics_part> &parts)
 	{
-		if (!info.is_valid())
+		if (parts.empty())
 		{
-			this->setPlainText("No results");
+			setPlainText("No results");
 			return;
 		}
-		this->setPlainText(QString::fromStdString(info.lyrics));
-		this->cache.set_track_info(track, info);
+
+		QString result;
+		for (const auto &part: parts)
+		{
+			result.append(QString::fromStdString(part.second));
+			result.append('\n');
+		}
+
+		setPlainText(result);
+//		this->cache.set_track_info(track, info);
 	});
 }

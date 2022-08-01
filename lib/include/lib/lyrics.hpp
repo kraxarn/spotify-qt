@@ -9,6 +9,8 @@
 
 namespace lib
 {
+	using lyrics_part = std::pair<long, std::string>;
+
 	/**
 	 * Lyrics helper
 	 * @note May or not be against ToS, use at your own risk
@@ -29,9 +31,13 @@ namespace lib
 		 * @throws runtime_error Failed to get lyrics or none found
 		 */
 		void get(const lib::spt::track &track,
-			lib::callback<lib::spt::track_info> &callback);
+			lib::callback<std::vector<lib::lyrics_part>> &callback);
 
 	private:
 		const lib::http_client &http;
+
+		static auto headers() -> lib::headers;
+		void search(const lib::spt::track &track, lib::callback<int> &callback);
+		void lyric(int lyrics_id, lib::callback<std::vector<lib::lyrics_part>> &callback);
 	};
 }
