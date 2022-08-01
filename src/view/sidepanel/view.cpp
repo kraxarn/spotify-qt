@@ -67,7 +67,7 @@ void SidePanel::View::openAudioFeatures(const std::vector<lib::spt::track> &trac
 
 void SidePanel::View::openLyrics(const lib::spt::track &track)
 {
-	auto *view = new LyricsView(httpClient, cache, this);
+	auto *view = new ::View::Lyrics(httpClient, cache, this);
 	addTab(view, "view-media-lyrics", QString::fromStdString(track.title()),
 		SidePanelType::Lyrics, QString::fromStdString(track.id));
 	view->open(track);
@@ -109,7 +109,7 @@ auto SidePanel::View::findTab(SidePanelType type, const QString &name) -> QWidge
 			return find<::View::AudioFeatures *>(name);
 
 		case SidePanelType::Lyrics:
-			return find<LyricsView *>(name);
+			return find<::View::Lyrics *>(name);
 
 		default:
 			return nullptr;

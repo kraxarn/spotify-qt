@@ -4,7 +4,7 @@
 #include "view/artist/view.hpp"
 #include "view/search/view.hpp"
 #include "view/audiofeatures.hpp"
-#include "view/lyricsview.hpp"
+#include "view/lyrics.hpp"
 #include "view/sidepanel/title.hpp"
 #include "enum/sidepaneltype.hpp"
 
