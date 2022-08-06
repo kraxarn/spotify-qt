@@ -130,6 +130,4 @@ void View::Lyrics::onTick(const lib::spt::playback &playback)
 
 	lyricsList->setCurrentItem(item);
 	emit lyricsList->scrollToItem(item, QAbstractItemView::PositionAtCenter);
-
-	lib::log::debug("Now: {}", playback.progress_ms);
 }
