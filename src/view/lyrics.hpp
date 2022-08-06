@@ -2,6 +2,7 @@
 
 #include "lib/httpclient.hpp"
 #include "lib/spotify/track.hpp"
+#include "lib/spotify/playback.hpp"
 #include "lib/lyrics.hpp"
 #include "lib/cache.hpp"
 
@@ -28,5 +29,10 @@ namespace View
 
 		QLabel *status;
 		QListWidget *lyricsList;
+
+		void load(const std::vector<lib::lyrics_part> &parts);
+		static auto getTimestamp(const QListWidgetItem *item) -> qlonglong;
+
+		void onTick(const lib::spt::playback &playback);
 	};
 }

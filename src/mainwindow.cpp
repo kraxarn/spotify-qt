@@ -265,6 +265,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 #endif
 
 	current.playback = playback;
+	emit tick(playback);
 
 	if (!current.playback.item.is_valid())
 	{
