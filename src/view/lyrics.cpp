@@ -18,6 +18,7 @@ View::Lyrics::Lyrics(const lib::http_client &httpClient,
 
 	lyricsList = new QListWidget(this);
 	lyricsList->setWordWrap(true);
+	lyricsList->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 	layout->addWidget(lyricsList);
 }
 
