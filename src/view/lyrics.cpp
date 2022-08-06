@@ -79,8 +79,14 @@ auto View::Lyrics::getTimestamp(const QListWidgetItem *item) -> qlonglong
 
 void View::Lyrics::onTick(const lib::spt::playback &playback)
 {
-	if (!playback.is_playing || playback.item.id != currentTrack.id)
+	if (!playback.is_playing)
 	{
+		return;
+	}
+
+	if (playback.item.id != currentTrack.id)
+	{
+		lyricsList->setCurrentItem(nullptr);
 		return;
 	}
 
