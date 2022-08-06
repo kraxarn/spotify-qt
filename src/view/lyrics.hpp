@@ -26,6 +26,7 @@ namespace View
 
 		lib::cache &cache;
 		lib::lyrics lyrics;
+		lib::spt::track currentTrack;
 
 		QLabel *status;
 		QListWidget *lyricsList;

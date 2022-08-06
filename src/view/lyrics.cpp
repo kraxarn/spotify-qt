@@ -32,7 +32,7 @@ void View::Lyrics::open(const lib::spt::track &track)
 
 	status->setText(QStringLiteral("Searching..."));
 
-	lyrics.get(track, [this](const std::vector<lib::lyrics_part> &parts)
+	lyrics.get(track, [this, track](const std::vector<lib::lyrics_part> &parts)
 	{
 		if (parts.empty())
 		{
@@ -40,6 +40,7 @@ void View::Lyrics::open(const lib::spt::track &track)
 			return;
 		}
 
+		currentTrack = track;
 		status->setVisible(false);
 		load(parts);
 
@@ -78,7 +79,7 @@ auto View::Lyrics::getTimestamp(const QListWidgetItem *item) -> qlonglong
 
 void View::Lyrics::onTick(const lib::spt::playback &playback)
 {
-	if (!playback.is_playing)
+	if (!playback.is_playing || playback.item.id != currentTrack.id)
 	{
 		return;
 	}
