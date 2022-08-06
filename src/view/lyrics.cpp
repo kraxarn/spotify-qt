@@ -103,18 +103,26 @@ void View::Lyrics::onTick(const lib::spt::playback &playback)
 	if (timestamp < playback.progress_ms)
 	{
 		// We are behind, check next
-		while (timestamp < playback.progress_ms && item != nullptr)
+		while (timestamp < playback.progress_ms)
 		{
 			item = lyricsList->item(++index);
+			if (item == nullptr)
+			{
+				break;
+			}
 			timestamp = getTimestamp(item);
 		}
 	}
 	else
 	{
 		// We are ahead, check previous
-		while (timestamp > playback.progress_ms && item != nullptr)
+		while (timestamp > playback.progress_ms)
 		{
 			item = lyricsList->item(--index);
+			if (item == nullptr)
+			{
+				break;
+			}
 			timestamp = getTimestamp(item);
 		}
 	}
