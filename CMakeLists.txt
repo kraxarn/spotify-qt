@@ -25,9 +25,7 @@ endif ()
 
 # Set target macOS version
 if (APPLE)
-	# Qt 6.2 supports 10.14 and Qt 5.15 supports 10.13
-	# As automated builds are only Qt 6 for now, target that version
-	set(CMAKE_OSX_DEPLOYMENT_TARGET "10.14")
+	set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15")
 endif ()
 
 # Find Qt
