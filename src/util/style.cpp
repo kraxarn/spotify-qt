@@ -41,10 +41,16 @@ void Style::apply(QWidget *window, lib::settings &settings)
 	QApplication::setStyle(QString::fromStdString(settings.general.style));
 	Style::applyPalette(settings.general.style_palette);
 
-	// Custom dark theme
 	if (settings.general.style_palette == lib::palette::dark)
 	{
+		// Custom dark theme
 		window->setStyleSheet(DarkPalette::getDarkStylesheet());
+		darkBackground = true;
+	}
+	else
+	{
+		// Check for dark background
+		setDarkBackground(window);
 	}
 
 	// Custom font
@@ -56,7 +62,4 @@ void Style::apply(QWidget *window, lib::settings &settings)
 			? QFont(fontName, qtSettings.custom_font_size)
 			: QFont(fontName));
 	}
-
-	// Check for dark background
-	Style::setDarkBackground(window);
 }
