@@ -8,6 +8,7 @@
 
 #include <QLabel>
 #include <QListWidget>
+#include <QComboBox>
 
 namespace View
 {
@@ -30,6 +31,8 @@ namespace View
 
 		QLabel *status;
 		QListWidget *lyricsList;
+
+		QComboBox *lyricIds = nullptr;
 
 		void load(const lib::lrc::lyrics &loaded);
 		static auto getTimestamp(const QListWidgetItem *item) -> qlonglong;

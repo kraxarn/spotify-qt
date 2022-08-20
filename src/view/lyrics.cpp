@@ -16,6 +16,13 @@ View::Lyrics::Lyrics(const lib::http_client &httpClient,
 	status = new QLabel(this);
 	layout->addWidget(status);
 
+	if (lib::developer_mode::enabled)
+	{
+		lyricIds = new QComboBox(this);
+		lyricIds->setVisible(false);
+		layout->addWidget(lyricIds);
+	}
+
 	lyricsList = new QListWidget(this);
 	lyricsList->setWordWrap(true);
 	lyricsList->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
