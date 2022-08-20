@@ -43,9 +43,13 @@ auto lib::lrc::line::parse_timestamp(const std::string &timestamp) -> long
 		return 0;
 	}
 
-	const auto minutes = std::stoi(timestamp.substr(0, 2));
-	const auto seconds = std::stoi(timestamp.substr(second + 1, 2));
-	const auto milliseconds = std::stoi(timestamp.substr(millisecond + 1, 3));
+	const auto minutes_str = timestamp.substr(0, 2);
+	const auto seconds_str = timestamp.substr(second + 1, 2);
+	const auto milliseconds_str = timestamp.substr(millisecond + 1, 3);
+
+	const auto minutes = minutes_str.empty() ? 0 : std::stoi(minutes_str);
+	const auto seconds = seconds_str.empty() ? 0 : std::stoi(seconds_str);
+	const auto milliseconds = milliseconds_str.empty() ? 0 : std::stoi(milliseconds_str);
 
 	constexpr int milliseconds_in_second = 1000;
 	constexpr int milliseconds_in_minute = milliseconds_in_second * 60;
