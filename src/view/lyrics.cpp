@@ -55,7 +55,7 @@ void View::Lyrics::open(const lib::spt::track &track)
 				return lib::strings::to_lower(lib::strings::erase_non_alpha(str));
 			};
 
-			size_t index = 0;
+			size_t index = -1;
 			const auto albumName = strip(track.album.name);
 			const auto &results = result.value();
 
@@ -66,6 +66,12 @@ void View::Lyrics::open(const lib::spt::track &track)
 					index = i;
 					break;
 				}
+			}
+
+			if (index >= results.size())
+			{
+				status->setText(QStringLiteral("No results"));
+				return;
 			}
 
 			if (lyricIds != nullptr && results.size() > 1)
