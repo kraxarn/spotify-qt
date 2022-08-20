@@ -115,6 +115,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a7886123f981729204fb510831474f216"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6d5b3b4d17e6966ecdb537786d40165"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#af6d5b3b4d17e6966ecdb537786d40165">replace_all</a> (const std::string &amp;str, const std::string &amp;old_val, const std::string &amp;new_val) -&gt; std::string</td></tr>
 <tr class="separator:af6d5b3b4d17e6966ecdb537786d40165"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c4cb184ebdf1b92135ef7e4bc971f13"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1strings.html#a9c4cb184ebdf1b92135ef7e4bc971f13">erase_non_alpha</a> (const std::string &amp;str) -&gt; std::string</td></tr>
+<tr class="separator:a9c4cb184ebdf1b92135ef7e4bc971f13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >String utilities </p>
@@ -239,6 +241,39 @@ template&lt;typename String &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>str ends with end </dd></dl>
+
+</div>
+</div>
+<a id="a9c4cb184ebdf1b92135ef7e4bc971f13" name="a9c4cb184ebdf1b92135ef7e4bc971f13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c4cb184ebdf1b92135ef7e4bc971f13">&#9670;&nbsp;</a></span>erase_non_alpha()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static auto lib::strings::erase_non_alpha </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td> -&gt;  std::string</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >Get a new string with all non-alphabetic characters removed </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>String to remove from </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New string with removed characters </dd></dl>
 
 </div>
 </div>
