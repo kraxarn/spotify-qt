@@ -3,7 +3,7 @@
 #include "lib/httpclient.hpp"
 #include "lib/spotify/track.hpp"
 #include "lib/spotify/playback.hpp"
-#include "lib/lyrics.hpp"
+#include "lib/lyrics/api.hpp"
 #include "lib/cache.hpp"
 
 #include <QLabel>
@@ -25,13 +25,13 @@ namespace View
 		static constexpr int timestampRole = 0x100;
 
 		lib::cache &cache;
-		lib::lyrics lyrics;
+		lib::lrc::api lyrics;
 		lib::spt::track currentTrack;
 
 		QLabel *status;
 		QListWidget *lyricsList;
 
-		void load(const std::vector<lib::lyrics_part> &parts);
+		void load(const lib::lrc::lyrics &loaded);
 		static auto getTimestamp(const QListWidgetItem *item) -> qlonglong;
 
 		void onTick(const lib::spt::playback &playback);

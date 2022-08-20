@@ -33,35 +33,44 @@ void View::Lyrics::open(const lib::spt::track &track)
 
 	status->setText(QStringLiteral("Searching..."));
 
-	lyrics.get(track, [this, track](const std::vector<lib::lyrics_part> &parts)
+	lyrics.search(track, [this](const lib::result<std::vector<lib::lrc::search_result>> &result)
 	{
-		if (parts.empty())
+		if (!result.success() || result.value().empty())
 		{
-			status->setText(QStringLiteral("No results"));
+			status->setText(result.message().empty()
+				? QStringLiteral("No results")
+				: QString::fromStdString(result.message()));
+
 			return;
 		}
 
-		currentTrack = track;
-		status->setVisible(false);
-		load(parts);
+		const auto lyricsId = result.value().front().lyrics_id;
+		lyrics.lyrics(lyricsId, [this](const lib::result<lib::lrc::lyrics> &result)
+		{
+			if (!result.success())
+			{
+				status->setText(QString::fromStdString(result.message()));
+				return;
+			}
 
-//		this->cache.set_track_info(track, info);
+			load(result.value());
+		});
 	});
 }
 
-void View::Lyrics::load(const std::vector<lib::lyrics_part> &parts)
+void View::Lyrics::load(const lib::lrc::lyrics &loaded)
 {
 	lyricsList->clear();
-	if (parts.empty())
+	if (loaded.lines.empty())
 	{
 		return;
 	}
 
-	for (const auto &part: parts)
+	for (const auto &line: loaded.lines)
 	{
 		auto *item = new QListWidgetItem(lyricsList);
-		item->setText(QString::fromStdString(part.second));
-		item->setData(timestampRole, (qlonglong) part.first);
+		item->setText(QString::fromStdString(line.text));
+		item->setData(timestampRole, (qlonglong) line.timestamp);
 	}
 
 	auto *window = MainWindow::find(parentWidget());
