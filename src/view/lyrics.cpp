@@ -22,9 +22,6 @@ View::Lyrics::Lyrics(const lib::http_client &httpClient,
 		lyricIds->setMaximumWidth(250);
 		lyricIds->setVisible(false);
 		layout->addWidget(lyricIds, 0, Qt::AlignHCenter);
-
-		QComboBox::connect(lyricIds, QOverload<int>::of(&QComboBox::currentIndexChanged),
-			this, &View::Lyrics::onLyricsIdSelect);
 	}
 
 	lyricsList = new QListWidget(this);
@@ -86,6 +83,9 @@ void View::Lyrics::open(const lib::spt::track &track)
 
 				lyricIds->setCurrentIndex(static_cast<int>(index));
 				lyricIds->show();
+
+				QComboBox::connect(lyricIds, QOverload<int>::of(&QComboBox::currentIndexChanged),
+					this, &View::Lyrics::onLyricsIdSelect);
 			}
 
 			const auto lyricsId = results[index].lyrics_id;
