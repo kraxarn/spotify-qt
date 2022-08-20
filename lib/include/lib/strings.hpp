@@ -166,6 +166,13 @@ namespace lib
 		static auto replace_all(const std::string &str,
 			const std::string &old_val, const std::string &new_val) -> std::string;
 
+		/**
+		 * Get a new string with all non-alphabetic characters removed
+		 * @param str String to remove from
+		 * @return New string with removed characters
+		 */
+		static auto erase_non_alpha(const std::string &str) -> std::string;
+
 	private:
 		/**
 		 * Trim beginning of string

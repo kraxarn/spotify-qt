@@ -187,3 +187,16 @@ auto lib::strings::replace_all(const std::string &str, const std::string &old_va
 
 	return val;
 }
+
+auto lib::strings::erase_non_alpha(const std::string &str) -> std::string
+{
+	std::string val = str;
+
+	val.erase(std::remove_if(val.begin(), val.end(), [](char current) -> bool
+	{
+		return (current < 'a' || current > 'z')
+			&& (current < 'A' || current > 'Z');
+	}), val.end());
+
+	return val;
+}

@@ -192,4 +192,11 @@ TEST_CASE("strings")
 		CHECK_EQ(lib::strings::replace_all(val, ", ", "->"), "abc->def->ghi");
 		CHECK_EQ(lib::strings::replace_all(val, "adg", "mno"), "abc, def, ghi");
 	}
+
+	SUBCASE("erase_non_alpha")
+	{
+		CHECK_EQ(lib::strings::erase_non_alpha("Hello, World"), "HelloWorld");
+		CHECK_EQ(lib::strings::erase_non_alpha("He110 (W047d)"), "HeWd");
+		CHECK_EQ(lib::strings::erase_non_alpha("hello"), "hello");
+	}
 }
