@@ -47,19 +47,35 @@ void View::Lyrics::open(const lib::spt::track &track)
 	lyrics.search(track,
 		[this, track](const lib::result<std::vector<lib::lrc::search_result>> &result)
 		{
-			if (!result.success() || result.value().empty())
+			if (!result.success())
 			{
-				status->setText(result.message().empty()
-					? QStringLiteral("No results")
-					: QString::fromStdString(result.message()));
-
+				status->setText(QString::fromStdString(result.message()));
 				return;
 			}
 
-			if (lyricIds != nullptr && result.value().size() > 1)
+			auto strip = [](const std::string &str) -> std::string
+			{
+				return lib::strings::to_lower(lib::strings::erase_non_alpha(str));
+			};
+
+			size_t index = 0;
+			const auto albumName = strip(track.album.name);
+			const auto &results = result.value();
+
+			for (size_t i = 0; i < results.size(); i++)
+			{
+				if (strip(results[i].album) == albumName)
+				{
+					index = i;
+					break;
+				}
+			}
+
+			if (lyricIds != nullptr && results.size() > 1)
 			{
 				lyricIds->clear();
-				for (const auto &value: result.value())
+
+				for (const auto &value: results)
 				{
 					lyricIds->addItem(QString("%1 - %2 - %3")
 							.arg(QString::fromStdString(lib::strings::join(value.artists, ", ")))
@@ -67,10 +83,12 @@ void View::Lyrics::open(const lib::spt::track &track)
 							.arg(QString::fromStdString(value.album)),
 						value.lyrics_id);
 				}
+
+				lyricIds->setCurrentIndex(static_cast<int>(index));
 				lyricIds->show();
 			}
 
-			const auto lyricsId = result.value().front().lyrics_id;
+			const auto lyricsId = results[index].lyrics_id;
 			load(lyricsId);
 			currentTrack = track;
 		});
