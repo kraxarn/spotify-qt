@@ -22,6 +22,9 @@ View::Lyrics::Lyrics(const lib::http_client &httpClient,
 		lyricIds->setMaximumWidth(250);
 		lyricIds->setVisible(false);
 		layout->addWidget(lyricIds, 0, Qt::AlignHCenter);
+
+		QComboBox::connect(lyricIds, QOverload<int>::of(&QComboBox::currentIndexChanged),
+			this, &View::Lyrics::onLyricsIdSelect);
 	}
 
 	lyricsList = new QListWidget(this);
@@ -58,29 +61,34 @@ void View::Lyrics::open(const lib::spt::track &track)
 				lyricIds->clear();
 				for (const auto &value: result.value())
 				{
-					lyricIds->addItem(QString("%1 - %2 - %3 (%4)")
-						.arg(QString::fromStdString(lib::strings::join(value.artists, ", ")))
-						.arg(QString::fromStdString(value.track))
-						.arg(QString::fromStdString(value.album))
-						.arg(value.lyrics_id));
+					lyricIds->addItem(QString("%1 - %2 - %3")
+							.arg(QString::fromStdString(lib::strings::join(value.artists, ", ")))
+							.arg(QString::fromStdString(value.track))
+							.arg(QString::fromStdString(value.album)),
+						value.lyrics_id);
 				}
 				lyricIds->show();
 			}
 
 			const auto lyricsId = result.value().front().lyrics_id;
-			lyrics.lyrics(lyricsId, [this, track](const lib::result<lib::lrc::lyrics> &result)
-			{
-				if (!result.success())
-				{
-					status->setText(QString::fromStdString(result.message()));
-					return;
-				}
-
-				currentTrack = track;
-				status->setVisible(false);
-				load(result.value());
-			});
+			load(lyricsId);
+			currentTrack = track;
 		});
+}
+
+void View::Lyrics::load(int lyricsId)
+{
+	lyrics.lyrics(lyricsId, [this](const lib::result<lib::lrc::lyrics> &result)
+	{
+		if (!result.success())
+		{
+			status->setText(QString::fromStdString(result.message()));
+			return;
+		}
+
+		status->setVisible(false);
+		load(result.value());
+	});
 }
 
 void View::Lyrics::load(const lib::lrc::lyrics &loaded)
@@ -173,4 +181,13 @@ void View::Lyrics::onTick(const lib::spt::playback &playback)
 
 	lyricsList->setCurrentItem(item);
 	emit lyricsList->scrollToItem(item, QAbstractItemView::PositionAtCenter);
+}
+
+void View::Lyrics::onLyricsIdSelect(int index)
+{
+	const auto lyricsId = lyricIds->itemData(index);
+	if (lyricsId.canConvert<int>())
+	{
+		load(lyricsId.toInt());
+	}
 }

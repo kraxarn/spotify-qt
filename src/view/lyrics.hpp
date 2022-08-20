@@ -34,9 +34,11 @@ namespace View
 
 		QComboBox *lyricIds = nullptr;
 
+		void load(int lyricsId);
 		void load(const lib::lrc::lyrics &loaded);
 		static auto getTimestamp(const QListWidgetItem *item) -> qlonglong;
 
 		void onTick(const lib::spt::playback &playback);
+		void onLyricsIdSelect(int index);
 	};
 }
