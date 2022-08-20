@@ -57,7 +57,11 @@ void View::Lyrics::open(const lib::spt::track &track)
 				lyricIds->clear();
 				for (const auto &value: result.value())
 				{
-					lyricIds->addItem(QString::number(value.lyrics_id));
+					lyricIds->addItem(QString("%1 - %2 - %3 (%4)")
+						.arg(QString::fromStdString(lib::strings::join(value.artists, ", ")))
+						.arg(QString::fromStdString(value.track))
+						.arg(QString::fromStdString(value.album))
+						.arg(value.lyrics_id));
 				}
 				lyricIds->show();
 			}
