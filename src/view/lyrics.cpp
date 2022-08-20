@@ -40,29 +40,42 @@ void View::Lyrics::open(const lib::spt::track &track)
 
 	status->setText(QStringLiteral("Searching..."));
 
-	lyrics.search(track, [this](const lib::result<std::vector<lib::lrc::search_result>> &result)
-	{
-		if (!result.success() || result.value().empty())
+	lyrics.search(track,
+		[this, track](const lib::result<std::vector<lib::lrc::search_result>> &result)
 		{
-			status->setText(result.message().empty()
-				? QStringLiteral("No results")
-				: QString::fromStdString(result.message()));
-
-			return;
-		}
-
-		const auto lyricsId = result.value().front().lyrics_id;
-		lyrics.lyrics(lyricsId, [this](const lib::result<lib::lrc::lyrics> &result)
-		{
-			if (!result.success())
+			if (!result.success() || result.value().empty())
 			{
-				status->setText(QString::fromStdString(result.message()));
+				status->setText(result.message().empty()
+					? QStringLiteral("No results")
+					: QString::fromStdString(result.message()));
+
 				return;
 			}
 
-			load(result.value());
+			if (lyricIds != nullptr && result.value().size() > 1)
+			{
+				lyricIds->clear();
+				for (const auto &value: result.value())
+				{
+					lyricIds->addItem(QString::number(value.lyrics_id));
+				}
+				lyricIds->show();
+			}
+
+			const auto lyricsId = result.value().front().lyrics_id;
+			lyrics.lyrics(lyricsId, [this, track](const lib::result<lib::lrc::lyrics> &result)
+			{
+				if (!result.success())
+				{
+					status->setText(QString::fromStdString(result.message()));
+					return;
+				}
+
+				currentTrack = track;
+				status->setVisible(false);
+				load(result.value());
+			});
 		});
-	});
 }
 
 void View::Lyrics::load(const lib::lrc::lyrics &loaded)
