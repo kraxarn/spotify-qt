@@ -19,8 +19,9 @@ View::Lyrics::Lyrics(const lib::http_client &httpClient,
 	if (lib::developer_mode::enabled)
 	{
 		lyricIds = new QComboBox(this);
+		lyricIds->setMaximumWidth(250);
 		lyricIds->setVisible(false);
-		layout->addWidget(lyricIds);
+		layout->addWidget(lyricIds, 0, Qt::AlignHCenter);
 	}
 
 	lyricsList = new QListWidget(this);
