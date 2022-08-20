@@ -3,7 +3,7 @@
 
 void lib::lrc::from_json(const nlohmann::json &json, lib::lrc::lyrics &lyrics)
 {
-	if (!json.is_object())
+	if (!json.is_string())
 	{
 		return;
 	}
