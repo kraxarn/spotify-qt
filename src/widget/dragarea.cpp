@@ -39,7 +39,7 @@ void DragArea::mousePressEvent(QMouseEvent *event)
 	}
 #endif
 
-	dragPosition = event->globalPos() - target->frameGeometry().topLeft();
+	dragPosition = getGlobalPosition(event) - target->frameGeometry().topLeft();
 	event->accept();
 }
 
@@ -56,7 +56,7 @@ void DragArea::mouseMoveEvent(QMouseEvent *event)
 	}
 
 	setCursor(Qt::SizeAllCursor);
-	target->move(event->globalPos() - dragPosition);
+	target->move(getGlobalPosition(event) - dragPosition);
 	event->accept();
 }
 
@@ -111,6 +111,15 @@ void DragArea::menu(const QPoint &pos)
 auto DragArea::isWindowMaximized() -> bool
 {
 	return target->windowState() == Qt::WindowMaximized;
+}
+
+auto DragArea::getGlobalPosition(QMouseEvent *event) -> QPoint
+{
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+	return event->globalPos();
+#else
+	return event->globalPosition().toPoint();
+#endif
 }
 
 void DragArea::onMaximize(bool /*checked*/)
