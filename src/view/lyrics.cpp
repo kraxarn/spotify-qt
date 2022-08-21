@@ -77,9 +77,6 @@ void View::Lyrics::open(const lib::spt::track &track)
 			if (lyricIds != nullptr && results.size() > 1)
 			{
 				setLyricsIds(results, static_cast<int>(index));
-
-				QComboBox::connect(lyricIds, QOverload<int>::of(&QComboBox::currentIndexChanged),
-					this, &View::Lyrics::onLyricsIdSelect);
 			}
 
 			load(results[index].lyrics_id);
@@ -145,7 +142,13 @@ void View::Lyrics::setLyricsIds(const std::vector<lib::lrc::search_result> &resu
 	}
 
 	lyricIds->setCurrentIndex(index);
-	lyricIds->show();
+
+	if (!lyricIds->isVisible())
+	{
+		lyricIds->show();
+		QComboBox::connect(lyricIds, QOverload<int>::of(&QComboBox::currentIndexChanged),
+			this, &View::Lyrics::onLyricsIdSelect);
+	}
 }
 
 void View::Lyrics::onTick(const lib::spt::playback &playback)
