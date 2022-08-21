@@ -173,7 +173,7 @@ void View::Lyrics::onTick(const lib::spt::playback &playback)
 		return;
 	}
 
-	if (playback.item.id != currentTrack.id)
+	if (playback.item.id != currentTrack.id || !syncWithMusic->isChecked())
 	{
 		lyricsList->setCurrentItem(nullptr);
 		return;
@@ -226,11 +226,7 @@ void View::Lyrics::onTick(const lib::spt::playback &playback)
 	}
 
 	lyricsList->setCurrentItem(item);
-
-	if (syncWithMusic->isChecked())
-	{
-		emit lyricsList->scrollToItem(item, QAbstractItemView::PositionAtCenter);
-	}
+	emit lyricsList->scrollToItem(item, QAbstractItemView::PositionAtCenter);
 }
 
 void View::Lyrics::onLyricsIdSelect(int index)
