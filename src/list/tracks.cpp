@@ -1,6 +1,7 @@
 #include "list/tracks.hpp"
 #include "mainwindow.hpp"
 #include "dialog/createplaylist.hpp"
+#include "util/shortcut.hpp"
 
 #include <QShortcut>
 
@@ -55,16 +56,16 @@ List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache
 	QLabel::connect(header(), &QWidget::customContextMenuRequested,
 		this, &List::Tracks::onHeaderMenu);
 
-	QShortcut::connect(new QShortcut(static_cast<int>(Shortcut::NewPlaylist), this),
+	QShortcut::connect(new QShortcut(Shortcut::newPlaylist(), this),
 		&QShortcut::activated, this, &List::Tracks::onNewPlaylist);
 
-	auto *deleteTrack = new QShortcut(static_cast<int>(Shortcut::Delete), this);
+	auto *deleteTrack = new QShortcut(Shortcut::deleteTrack(), this);
 	deleteTrack->setContext(Qt::WidgetShortcut);
 
 	QShortcut::connect(deleteTrack, &QShortcut::activated,
 		this, &List::Tracks::onDelete);
 
-	auto *playSelectedRow = new QShortcut(static_cast<int>(Shortcut::PlaySelectedRow), this);
+	auto *playSelectedRow = new QShortcut(Shortcut::playSelectedRow(), this);
 	playSelectedRow->setContext(Qt::WidgetShortcut);
 
 	QShortcut::connect(playSelectedRow, &QShortcut::activated,

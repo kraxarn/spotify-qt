@@ -1,7 +1,6 @@
 #pragma once
 
 #include "util/icon.hpp"
-#include "enum/shortcut.hpp"
 
 #include <QString>
 #include <QKeySequence>
@@ -20,7 +19,7 @@ public:
 	 * Create a new action with specified application shortcut
 	 */
 	static auto create(const QString &iconName, const QString &text, QObject *parent,
-		Shortcut shortcut) -> QAction *;
+		const QKeySequence &shortcut) -> QAction *;
 
 	/**
 	 * Create a new action without a shortcut

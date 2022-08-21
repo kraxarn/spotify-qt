@@ -9,10 +9,10 @@ auto MenuAction::create(const QString &iconName, const QString &text,
 }
 
 auto MenuAction::create(const QString &iconName, const QString &text,
-	QObject *parent, Shortcut shortcut) -> QAction *
+	QObject *parent, const QKeySequence &shortcut) -> QAction *
 {
 	auto *action = create(iconName, text, parent);
-	action->setShortcut(static_cast<int>(shortcut));
+	action->setShortcut(shortcut);
 	return action;
 }
 

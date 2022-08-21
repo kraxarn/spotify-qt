@@ -1,6 +1,6 @@
 #include "view/maintoolbar.hpp"
 #include "mainwindow.hpp"
-#include "enum/shortcut.hpp"
+#include "util/shortcut.hpp"
 
 MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	const lib::http_client &httpClient, lib::cache &cache, QWidget *parent)
@@ -34,17 +34,17 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	// Media controls
 	auto *mediaControlsSeparator = addSeparator();
 	previous = addShortcutAction(QStringLiteral("media-skip-backward"),
-		QStringLiteral("Previous"), Shortcut::PreviousTrack);
+		QStringLiteral("Previous"), Shortcut::previousTrack());
 	QAction::connect(previous, &QAction::triggered,
 		this, &MainToolBar::onPrevious);
 
 	playPause = addShortcutAction(QStringLiteral("media-playback-start"),
-		QStringLiteral("Play"), Shortcut::PlayPause);
+		QStringLiteral("Play"), Shortcut::playPause());
 	QAction::connect(playPause, &QAction::triggered,
 		this, &MainToolBar::onPlayPause);
 
 	next = addShortcutAction(QStringLiteral("media-skip-forward"),
-		QStringLiteral("Next"), Shortcut::NextTrack);
+		QStringLiteral("Next"), Shortcut::nextTrack());
 	QAction::connect(next, &QAction::triggered,
 		this, &MainToolBar::onNext);
 
@@ -72,13 +72,13 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 
 	// Shuffle and repeat toggles
 	shuffle = addShortcutAction(QStringLiteral("media-playlist-shuffle"),
-		QStringLiteral("Shuffle"), Shortcut::Shuffle);
+		QStringLiteral("Shuffle"), Shortcut::shuffle());
 	shuffle->setCheckable(true);
 	QAction::connect(shuffle, &QAction::triggered,
 		this, &MainToolBar::onShuffle);
 
 	repeat = addShortcutAction(QStringLiteral("media-playlist-repeat"),
-		QStringLiteral("Repeat"), Shortcut::Repeat);
+		QStringLiteral("Repeat"), Shortcut::repeat());
 	repeat->setCheckable(true);
 	QAction::connect(repeat, &QAction::triggered,
 		this, &MainToolBar::onRepeat);
@@ -157,13 +157,12 @@ void MainToolBar::updateSpacerSizes()
 }
 
 auto MainToolBar::addShortcutAction(const QString &iconName, const QString &title,
-	Shortcut shortcut) -> QAction *
+	const QKeySequence &shortcut) -> QAction *
 {
-	auto *action = addAction(Icon::get(iconName),
-		QStringLiteral("%1 (%2)").arg(title, QKeySequence(static_cast<int>(shortcut))
-			.toString(QKeySequence::NativeText)));
+	auto *action = addAction(Icon::get(iconName), QStringLiteral("%1 (%2)")
+		.arg(title, shortcut.toString(QKeySequence::NativeText)));
 
-	action->setShortcut(static_cast<int>(shortcut));
+	action->setShortcut(shortcut);
 	return action;
 }
 
@@ -200,8 +199,7 @@ void MainToolBar::setPlaying(bool playing)
 
 	playPause->setText(QString("%1 (%2)")
 		.arg(playing ? QStringLiteral("Pause") : QStringLiteral("Play"),
-			QKeySequence(static_cast<int>(Shortcut::PlayPause))
-				.toString(QKeySequence::NativeText)));
+			Shortcut::playPause().toString(QKeySequence::NativeText)));
 }
 
 void MainToolBar::setProgress(int current, int duration)

@@ -1,6 +1,6 @@
 #include "mainmenu.hpp"
 #include "mainwindow.hpp"
-#include "enum/shortcut.hpp"
+#include "util/shortcut.hpp"
 
 MainMenu::MainMenu(lib::spt::api &spotify, lib::settings &settings,
 	const lib::http_client &httpClient, lib::cache &cache, QWidget *parent)
@@ -59,7 +59,7 @@ MainMenu::MainMenu(lib::spt::api &spotify, lib::settings &settings,
 	QAction::connect(quitAction, &QAction::triggered, QCoreApplication::quit);
 
 	auto *logOutAction = MenuAction::create(QStringLiteral("im-user-away"),
-		QStringLiteral("Log out..."), this, Shortcut::LogOut);
+		QStringLiteral("Log out..."), this, Shortcut::logOut());
 	QAction::connect(logOutAction, &QAction::triggered,
 		this, &MainMenu::logOut);
 

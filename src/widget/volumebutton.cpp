@@ -1,6 +1,6 @@
 #include "volumebutton.hpp"
 #include "mainwindow.hpp"
-#include "enum/shortcut.hpp"
+#include "util/shortcut.hpp"
 
 VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWidget *parent)
 	: QToolButton(parent),
@@ -27,12 +27,12 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 	auto *volumeMenu = new QMenu(this);
 
 	volumeUp = createButton(QStringLiteral("+"));
-	volumeUp->setShortcut(static_cast<int>(Shortcut::VolumeUp));
+	volumeUp->setShortcut(Shortcut::volumeUp());
 	QPushButton::connect(volumeUp, &QPushButton::clicked,
 		this, &VolumeButton::onVolumeUp);
 
 	volumeDown = createButton(QStringLiteral("-"));
-	volumeDown->setShortcut(static_cast<int>(Shortcut::VolumeDown));
+	volumeDown->setShortcut(Shortcut::volumeDown());
 	QPushButton::connect(volumeDown, &QPushButton::clicked,
 		this, &VolumeButton::onVolumeDown);
 
