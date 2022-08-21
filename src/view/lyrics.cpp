@@ -14,6 +14,7 @@ View::Lyrics::Lyrics(const lib::http_client &httpClient,
 	auto *layout = new QVBoxLayout(this);
 
 	status = new QLabel(this);
+	status->setAlignment(Qt::AlignHCenter);
 	layout->addWidget(status);
 
 	if (lib::developer_mode::enabled)
