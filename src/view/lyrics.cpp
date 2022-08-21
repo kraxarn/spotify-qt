@@ -22,6 +22,9 @@ View::Lyrics::Lyrics(const lib::http_client &httpClient,
 		lyricIds->setMaximumWidth(250);
 		lyricIds->setVisible(false);
 		layout->addWidget(lyricIds, 0, Qt::AlignHCenter);
+
+		QComboBox::connect(lyricIds, QOverload<int>::of(&QComboBox::currentIndexChanged),
+			this, &View::Lyrics::onLyricsIdSelect);
 	}
 
 	lyricsList = new QListWidget(this);
@@ -76,32 +79,21 @@ void View::Lyrics::open(const lib::spt::track &track)
 
 			if (lyricIds != nullptr && results.size() > 1)
 			{
-				lyricIds->clear();
-
-				for (const auto &value: results)
-				{
-					lyricIds->addItem(QString("%1 - %2 - %3")
-							.arg(QString::fromStdString(lib::strings::join(value.artists, ", ")))
-							.arg(QString::fromStdString(value.track))
-							.arg(QString::fromStdString(value.album)),
-						value.lyrics_id);
-				}
-
-				lyricIds->setCurrentIndex(static_cast<int>(index));
-				lyricIds->show();
-
-				::QComboBox::connect(lyricIds, QOverload<int>::of(&QComboBox::currentIndexChanged),
-					this, &View::Lyrics::onLyricsIdSelect);
+				setLyricsIds(results, static_cast<int>(index));
+			}
+			else
+			{
+				load(results[index].lyrics_id);
 			}
 
-			const auto lyricsId = results[index].lyrics_id;
-			load(lyricsId);
 			currentTrack = track;
 		});
 }
 
 void View::Lyrics::load(int lyricsId)
 {
+	lib::log::debug("Loading: {}", lyricsId);
+
 	lyrics.lyrics(lyricsId, [this](const lib::result<lib::lrc::lyrics> &result)
 	{
 		if (!result.success())
@@ -142,6 +134,23 @@ void View::Lyrics::load(const lib::lrc::lyrics &loaded)
 auto View::Lyrics::getTimestamp(const QListWidgetItem *item) -> qlonglong
 {
 	return item->data(timestampRole).toLongLong();
+}
+
+void View::Lyrics::setLyricsIds(const std::vector<lib::lrc::search_result> &results, int index)
+{
+	lyricIds->clear();
+
+	for (const auto &result: results)
+	{
+		lyricIds->addItem(QString("%1 - %2 - %3")
+				.arg(QString::fromStdString(lib::strings::join(result.artists, ", ")))
+				.arg(QString::fromStdString(result.track))
+				.arg(QString::fromStdString(result.album)),
+			result.lyrics_id);
+	}
+
+	lyricIds->setCurrentIndex(index);
+	lyricIds->show();
 }
 
 void View::Lyrics::onTick(const lib::spt::playback &playback)
@@ -209,6 +218,8 @@ void View::Lyrics::onTick(const lib::spt::playback &playback)
 
 void View::Lyrics::onLyricsIdSelect(int index)
 {
+	lib::log::debug("Index: {}", index);
+
 	const auto lyricsId = lyricIds->itemData(index);
 	if (lyricsId.canConvert<int>())
 	{
