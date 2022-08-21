@@ -120,9 +120,9 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 endif ()
 
 # D-Bus support is optional
-if (Qt5DBus_FOUND)
+if (Qt${QT_VERSION_MAJOR}DBus_FOUND)
 	target_compile_definitions(spotify-qt PRIVATE USE_DBUS)
-	target_link_libraries(spotify-qt PRIVATE Qt5::DBus)
+	target_link_libraries(spotify-qt PRIVATE Qt${QT_VERSION_MAJOR}::DBus)
 endif ()
 
 # KCrash support
