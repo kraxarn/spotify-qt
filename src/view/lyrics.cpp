@@ -92,8 +92,6 @@ void View::Lyrics::open(const lib::spt::track &track)
 
 void View::Lyrics::load(int lyricsId)
 {
-	lib::log::debug("Loading: {}", lyricsId);
-
 	lyrics.lyrics(lyricsId, [this](const lib::result<lib::lrc::lyrics> &result)
 	{
 		if (!result.success())
@@ -218,8 +216,6 @@ void View::Lyrics::onTick(const lib::spt::playback &playback)
 
 void View::Lyrics::onLyricsIdSelect(int index)
 {
-	lib::log::debug("Index: {}", index);
-
 	const auto lyricsId = lyricIds->itemData(index);
 	if (lyricsId.canConvert<int>())
 	{
