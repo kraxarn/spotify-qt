@@ -90,7 +90,7 @@ void View::Lyrics::open(const lib::spt::track &track)
 				lyricIds->setCurrentIndex(static_cast<int>(index));
 				lyricIds->show();
 
-				QComboBox::connect(lyricIds, QOverload<int>::of(&QComboBox::currentIndexChanged),
+				::QComboBox::connect(lyricIds, QOverload<int>::of(&QComboBox::currentIndexChanged),
 					this, &View::Lyrics::onLyricsIdSelect);
 			}
 
