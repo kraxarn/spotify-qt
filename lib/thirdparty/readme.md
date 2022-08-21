@@ -54,7 +54,7 @@ SOFTWARE.
 
 ## [json](https://github.com/nlohmann/json)
 
-v3.10.5, used for parsing settings and responses from the Spotify API.
+v3.11.2, used for parsing settings and responses from the Spotify API.
 
 ```
 MIT License 
