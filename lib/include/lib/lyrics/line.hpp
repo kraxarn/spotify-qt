@@ -21,6 +21,11 @@ namespace lib
 			 */
 			std::string text;
 
+			/**
+			 * Raw line data
+			 */
+			std::string data;
+
 		private:
 			static auto parse_timestamp(const std::string &timestamp) -> long;
 		};

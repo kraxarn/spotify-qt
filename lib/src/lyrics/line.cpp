@@ -1,6 +1,7 @@
 #include "lib/lyrics/line.hpp"
 
 lib::lrc::line::line(const std::string &line)
+	: data(line)
 {
 	const auto timestamp_start = line.find('[');
 	const auto timestamp_end = line.find(']');

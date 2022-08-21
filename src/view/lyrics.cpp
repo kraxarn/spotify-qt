@@ -112,6 +112,11 @@ void View::Lyrics::load(const lib::lrc::lyrics &loaded)
 		auto *item = new QListWidgetItem(lyricsList);
 		item->setText(QString::fromStdString(line.text));
 		item->setData(timestampRole, (qlonglong) line.timestamp);
+
+		if (lib::developer_mode::enabled)
+		{
+			item->setToolTip(QString::fromStdString(line.data));
+		}
 	}
 
 	auto *window = MainWindow::find(parentWidget());
