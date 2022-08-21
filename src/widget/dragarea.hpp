@@ -23,7 +23,7 @@ private:
 
 	void menu(const QPoint &pos);
 	auto isWindowMaximized() -> bool;
-	auto getGlobalPosition(QMouseEvent *event) -> QPoint;
+	static auto getGlobalPosition(QMouseEvent *event) -> QPoint;
 
 	void onMaximize(bool checked);
 };
