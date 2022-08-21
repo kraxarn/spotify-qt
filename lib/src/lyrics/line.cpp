@@ -6,6 +6,13 @@ lib::lrc::line::line(const std::string &line)
 	const auto timestamp_start = line.find('[');
 	const auto timestamp_end = line.find(']');
 
+	if (timestamp_start == 0 && timestamp_end == line.size() - 1)
+	{
+		timestamp = 0L;
+		text = line;
+		return;
+	}
+
 	if (timestamp_start == std::string::npos
 		|| timestamp_end == std::string::npos)
 	{
