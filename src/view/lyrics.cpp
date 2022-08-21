@@ -32,7 +32,7 @@ View::Lyrics::Lyrics(const lib::http_client &httpClient,
 	syncWithMusic = new QCheckBox(this);
 	syncWithMusic->setText(QStringLiteral("Sync with music"));
 	syncWithMusic->setChecked(false);
-	syncWithMusic->setEnabled(false);
+	syncWithMusic->setVisible(false);
 	layout->addWidget(syncWithMusic);
 }
 
@@ -126,7 +126,7 @@ void View::Lyrics::load(const lib::lrc::lyrics &loaded)
 	}
 
 	syncWithMusic->setChecked(true);
-	syncWithMusic->setEnabled(true);
+	syncWithMusic->setVisible(true);
 
 	auto *window = MainWindow::find(parentWidget());
 	if (window == nullptr)
