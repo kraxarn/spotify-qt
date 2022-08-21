@@ -28,6 +28,12 @@ View::Lyrics::Lyrics(const lib::http_client &httpClient,
 	lyricsList->setWordWrap(true);
 	lyricsList->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 	layout->addWidget(lyricsList);
+
+	syncWithMusic = new QCheckBox(this);
+	syncWithMusic->setText(QStringLiteral("Sync with music"));
+	syncWithMusic->setChecked(false);
+	syncWithMusic->setEnabled(false);
+	layout->addWidget(syncWithMusic);
 }
 
 void View::Lyrics::open(const lib::spt::track &track)
@@ -119,6 +125,9 @@ void View::Lyrics::load(const lib::lrc::lyrics &loaded)
 		}
 	}
 
+	syncWithMusic->setChecked(true);
+	syncWithMusic->setEnabled(true);
+
 	auto *window = MainWindow::find(parentWidget());
 	if (window == nullptr)
 	{
@@ -158,7 +167,7 @@ void View::Lyrics::setLyricsIds(const std::vector<lib::lrc::search_result> &resu
 
 void View::Lyrics::onTick(const lib::spt::playback &playback)
 {
-	if (!playback.is_playing)
+	if (!playback.is_playing || !syncWithMusic->isChecked())
 	{
 		return;
 	}
