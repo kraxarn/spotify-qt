@@ -190,13 +190,15 @@ auto lib::strings::replace_all(const std::string &str, const std::string &old_va
 
 auto lib::strings::erase_non_alpha(const std::string &str) -> std::string
 {
-	std::string val = str;
+	std::string val;
 
-	val.erase(std::remove_if(val.begin(), val.end(), [](char current) -> bool
+	for (const auto chr: str)
 	{
-		return (current < 'a' || current > 'z')
-			&& (current < 'A' || current > 'Z');
-	}), val.end());
+		if ((chr >= 'a' && chr <= 'z') || (chr >= 'A' && chr <= 'Z'))
+		{
+			val.push_back(chr);
+		}
+	}
 
 	return val;
 }
