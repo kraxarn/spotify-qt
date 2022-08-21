@@ -88,7 +88,7 @@ namespace lib
 				return init;
 			}
 
-			return std::accumulate(vec.cbegin(), vec.cend(), init) / vec.size();
+			return std::accumulate(vec.cbegin(), vec.cend(), init) / static_cast<T>(vec.size());
 		}
 	};
 }
