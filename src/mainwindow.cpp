@@ -56,7 +56,7 @@ void MainWindow::showEvent(QShowEvent *event)
 	initMediaController();
 
 	// Create tray icon if specified
-	if (settings.general.tray_icon)
+	if (settings.general.tray_icon && !trayIcon)
 	{
 		trayIcon = new TrayIcon(spotify, settings, cache, this);
 	}
