@@ -6,13 +6,6 @@ lib::lrc::line::line(const std::string &line)
 	const auto timestamp_start = line.find('[');
 	const auto timestamp_end = line.find(']');
 
-	if (timestamp_start == 0 && timestamp_end == line.size() - 1)
-	{
-		timestamp = -1L;
-		text = line;
-		return;
-	}
-
 	if (timestamp_start == std::string::npos
 		|| timestamp_end == std::string::npos)
 	{
@@ -28,7 +21,7 @@ lib::lrc::line::line(const std::string &line)
 	{
 		text = "♪";
 	}
-	else if (timestamp_end != std::string::npos)
+	else if (timestamp_end != std::string::npos && timestamp > 0)
 	{
 		text = line.substr(timestamp_end + 1);
 	}
@@ -48,7 +41,7 @@ auto lib::lrc::line::parse_timestamp(const std::string &timestamp) -> long
 	if (second == std::string::npos
 		|| millisecond == std::string::npos)
 	{
-		return 0;
+		return -1L;
 	}
 
 	const auto minutes_str = timestamp.substr(0, 2);
