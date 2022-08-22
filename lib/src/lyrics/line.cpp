@@ -8,7 +8,7 @@ lib::lrc::line::line(const std::string &line)
 
 	if (timestamp_start == 0 && timestamp_end == line.size() - 1)
 	{
-		timestamp = 0L;
+		timestamp = -1L;
 		text = line;
 		return;
 	}
@@ -16,7 +16,7 @@ lib::lrc::line::line(const std::string &line)
 	if (timestamp_start == std::string::npos
 		|| timestamp_end == std::string::npos)
 	{
-		timestamp = 0;
+		timestamp = -1L;
 	}
 	else
 	{
