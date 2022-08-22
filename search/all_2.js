@@ -17,5 +17,6 @@ var searchData=
   ['crash_5fhandler_14',['crash_handler',['../classlib_1_1crash__handler.html',1,'lib']]],
   ['crash_5finfo_15',['crash_info',['../classlib_1_1crash__info.html',1,'lib']]],
   ['create_5fplaylist_16',['create_playlist',['../classlib_1_1spt_1_1api.html#ae6d859577d0d4fd809d3dfc3a3045805',1,'lib::spt::api']]],
-  ['current_5fplayback_17',['current_playback',['../classlib_1_1spt_1_1api.html#a273712e8625afb13c404ae910de8a63a',1,'lib::spt::api']]]
+  ['credit_17',['credit',['../classlib_1_1lrc_1_1credit.html',1,'lib::lrc']]],
+  ['current_5fplayback_18',['current_playback',['../classlib_1_1spt_1_1api.html#a273712e8625afb13c404ae910de8a63a',1,'lib::spt::api']]]
 ];
