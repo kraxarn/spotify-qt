@@ -10,6 +10,7 @@
 #include <QListWidget>
 #include <QComboBox>
 #include <QCheckBox>
+#include <QGridLayout>
 
 namespace View
 {
@@ -33,6 +34,7 @@ namespace View
 		QLabel *status;
 		QListWidget *lyricsList;
 		QCheckBox *syncWithMusic;
+		QGridLayout *credits;
 
 		QComboBox *lyricIds = nullptr;
 
