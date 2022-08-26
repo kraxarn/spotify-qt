@@ -26,6 +26,7 @@ namespace View
 
 	private:
 		static constexpr int timestampRole = 0x100;
+		static constexpr float creditsFontScale = 0.9F;
 
 		lib::cache &cache;
 		lib::lrc::api lyrics;

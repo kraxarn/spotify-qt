@@ -132,6 +132,10 @@ void View::Lyrics::load(const lib::lrc::lyrics &loaded)
 		auto *item = new QListWidgetItem(lyricsList);
 		item->setText(QString::fromStdString(credit.name));
 		item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
+
+		auto font = item->font();
+		font.setPointSizeF(font.pointSizeF() * creditsFontScale);
+		item->setFont(font);
 	}
 
 	syncWithMusic->setChecked(true);
