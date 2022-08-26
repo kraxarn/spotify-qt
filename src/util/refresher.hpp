@@ -15,7 +15,7 @@ Q_OBJECT
 public:
 	Refresher(lib::settings &settings, spt::Spotify &spotify);
 
-	void refresh(const std::function<void(bool)> &callback);
+	auto refresh() -> bool;
 
 private:
 	lib::settings &settings;

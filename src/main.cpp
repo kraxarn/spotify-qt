@@ -91,17 +91,14 @@ auto main(int argc, char *argv[]) -> int
 	lib::qt::http_client httpClient(nullptr);
 	spt::Spotify spotify(settings, httpClient, nullptr);
 
-	MainWindow *window;
-
 	Refresher refresher(settings, spotify);
-	refresher.refresh([&window, &settings, &paths, &httpClient, &spotify](bool success)
+	if (!refresher.refresh())
 	{
-		if (success)
-		{
-			window = new MainWindow(settings, paths, httpClient, spotify);
-			window->show();
-		}
-	});
+		return 1;
+	}
+
+	MainWindow window(settings, paths, httpClient, spotify);
+	window.show();
 
 	return QApplication::exec();
 }
