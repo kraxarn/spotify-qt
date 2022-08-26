@@ -10,17 +10,18 @@ var searchData=
   ['init_7',['init',['../classlib_1_1crash__handler.html#a25aebe0cfaa407547794d6fb223291f0',1,'lib::crash_handler']]],
   ['is_8',['is',['../classlib_1_1spt_1_1error.html#ac3d46b191da87ae88b6aae7467722b80',1,'lib::spt::error']]],
   ['is_5factive_9',['is_active',['../classlib_1_1spt_1_1device.html#a49f9a8bc672e50a80d6ae29a8441ff88',1,'lib::spt::device']]],
-  ['is_5fexplicit_10',['is_explicit',['../classlib_1_1spt_1_1show.html#a0e5196bc01ebed8762430b358e832c2a',1,'lib::spt::show::is_explicit()'],['../classlib_1_1spt_1_1episode.html#ac291fe0ca12df661765bb4de981886a5',1,'lib::spt::episode::is_explicit()']]],
+  ['is_5fexplicit_10',['is_explicit',['../classlib_1_1spt_1_1episode.html#ac291fe0ca12df661765bb4de981886a5',1,'lib::spt::episode::is_explicit()'],['../classlib_1_1spt_1_1show.html#a0e5196bc01ebed8762430b358e832c2a',1,'lib::spt::show::is_explicit()']]],
   ['is_5fexternally_5fhosted_11',['is_externally_hosted',['../classlib_1_1spt_1_1episode.html#a5a62d0b100dc1278f2f3a379402a16a4',1,'lib::spt::episode::is_externally_hosted()'],['../classlib_1_1spt_1_1show.html#af1eecc6ed0c564ac66fd4d50d1bfa02f',1,'lib::spt::show::is_externally_hosted()']]],
   ['is_5finit_12',['is_init',['../classlib_1_1crash__handler.html#a4868650f958b93eae12a82cbea1ad151',1,'lib::crash_handler']]],
   ['is_5fjpeg_13',['is_jpeg',['../classlib_1_1image.html#ab75e54ca0d172daab6ede85072072603',1,'lib::image']]],
   ['is_5flocal_14',['is_local',['../classlib_1_1spt_1_1track.html#a49999656e64cc5c72573cdf89093449a',1,'lib::spt::track']]],
   ['is_5fnull_15',['is_null',['../classlib_1_1spt_1_1playlist.html#a45528c5a2ce934d3edf40666039ce08b',1,'lib::spt::playlist']]],
   ['is_5fowner_16',['is_owner',['../classlib_1_1spt_1_1playlist.html#acd763fb869fc30db5ef8eb4d3c85487d',1,'lib::spt::playlist']]],
-  ['is_5fplayable_17',['is_playable',['../classlib_1_1spt_1_1episode.html#a9015eb9a12541c6818aa112ab8924676',1,'lib::spt::episode::is_playable()'],['../classlib_1_1spt_1_1track.html#ad752f55bc9254da0e20cc4aba182c946',1,'lib::spt::track::is_playable()']]],
+  ['is_5fplayable_17',['is_playable',['../classlib_1_1spt_1_1track.html#ad752f55bc9254da0e20cc4aba182c946',1,'lib::spt::track::is_playable()'],['../classlib_1_1spt_1_1episode.html#a9015eb9a12541c6818aa112ab8924676',1,'lib::spt::episode::is_playable()']]],
   ['is_5fplaying_18',['is_playing',['../classlib_1_1spt_1_1playback.html#ad3425f946100fb132fd503069e2cbf35',1,'lib::spt::playback']]],
   ['is_5fpublic_19',['is_public',['../classlib_1_1spt_1_1playlist.html#a0324054ae36cc088df2e6b79ca34956b',1,'lib::spt::playlist::is_public()'],['../classlib_1_1spt_1_1playlist__details.html#ad645d2730feeb6936127df24d97792a8',1,'lib::spt::playlist_details::is_public()']]],
-  ['is_5fup_5fto_5fdate_20',['is_up_to_date',['../classlib_1_1spt_1_1playlist.html#a844c73bebbc28d2872f0a45def66eb2e',1,'lib::spt::playlist']]],
-  ['is_5fvalid_21',['is_valid',['../classlib_1_1date__time.html#af54ecee574470208dc8263fe77cabac0',1,'lib::date_time::is_valid()'],['../classlib_1_1spt_1_1entity.html#a383b1f0c10936d67639450c7f5a91c1d',1,'lib::spt::entity::is_valid()'],['../classlib_1_1spt_1_1track.html#a37d4865150fb6a32cd0e9cb99aca8101',1,'lib::spt::track::is_valid()']]],
-  ['item_22',['item',['../classlib_1_1spt_1_1playback.html#ae6c4262236734fcaf6c7c8fecc417bab',1,'lib::spt::playback']]]
+  ['is_5fsynced_20',['is_synced',['../classlib_1_1lrc_1_1lyrics.html#af658184fe7e4b98e845d9694975d73e1',1,'lib::lrc::lyrics']]],
+  ['is_5fup_5fto_5fdate_21',['is_up_to_date',['../classlib_1_1spt_1_1playlist.html#a844c73bebbc28d2872f0a45def66eb2e',1,'lib::spt::playlist']]],
+  ['is_5fvalid_22',['is_valid',['../classlib_1_1date__time.html#af54ecee574470208dc8263fe77cabac0',1,'lib::date_time::is_valid()'],['../classlib_1_1spt_1_1entity.html#a383b1f0c10936d67639450c7f5a91c1d',1,'lib::spt::entity::is_valid()'],['../classlib_1_1spt_1_1track.html#a37d4865150fb6a32cd0e9cb99aca8101',1,'lib::spt::track::is_valid()']]],
+  ['item_23',['item',['../classlib_1_1spt_1_1playback.html#ae6c4262236734fcaf6c7c8fecc417bab',1,'lib::spt::playback']]]
 ];
