@@ -205,7 +205,7 @@ void View::Lyrics::onTick(const lib::spt::playback &playback)
 	if (getTimestamp(item) < playback.progress_ms)
 	{
 		QListWidgetItem *next = lyricsList->item(++index);
-		while (next != nullptr)
+		while (next != nullptr && (next->flags() & Qt::ItemIsEnabled) > 0)
 		{
 			const auto nextTimestamp = getTimestamp(next);
 			if (nextTimestamp > playback.progress_ms)
@@ -220,7 +220,7 @@ void View::Lyrics::onTick(const lib::spt::playback &playback)
 	else
 	{
 		QListWidgetItem *previous = lyricsList->item(--index);
-		while (previous != nullptr)
+		while (previous != nullptr && (previous->flags() & Qt::ItemIsEnabled) > 0)
 		{
 			const auto previousTimestamp = getTimestamp(previous);
 			if (previousTimestamp < playback.progress_ms)
