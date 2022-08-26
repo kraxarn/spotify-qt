@@ -3,6 +3,7 @@
 #include "dialog/createplaylist.hpp"
 #include "dialog/addtoplaylist.hpp"
 #include "dialog/apirequest.hpp"
+#include "dialog/auth.hpp"
 
 DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
@@ -103,6 +104,7 @@ auto DeveloperMenu::dialogMenu() -> QMenu *
 		new Dialog::CreatePlaylist({}, spotify, mainWindow),
 		new Dialog::AddToPlaylist(spotify, lib::spt::playlist(), {}, {}, mainWindow),
 		new Dialog::ApiRequest(settings, mainWindow),
+		new Dialog::Auth(settings, mainWindow),
 	};
 
 	for (auto *dialog: dialogs)

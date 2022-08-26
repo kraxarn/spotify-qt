@@ -1,5 +1,5 @@
 #include "util/refresher.hpp"
-#include "spotify/authserver.hpp"
+#include "dialog/auth.hpp"
 
 #define TITLE QStringLiteral("Connection failed")
 
@@ -25,24 +25,15 @@ void Refresher::refresh(const std::function<void(bool)> &callback)
 	}
 	catch (const lib::spt::error &e)
 	{
-		QMessageBox::warning(nullptr, TITLE, QString("%1.\nPlease reauthenticate.").arg(e.what()));
+		auto *auth = new Dialog::Auth(settings, nullptr);
 
-		auto *auth = new spt::AuthServer(settings, this);
-		if (auth->listen())
-		{
-			auth->openUrl(nullptr);
-		}
-
-		spt::AuthServer::connect(auth, &spt::AuthServer::success, [&callback]()
+		Dialog::Auth::connect(auth, &Dialog::Auth::success, [auth, &callback]()
 		{
 			callback(true);
+			auth->deleteLater();
 		});
 
-		spt::AuthServer::connect(auth, &spt::AuthServer::failed, [&callback](const QString &message)
-		{
-			QMessageBox::warning(nullptr, TITLE, message);
-			callback(false);
-		});
+		auth->show(e);
 	}
 	catch (const std::exception &e)
 	{
