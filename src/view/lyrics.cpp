@@ -30,10 +30,6 @@ View::Lyrics::Lyrics(const lib::http_client &httpClient,
 	lyricsList->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 	layout->addWidget(lyricsList, 1);
 
-	credits = new QGridLayout();
-	credits->setContentsMargins(lyricsList->contentsMargins());
-	layout->addLayout(credits);
-
 	syncWithMusic = new QCheckBox(this);
 	syncWithMusic->setContentsMargins(lyricsList->contentsMargins());
 	syncWithMusic->setText(QStringLiteral("Sync with music"));
@@ -131,15 +127,11 @@ void View::Lyrics::load(const lib::lrc::lyrics &loaded)
 		}
 	}
 
-	for (size_t i = 0; i < loaded.credits.size(); i++)
+	for (const auto &credit: loaded.credits)
 	{
-		const auto row = static_cast<int>(i);
-
-		auto *type = new QLabel(QStringLiteral("By"), this);
-		auto *name = new QLabel(QString::fromStdString(loaded.credits.at(i).name), this);
-
-		credits->addWidget(type, row, 0);
-		credits->addWidget(name, row, 1);
+		auto *item = new QListWidgetItem(lyricsList);
+		item->setText(QString::fromStdString(credit.name));
+		item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
 	}
 
 	syncWithMusic->setChecked(true);

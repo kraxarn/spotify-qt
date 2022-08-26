@@ -4,18 +4,13 @@
 
 lib::lrc::credit::credit(const std::string &line)
 {
-	auto values = lib::strings::split(line, ':');
-	if (values.size() != 2)
+	const auto split = line.find(':');
+	if (split == std::string::npos)
 	{
-		lib::log::debug("Failed to parse credit \"{}\": Unexpected values", line);
+		lib::log::debug("Failed to parse credit \"{}\"", line);
 		return;
 	}
 
-	const auto credit_type = lib::strings::trim(values[0]);
-	name = lib::strings::trim(values[1]);
-}
-
-lib::lrc::credit::credit(lib::lyrics_credit type, const std::string &name)
-	: type(type), name(name)
-{
+	name = line.substr(split + 1);
+	lib::strings::trim(name);
 }

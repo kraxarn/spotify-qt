@@ -34,7 +34,6 @@ namespace View
 		QLabel *status;
 		QListWidget *lyricsList;
 		QCheckBox *syncWithMusic;
-		QGridLayout *credits;
 
 		QComboBox *lyricIds = nullptr;
 

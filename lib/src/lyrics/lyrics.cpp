@@ -26,5 +26,5 @@ void lib::lrc::from_json(const nlohmann::json &json, lib::lrc::lyrics &lyrics)
 		lyrics.lines.push_back(parsed);
 	}
 
-	lyrics.credits.emplace_back(lib::lyrics_credit::provided, "NetEase");
+	lyrics.credits.emplace_back(":Provided by NetEase");
 }
