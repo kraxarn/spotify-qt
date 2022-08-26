@@ -46,12 +46,9 @@ Menu::Track::Track(const QList<PlaylistTrack> &tracks, lib::spt::api &spotify,
 
 	if (isSingle)
 	{
-		if (lib::developer_mode::enabled)
-		{
-			auto *lyrics = addAction(Icon::get("view-media-lyrics"), "Lyrics");
-			QAction::connect(lyrics, &QAction::triggered,
-				this, &Menu::Track::onLyrics);
-		}
+		auto *lyrics = addAction(Icon::get("view-media-lyrics"), "Lyrics");
+		QAction::connect(lyrics, &QAction::triggered,
+			this, &Menu::Track::onLyrics);
 
 		auto *share = addMenu(Icon::get("document-share"), "Share");
 
