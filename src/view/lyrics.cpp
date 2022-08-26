@@ -138,8 +138,16 @@ void View::Lyrics::load(const lib::lrc::lyrics &loaded)
 		item->setFont(font);
 	}
 
-	syncWithMusic->setChecked(true);
-	syncWithMusic->setVisible(true);
+	if (loaded.is_synced())
+	{
+		syncWithMusic->setChecked(true);
+		syncWithMusic->setVisible(true);
+	}
+	else
+	{
+		syncWithMusic->setChecked(false);
+		syncWithMusic->setVisible(false);
+	}
 
 	auto *window = MainWindow::find(parentWidget());
 	if (window == nullptr)

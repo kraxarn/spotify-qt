@@ -28,3 +28,11 @@ void lib::lrc::from_json(const nlohmann::json &json, lib::lrc::lyrics &lyrics)
 
 	lyrics.credits.emplace_back(":Provided by NetEase");
 }
+
+auto lib::lrc::lyrics::is_synced() const -> bool
+{
+	return std::any_of(lines.cbegin(), lines.cend(), [](const lib::lrc::line &line) -> bool
+	{
+		return line.timestamp >= 0L;
+	});
+}
