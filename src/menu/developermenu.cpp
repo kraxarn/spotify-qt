@@ -74,7 +74,7 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	});
 
 	addMenu(infoMenu());
-	addMenu(dialogMenu());
+	addMenu(getDialogMenu());
 	addMenu(crashMenu());
 	addMenu(statusMenu());
 }
@@ -89,31 +89,14 @@ void DeveloperMenu::addMenuItem(QMenu *menu, const QString &text,
 	});
 }
 
-auto DeveloperMenu::dialogMenu() -> QMenu *
+auto DeveloperMenu::getDialogMenu() -> QMenu *
 {
-	auto *menu = new QMenu("Dialogs", this);
-	auto *mainWindow = MainWindow::find(parentWidget());
+	dialogMenu = new QMenu("Dialogs", this);
 
-	std::vector<QDialog *> dialogs = {
-		new Dialog::DeviceSelect({}, mainWindow),
-		new Dialog::OpenLink("/", LinkType::Path, mainWindow),
-		new Dialog::Setup(settings, mainWindow),
-		new TracksCacheDialog(cache, mainWindow),
-		new Dialog::WhatsNew(settings, httpClient, mainWindow),
-		new Dialog::CreatePlaylist({}, spotify, mainWindow),
-		new Dialog::AddToPlaylist(spotify, lib::spt::playlist(), {}, {}, mainWindow),
-		new Dialog::ApiRequest(settings, mainWindow),
-	};
+	QMenu::connect(dialogMenu, &QMenu::aboutToShow,
+		this, &DeveloperMenu::onDialogMenuAboutToShow);
 
-	for (auto *dialog: dialogs)
-	{
-		addMenuItem(menu, dialog->metaObject()->className(), [dialog]()
-		{
-			dialog->open();
-		});
-	}
-
-	return menu;
+	return dialogMenu;
 }
 
 auto DeveloperMenu::infoMenu() -> QMenu *
@@ -188,4 +171,33 @@ auto DeveloperMenu::statusMenu() -> QMenu *
 	});
 
 	return menu;
+}
+
+void DeveloperMenu::onDialogMenuAboutToShow()
+{
+	if (!dialogMenu->isEmpty())
+	{
+		return;
+	}
+
+	auto *mainWindow = MainWindow::find(parentWidget());
+
+	std::vector<QDialog *> dialogs = {
+		new Dialog::DeviceSelect({}, mainWindow),
+		new Dialog::OpenLink("/", LinkType::Path, mainWindow),
+		new Dialog::Setup(settings, mainWindow),
+		new TracksCacheDialog(cache, mainWindow),
+		new Dialog::WhatsNew(settings, httpClient, mainWindow),
+		new Dialog::CreatePlaylist({}, spotify, mainWindow),
+		new Dialog::AddToPlaylist(spotify, lib::spt::playlist(), {}, {}, mainWindow),
+		new Dialog::ApiRequest(settings, mainWindow),
+	};
+
+	for (auto *dialog: dialogs)
+	{
+		addMenuItem(dialogMenu, dialog->metaObject()->className(), [dialog]()
+		{
+			dialog->open();
+		});
+	}
 }

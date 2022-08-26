@@ -27,11 +27,15 @@ private:
 	lib::cache &cache;
 	const lib::http_client &httpClient;
 
+	QMenu *dialogMenu;
+
 	static void addMenuItem(QMenu *menu, const QString &text,
 		const std::function<void()> &triggered);
 
-	auto dialogMenu() -> QMenu *;
+	auto getDialogMenu() -> QMenu *;
 	auto infoMenu() -> QMenu *;
 	auto crashMenu() -> QMenu *;
 	auto statusMenu() -> QMenu *;
+
+	void onDialogMenuAboutToShow();
 };
