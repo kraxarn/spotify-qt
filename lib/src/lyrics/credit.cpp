@@ -4,7 +4,7 @@
 
 lib::lrc::credit::credit(const std::string &line)
 {
-	const auto split = line.find(':');
+	const auto split = line.rfind(':');
 	if (split == std::string::npos)
 	{
 		lib::log::debug("Failed to parse credit \"{}\"", line);
