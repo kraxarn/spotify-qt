@@ -10,6 +10,7 @@
 #include "commandline/parser.hpp"
 #include "commandline/args.hpp"
 #include "commandline/processor.hpp"
+#include "util/refresher.hpp"
 
 #ifdef USE_KCRASH
 #include <kcrash.h>
@@ -90,19 +91,17 @@ auto main(int argc, char *argv[]) -> int
 	lib::qt::http_client httpClient(nullptr);
 	spt::Spotify spotify(settings, httpClient, nullptr);
 
-	MainWindow window(settings, paths, httpClient, spotify);
-	SplashScreen splash(settings, spotify, &window);
+	MainWindow *window;
 
-	SplashScreen::connect(&splash, &SplashScreen::success, [&window]()
+	Refresher refresher(settings, spotify);
+	refresher.refresh([&window, &settings, &paths, &httpClient, &spotify](bool success)
 	{
-		window.show();
+		if (success)
+		{
+			window = new MainWindow(settings, paths, httpClient, spotify);
+			window->show();
+		}
 	});
 
-	SplashScreen::connect(&splash, &SplashScreen::failed, []()
-	{
-		QApplication::exit(1);
-	});
-
-	splash.show();
 	return QApplication::exec();
 }

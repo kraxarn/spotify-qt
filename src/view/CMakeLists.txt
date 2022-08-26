@@ -12,6 +12,5 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/lyrics.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/maincontent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/maintoolbar.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/splashscreen.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/systeminfoview.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/trayicon.cpp)
