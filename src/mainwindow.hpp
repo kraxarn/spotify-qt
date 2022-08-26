@@ -75,7 +75,6 @@ signals:
 	void tick(const lib::spt::playback &playback);
 
 protected:
-	void showEvent(QShowEvent *event) override;
 	void closeEvent(QCloseEvent *event) override;
 
 private:

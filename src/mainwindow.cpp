@@ -21,27 +21,6 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 
 	Style::apply(this, settings);
 
-	setWindowTitle(APP_NAME);
-	setWindowIcon(Icon::get(QString("logo:%1").arg(APP_ICON)));
-	resize(defaultSize());
-	setCentralWidget(createCentralWidget());
-	toolBar = new MainToolBar(spotify, settings, httpClient, cache, this);
-	addToolBar(Qt::ToolBarArea::TopToolBarArea, toolBar);
-	setContextMenuPolicy(Qt::NoContextMenu);
-
-	setBorderless(!settings.qt().system_title_bar);
-}
-
-void MainWindow::showEvent(QShowEvent *event)
-{
-	QWidget::showEvent(event);
-
-	// Ignore restoring window from taskbar for example
-	if (event->spontaneous())
-	{
-		return;
-	}
-
 	// Update player status
 	auto *timer = new QTimer(this);
 	QTimer::connect(timer, &QTimer::timeout, this, &MainWindow::refresh);
@@ -71,6 +50,16 @@ void MainWindow::showEvent(QShowEvent *event)
 	});
 
 	initDevice();
+
+	setWindowTitle(APP_NAME);
+	setWindowIcon(Icon::get(QString("logo:%1").arg(APP_ICON)));
+	resize(defaultSize());
+	setCentralWidget(createCentralWidget());
+	toolBar = new MainToolBar(spotify, settings, httpClient, cache, this);
+	addToolBar(Qt::ToolBarArea::TopToolBarArea, toolBar);
+	setContextMenuPolicy(Qt::NoContextMenu);
+
+	setBorderless(!settings.qt().system_title_bar);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -82,7 +71,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	}
 	else
 	{
-		delete trayIcon;
+		trayIcon->deleteLater();
 		event->accept();
 	}
 }
