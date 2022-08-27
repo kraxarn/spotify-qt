@@ -25,6 +25,8 @@ auto Refresher::refresh() -> bool
 	}
 	catch (const lib::spt::error &e)
 	{
+		lib::log::error("Failed to refresh token: {}", e.what());
+
 		Dialog::Setup dialog(settings, nullptr);
 		return dialog.exec() == QDialog::Accepted;
 	}
