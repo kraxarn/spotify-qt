@@ -45,11 +45,16 @@ auto SettingsPage::Spotify::spotify() -> QWidget *
 	content->setAlignment(Qt::AlignTop);
 
 	// Executable settings
-	auto *sptPathLayout = new QHBoxLayout();
+	auto *pathBox = new QGroupBox(this);
+	pathBox->setTitle(QStringLiteral("Path to spotifyd/librespot"));
+
+	auto *pathLayout = new QGridLayout();
+	pathBox->setLayout(pathLayout);
+
 	sptPath = new QLineEdit(QString::fromStdString(settings.spotify.path), this);
-	sptPath->setPlaceholderText("Client path");
-	sptPathLayout->addWidget(sptPath, 1);
-	auto *sptPathBrowse = new QPushButton("...", this);
+	pathLayout->addWidget(sptPath, 0, 0);
+
+	auto *sptPathBrowse = new QPushButton(QStringLiteral("..."), this);
 	sptPathBrowse->setMaximumWidth(40);
 	sptPathBrowse->setFlat(true);
 	QAbstractButton::connect(sptPathBrowse, &QAbstractButton::clicked,
@@ -61,11 +66,10 @@ auto SettingsPage::Spotify::spotify() -> QWidget *
 				sptPath->setText(filePath);
 			}
 		});
-	sptPathLayout->addWidget(sptPathBrowse);
-	content->addLayout(sptPathLayout);
+	pathLayout->addWidget(sptPathBrowse, 0, 1);
 
 	// Client version
-	sptVersion = new QLabel("(no client provided)", this);
+	sptVersion = new QLabel(QStringLiteral("(no client provided)"), this);
 	if (!settings.spotify.path.empty())
 	{
 		const auto path = QString::fromStdString(settings.spotify.path);
@@ -73,7 +77,8 @@ auto SettingsPage::Spotify::spotify() -> QWidget *
 		sptVersion->setText(client);
 	}
 	sptVersion->setEnabled(false);
-	content->addWidget(sptVersion);
+	pathLayout->addWidget(sptVersion, 1, 0);
+	content->addWidget(pathBox);
 
 	// Start with app
 	sptAppStart = new QCheckBox("Start with app", this);
