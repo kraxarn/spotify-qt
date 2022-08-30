@@ -185,11 +185,6 @@ auto lib::spt::api::url_to_uri(const std::string &url) -> std::string
 		url.substr(id_index + 1));
 }
 
-auto lib::spt::api::to_full_url(const std::string &relative_url) -> std::string
-{
-	return lib::fmt::format("https://api.spotify.com/v1/{}", relative_url);
-}
-
 auto lib::spt::api::follow_type_string(lib::follow_type type) -> std::string
 {
 	switch (type)
@@ -220,7 +215,7 @@ auto lib::spt::api::get_device_url(const std::string &url,
 {
 	lib::uri uri(lib::strings::starts_with(url, "https://")
 		? url
-		: to_full_url(url));
+		: lib::spt::request::to_full_url(url));
 
 	auto params = uri.get_search_params();
 	auto device_id = params.find("device_id");
@@ -245,7 +240,7 @@ auto lib::spt::api::get_device_url(const std::string &url,
 
 void lib::spt::api::get(const std::string &url, lib::callback<nlohmann::json> &callback)
 {
-	http.get(to_full_url(url), auth_headers(),
+	http.get(lib::spt::request::to_full_url(url), auth_headers(),
 		[url, callback](const std::string &response)
 		{
 			try
@@ -316,7 +311,7 @@ void lib::spt::api::put(const std::string &url, const nlohmann::json &body,
 		? std::string()
 		: body.dump();
 
-	http.put(to_full_url(url), data, header,
+	http.put(lib::spt::request::to_full_url(url), data, header,
 		[this, url, body, callback](const std::string &response)
 		{
 			auto error = error_message(url, response);
@@ -386,10 +381,11 @@ void lib::spt::api::post(const std::string &url, lib::callback<std::string> &cal
 	auto headers = auth_headers();
 	headers["Content-Type"] = "application/x-www-form-urlencoded";
 
-	http.post(to_full_url(url), headers, [url, callback](const std::string &response)
-	{
-		callback(error_message(url, response));
-	});
+	http.post(lib::spt::request::to_full_url(url), headers,
+		[url, callback](const std::string &response)
+		{
+			callback(error_message(url, response));
+		});
 }
 
 void lib::spt::api::post(const std::string &url, const nlohmann::json &json,
@@ -402,7 +398,7 @@ void lib::spt::api::post(const std::string &url, const nlohmann::json &json,
 		? std::string()
 		: json.dump();
 
-	http.post(to_full_url(url), data, headers,
+	http.post(lib::spt::request::to_full_url(url), data, headers,
 		[url, callback](const std::string &response)
 		{
 			try
@@ -438,7 +434,7 @@ void lib::spt::api::del(const std::string &url, const nlohmann::json &json,
 		? std::string()
 		: json.dump();
 
-	http.del(to_full_url(url), data, headers,
+	http.del(lib::spt::request::to_full_url(url), data, headers,
 		[url, callback](const std::string &response)
 		{
 			callback(error_message(url, response));

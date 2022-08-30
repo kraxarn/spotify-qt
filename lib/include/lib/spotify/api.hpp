@@ -19,6 +19,7 @@
 #include "lib/spotify/savedalbum.hpp"
 #include "lib/spotify/episode.hpp"
 #include "lib/spotify/callback.hpp"
+#include "lib/spotify/request.hpp"
 #include "lib/httpclient.hpp"
 #include "lib/datetime.hpp"
 
@@ -496,11 +497,6 @@ namespace lib
 			 * Get authorization header, and refresh if needed
 			 */
 			auto auth_headers() -> lib::headers;
-
-			/**
-			 * Get full API url from relative URL
-			 */
-			static auto to_full_url(const std::string &relative_url) -> std::string;
 
 			/**
 			 * Set last used device
