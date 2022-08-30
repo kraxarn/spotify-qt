@@ -17,7 +17,7 @@ lib::lrc::line::line(const std::string &line)
 		timestamp = parse_timestamp(line.substr(timestamp_start + 1, length));
 	}
 
-	if (line.empty())
+	if (line.empty() || timestamp_end == line.size() - 1)
 	{
 		text = "♪";
 	}
