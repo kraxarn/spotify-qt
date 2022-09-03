@@ -1,7 +1,7 @@
 var searchData=
 [
   ['recently_5fplayed_0',['recently_played',['../classlib_1_1spt_1_1api.html#a4181de91367224105534a9976e5f3d43',1,'lib::spt::api']]],
-  ['refresh_1',['refresh',['../classlib_1_1spt_1_1api.html#a294dd5d87ca2258de4235a3eb5285285',1,'lib::spt::api']]],
+  ['refresh_1',['refresh',['../classlib_1_1spt_1_1request.html#a1f4968f63d0561048dd462ca0b018d53',1,'lib::spt::request']]],
   ['release_2',['release',['../classlib_1_1gh_1_1api.html#a549f211719ba4289a66651136446163e',1,'lib::gh::api']]],
   ['remove_3',['remove',['../classlib_1_1strings.html#ad8106cae3098ed9d40274d1d69328037',1,'lib::strings']]],
   ['remove_5fclient_4',['remove_client',['../classlib_1_1settings.html#ae2330fba54af6807d6a94efc251cd6bf',1,'lib::settings']]],
