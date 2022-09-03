@@ -16,11 +16,9 @@ auto lib::spt::request::to_full_url(const std::string &relative_url) -> std::str
 
 auto lib::spt::request::auth_headers() -> lib::headers
 {
-	constexpr int secsInHour = 3600;
-
 	// See when last refresh was
 	auto last_refresh = lib::date_time::seconds_since_epoch() - last_auth;
-	if (last_refresh >= secsInHour)
+	if (last_refresh >= secs_in_hour)
 	{
 		lib::log::debug("Access token probably expired, refreshing");
 		try
@@ -43,10 +41,8 @@ auto lib::spt::request::auth_headers() -> lib::headers
 
 void lib::spt::request::refresh(bool force)
 {
-	constexpr long s_in_hour = 60L * 60L;
-
 	if (!force
-		&& lib::date_time::seconds_since_epoch() - settings.account.last_refresh < s_in_hour)
+		&& lib::date_time::seconds_since_epoch() - settings.account.last_refresh < secs_in_hour)
 	{
 		lib::log::debug("Last refresh was less than an hour ago, not refreshing access token");
 		last_auth = settings.account.last_refresh;

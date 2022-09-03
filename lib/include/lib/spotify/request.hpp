@@ -41,6 +41,11 @@ namespace lib
 			//endregion
 
 		private:
+			/**
+			 * Seconds in an hour
+			 */
+			static constexpr long secs_in_hour = 60L * 60L;
+
 			lib::settings &settings;
 			const lib::http_client &http;
 
