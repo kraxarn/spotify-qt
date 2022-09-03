@@ -1,5 +1,6 @@
 #include "mainwindow.hpp"
 #include "util/widget.hpp"
+#include "lib/time.hpp"
 
 MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 	lib::qt::http_client &httpClient, spt::Spotify &spotify)
@@ -218,7 +219,7 @@ void MainWindow::refresh()
 {
 	if (refreshCount < 0
 		|| ++refreshCount >= settings.general.refresh_interval
-		|| current.playback.progress_ms + lib::format::ms_in_sec > current.playback.item.duration)
+		|| current.playback.progress_ms + lib::time::ms_in_sec > current.playback.item.duration)
 	{
 		spotify.current_playback([this](const lib::result<lib::spt::playback> &result)
 		{
@@ -233,7 +234,7 @@ void MainWindow::refresh()
 
 			if (current.playback.is_playing)
 			{
-				current.playback.progress_ms += lib::format::ms_in_sec;
+				current.playback.progress_ms += lib::time::ms_in_sec;
 				refreshed(current.playback);
 			}
 		});
@@ -245,7 +246,7 @@ void MainWindow::refresh()
 	{
 		return;
 	}
-	current.playback.progress_ms += lib::format::ms_in_sec;
+	current.playback.progress_ms += lib::time::ms_in_sec;
 	refreshed(current.playback);
 }
 
