@@ -3,12 +3,9 @@
 // Currently unavailable:
 // me/player/currently-playing
 
-void lib::spt::api::current_playback(lib::callback<lib::spt::playback> &callback)
+void lib::spt::api::current_playback(lib::callback<lib::result<lib::spt::playback>> &callback)
 {
-	get("me/player", [callback](const nlohmann::json &json)
-	{
-		callback(json);
-	});
+	request.get<lib::spt::playback>("me/player", callback);
 }
 
 //region set_device

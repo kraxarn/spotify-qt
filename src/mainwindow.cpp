@@ -222,11 +222,23 @@ void MainWindow::refresh()
 		|| ++refreshCount >= settings.general.refresh_interval
 		|| current.playback.progress_ms + msInSec > current.playback.item.duration)
 	{
-		spotify.current_playback([this](const lib::spt::playback &playback)
+		spotify.current_playback([this](const lib::result<lib::spt::playback> &result)
 		{
-			refreshed(playback);
+			if (result.success())
+			{
+				refreshed(result.value());
+				refreshCount = 0;
+				return;
+			}
+
+			lib::log::error("Refresh failed: {}", result.message());
+
+			if (current.playback.is_playing)
+			{
+				current.playback.progress_ms += msInSec;
+				refreshed(current.playback);
+			}
 		});
-		refreshCount = 0;
 		return;
 	}
 
