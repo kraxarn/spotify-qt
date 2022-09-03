@@ -216,11 +216,9 @@ void MainWindow::minimize()
 
 void MainWindow::refresh()
 {
-	constexpr int msInSec = 1000;
-
 	if (refreshCount < 0
 		|| ++refreshCount >= settings.general.refresh_interval
-		|| current.playback.progress_ms + msInSec > current.playback.item.duration)
+		|| current.playback.progress_ms + lib::format::ms_in_sec > current.playback.item.duration)
 	{
 		spotify.current_playback([this](const lib::result<lib::spt::playback> &result)
 		{
@@ -235,7 +233,7 @@ void MainWindow::refresh()
 
 			if (current.playback.is_playing)
 			{
-				current.playback.progress_ms += msInSec;
+				current.playback.progress_ms += lib::format::ms_in_sec;
 				refreshed(current.playback);
 			}
 		});
@@ -247,7 +245,7 @@ void MainWindow::refresh()
 	{
 		return;
 	}
-	current.playback.progress_ms += msInSec;
+	current.playback.progress_ms += lib::format::ms_in_sec;
 	refreshed(current.playback);
 }
 
