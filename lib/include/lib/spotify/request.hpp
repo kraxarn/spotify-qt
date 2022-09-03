@@ -21,6 +21,25 @@ namespace lib
 			 */
 			void refresh(bool force = false);
 
+			//region GET
+
+			/**
+			 * GET request
+			 * @param url URL to request
+			 * @param callback JSON response if successful, or error message on failure
+			 */
+			template<typename T>
+			void get(const std::string &url, lib::callback<lib::result<T>> &callback)
+			{
+				http.get(lib::spt::request::to_full_url(url), auth_headers(),
+					[url, callback](const std::string &response)
+					{
+						callback(parse_json<T>(response));
+					});
+			}
+
+			//endregion
+
 		private:
 			lib::settings &settings;
 			const lib::http_client &http;
@@ -84,25 +103,6 @@ namespace lib
 					return lib::result<T>::fail(e.what());
 				}
 			}
-
-			//region GET
-
-			/**
-			 * GET request
-			 * @param url URL to request
-			 * @param callback JSON response if successful, or error message on failure
-			 */
-			template<typename T>
-			void get(const std::string &url, lib::callback<lib::result<T>> &callback)
-			{
-				http.get(lib::spt::request::to_full_url(url), auth_headers(),
-					[url, callback](const std::string &response)
-					{
-						callback(parse_json<T>(response));
-					});
-			}
-
-			//endregion
 
 			// Until all requests are moved to here
 			friend class api;
