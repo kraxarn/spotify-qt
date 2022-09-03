@@ -1,23 +1,20 @@
 #pragma once
 
-#include "util/icon.hpp"
-#include "util/image.hpp"
-#include "spotify/spotify.hpp"
+#include "lib/settings.hpp"
+#include "lib/spotify/request.hpp"
 
-#include <QSplashScreen>
-#include <QPixmap>
-#include <QPainter>
+#include <QObject>
 
 class Refresher: public QObject
 {
 Q_OBJECT
 
 public:
-	Refresher(lib::settings &settings, spt::Spotify &spotify);
+	Refresher(lib::settings &settings, lib::spt::request &spotify);
 
 	auto refresh() -> bool;
 
 private:
 	lib::settings &settings;
-	spt::Spotify &spotify;
+	lib::spt::request &spotify;
 };

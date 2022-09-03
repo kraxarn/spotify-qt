@@ -1,6 +1,7 @@
 #include "util/icon.hpp"
 #include "util/appinstalltype.hpp"
 #include "lib/qtpaths.hpp"
+#include "lib/spotify/request.hpp"
 
 #include <QApplication>
 #include <QCoreApplication>
@@ -90,8 +91,9 @@ auto main(int argc, char *argv[]) -> int
 
 	lib::qt::http_client httpClient(nullptr);
 	spt::Spotify spotify(settings, httpClient, nullptr);
+	lib::spt::request request(settings, httpClient);
 
-	Refresher refresher(settings, spotify);
+	Refresher refresher(settings, request);
 	if (!refresher.refresh())
 	{
 		return 1;

@@ -1,9 +1,12 @@
 #include "util/refresher.hpp"
 #include "dialog/setup.hpp"
+#include "lib/spotify/error.hpp"
+
+#include <QMessageBox>
 
 #define TITLE QStringLiteral("Connection failed")
 
-Refresher::Refresher(lib::settings &settings, spt::Spotify &spotify)
+Refresher::Refresher(lib::settings &settings, lib::spt::request &spotify)
 	: settings(settings),
 	spotify(spotify)
 {
