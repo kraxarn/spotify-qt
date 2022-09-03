@@ -49,40 +49,6 @@ void lib::spt::api::select_device(const std::vector<lib::spt::device> &/*devices
 	callback(lib::spt::device());
 }
 
-auto lib::spt::api::to_uri(const std::string &type, const std::string &id) -> std::string
-{
-	return lib::strings::starts_with(id, "spotify:")
-		? id
-		: lib::fmt::format("spotify:{}:{}", type, id);
-}
-
-auto lib::spt::api::to_id(const std::string &id) -> std::string
-{
-	auto i = id.rfind(':');
-	return i != std::string::npos
-		? id.substr(i + 1)
-		: id;
-}
-
-auto lib::spt::api::url_to_uri(const std::string &url) -> std::string
-{
-	const auto id_index = url.rfind('/');
-	if (id_index == std::string::npos)
-	{
-		return {};
-	}
-
-	const auto type_index = url.rfind('/', id_index - 1);
-	if (type_index == std::string::npos)
-	{
-		return {};
-	}
-
-	return lib::fmt::format("spotify:{}:{}",
-		url.substr(type_index + 1, id_index - type_index - 1),
-		url.substr(id_index + 1));
-}
-
 auto lib::spt::api::follow_type_string(lib::follow_type type) -> std::string
 {
 	switch (type)
@@ -108,37 +74,11 @@ auto lib::spt::api::get_current_device() const -> const std::string &
 	return settings.general.last_device;
 }
 
-auto lib::spt::api::get_device_url(const std::string &url,
-	const lib::spt::device &device) -> std::string
-{
-	lib::uri uri(lib::strings::starts_with(url, "https://")
-		? url
-		: lib::spt::request::to_full_url(url));
-
-	auto params = uri.get_search_params();
-	auto device_id = params.find("device_id");
-	if (device_id != params.end())
-	{
-		device_id->second = device.id;
-	}
-	else
-	{
-		params.insert({
-			"device_id",
-			device.id,
-		});
-	}
-
-	uri.set_search_params(params);
-	auto pathname = uri.pathname();
-	return lib::strings::remove(pathname, "/v1/");
-}
-
 //region GET
 
 void lib::spt::api::get(const std::string &url, lib::callback<nlohmann::json> &callback)
 {
-	http.get(lib::spt::request::to_full_url(url), request.auth_headers(),
+	http.get(lib::spt::to_full_url(url), request.auth_headers(),
 		[url, callback](const std::string &response)
 		{
 			try
@@ -209,7 +149,7 @@ void lib::spt::api::put(const std::string &url, const nlohmann::json &body,
 		? std::string()
 		: body.dump();
 
-	http.put(lib::spt::request::to_full_url(url), data, header,
+	http.put(lib::spt::to_full_url(url), data, header,
 		[this, url, body, callback](const std::string &response)
 		{
 			auto error = error_message(url, response);
@@ -279,7 +219,7 @@ void lib::spt::api::post(const std::string &url, lib::callback<std::string> &cal
 	auto headers = request.auth_headers();
 	headers["Content-Type"] = "application/x-www-form-urlencoded";
 
-	http.post(lib::spt::request::to_full_url(url), headers,
+	http.post(lib::spt::to_full_url(url), headers,
 		[url, callback](const std::string &response)
 		{
 			callback(error_message(url, response));
@@ -296,7 +236,7 @@ void lib::spt::api::post(const std::string &url, const nlohmann::json &json,
 		? std::string()
 		: json.dump();
 
-	http.post(lib::spt::request::to_full_url(url), data, headers,
+	http.post(lib::spt::to_full_url(url), data, headers,
 		[url, callback](const std::string &response)
 		{
 			try
@@ -332,7 +272,7 @@ void lib::spt::api::del(const std::string &url, const nlohmann::json &json,
 		? std::string()
 		: json.dump();
 
-	http.del(lib::spt::request::to_full_url(url), data, headers,
+	http.del(lib::spt::to_full_url(url), data, headers,
 		[url, callback](const std::string &response)
 		{
 			callback(error_message(url, response));

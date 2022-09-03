@@ -108,7 +108,7 @@ auto Dialog::CreatePlaylist::getTrackUris() const -> std::vector<std::string>
 
 	for (const auto &trackId: trackIds)
 	{
-		uris.push_back(lib::spt::api::to_uri("track", trackId));
+		uris.push_back(lib::spt::id_to_uri("track", trackId));
 	}
 
 	return uris;

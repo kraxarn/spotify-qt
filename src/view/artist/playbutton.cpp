@@ -72,7 +72,7 @@ void Artist::PlayButton::setArtist(const lib::spt::artist &loadedArtist)
 
 void Artist::PlayButton::onClicked(bool /*checked*/)
 {
-	const auto uri = lib::spt::api::to_uri("artist", artist.id);
+	const auto uri = lib::spt::id_to_uri("artist", artist.id);
 	spotify.play_tracks(uri, {});
 }
 

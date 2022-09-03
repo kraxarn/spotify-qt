@@ -317,41 +317,6 @@ namespace lib
 
 			void refresh(bool force);
 
-			/**
-			 * Spotify ID (4uLU6hMCjMI75M1A2tKUQC) to Spotify URI
-			 * (spotify:track:4uLU6hMCjMI75M1A2tKUQC)
-			 * @param type URI type, for example artist, album, track, etc.
-			 * @param id Spotify ID
-			 * @note Returns result if already an URI
-			 * @return Spotify URI
-			 */
-			static auto to_uri(const std::string &type, const std::string &id) -> std::string;
-
-			/**
-			 * Spotify URI (spotify:track:4uLU6hMCjMI75M1A2tKUQC) to Spotify ID
-			 * (4uLU6hMCjMI75M1A2tKUQC)
-			 * @param id Spotify ID
-			 * @note Returns result if already an ID
-			 * @return Spotify ID
-			 */
-			static auto to_id(const std::string &id) -> std::string;
-
-			/**
-			 * Spotify URL (https://open.spotify.com/track/4uLU6hMCjMI75M1A2tKUQC)
-			 * to Spotify URI (spotify:track:4uLU6hMCjMI75M1A2tKUQC)
-			 * @param url Spotify URL
-			 * @return Spotify URI or an empty string if Spotify URL is invalid
-			 */
-			static auto url_to_uri(const std::string &url) -> std::string;
-
-			/**
-			 * Get new URL with device ID added, or replaced
-			 * @param url URL to modify
-			 * @param device Device to add/replace
-			 */
-			static auto get_device_url(const std::string &url,
-				const lib::spt::device &device) -> std::string;
-
 		protected:
 			/**
 			 * Allow use to select device, by default, none is chosen

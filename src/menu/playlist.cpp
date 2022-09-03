@@ -183,7 +183,7 @@ void Menu::Playlist::onShuffle(bool /*checked*/)
 	}
 
 	auto initialIndex = lib::random().next_int(0, static_cast<int>(tracks.size()));
-	spotify.play_tracks(initialIndex, lib::spt::api::to_uri("playlist", playlist.id),
+	spotify.play_tracks(initialIndex, lib::spt::id_to_uri("playlist", playlist.id),
 		[this](const std::string &status)
 		{
 			if (!status.empty())

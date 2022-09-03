@@ -73,7 +73,7 @@ void Search::Tracks::onItemDoubleClicked(QTreeWidgetItem *item, int /*column*/)
 			selectedIndex = i;
 		}
 
-		trackUris.push_back(lib::spt::api::to_uri("track", track.id));
+		trackUris.push_back(lib::spt::id_to_uri("track", track.id));
 	}
 
 	// Track wasn't found in list somehow, only play found track
@@ -81,7 +81,7 @@ void Search::Tracks::onItemDoubleClicked(QTreeWidgetItem *item, int /*column*/)
 	{
 		selectedIndex = 0;
 		trackUris.clear();
-		trackUris.push_back(lib::spt::api::to_uri("track", selectedItem.id));
+		trackUris.push_back(lib::spt::id_to_uri("track", selectedItem.id));
 	}
 
 	spotify.play_tracks(selectedIndex, trackUris, [](const std::string &status)

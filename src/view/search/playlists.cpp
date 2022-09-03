@@ -44,7 +44,7 @@ void Search::Playlists::onItemDoubleClicked(QListWidgetItem *item)
 	auto playlistId = item->data(static_cast<int>(DataRole::PlaylistId))
 		.toString().toStdString();
 
-	spotify.play_tracks(lib::spt::api::to_uri("playlist", playlistId),
+	spotify.play_tracks(lib::spt::id_to_uri("playlist", playlistId),
 		[](const std::string &result)
 		{
 			if (!result.empty())

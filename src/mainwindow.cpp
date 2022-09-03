@@ -453,7 +453,7 @@ auto MainWindow::currentTracks() -> std::vector<std::string>
 		{
 			continue;
 		}
-		tracks.push_back(lib::spt::api::to_uri("track", track.id));
+		tracks.push_back(lib::spt::id_to_uri("track", track.id));
 	}
 
 	return tracks;
@@ -538,18 +538,18 @@ void MainWindow::setSptContext(const std::string &uri)
 
 void MainWindow::setSptContext(const lib::spt::playlist &playlist)
 {
-	setSptContext(lib::spt::api::to_uri("playlist", playlist.id));
+	setSptContext(lib::spt::id_to_uri("playlist", playlist.id));
 }
 
 void MainWindow::setSptContext(const lib::spt::album &album)
 {
-	setSptContext(lib::spt::api::to_uri("album", album.id));
+	setSptContext(lib::spt::id_to_uri("album", album.id));
 	playlistList->setCurrentRow(-1);
 }
 
 void MainWindow::setSptContext(const lib::spt::show &show)
 {
-	setSptContext(lib::spt::api::to_uri("show", show.id));
+	setSptContext(lib::spt::id_to_uri("show", show.id));
 }
 
 void MainWindow::setNoSptContext()

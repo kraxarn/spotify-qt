@@ -178,7 +178,7 @@ void List::Library::onDoubleClicked(QTreeWidgetItem *item, int /*column*/)
 		trackIds.reserve(tracks.size());
 		for (const auto &track: tracks)
 		{
-			trackIds.push_back(lib::spt::api::to_uri("track", track.id));
+			trackIds.push_back(lib::spt::id_to_uri("track", track.id));
 		}
 
 		// Play in context of all tracks

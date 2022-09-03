@@ -139,7 +139,7 @@ void Artist::AlbumsList::onItemDoubleClicked(QTreeWidgetItem *item, int /*column
 		return;
 	}
 
-	spotify.play_tracks(lib::spt::api::to_uri("album", id),
+	spotify.play_tracks(lib::spt::id_to_uri("album", id),
 		[](const std::string &result)
 		{
 			if (result.empty())

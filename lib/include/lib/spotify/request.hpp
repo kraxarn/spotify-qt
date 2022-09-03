@@ -3,6 +3,7 @@
 #include "lib/httpclient.hpp"
 #include "lib/result.hpp"
 #include "lib/spotify/error.hpp"
+#include "lib/spotify/util.hpp"
 
 namespace lib
 {
@@ -31,7 +32,7 @@ namespace lib
 			template<typename T>
 			void get(const std::string &url, lib::callback<lib::result<T>> &callback)
 			{
-				http.get(lib::spt::request::to_full_url(url), auth_headers(),
+				http.get(lib::spt::to_full_url(url), auth_headers(),
 					[url, callback](const std::string &response)
 					{
 						callback(parse_json<T>(response));
@@ -53,11 +54,6 @@ namespace lib
 			 * Timestamp of last refresh
 			 */
 			unsigned long last_auth = 0;
-
-			/**
-			 * Get full API url from relative URL
-			 */
-			static auto to_full_url(const std::string &relative_url) -> std::string;
 
 			/**
 			 * Get authorization header, and refresh if needed

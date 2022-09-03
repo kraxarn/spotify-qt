@@ -126,7 +126,7 @@ void Context::Title::updateIcon()
 			? std::string()
 			: current.playback.item.artists.front().name;
 
-		auto id = lib::spt::api::to_id(current.playback.context.uri);
+		auto id = lib::spt::uri_to_id(current.playback.context.uri);
 		for (const auto &artist: current.playback.item.artists)
 		{
 			if (artist.id == id)
@@ -170,7 +170,7 @@ void Context::Title::playlistName(const std::string &id, lib::callback<std::stri
 	}
 	else
 	{
-		spotify.playlist(lib::spt::api::to_id(id),
+		spotify.playlist(lib::spt::uri_to_id(id),
 			[callback](const lib::spt::playlist &playlist)
 			{
 				callback(playlist.name);

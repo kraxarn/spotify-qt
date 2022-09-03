@@ -55,7 +55,7 @@ void Artist::TracksList::onDoubleClicked(QListWidgetItem *currentItem)
 			index = i;
 		}
 
-		uris.push_back(lib::spt::api::to_uri("track", trackId));
+		uris.push_back(lib::spt::id_to_uri("track", trackId));
 	}
 
 	spotify.play_tracks(index, uris, [](const std::string &result)

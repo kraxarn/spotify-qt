@@ -105,7 +105,7 @@ void Dialog::AddToPlaylist::addTracks(const std::vector<std::string> &trackIds)
 
 	for (const auto &trackId: trackIds)
 	{
-		trackUris.push_back(lib::spt::api::to_uri("track", trackId));
+		trackUris.push_back(lib::spt::id_to_uri("track", trackId));
 	}
 
 	spotify.add_to_playlist(playlist.id, trackUris,

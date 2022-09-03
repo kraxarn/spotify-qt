@@ -72,7 +72,7 @@ Menu::Track::Track(const QList<PlaylistTrack> &tracks, lib::spt::api &spotify,
 
 	if (isSingle)
 	{
-		const auto trackId = lib::spt::api::to_id(singleTrack.id);
+		const auto trackId = lib::spt::uri_to_id(singleTrack.id);
 		spotify.is_saved_track({trackId}, [this](const std::vector<bool> &likes)
 		{
 			auto liked = !likes.empty() && likes.front();
@@ -307,7 +307,7 @@ void Menu::Track::addToQueue(const QList<PlaylistTrack>::const_iterator &begin,
 		return;
 	}
 
-	const auto uri = lib::spt::api::api::to_uri("track", begin->second.id);
+	const auto uri = lib::spt::id_to_uri("track", begin->second.id);
 	spotify.add_to_queue(uri, [this, begin, end](const std::string &status)
 	{
 		if (!status.empty())
@@ -336,7 +336,7 @@ void Menu::Track::onRemoveFromPlaylist(bool /*checked*/)
 
 	for (const auto &track: tracks)
 	{
-		uris.emplace_back(track.first, lib::spt::api::to_uri("track", track.second.id));
+		uris.emplace_back(track.first, lib::spt::id_to_uri("track", track.second.id));
 		trackIds.insert(track.second.id);
 	}
 
@@ -430,7 +430,7 @@ void Menu::Track::onOpenAlbum(bool /*checked*/)
 	auto *mainWindow = MainWindow::find(parentWidget());
 	const auto &track = tracks.cbegin()->second;
 
-	mainWindow->loadAlbum(track.album.id, lib::spt::api::to_uri("track", track.id));
+	mainWindow->loadAlbum(track.album.id, lib::spt::id_to_uri("track", track.id));
 }
 
 void Menu::Track::setLiked(bool liked)

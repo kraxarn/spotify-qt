@@ -9,11 +9,6 @@ lib::spt::request::request(lib::settings &settings, const lib::http_client &http
 {
 }
 
-auto lib::spt::request::to_full_url(const std::string &relative_url) -> std::string
-{
-	return lib::fmt::format("https://api.spotify.com/v1/{}", relative_url);
-}
-
 auto lib::spt::request::auth_headers() -> lib::headers
 {
 	// See when last refresh was

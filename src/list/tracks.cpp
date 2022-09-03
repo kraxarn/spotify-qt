@@ -498,7 +498,7 @@ void List::Tracks::load(const lib::spt::playlist &playlist)
 void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-	if (lib::spt::api::to_uri("playlist", playlist.id) != mainWindow->getSptContext())
+	if (lib::spt::id_to_uri("playlist", playlist.id) != mainWindow->getSptContext())
 	{
 		return;
 	}

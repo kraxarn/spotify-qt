@@ -63,7 +63,7 @@ void List::Playlist::doubleClicked(QListWidgetItem *item)
 	const auto &currentPlaylist = mainWindow->getPlaylist(getItemIndex(item));
 	mainWindow->getSongsTree()->load(currentPlaylist);
 
-	spotify.play_tracks(lib::spt::api::to_uri("playlist", currentPlaylist.id),
+	spotify.play_tracks(lib::spt::id_to_uri("playlist", currentPlaylist.id),
 		[](const std::string &result)
 		{
 			if (result.empty())
@@ -91,7 +91,7 @@ void List::Playlist::load(const std::vector<lib::spt::playlist> &playlists)
 
 	auto lastItem = currentItem() != nullptr
 		? currentItem()->data(static_cast<int>(DataRole::PlaylistId)).toString().toStdString()
-		: lib::spt::api::to_id(settings.general.last_playlist);
+		: lib::spt::uri_to_id(settings.general.last_playlist);
 
 	// Add all playlists
 	clear();
