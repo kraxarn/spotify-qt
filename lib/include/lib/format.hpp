@@ -28,11 +28,17 @@ namespace lib
 		 */
 		static auto count(unsigned int count) -> std::string;
 
-	private:
-		/** Milliseconds in a second */
+		/**
+		 * Milliseconds in a second
+		 */
 		static constexpr int ms_in_sec = 1000;
-		/** Seconds in a minute */
+
+		/**
+		 * Seconds in a minute
+		 */
 		static constexpr int secs_in_min = 60;
+
+	private:
 		/** Kilo, 1,000 */
 		static constexpr int kilo = 1000;
 		/** Mega, 1,000,000 */
