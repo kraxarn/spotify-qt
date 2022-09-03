@@ -30,7 +30,7 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	{
 		try
 		{
-			this->spotify.refresh();
+			this->spotify.refresh(false);
 			QMessageBox::information(this, "Success",
 				QString::fromStdString(lib::fmt::format("Successfully refreshed access token:\n{}",
 					this->settings.account.refresh_token)));
