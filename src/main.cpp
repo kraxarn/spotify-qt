@@ -90,8 +90,8 @@ auto main(int argc, char *argv[]) -> int
 	}
 
 	lib::qt::http_client httpClient(nullptr);
-	spt::Spotify spotify(settings, httpClient, nullptr);
 	lib::spt::request request(settings, httpClient);
+	spt::Spotify spotify(settings, httpClient, request, nullptr);
 
 	Refresher refresher(settings, request);
 	if (!refresher.refresh())

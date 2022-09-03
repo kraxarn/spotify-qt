@@ -457,6 +457,7 @@ namespace lib
 
 		private:
 			const lib::http_client &http;
+			lib::spt::request &request;
 
 			/**
 			 * Get error message from JSON response

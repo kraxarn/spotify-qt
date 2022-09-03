@@ -34,8 +34,8 @@ namespace spt
 	Q_OBJECT
 
 	public:
-		explicit Spotify(lib::settings &settings,
-			const lib::http_client &httpClient, QObject *parent = nullptr);
+		Spotify(lib::settings &settings, const lib::http_client &httpClient,
+			lib::spt::request &request, QObject *parent = nullptr);
 
 	private:
 		void select_device(const std::vector<lib::spt::device> &devices,

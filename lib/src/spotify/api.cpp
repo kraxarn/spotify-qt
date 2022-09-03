@@ -1,10 +1,11 @@
 #include "lib/spotify/api.hpp"
 #include "lib/uri.hpp"
 
-lib::spt::api::api(lib::settings &settings, const lib::http_client &http_client)
+lib::spt::api::api(lib::settings &settings, const lib::http_client &http_client,
+	lib::spt::request &request)
 	: settings(settings),
 	http(http_client),
-	request(settings, http_client)
+	request(request)
 {
 }
 
