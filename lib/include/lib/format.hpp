@@ -30,9 +30,9 @@ namespace lib
 
 	private:
 		/** Milliseconds in a second */
-		static constexpr int msInSec = 1000;
+		static constexpr int ms_in_sec = 1000;
 		/** Seconds in a minute */
-		static constexpr int secsInMin = 60;
+		static constexpr int secs_in_min = 60;
 		/** Kilo, 1,000 */
 		static constexpr int kilo = 1000;
 		/** Mega, 1,000,000 */

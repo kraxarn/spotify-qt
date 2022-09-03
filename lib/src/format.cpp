@@ -3,10 +3,10 @@
 
 auto lib::format::time(int milliseconds) -> std::string
 {
-	const auto total_seconds = milliseconds / msInSec;
+	const auto total_seconds = milliseconds / ms_in_sec;
 
-	const auto minutes = total_seconds / secsInMin;
-	const auto seconds = total_seconds % secsInMin;
+	const auto minutes = total_seconds / secs_in_min;
+	const auto seconds = total_seconds % secs_in_min;
 
 	const auto seconds_prefixed = lib::fmt::format("{}{}",
 		seconds < 10 ? "0" : "", seconds);
