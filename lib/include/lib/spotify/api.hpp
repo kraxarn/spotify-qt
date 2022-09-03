@@ -39,8 +39,10 @@ namespace lib
 			 * Construct a new instance and refresh if needed
 			 * @param settings Settings for access token and refresh token
 			 * @param http_client HTTP Client for requests
+			 * @param request Request instance for http requests
 			 */
-			api(lib::settings &settings, const lib::http_client &http_client);
+			api(lib::settings &settings, const lib::http_client &http_client,
+				lib::spt::request &request);
 
 			//region Albums
 
@@ -313,10 +315,7 @@ namespace lib
 
 			//endregion
 
-			/**
-			 * Refresh access token with refresh token
-			 */
-			void refresh(bool force = false);
+			void refresh(bool force);
 
 			/**
 			 * Spotify ID (4uLU6hMCjMI75M1A2tKUQC) to Spotify URI
@@ -361,11 +360,6 @@ namespace lib
 			 */
 			virtual void select_device(const std::vector<lib::spt::device> &devices,
 				lib::callback<lib::spt::device> &callback);
-
-			/**
-			 * Timestamp of last refresh
-			 */
-			unsigned long last_auth = 0;
 
 			/**
 			 * Settings
@@ -462,41 +456,13 @@ namespace lib
 			static auto follow_type_string(lib::follow_type type) -> std::string;
 
 		private:
-			/**
-			 * Implementation of HTTP Client
-			 */
 			const lib::http_client &http;
-
-			/**
-			 * Send request to refresh access token
-			 * @param post_data POST form data
-			 * @param authorization Authorization header
-			 * @note Only required until networking is properly implemented
-			 * @return JSON response with (maybe) new access token
-			 */
-			auto request_refresh(const std::string &post_data,
-				const std::string &authorization) -> std::string;
-
-			/**
-			 * Parse JSON from string data
-			 * @param url Requested URL (used for error logging)
-			 * @param data JSON data
-			 * @note Throws if JSON failed to parse or JSON contains an error object
-			 * @returns Parsed JSON, or null object if no data
-			 */
-			static auto parse_json(const std::string &url,
-				const std::string &data) -> nlohmann::json;
 
 			/**
 			 * Get error message from JSON response
 			 */
 			static auto error_message(const std::string &url,
 				const std::string &data) -> std::string;
-
-			/**
-			 * Get authorization header, and refresh if needed
-			 */
-			auto auth_headers() -> lib::headers;
 
 			/**
 			 * Set last used device
