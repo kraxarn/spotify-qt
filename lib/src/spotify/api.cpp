@@ -14,26 +14,6 @@ void lib::spt::api::refresh(bool force)
 	request.refresh(force);
 }
 
-auto lib::spt::api::parse_json(const std::string &url, const std::string &data) -> nlohmann::json
-{
-	// No data, no response, no error
-	if (data.empty())
-	{
-		return {};
-	}
-
-	auto json = nlohmann::json::parse(data);
-
-	if (!lib::spt::error::is(json))
-	{
-		return json;
-	}
-
-	auto err = lib::spt::error::error_message(json);
-	lib::log::error("{} failed: {}", url, err);
-	throw lib::spt::error(err, url);
-}
-
 auto lib::spt::api::error_message(const std::string &url, const std::string &data) -> std::string
 {
 	nlohmann::json json;
