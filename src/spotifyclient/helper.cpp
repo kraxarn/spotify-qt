@@ -151,8 +151,8 @@ auto SpotifyClient::Helper::supportsAutoplay(const QString &path) -> bool
 	}
 
 	const auto help = clientExec(path, {
-		"--help"
+		QStringLiteral("--help"),
 	});
 
-	return help.contains("--autoplay");
+	return help.contains(QStringLiteral("--autoplay"));
 }
