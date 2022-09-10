@@ -1,2 +1,34 @@
-target_include_directories(${PROJECT_NAME} PUBLIC
-	${CMAKE_CURRENT_SOURCE_DIR}/include)
+# CMake doesn't allow linking of libraries outside of main CMake file
+# Create a new project to link against later
+project(spotify-qt-lib-third-party)
+add_library(${PROJECT_NAME} STATIC)
+
+option(USE_KEYCHAIN "Keychain support" ON)
+
+# Some libraries assume headers are in the root
+target_include_directories(${PROJECT_NAME} PRIVATE
+	${CMAKE_CURRENT_SOURCE_DIR}/include/thirdparty)
+
+if (USE_KEYCHAIN)
+	if (WIN32)
+		target_compile_definitions(${PROJECT_NAME} PUBLIC USE_KEYCHAIN)
+		target_compile_definitions(${PROJECT_NAME} PRIVATE KEYCHAIN_WINDOWS)
+		target_sources(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/keychain_win.cpp)
+	elseif (APPLE)
+		target_compile_definitions(${PROJECT_NAME} PUBLIC USE_KEYCHAIN)
+		target_compile_definitions(${PROJECT_NAME} PRIVATE KEYCHAIN_MACOS)
+		target_sources(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/keychain_mac.cpp)
+	elseif (UNIX)
+		find_package(PkgConfig QUIET)
+		if (PkgConfig_FOUND)
+			pkg_check_modules(GLIB2 IMPORTED_TARGET glib-2.0 QUIET)
+			pkg_check_modules(LIBSECRET IMPORTED_TARGET libsecret-1 QUIET)
+			if (GLIB2_FOUND AND LIBSECRET_FOUND)
+				target_compile_definitions(${PROJECT_NAME} PUBLIC USE_KEYCHAIN)
+				target_compile_definitions(${PROJECT_NAME} PRIVATE KEYCHAIN_LINUX)
+				target_sources(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/keychain_linux.cpp)
+				target_link_libraries(${PROJECT_NAME} PRIVATE PkgConfig::GLIB2 PkgConfig::LIBSECRET)
+			endif ()
+		endif ()
+	endif ()
+endif ()
