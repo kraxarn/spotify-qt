@@ -19,6 +19,13 @@ namespace SpotifyClient
 		static auto version(const QString &path) -> QString;
 		static auto running(const QString &path) -> bool;
 
+		/**
+		 * Client supports --autoplay argument
+		 * (librespot 0.4.2 and older only)
+		 * @param path Path to client
+		 */
+		static auto supportsAutoplay(const QString &path) -> bool;
+
 	private:
 		Helper() = default;
 

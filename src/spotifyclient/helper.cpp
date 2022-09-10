@@ -142,3 +142,17 @@ auto SpotifyClient::Helper::running(const QString &path) -> bool
 	auto out = ps.readAllStandardOutput();
 	return QString(out).contains(path);
 }
+
+auto SpotifyClient::Helper::supportsAutoplay(const QString &path) -> bool
+{
+	if (clientType(path) != lib::client_type::librespot)
+	{
+		return false;
+	}
+
+	const auto help = clientExec(path, {
+		"--help"
+	});
+
+	return help.contains("--autoplay");
+}
