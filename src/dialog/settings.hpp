@@ -1,6 +1,5 @@
 #pragma once
 
-#include "keyring/kwallet.hpp"
 #include "mainwindow.hpp"
 #include "settingspage/base.hpp"
 #include "spotifyclient/runner.hpp"

@@ -231,15 +231,12 @@ auto SettingsPage::Spotify::config() -> QWidget *
 	sptDeviceType->addItem(QStringLiteral("Default"));
 	sptLayout->addWidget(sptDeviceType, 3, 1);
 
-	// KWallet keyring for password
-#ifdef USE_DBUS
-	if (KWallet(QString::fromStdString(settings.spotify.username)).isEnabled())
-	{
-		sptKeyring = new QCheckBox("Save password in keyring", this);
-		sptKeyring->setToolTip("Store password in keyring (using KWallet)");
-		sptKeyring->setChecked(settings.spotify.keyring_password);
-		sptLayout->addWidget(sptKeyring, 4, 0);
-	}
+	// Keychain for password
+#ifdef USE_KEYCHAIN
+	sptKeyring = new QCheckBox(QStringLiteral("Save password in keyring"), this);
+	sptKeyring->setToolTip(QStringLiteral("Store password in system keychain"));
+	sptKeyring->setChecked(settings.spotify.keyring_password);
+	sptLayout->addWidget(sptKeyring, 4, 0);
 #endif
 
 	// librespot discovery

@@ -5,7 +5,6 @@
 #include "lib/logmessage.hpp"
 
 #include "spotifyclient/helper.hpp"
-#include "keyring/kwallet.hpp"
 
 #include <QDateTime>
 #include <QFileInfo>

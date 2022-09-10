@@ -1,6 +1,10 @@
 #include "spotifyclient/runner.hpp"
 #include "mainwindow.hpp"
 
+#ifdef USE_KEYCHAIN
+#include "util/keychain.hpp"
+#endif
+
 std::vector<lib::log_message> SpotifyClient::Runner::log;
 
 SpotifyClient::Runner::Runner(const lib::settings &settings,
@@ -60,11 +64,10 @@ auto SpotifyClient::Runner::start() -> QString
 
 	// Get password from keyring if set
 	QString password;
-#ifdef USE_DBUS
-	KWallet keyring(username);
-	if (settings.spotify.keyring_password && keyring.unlock())
+#ifdef USE_KEYCHAIN
+	if (settings.spotify.keyring_password)
 	{
-		password = keyring.readPassword();
+		password = Keychain::getPassword(username);
 	}
 #endif
 
@@ -81,10 +84,10 @@ auto SpotifyClient::Runner::start() -> QString
 			return "no password provided";
 		}
 
-#ifdef USE_DBUS
+#ifdef USE_KEYCHAIN
 		if (settings.spotify.keyring_password)
 		{
-			keyring.writePassword(password);
+			Keychain::setPassword(username, password);
 		}
 #endif
 	}
