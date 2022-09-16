@@ -13,7 +13,7 @@ inspired by [spotify-tui](https://github.com/Rigellute/spotify-tui). Much like s
 an actual Spotify client running, for example [spotifyd](https://github.com/Spotifyd/spotifyd),
 which can be configured from within the app.
 
-**Note:** Controlling playback requires Spotify Premium.
+**Note:** Requires Spotify Premium.
 
 #### Contributions are very welcome!
 
