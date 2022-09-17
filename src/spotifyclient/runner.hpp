@@ -44,6 +44,6 @@ namespace SpotifyClient
 
 		void readyRead() const;
 		void readyError() const;
-		static void logOutput(const QByteArray &output, lib::log_type logType);
+		void logOutput(const QByteArray &output, lib::log_type logType) const;
 	};
 }

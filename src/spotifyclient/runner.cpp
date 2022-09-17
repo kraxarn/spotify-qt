@@ -170,7 +170,7 @@ auto SpotifyClient::Runner::isRunning() const -> bool
 		: process->isOpen();
 }
 
-void SpotifyClient::Runner::logOutput(const QByteArray &output, lib::log_type logType)
+void SpotifyClient::Runner::logOutput(const QByteArray &output, lib::log_type logType) const
 {
 	for (auto &line: QString(output).split('\n'))
 	{
@@ -180,6 +180,17 @@ void SpotifyClient::Runner::logOutput(const QByteArray &output, lib::log_type lo
 		}
 
 		log.emplace_back(lib::date_time::now(), logType, line.toStdString());
+
+#ifdef USE_KEYCHAIN
+		if (line.contains(QStringLiteral("Bad credentials")))
+		{
+			const auto username = QString::fromStdString(settings.spotify.username);
+			if (Keychain::clearPassword(username))
+			{
+				lib::log::warn("Bad credentials, cleared saved password");
+			}
+		}
+#endif
 	}
 }
 

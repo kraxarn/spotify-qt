@@ -32,4 +32,18 @@ auto Keychain::setPassword(const QString &user, const QString &password) -> bool
 	return true;
 }
 
+auto Keychain::clearPassword(const QString &user) -> bool
+{
+	keychain::Error error;
+	keychain::deletePassword(PKG_NAME, APP_NAME, user.toStdString(), error);
+
+	if (error)
+	{
+		lib::log::warn("Failed to clear password: {}", error.message);
+		return false;
+	}
+
+	return true;
+}
+
 #endif
