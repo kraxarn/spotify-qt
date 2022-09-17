@@ -3,6 +3,7 @@
 #include "dialog/createplaylist.hpp"
 #include "dialog/addtoplaylist.hpp"
 #include "dialog/apirequest.hpp"
+#include "dialog/passwordentry.hpp"
 
 DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
@@ -181,6 +182,8 @@ void DeveloperMenu::onDialogMenuAboutToShow()
 	}
 
 	auto *mainWindow = MainWindow::find(parentWidget());
+	auto *paths = new QtPaths(this);
+	auto *runner = new SpotifyClient::Runner(settings, *paths, mainWindow);
 
 	std::vector<QDialog *> dialogs = {
 		new Dialog::DeviceSelect({}, mainWindow),
@@ -191,6 +194,7 @@ void DeveloperMenu::onDialogMenuAboutToShow()
 		new Dialog::CreatePlaylist({}, spotify, mainWindow),
 		new Dialog::AddToPlaylist(spotify, lib::spt::playlist(), {}, {}, mainWindow),
 		new Dialog::ApiRequest(settings, mainWindow),
+		new Dialog::PasswordEntry(runner, mainWindow),
 	};
 
 	for (auto *dialog: dialogs)
