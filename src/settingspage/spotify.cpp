@@ -231,14 +231,6 @@ auto SettingsPage::Spotify::config() -> QWidget *
 	sptDeviceType->addItem(QStringLiteral("Default"));
 	sptLayout->addWidget(sptDeviceType, 3, 1);
 
-	// Keychain for password
-#ifdef USE_KEYCHAIN
-	sptKeyring = new QCheckBox(QStringLiteral("Save password in keyring"), this);
-	sptKeyring->setToolTip(QStringLiteral("Store password in system keychain"));
-	sptKeyring->setChecked(settings.spotify.keyring_password);
-	sptLayout->addWidget(sptKeyring, 4, 0);
-#endif
-
 	// librespot discovery
 	sptDiscovery = new QCheckBox("Enable discovery");
 	sptDiscovery->setToolTip("Enable discovery mode (librespot only)");
@@ -318,14 +310,17 @@ auto SettingsPage::Spotify::save() -> bool
 	}
 
 	// Other Spotify stuff
+
 	if (sptAppStart != nullptr)
 	{
 		settings.spotify.start_client = sptAppStart->isChecked();
 	}
+
 	if (sptUsername != nullptr)
 	{
 		settings.spotify.username = sptUsername->text().toStdString();
 	}
+
 	if (sptBitrate != nullptr)
 	{
 		auto bitrate = sptBitrate->currentIndex();
@@ -334,14 +329,12 @@ auto SettingsPage::Spotify::save() -> bool
 				? lib::audio_quality::high
 				: lib::audio_quality::very_high;
 	}
+
 	if (sptAlways != nullptr)
 	{
 		settings.spotify.always_start = sptAlways->isChecked();
 	}
-	if (sptKeyring != nullptr)
-	{
-		settings.spotify.keyring_password = sptKeyring->isChecked();
-	}
+
 	if (sptDiscovery != nullptr)
 	{
 		settings.spotify.disable_discovery = !sptDiscovery->isChecked();

@@ -41,11 +41,6 @@ namespace lib
 			bool global_config = false;
 
 			/**
-			 * Save password in system keyring
-			 */
-			bool keyring_password = false;
-
-			/**
 			 * Start Spotify client on application start
 			 */
 			bool start_client = false;
