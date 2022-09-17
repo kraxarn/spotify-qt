@@ -41,13 +41,17 @@ jobs:
       - name: Install
         run: make DESTDIR="${{runner.workspace}}/dist" install
 
-      - name: Download linuxdeployqt
+      - name: Download linuxdeploy
         run: |
-          curl -L https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage -o ${{runner.workspace}}/linuxdeployqt
-          chmod +x ${{runner.workspace}}/linuxdeployqt
+          curl -L "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage" -o ${{runner.workspace}}/linuxdeploy-x86_64.AppImage
+          curl -L "https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppImage" -o ${{runner.workspace}}/linuxdeploy-plugin-appimage-x86_64.AppImage
+          curl -L "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage" -o ${{runner.workspace}}/linuxdeploy-plugin-qt-x86_64.AppImage
+          chmod +x ${{runner.workspace}}/linuxdeploy-*.AppImage
 
       - name: Package
-        run: ${{runner.workspace}}/linuxdeployqt ${{runner.workspace}}/dist/usr/share/applications/spotify-qt.desktop -appimage -verbose=2
+        run: |
+          export OUTPUT="spotify-qt-${{runner.os}}-${{env.VERSION}}-${{inputs.build_type}}-x86_64.AppImage"
+          ${{runner.workspace}}/linuxdeploy-x86_64.AppImage --appdir ${{runner.workspace}}/dist --output appimage --plugin qt -v 0 -d ${{runner.workspace}}/dist/usr/share/applications/spotify-qt.desktop
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
