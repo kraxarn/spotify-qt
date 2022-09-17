@@ -32,7 +32,7 @@ jobs:
           tools: "tools_openssl_x86,1.1.1-10,qt.tools.openssl.win_x86"
 
       - name: Configure CMake
-        run: cmake . -G "${{env.CMAKE_GENERATOR}}" -A ${{env.CMAKE_ARCH}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DUSE_TESTS=ON
+        run: cmake . -G "${{env.CMAKE_GENERATOR}}" -A ${{env.CMAKE_ARCH}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DUSE_TESTS=ON -DUSE_LTO=ON
 
       - name: Build
         run: cmake --build . --config ${{env.BUILD_TYPE}}

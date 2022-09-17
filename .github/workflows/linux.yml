@@ -30,7 +30,7 @@ jobs:
           arch: ${{env.QT_ARCH}}
 
       - name: Configure CMake
-        run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr -DUSE_TESTS=ON
+        run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr -DUSE_TESTS=ON -DUSE_LTO=ON
 
       - name: Build
         run: cmake --build . --config $BUILD_TYPE
