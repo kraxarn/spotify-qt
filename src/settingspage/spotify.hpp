@@ -29,7 +29,6 @@ namespace SettingsPage
 		QCheckBox *sptAlways = nullptr;
 		QCheckBox *sptAppStart = nullptr;
 		QCheckBox *sptGlobal = nullptr;
-		QCheckBox *sptKeyring = nullptr;
 		QComboBox *sptBackend = nullptr;
 		QComboBox *sptDeviceType = nullptr;
 		QComboBox *sptBitrate = nullptr;
