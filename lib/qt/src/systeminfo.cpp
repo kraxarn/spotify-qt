@@ -30,6 +30,12 @@ lib::qt::system_info::system_info()
 			? "Wayland" : windowSystem == lib::window_system::x11
 				? "X11" : "Unknown");
 	}
+
+#ifdef USE_KEYCHAIN
+	add(QStringLiteral("Keychain support"), QStringLiteral("Yes"));
+#else
+	add(QStringLiteral("Keychain support"), QStringLiteral("No"));
+#endif
 }
 
 void lib::qt::system_info::add(const QString &key, const QString &value)
