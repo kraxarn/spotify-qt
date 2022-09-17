@@ -1,6 +1,6 @@
 name: Windows (MSYS2)
 
-on: [ push, pull_request ]
+on: workflow_dispatch
 
 env:
   BUILD_TYPE: Release
