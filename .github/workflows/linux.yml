@@ -14,6 +14,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Cache Qt
         id: cache-qt
@@ -50,7 +52,7 @@ jobs:
 
       - name: Package
         run: |
-          export OUTPUT="spotify-qt-${{runner.os}}-${{env.VERSION}}-${{inputs.build_type}}-x86_64.AppImage"
+          export OUTPUT="spotify-qt-$(git rev-parse --short HEAD)-x86_64.AppImage"
           ${{runner.workspace}}/linuxdeploy-x86_64.AppImage --appdir ${{runner.workspace}}/dist --output appimage --plugin qt -v 0 -d ${{runner.workspace}}/dist/usr/share/applications/spotify-qt.desktop
 
       - name: Upload Artifact
