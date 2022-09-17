@@ -5,6 +5,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/createplaylist.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/deviceselect.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/openlink.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/passwordentry.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/playlistedit.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/settings.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/setup.cpp

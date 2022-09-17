@@ -1,5 +1,6 @@
 #include "spotifyclient/runner.hpp"
 #include "mainwindow.hpp"
+#include "dialog/passwordentry.hpp"
 
 #ifdef USE_KEYCHAIN
 #include "util/keychain.hpp"
@@ -38,60 +39,51 @@ auto SpotifyClient::Runner::start() -> QString
 	// Check if empty
 	if (clientType == lib::client_type::none)
 	{
-		return "path is empty or invalid";
+		return QStringLiteral("path is empty or invalid");
 	}
 
 	// Check if path exists
 	QFileInfo info(path);
 	if (!info.exists())
 	{
-		return "file in path does not exist";
+		return QStringLiteral("file in path does not exist");
 	}
 
 	// If using global config, just start
 	if (settings.spotify.global_config && clientType == lib::client_type::spotifyd)
 	{
-		process->start(path, QStringList({"--no-daemon"}));
+		process->start(path, QStringList({QStringLiteral("--no-daemon")}));
 		return {};
 	}
 
 	// Check if username exists
-	auto username = QString::fromStdString(settings.spotify.username);
+	const auto username = QString::fromStdString(settings.spotify.username);
 	if (username.isEmpty())
 	{
-		return "no username provided";
+		return QStringLiteral("no username provided");
 	}
 
-	// Get password from keyring if set
+	// Try to get password
 	QString password;
 #ifdef USE_KEYCHAIN
-	if (settings.spotify.keyring_password)
-	{
-		password = Keychain::getPassword(username);
-	}
+	password = Keychain::getPassword(username);
 #endif
 
-	// Ask for password
 	if (password.isEmpty())
 	{
-		password = QInputDialog::getText(parentWidget,
-			"Enter password",
-			QString("Enter password for Spotify user \"%1\":").arg(username),
-			QLineEdit::Password);
-
-		if (password.isEmpty())
-		{
-			return "no password provided";
-		}
-
-#ifdef USE_KEYCHAIN
-		if (settings.spotify.keyring_password)
-		{
-			Keychain::setPassword(username, password);
-		}
-#endif
+		auto *dialog = new Dialog::PasswordEntry(this, parentWidget);
+		dialog->show(username);
+	}
+	else
+	{
+		start(username, password);
 	}
 
+	return {};
+}
+
+auto SpotifyClient::Runner::start(const QString &username, const QString &password) -> QString
+{
 	// Common arguments
 	QStringList arguments({
 		"--bitrate", QString::number(static_cast<int>(settings.spotify.bitrate)),
