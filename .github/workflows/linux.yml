@@ -4,13 +4,13 @@ on: [ push, pull_request ]
 
 env:
   BUILD_TYPE: Release
-  QT_VERSION: "5.15.2"
+  QT_VERSION: "6.3.2"
   QT_ARCH: "gcc_64"
 
 jobs:
   build:
-    # https://github.com/probonopd/linuxdeployqt/issues/377
-    runs-on: ubuntu-18.04
+    # Qt 6.3 requires Ubuntu 20.04
+    runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v2
