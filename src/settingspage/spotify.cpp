@@ -2,6 +2,10 @@
 #include "mainwindow.hpp"
 #include "util/widget.hpp"
 
+#ifdef USE_KEYCHAIN
+#include "util/keychain.hpp"
+#endif
+
 SettingsPage::Spotify::Spotify(lib::settings &settings, QWidget *parent)
 	: SettingsPage::Base(settings, parent)
 {
@@ -231,6 +235,18 @@ auto SettingsPage::Spotify::config() -> QWidget *
 	sptDeviceType->addItem(QStringLiteral("Default"));
 	sptLayout->addWidget(sptDeviceType, 3, 1);
 
+	// Clear password
+#ifdef USE_KEYCHAIN
+	auto *clearPasswordText = new QLabel(QStringLiteral("Clear saved password"));
+	sptLayout->addWidget(clearPasswordText, 4, 0);
+
+	auto *clearPassword = new QPushButton(QStringLiteral("Clear"), this);
+	sptLayout->addWidget(clearPassword, 4, 1, Qt::AlignTrailing);
+
+	QAbstractButton::connect(clearPassword, &QAbstractButton::clicked,
+		this, &SettingsPage::Spotify::onClearPassword);
+#endif
+
 	// librespot discovery
 	sptDiscovery = new QCheckBox("Enable discovery");
 	sptDiscovery->setToolTip("Enable discovery mode (librespot only)");
@@ -437,3 +453,34 @@ void SettingsPage::Spotify::setClientStatus(bool enabled,
 		clientStatus->setText(status);
 	}
 }
+
+#ifdef USE_KEYCHAIN
+void SettingsPage::Spotify::onClearPassword(bool /*checked*/)
+{
+	const auto username = QString::fromStdString(settings.spotify.username);
+	if (username.isEmpty())
+	{
+		QMessageBox::information(this, QStringLiteral("No username"),
+			QStringLiteral("No username saved to clear password for."));
+		return;
+	}
+
+	const auto password = Keychain::getPassword(username);
+	if (password.isEmpty())
+	{
+		QMessageBox::information(this, QStringLiteral("No password"),
+			QString("No password saved for user \"%1\".").arg(username));
+		return;
+	}
+
+	if (!Keychain::clearPassword(username))
+	{
+		QMessageBox::warning(this, QStringLiteral("Failed"),
+			QStringLiteral("Failed to clear password, check the log for details."));
+		return;
+	}
+
+	QMessageBox::information(this, QStringLiteral("Cleared"),
+		QString("Password cleared for user \"%1\".").arg(username));
+}
+#endif

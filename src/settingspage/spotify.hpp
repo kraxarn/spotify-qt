@@ -61,5 +61,9 @@ namespace SettingsPage
 
 		auto spotify() -> QWidget *;
 		auto config() -> QWidget *;
+
+#ifdef USE_KEYCHAIN
+		void onClearPassword(bool checked);
+#endif
 	};
 }
