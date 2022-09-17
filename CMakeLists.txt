@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.9)
 
 project(spotify-qt LANGUAGES CXX VERSION 3.9)
 
@@ -15,6 +15,9 @@ option(USE_DBUS "Use D-Bus integration" ON)
 
 # Optional KCrash support
 option(USE_KCRASH "Use KCrash integration" ON)
+
+# LTO support
+option(USE_LTO "Use link time optimization" OFF)
 
 # Prefer new OpenGL
 if (POLICY CMP0072)
@@ -98,6 +101,19 @@ endif ()
 # Don't show console window under windows
 if (WIN32 AND NOT MSVC)
 	target_link_options(spotify-qt PRIVATE -mwindows)
+endif ()
+
+# IPO / LTO
+if (USE_LTO)
+	include(CheckIPOSupported)
+	check_ipo_supported(RESULT ipo_supported OUTPUT ipo_error)
+	if (ipo_supported AND CMAKE_BUILD_TYPE STREQUAL "Release")
+		set_property(TARGET ${PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+	elseif (ipo_supported)
+		message(STATUS "LTO is only supported in Release builds")
+	else ()
+		message(STATUS "LTO error: ${ipo_error}")
+	endif ()
 endif ()
 
 # Link Qt
