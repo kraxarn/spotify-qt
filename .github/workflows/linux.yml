@@ -59,7 +59,7 @@ jobs:
       - name: Package
         run: |
           export OUTPUT="spotify-qt-$(git rev-parse --short HEAD)-x86_64.AppImage"
-          ${{runner.workspace}}/linuxdeploy-x86_64.AppImage --appdir ${{runner.workspace}}/dist --output appimage --plugin qt -v 0 -d ${{runner.workspace}}/dist/usr/share/applications/spotify-qt.desktop
+          ${{runner.workspace}}/linuxdeploy-x86_64.AppImage --appdir ${{runner.workspace}}/dist --output appimage --plugin qt -d ${{runner.workspace}}/dist/usr/share/applications/spotify-qt.desktop
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
