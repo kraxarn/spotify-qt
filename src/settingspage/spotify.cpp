@@ -50,7 +50,7 @@ auto SettingsPage::Spotify::spotify() -> QWidget *
 
 	// Executable settings
 	auto *pathBox = new QGroupBox(this);
-	pathBox->setTitle(QStringLiteral("Path to spotifyd/librespot"));
+	pathBox->setTitle(QStringLiteral("Path to librespot or spotifyd"));
 
 	auto *pathLayout = new QGridLayout();
 	pathBox->setLayout(pathLayout);
