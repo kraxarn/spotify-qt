@@ -4,6 +4,7 @@
 #include "dialog/addtoplaylist.hpp"
 #include "dialog/apirequest.hpp"
 #include "dialog/passwordentry.hpp"
+#include "dialog/memory.hpp"
 
 DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
@@ -195,6 +196,7 @@ void DeveloperMenu::onDialogMenuAboutToShow()
 		new Dialog::AddToPlaylist(spotify, lib::spt::playlist(), {}, {}, mainWindow),
 		new Dialog::ApiRequest(settings, mainWindow),
 		new Dialog::PasswordEntry(runner, mainWindow),
+		new Dialog::Memory(mainWindow),
 	};
 
 	for (auto *dialog: dialogs)

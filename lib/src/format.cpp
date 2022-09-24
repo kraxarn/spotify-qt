@@ -15,7 +15,7 @@ auto lib::format::time(int milliseconds) -> std::string
 	return lib::fmt::format("{}:{}", minutes, seconds_prefixed);
 }
 
-auto lib::format::size(unsigned int bytes) -> std::string
+auto lib::format::size(unsigned long bytes) -> std::string
 {
 	if (bytes >= giga)
 	{
