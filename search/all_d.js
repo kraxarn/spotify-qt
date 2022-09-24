@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['ok_0',['ok',['../classlib_1_1result.html#aeb689aa457c1ff79bee90c4eedf95f3c',1,'lib::result']]],
-  ['optional_1',['optional',['../classlib_1_1optional.html',1,'lib::optional&lt; T &gt;'],['../classlib_1_1optional.html#aafff5f4aab6ea7b6ddc102cefa6542fc',1,'lib::optional::optional()=default'],['../classlib_1_1optional.html#a8b4971731eda177d1ffb7dd9b3042f65',1,'lib::optional::optional(T value)']]],
-  ['origin_2',['origin',['../classlib_1_1uri.html#af19c92bb8946ae4843df90647bfb8117',1,'lib::uri']]],
-  ['owner_5fid_3',['owner_id',['../classlib_1_1spt_1_1playlist.html#a59f10ebad47330939b4759c3f0a982ea',1,'lib::spt::playlist']]],
-  ['owner_5fname_4',['owner_name',['../classlib_1_1spt_1_1playlist.html#a9af238a93a7984167540d3b406ca3b86',1,'lib::spt::playlist']]]
+  ['name_0',['name',['../classlib_1_1lrc_1_1credit.html#a3d7b1c7655cb04e9099603986d5576eb',1,'lib::lrc::credit::name()'],['../classlib_1_1spt_1_1entity.html#a52586eeb440239769c5383020a1ca50a',1,'lib::spt::entity::name()'],['../classlib_1_1spt_1_1playlist__details.html#a5e78dd53f231ed2dd5f91832ce9ece70',1,'lib::spt::playlist_details::name()']]],
+  ['next_1',['next',['../classlib_1_1random.html#a8a6870faaa9accd2673393296a402ad9',1,'lib::random::next()'],['../classlib_1_1spt_1_1api.html#a01fc1b68241b86c107b11c9ebc3eeea4',1,'lib::spt::api::next()']]],
+  ['now_2',['now',['../classlib_1_1date__time.html#a0bfc48932543d18c486119c84458c14a',1,'lib::date_time']]],
+  ['now_5futc_3',['now_utc',['../classlib_1_1date__time.html#a9f27a893ead35709fc01030c193a05cf',1,'lib::date_time']]]
 ];

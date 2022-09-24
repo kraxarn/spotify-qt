@@ -33,5 +33,6 @@ var searchData=
   ['get_5furl_30',['get_url',['../classlib_1_1uri.html#a669b9fb97f34c1253c84c9a05371f104',1,'lib::uri']]],
   ['get_5fvalue_31',['get_value',['../classlib_1_1spt_1_1audio__feature.html#a6ad5e61e3d3e7bbe953e1f583ea59b14',1,'lib::spt::audio_feature']]],
   ['get_5fvalue_5fstring_32',['get_value_string',['../classlib_1_1spt_1_1audio__feature.html#a3c084fb623d03d7583a5a4197c217a67',1,'lib::spt::audio_feature']]],
-  ['get_5fyear_33',['get_year',['../classlib_1_1date__time.html#a097138ebea3ea58a0a4d3cfb8c7e4f64',1,'lib::date_time']]]
+  ['get_5fyear_33',['get_year',['../classlib_1_1date__time.html#a097138ebea3ea58a0a4d3cfb8c7e4f64',1,'lib::date_time']]],
+  ['giga_34',['giga',['../classlib_1_1format.html#a5b148ad8187c4726517614b0565eeff0',1,'lib::format']]]
 ];

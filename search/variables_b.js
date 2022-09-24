@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['name_0',['name',['../classlib_1_1lrc_1_1credit.html#a3d7b1c7655cb04e9099603986d5576eb',1,'lib::lrc::credit::name()'],['../classlib_1_1spt_1_1entity.html#a52586eeb440239769c5383020a1ca50a',1,'lib::spt::entity::name()'],['../classlib_1_1spt_1_1playlist__details.html#a5e78dd53f231ed2dd5f91832ce9ece70',1,'lib::spt::playlist_details::name()']]]
+  ['media_5ftype_0',['media_type',['../classlib_1_1spt_1_1show.html#a9defc9290fd673dc484d20e678fbdb0a',1,'lib::spt::show']]],
+  ['mega_1',['mega',['../classlib_1_1format.html#accc190604b9c35439a4dffc13b86bfba',1,'lib::format']]],
+  ['meta_2',['meta',['../classlib_1_1ddg_1_1results.html#a86159a01470dbdee97491e87c107a2fd',1,'lib::ddg::results']]]
 ];

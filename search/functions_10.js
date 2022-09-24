@@ -23,7 +23,7 @@ var searchData=
   ['settings_20',['settings',['../classlib_1_1settings.html#adb2eacf4134e51934d779cb6d933c6a9',1,'lib::settings']]],
   ['show_21',['show',['../classlib_1_1spt_1_1api.html#a0f56416580d89ca435ab3ce15a37fa14',1,'lib::spt::api']]],
   ['show_5fepisodes_22',['show_episodes',['../classlib_1_1spt_1_1api.html#a275014bf2e6d10d2ab09993ad490089b',1,'lib::spt::api']]],
-  ['size_23',['size',['../classlib_1_1format.html#a5c2623a303947450960328e1adeb7397',1,'lib::format']]],
+  ['size_23',['size',['../classlib_1_1format.html#ac1e6cd8b556cb44cebc80ac414de27ee',1,'lib::format']]],
   ['split_24',['split',['../classlib_1_1strings.html#ac28d3f45f0ec324ec627cc1855f40569',1,'lib::strings::split(const std::string &amp;str, const std::string &amp;delimiter) -&gt; std::vector&lt; std::string &gt;'],['../classlib_1_1strings.html#a8eb65123d86e7e0f3fb834f0c13c4d95',1,'lib::strings::split(const std::string &amp;str, char delimiter) -&gt; std::vector&lt; std::string &gt;']]],
   ['start_25',['start',['../classlib_1_1stopwatch.html#ae42cfa37e0452feae50ab338cef759f6',1,'lib::stopwatch']]],
   ['starts_5fwith_26',['starts_with',['../classlib_1_1strings.html#a36c370982807a4d49343ec3811d184f9',1,'lib::strings']]],
