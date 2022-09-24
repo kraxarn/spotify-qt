@@ -183,27 +183,55 @@ void DeveloperMenu::onDialogMenuAboutToShow()
 	}
 
 	auto *mainWindow = MainWindow::find(parentWidget());
-	auto *paths = new QtPaths(this);
-	auto *runner = new SpotifyClient::Runner(settings, *paths, mainWindow);
 
-	std::vector<QDialog *> dialogs = {
-		new Dialog::DeviceSelect({}, mainWindow),
-		new Dialog::OpenLink("/", LinkType::Path, mainWindow),
-		new Dialog::Setup(settings, mainWindow),
-		new TracksCacheDialog(cache, mainWindow),
-		new Dialog::WhatsNew(settings, httpClient, mainWindow),
-		new Dialog::CreatePlaylist({}, spotify, mainWindow),
-		new Dialog::AddToPlaylist(spotify, lib::spt::playlist(), {}, {}, mainWindow),
-		new Dialog::ApiRequest(settings, mainWindow),
-		new Dialog::PasswordEntry(runner, mainWindow),
-		new Dialog::Memory(mainWindow),
+	QMap<QString, std::function<QDialog *()>> dialogs{
+		{QStringLiteral("Device select"), [mainWindow]()
+		{
+			return new Dialog::DeviceSelect({}, mainWindow);
+		}},
+		{QStringLiteral("Open link"), [mainWindow]()
+		{
+			return new Dialog::OpenLink(QStringLiteral("/"), LinkType::Path, mainWindow);
+		}},
+		{QStringLiteral("Setup"), [this, mainWindow]
+		{
+			return new Dialog::Setup(settings, mainWindow);
+		}},
+		{QStringLiteral("Tracks cache"), [this, mainWindow]
+		{
+			return new TracksCacheDialog(cache, mainWindow);
+		}},
+		{QStringLiteral("What's new"), [this, mainWindow]
+		{
+			return new Dialog::WhatsNew(settings, httpClient, mainWindow);
+		}},
+		{QStringLiteral("Create playlist"), [this, mainWindow]
+		{
+			return new Dialog::CreatePlaylist({}, spotify, mainWindow);
+		}},
+		{QStringLiteral("Add to playlist"), [this, mainWindow]
+		{
+			return new Dialog::AddToPlaylist(spotify, lib::spt::playlist(), {}, {}, mainWindow);
+		}},
+		{QStringLiteral("Password entry"), [this, mainWindow]
+		{
+			auto *paths = new QtPaths(this);
+			auto *runner = new SpotifyClient::Runner(settings, *paths, mainWindow);
+			return new Dialog::PasswordEntry(runner, mainWindow);
+		}},
+		{QStringLiteral("Memory"), [mainWindow]
+		{
+			return new Dialog::Memory(mainWindow);
+		}}
 	};
 
-	for (auto *dialog: dialogs)
+	QMapIterator<QString, std::function<QDialog *()>> iter(dialogs);
+	while (iter.hasNext())
 	{
-		addMenuItem(dialogMenu, dialog->metaObject()->className(), [dialog]()
+		iter.next();
+		addMenuItem(dialogMenu, iter.key(), [iter]()
 		{
-			dialog->open();
+			iter.value()()->open();
 		});
 	}
 }
