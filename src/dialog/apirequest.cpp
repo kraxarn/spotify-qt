@@ -1,4 +1,5 @@
 #include "dialog/apirequest.hpp"
+#include "util/font.hpp"
 
 Dialog::ApiRequest::ApiRequest(const lib::settings &settings, QWidget *parent)
 	: QDialog(parent),
@@ -44,12 +45,12 @@ Dialog::ApiRequest::ApiRequest(const lib::settings &settings, QWidget *parent)
 	layout->addLayout(requestLayout);
 
 	jsonRequest = new QTextEdit(this);
-	jsonRequest->setFontFamily(QStringLiteral("monospace"));
+	jsonRequest->setFont(Font::monospace());
 	jsonRequest->setWordWrapMode(QTextOption::NoWrap);
 
 	jsonResponse = new QTextEdit(this);
 	jsonResponse->setReadOnly(true);
-	jsonResponse->setFontFamily(QStringLiteral("monospace"));
+	jsonResponse->setFont(Font::monospace());
 	jsonResponse->setWordWrapMode(QTextOption::NoWrap);
 
 	tabs = new QTabWidget();

@@ -1,6 +1,7 @@
 #include "mainwindow.hpp"
 #include "util/widget.hpp"
 #include "lib/time.hpp"
+#include "util/font.hpp"
 
 MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 	lib::qt::http_client &httpClient, spt::Spotify &spotify)
@@ -480,7 +481,7 @@ auto MainWindow::getTrayIcon() -> TrayIcon *
 void MainWindow::setFixedWidthTime(bool value)
 {
 	toolBar->setPositionFont(value
-		? QFont("monospace")
+		? Font::monospace()
 		: QFont());
 }
 

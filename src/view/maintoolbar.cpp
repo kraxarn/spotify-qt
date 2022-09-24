@@ -1,6 +1,7 @@
 #include "view/maintoolbar.hpp"
 #include "mainwindow.hpp"
 #include "util/shortcut.hpp"
+#include "util/font.hpp"
 
 MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	const lib::http_client &httpClient, lib::cache &cache, QWidget *parent)
@@ -62,7 +63,7 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	position = new QLabel("0:00/0:00", this);
 	if (settings.general.fixed_width_time)
 	{
-		position->setFont(QFont("monospace"));
+		position->setFont(Font::monospace());
 	}
 	addWidget(position);
 

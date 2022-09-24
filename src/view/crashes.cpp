@@ -1,4 +1,5 @@
 #include "view/crashes.hpp"
+#include "util/font.hpp"
 
 View::Crashes::Crashes(lib::cache &cache, QWidget *parent)
 	: QWidget(parent),
@@ -12,7 +13,7 @@ View::Crashes::Crashes(lib::cache &cache, QWidget *parent)
 	layout->addWidget(list);
 
 	log = new QTextEdit(this);
-	log->setFontFamily("monospace");
+	log->setFont(Font::monospace());
 	layout->addWidget(log, 1);
 
 	QListWidget::connect(list, &QListWidget::currentItemChanged,
