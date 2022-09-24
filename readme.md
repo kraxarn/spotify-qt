@@ -29,8 +29,8 @@ which can be configured from within the app.
 
 ## Supported platforms
 
-Any system with a C++11 compiler and Qt is supported, but only Linux and Windows are regularly being
-tested, so if an issue occurs on your favorite platform, please report it.
+Any system with a C++11 compiler and Qt is supported, but only Linux, Windows (x64) and macOS (arm64)
+are regularly being tested, so if an issue occurs on your favorite platform, please report it.
 
 ## Installing
 
