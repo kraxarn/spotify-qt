@@ -1,5 +1,6 @@
 #include "settingspage/interface.hpp"
 #include "mainwindow.hpp"
+#include "lib/system.hpp"
 #include "util/widget.hpp"
 
 #include <QFontDialog>

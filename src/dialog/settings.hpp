@@ -1,32 +1,14 @@
 #pragma once
 
-#include "mainwindow.hpp"
 #include "settingspage/base.hpp"
-#include "spotifyclient/runner.hpp"
-#include "view/systeminfoview.hpp"
-#include "lib/settings.hpp"
-#include "dialog/openlink.hpp"
 
-#include <QAction>
-#include <QApplication>
-#include <QCheckBox>
-#include <QComboBox>
+#include "lib/settings.hpp"
+#include "lib/cache.hpp"
+#include "lib/httpclient.hpp"
+
 #include <QDialog>
-#include <QFileDialog>
-#include <QFileInfo>
-#include <QGridLayout>
-#include <QGroupBox>
-#include <QHBoxLayout>
-#include <QInputDialog>
-#include <QLabel>
-#include <QLineEdit>
 #include <QListWidget>
-#include <QMessageBox>
-#include <QProcess>
-#include <QPushButton>
 #include <QStackedWidget>
-#include <QStyleFactory>
-#include <QVBoxLayout>
 
 namespace Dialog
 {

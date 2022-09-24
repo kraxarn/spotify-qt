@@ -1,6 +1,7 @@
 #include "mainwindow.hpp"
-#include "util/widget.hpp"
 #include "lib/time.hpp"
+#include "lib/system.hpp"
+#include "util/widget.hpp"
 #include "util/font.hpp"
 
 MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
