@@ -13,8 +13,6 @@ Dialog::Settings::Settings(lib::settings &settings, lib::cache &cache,
 	: QDialog(parent),
 	settings(settings)
 {
-	setStyleSheet(parent->styleSheet());
-
 	// Main layout
 	auto *mainLayout = new QHBoxLayout();
 
