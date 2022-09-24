@@ -1,12 +1,10 @@
 #pragma once
 
 #include "lib/spotify/api.hpp"
-
-#include "menu/developermenu.hpp"
-#include "util/menuaction.hpp"
+#include "lib/cache.hpp"
+#include "dialog/settings.hpp"
 
 #include <QMenu>
-#include <QMessageBox>
 
 class MainMenu: public QMenu
 {
@@ -23,6 +21,7 @@ private:
 	const lib::http_client &httpClient;
 	QAction *about;
 	QMenu *deviceMenu;
+	Dialog::Settings *settingsDialog = nullptr;
 
 	void refreshDevices();
 	void deviceSelected(QAction *action);

@@ -1,6 +1,8 @@
 #include "mainmenu.hpp"
 #include "mainwindow.hpp"
+#include "util/menuaction.hpp"
 #include "util/shortcut.hpp"
+#include "menu/developermenu.hpp"
 
 MainMenu::MainMenu(lib::spt::api &spotify, lib::settings &settings,
 	const lib::http_client &httpClient, lib::cache &cache, QWidget *parent)
@@ -195,8 +197,10 @@ void MainMenu::checkForUpdate(const std::string &data)
 
 void MainMenu::onOpenSettings(bool /*checked*/)
 {
-	auto *parent = MainWindow::find(parentWidget());
-
-	Dialog::Settings dialog(settings, cache, httpClient, parent);
-	dialog.exec();
+	if (settingsDialog == nullptr)
+	{
+		auto *parent = MainWindow::find(parentWidget());
+		settingsDialog = new Dialog::Settings(settings, cache, httpClient, parent);
+	}
+	settingsDialog->open();
 }
