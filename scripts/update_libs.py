@@ -10,9 +10,9 @@ success = True
 
 def log(lib_name: str, current_version: str, latest_version: str):
 	if current_version == latest_version:
-		print(f"✓️ {lib_name} is up-to-date ({current_version})")
+		print(f" {lib_name} is up-to-date ({current_version})")
 	else:
-		print(f"⨯ {lib_name} {latest_version} is available (current is {current_version})")
+		print(f" {lib_name} {latest_version} is available (current is {current_version})")
 		global success
 		success = False
 
