@@ -15,6 +15,11 @@ void SidePanel::Title::mouseReleaseEvent(QMouseEvent *event)
 	if (event->button() == Qt::MiddleButton
 		&& sidePanel != nullptr)
 	{
-		sidePanel->removeTab(tabAt(event->localPos().toPoint()));
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+		const auto pos = event->localPos();
+#else
+		const auto pos = event->position();
+#endif
+		sidePanel->removeTab(tabAt(pos.toPoint()));
 	}
 }
