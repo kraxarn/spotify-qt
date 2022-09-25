@@ -447,7 +447,7 @@ void SettingsPage::Spotify::setClientStatus(bool enabled,
 void SettingsPage::Spotify::onSpotifyStatusChanged(const QString &status)
 {
 	setClientStatus(true,
-		status.isEmpty()
+		isClientRunning()
 			? QStringLiteral("Stop client")
 			: QStringLiteral("Start client"),
 		status.isEmpty()
