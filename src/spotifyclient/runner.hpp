@@ -48,11 +48,11 @@ namespace SpotifyClient
 		const lib::paths &paths;
 		lib::client_type clientType;
 
-		void logOutput(const QByteArray &output, lib::log_type logType) const;
+		void logOutput(const QByteArray &output, lib::log_type logType);
 		static auto joinArgs(const QStringList &args) -> QString;
 
-		void onReadyReadOutput() const;
-		void onReadyReadError() const;
+		void onReadyReadOutput();
+		void onReadyReadError();
 		void onStarted();
 		void onErrorOccurred(QProcess::ProcessError error);
 	};

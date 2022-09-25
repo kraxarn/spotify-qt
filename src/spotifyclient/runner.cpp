@@ -173,7 +173,7 @@ auto SpotifyClient::Runner::isRunning() const -> bool
 		: process->isOpen();
 }
 
-void SpotifyClient::Runner::logOutput(const QByteArray &output, lib::log_type logType) const
+void SpotifyClient::Runner::logOutput(const QByteArray &output, lib::log_type logType)
 {
 	for (auto &line: QString(output).split('\n'))
 	{
@@ -192,6 +192,8 @@ void SpotifyClient::Runner::logOutput(const QByteArray &output, lib::log_type lo
 			{
 				lib::log::warn("Bad credentials, cleared saved password");
 			}
+
+			emit statusChanged(QStringLiteral("Bad credentials, please try again"));
 		}
 #endif
 	}
@@ -210,12 +212,12 @@ auto SpotifyClient::Runner::joinArgs(const QStringList &args) -> QString
 	return result;
 }
 
-void SpotifyClient::Runner::onReadyReadOutput() const
+void SpotifyClient::Runner::onReadyReadOutput()
 {
 	logOutput(process->readAllStandardOutput(), lib::log_type::information);
 }
 
-void SpotifyClient::Runner::onReadyReadError() const
+void SpotifyClient::Runner::onReadyReadError()
 {
 	logOutput(process->readAllStandardError(), lib::log_type::error);
 }
