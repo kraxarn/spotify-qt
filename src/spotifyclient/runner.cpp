@@ -207,7 +207,7 @@ auto SpotifyClient::Runner::joinArgs(const QStringList &args) -> QString
 		const auto &arg = args.at(i);
 		result.append(QString("%1%2%1%3")
 			.arg(arg.contains(' ') ? "\"" : "", arg,
-				i >= args.size() - 1 ? " " : ""));
+				i < args.size() - 1 ? " " : ""));
 	}
 	return result;
 }
