@@ -18,6 +18,7 @@ Dialog::PasswordEntry::PasswordEntry(SpotifyClient::Runner *runner, QWidget *par
 
 	password = new QLineEdit(this);
 	password->setMinimumWidth(300);
+	password->setEchoMode(QLineEdit::Password);
 	containerLayout->addWidget(password);
 	layout->addWidget(container);
 
