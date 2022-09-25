@@ -28,39 +28,44 @@ SpotifyClient::Runner::~Runner()
 	}
 }
 
-auto SpotifyClient::Runner::start() -> QString
+void SpotifyClient::Runner::start()
 {
 	// Don't start if already running
 	if (!settings.spotify.always_start && isRunning())
 	{
-		return {};
+		emit statusChanged({});
+		return;
 	}
 
 	// Check if empty
 	if (clientType == lib::client_type::none)
 	{
-		return QStringLiteral("path is empty or invalid");
+		emit statusChanged(QStringLiteral("Client path is empty or invalid"));
+		return;
 	}
 
 	// Check if path exists
 	QFileInfo info(path);
 	if (!info.exists())
 	{
-		return QStringLiteral("file in path does not exist");
+		emit statusChanged(QStringLiteral("Client path does not exist"));
+		return;
 	}
 
 	// If using global config, just start
 	if (settings.spotify.global_config && clientType == lib::client_type::spotifyd)
 	{
 		process->start(path, QStringList({QStringLiteral("--no-daemon")}));
-		return {};
+		emit statusChanged({});
+		return;
 	}
 
 	// Check if username exists
 	const auto username = QString::fromStdString(settings.spotify.username);
 	if (username.isEmpty())
 	{
-		return QStringLiteral("no username provided");
+		emit statusChanged(QStringLiteral("No username provided"));
+		return;
 	}
 
 	// Try to get password
@@ -78,12 +83,16 @@ auto SpotifyClient::Runner::start() -> QString
 	{
 		start(username, password);
 	}
-
-	return {};
 }
 
-auto SpotifyClient::Runner::start(const QString &username, const QString &password) -> QString
+void SpotifyClient::Runner::start(const QString &username, const QString &password)
 {
+	if (password.isEmpty())
+	{
+		emit statusChanged(QStringLiteral("No password provided"));
+		return;
+	}
+
 	// Common arguments
 	QStringList arguments({
 		"--bitrate", QString::number(static_cast<int>(settings.spotify.bitrate)),
@@ -140,27 +149,21 @@ auto SpotifyClient::Runner::start(const QString &username, const QString &passwo
 	}
 
 	QProcess::connect(process, &QProcess::readyReadStandardOutput,
-		this, &Runner::readyRead);
+		this, &Runner::onReadyReadOutput);
 
 	QProcess::connect(process, &QProcess::readyReadStandardError,
-		this, &Runner::readyError);
+		this, &Runner::onReadyReadError);
+
+	QProcess::connect(process, &QProcess::started,
+		this, &Runner::onStarted);
+
+	QProcess::connect(process, &QProcess::errorOccurred,
+		this, &Runner::onErrorOccurred);
 
 	lib::log::debug("starting: {} {}", path.toStdString(),
-		arguments.join(' ').toStdString());
+		joinArgs(arguments).toStdString());
 
 	process->start(path, arguments);
-	return {};
-}
-
-auto SpotifyClient::Runner::waitForStarted() const -> bool
-{
-	if (process == nullptr)
-	{
-		return false;
-	}
-
-	constexpr int timeout = 3 * 1000;
-	return process->waitForStarted(timeout);
 }
 
 auto SpotifyClient::Runner::isRunning() const -> bool
@@ -194,14 +197,37 @@ void SpotifyClient::Runner::logOutput(const QByteArray &output, lib::log_type lo
 	}
 }
 
-void SpotifyClient::Runner::readyRead() const
+auto SpotifyClient::Runner::joinArgs(const QStringList &args) -> QString
+{
+	QString result;
+	for (auto i = 0; i < args.size(); i++)
+	{
+		const auto &arg = args.at(i);
+		result.append(QString("%1%2%1%3")
+			.arg(arg.contains(' ') ? "\"" : "", arg,
+				i >= args.size() - 1 ? " " : ""));
+	}
+	return result;
+}
+
+void SpotifyClient::Runner::onReadyReadOutput() const
 {
 	logOutput(process->readAllStandardOutput(), lib::log_type::information);
 }
 
-void SpotifyClient::Runner::readyError() const
+void SpotifyClient::Runner::onReadyReadError() const
 {
 	logOutput(process->readAllStandardError(), lib::log_type::error);
+}
+
+void SpotifyClient::Runner::onStarted()
+{
+	emit statusChanged({});
+}
+
+void SpotifyClient::Runner::onErrorOccurred(QProcess::ProcessError error)
+{
+	emit statusChanged(QString("Error %1").arg(error));
 }
 
 auto SpotifyClient::Runner::getLog() -> const std::vector<lib::log_message> &

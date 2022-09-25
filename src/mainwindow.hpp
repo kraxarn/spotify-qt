@@ -50,7 +50,7 @@ public:
 	void addSizeGrip(const std::function<QPoint(const QRect &)> &position);
 	void minimize();
 
-	auto startClient() -> bool;
+	auto startClient() -> const SpotifyClient::Runner *;
 	void stopClient();
 
 	void setSptContext(const lib::spt::playlist &playlist);
@@ -115,4 +115,7 @@ private:
 	QWidget *createCentralWidget();
 	void setAlbumImage(const lib::spt::entity &albumEntity, const std::string &albumImageUrl);
 	void setSptContext(const std::string &uri);
+
+	// Slots
+	void onSpotifyStatusChanged(const QString &status);
 };

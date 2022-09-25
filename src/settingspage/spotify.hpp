@@ -41,6 +41,8 @@ namespace SettingsPage
 		QPushButton *startClient = nullptr;
 		QLabel *clientStatus = nullptr;
 
+		const SpotifyClient::Runner *runner = nullptr;
+
 		void globalConfigToggle(int state);
 		void startClientToggle(int state);
 		static auto sptConfigExists() -> bool;
@@ -60,6 +62,8 @@ namespace SettingsPage
 
 		auto spotify() -> QWidget *;
 		auto config() -> QWidget *;
+
+		void onSpotifyStatusChanged(const QString &status);
 
 #ifdef USE_KEYCHAIN
 		void onClearPassword(bool checked);

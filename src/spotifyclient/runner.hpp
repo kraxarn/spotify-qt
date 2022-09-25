@@ -26,12 +26,18 @@ namespace SpotifyClient
 		Runner(const lib::settings &settings, const lib::paths &paths, QWidget *parent);
 		~Runner() override;
 
-		auto start() -> QString;
-		auto start(const QString &username, const QString &password) -> QString;
-		auto waitForStarted() const -> bool;
+		void start();
+		void start(const QString &username, const QString &password);
 
 		static auto getLog() -> const std::vector<lib::log_message> &;
 		auto isRunning() const -> bool;
+
+	signals:
+		/**
+		 * Client status changed, usually after attempted start
+		 * @param status Error message, or empty string on success
+		 */
+		void statusChanged(const QString &status);
 
 	private:
 		QProcess *process = nullptr;
@@ -42,8 +48,12 @@ namespace SpotifyClient
 		const lib::paths &paths;
 		lib::client_type clientType;
 
-		void readyRead() const;
-		void readyError() const;
 		void logOutput(const QByteArray &output, lib::log_type logType) const;
+		static auto joinArgs(const QStringList &args) -> QString;
+
+		void onReadyReadOutput() const;
+		void onReadyReadError() const;
+		void onStarted();
+		void onErrorOccurred(QProcess::ProcessError error);
 	};
 }

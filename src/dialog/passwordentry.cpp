@@ -54,3 +54,11 @@ void Dialog::PasswordEntry::onOk(bool checked)
 	runner->start(currentUsername, passwordText);
 	Base::onOk(checked);
 }
+
+void Dialog::PasswordEntry::onCancel(bool checked)
+{
+	// Start anyway with empty password to emit statusChanged signal
+	runner->start(currentUsername, {});
+
+	Base::onCancel(checked);
+}

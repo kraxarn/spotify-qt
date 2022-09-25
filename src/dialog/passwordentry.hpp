@@ -20,6 +20,7 @@ namespace Dialog
 
 	protected:
 		void onOk(bool checked) override;
+		void onCancel(bool checked) override;
 
 	private:
 		SpotifyClient::Runner *runner;

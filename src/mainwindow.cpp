@@ -366,25 +366,21 @@ auto MainWindow::createCentralWidget() -> QWidget *
 	return mainContent;
 }
 
-auto MainWindow::startClient() -> bool
+auto MainWindow::startClient() -> const SpotifyClient::Runner *
 {
 	stopClient();
 
 	spotifyRunner = new SpotifyClient::Runner(settings, paths, this);
-	auto status = spotifyRunner->start();
-	if (!status.isEmpty())
-	{
-		QMessageBox::warning(this, "Client error",
-			QString("Failed to start Spotify client: %1").arg(status));
-		return false;
-	}
+	SpotifyClient::Runner::connect(spotifyRunner, &SpotifyClient::Runner::statusChanged,
+		this, &MainWindow::onSpotifyStatusChanged);
 
-	return true;
+	spotifyRunner->start();
+	return spotifyRunner;
 }
 
 void MainWindow::stopClient()
 {
-	delete spotifyRunner;
+	spotifyRunner->deleteLater();
 	spotifyRunner = nullptr;
 }
 
@@ -665,4 +661,13 @@ void MainWindow::resetLibraryPlaylist() const
 {
 	libraryList->setCurrentItem(nullptr);
 	playlistList->setCurrentRow(-1);
+}
+
+void MainWindow::onSpotifyStatusChanged(const QString &status)
+{
+	if ((windowState() & Qt::WindowActive) > 0)
+	{
+		QMessageBox::warning(this, QStringLiteral("Client error"),
+			QString("Failed to start Spotify client: %1").arg(status));
+	}
 }

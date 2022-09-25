@@ -109,6 +109,17 @@ auto SettingsPage::Spotify::spotify() -> QWidget *
 	QAbstractButton::connect(startClient, &QAbstractButton::clicked,
 		this, &SettingsPage::Spotify::restartClient);
 
+	auto *mainWindow = MainWindow::find(parentWidget());
+	if (mainWindow != nullptr)
+	{
+		runner = mainWindow->getSpotifyRunner();
+		if (runner != nullptr)
+		{
+			SpotifyClient::Runner::connect(runner, &SpotifyClient::Runner::statusChanged,
+				this, &SettingsPage::Spotify::onSpotifyStatusChanged);
+		}
+	}
+
 	clientStatus = new QLabel(this);
 	clientStatus->setEnabled(false);
 	statusLayout->addWidget(clientStatus, 1);
@@ -140,45 +151,24 @@ void SettingsPage::Spotify::updateClientStatus()
 void SettingsPage::Spotify::restartClient(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-	if (mainWindow != nullptr)
+	if (mainWindow == nullptr)
 	{
-		if (isClientRunning())
-		{
-			mainWindow->stopClient();
-		}
-		else
-		{
-			setClientStatus(false, QStringLiteral("Starting"),
-				QStringLiteral("Please wait..."));
-
-			if (!mainWindow->startClient())
-			{
-				setClientStatus(true, QStringLiteral("Start client"),
-					QStringLiteral("Failed to start"));
-			}
-			else
-			{
-				const auto *clientHandler = getClientRunner();
-				if (clientHandler != nullptr)
-				{
-					const auto success = clientHandler->waitForStarted();
-					setClientStatus(true,
-						success
-							? QStringLiteral("Stop client")
-							: QStringLiteral("Start client"),
-						success
-							? QStringLiteral("Running")
-							: QStringLiteral("Failed to start"));
-
-					return;
-				}
-				updateClientStatus();
-			}
-
-			return;
-		}
+		return;
 	}
-	updateClientStatus();
+
+	if (isClientRunning())
+	{
+		mainWindow->stopClient();
+		updateClientStatus();
+		return;
+	}
+
+	setClientStatus(false, QStringLiteral("Starting"),
+		QStringLiteral("Please wait..."));
+
+	runner = mainWindow->startClient();
+	SpotifyClient::Runner::connect(runner, &SpotifyClient::Runner::statusChanged,
+		this, &SettingsPage::Spotify::onSpotifyStatusChanged);
 }
 
 auto SettingsPage::Spotify::config() -> QWidget *
@@ -452,6 +442,17 @@ void SettingsPage::Spotify::setClientStatus(bool enabled,
 	{
 		clientStatus->setText(status);
 	}
+}
+
+void SettingsPage::Spotify::onSpotifyStatusChanged(const QString &status)
+{
+	setClientStatus(true,
+		status.isEmpty()
+			? QStringLiteral("Stop client")
+			: QStringLiteral("Start client"),
+		status.isEmpty()
+			? QStringLiteral("Running")
+			: status);
 }
 
 #ifdef USE_KEYCHAIN
