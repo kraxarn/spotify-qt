@@ -33,11 +33,11 @@ Dialog::PasswordEntry::PasswordEntry(SpotifyClient::Runner *runner, QWidget *par
 	Base::addAction(DialogAction::Cancel);
 }
 
-void Dialog::PasswordEntry::show(const QString &username)
+void Dialog::PasswordEntry::open(const QString &username)
 {
 	currentUsername = username;
 	container->setTitle(QString("Password for Spotify user \"%1\"").arg(username));
-	QWidget::show();
+	QDialog::open();
 }
 
 void Dialog::PasswordEntry::onOk(bool checked)

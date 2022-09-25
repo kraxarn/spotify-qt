@@ -16,7 +16,7 @@ namespace Dialog
 	public:
 		PasswordEntry(SpotifyClient::Runner *runner, QWidget *parent);
 
-		void show(const QString &username);
+		void open(const QString &username);
 
 	protected:
 		void onOk(bool checked) override;

@@ -77,7 +77,7 @@ void SpotifyClient::Runner::start()
 	if (password.isEmpty())
 	{
 		auto *dialog = new Dialog::PasswordEntry(this, parentWidget);
-		dialog->show(username);
+		dialog->open(username);
 	}
 	else
 	{
