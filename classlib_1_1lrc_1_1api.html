@@ -83,6 +83,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aa92f48b9431ea37c9d8fd342209a7e95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed1f2595e39cceee74b26a9dbee2090a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1lrc_1_1api.html#aed1f2595e39cceee74b26a9dbee2090a">search</a> (const <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &amp;track, lib::callback&lt; <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; std::vector&lt; <a class="el" href="classlib_1_1lrc_1_1search__result.html">lib::lrc::search_result</a> &gt; &gt; &gt; &amp;callback)</td></tr>
 <tr class="separator:aed1f2595e39cceee74b26a9dbee2090a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44e5e2e527a89743902d26812b2b201c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1lrc_1_1api.html#a44e5e2e527a89743902d26812b2b201c">search</a> (const std::string &amp;query, lib::callback&lt; <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; std::vector&lt; <a class="el" href="classlib_1_1lrc_1_1search__result.html">lib::lrc::search_result</a> &gt; &gt; &gt; &amp;callback)</td></tr>
+<tr class="separator:a44e5e2e527a89743902d26812b2b201c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59a3b128a10bc6441e49b4f731dc0212"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1lrc_1_1api.html#a59a3b128a10bc6441e49b4f731dc0212">lyrics</a> (int lyrics_id, lib::callback&lt; <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; <a class="el" href="classlib_1_1lrc_1_1lyrics.html">lib::lrc::lyrics</a> &gt; &gt; &amp;callback)</td></tr>
 <tr class="separator:a59a3b128a10bc6441e49b4f731dc0212"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -158,7 +160,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="aed1f2595e39cceee74b26a9dbee2090a" name="aed1f2595e39cceee74b26a9dbee2090a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aed1f2595e39cceee74b26a9dbee2090a">&#9670;&nbsp;</a></span>search()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aed1f2595e39cceee74b26a9dbee2090a">&#9670;&nbsp;</a></span>search() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -185,6 +187,41 @@ Public Member Functions</h2></td></tr>
 <p >Search for lyrics </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">track</td><td>Track to search for </td></tr>
+    <tr><td class="paramname">callback</td><td>A list of possible lyric ids if successful </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a44e5e2e527a89743902d26812b2b201c" name="a44e5e2e527a89743902d26812b2b201c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44e5e2e527a89743902d26812b2b201c">&#9670;&nbsp;</a></span>search() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::lrc::api::search </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>query</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; std::vector&lt; <a class="el" href="classlib_1_1lrc_1_1search__result.html">lib::lrc::search_result</a> &gt; &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Search for lyrics </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">query</td><td>Query to search for </td></tr>
     <tr><td class="paramname">callback</td><td>A list of possible lyric ids if successful </td></tr>
   </table>
   </dd>
