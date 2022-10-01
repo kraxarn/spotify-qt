@@ -48,11 +48,11 @@ auto lib::qt::system_info::to_text() -> QString
 	QString systemInfo;
 	QMapIterator<QString, QString> iter(info);
 
-	size_t max = 0;
+	qsizetype max = 0;
 	while (iter.hasNext())
 	{
 		iter.next();
-		const auto keySize = iter.key().size();
+		const auto keySize = iter.key().length();
 		if (keySize > max)
 		{
 			max = keySize;
