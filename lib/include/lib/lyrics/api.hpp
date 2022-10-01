@@ -39,6 +39,14 @@ namespace lib
 				lib::callback<lib::result<std::vector<lib::lrc::search_result>>> &callback);
 
 			/**
+			 * Search for lyrics
+			 * @param query Query to search for
+			 * @param callback A list of possible lyric ids if successful
+			 */
+			void search(const std::string &query,
+				lib::callback<lib::result<std::vector<lib::lrc::search_result>>> &callback);
+
+			/**
 			 * Load lyrics from ID
 			 * @param lyrics_id Lyrics ID from search
 			 * @param callback Lyrics

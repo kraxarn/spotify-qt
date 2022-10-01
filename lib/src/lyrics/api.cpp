@@ -20,13 +20,21 @@ auto lib::lrc::api::headers() -> lib::headers
 void lib::lrc::api::search(const lib::spt::track &track,
 	lib::callback<lib::result<std::vector<lib::lrc::search_result>>> &callback)
 {
+	const auto query = lib::fmt::format("{} {}",
+		lib::uri::encode(track.name),
+		lib::uri::encode(track.artists.front().name));
+
+	search(query, callback);
+}
+
+void lib::lrc::api::search(const std::string &query,
+	lib::callback<lib::result<std::vector<lib::lrc::search_result>>> &callback)
+{
 	lib::uri uri("https://music.xianqiao.wang/neteaseapiv2/search");
 	uri.set_search_params({
 		{"limit", "10"},
 		{"type", "1"},
-		{"keywords", lib::fmt::format("{} {}",
-			lib::uri::encode(track.name),
-			lib::uri::encode(track.artists.front().name))},
+		{"keywords", query},
 	});
 
 	http.get(uri.get_url(), headers(), [callback](const std::string &response)
