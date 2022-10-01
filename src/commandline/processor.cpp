@@ -7,6 +7,8 @@
 #include "mediaplayer/client.hpp"
 #endif
 
+#include <QtDebug>
+
 auto CommandLine::Processor::process(const QCommandLineParser &parser) -> bool
 {
 	if (parser.isSet(ARG_ENABLE_DEV))
