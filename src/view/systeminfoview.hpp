@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/qt/systeminfo.hpp"
+#include "util/systeminfo.hpp"
 
 #include <QFile>
 #include <QLabel>
