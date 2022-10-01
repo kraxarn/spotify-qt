@@ -25,16 +25,16 @@ auto lib::log_message::get_type_short() const -> std::string
 	switch (logType)
 	{
 		case log_type::information:
-			return "info";
+			return "inf";
 
 		case log_type::warning:
-			return "warn";
+			return "wrn";
 
 		case log_type::error:
-			return "err ";
+			return "err";
 
 		case log_type::verbose:
-			return "dbg ";
+			return "dbg";
 	}
 
 	return {};
