@@ -5,6 +5,7 @@
 #include "dialog/apirequest.hpp"
 #include "dialog/passwordentry.hpp"
 #include "dialog/memory.hpp"
+#include "dialog/lyricssearch.hpp"
 
 DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
@@ -222,7 +223,11 @@ void DeveloperMenu::onDialogMenuAboutToShow()
 		{QStringLiteral("Memory"), [mainWindow]
 		{
 			return new Dialog::Memory(mainWindow);
-		}}
+		}},
+		{QStringLiteral("Lyrics search"), [this, mainWindow]
+		{
+			return new Dialog::LyricsSearch(httpClient, mainWindow);
+		}},
 	};
 
 	QMapIterator<QString, std::function<QDialog *()>> iter(dialogs);
