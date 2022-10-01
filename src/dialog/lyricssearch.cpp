@@ -1,9 +1,9 @@
 #include "dialog/lyricssearch.hpp"
+#include "view/sidepanel/view.hpp"
 
 #include <QGroupBox>
 #include <QPushButton>
 #include <QMessageBox>
-#include <QHeaderView>
 
 Dialog::LyricsSearch::LyricsSearch(const lib::http_client &httpClient, QWidget *parent)
 	: Base(parent),
@@ -35,6 +35,9 @@ Dialog::LyricsSearch::LyricsSearch(const lib::http_client &httpClient, QWidget *
 		QStringLiteral("Album"),
 	});
 	layout->addWidget(results, 1);
+
+	QTreeWidget::connect(results, &QTreeWidget::itemDoubleClicked,
+		this, &Dialog::LyricsSearch::onResultsItemDoubleClicked);
 
 	auto *header = results->header();
 	header->resizeSection(0, widthId);
@@ -73,4 +76,26 @@ void Dialog::LyricsSearch::onSearchClicked(bool /*checked*/)
 
 		searchBox->setEnabled(true);
 	});
+}
+
+void Dialog::LyricsSearch::onResultsItemDoubleClicked(QTreeWidgetItem *item, int /*column*/)
+{
+	SidePanel::View *sidePanel = nullptr;
+	for (auto *window: QApplication::topLevelWidgets())
+	{
+		sidePanel = window->findChild<SidePanel::View *>();
+		if (sidePanel != nullptr)
+		{
+			break;
+		}
+	}
+
+	if (sidePanel == nullptr)
+	{
+		return;
+	}
+
+	const auto lyricsId = item->text(0).toInt();
+	sidePanel->openLyrics(lyricsId);
+	accept();
 }

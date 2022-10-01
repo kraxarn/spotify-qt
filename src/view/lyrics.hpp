@@ -23,6 +23,7 @@ namespace View
 			lib::cache &cache, QWidget *parent);
 
 		void open(const lib::spt::track &track);
+		void load(int lyricsId);
 
 	private:
 		static constexpr int timestampRole = 0x100;
@@ -38,7 +39,6 @@ namespace View
 
 		QComboBox *lyricIds = nullptr;
 
-		void load(int lyricsId);
 		void load(const lib::lrc::lyrics &loaded);
 		static auto getTimestamp(const QListWidgetItem *item) -> qlonglong;
 		void setLyricsIds(const std::vector<lib::lrc::search_result> &results, int index);

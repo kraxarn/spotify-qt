@@ -73,6 +73,14 @@ void SidePanel::View::openLyrics(const lib::spt::track &track)
 	view->open(track);
 }
 
+void SidePanel::View::openLyrics(int lyricsId)
+{
+	auto *view = new ::View::Lyrics(httpClient, cache, this);
+	const auto name = QString::number(lyricsId);
+	addTab(view, QStringLiteral("view-media-lyrics"), name, SidePanelType::Lyrics, name);
+	view->load(lyricsId);
+}
+
 void SidePanel::View::openSearch()
 {
 	if (searchView == nullptr)

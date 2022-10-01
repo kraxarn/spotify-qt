@@ -24,6 +24,7 @@ namespace SidePanel
 		void openArtist(const std::string &artistId);
 		void openAudioFeatures(const std::vector<lib::spt::track> &tracks);
 		void openLyrics(const lib::spt::track &track);
+		void openLyrics(int lyricsId);
 
 		void openSearch();
 		void closeSearch();

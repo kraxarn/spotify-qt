@@ -31,5 +31,6 @@ namespace Dialog
 		QTreeWidget *results;
 
 		void onSearchClicked(bool checked);
+		void onResultsItemDoubleClicked(QTreeWidgetItem *item, int);
 	};
 }
