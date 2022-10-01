@@ -48,11 +48,11 @@ auto lib::qt::system_info::to_text() -> QString
 	QString systemInfo;
 	QMapIterator<QString, QString> iter(info);
 
-	qsizetype max = 0;
+	auto max = 0;
 	while (iter.hasNext())
 	{
 		iter.next();
-		const auto keySize = iter.key().length();
+		const auto keySize = static_cast<int>(iter.key().length());
 		if (keySize > max)
 		{
 			max = keySize;
@@ -64,7 +64,7 @@ auto lib::qt::system_info::to_text() -> QString
 	{
 		iter.next();
 		systemInfo += QString("%1: %2\n")
-			.arg(iter.key(), -static_cast<int>(max))
+			.arg(iter.key(), -max)
 			.arg(iter.value());
 	}
 	return systemInfo;
