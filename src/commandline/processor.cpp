@@ -1,6 +1,7 @@
 #include "commandline/processor.hpp"
 #include "commandline/args.hpp"
 #include "lib/log.hpp"
+#include "util/systeminfo.hpp"
 
 #ifdef USE_DBUS
 #include "mediaplayer/client.hpp"
@@ -14,6 +15,13 @@ auto CommandLine::Processor::process(const QCommandLineParser &parser) -> bool
 	{
 		lib::developer_mode::enabled = true;
 		return false;
+	}
+
+	if (parser.isSet(ARG_SYSTEM_INFORMATION))
+	{
+		SystemInfo systemInfo;
+		qInfo().noquote() << systemInfo.to_text();
+		return true;
 	}
 
 #ifdef USE_DBUS

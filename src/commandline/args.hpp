@@ -34,3 +34,8 @@
  * Metadata of currently playing track
  */
 #define ARG_METADATA QStringLiteral("metadata")
+
+/**
+ * Print system information
+ */
+#define ARG_SYSTEM_INFORMATION QStringLiteral("system-info")

@@ -25,6 +25,10 @@ auto CommandLine::Parser::options() -> QList<QCommandLineOption>
 			ARG_LIST_PATHS,
 			QStringLiteral("Print paths for config file and cache."),
 		},
+		{
+			ARG_SYSTEM_INFORMATION,
+			QStringLiteral("Print system information"),
+		},
 		// Playback options
 		{
 			ARG_PLAY_PAUSE,

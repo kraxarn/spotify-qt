@@ -11,6 +11,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/refresher.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/shortcut.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/style.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/systeminfo.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/tree.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/url.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/widget.cpp)
