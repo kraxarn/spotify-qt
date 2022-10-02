@@ -6,6 +6,7 @@ SidePanel::Title::Title(QWidget *parent)
 {
 	setMovable(true);
 	setTabsClosable(true);
+	setUsesScrollButtons(true);
 }
 
 void SidePanel::Title::mouseReleaseEvent(QMouseEvent *event)
