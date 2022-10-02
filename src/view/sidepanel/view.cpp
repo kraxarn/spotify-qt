@@ -20,7 +20,7 @@ SidePanel::View::View(lib::spt::api &spotify, const lib::settings &settings,
 	QTabBar::connect(title, &QTabBar::tabCloseRequested,
 		this, &SidePanel::View::removeTab);
 
-	QTabBar::connect(title, &QTabBar::currentChanged,
+	QTabBar::connect(title, &QTabBar::tabBarClicked,
 		this, &SidePanel::View::setCurrentIndex);
 
 	QTabBar::connect(title, &QTabBar::tabMoved,
