@@ -18,7 +18,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
 	if (lib::system::window_system() == lib::window_system::wayland)
 	{
-		createWinId();
+		winId();
 	}
 #endif
 
