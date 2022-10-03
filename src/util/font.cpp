@@ -3,6 +3,11 @@
 auto Font::monospace() -> QFont
 {
 	QFont font(QStringLiteral("monospace"));
-	font.setStyleHint(QFont::Monospace);
+
+	if (!font.fixedPitch())
+	{
+		font.setStyleHint(QFont::Monospace);
+	}
+
 	return font;
 }
