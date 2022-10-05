@@ -1,13 +1,8 @@
 #include "util/font.hpp"
 
+#include <QFontDatabase>
+
 auto Font::monospace() -> QFont
 {
-	QFont font(QStringLiteral("monospace"));
-
-	if (!font.fixedPitch())
-	{
-		font.setStyleHint(QFont::Monospace);
-	}
-
-	return font;
+	return QFontDatabase::systemFont(QFontDatabase::FixedFont);
 }
