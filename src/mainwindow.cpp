@@ -232,7 +232,10 @@ void MainWindow::refresh()
 				return;
 			}
 
-			lib::log::error("Refresh failed: {}", result.message());
+			if (!result.message().empty())
+			{
+				lib::log::error("Refresh failed: {}", result.message());
+			}
 
 			if (current.playback.is_playing)
 			{
