@@ -33,9 +33,14 @@ namespace lib
 			void get(const std::string &url, lib::callback<lib::result<T>> &callback)
 			{
 				http.get(lib::spt::to_full_url(url), auth_headers(),
-					[url, callback](const std::string &response)
+					[url, callback](const lib::result<std::string> &response)
 					{
-						callback(parse_json<T>(response));
+						if (!response.success())
+						{
+							callback(lib::result<T>::fail(response.message()));
+							return;
+						}
+						callback(parse_json<T>(response.value()));
 					});
 			}
 

@@ -40,6 +40,27 @@ void lib::qt::http_client::await(QNetworkReply *reply, lib::callback<QByteArray>
 		});
 }
 
+void lib::qt::http_client::await(QNetworkReply *reply,
+	lib::callback<lib::result<std::string>> &callback) const
+{
+	QNetworkReply::connect(reply, &QNetworkReply::finished, this, [reply, callback]()
+	{
+		const auto data = reply->readAll();
+		std::string response(data.cbegin(), data.cend());
+
+		if (reply->error() != QNetworkReply::NoError)
+		{
+			lib::log::error("Request failed: {}", reply->errorString().toStdString());
+			callback(lib::result<std::string>::fail(response));
+		}
+		else
+		{
+			callback(lib::result<std::string>::ok(response));
+		}
+		reply->deleteLater();
+	});
+}
+
 void lib::qt::http_client::get(const std::string &url, const lib::headers &headers,
 	lib::callback<std::string> &callback) const
 {
@@ -48,6 +69,12 @@ void lib::qt::http_client::get(const std::string &url, const lib::headers &heade
 		{
 			callback(data.toStdString());
 		});
+}
+
+void lib::qt::http_client::get(const std::string &url, const lib::headers &headers,
+	lib::callback<lib::result<std::string>> &callback) const
+{
+	await(network_manager->get(request(url, headers)), callback);
 }
 
 void lib::qt::http_client::put(const std::string &url, const std::string &body,

@@ -3,6 +3,7 @@
 #include "lib/settings.hpp"
 #include "lib/format.hpp"
 #include "lib/spotify/callback.hpp"
+#include "lib/result.hpp"
 
 #include <string>
 
@@ -21,9 +22,16 @@ namespace lib
 	public:
 		/**
 		 * GET request
+		 * @deprecated Use with result callback instead
 		 */
 		virtual void get(const std::string &url, const headers &headers,
 			lib::callback<std::string> &callback) const = 0;
+
+		/**
+		 * GET request
+		 */
+		virtual void get(const std::string &url, const lib::headers &headers,
+			lib::callback<lib::result<std::string>> &callback) const = 0;
 
 		/**
 		 * PUT request

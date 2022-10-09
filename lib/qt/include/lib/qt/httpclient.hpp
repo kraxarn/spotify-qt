@@ -22,6 +22,9 @@ namespace lib
 				const lib::headers &headers,
 				lib::callback<std::string> &callback) const override;
 
+			void get(const std::string &url, const lib::headers &headers,
+				lib::callback<lib::result<std::string>> &callback) const override;
+
 			void put(const std::string &url, const std::string &body,
 				const lib::headers &headers,
 				lib::callback<std::string> &callback) const override;
@@ -42,6 +45,9 @@ namespace lib
 				const lib::headers &headers) -> QNetworkRequest;
 
 			void await(QNetworkReply *reply, lib::callback<QByteArray> &callback) const;
+
+			void await(QNetworkReply *reply,
+				lib::callback<lib::result<std::string>> &callback) const;
 		};
 	}
 }
