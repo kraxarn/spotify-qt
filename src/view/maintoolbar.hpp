@@ -7,6 +7,7 @@
 #include "widget/volumebutton.hpp"
 #include "widget/clickableslider.hpp"
 #include "widget/dragarea.hpp"
+#include "widget/position.hpp"
 
 #include <QToolBar>
 #include <QToolButton>
@@ -63,7 +64,7 @@ private:
 	QAction *next;
 
 	QSlider *progress;
-	QLabel *position;
+	Position *position;
 
 	QAction *shuffle;
 	QAction *repeat;

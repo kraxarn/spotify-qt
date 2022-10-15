@@ -60,11 +60,7 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 
 	addWidget(progress);
 	addSeparator();
-	position = new QLabel("0:00/0:00", this);
-	if (settings.general.fixed_width_time)
-	{
-		position->setFont(Font::monospace());
-	}
+	position = new Position(this);
 	addWidget(position);
 
 	rightSpacer = new DragArea(mainWindow, this);
@@ -205,9 +201,8 @@ void MainToolBar::setPlaying(bool playing)
 
 void MainToolBar::setProgress(int current, int duration)
 {
-	position->setText(QString("%1/%2")
-		.arg(QString::fromStdString(lib::format::time(current)),
-			QString::fromStdString(lib::format::time(duration))));
+	position->setCurrent(current);
+	position->setTotal(duration);
 
 	progress->setValue(current);
 	progress->setMaximum(duration);
