@@ -4,7 +4,10 @@
 Dialog::Base::Base(QWidget *parent)
 	: QDialog(parent)
 {
-	setAttribute(Qt::WA_DeleteOnClose);
+	if (parent != nullptr)
+	{
+		setAttribute(Qt::WA_DeleteOnClose);
+	}
 }
 
 void Dialog::Base::onOk(bool /*checked*/)
