@@ -22,7 +22,6 @@ namespace SettingsPage
 	private:
 		// General
 		QComboBox *resizeMode = nullptr;
-		QCheckBox *monoTime = nullptr;
 		QCheckBox *trackNumbers = nullptr;
 		QCheckBox *relativeAdded = nullptr;
 

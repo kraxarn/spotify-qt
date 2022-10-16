@@ -28,7 +28,6 @@ public:
 	void reloadTrayIcon();
 	auto getTrayIcon() -> TrayIcon *;
 	auto getCurrentUser() const -> const lib::spt::user &;
-	void setFixedWidthTime(bool value);
 	std::vector<lib::spt::track> loadTracksFromCache(const std::string &id);
 	void saveTracksToCache(const std::string &id, const std::vector<lib::spt::track> &tracks);
 	std::vector<std::string> currentTracks();

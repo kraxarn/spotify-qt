@@ -7,7 +7,6 @@ void lib::setting::to_json(nlohmann::json &j, const general &g)
 		{"close_to_tray", g.close_to_tray},
 		{"custom_playlist_order", g.custom_playlist_order},
 		{"fallback_icons", g.fallback_icons},
-		{"fixed_width_time", g.fixed_width_time},
 		{"hidden_song_headers", g.hidden_song_headers},
 		{"last_device", g.last_device},
 		{"last_playlist", g.last_playlist},
@@ -41,7 +40,6 @@ void lib::setting::from_json(const nlohmann::json &j, general &g)
 	lib::json::get(j, "close_to_tray", g.close_to_tray);
 	lib::json::get(j, "custom_playlist_order", g.custom_playlist_order);
 	lib::json::get(j, "fallback_icons", g.fallback_icons);
-	lib::json::get(j, "fixed_width_time", g.fixed_width_time);
 	lib::json::get(j, "hidden_song_headers", g.hidden_song_headers);
 	lib::json::get(j, "last_device", g.last_device);
 	lib::json::get(j, "last_playlist", g.last_playlist);

@@ -237,11 +237,6 @@ void MainToolBar::setShuffle(bool value)
 	shuffle->setChecked(value);
 }
 
-void MainToolBar::setPositionFont(const QFont &font)
-{
-	position->setFont(font);
-}
-
 void MainToolBar::setSearchChecked(bool checked)
 {
 	search->setChecked(checked);

@@ -29,7 +29,6 @@ public:
 	void setRepeat(lib::repeat_state state);
 	auto toggleRepeat() -> lib::repeat_state;
 	void setShuffle(bool shuffle);
-	void setPositionFont(const QFont &font);
 	void setSearchChecked(bool checked);
 
 protected:

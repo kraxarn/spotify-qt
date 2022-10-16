@@ -65,11 +65,6 @@ namespace lib
 			bool fallback_icons = false;
 
 			/**
-			 * Use a monospace font for time progress
-			 */
-			bool fixed_width_time = true;
-
-			/**
 			 * Enable d-bus MPRIS
 			 */
 			bool media_controller = false;

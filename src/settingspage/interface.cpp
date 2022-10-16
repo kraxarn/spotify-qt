@@ -39,12 +39,6 @@ auto SettingsPage::Interface::general() -> QWidget *
 	comboBoxLayout->addWidget(resizeMode, 0, 1);
 	layout->addLayout(comboBoxLayout);
 
-	// Monospace remaining time
-	monoTime = new QCheckBox("Fixed width remaining time", this);
-	monoTime->setToolTip("Use a fixed width for remaining time to avoid resizing");
-	monoTime->setChecked(settings.general.fixed_width_time);
-	layout->addWidget(monoTime);
-
 	// Track numbers
 	trackNumbers = new QCheckBox("Show track numbers", this);
 	trackNumbers->setToolTip("Show track numbers next to tracks in the list");
@@ -259,16 +253,6 @@ void SettingsPage::Interface::saveGeneral()
 		}
 
 		settings.general.track_list_resize_mode = newResizeMode;
-	}
-
-	if (monoTime != nullptr)
-	{
-		if (mainWindow != nullptr)
-		{
-			mainWindow->setFixedWidthTime(monoTime->isChecked());
-		}
-
-		settings.general.fixed_width_time = monoTime->isChecked();
 	}
 
 	if (trackNumbers != nullptr)

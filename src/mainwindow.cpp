@@ -478,13 +478,6 @@ auto MainWindow::getTrayIcon() -> TrayIcon *
 	return trayIcon;
 }
 
-void MainWindow::setFixedWidthTime(bool value)
-{
-	toolBar->setPositionFont(value
-		? Font::monospace()
-		: QFont());
-}
-
 void MainWindow::toggleTrackNumbers(bool enabled)
 {
 	const auto *tracksList = mainContent->getTracksList();
