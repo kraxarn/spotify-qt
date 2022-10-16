@@ -26,6 +26,11 @@ Menu::AddToPlaylist::AddToPlaylist(std::vector<std::string> trackIds, lib::spt::
 
 void Menu::AddToPlaylist::onAboutToShow()
 {
+	if (actions().length() > 1)
+	{
+		return;
+	}
+
 	auto *mainWindow = MainWindow::find(parentWidget());
 	const auto &currentUserId = mainWindow->getCurrentUser().id;
 
