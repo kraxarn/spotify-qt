@@ -18,7 +18,7 @@ auto lib::json::combine(const nlohmann::json &item1, const nlohmann::json &item2
 
 auto lib::json::load(const ghc::filesystem::path &path) -> nlohmann::json
 {
-	std::ifstream file(path);
+	ghc::filesystem::ifstream file(path);
 	if (!file.is_open() || file.bad())
 	{
 		// File not found errors fail silently
@@ -44,7 +44,7 @@ void lib::json::save(const ghc::filesystem::path &path, const nlohmann::json &js
 {
 	try
 	{
-		std::ofstream file(path);
+		ghc::filesystem::ofstream file(path);
 		file << std::setw(4) << json;
 	}
 	catch (const std::exception &e)
