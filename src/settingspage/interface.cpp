@@ -61,7 +61,7 @@ auto SettingsPage::Interface::general() -> QWidget *
 
 	// Native window handle
 	// (Required to move window under Wayland)
-	if (lib::system::window_system() != lib::window_system::wayland)
+	if (QGuiApplication::platformName() != "wayland")
 	{
 		nativeWindow = new QCheckBox(QStringLiteral("Use native window"), this);
 		nativeWindow->setToolTip(QStringLiteral("Create main window with a native handle"));
