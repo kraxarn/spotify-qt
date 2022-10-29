@@ -1,6 +1,8 @@
 #include "util/systeminfo.hpp"
 #include "util/appinstalltype.hpp"
 
+#include <QGuiApplication>
+
 SystemInfo::SystemInfo()
 {
 	// spotify-qt version
@@ -33,4 +35,7 @@ SystemInfo::SystemInfo()
 
 	// CMake build type
 	add(QStringLiteral("Build type"), QStringLiteral(BUILD_TYPE));
+
+	// Platform plugin
+	add(QStringLiteral("Platform"), QGuiApplication::platformName());
 }
