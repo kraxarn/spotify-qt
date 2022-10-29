@@ -18,6 +18,9 @@ namespace lib
 			 * Name of credited
 			 */
 			std::string name;
+
+			auto operator<(const credit &rhs) const -> bool;
+			auto operator==(const credit &rhs) const -> bool;
 		};
 	}
 }

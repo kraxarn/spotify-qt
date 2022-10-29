@@ -1,5 +1,6 @@
 #include "lib/lyrics/lyrics.hpp"
 #include "lib/strings.hpp"
+#include "lib/vector.hpp"
 
 void lib::lrc::from_json(const nlohmann::json &json, lib::lrc::lyrics &lyrics)
 {
@@ -21,6 +22,8 @@ void lib::lrc::from_json(const nlohmann::json &json, lib::lrc::lyrics &lyrics)
 		}
 		lyrics.credits.emplace_back(parsed.text);
 	}
+
+	lib::vector::unique(lyrics.credits);
 
 	while (iter != lines.cend())
 	{

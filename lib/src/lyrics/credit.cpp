@@ -14,3 +14,13 @@ lib::lrc::credit::credit(const std::string &line)
 	name = line.substr(split + 1);
 	lib::strings::trim(name);
 }
+
+auto lib::lrc::credit::operator<(const lib::lrc::credit &rhs) const -> bool
+{
+	return name < rhs.name;
+}
+
+auto lib::lrc::credit::operator==(const lib::lrc::credit &rhs) const -> bool
+{
+	return name == rhs.name;
+}
