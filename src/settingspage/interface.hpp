@@ -24,6 +24,7 @@ namespace SettingsPage
 		QComboBox *resizeMode = nullptr;
 		QCheckBox *trackNumbers = nullptr;
 		QCheckBox *relativeAdded = nullptr;
+		QCheckBox *nativeWindow = nullptr;
 
 		// Appearance
 		QComboBox *qtStyle = nullptr;
