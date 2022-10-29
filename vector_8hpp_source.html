@@ -135,14 +135,23 @@ $(function() {
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            <span class="keywordflow">return</span> std::accumulate(vec.cbegin(), vec.cend(), init) / <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(vec.size());</div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        }</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    };</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>}</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno"><a class="line" href="classlib_1_1vector.html#af0a0f3f4923cc18f96711a9b0bba7f19">  101</a></span>        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1vector.html#af0a0f3f4923cc18f96711a9b0bba7f19">unique</a>(std::vector&lt;T&gt; &amp;vec)</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        {</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            std::sort(vec.begin(), vec.end());</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            <span class="keyword">const</span> <span class="keyword">auto</span> duplicates = std::unique(vec.begin(), vec.end());</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            vec.erase(duplicates, vec.end());</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        }</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    };</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>}</div>
 <div class="ttc" id="aclasslib_1_1vector_html"><div class="ttname"><a href="classlib_1_1vector.html">lib::vector</a></div><div class="ttdef"><b>Definition:</b> vector.hpp:10</div></div>
 <div class="ttc" id="aclasslib_1_1vector_html_a3989baffc142e95ea96da199c81d15f1"><div class="ttname"><a href="classlib_1_1vector.html#a3989baffc142e95ea96da199c81d15f1">lib::vector::index_of</a></div><div class="ttdeci">static auto index_of(const std::vector&lt; T &gt; &amp;vec, const T &amp;item) -&gt; size_t</div><div class="ttdef"><b>Definition:</b> vector.hpp:72</div></div>
 <div class="ttc" id="aclasslib_1_1vector_html_a63e10932af3ec4fe496dc1d3aa9f3c92"><div class="ttname"><a href="classlib_1_1vector.html#a63e10932af3ec4fe496dc1d3aa9f3c92">lib::vector::average</a></div><div class="ttdeci">static auto average(const std::vector&lt; T &gt; &amp;vec) -&gt; T</div><div class="ttdef"><b>Definition:</b> vector.hpp:83</div></div>
 <div class="ttc" id="aclasslib_1_1vector_html_abd6f4bb72d24e728392a4fb104e3b22c"><div class="ttname"><a href="classlib_1_1vector.html#abd6f4bb72d24e728392a4fb104e3b22c">lib::vector::append</a></div><div class="ttdeci">static void append(std::vector&lt; T &gt; &amp;vec, const std::vector&lt; T &gt; &amp;append)</div><div class="ttdef"><b>Definition:</b> vector.hpp:36</div></div>
 <div class="ttc" id="aclasslib_1_1vector_html_ac54a6a64d3e2a89092b00d6d81c0300f"><div class="ttname"><a href="classlib_1_1vector.html#ac54a6a64d3e2a89092b00d6d81c0300f">lib::vector::sub</a></div><div class="ttdeci">static auto sub(const std::vector&lt; T &gt; &amp;vec, size_t pos, size_t len) -&gt; std::vector&lt; T &gt;</div><div class="ttdef"><b>Definition:</b> vector.hpp:48</div></div>
 <div class="ttc" id="aclasslib_1_1vector_html_ad620af939ec2cbf25514e3381c5a2782"><div class="ttname"><a href="classlib_1_1vector.html#ad620af939ec2cbf25514e3381c5a2782">lib::vector::combine</a></div><div class="ttdeci">static auto combine(const std::vector&lt; T &gt; &amp;vec1, const std::vector&lt; T &gt; &amp;vec2) -&gt; std::vector&lt; T &gt;</div><div class="ttdef"><b>Definition:</b> vector.hpp:19</div></div>
+<div class="ttc" id="aclasslib_1_1vector_html_af0a0f3f4923cc18f96711a9b0bba7f19"><div class="ttname"><a href="classlib_1_1vector.html#af0a0f3f4923cc18f96711a9b0bba7f19">lib::vector::unique</a></div><div class="ttdeci">static void unique(std::vector&lt; T &gt; &amp;vec)</div><div class="ttdef"><b>Definition:</b> vector.hpp:101</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

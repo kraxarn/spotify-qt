@@ -92,6 +92,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a63e10932af3ec4fe496dc1d3aa9f3c92"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a63e10932af3ec4fe496dc1d3aa9f3c92"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1vector.html#a63e10932af3ec4fe496dc1d3aa9f3c92">average</a> (const std::vector&lt; T &gt; &amp;vec) -&gt; T</td></tr>
 <tr class="separator:a63e10932af3ec4fe496dc1d3aa9f3c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0a0f3f4923cc18f96711a9b0bba7f19"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:af0a0f3f4923cc18f96711a9b0bba7f19"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1vector.html#af0a0f3f4923cc18f96711a9b0bba7f19">unique</a> (std::vector&lt; T &gt; &amp;vec)</td></tr>
+<tr class="separator:af0a0f3f4923cc18f96711a9b0bba7f19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="abd6f4bb72d24e728392a4fb104e3b22c" name="abd6f4bb72d24e728392a4fb104e3b22c"></a>
@@ -316,6 +319,43 @@ template&lt;typename T &gt; </div>
     <tr><td class="paramname">vec</td><td>Vector to take from </td></tr>
     <tr><td class="paramname">pos</td><td>Starting index </td></tr>
     <tr><td class="paramname">len</td><td>Number of elements (-1 to include rest of items) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af0a0f3f4923cc18f96711a9b0bba7f19" name="af0a0f3f4923cc18f96711a9b0bba7f19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0a0f3f4923cc18f96711a9b0bba7f19">&#9670;&nbsp;</a></span>unique()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void lib::vector::unique </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>vec</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >Remove all duplicate items from a vector </p><dl class="section note"><dt>Note</dt><dd>Sorts the vector </dd>
+<dd>
+Requires &lt; and == operators </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vec</td><td>Vector of items </td></tr>
   </table>
   </dd>
 </dl>
