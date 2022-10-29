@@ -97,11 +97,7 @@ TEST_CASE("vector")
 			2, 1, 2, 3,
 		};
 
-		lib::vector::unique(vec, [](int lhs, int rhs) -> bool
-		{
-			return lhs == rhs;
-		});
-
+		lib::vector::unique(vec);
 		CHECK_EQ(vec.size(), 3);
 		CHECK_EQ(vec[0], 1);
 		CHECK_EQ(vec[1], 2);

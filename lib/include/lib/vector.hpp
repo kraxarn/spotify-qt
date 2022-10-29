@@ -94,14 +94,14 @@ namespace lib
 		/**
 		 * Remove all duplicate items from a vector
 		 * @note Sorts the vector
+		 * @note Requires \< and == operators
 		 * @param vec Vector of items
-		 * @param compare Compare function
 		 */
-		template<typename T, typename TCompare>
-		static void unique(std::vector<T> &vec, TCompare compare)
+		template<typename T>
+		static void unique(std::vector<T> &vec)
 		{
 			std::sort(vec.begin(), vec.end());
-			const auto duplicates = std::unique(vec.begin(), vec.end(), compare);
+			const auto duplicates = std::unique(vec.begin(), vec.end());
 			vec.erase(duplicates, vec.end());
 		}
 	};
