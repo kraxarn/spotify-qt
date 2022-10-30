@@ -24,6 +24,9 @@ jobs:
           path: ${{runner.workspace}}/Qt
           key: qt-${{env.QT_VERSION}}-${{env.QT_ARCH}}
 
+      - name: Install Dependencies
+        run: sudo apt install libssl1.1
+
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
