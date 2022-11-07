@@ -18,6 +18,7 @@ void lib::lrc::from_json(const nlohmann::json &json, lib::lrc::lyrics &lyrics)
 		const lib::lrc::line parsed(*(iter++));
 		if (parsed.text.find(':') == std::string::npos)
 		{
+			iter--;
 			break;
 		}
 		lyrics.credits.emplace_back(parsed.text);
