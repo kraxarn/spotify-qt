@@ -1,5 +1,6 @@
 #include "lib/lyrics/lyrics.hpp"
 #include "lib/strings.hpp"
+#include "lib/vector.hpp"
 
 void lib::lrc::from_json(const nlohmann::json &json, lib::lrc::lyrics &lyrics)
 {
@@ -11,18 +12,23 @@ void lib::lrc::from_json(const nlohmann::json &json, lib::lrc::lyrics &lyrics)
 	const auto lines = lib::strings::split(json, '\n');
 	lyrics.lines.reserve(lines.size());
 
-	for (const auto &line: lines)
+	auto iter = lines.cbegin();
+	while (iter != lines.cend())
 	{
-		const lib::lrc::line parsed(line);
-
-		if (lyrics.lines.empty()
-			&& (parsed.timestamp < 0 || parsed.timestamp % 1000L == 0)
-			&& parsed.text.find(':') != std::string::npos)
+		const lib::lrc::line parsed(*iter);
+		if (parsed.text.find(':') == std::string::npos)
 		{
-			lyrics.credits.emplace_back(parsed.text);
-			continue;
+			break;
 		}
+		lyrics.credits.emplace_back(parsed.text);
+		iter++;
+	}
 
+	lib::vector::unique(lyrics.credits);
+
+	while (iter != lines.cend())
+	{
+		const lib::lrc::line parsed(*(iter++));
 		lyrics.lines.push_back(parsed);
 	}
 

@@ -50,10 +50,16 @@ jobs:
           curl -L "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage" -o ${{runner.workspace}}/linuxdeploy-plugin-qt-x86_64.AppImage
           chmod +x ${{runner.workspace}}/linuxdeploy-*.AppImage
 
+      - name: Copy OpenSSL
+        run: |
+          mkdir -p ${{runner.workspace}}/dist/usr/lib
+          cp /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 ${{runner.workspace}}/dist/usr/lib/
+          cp /usr/lib/x86_64-linux-gnu/libssl.so.1.1 ${{runner.workspace}}/dist/usr/lib/
+
       - name: Package
         run: |
           export OUTPUT="spotify-qt-$(git rev-parse --short HEAD)-x86_64.AppImage"
-          ${{runner.workspace}}/linuxdeploy-x86_64.AppImage --appdir ${{runner.workspace}}/dist --output appimage --plugin qt -v 0 -d ${{runner.workspace}}/dist/usr/share/applications/spotify-qt.desktop
+          ${{runner.workspace}}/linuxdeploy-x86_64.AppImage --appdir ${{runner.workspace}}/dist --output appimage --plugin qt -d ${{runner.workspace}}/dist/usr/share/applications/spotify-qt.desktop
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2

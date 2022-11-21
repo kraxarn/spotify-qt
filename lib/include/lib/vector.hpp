@@ -90,5 +90,19 @@ namespace lib
 
 			return std::accumulate(vec.cbegin(), vec.cend(), init) / static_cast<T>(vec.size());
 		}
+
+		/**
+		 * Remove all duplicate items from a vector
+		 * @note Sorts the vector
+		 * @note Requires \< and == operators
+		 * @param vec Vector of items
+		 */
+		template<typename T>
+		static void unique(std::vector<T> &vec)
+		{
+			std::sort(vec.begin(), vec.end());
+			const auto duplicates = std::unique(vec.begin(), vec.end());
+			vec.erase(duplicates, vec.end());
+		}
 	};
 }

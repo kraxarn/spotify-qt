@@ -90,4 +90,17 @@ TEST_CASE("vector")
 		};
 		CHECK_EQ(lib::vector::average(vec_float), 4.25F);
 	}
+
+	SUBCASE("unique")
+	{
+		std::vector<int> vec{
+			2, 1, 2, 3,
+		};
+
+		lib::vector::unique(vec);
+		CHECK_EQ(vec.size(), 3);
+		CHECK_EQ(vec[0], 1);
+		CHECK_EQ(vec[1], 2);
+		CHECK_EQ(vec[2], 3);
+	}
 }

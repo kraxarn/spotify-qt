@@ -134,6 +134,12 @@ namespace lib
 			 * Check for updates on start
 			 */
 			bool check_for_updates = true;
+
+			/**
+			 * Create a native window handle
+			 * @note Always enabled under Linux/Wayland
+			 */
+			bool native_window = false;
 		};
 
 		void to_json(nlohmann::json &j, const general &g);
