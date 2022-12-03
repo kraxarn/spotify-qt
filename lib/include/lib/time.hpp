@@ -15,6 +15,11 @@ namespace lib
 		static constexpr int secs_in_min = 60;
 
 		/**
+		 * Minutes in an hour
+		 */
+		static constexpr int min_in_hour = 60;
+
+		/**
 		 * Milliseconds in a minute
 		 */
 		static constexpr int ms_in_min = ms_in_sec * secs_in_min;
