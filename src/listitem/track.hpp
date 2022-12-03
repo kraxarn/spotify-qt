@@ -18,6 +18,9 @@ namespace ListItem
 		Track(const QStringList &strings, const lib::spt::track &track,
 			const QIcon &icon, int index);
 
+		Track(const QStringList &strings, const lib::spt::track &track,
+			const QIcon &icon, int index, const QString &addedAt);
+
 	private:
 		auto operator<(const QTreeWidgetItem &item) const -> bool override;
 

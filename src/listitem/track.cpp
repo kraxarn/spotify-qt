@@ -1,19 +1,22 @@
 #include "listitem/track.hpp"
 
-ListItem::Track::Track(const QStringList &strings,
-	const lib::spt::track &track,
-	const QIcon &icon,
-	int index)
+ListItem::Track::Track(const QStringList &strings, const lib::spt::track &track,
+	const QIcon &icon, int index)
+	: Track(strings, track, icon, index, QString::fromStdString(track.added_at))
+{
+}
+
+ListItem::Track::Track(const QStringList &strings, const lib::spt::track &track,
+	const QIcon &icon, int index, const QString &addedAt)
 	: QTreeWidgetItem(strings)
 {
 	setIcon(0, icon);
 
-	auto addedAt = QDateTime::fromString(QString::fromStdString(track.added_at),
-		Qt::DateFormat::ISODate);
+	auto addedDate = QDateTime::fromString(addedAt, Qt::DateFormat::ISODate);
 
 	setData(0, static_cast<int>(DataRole::Track), QVariant::fromValue(track));
 	setData(0, static_cast<int>(DataRole::Index), index);
-	setData(0, static_cast<int>(DataRole::AddedDate), addedAt);
+	setData(0, static_cast<int>(DataRole::AddedDate), addedDate);
 	setData(0, static_cast<int>(DataRole::Length), track.duration);
 
 	if (track.is_local || !track.is_playable)
@@ -48,10 +51,10 @@ ListItem::Track::Track(const QStringList &strings,
 	}
 
 	// Added
-	if (!DateTime::isEmpty(addedAt))
+	if (!DateTime::isEmpty(addedDate))
 	{
 		setToolTip(strings.length() - 1,
-			QLocale().toString(addedAt.date()));
+			QLocale().toString(addedDate.date()));
 	}
 }
 
