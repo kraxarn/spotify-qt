@@ -12,6 +12,14 @@ TEST_CASE("fmt::format")
 		CHECK_EQ(lib::format::time(65 * 1000), "1:05");
 	}
 
+	SUBCASE("time_pretty")
+	{
+		CHECK_EQ(lib::format::time_pretty(0), "0 m");
+		CHECK_EQ(lib::format::time_pretty(59 * 1000 * 60), "59 m");
+		CHECK_EQ(lib::format::time_pretty(60 * 1000 * 60), "1 h");
+		CHECK_EQ(lib::format::time_pretty(61 * 1000 * 60), "1 h 1 m");
+	}
+
 	SUBCASE("size")
 	{
 		CHECK_EQ(lib::format::size(1), "1 B");
