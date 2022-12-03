@@ -2,7 +2,7 @@
 
 ListItem::Track::Track(const QStringList &strings, const lib::spt::track &track,
 	const QIcon &icon, int index)
-	: Track(strings, track, icon, index, QString::fromStdString(track.added_at))
+	: Track(strings, track, icon, index, {})
 {
 }
 
@@ -12,7 +12,10 @@ ListItem::Track::Track(const QStringList &strings, const lib::spt::track &track,
 {
 	setIcon(0, icon);
 
-	auto addedDate = QDateTime::fromString(addedAt, Qt::DateFormat::ISODate);
+	auto addedDate = QDateTime::fromString(addedAt.isEmpty()
+			? QString::fromStdString(track.added_at)
+			: addedAt,
+		Qt::DateFormat::ISODate);
 
 	setData(0, static_cast<int>(DataRole::Track), QVariant::fromValue(track));
 	setData(0, static_cast<int>(DataRole::Index), index);
