@@ -497,8 +497,15 @@ auto SettingsPage::Interface::defaultStyle() -> QString
 		return QString::fromStdString(overridden);
 	}
 
+	// First is probably default
+	const auto &styles = QStyleFactory::keys();
+	if (!styles.isEmpty())
+	{
+		return styles.first();
+	}
+
 	// Assume Fusion
-	return {};
+	return QStringLiteral("Fusion");
 }
 
 auto SettingsPage::Interface::getFontName(const QString &family, int pointSize) -> QString
