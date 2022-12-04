@@ -289,7 +289,11 @@ auto SettingsPage::Spotify::save() -> bool
 		{
 			sptVersion->setText(client);
 		}
-		settings.spotify.path = sptPath->text().toStdString();
+
+		if (!client.isEmpty())
+		{
+			settings.spotify.path = sptPath->text().toStdString();
+		}
 	}
 
 	// librespot has no global config support
