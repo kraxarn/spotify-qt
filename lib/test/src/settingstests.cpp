@@ -34,7 +34,7 @@ TEST_CASE("settings")
 
 	auto read_settings = [&paths]() -> nlohmann::json
 	{
-		std::ifstream file(paths.config_file());
+		ghc::filesystem::ifstream file(paths.config_file());
 		nlohmann::json json;
 		file >> json;
 
