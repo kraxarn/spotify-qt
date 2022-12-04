@@ -498,7 +498,7 @@ auto SettingsPage::Interface::defaultStyle() -> QString
 	}
 
 	// Assume Fusion
-	return QStringLiteral("Fusion");
+	return {};
 }
 
 auto SettingsPage::Interface::getFontName(const QString &family, int pointSize) -> QString
