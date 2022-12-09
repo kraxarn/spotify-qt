@@ -73,6 +73,10 @@ Menu::Track::Track(const QList<PlaylistTrack> &tracks, lib::spt::api &spotify,
 		QAction::connect(shareSongLink, &QAction::triggered,
 			this, &Menu::Track::onCopySongLink);
 
+		auto *shareSongName = share->addAction("Copy song name");
+		QAction::connect(shareSongName, &QAction::triggered,
+			this, &Menu::Track::onCopySongName);
+
 		auto *shareSongOpen = share->addAction("Open in Spotify");
 		QAction::connect(shareSongOpen, &QAction::triggered,
 			this, &Menu::Track::onOpenInSpotify);
@@ -475,10 +479,30 @@ auto Menu::Track::getTrackUrl() const -> QString
 	return QString::fromStdString(str);
 }
 
+auto Menu::Track::getTrackDisplayName() const -> QString
+{
+	if (tracks.empty())
+	{
+		return {};
+	}
+
+	const auto track = tracks.cbegin()->second;
+	const auto trackName = track.name;
+	const auto artistNames = lib::spt::entity::combine_names(track.artists);
+	auto str = lib::fmt::format("{} - {}", artistNames, trackName);
+	return QString::fromStdString(str);
+}
+
 void Menu::Track::onCopySongLink(bool /*checked*/)
 {
 	QApplication::clipboard()->setText(getTrackUrl());
 	StatusMessage::info(QStringLiteral("Link copied to clipboard"));
+}
+
+void Menu::Track::onCopySongName(bool /*checked*/)
+{
+	QApplication::clipboard()->setText(getTrackDisplayName());
+	StatusMessage::info(QStringLiteral("Name copied to clipboard"));
 }
 
 void Menu::Track::onOpenInSpotify(bool /*checked*/)

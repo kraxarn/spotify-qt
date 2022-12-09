@@ -86,6 +86,10 @@ auto Menu::Playlist::shareMenu() -> QMenu *
 	QAction::connect(copyLink, &QAction::triggered,
 		this, &Menu::Playlist::onCopyLink);
 
+	auto *copyName = menu->addAction("Copy playlist name");
+	QAction::connect(copyName, &QAction::triggered,
+		this, &Menu::Playlist::onCopyName);
+
 	auto *openInSpotify = menu->addAction("Open in Spotify");
 	QAction::connect(openInSpotify, &QAction::triggered,
 		this, &Menu::Playlist::onOpenInSpotify);
@@ -174,6 +178,12 @@ auto Menu::Playlist::playlistUrl() const -> QString
 		.arg(QString::fromStdString(playlist.id));
 }
 
+auto Menu::Playlist::playlistName() const -> QString
+{
+	return QString::fromStdString(
+		lib::fmt::format("\"{}\" by {}",playlist.name, playlist.owner_name));
+}
+
 void Menu::Playlist::onShuffle(bool /*checked*/)
 {
 	if (tracks.empty())
@@ -259,6 +269,12 @@ void Menu::Playlist::onCopyLink(bool /*checked*/) const
 {
 	QApplication::clipboard()->setText(playlistUrl());
 	StatusMessage::info(QStringLiteral("Link copied to clipboard"));
+}
+
+void Menu::Playlist::onCopyName(bool /*checked*/) const
+{
+	QApplication::clipboard()->setText(playlistName());
+	StatusMessage::info(QStringLiteral("Name copied to clipboard"));
 }
 
 void Menu::Playlist::onOpenInSpotify(bool /*checked*/) const

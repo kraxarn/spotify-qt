@@ -49,6 +49,7 @@ namespace Menu
 		QList<PlaylistTrack> tracks;
 
 		auto getTrackUrl() const -> QString;
+		auto getTrackDisplayName() const -> QString;
 		void viewArtist(const lib::spt::entity &artist);
 		void setLiked(bool liked);
 
@@ -72,6 +73,7 @@ namespace Menu
 		void onAudioFeatures(bool checked);
 		void onLyrics(bool checked);
 		void onCopySongLink(bool checked);
+		void onCopySongName(bool checked);
 		void onOpenInSpotify(bool checked);
 		void onLike(bool checked);
 		void onAddToQueue(bool checked);
