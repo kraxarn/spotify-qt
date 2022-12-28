@@ -4,7 +4,7 @@ var searchData=
   ['abstract_5furl_1',['abstract_url',['../classlib_1_1ddg_1_1results.html#a2b3bcd6d3ae964289bd86822e75b5fe5',1,'lib::ddg::results']]],
   ['account_2',['account',['../classlib_1_1settings.html#ac3e01e98b54cd4c4dfdfc65204b7ae53',1,'lib::settings']]],
   ['add_5fcrash_3',['add_crash',['../classlib_1_1json__cache.html#a828151dcc52dffa459d1253056cd1e18',1,'lib::json_cache::add_crash()'],['../classlib_1_1cache.html#aad042b2c6f50a0243933dd33b85b2149',1,'lib::cache::add_crash()']]],
-  ['add_5fto_5fqueue_4',['add_to_queue',['../classlib_1_1spt_1_1api.html#aae8d9a1ea500342ccb9a4fd0468b3395',1,'lib::spt::api']]],
+  ['add_5fto_5fqueue_4',['add_to_queue',['../classlib_1_1spt_1_1api.html#acc383d7e53ebb44805d706a678cce9a0',1,'lib::spt::api']]],
   ['added_5fat_5',['added_at',['../classlib_1_1spt_1_1track.html#a74566d47d168bfae9fe4828a42a83f6c',1,'lib::spt::track']]],
   ['album_6',['album',['../classlib_1_1spt_1_1track.html#aa03107485fdd49425754ba5b1cdec212',1,'lib::spt::track::album()'],['../classlib_1_1lrc_1_1search__result.html#a43060adced8a93d75f7c1b01128ec4b7',1,'lib::lrc::search_result::album()'],['../classlib_1_1spt_1_1album.html',1,'lib::spt::album']]],
   ['album_5fgroup_7',['album_group',['../classlib_1_1spt_1_1album.html#aa1627db8f402a299e363191a3abf9730',1,'lib::spt::album']]],

@@ -190,8 +190,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>top_tracks</b> (lib::
 <tr class="separator:af58d77d78d2f690e1d006be63b946aa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4181de91367224105534a9976e5f3d43"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a4181de91367224105534a9976e5f3d43">recently_played</a> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;callback)</td></tr>
 <tr class="separator:a4181de91367224105534a9976e5f3d43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae8d9a1ea500342ccb9a4fd0468b3395"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#aae8d9a1ea500342ccb9a4fd0468b3395">add_to_queue</a> (const std::string &amp;<a class="el" href="classlib_1_1uri.html">uri</a>, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:aae8d9a1ea500342ccb9a4fd0468b3395"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc383d7e53ebb44805d706a678cce9a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#acc383d7e53ebb44805d706a678cce9a0">add_to_queue</a> (const std::string &amp;<a class="el" href="classlib_1_1uri.html">uri</a>, lib::callback&lt; <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; void * &gt; &gt; &amp;callback)</td></tr>
+<tr class="separator:acc383d7e53ebb44805d706a678cce9a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae6d859577d0d4fd809d3dfc3a3045805"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#ae6d859577d0d4fd809d3dfc3a3045805">create_playlist</a> (const std::string &amp;name, const <a class="el" href="classlib_1_1optional.html">lib::optional</a>&lt; std::string &gt; &amp;description, const <a class="el" href="classlib_1_1optional.html">lib::optional</a>&lt; bool &gt; &amp;is_public, const <a class="el" href="classlib_1_1optional.html">lib::optional</a>&lt; bool &gt; &amp;is_collaborative, lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &gt; &amp;callback)</td></tr>
 <tr class="separator:ae6d859577d0d4fd809d3dfc3a3045805"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb758cfd2014139ab590cfa5dc160272"><td class="memItemLeft" align="right" valign="top"><a id="afb758cfd2014139ab590cfa5dc160272" name="afb758cfd2014139ab590cfa5dc160272"></a>
@@ -314,8 +314,8 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aae8d9a1ea500342ccb9a4fd0468b3395" name="aae8d9a1ea500342ccb9a4fd0468b3395"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae8d9a1ea500342ccb9a4fd0468b3395">&#9670;&#160;</a></span>add_to_queue()</h2>
+<a id="acc383d7e53ebb44805d706a678cce9a0" name="acc383d7e53ebb44805d706a678cce9a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc383d7e53ebb44805d706a678cce9a0">&#9670;&#160;</a></span>add_to_queue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -329,7 +329,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramtype">lib::callback&lt; <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; void * &gt; &gt; &amp;&#160;</td>
           <td class="paramname"><em>callback</em>&#160;</td>
         </tr>
         <tr>
@@ -990,7 +990,7 @@ Temporarily protected </dd></dl>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Convenience method for POST request with no body </p>
+<p >Convenience method for POST request with no body </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000003">Deprecated:</a></b></dt><dd>Use <code><a class="el" href="classlib_1_1spt_1_1request.html#abb55e1b943d4132fb3d53eb6fdbdb21f">lib::spt::request::post</a></code> instead </dd></dl>
 
 </div>
 </div>
