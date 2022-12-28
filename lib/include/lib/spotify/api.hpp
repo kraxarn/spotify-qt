@@ -235,7 +235,8 @@ namespace lib
 			 * Add specified track to play next
 			 * @param uri URI of track to add
 			 */
-			void add_to_queue(const std::string &uri, lib::callback<std::string> &callback);
+			void add_to_queue(const std::string &uri,
+				lib::callback<lib::result<void *>> &callback);
 
 			//endregion
 

@@ -169,7 +169,8 @@ void lib::spt::api::recently_played(lib::callback<std::vector<lib::spt::track>> 
 	get_items("me/player/recently-played?limit=50", callback);
 }
 
-void lib::spt::api::add_to_queue(const std::string &uri, lib::callback<std::string> &callback)
+void lib::spt::api::add_to_queue(const std::string &uri,
+	lib::callback<lib::result<void *>> &callback)
 {
-	post(lib::fmt::format("me/player/queue?uri={}", uri), callback);
+	request.post(lib::fmt::format("me/player/queue?uri={}", uri), callback);
 }
