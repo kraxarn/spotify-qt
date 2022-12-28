@@ -119,6 +119,16 @@ auto lib::qt::http_client::post(const std::string &url, const lib::headers &head
 	return reply->readAll().toStdString();
 }
 
+void lib::qt::http_client::post(const std::string &url, const std::string &body,
+	const lib::headers &headers, lib::callback<lib::result<std::string>> &callback) const
+{
+	const auto data = body.empty()
+		? QByteArray()
+		: QByteArray::fromStdString(body);
+
+	await(network_manager->post(request(url, headers), data), callback);
+}
+
 void lib::qt::http_client::del(const std::string &url, const std::string &body,
 	const lib::headers &headers, lib::callback<std::string> &callback) const
 {
