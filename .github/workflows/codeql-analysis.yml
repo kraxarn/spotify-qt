@@ -29,7 +29,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install qt5-default libqt5svg5-dev -y
+          sudo apt install qt6-base-dev libqt6svg6-dev -y
 
       - name: Autobuild
         uses: github/codeql-action/autobuild@v1
