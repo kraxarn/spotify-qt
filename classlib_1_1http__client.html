@@ -94,8 +94,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a417ac19ac51959fc94c36b432d7e28c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6af2f6fa7b239f3a097d3705b25ba087"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1http__client.html#a6af2f6fa7b239f3a097d3705b25ba087">post</a> (const std::string &amp;url, const headers &amp;headers, lib::callback&lt; std::string &gt; &amp;callback) const</td></tr>
 <tr class="separator:a6af2f6fa7b239f3a097d3705b25ba087"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae502d72380de56bd456e225b1fdcd79e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1http__client.html#ae502d72380de56bd456e225b1fdcd79e">post</a> (const std::string &amp;url, const headers &amp;headers, lib::callback&lt; <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; std::string &gt; &gt; &amp;callback) const</td></tr>
+<tr class="separator:ae502d72380de56bd456e225b1fdcd79e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62349387dd537a19055cfb91205c0f2e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1http__client.html#a62349387dd537a19055cfb91205c0f2e">post</a> (const std::string &amp;url, const std::string &amp;body, const headers &amp;headers, lib::callback&lt; std::string &gt; &amp;callback) const =0</td></tr>
 <tr class="separator:a62349387dd537a19055cfb91205c0f2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d470ac75820d42977e6dd1e52c245d0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1http__client.html#a1d470ac75820d42977e6dd1e52c245d0">post</a> (const std::string &amp;url, const std::string &amp;body, const headers &amp;headers, lib::callback&lt; <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; std::string &gt; &gt; &amp;callback) const =0</td></tr>
+<tr class="separator:a1d470ac75820d42977e6dd1e52c245d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6883132a18443387a0bfce0145a75f7c"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1http__client.html#a6883132a18443387a0bfce0145a75f7c">post</a> (const std::string &amp;url, const headers &amp;headers, const std::string &amp;post_data) const -&gt; std::string=0</td></tr>
 <tr class="separator:a6883132a18443387a0bfce0145a75f7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4cc68e5a7ab4d9f140c80873f50ceca"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1http__client.html#ab4cc68e5a7ab4d9f140c80873f50ceca">del</a> (const std::string &amp;url, const std::string &amp;body, const headers &amp;headers, lib::callback&lt; std::string &gt; &amp;callback) const =0</td></tr>
@@ -245,7 +249,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a6883132a18443387a0bfce0145a75f7c" name="a6883132a18443387a0bfce0145a75f7c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6883132a18443387a0bfce0145a75f7c">&#9670;&#160;</a></span>post() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6883132a18443387a0bfce0145a75f7c">&#9670;&#160;</a></span>post() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -283,12 +287,47 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Synchronous POST request </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000002">Deprecated:</a></b></dt><dd>Use asynchronous method </dd></dl>
+<p >Synchronous POST request </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000004">Deprecated:</a></b></dt><dd>Use asynchronous method </dd></dl>
+
+</div>
+</div>
+<a id="ae502d72380de56bd456e225b1fdcd79e" name="ae502d72380de56bd456e225b1fdcd79e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae502d72380de56bd456e225b1fdcd79e">&#9670;&#160;</a></span>post() <span class="overload">[2/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::http_client::post </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const headers &amp;&#160;</td>
+          <td class="paramname"><em>headers</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; std::string &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >POST request without request body </p>
 
 </div>
 </div>
 <a id="a6af2f6fa7b239f3a097d3705b25ba087" name="a6af2f6fa7b239f3a097d3705b25ba087"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6af2f6fa7b239f3a097d3705b25ba087">&#9670;&#160;</a></span>post() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6af2f6fa7b239f3a097d3705b25ba087">&#9670;&#160;</a></span>post() <span class="overload">[3/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -318,12 +357,61 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >POST request without request body </p>
+<p >POST request without request body </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000002">Deprecated:</a></b></dt><dd>Use with result callback instead </dd></dl>
+
+</div>
+</div>
+<a id="a1d470ac75820d42977e6dd1e52c245d0" name="a1d470ac75820d42977e6dd1e52c245d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d470ac75820d42977e6dd1e52c245d0">&#9670;&#160;</a></span>post() <span class="overload">[4/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void lib::http_client::post </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>body</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const headers &amp;&#160;</td>
+          <td class="paramname"><em>headers</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; std::string &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >POST request with request body </p>
 
 </div>
 </div>
 <a id="a62349387dd537a19055cfb91205c0f2e" name="a62349387dd537a19055cfb91205c0f2e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a62349387dd537a19055cfb91205c0f2e">&#9670;&#160;</a></span>post() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a62349387dd537a19055cfb91205c0f2e">&#9670;&#160;</a></span>post() <span class="overload">[5/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -367,7 +455,7 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >POST request with request body </p>
+<p >POST request with request body </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000003">Deprecated:</a></b></dt><dd>Use with result callback instead </dd></dl>
 
 </div>
 </div>
