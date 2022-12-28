@@ -391,6 +391,7 @@ namespace lib
 
 			/**
 			 * Convenience method for POST request with no body
+			 * @deprecated Use `lib::spt::request::post` instead
 			 */
 			void post(const std::string &url, lib::callback<std::string> &callback);
 
