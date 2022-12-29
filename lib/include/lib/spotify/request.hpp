@@ -53,10 +53,14 @@ namespace lib
 				headers["Content-Type"] = "application/x-www-form-urlencoded";
 
 				http.post(lib::spt::to_full_url(url), headers,
-					[callback](const std::string &response)
+					[callback](const lib::result<std::string> &response)
 					{
-						lib::log::debug("Response: {}", response);
-						callback(parse_json(response));
+						if (!response.success())
+						{
+							callback(lib::result<void *>::fail(response.message()));
+							return;
+						}
+						callback(parse_json(response.value()));
 					});
 			}
 
