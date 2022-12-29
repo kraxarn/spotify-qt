@@ -46,17 +46,42 @@ void lib::qt::http_client::await(QNetworkReply *reply,
 	QNetworkReply::connect(reply, &QNetworkReply::finished, this, [reply, callback]()
 	{
 		const auto data = reply->readAll();
-		std::string response(data.cbegin(), data.cend());
+		const std::string response(data.cbegin(), data.cend());
 
 		if (reply->error() != QNetworkReply::NoError)
 		{
 			lib::log::error("Request failed: {}", reply->errorString().toStdString());
+
+			const auto statusCode = reply->attribute(
+				QNetworkRequest::HttpStatusCodeAttribute
+			).toInt();
+
+			if (statusCode > 0)
+			{
+				std::string statusMessage;
+				if (statusCode / 100 == 4)
+				{
+					statusMessage = lib::fmt::format("Client error: {}", statusCode);
+				}
+				else if (statusCode / 100 == 5)
+				{
+					statusMessage = lib::fmt::format("Server error: {}", statusCode);
+				}
+				else
+				{
+					statusMessage = response;
+				}
+
+				callback(lib::result<std::string>::fail(statusMessage));
+			}
+
 			callback(lib::result<std::string>::fail(response));
 		}
 		else
 		{
 			callback(lib::result<std::string>::ok(response));
 		}
+
 		reply->deleteLater();
 	});
 }
