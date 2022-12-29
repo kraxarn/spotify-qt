@@ -1,10 +1,6 @@
 name: "CodeQL"
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
   schedule:
     - cron: '38 21 * * 4'
 
@@ -27,7 +23,7 @@ jobs:
           languages: 'cpp'
 
       - name: Install dependencies
-        run: sudo apt install libglx-dev qt6-base-dev libqt6svg6-dev -y
+        run: sudo apt install qt6-base-dev libqt6svg6-dev -y
 
       - name: Autobuild
         uses: github/codeql-action/autobuild@v2
