@@ -48,6 +48,9 @@ namespace lib
 			static auto request(const std::string &url,
 				const lib::headers &headers) -> QNetworkRequest;
 
+			/**
+			 * @deprecated Use with result callback instead
+			 */
 			void await(QNetworkReply *reply, lib::callback<QByteArray> &callback) const;
 
 			void await(QNetworkReply *reply,
