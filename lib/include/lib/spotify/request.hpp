@@ -44,6 +44,26 @@ namespace lib
 					});
 			}
 
+			/**
+			 * POST request without body
+			 */
+			void post(const std::string &url, lib::callback<lib::result<void *>> &callback)
+			{
+				auto headers = auth_headers();
+				headers["Content-Type"] = "application/x-www-form-urlencoded";
+
+				http.post(lib::spt::to_full_url(url), headers,
+					[callback](const lib::result<std::string> &response)
+					{
+						if (!response.success())
+						{
+							callback(lib::result<void *>::fail(response.message()));
+							return;
+						}
+						callback(parse_json(response.value()));
+					});
+			}
+
 			//endregion
 
 		private:
@@ -107,6 +127,38 @@ namespace lib
 				catch (const std::exception &e)
 				{
 					return lib::result<T>::fail(e.what());
+				}
+			}
+
+			/**
+			 * Parse error from JSON
+			 */
+			static auto parse_json(const std::string &data) -> lib::result<void *>
+			{
+				if (data.empty())
+				{
+					return lib::result<void *>::ok(nullptr);
+				}
+
+				try
+				{
+					const nlohmann::json json = nlohmann::json::parse(data);
+					if (!lib::spt::error::is(json))
+					{
+						return lib::result<void *>::ok(nullptr);
+					}
+
+					const auto message = lib::spt::error::error_message(json);
+					return lib::result<void *>::fail(message);
+				}
+				catch (const nlohmann::json::parse_error &e)
+				{
+					lib::log::debug("JSON: {}", data);
+					return lib::result<void *>::fail(e.what());
+				}
+				catch (const std::exception &e)
+				{
+					return lib::result<void *>::fail(e.what());
 				}
 			}
 

@@ -42,15 +42,29 @@ namespace lib
 
 		/**
 		 * POST request without request body
+		 * @deprecated Use with result callback instead
 		 */
 		void post(const std::string &url, const headers &headers,
 			lib::callback<std::string> &callback) const;
 
 		/**
+		 * POST request without request body
+		 */
+		void post(const std::string &url, const headers &headers,
+			lib::callback<lib::result<std::string>> &callback) const;
+
+		/**
 		 * POST request with request body
+		 * @deprecated Use with result callback instead
 		 */
 		virtual void post(const std::string &url, const std::string &body,
 			const headers &headers, lib::callback<std::string> &callback) const = 0;
+
+		/**
+		 * POST request with request body
+		 */
+		virtual void post(const std::string &url, const std::string &body,
+			const headers &headers, lib::callback<lib::result<std::string>> &callback) const = 0;
 
 		/**
 		 * Synchronous POST request
