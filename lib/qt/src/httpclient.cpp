@@ -73,10 +73,11 @@ void lib::qt::http_client::await(QNetworkReply *reply,
 				}
 
 				callback(lib::result<std::string>::fail(statusMessage));
-				return;
 			}
-
-			callback(lib::result<std::string>::fail(response));
+			else
+			{
+				callback(lib::result<std::string>::fail(response));
+			}
 		}
 		else
 		{
