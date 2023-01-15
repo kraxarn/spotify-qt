@@ -35,6 +35,7 @@ private:
 	static constexpr int messageTrackTimeout = 6000;
 
 	auto playback() -> lib::spt::playback;
+	void showWindow();
 
 	QAction *previous = nullptr;
 	QAction *playPause = nullptr;
@@ -47,11 +48,16 @@ private:
 	const lib::settings &settings;
 	const lib::cache &cache;
 
+#ifdef __APPLE__
+	QAction *showApp = nullptr;
+#endif
+
 	std::function<void(const std::string &result)> callback;
 
 	void onPrevious(bool checked);
 	void onPlayPause(bool checked);
 	void onNext(bool checked);
 	void onActivated(ActivationReason reason);
+	void onShowWindow(bool checked);
 	void onMenuAboutToShow();
 };
