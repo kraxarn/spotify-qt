@@ -15,6 +15,7 @@ Search::View::View(lib::spt::api &spotify, lib::cache &cache,
 
 	// Tab container
 	tabs = new QTabWidget(this);
+	tabs->setUsesScrollButtons(true);
 	layout->addWidget(tabs);
 
 	// Tab content
