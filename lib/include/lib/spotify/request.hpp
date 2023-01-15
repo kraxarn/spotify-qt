@@ -37,7 +37,8 @@ namespace lib
 					{
 						if (!response.success())
 						{
-							callback(lib::result<T>::fail(response.message()));
+							const auto message = parse_error_message(response.message());
+							callback(lib::result<T>::fail(message));
 							return;
 						}
 						callback(parse_json<T>(response.value()));
@@ -57,7 +58,8 @@ namespace lib
 					{
 						if (!response.success())
 						{
-							callback(lib::result<void *>::fail(response.message()));
+							const auto message = parse_error_message(response.message());
+							callback(lib::result<void *>::fail(message));
 							return;
 						}
 						callback(parse_json(response.value()));
@@ -159,6 +161,21 @@ namespace lib
 				catch (const std::exception &e)
 				{
 					return lib::result<void *>::fail(e.what());
+				}
+			}
+
+			static auto parse_error_message(const std::string &data) -> std::string
+			{
+				try
+				{
+					const nlohmann::json json = nlohmann::json::parse(data);
+					return lib::spt::error::is(json)
+						? lib::spt::error::error_message(json)
+						: data;
+				}
+				catch (const std::exception &e)
+				{
+					return data;
 				}
 			}
 
