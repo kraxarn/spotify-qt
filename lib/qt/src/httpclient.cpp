@@ -56,7 +56,7 @@ void lib::qt::http_client::await(QNetworkReply *reply,
 				QNetworkRequest::HttpStatusCodeAttribute
 			).toInt();
 
-			if (statusCode > 0)
+			if (statusCode > 0 && response.empty())
 			{
 				std::string statusMessage;
 				if (statusCode / 100 == 4)
@@ -69,10 +69,11 @@ void lib::qt::http_client::await(QNetworkReply *reply,
 				}
 				else
 				{
-					statusMessage = response;
+					statusMessage = lib::fmt::format("Error: {}", statusCode);;
 				}
 
 				callback(lib::result<std::string>::fail(statusMessage));
+				return;
 			}
 
 			callback(lib::result<std::string>::fail(response));
