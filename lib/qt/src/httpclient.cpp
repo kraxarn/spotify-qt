@@ -50,8 +50,6 @@ void lib::qt::http_client::await(QNetworkReply *reply,
 
 		if (reply->error() != QNetworkReply::NoError)
 		{
-			lib::log::error("Request failed: {}", reply->errorString().toStdString());
-
 			const auto statusCode = reply->attribute(
 				QNetworkRequest::HttpStatusCodeAttribute
 			).toInt();
