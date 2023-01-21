@@ -30,7 +30,9 @@ void List::Contributors::showEvent(QShowEvent *event)
 						? QStringLiteral("contribution")
 						: QStringLiteral("contributions")));
 
-				item->setData(urlRole, QString::fromStdString(contributor.html_url));
+				item->setData(urlRole,
+					QString("https://github.com/kraxarn/spotify-qt/commits?author=%1")
+						.arg(QString::fromStdString(contributor.login)));
 
 				httpClient.get(contributor.avatar_url, lib::headers(),
 					[item](const std::string &str)
