@@ -1,13 +1,14 @@
 #include "listitem/track.hpp"
+#include "util/icon.hpp"
 
 ListItem::Track::Track(const QStringList &strings, const lib::spt::track &track,
 	const QIcon &icon, int index)
-	: Track(strings, track, icon, index, {})
+	: Track(strings, track, icon, index, {}, false)
 {
 }
 
 ListItem::Track::Track(const QStringList &strings, const lib::spt::track &track,
-	const QIcon &icon, int index, const QString &addedAt)
+	const QIcon &icon, int index, const QString &addedAt, bool isLiked)
 	: QTreeWidgetItem(strings)
 {
 	setIcon(0, icon);
@@ -21,6 +22,8 @@ ListItem::Track::Track(const QStringList &strings, const lib::spt::track &track,
 	setData(0, static_cast<int>(DataRole::Index), index);
 	setData(0, static_cast<int>(DataRole::AddedDate), addedDate);
 	setData(0, static_cast<int>(DataRole::Length), track.duration);
+
+	setLiked(isLiked);
 
 	if (track.is_local || !track.is_playable)
 	{
@@ -96,4 +99,14 @@ auto ListItem::Track::removePrefix(const QString &str) -> QString
 	return str.startsWith("The ", Qt::CaseInsensitive)
 		? str.right(str.length() - 4)
 		: str;
+}
+
+void ListItem::Track::setLiked(bool isLiked)
+{
+	const auto icon = isLiked
+		? Icon::get(QStringLiteral("starred-symbolic"))
+		: QIcon();
+
+	setIcon(static_cast<int>(Column::Liked), icon);
+	setData(0, static_cast<int>(DataRole::Liked), isLiked);
 }

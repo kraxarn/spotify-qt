@@ -28,8 +28,15 @@ List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache
 	setAllColumnsShowFocus(true);
 	setColumnCount(columnCount);
 	setHeaderLabels({
-		settings.general.track_numbers == lib::spotify_context::all ? "#" : "",
-		"Title", "Artist", "Album", "Length", "Added"
+		settings.general.track_numbers == lib::spotify_context::all
+			? QStringLiteral("#")
+			: QString(),
+		QStringLiteral("Title"),
+		QStringLiteral("Artist"),
+		QStringLiteral("Album"),
+		QStringLiteral("Length"),
+		QStringLiteral("Added"),
+		QStringLiteral("Liked"),
 	});
 	header()->setSectionsMovable(false);
 	header()->setSortIndicator(settings.general.song_header_sort_by + 1, Qt::AscendingOrder);
@@ -41,6 +48,10 @@ List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache
 	{
 		header()->setSectionHidden(value + 1, true);
 	}
+
+	// Clicking icons
+	QTreeWidget::connect(this, &QTreeWidget::itemClicked,
+		this, &List::Tracks::onItemClicked);
 
 	// Play tracks on click or enter/special key
 	QTreeWidget::connect(this, &QTreeWidget::itemDoubleClicked,
@@ -55,6 +66,10 @@ List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache
 	header()->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QLabel::connect(header(), &QWidget::customContextMenuRequested,
 		this, &List::Tracks::onHeaderMenu);
+
+	// Selecting track
+	QTreeWidget::connect(this, &QTreeWidget::currentItemChanged,
+		this, &List::Tracks::onCurrentItemChanged);
 
 	QShortcut::connect(new QShortcut(Shortcut::newPlaylist(), this),
 		&QShortcut::activated, this, &List::Tracks::onNewPlaylist);
@@ -100,6 +115,38 @@ void List::Tracks::onMenu(const QPoint &pos)
 
 	auto *songMenu = new Menu::Track(tracks, spotify, cache, parentWidget());
 	songMenu->popup(mapToGlobal(pos));
+}
+
+void List::Tracks::onItemClicked(QTreeWidgetItem *item, int column)
+{
+	if (column == static_cast<int>(Column::Liked))
+	{
+		const auto &trackData = item->data(0, static_cast<int>(DataRole::Track));
+		const auto &track = trackData.value<lib::spt::track>();
+
+		const auto &likedData = item->data(0, static_cast<int>(DataRole::Liked));
+		const auto &isLiked = likedData.toBool();
+
+		const auto callback = [item, isLiked, column](const std::string &response)
+		{
+			if (response.empty())
+			{
+				item->setData(0, static_cast<int>(DataRole::Liked), !isLiked);
+				item->setIcon(column, Icon::get(isLiked
+					? QStringLiteral("non-starred-symbolic")
+					: QStringLiteral("starred-symbolic")));
+			}
+		};
+
+		if (isLiked)
+		{
+			spotify.remove_saved_tracks({track.id}, callback);
+		}
+		else
+		{
+			spotify.add_saved_tracks({track.id}, callback);
+		}
+	}
 }
 
 void List::Tracks::onDoubleClicked(QTreeWidgetItem *item, int /*column*/)
@@ -151,8 +198,13 @@ void List::Tracks::onHeaderMenu(const QPoint &pos)
 	auto *menu = new QMenu(header());
 	auto *showHeaders = menu->addMenu(Icon::get("visibility"), "Columns to show");
 	auto *sortBy = menu->addMenu(Icon::get("view-sort-ascending"), "Default sorting");
-	QStringList headerTitles({
-		"Title", "Artist", "Album", "Length", "Added"
+	const QStringList headerTitles({
+		QStringLiteral("Title"),
+		QStringLiteral("Artist"),
+		QStringLiteral("Album"),
+		QStringLiteral("Length"),
+		QStringLiteral("Added"),
+		QStringLiteral("Liked"),
 	});
 	const auto &headers = this->settings.general.hidden_song_headers;
 
@@ -203,6 +255,31 @@ void List::Tracks::onHeaderMenuTriggered(QAction *action)
 	header()->setSortIndicator(index + 1, Qt::AscendingOrder);
 	settings.general.song_header_sort_by = index;
 	settings.save();
+}
+
+void List::Tracks::onCurrentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+{
+	if (previous != nullptr)
+	{
+		const auto &likedData = previous->data(0, static_cast<int>(DataRole::Liked));
+		const auto isLiked = likedData.toBool();
+		if (!isLiked)
+		{
+			previous->setIcon(static_cast<int>(Column::Liked), QIcon());
+		}
+	}
+
+	if (current == nullptr)
+	{
+		return;
+	}
+
+	const auto &likedData = current->data(0, static_cast<int>(DataRole::Liked));
+	const auto isLiked = likedData.toBool();
+
+	current->setIcon(static_cast<int>(Column::Liked), isLiked
+		? Icon::get(QStringLiteral("starred-symbolic"))
+		: Icon::get(QStringLiteral("non-starred-symbolic")));
 }
 
 void List::Tracks::onNewPlaylist()
@@ -300,8 +377,9 @@ void List::Tracks::resizeHeaders(const QSize &newSize)
 	constexpr int addedSize = 140;
 	constexpr int minSize = 60;
 	constexpr int columnCount = 7;
+	constexpr int likedSize = 40;
 
-	auto size = (newSize.width() - indexSize - lengthSize - addedSize) / columnCount;
+	auto size = (newSize.width() - indexSize - lengthSize - addedSize - likedSize) / columnCount;
 
 	if (size < minSize)
 	{
@@ -314,6 +392,7 @@ void List::Tracks::resizeHeaders(const QSize &newSize)
 	header()->resizeSection(static_cast<int>(Column::Album), size * 2);
 	header()->resizeSection(static_cast<int>(Column::Length), lengthSize);
 	header()->resizeSection(static_cast<int>(Column::Added), addedSize);
+	header()->resizeSection(static_cast<int>(Column::Liked), likedSize);
 }
 
 void List::Tracks::updateResizeMode(lib::resize_mode mode)
@@ -414,7 +493,7 @@ void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
 			QString::fromStdString(track.album.name),
 			QString::fromStdString(lib::format::time(track.duration)),
 			getAddedText(added),
-		}, track, emptyIcon, index, QString::fromStdString(addedAt));
+		}, track, emptyIcon, index, QString::fromStdString(addedAt), false);
 
 		if (!anyHasDate && !added.empty())
 		{
@@ -440,6 +519,26 @@ void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
 	header()->setSectionHidden(static_cast<int>(Column::Added), !anyHasDate
 		|| lib::set::contains(settings.general.hidden_song_headers,
 			static_cast<int>(Column::Added)));
+
+	getLikedTracks([this](const std::vector<lib::spt::track> &likedTracks)
+	{
+		for (const auto &likedTrack: likedTracks)
+		{
+			auto trackItem = trackItems.find(likedTrack.id);
+			if (trackItem == trackItems.end())
+			{
+				continue;
+			}
+
+			auto *item = dynamic_cast<ListItem::Track *>(trackItem->second);
+			if (item == nullptr)
+			{
+				continue;
+			}
+
+			item->setLiked(true);
+		}
+	});
 }
 
 void List::Tracks::load(const std::vector<lib::spt::track> &tracks)
@@ -570,4 +669,20 @@ auto List::Tracks::getCurrent() -> const spt::Current &
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	return mainWindow->getCurrent();
+}
+
+void List::Tracks::getLikedTracks(const std::function<void(const std::vector<lib::spt::track> &)> &callback)
+{
+	const auto cachedTracks = cache.get_tracks("liked_tracks");
+	if (!cachedTracks.empty())
+	{
+		callback(cachedTracks);
+		return;
+	}
+
+	spotify.saved_tracks([this, callback](const std::vector<lib::spt::track> &tracks)
+	{
+		callback(tracks);
+		cache.set_tracks("liked_tracks", tracks);
+	});
 }

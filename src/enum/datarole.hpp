@@ -11,4 +11,5 @@ enum class DataRole: int
 	Length = 0x106,       // 262
 	DefaultIndex = 0x107, // 263
 	ShowId = 0x108,       // 264
+	Liked = 0x109,        // 265
 };
