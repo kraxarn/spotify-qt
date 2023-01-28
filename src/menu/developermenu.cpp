@@ -163,6 +163,14 @@ auto DeveloperMenu::statusMenu() -> QMenu *
 		StatusMessage::show(MessageType::Information, "Information");
 	});
 
+	addMenuItem(menu, QStringLiteral("Information with action"), []()
+	{
+		StatusMessage::info(QStringLiteral("Information"), QStringLiteral("Action"), []()
+		{
+			StatusMessage::info(QStringLiteral("Information action"));
+		});
+	});
+
 	addMenuItem(menu, "Warning", []()
 	{
 		StatusMessage::show(MessageType::Warning, "Warning");
