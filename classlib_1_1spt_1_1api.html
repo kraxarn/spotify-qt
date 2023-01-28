@@ -237,8 +237,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>refresh</b> (bool for
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:aed0d8133140221ebdd84d5efc795fda5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#aed0d8133140221ebdd84d5efc795fda5">select_device</a> (const std::vector&lt; <a class="el" href="classlib_1_1spt_1_1device.html">lib::spt::device</a> &gt; &amp;<a class="el" href="classlib_1_1spt_1_1api.html#ab71b9c21944c8b1ae9f2c6a78ff99cb6">devices</a>, lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1device.html">lib::spt::device</a> &gt; &amp;callback)</td></tr>
-<tr class="separator:aed0d8133140221ebdd84d5efc795fda5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8235c4f96e74fa58a5e1f12795b9612d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a8235c4f96e74fa58a5e1f12795b9612d">get</a> (const std::string &amp;response, lib::callback&lt; nlohmann::json &gt; &amp;callback)</td></tr>
 <tr class="separator:a8235c4f96e74fa58a5e1f12795b9612d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8c249ba34558bb06a807f13aace0554"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#af8c249ba34558bb06a807f13aace0554">get_items</a> (const std::string &amp;url, lib::callback&lt; nlohmann::json &gt; &amp;callback)</td></tr>
@@ -1166,49 +1164,6 @@ Temporarily protected </dd></dl>
 <p >Seek in current track </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">position</td><td>Position to seek to in milliseconds </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="aed0d8133140221ebdd84d5efc795fda5" name="aed0d8133140221ebdd84d5efc795fda5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aed0d8133140221ebdd84d5efc795fda5">&#9670;&#160;</a></span>select_device()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void lib::spt::api::select_device </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; <a class="el" href="classlib_1_1spt_1_1device.html">lib::spt::device</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>devices</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1device.html">lib::spt::device</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>callback</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p >Allow use to select device, by default, none is chosen </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">devices</td><td>Devices to select from </td></tr>
-    <tr><td class="paramname">callback</td><td>Selected device </td></tr>
   </table>
   </dd>
 </dl>
