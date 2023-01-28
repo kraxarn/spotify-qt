@@ -16,7 +16,7 @@ namespace ListItem
 	{
 	public:
 		Track(const QStringList &strings, const lib::spt::track &track,
-			const QIcon &icon, int index, const QString &addedAt, bool isLiked);
+			const QIcon &icon, int index, const QString &addedAt);
 
 		void setLiked(bool isLiked);
 

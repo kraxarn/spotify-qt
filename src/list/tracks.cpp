@@ -493,7 +493,7 @@ void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
 			QString::fromStdString(track.album.name),
 			QString::fromStdString(lib::format::time(track.duration)),
 			getAddedText(added),
-		}, track, emptyIcon, index, QString::fromStdString(addedAt), false);
+		}, track, emptyIcon, index, QString::fromStdString(addedAt));
 
 		if (!anyHasDate && !added.empty())
 		{

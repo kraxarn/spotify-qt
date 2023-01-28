@@ -2,7 +2,7 @@
 #include "util/icon.hpp"
 
 ListItem::Track::Track(const QStringList &strings, const lib::spt::track &track,
-	const QIcon &icon, int index, const QString &addedAt, bool isLiked)
+	const QIcon &icon, int index, const QString &addedAt)
 	: QTreeWidgetItem(strings)
 {
 	setIcon(0, icon);
@@ -17,7 +17,7 @@ ListItem::Track::Track(const QStringList &strings, const lib::spt::track &track,
 	setData(0, static_cast<int>(DataRole::AddedDate), addedDate);
 	setData(0, static_cast<int>(DataRole::Length), track.duration);
 
-	setLiked(isLiked);
+	setLiked(false);
 
 	if (track.is_local || !track.is_playable)
 	{
