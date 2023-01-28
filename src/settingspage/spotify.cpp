@@ -3,6 +3,8 @@
 #include "util/widget.hpp"
 #include "util/process.hpp"
 
+#include <QStandardPaths>
+
 #ifdef USE_KEYCHAIN
 #include "util/keychain.hpp"
 #endif

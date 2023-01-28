@@ -8,7 +8,7 @@ Q_OBJECT
 
 public:
 	MainWindow(lib::settings &settings, lib::paths &paths,
-		lib::qt::http_client &httpClient, spt::Spotify &spotify);
+		lib::qt::http_client &httpClient, lib::spt::api &spotify);
 
 	static MainWindow *find(QWidget *from);
 	static auto defaultSize() -> QSize;
@@ -83,7 +83,7 @@ private:
 
 	SpotifyClient::Runner *spotifyRunner = nullptr;
 
-	spt::Spotify &spotify;
+	lib::spt::api &spotify;
 	spt::Current current;
 
 	lib::settings &settings;

@@ -93,7 +93,7 @@ auto main(int argc, char *argv[]) -> int
 	lib::qt::http_client httpClient(nullptr);
 	const spt::DeviceSelect deviceSelect(nullptr);
 	lib::spt::request request(settings, httpClient, deviceSelect);
-	spt::Spotify spotify(settings, httpClient, request, nullptr);
+	lib::spt::api spotify(settings, httpClient, request);
 
 	Refresher refresher(settings, request);
 	if (!refresher.refresh())

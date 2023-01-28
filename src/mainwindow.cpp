@@ -5,7 +5,7 @@
 #include "util/font.hpp"
 
 MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
-	lib::qt::http_client &httpClient, spt::Spotify &spotify)
+	lib::qt::http_client &httpClient, lib::spt::api &spotify)
 	: spotify(spotify),
 	settings(settings),
 	paths(paths),

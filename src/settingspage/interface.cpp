@@ -4,6 +4,8 @@
 #include "util/widget.hpp"
 
 #include <QFontDialog>
+#include <QStandardPaths>
+#include <QSettings>
 
 SettingsPage::Interface::Interface(lib::settings &settings, QWidget *parent)
 	: SettingsPage::Base(settings, parent)
