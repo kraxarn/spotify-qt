@@ -689,7 +689,11 @@ void List::Tracks::updateLikedTracks(const std::function<void(const std::vector<
 {
 	spotify.saved_tracks([this, callback](const std::vector<lib::spt::track> &tracks)
 	{
-		callback(tracks);
+		if (callback)
+		{
+			callback(tracks);
+		}
+
 		cache.set_tracks("liked_tracks", tracks);
 	});
 }
