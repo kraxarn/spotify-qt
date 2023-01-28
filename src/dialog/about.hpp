@@ -10,5 +10,8 @@ namespace Dialog
 
 	public:
 		explicit About(QWidget *parent);
+
+	protected:
+		void showEvent(QShowEvent *event) override;
 	};
 }

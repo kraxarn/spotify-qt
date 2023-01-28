@@ -11,3 +11,11 @@ Dialog::About::About(QWidget *parent)
 
 	Base::addAction(DialogAction::Ok);
 }
+
+void Dialog::About::showEvent(QShowEvent *event)
+{
+	QDialog::showEvent(event);
+
+	const auto size = std::max(QWidget::width(), QWidget::height());
+	setFixedSize(size, size);
+}
