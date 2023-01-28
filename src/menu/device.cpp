@@ -12,6 +12,10 @@ Menu::Device::Device(lib::spt::api &spotify, QWidget *parent)
 
 	QMenu::connect(this, &QMenu::aboutToShow, this, &Menu::Device::onAboutToShow);
 	QMenu::connect(this, &QMenu::triggered, this, &Menu::Device::onTriggered);
+
+	// Some systems don't show menus with no items
+	auto *action = addAction(QStringLiteral("Refreshing devices..."));
+	action->setDisabled(true);
 }
 
 void Menu::Device::refreshDevices()
