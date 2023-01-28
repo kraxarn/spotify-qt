@@ -79,6 +79,7 @@ namespace List
 		void resizeHeaders(const QSize &newSize);
 
 		void getLikedTracks(const std::function<void(const std::vector<lib::spt::track> &)> &callback);
+		void updateLikedTracks(const std::function<void(const std::vector<lib::spt::track> &)> &callback);
 
 		void onMenu(const QPoint &pos);
 		void onItemClicked(QTreeWidgetItem *item, int column);

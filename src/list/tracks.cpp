@@ -127,7 +127,7 @@ void List::Tracks::onItemClicked(QTreeWidgetItem *item, int column)
 		const auto &likedData = item->data(0, static_cast<int>(DataRole::Liked));
 		const auto &isLiked = likedData.toBool();
 
-		const auto callback = [item, isLiked, column](const std::string &response)
+		const auto callback = [this, item, isLiked, column](const std::string &response)
 		{
 			if (response.empty())
 			{
@@ -135,6 +135,8 @@ void List::Tracks::onItemClicked(QTreeWidgetItem *item, int column)
 				item->setIcon(column, Icon::get(isLiked
 					? QStringLiteral("non-starred-symbolic")
 					: QStringLiteral("starred-symbolic")));
+
+				updateLikedTracks({});
 			}
 		};
 
@@ -680,6 +682,11 @@ void List::Tracks::getLikedTracks(const std::function<void(const std::vector<lib
 		return;
 	}
 
+	updateLikedTracks(callback);
+}
+
+void List::Tracks::updateLikedTracks(const std::function<void(const std::vector<lib::spt::track> &)> &callback)
+{
 	spotify.saved_tracks([this, callback](const std::vector<lib::spt::track> &tracks)
 	{
 		callback(tracks);
