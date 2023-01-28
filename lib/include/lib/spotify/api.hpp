@@ -323,6 +323,7 @@ namespace lib
 			 * Allow use to select device, by default, none is chosen
 			 * @param devices Devices to select from
 			 * @param callback Selected device
+			 * @deprecated See lib::spt::device_select
 			 */
 			virtual void select_device(const std::vector<lib::spt::device> &devices,
 				lib::callback<lib::spt::device> &callback);
