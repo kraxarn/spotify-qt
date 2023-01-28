@@ -3,6 +3,7 @@
 #include "util/menuaction.hpp"
 #include "util/shortcut.hpp"
 #include "menu/developermenu.hpp"
+#include "menu/device.hpp"
 
 MainMenu::MainMenu(lib::spt::api &spotify, lib::settings &settings,
 	const lib::http_client &httpClient, lib::cache &cache, QWidget *parent)
@@ -31,13 +32,7 @@ MainMenu::MainMenu(lib::spt::api &spotify, lib::settings &settings,
 	}
 
 	// Device selection
-	deviceMenu = new QMenu("Device", this);
-	deviceMenu->setIcon(Icon::get("speaker"));
-	QMenu::connect(deviceMenu, &QMenu::aboutToShow, [this]()
-	{
-		this->refreshDevices();
-	});
-	QMenu::connect(deviceMenu, &QMenu::triggered, this, &MainMenu::deviceSelected);
+	auto *deviceMenu = new Menu::Device(spotify, this);
 	addMenu(deviceMenu);
 
 	// Refresh and settings
@@ -68,59 +63,6 @@ MainMenu::MainMenu(lib::spt::api &spotify, lib::settings &settings,
 	addActions({
 		logOutAction, quitAction
 	});
-}
-
-void MainMenu::refreshDevices()
-{
-	spotify.devices([this](const std::vector<lib::spt::device> &devices)
-	{
-		// Probably left menu before it loaded
-		if (this->deviceMenu == nullptr)
-		{
-			return;
-		}
-
-		// Clear all entries
-		for (auto &action: deviceMenu->actions())
-		{
-			deviceMenu->removeAction(action);
-		}
-
-		// Check if empty
-		if (devices.empty())
-		{
-			deviceMenu->addAction("No devices found")->setDisabled(true);
-			return;
-		}
-
-		// Update devices
-		for (const auto &device: devices)
-		{
-			auto *action = deviceMenu->addAction(QString::fromStdString(device.name));
-			action->setCheckable(true);
-			action->setChecked(device.is_active);
-			action->setDisabled(device.is_active);
-			action->setData(QString::fromStdString(device.id));
-		}
-	});
-}
-
-void MainMenu::deviceSelected(QAction *action)
-{
-	spotify.set_device(action->data().toString().toStdString(),
-		[action](const std::string &status)
-		{
-			if (!status.empty())
-			{
-				action->setChecked(false);
-				StatusMessage::error(QString("Failed to set device: %1")
-					.arg(QString::fromStdString(status)));
-			}
-			else
-			{
-				action->setDisabled(true);
-			}
-		});
 }
 
 void MainMenu::logOut(bool /*checked*/)

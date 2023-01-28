@@ -20,11 +20,8 @@ private:
 	lib::cache &cache;
 	const lib::http_client &httpClient;
 	QAction *about;
-	QMenu *deviceMenu;
 	Dialog::Settings *settingsDialog = nullptr;
 
-	void refreshDevices();
-	void deviceSelected(QAction *action);
 	void logOut(bool checked);
 	void checkForUpdate(const std::string &data);
 
