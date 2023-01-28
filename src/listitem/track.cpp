@@ -83,6 +83,13 @@ auto ListItem::Track::operator<(const QTreeWidgetItem &item) const -> bool
 			< item.data(0, static_cast<int>(DataRole::AddedDate)).toDateTime();
 	}
 
+	// Liked status
+	if (column == Column::Liked)
+	{
+		return !data(0, static_cast<int>(DataRole::Liked)).toBool()
+			&& item.data(0, static_cast<int>(DataRole::Liked)).toBool();
+	}
+
 	return removePrefix(text(static_cast<int>(column)))
 		.compare(removePrefix(item.text(static_cast<int>(column))),
 			Qt::CaseInsensitive) < 0;
