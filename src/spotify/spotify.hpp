@@ -1,6 +1,5 @@
 #pragma once
 
-#include "dialog/deviceselect.hpp"
 #include "lib/enum/followtype.hpp"
 #include "lib/qt/httpclient.hpp"
 #include "lib/settings.hpp"
@@ -36,9 +35,5 @@ namespace spt
 	public:
 		Spotify(lib::settings &settings, const lib::http_client &httpClient,
 			lib::spt::request &request, QObject *parent = nullptr);
-
-	private:
-		void select_device(const std::vector<lib::spt::device> &devices,
-			lib::callback<lib::spt::device> &callback) override;
 	};
 }

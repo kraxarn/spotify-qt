@@ -4,6 +4,7 @@
 #include "lib/result.hpp"
 #include "lib/spotify/error.hpp"
 #include "lib/spotify/util.hpp"
+#include "lib/spotify/deviceselect.hpp"
 
 namespace lib
 {
@@ -15,7 +16,8 @@ namespace lib
 		class request
 		{
 		public:
-			request(lib::settings &settings, const lib::http_client &http_client);
+			request(lib::settings &settings, const lib::http_client &http_client,
+				const lib::spt::device_select &device_select);
 
 			/**
 			 * Refresh access token with refresh token
@@ -76,6 +78,7 @@ namespace lib
 
 			lib::settings &settings;
 			const lib::http_client &http;
+			const lib::spt::device_select &device_select;
 
 			/**
 			 * Timestamp of last refresh

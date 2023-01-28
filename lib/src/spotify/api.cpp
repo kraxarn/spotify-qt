@@ -43,12 +43,6 @@ auto lib::spt::api::error_message(const std::string &url, const std::string &dat
 	return message;
 }
 
-void lib::spt::api::select_device(const std::vector<lib::spt::device> &/*devices*/,
-	lib::callback<lib::spt::device> &callback)
-{
-	callback(lib::spt::device());
-}
-
 auto lib::spt::api::follow_type_string(lib::follow_type type) -> std::string
 {
 	switch (type)
@@ -165,7 +159,7 @@ void lib::spt::api::put(const std::string &url, const nlohmann::json &body,
 					}
 					else
 					{
-						this->select_device(devices, [this, url, body, callback, error]
+						request.device_select.get(devices, [this, url, body, callback, error]
 							(const lib::spt::device &device)
 						{
 							if (device.id.empty())

@@ -5,7 +5,7 @@
 
 namespace spt
 {
-	class DeviceSelect: public lib::spt::device_select, public QObject
+	class DeviceSelect: public QObject, public lib::spt::device_select
 	{
 	Q_OBJECT
 
