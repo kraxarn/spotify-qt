@@ -3,6 +3,8 @@
 #include "lib/system.hpp"
 #include "util/widget.hpp"
 #include "util/font.hpp"
+#include "menu/mainmenubar.hpp"
+#include "util/appconfig.hpp"
 
 MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 	lib::qt::http_client &httpClient, lib::spt::api &spotify)
@@ -64,6 +66,11 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 	setContextMenuPolicy(Qt::NoContextMenu);
 
 	setBorderless(!settings.qt().system_title_bar);
+
+	if (AppConfig::useNativeMenuBar())
+	{
+		new MainMenuBar(spotify, settings, httpClient, cache, this);
+	}
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

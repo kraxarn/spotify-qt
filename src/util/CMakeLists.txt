@@ -1,4 +1,5 @@
 target_sources(${PROJECT_NAME} PRIVATE
+	${CMAKE_CURRENT_SOURCE_DIR}/appconfig.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/appinstalltype.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/darkpalette.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/datetime.cpp

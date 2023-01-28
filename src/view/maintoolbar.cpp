@@ -1,7 +1,7 @@
 #include "view/maintoolbar.hpp"
 #include "mainwindow.hpp"
 #include "util/shortcut.hpp"
-#include "util/font.hpp"
+#include "util/appconfig.hpp"
 
 MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	const lib::http_client &httpClient, lib::cache &cache, QWidget *parent)
@@ -21,6 +21,7 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	menu->setText("Menu");
 	menu->setIcon(Icon::get("application-menu"));
 	menu->setPopupMode(QToolButton::InstantPopup);
+	menu->setVisible(!AppConfig::useNativeMenuBar());
 	menu->setMenu(new MainMenu(spotify, settings,
 		httpClient, cache, mainWindow));
 
