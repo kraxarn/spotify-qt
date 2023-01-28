@@ -144,7 +144,7 @@ void lib::spt::api::put(const std::string &url, const nlohmann::json &body,
 			{
 				if (invalidDevice)
 				{
-					request.set_current_device(std::string());
+					this->request.set_current_device(std::string());
 				}
 
 				devices([this, url, body, error, callback]
@@ -159,7 +159,7 @@ void lib::spt::api::put(const std::string &url, const nlohmann::json &body,
 					}
 					else
 					{
-						request.device_select.get(devices, [this, url, body, callback, error]
+						this->request.device_select.get(devices, [this, url, body, callback, error]
 							(const lib::spt::device &device)
 						{
 							if (device.id.empty())
@@ -173,7 +173,7 @@ void lib::spt::api::put(const std::string &url, const nlohmann::json &body,
 							{
 								if (status.empty())
 								{
-									request.set_current_device(device.id);
+									this->request.set_current_device(device.id);
 									this->put(get_device_url(url, device), body, callback);
 								}
 							});
