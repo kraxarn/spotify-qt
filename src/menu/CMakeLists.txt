@@ -1,6 +1,7 @@
 target_sources(${PROJECT_NAME} PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/addtoplaylist.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/album.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/appmenu.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/artistlinks.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/developermenu.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/device.cpp
