@@ -93,3 +93,14 @@ auto lib::spt::request::request_refresh(const std::string &post_data,
 		{"Authorization", authorization},
 	}, post_data);
 }
+
+auto lib::spt::request::get_current_device() const -> const std::string &
+{
+	return settings.general.last_device;
+}
+
+void lib::spt::request::set_current_device(const std::string &device_id)
+{
+	settings.general.last_device = device_id;
+	settings.save();
+}

@@ -431,17 +431,6 @@ namespace lib
 			 */
 			static auto error_message(const std::string &url,
 				const std::string &data) -> std::string;
-
-			/**
-			 * Set last used device
-			 * @param id Device ID
-			 */
-			void set_current_device(const std::string &id);
-
-			/**
-			 * Get last used device
-			 */
-			auto get_current_device() const -> const std::string &;
 		};
 	}
 }

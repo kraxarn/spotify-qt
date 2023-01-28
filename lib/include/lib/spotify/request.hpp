@@ -97,6 +97,17 @@ namespace lib
 				const std::string &authorization) -> std::string;
 
 			/**
+			 * Get last used device
+			 */
+			auto get_current_device() const -> const std::string &;
+
+			/**
+			 * Set last used device
+			 * @param id Device ID
+			 */
+			void set_current_device(const std::string &device_id);
+
+			/**
 			 * Parse JSON from string data
 			 * @param url Requested URL (used for error logging)
 			 * @param data JSON data

@@ -12,7 +12,7 @@ void lib::spt::api::current_playback(lib::callback<lib::result<lib::spt::playbac
 
 void lib::spt::api::set_device(const std::string &device_id, lib::callback<std::string> &callback)
 {
-	set_current_device(device_id);
+	request.set_current_device(device_id);
 	put("me/player", {
 		{"device_ids", {
 			device_id
@@ -39,10 +39,10 @@ void lib::spt::api::devices(lib::callback<std::vector<lib::spt::device>> &callba
 
 auto lib::spt::api::play_tracks_url() -> std::string
 {
-	return get_current_device().empty()
+	return request.get_current_device().empty()
 		? "me/player/play"
 		: lib::fmt::format("me/player/play?device_id={}",
-			get_current_device());
+			request.get_current_device());
 }
 
 void lib::spt::api::play_tracks(int track_index, const std::string &context,

@@ -63,17 +63,6 @@ auto lib::spt::api::follow_type_string(lib::follow_type type) -> std::string
 	return {};
 }
 
-void lib::spt::api::set_current_device(const std::string &id)
-{
-	settings.general.last_device = id;
-	settings.save();
-}
-
-auto lib::spt::api::get_current_device() const -> const std::string &
-{
-	return settings.general.last_device;
-}
-
 //region GET
 
 void lib::spt::api::get(const std::string &url, lib::callback<nlohmann::json> &callback)
@@ -161,7 +150,7 @@ void lib::spt::api::put(const std::string &url, const nlohmann::json &body,
 			{
 				if (invalidDevice)
 				{
-					set_current_device(std::string());
+					request.set_current_device(std::string());
 				}
 
 				devices([this, url, body, error, callback]
@@ -190,7 +179,7 @@ void lib::spt::api::put(const std::string &url, const nlohmann::json &body,
 							{
 								if (status.empty())
 								{
-									set_current_device(device.id);
+									request.set_current_device(device.id);
 									this->put(get_device_url(url, device), body, callback);
 								}
 							});
