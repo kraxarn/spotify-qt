@@ -6,6 +6,8 @@ namespace spt
 {
 	class DeviceSelect: public lib::spt::device_select, public QObject
 	{
+	Q_OBJECT
+
 	public:
 		explicit DeviceSelect(QObject *parent);
 
