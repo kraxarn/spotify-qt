@@ -56,6 +56,7 @@ private:
 	void hideAnimated();
 	void animate(int from, int to);
 
+	void onAction(bool checked);
 	void onClose(bool checked);
 	void onTimerTimeout();
 	void onTimeLineFrameChanged(int value);

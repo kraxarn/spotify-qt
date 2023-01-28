@@ -183,10 +183,10 @@ auto StatusMessage::getInterval(MessageType messageType) -> int
 		case MessageType::Information:
 			return 5000;
 
-		case MessageType::InformationAction:
 		case MessageType::Warning:
 			return 10000;
 
+		case MessageType::InformationAction:
 		case MessageType::Error:
 			return -1;
 
@@ -195,12 +195,13 @@ auto StatusMessage::getInterval(MessageType messageType) -> int
 	}
 }
 
-void StatusMessage::onAction(bool /*checked*/)
+void StatusMessage::onAction(bool checked)
 {
 	if (buttonAction)
 	{
 		buttonAction();
 	}
+	onClose(checked);
 }
 
 void StatusMessage::onClose(bool /*checked*/)
