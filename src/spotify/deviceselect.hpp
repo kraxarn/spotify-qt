@@ -11,7 +11,7 @@ namespace spt
 	public:
 		explicit DeviceSelect(QObject *parent);
 
-		void select_device(const std::vector<lib::spt::device> &devices,
-			lib::callback<lib::spt::device> &callback) override;
+		void get(const std::vector<lib::spt::device> &devices,
+			lib::callback<lib::spt::device> &callback) const override;
 	};
 }

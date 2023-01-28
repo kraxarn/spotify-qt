@@ -10,8 +10,13 @@ namespace lib
 		public:
 			device_select() = default;
 
-			virtual void select_device(const std::vector<lib::spt::device> &devices,
-				lib::callback<lib::spt::device> &callback) = 0;
+			/**
+			 * Allow user to select device
+			 * @param devices Devices to select from
+			 * @param callback Selected device
+			 */
+			virtual void get(const std::vector<lib::spt::device> &devices,
+				lib::callback<lib::spt::device> &callback) const = 0;
 		};
 	}
 }
