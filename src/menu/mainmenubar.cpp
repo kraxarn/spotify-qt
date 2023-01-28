@@ -11,7 +11,8 @@ MainMenuBar::MainMenuBar(lib::spt::api &spotify, lib::settings &settings,
 {
 	auto *menu = new QMenu(QStringLiteral(APP_NAME), this);
 
-	auto *preferences = menu->addAction(QStringLiteral("Preferences"), QKeySequence::Preferences);
+	auto *preferences = menu->addAction(QStringLiteral("Preferences"));
+	preferences->setShortcut(QKeySequence::Preferences);
 	QAction::connect(preferences, &QAction::triggered, this, &MainMenuBar::onOpenPreferences);
 
 	auto *about = menu->addAction(QStringLiteral("About"));
