@@ -44,7 +44,7 @@ ListItem::Track::Track(const QStringList &strings, const lib::spt::track &track,
 	auto length = strings.at(strings.length() - 2).split(':');
 	if (length.length() >= 2)
 	{
-		setToolTip(strings.length() - 2,
+		setToolTip(static_cast<int>(strings.length() - 2),
 			QString("%1m %2s (%3s total)")
 				.arg(length.at(0), length.at(1))
 				.arg(track.duration / 1000));
@@ -53,7 +53,7 @@ ListItem::Track::Track(const QStringList &strings, const lib::spt::track &track,
 	// Added
 	if (!DateTime::isEmpty(addedDate))
 	{
-		setToolTip(strings.length() - 1,
+		setToolTip(static_cast<int>(strings.length() - 1),
 			QLocale().toString(addedDate.date()));
 	}
 }
