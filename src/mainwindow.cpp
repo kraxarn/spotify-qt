@@ -45,6 +45,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 
 	// If new version has been detected, show what's new dialog
 	initWhatsNew();
+	checkForUpdates();
 
 	// Get current user
 	spotify.me([this](const lib::spt::user &user)
@@ -163,6 +164,44 @@ void MainWindow::initDevice()
 				}
 			}
 		}
+	});
+}
+
+void MainWindow::checkForUpdates()
+{
+	if (!settings.general.check_for_updates)
+	{
+		return;
+	}
+
+	const auto *const url = "https://api.github.com/repos/kraxarn/spotify-qt/releases/latest";
+	httpClient.get(url, lib::headers(), [this](const std::string &data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		auto json = nlohmann::json::parse(data);
+		if (!json.contains("tag_name"))
+		{
+			return;
+		}
+
+		const auto &latest = json.at("tag_name").get<std::string>();
+		if (latest.empty() || latest == APP_VERSION)
+		{
+			return;
+		}
+
+		const auto text = QString("%1 %2 is now available")
+			.arg(APP_NAME, QString::fromStdString(latest));
+
+		StatusMessage::info(text, QStringLiteral("Open release"), [this]()
+		{
+			const QString url("https://github.com/kraxarn/spotify-qt/releases/latest");
+			Url::open(url, LinkType::Web, this);
+		});
 	});
 }
 

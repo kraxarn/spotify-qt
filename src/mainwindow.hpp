@@ -109,6 +109,7 @@ private:
 	void initMediaController();
 	void initWhatsNew();
 	void initDevice();
+	void checkForUpdates();
 
 	// Methods
 	QWidget *createCentralWidget();

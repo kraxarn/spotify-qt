@@ -19,11 +19,9 @@ private:
 	lib::settings &settings;
 	lib::cache &cache;
 	const lib::http_client &httpClient;
-	QAction *about;
 	Dialog::Settings *settingsDialog = nullptr;
 
 	void logOut(bool checked);
-	void checkForUpdate(const std::string &data);
 
 	void onOpenSettings(bool checked);
 };

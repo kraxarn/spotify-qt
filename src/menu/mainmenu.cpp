@@ -13,24 +13,6 @@ MainMenu::MainMenu(lib::spt::api &spotify, lib::settings &settings,
 	cache(cache),
 	httpClient(httpClient)
 {
-	// Update notifier
-	about = addAction(Icon::get("help-about"), QString("Checking for updates..."));
-	about->setDisabled(true);
-
-	// Check for updates
-	if (settings.general.check_for_updates)
-	{
-		httpClient.get("https://api.github.com/repos/kraxarn/spotify-qt/releases/latest",
-			lib::headers(), [this](const std::string &data)
-			{
-				this->checkForUpdate(data);
-			});
-	}
-	else
-	{
-		about->setVisible(false);
-	}
-
 	// Device selection
 	auto *deviceMenu = new Menu::Device(spotify, this);
 	addMenu(deviceMenu);
@@ -103,38 +85,6 @@ void MainMenu::logOut(bool /*checked*/)
 		"You are now logged out, the application will now close");
 
 	QCoreApplication::quit();
-}
-
-void MainMenu::checkForUpdate(const std::string &data)
-{
-	if (data.empty())
-	{
-		return;
-	}
-
-	auto json = nlohmann::json::parse(data);
-	if (!json.contains("tag_name"))
-	{
-		return;
-	}
-
-	const auto &latest = json.at("tag_name").get<std::string>();
-	auto isLatest = latest.empty() || latest == APP_VERSION;
-	if (latest.empty() || isLatest)
-	{
-		about->setVisible(false);
-	}
-	else
-	{
-		about->setDisabled(false);
-		about->setText(QString("Update found: %1")
-			.arg(QString::fromStdString(latest)));
-		QAction::connect(about, &QAction::triggered, [this]()
-		{
-			QString url("https://github.com/kraxarn/spotify-qt/releases/latest");
-			Url::open(url, LinkType::Web, MainWindow::find(this->parentWidget()));
-		});
-	}
 }
 
 void MainMenu::onOpenSettings(bool /*checked*/)
