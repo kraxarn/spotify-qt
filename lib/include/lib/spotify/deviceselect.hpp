@@ -1,3 +1,5 @@
+#pragma once
+
 #include "lib/spotify/device.hpp"
 #include "lib/spotify/callback.hpp"
 

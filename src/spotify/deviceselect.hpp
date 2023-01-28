@@ -1,5 +1,6 @@
-#include "lib/spotify/deviceselect.hpp"
+#pragma once
 
+#include "lib/spotify/deviceselect.hpp"
 #include <QObject>
 
 namespace spt
