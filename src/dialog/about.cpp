@@ -16,6 +16,6 @@ void Dialog::About::showEvent(QShowEvent *event)
 {
 	QDialog::showEvent(event);
 
-	const auto size = std::max(QWidget::width(), QWidget::height());
+	const auto size = qMax(QWidget::width(), QWidget::height());
 	setFixedSize(size, size);
 }
