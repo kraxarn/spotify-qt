@@ -1,7 +1,10 @@
 #include "util/appconfig.hpp"
-#include <QCoreApplication>
 
 auto AppConfig::useNativeMenuBar() -> bool
 {
-	return !QCoreApplication::testAttribute(Qt::AA_DontUseNativeMenuBar);
+#ifdef __APPLE__
+	return true;
+#else
+	return false;
+#endif
 }
