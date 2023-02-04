@@ -11,7 +11,6 @@ void lib::setting::to_json(nlohmann::json &j, const general &g)
 		{"last_device", g.last_device},
 		{"last_playlist", g.last_playlist},
 		{"last_version", g.last_version},
-		{"last_volume", g.last_volume},
 		{"media_controller", g.media_controller},
 		{"native_window", g.native_window},
 		{"notify_track_change", g.notify_track_change},
@@ -45,7 +44,6 @@ void lib::setting::from_json(const nlohmann::json &j, general &g)
 	lib::json::get(j, "last_device", g.last_device);
 	lib::json::get(j, "last_playlist", g.last_playlist);
 	lib::json::get(j, "last_version", g.last_version);
-	lib::json::get(j, "last_volume", g.last_volume);
 	lib::json::get(j, "media_controller", g.media_controller);
 	lib::json::get(j, "native_window", g.native_window);
 	lib::json::get(j, "notify_track_change", g.notify_track_change);

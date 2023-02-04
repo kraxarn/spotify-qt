@@ -13,6 +13,7 @@ void lib::setting::to_json(nlohmann::json &j, const spotify &s)
 		{"path", s.path},
 		{"start_client", s.start_client},
 		{"username", s.username},
+		{"volume", s.volume},
 	};
 }
 
@@ -33,4 +34,5 @@ void lib::setting::from_json(const nlohmann::json &j, spotify &s)
 	lib::json::get(j, "path", s.path);
 	lib::json::get(j, "start_client", s.start_client);
 	lib::json::get(j, "username", s.username);
+	lib::json::get(j, "volume", s.volume);
 }

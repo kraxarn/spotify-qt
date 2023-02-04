@@ -66,6 +66,11 @@ namespace lib
 			 * Device type for Spotify client
 			 */
 			lib::device_type device_type = device_type::unknown;
+
+			/**
+			 * Volume to start client at from 0-100%
+			 */
+			int volume = 100;
 		};
 
 		void to_json(nlohmann::json &j, const spotify &s);

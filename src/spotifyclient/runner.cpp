@@ -100,10 +100,7 @@ void SpotifyClient::Runner::start(const QString &username, const QString &passwo
 		"--password", password
 	});
 
-	constexpr int volumeStep = 5;
-	const auto initialVolume = settings.general.last_volume > 0
-		? QString::number(settings.general.last_volume * volumeStep)
-		: QStringLiteral("100");
+	const auto initialVolume = QString::number(settings.spotify.volume);
 
 	// librespot specific
 	if (clientType == lib::client_type::librespot)
