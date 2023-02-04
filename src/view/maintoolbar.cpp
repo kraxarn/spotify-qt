@@ -22,8 +22,7 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	menu->setIcon(Icon::get("application-menu"));
 	menu->setPopupMode(QToolButton::InstantPopup);
 	menu->setVisible(!AppConfig::useNativeMenuBar());
-	menu->setMenu(new MainMenu(spotify, settings,
-		httpClient, cache, mainWindow));
+	menu->setMenu(new MainMenu(spotify, settings, httpClient, cache, this));
 
 	// Search
 	search = addAction(Icon::get(QStringLiteral("edit-find")),
