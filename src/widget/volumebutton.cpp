@@ -52,12 +52,6 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 		this, &VolumeButton::onVolumeSliderReleased);
 }
 
-VolumeButton::~VolumeButton()
-{
-	settings.general.last_volume = volume->value();
-	settings.save();
-}
-
 void VolumeButton::wheelEvent(QWheelEvent *event)
 {
 	volume->setValue(volume->value() + (event->angleDelta().y() < 0 ? -1 : 1));
@@ -71,6 +65,8 @@ void VolumeButton::update(int value)
 
 	volumeUp->setEnabled(value < maximum);
 	volumeDown->setEnabled(value > minimum);
+
+	settings.general.last_volume = value / 5;
 }
 
 auto VolumeButton::getVolumeIcon(int value) -> QIcon
