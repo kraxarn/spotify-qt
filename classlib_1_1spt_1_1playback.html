@@ -89,6 +89,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1f8a47dd2b4e30511d60ab7ec0ef2018"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a788f323394b808b2698413d1460d9b8c"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1playback.html#a788f323394b808b2698413d1460d9b8c">volume</a> () const -&gt; int</td></tr>
 <tr class="separator:a788f323394b808b2698413d1460d9b8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac30f1e2a3ebbadd0886e15154e5955c8"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1playback.html#ac30f1e2a3ebbadd0886e15154e5955c8">is_allowed</a> (const player_action &amp;action) const -&gt; bool</td></tr>
+<tr class="separator:ac30f1e2a3ebbadd0886e15154e5955c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -106,8 +108,29 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a3b8abad8cc302c24f0a07b4b3bca9146"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a347a1f37e20750a9ffaaf42cf93780bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classlib_1_1spt_1_1device.html">lib::spt::device</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1playback.html#a347a1f37e20750a9ffaaf42cf93780bd">device</a></td></tr>
 <tr class="separator:a347a1f37e20750a9ffaaf42cf93780bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8258bdd52358fde4375827138c58766"><td class="memItemLeft" align="right" valign="top">std::unordered_set&lt; lib::player_action &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1playback.html#ac8258bdd52358fde4375827138c58766">disallowed_actions</a></td></tr>
+<tr class="separator:ac8258bdd52358fde4375827138c58766"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="ac30f1e2a3ebbadd0886e15154e5955c8" name="ac30f1e2a3ebbadd0886e15154e5955c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac30f1e2a3ebbadd0886e15154e5955c8">&#9670;&#160;</a></span>is_allowed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto lib::spt::playback::is_allowed </td>
+          <td>(</td>
+          <td class="paramtype">const player_action &amp;&#160;</td>
+          <td class="paramname"><em>action</em></td><td>)</td>
+          <td> const -&gt;  bool</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Is specified action allowed </p>
+
+</div>
+</div>
 <a id="a1f8a47dd2b4e30511d60ab7ec0ef2018" name="a1f8a47dd2b4e30511d60ab7ec0ef2018"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1f8a47dd2b4e30511d60ab7ec0ef2018">&#9670;&#160;</a></span>metadata()</h2>
 
@@ -172,6 +195,21 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p >Current active device </p>
+
+</div>
+</div>
+<a id="ac8258bdd52358fde4375827138c58766" name="ac8258bdd52358fde4375827138c58766"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8258bdd52358fde4375827138c58766">&#9670;&#160;</a></span>disallowed_actions</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_set&lt;lib::player_action&gt; lib::spt::playback::disallowed_actions</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Disallowed actions </p>
 
 </div>
 </div>
