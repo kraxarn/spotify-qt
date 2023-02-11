@@ -317,6 +317,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 
 	current.playback = playback;
 	emit tick(playback);
+	toolBar->toggleActions(playback);
 
 	if (!current.playback.item.is_valid())
 	{
