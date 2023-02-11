@@ -1,6 +1,7 @@
 #include "volumebutton.hpp"
 #include "mainwindow.hpp"
 #include "util/shortcut.hpp"
+#include "widget/clickableslider.hpp"
 
 VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWidget *parent)
 	: QToolButton(parent),
@@ -8,8 +9,7 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 	spotify(spotify)
 {
 	// Volume slider
-	volume = new QSlider(this);
-	volume->setOrientation(Qt::Orientation::Vertical);
+	volume = new ClickableSlider(Qt::Vertical, this);
 	volume->setFixedHeight(height);
 	volume->setFixedWidth(width);
 	volume->setMinimum(minimum);
