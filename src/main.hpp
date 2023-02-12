@@ -19,7 +19,6 @@
 #include "menu/playlist.hpp"
 #include "menu/track.hpp"
 #include "spotify/current.hpp"
-#include "spotify/spotify.hpp"
 #include "spotifyclient/runner.hpp"
 #include "util/datetime.hpp"
 #include "util/http.hpp"

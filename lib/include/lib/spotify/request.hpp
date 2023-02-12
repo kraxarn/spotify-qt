@@ -4,6 +4,7 @@
 #include "lib/result.hpp"
 #include "lib/spotify/error.hpp"
 #include "lib/spotify/util.hpp"
+#include "lib/spotify/deviceselect.hpp"
 
 namespace lib
 {
@@ -15,7 +16,8 @@ namespace lib
 		class request
 		{
 		public:
-			request(lib::settings &settings, const lib::http_client &http_client);
+			request(lib::settings &settings, const lib::http_client &http_client,
+				const lib::spt::device_select &device_select);
 
 			/**
 			 * Refresh access token with refresh token
@@ -37,10 +39,32 @@ namespace lib
 					{
 						if (!response.success())
 						{
-							callback(lib::result<T>::fail(response.message()));
+							const auto message = parse_error_message(response.message());
+							callback(lib::result<T>::fail(message));
 							return;
 						}
 						callback(parse_json<T>(response.value()));
+					});
+			}
+
+			/**
+			 * POST request without body
+			 */
+			void post(const std::string &url, lib::callback<lib::result<void *>> &callback)
+			{
+				auto headers = auth_headers();
+				headers["Content-Type"] = "application/x-www-form-urlencoded";
+
+				http.post(lib::spt::to_full_url(url), headers,
+					[callback](const lib::result<std::string> &response)
+					{
+						if (!response.success())
+						{
+							const auto message = parse_error_message(response.message());
+							callback(lib::result<void *>::fail(message));
+							return;
+						}
+						callback(parse_json(response.value()));
 					});
 			}
 
@@ -54,6 +78,7 @@ namespace lib
 
 			lib::settings &settings;
 			const lib::http_client &http;
+			const lib::spt::device_select &device_select;
 
 			/**
 			 * Timestamp of last refresh
@@ -73,6 +98,17 @@ namespace lib
 			 */
 			auto request_refresh(const std::string &post_data,
 				const std::string &authorization) -> std::string;
+
+			/**
+			 * Get last used device
+			 */
+			auto get_current_device() const -> const std::string &;
+
+			/**
+			 * Set last used device
+			 * @param id Device ID
+			 */
+			void set_current_device(const std::string &device_id);
 
 			/**
 			 * Parse JSON from string data
@@ -107,6 +143,53 @@ namespace lib
 				catch (const std::exception &e)
 				{
 					return lib::result<T>::fail(e.what());
+				}
+			}
+
+			/**
+			 * Parse error from JSON
+			 */
+			static auto parse_json(const std::string &data) -> lib::result<void *>
+			{
+				if (data.empty())
+				{
+					return lib::result<void *>::ok(nullptr);
+				}
+
+				try
+				{
+					const nlohmann::json json = nlohmann::json::parse(data);
+					if (!lib::spt::error::is(json))
+					{
+						return lib::result<void *>::ok(nullptr);
+					}
+
+					const auto message = lib::spt::error::error_message(json);
+					return lib::result<void *>::fail(message);
+				}
+				catch (const nlohmann::json::parse_error &e)
+				{
+					lib::log::debug("JSON: {}", data);
+					return lib::result<void *>::fail(e.what());
+				}
+				catch (const std::exception &e)
+				{
+					return lib::result<void *>::fail(e.what());
+				}
+			}
+
+			static auto parse_error_message(const std::string &data) -> std::string
+			{
+				try
+				{
+					const nlohmann::json json = nlohmann::json::parse(data);
+					return lib::spt::error::is(json)
+						? lib::spt::error::error_message(json)
+						: data;
+				}
+				catch (const std::exception &e)
+				{
+					return data;
 				}
 			}
 

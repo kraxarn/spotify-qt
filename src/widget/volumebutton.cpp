@@ -1,6 +1,7 @@
 #include "volumebutton.hpp"
 #include "mainwindow.hpp"
 #include "util/shortcut.hpp"
+#include "widget/clickableslider.hpp"
 
 VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWidget *parent)
 	: QToolButton(parent),
@@ -8,20 +9,14 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 	spotify(spotify)
 {
 	// Volume slider
-	volume = new QSlider(this);
-	volume->setOrientation(Qt::Orientation::Vertical);
+	volume = new ClickableSlider(Qt::Vertical, this);
 	volume->setFixedHeight(height);
 	volume->setFixedWidth(width);
 	volume->setMinimum(minimum);
 	volume->setMaximum(maximum);
 
-	// Assume no volume is full volume
-	auto volumeValue = settings.general.last_volume;
-	if (volumeValue == minimum)
-	{
-		volumeValue = maximum;
-	}
-	volume->setValue(volumeValue);
+	// Initially assume full volume until refreshed
+	volume->setValue(maximum);
 
 	// Layout for volume slider
 	auto *volumeMenu = new QMenu(this);
@@ -43,7 +38,7 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 	volumeMenu->setLayout(volumeLayout);
 
 	setText(QStringLiteral("Volume"));
-	update(volumeValue);
+	update(volume->value());
 	setPopupMode(QToolButton::InstantPopup);
 	setMenu(volumeMenu);
 
@@ -55,12 +50,6 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 
 	QAbstractSlider::connect(volume, &QAbstractSlider::sliderReleased,
 		this, &VolumeButton::onVolumeSliderReleased);
-}
-
-VolumeButton::~VolumeButton()
-{
-	settings.general.last_volume = volume->value();
-	settings.save();
 }
 
 void VolumeButton::wheelEvent(QWheelEvent *event)
@@ -76,6 +65,8 @@ void VolumeButton::update(int value)
 
 	volumeUp->setEnabled(value < maximum);
 	volumeDown->setEnabled(value > minimum);
+
+	settings.spotify.volume = value * step;
 }
 
 auto VolumeButton::getVolumeIcon(int value) -> QIcon

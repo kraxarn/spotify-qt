@@ -15,6 +15,21 @@ auto lib::format::time(int milliseconds) -> std::string
 	return lib::fmt::format("{}:{}", minutes, seconds_prefixed);
 }
 
+auto lib::format::time_pretty(int milliseconds) -> std::string
+{
+	const auto minutes = milliseconds / lib::time::ms_in_min;
+	if (minutes < lib::time::min_in_hour)
+	{
+		return lib::fmt::format("{} m", minutes);
+	}
+
+	const auto hours = minutes / lib::time::min_in_hour;
+	return minutes == lib::time::min_in_hour
+		? lib::fmt::format("{} h", hours)
+		: lib::fmt::format("{} h {} m", hours, minutes % lib::time::min_in_hour);
+
+}
+
 auto lib::format::size(unsigned long bytes) -> std::string
 {
 	if (bytes >= giga)

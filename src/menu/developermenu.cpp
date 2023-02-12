@@ -6,6 +6,7 @@
 #include "dialog/passwordentry.hpp"
 #include "dialog/memory.hpp"
 #include "dialog/lyricssearch.hpp"
+#include "dialog/disallows.hpp"
 
 DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
@@ -163,6 +164,14 @@ auto DeveloperMenu::statusMenu() -> QMenu *
 		StatusMessage::show(MessageType::Information, "Information");
 	});
 
+	addMenuItem(menu, QStringLiteral("Information with action"), []()
+	{
+		StatusMessage::info(QStringLiteral("Information"), QStringLiteral("Action"), []()
+		{
+			StatusMessage::info(QStringLiteral("Information action"));
+		});
+	});
+
 	addMenuItem(menu, "Warning", []()
 	{
 		StatusMessage::show(MessageType::Warning, "Warning");
@@ -228,6 +237,10 @@ void DeveloperMenu::onDialogMenuAboutToShow()
 		{
 			return new Dialog::LyricsSearch(httpClient, mainWindow);
 		}},
+		{QStringLiteral("Disallowed actions"), [mainWindow]
+		{
+			return new Dialog::Disallows(mainWindow);
+		}}
 	};
 
 	QMapIterator<QString, std::function<QDialog *()>> iter(dialogs);

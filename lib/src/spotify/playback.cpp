@@ -1,4 +1,6 @@
 #include "lib/spotify/playback.hpp"
+#include "lib/enums.hpp"
+
 #include "lib/fmt.hpp"
 
 void lib::spt::from_json(const nlohmann::json &j, playback &p)
@@ -21,16 +23,40 @@ void lib::spt::from_json(const nlohmann::json &j, playback &p)
 		: repeat_state == "context"
 			? lib::repeat_state::context
 			: lib::repeat_state::off;
+
+	if (j.contains("actions"))
+	{
+		const auto &actions = j.at("actions");
+		if (actions.contains("disallows"))
+		{
+			const auto &disallows = actions.at("disallows");
+			for (const auto &action: disallows.items())
+			{
+				const auto player_action = lib::enums<lib::player_action>::parse(action.key());
+				p.disallowed_actions.insert(player_action);
+			}
+		}
+	}
 }
 
 void lib::spt::to_json(nlohmann::json &j, const playback &p)
 {
+	std::vector<std::string> disallowed_action_strings;
+	disallowed_action_strings.reserve(p.disallowed_actions.size());
+
+	for (const auto &action: p.disallowed_actions)
+	{
+		const auto action_string = lib::enums<lib::player_action>::to_string(action);
+		disallowed_action_strings.push_back(action_string);
+	}
+
 	j = nlohmann::json{
 		{"progress_ms", p.progress_ms},
 		{"item", p.item},
 		{"is_playing", p.is_playing},
 		{"repeat", p.repeat},
-		{"shuffle", p.shuffle}
+		{"shuffle", p.shuffle},
+		{"disallowed_actions", disallowed_action_strings},
 	};
 }
 
@@ -53,4 +79,9 @@ auto lib::spt::playback::metadata() const -> nlohmann::json
 auto lib::spt::playback::volume() const -> int
 {
 	return device.volume_percent;
+}
+
+auto lib::spt::playback::is_allowed(const lib::player_action &action) const -> bool
+{
+	return disallowed_actions.find(action) == disallowed_actions.end();
 }

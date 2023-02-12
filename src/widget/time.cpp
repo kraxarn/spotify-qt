@@ -11,7 +11,7 @@ Time::Time(QWidget *parent)
 {
 	auto *layout = new QHBoxLayout(this);
 	layout->setContentsMargins({});
-	layout->setSpacing(1);
+	layout->setSpacing(0);
 
 	const auto width = Font::numberWidth();
 	for (auto i = 0; i < labelCount; i++)

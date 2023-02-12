@@ -1,6 +1,9 @@
 #include "settingspage/spotify.hpp"
 #include "mainwindow.hpp"
 #include "util/widget.hpp"
+#include "util/process.hpp"
+
+#include <QStandardPaths>
 
 #ifdef USE_KEYCHAIN
 #include "util/keychain.hpp"
@@ -258,21 +261,41 @@ auto SettingsPage::Spotify::title() -> QString
 
 auto SettingsPage::Spotify::save() -> bool
 {
+	auto success = true;
+
 	// Check spotify client path
 	if (sptPath != nullptr && !sptPath->text().isEmpty())
 	{
 		auto client = SpotifyClient::Helper::version(sptPath->text());
 		if (client.isEmpty())
 		{
-			applyFail("spotifyd path");
-			return false;
+			const auto result = Process::exec(sptPath->text(), {});
+			const auto title = QStringLiteral("Spotify client path");
+
+			if (result.success())
+			{
+				warning(title, QStringLiteral("Spotify client not supported"));
+			}
+			else
+			{
+				warning(title, result.message().empty()
+					? QStringLiteral("Invalid Spotify client")
+					: QString("Invalid Spotify client:\n%1")
+						.arg(QString::fromStdString(result.message())));
+			}
+
+			success = false;
 		}
 
 		if (sptVersion != nullptr)
 		{
 			sptVersion->setText(client);
 		}
-		settings.spotify.path = sptPath->text().toStdString();
+
+		if (!client.isEmpty())
+		{
+			settings.spotify.path = sptPath->text().toStdString();
+		}
 	}
 
 	// librespot has no global config support
@@ -346,7 +369,7 @@ auto SettingsPage::Spotify::save() -> bool
 		settings.spotify.disable_discovery = !sptDiscovery->isChecked();
 	}
 
-	return true;
+	return success;
 }
 
 void SettingsPage::Spotify::globalConfigToggle(int state)

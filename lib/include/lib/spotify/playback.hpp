@@ -4,8 +4,11 @@
 #include "lib/spotify/device.hpp"
 #include "lib/spotify/context.hpp"
 #include "lib/enum/repeatstate.hpp"
+#include "lib/enum/playeraction.hpp"
 
 #include "thirdparty/json.hpp"
+
+#include <unordered_set>
 
 namespace lib
 {
@@ -25,6 +28,11 @@ namespace lib
 			 * Current volume, fetched from active device
 			 */
 			auto volume() const -> int;
+
+			/**
+			 * Is specified action allowed
+			 */
+			auto is_allowed(const player_action &action) const -> bool;
 
 			/**
 			 * Context currently playing from
@@ -60,6 +68,11 @@ namespace lib
 			 * Current active device
 			 */
 			lib::spt::device device;
+
+			/**
+			 * Disallowed actions
+			 */
+			std::unordered_set<lib::player_action> disallowed_actions;
 		};
 
 		/**

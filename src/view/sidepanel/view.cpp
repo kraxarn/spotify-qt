@@ -183,7 +183,9 @@ void SidePanel::View::setTabText(QWidget *widget, const QString &text)
 	{
 		return;
 	}
-	title->setTabText(index, text);
+
+	const auto tabText = QString(text).replace('&', QStringLiteral("&&"));
+	title->setTabText(index, tabText);
 }
 
 void SidePanel::View::onTabMoved(int from, int to)

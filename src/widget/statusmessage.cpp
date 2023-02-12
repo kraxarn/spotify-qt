@@ -16,6 +16,13 @@ StatusMessage::StatusMessage(QWidget *parent)
 	message = new QLabel(this);
 	layout->addWidget(message, 1, Qt::AlignVCenter);
 
+	action = new QPushButton(this);
+	action->setFlat(true);
+	layout->addWidget(action);
+
+	QAbstractButton::connect(action, &QAbstractButton::clicked,
+		this, &StatusMessage::onAction);
+
 	close = new QPushButton(this);
 	close->setFlat(true);
 	close->setIcon(Icon::get("window-close"));
@@ -45,6 +52,9 @@ void StatusMessage::showStatus(MessageType messageType, const QString &text)
 	{
 		return;
 	}
+
+	action->setText(buttonText);
+	action->setVisible(!buttonText.isEmpty());
 
 	timer->stop();
 
@@ -91,6 +101,12 @@ void StatusMessage::show(MessageType messageType, const QString &text)
 		return;
 	}
 
+	if (messageType != MessageType::InformationAction)
+	{
+		instance->buttonText = QString();
+		instance->buttonAction = {};
+	}
+
 	instance->showStatus(messageType, text);
 }
 
@@ -109,11 +125,24 @@ void StatusMessage::error(const QString &text)
 	StatusMessage::show(MessageType::Error, text);
 }
 
+void StatusMessage::info(const QString &text, const QString &buttonText,
+	const std::function<void()> &buttonAction)
+{
+	if (instance != nullptr)
+	{
+		instance->buttonText = buttonText;
+		instance->buttonAction = buttonAction;
+	}
+
+	StatusMessage::show(MessageType::InformationAction, text);
+}
+
 auto StatusMessage::getIcon(MessageType messageType) -> QIcon
 {
 	switch (messageType)
 	{
 		case MessageType::Information:
+		case MessageType::InformationAction:
 			return Icon::get(QStringLiteral("data-information"));
 
 		case MessageType::Warning:
@@ -133,6 +162,7 @@ auto StatusMessage::getColor(MessageType messageType) -> QColor
 	switch (messageType)
 	{
 		case MessageType::Information:
+		case MessageType::InformationAction:
 			return {61, 174, 233};
 
 		case MessageType::Warning:
@@ -156,12 +186,22 @@ auto StatusMessage::getInterval(MessageType messageType) -> int
 		case MessageType::Warning:
 			return 10000;
 
+		case MessageType::InformationAction:
 		case MessageType::Error:
 			return -1;
 
 		default:
 			return 0;
 	}
+}
+
+void StatusMessage::onAction(bool checked)
+{
+	if (buttonAction)
+	{
+		buttonAction();
+	}
+	onClose(checked);
 }
 
 void StatusMessage::onClose(bool /*checked*/)

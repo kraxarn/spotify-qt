@@ -2,6 +2,7 @@
 #include "util/appinstalltype.hpp"
 #include "lib/qtpaths.hpp"
 #include "lib/spotify/request.hpp"
+#include "spotify/deviceselect.hpp"
 
 #include <QApplication>
 #include <QCoreApplication>
@@ -90,8 +91,9 @@ auto main(int argc, char *argv[]) -> int
 	}
 
 	lib::qt::http_client httpClient(nullptr);
-	lib::spt::request request(settings, httpClient);
-	spt::Spotify spotify(settings, httpClient, request, nullptr);
+	const spt::DeviceSelect deviceSelect(nullptr);
+	lib::spt::request request(settings, httpClient, deviceSelect);
+	lib::spt::api spotify(settings, httpClient, request);
 
 	Refresher refresher(settings, request);
 	if (!refresher.refresh())

@@ -95,12 +95,6 @@ namespace lib
 			bool tray_light_icon = false;
 
 			/**
-			 * Volume last set
-			 * @note Should be 0-20, representing 0-100% as steps of 5
-			 */
-			int last_volume = 0;
-
-			/**
 			 * How often to refresh in seconds
 			 */
 			int refresh_interval = 3;

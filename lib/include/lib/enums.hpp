@@ -2,6 +2,7 @@
 
 #include "lib/enum/mediatype.hpp"
 #include "lib/enum/devicetype.hpp"
+#include "lib/enum/playeraction.hpp"
 
 #include <string>
 
@@ -160,6 +161,108 @@ namespace lib
 		{
 			// TODO: Not implemented yet
 			device_type = device_type::unknown;
+		}
+
+		//endregion
+
+		//region player_action
+
+		static void enum_to_string(player_action player_action, std::string &str)
+		{
+			switch (player_action)
+			{
+				case player_action::interrupting_playback:
+					str = "interrupting_playback";
+					break;
+
+				case player_action::pausing:
+					str = "pausing";
+					break;
+
+				case player_action::resuming:
+					str = "resuming";
+					break;
+
+				case player_action::seeking:
+					str = "seeking";
+					break;
+
+				case player_action::skipping_next:
+					str = "skipping_next";
+					break;
+
+				case player_action::skipping_prev:
+					str = "skipping_prev";
+					break;
+
+				case player_action::toggling_repeat_context:
+					str = "toggling_repeat_context";
+					break;
+
+				case player_action::toggling_shuffle:
+					str = "toggling_shuffle";
+					break;
+
+				case player_action::toggling_repeat_track:
+					str = "toggling_repeat_track";
+					break;
+
+				case player_action::transferring_playback:
+					str = "transferring_playback";
+					break;
+
+				case player_action::unknown:
+					str = "unknown";
+					break;
+			}
+		}
+
+		static void enum_from_string(const std::string &str, player_action &player_action)
+		{
+			if (str == "interrupting_playback")
+			{
+				player_action = player_action::interrupting_playback;
+			}
+			else if (str == "pausing")
+			{
+				player_action = player_action::pausing;
+			}
+			else if (str == "resuming")
+			{
+				player_action = player_action::resuming;
+			}
+			else if (str == "seeking")
+			{
+				player_action = player_action::seeking;
+			}
+			else if (str == "skipping_next")
+			{
+				player_action = player_action::skipping_next;
+			}
+			else if (str == "skipping_prev")
+			{
+				player_action = player_action::skipping_prev;
+			}
+			else if (str == "toggling_repeat_context")
+			{
+				player_action = player_action::toggling_repeat_context;
+			}
+			else if (str == "toggling_shuffle")
+			{
+				player_action = player_action::toggling_shuffle;
+			}
+			else if (str == "toggling_repeat_track")
+			{
+				player_action = player_action::toggling_repeat_track;
+			}
+			else if (str == "transferring_playback")
+			{
+				player_action = player_action::transferring_playback;
+			}
+			else
+			{
+				player_action = player_action::unknown;
+			}
 		}
 
 		//endregion

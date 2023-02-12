@@ -23,13 +23,13 @@ public:
 
 	void showTitleBarButtons(bool show);
 	void setPlaying(bool playing);
-	void setProgress(int current, int duration);
 	void setProgress(const lib::spt::playback &playback);
 	void setVolume(int volume);
 	void setRepeat(lib::repeat_state state);
-	auto toggleRepeat() -> lib::repeat_state;
+	auto toggleRepeat(const lib::spt::playback &playback) -> lib::repeat_state;
 	void setShuffle(bool shuffle);
 	void setSearchChecked(bool checked);
+	void toggleActions(const lib::spt::playback &playback);
 
 protected:
 	void resizeEvent(QResizeEvent *event) override;
@@ -37,11 +37,13 @@ protected:
 
 private:
 	void updateSpacerSizes();
+	void setProgress(int current, int duration);
+	auto isPlaying() const -> bool;
 
 	auto addShortcutAction(const QString &iconName, const QString &title,
 		const QKeySequence &shortcut) -> QAction *;
 
-	static auto getNextRepeatState(lib::repeat_state repeatState) -> lib::repeat_state;
+	auto getNextRepeatState(const lib::spt::playback &playback) -> lib::repeat_state;
 	static auto getRepeatIcon(lib::repeat_state repeatState) -> QIcon;
 
 	void onPlayPause(bool checked);

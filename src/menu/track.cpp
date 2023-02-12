@@ -35,6 +35,23 @@ Menu::Track::Track(const QList<PlaylistTrack> &tracks, lib::spt::api &spotify,
 	const auto isSingle = tracks.length() == 1;
 	const auto &singleTrack = tracks.at(0).second;
 
+	if (tracks.length() > 1)
+	{
+		auto duration = 0;
+		for (const auto &track: tracks)
+		{
+			duration += track.second.duration;
+		}
+
+		const auto countText = QString("%1 tracks, %2")
+			.arg(tracks.length())
+			.arg(QString::fromStdString(lib::format::time_pretty(duration)));
+
+		auto *countAction = addAction(countText);
+		countAction->setEnabled(false);
+		addSeparator();
+	}
+
 	if (tracks.length() <= 100)
 	{
 		const auto icon = Icon::get(QStringLiteral("view-statistics"));
@@ -308,11 +325,12 @@ void Menu::Track::addToQueue(const QList<PlaylistTrack>::const_iterator &begin,
 	}
 
 	const auto uri = lib::spt::id_to_uri("track", begin->second.id);
-	spotify.add_to_queue(uri, [this, begin, end](const std::string &status)
+	spotify.add_to_queue(uri, [this, begin, end](const lib::result<void *> &result)
 	{
-		if (!status.empty())
+		if (!result.success())
 		{
-			StatusMessage::error(QString::fromStdString(status));
+			StatusMessage::error(QString("Failed to add to queue: %1")
+				.arg(QString::fromStdString(result.message())));
 			return;
 		}
 

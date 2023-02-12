@@ -74,13 +74,7 @@ void List::Library::onClicked(QTreeWidgetItem *item, int /*column*/)
 				mainWindow->loadAlbum(entityId);
 				break;
 
-			case DataRole::Track:
-			case DataRole::Index:
-			case DataRole::PlaylistId:
-			case DataRole::AddedDate:
-			case DataRole::Length:
-			case DataRole::DefaultIndex:
-			case DataRole::ShowId:
+			default:
 				break;
 		}
 	}

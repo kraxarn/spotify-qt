@@ -82,6 +82,8 @@ auto SettingsPage::Application::title() -> QString
 
 auto SettingsPage::Application::save() -> bool
 {
+	auto success = true;
+
 	// Media controller
 	if (appMedia != nullptr)
 	{
@@ -101,7 +103,7 @@ auto SettingsPage::Application::save() -> bool
 		if (!ok || interval < minRefreshInterval || interval > maxRefreshInterval)
 		{
 			applyFail("refresh interval");
-			return false;
+			success = false;
 		}
 		settings.general.refresh_interval = interval;
 	}
@@ -114,7 +116,7 @@ auto SettingsPage::Application::save() -> bool
 		if (!ok || maxQueue < minMaxQueue || maxQueue > maxMaxQueue)
 		{
 			applyFail("queue limit");
-			return false;
+			success = false;
 		}
 		settings.spotify.max_queue = maxQueue;
 	}
@@ -131,5 +133,5 @@ auto SettingsPage::Application::save() -> bool
 		settings.general.check_for_updates = appUpdates->isChecked();
 	}
 
-	return true;
+	return success;
 }

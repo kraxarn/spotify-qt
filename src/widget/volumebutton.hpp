@@ -17,7 +17,6 @@ Q_OBJECT
 
 public:
 	VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWidget *parent);
-	~VolumeButton() override;
 
 	void setVolume(int value);
 

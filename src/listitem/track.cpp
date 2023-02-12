@@ -1,20 +1,23 @@
 #include "listitem/track.hpp"
+#include "util/icon.hpp"
 
-ListItem::Track::Track(const QStringList &strings,
-	const lib::spt::track &track,
-	const QIcon &icon,
-	int index)
+ListItem::Track::Track(const QStringList &strings, const lib::spt::track &track,
+	const QIcon &icon, int index, const QString &addedAt)
 	: QTreeWidgetItem(strings)
 {
 	setIcon(0, icon);
 
-	auto addedAt = QDateTime::fromString(QString::fromStdString(track.added_at),
+	auto addedDate = QDateTime::fromString(addedAt.isEmpty()
+			? QString::fromStdString(track.added_at)
+			: addedAt,
 		Qt::DateFormat::ISODate);
 
 	setData(0, static_cast<int>(DataRole::Track), QVariant::fromValue(track));
 	setData(0, static_cast<int>(DataRole::Index), index);
-	setData(0, static_cast<int>(DataRole::AddedDate), addedAt);
+	setData(0, static_cast<int>(DataRole::AddedDate), addedDate);
 	setData(0, static_cast<int>(DataRole::Length), track.duration);
+
+	setLiked(false);
 
 	if (track.is_local || !track.is_playable)
 	{
@@ -41,17 +44,17 @@ ListItem::Track::Track(const QStringList &strings,
 	auto length = strings.at(strings.length() - 2).split(':');
 	if (length.length() >= 2)
 	{
-		setToolTip(strings.length() - 2,
+		setToolTip(static_cast<int>(strings.length() - 2),
 			QString("%1m %2s (%3s total)")
 				.arg(length.at(0), length.at(1))
 				.arg(track.duration / 1000));
 	}
 
 	// Added
-	if (!DateTime::isEmpty(addedAt))
+	if (!DateTime::isEmpty(addedDate))
 	{
-		setToolTip(strings.length() - 1,
-			QLocale().toString(addedAt.date()));
+		setToolTip(static_cast<int>(strings.length() - 1),
+			QLocale().toString(addedDate.date()));
 	}
 }
 
@@ -80,6 +83,13 @@ auto ListItem::Track::operator<(const QTreeWidgetItem &item) const -> bool
 			< item.data(0, static_cast<int>(DataRole::AddedDate)).toDateTime();
 	}
 
+	// Liked status
+	if (column == Column::Liked)
+	{
+		return !data(0, static_cast<int>(DataRole::Liked)).toBool()
+			&& item.data(0, static_cast<int>(DataRole::Liked)).toBool();
+	}
+
 	return removePrefix(text(static_cast<int>(column)))
 		.compare(removePrefix(item.text(static_cast<int>(column))),
 			Qt::CaseInsensitive) < 0;
@@ -90,4 +100,14 @@ auto ListItem::Track::removePrefix(const QString &str) -> QString
 	return str.startsWith("The ", Qt::CaseInsensitive)
 		? str.right(str.length() - 4)
 		: str;
+}
+
+void ListItem::Track::setLiked(bool isLiked)
+{
+	const auto icon = isLiked
+		? Icon::get(QStringLiteral("starred-symbolic"))
+		: QIcon();
+
+	setIcon(static_cast<int>(Column::Liked), icon);
+	setData(0, static_cast<int>(DataRole::Liked), isLiked);
 }

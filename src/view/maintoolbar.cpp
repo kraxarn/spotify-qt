@@ -1,7 +1,7 @@
 #include "view/maintoolbar.hpp"
 #include "mainwindow.hpp"
 #include "util/shortcut.hpp"
-#include "util/font.hpp"
+#include "util/appconfig.hpp"
 
 MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	const lib::http_client &httpClient, lib::cache &cache, QWidget *parent)
@@ -21,8 +21,8 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	menu->setText("Menu");
 	menu->setIcon(Icon::get("application-menu"));
 	menu->setPopupMode(QToolButton::InstantPopup);
-	menu->setMenu(new MainMenu(spotify, settings,
-		httpClient, cache, mainWindow));
+	menu->setVisible(!AppConfig::useNativeMenuBar());
+	menu->setMenu(new MainMenu(spotify, settings, httpClient, cache, this));
 
 	// Search
 	search = addAction(Icon::get(QStringLiteral("edit-find")),
@@ -163,15 +163,19 @@ auto MainToolBar::addShortcutAction(const QString &iconName, const QString &titl
 	return action;
 }
 
-auto MainToolBar::getNextRepeatState(lib::repeat_state repeatState) -> lib::repeat_state
+auto MainToolBar::getNextRepeatState(const lib::spt::playback &playback) -> lib::repeat_state
 {
 	switch (repeatState)
 	{
 		case lib::repeat_state::off:
-			return lib::repeat_state::context;
+			return playback.is_allowed(lib::player_action::toggling_repeat_context)
+				? lib::repeat_state::context
+				: lib::repeat_state::track;
 
 		case lib::repeat_state::context:
-			return lib::repeat_state::track;
+			return playback.is_allowed(lib::player_action::toggling_repeat_track)
+				? lib::repeat_state::track
+				: lib::repeat_state::off;
 
 		default:
 			return lib::repeat_state::off;
@@ -213,6 +217,36 @@ void MainToolBar::setProgress(const lib::spt::playback &playback)
 	setProgress(playback.progress_ms, playback.item.duration);
 }
 
+auto MainToolBar::isPlaying() const -> bool
+{
+	return playPause->text() == QStringLiteral("Play");
+}
+
+void MainToolBar::toggleActions(const lib::spt::playback &playback)
+{
+	if (!playback.is_allowed(lib::player_action::interrupting_playback))
+	{
+		playPause->setEnabled(false);
+	}
+	else
+	{
+		const auto buttonAction = isPlaying()
+			? lib::player_action::pausing
+			: lib::player_action::resuming;
+
+		playPause->setEnabled(playback.is_allowed(buttonAction));
+	}
+
+	progress->setEnabled(playback.is_allowed(lib::player_action::seeking));
+	next->setEnabled(playback.is_allowed(lib::player_action::skipping_next));
+	previous->setEnabled(playback.is_allowed(lib::player_action::skipping_prev));
+
+	repeat->setEnabled(playback.is_allowed(lib::player_action::toggling_repeat_context)
+		|| playback.is_allowed(lib::player_action::toggling_repeat_track));
+
+	shuffle->setEnabled(playback.is_allowed(lib::player_action::toggling_shuffle));
+}
+
 void MainToolBar::setVolume(int volume)
 {
 	volumeButton->setVolume(volume);
@@ -225,9 +259,9 @@ void MainToolBar::setRepeat(lib::repeat_state state)
 	repeatState = state;
 }
 
-auto MainToolBar::toggleRepeat() -> lib::repeat_state
+auto MainToolBar::toggleRepeat(const lib::spt::playback &playback) -> lib::repeat_state
 {
-	const auto newState = getNextRepeatState(repeatState);
+	const auto newState = getNextRepeatState(playback);
 	setRepeat(newState);
 	return newState;
 }
@@ -360,7 +394,7 @@ void MainToolBar::onRepeat(bool /*checked*/)
 	auto *mainWindow = MainWindow::find(parentWidget());
 	auto &current = mainWindow->getCurrentPlayback();
 
-	const auto repeatMode = toggleRepeat();
+	const auto repeatMode = toggleRepeat(current);
 	current.repeat = repeatMode;
 	mainWindow->refreshed(current);
 

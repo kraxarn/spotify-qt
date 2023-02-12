@@ -18,7 +18,6 @@ namespace SettingsPage
 
 	private:
 		QCheckBox *appMedia = nullptr;
-		QCheckBox *appPulse = nullptr;
 		QCheckBox *appWhatsNew = nullptr;
 		QComboBox *appRefresh = nullptr;
 		QComboBox *appMaxQueue = nullptr;

@@ -120,6 +120,10 @@ QListWidget, QTreeWidget, QTextEdit {
 
 	&::item {
 		min-height: 24px;
+
+		&::disabled {
+			color: $disabled-color;
+		}
 	}
 }
 

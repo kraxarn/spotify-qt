@@ -45,7 +45,17 @@ void lib::lrc::api::search(const std::string &query,
 			return;
 		}
 
-		const auto json = nlohmann::json::parse(response);
+		nlohmann::json json;
+		try
+		{
+			json = nlohmann::json::parse(response);
+		}
+		catch (const std::exception &e)
+		{
+			callback(lib::result<std::vector<lib::lrc::search_result>>::fail(e.what()));
+			return;
+		}
+
 		if (!json.contains("result"))
 		{
 			callback(lib::result<std::vector<lib::lrc::search_result>>::fail("No results"));
@@ -86,7 +96,17 @@ void lib::lrc::api::lyrics(int lyrics_id, lib::callback<lib::result<lib::lrc::ly
 			return;
 		}
 
-		const auto json = nlohmann::json::parse(response);
+		nlohmann::json json;
+		try
+		{
+			json = nlohmann::json::parse(response);
+		}
+		catch (const std::exception &e)
+		{
+			callback(lib::result<lib::lrc::lyrics>::fail(e.what()));
+			return;
+		}
+
 		if (!json.contains("lrc"))
 		{
 			callback(lib::result<lib::lrc::lyrics>::fail("No lyrics"));

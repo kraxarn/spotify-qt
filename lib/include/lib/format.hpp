@@ -24,6 +24,11 @@ namespace lib
 		static auto time(int milliseconds) -> std::string;
 
 		/**
+		 * Format time as "... h ... m"
+		 */
+		static auto time_pretty(int milliseconds) -> std::string;
+
+		/**
 		 * Format size as B, kB, MB or GB (bytes)
 		 * @param bytes Bytes
 		 */

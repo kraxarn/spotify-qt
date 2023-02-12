@@ -78,10 +78,16 @@ namespace List
 		auto getSelectedTrackIds() const -> std::vector<std::string>;
 		void resizeHeaders(const QSize &newSize);
 
+		void getLikedTracks(const std::function<void(const std::vector<lib::spt::track> &)> &callback);
+		void updateLikedTracks(const std::function<void(const std::vector<lib::spt::track> &)> &callback);
+
 		void onMenu(const QPoint &pos);
+		void onItemClicked(QTreeWidgetItem *item, int column);
 		void onDoubleClicked(QTreeWidgetItem *item, int column);
 		void onHeaderMenu(const QPoint &pos);
 		void onHeaderMenuTriggered(QAction *action);
+
+		static void onCurrentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
 		void onNewPlaylist();
 		void onDelete();

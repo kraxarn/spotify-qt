@@ -8,4 +8,5 @@ enum class Column: int
 	Album = 3,
 	Length = 4,
 	Added = 5,
+	Liked = 6,
 };

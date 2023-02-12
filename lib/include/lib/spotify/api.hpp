@@ -235,7 +235,8 @@ namespace lib
 			 * Add specified track to play next
 			 * @param uri URI of track to add
 			 */
-			void add_to_queue(const std::string &uri, lib::callback<std::string> &callback);
+			void add_to_queue(const std::string &uri,
+				lib::callback<lib::result<void *>> &callback);
 
 			//endregion
 
@@ -319,14 +320,6 @@ namespace lib
 
 		protected:
 			/**
-			 * Allow use to select device, by default, none is chosen
-			 * @param devices Devices to select from
-			 * @param callback Selected device
-			 */
-			virtual void select_device(const std::vector<lib::spt::device> &devices,
-				lib::callback<lib::spt::device> &callback);
-
-			/**
 			 * Settings
 			 */
 			lib::settings &settings;
@@ -391,6 +384,7 @@ namespace lib
 
 			/**
 			 * Convenience method for POST request with no body
+			 * @deprecated Use `lib::spt::request::post` instead
 			 */
 			void post(const std::string &url, lib::callback<std::string> &callback);
 
@@ -429,17 +423,6 @@ namespace lib
 			 */
 			static auto error_message(const std::string &url,
 				const std::string &data) -> std::string;
-
-			/**
-			 * Set last used device
-			 * @param id Device ID
-			 */
-			void set_current_device(const std::string &id);
-
-			/**
-			 * Get last used device
-			 */
-			auto get_current_device() const -> const std::string &;
 		};
 	}
 }

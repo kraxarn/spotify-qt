@@ -24,6 +24,9 @@ public:
 	static void warn(const QString &text);
 	static void error(const QString &text);
 
+	static void info(const QString &text, const QString &buttonText,
+		const std::function<void()> &buttonAction);
+
 private:
 	static constexpr int height = 36;
 	static constexpr int iconSize = height * 0.75;
@@ -33,10 +36,14 @@ private:
 
 	QLabel *icon = nullptr;
 	QLabel *message = nullptr;
+	QPushButton *action = nullptr;
 	QPushButton *close = nullptr;
 
 	QTimer *timer = nullptr;
 	QTimeLine *timeLine = nullptr;
+
+	QString buttonText;
+	std::function<void()> buttonAction;
 
 	// This may or may not be a good idea
 	static StatusMessage *instance;
@@ -49,6 +56,7 @@ private:
 	void hideAnimated();
 	void animate(int from, int to);
 
+	void onAction(bool checked);
 	void onClose(bool checked);
 	void onTimerTimeout();
 	void onTimeLineFrameChanged(int value);

@@ -3,13 +3,15 @@
 #include "lib/system.hpp"
 #include "util/widget.hpp"
 #include "util/font.hpp"
+#include "menu/mainmenubar.hpp"
+#include "util/appconfig.hpp"
 
 #ifdef Q_OS_WIN
 	#include "windows.h"
 #endif
 
 MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
-	lib::qt::http_client &httpClient, spt::Spotify &spotify)
+	lib::qt::http_client &httpClient, lib::spt::api &spotify)
 	: spotify(spotify),
 	settings(settings),
 	paths(paths),
@@ -49,6 +51,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 
 	// If new version has been detected, show what's new dialog
 	initWhatsNew();
+	checkForUpdates();
 
 	// Get current user
 	spotify.me([this](const lib::spt::user &user)
@@ -67,6 +70,11 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 	setContextMenuPolicy(Qt::NoContextMenu);
 
 	setBorderless(!settings.qt().system_title_bar);
+
+	if (AppConfig::useNativeMenuBar())
+	{
+		new MainMenuBar(spotify, settings, httpClient, cache, this);
+	}
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -269,6 +277,44 @@ void MainWindow::initDevice()
 	});
 }
 
+void MainWindow::checkForUpdates()
+{
+	if (!settings.general.check_for_updates)
+	{
+		return;
+	}
+
+	const auto *const url = "https://api.github.com/repos/kraxarn/spotify-qt/releases/latest";
+	httpClient.get(url, lib::headers(), [this](const std::string &data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		auto json = nlohmann::json::parse(data);
+		if (!json.contains("tag_name"))
+		{
+			return;
+		}
+
+		const auto &latest = json.at("tag_name").get<std::string>();
+		if (latest.empty() || latest == APP_VERSION)
+		{
+			return;
+		}
+
+		const auto text = QString("%1 %2 is now available")
+			.arg(APP_NAME, QString::fromStdString(latest));
+
+		StatusMessage::info(text, QStringLiteral("Open release"), [this]()
+		{
+			const QString url("https://github.com/kraxarn/spotify-qt/releases/latest");
+			Url::open(url, LinkType::Web, this);
+		});
+	});
+}
+
 void MainWindow::setBorderless(bool enabled)
 {
 	setWindowFlag(Qt::FramelessWindowHint, enabled);
@@ -374,6 +420,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 
 	current.playback = playback;
 	emit tick(playback);
+	toolBar->toggleActions(playback);
 
 	if (!current.playback.item.is_valid())
 	{

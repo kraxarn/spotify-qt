@@ -43,12 +43,6 @@ auto lib::spt::api::error_message(const std::string &url, const std::string &dat
 	return message;
 }
 
-void lib::spt::api::select_device(const std::vector<lib::spt::device> &/*devices*/,
-	lib::callback<lib::spt::device> &callback)
-{
-	callback(lib::spt::device());
-}
-
 auto lib::spt::api::follow_type_string(lib::follow_type type) -> std::string
 {
 	switch (type)
@@ -61,17 +55,6 @@ auto lib::spt::api::follow_type_string(lib::follow_type type) -> std::string
 	}
 
 	return {};
-}
-
-void lib::spt::api::set_current_device(const std::string &id)
-{
-	settings.general.last_device = id;
-	settings.save();
-}
-
-auto lib::spt::api::get_current_device() const -> const std::string &
-{
-	return settings.general.last_device;
 }
 
 //region GET
@@ -161,7 +144,7 @@ void lib::spt::api::put(const std::string &url, const nlohmann::json &body,
 			{
 				if (invalidDevice)
 				{
-					set_current_device(std::string());
+					this->request.set_current_device(std::string());
 				}
 
 				devices([this, url, body, error, callback]
@@ -176,7 +159,7 @@ void lib::spt::api::put(const std::string &url, const nlohmann::json &body,
 					}
 					else
 					{
-						this->select_device(devices, [this, url, body, callback, error]
+						this->request.device_select.get(devices, [this, url, body, callback, error]
 							(const lib::spt::device &device)
 						{
 							if (device.id.empty())
@@ -190,7 +173,7 @@ void lib::spt::api::put(const std::string &url, const nlohmann::json &body,
 							{
 								if (status.empty())
 								{
-									set_current_device(device.id);
+									this->request.set_current_device(device.id);
 									this->put(get_device_url(url, device), body, callback);
 								}
 							});

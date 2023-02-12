@@ -33,6 +33,12 @@ TrayIcon::TrayIcon(lib::spt::api &spotify, const lib::settings &settings,
 		this, &TrayIcon::onNext);
 
 	contextMenu->addSeparator();
+
+#ifdef __APPLE__
+	showApp = contextMenu->addAction(Icon::get("window"), QStringLiteral("Show"));
+	QAction::connect(showApp, &QAction::triggered, this, &TrayIcon::onShowWindow);
+#endif
+
 	auto *quit = contextMenu->addAction(Icon::get("application-exit"), "Quit");
 	QAction::connect(quit, &QAction::triggered, QCoreApplication::quit);
 
@@ -40,8 +46,10 @@ TrayIcon::TrayIcon(lib::spt::api &spotify, const lib::settings &settings,
 	setContextMenu(contextMenu);
 	show();
 
+#ifndef __APPLE__
 	QSystemTrayIcon::connect(this, &QSystemTrayIcon::activated,
 		this, &TrayIcon::onActivated);
+#endif
 
 	QMenu::connect(contextMenu, &QMenu::aboutToShow,
 		this, &TrayIcon::onMenuAboutToShow);
@@ -102,6 +110,15 @@ void TrayIcon::setDefaultPixmap()
 		.pixmap(iconSize, iconSize));
 }
 
+void TrayIcon::showWindow()
+{
+	auto *parentWidget = qobject_cast<QWidget *>(parent());
+	if (parentWidget != nullptr)
+	{
+		parentWidget->setVisible(!parentWidget->isVisible());
+	}
+}
+
 void TrayIcon::onPrevious(bool /*checked*/)
 {
 	spotify.previous(callback);
@@ -126,16 +143,15 @@ void TrayIcon::onNext(bool /*checked*/)
 
 void TrayIcon::onActivated(ActivationReason reason)
 {
-	if (reason != ActivationReason::Trigger)
+	if (reason == ActivationReason::Trigger)
 	{
-		return;
+		showWindow();
 	}
+}
 
-	auto *parentWidget = qobject_cast<QWidget *>(parent());
-	if (parentWidget != nullptr)
-	{
-		parentWidget->setVisible(!parentWidget->isVisible());
-	}
+void TrayIcon::onShowWindow(bool /*checked*/)
+{
+	showWindow();
 }
 
 void TrayIcon::onMenuAboutToShow()
@@ -152,4 +168,17 @@ void TrayIcon::onMenuAboutToShow()
 	playPause->setText(isPlaying
 		? "Pause"
 		: "Play");
+
+#ifdef __APPLE__
+	if (showApp != nullptr)
+	{
+		auto *parentWidget = qobject_cast<QWidget *>(parent());
+		if (parentWidget != nullptr)
+		{
+			showApp->setText(parentWidget->isVisible()
+				? QStringLiteral("Hide")
+				: QStringLiteral("Show"));
+		}
+	}
+#endif
 }

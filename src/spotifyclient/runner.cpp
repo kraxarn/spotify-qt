@@ -100,12 +100,14 @@ void SpotifyClient::Runner::start(const QString &username, const QString &passwo
 		"--password", password
 	});
 
+	const auto initialVolume = QString::number(settings.spotify.volume);
+
 	// librespot specific
 	if (clientType == lib::client_type::librespot)
 	{
 		arguments.append({
 			"--name", QString("%1 (librespot)").arg(APP_NAME),
-			"--initial-volume", "100",
+			"--initial-volume", initialVolume,
 			"--cache", QString::fromStdString((paths.cache() / "librespot").string()),
 		});
 
@@ -118,6 +120,7 @@ void SpotifyClient::Runner::start(const QString &username, const QString &passwo
 	{
 		arguments.append({
 			"--no-daemon",
+			"--initial-volume", initialVolume,
 			"--device-name", QString("%1 (spotifyd)").arg(APP_NAME),
 		});
 	}

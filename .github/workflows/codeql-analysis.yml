@@ -1,10 +1,6 @@
 name: "CodeQL"
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
   schedule:
     - cron: '38 21 * * 4'
 
@@ -22,17 +18,15 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: 'cpp'
 
       - name: Install dependencies
-        run: |
-          sudo apt update
-          sudo apt install qt5-default libqt5svg5-dev -y
+        run: sudo apt install qt6-base-dev libqt6svg6-dev -y
 
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v1
+        uses: github/codeql-action/autobuild@v2
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2

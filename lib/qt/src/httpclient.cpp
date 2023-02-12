@@ -46,17 +46,42 @@ void lib::qt::http_client::await(QNetworkReply *reply,
 	QNetworkReply::connect(reply, &QNetworkReply::finished, this, [reply, callback]()
 	{
 		const auto data = reply->readAll();
-		std::string response(data.cbegin(), data.cend());
+		const std::string response(data.cbegin(), data.cend());
 
 		if (reply->error() != QNetworkReply::NoError)
 		{
-			lib::log::error("Request failed: {}", reply->errorString().toStdString());
-			callback(lib::result<std::string>::fail(response));
+			const auto statusCode = reply->attribute(
+				QNetworkRequest::HttpStatusCodeAttribute
+			).toInt();
+
+			if (statusCode > 0 && response.empty())
+			{
+				std::string statusMessage;
+				if (statusCode / 100 == 4)
+				{
+					statusMessage = lib::fmt::format("Client error: {}", statusCode);
+				}
+				else if (statusCode / 100 == 5)
+				{
+					statusMessage = lib::fmt::format("Server error: {}", statusCode);
+				}
+				else
+				{
+					statusMessage = lib::fmt::format("Error: {}", statusCode);;
+				}
+
+				callback(lib::result<std::string>::fail(statusMessage));
+			}
+			else
+			{
+				callback(lib::result<std::string>::fail(response));
+			}
 		}
 		else
 		{
 			callback(lib::result<std::string>::ok(response));
 		}
+
 		reply->deleteLater();
 	});
 }
@@ -117,6 +142,16 @@ auto lib::qt::http_client::post(const std::string &url, const lib::headers &head
 	}
 
 	return reply->readAll().toStdString();
+}
+
+void lib::qt::http_client::post(const std::string &url, const std::string &body,
+	const lib::headers &headers, lib::callback<lib::result<std::string>> &callback) const
+{
+	const auto data = body.empty()
+		? QByteArray()
+		: QByteArray::fromStdString(body);
+
+	await(network_manager->post(request(url, headers), data), callback);
 }
 
 void lib::qt::http_client::del(const std::string &url, const std::string &body,

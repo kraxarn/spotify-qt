@@ -3,9 +3,11 @@
 #include "lib/spotify/error.hpp"
 #include "lib/base64.hpp"
 
-lib::spt::request::request(lib::settings &settings, const lib::http_client &http_client)
+lib::spt::request::request(lib::settings &settings, const lib::http_client &http_client,
+	const lib::spt::device_select &device_select)
 	: settings(settings),
-	http(http_client)
+	http(http_client),
+	device_select(device_select)
 {
 }
 
@@ -92,4 +94,15 @@ auto lib::spt::request::request_refresh(const std::string &post_data,
 		{"Content-Type", "application/x-www-form-urlencoded"},
 		{"Authorization", authorization},
 	}, post_data);
+}
+
+auto lib::spt::request::get_current_device() const -> const std::string &
+{
+	return settings.general.last_device;
+}
+
+void lib::spt::request::set_current_device(const std::string &device_id)
+{
+	settings.general.last_device = device_id;
+	settings.save();
 }

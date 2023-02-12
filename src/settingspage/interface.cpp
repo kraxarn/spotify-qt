@@ -4,6 +4,8 @@
 #include "util/widget.hpp"
 
 #include <QFontDialog>
+#include <QStandardPaths>
+#include <QSettings>
 
 SettingsPage::Interface::Interface(lib::settings &settings, QWidget *parent)
 	: SettingsPage::Base(settings, parent)
@@ -495,6 +497,13 @@ auto SettingsPage::Interface::defaultStyle() -> QString
 	if (!overridden.empty())
 	{
 		return QString::fromStdString(overridden);
+	}
+
+	// First is probably default
+	const auto &styles = QStyleFactory::keys();
+	if (!styles.isEmpty())
+	{
+		return styles.first();
 	}
 
 	// Assume Fusion

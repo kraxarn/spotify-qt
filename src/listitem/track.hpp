@@ -16,7 +16,9 @@ namespace ListItem
 	{
 	public:
 		Track(const QStringList &strings, const lib::spt::track &track,
-			const QIcon &icon, int index);
+			const QIcon &icon, int index, const QString &addedAt);
+
+		void setLiked(bool isLiked);
 
 	private:
 		auto operator<(const QTreeWidgetItem &item) const -> bool override;
