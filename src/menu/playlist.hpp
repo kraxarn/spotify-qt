@@ -38,6 +38,7 @@ namespace Menu
 		void isFollowingLoaded(const std::vector<bool> &follows);
 
 		auto playlistUrl() const -> QString;
+		auto playlistName() const -> QString;
 
 		auto shareMenu() -> QMenu *;
 		auto devMenu() -> QMenu *;
@@ -47,6 +48,7 @@ namespace Menu
 		void onRefresh(bool checked);
 		void onFollow(bool checked);
 		void onCopyLink(bool checked) const;
+		void onCopyName(bool checked) const;
 		void onOpenInSpotify(bool checked) const;
 		void onCopyId(bool checked) const;
 		void onShowJson(bool checked) const;
