@@ -300,8 +300,8 @@ void MainToolBar::onPlayPause(bool /*checked*/)
 		}
 
 		StatusMessage::error(QString("Failed to %1 playback: %2")
-			.arg(playPause->iconText() == "Pause" ? "pause" : "resume")
-			.arg(QString::fromStdString(status)));
+			.arg(isPlaying() ? QStringLiteral("pause") : QStringLiteral("resume"),
+				QString::fromStdString(status)));
 	};
 
 	if (current.is_playing)
