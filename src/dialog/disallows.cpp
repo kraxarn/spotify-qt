@@ -11,6 +11,8 @@ Dialog::Disallows::Disallows(QWidget *parent)
 	layout->addWidget(list);
 
 	Base::addAction(DialogAction::Ok);
+	Base::addAction(DialogAction::Apply);
+	Base::addAction(DialogAction::Cancel);
 }
 
 void Dialog::Disallows::showEvent(QShowEvent *event)
@@ -43,26 +45,38 @@ void Dialog::Disallows::showEvent(QShowEvent *event)
 
 void Dialog::Disallows::onOk(bool checked)
 {
+	applyActions();
+	Base::onOk(checked);
+}
+
+void Dialog::Disallows::onApply(bool checked)
+{
+	applyActions();
+	Base::onApply(checked);
+}
+
+void Dialog::Disallows::applyActions()
+{
 	auto *mainWindow = MainWindow::find(parentWidget());
-	if (mainWindow != nullptr)
+	if (mainWindow == nullptr)
 	{
-		auto playback = mainWindow->currentPlayback();
-		std::unordered_set<lib::player_action> actions;
-
-		for (int i = 0; i < list->count(); i++)
-		{
-			auto *item = list->item(i);
-			if (item->checkState() == Qt::Checked)
-			{
-				const auto data = item->data(actionRole);
-				const auto action = static_cast<lib::player_action>(data.value<int>());
-				actions.insert(action);
-			}
-		}
-
-		playback.disallowed_actions = actions;
-		mainWindow->refreshed(playback);
+		return;
 	}
 
-	Base::onOk(checked);
+	auto playback = mainWindow->currentPlayback();
+	std::unordered_set<lib::player_action> actions;
+
+	for (int i = 0; i < list->count(); i++)
+	{
+		auto *item = list->item(i);
+		if (item->checkState() == Qt::Checked)
+		{
+			const auto data = item->data(actionRole);
+			const auto action = static_cast<lib::player_action>(data.value<int>());
+			actions.insert(action);
+		}
+	}
+
+	playback.disallowed_actions = actions;
+	mainWindow->refreshed(playback);
 }
