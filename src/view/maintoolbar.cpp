@@ -219,7 +219,7 @@ void MainToolBar::setProgress(const lib::spt::playback &playback)
 
 auto MainToolBar::isPlaying() const -> bool
 {
-	return playPause->text() == QStringLiteral("Pause");
+	return playPause->text().startsWith(QStringLiteral("Pause"));
 }
 
 void MainToolBar::toggleActions(const lib::spt::playback &playback)
