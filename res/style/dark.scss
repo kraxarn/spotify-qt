@@ -104,6 +104,10 @@ QPushButton, QComboBox {
 
 QPushButton {
 	@include button-style();
+
+	&::flat {
+		background: none;
+	}
 }
 
 QListWidget, QTreeWidget, QTextEdit {
