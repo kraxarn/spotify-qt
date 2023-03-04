@@ -23,4 +23,6 @@ void SidePanel::Title::mouseReleaseEvent(QMouseEvent *event)
 #endif
 		sidePanel->removeTab(tabAt(pos.toPoint()));
 	}
+
+	QTabBar::mouseReleaseEvent(event);
 }
