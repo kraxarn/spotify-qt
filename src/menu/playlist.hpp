@@ -1,6 +1,6 @@
 #pragma once
 
-#include "dialog/playlistedit.hpp"
+#include "dialog/editplaylist.hpp"
 #include "lib/spotify/api.hpp"
 #include "lib/cache.hpp"
 #include "lib/random.hpp"
@@ -27,7 +27,7 @@ namespace Menu
 		lib::cache &cache;
 		lib::spt::api &spotify;
 
-		Dialog::PlaylistEdit *editDialog = nullptr;
+		Dialog::EditPlaylist *editDialog = nullptr;
 		std::vector<lib::spt::track> tracks;
 		QAction *tracksAction = nullptr;
 		QAction *byAction = nullptr;

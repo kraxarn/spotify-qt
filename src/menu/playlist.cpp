@@ -181,7 +181,7 @@ auto Menu::Playlist::playlistUrl() const -> QString
 auto Menu::Playlist::playlistName() const -> QString
 {
 	return QString::fromStdString(
-		lib::fmt::format("\"{}\" by {}",playlist.name, playlist.owner_name));
+		lib::fmt::format("\"{}\" by {}", playlist.name, playlist.owner_name));
 }
 
 void Menu::Playlist::onShuffle(bool /*checked*/)
@@ -219,7 +219,7 @@ void Menu::Playlist::onEdit(bool /*checked*/)
 		editDialog->deleteLater();
 	}
 
-	editDialog = new Dialog::PlaylistEdit(spotify, playlist, -1,
+	editDialog = new Dialog::EditPlaylist(spotify, playlist, -1,
 		MainWindow::find(parentWidget()));
 
 	if (editDialog->exec() == QDialog::Accepted)

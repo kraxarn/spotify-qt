@@ -7,7 +7,7 @@
 #include "dialog/memory.hpp"
 #include "dialog/lyricssearch.hpp"
 #include "dialog/disallows.hpp"
-#include "dialog/playlistedit.hpp"
+#include "dialog/editplaylist.hpp"
 
 DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
@@ -244,7 +244,7 @@ void DeveloperMenu::onDialogMenuAboutToShow()
 		}},
 		{QStringLiteral("Edit playlist"), [this, mainWindow]
 		{
-			return new Dialog::PlaylistEdit(spotify, {}, -1, mainWindow);
+			return new Dialog::EditPlaylist(spotify, {}, -1, mainWindow);
 		}}
 	};
 

@@ -1,8 +1,10 @@
-#include "dialog/playlistedit.hpp"
+#include "dialog/editplaylist.hpp"
 
-Dialog::PlaylistEdit::PlaylistEdit(lib::spt::api &spotify, const lib::spt::playlist &playlist,
+#include <QMessageBox>
+
+Dialog::EditPlaylist::EditPlaylist(lib::spt::api &spotify, const lib::spt::playlist &playlist,
 	int selectedIndex, QWidget *parent)
-	: QDialog(parent),
+	: Base(parent),
 	spotify(spotify),
 	playlist(playlist)
 {
@@ -11,7 +13,7 @@ Dialog::PlaylistEdit::PlaylistEdit(lib::spt::api &spotify, const lib::spt::playl
 
 	setWindowTitle(playlistName);
 	setModal(true);
-	auto *layout = new QVBoxLayout(this);
+	auto *layout = Base::layout<QVBoxLayout>();
 
 	// Name
 	layout->addWidget(new QLabel("Name:", this));
@@ -49,32 +51,23 @@ Dialog::PlaylistEdit::PlaylistEdit(lib::spt::api &spotify, const lib::spt::playl
 	}
 
 	// Dialog buttons
-	auto *buttons = new QDialogButtonBox(this);
-	buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-
-	QDialogButtonBox::connect(buttons, &QDialogButtonBox::accepted,
-		this, &Dialog::PlaylistEdit::yes);
-
-	QDialogButtonBox::connect(buttons, &QDialogButtonBox::rejected,
-		this, &Dialog::PlaylistEdit::no);
-
-	layout->addWidget(buttons);
-	setLayout(layout);
+	Base::addAction(DialogAction::Ok);
+	Base::addAction(DialogAction::Cancel);
 }
 
-void Dialog::PlaylistEdit::yes()
+void Dialog::EditPlaylist::onOk(bool checked)
 {
-	lib::spt::playlist_details pl(playlist);
-	pl.name = name->text().toStdString();
-	pl.description = description->toPlainText().toStdString();
-	pl.is_public = isPublic->isChecked();
-	pl.collaborative = isCollaborative->isChecked();
+	lib::spt::playlist_details details(playlist);
+	details.name = name->text().toStdString();
+	details.description = description->toPlainText().toStdString();
+	details.is_public = isPublic->isChecked();
+	details.collaborative = isCollaborative->isChecked();
 
-	spotify.edit_playlist(playlist.id, pl, [this](const std::string &result)
+	spotify.edit_playlist(playlist.id, details, [this, checked](const std::string &result)
 	{
 		if (result.empty())
 		{
-			accept();
+			Base::onOk(checked);
 			return;
 		}
 
@@ -82,9 +75,4 @@ void Dialog::PlaylistEdit::yes()
 			QString("Failed to save changes:\n%1")
 				.arg(QString::fromStdString(result)));
 	});
-}
-
-void Dialog::PlaylistEdit::no()
-{
-	reject();
 }
