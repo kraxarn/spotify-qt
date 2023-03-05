@@ -6,10 +6,11 @@
 Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache,
 	const std::string &albumId, QWidget *parent)
 	: QMenu(parent),
-	albumId(albumId),
 	spotify(spotify),
 	cache(cache)
 {
+	album.id = albumId;
+
 	trackCount = addAction("...");
 	trackCount->setEnabled(false);
 	addSeparator();
@@ -20,10 +21,14 @@ Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache,
 		this, &Menu::Album::onShuffle);
 
 	auto *share = addMenu(Icon::get("document-share"), "Share");
-	auto *sharePlaylist = share->addAction("Copy album link");
 
-	QAction::connect(sharePlaylist, &QAction::triggered,
+	auto *copyLink = share->addAction("Copy album link");
+	QAction::connect(copyLink, &QAction::triggered,
 		this, &Menu::Album::onCopyLink);
+
+	auto *copyName = share->addAction(QStringLiteral("Copy album name"));
+	QAction::connect(copyName, &QAction::triggered,
+		this, &Menu::Album::onCopyName);
 
 	auto *shareSongOpen = share->addAction("Open in Spotify");
 
@@ -31,8 +36,9 @@ Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache,
 		this, &Menu::Album::onOpenInSpotify);
 
 	tracksLoaded(cache.get_tracks(albumId));
-	spotify.album(albumId, [this](const lib::spt::album &album)
+	spotify.album(albumId, [this](const lib::spt::album &item)
 	{
+		album = item;
 		this->spotify.album_tracks(album, [this](const std::vector<lib::spt::track> &items)
 		{
 			this->tracksLoaded(items);
@@ -51,7 +57,7 @@ void Menu::Album::onShuffle(bool /*checked*/)
 	const auto initialIndex = lib::random()
 		.next_int(0, static_cast<int>(tracks.size()));
 
-	spotify.play_tracks(initialIndex, lib::spt::id_to_uri("album", albumId),
+	spotify.play_tracks(initialIndex, lib::spt::id_to_uri("album", album.id),
 		[this](const std::string &status)
 		{
 			if (!status.empty())
@@ -70,14 +76,20 @@ void Menu::Album::onShuffle(bool /*checked*/)
 void Menu::Album::onCopyLink(bool /*checked*/)
 {
 	QApplication::clipboard()->setText(QString("https://open.spotify.com/album/%1")
-		.arg(QString::fromStdString(albumId)));
+		.arg(QString::fromStdString(album.id)));
 	StatusMessage::info(QStringLiteral("Link copied to clipboard"));
+}
+
+void Menu::Album::onCopyName(bool /*checked*/)
+{
+	QApplication::clipboard()->setText(QString::fromStdString(album.name));
+	StatusMessage::info(QStringLiteral("Name copied to clipboard"));
 }
 
 void Menu::Album::onOpenInSpotify(bool /*checked*/)
 {
 	Url::open(QString("https://open.spotify.com/album/%1")
-			.arg(QString::fromStdString(albumId)), LinkType::Web,
+			.arg(QString::fromStdString(album.id)), LinkType::Web,
 		MainWindow::find(parentWidget()));
 }
 

@@ -19,7 +19,7 @@ namespace Menu
 
 	private:
 		std::vector<lib::spt::track> tracks;
-		std::string albumId;
+		lib::spt::album album;
 		lib::spt::api &spotify;
 		lib::cache &cache;
 
@@ -31,6 +31,7 @@ namespace Menu
 
 		void onShuffle(bool checked);
 		void onCopyLink(bool checked);
+		void onCopyName(bool checked);
 		void onOpenInSpotify(bool checked);
 	};
 }
