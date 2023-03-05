@@ -627,6 +627,12 @@ void List::Tracks::load(const lib::spt::album &album, const std::string &trackId
 		setEnabled(false);
 	}
 
+	auto *mainWindow = MainWindow::find(parentWidget());
+	if (mainWindow != nullptr)
+	{
+		mainWindow->setSptContext(album);
+	}
+
 	spotify.album_tracks(album,
 		[this, album, trackId](const std::vector<lib::spt::track> &tracks)
 		{
@@ -635,12 +641,6 @@ void List::Tracks::load(const lib::spt::album &album, const std::string &trackId
 
 			cache.set_tracks(album.id, tracks);
 			cache.set_album(album);
-
-			auto *mainWindow = MainWindow::find(this->parentWidget());
-			if (mainWindow != nullptr)
-			{
-				mainWindow->setSptContext(album);
-			}
 		});
 }
 
