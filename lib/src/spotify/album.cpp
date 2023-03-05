@@ -37,7 +37,7 @@ void lib::spt::to_json(nlohmann::json &j, const album &a)
 				break;
 		}
 
-		j.at("album_group") = album_group;
+		j["album_group"] = album_group;
 	}
 }
 
