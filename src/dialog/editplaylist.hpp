@@ -17,6 +17,9 @@ namespace Dialog
 		EditPlaylist(lib::spt::api &spotify, const lib::spt::playlist &playlist,
 			int selectedIndex, QWidget *parent);
 
+	signals:
+		void playlistSaved();
+
 	private:
 		QLineEdit *name;
 		QTextEdit *description;

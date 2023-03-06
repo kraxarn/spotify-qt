@@ -222,11 +222,10 @@ void Menu::Playlist::onEdit(bool /*checked*/)
 	editDialog = new Dialog::EditPlaylist(spotify, playlist, -1,
 		MainWindow::find(parentWidget()));
 
-	if (editDialog->exec() == QDialog::Accepted)
-	{
-		auto *mainWindow = MainWindow::find(parentWidget());
-		mainWindow->refreshPlaylists();
-	}
+	QDialog::connect(editDialog, &Dialog::EditPlaylist::playlistSaved,
+		this, &Menu::Playlist::onPlaylistSaved);
+
+	editDialog->open();
 }
 
 void Menu::Playlist::onRefresh(bool /*checked*/)
@@ -292,4 +291,13 @@ void Menu::Playlist::onShowJson(bool /*checked*/) const
 	nlohmann::json json = playlist;
 	QMessageBox::information(MainWindow::find(parentWidget()), "JSON",
 		QString::fromStdString(json.dump(4)));
+}
+
+void Menu::Playlist::onPlaylistSaved()
+{
+	auto *mainWindow = MainWindow::find(parentWidget());
+	if (mainWindow != nullptr)
+	{
+		mainWindow->refreshPlaylists();
+	}
 }

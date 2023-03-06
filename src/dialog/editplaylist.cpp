@@ -67,6 +67,7 @@ void Dialog::EditPlaylist::onOk(bool checked)
 	{
 		if (result.empty())
 		{
+			emit playlistSaved();
 			Base::onOk(checked);
 			return;
 		}
