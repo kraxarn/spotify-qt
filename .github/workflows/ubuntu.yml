@@ -7,9 +7,9 @@ env:
 
 jobs:
   build:
-    # Ubuntu 18.04 is supported until April 2023
+    # Ubuntu 20.04 is supported until April 2025
     # See: https://wiki.ubuntu.com/Releases
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     steps:
     - uses: actions/checkout@v2
