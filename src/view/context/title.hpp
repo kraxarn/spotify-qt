@@ -6,6 +6,7 @@
 
 #include "spotify/current.hpp"
 #include "util/icon.hpp"
+#include "view/context/titleinfo.hpp"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -26,18 +27,13 @@ namespace Context
 
 	private:
 		QLabel *icon = nullptr;
-		QLabel *info = nullptr;
+		TitleInfo *info = nullptr;
 
 		lib::spt::api &spotify;
 		spt::Current &current;
 		const lib::cache &cache;
 
 		static constexpr int spacing = 16;
-
-		void onMenu(const QPoint &pos);
-		void onInfoOpen(bool checked);
-
-		auto getIcon() const -> QIcon;
 
 		auto playlist(const std::string &id) -> lib::spt::playlist;
 		auto playlistNameFromSaved(const std::string &id) -> std::string;

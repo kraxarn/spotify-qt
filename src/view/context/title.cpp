@@ -15,76 +15,10 @@ Context::Title::Title(lib::spt::api &spotify, spt::Current &current,
 
 	icon = new QLabel(this);
 	icon->setVisible(false);
-
-	info = new QLabel(this);
-	info->setToolTip("Currently playing from");
-	info->setVisible(false);
-	info->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
-
 	layout->addWidget(icon);
+
+	info = new Context::TitleInfo(spotify, current, this);
 	layout->addWidget(info, 1);
-
-	info->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-	QWidget::connect(info, &QWidget::customContextMenuRequested,
-		this, &Context::Title::onMenu);
-}
-
-void Context::Title::onMenu(const QPoint &pos)
-{
-	if (info == nullptr)
-	{
-		return;
-	}
-
-	auto *menu = new QMenu(info);
-
-	if (lib::developer_mode::enabled)
-	{
-		const auto uri = QString::fromStdString(current.playback.context.uri);
-		auto *devContext = menu->addAction(uri);
-		devContext->setEnabled(false);
-	}
-
-	auto *open = menu->addAction(getIcon(), QString("Open %1")
-		.arg(QString::fromStdString(current.playback.context.type)));
-	QAction::connect(open, &QAction::triggered,
-		this, &Context::Title::onInfoOpen);
-
-	menu->popup(info->mapToGlobal(pos));
-}
-
-void Context::Title::onInfoOpen(bool /*checked*/)
-{
-	auto *mainWindow = MainWindow::find(parentWidget());
-	const auto &type = current.playback.context.type;
-	const auto uri = lib::strings::split(current.playback.context.uri, ':').back();
-
-	if (type == "album")
-	{
-		mainWindow->loadAlbum(uri);
-	}
-	else if (type == "artist")
-	{
-		mainWindow->openArtist(uri);
-	}
-	else if (type == "playlist")
-	{
-		spotify.playlist(uri, [mainWindow](const lib::spt::playlist &playlist)
-		{
-			mainWindow->resetLibraryPlaylist();
-			mainWindow->getSongsTree()->load(playlist);
-		});
-	}
-}
-
-auto Context::Title::getIcon() const -> QIcon
-{
-	return Icon::get(QString("view-media-%1")
-		.arg(current.playback.context.type.empty()
-			? "track"
-			: current.playback.context.type == "album"
-				? "album-cover"
-				: QString::fromStdString(current.playback.context.type)));
 }
 
 void Context::Title::updateIcon()
@@ -100,9 +34,9 @@ void Context::Title::updateIcon()
 
 		auto show = currentName != "No context";
 
-		if (this->icon != nullptr)
+		if (this->icon != nullptr && this->info != nullptr)
 		{
-			this->icon->setPixmap(getIcon().pixmap(size, size));
+			this->icon->setPixmap(info->getIcon().pixmap(size, size));
 			this->icon->setVisible(show);
 		}
 		if (this->info != nullptr)
