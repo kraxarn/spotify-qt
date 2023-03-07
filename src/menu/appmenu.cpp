@@ -4,10 +4,10 @@
 
 AppMenu::AppMenu(lib::settings &settings, const lib::http_client &httpClient,
 	lib::cache &cache, QWidget *parent)
-	: settings(settings),
+	: parent(parent),
+	settings(settings),
 	httpClient(httpClient),
-	cache(cache),
-	parent(parent)
+	cache(cache)
 {
 }
 
