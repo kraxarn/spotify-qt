@@ -13,7 +13,7 @@ SettingsPage::Logs::Logs(lib::settings &settings, QWidget *parent)
 
 auto SettingsPage::Logs::icon() -> QIcon
 {
-	return Icon::get(QStringLiteral("folder-txt"));
+	return Icon::get(QStringLiteral("document-preview"));
 }
 
 auto SettingsPage::Logs::title() -> QString
