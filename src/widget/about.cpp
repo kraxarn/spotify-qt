@@ -30,6 +30,9 @@ About::About(QWidget *parent)
 #ifdef GIT_COMMIT
 	auto *commit = new QLabel(QString("Commit %1").arg(GIT_COMMIT), this);
 	layout->addWidget(commit, 0, Qt::AlignHCenter);
+
+	auto *buildDate = new QLabel(QString("Built on %1").arg(__DATE__), this);
+	layout->addWidget(buildDate, 0, Qt::AlignHCenter);
 #endif
 
 	// User info
