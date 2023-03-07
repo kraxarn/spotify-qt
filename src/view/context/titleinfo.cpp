@@ -79,3 +79,13 @@ void Context::TitleInfo::onContextMenuTriggered(bool /*checked*/)
 		});
 	}
 }
+
+void Context::TitleInfo::mouseReleaseEvent(QMouseEvent *event)
+{
+	if (event->button() == Qt::MouseButton::LeftButton)
+	{
+		onContextMenuTriggered(false);
+	}
+
+	QLabel::mouseReleaseEvent(event);
+}

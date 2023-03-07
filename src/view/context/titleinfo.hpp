@@ -14,6 +14,9 @@ namespace Context
 
 		auto getIcon() const -> QIcon;
 
+	protected:
+		void mouseReleaseEvent(QMouseEvent *event) override;
+
 	private:
 		lib::spt::api &spotify;
 		spt::Current &current;
