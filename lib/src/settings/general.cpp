@@ -12,7 +12,6 @@ void lib::setting::to_json(nlohmann::json &j, const general &g)
 		{"last_playlist", g.last_playlist},
 		{"last_version", g.last_version},
 		{"media_controller", g.media_controller},
-		{"media_hotkeys", g.media_hotkeys},
 		{"native_window", g.native_window},
 		{"notify_track_change", g.notify_track_change},
 		{"playlist_order", g.playlist_order},
@@ -28,6 +27,10 @@ void lib::setting::to_json(nlohmann::json &j, const general &g)
 		{"tray_icon", g.tray_icon},
 		{"tray_light_icon", g.tray_light_icon},
 	};
+
+#ifdef __WIN32__
+	j["media_hotkeys"] = g.media_hotkeys;
+#endif
 }
 
 void lib::setting::from_json(const nlohmann::json &j, general &g)
@@ -46,7 +49,6 @@ void lib::setting::from_json(const nlohmann::json &j, general &g)
 	lib::json::get(j, "last_playlist", g.last_playlist);
 	lib::json::get(j, "last_version", g.last_version);
 	lib::json::get(j, "media_controller", g.media_controller);
-	lib::json::get(j, "media_hotkeys", g.media_hotkeys);
 	lib::json::get(j, "native_window", g.native_window);
 	lib::json::get(j, "notify_track_change", g.notify_track_change);
 	lib::json::get(j, "playlist_order", g.playlist_order);
@@ -61,4 +63,8 @@ void lib::setting::from_json(const nlohmann::json &j, general &g)
 	lib::json::get(j, "tray_album_art", g.tray_album_art);
 	lib::json::get(j, "tray_icon", g.tray_icon);
 	lib::json::get(j, "tray_light_icon", g.tray_light_icon);
+
+#ifdef __WIN32__
+	lib::json::get(j, "media_hotkeys", g.media_hotkeys);
+#endif
 }

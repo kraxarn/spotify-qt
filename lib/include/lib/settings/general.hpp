@@ -138,7 +138,9 @@ namespace lib
 			/**
 			 * Register media hotkeys under Windows
 			 */
+#ifdef __WIN32__
 			bool media_hotkeys = true;
+#endif
 		};
 
 		void to_json(nlohmann::json &j, const general &g);
