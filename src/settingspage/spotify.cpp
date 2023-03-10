@@ -103,6 +103,14 @@ auto SettingsPage::Spotify::spotify() -> QWidget *
 	sptAlways->setEnabled(sptAppStart->isChecked());
 	content->addWidget(sptAlways);
 
+	// Register hotkeys (Windows)
+#ifdef Q_OS_WIN
+	sptWinHotkeys = new QCheckBox(QStringLiteral("Register media keys"));
+	sptWinHotkeys->setToolTip(QStringLiteral("Register media keys as hotkeys"));
+	sptWinHotkeys->setChecked(settings.general.media_hotkeys);
+	content->addWidget(sptWinHotkeys);
+#endif
+
 	// Client restart
 	auto *statusLayout = new QHBoxLayout();
 	startClient = new QPushButton(this);
@@ -368,6 +376,17 @@ auto SettingsPage::Spotify::save() -> bool
 	{
 		settings.spotify.disable_discovery = !sptDiscovery->isChecked();
 	}
+
+#ifdef Q_OS_WIN
+	if (sptWinHotkeys != nullptr)
+	{
+		if (settings.general.media_hotkeys != sptWinHotkeys->isChecked())
+		{
+			MainWindow::registerMediaHotkeys(sptWinHotkeys->isChecked());
+		}
+		settings.general.media_hotkeys = sptWinHotkeys->isChecked();
+	}
+#endif
 
 	return success;
 }

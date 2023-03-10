@@ -12,6 +12,7 @@ public:
 
 	static MainWindow *find(QWidget *from);
 	static auto defaultSize() -> QSize;
+	static void registerMediaHotkeys(bool enabled);
 
 	//region Deprecated
 
@@ -112,6 +113,7 @@ private:
 	// Initialization
 	void initClient();
 	void initMediaController();
+	void initMediaHotkeys();
 	void initWhatsNew();
 	void initDevice();
 	void checkForUpdates();

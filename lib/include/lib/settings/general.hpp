@@ -134,6 +134,11 @@ namespace lib
 			 * @note Always enabled under Linux/Wayland
 			 */
 			bool native_window = false;
+
+			/**
+			 * Register media hotkeys under Windows
+			 */
+			bool media_hotkeys = true;
 		};
 
 		void to_json(nlohmann::json &j, const general &g);
