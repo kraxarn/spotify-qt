@@ -382,7 +382,11 @@ auto SettingsPage::Spotify::save() -> bool
 	{
 		if (settings.general.media_hotkeys != sptWinHotkeys->isChecked())
 		{
-			MainWindow::registerMediaHotkeys(sptWinHotkeys->isChecked());
+			auto *mainWindow = MainWindow::find(parentWidget());
+			if (mainWindow != nullptr)
+			{
+				mainWindow->registerMediaHotkeys(sptWinHotkeys->isChecked());
+			}
 		}
 		settings.general.media_hotkeys = sptWinHotkeys->isChecked();
 	}

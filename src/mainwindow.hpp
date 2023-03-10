@@ -12,7 +12,6 @@ public:
 
 	static MainWindow *find(QWidget *from);
 	static auto defaultSize() -> QSize;
-	static void registerMediaHotkeys(bool enabled);
 
 	//region Deprecated
 
@@ -69,6 +68,10 @@ public:
 
 #ifdef USE_DBUS
 	mp::Service *getMediaPlayer();
+#endif
+
+#ifdef __WIN32__
+	void registerMediaHotkeys(bool enabled);
 #endif
 
 signals:

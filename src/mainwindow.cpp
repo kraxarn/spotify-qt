@@ -236,9 +236,9 @@ void MainWindow::initMediaHotkeys()
 #endif
 }
 
+#ifdef __WIN32__
 void MainWindow::registerMediaHotkeys(bool enabled)
 {
-#ifdef __WIN32__
 	HWND hwnd = HWND(winId());
 	if (enabled)
 	{
@@ -254,10 +254,8 @@ void MainWindow::registerMediaHotkeys(bool enabled)
 		UnregisterHotKey(hwnd, 2);
 		UnregisterHotKey(hwnd, 3);
 	}
-#else
-	Q_UNUSED(enabled);
-#endif
 }
+#endif
 
 void MainWindow::initWhatsNew()
 {
