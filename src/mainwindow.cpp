@@ -184,14 +184,6 @@ bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, long *r
 
 void MainWindow::initClient()
 {
-	#ifdef Q_OS_WIN
-		HWND hwnd = HWND(winId());
-		RegisterHotKey(hwnd, 0, MOD_NOREPEAT, 0xB0); //Next Track
-		RegisterHotKey(hwnd, 1, MOD_NOREPEAT, 0xB1); //Previous Track
-		RegisterHotKey(hwnd, 2, MOD_NOREPEAT, 0xB2); //Stop Media
-		RegisterHotKey(hwnd, 3, MOD_NOREPEAT, 0xB3); //Play/Pause Media
-	#endif
-
 	if (!settings.spotify.start_client)
 	{
 		return;
@@ -523,6 +515,14 @@ auto MainWindow::startClient() -> const SpotifyClient::Runner *
 {
 	stopClient();
 
+#ifdef Q_OS_WIN
+	HWND hwnd = HWND(winId());
+	RegisterHotKey(hwnd, 0, MOD_NOREPEAT, 0xB0); // Next Track
+	RegisterHotKey(hwnd, 1, MOD_NOREPEAT, 0xB1); // Previous Track
+	RegisterHotKey(hwnd, 2, MOD_NOREPEAT, 0xB2); // Stop Media
+	RegisterHotKey(hwnd, 3, MOD_NOREPEAT, 0xB3); // Play/Pause Media
+#endif
+
 	spotifyRunner = new SpotifyClient::Runner(settings, paths, this);
 	SpotifyClient::Runner::connect(spotifyRunner, &SpotifyClient::Runner::statusChanged,
 		this, &MainWindow::onSpotifyStatusChanged);
@@ -533,6 +533,14 @@ auto MainWindow::startClient() -> const SpotifyClient::Runner *
 
 void MainWindow::stopClient()
 {
+#ifdef Q_OS_WIN
+	HWND hwnd = HWND(winId());
+	UnregisterHotKey(hwnd, 0);
+	UnregisterHotKey(hwnd, 1);
+	UnregisterHotKey(hwnd, 2);
+	UnregisterHotKey(hwnd, 3);
+#endif
+
 	spotifyRunner->deleteLater();
 	spotifyRunner = nullptr;
 }
