@@ -53,3 +53,11 @@ if (NOT SQLITE_VERSION)
 
 	message(STATUS "Using SQLite (bundled)")
 endif ()
+
+# Generate SQL model
+if (USE_DB_CACHE)
+	file(READ "${CMAKE_CURRENT_SOURCE_DIR}/../res/model_cache.sql" model_cache)
+	string(PREPEND model_cache "#pragma once\nconst char* model_cache_sql = R\"(")
+	string(APPEND model_cache ")\";")
+	file(WRITE "${CMAKE_CURRENT_SOURCE_DIR}/../res/model_cache.hpp" "${model_cache}")
+endif ()

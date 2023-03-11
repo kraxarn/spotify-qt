@@ -26,6 +26,10 @@ target_include_directories(spotify-qt-lib PUBLIC
 	"${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/include"
 	${LIB_QT_HEADERS})
 
+# Generated headers
+target_include_directories(${PROJECT_NAME} PRIVATE
+	"${CMAKE_CURRENT_SOURCE_DIR}/res")
+
 # Third-party libraries
 add_subdirectory(thirdparty)
 target_link_libraries(spotify-qt-lib PUBLIC spotify-qt-lib-third-party)
