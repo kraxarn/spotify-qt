@@ -25,8 +25,13 @@ lib::db_cache::~db_cache()
 
 auto lib::db_cache::make_storage(const std::string &path) -> bool
 {
-	return sqlite3_open(path.c_str(), &db) == SQLITE_OK
-		&& exec(model_cache_sql, {});
+	if (sqlite3_open(path.c_str(), &db) != SQLITE_OK)
+	{
+		lib::log::debug("Failed to open database: {}", sqlite3_errmsg(db));
+		return false;
+	}
+
+	return exec(model_cache_sql, {});
 }
 
 auto lib::db_cache::exec(const char *query,
