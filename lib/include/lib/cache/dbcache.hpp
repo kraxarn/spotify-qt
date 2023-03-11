@@ -4,14 +4,15 @@
 #include "lib/cache/jsoncache.hpp"
 #include "lib/paths/paths.hpp"
 
-#include "thirdparty/sqlite_modern_cpp.h"
+#include "sqlite3.h"
 
 namespace lib
 {
 	class db_cache: public cache
 	{
 	public:
-		db_cache(const lib::paths &paths);
+		explicit db_cache(const lib::paths &paths);
+		virtual ~db_cache();
 
 		void from_json(const json_cache &json_cache);
 
@@ -40,16 +41,9 @@ namespace lib
 		auto get_all_crashes() const -> std::vector<lib::crash_info> override;
 
 	private:
-		sqlite::database db;
+		sqlite3 *db = nullptr;
 
-		void make_storage();
-
-		template<typename T>
-		auto sql(const std::string &query) -> T
-		{
-			T result;
-			db << query >> result;
-			return result;
-		}
+		auto make_storage(const std::string &path) -> bool;
+		auto exec(const char *query, const std::function<void(sqlite3_stmt * )> &callback) -> bool;
 	};
 }
