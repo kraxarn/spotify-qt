@@ -189,6 +189,7 @@ namespace lib
 				}
 				catch (const std::exception &e)
 				{
+					lib::log::error("Failed to parse error message: {}", e.what());
 					return data;
 				}
 			}
