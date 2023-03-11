@@ -31,12 +31,25 @@ if (USE_DB_CACHE AND NOT USE_BUNDLED_SQLITE)
 endif ()
 
 if (NOT SQLITE_VERSION)
-	# sqlite3.h is expected in the root
-	target_include_directories(${PROJECT_NAME} PRIVATE
-		${CMAKE_CURRENT_SOURCE_DIR}/include/thirdparty)
+	include(FetchContent OPTIONAL RESULT_VARIABLE FetchContent_supported)
+	if (FetchContent_supported STREQUAL "NOTFOUND")
+		message(STATUS "FetchContent not supported")
+	else ()
+		FetchContent_Declare(
+			sqlite_amalgamation
+			URL https://www.sqlite.org/2022/sqlite-amalgamation-3390400.zip
+			URL_HASH SHA3_256=96894cf2c57f76ccbeda41aa6ff0ce1f6b093deced8335801d38ddb34ec9690e
+			DOWNLOAD_EXTRACT_TIMESTAMP true
+		)
+		message(STATUS "Downloading SQLite3, please wait...")
+		FetchContent_MakeAvailable(sqlite_amalgamation)
 
-	target_sources(${PROJECT_NAME} PRIVATE
-		${CMAKE_CURRENT_SOURCE_DIR}/src/sqlite3.c)
+		target_include_directories(${PROJECT_NAME} PRIVATE
+			${sqlite_amalgamation_SOURCE_DIR})
+
+		target_sources(${PROJECT_NAME} PRIVATE
+			${sqlite_amalgamation_SOURCE_DIR}/sqlite3.c)
+	endif ()
 
 	message(STATUS "Using SQLite (bundled)")
 endif ()
