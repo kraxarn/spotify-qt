@@ -7,7 +7,7 @@
 #include "util/appconfig.hpp"
 
 #ifdef __WIN32__
-	#include "windows.h"
+#include "windows.h"
 #endif
 
 MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
@@ -93,95 +93,95 @@ void MainWindow::closeEvent(QCloseEvent *event)
 		event->accept();
 	}
 }
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0) 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr *result)
 #else
 bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, long *result)
 #endif
 {
-	#ifdef __WIN32__
-		MSG* msg = reinterpret_cast<MSG*>(message);
-		if (msg->message == WM_HOTKEY) {
-			UINT key = msg->wParam;
-			switch (key)
+#ifdef __WIN32__
+	MSG* msg = reinterpret_cast<MSG*>(message);
+	if (msg->message == WM_HOTKEY) {
+		UINT key = msg->wParam;
+		switch (key)
+		{
+			case 0: //Next Track
 			{
-				case 0: //Next Track
+				spotify.next([this](const std::string &status)
 				{
-					spotify.next([this](const std::string &status) 
+					if (!status.empty())
 					{
-						if (!status.empty())
-						{
-							StatusMessage::error(QString("Failed to go to next track: %1")
-								.arg(QString::fromStdString(status)));
-							return;
-						}
-						refresh();
-					});
-					break;
-				}
-
-				case 1: //Previous Track
-				{
-					spotify.previous([this](const std::string &status) 
-					{
-						if (!status.empty())
-						{
-							StatusMessage::error(QString("Failed to go to previous track: %1")
-								.arg(QString::fromStdString(status)));
-							return;
-						}
-						refresh();
-					});
-					break;
-				}
-
-				case 2: //Stop Media
-				{
-					auto &current = getCurrentPlayback();
-					current.is_playing = false;
-					refreshed(current);
-					auto callback = [this](const std::string &status)
-					{
-						if (status.empty())
-						{
-							return;
-						}
-				
-						StatusMessage::error(QString("Failed to stop playback: %1")
+						StatusMessage::error(QString("Failed to go to next track: %1")
 							.arg(QString::fromStdString(status)));
-					};
+						return;
+					}
+					refresh();
+				});
+				break;
+			}
+
+			case 1: //Previous Track
+			{
+				spotify.previous([this](const std::string &status)
+				{
+					if (!status.empty())
+					{
+						StatusMessage::error(QString("Failed to go to previous track: %1")
+							.arg(QString::fromStdString(status)));
+						return;
+					}
+					refresh();
+				});
+				break;
+			}
+
+			case 2: //Stop Media
+			{
+				auto &current = getCurrentPlayback();
+				current.is_playing = false;
+				refreshed(current);
+				auto callback = [this](const std::string &status)
+				{
+					if (status.empty())
+					{
+						return;
+					}
+
+					StatusMessage::error(QString("Failed to stop playback: %1")
+						.arg(QString::fromStdString(status)));
+				};
+				spotify.pause(callback);
+				break;
+			}
+
+			case 3: //Play/Pause Media
+			{
+				auto &current = getCurrentPlayback();
+				current.is_playing = !current.is_playing;
+				refreshed(current);
+				auto callback = [this](const std::string &status)
+				{
+					if (status.empty())
+					{
+						return;
+					}
+
+					StatusMessage::error(QString("Failed to play/pause playback: %1")
+						.arg(QString::fromStdString(status)));
+				};
+				if (current.is_playing)
+				{
+					spotify.resume(callback);
+				}
+				else
+				{
 					spotify.pause(callback);
-					break;
 				}
-
-				case 3: //Play/Pause Media
-				{
-					auto &current = getCurrentPlayback();
-					current.is_playing = !current.is_playing;
-					refreshed(current);
-					auto callback = [this](const std::string &status)
-					{
-						if (status.empty())
-						{
-							return;
-						}
-
-						StatusMessage::error(QString("Failed to play/pause playback: %1")
-							.arg(QString::fromStdString(status)));
-					};
-					if (current.is_playing)
-					{
-						spotify.resume(callback);
-					}
-					else
-					{
-						spotify.pause(callback);
-					}
-					break;
-				}
+				break;
 			}
 		}
-	#endif
+	}
+#endif
 	return QMainWindow::nativeEvent(eventType, message, result);
 }
 
