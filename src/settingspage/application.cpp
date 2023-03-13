@@ -54,6 +54,14 @@ auto SettingsPage::Application::app() -> QWidget *
 	layout->addWidget(appMedia);
 #endif
 
+	// Register hotkeys (Windows)
+#ifdef __WIN32__
+	appHotkeys = new QCheckBox(QStringLiteral("Register media keys"));
+	appHotkeys->setToolTip(QStringLiteral("Register media keys as hotkeys"));
+	appHotkeys->setChecked(settings.general.media_hotkeys);
+	content->addWidget(appHotkeys);
+#endif
+
 	// What's new dialog
 	appWhatsNew = new QCheckBox("Show what's new on start", this);
 	appWhatsNew->setToolTip("Show what's new in the latest version after the app has been updated");
@@ -94,6 +102,21 @@ auto SettingsPage::Application::save() -> bool
 		}
 		settings.general.media_controller = appMedia->isChecked();
 	}
+
+#ifdef __WIN32__
+	if (appHotkeys != nullptr)
+	{
+		if (settings.general.media_hotkeys != appHotkeys->isChecked())
+		{
+			auto *mainWindow = MainWindow::find(parentWidget());
+			if (mainWindow != nullptr)
+			{
+				mainWindow->registerMediaHotkeys(appHotkeys->isChecked());
+			}
+		}
+		settings.general.media_hotkeys = appHotkeys->isChecked();
+	}
+#endif
 
 	// Refresh interval
 	if (appRefresh != nullptr)
