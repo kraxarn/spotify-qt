@@ -45,5 +45,6 @@ namespace lib
 
 		auto make_storage(const std::string &path) -> bool;
 		auto exec(const char *query, const std::function<void(sqlite3_stmt * )> &callback) -> bool;
+		void err(const char *message, int code);
 	};
 }

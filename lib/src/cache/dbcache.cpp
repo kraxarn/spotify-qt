@@ -56,7 +56,7 @@ auto lib::db_cache::exec(const char *query,
 
 	if (step != SQLITE_DONE)
 	{
-		lib::log::error("Failed to step: {}", sqlite3_errmsg(db));
+		err("Failed to step", step);
 		return false;
 	}
 
@@ -66,6 +66,13 @@ auto lib::db_cache::exec(const char *query,
 	}
 
 	return true;
+}
+
+void lib::db_cache::err(const char *message, int code)
+{
+	lib::log::error("{}: {} ({})", message,
+		sqlite3_errstr(code >= 0 ? code : sqlite3_errcode(db)),
+		sqlite3_errmsg(db));
 }
 
 void lib::db_cache::from_json(const lib::json_cache &json_cache)
