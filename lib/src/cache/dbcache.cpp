@@ -7,7 +7,7 @@ lib::db_cache::db_cache(const lib::paths &paths)
 	lib::stopwatch stopwatch;
 	stopwatch.start();
 
-	if (!make_storage(paths.cache() / "cache.sqlite"))
+	if (!make_storage(paths.cache() / "cache.db"))
 	{
 		lib::log::debug("Schema sync failed");
 		return;
