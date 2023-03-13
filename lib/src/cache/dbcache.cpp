@@ -37,9 +37,10 @@ auto lib::db_cache::make_storage(const std::string &path) -> bool
 auto lib::db_cache::exec(const char *query,
 	const std::function<void(sqlite3_stmt *)> &callback) -> bool
 {
-	sqlite3_stmt *stmt = nullptr;
+	sqlite3_stmt *stmt;
+	const char *tail;
 
-	const auto prepare = sqlite3_prepare_v2(db, query, -1, &stmt, nullptr);
+	const auto prepare = sqlite3_prepare_v2(db, query, -1, &stmt, &tail);
 	if (prepare != SQLITE_OK)
 	{
 		lib::log::error("Failed to prepare query: {}", sqlite3_errmsg(db));
@@ -57,6 +58,11 @@ auto lib::db_cache::exec(const char *query,
 	{
 		lib::log::error("Failed to step: {}", sqlite3_errmsg(db));
 		return false;
+	}
+
+	if (tail != nullptr && std::strstr(tail, ";") != nullptr)
+	{
+		return exec(tail, callback);
 	}
 
 	return true;
