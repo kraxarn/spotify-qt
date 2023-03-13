@@ -1,4 +1,5 @@
 #include "settingspage/application.hpp"
+#include "mainwindow.hpp"
 
 SettingsPage::Application::Application(lib::settings &settings, QWidget *parent)
 	: SettingsPage::Base(settings, parent)
