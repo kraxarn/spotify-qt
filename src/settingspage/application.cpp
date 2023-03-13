@@ -59,7 +59,7 @@ auto SettingsPage::Application::app() -> QWidget *
 	appHotkeys = new QCheckBox(QStringLiteral("Register media keys"));
 	appHotkeys->setToolTip(QStringLiteral("Register media keys as hotkeys"));
 	appHotkeys->setChecked(settings.general.media_hotkeys);
-	content->addWidget(appHotkeys);
+	layout->addWidget(appHotkeys);
 #endif
 
 	// What's new dialog
