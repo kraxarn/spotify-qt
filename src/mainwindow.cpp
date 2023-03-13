@@ -6,7 +6,7 @@
 #include "menu/mainmenubar.hpp"
 #include "util/appconfig.hpp"
 
-#ifdef __WIN32__
+#ifdef _WIN32
 #include "windows.h"
 #endif
 
@@ -99,7 +99,7 @@ bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
 bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, long *result)
 #endif
 {
-#ifdef __WIN32__
+#ifdef _WIN32
 	MSG* msg = reinterpret_cast<MSG*>(message);
 	if (msg->message == WM_HOTKEY) {
 		UINT key = msg->wParam;
@@ -228,7 +228,7 @@ void MainWindow::initMediaController()
 
 void MainWindow::initMediaHotkeys()
 {
-#ifdef __WIN32__
+#ifdef _WIN32
 	if (settings.general.media_hotkeys)
 	{
 		registerMediaHotkeys(true);
@@ -236,7 +236,7 @@ void MainWindow::initMediaHotkeys()
 #endif
 }
 
-#ifdef __WIN32__
+#ifdef _WIN32
 void MainWindow::registerMediaHotkeys(bool enabled)
 {
 	HWND hwnd = HWND(winId());

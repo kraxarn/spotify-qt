@@ -55,7 +55,7 @@ auto SettingsPage::Application::app() -> QWidget *
 #endif
 
 	// Register hotkeys (Windows)
-#ifdef __WIN32__
+#ifdef _WIN32
 	appHotkeys = new QCheckBox(QStringLiteral("Register media keys"));
 	appHotkeys->setToolTip(QStringLiteral("Register media keys as hotkeys"));
 	appHotkeys->setChecked(settings.general.media_hotkeys);
@@ -103,7 +103,7 @@ auto SettingsPage::Application::save() -> bool
 		settings.general.media_controller = appMedia->isChecked();
 	}
 
-#ifdef __WIN32__
+#ifdef _WIN32
 	if (appHotkeys != nullptr)
 	{
 		if (settings.general.media_hotkeys != appHotkeys->isChecked())

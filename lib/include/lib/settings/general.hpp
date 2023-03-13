@@ -138,7 +138,7 @@ namespace lib
 			/**
 			 * Register media hotkeys under Windows
 			 */
-#ifdef __WIN32__
+#ifdef _WIN32
 			bool media_hotkeys = true;
 #endif
 		};

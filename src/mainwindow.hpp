@@ -70,7 +70,7 @@ public:
 	mp::Service *getMediaPlayer();
 #endif
 
-#ifdef __WIN32__
+#ifdef _WIN32
 	void registerMediaHotkeys(bool enabled);
 #endif
 
