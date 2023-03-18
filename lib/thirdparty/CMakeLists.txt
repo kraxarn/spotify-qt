@@ -50,7 +50,7 @@ if (NOT SQLITE_VERSION)
 
 		FetchContent_Declare(
 			sqlite_amalgamation
-			URL "https://www.sqlite.org/2022/sqlite-amalgamation-${sqlite_version}.zip"
+			URL "https://www.sqlite.org/2023/sqlite-amalgamation-${sqlite_version}.zip"
 			URL_HASH "SHA3_256=${SQLITE_HASH}"
 			DOWNLOAD_EXTRACT_TIMESTAMP true
 		)
