@@ -23,7 +23,7 @@ lib::db_cache::~db_cache()
 	sqlite3_close(db);
 }
 
-auto lib::db_cache::make_storage(const std::string &path) -> bool
+auto lib::db_cache::make_storage(const ghc::filesystem::path &path) -> bool
 {
 	if (sqlite3_open(path.c_str(), &db) != SQLITE_OK)
 	{
