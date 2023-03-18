@@ -103,4 +103,34 @@ TEST_CASE("vector")
 		CHECK_EQ(vec[1], 2);
 		CHECK_EQ(vec[2], 3);
 	}
+
+	SUBCASE("sub")
+	{
+		const std::vector<int> vec{
+			1, 2, 3, 4, 5,
+		};
+
+		const auto vec1 = lib::vector::sub(vec, 0, 3);
+		CHECK_EQ(vec1.size(), 3);
+		CHECK_EQ(vec1[0], 1);
+		CHECK_EQ(vec1[1], 2);
+		CHECK_EQ(vec1[2], 3);
+
+		const auto vec2 = lib::vector::sub(vec, 1, 3);
+		CHECK_EQ(vec2.size(), 3);
+		CHECK_EQ(vec2[0], 2);
+		CHECK_EQ(vec2[1], 3);
+		CHECK_EQ(vec2[2], 4);
+
+		const auto vec3 = lib::vector::sub(vec, 2, 5);
+		CHECK_EQ(vec3.size(), 3);
+		CHECK_EQ(vec3[0], 3);
+		CHECK_EQ(vec3[1], 4);
+		CHECK_EQ(vec3[2], 5);
+
+		const auto vec4 = lib::vector::sub(vec, 3, static_cast<size_t>(-1));
+		CHECK_EQ(vec4.size(), 2);
+		CHECK_EQ(vec4[0], 4);
+		CHECK_EQ(vec4[1], 5);
+	}
 }
