@@ -74,7 +74,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 
 	setBorderless(!settings.qt().system_title_bar);
 
-	if (AppConfig::useNativeMenuBar())
+	if (AppConfig::useNativeMenuBar() || settings.qt().system_title_bar)
 	{
 		new MainMenuBar(spotify, settings, httpClient, cache, this);
 	}
