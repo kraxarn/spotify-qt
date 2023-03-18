@@ -25,7 +25,7 @@ lib::db_cache::~db_cache()
 
 auto lib::db_cache::make_storage(const ghc::filesystem::path &path) -> bool
 {
-	if (sqlite3_open16(path.c_str(), &db) != SQLITE_OK)
+	if (sqlite3_open(reinterpret_cast<const char *>(path.c_str()), &db) != SQLITE_OK)
 	{
 		lib::log::debug("Failed to open database: {}", sqlite3_errmsg(db));
 		return false;
