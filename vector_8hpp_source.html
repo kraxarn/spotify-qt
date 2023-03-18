@@ -119,10 +119,10 @@ $(function() {
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            <span class="comment">// If size+len is larger than element count, stop as last element</span></div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            <span class="keywordflow">if</span> (pos + len &gt; vec.size())</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            {</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                len = vec.size() - 1;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                len = vec.size() - pos - 1;</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            }</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>            <span class="keywordflow">return</span> std::vector&lt;T&gt;(vec.cbegin() + pos, vec.cbegin() + len);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>            <span class="keywordflow">return</span> std::vector&lt;T&gt;(vec.cbegin() + pos, vec.cbegin() + pos + len);</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        }</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
