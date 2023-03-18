@@ -44,7 +44,7 @@ if (NOT SQLITE_VERSION)
 		message(STATUS "Downloading SQLite3, please wait...")
 		FetchContent_MakeAvailable(sqlite_amalgamation)
 
-		target_include_directories(${PROJECT_NAME} PRIVATE
+		target_include_directories(${PROJECT_NAME} PUBLIC
 			${sqlite_amalgamation_SOURCE_DIR})
 
 		target_sources(${PROJECT_NAME} PRIVATE
