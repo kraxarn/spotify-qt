@@ -10,8 +10,8 @@ option(USE_DB_CACHE "Use SQLite based cache" ON)
 option(USE_BUNDLED_SQLITE "Force use bundled SQLite" OFF)
 
 # Bundled SQLite version
-set(SQLITE_VERSION "3.39.4")
-set(SQLITE_HASH "96894cf2c57f76ccbeda41aa6ff0ce1f6b093deced8335801d38ddb34ec9690e")
+set(SQLITE_VERSION "3.41.1")
+set(SQLITE_HASH "02c0b580272ff9160b4c70459f85fd1a1c602a9f081c2c375b32ffa68483f55e")
 
 # Some libraries assume headers are in the root
 target_include_directories(${PROJECT_NAME} PRIVATE
