@@ -64,7 +64,7 @@ if (NOT SQLITE_VERSION)
 			${sqlite_amalgamation_SOURCE_DIR}/sqlite3.c)
 	endif ()
 
-	message(STATUS "Using SQLite ${SQLITE_VERSION} (bundled)")
+	message(STATUS "Using SQLite ${BUNDLED_SQLITE_VERSION} (bundled)")
 endif ()
 
 # Generate SQL model
