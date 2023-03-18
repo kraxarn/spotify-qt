@@ -53,8 +53,9 @@ namespace lib
 				return std::vector<T>();
 			}
 
-			// If size+len is larger than element count, stop as last element
-			if (pos + len > vec.size())
+			// If pos+len would overflow or is larger than
+			// element count, include remaining elements
+			if ((pos + len) < len || pos + len > vec.size())
 			{
 				len = vec.size() - pos;
 			}
