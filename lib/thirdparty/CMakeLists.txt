@@ -60,7 +60,7 @@ if (NOT SQLITE_VERSION)
 		target_include_directories(${PROJECT_NAME} PUBLIC
 			${sqlite_amalgamation_SOURCE_DIR})
 
-		target_sources(${PROJECT_NAME} PRIVATE
+		target_sources(${PROJECT_NAME} PUBLIC
 			${sqlite_amalgamation_SOURCE_DIR}/sqlite3.c)
 	endif ()
 
