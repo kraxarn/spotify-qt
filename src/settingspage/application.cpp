@@ -81,7 +81,7 @@ auto SettingsPage::Application::app() -> QWidget *
 
 auto SettingsPage::Application::icon() -> QIcon
 {
-	return Icon::get("window");
+	return Icon::get(QStringLiteral("document-properties"));
 }
 
 auto SettingsPage::Application::title() -> QString

@@ -16,6 +16,7 @@
         <file>res/ic/light/dialog-ok.svg</file>
         <file>res/ic/light/document-edit.svg</file>
         <file>res/ic/light/document-preview.svg</file>
+        <file>res/ic/light/document-properties.svg</file>
         <file>res/ic/light/document-save.svg</file>
         <file>res/ic/light/document-share.svg</file>
         <file>res/ic/light/download.svg</file>
@@ -76,6 +77,7 @@
         <file>res/ic/dark/dialog-ok.svg</file>
         <file>res/ic/dark/document-edit.svg</file>
         <file>res/ic/dark/document-preview.svg</file>
+        <file>res/ic/dark/document-properties.svg</file>
         <file>res/ic/dark/document-save.svg</file>
         <file>res/ic/dark/document-share.svg</file>
         <file>res/ic/dark/download.svg</file>
