@@ -9,6 +9,10 @@ option(USE_KEYCHAIN "Keychain support" ON)
 option(USE_DB_CACHE "Use SQLite based cache" ON)
 option(USE_BUNDLED_SQLITE "Force use bundled SQLite" OFF)
 
+# Bundled SQLite version
+set(SQLITE_VERSION "3.39.4")
+set(SQLITE_HASH "96894cf2c57f76ccbeda41aa6ff0ce1f6b093deced8335801d38ddb34ec9690e")
+
 # Some libraries assume headers are in the root
 target_include_directories(${PROJECT_NAME} PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/include/thirdparty)
@@ -35,10 +39,19 @@ if (NOT SQLITE_VERSION)
 	if (FetchContent_supported STREQUAL "NOTFOUND")
 		message(STATUS "FetchContent not supported")
 	else ()
+		# Get version for URL
+		string(REPLACE "." ";" sqlite_version "${SQLITE_VERSION}")
+		list(GET sqlite_version 0 sqlite_version_major)
+		list(GET sqlite_version 1 sqlite_version_minor)
+		list(GET sqlite_version 2 sqlite_version_patch)
+		math(EXPR sqlite_version "${sqlite_version_major} * 1000000")
+		math(EXPR sqlite_version "${sqlite_version} + ${sqlite_version_minor} * 1000")
+		math(EXPR sqlite_version "${sqlite_version} + ${sqlite_version_patch}")
+
 		FetchContent_Declare(
 			sqlite_amalgamation
-			URL https://www.sqlite.org/2022/sqlite-amalgamation-3390400.zip
-			URL_HASH SHA3_256=96894cf2c57f76ccbeda41aa6ff0ce1f6b093deced8335801d38ddb34ec9690e
+			URL "https://www.sqlite.org/2022/sqlite-amalgamation-${sqlite_version}.zip"
+			URL_HASH "SHA3_256=${SQLITE_HASH}"
 			DOWNLOAD_EXTRACT_TIMESTAMP true
 		)
 		message(STATUS "Downloading SQLite3, please wait...")
@@ -51,7 +64,7 @@ if (NOT SQLITE_VERSION)
 			${sqlite_amalgamation_SOURCE_DIR}/sqlite3.c)
 	endif ()
 
-	message(STATUS "Using SQLite (bundled)")
+	message(STATUS "Using SQLite ${SQLITE_VERSION} (bundled)")
 endif ()
 
 # Generate SQL model
