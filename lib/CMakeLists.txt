@@ -34,6 +34,9 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 add_subdirectory(thirdparty)
 target_link_libraries(spotify-qt-lib PUBLIC spotify-qt-lib-third-party)
 
+# SQLite3 (private)
+include(sqlite3.cmake)
+
 # Version macros
 target_compile_definitions(spotify-qt-lib PUBLIC LIB_VERSION="v${PROJECT_VERSION}")
 
