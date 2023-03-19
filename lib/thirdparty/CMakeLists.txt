@@ -57,8 +57,8 @@ if (NOT SQLITE_VERSION)
 		message(STATUS "Downloading SQLite3, please wait...")
 		FetchContent_MakeAvailable(sqlite_amalgamation)
 
-		target_link_libraries(${PROJECT_NAME} PRIVATE ${CMAKE_DL_LIBS})
 		enable_language(C)
+		target_link_libraries(${PROJECT_NAME} INTERFACE ${CMAKE_DL_LIBS})
 
 		target_include_directories(${PROJECT_NAME} PRIVATE
 			${sqlite_amalgamation_SOURCE_DIR})
