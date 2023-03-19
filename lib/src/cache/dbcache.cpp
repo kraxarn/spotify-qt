@@ -2,6 +2,8 @@
 #include "lib/stopwatch.hpp"
 #include "model_cache.hpp"
 
+#include "sqlite3.h"
+
 lib::db_cache::db_cache(const lib::paths &paths)
 {
 	lib::stopwatch stopwatch;

@@ -4,7 +4,8 @@
 #include "lib/cache/jsoncache.hpp"
 #include "lib/paths/paths.hpp"
 
-#include "sqlite3.h"
+using sqlite3 = struct sqlite3;
+using sqlite3_stmt = struct sqlite3_stmt;
 
 namespace lib
 {

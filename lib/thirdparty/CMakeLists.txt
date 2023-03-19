@@ -56,11 +56,12 @@ if (NOT SQLITE_VERSION)
 		)
 		message(STATUS "Downloading SQLite3, please wait...")
 		FetchContent_MakeAvailable(sqlite_amalgamation)
+		enable_language(C)
 
-		target_include_directories(${PROJECT_NAME} PUBLIC
+		target_include_directories(${PROJECT_NAME} PRIVATE
 			${sqlite_amalgamation_SOURCE_DIR})
 
-		target_sources(${PROJECT_NAME} PUBLIC
+		target_sources(${PROJECT_NAME} PRIVATE
 			${sqlite_amalgamation_SOURCE_DIR}/sqlite3.c)
 	endif ()
 
