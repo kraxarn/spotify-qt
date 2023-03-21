@@ -47,8 +47,8 @@ auto CommandLine::Processor::process(const QCommandLineParser &parser) -> bool
 	{
 		for (const auto &argument: parser.positionalArguments())
 		{
-			if (argument.startsWith(QStringLiteral("https://open.spotify.com/"))
-				|| argument.startsWith(QStringLiteral("spotify:")))
+			if (argument.startsWith(QStringLiteral("https://open.spotify.com/track/"))
+				|| argument.startsWith(QStringLiteral("spotify:track:")))
 			{
 				client.openUri(argument);
 				return true;
