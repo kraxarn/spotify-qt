@@ -24,7 +24,7 @@ jobs:
           key: qt-${{env.QT_VERSION}}-${{env.QT_ARCH}}
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v3
         with:
           cached: ${{steps.cache-qt.outputs.cache-hit}}
           version: ${{env.QT_VERSION}}
