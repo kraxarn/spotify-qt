@@ -4,6 +4,40 @@ Versions use major.minor scheming. New versions are released together with spoti
 * Minor releases contain minor changes and bug fixes and should never require changes to be made.
 * Pre-release and beta releases may contain breaking changes, even if it's a minor release.
 
+## v0.8 (spotify-qt v3.10)
+* `crash_info::timestamp` is now an `unsigned long`.
+* `account.last_refresh` is now an `unsigned long`.
+* `spt::api` now requires an `spt::request` instance.
+* `spt::api::current_playback` now returns a `result`.
+* `spt::api::add_to_queue` now returns a `result`.
+* `format::size` now takes an `unsigned long`.
+* `vector::sub` now properly expects length instead of index.
+* Replaced `lib::lyrics` with reworked `lrc::api`.
+* Moved `spt::api::select_device` to `spt::device_select`.
+* Moved `spt::api::to_uri` to `spt::util::id_to_uri`.
+* Moved `spt::api::to_id` to `spt::util::uri_to_id`.
+* Moved `spt::api::url_to_uri` to `spt::util::url_to_uri`.
+* Moved `spt::api::get_device_url` to `spt::util::get_device_url`.
+* Added `player_action` enum.
+* Added `general.native_window`.
+* Added `general.media_hotkeys` (Windows only).
+* Added `spotify.volume`.
+* Added `spt::playback::is_allowed`.
+* Added `spt::playback::disallowed_actions`.
+* Added `spt::request`.
+* Added `format::time_pretty`.
+* Added `format::kilo`, `format::mega` and `format::giga`.
+* Added `http_client::get` and `http_client::post` with `result`.
+* Added `strings::erase_non_alpha`.
+* Added `lib::time` constants.
+* Added `vector::unique`.
+* Added `third_party/keychain`.
+* Removed `window_system` enum.
+* Removed `general.fixed_width_time`.
+* Removed `general.last_volume`.
+* Removed `spotify.keyring_password`.
+* Removed `system::window_system`.
+
 ## v0.7 (spotify-qt v3.9)
 
 * `add_saved_track` and `remove_saved_track` now supports multiple tracks.
