@@ -62,6 +62,24 @@ for file in os.listdir(workflows_dir):
 		continue
 	log(f"Qt ({basename})", version, latest_qt)
 
+actions = {}
+
+for filename in os.listdir(workflows_dir):
+	basename = filename.decode()
+	file_path = os.path.join(workflows_dir, filename).decode()
+	with open(file_path, "r") as file:
+		for line in file:
+			if "uses:" in line:
+				action = line[line.index("uses:") + 5:].strip().split("@")
+				if action[0] in actions.keys() and action[1] != actions[action[0]]:
+					print(f" Mismatch {action[0]}: {action[1]} != {actions[action[0]]}")
+				else:
+					actions[action[0]] = action[1]
+
+for action_name, action_version in actions.items():
+	action_latest = get_latest_tag(action_name, False)[:2]
+	log(action_name, action_version, action_latest)
+
 # res/ic
 
 latest_ic = get_latest_tag("KDE/breeze-icons", True)
