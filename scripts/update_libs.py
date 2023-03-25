@@ -34,8 +34,7 @@ with open("../lib/thirdparty/readme.md", "r") as file:
 		if line.startswith("##"):
 			name = line[line.index("[") + 1:line.index("]")]
 			repo = line[line.index("(") + 1:line.index(")")].split("/")
-			url = f"https://api.github.com/repos/{repo[len(repo) - 2]}/{repo[len(repo) - 1]}/tags"
-			latest = requests.get(url).json()[0]["name"]
+			latest = get_latest_tag(f"{repo[len(repo) - 2]}/{repo[len(repo) - 1]}", False)
 		if line.startswith("v"):
 			version = line[:line.index(",")]
 			log(name, version, latest)
