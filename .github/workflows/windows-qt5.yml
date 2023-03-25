@@ -49,7 +49,7 @@ jobs:
           copy "${{runner.workspace}}\Qt\Tools\OpenSSL\Win_x86\bin\libssl-1_1.dll" "${{runner.workspace}}\spotify-qt\${{env.BUILD_TYPE}}"
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: spotify-qt
           path: ${{runner.workspace}}/spotify-qt/${{env.BUILD_TYPE}}

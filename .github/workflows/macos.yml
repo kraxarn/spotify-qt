@@ -46,7 +46,7 @@ jobs:
         run: macdeployqt ${{runner.workspace}}/build/spotify-qt.app -dmg -verbose=2
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: spotify-qt
           path: ${{runner.workspace}}/build/spotify-qt.dmg

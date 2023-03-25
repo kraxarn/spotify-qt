@@ -43,7 +43,7 @@ jobs:
         run: windeployqt --no-opengl-sw ${{runner.workspace}}/spotify-qt/${{env.BUILD_TYPE}}/spotify-qt.exe
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: spotify-qt
           path: ${{runner.workspace}}/spotify-qt/${{env.BUILD_TYPE}}

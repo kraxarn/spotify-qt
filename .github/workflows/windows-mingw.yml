@@ -38,7 +38,7 @@ jobs:
         run: ./lib/test/spotify-qt-lib-test.exe
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: spotify-qt
           path: ./spotify-qt.exe
