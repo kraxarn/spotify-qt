@@ -59,7 +59,6 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 		this, &MainToolBar::onProgressReleased);
 
 	addWidget(progress);
-	addSeparator();
 	position = new Position(this);
 	addWidget(position);
 
