@@ -16,17 +16,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Cache Qt
-        id: cache-qt
-        uses: actions/cache@v3
-        with:
-          path: ${{runner.workspace}}/Qt
-          key: qt-${{env.QT_VERSION}}-${{env.QT_ARCH}}-1
-
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          cached: ${{steps.cache-qt.outputs.cache-hit}}
+          cache: true
           version: ${{env.QT_VERSION}}
           arch: ${{env.QT_ARCH}}
           tools: "tools_openssl_x86,1.1.1-10,qt.tools.openssl.win_x86"
