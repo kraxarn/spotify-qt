@@ -9,7 +9,7 @@ env:
 
 jobs:
   build:
-    # Qt 6.3 requires Ubuntu 20.04
+    # Qt 6 requires Ubuntu 20.04
     runs-on: ubuntu-20.04
 
     steps:
@@ -23,6 +23,9 @@ jobs:
           cache: true
           version: ${{env.QT_VERSION}}
           arch: ${{env.QT_ARCH}}
+
+      - name: Install Dependencies
+        run: sudo apt install libxkbcommon-x11-dev -y
 
       - name: Configure CMake
         run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr -DUSE_TESTS=ON -DUSE_LTO=ON
