@@ -4,6 +4,7 @@
 #include "util/shortcut.hpp"
 #include "menu/developermenu.hpp"
 #include "menu/device.hpp"
+#include "menu/queue.hpp"
 
 MainMenu::MainMenu(lib::spt::api &spotify, lib::settings &settings,
 	const lib::http_client &httpClient, lib::cache &cache, QWidget *parent)
@@ -13,6 +14,10 @@ MainMenu::MainMenu(lib::spt::api &spotify, lib::settings &settings,
 	// Device selection
 	auto *deviceMenu = new Menu::Device(spotify, this);
 	addMenu(deviceMenu);
+
+	// Track queue
+	auto *queueMenu = new Menu::Queue(spotify, this);
+	addMenu(queueMenu);
 
 	// Refresh and settings
 	auto *openSettings = MenuAction::create("configure", "Settings...",

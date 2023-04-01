@@ -2,6 +2,7 @@
 
 #include "menu/device.hpp"
 #include "menu/developermenu.hpp"
+#include "menu/queue.hpp"
 #include "dialog/about.hpp"
 
 MainMenuBar::MainMenuBar(lib::spt::api &spotify, lib::settings &settings,
@@ -22,6 +23,9 @@ MainMenuBar::MainMenuBar(lib::spt::api &spotify, lib::settings &settings,
 
 	auto *deviceMenu = new Menu::Device(spotify, this);
 	addMenu(deviceMenu);
+
+	auto *queueMenu = new Menu::Queue(spotify, this);
+	addMenu(queueMenu);
 
 	auto *accountMenu = new QMenu(QStringLiteral("Account"));
 

@@ -8,5 +8,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/mainmenu.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/mainmenubar.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/playlist.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/queue.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/show.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/track.cpp)
