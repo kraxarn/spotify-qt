@@ -29,6 +29,7 @@
         <file>res/ic/light/folder-temp.svg</file>
         <file>res/ic/light/folder-txt.svg</file>
         <file>res/ic/light/go-down.svg</file>
+        <file>res/ic/light/go-previous.svg</file>
         <file>res/ic/light/go-up.svg</file>
         <file>res/ic/light/headphones.svg</file>
         <file>res/ic/light/help-about.svg</file>
@@ -91,6 +92,7 @@
         <file>res/ic/dark/folder-temp.svg</file>
         <file>res/ic/dark/folder-txt.svg</file>
         <file>res/ic/dark/go-down.svg</file>
+        <file>res/ic/dark/go-previous.svg</file>
         <file>res/ic/dark/go-up.svg</file>
         <file>res/ic/dark/headphones.svg</file>
         <file>res/ic/dark/help-about.svg</file>
