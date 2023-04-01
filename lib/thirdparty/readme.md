@@ -82,7 +82,7 @@ SOFTWARE.
 
 ## [keychain](https://github.com/hrantzsch/keychain)
 
-v1.2.0, used for saving passwords.
+v1.2.1, used for saving passwords.
 
 ```
 Copyright (c) 2019 Hannes Rantzsch, René Meusel
