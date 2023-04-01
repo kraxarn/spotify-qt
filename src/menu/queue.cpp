@@ -3,7 +3,7 @@
 #include "util/icon.hpp"
 
 Menu::Queue::Queue(lib::spt::api &spotify, QWidget *parent)
-	: QMenu(parent),
+	: Base(parent),
 	spotify(spotify)
 {
 	setTitle(QStringLiteral("Queue"));
@@ -16,12 +16,6 @@ Menu::Queue::Queue(lib::spt::api &spotify, QWidget *parent)
 		this, &Menu::Queue::onTriggered);
 
 	addMessage(QStringLiteral("Refreshing queue..."));
-}
-
-void Menu::Queue::addMessage(const QString &message)
-{
-	auto *action = addAction(message);
-	action->setDisabled(true);
 }
 
 void Menu::Queue::refreshQueue()

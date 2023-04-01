@@ -1,11 +1,11 @@
 #pragma once
 
 #include "lib/spotify/api.hpp"
-#include <QMenu>
+#include "menu/base.hpp"
 
 namespace Menu
 {
-	class Queue: public QMenu
+	class Queue: public Base
 	{
 	Q_OBJECT
 
@@ -15,7 +15,6 @@ namespace Menu
 	private:
 		lib::spt::api &spotify;
 
-		void addMessage(const QString &message);
 		void refreshQueue();
 		void skipTracks(int skips);
 
