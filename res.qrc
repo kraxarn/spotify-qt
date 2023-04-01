@@ -45,6 +45,7 @@
         <file>res/ic/light/media-playlist-shuffle.svg</file>
         <file>res/ic/light/media-skip-backward.svg</file>
         <file>res/ic/light/media-skip-forward.svg</file>
+        <file>res/ic/light/media-track-show-active.svg</file>
         <file>res/ic/light/non-starred-symbolic.svg</file>
         <file>res/ic/light/speaker.svg</file>
         <file>res/ic/light/starred-symbolic.svg</file>
@@ -106,6 +107,7 @@
         <file>res/ic/dark/media-playlist-shuffle.svg</file>
         <file>res/ic/dark/media-skip-backward.svg</file>
         <file>res/ic/dark/media-skip-forward.svg</file>
+        <file>res/ic/dark/media-track-show-active.svg</file>
         <file>res/ic/dark/non-starred-symbolic.svg</file>
         <file>res/ic/dark/speaker.svg</file>
         <file>res/ic/dark/starred-symbolic.svg</file>
