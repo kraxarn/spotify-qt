@@ -126,7 +126,7 @@ namespace lib
 
 				try
 				{
-					const T json = nlohmann::json::parse(data);
+					const auto json = nlohmann::json::parse(data);
 					if (!lib::spt::error::is(json))
 					{
 						return lib::result<T>::ok(json);
