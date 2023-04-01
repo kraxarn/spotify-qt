@@ -100,278 +100,281 @@ $(function() {
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;lib/spotify/episode.hpp&quot;</span></div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &quot;lib/spotify/callback.hpp&quot;</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &quot;lib/spotify/request.hpp&quot;</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &quot;lib/httpclient.hpp&quot;</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &quot;lib/datetime.hpp&quot;</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &quot;thirdparty/json.hpp&quot;</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">namespace </span>lib</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>{</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keyword">namespace </span>spt</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    {</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html">   35</a></span>        <span class="keyword">class </span><a class="code hl_class" href="classlib_1_1spt_1_1api.html">api</a></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        {</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ae1e3e341b64a75e92bc6715f48ee1960">   44</a></span>            <a class="code hl_function" href="classlib_1_1spt_1_1api.html#ae1e3e341b64a75e92bc6715f48ee1960">api</a>(<a class="code hl_class" href="classlib_1_1settings.html">lib::settings</a> &amp;<a class="code hl_class" href="classlib_1_1settings.html">settings</a>, <span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1http__client.html">lib::http_client</a> &amp;<a class="code hl_class" href="classlib_1_1http__client.html">http_client</a>,</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                <a class="code hl_class" href="classlib_1_1spt_1_1request.html">lib::spt::request</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1request.html">request</a>);</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            <span class="comment">//region Albums</span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            <span class="keywordtype">void</span> <a class="code hl_class" href="classlib_1_1spt_1_1album.html">album</a>(<span class="keyword">const</span> std::string &amp;<span class="keywordtype">id</span>,</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                lib::callback&lt;lib::spt::album&gt; &amp;callback);</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <span class="keywordtype">void</span> album_tracks(<span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1spt_1_1album.html">lib::spt::album</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1album.html">album</a>,</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>                lib::callback&lt;std::vector&lt;lib::spt::track&gt;&gt; &amp;callback);</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            <span class="comment">//endregion</span></div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            <span class="comment">//region Artists</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            <span class="keywordtype">void</span> <a class="code hl_class" href="classlib_1_1spt_1_1artist.html">artist</a>(<span class="keyword">const</span> std::string &amp;<span class="keywordtype">id</span>,</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                lib::callback&lt;lib::spt::artist&gt; &amp;callback);</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>            <span class="keywordtype">void</span> top_tracks(<span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1artist.html">artist</a>,</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                lib::callback&lt;std::vector&lt;lib::spt::track&gt;&gt; &amp;callback);</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            <span class="keywordtype">void</span> related_artists(<span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1artist.html">artist</a>,</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                lib::callback&lt;std::vector&lt;lib::spt::artist&gt;&gt; &amp;callback);</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            <span class="keywordtype">void</span> albums(<span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1artist.html">artist</a>,</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                lib::callback&lt;std::vector&lt;lib::spt::album&gt;&gt; &amp;callback);</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            <span class="comment">//endregion</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            <span class="comment">//region Browse</span></div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <span class="keywordtype">void</span> new_releases(lib::callback&lt;std::vector&lt;lib::spt::album&gt;&gt; &amp;callback);</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            <span class="comment">//endregion</span></div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            <span class="comment">//region Follow</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            <span class="keywordtype">void</span> followed_artists(lib::callback&lt;std::vector&lt;lib::spt::artist&gt;&gt; &amp;callback);</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            <span class="keywordtype">void</span> follow(lib::follow_type type, <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;ids,</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>            <span class="keywordtype">void</span> unfollow(lib::follow_type type, <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;ids,</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            <span class="keywordtype">void</span> is_following(lib::follow_type type, <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;ids,</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                lib::callback&lt;std::vector&lt;bool&gt;&gt; &amp;callback);</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            <span class="keywordtype">void</span> follow_playlist(<span class="keyword">const</span> std::string &amp;playlist_id,</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            <span class="keywordtype">void</span> unfollow_playlist(<span class="keyword">const</span> std::string &amp;playlist_id,</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            <span class="keywordtype">void</span> is_following_playlist(<span class="keyword">const</span> std::string &amp;playlist_id,</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>                <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;user_ids,</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                lib::callback&lt;std::vector&lt;bool&gt;&gt; &amp;callback);</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            <span class="comment">//endregion</span></div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            <span class="comment">//region Library</span></div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            <span class="keywordtype">void</span> saved_albums(lib::callback&lt;std::vector&lt;lib::spt::saved_album&gt;&gt; &amp;callback);</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            <span class="keywordtype">void</span> saved_tracks(lib::callback&lt;std::vector&lt;lib::spt::track&gt;&gt; &amp;callback);</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            <span class="keywordtype">void</span> add_saved_tracks(<span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;track_ids,</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            <span class="keywordtype">void</span> remove_saved_tracks(<span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;track_ids,</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            <span class="keywordtype">void</span> is_saved_track(<span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;track_ids,</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>                lib::callback&lt;std::vector&lt;bool&gt;&gt; &amp;callback);</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            <span class="comment">//endregion</span></div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>            <span class="comment">//region Personalization</span></div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>            <span class="keywordtype">void</span> top_artists(lib::callback&lt;std::vector&lt;lib::spt::artist&gt;&gt; &amp;callback);</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>            <span class="keywordtype">void</span> top_tracks(lib::callback&lt;std::vector&lt;lib::spt::track&gt;&gt; &amp;callback);</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>            <span class="comment">//endregion</span></div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>            <span class="comment">//region Player</span></div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a00deaf1cbfdcce64b499daf2e3ebb85c">  134</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a00deaf1cbfdcce64b499daf2e3ebb85c">current_playback</a>(lib::callback&lt;<a class="code hl_class" href="classlib_1_1result.html">lib::result&lt;lib::spt::playback&gt;</a>&gt; &amp;callback);</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a72a29c46a82d922524541ea794533102">  139</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a72a29c46a82d922524541ea794533102">set_device</a>(<span class="keyword">const</span> std::string &amp;device_id, lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a36c1458cde31e74bc4f4486ad4c542b9">  144</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a36c1458cde31e74bc4f4486ad4c542b9">set_device</a>(<span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1spt_1_1device.html">lib::spt::device</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1device.html">device</a>, lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ab71b9c21944c8b1ae9f2c6a78ff99cb6">  149</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#ab71b9c21944c8b1ae9f2c6a78ff99cb6">devices</a>(lib::callback&lt;std::vector&lt;lib::spt::device&gt;&gt; &amp;callback);</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#abca1449ba0890522b37d52ff70be8c15">  154</a></span>            <span class="keyword">auto</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#abca1449ba0890522b37d52ff70be8c15">play_tracks_url</a>() -&gt; std::string;</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#aacbb20568d0a95b4bcce20c6440e8f2e">  161</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#aacbb20568d0a95b4bcce20c6440e8f2e">play_tracks</a>(<span class="keywordtype">int</span> track_index, <span class="keyword">const</span> std::string &amp;<a class="code hl_class" href="classlib_1_1spt_1_1context.html">context</a>,</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a0d4868cbfad0a9a5dfa545ce181299cc">  169</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a0d4868cbfad0a9a5dfa545ce181299cc">play_tracks</a>(<span class="keywordtype">int</span> track_index, <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;all,</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a60f5838cd80f0d677fe4dd972dccf0fd">  175</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a60f5838cd80f0d677fe4dd972dccf0fd">play_tracks</a>(<span class="keywordtype">int</span> track_index, <span class="keyword">const</span> std::initializer_list&lt;std::string&gt; &amp;all,</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a40991941ba40216746d52ff1ae353404">  183</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a40991941ba40216746d52ff1ae353404">play_tracks</a>(<span class="keyword">const</span> std::string &amp;<a class="code hl_class" href="classlib_1_1spt_1_1context.html">context</a>, lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> </div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ab2fb6d5bc3df674e5f7bab48d4ddc5bb">  188</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#ab2fb6d5bc3df674e5f7bab48d4ddc5bb">resume</a>(lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a7ea863a1c91a7eb1382541e0c08eea1a">  193</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a7ea863a1c91a7eb1382541e0c08eea1a">pause</a>(lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a01fc1b68241b86c107b11c9ebc3eeea4">  198</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a01fc1b68241b86c107b11c9ebc3eeea4">next</a>(lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a9d5c5e8e938f27f919fcfe4319890058">  203</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a9d5c5e8e938f27f919fcfe4319890058">previous</a>(lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#aed68ce4103f82a1ed4dbb61dd8627112">  209</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#aed68ce4103f82a1ed4dbb61dd8627112">seek</a>(<span class="keywordtype">int</span> position, lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> </div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a83a3edd5bf3a5d216ca298b63d346df5">  215</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a83a3edd5bf3a5d216ca298b63d346df5">set_repeat</a>(lib::repeat_state state, lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> </div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a6441af8171fdc04cdc497d3e93a93739">  221</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a6441af8171fdc04cdc497d3e93a93739">set_volume</a>(<span class="keywordtype">int</span> volume, lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> </div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#af58d77d78d2f690e1d006be63b946aa0">  227</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#af58d77d78d2f690e1d006be63b946aa0">set_shuffle</a>(<span class="keywordtype">bool</span> enabled, lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span> </div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a4181de91367224105534a9976e5f3d43">  232</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a4181de91367224105534a9976e5f3d43">recently_played</a>(lib::callback&lt;std::vector&lt;lib::spt::track&gt;&gt; &amp;callback);</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> </div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#acc383d7e53ebb44805d706a678cce9a0">  238</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#acc383d7e53ebb44805d706a678cce9a0">add_to_queue</a>(<span class="keyword">const</span> std::string &amp;<a class="code hl_class" href="classlib_1_1uri.html">uri</a>,</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>                lib::callback&lt;<a class="code hl_class" href="classlib_1_1result.html">lib::result&lt;void *&gt;</a>&gt; &amp;callback);</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>            <span class="comment">//endregion</span></div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> </div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>            <span class="comment">//region Playlists</span></div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span> </div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ae6d859577d0d4fd809d3dfc3a3045805">  253</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#ae6d859577d0d4fd809d3dfc3a3045805">create_playlist</a>(<span class="keyword">const</span> std::string &amp;name,</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>                <span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1optional.html">lib::optional&lt;std::string&gt;</a> &amp;description,</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>                <span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1optional.html">lib::optional&lt;bool&gt;</a> &amp;is_public,</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>                <span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1optional.html">lib::optional&lt;bool&gt;</a> &amp;is_collaborative,</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>                lib::callback&lt;lib::spt::playlist&gt; &amp;callback);</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span> </div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>            <span class="keywordtype">void</span> playlists(lib::callback&lt;std::vector&lt;lib::spt::playlist&gt;&gt; &amp;callback);</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span> </div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>            <span class="keywordtype">void</span> <a class="code hl_class" href="classlib_1_1spt_1_1playlist.html">playlist</a>(<span class="keyword">const</span> std::string &amp;playlist_id,</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>                lib::callback&lt;lib::spt::playlist&gt; &amp;callback);</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span> </div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>            <span class="keywordtype">void</span> edit_playlist(<span class="keyword">const</span> std::string &amp;playlist_id,</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>                <span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1spt_1_1playlist__details.html">lib::spt::playlist_details</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1playlist.html">playlist</a>,</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span> </div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>            <span class="keywordtype">void</span> playlist_tracks(<span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1playlist.html">playlist</a>,</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>                lib::callback&lt;std::vector&lt;lib::spt::track&gt;&gt; &amp;callback);</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span> </div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>            <span class="keywordtype">void</span> add_to_playlist(<span class="keyword">const</span> std::string &amp;playlist_id,</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>                <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;track_uris,</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span> </div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>            <span class="keywordtype">void</span> remove_from_playlist(<span class="keyword">const</span> std::string &amp;playlist_id,</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>                <span class="keyword">const</span> std::vector&lt;std::pair&lt;int, std::string&gt;&gt; &amp;track_index_uris,</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span> </div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>            <span class="comment">//endregion</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &quot;lib/spotify/queue.hpp&quot;</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &quot;lib/httpclient.hpp&quot;</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &quot;lib/datetime.hpp&quot;</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#include &quot;thirdparty/json.hpp&quot;</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">namespace </span>lib</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>{</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keyword">namespace </span>spt</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    {</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html">   36</a></span>        <span class="keyword">class </span><a class="code hl_class" href="classlib_1_1spt_1_1api.html">api</a></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        {</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ae1e3e341b64a75e92bc6715f48ee1960">   45</a></span>            <a class="code hl_function" href="classlib_1_1spt_1_1api.html#ae1e3e341b64a75e92bc6715f48ee1960">api</a>(<a class="code hl_class" href="classlib_1_1settings.html">lib::settings</a> &amp;<a class="code hl_class" href="classlib_1_1settings.html">settings</a>, <span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1http__client.html">lib::http_client</a> &amp;<a class="code hl_class" href="classlib_1_1http__client.html">http_client</a>,</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                <a class="code hl_class" href="classlib_1_1spt_1_1request.html">lib::spt::request</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1request.html">request</a>);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            <span class="comment">//region Albums</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            <span class="keywordtype">void</span> <a class="code hl_class" href="classlib_1_1spt_1_1album.html">album</a>(<span class="keyword">const</span> std::string &amp;<span class="keywordtype">id</span>,</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                lib::callback&lt;lib::spt::album&gt; &amp;callback);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            <span class="keywordtype">void</span> album_tracks(<span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1spt_1_1album.html">lib::spt::album</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1album.html">album</a>,</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                lib::callback&lt;std::vector&lt;lib::spt::track&gt;&gt; &amp;callback);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            <span class="comment">//endregion</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            <span class="comment">//region Artists</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            <span class="keywordtype">void</span> <a class="code hl_class" href="classlib_1_1spt_1_1artist.html">artist</a>(<span class="keyword">const</span> std::string &amp;<span class="keywordtype">id</span>,</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                lib::callback&lt;lib::spt::artist&gt; &amp;callback);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            <span class="keywordtype">void</span> top_tracks(<span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1artist.html">artist</a>,</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                lib::callback&lt;std::vector&lt;lib::spt::track&gt;&gt; &amp;callback);</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            <span class="keywordtype">void</span> related_artists(<span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1artist.html">artist</a>,</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>                lib::callback&lt;std::vector&lt;lib::spt::artist&gt;&gt; &amp;callback);</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            <span class="keywordtype">void</span> albums(<span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1artist.html">artist</a>,</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                lib::callback&lt;std::vector&lt;lib::spt::album&gt;&gt; &amp;callback);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            <span class="comment">//endregion</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <span class="comment">//region Browse</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            <span class="keywordtype">void</span> new_releases(lib::callback&lt;std::vector&lt;lib::spt::album&gt;&gt; &amp;callback);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            <span class="comment">//endregion</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            <span class="comment">//region Follow</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            <span class="keywordtype">void</span> followed_artists(lib::callback&lt;std::vector&lt;lib::spt::artist&gt;&gt; &amp;callback);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>            <span class="keywordtype">void</span> follow(lib::follow_type type, <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;ids,</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            <span class="keywordtype">void</span> unfollow(lib::follow_type type, <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;ids,</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            <span class="keywordtype">void</span> is_following(lib::follow_type type, <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;ids,</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                lib::callback&lt;std::vector&lt;bool&gt;&gt; &amp;callback);</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            <span class="keywordtype">void</span> follow_playlist(<span class="keyword">const</span> std::string &amp;playlist_id,</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            <span class="keywordtype">void</span> unfollow_playlist(<span class="keyword">const</span> std::string &amp;playlist_id,</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>            <span class="keywordtype">void</span> is_following_playlist(<span class="keyword">const</span> std::string &amp;playlist_id,</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;user_ids,</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>                lib::callback&lt;std::vector&lt;bool&gt;&gt; &amp;callback);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            <span class="comment">//endregion</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            <span class="comment">//region Library</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            <span class="keywordtype">void</span> saved_albums(lib::callback&lt;std::vector&lt;lib::spt::saved_album&gt;&gt; &amp;callback);</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            <span class="keywordtype">void</span> saved_tracks(lib::callback&lt;std::vector&lt;lib::spt::track&gt;&gt; &amp;callback);</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            <span class="keywordtype">void</span> add_saved_tracks(<span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;track_ids,</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>            <span class="keywordtype">void</span> remove_saved_tracks(<span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;track_ids,</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            <span class="keywordtype">void</span> is_saved_track(<span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;track_ids,</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>                lib::callback&lt;std::vector&lt;bool&gt;&gt; &amp;callback);</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            <span class="comment">//endregion</span></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>            <span class="comment">//region Personalization</span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>            <span class="keywordtype">void</span> top_artists(lib::callback&lt;std::vector&lt;lib::spt::artist&gt;&gt; &amp;callback);</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>            <span class="keywordtype">void</span> top_tracks(lib::callback&lt;std::vector&lt;lib::spt::track&gt;&gt; &amp;callback);</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>            <span class="comment">//endregion</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>            <span class="comment">//region Player</span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a00deaf1cbfdcce64b499daf2e3ebb85c">  135</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a00deaf1cbfdcce64b499daf2e3ebb85c">current_playback</a>(lib::callback&lt;<a class="code hl_class" href="classlib_1_1result.html">lib::result&lt;lib::spt::playback&gt;</a>&gt; &amp;callback);</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a72a29c46a82d922524541ea794533102">  140</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a72a29c46a82d922524541ea794533102">set_device</a>(<span class="keyword">const</span> std::string &amp;device_id, lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> </div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a36c1458cde31e74bc4f4486ad4c542b9">  145</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a36c1458cde31e74bc4f4486ad4c542b9">set_device</a>(<span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1spt_1_1device.html">lib::spt::device</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1device.html">device</a>, lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ab71b9c21944c8b1ae9f2c6a78ff99cb6">  150</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#ab71b9c21944c8b1ae9f2c6a78ff99cb6">devices</a>(lib::callback&lt;std::vector&lt;lib::spt::device&gt;&gt; &amp;callback);</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#abca1449ba0890522b37d52ff70be8c15">  155</a></span>            <span class="keyword">auto</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#abca1449ba0890522b37d52ff70be8c15">play_tracks_url</a>() -&gt; std::string;</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#aacbb20568d0a95b4bcce20c6440e8f2e">  162</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#aacbb20568d0a95b4bcce20c6440e8f2e">play_tracks</a>(<span class="keywordtype">int</span> track_index, <span class="keyword">const</span> std::string &amp;<a class="code hl_class" href="classlib_1_1spt_1_1context.html">context</a>,</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a0d4868cbfad0a9a5dfa545ce181299cc">  170</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a0d4868cbfad0a9a5dfa545ce181299cc">play_tracks</a>(<span class="keywordtype">int</span> track_index, <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;all,</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a60f5838cd80f0d677fe4dd972dccf0fd">  176</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a60f5838cd80f0d677fe4dd972dccf0fd">play_tracks</a>(<span class="keywordtype">int</span> track_index, <span class="keyword">const</span> std::initializer_list&lt;std::string&gt; &amp;all,</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a40991941ba40216746d52ff1ae353404">  184</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a40991941ba40216746d52ff1ae353404">play_tracks</a>(<span class="keyword">const</span> std::string &amp;<a class="code hl_class" href="classlib_1_1spt_1_1context.html">context</a>, lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ab2fb6d5bc3df674e5f7bab48d4ddc5bb">  189</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#ab2fb6d5bc3df674e5f7bab48d4ddc5bb">resume</a>(lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a7ea863a1c91a7eb1382541e0c08eea1a">  194</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a7ea863a1c91a7eb1382541e0c08eea1a">pause</a>(lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span> </div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a01fc1b68241b86c107b11c9ebc3eeea4">  199</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a01fc1b68241b86c107b11c9ebc3eeea4">next</a>(lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a9d5c5e8e938f27f919fcfe4319890058">  204</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a9d5c5e8e938f27f919fcfe4319890058">previous</a>(lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#aed68ce4103f82a1ed4dbb61dd8627112">  210</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#aed68ce4103f82a1ed4dbb61dd8627112">seek</a>(<span class="keywordtype">int</span> position, lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a83a3edd5bf3a5d216ca298b63d346df5">  216</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a83a3edd5bf3a5d216ca298b63d346df5">set_repeat</a>(lib::repeat_state state, lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a6441af8171fdc04cdc497d3e93a93739">  222</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a6441af8171fdc04cdc497d3e93a93739">set_volume</a>(<span class="keywordtype">int</span> volume, lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#af58d77d78d2f690e1d006be63b946aa0">  228</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#af58d77d78d2f690e1d006be63b946aa0">set_shuffle</a>(<span class="keywordtype">bool</span> enabled, lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> </div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a4181de91367224105534a9976e5f3d43">  233</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a4181de91367224105534a9976e5f3d43">recently_played</a>(lib::callback&lt;std::vector&lt;lib::spt::track&gt;&gt; &amp;callback);</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> </div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#acc383d7e53ebb44805d706a678cce9a0">  239</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#acc383d7e53ebb44805d706a678cce9a0">add_to_queue</a>(<span class="keyword">const</span> std::string &amp;<a class="code hl_class" href="classlib_1_1uri.html">uri</a>,</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>                lib::callback&lt;<a class="code hl_class" href="classlib_1_1result.html">lib::result&lt;void *&gt;</a>&gt; &amp;callback);</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> </div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ae7038f645ad3f9082ae721d844932dbf">  245</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#ae7038f645ad3f9082ae721d844932dbf">queue</a>(lib::callback&lt;<a class="code hl_class" href="classlib_1_1result.html">lib::result&lt;lib::spt::queue&gt;</a>&gt; &amp;callback);</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span> </div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>            <span class="comment">//endregion</span></div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span> </div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>            <span class="comment">//region Playlists</span></div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span> </div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ae6d859577d0d4fd809d3dfc3a3045805">  259</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#ae6d859577d0d4fd809d3dfc3a3045805">create_playlist</a>(<span class="keyword">const</span> std::string &amp;name,</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>                <span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1optional.html">lib::optional&lt;std::string&gt;</a> &amp;description,</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>                <span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1optional.html">lib::optional&lt;bool&gt;</a> &amp;is_public,</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>                <span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1optional.html">lib::optional&lt;bool&gt;</a> &amp;is_collaborative,</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>                lib::callback&lt;lib::spt::playlist&gt; &amp;callback);</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> </div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>            <span class="keywordtype">void</span> playlists(lib::callback&lt;std::vector&lt;lib::spt::playlist&gt;&gt; &amp;callback);</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> </div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>            <span class="keywordtype">void</span> <a class="code hl_class" href="classlib_1_1spt_1_1playlist.html">playlist</a>(<span class="keyword">const</span> std::string &amp;playlist_id,</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>                lib::callback&lt;lib::spt::playlist&gt; &amp;callback);</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> </div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>            <span class="keywordtype">void</span> edit_playlist(<span class="keyword">const</span> std::string &amp;playlist_id,</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>                <span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1spt_1_1playlist__details.html">lib::spt::playlist_details</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1playlist.html">playlist</a>,</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span> </div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>            <span class="keywordtype">void</span> playlist_tracks(<span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1playlist.html">playlist</a>,</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>                lib::callback&lt;std::vector&lt;lib::spt::track&gt;&gt; &amp;callback);</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span> </div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>            <span class="keywordtype">void</span> add_to_playlist(<span class="keyword">const</span> std::string &amp;playlist_id,</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>                <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;track_uris,</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
 <div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span> </div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>            <span class="comment">//region Search</span></div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span> </div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>            <span class="keywordtype">void</span> search(<span class="keyword">const</span> std::string &amp;query,</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>                lib::callback&lt;lib::spt::search_results&gt; &amp;callback);</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span> </div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>            <span class="comment">//endregion</span></div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> </div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>            <span class="comment">//region Tracks</span></div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span> </div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>            <span class="keywordtype">void</span> <a class="code hl_class" href="classlib_1_1spt_1_1track.html">track</a>(<span class="keyword">const</span> std::string &amp;track_id,</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>                lib::callback&lt;lib::spt::track&gt; &amp;callback);</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span> </div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>            <span class="keywordtype">void</span> track_audio_features(<span class="keyword">const</span> std::string &amp;track_id,</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>                lib::callback&lt;lib::spt::audio_features&gt; &amp;callback);</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>            <span class="keywordtype">void</span> remove_from_playlist(<span class="keyword">const</span> std::string &amp;playlist_id,</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>                <span class="keyword">const</span> std::vector&lt;std::pair&lt;int, std::string&gt;&gt; &amp;track_index_uris,</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> </div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>            <span class="comment">//endregion</span></div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span> </div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>            <span class="comment">//region Search</span></div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span> </div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>            <span class="keywordtype">void</span> search(<span class="keyword">const</span> std::string &amp;query,</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>                lib::callback&lt;lib::spt::search_results&gt; &amp;callback);</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span> </div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>            <span class="comment">//endregion</span></div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> </div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>            <span class="comment">//region Tracks</span></div>
 <div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span> </div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>            <span class="keywordtype">void</span> track_audio_features(<span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;track_ids,</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>                lib::callback&lt;std::vector&lt;lib::spt::audio_features&gt;&gt; &amp;callback);</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>            <span class="keywordtype">void</span> <a class="code hl_class" href="classlib_1_1spt_1_1track.html">track</a>(<span class="keyword">const</span> std::string &amp;track_id,</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>                lib::callback&lt;lib::spt::track&gt; &amp;callback);</div>
 <div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span> </div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>            <span class="comment">//endregion</span></div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span> </div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>            <span class="comment">//region User Profile</span></div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span> </div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>            <span class="keywordtype">void</span> me(lib::callback&lt;lib::spt::user&gt; &amp;callback);</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>            <span class="keywordtype">void</span> track_audio_features(<span class="keyword">const</span> std::string &amp;track_id,</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>                lib::callback&lt;lib::spt::audio_features&gt; &amp;callback);</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span> </div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>            <span class="keywordtype">void</span> track_audio_features(<span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;track_ids,</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>                lib::callback&lt;std::vector&lt;lib::spt::audio_features&gt;&gt; &amp;callback);</div>
 <div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span> </div>
 <div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>            <span class="comment">//endregion</span></div>
 <div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span> </div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>            <span class="comment">//region Shows</span></div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>            <span class="comment">//region User Profile</span></div>
 <div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span> </div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a0f56416580d89ca435ab3ce15a37fa14">  310</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a0f56416580d89ca435ab3ce15a37fa14">show</a>(<span class="keyword">const</span> std::string &amp;show_id,</div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>                lib::callback&lt;lib::spt::show&gt; &amp;callback);</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>            <span class="keywordtype">void</span> me(lib::callback&lt;lib::spt::user&gt; &amp;callback);</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> </div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>            <span class="comment">//endregion</span></div>
 <div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span> </div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a275014bf2e6d10d2ab09993ad490089b">  314</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a275014bf2e6d10d2ab09993ad490089b">show_episodes</a>(<span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1spt_1_1show.html">lib::spt::show</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1show.html">show</a>,</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>                lib::callback&lt;std::vector&lt;lib::spt::episode&gt;&gt; &amp;callback);</div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span> </div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>            <span class="comment">//endregion</span></div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>            <span class="comment">//region Shows</span></div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span> </div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a0f56416580d89ca435ab3ce15a37fa14">  316</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a0f56416580d89ca435ab3ce15a37fa14">show</a>(<span class="keyword">const</span> std::string &amp;show_id,</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>                lib::callback&lt;lib::spt::show&gt; &amp;callback);</div>
 <div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span> </div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>            <span class="keywordtype">void</span> refresh(<span class="keywordtype">bool</span> force);</div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span> </div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>        <span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a5a058e247f84895b9ee98f7b5a6ed756">  325</a></span>            <a class="code hl_class" href="classlib_1_1settings.html">lib::settings</a> &amp;<a class="code hl_variable" href="classlib_1_1spt_1_1api.html#a5a058e247f84895b9ee98f7b5a6ed756">settings</a>;</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a275014bf2e6d10d2ab09993ad490089b">  320</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a275014bf2e6d10d2ab09993ad490089b">show_episodes</a>(<span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1spt_1_1show.html">lib::spt::show</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1show.html">show</a>,</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>                lib::callback&lt;std::vector&lt;lib::spt::episode&gt;&gt; &amp;callback);</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span> </div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>            <span class="comment">//endregion</span></div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span> </div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>            <span class="keywordtype">void</span> refresh(<span class="keywordtype">bool</span> force);</div>
 <div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span> </div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>            <span class="comment">//region GET</span></div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span> </div>
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a8235c4f96e74fa58a5e1f12795b9612d">  335</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a8235c4f96e74fa58a5e1f12795b9612d">get</a>(<span class="keyword">const</span> std::string &amp;response,</div>
-<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>                lib::callback&lt;nlohmann::json&gt; &amp;callback);</div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span> </div>
-<div class="line"><a id="l00345" name="l00345"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#af8c249ba34558bb06a807f13aace0554">  345</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#af8c249ba34558bb06a807f13aace0554">get_items</a>(<span class="keyword">const</span> std::string &amp;url,</div>
-<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>                lib::callback&lt;nlohmann::json&gt; &amp;callback);</div>
-<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span> </div>
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a348f5279b629971c0b8e2097b333b5e7">  351</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a348f5279b629971c0b8e2097b333b5e7">get_items</a>(<span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> std::string &amp;key,</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>        <span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a5a058e247f84895b9ee98f7b5a6ed756">  331</a></span>            <a class="code hl_class" href="classlib_1_1settings.html">lib::settings</a> &amp;<a class="code hl_variable" href="classlib_1_1spt_1_1api.html#a5a058e247f84895b9ee98f7b5a6ed756">settings</a>;</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span> </div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>            <span class="comment">//region GET</span></div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span> </div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a8235c4f96e74fa58a5e1f12795b9612d">  341</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a8235c4f96e74fa58a5e1f12795b9612d">get</a>(<span class="keyword">const</span> std::string &amp;response,</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>                lib::callback&lt;nlohmann::json&gt; &amp;callback);</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span> </div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#af8c249ba34558bb06a807f13aace0554">  351</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#af8c249ba34558bb06a807f13aace0554">get_items</a>(<span class="keyword">const</span> std::string &amp;url,</div>
 <div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>                lib::callback&lt;nlohmann::json&gt; &amp;callback);</div>
 <div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span> </div>
-<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>            <span class="comment">//endregion</span></div>
-<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span> </div>
-<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>            <span class="comment">//region PUT</span></div>
-<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span> </div>
-<div class="line"><a id="l00364" name="l00364"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ae6de5354ebff77d8d21124141dfa8d09">  364</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#ae6de5354ebff77d8d21124141dfa8d09">put</a>(<span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> nlohmann::json &amp;body,</div>
-<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span> </div>
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a1370bf233537673881fc2867adc433bf">  370</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a1370bf233537673881fc2867adc433bf">put</a>(<span class="keyword">const</span> std::string &amp;url, lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span> </div>
-<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>            <span class="comment">//endregion</span></div>
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span> </div>
-<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>            <span class="comment">//region POST</span></div>
-<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span> </div>
-<div class="line"><a id="l00382" name="l00382"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#aebe2c2e0bfc8f2b3343e41a69d5c610c">  382</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#aebe2c2e0bfc8f2b3343e41a69d5c610c">post</a>(<span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> nlohmann::json &amp;<a class="code hl_class" href="classlib_1_1json.html">json</a>,</div>
-<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>                lib::callback&lt;nlohmann::json&gt; &amp;callback);</div>
-<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span> </div>
-<div class="line"><a id="l00389" name="l00389"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a64f1734b8278db05880989f44a70e552">  389</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a64f1734b8278db05880989f44a70e552">post</a>(<span class="keyword">const</span> std::string &amp;url, lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a348f5279b629971c0b8e2097b333b5e7">  357</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a348f5279b629971c0b8e2097b333b5e7">get_items</a>(<span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> std::string &amp;key,</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>                lib::callback&lt;nlohmann::json&gt; &amp;callback);</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span> </div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>            <span class="comment">//endregion</span></div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span> </div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>            <span class="comment">//region PUT</span></div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span> </div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ae6de5354ebff77d8d21124141dfa8d09">  370</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#ae6de5354ebff77d8d21124141dfa8d09">put</a>(<span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> nlohmann::json &amp;body,</div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span> </div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a1370bf233537673881fc2867adc433bf">  376</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a1370bf233537673881fc2867adc433bf">put</a>(<span class="keyword">const</span> std::string &amp;url, lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span> </div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>            <span class="comment">//endregion</span></div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span> </div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>            <span class="comment">//region POST</span></div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span> </div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#aebe2c2e0bfc8f2b3343e41a69d5c610c">  388</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#aebe2c2e0bfc8f2b3343e41a69d5c610c">post</a>(<span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> nlohmann::json &amp;<a class="code hl_class" href="classlib_1_1json.html">json</a>,</div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>                lib::callback&lt;nlohmann::json&gt; &amp;callback);</div>
 <div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span> </div>
-<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>            <span class="comment">//endregion</span></div>
-<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span> </div>
-<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>            <span class="comment">//region DELETE</span></div>
-<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span> </div>
-<div class="line"><a id="l00401" name="l00401"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a3f97861134a29ce268d5730ef9c251a7">  401</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a3f97861134a29ce268d5730ef9c251a7">del</a>(<span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> nlohmann::json &amp;<a class="code hl_class" href="classlib_1_1json.html">json</a>,</div>
-<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span> </div>
-<div class="line"><a id="l00407" name="l00407"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ae1c1d6b6d175f6897eee141d502ca313">  407</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#ae1c1d6b6d175f6897eee141d502ca313">del</a>(<span class="keyword">const</span> std::string &amp;url, lib::callback&lt;std::string&gt; &amp;callback);</div>
-<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span> </div>
-<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>            <span class="comment">//endregion</span></div>
-<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span> </div>
-<div class="line"><a id="l00415" name="l00415"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#affa5db54d3cb40ede82e59dee74deddf">  415</a></span>            <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#affa5db54d3cb40ede82e59dee74deddf">follow_type_string</a>(lib::follow_type type) -&gt; std::string;</div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a64f1734b8278db05880989f44a70e552">  395</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a64f1734b8278db05880989f44a70e552">post</a>(<span class="keyword">const</span> std::string &amp;url, lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span> </div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>            <span class="comment">//endregion</span></div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span> </div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>            <span class="comment">//region DELETE</span></div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span> </div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#a3f97861134a29ce268d5730ef9c251a7">  407</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#a3f97861134a29ce268d5730ef9c251a7">del</a>(<span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> nlohmann::json &amp;<a class="code hl_class" href="classlib_1_1json.html">json</a>,</div>
+<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>                lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span> </div>
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#ae1c1d6b6d175f6897eee141d502ca313">  413</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#ae1c1d6b6d175f6897eee141d502ca313">del</a>(<span class="keyword">const</span> std::string &amp;url, lib::callback&lt;std::string&gt; &amp;callback);</div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span> </div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>            <span class="comment">//endregion</span></div>
 <div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span> </div>
-<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>        <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>            <span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1http__client.html">lib::http_client</a> &amp;http;</div>
-<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>            <a class="code hl_class" href="classlib_1_1spt_1_1request.html">lib::spt::request</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1request.html">request</a>;</div>
-<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span> </div>
-<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>            <span class="keyword">static</span> <span class="keyword">auto</span> error_message(<span class="keyword">const</span> std::string &amp;url,</div>
-<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>                <span class="keyword">const</span> std::string &amp;data) -&gt; std::string;</div>
-<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>        };</div>
-<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>    }</div>
-<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span>}</div>
+<div class="line"><a id="l00421" name="l00421"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1api.html#affa5db54d3cb40ede82e59dee74deddf">  421</a></span>            <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code hl_function" href="classlib_1_1spt_1_1api.html#affa5db54d3cb40ede82e59dee74deddf">follow_type_string</a>(lib::follow_type type) -&gt; std::string;</div>
+<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span> </div>
+<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>            <span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1http__client.html">lib::http_client</a> &amp;http;</div>
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>            <a class="code hl_class" href="classlib_1_1spt_1_1request.html">lib::spt::request</a> &amp;<a class="code hl_class" href="classlib_1_1spt_1_1request.html">request</a>;</div>
+<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span> </div>
+<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>            <span class="keyword">static</span> <span class="keyword">auto</span> error_message(<span class="keyword">const</span> std::string &amp;url,</div>
+<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span>                <span class="keyword">const</span> std::string &amp;data) -&gt; std::string;</div>
+<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span>        };</div>
+<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span>    }</div>
+<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span>}</div>
 <div class="ttc" id="aclasslib_1_1http__client_html"><div class="ttname"><a href="classlib_1_1http__client.html">lib::http_client</a></div><div class="ttdef"><b>Definition:</b> httpclient.hpp:21</div></div>
 <div class="ttc" id="aclasslib_1_1json_html"><div class="ttname"><a href="classlib_1_1json.html">lib::json</a></div><div class="ttdef"><b>Definition:</b> json.hpp:17</div></div>
 <div class="ttc" id="aclasslib_1_1optional_html"><div class="ttname"><a href="classlib_1_1optional.html">lib::optional</a></div><div class="ttdef"><b>Definition:</b> optional.hpp:13</div></div>
 <div class="ttc" id="aclasslib_1_1result_html"><div class="ttname"><a href="classlib_1_1result.html">lib::result</a></div><div class="ttdef"><b>Definition:</b> result.hpp:14</div></div>
 <div class="ttc" id="aclasslib_1_1settings_html"><div class="ttname"><a href="classlib_1_1settings.html">lib::settings</a></div><div class="ttdef"><b>Definition:</b> settings.hpp:24</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1album_html"><div class="ttname"><a href="classlib_1_1spt_1_1album.html">lib::spt::album</a></div><div class="ttdef"><b>Definition:</b> album.hpp:17</div></div>
-<div class="ttc" id="aclasslib_1_1spt_1_1api_html"><div class="ttname"><a href="classlib_1_1spt_1_1api.html">lib::spt::api</a></div><div class="ttdef"><b>Definition:</b> api.hpp:36</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1api_html"><div class="ttname"><a href="classlib_1_1spt_1_1api.html">lib::spt::api</a></div><div class="ttdef"><b>Definition:</b> api.hpp:37</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_a00deaf1cbfdcce64b499daf2e3ebb85c"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a00deaf1cbfdcce64b499daf2e3ebb85c">lib::spt::api::current_playback</a></div><div class="ttdeci">void current_playback(lib::callback&lt; lib::result&lt; lib::spt::playback &gt; &gt; &amp;callback)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_a01fc1b68241b86c107b11c9ebc3eeea4"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a01fc1b68241b86c107b11c9ebc3eeea4">lib::spt::api::next</a></div><div class="ttdeci">void next(lib::callback&lt; std::string &gt; &amp;callback)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_a0d4868cbfad0a9a5dfa545ce181299cc"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a0d4868cbfad0a9a5dfa545ce181299cc">lib::spt::api::play_tracks</a></div><div class="ttdeci">void play_tracks(int track_index, const std::vector&lt; std::string &gt; &amp;all, lib::callback&lt; std::string &gt; &amp;callback)</div></div>
@@ -383,7 +386,7 @@ $(function() {
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_a3f97861134a29ce268d5730ef9c251a7"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a3f97861134a29ce268d5730ef9c251a7">lib::spt::api::del</a></div><div class="ttdeci">void del(const std::string &amp;url, const nlohmann::json &amp;json, lib::callback&lt; std::string &gt; &amp;callback)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_a40991941ba40216746d52ff1ae353404"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a40991941ba40216746d52ff1ae353404">lib::spt::api::play_tracks</a></div><div class="ttdeci">void play_tracks(const std::string &amp;context, lib::callback&lt; std::string &gt; &amp;callback)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_a4181de91367224105534a9976e5f3d43"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a4181de91367224105534a9976e5f3d43">lib::spt::api::recently_played</a></div><div class="ttdeci">void recently_played(lib::callback&lt; std::vector&lt; lib::spt::track &gt; &gt; &amp;callback)</div></div>
-<div class="ttc" id="aclasslib_1_1spt_1_1api_html_a5a058e247f84895b9ee98f7b5a6ed756"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a5a058e247f84895b9ee98f7b5a6ed756">lib::spt::api::settings</a></div><div class="ttdeci">lib::settings &amp; settings</div><div class="ttdef"><b>Definition:</b> api.hpp:325</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1api_html_a5a058e247f84895b9ee98f7b5a6ed756"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a5a058e247f84895b9ee98f7b5a6ed756">lib::spt::api::settings</a></div><div class="ttdeci">lib::settings &amp; settings</div><div class="ttdef"><b>Definition:</b> api.hpp:331</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_a60f5838cd80f0d677fe4dd972dccf0fd"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a60f5838cd80f0d677fe4dd972dccf0fd">lib::spt::api::play_tracks</a></div><div class="ttdeci">void play_tracks(int track_index, const std::initializer_list&lt; std::string &gt; &amp;all, lib::callback&lt; std::string &gt; &amp;callback)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_a6441af8171fdc04cdc497d3e93a93739"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a6441af8171fdc04cdc497d3e93a93739">lib::spt::api::set_volume</a></div><div class="ttdeci">void set_volume(int volume, lib::callback&lt; std::string &gt; &amp;callback)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_a64f1734b8278db05880989f44a70e552"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#a64f1734b8278db05880989f44a70e552">lib::spt::api::post</a></div><div class="ttdeci">void post(const std::string &amp;url, lib::callback&lt; std::string &gt; &amp;callback)</div></div>
@@ -401,6 +404,7 @@ $(function() {
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_ae1e3e341b64a75e92bc6715f48ee1960"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#ae1e3e341b64a75e92bc6715f48ee1960">lib::spt::api::api</a></div><div class="ttdeci">api(lib::settings &amp;settings, const lib::http_client &amp;http_client, lib::spt::request &amp;request)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_ae6d859577d0d4fd809d3dfc3a3045805"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#ae6d859577d0d4fd809d3dfc3a3045805">lib::spt::api::create_playlist</a></div><div class="ttdeci">void create_playlist(const std::string &amp;name, const lib::optional&lt; std::string &gt; &amp;description, const lib::optional&lt; bool &gt; &amp;is_public, const lib::optional&lt; bool &gt; &amp;is_collaborative, lib::callback&lt; lib::spt::playlist &gt; &amp;callback)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_ae6de5354ebff77d8d21124141dfa8d09"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#ae6de5354ebff77d8d21124141dfa8d09">lib::spt::api::put</a></div><div class="ttdeci">void put(const std::string &amp;url, const nlohmann::json &amp;body, lib::callback&lt; std::string &gt; &amp;callback)</div></div>
+<div class="ttc" id="aclasslib_1_1spt_1_1api_html_ae7038f645ad3f9082ae721d844932dbf"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#ae7038f645ad3f9082ae721d844932dbf">lib::spt::api::queue</a></div><div class="ttdeci">void queue(lib::callback&lt; lib::result&lt; lib::spt::queue &gt; &gt; &amp;callback)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_aebe2c2e0bfc8f2b3343e41a69d5c610c"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#aebe2c2e0bfc8f2b3343e41a69d5c610c">lib::spt::api::post</a></div><div class="ttdeci">void post(const std::string &amp;url, const nlohmann::json &amp;json, lib::callback&lt; nlohmann::json &gt; &amp;callback)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_aed68ce4103f82a1ed4dbb61dd8627112"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#aed68ce4103f82a1ed4dbb61dd8627112">lib::spt::api::seek</a></div><div class="ttdeci">void seek(int position, lib::callback&lt; std::string &gt; &amp;callback)</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1api_html_af58d77d78d2f690e1d006be63b946aa0"><div class="ttname"><a href="classlib_1_1spt_1_1api.html#af58d77d78d2f690e1d006be63b946aa0">lib::spt::api::set_shuffle</a></div><div class="ttdeci">void set_shuffle(bool enabled, lib::callback&lt; std::string &gt; &amp;callback)</div></div>
