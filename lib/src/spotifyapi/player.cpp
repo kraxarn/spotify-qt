@@ -174,3 +174,8 @@ void lib::spt::api::add_to_queue(const std::string &uri,
 {
 	request.post(lib::fmt::format("me/player/queue?uri={}", uri), callback);
 }
+
+void lib::spt::api::queue(lib::callback<lib::result<lib::spt::queue>> &callback)
+{
+	request.get("me/player/queue", callback);
+}

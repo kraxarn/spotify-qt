@@ -20,6 +20,7 @@
 #include "lib/spotify/episode.hpp"
 #include "lib/spotify/callback.hpp"
 #include "lib/spotify/request.hpp"
+#include "lib/spotify/queue.hpp"
 #include "lib/httpclient.hpp"
 #include "lib/datetime.hpp"
 
@@ -237,6 +238,11 @@ namespace lib
 			 */
 			void add_to_queue(const std::string &uri,
 				lib::callback<lib::result<void *>> &callback);
+
+			/**
+			 * Get all queued tracks
+			 */
+			void queue(lib::callback<lib::result<lib::spt::queue>> &callback);
 
 			//endregion
 
