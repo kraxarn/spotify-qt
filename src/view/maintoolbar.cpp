@@ -25,7 +25,7 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	menu->setMenu(new MainMenu(spotify, settings, httpClient, cache, this));
 
 	// Search
-	search = addAction(Icon::get(QStringLiteral("edit-find")),
+	search = new QAction(Icon::get(QStringLiteral("edit-find")),
 		QString("Search (%1)").arg(QKeySequence(QKeySequence::Find)
 			.toString(QKeySequence::NativeText)));
 	search->setCheckable(true);
@@ -33,47 +33,40 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	QAction::connect(search, &QAction::triggered, mainWindow, &MainWindow::setSearchVisible);
 
 	// Media controls
-	auto *mediaControlsSeparator = addSeparator();
-	previous = addShortcutAction(QStringLiteral("media-skip-backward"),
+	previous = createShortcutAction(QStringLiteral("media-skip-backward"),
 		QStringLiteral("Previous"), Shortcut::previousTrack());
 	QAction::connect(previous, &QAction::triggered,
 		this, &MainToolBar::onPrevious);
 
-	playPause = addShortcutAction(QStringLiteral("media-playback-start"),
+	playPause = createShortcutAction(QStringLiteral("media-playback-start"),
 		QStringLiteral("Play"), Shortcut::playPause());
 	QAction::connect(playPause, &QAction::triggered,
 		this, &MainToolBar::onPlayPause);
 
-	next = addShortcutAction(QStringLiteral("media-skip-forward"),
+	next = createShortcutAction(QStringLiteral("media-skip-forward"),
 		QStringLiteral("Next"), Shortcut::nextTrack());
 	QAction::connect(next, &QAction::triggered,
 		this, &MainToolBar::onNext);
 
-	addSeparator();
 	leftSpacer = new DragArea(mainWindow, this);
-	addWidget(leftSpacer);
 
 	// Progress
 	progress = new ClickableSlider(Qt::Horizontal, this);
 	QSlider::connect(progress, &QAbstractSlider::sliderReleased,
 		this, &MainToolBar::onProgressReleased);
 
-	addWidget(progress);
 	position = new Position(this);
-	addWidget(position);
 
 	rightSpacer = new DragArea(mainWindow, this);
-	addWidget(rightSpacer);
-	addSeparator();
 
 	// Shuffle and repeat toggles
-	shuffle = addShortcutAction(QStringLiteral("media-playlist-shuffle"),
+	shuffle = createShortcutAction(QStringLiteral("media-playlist-shuffle"),
 		QStringLiteral("Shuffle"), Shortcut::shuffle());
 	shuffle->setCheckable(true);
 	QAction::connect(shuffle, &QAction::triggered,
 		this, &MainToolBar::onShuffle);
 
-	repeat = addShortcutAction(QStringLiteral("media-playlist-repeat"),
+	repeat = createShortcutAction(QStringLiteral("media-playlist-repeat"),
 		QStringLiteral("Repeat"), Shortcut::repeat());
 	repeat->setCheckable(true);
 	QAction::connect(repeat, &QAction::triggered,
@@ -81,10 +74,10 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 
 	// Volume
 	volumeButton = new VolumeButton(settings, spotify, this);
-	addWidget(volumeButton);
 
 	// Title bar buttons
-	titleBarSeparator = addSeparator();
+	titleBarSeparator = new QAction(this);
+	titleBarSeparator->setSeparator(true);
 
 	minimize = new QAction(Icon::get("window-minimize"),
 		QStringLiteral("Minimize"), this);
@@ -97,21 +90,59 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 
 	QAction::connect(close, &QAction::triggered, this, &MainToolBar::onClose);
 
-	if (settings.qt().mirror_title_bar)
-	{
-		insertAction(mediaControlsSeparator, minimize);
-		insertAction(minimize, close);
+	const auto isMirrored = settings.qt().mirror_title_bar;
+	const auto isMenuVisible = !AppConfig::useNativeMenuBar();
+	const auto isSearchMirrored = !isMirrored && !isMenuVisible;
 
-		addAction(search);
-		addWidget(menu);
+	if (isMirrored)
+	{
+		addAction(close);
+		addAction(minimize);
+		addAction(titleBarSeparator);
 	}
 	else
 	{
-		insertAction(mediaControlsSeparator, search);
-		insertWidget(search, menu);
+		addWidget(menu);
+	}
 
+	if (isSearchMirrored)
+	{
+		addAction(search);
+	}
+
+	addSeparator();
+	addAction(previous);
+	addAction(playPause);
+	addAction(next);
+
+	addWidget(leftSpacer);
+	addWidget(progress);
+	addWidget(position);
+	addWidget(rightSpacer);
+
+	addAction(shuffle);
+	addAction(repeat);
+	addWidget(volumeButton);
+
+	if (!isSearchMirrored)
+	{
+		addAction(search);
+	}
+
+	if (!isMirrored)
+	{
+		addAction(titleBarSeparator);
 		addAction(minimize);
 		addAction(close);
+	}
+	else
+	{
+		if (isMenuVisible)
+		{
+			addSeparator();
+		}
+
+		addWidget(menu);
 	}
 }
 
@@ -152,12 +183,15 @@ void MainToolBar::updateSpacerSizes()
 	rightSpacer->setMinimumWidth(spacerWidth);
 }
 
-auto MainToolBar::addShortcutAction(const QString &iconName, const QString &title,
+auto MainToolBar::createShortcutAction(const QString &iconName, const QString &title,
 	const QKeySequence &shortcut) -> QAction *
 {
-	auto *action = addAction(Icon::get(iconName), QStringLiteral("%1 (%2)")
+	auto *action = new QAction(this);
+
+	action->setText(QString("%1 (%2)")
 		.arg(title, shortcut.toString(QKeySequence::NativeText)));
 
+	action->setIcon(Icon::get(iconName));
 	action->setShortcut(shortcut);
 	return action;
 }

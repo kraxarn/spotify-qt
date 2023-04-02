@@ -40,7 +40,7 @@ private:
 	void setProgress(int current, int duration);
 	auto isPlaying() const -> bool;
 
-	auto addShortcutAction(const QString &iconName, const QString &title,
+	auto createShortcutAction(const QString &iconName, const QString &title,
 		const QKeySequence &shortcut) -> QAction *;
 
 	auto getNextRepeatState(const lib::spt::playback &playback) -> lib::repeat_state;
