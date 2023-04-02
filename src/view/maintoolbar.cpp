@@ -1,4 +1,5 @@
 #include "view/maintoolbar.hpp"
+#include "widget/historybutton.hpp"
 #include "mainwindow.hpp"
 #include "util/shortcut.hpp"
 #include "util/appconfig.hpp"
@@ -23,6 +24,9 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	menu->setPopupMode(QToolButton::InstantPopup);
 	menu->setVisible(!AppConfig::useNativeMenuBar());
 	menu->setMenu(new MainMenu(spotify, settings, httpClient, cache, this));
+
+	// History
+	auto *history = new HistoryButton(this);
 
 	// Search
 	search = new QAction(Icon::get(QStringLiteral("edit-find")),
@@ -104,6 +108,8 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	{
 		addWidget(menu);
 	}
+
+	addAction(history);
 
 	if (isSearchMirrored)
 	{
