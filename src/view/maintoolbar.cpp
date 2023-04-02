@@ -18,12 +18,18 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	setMovable(false);
 
 	// Menu
-	menu = new QToolButton(this);
-	menu->setText("Menu");
-	menu->setIcon(Icon::get("application-menu"));
-	menu->setPopupMode(QToolButton::InstantPopup);
-	menu->setVisible(!AppConfig::useNativeMenuBar());
-	menu->setMenu(new MainMenu(spotify, settings, httpClient, cache, this));
+	if (AppConfig::useNativeMenuBar())
+	{
+		menu = nullptr;
+	}
+	else
+	{
+		menu = new QToolButton(this);
+		menu->setText("Menu");
+		menu->setIcon(Icon::get("application-menu"));
+		menu->setPopupMode(QToolButton::InstantPopup);
+		menu->setMenu(new MainMenu(spotify, settings, httpClient, cache, this));
+	}
 
 	// History
 	auto *history = new HistoryButton(this);
@@ -95,7 +101,7 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	QAction::connect(close, &QAction::triggered, this, &MainToolBar::onClose);
 
 	const auto isMirrored = settings.qt().mirror_title_bar;
-	const auto isMenuVisible = !AppConfig::useNativeMenuBar();
+	const auto isMenuVisible = menu != nullptr;
 	const auto isSearchMirrored = !isMirrored && !isMenuVisible;
 
 	if (isMirrored)
@@ -104,7 +110,7 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 		addAction(minimize);
 		addAction(titleBarSeparator);
 	}
-	else
+	else if (isMenuVisible)
 	{
 		addWidget(menu);
 	}
@@ -141,13 +147,9 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 		addAction(minimize);
 		addAction(close);
 	}
-	else
+	else if (isMenuVisible)
 	{
-		if (isMenuVisible)
-		{
-			addSeparator();
-		}
-
+		addSeparator();
 		addWidget(menu);
 	}
 }
