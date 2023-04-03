@@ -9,3 +9,13 @@ HistoryButton::HistoryButton(QWidget *parent)
 	setEnabled(false);
 	setVisible(lib::developer_mode::enabled);
 }
+
+HistoryButton::~HistoryButton()
+{
+	for (const auto *item: items)
+	{
+		delete item;
+	}
+
+	items.clear();
+}
