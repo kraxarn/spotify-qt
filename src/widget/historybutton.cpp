@@ -1,6 +1,8 @@
 #include "widget/historybutton.hpp"
 #include "lib/developermode.hpp"
 
+#include <QMenu>
+
 HistoryButton::HistoryButton(QWidget *parent)
 	: QAction(parent)
 {
@@ -8,14 +10,13 @@ HistoryButton::HistoryButton(QWidget *parent)
 	setText(QStringLiteral("Go back"));
 	setEnabled(false);
 	setVisible(lib::developer_mode::enabled);
+
+	menu = new QMenu();
+	setMenu(menu);
 }
 
-HistoryButton::~HistoryButton()
+void HistoryButton::push(const lib::spt::entity &entity)
 {
-	for (const auto *item: items)
-	{
-		delete item;
-	}
-
-	items.clear();
+	menu->addAction(QString::fromStdString(entity.name));
+	setEnabled(true);
 }

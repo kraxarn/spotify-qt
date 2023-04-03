@@ -9,15 +9,9 @@ class HistoryButton: public QAction
 {
 public:
 	explicit HistoryButton(QWidget *parent);
-	~HistoryButton() override;
 
-	template<typename T>
-	void push(const T &entity)
-	{
-		auto *pointer = new T(entity);
-		items.append(pointer);
-	}
+	void push(const lib::spt::entity &entity);
 
 private:
-	QList<lib::spt::entity *> items;
+	QMenu *menu;
 };
