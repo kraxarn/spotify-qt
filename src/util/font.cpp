@@ -23,9 +23,9 @@ auto Font::numberWidth() -> int
 	return max;
 }
 
-void Font::setFontWeight(QWidget *widget, QFont::Weight weight)
+void Font::setFontWeight(QAction *action, QFont::Weight weight)
 {
-	auto font = widget->font();
+	auto font = action->font();
 	font.setWeight(weight);
-	widget->setFont(font);
+	action->setFont(font);
 }
