@@ -50,7 +50,7 @@ auto main(int argc, char *argv[]) -> int
 	QApplication app(argc, argv);
 
 	// Optional KCrash support
-#ifdef USE_KCRASH
+#if defined USE_KCRASH && defined NDEBUG
 	KCrash::initialize();
 	if (!KCrash::isDrKonqiEnabled())
 	{
