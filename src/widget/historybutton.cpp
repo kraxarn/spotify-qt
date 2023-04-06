@@ -2,8 +2,6 @@
 
 #include "util/font.hpp"
 #include "mainwindow.hpp"
-
-#include "lib/developermode.hpp"
 #include "lib/spotify/util.hpp"
 
 #include <QMenu>
@@ -14,7 +12,6 @@ HistoryButton::HistoryButton(QWidget *parent)
 	setIcon(Icon::get(QStringLiteral("go-previous")));
 	setText(QStringLiteral("Go back"));
 	setEnabled(false);
-	setVisible(lib::developer_mode::enabled);
 	setMenu(new QMenu());
 
 	QMenu::connect(menu(), &QMenu::triggered,
