@@ -78,17 +78,18 @@ void HistoryButton::onMenuTriggered(QAction *action)
 		return;
 	}
 
+	auto *tracksList = mainWindow->getSongsTree();
 	if (uri.startsWith(QStringLiteral("spotify:playlist:")))
 	{
 		lib::spt::playlist playlist;
 		playlist.id = id;
-		mainWindow->setSptContext(playlist);
+		tracksList->load(playlist);
 	}
 	else if (uri.startsWith(QStringLiteral("spotify:album:")))
 	{
 		lib::spt::album album;
 		album.id = id;
-		mainWindow->setSptContext(album);
+		tracksList->load(album);
 	}
 	else if (uri.startsWith(QStringLiteral("spotify:show:")))
 	{
