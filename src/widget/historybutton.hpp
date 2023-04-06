@@ -17,7 +17,5 @@ public:
 	void push(const lib::spt::show &show);
 
 private:
-	QMenu *menu;
-
 	void push(const lib::spt::entity &entity, const std::string &type);
 };
