@@ -1,5 +1,6 @@
 #include "widget/historybutton.hpp"
 #include "lib/developermode.hpp"
+#include "lib/spotify/util.hpp"
 
 #include <QMenu>
 
@@ -15,8 +16,25 @@ HistoryButton::HistoryButton(QWidget *parent)
 	setMenu(menu);
 }
 
-void HistoryButton::push(const lib::spt::entity &entity)
+void HistoryButton::push(const lib::spt::playlist &playlist)
 {
-	menu->addAction(QString::fromStdString(entity.name));
-	setEnabled(true);
+	push(playlist, "playlist");
+}
+
+void HistoryButton::push(const lib::spt::album &album)
+{
+	push(album, "album");
+}
+
+void HistoryButton::push(const lib::spt::show &show)
+{
+	push(show, "show");
+}
+
+void HistoryButton::push(const lib::spt::entity &entity, const std::string &type)
+{
+	auto *action = menu->addAction(QString::fromStdString(entity.name));
+
+	const auto uri = lib::spt::id_to_uri(type, entity.id);
+	action->setData(QString::fromStdString(uri));
 }
