@@ -35,4 +35,6 @@ void HistoryButton::push(const lib::spt::entity &entity, const std::string &type
 
 	const auto uri = lib::spt::id_to_uri(type, entity.id);
 	action->setData(QString::fromStdString(uri));
+
+	setEnabled(true);
 }
