@@ -708,22 +708,30 @@ void MainWindow::setSptContext(const std::string &uri)
 void MainWindow::setSptContext(const lib::spt::playlist &playlist)
 {
 	setSptContext(lib::spt::id_to_uri("playlist", playlist.id));
+	history()->push(playlist);
 }
 
 void MainWindow::setSptContext(const lib::spt::album &album)
 {
 	setSptContext(lib::spt::id_to_uri("album", album.id));
+	history()->push(album);
 	playlistList->setCurrentRow(-1);
 }
 
 void MainWindow::setSptContext(const lib::spt::show &show)
 {
 	setSptContext(lib::spt::id_to_uri("show", show.id));
+	history()->push(show);
 }
 
 void MainWindow::setNoSptContext()
 {
 	setSptContext(std::string());
+}
+
+auto MainWindow::history() -> HistoryButton *
+{
+	return toolBar->findChild<HistoryButton *>({}, Qt::FindDirectChildrenOnly);
 }
 
 auto MainWindow::getCurrentPlayback() -> lib::spt::playback &

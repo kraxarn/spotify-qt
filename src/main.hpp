@@ -32,6 +32,7 @@
 #include "view/sidepanel/view.hpp"
 #include "view/trayicon.hpp"
 #include "widget/hiddensizegrip.hpp"
+#include "widget/historybutton.hpp"
 
 #include <QMainWindow>
 #include <QSplitter>

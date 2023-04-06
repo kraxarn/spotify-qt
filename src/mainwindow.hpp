@@ -125,6 +125,7 @@ private:
 	QWidget *createCentralWidget();
 	void setAlbumImage(const lib::spt::entity &albumEntity, const std::string &albumImageUrl);
 	void setSptContext(const std::string &uri);
+	auto history() -> HistoryButton *;
 
 	// Slots
 	void onSpotifyStatusChanged(const QString &status);
