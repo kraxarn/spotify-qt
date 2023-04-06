@@ -31,10 +31,16 @@ void HistoryButton::push(const lib::spt::show &show)
 
 void HistoryButton::push(const lib::spt::entity &entity, const std::string &type)
 {
-	auto *action = menu()->addAction(QString::fromStdString(entity.name));
+	auto *action = new QAction(QString::fromStdString(entity.name));
 
 	const auto uri = lib::spt::id_to_uri(type, entity.id);
 	action->setData(QString::fromStdString(uri));
 
+	const auto &actions = menu()->actions();
+	auto *before = actions.empty()
+		? nullptr
+		: actions.first();
+
+	menu()->insertAction(before, action);
 	setEnabled(true);
 }
