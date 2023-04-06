@@ -9,6 +9,8 @@
 
 class HistoryButton: public QAction
 {
+Q_OBJECT
+
 public:
 	explicit HistoryButton(QWidget *parent);
 
