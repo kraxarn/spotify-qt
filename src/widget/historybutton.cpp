@@ -33,14 +33,24 @@ void HistoryButton::push(const lib::spt::entity &entity, const std::string &type
 {
 	auto *action = new QAction(QString::fromStdString(entity.name));
 
-	const auto uri = lib::spt::id_to_uri(type, entity.id);
-	action->setData(QString::fromStdString(uri));
+	const auto uri = QString::fromStdString(lib::spt::id_to_uri(type, entity.id));
+	action->setData(uri);
 
 	const auto &actions = menu()->actions();
-	auto *before = actions.empty()
-		? nullptr
-		: actions.first();
 
-	menu()->insertAction(before, action);
+	if (actions.empty())
+	{
+		menu()->addAction(action);
+	}
+	else
+	{
+		auto *before = actions.first();
+		const auto beforeUri = before->data().toString();
+		if (uri != beforeUri)
+		{
+			menu()->insertAction(before, action);
+		}
+	}
+
 	setEnabled(true);
 }
