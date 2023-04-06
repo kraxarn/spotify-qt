@@ -2,6 +2,7 @@
 
 #include <QFontDatabase>
 #include <QFontMetrics>
+#include <QWidget>
 
 auto Font::monospace() -> QFont
 {
@@ -20,4 +21,11 @@ auto Font::numberWidth() -> int
 	}
 
 	return max;
+}
+
+void Font::setFontWeight(QWidget *widget, QFont::Weight weight)
+{
+	auto font = widget->font();
+	font.setWeight(weight);
+	widget->setFont(font);
 }
