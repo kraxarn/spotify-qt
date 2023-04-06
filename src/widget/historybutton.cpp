@@ -102,6 +102,15 @@ void HistoryButton::onMenuTriggered(QAction *action)
 		return;
 	}
 
+	for (auto *menuAction: menu()->actions())
+	{
+		menu()->removeAction(menuAction);
+		if (menuAction == action)
+		{
+			break;
+		}
+	}
+
 	auto *tracksList = mainWindow->getSongsTree();
 	if (action->data().canConvert<lib::spt::playlist>())
 	{
