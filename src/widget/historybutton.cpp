@@ -20,30 +20,27 @@ HistoryButton::HistoryButton(QWidget *parent)
 
 void HistoryButton::push(const lib::spt::playlist &playlist)
 {
-	push(playlist, "playlist");
+	push(playlist.name, QVariant::fromValue(playlist), "playlist");
 }
 
 void HistoryButton::push(const lib::spt::album &album)
 {
-	push(album, "album");
+	push(album.name, QVariant::fromValue(album), "album");
 }
 
 void HistoryButton::push(const lib::spt::show &show)
 {
-	push(show, "show");
+	push(show.name, QVariant::fromValue(show), "show");
 }
 
-void HistoryButton::push(const lib::spt::entity &entity, const std::string &type)
+void HistoryButton::push(const std::string &name, const QVariant &entity, const std::string &type)
 {
-	auto *action = new QAction(QString::fromStdString(entity.name));
+	auto *action = new QAction(QString::fromStdString(name));
 	action->setIcon(Icon::getByType(type));
+	action->setData(entity);
 	Font::setFontWeight(action, QFont::DemiBold);
 
-	const auto uri = QString::fromStdString(lib::spt::id_to_uri(type, entity.id));
-	action->setData(uri);
-
 	const auto &actions = menu()->actions();
-
 	if (actions.empty())
 	{
 		menu()->addAction(action);
@@ -51,8 +48,7 @@ void HistoryButton::push(const lib::spt::entity &entity, const std::string &type
 	else
 	{
 		auto *before = actions.first();
-		const auto beforeUri = before->data().toString();
-		if (uri == beforeUri)
+		if (action->text() == before->text())
 		{
 			return;
 		}
@@ -66,9 +62,6 @@ void HistoryButton::push(const lib::spt::entity &entity, const std::string &type
 
 void HistoryButton::onMenuTriggered(QAction *action)
 {
-	const auto uri = action->data().toString();
-	const auto id = lib::spt::uri_to_id(uri.toStdString());
-
 	auto *mainWindow = MainWindow::find(parentWidget());
 	if (mainWindow == nullptr)
 	{
@@ -76,26 +69,23 @@ void HistoryButton::onMenuTriggered(QAction *action)
 	}
 
 	auto *tracksList = mainWindow->getSongsTree();
-	if (uri.startsWith(QStringLiteral("spotify:playlist:")))
+	if (action->data().canConvert<lib::spt::playlist>())
 	{
-		lib::spt::playlist playlist;
-		playlist.id = id;
+		const auto playlist = action->data().value<lib::spt::playlist>();
 		tracksList->load(playlist);
 	}
-	else if (uri.startsWith(QStringLiteral("spotify:album:")))
+	else if (action->data().canConvert<lib::spt::album>())
 	{
-		lib::spt::album album;
-		album.id = id;
+		const auto album = action->data().value<lib::spt::album>();
 		tracksList->load(album);
 	}
-	else if (uri.startsWith(QStringLiteral("spotify:show:")))
+	else if (action->data().canConvert<lib::spt::show>())
 	{
-		lib::spt::show show;
-		show.id = id;
+		const auto show = action->data().value<lib::spt::show>();
 		mainWindow->setSptContext(show);
 	}
 	else
 	{
-		lib::log::warn("Unknown URI: {}", uri.toStdString());
+		lib::log::warn("Unknown type: {}", action->data().typeName());
 	}
 }

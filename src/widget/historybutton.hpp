@@ -19,7 +19,7 @@ public:
 	void push(const lib::spt::show &show);
 
 private:
-	void push(const lib::spt::entity &entity, const std::string &type);
+	void push(const std::string &name, const QVariant &entity, const std::string &type);
 
 	void onMenuTriggered(QAction *action);
 };
