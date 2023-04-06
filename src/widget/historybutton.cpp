@@ -14,6 +14,9 @@ HistoryButton::HistoryButton(QWidget *parent)
 	setEnabled(false);
 	setMenu(new QMenu());
 
+	QAction::connect(this, &QAction::triggered,
+		this, &HistoryButton::onTriggered);
+
 	QMenu::connect(menu(), &QMenu::triggered,
 		this, &HistoryButton::onMenuTriggered);
 }
@@ -78,6 +81,17 @@ auto HistoryButton::getEntityId(QAction *action) -> std::string
 	}
 
 	return {};
+}
+
+void HistoryButton::onTriggered(bool /*checked*/)
+{
+	if (menu()->actions().length() <= 1)
+	{
+		return;
+	}
+
+	auto *action = menu()->actions().at(1);
+	onMenuTriggered(action);
 }
 
 void HistoryButton::onMenuTriggered(QAction *action)
