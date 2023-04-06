@@ -48,7 +48,7 @@ void HistoryButton::push(const std::string &name, const QVariant &entity, const 
 	else
 	{
 		auto *before = actions.first();
-		if (action->text() == before->text())
+		if (getEntityId(action) == getEntityId(before))
 		{
 			return;
 		}
@@ -58,6 +58,26 @@ void HistoryButton::push(const std::string &name, const QVariant &entity, const 
 	}
 
 	setEnabled(true);
+}
+
+auto HistoryButton::getEntityId(QAction *action) -> std::string
+{
+	if (action->data().canConvert<lib::spt::playlist>())
+	{
+		return action->data().value<lib::spt::playlist>().id;
+	}
+
+	if (action->data().canConvert<lib::spt::album>())
+	{
+		return action->data().value<lib::spt::album>().id;
+	}
+
+	if (action->data().canConvert<lib::spt::show>())
+	{
+		return action->data().value<lib::spt::show>().id;
+	}
+
+	return {};
 }
 
 void HistoryButton::onMenuTriggered(QAction *action)

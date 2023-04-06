@@ -20,6 +20,7 @@ public:
 
 private:
 	void push(const std::string &name, const QVariant &entity, const std::string &type);
+	static auto getEntityId(QAction *action) -> std::string;
 
 	void onMenuTriggered(QAction *action);
 };
