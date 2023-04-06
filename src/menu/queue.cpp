@@ -40,11 +40,11 @@ void Menu::Queue::refreshQueue()
 			return;
 		}
 
-		for (auto i = 0; i < queue.tracks.size(); i++)
+		for (size_t i = 0; i < queue.tracks.size(); i++)
 		{
 			const auto &track = queue.tracks.at(i);
 			auto *action = addAction(QString::fromStdString(track.title()));
-			action->setData(i + 1);
+			action->setData(static_cast<int>(i + 1));
 		}
 	});
 }
