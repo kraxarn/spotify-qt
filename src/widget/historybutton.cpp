@@ -35,6 +35,7 @@ void HistoryButton::push(const lib::spt::show &show)
 void HistoryButton::push(const lib::spt::entity &entity, const std::string &type)
 {
 	auto *action = new QAction(QString::fromStdString(entity.name));
+	action->setIcon(Icon::getByType(type));
 	Font::setFontWeight(action, QFont::DemiBold);
 
 	const auto uri = QString::fromStdString(lib::spt::id_to_uri(type, entity.id));
