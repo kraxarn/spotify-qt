@@ -22,18 +22,7 @@ Context::TitleInfo::TitleInfo(lib::spt::api &spotify, spt::Current &current, QWi
 
 auto Context::TitleInfo::getIcon() const -> QIcon
 {
-	if (current.playback.context.type.empty())
-	{
-		return Icon::get(QStringLiteral("view-media-track"));
-	}
-
-	if (current.playback.context.type == "album")
-	{
-		return Icon::get(QStringLiteral("view-media-album-cover"));
-	}
-
-	return Icon::get(QString("view-media-%1")
-		.arg(QString::fromStdString(current.playback.context.type)));
+	return Icon::getByType(current.playback.context.type);
 }
 
 void Context::TitleInfo::onContextMenu(const QPoint &pos)
