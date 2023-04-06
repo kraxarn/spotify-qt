@@ -17,6 +17,7 @@ namespace lib
 		{
 		public:
 			entity() = default;
+			virtual ~entity() = default;
 
 			/**
 			 * Manually construct an entity
