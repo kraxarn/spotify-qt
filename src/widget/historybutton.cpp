@@ -1,6 +1,7 @@
 #include "widget/historybutton.hpp"
 
 #include "util/font.hpp"
+#include "mainwindow.hpp"
 
 #include "lib/developermode.hpp"
 #include "lib/spotify/util.hpp"
@@ -15,6 +16,9 @@ HistoryButton::HistoryButton(QWidget *parent)
 	setEnabled(false);
 	setVisible(lib::developer_mode::enabled);
 	setMenu(new QMenu());
+
+	QMenu::connect(menu(), &QMenu::triggered,
+		this, &HistoryButton::onMenuTriggered);
 }
 
 void HistoryButton::push(const lib::spt::playlist &playlist)
@@ -61,4 +65,39 @@ void HistoryButton::push(const lib::spt::entity &entity, const std::string &type
 	}
 
 	setEnabled(true);
+}
+
+void HistoryButton::onMenuTriggered(QAction *action)
+{
+	const auto uri = action->data().toString();
+	const auto id = lib::spt::uri_to_id(uri.toStdString());
+
+	auto *mainWindow = MainWindow::find(parentWidget());
+	if (mainWindow == nullptr)
+	{
+		return;
+	}
+
+	if (uri.startsWith(QStringLiteral("spotify:playlist:")))
+	{
+		lib::spt::playlist playlist;
+		playlist.id = id;
+		mainWindow->setSptContext(playlist);
+	}
+	else if (uri.startsWith(QStringLiteral("spotify:album:")))
+	{
+		lib::spt::album album;
+		album.id = id;
+		mainWindow->setSptContext(album);
+	}
+	else if (uri.startsWith(QStringLiteral("spotify:show:")))
+	{
+		lib::spt::show show;
+		show.id = id;
+		mainWindow->setSptContext(show);
+	}
+	else
+	{
+		lib::log::warn("Unknown URI: {}", uri.toStdString());
+	}
 }

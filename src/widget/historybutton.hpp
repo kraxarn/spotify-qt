@@ -20,4 +20,6 @@ public:
 
 private:
 	void push(const lib::spt::entity &entity, const std::string &type);
+
+	void onMenuTriggered(QAction *action);
 };
