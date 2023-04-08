@@ -19,7 +19,9 @@ public:
 	void push(const lib::spt::show &show);
 
 private:
-	void push(const std::string &name, const QVariant &entity, const std::string &type);
+	QAction *current = nullptr;
+
+	void push(const lib::spt::entity &entity, const QVariant &data, const std::string &type);
 	static auto getEntityId(QAction *action) -> std::string;
 
 	void onTriggered(bool checked);

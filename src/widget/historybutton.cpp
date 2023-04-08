@@ -23,41 +23,53 @@ HistoryButton::HistoryButton(QWidget *parent)
 
 void HistoryButton::push(const lib::spt::playlist &playlist)
 {
-	push(playlist.name, QVariant::fromValue(playlist), "playlist");
+	push(playlist, QVariant::fromValue(playlist), "playlist");
 }
 
 void HistoryButton::push(const lib::spt::album &album)
 {
-	push(album.name, QVariant::fromValue(album), "album");
+	push(album, QVariant::fromValue(album), "album");
 }
 
 void HistoryButton::push(const lib::spt::show &show)
 {
-	push(show.name, QVariant::fromValue(show), "show");
+	push(show, QVariant::fromValue(show), "show");
 }
 
-void HistoryButton::push(const std::string &name, const QVariant &entity, const std::string &type)
+void HistoryButton::push(const lib::spt::entity &entity,
+	const QVariant &data, const std::string &type)
 {
-	auto *action = new QAction(QString::fromStdString(name));
-	action->setIcon(Icon::getByType(type));
-	action->setData(entity);
-	Font::setFontWeight(action, QFont::DemiBold);
+	for (auto *menuAction: menu()->actions())
+	{
+		if (getEntityId(menuAction) == entity.id)
+		{
+			Font::setFontWeight(current, QFont::Normal);
+			Font::setFontWeight(menuAction, QFont::DemiBold);
+			current = menuAction;
+			return;
+		}
+	}
+
+	current = new QAction(QString::fromStdString(entity.name));
+	current->setIcon(Icon::getByType(type));
+	current->setData(data);
+	Font::setFontWeight(current, QFont::DemiBold);
 
 	const auto &actions = menu()->actions();
 	if (actions.empty())
 	{
-		menu()->addAction(action);
+		menu()->addAction(current);
 	}
 	else
 	{
 		auto *before = actions.first();
-		if (getEntityId(action) == getEntityId(before))
+		if (getEntityId(current) == getEntityId(before))
 		{
 			return;
 		}
 
 		Font::setFontWeight(before, QFont::Normal);
-		menu()->insertAction(before, action);
+		menu()->insertAction(before, current);
 	}
 
 	setEnabled(true);
