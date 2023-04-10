@@ -39,15 +39,10 @@ void HistoryButton::push(const lib::spt::show &show)
 void HistoryButton::push(const lib::spt::entity &entity,
 	const QVariant &data, const std::string &type)
 {
-	for (auto *menuAction: menu()->actions())
+	if (current != nullptr && entity.id == getEntityId(current))
 	{
-		if (getEntityId(menuAction) == entity.id)
-		{
-			Font::setFontWeight(current, QFont::Normal);
-			Font::setFontWeight(menuAction, QFont::DemiBold);
-			current = menuAction;
-			return;
-		}
+		lib::log::debug("History: current is already active");
+		return;
 	}
 
 	current = new QAction(QString::fromStdString(entity.name));
