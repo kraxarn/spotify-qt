@@ -78,6 +78,8 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 	{
 		new MainMenuBar(spotify, settings, httpClient, cache, this);
 	}
+
+	QCoreApplication::instance()->installEventFilter(this);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -93,6 +95,31 @@ void MainWindow::closeEvent(QCloseEvent *event)
 		event->accept();
 	}
 }
+
+auto MainWindow::eventFilter(QObject *obj, QEvent *event) -> bool
+{
+	if (event->type() != QEvent::MouseButtonPress)
+	{
+		return QMainWindow::eventFilter(obj, event);
+	}
+
+	auto *mouseEvent = dynamic_cast<QMouseEvent *>(event);
+
+	if (mouseEvent->button() == Qt::BackButton)
+	{
+		history()->back();
+		return true;
+	}
+
+	if (mouseEvent->button() == Qt::ForwardButton)
+	{
+		history()->forward();
+		return true;
+	}
+
+	return QMainWindow::eventFilter(obj, event);
+}
+
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr *result)
 #else
