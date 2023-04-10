@@ -85,7 +85,11 @@ auto HistoryButton::getEntityId(QAction *action) -> std::string
 
 void HistoryButton::setCurrent(QAction *action)
 {
-	Font::setFontWeight(current, QFont::Normal);
+	if (current != nullptr)
+	{
+		Font::setFontWeight(current, QFont::Normal);
+	}
+
 	Font::setFontWeight(action, QFont::DemiBold);
 	current = action;
 }
