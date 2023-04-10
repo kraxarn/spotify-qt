@@ -98,13 +98,14 @@ void HistoryButton::setCurrent(QAction *action)
 
 void HistoryButton::onTriggered(bool /*checked*/)
 {
-	if (menu()->actions().length() <= 1)
+	const auto &actions = menu()->actions();
+	for (qsizetype i = 0; i < actions.size() - 1; i++)
 	{
-		return;
+		if (actions.at(i) == current)
+		{
+			onMenuTriggered(actions.at(i + 1));
+		}
 	}
-
-	auto *action = menu()->actions().at(1);
-	onMenuTriggered(action);
 }
 
 void HistoryButton::onMenuTriggered(QAction *action)
