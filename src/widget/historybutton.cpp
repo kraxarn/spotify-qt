@@ -95,6 +95,13 @@ auto HistoryButton::getEntityId(QAction *action) -> std::string
 	return {};
 }
 
+void HistoryButton::setCurrent(QAction *action)
+{
+	Font::setFontWeight(current, QFont::Normal);
+	Font::setFontWeight(action, QFont::DemiBold);
+	current = action;
+}
+
 void HistoryButton::onTriggered(bool /*checked*/)
 {
 	if (menu()->actions().length() <= 1)
@@ -113,6 +120,8 @@ void HistoryButton::onMenuTriggered(QAction *action)
 	{
 		return;
 	}
+
+	setCurrent(action);
 
 	auto *tracksList = mainWindow->getSongsTree();
 	if (action->data().canConvert<lib::spt::playlist>())
