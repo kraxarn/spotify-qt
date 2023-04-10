@@ -73,6 +73,30 @@ void HistoryButton::push(const lib::spt::entity &entity,
 	setEnabled(true);
 }
 
+void HistoryButton::back()
+{
+	const auto &actions = menu()->actions();
+	for (qsizetype i = 0; i < actions.size() - 1; i++)
+	{
+		if (actions.at(i) == current)
+		{
+			onMenuTriggered(actions.at(i + 1));
+		}
+	}
+}
+
+void HistoryButton::forward()
+{
+	const auto &actions = menu()->actions();
+	for (qsizetype i = 0; i < actions.size() - 1; i++)
+	{
+		if (actions.at(i + 1) == current)
+		{
+			onMenuTriggered(actions.at(i));
+		}
+	}
+}
+
 auto HistoryButton::getEntityId(QAction *action) -> std::string
 {
 	if (action->data().canConvert<lib::spt::playlist>())
@@ -106,14 +130,7 @@ void HistoryButton::setCurrent(QAction *action)
 
 void HistoryButton::onTriggered(bool /*checked*/)
 {
-	const auto &actions = menu()->actions();
-	for (qsizetype i = 0; i < actions.size() - 1; i++)
-	{
-		if (actions.at(i) == current)
-		{
-			onMenuTriggered(actions.at(i + 1));
-		}
-	}
+	back();
 }
 
 void HistoryButton::onMenuTriggered(QAction *action)

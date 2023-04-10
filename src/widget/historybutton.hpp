@@ -18,6 +18,9 @@ public:
 	void push(const lib::spt::album &album);
 	void push(const lib::spt::show &show);
 
+	void back();
+	void forward();
+
 private:
 	QAction *current = nullptr;
 
