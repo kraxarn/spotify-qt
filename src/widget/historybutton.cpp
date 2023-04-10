@@ -44,28 +44,22 @@ void HistoryButton::push(const lib::spt::entity &entity,
 		return;
 	}
 
-	current = new QAction(QString::fromStdString(entity.name));
-	current->setIcon(Icon::getByType(type));
-	current->setData(data);
-	Font::setFontWeight(current, QFont::DemiBold);
+	auto *action = new QAction(QString::fromStdString(entity.name));
+	action->setIcon(Icon::getByType(type));
+	action->setData(data);
 
 	const auto &actions = menu()->actions();
 	if (actions.empty())
 	{
-		menu()->addAction(current);
+		menu()->addAction(action);
 	}
 	else
 	{
 		auto *before = actions.first();
-		if (getEntityId(current) == getEntityId(before))
-		{
-			return;
-		}
-
-		Font::setFontWeight(before, QFont::Normal);
-		menu()->insertAction(before, current);
+		menu()->insertAction(before, action);
 	}
 
+	setCurrent(action);
 	setEnabled(true);
 }
 
