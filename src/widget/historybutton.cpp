@@ -41,7 +41,6 @@ void HistoryButton::push(const lib::spt::entity &entity,
 {
 	if (current != nullptr && entity.id == getEntityId(current))
 	{
-		lib::log::debug("History: current is already active");
 		return;
 	}
 
