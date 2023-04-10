@@ -816,14 +816,16 @@ void MainWindow::orderPlaylists(lib::playlist_order order)
 	playlistList->order(order);
 }
 
-auto MainWindow::find(QWidget *from) -> MainWindow *
+auto MainWindow::find(QObject *from) -> MainWindow *
 {
 	auto *active = qobject_cast<MainWindow *>(QApplication::activeWindow());
 	if (active != nullptr)
 	{
 		return active;
 	}
-	return Parent::findWidget<MainWindow>(from);
+
+	auto *fromWidget = qobject_cast<QWidget *>(from);
+	return Parent::findWidget<MainWindow>(fromWidget);
 }
 
 auto MainWindow::defaultSize() -> QSize

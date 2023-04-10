@@ -10,7 +10,7 @@ public:
 	MainWindow(lib::settings &settings, lib::paths &paths,
 		lib::qt::http_client &httpClient, lib::spt::api &spotify);
 
-	static MainWindow *find(QWidget *from);
+	static auto find(QObject *from) -> MainWindow *;
 	static auto defaultSize() -> QSize;
 
 	//region Deprecated
