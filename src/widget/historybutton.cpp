@@ -118,7 +118,7 @@ void HistoryButton::onTriggered(bool /*checked*/)
 
 void HistoryButton::onMenuTriggered(QAction *action)
 {
-	auto *mainWindow = MainWindow::find(parentWidget());
+	auto *mainWindow = MainWindow::find(parent());
 	if (mainWindow == nullptr)
 	{
 		return;
