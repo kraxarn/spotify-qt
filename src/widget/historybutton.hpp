@@ -21,6 +21,8 @@ public:
 	void back();
 	void forward();
 
+	auto currentUri() const -> std::string;
+
 private:
 	QAction *current = nullptr;
 

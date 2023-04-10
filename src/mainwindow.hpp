@@ -52,19 +52,14 @@ public:
 	auto startClient() -> const SpotifyClient::Runner *;
 	void stopClient();
 
-	void setSptContext(const lib::spt::playlist &playlist);
-	void setSptContext(const lib::spt::album &album);
-	void setSptContext(const lib::spt::show &show);
-	void setNoSptContext();
-
 	// Getters for private properties
 	void setSearchChecked(bool checked);
 	List::Tracks *getSongsTree();
-	std::string getSptContext() const;
 	lib::spt::playback &getCurrentPlayback();
 	const spt::Current &getCurrent();
 	auto getSpotifyRunner() -> const SpotifyClient::Runner *;
 	void resetLibraryPlaylist() const;
+	auto history() -> HistoryButton *;
 
 #ifdef USE_DBUS
 	mp::Service *getMediaPlayer();
@@ -126,8 +121,6 @@ private:
 	// Methods
 	QWidget *createCentralWidget();
 	void setAlbumImage(const lib::spt::entity &albumEntity, const std::string &albumImageUrl);
-	void setSptContext(const std::string &uri);
-	auto history() -> HistoryButton *;
 
 	// Slots
 	void onSpotifyStatusChanged(const QString &status);

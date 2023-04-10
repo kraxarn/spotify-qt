@@ -183,15 +183,15 @@ void List::Tracks::onDoubleClicked(QTreeWidgetItem *item, int /*column*/)
 		mainWindow->refresh();
 	};
 
-	const auto &context = mainWindow->getSptContext();
-	if (context.empty())
+	const auto uri = mainWindow->history()->currentUri();
+	if (uri.empty())
 	{
 		auto allTracks = mainWindow->currentTracks();
-		this->spotify.play_tracks(currentIndex().row(), allTracks, callback);
+		spotify.play_tracks(currentIndex().row(), allTracks, callback);
 	}
 	else
 	{
-		this->spotify.play_tracks(trackIndex, context, callback);
+		spotify.play_tracks(trackIndex, uri, callback);
 	}
 }
 
@@ -589,7 +589,7 @@ void List::Tracks::load(const lib::spt::playlist &playlist)
 
 	if (mainWindow != nullptr)
 	{
-		mainWindow->setSptContext(playlist);
+		mainWindow->history()->push(playlist);
 	}
 
 	settings.general.last_playlist = playlist.id;
@@ -599,7 +599,9 @@ void List::Tracks::load(const lib::spt::playlist &playlist)
 void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-	if (lib::spt::id_to_uri("playlist", playlist.id) != mainWindow->getSptContext())
+	const auto playlistUri = lib::spt::id_to_uri("playlist", playlist.id);
+
+	if (playlistUri != mainWindow->history()->currentUri())
 	{
 		return;
 	}
@@ -630,7 +632,7 @@ void List::Tracks::load(const lib::spt::album &album, const std::string &trackId
 	auto *mainWindow = MainWindow::find(parentWidget());
 	if (mainWindow != nullptr)
 	{
-		mainWindow->setSptContext(album);
+		mainWindow->history()->push(album);
 	}
 
 	spotify.album_tracks(album,

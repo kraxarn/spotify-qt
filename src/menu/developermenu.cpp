@@ -126,7 +126,7 @@ auto DeveloperMenu::infoMenu() -> QMenu *
 	addMenuItem(menu, "Context", [mainWindow]()
 	{
 		QMessageBox::information(mainWindow, "Context",
-			QString::fromStdString(mainWindow->getSptContext()));
+			QString::fromStdString(mainWindow->history()->currentUri()));
 	});
 
 	return menu;

@@ -97,6 +97,31 @@ void HistoryButton::forward()
 	}
 }
 
+auto HistoryButton::currentUri() const -> std::string
+{
+	const auto &data = current->data();
+
+	if (data.canConvert<lib::spt::playlist>())
+	{
+		const auto playlistId = data.value<lib::spt::playlist>().id;
+		return lib::spt::id_to_uri("playlist", playlistId);
+	}
+
+	if (data.canConvert<lib::spt::album>())
+	{
+		const auto albumId = data.value<lib::spt::album>().id;
+		return lib::spt::id_to_uri("album", albumId);
+	}
+
+	if (data.canConvert<lib::spt::show>())
+	{
+		const auto showId = data.value<lib::spt::show>().id;
+		return lib::spt::id_to_uri("show", showId);
+	}
+
+	return {};
+}
+
 auto HistoryButton::getEntityId(QAction *action) -> std::string
 {
 	if (action->data().canConvert<lib::spt::playlist>())
@@ -156,8 +181,7 @@ void HistoryButton::onMenuTriggered(QAction *action)
 	}
 	else if (action->data().canConvert<lib::spt::show>())
 	{
-		const auto show = action->data().value<lib::spt::show>();
-		mainWindow->setSptContext(show);
+		lib::log::error("Shows currently not supported");
 	}
 	else
 	{

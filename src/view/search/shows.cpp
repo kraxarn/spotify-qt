@@ -47,7 +47,7 @@ void Search::Shows::onItemClicked(QListWidgetItem *item)
 					tracks.insert(tracks.begin(), episode.to_track(show));
 				}
 
-				mainWindow->setSptContext(show);
+				mainWindow->history()->push(show);
 				tracksList->load(tracks);
 				tracksList->setEnabled(true);
 			});

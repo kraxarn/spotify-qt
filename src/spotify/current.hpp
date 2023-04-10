@@ -8,7 +8,7 @@ namespace spt
 {
 	struct Current
 	{
+		// TODO: Remove this
 		lib::spt::playback playback;
-		QString context;
 	};
 }
