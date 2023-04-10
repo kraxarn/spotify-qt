@@ -44,6 +44,16 @@ void HistoryButton::push(const lib::spt::entity &entity,
 		return;
 	}
 
+	for (auto *menuAction: menu()->actions())
+	{
+		if (menuAction == current)
+		{
+			break;
+		}
+
+		menu()->removeAction(menuAction);
+	}
+
 	auto *action = new QAction(QString::fromStdString(entity.name));
 	action->setIcon(Icon::getByType(type));
 	action->setData(data);
