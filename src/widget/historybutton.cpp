@@ -165,44 +165,45 @@ void HistoryButton::setCurrent(QAction *action)
 	current = action;
 }
 
-void HistoryButton::onTriggered(bool /*checked*/)
-{
-	back();
-}
-
-void HistoryButton::onMenuTriggered(QAction *action)
+auto HistoryButton::load(const QVariant &data) -> bool
 {
 	auto *mainWindow = MainWindow::find(parent());
 	if (mainWindow == nullptr)
 	{
-		return;
+		return false;
 	}
 
 	auto *tracksList = mainWindow->getSongsTree();
-	if (action->data().canConvert<lib::spt::playlist>())
+
+	if (data.canConvert<lib::spt::playlist>())
 	{
-		const auto playlist = action->data().value<lib::spt::playlist>();
+		const auto playlist = data.value<lib::spt::playlist>();
 		tracksList->load(playlist);
+		return true;
 	}
-	else if (action->data().canConvert<lib::spt::album>())
+
+	if (data.canConvert<lib::spt::album>())
 	{
-		const auto album = action->data().value<lib::spt::album>();
+		const auto album = data.value<lib::spt::album>();
 		tracksList->load(album);
+		return true;
 	}
-	else if (action->data().canConvert<lib::spt::show>())
+
+	if (data.canConvert<lib::spt::show>())
 	{
 		lib::log::error("Shows currently not supported");
-		return;
+		return false;
 	}
-	else if (action->data().canConvert<lib::spt::entity>())
+
+	if (data.canConvert<lib::spt::entity>())
 	{
 		auto *library = mainWindow->findChild<List::Library *>();
 		if (library == nullptr)
 		{
-			return;
+			return false;
 		}
 
-		const auto entity = action->data().value<lib::spt::entity>();
+		const auto entity = data.value<lib::spt::entity>();
 		for (int i = 0; i < library->topLevelItemCount(); i++)
 		{
 			auto *item = library->topLevelItem(i);
@@ -210,15 +211,26 @@ void HistoryButton::onMenuTriggered(QAction *action)
 			{
 				library->setCurrentItem(item);
 				library->load(item);
-				break;
+				return true;
 			}
 		}
-	}
-	else
-	{
-		lib::log::warn("Unknown type: {}", action->data().typeName());
-		return;
+
+		return false;
 	}
 
-	setCurrent(action);
+	lib::log::warn("Unknown type: {}", data.typeName());
+	return false;
+}
+
+void HistoryButton::onTriggered(bool /*checked*/)
+{
+	back();
+}
+
+void HistoryButton::onMenuTriggered(QAction *action)
+{
+	if (load(action->data()))
+	{
+		setCurrent(action);
+	}
 }

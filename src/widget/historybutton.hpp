@@ -30,6 +30,7 @@ private:
 	void push(const lib::spt::entity &entity, const QVariant &data, const std::string &type);
 	static auto getEntityId(QAction *action) -> std::string;
 	void setCurrent(QAction *action);
+	auto load(const QVariant &data) -> bool;
 
 	void onTriggered(bool checked);
 	void onMenuTriggered(QAction *action);
