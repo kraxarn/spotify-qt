@@ -36,9 +36,9 @@ void HistoryButton::push(const lib::spt::show &show)
 	push(show, QVariant::fromValue(show), "show");
 }
 
-void HistoryButton::push(const std::string &name)
+void HistoryButton::push(const lib::spt::entity &entity)
 {
-	push({name, name}, QVariant::fromValue(name), "track");
+	push(entity, QVariant::fromValue(entity), "track");
 }
 
 void HistoryButton::push(const lib::spt::entity &entity,
@@ -146,9 +146,9 @@ auto HistoryButton::getEntityId(QAction *action) -> std::string
 		return data.value<lib::spt::show>().id;
 	}
 
-	if (data.canConvert<std::string>())
+	if (data.canConvert<lib::spt::entity>())
 	{
-		return data.value<std::string>();
+		return data.value<lib::spt::entity>().id;
 	}
 
 	return {};

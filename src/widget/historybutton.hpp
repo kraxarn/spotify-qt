@@ -17,7 +17,7 @@ public:
 	void push(const lib::spt::playlist &playlist);
 	void push(const lib::spt::album &album);
 	void push(const lib::spt::show &show);
-	void push(const std::string &name);
+	void push(const lib::spt::entity &entity);
 
 	void back();
 	void forward();
