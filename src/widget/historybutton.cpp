@@ -173,19 +173,17 @@ auto HistoryButton::load(const QVariant &data) -> bool
 		return false;
 	}
 
-	auto *tracksList = mainWindow->getSongsTree();
-
 	if (data.canConvert<lib::spt::playlist>())
 	{
 		const auto playlist = data.value<lib::spt::playlist>();
-		tracksList->load(playlist);
+		mainWindow->getSongsTree()->load(playlist);
 		return true;
 	}
 
 	if (data.canConvert<lib::spt::album>())
 	{
 		const auto album = data.value<lib::spt::album>();
-		tracksList->load(album);
+		mainWindow->getSongsTree()->load(album);
 		return true;
 	}
 
