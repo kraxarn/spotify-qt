@@ -35,7 +35,7 @@ namespace List
 		void onExpanded(QTreeWidgetItem *item);
 		void onMenuRequested(const QPoint &pos);
 
-		void tracksLoaded(const std::string &id, const std::vector<lib::spt::track> &tracks);
+		void tracksLoaded(const lib::spt::entity &entity, const std::vector<lib::spt::track> &tracks);
 		static void itemsLoaded(std::vector<ListItem::Library> &items, QTreeWidgetItem *item);
 	};
 }

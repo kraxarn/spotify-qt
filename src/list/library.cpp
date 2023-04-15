@@ -80,8 +80,12 @@ void List::Library::onClicked(QTreeWidgetItem *item, int /*column*/)
 	}
 	else
 	{
-		auto id = item->text(0).toLower().replace(' ', '_').toStdString();
-		const auto &cacheTracks = mainWindow->loadTracksFromCache(id);
+		const lib::spt::entity entity{
+			item->text(0).toLower().replace(' ', '_').toStdString(),
+			item->text(0).toStdString(),
+		};
+
+		const auto &cacheTracks = mainWindow->loadTracksFromCache(entity.id);
 		auto *songs = mainWindow->getSongsTree();
 
 		if (cacheTracks.empty())
@@ -93,9 +97,9 @@ void List::Library::onClicked(QTreeWidgetItem *item, int /*column*/)
 			songs->load(cacheTracks);
 		}
 
-		auto callback = [this, id](const std::vector<lib::spt::track> &tracks)
+		auto callback = [this, entity](const std::vector<lib::spt::track> &tracks)
 		{
-			this->tracksLoaded(id, tracks);
+			tracksLoaded(entity, tracks);
 		};
 
 		if (item->text(0) == recentlyPlayed)
@@ -144,15 +148,16 @@ void List::Library::onClicked(QTreeWidgetItem *item, int /*column*/)
 	}
 }
 
-void List::Library::tracksLoaded(const std::string &id, const std::vector<lib::spt::track> &tracks)
+void List::Library::tracksLoaded(const lib::spt::entity &entity,
+	const std::vector<lib::spt::track> &tracks)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 
 	if (!tracks.empty())
 	{
-		mainWindow->saveTracksToCache(id, tracks);
+		mainWindow->saveTracksToCache(entity.id, tracks);
 		mainWindow->getSongsTree()->load(tracks);
-		mainWindow->setNoSptContext();
+		mainWindow->history()->push(entity);
 	}
 	mainWindow->getSongsTree()->setEnabled(true);
 }
