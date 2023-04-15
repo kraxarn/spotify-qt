@@ -39,7 +39,7 @@ List::Library::Library(lib::spt::api &spotify, lib::cache &cache, QWidget *paren
 		this, &List::Library::onMenuRequested);
 }
 
-void List::Library::onClicked(QTreeWidgetItem *item, int /*column*/)
+void List::Library::load(QTreeWidgetItem *item)
 {
 	if (item != nullptr
 		&& item->parent() == nullptr
@@ -160,6 +160,11 @@ void List::Library::tracksLoaded(const lib::spt::entity &entity,
 		mainWindow->history()->push(entity);
 	}
 	mainWindow->getSongsTree()->setEnabled(true);
+}
+
+void List::Library::onClicked(QTreeWidgetItem *item, int /*column*/)
+{
+	load(item);
 }
 
 void List::Library::onDoubleClicked(QTreeWidgetItem *item, int /*column*/)

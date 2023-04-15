@@ -18,6 +18,8 @@ namespace List
 	public:
 		Library(lib::spt::api &spotify, lib::cache &cache, QWidget *parent);
 
+		void load(QTreeWidgetItem *item);
+
 	private:
 		lib::spt::api &spotify;
 		lib::cache &cache;
