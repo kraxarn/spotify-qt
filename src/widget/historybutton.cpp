@@ -166,8 +166,6 @@ void HistoryButton::onMenuTriggered(QAction *action)
 		return;
 	}
 
-	setCurrent(action);
-
 	auto *tracksList = mainWindow->getSongsTree();
 	if (action->data().canConvert<lib::spt::playlist>())
 	{
@@ -182,9 +180,13 @@ void HistoryButton::onMenuTriggered(QAction *action)
 	else if (action->data().canConvert<lib::spt::show>())
 	{
 		lib::log::error("Shows currently not supported");
+		return;
 	}
 	else
 	{
 		lib::log::warn("Unknown type: {}", action->data().typeName());
+		return;
 	}
+
+	setCurrent(action);
 }
