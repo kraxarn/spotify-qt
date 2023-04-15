@@ -36,6 +36,11 @@ void HistoryButton::push(const lib::spt::show &show)
 	push(show, QVariant::fromValue(show), "show");
 }
 
+void HistoryButton::push(const std::string &name)
+{
+	push({name, name}, QVariant::fromValue(name), "track");
+}
+
 void HistoryButton::push(const lib::spt::entity &entity,
 	const QVariant &data, const std::string &type)
 {
@@ -124,19 +129,26 @@ auto HistoryButton::currentUri() const -> std::string
 
 auto HistoryButton::getEntityId(QAction *action) -> std::string
 {
-	if (action->data().canConvert<lib::spt::playlist>())
+	const auto &data = action->data();
+
+	if (data.canConvert<lib::spt::playlist>())
 	{
-		return action->data().value<lib::spt::playlist>().id;
+		return data.value<lib::spt::playlist>().id;
 	}
 
-	if (action->data().canConvert<lib::spt::album>())
+	if (data.canConvert<lib::spt::album>())
 	{
-		return action->data().value<lib::spt::album>().id;
+		return data.value<lib::spt::album>().id;
 	}
 
-	if (action->data().canConvert<lib::spt::show>())
+	if (data.canConvert<lib::spt::show>())
 	{
-		return action->data().value<lib::spt::show>().id;
+		return data.value<lib::spt::show>().id;
+	}
+
+	if (data.canConvert<std::string>())
+	{
+		return data.value<std::string>();
 	}
 
 	return {};
