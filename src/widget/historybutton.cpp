@@ -161,7 +161,7 @@ void HistoryButton::setCurrent(QAction *action)
 		Font::setFontWeight(current, QFont::Normal);
 	}
 
-	Font::setFontWeight(action, QFont::DemiBold);
+	Font::setFontWeight(action, QFont::Bold);
 	current = action;
 }
 
