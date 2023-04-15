@@ -227,8 +227,11 @@ void HistoryButton::onTriggered(bool /*checked*/)
 
 void HistoryButton::onMenuTriggered(QAction *action)
 {
-	if (load(action->data()))
+	auto *previous = current;
+	setCurrent(action);
+
+	if (!load(action->data()))
 	{
-		setCurrent(action);
+		setCurrent(previous);
 	}
 }
