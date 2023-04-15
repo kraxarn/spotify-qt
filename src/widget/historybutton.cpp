@@ -194,6 +194,26 @@ void HistoryButton::onMenuTriggered(QAction *action)
 		lib::log::error("Shows currently not supported");
 		return;
 	}
+	else if (action->data().canConvert<lib::spt::entity>())
+	{
+		auto *library = mainWindow->findChild<List::Library *>();
+		if (library == nullptr)
+		{
+			return;
+		}
+
+		const auto entity = action->data().value<lib::spt::entity>();
+		for (int i = 0; i < library->topLevelItemCount(); i++)
+		{
+			auto *item = library->topLevelItem(i);
+			if (item->text(0) == QString::fromStdString(entity.name))
+			{
+				library->setCurrentItem(item);
+				library->load(item);
+				break;
+			}
+		}
+	}
 	else
 	{
 		lib::log::warn("Unknown type: {}", action->data().typeName());
