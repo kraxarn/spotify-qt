@@ -1,5 +1,7 @@
 #include "developermenu.hpp"
 #include "mainwindow.hpp"
+#include "lib/qtpaths.hpp"
+
 #include "dialog/createplaylist.hpp"
 #include "dialog/addtoplaylist.hpp"
 #include "dialog/apirequest.hpp"
@@ -210,7 +212,7 @@ void DeveloperMenu::onDialogMenuAboutToShow()
 		}},
 		{QStringLiteral("Tracks cache"), [this, mainWindow]
 		{
-			return new TracksCacheDialog(cache, mainWindow);
+			return new Dialog::TracksCache(cache, mainWindow);
 		}},
 		{QStringLiteral("What's new"), [this, mainWindow]
 		{

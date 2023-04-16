@@ -1,7 +1,7 @@
-#include "trackscachedialog.hpp"
+#include "dialog/trackscache.hpp"
 
-TracksCacheDialog::TracksCacheDialog(lib::cache &cache, QWidget *parent)
-	: QDialog(parent),
+Dialog::TracksCache::TracksCache(lib::cache &cache, QWidget *parent)
+	: Base(parent),
 	cache(cache)
 {
 	resize(400, 300);
@@ -25,16 +25,11 @@ TracksCacheDialog::TracksCacheDialog(lib::cache &cache, QWidget *parent)
 
 	auto *buttons = new QDialogButtonBox(this);
 	layout->addWidget(buttons);
-	QPushButton::connect(buttons->addButton(QDialogButtonBox::Ok),
-		&QPushButton::clicked, this, &TracksCacheDialog::okClicked);
+
+	Base::addAction(DialogAction::Ok);
 }
 
-void TracksCacheDialog::okClicked(bool /*checked*/)
-{
-	accept();
-}
-
-void TracksCacheDialog::open()
+void Dialog::TracksCache::showEvent(QShowEvent *event)
 {
 	tree->clear();
 
@@ -50,5 +45,5 @@ void TracksCacheDialog::open()
 		}
 	}
 
-	QDialog::open();
+	QDialog::showEvent(event);
 }

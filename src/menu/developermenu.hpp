@@ -3,7 +3,7 @@
 #include "dialog/deviceselect.hpp"
 #include "dialog/openlink.hpp"
 #include "dialog/setup.hpp"
-#include "dialog/trackscachedialog.hpp"
+#include "dialog/trackscache.hpp"
 #include "dialog/whatsnew.hpp"
 #include "util/icon.hpp"
 #include "lib/settings.hpp"

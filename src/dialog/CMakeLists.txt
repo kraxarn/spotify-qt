@@ -13,5 +13,5 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/passwordentry.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/settings.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/setup.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/trackscachedialog.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/trackscache.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/whatsnew.cpp)
