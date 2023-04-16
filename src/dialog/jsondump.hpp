@@ -16,7 +16,7 @@ namespace Dialog
 		void showEvent(QShowEvent *event) override;
 
 	private:
-		static constexpr int width = 400;
+		static constexpr int width = 500;
 		static constexpr int height = 600;
 
 		nlohmann::json json;
