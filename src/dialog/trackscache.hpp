@@ -14,6 +14,8 @@ namespace Dialog
 	public:
 		TracksCache(lib::cache &cache, QWidget *parent);
 
+		void setPlaylistId(const std::string &value);
+
 	protected:
 		void showEvent(QShowEvent *event) override;
 
@@ -21,7 +23,10 @@ namespace Dialog
 		static constexpr int width = 500;
 		static constexpr int height = 300;
 
+		std::string playlistId;
 		QTreeWidget *tree = nullptr;
 		lib::cache &cache;
+
+		void addTrack(const lib::spt::track &track);
 	};
 }

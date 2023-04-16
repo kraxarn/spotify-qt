@@ -27,22 +27,46 @@ Dialog::TracksCache::TracksCache(lib::cache &cache, QWidget *parent)
 	Base::addAction(DialogAction::Ok);
 }
 
+void Dialog::TracksCache::setPlaylistId(const std::string &value)
+{
+	playlistId = value;
+}
+
 void Dialog::TracksCache::showEvent(QShowEvent *event)
 {
 	tree->clear();
+	const auto allTracks = cache.all_tracks();
 
-	for (const auto &pair: cache.all_tracks())
+	if (!playlistId.empty())
 	{
-		for (const auto &track: pair.second)
+		if (allTracks.find(playlistId) != allTracks.cend())
 		{
-			new QTreeWidgetItem(tree, {
-				QString::fromStdString(track.id),
-				QString::fromStdString(track.name),
-				QString::fromStdString(lib::spt::entity::combine_names(track.artists)),
-				QString::fromStdString(track.album.name),
-			});
+			for (const auto &track: allTracks.at(playlistId))
+			{
+				addTrack(track);
+			}
+		}
+	}
+	else
+	{
+		for (const auto &pair: cache.all_tracks())
+		{
+			for (const auto &track: pair.second)
+			{
+				addTrack(track);
+			}
 		}
 	}
 
 	QDialog::showEvent(event);
+}
+
+void Dialog::TracksCache::addTrack(const lib::spt::track &track)
+{
+	new QTreeWidgetItem(tree, {
+		QString::fromStdString(track.id),
+		QString::fromStdString(track.name),
+		QString::fromStdString(lib::spt::entity::combine_names(track.artists)),
+		QString::fromStdString(track.album.name),
+	});
 }
