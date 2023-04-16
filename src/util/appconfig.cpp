@@ -14,6 +14,6 @@ auto AppConfig::useNativeMenuBar() -> bool
 
 auto AppConfig::useClickableSlider() -> bool
 {
-	const auto name = QApplication::style()->name();
+	const auto name = QApplication::style()->objectName();
 	return name.compare(QStringLiteral("fusion"), Qt::CaseInsensitive) == 0;
 }
