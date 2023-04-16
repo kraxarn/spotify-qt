@@ -1,8 +1,7 @@
 #include "dialog/trackscache.hpp"
 
-Dialog::TracksCache::TracksCache(lib::cache &cache, QWidget *parent)
-	: Base(parent),
-	cache(cache)
+Dialog::TracksCache::TracksCache(QWidget *parent)
+	: Base(parent)
 {
 	resize(width, height);
 	setWindowTitle(QStringLiteral("Tracks cache"));
@@ -27,38 +26,23 @@ Dialog::TracksCache::TracksCache(lib::cache &cache, QWidget *parent)
 	Base::addAction(DialogAction::Ok);
 }
 
-void Dialog::TracksCache::setPlaylistId(const std::string &value)
+void Dialog::TracksCache::load(const std::vector<lib::spt::track> &tracks)
 {
-	playlistId = value;
+	for (const auto &track: tracks)
+	{
+		addTrack(track);
+	}
 }
 
-void Dialog::TracksCache::showEvent(QShowEvent *event)
+void Dialog::TracksCache::loadAllTracks(const lib::cache &cache)
 {
-	tree->clear();
-	const auto allTracks = cache.all_tracks();
-
-	if (!playlistId.empty())
+	for (const auto &pair: cache.all_tracks())
 	{
-		if (allTracks.find(playlistId) != allTracks.cend())
+		for (const auto &track: pair.second)
 		{
-			for (const auto &track: allTracks.at(playlistId))
-			{
-				addTrack(track);
-			}
+			addTrack(track);
 		}
 	}
-	else
-	{
-		for (const auto &pair: cache.all_tracks())
-		{
-			for (const auto &track: pair.second)
-			{
-				addTrack(track);
-			}
-		}
-	}
-
-	QDialog::showEvent(event);
 }
 
 void Dialog::TracksCache::addTrack(const lib::spt::track &track)

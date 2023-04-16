@@ -212,7 +212,9 @@ void DeveloperMenu::onDialogMenuAboutToShow()
 		}},
 		{QStringLiteral("Tracks cache"), [this, mainWindow]
 		{
-			return new Dialog::TracksCache(cache, mainWindow);
+			auto *dialog = new Dialog::TracksCache(mainWindow);
+			dialog->loadAllTracks(cache);
+			return dialog;
 		}},
 		{QStringLiteral("What's new"), [this, mainWindow]
 		{

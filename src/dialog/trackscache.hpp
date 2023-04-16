@@ -12,20 +12,16 @@ namespace Dialog
 	Q_OBJECT
 
 	public:
-		TracksCache(lib::cache &cache, QWidget *parent);
+		explicit TracksCache(QWidget *parent);
 
-		void setPlaylistId(const std::string &value);
-
-	protected:
-		void showEvent(QShowEvent *event) override;
+		void load(const std::vector<lib::spt::track> &tracks);
+		void loadAllTracks(const lib::cache &cache);
 
 	private:
 		static constexpr int width = 500;
 		static constexpr int height = 300;
 
-		std::string playlistId;
 		QTreeWidget *tree = nullptr;
-		lib::cache &cache;
 
 		void addTrack(const lib::spt::track &track);
 	};
