@@ -1,5 +1,8 @@
 #include "util/appconfig.hpp"
 
+#include <QApplication>
+#include <QStyle>
+
 auto AppConfig::useNativeMenuBar() -> bool
 {
 #ifdef __APPLE__
@@ -7,4 +10,10 @@ auto AppConfig::useNativeMenuBar() -> bool
 #else
 	return false;
 #endif
+}
+
+auto AppConfig::useClickableSlider() -> bool
+{
+	const auto name = QApplication::style()->name();
+	return name.compare(QStringLiteral("fusion"), Qt::CaseInsensitive) == 0;
 }

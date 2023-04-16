@@ -16,9 +16,4 @@ private:
 	bool enabled = true;
 
 	auto valueFromPos(const QPoint &pos) -> int;
-
-	/**
-	 * If style already implements custom click handling
-	 */
-	static auto styleHasClickSupport() -> bool;
 };
