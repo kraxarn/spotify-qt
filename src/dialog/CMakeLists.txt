@@ -7,6 +7,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/deviceselect.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/disallows.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/editplaylist.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/jsondump.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/lyricssearch.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/memory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/openlink.cpp
