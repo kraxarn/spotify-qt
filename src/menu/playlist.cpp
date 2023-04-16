@@ -103,10 +103,13 @@ auto Menu::Playlist::devMenu() -> QMenu *
 	menu->setIcon(Icon::get("folder-txt"));
 
 	const auto playlistId = QString::fromStdString(playlist.id);
-	QAction::connect(menu->addAction(playlistId), &QAction::triggered,
+	auto *copyId = menu->addAction(QString("Copy ID: %1").arg(playlistId));
+
+	QAction::connect(copyId, &QAction::triggered,
 		this, &Menu::Playlist::onCopyId);
 
-	QAction::connect(menu->addAction("As JSON"), &QAction::triggered,
+	auto *openJson = menu->addAction(QStringLiteral("Preview as JSON"));
+	QAction::connect(openJson, &QAction::triggered,
 		this, &Menu::Playlist::onShowJson);
 
 	return menu;
