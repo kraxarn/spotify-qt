@@ -1,6 +1,8 @@
 #include "menu/playlist.hpp"
 #include "mainwindow.hpp"
+
 #include "dialog/trackscache.hpp"
+#include "dialog/jsondump.hpp"
 
 Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playlist,
 	lib::cache &cache, QWidget *parent)
@@ -298,9 +300,9 @@ void Menu::Playlist::onCopyId(bool /*checked*/) const
 
 void Menu::Playlist::onShowJson(bool /*checked*/) const
 {
-	const nlohmann::json json = playlist;
-	QMessageBox::information(MainWindow::find(parentWidget()), QStringLiteral("JSON"),
-		QString::fromStdString(json.dump(4)));
+	auto *mainWindow = MainWindow::find(parent());
+	auto *dialog = new Dialog::JsonDump(playlist, mainWindow);
+	dialog->open();
 }
 
 void Menu::Playlist::onShowTracks(bool /*checked*/) const
