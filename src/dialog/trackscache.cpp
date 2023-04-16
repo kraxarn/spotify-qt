@@ -18,8 +18,9 @@ Dialog::TracksCache::TracksCache(lib::cache &cache, QWidget *parent)
 	tree->setSortingEnabled(true);
 	tree->setRootIsDecorated(false);
 	tree->setAllColumnsShowFocus(true);
-	tree->setColumnCount(3);
+	tree->setColumnCount(4);
 	tree->setHeaderLabels({
+		QStringLiteral("ID"),
 		QStringLiteral("Title"),
 		QStringLiteral("Artist"),
 		QStringLiteral("Album"),
@@ -40,6 +41,7 @@ void Dialog::TracksCache::showEvent(QShowEvent *event)
 		for (const auto &track: pair.second)
 		{
 			new QTreeWidgetItem(tree, {
+				QString::fromStdString(track.id),
 				QString::fromStdString(track.name),
 				QString::fromStdString(lib::spt::entity::combine_names(track.artists)),
 				QString::fromStdString(track.album.name),
