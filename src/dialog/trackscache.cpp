@@ -6,9 +6,7 @@ Dialog::TracksCache::TracksCache(lib::cache &cache, QWidget *parent)
 {
 	resize(width, height);
 	setWindowTitle(QStringLiteral("Tracks cache"));
-
-	auto *layout = new QVBoxLayout(this);
-	setLayout(layout);
+	auto *layout = Base::layout<QVBoxLayout>();
 
 	tree = new QTreeWidget(this);
 	layout->addWidget(tree);
@@ -25,9 +23,6 @@ Dialog::TracksCache::TracksCache(lib::cache &cache, QWidget *parent)
 		QStringLiteral("Artist"),
 		QStringLiteral("Album"),
 	});
-
-	auto *buttons = new QDialogButtonBox(this);
-	layout->addWidget(buttons);
 
 	Base::addAction(DialogAction::Ok);
 }
