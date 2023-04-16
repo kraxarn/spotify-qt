@@ -52,6 +52,7 @@ namespace Menu
 		void onOpenInSpotify(bool checked) const;
 		void onCopyId(bool checked) const;
 		void onShowJson(bool checked) const;
+		void onShowTracks(bool checked) const;
 		void onPlaylistSaved();
 	};
 }

@@ -1,5 +1,6 @@
 #include "menu/playlist.hpp"
 #include "mainwindow.hpp"
+#include "dialog/trackscache.hpp"
 
 Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playlist,
 	lib::cache &cache, QWidget *parent)
@@ -108,9 +109,13 @@ auto Menu::Playlist::devMenu() -> QMenu *
 	QAction::connect(copyId, &QAction::triggered,
 		this, &Menu::Playlist::onCopyId);
 
-	auto *openJson = menu->addAction(QStringLiteral("Preview as JSON"));
+	auto *openJson = menu->addAction(QStringLiteral("View as JSON"));
 	QAction::connect(openJson, &QAction::triggered,
 		this, &Menu::Playlist::onShowJson);
+
+	auto *openTracks = menu->addAction(QStringLiteral("View cached tracks"));
+	QAction::connect(openTracks, &QAction::triggered,
+		this, &Menu::Playlist::onShowTracks);
 
 	return menu;
 }
@@ -294,6 +299,14 @@ void Menu::Playlist::onShowJson(bool /*checked*/) const
 	nlohmann::json json = playlist;
 	QMessageBox::information(MainWindow::find(parentWidget()), "JSON",
 		QString::fromStdString(json.dump(4)));
+}
+
+void Menu::Playlist::onShowTracks(bool /*checked*/) const
+{
+	auto *mainWindow = MainWindow::find(parent());
+	auto *dialog = new Dialog::TracksCache(mainWindow);
+	dialog->load(playlist.tracks);
+	dialog->open();
 }
 
 void Menu::Playlist::onPlaylistSaved()
