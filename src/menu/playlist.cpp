@@ -138,10 +138,12 @@ void Menu::Playlist::tracksLoaded(const std::vector<lib::spt::track> &items)
 	{
 		tracksAction->setText(QString("%1 track%2, %3%4 m")
 			.arg(tracks.size())
-			.arg(tracks.size() == 1 ? "" : "s")
-			.arg(minutes >= sInMin
-				? QString("%1 h ").arg(minutes / sInMin)
-				: QString())
+			.arg(tracks.size() == 1
+					? QString()
+					: QStringLiteral("s"),
+				minutes >= sInMin
+					? QString("%1 h ").arg(minutes / sInMin)
+					: QString())
 			.arg(minutes % sInMin));
 	}
 
@@ -252,9 +254,9 @@ void Menu::Playlist::onFollow(bool /*checked*/)
 		{
 			StatusMessage::error(QString("Failed to %1: %2")
 				.arg(isFollowing
-					? QStringLiteral("unfollow")
-					: QStringLiteral("follow"))
-				.arg(QString::fromStdString(status)));
+						? QStringLiteral("unfollow")
+						: QStringLiteral("follow"),
+					QString::fromStdString(status)));
 			return;
 		}
 
@@ -296,8 +298,8 @@ void Menu::Playlist::onCopyId(bool /*checked*/) const
 
 void Menu::Playlist::onShowJson(bool /*checked*/) const
 {
-	nlohmann::json json = playlist;
-	QMessageBox::information(MainWindow::find(parentWidget()), "JSON",
+	const nlohmann::json json = playlist;
+	QMessageBox::information(MainWindow::find(parentWidget()), QStringLiteral("JSON"),
 		QString::fromStdString(json.dump(4)));
 }
 
