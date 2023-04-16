@@ -4,8 +4,8 @@ Dialog::TracksCache::TracksCache(lib::cache &cache, QWidget *parent)
 	: Base(parent),
 	cache(cache)
 {
-	resize(400, 300);
-	setWindowTitle("Tracks cache");
+	resize(width, height);
+	setWindowTitle(QStringLiteral("Tracks cache"));
 
 	auto *layout = new QVBoxLayout(this);
 	setLayout(layout);
@@ -20,7 +20,9 @@ Dialog::TracksCache::TracksCache(lib::cache &cache, QWidget *parent)
 	tree->setAllColumnsShowFocus(true);
 	tree->setColumnCount(3);
 	tree->setHeaderLabels({
-		"Title", "Artist", "Album",
+		QStringLiteral("Title"),
+		QStringLiteral("Artist"),
+		QStringLiteral("Album"),
 	});
 
 	auto *buttons = new QDialogButtonBox(this);
