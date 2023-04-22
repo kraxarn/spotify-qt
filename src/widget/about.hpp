@@ -10,4 +10,7 @@ public:
 private:
 	static constexpr int logoSize = 96;
 	static constexpr float appNameFontMulti = 1.5F;
+
+	auto appLogo() -> QWidget *;
+	auto appInfo() -> QWidget *;
 };
