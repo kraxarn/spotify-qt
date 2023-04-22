@@ -5,7 +5,7 @@
 
 void lib::spt::api::current_playback(lib::callback<lib::result<lib::spt::playback>> &callback)
 {
-	request.get<lib::spt::playback>("me/player", callback);
+	request.get<lib::spt::playback>("me/player?market=from_token", callback);
 }
 
 //region set_device
