@@ -50,12 +50,12 @@ void lib::spt::api::playlist_tracks(const lib::spt::playlist &playlist,
 		lib::uri uri(url);
 		auto params = uri.get_search_params();
 
-		if (params.find("market") == params.cend())
+		if (params.find("market") == params.end())
 		{
 			params["market"] = "from_token";
 		}
 
-		if (params.find("limit") == params.cend())
+		if (params.find("limit") == params.end())
 		{
 			params["limit"] = "50";
 		}
