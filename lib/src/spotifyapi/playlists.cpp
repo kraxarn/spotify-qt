@@ -1,4 +1,5 @@
 #include "lib/spotify/api.hpp"
+#include "lib/uri.hpp"
 
 // Currently unavailable:
 // users/{user_id}/playlists
@@ -46,10 +47,21 @@ void lib::spt::api::playlist_tracks(const lib::spt::playlist &playlist,
 {
 	auto fetch = [this, callback](const std::string &url)
 	{
-		auto item_url = lib::strings::contains(url, "market=")
-			? url : lib::fmt::format("{}{}market=from_token",
-				url, lib::strings::contains(url, "?") ? "&" : "?");
-		get_items(item_url, callback);
+		lib::uri uri(url);
+		auto params = uri.get_search_params();
+
+		if (params.find("market") == params.cend())
+		{
+			params["market"] = "from_token";
+		}
+
+		if (params.find("limit") == params.cend())
+		{
+			params["limit"] = "50";
+		}
+
+		uri.set_search_params(params);
+		get_items(uri.get_url(), callback);
 	};
 
 	if (playlist.tracks_href.empty())
