@@ -43,7 +43,7 @@ namespace View
 		static auto getTimestamp(const QListWidgetItem *item) -> qlonglong;
 		void setLyricsIds(const std::vector<lib::lrc::search_result> &results, int index);
 
-		void onTick(const lib::spt::playback &playback);
+		void onPlaybackRefreshed(const lib::spt::playback &playback);
 		void onLyricsIdSelect(int index);
 	};
 }

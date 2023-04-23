@@ -155,7 +155,8 @@ void View::Lyrics::load(const lib::lrc::lyrics &loaded)
 		return;
 	}
 
-	MainWindow::connect(window, &MainWindow::tick, this, &View::Lyrics::onTick);
+	MainWindow::connect(window, &MainWindow::playbackRefreshed,
+		this, &View::Lyrics::onPlaybackRefreshed);
 }
 
 auto View::Lyrics::getTimestamp(const QListWidgetItem *item) -> qlonglong
@@ -186,7 +187,7 @@ void View::Lyrics::setLyricsIds(const std::vector<lib::lrc::search_result> &resu
 	}
 }
 
-void View::Lyrics::onTick(const lib::spt::playback &playback)
+void View::Lyrics::onPlaybackRefreshed(const lib::spt::playback &playback)
 {
 	if (!playback.is_playing || lyricsList->count() <= 0)
 	{

@@ -70,7 +70,7 @@ public:
 #endif
 
 signals:
-	void tick(const lib::spt::playback &playback);
+	void playbackRefreshed(const lib::spt::playback &playback);
 
 protected:
 	void closeEvent(QCloseEvent *event) override;
