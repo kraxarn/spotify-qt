@@ -85,3 +85,8 @@ auto lib::spt::playback::is_allowed(const lib::player_action &action) const -> b
 {
 	return disallowed_actions.find(action) == disallowed_actions.end();
 }
+
+auto lib::spt::playback::is_valid() const -> bool
+{
+	return item.is_valid();
+}

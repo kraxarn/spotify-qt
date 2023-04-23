@@ -35,6 +35,11 @@ namespace lib
 			auto is_allowed(const player_action &action) const -> bool;
 
 			/**
+			 * Is anything valid currently playing
+			 */
+			auto is_valid() const -> bool;
+
+			/**
 			 * Context currently playing from
 			 */
 			lib::spt::context context;
