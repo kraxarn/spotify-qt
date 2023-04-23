@@ -92,7 +92,7 @@ auto TrayIcon::playback() -> lib::spt::playback
 	{
 		return {};
 	}
-	return mainWindow->currentPlayback();
+	return mainWindow->playback();
 }
 
 void TrayIcon::setPixmap(const QPixmap &pixmap)

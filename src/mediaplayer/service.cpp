@@ -71,7 +71,7 @@ void mp::Service::seeked(qint64 newPos)
 auto mp::Service::currentPlayback() -> lib::spt::playback
 {
 	auto *mainWindow = dynamic_cast<MainWindow *>(parent());
-	return mainWindow->currentPlayback();
+	return mainWindow->playback();
 }
 
 auto mp::Service::isValid() -> bool

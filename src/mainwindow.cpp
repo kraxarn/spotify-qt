@@ -701,7 +701,7 @@ void MainWindow::toggleExpandableAlbum(lib::album_size albumSize)
 
 //region Getters
 
-auto MainWindow::currentPlayback() const -> lib::spt::playback
+auto MainWindow::playback() const -> const lib::spt::playback &
 {
 	return current.playback;
 }

@@ -71,7 +71,7 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 			return;
 		}
 
-		const auto &track = mainWindow->currentPlayback().item;
+		const auto &track = mainWindow->playback().item;
 
 		Http::getAlbum(track.image_small(), this->httpClient, this->cache,
 			[trayIcon, &track](const QPixmap &pixmap)
@@ -113,14 +113,14 @@ auto DeveloperMenu::infoMenu() -> QMenu *
 
 	addMenuItem(menu, "Playback", [mainWindow]()
 	{
-		nlohmann::json json = mainWindow->currentPlayback();
+		const nlohmann::json json = mainWindow->playback();
 		QMessageBox::information(mainWindow, "Playback",
 			QString::fromStdString(json.dump(4)));
 	});
 
 	addMenuItem(menu, "Playback (MPRIS)", [mainWindow]()
 	{
-		nlohmann::json json = mainWindow->currentPlayback().metadata();
+		const nlohmann::json json = mainWindow->playback().metadata();
 		QMessageBox::information(mainWindow, "Metadata",
 			QString::fromStdString(json.dump(4)));
 	});

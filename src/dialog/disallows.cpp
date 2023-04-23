@@ -22,9 +22,9 @@ void Dialog::Disallows::showEvent(QShowEvent *event)
 
 	list->clear();
 
-	auto *mainWindow = MainWindow::find(parentWidget());
+	auto *mainWindow = MainWindow::find(parent());
 	auto actions = mainWindow != nullptr
-		? mainWindow->currentPlayback().disallowed_actions
+		? mainWindow->playback().disallowed_actions
 		: std::unordered_set<lib::player_action>();
 
 	for (auto i = min; i <= max; i++)
@@ -63,7 +63,7 @@ void Dialog::Disallows::applyActions()
 		return;
 	}
 
-	auto playback = mainWindow->currentPlayback();
+	auto playback = mainWindow->playback();
 	std::unordered_set<lib::player_action> actions;
 
 	for (int i = 0; i < list->count(); i++)

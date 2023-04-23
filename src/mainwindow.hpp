@@ -23,7 +23,7 @@ public:
 
 	//endregion
 
-	lib::spt::playback currentPlayback() const;
+	auto playback() const -> const lib::spt::playback &;
 	void openLyrics(const lib::spt::track &track);
 	void reloadTrayIcon();
 	auto getTrayIcon() -> TrayIcon *;
