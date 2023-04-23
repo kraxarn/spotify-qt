@@ -10,7 +10,7 @@ Context::View::View(lib::spt::api &spotify, lib::settings &settings, spt::Curren
 {
 	setAlbumSize(settings.qt().album_size);
 
-	title = new Context::Title(spotify, current, cache, this);
+	title = new Context::Title(spotify, cache, this);
 	setTitleBarWidget(title);
 
 	setFeatures(QDockWidget::DockWidgetMovable | DockWidgetFloatable);

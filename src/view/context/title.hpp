@@ -20,17 +20,13 @@ namespace Context
 	Q_OBJECT
 
 	public:
-		Title(lib::spt::api &spotify, spt::Current &current,
-			const lib::cache &cache, QWidget *parent);
-
-		void updateIcon();
+		Title(lib::spt::api &spotify, const lib::cache &cache, QWidget *parent);
 
 	private:
 		QLabel *icon = nullptr;
 		TitleInfo *info = nullptr;
 
 		lib::spt::api &spotify;
-		spt::Current &current;
 		const lib::cache &cache;
 
 		static constexpr int spacing = 16;
@@ -38,5 +34,7 @@ namespace Context
 		auto playlist(const std::string &id) -> lib::spt::playlist;
 		auto playlistNameFromSaved(const std::string &id) -> std::string;
 		void playlistName(const std::string &id, lib::callback<std::string> &callback);
+
+		void onPlaybackRefreshed(const lib::spt::playback &playback);
 	};
 }

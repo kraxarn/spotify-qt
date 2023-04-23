@@ -2,11 +2,10 @@
 
 #include "mainwindow.hpp"
 
-Context::Title::Title(lib::spt::api &spotify, spt::Current &current,
+Context::Title::Title(lib::spt::api &spotify,
 	const lib::cache &cache, QWidget *parent)
 	: QWidget(parent),
 	spotify(spotify),
-	current(current),
 	cache(cache)
 {
 	auto *layout = new QHBoxLayout(this);
@@ -19,9 +18,13 @@ Context::Title::Title(lib::spt::api &spotify, spt::Current &current,
 
 	info = new Context::TitleInfo(spotify, this);
 	layout->addWidget(info, 1);
+
+	auto *mainWindow = MainWindow::find(parent);
+	MainWindow::connect(mainWindow, &MainWindow::playbackRefreshed,
+		this, &Context::Title::onPlaybackRefreshed);
 }
 
-void Context::Title::updateIcon()
+void Context::Title::onPlaybackRefreshed(const lib::spt::playback &playback)
 {
 	auto callback = [this](const std::string &currentName)
 	{
@@ -45,23 +48,23 @@ void Context::Title::updateIcon()
 		}
 	};
 
-	if (current.playback.context.type.empty()
-		|| current.playback.context.uri.empty())
+	if (playback.context.type.empty()
+		|| playback.context.uri.empty())
 	{
 		callback("No context");
 	}
-	else if (current.playback.context.type == "album")
+	else if (playback.context.type == "album")
 	{
-		callback(current.playback.item.album.name);
+		callback(playback.item.album.name);
 	}
-	else if (current.playback.context.type == "artist")
+	else if (playback.context.type == "artist")
 	{
-		auto name = current.playback.item.artists.empty()
+		auto name = playback.item.artists.empty()
 			? std::string()
-			: current.playback.item.artists.front().name;
+			: playback.item.artists.front().name;
 
-		auto id = lib::spt::uri_to_id(current.playback.context.uri);
-		for (const auto &artist: current.playback.item.artists)
+		auto id = lib::spt::uri_to_id(playback.context.uri);
+		for (const auto &artist: playback.item.artists)
 		{
 			if (artist.id == id)
 			{
@@ -73,7 +76,7 @@ void Context::Title::updateIcon()
 	}
 	else
 	{
-		playlistName(current.playback.context.uri, callback);
+		playlistName(playback.context.uri, callback);
 	}
 }
 
