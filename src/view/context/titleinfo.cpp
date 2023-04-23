@@ -72,9 +72,9 @@ void Context::TitleInfo::onContextMenuTriggered(bool /*checked*/)
 	}
 }
 
-void Context::TitleInfo::onPlaybackRefreshed(const lib::spt::playback &current)
+void Context::TitleInfo::onPlaybackRefreshed(const lib::spt::playback &refreshed)
 {
-	playback = current;
+	playback = refreshed;
 }
 
 void Context::TitleInfo::mouseReleaseEvent(QMouseEvent *event)
