@@ -35,14 +35,6 @@ void Context::View::setAlbumSize(lib::album_size albumSize)
 	setWidget(albumContent);
 }
 
-void Context::View::updateContextIcon()
-{
-	if (title != nullptr)
-	{
-		title->updateIcon();
-	}
-}
-
 void Context::View::resetCurrentlyPlaying() const
 {
 	albumContent->reset();

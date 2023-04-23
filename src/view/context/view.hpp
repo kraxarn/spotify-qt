@@ -19,7 +19,6 @@ namespace Context
 		View(lib::spt::api &spotify, lib::settings &settings, spt::Current &current,
 			const lib::cache &cache, QWidget *parent);
 
-		void updateContextIcon();
 		void resetCurrentlyPlaying() const;
 
 		auto getCurrentlyPlaying() const -> const lib::spt::track &;

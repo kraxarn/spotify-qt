@@ -504,7 +504,6 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 		contextView->setCurrentlyPlaying(currPlaying);
 		setAlbumImage(currPlaying.album, albumImageUrl);
 		setWindowTitle(QString::fromStdString(currPlaying.title()));
-		contextView->updateContextIcon();
 
 #ifdef USE_DBUS
 		if (mediaPlayer != nullptr)
