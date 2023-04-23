@@ -17,7 +17,7 @@ Context::Title::Title(lib::spt::api &spotify, spt::Current &current,
 	icon->setVisible(false);
 	layout->addWidget(icon);
 
-	info = new Context::TitleInfo(spotify, current, this);
+	info = new Context::TitleInfo(spotify, this);
 	layout->addWidget(info, 1);
 }
 

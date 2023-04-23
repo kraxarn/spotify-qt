@@ -10,7 +10,7 @@ namespace Context
 	class TitleInfo: public QLabel
 	{
 	public:
-		TitleInfo(lib::spt::api &spotify, spt::Current &current, QWidget *parent);
+		TitleInfo(lib::spt::api &spotify, QWidget *parent);
 
 		auto getIcon() const -> QIcon;
 
@@ -19,9 +19,10 @@ namespace Context
 
 	private:
 		lib::spt::api &spotify;
-		spt::Current &current;
+		lib::spt::playback playback;
 
 		void onContextMenu(const QPoint &pos);
 		void onContextMenuTriggered(bool checked);
+		void onPlaybackRefreshed(const lib::spt::playback &refreshed);
 	};
 };

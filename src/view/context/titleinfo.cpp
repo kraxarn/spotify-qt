@@ -6,10 +6,9 @@
 
 #include <QMenu>
 
-Context::TitleInfo::TitleInfo(lib::spt::api &spotify, spt::Current &current, QWidget *parent)
+Context::TitleInfo::TitleInfo(lib::spt::api &spotify, QWidget *parent)
 	: QLabel(parent),
-	spotify(spotify),
-	current(current)
+	spotify(spotify)
 {
 	setToolTip(QStringLiteral("Currently playing from"));
 	setVisible(false);
@@ -18,11 +17,15 @@ Context::TitleInfo::TitleInfo(lib::spt::api &spotify, spt::Current &current, QWi
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested,
 		this, &Context::TitleInfo::onContextMenu);
+
+	auto *mainWindow = MainWindow::find(parent);
+	MainWindow::connect(mainWindow, &MainWindow::playbackRefreshed,
+		this, &Context::TitleInfo::onPlaybackRefreshed);
 }
 
 auto Context::TitleInfo::getIcon() const -> QIcon
 {
-	return Icon::getByType(current.playback.context.type);
+	return Icon::getByType(playback.context.type);
 }
 
 void Context::TitleInfo::onContextMenu(const QPoint &pos)
@@ -31,13 +34,13 @@ void Context::TitleInfo::onContextMenu(const QPoint &pos)
 
 	if (lib::developer_mode::enabled)
 	{
-		const auto uri = QString::fromStdString(current.playback.context.uri);
+		const auto uri = QString::fromStdString(playback.context.uri);
 		auto *devContext = menu->addAction(uri);
 		devContext->setEnabled(false);
 	}
 
 	auto *open = menu->addAction(getIcon(), QString("Open %1")
-		.arg(QString::fromStdString(current.playback.context.type)));
+		.arg(QString::fromStdString(playback.context.type)));
 
 	QAction::connect(open, &QAction::triggered,
 		this, &Context::TitleInfo::onContextMenuTriggered);
@@ -48,8 +51,8 @@ void Context::TitleInfo::onContextMenu(const QPoint &pos)
 void Context::TitleInfo::onContextMenuTriggered(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-	const auto &type = current.playback.context.type;
-	const auto uri = lib::strings::split(current.playback.context.uri, ':').back();
+	const auto &type = playback.context.type;
+	const auto uri = lib::strings::split(playback.context.uri, ':').back();
 
 	if (type == "album")
 	{
@@ -67,6 +70,11 @@ void Context::TitleInfo::onContextMenuTriggered(bool /*checked*/)
 			mainWindow->getSongsTree()->load(playlist);
 		});
 	}
+}
+
+void Context::TitleInfo::onPlaybackRefreshed(const lib::spt::playback &current)
+{
+	playback = current;
 }
 
 void Context::TitleInfo::mouseReleaseEvent(QMouseEvent *event)
