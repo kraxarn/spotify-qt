@@ -2,8 +2,8 @@
 #include "util/font.hpp"
 
 Dialog::JsonDump::JsonDump(nlohmann::json json, QWidget *parent)
-	: json(std::move(json)),
-	Base(parent)
+	: Base(parent),
+	json(std::move(json))
 {
 	resize(width, height);
 	setWindowTitle(QStringLiteral("JSON"));
