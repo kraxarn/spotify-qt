@@ -459,16 +459,9 @@ void MainWindow::refresh()
 
 void MainWindow::refreshed(const lib::spt::playback &playback)
 {
-#ifdef USE_DBUS
-	if (playback.is_playing != current.playback.is_playing
-		&& mediaPlayer != nullptr)
-	{
-		mediaPlayer->stateUpdated();
-	}
-#endif
-
 	emit playbackRefreshed(playback, current.playback);
-	const auto previous = current.playback;
+
+	const auto trackChange = current.playback.item.id != playback.item.id;
 	current.playback = playback;
 
 	if (!current.playback.item.is_valid())
@@ -482,17 +475,9 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 		settings.general.last_device = current.playback.device.id;
 	}
 
-	const auto &currPlaying = current.playback.item;
-	if (previous.item.id != currPlaying.id || windowTitle() == APP_NAME)
+	if (trackChange || windowTitle() == APP_NAME)
 	{
-		setWindowTitle(QString::fromStdString(currPlaying.title()));
-
-#ifdef USE_DBUS
-		if (mediaPlayer != nullptr)
-		{
-			mediaPlayer->currentSourceChanged(current.playback);
-		}
-#endif
+		setWindowTitle(QString::fromStdString(playback.item.title()));
 	}
 }
 

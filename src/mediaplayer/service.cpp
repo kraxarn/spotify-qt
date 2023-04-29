@@ -22,6 +22,10 @@ mp::Service::Service(lib::spt::api &spotify, QObject *parent)
 	{
 		lib::log::warn("Failed to register D-Bus object");
 	}
+
+	auto *mainWindow = MainWindow::find(parent);
+	MainWindow::connect(mainWindow, &MainWindow::playbackRefreshed,
+		this, &mp::Service::onPlaybackRefreshed);
 }
 
 void mp::Service::signalPropertiesChange(const QObject *adaptor, const QVariantMap &properties)
@@ -77,6 +81,20 @@ auto mp::Service::currentPlayback() -> lib::spt::playback
 auto mp::Service::isValid() -> bool
 {
 	return playerPlayer != nullptr;
+}
+
+void mp::Service::onPlaybackRefreshed(const lib::spt::playback &current,
+	const lib::spt::playback &previous)
+{
+	if (current.is_playing != previous.is_playing)
+	{
+		stateUpdated();
+	}
+
+	if (current.item.id != previous.item.id)
+	{
+		currentSourceChanged(current);
+	}
 }
 
 #endif

@@ -31,6 +31,9 @@ namespace mp
 	private:
 		lib::spt::api &spotify;
 		MediaPlayerPlayer *playerPlayer = nullptr;
+
+		void onPlaybackRefreshed(const lib::spt::playback &current,
+			const lib::spt::playback &previous);
 	};
 }
 
