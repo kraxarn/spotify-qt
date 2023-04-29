@@ -16,7 +16,7 @@ namespace Context
 	Q_OBJECT
 
 	public:
-		View(lib::spt::api &spotify, lib::settings &settings, spt::Current &current,
+		View(lib::spt::api &spotify, lib::settings &settings,
 			const lib::cache &cache, QWidget *parent);
 
 		void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage) const;
@@ -24,7 +24,6 @@ namespace Context
 
 	private:
 		lib::spt::api &spotify;
-		spt::Current &current;
 		const lib::cache &cache;
 
 		Title *title = nullptr;

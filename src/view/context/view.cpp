@@ -1,11 +1,10 @@
 #include "view/context/view.hpp"
 #include "mainwindow.hpp"
 
-Context::View::View(lib::spt::api &spotify, lib::settings &settings, spt::Current &current,
+Context::View::View(lib::spt::api &spotify, lib::settings &settings,
 	const lib::cache &cache, QWidget *parent)
 	: QDockWidget(parent),
 	spotify(spotify),
-	current(current),
 	cache(cache)
 {
 	setAlbumSize(settings.qt().album_size);
