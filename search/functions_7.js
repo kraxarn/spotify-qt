@@ -13,5 +13,5 @@ var searchData=
   ['is_5fowner_10',['is_owner',['../classlib_1_1spt_1_1playlist.html#acd763fb869fc30db5ef8eb4d3c85487d',1,'lib::spt::playlist']]],
   ['is_5fsynced_11',['is_synced',['../classlib_1_1lrc_1_1lyrics.html#af658184fe7e4b98e845d9694975d73e1',1,'lib::lrc::lyrics']]],
   ['is_5fup_5fto_5fdate_12',['is_up_to_date',['../classlib_1_1spt_1_1playlist.html#a844c73bebbc28d2872f0a45def66eb2e',1,'lib::spt::playlist']]],
-  ['is_5fvalid_13',['is_valid',['../classlib_1_1date__time.html#af54ecee574470208dc8263fe77cabac0',1,'lib::date_time::is_valid()'],['../classlib_1_1spt_1_1entity.html#a383b1f0c10936d67639450c7f5a91c1d',1,'lib::spt::entity::is_valid()'],['../classlib_1_1spt_1_1track.html#a37d4865150fb6a32cd0e9cb99aca8101',1,'lib::spt::track::is_valid()']]]
+  ['is_5fvalid_13',['is_valid',['../classlib_1_1date__time.html#af54ecee574470208dc8263fe77cabac0',1,'lib::date_time::is_valid()'],['../classlib_1_1spt_1_1entity.html#a383b1f0c10936d67639450c7f5a91c1d',1,'lib::spt::entity::is_valid()'],['../classlib_1_1spt_1_1playback.html#a7624d8261fadb599f26cd6cc79438f8f',1,'lib::spt::playback::is_valid()'],['../classlib_1_1spt_1_1track.html#a37d4865150fb6a32cd0e9cb99aca8101',1,'lib::spt::track::is_valid()']]]
 ];
