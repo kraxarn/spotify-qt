@@ -1,9 +1,9 @@
 #include "view/context/smallcontent.hpp"
 #include "view/context/abstractcontent.hpp"
 
-Context::SmallContent::SmallContent(lib::spt::api &spotify, spt::Current &current,
+Context::SmallContent::SmallContent(lib::spt::api &spotify,
 	const lib::cache &cache, QWidget *parent)
-	: AbstractContent(spotify, current, cache, parent)
+	: AbstractContent(spotify, cache, parent)
 {
 	auto *layout = AbstractContent::layout<QHBoxLayout>();
 	layout->setAlignment(Qt::AlignBottom);

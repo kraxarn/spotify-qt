@@ -21,8 +21,7 @@ namespace Context
 	class AbstractContent: public QWidget
 	{
 	public:
-		AbstractContent(lib::spt::api &spotify, spt::Current &current,
-			const lib::cache &cache, QWidget *parent);
+		AbstractContent(lib::spt::api &spotify, const lib::cache &cache, QWidget *parent);
 
 		void reset();
 		auto getCurrentlyPlaying() const -> const lib::spt::track &;
@@ -31,7 +30,6 @@ namespace Context
 
 	protected:
 		lib::spt::api &spotify;
-		spt::Current &current;
 		const lib::cache &cache;
 
 		QLabel *album = nullptr;

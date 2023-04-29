@@ -24,8 +24,7 @@ namespace Context
 	Q_OBJECT
 
 	public:
-		ExpandedContent(lib::spt::api &spotify, spt::Current &current,
-			const lib::cache &cache, QWidget *parent);
+		ExpandedContent(lib::spt::api &spotify, const lib::cache &cache, QWidget *parent);
 
 	private:
 		void resizeEvent(QResizeEvent *event) override;

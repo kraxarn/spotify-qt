@@ -23,8 +23,7 @@ namespace Context
 	Q_OBJECT
 
 	public:
-		SmallContent(lib::spt::api &spotify, spt::Current &current,
-			const lib::cache &cache, QWidget *parent);
+		SmallContent(lib::spt::api &spotify, const lib::cache &cache, QWidget *parent);
 
 	private:
 		/** Width and height of album */

@@ -1,9 +1,9 @@
 #include "view/context/expandedcontent.hpp"
 #include "view/context/abstractcontent.hpp"
 
-Context::ExpandedContent::ExpandedContent(lib::spt::api &spotify, spt::Current &current,
+Context::ExpandedContent::ExpandedContent(lib::spt::api &spotify,
 	const lib::cache &cache, QWidget *parent)
-	: AbstractContent(spotify, current, cache, parent)
+	: AbstractContent(spotify, cache, parent)
 {
 	auto *layout = AbstractContent::layout<QGridLayout>();
 

@@ -1,10 +1,10 @@
 #include "view/context/abstractcontent.hpp"
+#include "mainwindow.hpp"
 
-Context::AbstractContent::AbstractContent(lib::spt::api &spotify, spt::Current &current,
+Context::AbstractContent::AbstractContent(lib::spt::api &spotify,
 	const lib::cache &cache, QWidget *parent)
 	: QWidget(parent),
 	spotify(spotify),
-	current(current),
 	cache(cache)
 {
 	// Show menu when clicking
@@ -30,7 +30,13 @@ void Context::AbstractContent::setAlbum(const lib::spt::entity &albumEntity,
 
 void Context::AbstractContent::onSongMenu(const QPoint &pos)
 {
-	auto track = current.playback.item;
+	auto *mainWindow = MainWindow::find(parent());
+	if (mainWindow == nullptr)
+	{
+		return;
+	}
+
+	auto track = mainWindow->playback().item;
 	if (track.name.empty()
 		&& track.artists.empty())
 	{
