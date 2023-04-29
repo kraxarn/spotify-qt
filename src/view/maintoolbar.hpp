@@ -55,6 +55,9 @@ private:
 	void onMinimize(bool checked);
 	void onClose(bool checked);
 
+	void onPlaybackRefreshed(const lib::spt::playback &current,
+		const lib::spt::playback &previousPlayback);
+
 	lib::repeat_state repeatState = lib::repeat_state::off;
 
 	QToolButton *menu;

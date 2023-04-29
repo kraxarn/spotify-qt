@@ -470,11 +470,9 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 	emit playbackRefreshed(playback, current.playback);
 	const auto previous = current.playback;
 	current.playback = playback;
-	toolBar->toggleActions(playback);
 
 	if (!current.playback.item.is_valid())
 	{
-		toolBar->setPlaying(false);
 		setWindowTitle(APP_NAME);
 		return;
 	}
@@ -496,15 +494,6 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 		}
 #endif
 	}
-
-	toolBar->setProgress(current.playback);
-	toolBar->setPlaying(current.playback.is_playing);
-
-	constexpr int volumeStep = 5;
-	toolBar->setVolume(current.playback.volume() / volumeStep);
-
-	toolBar->setRepeat(current.playback.repeat);
-	toolBar->setShuffle(current.playback.shuffle);
 }
 
 auto MainWindow::createCentralWidget() -> QWidget *

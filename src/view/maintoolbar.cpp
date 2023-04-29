@@ -100,6 +100,9 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 
 	QAction::connect(close, &QAction::triggered, this, &MainToolBar::onClose);
 
+	MainWindow::connect(mainWindow, &MainWindow::playbackRefreshed,
+		this, &MainToolBar::onPlaybackRefreshed);
+
 	const auto isMirrored = settings.qt().mirror_title_bar;
 	const auto isMenuVisible = menu != nullptr;
 	const auto isSearchMirrored = !isMirrored && !isMenuVisible;
@@ -468,4 +471,25 @@ void MainToolBar::onClose(bool /*checked*/)
 	{
 		QCoreApplication::quit();
 	}
+}
+
+void MainToolBar::onPlaybackRefreshed(const lib::spt::playback &current,
+	const lib::spt::playback &/*previous*/)
+{
+	toggleActions(current);
+
+	if (!current.is_valid())
+	{
+		setPlaying(false);
+		return;
+	}
+
+	setProgress(current);
+	setPlaying(current.is_playing);
+
+	constexpr int volumeStep = 5;
+	setVolume(current.volume() / volumeStep);
+
+	setRepeat(current.repeat);
+	setShuffle(current.shuffle);
 }
