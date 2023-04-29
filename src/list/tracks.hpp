@@ -89,6 +89,9 @@ namespace List
 
 		static void onCurrentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
+		void onPlaybackRefreshed(const lib::spt::playback &current,
+			const lib::spt::playback &previous);
+
 		void onNewPlaylist();
 		void onDelete();
 		void onPlaySelectedRow();

@@ -85,6 +85,10 @@ List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache
 
 	QShortcut::connect(playSelectedRow, &QShortcut::activated,
 		this, &List::Tracks::onPlaySelectedRow);
+
+	auto *mainWindow = MainWindow::find(parent);
+	MainWindow::connect(mainWindow, &MainWindow::playbackRefreshed,
+		this, &List::Tracks::onPlaybackRefreshed);
 }
 
 void List::Tracks::onMenu(const QPoint &pos)
@@ -282,6 +286,15 @@ void List::Tracks::onCurrentItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
 	current->setIcon(static_cast<int>(Column::Liked), isLiked
 		? Icon::get(QStringLiteral("starred-symbolic"))
 		: Icon::get(QStringLiteral("non-starred-symbolic")));
+}
+
+void List::Tracks::onPlaybackRefreshed(const lib::spt::playback &current,
+	const lib::spt::playback &previous)
+{
+	if (current.item.id != previous.item.id && current.is_playing)
+	{
+		setPlayingTrackItem(current.item.id);
+	}
 }
 
 void List::Tracks::onNewPlaylist()

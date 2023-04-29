@@ -487,11 +487,6 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 	const auto &currPlaying = current.playback.item;
 	if (previous.item.id != currPlaying.id || windowTitle() == APP_NAME)
 	{
-		if (current.playback.is_playing)
-		{
-			mainContent->getTracksList()->setPlayingTrackItem(currPlaying.id);
-		}
-
 		setWindowTitle(QString::fromStdString(currPlaying.title()));
 
 #ifdef USE_DBUS
