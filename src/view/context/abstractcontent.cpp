@@ -13,11 +13,6 @@ Context::AbstractContent::AbstractContent(lib::spt::api &spotify,
 		this, &Context::AbstractContent::onSongMenu);
 }
 
-auto Context::AbstractContent::getCurrentlyPlaying() const -> const lib::spt::track &
-{
-	return currentlyPlaying;
-}
-
 void Context::AbstractContent::setAlbum(const lib::spt::entity &albumEntity,
 	const QPixmap &albumImage)
 {
@@ -66,5 +61,4 @@ void Context::AbstractContent::setCurrentlyPlaying(const lib::spt::track &track)
 	{
 		nowPlaying->setTrack(track);
 	}
-	currentlyPlaying = track;
 }

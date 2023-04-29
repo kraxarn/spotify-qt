@@ -24,7 +24,6 @@ namespace Context
 		AbstractContent(lib::spt::api &spotify, const lib::cache &cache, QWidget *parent);
 
 		void reset();
-		auto getCurrentlyPlaying() const -> const lib::spt::track &;
 		void setCurrentlyPlaying(const lib::spt::track &track);
 		void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage);
 
@@ -34,8 +33,6 @@ namespace Context
 
 		QLabel *album = nullptr;
 		NowPlaying *nowPlaying = nullptr;
-
-		lib::spt::track currentlyPlaying;
 
 		template<typename T>
 		auto layout() -> T *

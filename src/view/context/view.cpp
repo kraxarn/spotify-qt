@@ -40,11 +40,6 @@ void Context::View::setAlbumSize(lib::album_size albumSize)
 	setWidget(albumContent);
 }
 
-auto Context::View::getCurrentlyPlaying() const -> const lib::spt::track &
-{
-	return albumContent->getCurrentlyPlaying();
-}
-
 void Context::View::setAlbum(const lib::spt::entity &albumEntity,
 	const QPixmap &albumImage) const
 {
