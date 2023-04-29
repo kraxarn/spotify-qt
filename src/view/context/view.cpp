@@ -46,7 +46,8 @@ void Context::View::setAlbum(const lib::spt::entity &albumEntity,
 	albumContent->setAlbum(albumEntity, albumImage);
 }
 
-void Context::View::onPlaybackRefreshed(const lib::spt::playback &playback)
+void Context::View::onPlaybackRefreshed(const lib::spt::playback &playback,
+	const lib::spt::playback &/*previous*/)
 {
 	if (!playback.is_valid())
 	{

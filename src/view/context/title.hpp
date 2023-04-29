@@ -35,6 +35,7 @@ namespace Context
 		auto playlistNameFromSaved(const std::string &id) -> std::string;
 		void playlistName(const std::string &id, lib::callback<std::string> &callback);
 
-		void onPlaybackRefreshed(const lib::spt::playback &playback);
+		void onPlaybackRefreshed(const lib::spt::playback &playback,
+			const lib::spt::playback &previous);
 	};
 }

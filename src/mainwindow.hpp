@@ -69,7 +69,7 @@ public:
 #endif
 
 signals:
-	void playbackRefreshed(const lib::spt::playback &playback);
+	void playbackRefreshed(const lib::spt::playback &current, const lib::spt::playback &previous);
 
 protected:
 	void closeEvent(QCloseEvent *event) override;

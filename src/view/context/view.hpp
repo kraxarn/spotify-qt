@@ -30,6 +30,7 @@ namespace Context
 		Title *title = nullptr;
 		AbstractContent *albumContent = nullptr;
 
-		void onPlaybackRefreshed(const lib::spt::playback &playback);
+		void onPlaybackRefreshed(const lib::spt::playback &playback,
+			const lib::spt::playback &previous);
 	};
 }

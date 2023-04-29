@@ -72,7 +72,8 @@ void Context::TitleInfo::onContextMenuTriggered(bool /*checked*/)
 	}
 }
 
-void Context::TitleInfo::onPlaybackRefreshed(const lib::spt::playback &refreshed)
+void Context::TitleInfo::onPlaybackRefreshed(const lib::spt::playback &refreshed,
+	const lib::spt::playback &/*previous*/)
 {
 	playback = refreshed;
 }

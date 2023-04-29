@@ -471,9 +471,9 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 	}
 #endif
 
+	emit playbackRefreshed(playback, current.playback);
 	const auto previous = current.playback;
 	current.playback = playback;
-	emit playbackRefreshed(playback);
 	toolBar->toggleActions(playback);
 
 	if (!current.playback.item.is_valid())

@@ -23,6 +23,7 @@ namespace Context
 
 		void onContextMenu(const QPoint &pos);
 		void onContextMenuTriggered(bool checked);
-		void onPlaybackRefreshed(const lib::spt::playback &refreshed);
+		void onPlaybackRefreshed(const lib::spt::playback &refreshed,
+			const lib::spt::playback &previous);
 	};
 };

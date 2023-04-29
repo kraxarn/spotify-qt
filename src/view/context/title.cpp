@@ -24,7 +24,8 @@ Context::Title::Title(lib::spt::api &spotify,
 		this, &Context::Title::onPlaybackRefreshed);
 }
 
-void Context::Title::onPlaybackRefreshed(const lib::spt::playback &playback)
+void Context::Title::onPlaybackRefreshed(const lib::spt::playback &playback,
+	const lib::spt::playback &/*previous*/)
 {
 	auto callback = [this](const std::string &currentName)
 	{

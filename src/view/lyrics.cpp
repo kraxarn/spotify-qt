@@ -187,7 +187,8 @@ void View::Lyrics::setLyricsIds(const std::vector<lib::lrc::search_result> &resu
 	}
 }
 
-void View::Lyrics::onPlaybackRefreshed(const lib::spt::playback &playback)
+void View::Lyrics::onPlaybackRefreshed(const lib::spt::playback &playback,
+	const lib::spt::playback &/*previous*/)
 {
 	if (!playback.is_playing || lyricsList->count() <= 0)
 	{
