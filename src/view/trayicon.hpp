@@ -12,11 +12,10 @@ class TrayIcon: public QSystemTrayIcon
 Q_OBJECT
 
 public:
-	TrayIcon(lib::spt::api &spotify, const lib::settings &settings,
-		const lib::cache &cache, QWidget *parent);
-	~TrayIcon() override;
+	TrayIcon(lib::spt::api &spotify, const lib::settings &settings, lib::cache &cache,
+		const lib::http_client &httpClient, QWidget *parent);
 
-	void message(const QString &message);
+	~TrayIcon() override;
 
 	/**
 	 * Notify about track, for example on track change
@@ -36,6 +35,7 @@ private:
 
 	auto playback() -> lib::spt::playback;
 	void showWindow();
+	void message(const QString &message);
 
 	QAction *previous = nullptr;
 	QAction *playPause = nullptr;
@@ -46,7 +46,8 @@ private:
 	QAction *currentTrack = nullptr;
 	lib::spt::api &spotify;
 	const lib::settings &settings;
-	const lib::cache &cache;
+	lib::cache &cache;
+	const lib::http_client &httpClient;
 
 #ifdef __APPLE__
 	QAction *showApp = nullptr;
@@ -60,4 +61,7 @@ private:
 	void onActivated(ActivationReason reason);
 	void onShowWindow(bool checked);
 	void onMenuAboutToShow();
+
+	void onPlaybackRefreshed(const lib::spt::playback &currentPlayback,
+		const lib::spt::playback &previousPlayback);
 };

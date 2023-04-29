@@ -1,12 +1,13 @@
 #include "trayicon.hpp"
 #include "mainwindow.hpp"
 
-TrayIcon::TrayIcon(lib::spt::api &spotify, const lib::settings &settings,
-	const lib::cache &cache, QWidget *parent)
+TrayIcon::TrayIcon(lib::spt::api &spotify, const lib::settings &settings, lib::cache &cache,
+	const lib::http_client &httpClient, QWidget *parent)
 	: QSystemTrayIcon(parent),
 	spotify(spotify),
 	settings(settings),
-	cache(cache)
+	cache(cache),
+	httpClient(httpClient)
 {
 	callback = [this](const std::string &result)
 	{
@@ -53,6 +54,10 @@ TrayIcon::TrayIcon(lib::spt::api &spotify, const lib::settings &settings,
 
 	QMenu::connect(contextMenu, &QMenu::aboutToShow,
 		this, &TrayIcon::onMenuAboutToShow);
+
+	auto *mainWindow = MainWindow::find(parent);
+	MainWindow::connect(mainWindow, &MainWindow::playbackRefreshed,
+		this, &TrayIcon::onPlaybackRefreshed);
 }
 
 TrayIcon::~TrayIcon()
@@ -181,4 +186,31 @@ void TrayIcon::onMenuAboutToShow()
 		}
 	}
 #endif
+}
+
+void TrayIcon::onPlaybackRefreshed(const lib::spt::playback &currentPlayback,
+	const lib::spt::playback &previousPlayback)
+{
+	if (!settings.general.tray_album_art && !settings.general.notify_track_change)
+	{
+		return;
+	}
+
+	Http::getAlbum(currentPlayback.item.image_small(), httpClient, cache, false,
+		[this, currentPlayback, previousPlayback](const QPixmap &image)
+		{
+			const auto trackChange = currentPlayback.is_playing
+				&& previousPlayback.is_playing
+				&& currentPlayback.item.id != previousPlayback.item.id;
+
+			if (settings.general.tray_album_art)
+			{
+				setPixmap(image);
+			}
+
+			if (settings.general.notify_track_change && trackChange)
+			{
+				message(currentPlayback.item, image);
+			}
+		});
 }

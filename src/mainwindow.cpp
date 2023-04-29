@@ -49,7 +49,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 	// Create tray icon if specified
 	if (settings.general.tray_icon)
 	{
-		trayIcon = new TrayIcon(spotify, settings, cache, this);
+		trayIcon = new TrayIcon(spotify, settings, cache, httpClient, this);
 	}
 
 	// If new version has been detected, show what's new dialog
@@ -459,10 +459,6 @@ void MainWindow::refresh()
 
 void MainWindow::refreshed(const lib::spt::playback &playback)
 {
-	const auto trackChange = playback.is_playing
-		&& current.playback.is_playing
-		&& playback.item.id != current.playback.item.id;
-
 #ifdef USE_DBUS
 	if (playback.is_playing != current.playback.is_playing
 		&& mediaPlayer != nullptr)
@@ -504,29 +500,6 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 			mediaPlayer->currentSourceChanged(current.playback);
 		}
 #endif
-
-		if (trayIcon != nullptr
-			&& (settings.general.tray_album_art || settings.general.notify_track_change))
-		{
-			Http::getAlbum(current.playback.item.image_small(), httpClient, cache, false,
-				[this, &currPlaying, trackChange](const QPixmap &image)
-				{
-					if (trayIcon == nullptr)
-					{
-						return;
-					}
-
-					if (settings.general.tray_album_art)
-					{
-						trayIcon->setPixmap(image);
-					}
-
-					if (settings.general.notify_track_change && trackChange)
-					{
-						trayIcon->message(currPlaying, image);
-					}
-				});
-		}
 	}
 
 	toolBar->setProgress(current.playback);
@@ -652,7 +625,7 @@ void MainWindow::reloadTrayIcon()
 
 	if (settings.general.tray_icon)
 	{
-		trayIcon = new TrayIcon(spotify, settings, cache, this);
+		trayIcon = new TrayIcon(spotify, settings, cache, httpClient, this);
 	}
 }
 
