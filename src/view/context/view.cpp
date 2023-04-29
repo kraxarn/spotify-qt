@@ -1,11 +1,13 @@
 #include "view/context/view.hpp"
 #include "mainwindow.hpp"
 
-Context::View::View(lib::spt::api &spotify, lib::settings &settings,
-	const lib::cache &cache, QWidget *parent)
+Context::View::View(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
+	const lib::http_client &httpClient, QWidget *parent)
 	: QDockWidget(parent),
 	spotify(spotify),
-	cache(cache)
+	settings(settings),
+	cache(cache),
+	httpClient(httpClient)
 {
 	setAlbumSize(settings.qt().album_size);
 
@@ -39,20 +41,33 @@ void Context::View::setAlbumSize(lib::album_size albumSize)
 	setWidget(albumContent);
 }
 
-void Context::View::setAlbum(const lib::spt::entity &albumEntity,
-	const QPixmap &albumImage) const
+void Context::View::setAlbumImage(const lib::spt::entity &albumEntity,
+	const std::string &albumImageUrl)
 {
-	albumContent->setAlbum(albumEntity, albumImage);
+	Http::getAlbum(albumImageUrl, httpClient, cache, [this, albumEntity](const QPixmap &image)
+	{
+		albumContent->setAlbum(albumEntity, image);
+	});
 }
 
-void Context::View::onPlaybackRefreshed(const lib::spt::playback &playback,
-	const lib::spt::playback &/*previous*/)
+void Context::View::onPlaybackRefreshed(const lib::spt::playback &current,
+	const lib::spt::playback &previous)
 {
-	if (!playback.is_valid())
+	if (!current.is_valid())
 	{
 		albumContent->reset();
 		return;
 	}
 
-	albumContent->setCurrentlyPlaying(playback.item);
+	if (current.item.id != previous.item.id
+		|| MainWindow::find(parent())->windowTitle() == QStringLiteral(APP_NAME))
+	{
+		const auto &albumImageUrl = settings.qt().album_size == lib::album_size::expanded
+			? current.item.image_large()
+			: current.item.image_small();
+
+		setAlbumImage(current.item.album, albumImageUrl);
+	}
+
+	albumContent->setCurrentlyPlaying(current.item);
 }

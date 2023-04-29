@@ -119,7 +119,6 @@ private:
 
 	// Methods
 	QWidget *createCentralWidget();
-	void setAlbumImage(const lib::spt::entity &albumEntity, const std::string &albumImageUrl);
 
 	// Slots
 	void onSpotifyStatusChanged(const QString &status);

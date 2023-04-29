@@ -16,20 +16,23 @@ namespace Context
 	Q_OBJECT
 
 	public:
-		View(lib::spt::api &spotify, lib::settings &settings,
-			const lib::cache &cache, QWidget *parent);
+		View(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
+			const lib::http_client &httpClient, QWidget *parent);
 
-		void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage) const;
 		void setAlbumSize(lib::album_size albumSize);
 
 	private:
 		lib::spt::api &spotify;
-		const lib::cache &cache;
+		lib::settings &settings;
+		lib::cache &cache;
+		const lib::http_client &httpClient;
 
 		Title *title = nullptr;
 		AbstractContent *albumContent = nullptr;
 
-		void onPlaybackRefreshed(const lib::spt::playback &playback,
+		void setAlbumImage(const lib::spt::entity &albumEntity, const std::string &albumImageUrl);
+
+		void onPlaybackRefreshed(const lib::spt::playback &current,
 			const lib::spt::playback &previous);
 	};
 }

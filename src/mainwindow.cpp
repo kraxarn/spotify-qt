@@ -496,11 +496,6 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 			mainContent->getTracksList()->setPlayingTrackItem(currPlaying.id);
 		}
 
-		const auto &albumImageUrl = settings.qt().album_size == lib::album_size::expanded
-			? currPlaying.image_large()
-			: currPlaying.image_small();
-
-		setAlbumImage(currPlaying.album, albumImageUrl);
 		setWindowTitle(QString::fromStdString(currPlaying.title()));
 
 #ifdef USE_DBUS
@@ -552,7 +547,7 @@ auto MainWindow::createCentralWidget() -> QWidget *
 
 	libraryList = new List::Library(spotify, cache, this);
 	playlistList = new List::Playlist(spotify, settings, cache, this);
-	contextView = new Context::View(spotify, settings, cache, this);
+	contextView = new Context::View(spotify, settings, cache, httpClient, this);
 
 	// Left side panel
 	addDockWidget(Qt::LeftDockWidgetArea,
@@ -618,18 +613,6 @@ void MainWindow::saveTracksToCache(const std::string &id,
 	const std::vector<lib::spt::track> &tracks)
 {
 	cache.set_tracks(id, tracks);
-}
-
-void MainWindow::setAlbumImage(const lib::spt::entity &albumEntity,
-	const std::string &albumImageUrl)
-{
-	Http::getAlbum(albumImageUrl, httpClient, cache, [this, albumEntity](const QPixmap &image)
-	{
-		if (contextView != nullptr)
-		{
-			contextView->setAlbum(albumEntity, image);
-		}
-	});
 }
 
 void MainWindow::openArtist(const std::string &artistId)
