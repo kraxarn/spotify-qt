@@ -164,7 +164,7 @@ bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, long *r
 
 			case 2: //Stop Media
 			{
-				auto &current = getCurrentPlayback();
+				auto &current = playback();
 				current.is_playing = false;
 				refreshed(current);
 				auto callback = [this](const std::string &status)
@@ -183,7 +183,7 @@ bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, long *r
 
 			case 3: //Play/Pause Media
 			{
-				auto &current = getCurrentPlayback();
+				auto &current = playback();
 				current.is_playing = !current.is_playing;
 				refreshed(current);
 				auto callback = [this](const std::string &status)
