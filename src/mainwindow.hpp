@@ -55,7 +55,6 @@ public:
 	// Getters for private properties
 	void setSearchChecked(bool checked);
 	List::Tracks *getSongsTree();
-	lib::spt::playback &getCurrentPlayback();
 	const spt::Current &getCurrent();
 	auto getSpotifyRunner() -> const SpotifyClient::Runner *;
 	void resetLibraryPlaylist() const;

@@ -320,7 +320,7 @@ void MainToolBar::setSearchChecked(bool checked)
 void MainToolBar::onPlayPause(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-	auto &current = mainWindow->getCurrentPlayback();
+	auto current = mainWindow->playback();
 
 #ifdef USE_DBUS
 	auto *mediaPlayer = mainWindow->getMediaPlayer();
@@ -413,7 +413,7 @@ void MainToolBar::onProgressReleased()
 void MainToolBar::onShuffle(bool checked)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-	auto &current = mainWindow->getCurrentPlayback();
+	auto current = mainWindow->playback();
 
 	current.shuffle = !current.shuffle;
 	mainWindow->refreshed(current);
@@ -433,7 +433,7 @@ void MainToolBar::onShuffle(bool checked)
 void MainToolBar::onRepeat(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-	auto &current = mainWindow->getCurrentPlayback();
+	auto current = mainWindow->playback();
 
 	const auto repeatMode = toggleRepeat(current);
 	current.repeat = repeatMode;

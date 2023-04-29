@@ -723,11 +723,6 @@ auto MainWindow::history() -> HistoryButton *
 	return toolBar->findChild<HistoryButton *>({}, Qt::FindDirectChildrenOnly);
 }
 
-auto MainWindow::getCurrentPlayback() -> lib::spt::playback &
-{
-	return current.playback;
-}
-
 auto MainWindow::getCurrent() -> const spt::Current &
 {
 	return current;

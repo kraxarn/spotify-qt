@@ -36,7 +36,7 @@ auto SystemInfoView::systemInfo() -> lib::qt::system_info
 	auto *mainWindow = MainWindow::find(parentWidget());
 	if (mainWindow != nullptr)
 	{
-		auto device = mainWindow->getCurrentPlayback().device;
+		auto device = mainWindow->playback().device;
 		if (!device.name.empty() && !device.type.empty())
 		{
 			info.add(QStringLiteral("Device"),
