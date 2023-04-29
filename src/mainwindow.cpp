@@ -471,6 +471,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 	}
 #endif
 
+	const auto previous = current.playback;
 	current.playback = playback;
 	emit playbackRefreshed(playback);
 	toolBar->toggleActions(playback);
@@ -488,7 +489,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 	}
 
 	const auto &currPlaying = current.playback.item;
-	if (current.playback.item.id != currPlaying.id || windowTitle() == APP_NAME)
+	if (previous.item.id != currPlaying.id || windowTitle() == APP_NAME)
 	{
 		if (current.playback.is_playing)
 		{
