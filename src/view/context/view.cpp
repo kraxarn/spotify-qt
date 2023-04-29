@@ -14,6 +14,11 @@ Context::View::View(lib::spt::api &spotify, lib::settings &settings, spt::Curren
 	setTitleBarWidget(title);
 
 	setFeatures(QDockWidget::DockWidgetMovable | DockWidgetFloatable);
+
+	auto *mainWindow = MainWindow::find(parent);
+
+	MainWindow::connect(mainWindow, &MainWindow::playbackRefreshed,
+		this, &Context::View::onPlaybackRefreshed);
 }
 
 void Context::View::setAlbumSize(lib::album_size albumSize)
@@ -35,22 +40,24 @@ void Context::View::setAlbumSize(lib::album_size albumSize)
 	setWidget(albumContent);
 }
 
-void Context::View::resetCurrentlyPlaying() const
-{
-	albumContent->reset();
-}
-
 auto Context::View::getCurrentlyPlaying() const -> const lib::spt::track &
 {
 	return albumContent->getCurrentlyPlaying();
 }
 
-void Context::View::setCurrentlyPlaying(const lib::spt::track &track) const
-{
-	albumContent->setCurrentlyPlaying(track);
-}
-
-void Context::View::setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage) const
+void Context::View::setAlbum(const lib::spt::entity &albumEntity,
+	const QPixmap &albumImage) const
 {
 	albumContent->setAlbum(albumEntity, albumImage);
+}
+
+void Context::View::onPlaybackRefreshed(const lib::spt::playback &playback)
+{
+	if (!playback.is_valid())
+	{
+		albumContent->reset();
+		return;
+	}
+
+	albumContent->setCurrentlyPlaying(playback.item);
 }

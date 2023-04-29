@@ -478,7 +478,6 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 	if (!current.playback.item.is_valid())
 	{
 		toolBar->setPlaying(false);
-		contextView->resetCurrentlyPlaying();
 		setWindowTitle(APP_NAME);
 		return;
 	}
@@ -501,7 +500,6 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 			? currPlaying.image_large()
 			: currPlaying.image_small();
 
-		contextView->setCurrentlyPlaying(currPlaying);
 		setAlbumImage(currPlaying.album, albumImageUrl);
 		setWindowTitle(QString::fromStdString(currPlaying.title()));
 

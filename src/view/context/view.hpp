@@ -19,10 +19,7 @@ namespace Context
 		View(lib::spt::api &spotify, lib::settings &settings, spt::Current &current,
 			const lib::cache &cache, QWidget *parent);
 
-		void resetCurrentlyPlaying() const;
-
 		auto getCurrentlyPlaying() const -> const lib::spt::track &;
-		void setCurrentlyPlaying(const lib::spt::track &track) const;
 
 		void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage) const;
 		void setAlbumSize(lib::album_size albumSize);
@@ -34,5 +31,7 @@ namespace Context
 
 		Title *title = nullptr;
 		AbstractContent *albumContent = nullptr;
+
+		void onPlaybackRefreshed(const lib::spt::playback &playback);
 	};
 }
