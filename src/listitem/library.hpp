@@ -13,7 +13,6 @@ namespace ListItem
 		explicit Library(const lib::spt::album &album);
 		explicit Library(const lib::spt::artist &artist);
 
-		auto id() const -> std::string;
 		auto name() const -> std::string;
 		auto tooltip() const -> QString;
 		auto data() const -> const QVariant &;

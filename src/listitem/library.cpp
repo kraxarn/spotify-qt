@@ -10,21 +10,6 @@ ListItem::Library::Library(const lib::spt::artist &artist)
 {
 }
 
-auto ListItem::Library::id() const -> std::string
-{
-	if (entity.canConvert<lib::spt::album>())
-	{
-		return entity.value<lib::spt::album>().id;
-	}
-
-	if (entity.canConvert<lib::spt::artist>())
-	{
-		return entity.value<lib::spt::artist>().id;
-	}
-
-	return {};
-}
-
 auto ListItem::Library::name() const -> std::string
 {
 	if (entity.canConvert<lib::spt::album>())
