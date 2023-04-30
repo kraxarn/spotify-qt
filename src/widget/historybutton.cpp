@@ -23,25 +23,38 @@ HistoryButton::HistoryButton(QWidget *parent)
 
 void HistoryButton::push(const lib::spt::playlist &playlist)
 {
-	push(playlist, QVariant::fromValue(playlist), "playlist");
+	const auto tooltip = QString("%1 by %2")
+		.arg(QString::fromStdString(playlist.name),
+			QString::fromStdString(playlist.owner_name));
+
+	push(playlist, tooltip, QVariant::fromValue(playlist), "playlist");
 }
 
 void HistoryButton::push(const lib::spt::album &album)
 {
-	push(album, QVariant::fromValue(album), "album");
+	const auto tooltip = QString("%1 by %2")
+		.arg(QString::fromStdString(album.name),
+			QString::fromStdString(album.artist));
+
+	push(album, tooltip, QVariant::fromValue(album), "album");
 }
 
 void HistoryButton::push(const lib::spt::show &show)
 {
-	push(show, QVariant::fromValue(show), "show");
+	const auto tooltip = QString("%1 by %2")
+		.arg(QString::fromStdString(show.name),
+			QString::fromStdString(show.publisher));
+
+	push(show, tooltip, QVariant::fromValue(show), "show");
 }
 
 void HistoryButton::push(const lib::spt::entity &entity)
 {
-	push(entity, QVariant::fromValue(entity), "track");
+	const auto tooltip = QString::fromStdString(entity.name);
+	push(entity, tooltip, QVariant::fromValue(entity), "track");
 }
 
-void HistoryButton::push(const lib::spt::entity &entity,
+void HistoryButton::push(const lib::spt::entity &entity, const QString &tooltip,
 	const QVariant &data, const std::string &type)
 {
 	if (current != nullptr && entity.id == getEntityId(current))
@@ -62,6 +75,7 @@ void HistoryButton::push(const lib::spt::entity &entity,
 	auto *action = new QAction(QString::fromStdString(entity.name));
 	action->setIcon(Icon::getByType(type));
 	action->setData(data);
+	action->setToolTip(tooltip);
 
 	const auto &actions = menu()->actions();
 	if (actions.empty())

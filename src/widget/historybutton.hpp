@@ -27,7 +27,9 @@ public:
 private:
 	QAction *current = nullptr;
 
-	void push(const lib::spt::entity &entity, const QVariant &data, const std::string &type);
+	void push(const lib::spt::entity &entity, const QString &tooltip,
+		const QVariant &data, const std::string &type);
+
 	static auto getEntityId(QAction *action) -> std::string;
 	void setCurrent(QAction *action);
 	auto load(const QVariant &data) -> bool;
