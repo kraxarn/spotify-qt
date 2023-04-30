@@ -1,4 +1,5 @@
 #include "listitem/library.hpp"
+#include "metatypes.hpp"
 
 ListItem::Library::Library(const lib::spt::album &album)
 	: entity(QVariant::fromValue(album))
