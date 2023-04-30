@@ -57,7 +57,7 @@ void List::Library::load(QTreeWidgetItem *item)
 	mainWindow->setCurrentPlaylistItem(-1);
 	if (item->parent() != nullptr)
 	{
-		const auto data = item->data(0, dataRole);
+		const auto &data = item->data(0, dataRole);
 		if (data.canConvert<lib::spt::album>())
 		{
 			auto *tracksList = mainWindow->findChild<List::Tracks *>();
