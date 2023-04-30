@@ -73,7 +73,7 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 
 		const auto &track = mainWindow->playback().item;
 
-		Http::getAlbum(track.image_small(), this->httpClient, this->cache,
+		Http::getAlbumImage(track.image_small(), this->httpClient, this->cache,
 			[trayIcon, &track](const QPixmap &pixmap)
 			{
 				trayIcon->message(track, pixmap);

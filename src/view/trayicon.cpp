@@ -196,7 +196,7 @@ void TrayIcon::onPlaybackRefreshed(const lib::spt::playback &currentPlayback,
 		return;
 	}
 
-	Http::getAlbum(currentPlayback.item.image_small(), httpClient, cache, false,
+	Http::getAlbumImage(currentPlayback.item.image_small(), httpClient, cache, false,
 		[this, currentPlayback, previousPlayback](const QPixmap &image)
 		{
 			const auto trackChange = currentPlayback.is_playing

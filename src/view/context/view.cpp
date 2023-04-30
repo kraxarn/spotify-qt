@@ -44,7 +44,7 @@ void Context::View::setAlbumSize(lib::album_size albumSize)
 void Context::View::setAlbumImage(const lib::spt::entity &albumEntity,
 	const std::string &albumImageUrl)
 {
-	Http::getAlbum(albumImageUrl, httpClient, cache, [this, albumEntity](const QPixmap &image)
+	Http::getAlbumImage(albumImageUrl, httpClient, cache, [this, albumEntity](const QPixmap &image)
 	{
 		albumContent->setAlbum(albumEntity, image);
 	});

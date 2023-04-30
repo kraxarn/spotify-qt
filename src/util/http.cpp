@@ -1,6 +1,6 @@
 #include "util/http.hpp"
 
-void Http::getAlbum(const std::string &url, const lib::http_client &httpClient,
+void Http::getAlbumImage(const std::string &url, const lib::http_client &httpClient,
 	lib::cache &cache, bool useDefaultIcon, lib::callback<QPixmap> &callback)
 {
 	if (url.empty())
@@ -42,10 +42,10 @@ void Http::getAlbum(const std::string &url, const lib::http_client &httpClient,
 		});
 }
 
-void Http::getAlbum(const std::string &url, const lib::http_client &httpClient,
+void Http::getAlbumImage(const std::string &url, const lib::http_client &httpClient,
 	lib::cache &cache, lib::callback<QPixmap> &callback)
 {
-	getAlbum(url, httpClient, cache, true, callback);
+	getAlbumImage(url, httpClient, cache, true, callback);
 }
 
 auto Http::defaultIcon() -> QPixmap
