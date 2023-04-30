@@ -1,40 +1,60 @@
 #include "listitem/library.hpp"
 
-#include <utility>
-
-ListItem::Library::Library(lib::spt::entity entity, std::string tooltip, DataRole role)
-	: entity(std::move(entity)),
-	tooltip(std::move(tooltip)),
-	role(role)
+ListItem::Library::Library(const lib::spt::album &album)
+	: entity(QVariant::fromValue(album))
 {
 }
 
-ListItem::Library::Library(const lib::spt::entity &entity, DataRole role)
-	: Library(entity, entity.name, role)
+ListItem::Library::Library(const lib::spt::artist &artist)
+	: entity(QVariant::fromValue(artist))
 {
 }
 
-auto ListItem::Library::getId() const -> QString
+auto ListItem::Library::id() const -> std::string
 {
-	return QString::fromStdString(entity.id);
+	if (entity.canConvert<lib::spt::album>())
+	{
+		return entity.value<lib::spt::album>().id;
+	}
+
+	if (entity.canConvert<lib::spt::artist>())
+	{
+		return entity.value<lib::spt::artist>().id;
+	}
+
+	return {};
 }
 
-auto ListItem::Library::getName() const -> QString
+auto ListItem::Library::name() const -> std::string
 {
-	return QString::fromStdString(getNameString());
+	if (entity.canConvert<lib::spt::album>())
+	{
+		return entity.value<lib::spt::album>().name;
+	}
+
+	if (entity.canConvert<lib::spt::artist>())
+	{
+		return entity.value<lib::spt::artist>().name;
+	}
+
+	return {};
 }
 
-auto ListItem::Library::getTooltip() const -> QString
+auto ListItem::Library::tooltip() const -> QString
 {
-	return QString::fromStdString(tooltip);
+	if (entity.canConvert<lib::spt::album>())
+	{
+		const auto album = entity.value<lib::spt::album>();
+
+		return QString("%1\nBy %2")
+			.arg(QString::fromStdString(album.name),
+				QString::fromStdString(album.artist));
+	}
+
+	return QString::fromStdString(name());
 }
 
-auto ListItem::Library::getRole() const -> int
+auto ListItem::Library::data() const -> const QVariant &
 {
-	return static_cast<int>(role);
-}
-
-auto ListItem::Library::getNameString() const -> const std::string &
-{
-	return entity.name;
+	return entity;
 }

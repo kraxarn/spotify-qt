@@ -1,28 +1,24 @@
 #pragma once
 
-#include "enum/datarole.hpp"
-#include "lib/spotify/entity.hpp"
+#include "lib/spotify/album.hpp"
+#include "lib/spotify/artist.hpp"
 
-#include <QString>
+#include <QVariant>
 
 namespace ListItem
 {
 	class Library
 	{
 	public:
-		Library(lib::spt::entity entity, std::string tooltip, DataRole role);
-		Library(const lib::spt::entity &entity, DataRole role);
+		explicit Library(const lib::spt::album &album);
+		explicit Library(const lib::spt::artist &artist);
 
-		auto getId() const -> QString;
-		auto getName() const -> QString;
-		auto getTooltip() const -> QString;
-		auto getRole() const -> int;
-
-		auto getNameString() const -> const std::string &;
+		auto id() const -> std::string;
+		auto name() const -> std::string;
+		auto tooltip() const -> QString;
+		auto data() const -> const QVariant &;
 
 	private:
-		lib::spt::entity entity;
-		std::string tooltip;
-		DataRole role;
+		QVariant entity;
 	};
 }

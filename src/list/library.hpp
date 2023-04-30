@@ -24,6 +24,7 @@ namespace List
 		lib::spt::api &spotify;
 		lib::cache &cache;
 
+		static constexpr const int dataRole = 0x100;
 		static constexpr const char *followedArtists = "Followed Artists";
 		static constexpr const char *newReleases = "New Releases";
 		static constexpr const char *recentlyPlayed = "History";

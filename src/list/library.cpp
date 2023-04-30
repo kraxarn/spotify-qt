@@ -1,6 +1,5 @@
 #include "list/library.hpp"
 #include "mainwindow.hpp"
-#include "enum/libraryrole.hpp"
 
 List::Library::Library(lib::spt::api &spotify, lib::cache &cache, QWidget *parent)
 	: QTreeWidget(parent),
@@ -58,24 +57,19 @@ void List::Library::load(QTreeWidgetItem *item)
 	mainWindow->setCurrentPlaylistItem(-1);
 	if (item->parent() != nullptr)
 	{
-		const auto entityId = item->data(0, static_cast<int>(LibraryRole::EntityId))
-			.toString().toStdString();
-
-		const auto dataRole = item->data(0, static_cast<int>(LibraryRole::DataRole))
-			.toInt();
-
-		switch (static_cast<DataRole>(dataRole))
+		const auto data = item->data(0, dataRole);
+		if (data.canConvert<lib::spt::album>())
 		{
-			case DataRole::ArtistId:
-				mainWindow->openArtist(entityId);
-				break;
+			auto *tracksList = mainWindow->findChild<List::Tracks *>();
+			tracksList->load(data.value<lib::spt::album>());
+		}
+		else if (data.canConvert<lib::spt::artist>())
+		{
+			auto *sidePanel = mainWindow->findChild<SidePanel::View *>({},
+				Qt::FindDirectChildrenOnly);
 
-			case DataRole::AlbumId:
-				mainWindow->loadAlbum(entityId);
-				break;
-
-			default:
-				break;
+			const auto artist = data.value<lib::spt::artist>();
+			sidePanel->openArtist(artist.id);
 		}
 	}
 	else
@@ -225,7 +219,7 @@ void List::Library::onExpanded(QTreeWidgetItem *item)
 			results.reserve(artists.size());
 			for (const auto &artist: artists)
 			{
-				results.emplace_back(artist, DataRole::ArtistId);
+				results.emplace_back(artist);
 			}
 			List::Library::itemsLoaded(results, item);
 		});
@@ -238,10 +232,7 @@ void List::Library::onExpanded(QTreeWidgetItem *item)
 			results.reserve(savedAlbums.size());
 			for (const auto &savedAlbum: savedAlbums)
 			{
-				const auto &album = savedAlbum.album;
-				const auto tooltip = lib::fmt::format("{}\nBy {}",
-					album.name, album.artist);
-				results.emplace_back(album, tooltip, DataRole::AlbumId);
+				results.emplace_back(savedAlbum.album);
 			}
 			List::Library::itemsLoaded(results, item);
 		});
@@ -254,7 +245,7 @@ void List::Library::onExpanded(QTreeWidgetItem *item)
 			results.reserve(artists.size());
 			for (const auto &artist: artists)
 			{
-				results.emplace_back(artist, DataRole::ArtistId);
+				results.emplace_back(artist);
 			}
 			List::Library::itemsLoaded(results, item);
 		});
@@ -266,7 +257,7 @@ void List::Library::itemsLoaded(std::vector<ListItem::Library> &items, QTreeWidg
 	std::sort(items.begin(), items.end(),
 		[](const ListItem::Library &item1, const ListItem::Library &item2) -> bool
 		{
-			return item1.getNameString() < item2.getNameString();
+			return item1.name() < item2.name();
 		}
 	);
 
@@ -286,11 +277,10 @@ void List::Library::itemsLoaded(std::vector<ListItem::Library> &items, QTreeWidg
 	for (auto &result: items)
 	{
 		auto *child = new QTreeWidgetItem(item, {
-			result.getName(),
+			QString::fromStdString(result.name()),
 		});
-		child->setToolTip(0, result.getTooltip());
-		child->setData(0, static_cast<int>(LibraryRole::EntityId), result.getId());
-		child->setData(0, static_cast<int>(LibraryRole::DataRole), result.getRole());
+		child->setToolTip(0, result.tooltip());
+		child->setData(0, dataRole, result.data());
 		item->addChild(child);
 	}
 }
@@ -303,25 +293,14 @@ void List::Library::onMenuRequested(const QPoint &pos)
 		return;
 	}
 
-	const auto roleVariant = item->data(0, static_cast<int>(LibraryRole::DataRole));
-	if (!roleVariant.canConvert<int>())
-	{
-		return;
-	}
-
 	// Currently, only albums have a context menu
-	if (static_cast<DataRole>(roleVariant.toInt()) != DataRole::AlbumId)
+	const auto data = item->data(0, dataRole);
+	if (!data.canConvert<lib::spt::album>())
 	{
 		return;
 	}
 
-	const auto idVariant = item->data(0, static_cast<int>(LibraryRole::EntityId));
-	if (!idVariant.canConvert<QString>())
-	{
-		return;
-	}
-
-	const auto entityId = idVariant.toString().toStdString();
-	auto *menu = new Menu::Album(spotify, cache, entityId, this);
+	const auto album = data.value<lib::spt::album>();
+	auto *menu = new Menu::Album(spotify, cache, album.id, this);
 	menu->popup(mapToGlobal(pos));
 }
