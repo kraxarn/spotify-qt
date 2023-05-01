@@ -53,3 +53,19 @@ auto Http::defaultIcon() -> QPixmap
 	constexpr int iconSize = 64;
 	return Icon::get("media-optical-audio").pixmap(iconSize);
 }
+
+void Http::getAlbum(const std::string &albumId, lib::spt::api &spotify,
+	lib::cache &cache, lib::callback<lib::spt::album> &callback)
+{
+	const auto album = cache.get_album(albumId);
+	if (album.is_valid())
+	{
+		callback(album);
+		return;
+	}
+
+	spotify.album(albumId, [callback](const lib::spt::album &album)
+	{
+		callback(album);
+	});
+}

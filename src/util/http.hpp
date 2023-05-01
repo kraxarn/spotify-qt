@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/spotify/callback.hpp"
+#include "lib/spotify/api.hpp"
 #include "lib/cache.hpp"
 #include "lib/httpclient.hpp"
 #include "lib/image.hpp"
@@ -28,6 +28,16 @@ public:
 	 */
 	static void getAlbumImage(const std::string &url, const lib::http_client &httpClient,
 		lib::cache &cache, lib::callback<QPixmap> &callback);
+
+	/**
+	 * Get album from cache or from HTTP
+	 * @param albumId ID of album
+	 * @param spotify Spotify API instance
+	 * @param cache Cache instance
+	 * @param callback Callback called once when loaded
+	 */
+	static void getAlbum(const std::string &albumId, lib::spt::api &spotify,
+		lib::cache &cache, lib::callback<lib::spt::album> &callback);
 
 private:
 	Http() = default;
