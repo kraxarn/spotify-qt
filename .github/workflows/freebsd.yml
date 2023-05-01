@@ -11,8 +11,6 @@ jobs:
 
       - name: Build
         uses: cross-platform-actions/action@v0.13.0
-        env:
-          BUILD_TYPE: Release
         with:
           operating_system: freebsd
           architecture: x86-64
@@ -20,8 +18,8 @@ jobs:
           shell: bash
           run: |
             sudo pkg install -y cmake git qt6-base qt6-svg
-            cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_TESTS=ON -DUSE_LTO=ON
-            cmake --build . --config $BUILD_TYPE
+            cmake . -DCMAKE_BUILD_TYPE=Release -DUSE_TESTS=ON -DUSE_LTO=ON
+            cmake --build . --config Release
             ./lib/test/spotify-qt-lib-test
 
       - name: Upload Artifact
