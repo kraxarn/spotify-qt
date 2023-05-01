@@ -63,3 +63,15 @@ namespace lib
 		transferring_playback,
 	};
 }
+
+namespace std
+{
+	template<>
+	struct hash<lib::player_action>
+	{
+		auto operator()(const lib::player_action &player_action) const -> size_t
+		{
+			return static_cast<size_t>(player_action);
+		}
+	};
+}
