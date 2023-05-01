@@ -17,7 +17,8 @@ jobs:
           version: '9.2'
           shell: bash
           run: |
-            sudo pkgin -y install cmake git qt6-qtbase qt6-qtsvg
+            sudo pkgin -y install cmake git qt6-qtbase qt6-qtsvg || true
+            cat /var/db/pkgin/pkg_install-err.log
             cmake . -DCMAKE_BUILD_TYPE=Release -DUSE_TESTS=ON -DUSE_LTO=ON
             cmake --build . --config Release
             ./lib/test/spotify-qt-lib-test
