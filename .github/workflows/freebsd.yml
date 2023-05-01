@@ -22,7 +22,7 @@ jobs:
           run: |
             sudo pkg install -y cmake git qt6-base qt6-svg
             cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_TESTS=ON -DUSE_LTO=ON
-            cmake --build .
+            cmake --build . --target spotify-qt
             ./lib/test/spotify-qt-lib-test
             ls -lha
 
