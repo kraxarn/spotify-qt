@@ -196,6 +196,12 @@ void TrayIcon::onPlaybackRefreshed(const lib::spt::playback &currentPlayback,
 		return;
 	}
 
+	if (!currentPlayback.is_valid())
+	{
+		setDefaultPixmap();
+		return;
+	}
+
 	Http::getAlbumImage(currentPlayback.item.image_small(), httpClient, cache, false,
 		[this, currentPlayback, previousPlayback](const QPixmap &image)
 		{
