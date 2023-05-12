@@ -132,8 +132,8 @@ TEST_CASE("strings")
 
 		// Overflow
 		i = 0;
-		const auto long_max = std::numeric_limits<long>::max();
-		CHECK_THROWS(lib::strings::try_to_int(std::to_string(long_max), i));
+		const auto int_max = static_cast<unsigned int>(std::numeric_limits<int>::max());
+		CHECK_THROWS(lib::strings::try_to_int(std::to_string(int_max + 1), i));
 		CHECK_EQ(i, 0);
 	}
 
