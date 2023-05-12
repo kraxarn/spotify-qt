@@ -132,7 +132,8 @@ TEST_CASE("strings")
 
 		// Overflow
 		i = 0;
-		CHECK_THROWS(lib::strings::try_to_int(std::to_string(INT64_MAX), i));
+		const auto long_max = std::numeric_limits<long>::max();
+		CHECK_THROWS(lib::strings::try_to_int(std::to_string(long_max), i));
 		CHECK_EQ(i, 0);
 	}
 
