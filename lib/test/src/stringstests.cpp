@@ -2,6 +2,7 @@
 #include "thirdparty/doctest.h"
 
 #include <array>
+#include <limits>
 
 TEST_CASE("strings")
 {
