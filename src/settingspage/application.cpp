@@ -71,8 +71,7 @@ auto SettingsPage::Application::app() -> QWidget *
 
 	// Check for updates
 	appUpdates = new QCheckBox(QStringLiteral("Check for updates on start"), this);
-	appUpdates->setToolTip(QStringLiteral("Check for updates on start, "
-										  "and show notification in main menu if any"));
+	appUpdates->setToolTip(QStringLiteral("Check for updates on start, and show notification if any"));
 	appUpdates->setChecked(settings.general.check_for_updates);
 	layout->addWidget(appUpdates);
 
