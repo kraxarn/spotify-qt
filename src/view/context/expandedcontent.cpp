@@ -22,5 +22,24 @@ Context::ExpandedContent::ExpandedContent(lib::spt::api &spotify,
 void Context::ExpandedContent::resizeEvent(QResizeEvent *event)
 {
 	AbstractContent::resizeEvent(event);
-	setFixedHeight(width());
+	setFixedHeight(event->size().width());
+	scaleAlbum(event->size().width());
+}
+
+void Context::ExpandedContent::scaleAlbum(int width)
+{
+	if (albumPixmap.isNull())
+	{
+		return;
+	}
+
+	const auto pixmap = albumPixmap.scaled(width, width);
+	album->setPixmap(Image::mask(pixmap));
+}
+
+void Context::ExpandedContent::setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage)
+{
+	AbstractContent::setAlbum(albumEntity, albumImage);
+	albumPixmap = albumImage;
+	scaleAlbum(QWidget::width());
 }

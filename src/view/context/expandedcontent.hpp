@@ -26,7 +26,13 @@ namespace Context
 	public:
 		ExpandedContent(lib::spt::api &spotify, const lib::cache &cache, QWidget *parent);
 
+		void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage) override;
+
 	private:
+		QPixmap albumPixmap;
+
+		void scaleAlbum(int width);
+
 		void resizeEvent(QResizeEvent *event) override;
 	};
 }

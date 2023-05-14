@@ -25,7 +25,7 @@ namespace Context
 
 		void reset();
 		void setCurrentlyPlaying(const lib::spt::track &track);
-		void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage);
+		virtual void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage);
 
 	protected:
 		lib::spt::api &spotify;
