@@ -22,8 +22,10 @@ Context::ExpandedContent::ExpandedContent(lib::spt::api &spotify,
 void Context::ExpandedContent::resizeEvent(QResizeEvent *event)
 {
 	AbstractContent::resizeEvent(event);
-	setFixedHeight(event->size().width());
-	scaleAlbum(event->size().width());
+
+	const auto size = qMin(event->size().width(), lib::spt::image::size_large);
+	setFixedHeight(size);
+	scaleAlbum(size);
 }
 
 void Context::ExpandedContent::scaleAlbum(int width)
