@@ -9,7 +9,7 @@ Context::ExpandedContent::ExpandedContent(lib::spt::api &spotify,
 
 	album = new QLabel(this);
 	album->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-	layout->addWidget(album, 0, 0, Qt::AlignBottom);
+	layout->addWidget(album, 0, 0, Qt::AlignCenter);
 
 	nowPlaying = new Context::NowPlaying(this);
 	nowPlaying->setTextShadow(true);
@@ -35,6 +35,11 @@ auto Context::ExpandedContent::sizeHint() const -> QSize
 	const auto size = QWidget::width() - contentMargins.left() - contentMargins.right();
 
 	return {size, size};
+}
+
+auto Context::ExpandedContent::iconSize() const -> QSize
+{
+	return size();
 }
 
 void Context::ExpandedContent::scaleAlbum(int width)

@@ -30,6 +30,9 @@ namespace Context
 
 		auto sizeHint() const -> QSize override;
 
+	protected:
+		QSize iconSize() const override;
+
 	private:
 		QPixmap albumPixmap;
 

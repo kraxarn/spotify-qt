@@ -34,6 +34,8 @@ namespace Context
 		QLabel *album = nullptr;
 		NowPlaying *nowPlaying = nullptr;
 
+		virtual auto iconSize() const -> QSize = 0;
+
 		template<typename T>
 		auto layout() -> T *
 		{

@@ -25,6 +25,9 @@ namespace Context
 	public:
 		SmallContent(lib::spt::api &spotify, const lib::cache &cache, QWidget *parent);
 
+	protected:
+		auto iconSize() const -> QSize override;
+
 	private:
 		/** Width and height of album */
 		static constexpr int albumSize = 64;

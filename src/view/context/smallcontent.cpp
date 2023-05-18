@@ -20,3 +20,8 @@ Context::SmallContent::SmallContent(lib::spt::api &spotify,
 	// Context doesn't make sense to resize vertically
 	setFixedHeight(layout->minimumSize().height());
 }
+
+auto Context::SmallContent::iconSize() const -> QSize
+{
+	return {albumSize, albumSize};
+}

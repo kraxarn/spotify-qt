@@ -46,7 +46,7 @@ void Context::AbstractContent::reset()
 {
 	if (album != nullptr)
 	{
-		album->setPixmap(Icon::get("media-optical-audio").pixmap(album->size()));
+		album->setPixmap(Icon::get("media-optical-audio").pixmap(iconSize()));
 	}
 
 	if (nowPlaying != nullptr)
