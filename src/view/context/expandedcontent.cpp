@@ -24,9 +24,17 @@ void Context::ExpandedContent::resizeEvent(QResizeEvent *event)
 {
 	AbstractContent::resizeEvent(event);
 
-	const auto size = qMin(event->size().width(), lib::spt::image::size_large);
+	const auto size = event->size().width();
 	setFixedHeight(size);
 	scaleAlbum(size);
+}
+
+auto Context::ExpandedContent::sizeHint() const -> QSize
+{
+	const auto contentMargins = QWidget::layout()->contentsMargins();
+	const auto size = QWidget::width() - contentMargins.left() - contentMargins.right();
+
+	return {size, size};
 }
 
 void Context::ExpandedContent::scaleAlbum(int width)

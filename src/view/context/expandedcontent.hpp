@@ -28,6 +28,8 @@ namespace Context
 
 		void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage) override;
 
+		auto sizeHint() const -> QSize override;
+
 	private:
 		QPixmap albumPixmap;
 
