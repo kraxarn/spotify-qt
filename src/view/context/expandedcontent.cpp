@@ -15,6 +15,7 @@ Context::ExpandedContent::ExpandedContent(lib::spt::api &spotify,
 	nowPlaying->setTextShadow(true);
 	layout->addWidget(nowPlaying, 0, 0, Qt::AlignBottom);
 
+	setMaximumWidth(lib::spt::image::size_large);
 	setFixedHeight(width());
 	reset();
 }
