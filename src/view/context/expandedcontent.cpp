@@ -35,7 +35,9 @@ void Context::ExpandedContent::scaleAlbum(int width)
 		return;
 	}
 
-	const auto pixmap = albumPixmap.scaled(width, width);
+	const auto pixmap = albumPixmap.scaled(width, width,
+		Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+
 	album->setPixmap(Image::mask(pixmap));
 }
 
