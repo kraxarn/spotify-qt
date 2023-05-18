@@ -11,8 +11,8 @@ Context::ExpandedContent::ExpandedContent(lib::spt::api &spotify,
 	album->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
 	layout->addWidget(album, 0, 0, Qt::AlignBottom);
 
-	// TODO: Add background to text
 	nowPlaying = new Context::NowPlaying(this);
+	nowPlaying->setTextShadow(true);
 	layout->addWidget(nowPlaying, 0, 0, Qt::AlignBottom);
 
 	setFixedHeight(width());

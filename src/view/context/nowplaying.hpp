@@ -13,10 +13,11 @@ namespace Context
 	Q_OBJECT
 
 	public:
-		NowPlaying(QWidget *parent);
+		explicit NowPlaying(QWidget *parent);
 
 		void setTrack(const lib::spt::track &track);
 		void setNoPlaying();
+		void setTextShadow(bool value);
 
 	private:
 		static constexpr float nameScale = 1.1F;
@@ -29,5 +30,8 @@ namespace Context
 
 		auto newLabel(float scale) -> QLabel *;
 		static void setText(QLabel *label, const std::string &text);
+
+		static void addTextShadow(QLabel *label);
+		static void removeTextShadow(QLabel *label);
 	};
 }
