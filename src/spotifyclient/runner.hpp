@@ -11,6 +11,7 @@
 #include <QInputDialog>
 #include <QList>
 #include <QProcess>
+#include <QRegularExpression>
 #include <QStringList>
 
 namespace SpotifyClient
