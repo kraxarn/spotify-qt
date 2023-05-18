@@ -17,6 +17,8 @@ namespace Context
 
 		void setTrack(const lib::spt::track &track);
 		void setNoPlaying();
+
+		auto getTextShadow() const -> bool;
 		void setTextShadow(bool value);
 
 	private:
@@ -33,5 +35,7 @@ namespace Context
 
 		static void addTextShadow(QLabel *label);
 		static void removeTextShadow(QLabel *label);
+
+		void onMenu(const QPoint &pos);
 	};
 }

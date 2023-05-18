@@ -9,6 +9,14 @@ Context::NowPlaying::NowPlaying(QWidget *parent)
 
 	name = newLabel(nameScale);
 	artist = newLabel(artistScale);
+
+	if (lib::developer_mode::enabled)
+	{
+		setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+
+		QLabel::connect(this, &QWidget::customContextMenuRequested,
+			this, &Context::NowPlaying::onMenu);
+	}
 }
 
 void Context::NowPlaying::setTrack(const lib::spt::track &track)
@@ -60,13 +68,20 @@ void Context::NowPlaying::setText(QLabel *label, const std::string &text)
 	label->setToolTip(qText);
 }
 
+auto Context::NowPlaying::getTextShadow() const -> bool
+{
+	return name->graphicsEffect() != nullptr
+		&& artist->graphicsEffect() != nullptr;
+}
+
 void Context::NowPlaying::setTextShadow(bool value)
 {
 	if (value)
 	{
 		addTextShadow(name);
 		addTextShadow(artist);
-	} else
+	}
+	else
 	{
 		removeTextShadow(name);
 		removeTextShadow(artist);
@@ -97,4 +112,19 @@ void Context::NowPlaying::removeTextShadow(QLabel *label)
 {
 	label->setPalette(QLabel().palette());
 	label->setGraphicsEffect(nullptr);
+}
+
+void Context::NowPlaying::onMenu(const QPoint &pos)
+{
+	auto *menu = new QMenu(this);
+	auto *textShadow = menu->addAction(QStringLiteral("Text shadow"));
+	textShadow->setCheckable(true);
+	textShadow->setChecked(getTextShadow());
+
+	QAction::connect(textShadow, &QAction::triggered, [this](bool checked)
+	{
+		setTextShadow(checked);
+	});
+
+	menu->popup(mapToGlobal(pos));
 }
