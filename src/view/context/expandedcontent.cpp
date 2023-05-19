@@ -31,7 +31,7 @@ void Context::ExpandedContent::resizeEvent(QResizeEvent *event)
 
 auto Context::ExpandedContent::iconSize() const -> QSize
 {
-	return size();
+	return {100, 100};
 }
 
 void Context::ExpandedContent::scaleAlbum(int width)
