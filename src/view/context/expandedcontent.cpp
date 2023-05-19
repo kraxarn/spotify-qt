@@ -29,14 +29,6 @@ void Context::ExpandedContent::resizeEvent(QResizeEvent *event)
 	scaleAlbum(size);
 }
 
-auto Context::ExpandedContent::sizeHint() const -> QSize
-{
-	const auto contentMargins = QWidget::layout()->contentsMargins();
-	const auto size = QWidget::width() - contentMargins.left() - contentMargins.right();
-
-	return {size, size};
-}
-
 auto Context::ExpandedContent::iconSize() const -> QSize
 {
 	return size();
@@ -49,7 +41,10 @@ void Context::ExpandedContent::scaleAlbum(int width)
 		return;
 	}
 
-	const auto pixmap = albumPixmap.scaled(width, width,
+	const auto contentMargins = QWidget::layout()->contentsMargins();
+	const auto size = width - contentMargins.left() - contentMargins.right();
+
+	const auto pixmap = albumPixmap.scaled(size, size,
 		Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
 
 	album->setPixmap(Image::mask(pixmap));
