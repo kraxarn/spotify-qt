@@ -113,7 +113,12 @@ void SpotifyClient::Runner::start(const QString &username, const QString &passwo
 
 		if (SpotifyClient::Helper::supportsAutoplay(path))
 		{
-			arguments.append(QStringLiteral("--autoplay"));
+			const auto librespotVersion = SpotifyClient::Helper::version(path);
+			// If version 0.4.x or older
+			if (librespotVersion.contains(QRegularExpression("([0]\\.[0-4]\\.[0-9])")))
+			{
+				arguments.append(QStringLiteral("--autoplay"));
+			}
 		}
 	}
 	else if (clientType == lib::client_type::spotifyd)
