@@ -64,7 +64,7 @@ auto SettingsPage::Interface::general() -> QWidget *
 	// Library mode
 	tabbedLibrary = new QCheckBox(QStringLiteral("Tabbed library layout"), this);
 	tabbedLibrary->setToolTip(QStringLiteral("Show library and playlists as tabs"));
-	tabbedLibrary->setChecked(qtSettings.library_mode == lib::library_mode::tabbed);
+	tabbedLibrary->setChecked(qtSettings.library_layout == lib::library_layout::tabbed);
 	layout->addWidget(tabbedLibrary);
 
 	// Native window handle
@@ -306,11 +306,11 @@ void SettingsPage::Interface::saveGeneral()
 
 	if (tabbedLibrary != nullptr)
 	{
-		const auto libraryMode = tabbedLibrary->isChecked()
-			? lib::library_mode::tabbed
-			: lib::library_mode::stacked;
+		const auto libraryLayout = tabbedLibrary->isChecked()
+			? lib::library_layout::tabbed
+			: lib::library_layout::stacked;
 
-		qtSettings.library_mode = libraryMode;
+		qtSettings.library_layout = libraryLayout;
 	}
 
 	if (nativeWindow != nullptr)

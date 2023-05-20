@@ -2,7 +2,7 @@
 
 #include "lib/json.hpp"
 #include "lib/enum/albumsize.hpp"
-#include "lib/enum/librarymode.hpp"
+#include "lib/enum/librarylayout.hpp"
 
 namespace lib
 {
@@ -48,7 +48,7 @@ namespace lib
 			/**
 			 * How to display library/playlists
 			 */
-			lib::library_mode library_mode = lib::library_mode::stacked;
+			lib::library_layout library_layout = lib::library_layout::stacked;
 		};
 
 		void to_json(nlohmann::json &j, const qt &q);

@@ -5,7 +5,7 @@ namespace lib
 	/**
 	 * How to display library/playlists in sidebar
 	 */
-	enum class library_mode
+	enum class library_layout
 	{
 		/**
 		 * Stacked on top of each other
