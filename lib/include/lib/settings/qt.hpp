@@ -2,6 +2,7 @@
 
 #include "lib/json.hpp"
 #include "lib/enum/albumsize.hpp"
+#include "lib/enum/librarymode.hpp"
 
 namespace lib
 {
@@ -43,6 +44,11 @@ namespace lib
 			 * Size of album cover in side panel
 			 */
 			lib::album_size album_size = lib::album_size::fixed;
+
+			/**
+			 * How to display library/playlists
+			 */
+			lib::library_mode library_mode = lib::library_mode::stacked;
 		};
 
 		void to_json(nlohmann::json &j, const qt &q);
