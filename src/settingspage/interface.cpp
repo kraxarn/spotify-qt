@@ -61,6 +61,12 @@ auto SettingsPage::Interface::general() -> QWidget *
 	expandAlbumCover->setChecked(qtSettings.album_size == lib::album_size::expanded);
 	layout->addWidget(expandAlbumCover);
 
+	// Library mode
+	tabbedLibrary = new QCheckBox(QStringLiteral("Tabbed library layout"), this);
+	tabbedLibrary->setToolTip(QStringLiteral("Show library and playlists as tabs"));
+	tabbedLibrary->setChecked(qtSettings.library_mode == lib::library_mode::tabbed);
+	layout->addWidget(tabbedLibrary);
+
 	// Native window handle
 	// (Required to move window under Wayland)
 	if (QGuiApplication::platformName() != "wayland")
@@ -296,6 +302,15 @@ void SettingsPage::Interface::saveGeneral()
 		}
 
 		qtSettings.album_size = albumSize;
+	}
+
+	if (tabbedLibrary != nullptr)
+	{
+		const auto libraryMode = tabbedLibrary->isChecked()
+			? lib::library_mode::tabbed
+			: lib::library_mode::stacked;
+
+		qtSettings.library_mode = libraryMode;
 	}
 
 	if (nativeWindow != nullptr)
