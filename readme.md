@@ -8,10 +8,9 @@
 [![Windows Build](https://github.com/kraxarn/spotify-qt/actions/workflows/windows-qt6.yml/badge.svg)](https://github.com/kraxarn/spotify-qt/actions/workflows/windows-qt6.yml)
 [![macOS Build](https://github.com/kraxarn/spotify-qt/actions/workflows/macos.yml/badge.svg)](https://github.com/kraxarn/spotify-qt/actions/workflows/macos.yml)
 
-An unofficial Spotify client using Qt as a simpler, lighter alternative to the official client,
-inspired by [spotify-tui](https://github.com/Rigellute/spotify-tui). Much like spotify-tui, you need
-an actual Spotify client running, for example [librespot](https://github.com/librespot-org/librespot),
-which can be configured from within the app.
+An unofficial Spotify client using Qt as a simpler, lighter alternative to the official client. Please note that you
+need an actual Spotify client running, for example [librespot](https://github.com/librespot-org/librespot), which can be
+configured from within the app.
 
 **Note:** Controlling playback requires Spotify Premium.
 
