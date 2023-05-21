@@ -3,6 +3,7 @@
 #include "lib/enum/mediatype.hpp"
 #include "lib/enum/devicetype.hpp"
 #include "lib/enum/playeraction.hpp"
+#include "lib/enum/position.hpp"
 
 #include <string>
 
