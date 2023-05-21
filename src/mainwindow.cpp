@@ -69,7 +69,8 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 	resize(defaultSize());
 	setCentralWidget(createCentralWidget());
 	toolBar = new MainToolBar(spotify, settings, httpClient, cache, this);
-	addToolBar(Qt::ToolBarArea::TopToolBarArea, toolBar);
+	const auto toolbarArea = MainToolBar::toToolBarArea(settings.qt().toolbar_position);
+	addToolBar(toolbarArea, toolBar);
 	setContextMenuPolicy(Qt::NoContextMenu);
 
 	setBorderless(!settings.qt().system_title_bar);
