@@ -266,5 +266,60 @@ namespace lib
 		}
 
 		//endregion
+
+		//region position
+
+		static void enum_to_string(position position, std::string &str)
+		{
+			switch (position)
+			{
+
+				case position::none:
+					str = "none";
+					break;
+
+				case position::top:
+					str = "top";
+					break;
+
+				case position::right:
+					str = "right";
+					break;
+
+				case position::bottom:
+					str = "bottom";
+					break;
+
+				case position::left:
+					str = "left";
+					break;
+			}
+		}
+
+		static void enum_from_string(const std::string &str, position &position)
+		{
+			if (str == "top")
+			{
+				position = position::top;
+			}
+			else if (str == "right")
+			{
+				position = position::right;
+			}
+			else if (str == "bottom")
+			{
+				position = position::bottom;
+			}
+			else if (str == "left")
+			{
+				position = position::left;
+			}
+			else
+			{
+				position = position::none;
+			}
+		}
+
+		//endregion
 	};
 }
