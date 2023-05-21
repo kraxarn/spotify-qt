@@ -4,6 +4,7 @@
 #include "lib/enum/albumsize.hpp"
 #include "lib/enum/librarylayout.hpp"
 #include "lib/enum/position.hpp"
+#include "lib/enum/albumshape.hpp"
 
 namespace lib
 {
@@ -55,6 +56,11 @@ namespace lib
 			 * Where to show the main toolbar
 			 */
 			lib::position toolbar_position = lib::position::top;
+
+			/**
+			 * Shape of album in main window and tray icon
+			 */
+			lib::album_shape album_shape = lib::album_shape::app;
 		};
 
 		void to_json(nlohmann::json &j, const qt &q);
