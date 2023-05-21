@@ -24,6 +24,19 @@ void SettingsPage::Base::applyFail(const QString &setting)
 			.arg(setting));
 }
 
+auto SettingsPage::Base::applyWarning(const QString &title, const QString &message) -> bool
+{
+	const auto dialogTitle = title.isEmpty()
+		? QStringLiteral("Invalid value")
+		: title;
+
+	const auto result = QMessageBox::warning(this, dialogTitle,
+		QString("%1.\nDo you want to save anyway?").arg(message),
+		QMessageBox::Ok | QMessageBox::Cancel);
+
+	return result == QMessageBox::Ok;
+}
+
 auto SettingsPage::Base::tabContent() -> QVBoxLayout *
 {
 	auto *layout = new QVBoxLayout(this);

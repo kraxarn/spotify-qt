@@ -271,20 +271,21 @@ auto SettingsPage::Spotify::save() -> bool
 		{
 			const auto result = Process::exec(sptPath->text(), {});
 			const auto title = QStringLiteral("Spotify client path");
+			QString message;
 
 			if (result.success())
 			{
-				warning(title, QStringLiteral("Spotify client not supported"));
+				message = QStringLiteral("Spotify client not supported");
 			}
 			else
 			{
-				warning(title, result.message().empty()
+				message = result.message().empty()
 					? QStringLiteral("Invalid Spotify client")
 					: QString("Invalid Spotify client:\n%1")
-						.arg(QString::fromStdString(result.message())));
+						.arg(QString::fromStdString(result.message()));
 			}
 
-			success = false;
+			success = applyWarning(title, message);
 		}
 
 		if (sptVersion != nullptr)

@@ -28,6 +28,7 @@ namespace SettingsPage
 		void info(const QString &title, const QString &message);
 
 		void applyFail(const QString &setting);
+		auto applyWarning(const QString &title, const QString &message) -> bool;
 		auto tabContent() -> QVBoxLayout *;
 
 		lib::settings &settings;
