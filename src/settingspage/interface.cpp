@@ -52,6 +52,22 @@ auto SettingsPage::Interface::general() -> QWidget *
 	});
 	toolbarPosition->setCurrentIndex(qtSettings.toolbar_position == lib::position::bottom ? 1 : 0);
 	comboBoxLayout->addWidget(toolbarPosition, 1, 1);
+
+	// Album shape
+	if (lib::developer_mode::enabled)
+	{
+		auto *albumShapeLabel = new QLabel(QStringLiteral("Album art shape"), this);
+		albumShapeLabel->setToolTip(QStringLiteral("Shape of album art in main window and tray icon"));
+		comboBoxLayout->addWidget(albumShapeLabel, 2, 0);
+
+		albumShape = new QComboBox(this);
+		for (const auto shape: albumShapes())
+		{
+			addAlbumShape(albumShape, shape);
+		}
+		comboBoxLayout->addWidget(albumShape, 2, 1);
+	}
+
 	layout->addLayout(comboBoxLayout);
 
 	// Track numbers
@@ -553,6 +569,25 @@ auto SettingsPage::Interface::defaultStyle() -> QString
 
 	// Assume Fusion
 	return QStringLiteral("Fusion");
+}
+
+auto SettingsPage::Interface::albumShapes() -> QList<lib::album_shape>
+{
+	return {
+		lib::album_shape::app,
+		lib::album_shape::circle,
+		lib::album_shape::disc,
+		lib::album_shape::none,
+	};
+}
+
+void SettingsPage::Interface::addAlbumShape(QComboBox *comboBox, lib::album_shape albumShape)
+{
+	const auto shapeName = lib::enums<lib::album_shape>::to_string(albumShape);
+	const auto text = QString::fromStdString(lib::strings::capitalize(shapeName));
+	const auto data = static_cast<short>(albumShape);
+
+	comboBox->addItem(text, data);
 }
 
 auto SettingsPage::Interface::getFontName(const QString &family, int pointSize) -> QString
