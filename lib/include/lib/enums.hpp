@@ -4,6 +4,7 @@
 #include "lib/enum/devicetype.hpp"
 #include "lib/enum/playeraction.hpp"
 #include "lib/enum/position.hpp"
+#include "lib/enum/albumshape.hpp"
 
 #include <string>
 
@@ -263,6 +264,52 @@ namespace lib
 			else
 			{
 				player_action = player_action::unknown;
+			}
+		}
+
+		//endregion
+
+		//region album_shape
+
+		static void enum_to_string(album_shape album_shape, std::string &str)
+		{
+			switch (album_shape)
+			{
+				case album_shape::none:
+					str = "none";
+					break;
+
+				case album_shape::app:
+					str = "app";
+					break;
+
+				case album_shape::circle:
+					str = "circle";
+					break;
+
+				case album_shape::disc:
+					str = "disc";
+					break;
+			}
+		}
+
+		static void enum_from_string(const std::string &str, album_shape &album_shape)
+		{
+			if (str == "app")
+			{
+				album_shape = album_shape::app;
+			}
+			else if (str == "circle")
+			{
+				album_shape = album_shape::circle;
+			}
+			else if (str == "disc")
+			{
+				album_shape = album_shape::disc;
+			}
+			else
+			{
+				album_shape = album_shape::none;
 			}
 		}
 
