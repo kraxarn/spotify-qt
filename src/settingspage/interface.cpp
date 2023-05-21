@@ -39,6 +39,19 @@ auto SettingsPage::Interface::general() -> QWidget *
 	});
 	resizeMode->setCurrentIndex(static_cast<int>(settings.general.track_list_resize_mode));
 	comboBoxLayout->addWidget(resizeMode, 0, 1);
+
+	// Toolbar position
+	auto *toolbarPositionLabel = new QLabel(QStringLiteral("Toolbar position"), this);
+	toolbarPositionLabel->setToolTip(QStringLiteral("Where to position the main toolbar"));
+	comboBoxLayout->addWidget(toolbarPositionLabel, 1, 0);
+
+	toolbarPosition = new QComboBox(this);
+	toolbarPosition->addItems({
+		QStringLiteral("Top"),
+		QStringLiteral("Bottom"),
+	});
+	toolbarPosition->setCurrentIndex(qtSettings.toolbar_position == lib::position::bottom ? 1 : 0);
+	comboBoxLayout->addWidget(toolbarPosition, 1, 1);
 	layout->addLayout(comboBoxLayout);
 
 	// Track numbers
@@ -343,6 +356,23 @@ void SettingsPage::Interface::saveAppearance()
 
 		settings.set_dark_theme(darkTheme->isChecked());
 		Style::applyPalette(settings.general.style_palette);
+	}
+
+	if (toolbarPosition != nullptr)
+	{
+		const auto newPosition = toolbarPosition->currentIndex() == 1
+			? lib::position::bottom
+			: lib::position::top;
+
+		if (qtSettings.toolbar_position != newPosition)
+		{
+			auto *mainWindow = MainWindow::find(parent());
+			auto *toolbar = mainWindow->findChild<MainToolBar *>(QString(), Qt::FindDirectChildrenOnly);
+			const auto newToolBarArea = MainToolBar::toToolBarArea(newPosition);
+			mainWindow->addToolBar(newToolBarArea, toolbar);
+		}
+
+		qtSettings.toolbar_position = newPosition;
 	}
 
 	if (iconFallback != nullptr)
