@@ -31,6 +31,9 @@ public:
 	void setSearchChecked(bool checked);
 	void toggleActions(const lib::spt::playback &playback);
 
+	static auto toPosition(Qt::ToolBarArea area) -> lib::position;
+	static auto toToolBarArea(lib::position position) -> Qt::ToolBarArea;
+
 protected:
 	void resizeEvent(QResizeEvent *event) override;
 	void showEvent(QShowEvent *event) override;

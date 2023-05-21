@@ -320,6 +320,51 @@ void MainToolBar::setSearchChecked(bool checked)
 	search->setChecked(checked);
 }
 
+auto MainToolBar::toPosition(Qt::ToolBarArea area) -> lib::position
+{
+	switch (area)
+	{
+		case Qt::LeftToolBarArea:
+			return lib::position::left;
+
+		case Qt::RightToolBarArea:
+			return lib::position::right;
+
+		case Qt::TopToolBarArea:
+			return lib::position::top;
+
+		case Qt::BottomToolBarArea:
+			return lib::position::bottom;
+
+		default:
+			return lib::position::none;
+	}
+}
+
+auto MainToolBar::toToolBarArea(lib::position position) -> Qt::ToolBarArea
+{
+	switch (position)
+	{
+		case lib::position::none:
+			return Qt::NoToolBarArea;
+
+		case lib::position::top:
+			return Qt::TopToolBarArea;
+
+		case lib::position::right:
+			return Qt::RightToolBarArea;
+
+		case lib::position::bottom:
+			return Qt::BottomToolBarArea;
+
+		case lib::position::left:
+			return Qt::LeftToolBarArea;
+
+		default:
+			return Qt::NoToolBarArea;
+	}
+}
+
 void MainToolBar::onPlayPause(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
