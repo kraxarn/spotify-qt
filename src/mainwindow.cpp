@@ -491,24 +491,18 @@ auto MainWindow::createCentralWidget() -> QWidget *
 	playlistList = new List::Playlist(spotify, settings, cache, this);
 	contextView = new Context::View(spotify, settings, cache, httpClient, this);
 
+	auto *libraryDock = Widget::createDockWidget(libraryList,
+		QStringLiteral("Library"), DockTitle::margins(), this);
+
+	auto *playlistListDock = Widget::createDockWidget(playlistList,
+		QStringLiteral("Playlists"), DockTitle::margins(), this);
+
+	addDockWidget(Qt::LeftDockWidgetArea, libraryDock);
+	addDockWidget(Qt::LeftDockWidgetArea, playlistListDock);
+
 	if (settings.qt().library_layout == lib::library_layout::tabbed)
 	{
-		auto *tabs = new QTabWidget(this);
-		tabs->addTab(libraryList, QStringLiteral("Library"));
-		tabs->addTab(playlistList, QStringLiteral("Playlists"));
-
-		auto *dockTabs = Widget::createDockWidget(tabs, {}, DockTitle::margins(), this);
-		addDockWidget(Qt::LeftDockWidgetArea, dockTabs);
-	}
-	else
-	{
-		addDockWidget(Qt::LeftDockWidgetArea,
-			Widget::createDockWidget(libraryList, QStringLiteral("Library"),
-				DockTitle::margins(), this));
-
-		addDockWidget(Qt::LeftDockWidgetArea,
-			Widget::createDockWidget(playlistList, QStringLiteral("Playlists"),
-				DockTitle::margins(), this));
+		tabifyDockWidget(libraryDock, playlistListDock);
 	}
 
 	addDockWidget(Qt::LeftDockWidgetArea, contextView);

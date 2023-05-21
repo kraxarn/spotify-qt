@@ -19,6 +19,7 @@ auto Widget::createDockWidget(QWidget *widget, const QString &title,
 {
 	auto *dock = createDockWidget(widget, parent);
 	dock->setTitleBarWidget(new DockTitle(title, dock));
+	dock->setWindowTitle(title);
 	dock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
 	return dock;
 }
