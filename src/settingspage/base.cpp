@@ -9,12 +9,12 @@ SettingsPage::Base::Base(lib::settings &settings, QWidget *parent)
 
 void SettingsPage::Base::warning(const QString &title, const QString &message)
 {
-	QMessageBox::warning(this, title, message);
+	QMessageBox::warning(parentWidget(), title, message);
 }
 
 void SettingsPage::Base::info(const QString &title, const QString &message)
 {
-	QMessageBox::information(this, title, message);
+	QMessageBox::information(parentWidget(), title, message);
 }
 
 void SettingsPage::Base::applyFail(const QString &setting)
@@ -30,7 +30,7 @@ auto SettingsPage::Base::applyWarning(const QString &title, const QString &messa
 		? QStringLiteral("Invalid value")
 		: title;
 
-	const auto result = QMessageBox::warning(this, dialogTitle,
+	const auto result = QMessageBox::warning(parentWidget(), dialogTitle,
 		QString("%1.\nDo you want to save anyway?").arg(message),
 		QMessageBox::Ok | QMessageBox::Cancel);
 
