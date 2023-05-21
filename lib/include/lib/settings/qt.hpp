@@ -3,6 +3,7 @@
 #include "lib/json.hpp"
 #include "lib/enum/albumsize.hpp"
 #include "lib/enum/librarylayout.hpp"
+#include "lib/enum/position.hpp"
 
 namespace lib
 {
@@ -49,6 +50,11 @@ namespace lib
 			 * How to display library/playlists
 			 */
 			lib::library_layout library_layout = lib::library_layout::stacked;
+
+			/**
+			 * Where to show the main toolbar
+			 */
+			lib::position toolbar_position = lib::position::top;
 		};
 
 		void to_json(nlohmann::json &j, const qt &q);
