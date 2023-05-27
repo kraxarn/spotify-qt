@@ -62,6 +62,11 @@ auto SettingsPage::Interface::general() -> QWidget *
 	for (const auto shape: albumShapes())
 	{
 		addAlbumShape(albumShape, shape);
+
+		if (qtSettings.album_shape == shape)
+		{
+			albumShape->setCurrentIndex(albumShape->count() - 1);
+		}
 	}
 	comboBoxLayout->addWidget(albumShape, 2, 1);
 
