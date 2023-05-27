@@ -1,9 +1,9 @@
 #include "util/image.hpp"
 
-auto Image::mask(const QPixmap &source, lib::album_shape shape,
-	const QVariant &data) -> QPixmap
+auto Image::mask(const QPixmap &source, lib::album_shape shape, const QVariant &data) -> QPixmap
 {
-	if (source.isNull())
+	if (source.isNull()
+		|| (shape == lib::album_shape::none && data.isNull()))
 	{
 		return source;
 	}
