@@ -23,6 +23,10 @@ auto Image::mask(const QPixmap &source, lib::album_shape shape,
 	{
 		addAppShape(path, img);
 	}
+	else if (shape == lib::album_shape::circle)
+	{
+		addCircleShape(path, img.size());
+	}
 	else if (shape == lib::album_shape::none && data.canConvert<int>())
 	{
 		addPieShape(path, img, data);
@@ -50,6 +54,11 @@ void Image::addAppShape(QPainterPath &path, const QImage &img)
 		<< QPointF(quarterWidth * 3, height)
 		<< QPointF(0, height)
 		<< QPointF(0, quarterHeight));
+}
+
+void Image::addCircleShape(QPainterPath &path, const QSize &size)
+{
+	path.addEllipse(QRectF({}, size));
 }
 
 void Image::addPieShape(QPainterPath &path, const QImage &img, const QVariant &data)

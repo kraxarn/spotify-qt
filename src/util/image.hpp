@@ -20,5 +20,6 @@ private:
 	Image() = default;
 
 	static void addAppShape(QPainterPath &path, const QImage &img);
+	static void addCircleShape(QPainterPath &path, const QSize &size);
 	static void addPieShape(QPainterPath &path, const QImage &img, const QVariant &data);
 };
