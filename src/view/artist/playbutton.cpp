@@ -49,7 +49,7 @@ void Artist::PlayButton::setArtist(const lib::spt::artist &loadedArtist)
 	artist = loadedArtist;
 
 	const auto iconImage = Icon::get("draw-donut").pixmap(64, 64);
-	const auto masked = Image::mask(iconImage, lib::album_shape::circle,
+	const auto masked = Image::mask(iconImage, lib::album_shape::none,
 		QVariant(artist.popularity));
 
 	popularity->setIcon(QIcon(masked));

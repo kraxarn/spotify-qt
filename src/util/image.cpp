@@ -19,11 +19,15 @@ auto Image::mask(const QPixmap &source, lib::album_shape shape,
 	painter.setOpacity(1);
 	QPainterPath path(QPointF(0, 0));
 
-	auto polygon = shape == lib::album_shape::app
-		? appShape(img)
-		: shape == lib::album_shape::circle
-			? pieShape(img, data)
-			: QPolygonF();
+	QPolygonF polygon;
+	if (shape == lib::album_shape::app)
+	{
+		polygon = appShape(img);
+	}
+	else if (shape == lib::album_shape::none && data.canConvert<int>())
+	{
+		polygon = pieShape(img, data);
+	}
 
 	path.addPolygon(polygon);
 	painter.setClipPath(path);
