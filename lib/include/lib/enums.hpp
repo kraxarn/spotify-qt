@@ -297,30 +297,6 @@ namespace lib
 			}
 		}
 
-		static void enum_from_string(const std::string &str, album_shape &album_shape)
-		{
-			if (str == "app")
-			{
-				album_shape = album_shape::app;
-			}
-			else if (str == "circle")
-			{
-				album_shape = album_shape::circle;
-			}
-			else if (str == "disc")
-			{
-				album_shape = album_shape::disc;
-			}
-			else if (str == "rounded")
-			{
-				album_shape = album_shape::rounded;
-			}
-			else
-			{
-				album_shape = album_shape::none;
-			}
-		}
-
 		//endregion
 	};
 }
