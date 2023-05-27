@@ -290,6 +290,10 @@ namespace lib
 				case album_shape::disc:
 					str = "disc";
 					break;
+
+				case album_shape::rounded:
+					str = "rounded";
+					break;
 			}
 		}
 
@@ -306,6 +310,10 @@ namespace lib
 			else if (str == "disc")
 			{
 				album_shape = album_shape::disc;
+			}
+			else if (str == "rounded")
+			{
+				album_shape = album_shape::rounded;
 			}
 			else
 			{

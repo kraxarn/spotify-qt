@@ -30,6 +30,10 @@ auto Image::mask(const QPixmap &source, lib::album_shape shape, const QVariant &
 	{
 		addDiscShape(path, img.size());
 	}
+	else if (shape == lib::album_shape::rounded)
+	{
+		addRoundedShape(path, img.size());
+	}
 	else if (shape == lib::album_shape::none && data.canConvert<int>())
 	{
 		addPieShape(path, img, data);
@@ -82,6 +86,12 @@ void Image::addDiscShape(QPainterPath &path, const QSize &size)
 	QPainterPath innerPath;
 	innerPath.addEllipse(QRectF(innerOffset, innerSize));
 	path.addPath(outerPath.subtracted(innerPath));
+}
+
+void Image::addRoundedShape(QPainterPath &path, const QSize &size)
+{
+	constexpr qreal radius = 8.0;
+	path.addRoundedRect(QRectF({}, size), radius, radius);
 }
 
 void Image::addPieShape(QPainterPath &path, const QImage &img, const QVariant &data)
