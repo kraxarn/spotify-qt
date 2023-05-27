@@ -54,19 +54,16 @@ auto SettingsPage::Interface::general() -> QWidget *
 	comboBoxLayout->addWidget(toolbarPosition, 1, 1);
 
 	// Album shape
-	if (lib::developer_mode::enabled)
-	{
-		auto *albumShapeLabel = new QLabel(QStringLiteral("Album art shape"), this);
-		albumShapeLabel->setToolTip(QStringLiteral("Shape of album art in main window and tray icon"));
-		comboBoxLayout->addWidget(albumShapeLabel, 2, 0);
+	auto *albumShapeLabel = new QLabel(QStringLiteral("Album art shape"), this);
+	albumShapeLabel->setToolTip(QStringLiteral("Shape of album art in main window and tray icon"));
+	comboBoxLayout->addWidget(albumShapeLabel, 2, 0);
 
-		albumShape = new QComboBox(this);
-		for (const auto shape: albumShapes())
-		{
-			addAlbumShape(albumShape, shape);
-		}
-		comboBoxLayout->addWidget(albumShape, 2, 1);
+	albumShape = new QComboBox(this);
+	for (const auto shape: albumShapes())
+	{
+		addAlbumShape(albumShape, shape);
 	}
+	comboBoxLayout->addWidget(albumShape, 2, 1);
 
 	layout->addLayout(comboBoxLayout);
 
