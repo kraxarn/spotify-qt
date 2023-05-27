@@ -1,6 +1,6 @@
 #pragma once
 
-#include "enum/maskshape.hpp"
+#include "lib/enum/albumshape.hpp"
 
 #include <QPixmap>
 #include <QPainter>
@@ -13,15 +13,12 @@ public:
 	/**
 	 * Mask image using specified shape
 	 */
-	static auto mask(const QPixmap &source, MaskShape shape = MaskShape::App,
+	static auto mask(const QPixmap &source, lib::album_shape shape = lib::album_shape::app,
 		const QVariant &data = QVariant()) -> QPixmap;
 
 private:
 	Image() = default;
 
-	/** Get shape for MaskShape::App */
 	static auto appShape(const QImage &img) -> QPolygonF;
-
-	/** Get shape for MaskShape::Pie */
 	static auto pieShape(const QImage &img, const QVariant &data) -> QPolygonF;
 };

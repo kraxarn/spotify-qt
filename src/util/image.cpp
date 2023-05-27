@@ -1,6 +1,6 @@
 #include "util/image.hpp"
 
-auto Image::mask(const QPixmap &source, MaskShape shape,
+auto Image::mask(const QPixmap &source, lib::album_shape shape,
 	const QVariant &data) -> QPixmap
 {
 	if (source.isNull())
@@ -19,9 +19,9 @@ auto Image::mask(const QPixmap &source, MaskShape shape,
 	painter.setOpacity(1);
 	QPainterPath path(QPointF(0, 0));
 
-	auto polygon = shape == MaskShape::App
+	auto polygon = shape == lib::album_shape::app
 		? appShape(img)
-		: shape == MaskShape::Pie
+		: shape == lib::album_shape::circle
 			? pieShape(img, data)
 			: QPolygonF();
 
