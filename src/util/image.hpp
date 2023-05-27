@@ -19,6 +19,6 @@ public:
 private:
 	Image() = default;
 
-	static auto appShape(const QImage &img) -> QPolygonF;
-	static auto pieShape(const QImage &img, const QVariant &data) -> QPolygonF;
+	static void addAppShape(QPainterPath &path, const QImage &img);
+	static void addPieShape(QPainterPath &path, const QImage &img, const QVariant &data);
 };
