@@ -2,8 +2,7 @@
 
 auto Image::mask(const QPixmap &source, lib::album_shape shape, const QVariant &data) -> QPixmap
 {
-	if (source.isNull()
-		|| (shape == lib::album_shape::none && data.isNull()))
+	if (source.isNull())
 	{
 		return source;
 	}
@@ -30,6 +29,10 @@ auto Image::mask(const QPixmap &source, lib::album_shape shape, const QVariant &
 	else if (shape == lib::album_shape::none && data.canConvert<int>())
 	{
 		addPieShape(path, img, data);
+	}
+	else
+	{
+		return source;
 	}
 
 	painter.setClipPath(path);
