@@ -23,7 +23,8 @@ namespace Context
 	Q_OBJECT
 
 	public:
-		SmallContent(lib::spt::api &spotify, const lib::cache &cache, QWidget *parent);
+		SmallContent(lib::spt::api &spotify, const lib::cache &cache,
+			lib::settings &settings, QWidget *parent);
 
 	protected:
 		auto iconSize() const -> QSize override;

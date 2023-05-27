@@ -1,9 +1,9 @@
 #include "view/context/expandedcontent.hpp"
 #include "view/context/abstractcontent.hpp"
 
-Context::ExpandedContent::ExpandedContent(lib::spt::api &spotify,
-	const lib::cache &cache, QWidget *parent)
-	: AbstractContent(spotify, cache, parent)
+Context::ExpandedContent::ExpandedContent(lib::spt::api &spotify, const lib::cache &cache,
+	lib::settings &settings, QWidget *parent)
+	: AbstractContent(spotify, cache, settings, parent)
 {
 	auto *layout = AbstractContent::layout<QGridLayout>();
 
@@ -47,7 +47,8 @@ void Context::ExpandedContent::scaleAlbum(int width)
 	const auto pixmap = albumPixmap.scaled(size, size,
 		Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
 
-	album->setPixmap(Image::mask(pixmap));
+	const auto albumShape = settings.qt().album_shape;
+	album->setPixmap(Image::mask(pixmap, albumShape));
 }
 
 void Context::ExpandedContent::setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage)

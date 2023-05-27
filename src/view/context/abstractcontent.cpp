@@ -1,11 +1,12 @@
 #include "view/context/abstractcontent.hpp"
 #include "mainwindow.hpp"
 
-Context::AbstractContent::AbstractContent(lib::spt::api &spotify,
-	const lib::cache &cache, QWidget *parent)
+Context::AbstractContent::AbstractContent(lib::spt::api &spotify, const lib::cache &cache,
+	lib::settings &settings, QWidget *parent)
 	: QWidget(parent),
 	spotify(spotify),
-	cache(cache)
+	cache(cache),
+	settings(settings)
 {
 	// Show menu when clicking
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
@@ -18,7 +19,8 @@ void Context::AbstractContent::setAlbum(const lib::spt::entity &albumEntity,
 {
 	if (album != nullptr)
 	{
-		album->setPixmap(Image::mask(albumImage));
+		const auto albumShape = settings.qt().album_shape;
+		album->setPixmap(Image::mask(albumImage, albumShape));
 		album->setToolTip(QString::fromStdString(albumEntity.name));
 	}
 }

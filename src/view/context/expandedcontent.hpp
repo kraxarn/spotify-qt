@@ -24,7 +24,8 @@ namespace Context
 	Q_OBJECT
 
 	public:
-		ExpandedContent(lib::spt::api &spotify, const lib::cache &cache, QWidget *parent);
+		ExpandedContent(lib::spt::api &spotify, const lib::cache &cache,
+			lib::settings &settings, QWidget *parent);
 
 		void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage) override;
 

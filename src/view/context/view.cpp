@@ -31,11 +31,11 @@ void Context::View::setAlbumSize(lib::album_size albumSize)
 
 	if (albumSize == lib::album_size::expanded)
 	{
-		albumContent = new Context::ExpandedContent(spotify, cache, this);
+		albumContent = new Context::ExpandedContent(spotify, cache, settings, this);
 	}
 	else
 	{
-		albumContent = new Context::SmallContent(spotify, cache, this);
+		albumContent = new Context::SmallContent(spotify, cache, settings, this);
 	}
 
 	setWidget(albumContent);
