@@ -58,11 +58,10 @@ auto SettingsPage::Interface::general() -> QWidget *
 	albumShapeLabel->setToolTip(QStringLiteral("Shape of album art in main window and tray icon"));
 	comboBoxLayout->addWidget(albumShapeLabel, 2, 0);
 
-	albumShape = new QComboBox(this);
+	albumShape = new AlbumShapeComboBox(this);
 	for (const auto shape: albumShapes())
 	{
-		addAlbumShape(albumShape, shape);
-
+		albumShape->addAlbumShape(shape);
 		if (qtSettings.album_shape == shape)
 		{
 			albumShape->setCurrentIndex(albumShape->count() - 1);
@@ -346,10 +345,8 @@ void SettingsPage::Interface::saveGeneral()
 
 	if (albumShape != nullptr)
 	{
-		const auto shapeValue = albumShape->currentData().value<short>();
-		const auto shape = static_cast<lib::album_shape>(shapeValue);
-
-		qtSettings.album_shape = shape;
+		const auto currentAlbumShape = albumShape->currentAlbumShape();
+		qtSettings.album_shape = currentAlbumShape;
 	}
 
 	if (nativeWindow != nullptr)
@@ -590,21 +587,6 @@ auto SettingsPage::Interface::albumShapes() -> QList<lib::album_shape>
 		lib::album_shape::rounded,
 		lib::album_shape::none,
 	};
-}
-
-void SettingsPage::Interface::addAlbumShape(QComboBox *comboBox, lib::album_shape albumShape)
-{
-	const auto shapeName = lib::enums<lib::album_shape>::to_string(albumShape);
-	const auto text = QString::fromStdString(lib::strings::capitalize(shapeName));
-	const auto data = static_cast<short>(albumShape);
-
-	auto textColor = QApplication::palette().text().color();
-	textColor.setAlpha(192);
-
-	QPixmap icon(64, 64);
-	icon.fill(textColor);
-
-	comboBox->addItem({Image::mask(icon, albumShape)}, text, data);
 }
 
 auto SettingsPage::Interface::getFontName(const QString &family, int pointSize) -> QString

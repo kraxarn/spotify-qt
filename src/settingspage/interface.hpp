@@ -2,6 +2,7 @@
 
 #include "settingspage/base.hpp"
 #include "util/icon.hpp"
+#include "widget/albumshapecombobox.hpp"
 
 #include <QStyleFactory>
 #include <QGroupBox>
@@ -23,7 +24,7 @@ namespace SettingsPage
 		// General
 		QComboBox *resizeMode = nullptr;
 		QComboBox *toolbarPosition = nullptr;
-		QComboBox *albumShape = nullptr;
+		AlbumShapeComboBox *albumShape = nullptr;
 		QCheckBox *trackNumbers = nullptr;
 		QCheckBox *relativeAdded = nullptr;
 		QCheckBox *nativeWindow = nullptr;
@@ -68,7 +69,6 @@ namespace SettingsPage
 		void darkThemeToggle(bool checked);
 
 		static auto albumShapes() -> QList<lib::album_shape>;
-		static void addAlbumShape(QComboBox *comboBox, lib::album_shape albumShape);
 
 		static auto getFontName(const QString &family, int pointSize) -> QString;
 		static auto getFontName(const QFont &font) -> QString;
