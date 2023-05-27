@@ -587,7 +587,13 @@ void SettingsPage::Interface::addAlbumShape(QComboBox *comboBox, lib::album_shap
 	const auto text = QString::fromStdString(lib::strings::capitalize(shapeName));
 	const auto data = static_cast<short>(albumShape);
 
-	comboBox->addItem(text, data);
+	auto textColor = QApplication::palette().text().color();
+	textColor.setAlpha(192);
+
+	QPixmap icon(64, 64);
+	icon.fill(textColor);
+
+	comboBox->addItem({Image::mask(icon, albumShape)}, text, data);
 }
 
 auto SettingsPage::Interface::getFontName(const QString &family, int pointSize) -> QString
