@@ -339,6 +339,14 @@ void SettingsPage::Interface::saveGeneral()
 		qtSettings.library_layout = libraryLayout;
 	}
 
+	if (albumShape != nullptr)
+	{
+		const auto shapeValue = albumShape->currentData().value<short>();
+		const auto shape = static_cast<lib::album_shape>(shapeValue);
+
+		qtSettings.album_shape = shape;
+	}
+
 	if (nativeWindow != nullptr)
 	{
 		settings.general.native_window = nativeWindow->isChecked();
