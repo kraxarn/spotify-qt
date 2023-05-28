@@ -46,6 +46,8 @@ void Context::AbstractContent::onSongMenu(const QPoint &pos)
 
 void Context::AbstractContent::reset()
 {
+	isPlaying = false;
+
 	if (album != nullptr)
 	{
 		album->setPixmap(Icon::get("media-optical-audio").pixmap(iconSize()));
@@ -59,8 +61,15 @@ void Context::AbstractContent::reset()
 
 void Context::AbstractContent::setCurrentlyPlaying(const lib::spt::track &track)
 {
+	isPlaying = true;
+
 	if (nowPlaying != nullptr)
 	{
 		nowPlaying->setTrack(track);
 	}
+}
+
+auto Context::AbstractContent::isCurrentlyPlaying() const -> bool
+{
+	return isPlaying;
 }

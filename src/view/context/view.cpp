@@ -60,6 +60,7 @@ void Context::View::onPlaybackRefreshed(const lib::spt::playback &current,
 	}
 
 	if (current.item.id != previous.item.id
+		|| !albumContent->isCurrentlyPlaying()
 		|| MainWindow::find(parent())->windowTitle() == QStringLiteral(APP_NAME))
 	{
 		const auto &albumImageUrl = settings.qt().album_size == lib::album_size::expanded

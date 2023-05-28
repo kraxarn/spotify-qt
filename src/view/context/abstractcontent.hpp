@@ -27,6 +27,7 @@ namespace Context
 		void reset();
 		void setCurrentlyPlaying(const lib::spt::track &track);
 		virtual void setAlbum(const lib::spt::entity &albumEntity, const QPixmap &albumImage);
+		auto isCurrentlyPlaying() const -> bool;
 
 	protected:
 		lib::spt::api &spotify;
@@ -35,6 +36,7 @@ namespace Context
 
 		QLabel *album = nullptr;
 		NowPlaying *nowPlaying = nullptr;
+		bool isPlaying;
 
 		virtual auto iconSize() const -> QSize = 0;
 
