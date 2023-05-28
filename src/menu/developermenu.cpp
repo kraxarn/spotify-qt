@@ -80,11 +80,11 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 			});
 	});
 
-	addMenuItem(this, QStringLiteral("Reload context album"), [this, &settings]()
+	addMenuItem(this, QStringLiteral("Reload context album"), [this]()
 	{
 		auto *mainWindow = MainWindow::find(parentWidget());
-		auto *contextView = mainWindow->findChild<Context::View*>();
-		contextView->setAlbumSize(settings.qt().album_size);
+		auto *contextView = mainWindow->findChild<Context::View *>();
+		contextView->reset();
 	});
 
 	addMenu(infoMenu());

@@ -50,12 +50,17 @@ void Context::View::setAlbumImage(const lib::spt::entity &albumEntity,
 	});
 }
 
+void Context::View::reset()
+{
+	albumContent->reset();
+}
+
 void Context::View::onPlaybackRefreshed(const lib::spt::playback &current,
 	const lib::spt::playback &previous)
 {
 	if (!current.is_valid())
 	{
-		albumContent->reset();
+		reset();
 		return;
 	}
 

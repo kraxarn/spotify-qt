@@ -20,6 +20,7 @@ namespace Context
 			const lib::http_client &httpClient, QWidget *parent);
 
 		void setAlbumSize(lib::album_size albumSize);
+		void reset();
 
 	private:
 		lib::spt::api &spotify;
