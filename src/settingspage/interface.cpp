@@ -346,6 +346,16 @@ void SettingsPage::Interface::saveGeneral()
 	if (albumShape != nullptr)
 	{
 		const auto currentAlbumShape = albumShape->currentAlbumShape();
+
+		if (mainWindow != nullptr && qtSettings.album_shape != currentAlbumShape)
+		{
+			auto *contextView = mainWindow->findChild<Context::View *>();
+			if (contextView != nullptr)
+			{
+				contextView->reset();
+			}
+		}
+
 		qtSettings.album_shape = currentAlbumShape;
 	}
 
