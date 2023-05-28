@@ -584,7 +584,6 @@ auto SettingsPage::Interface::albumShapes() -> QList<lib::album_shape>
 		lib::album_shape::app,
 		lib::album_shape::circle,
 		lib::album_shape::disc,
-		lib::album_shape::rounded,
 		lib::album_shape::none,
 	};
 }
