@@ -290,10 +290,6 @@ namespace lib
 				case album_shape::disc:
 					str = "disc";
 					break;
-
-				case album_shape::rounded:
-					str = "rounded";
-					break;
 			}
 		}
 

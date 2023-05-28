@@ -26,10 +26,5 @@ namespace lib
 		 * A round circle with a hole in the middle, like a CD
 		 */
 		disc = 3,
-
-		/**
-		 * Rounded corners
-		 */
-		rounded = 4,
 	};
 }

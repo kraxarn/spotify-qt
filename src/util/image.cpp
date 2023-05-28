@@ -18,29 +18,33 @@ auto Image::mask(const QPixmap &source, lib::album_shape shape, const QVariant &
 	painter.setOpacity(1);
 	QPainterPath path(QPointF(0, 0));
 
-	if (shape == lib::album_shape::app)
+	switch (shape)
 	{
-		addAppShape(path, img);
-	}
-	else if (shape == lib::album_shape::circle)
-	{
-		addCircleShape(path, img.size());
-	}
-	else if (shape == lib::album_shape::disc)
-	{
-		addDiscShape(path, img.size());
-	}
-	else if (shape == lib::album_shape::rounded)
-	{
-		addRoundedShape(path, img.size());
-	}
-	else if (shape == lib::album_shape::none && data.canConvert<int>())
-	{
-		addPieShape(path, img, data);
-	}
-	else
-	{
-		return source;
+		case lib::album_shape::app:
+			addAppShape(path, img);
+			break;
+
+		case lib::album_shape::circle:
+			addCircleShape(path, img.size());
+			break;
+
+		case lib::album_shape::disc:
+			addDiscShape(path, img.size());
+			break;
+
+		case lib::album_shape::none:
+			if (data.canConvert<int>())
+			{
+				addPieShape(path, img, data);
+			}
+			else
+			{
+				addRoundedShape(path, img.size());
+			}
+			break;
+
+		default:
+			return source;
 	}
 
 	painter.setClipPath(path);
@@ -90,7 +94,7 @@ void Image::addDiscShape(QPainterPath &path, const QSize &size)
 
 void Image::addRoundedShape(QPainterPath &path, const QSize &size)
 {
-	constexpr qreal radius = 8.0;
+	constexpr qreal radius = 4.0;
 	path.addRoundedRect(QRectF({}, size), radius, radius);
 }
 
