@@ -12,7 +12,7 @@ class TrayIcon: public QSystemTrayIcon
 Q_OBJECT
 
 public:
-	TrayIcon(lib::spt::api &spotify, const lib::settings &settings, lib::cache &cache,
+	TrayIcon(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
 		const lib::http_client &httpClient, QWidget *parent);
 
 	~TrayIcon() override;
@@ -45,7 +45,7 @@ private:
 
 	QAction *currentTrack = nullptr;
 	lib::spt::api &spotify;
-	const lib::settings &settings;
+	lib::settings &settings;
 	lib::cache &cache;
 	const lib::http_client &httpClient;
 

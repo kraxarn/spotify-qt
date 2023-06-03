@@ -1,7 +1,7 @@
 #include "trayicon.hpp"
 #include "mainwindow.hpp"
 
-TrayIcon::TrayIcon(lib::spt::api &spotify, const lib::settings &settings, lib::cache &cache,
+TrayIcon::TrayIcon(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
 	const lib::http_client &httpClient, QWidget *parent)
 	: QSystemTrayIcon(parent),
 	spotify(spotify),
@@ -102,7 +102,8 @@ auto TrayIcon::playback() -> lib::spt::playback
 
 void TrayIcon::setPixmap(const QPixmap &pixmap)
 {
-	setIcon(Image::mask(pixmap));
+	const auto albumShape = settings.qt().album_shape;
+	setIcon(Image::mask(pixmap, albumShape));
 }
 
 void TrayIcon::setDefaultPixmap()
