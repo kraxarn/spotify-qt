@@ -199,11 +199,9 @@ void List::Playlist::order(lib::playlist_order order)
 			break;
 
 		case lib::playlist_order::recent:
-			// TODO: Currently sorts by when tracks where added, not when playlist was last played
-			mainWindow = MainWindow::find(parentWidget());
+			mainWindow = MainWindow::find(parent());
 			if (mainWindow == nullptr)
 			{
-				lib::log::error("Failed to order playlist: MainWindow not found");
 				break;
 			}
 
