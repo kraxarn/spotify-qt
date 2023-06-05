@@ -210,6 +210,7 @@ void List::Playlist::order(lib::playlist_order order)
 			{
 				const auto playlistIdData = item->data(static_cast<int>(DataRole::PlaylistId));
 				const auto playlistId = playlistIdData.toString();
+				// TODO: Getting playlist from cache (again) can still be slow
 				const auto playlist = cache.get_playlist(playlistId.toStdString());
 				edited[playlistId] = latestTrack(playlist.tracks);
 			}
