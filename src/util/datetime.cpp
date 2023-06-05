@@ -75,3 +75,10 @@ auto DateTime::parseIsoDate(const std::string &date) -> QDateTime
 {
 	return parseIsoDate(QString::fromStdString(date));
 }
+
+auto DateTime::epoch() -> QDateTime
+{
+	const QDate date(1970, 1, 1);
+	const QTime time(0, 0);
+	return {date, time};
+}

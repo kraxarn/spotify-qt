@@ -41,6 +41,11 @@ public:
 	 */
 	static auto parseIsoDate(const std::string &date) -> QDateTime;
 
+	/**
+	 * Epoch, the beginning of time, 1970-01-01
+	 */
+	static auto epoch() -> QDateTime;
+
 private:
 	DateTime() = default;
 
