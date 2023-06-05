@@ -39,6 +39,6 @@ namespace List
 		void doubleClicked(QListWidgetItem *item);
 		void menu(const QPoint &pos);
 
-		static auto latestTrack(const std::vector<lib::spt::track> &tracks) -> size_t;
+		static auto latestTrack(const std::vector<lib::spt::track> &tracks) -> QDateTime;
 	};
 }

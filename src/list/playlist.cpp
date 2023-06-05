@@ -177,6 +177,7 @@ void List::Playlist::order(lib::playlist_order order)
 	}
 
 	QMap<QString, int> customOrder;
+	QHash<QString, QDateTime> edited;
 	MainWindow *mainWindow;
 
 	switch (order)
@@ -205,20 +206,23 @@ void List::Playlist::order(lib::playlist_order order)
 				break;
 			}
 
-			std::sort(items.begin(), items.end(), [this]
-				(QListWidgetItem *item1, QListWidgetItem *item2) -> bool
+			for (const auto &item: items)
 			{
-				auto id1 = item1->data(static_cast<int>(DataRole::PlaylistId))
-					.toString().toStdString();
-				auto id2 = item2->data(static_cast<int>(DataRole::PlaylistId))
-					.toString().toStdString();
+				const auto playlistIdData = item->data(static_cast<int>(DataRole::PlaylistId));
+				const auto playlistId = playlistIdData.toString();
+				const auto playlist = cache.get_playlist(playlistId.toStdString());
+				edited[playlistId] = latestTrack(playlist.tracks);
+			}
 
-				auto track1 = this->cache.get_playlist(id1).tracks;
-				auto track2 = this->cache.get_playlist(id2).tracks;
+			std::sort(items.begin(), items.end(), [&edited](QListWidgetItem *item1, QListWidgetItem *item2) -> bool
+			{
+				const auto id1 = item1->data(static_cast<int>(DataRole::PlaylistId)).toString();
+				const auto id2 = item2->data(static_cast<int>(DataRole::PlaylistId)).toString();
 
-				return !track1.empty() && !track2.empty()
-					&& DateTime::parseIso(track1.at(latestTrack(track1)).added_at)
-						> DateTime::parseIso(track2.at(latestTrack(track2)).added_at);
+				const auto date1 = edited.value(id1);
+				const auto date2 = edited.value(id2);
+
+				return date1.isValid() && date2.isValid() && date1 > date2;
 			});
 			break;
 
@@ -253,15 +257,15 @@ void List::Playlist::order(lib::playlist_order order)
 	}
 }
 
-auto List::Playlist::latestTrack(const std::vector<lib::spt::track> &tracks) -> size_t
+auto List::Playlist::latestTrack(const std::vector<lib::spt::track> &tracks) -> QDateTime
 {
-	size_t latest = 0;
-	for (size_t i = 0; i < tracks.size(); i++)
+	QDateTime latest;
+	for (const auto &track: tracks)
 	{
-		if (DateTime::parseIso(tracks[i].added_at)
-			> DateTime::parseIso(tracks[latest].added_at))
+		const auto addedAt = DateTime::parseIso(track.added_at);
+		if (!latest.isValid() || addedAt > latest)
 		{
-			latest = i;
+			latest = addedAt;
 		}
 	}
 	return latest;
