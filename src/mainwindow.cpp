@@ -512,6 +512,69 @@ auto MainWindow::createCentralWidget() -> QWidget *
 	return mainContent;
 }
 
+auto MainWindow::getDockedWidgets() -> std::string
+{
+	nlohmann::json json;
+	QMap<Qt::DockWidgetArea, int> indexes;
+
+	auto widgets = findChildren<QDockWidget *>(QString(), Qt::FindDirectChildrenOnly);
+	for (auto *widget: widgets)
+	{
+		const auto key = (widget->objectName().isEmpty()
+			? QString(widget->metaObject()->className())
+			: widget->objectName())
+			.toStdString();
+
+		if (json.contains(key))
+		{
+			lib::log::warn("Docked widget with name \"{}\" already exists, ignoring");
+			continue;
+		}
+
+		const auto area = dockWidgetArea(widget);
+		int index;
+
+		if (indexes.contains(area))
+		{
+			index = ++indexes[area];
+		}
+		else
+		{
+			index = indexes[area] = 0;
+		}
+
+		std::vector<std::string> tabNames;
+		for (const auto *tabbedWidget: tabifiedDockWidgets(widget))
+		{
+			tabNames.push_back((tabbedWidget->objectName().isEmpty()
+				? QString(tabbedWidget->metaObject()->className())
+				: tabbedWidget->objectName())
+				.toStdString());
+		}
+
+		nlohmann::json obj{
+			{"y",     qMax(widget->pos().y(), -1)},
+			{"index", index},
+			{"area",  area},
+			{"tabs",  tabNames},
+		};
+
+		const auto y = widget->pos().y();
+		if (y >= 0)
+		{
+			obj["y"] = (nlohmann::json::value_type) y;
+		}
+		else
+		{
+			obj["y"] = nullptr;
+		}
+
+		json[key] = obj;
+	}
+
+	return json.dump();
+}
+
 auto MainWindow::startClient() -> const SpotifyClient::Runner *
 {
 	stopClient();

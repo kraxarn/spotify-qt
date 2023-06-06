@@ -10,6 +10,7 @@
 #include "dialog/lyricssearch.hpp"
 #include "dialog/disallows.hpp"
 #include "dialog/editplaylist.hpp"
+#include "dialog/jsondump.hpp"
 
 DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
@@ -85,6 +86,14 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 		auto *mainWindow = MainWindow::find(parentWidget());
 		auto *contextView = mainWindow->findChild<Context::View *>();
 		contextView->reset();
+	});
+
+	addMenuItem(this, QStringLiteral("Docked widgets"), [this]()
+	{
+		auto *mainWindow = MainWindow::find(parentWidget());
+		const auto json = nlohmann::json::parse(mainWindow->getDockedWidgets());
+		auto *dialog = new Dialog::JsonDump(json, mainWindow);
+		dialog->open();
 	});
 
 	addMenu(infoMenu());

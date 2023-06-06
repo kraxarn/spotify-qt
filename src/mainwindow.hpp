@@ -48,6 +48,7 @@ public:
 	void setBorderless(bool enabled);
 	void addSizeGrip(const std::function<QPoint(const QRect &)> &position);
 	void minimize();
+	auto getDockedWidgets() -> std::string;
 
 	auto startClient() -> const SpotifyClient::Runner *;
 	void stopClient();
