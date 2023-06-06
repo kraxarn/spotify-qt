@@ -5,7 +5,7 @@ on: workflow_dispatch
 env:
   BUILD_TYPE: Release
   QT_VERSION: "6.5.1"
-  QT_ARCH: "win64_msvc2019_arm64"
+  QT_ARCH: "win64_msvc2019_64 win64_msvc2019_arm64"
   CMAKE_GENERATOR: "Visual Studio 17 2022"
   CMAKE_ARCH: "ARM64"
 
