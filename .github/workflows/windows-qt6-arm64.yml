@@ -5,7 +5,8 @@ on: workflow_dispatch
 env:
   BUILD_TYPE: Release
   QT_VERSION: "6.5.1"
-  QT_ARCH: "win64_msvc2019_64 win64_msvc2019_arm64"
+  QT_ARCH: "win64_msvc2019_arm64"
+  QT_HOST_ARCH: "win64_msvc2019_64"
   CMAKE_GENERATOR: "Visual Studio 17 2022"
   CMAKE_ARCH: "ARM64"
 
@@ -16,6 +17,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Install Qt (Host)
+        uses: jurplel/install-qt-action@v3
+        with:
+          cache: true
+          version: ${{env.QT_VERSION}}
+          arch: ${{env.QT_HOST_ARCH}}
+
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
@@ -24,6 +32,8 @@ jobs:
           arch: ${{env.QT_ARCH}}
 
       - name: Configure CMake
+        env:
+          QT_HOST_PATH: ${{runner.workspace}}/Qt/${{env.QT_VERSION}}/${{env.QT_HOST_ARCH}}
         run: cmake . -G "${{env.CMAKE_GENERATOR}}" -A ${{env.CMAKE_ARCH}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DUSE_TESTS=ON -DUSE_LTO=ON
 
       - name: Build
