@@ -38,6 +38,9 @@ namespace SidePanel
 
 		static auto find(QWidget *widget) -> View *;
 
+	protected:
+		void showEvent(QShowEvent *event) override;
+
 	private:
 		SidePanel::Title *title = nullptr;
 		QStackedWidget *stack = nullptr;

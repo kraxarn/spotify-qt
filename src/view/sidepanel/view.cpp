@@ -209,3 +209,18 @@ auto SidePanel::View::find(QWidget *widget) -> View *
 	return window->findChild<SidePanel::View *>(QString(),
 		Qt::FindDirectChildrenOnly);
 }
+
+void SidePanel::View::showEvent(QShowEvent *event)
+{
+	QWidget::showEvent(event);
+
+	// When using QGraphicsEffect (like with now playing)
+	// the dock title disappears for some reason, so we
+	// force it to redraw to work around it
+	if (title->height() == 0)
+	{
+		lib::log::debug("Title is hidden, forcing re-add");
+		title->hide();
+		title->show();
+	}
+}
