@@ -15,8 +15,6 @@ SidePanel::View::View(lib::spt::api &spotify, const lib::settings &settings,
 	stack = new QStackedWidget(this);
 	setWidget(stack);
 
-	setVisible(false);
-
 	QTabBar::connect(title, &QTabBar::tabCloseRequested,
 		this, &SidePanel::View::removeTab);
 

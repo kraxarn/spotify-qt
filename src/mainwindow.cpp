@@ -487,6 +487,7 @@ auto MainWindow::createCentralWidget() -> QWidget *
 	// All widgets in container
 	mainContent = new MainContent(spotify, settings, cache, this);
 	sidePanel = new SidePanel::View(spotify, settings, cache, httpClient, this);
+	sidePanel->setVisible(false);
 
 	libraryList = new List::Library(spotify, cache, this);
 	playlistList = new List::Playlist(spotify, settings, cache, this);
