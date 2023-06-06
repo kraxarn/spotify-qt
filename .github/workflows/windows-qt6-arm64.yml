@@ -1,0 +1,42 @@
+name: Windows (Qt 6, arm64)
+
+on: workflow_dispatch
+
+env:
+  BUILD_TYPE: Release
+  QT_VERSION: "6.5.1"
+  QT_ARCH: "win64_msvc2019_arm64"
+  CMAKE_GENERATOR: "Visual Studio 17 2022"
+  CMAKE_ARCH: "ARM64"
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          cache: true
+          version: ${{env.QT_VERSION}}
+          arch: ${{env.QT_ARCH}}
+
+      - name: Configure CMake
+        run: cmake . -G "${{env.CMAKE_GENERATOR}}" -A ${{env.CMAKE_ARCH}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DUSE_TESTS=ON -DUSE_LTO=ON
+
+      - name: Build
+        run: cmake --build . --config ${{env.BUILD_TYPE}}
+
+      - name: Test
+        run: ${{runner.workspace}}/spotify-qt/lib/test/${{env.BUILD_TYPE}}/spotify-qt-lib-test.exe
+
+      - name: Package
+        run: windeployqt --no-opengl-sw ${{runner.workspace}}/spotify-qt/${{env.BUILD_TYPE}}/spotify-qt.exe
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: spotify-qt
+          path: ${{runner.workspace}}/spotify-qt/${{env.BUILD_TYPE}}
