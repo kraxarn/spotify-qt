@@ -36,7 +36,6 @@ private:
 	auto infoMenu() -> QMenu *;
 	auto crashMenu() -> QMenu *;
 	auto statusMenu() -> QMenu *;
-	auto widgetsMenu() -> QMenu *;
 
 	void onDialogMenuAboutToShow();
 };

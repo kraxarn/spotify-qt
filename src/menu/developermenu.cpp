@@ -11,6 +11,7 @@
 #include "dialog/disallows.hpp"
 #include "dialog/editplaylist.hpp"
 #include "dialog/jsondump.hpp"
+#include "dialog/widgets.hpp"
 
 DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
@@ -96,11 +97,17 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 		dialog->open();
 	});
 
+	addMenuItem(this, QStringLiteral("Widgets"), [this]()
+	{
+		auto *mainWindow = MainWindow::find(parentWidget());
+		auto *debugView = new Dialog::Widgets(mainWindow);
+		debugView->show();
+	});
+
 	addMenu(infoMenu());
 	addMenu(getDialogMenu());
 	addMenu(crashMenu());
 	addMenu(statusMenu());
-	addMenu(widgetsMenu());
 }
 
 void DeveloperMenu::addMenuItem(QMenu *menu, const QString &text,
@@ -200,51 +207,6 @@ auto DeveloperMenu::statusMenu() -> QMenu *
 	addMenuItem(menu, "Error", []()
 	{
 		StatusMessage::show(MessageType::Error, "Error");
-	});
-
-	return menu;
-}
-
-auto DeveloperMenu::widgetsMenu() -> QMenu *
-{
-	auto *menu = new QMenu(QStringLiteral("Widgets"), this);
-
-	addMenuItem(menu, QStringLiteral("Active window"), [this]()
-	{
-		auto *mainWindow = MainWindow::find(parent());
-		const auto *window = QApplication::activeWindow();
-
-		QMessageBox::information(mainWindow, QStringLiteral("Active window"),
-			window->metaObject()->className());
-	});
-
-	addMenuItem(menu, QStringLiteral("Top-level windows"), [this]()
-	{
-		auto *mainWindow = MainWindow::find(parent());
-
-		QString info;
-		for (const auto *window: QApplication::topLevelWindows())
-		{
-			info.append(QString("\n%1").arg(window->metaObject()->className()));
-		}
-
-		QMessageBox::information(mainWindow, QStringLiteral("Top-level windows"), info);
-	});
-
-	addMenuItem(menu, QStringLiteral("Top-level widgets"), [this]()
-	{
-		auto *mainWindow = MainWindow::find(parent());
-
-		QString info;
-		for (const auto *window: QApplication::topLevelWidgets())
-		{
-			auto *parent = window->parent();
-			info.append(QString("\n%1 (parent: %2)").arg(window->metaObject()->className(), parent != nullptr
-				? parent->metaObject()->className()
-				: QStringLiteral("no parent")));
-		}
-
-		QMessageBox::information(mainWindow, QStringLiteral("Top-level widgets"), info);
 	});
 
 	return menu;
