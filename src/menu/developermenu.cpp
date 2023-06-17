@@ -259,7 +259,7 @@ void DeveloperMenu::onDialogMenuAboutToShow()
 
 	auto *mainWindow = MainWindow::find(parentWidget());
 
-	QMap<QString, std::function<QDialog *()>> dialogs{
+	const QMap<QString, std::function<QDialog *()>> dialogs{
 		{QStringLiteral("Device select"), [mainWindow]()
 		{
 			return new Dialog::DeviceSelect({}, mainWindow);
