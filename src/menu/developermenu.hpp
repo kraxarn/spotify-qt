@@ -27,7 +27,7 @@ private:
 	lib::cache &cache;
 	const lib::http_client &httpClient;
 
-	QMenu *dialogMenu;
+	QMenu *dialogMenu = nullptr;
 
 	static void addMenuItem(QMenu *menu, const QString &text,
 		const std::function<void()> &triggered);
