@@ -1,21 +1,32 @@
 #include "dialog/widgets.hpp"
 
+#include <QPushButton>
+
 Dialog::Widgets::Widgets(QWidget *parent)
 	: Base(parent)
 {
 	setWindowTitle(QStringLiteral("Widgets"));
 	auto *layout = Base::layout<QVBoxLayout>();
 
-	auto *tabs = new QTabWidget(this);
+	tabs = new QTabWidget(this);
 	tabs->addTab(activeWindow(), QStringLiteral("Active window"));
 	tabs->addTab(topLevelWindows(), QStringLiteral("Top-level windows"));
 	tabs->addTab(topLevelWidgets(), QStringLiteral("Top-level widgets"));
 	layout->addWidget(tabs);
 
+	for (auto i = 0; i < tabs->children().length(); i++)
+	{
+		refresh(i);
+	}
+
+	auto *refreshButton = Base::addButton(QStringLiteral("Refresh"), QDialogButtonBox::ResetRole);
+	QPushButton::connect(refreshButton, &QPushButton::clicked,
+		this, &Dialog::Widgets::onRefreshClicked);
+
 	Base::addAction(DialogAction::Ok);
 }
 
-auto Dialog::Widgets::tree(const QStringList &labels)
+auto Dialog::Widgets::tree(const QStringList &labels) -> QTreeWidget *
 {
 	auto *tree = new QTreeWidget(this);
 	tree->setHeaderLabels(labels);
@@ -25,50 +36,70 @@ auto Dialog::Widgets::tree(const QStringList &labels)
 
 auto Dialog::Widgets::activeWindow() -> QWidget *
 {
-	auto *items = tree({
+	return tree({
 		QStringLiteral("Class name"),
 	});
-
-	auto *item = new QTreeWidgetItem(items);
-	const auto *window = QApplication::activeWindow();
-	item->setText(0, window->metaObject()->className());
-
-	return items;
 }
 
 auto Dialog::Widgets::topLevelWindows() -> QWidget *
 {
-	auto *items = tree({
+	return tree({
 		QStringLiteral("Class name"),
 	});
-
-	for (const auto *window: QApplication::topLevelWindows())
-	{
-		auto *item = new QTreeWidgetItem(items);
-		item->setText(0, window->metaObject()->className());
-	}
-
-	return items;
 }
 
 auto Dialog::Widgets::topLevelWidgets() -> QWidget *
 {
-	auto *items = tree({
+	return tree({
 		QStringLiteral("Class name"),
 		QStringLiteral("Parent class name"),
 	});
+}
 
-	for (const auto *widget: QApplication::topLevelWidgets())
+void Dialog::Widgets::refresh(int index)
+{
+	auto *child = tabs->widget(index);
+	auto *tree = qobject_cast<QTreeWidget *>(child);
+	if (tree == nullptr)
 	{
-		auto *item = new QTreeWidgetItem(items);
-		item->setText(0, widget->metaObject()->className());
-
-		auto *parent = widget->parent();
-		if (parent != nullptr)
-		{
-			item->setText(1, widget->parent()->metaObject()->className());
-		}
+		return;
 	}
 
-	return items;
+	tree->clear();
+	if (index == 0)
+	{
+		// Active window
+		auto *item = new QTreeWidgetItem(tree);
+		const auto *window = QApplication::activeWindow();
+		item->setText(0, window->metaObject()->className());
+	}
+	else if (index == 1)
+	{
+		// Top-level windows
+		for (const auto *window: QApplication::topLevelWindows())
+		{
+			auto *item = new QTreeWidgetItem(tree);
+			item->setText(0, window->metaObject()->className());
+		}
+	}
+	else if (index == 2)
+	{
+		// Top-level widgets
+		for (const auto *widget: QApplication::topLevelWidgets())
+		{
+			auto *item = new QTreeWidgetItem(tree);
+			item->setText(0, widget->metaObject()->className());
+
+			auto *parent = widget->parent();
+			if (parent != nullptr)
+			{
+				item->setText(1, widget->parent()->metaObject()->className());
+			}
+		}
+	}
+}
+
+void Dialog::Widgets::onRefreshClicked(bool /*checked*/)
+{
+	refresh(tabs->currentIndex());
 }

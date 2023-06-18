@@ -12,10 +12,15 @@ namespace Dialog
 		explicit Widgets(QWidget *parent);
 
 	private:
-		auto tree(const QStringList &labels);
+		QTabWidget *tabs;
+
+		auto tree(const QStringList &labels) -> QTreeWidget *;
+		void refresh(int index);
 
 		auto activeWindow() -> QWidget *;
 		auto topLevelWindows() -> QWidget *;
 		auto topLevelWidgets() -> QWidget *;
+
+		void onRefreshClicked(bool checked);
 	};
 }
