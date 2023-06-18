@@ -14,16 +14,21 @@ Dialog::Widgets::Widgets(QWidget *parent)
 	tabs->addTab(topLevelWidgets(), QStringLiteral("Top-level widgets"));
 	layout->addWidget(tabs);
 
-	for (auto i = 0; i < tabs->children().length(); i++)
-	{
-		refresh(i);
-	}
-
 	auto *refreshButton = Base::addButton(QStringLiteral("Refresh"), QDialogButtonBox::ResetRole);
 	QPushButton::connect(refreshButton, &QPushButton::clicked,
 		this, &Dialog::Widgets::onRefreshClicked);
 
 	Base::addAction(DialogAction::Ok);
+}
+
+void Dialog::Widgets::showEvent(QShowEvent *event)
+{
+	QDialog::showEvent(event);
+
+	for (auto i = 0; i < tabs->children().length(); i++)
+	{
+		refresh(i);
+	}
 }
 
 auto Dialog::Widgets::tree(const QStringList &labels) -> QTreeWidget *

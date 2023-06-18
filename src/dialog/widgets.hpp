@@ -11,6 +11,9 @@ namespace Dialog
 	public:
 		explicit Widgets(QWidget *parent);
 
+	protected:
+		void showEvent(QShowEvent *event) override;
+
 	private:
 		QTabWidget *tabs;
 
