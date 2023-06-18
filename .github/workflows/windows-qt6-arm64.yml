@@ -21,6 +21,7 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           cache: true
+          set-env: false
           version: ${{env.QT_VERSION}}
           arch: ${{env.QT_HOST_ARCH}}
 
