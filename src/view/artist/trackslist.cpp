@@ -1,4 +1,5 @@
-#include "trackslist.hpp"
+#include "view/artist/trackslist.hpp"
+#include "util/tooltip.hpp"
 #include "mainwindow.hpp"
 
 Artist::TracksList::TracksList(lib::spt::api &spotify, lib::cache &cache,
@@ -27,6 +28,7 @@ void Artist::TracksList::addTrack(const lib::spt::track &track)
 {
 	auto *item = new QListWidgetItem(QString::fromStdString(track.name), this);
 	item->setData(static_cast<int>(DataRole::Track), QVariant::fromValue(track));
+	Tooltip::set(item, track);
 
 	Http::getAlbumImage(track.image_small(), httpClient, cache, [item](const QPixmap &image)
 	{
