@@ -30,11 +30,12 @@ void Artist::TracksList::addTrack(const lib::spt::track &track)
 	item->setData(static_cast<int>(DataRole::Track), QVariant::fromValue(track));
 	Tooltip::set(item, track);
 
-	Http::getAlbumImage(track.image_small(), httpClient, cache, [item](const QPixmap &image)
+	Http::getAlbumImage(track.image_small(), httpClient, cache, [item, track](const QPixmap &image)
 	{
 		if (item != nullptr)
 		{
 			item->setIcon(QIcon(image));
+			Tooltip::set(item, track, image);
 		}
 	});
 }
