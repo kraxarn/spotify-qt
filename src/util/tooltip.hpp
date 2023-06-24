@@ -8,6 +8,7 @@ class Tooltip
 {
 public:
 	static void set(QListWidgetItem *item, const lib::spt::track &track);
+	static void set(QListWidgetItem *item, const lib::spt::track &track, const QPixmap &albumImage);
 
 private:
 	static constexpr int iconSize = 16;
@@ -15,6 +16,8 @@ private:
 
 	Tooltip() = default;
 
-	static auto tooltip(const lib::spt::track &track) -> QString;
+	static auto tooltip(const lib::spt::track &track, const QPixmap &albumImage) -> QString;
+
 	static auto icon(const QString &name, int size = iconSize) -> QString;
+	static auto icon(const QPixmap &pixmap) -> QString;
 };
