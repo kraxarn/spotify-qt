@@ -1,8 +1,8 @@
 #include "view/artist/view.hpp"
 #include "mainwindow.hpp"
 
-Artist::View::View(lib::spt::api &spotify, const std::string &artistId,
-	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
+Artist::View::View(lib::spt::api &spotify, const std::string &artistId, lib::cache &cache,
+	const lib::http_client &httpClient, lib::settings &settings, QWidget *parent)
 	: QWidget(parent),
 	artistId(std::string(artistId)),
 	spotify(spotify),
@@ -38,8 +38,7 @@ Artist::View::View(lib::spt::api &spotify, const std::string &artistId,
 	layout->addWidget(tabs);
 
 	// Top tracks
-	topTracksList = new Artist::TracksList(spotify, cache,
-		httpClient, artist, tabs);
+	topTracksList = new Artist::TracksList(spotify, cache, httpClient, artist, settings, tabs);
 	tabs->addTab(topTracksList, "Popular");
 
 	// Albums

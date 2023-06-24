@@ -2,13 +2,14 @@
 #include "util/tooltip.hpp"
 #include "mainwindow.hpp"
 
-Artist::TracksList::TracksList(lib::spt::api &spotify, lib::cache &cache,
-	const lib::http_client &httpClient, const lib::spt::artist &artist, QWidget *parent)
+Artist::TracksList::TracksList(lib::spt::api &spotify, lib::cache &cache, const lib::http_client &httpClient,
+	const lib::spt::artist &artist, lib::settings &settings, QWidget *parent)
 	: QListWidget(parent),
 	spotify(spotify),
 	cache(cache),
 	httpClient(httpClient),
-	artist(artist)
+	artist(artist),
+	settings(settings)
 {
 	setEnabled(false);
 
@@ -30,12 +31,15 @@ void Artist::TracksList::addTrack(const lib::spt::track &track)
 	item->setData(static_cast<int>(DataRole::Track), QVariant::fromValue(track));
 	Tooltip::set(item, track);
 
-	Http::getAlbumImage(track.image_small(), httpClient, cache, [item, track](const QPixmap &image)
+	Http::getAlbumImage(track.image_small(), httpClient, cache, [this, item, track](const QPixmap &image)
 	{
 		if (item != nullptr)
 		{
 			item->setIcon(QIcon(image));
-			Tooltip::set(item, track, image);
+
+			const auto albumShape = settings.qt().album_shape;
+			const auto albumImage = Image::mask(image, albumShape);
+			Tooltip::set(item, track, albumImage);
 		}
 	});
 }

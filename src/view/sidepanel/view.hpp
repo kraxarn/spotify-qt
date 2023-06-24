@@ -18,7 +18,7 @@ namespace SidePanel
 	Q_OBJECT
 
 	public:
-		View(lib::spt::api &spotify, const lib::settings &settings, lib::cache &cache,
+		View(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
 			const lib::http_client &httpClient, QWidget *parent);
 
 		void openArtist(const std::string &artistId);
@@ -48,7 +48,7 @@ namespace SidePanel
 		QWidget *searchView = nullptr;
 
 		lib::spt::api &spotify;
-		const lib::settings &settings;
+		lib::settings &settings;
 		lib::cache &cache;
 		const lib::http_client &httpClient;
 

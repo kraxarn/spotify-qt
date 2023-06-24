@@ -1,7 +1,7 @@
 #include "view/sidepanel/view.hpp"
 #include "mainwindow.hpp"
 
-SidePanel::View::View(lib::spt::api &spotify, const lib::settings &settings,
+SidePanel::View::View(lib::spt::api &spotify, lib::settings &settings,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
 	: QDockWidget(parent),
 	spotify(spotify),
@@ -27,7 +27,7 @@ SidePanel::View::View(lib::spt::api &spotify, const lib::settings &settings,
 
 void SidePanel::View::openArtist(const std::string &artistId)
 {
-	auto *view = new Artist::View(spotify, artistId, cache, httpClient, this);
+	auto *view = new Artist::View(spotify, artistId, cache, httpClient, settings, this);
 	addTab(view, "view-media-artist", "...",
 		SidePanelType::Artist, QString::fromStdString(artistId));
 }

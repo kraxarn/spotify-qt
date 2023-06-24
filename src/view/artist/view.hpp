@@ -30,8 +30,8 @@ namespace Artist
 	Q_OBJECT
 
 	public:
-		View(lib::spt::api &spotify, const std::string &artistId,
-			lib::cache &cache, const lib::http_client &httpClient, QWidget *parent);
+		View(lib::spt::api &spotify, const std::string &artistId, lib::cache &cache,
+			const lib::http_client &httpClient, lib::settings &settings, QWidget *parent);
 
 	private:
 		void artistLoaded(const lib::spt::artist &loadedArtist);
