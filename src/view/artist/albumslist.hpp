@@ -3,6 +3,7 @@
 #include "lib/spotify/api.hpp"
 #include "lib/cache.hpp"
 #include "lib/enum/albumgroup.hpp"
+#include "util/tooltip.hpp"
 
 #include <QTreeWidget>
 #include <QHeaderView>
@@ -15,7 +16,7 @@ namespace Artist
 	{
 	public:
 		AlbumsList(lib::spt::api &spotify, lib::cache &cache,
-			const lib::http_client &httpClient, QWidget *parent);
+			const lib::http_client &httpClient, lib::settings &settings, QWidget *parent);
 
 		void setAlbums(const std::vector<lib::spt::album> &albums);
 
@@ -23,6 +24,7 @@ namespace Artist
 		lib::spt::api &spotify;
 		lib::cache &cache;
 		const lib::http_client &httpClient;
+		Tooltip tooltip;
 
 		std::map<lib::album_group, QTreeWidgetItem *> groups;
 
@@ -32,5 +34,6 @@ namespace Artist
 		void onItemClicked(QTreeWidgetItem *item, int column);
 		void onItemDoubleClicked(QTreeWidgetItem *item, int column);
 		void onContextMenu(const QPoint &pos);
+		void onItemEntered(QTreeWidgetItem *item, int column);
 	};
 }

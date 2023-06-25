@@ -3,14 +3,16 @@
 #include "mainwindow.hpp"
 
 Artist::AlbumsList::AlbumsList(lib::spt::api &spotify, lib::cache &cache,
-	const lib::http_client &httpClient, QWidget *parent)
+	const lib::http_client &httpClient, lib::settings &settings, QWidget *parent)
 	: QTreeWidget(parent),
 	spotify(spotify),
 	cache(cache),
-	httpClient(httpClient)
+	httpClient(httpClient),
+	tooltip(settings)
 {
 	setEnabled(false);
 	setColumnCount(2);
+	setMouseTracking(true);
 
 	header()->hide();
 	header()->setStretchLastSection(false);
@@ -26,6 +28,9 @@ Artist::AlbumsList::AlbumsList(lib::spt::api &spotify, lib::cache &cache,
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested,
 		this, &Artist::AlbumsList::onContextMenu);
+
+	QTreeWidget::connect(this, &QTreeWidget::itemEntered,
+		this, &Artist::AlbumsList::onItemEntered);
 
 	for (auto i = lib::album_group::album; i < lib::album_group::none;
 		i = static_cast<lib::album_group>(static_cast<int>(i) + 1))
@@ -58,14 +63,11 @@ void Artist::AlbumsList::setAlbums(const std::vector<lib::spt::album> &albums)
 			albumName, year.isEmpty() ? QString() : year
 		});
 
-		Tooltip::set(item, album, {});
-
 		Http::getAlbumImage(album.image, httpClient, cache, [item, album](const QPixmap &image)
 		{
 			if (item != nullptr)
 			{
 				item->setIcon(0, QIcon(image));
-				Tooltip::set(item, album, image);
 			}
 		});
 
@@ -166,4 +168,15 @@ void Artist::AlbumsList::onContextMenu(const QPoint &pos)
 
 	auto *albumMenu = new Menu::Album(spotify, cache, albumId, parentWidget());
 	albumMenu->popup(mapToGlobal(pos));
+}
+
+void Artist::AlbumsList::onItemEntered(QTreeWidgetItem *item, int column)
+{
+	if (!item->toolTip(0).isEmpty() || column != 0)
+	{
+		return;
+	}
+
+	const auto album = getAlbum(item);
+	tooltip.set(item, album);
 }
