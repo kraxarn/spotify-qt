@@ -4,6 +4,7 @@
 #include "lib/cache.hpp"
 #include "enum/datarole.hpp"
 #include "util/http.hpp"
+#include "util/tooltip.hpp"
 
 #include <QListWidget>
 
@@ -22,9 +23,10 @@ namespace Artist
 		lib::cache &cache;
 		const lib::http_client &httpClient;
 		const lib::spt::artist &artist;
-		lib::settings &settings;
+		Tooltip tooltip;
 
 		void onDoubleClicked(QListWidgetItem *currentItem);
 		void onContextMenu(const QPoint &pos);
+		void onItemEntered(QListWidgetItem *item);
 	};
 }

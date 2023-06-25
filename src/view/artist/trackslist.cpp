@@ -1,5 +1,4 @@
 #include "view/artist/trackslist.hpp"
-#include "util/tooltip.hpp"
 #include "mainwindow.hpp"
 
 Artist::TracksList::TracksList(lib::spt::api &spotify, lib::cache &cache, const lib::http_client &httpClient,
@@ -9,9 +8,10 @@ Artist::TracksList::TracksList(lib::spt::api &spotify, lib::cache &cache, const 
 	cache(cache),
 	httpClient(httpClient),
 	artist(artist),
-	settings(settings)
+	tooltip(settings)
 {
 	setEnabled(false);
+	setMouseTracking(true);
 
 	setEditTriggers(QAbstractItemView::NoEditTriggers);
 	setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -23,23 +23,21 @@ Artist::TracksList::TracksList(lib::spt::api &spotify, lib::cache &cache, const 
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested,
 		this, &Artist::TracksList::onContextMenu);
+
+	QListWidget::connect(this, &QListWidget::itemEntered,
+		this, &Artist::TracksList::onItemEntered);
 }
 
 void Artist::TracksList::addTrack(const lib::spt::track &track)
 {
 	auto *item = new QListWidgetItem(QString::fromStdString(track.name), this);
 	item->setData(static_cast<int>(DataRole::Track), QVariant::fromValue(track));
-	Tooltip::set(item, track, {});
 
-	Http::getAlbumImage(track.image_small(), httpClient, cache, [this, item, track](const QPixmap &image)
+	Http::getAlbumImage(track.image_small(), httpClient, cache, [item, track](const QPixmap &image)
 	{
 		if (item != nullptr)
 		{
 			item->setIcon(QIcon(image));
-
-			const auto albumShape = settings.qt().album_shape;
-			const auto albumImage = Image::mask(image, albumShape);
-			Tooltip::set(item, track, albumImage);
 		}
 	});
 }
@@ -99,4 +97,16 @@ void Artist::TracksList::onContextMenu(const QPoint &pos)
 
 	auto *songMenu = new Menu::Track(tracks, spotify, cache, &artist, parentWidget());
 	songMenu->popup(mapToGlobal(pos));
+}
+
+void Artist::TracksList::onItemEntered(QListWidgetItem *item)
+{
+	if (!item->toolTip().isEmpty())
+	{
+		return;
+	}
+
+	const auto &trackData = item->data(static_cast<int>(DataRole::Track));
+	const auto &track = trackData.value<lib::spt::track>();
+	tooltip.set(item, track);
 }
