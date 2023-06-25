@@ -18,7 +18,6 @@ Search::Albums::Albums(lib::spt::api &spotify, lib::cache &cache,
 
 void Search::Albums::add(const lib::spt::album &album)
 {
-	auto id = QString::fromStdString(album.id);
 	auto name = QString::fromStdString(album.name);
 	auto artist = QString::fromStdString(album.artist);
 
