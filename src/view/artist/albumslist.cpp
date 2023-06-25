@@ -1,4 +1,5 @@
 #include "view/artist/albumslist.hpp"
+#include "util/tooltip.hpp"
 #include "mainwindow.hpp"
 
 Artist::AlbumsList::AlbumsList(lib::spt::api &spotify, lib::cache &cache,
@@ -57,11 +58,14 @@ void Artist::AlbumsList::setAlbums(const std::vector<lib::spt::album> &albums)
 			albumName, year.isEmpty() ? QString() : year
 		});
 
-		Http::getAlbumImage(album.image, httpClient, cache, [item](const QPixmap &image)
+		Tooltip::set(item, album, {});
+
+		Http::getAlbumImage(album.image, httpClient, cache, [item, album](const QPixmap &image)
 		{
 			if (item != nullptr)
 			{
 				item->setIcon(0, QIcon(image));
+				Tooltip::set(item, album, image);
 			}
 		});
 
@@ -74,7 +78,6 @@ void Artist::AlbumsList::setAlbums(const std::vector<lib::spt::album> &albums)
 			? QLocale::system().toString(fullReleaseDate.date(), QLocale::ShortFormat)
 			: QString::fromStdString(album.release_date);
 
-		item->setToolTip(0, albumName);
 		item->setToolTip(1, releaseDateToolTip);
 
 		group->addChild(item);
