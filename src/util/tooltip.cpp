@@ -1,17 +1,25 @@
 #include "util/tooltip.hpp"
 #include "util/icon.hpp"
 #include "util/datetime.hpp"
+#include "util/image.hpp"
 
 #include <QBuffer>
 
-void Tooltip::set(QListWidgetItem *item, const lib::spt::track &track, const QPixmap &albumImage)
+Tooltip::Tooltip(lib::settings &settings)
+	: settings(settings)
 {
-	item->setToolTip(tooltip(track, albumImage));
 }
 
-void Tooltip::set(QTreeWidgetItem *item, const lib::spt::album &album, const QPixmap &albumImage)
+void Tooltip::set(QListWidgetItem *item, const lib::spt::track &track)
 {
-	item->setToolTip(0, tooltip(album, albumImage));
+	const auto icon = item->icon().pixmap(albumSize, albumSize);
+	item->setToolTip(tooltip(track, icon));
+}
+
+void Tooltip::set(QTreeWidgetItem *item, const lib::spt::album &album)
+{
+	const auto icon = item->icon(0).pixmap(albumSize, albumSize);
+	item->setToolTip(0, tooltip(album, icon));
 }
 
 auto Tooltip::tooltip(const QPixmap &image, const QList<TooltipRow> &rows) -> QString
@@ -101,7 +109,8 @@ auto Tooltip::albumIcon(const QPixmap &albumPixmap) -> QPixmap
 {
 	if (!albumPixmap.isNull())
 	{
-		return albumPixmap;
+		const auto shape = settings.qt().album_shape;
+		return Image::mask(albumPixmap, shape);
 	}
 
 	return Icon::get(QStringLiteral("media-optical-audio"))
