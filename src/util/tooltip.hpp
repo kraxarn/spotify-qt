@@ -4,6 +4,8 @@
 #include "lib/settings.hpp"
 #include "lib/spotify/track.hpp"
 #include "lib/spotify/album.hpp"
+#include "lib/httpclient.hpp"
+#include "lib/cache.hpp"
 
 #include <QListWidgetItem>
 #include <QTreeWidgetItem>
@@ -11,7 +13,8 @@
 class Tooltip
 {
 public:
-	Tooltip(lib::settings &settings);
+	Tooltip(lib::settings &settings,
+		const lib::http_client &httpClient, lib::cache &cache);
 
 	void set(QListWidgetItem *item, const lib::spt::track &track);
 	void set(QTreeWidgetItem *item, const lib::spt::track &track);
@@ -22,6 +25,8 @@ private:
 	static constexpr int albumSize = 64;
 
 	lib::settings &settings;
+	const lib::http_client &httpClient;
+	lib::cache &cache;
 
 	static auto tooltip(const QPixmap &image, const QList<TooltipRow> &rows) -> QString;
 

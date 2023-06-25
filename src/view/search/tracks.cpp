@@ -1,11 +1,12 @@
 #include "view/search/tracks.hpp"
 #include "mainwindow.hpp"
 
-Search::Tracks::Tracks(lib::spt::api &spotify, lib::cache &cache, lib::settings &settings, QWidget *parent)
+Search::Tracks::Tracks(lib::spt::api &spotify, lib::cache &cache,
+	lib::settings &settings, const lib::http_client &httpClient, QWidget *parent)
 	: Search::SearchTabTree({"Title", "Artist", "Album"}, parent),
 	spotify(spotify),
 	cache(cache),
-	tooltip(settings)
+	tooltip(settings, httpClient, cache)
 {
 	// Hide "Album" by default
 	header()->setSectionHidden(header()->count() - 1, true);

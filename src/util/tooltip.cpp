@@ -2,11 +2,15 @@
 #include "util/icon.hpp"
 #include "util/datetime.hpp"
 #include "util/image.hpp"
+#include "util/http.hpp"
 
 #include <QBuffer>
 
-Tooltip::Tooltip(lib::settings &settings)
-	: settings(settings)
+Tooltip::Tooltip(lib::settings &settings,
+	const lib::http_client &httpClient, lib::cache &cache)
+	: settings(settings),
+	httpClient(httpClient),
+	cache(cache)
 {
 }
 
@@ -18,8 +22,19 @@ void Tooltip::set(QListWidgetItem *item, const lib::spt::track &track)
 
 void Tooltip::set(QTreeWidgetItem *item, const lib::spt::track &track)
 {
-	const auto icon = item->icon(0).pixmap(albumSize, albumSize);
-	item->setToolTip(0, tooltip(track, icon));
+	const auto icon = item->icon(0);
+	if (!icon.isNull())
+	{
+		const auto pixmap = icon.pixmap(albumSize, albumSize);
+		item->setToolTip(0, tooltip(track, pixmap));
+		return;
+	}
+
+	Http::getAlbumImage(track.image_small(), httpClient, cache,
+		[this, item, track](const QPixmap &pixmap)
+		{
+			item->setToolTip(0, tooltip(track, pixmap));
+		});
 }
 
 void Tooltip::set(QTreeWidgetItem *item, const lib::spt::album &album)

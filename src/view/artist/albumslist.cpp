@@ -8,7 +8,7 @@ Artist::AlbumsList::AlbumsList(lib::spt::api &spotify, lib::cache &cache,
 	spotify(spotify),
 	cache(cache),
 	httpClient(httpClient),
-	tooltip(settings)
+	tooltip(settings, httpClient, cache)
 {
 	setEnabled(false);
 	setColumnCount(2);

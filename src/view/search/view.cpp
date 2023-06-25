@@ -21,9 +21,9 @@ Search::View::View(lib::spt::api &spotify, lib::cache &cache, const lib::http_cl
 	// Tab content
 	artists = new Search::Artists(this);
 	playlists = new Search::Playlists(spotify, cache, this);
-	tracks = new Search::Tracks(spotify, cache, settings, this);
+	tracks = new Search::Tracks(spotify, cache, settings, httpClient, this);
 	albums = new Search::Albums(spotify, cache, httpClient, this);
-	library = new Search::Library(spotify, cache, settings, this);
+	library = new Search::Library(spotify, cache, settings, httpClient, this);
 	shows = new Search::Shows(spotify, this);
 
 	// Add all tabs

@@ -8,7 +8,7 @@ Artist::TracksList::TracksList(lib::spt::api &spotify, lib::cache &cache, const 
 	cache(cache),
 	httpClient(httpClient),
 	artist(artist),
-	tooltip(settings)
+	tooltip(settings, httpClient, cache)
 {
 	setEnabled(false);
 	setMouseTracking(true);
