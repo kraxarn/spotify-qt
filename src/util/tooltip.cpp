@@ -4,11 +4,6 @@
 
 #include <QBuffer>
 
-void Tooltip::set(QListWidgetItem *item, const lib::spt::track &track)
-{
-	item->setToolTip(tooltip(track, {}));
-}
-
 void Tooltip::set(QListWidgetItem *item, const lib::spt::track &track, const QPixmap &albumImage)
 {
 	item->setToolTip(tooltip(track, albumImage));

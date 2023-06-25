@@ -10,7 +10,6 @@
 class Tooltip
 {
 public:
-	static void set(QListWidgetItem *item, const lib::spt::track &track);
 	static void set(QListWidgetItem *item, const lib::spt::track &track, const QPixmap &albumImage);
 	static void set(QTreeWidgetItem *item, const lib::spt::album &album, const QPixmap &albumImage);
 

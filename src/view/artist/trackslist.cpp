@@ -29,7 +29,7 @@ void Artist::TracksList::addTrack(const lib::spt::track &track)
 {
 	auto *item = new QListWidgetItem(QString::fromStdString(track.name), this);
 	item->setData(static_cast<int>(DataRole::Track), QVariant::fromValue(track));
-	Tooltip::set(item, track);
+	Tooltip::set(item, track, {});
 
 	Http::getAlbumImage(track.image_small(), httpClient, cache, [this, item, track](const QPixmap &image)
 	{
