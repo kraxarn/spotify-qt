@@ -26,8 +26,8 @@ namespace Search
 	Q_OBJECT
 
 	public:
-		View(lib::spt::api &spotify, lib::cache &cache,
-			const lib::http_client &httpClient, QWidget *parent);
+		View(lib::spt::api &spotify, lib::cache &cache, const lib::http_client &httpClient,
+			lib::settings &settings, QWidget *parent);
 
 	private:
 		QTabWidget *tabs = nullptr;

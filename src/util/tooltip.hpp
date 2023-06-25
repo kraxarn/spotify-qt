@@ -14,6 +14,7 @@ public:
 	Tooltip(lib::settings &settings);
 
 	void set(QListWidgetItem *item, const lib::spt::track &track);
+	void set(QTreeWidgetItem *item, const lib::spt::track &track);
 	void set(QTreeWidgetItem *item, const lib::spt::album &album);
 
 private:

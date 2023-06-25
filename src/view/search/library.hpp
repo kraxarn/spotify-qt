@@ -10,7 +10,8 @@ namespace Search
 	Q_OBJECT
 
 	public:
-		Library(lib::spt::api &spotify, lib::cache &cache, QWidget *parent);
+		Library(lib::spt::api &spotify, lib::cache &cache,
+			lib::settings &settings, QWidget *parent);
 
 		/** Searches in cache */
 		void searchCache(const std::string &query);

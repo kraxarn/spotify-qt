@@ -4,6 +4,7 @@
 #include "lib/cache.hpp"
 #include "view/search/searchtabtree.hpp"
 #include "enum/column.hpp"
+#include "util/tooltip.hpp"
 
 namespace Search
 {
@@ -12,7 +13,7 @@ namespace Search
 	Q_OBJECT
 
 	public:
-		Tracks(lib::spt::api &spotify, lib::cache &cache, QWidget *parent);
+		Tracks(lib::spt::api &spotify, lib::cache &cache, lib::settings &settings, QWidget *parent);
 
 		void add(const lib::spt::track &track);
 
@@ -25,8 +26,10 @@ namespace Search
 
 		lib::spt::api &spotify;
 		lib::cache &cache;
+		Tooltip tooltip;
 
 		void onItemDoubleClicked(QTreeWidgetItem *item, int column);
 		void onContextMenu(const QPoint &pos);
+		void onItemEntered(QTreeWidgetItem *item, int column);
 	};
 }

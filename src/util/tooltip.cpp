@@ -16,6 +16,12 @@ void Tooltip::set(QListWidgetItem *item, const lib::spt::track &track)
 	item->setToolTip(tooltip(track, icon));
 }
 
+void Tooltip::set(QTreeWidgetItem *item, const lib::spt::track &track)
+{
+	const auto icon = item->icon(0).pixmap(albumSize, albumSize);
+	item->setToolTip(0, tooltip(track, icon));
+}
+
 void Tooltip::set(QTreeWidgetItem *item, const lib::spt::album &album)
 {
 	const auto icon = item->icon(0).pixmap(albumSize, albumSize);

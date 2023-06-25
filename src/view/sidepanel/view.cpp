@@ -83,7 +83,7 @@ void SidePanel::View::openSearch()
 {
 	if (searchView == nullptr)
 	{
-		searchView = new Search::View(spotify, cache, httpClient, this);
+		searchView = new Search::View(spotify, cache, httpClient, settings, this);
 	}
 
 	if (stack->indexOf(searchView) < 0)

@@ -1,13 +1,16 @@
 #include "view/search/tracks.hpp"
 #include "mainwindow.hpp"
 
-Search::Tracks::Tracks(lib::spt::api &spotify, lib::cache &cache, QWidget *parent)
+Search::Tracks::Tracks(lib::spt::api &spotify, lib::cache &cache, lib::settings &settings, QWidget *parent)
 	: Search::SearchTabTree({"Title", "Artist", "Album"}, parent),
 	spotify(spotify),
-	cache(cache)
+	cache(cache),
+	tooltip(settings)
 {
 	// Hide "Album" by default
 	header()->setSectionHidden(header()->count() - 1, true);
+
+	setMouseTracking(true);
 
 	setEditTriggers(QAbstractItemView::NoEditTriggers);
 	setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -19,6 +22,9 @@ Search::Tracks::Tracks(lib::spt::api &spotify, lib::cache &cache, QWidget *paren
 	setContextMenuPolicy(Qt::CustomContextMenu);
 	QWidget::connect(this, &QTreeWidget::customContextMenuRequested,
 		this, &Search::Tracks::onContextMenu);
+
+	QTreeWidget::connect(this, &QTreeWidget::itemEntered,
+		this, &Search::Tracks::onItemEntered);
 }
 
 void Search::Tracks::resizeEvent(QResizeEvent *event)
@@ -43,7 +49,6 @@ void Search::Tracks::add(const lib::spt::track &track)
 
 	item->setData(0, static_cast<int>(DataRole::Track),
 		QVariant::fromValue(track));
-	item->setToolTip(0, trackName);
 	item->setToolTip(1, trackArtist);
 }
 
@@ -118,4 +123,16 @@ void Search::Tracks::onContextMenu(const QPoint &pos)
 
 	auto *songMenu = new Menu::Track(tracks, spotify, cache, parentWidget());
 	songMenu->popup(mapToGlobal(pos));
+}
+
+void Search::Tracks::onItemEntered(QTreeWidgetItem *item, int column)
+{
+	if (!item->toolTip(0).isEmpty() || column != 0)
+	{
+		return;
+	}
+
+	const auto trackData = item->data(0, static_cast<int>(DataRole::Track));
+	const auto track = trackData.value<lib::spt::track>();
+	tooltip.set(item, track);
 }

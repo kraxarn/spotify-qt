@@ -1,9 +1,9 @@
 #include "view/search/library.hpp"
 #include "view/search/view.hpp"
 
-Search::Library::Library(lib::spt::api &spotify,
-	lib::cache &cache, QWidget *parent)
-	: Search::Tracks(spotify, cache, parent),
+Search::Library::Library(lib::spt::api &spotify, lib::cache &cache,
+	lib::settings &settings, QWidget *parent)
+	: Search::Tracks(spotify, cache, settings, parent),
 	spotify(spotify),
 	cache(cache)
 {

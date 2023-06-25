@@ -1,8 +1,8 @@
 #include "view/search/view.hpp"
 #include "mainwindow.hpp"
 
-Search::View::View(lib::spt::api &spotify, lib::cache &cache,
-	const lib::http_client &httpClient, QWidget *parent)
+Search::View::View(lib::spt::api &spotify, lib::cache &cache, const lib::http_client &httpClient,
+	lib::settings &settings, QWidget *parent)
 	: QWidget(parent),
 	spotify(spotify),
 	cache(cache),
@@ -21,9 +21,9 @@ Search::View::View(lib::spt::api &spotify, lib::cache &cache,
 	// Tab content
 	artists = new Search::Artists(this);
 	playlists = new Search::Playlists(spotify, cache, this);
-	tracks = new Search::Tracks(spotify, cache, this);
+	tracks = new Search::Tracks(spotify, cache, settings, this);
 	albums = new Search::Albums(spotify, cache, httpClient, this);
-	library = new Search::Library(spotify, cache, this);
+	library = new Search::Library(spotify, cache, settings, this);
 	shows = new Search::Shows(spotify, this);
 
 	// Add all tabs
