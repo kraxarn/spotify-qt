@@ -13,59 +13,59 @@ void Tooltip::set(QListWidgetItem *item, const lib::spt::track &track, const QPi
 	item->setToolTip(tooltip(track, albumImage));
 }
 
+auto Tooltip::tooltip(const QPixmap &image, const QList<TooltipRow> &rows) -> QString
+{
+	QString table("<table>");
+
+	for (qsizetype i = 0; i < rows.size(); i++)
+	{
+		table.append("<tr>");
+		const auto &row = rows.at(i);
+
+		if (i == 0 && !image.isNull())
+		{
+			table.append(QString(R"(<td rowspan="%1"><img src="%2"/></td>)")
+				.arg(rows.size())
+				.arg(icon(image)));
+		}
+
+		table.append(QString(R"(<td><img src="%1"/></td><td>%2</td>)")
+			.arg(icon(row.icon), row.name));
+
+		table.append("</tr>");
+	}
+
+	table.append("</table>");
+	return table;
+}
+
 auto Tooltip::tooltip(const lib::spt::track &track, const QPixmap &albumImage) -> QString
 {
-	const QString table(
-		"<table>"
-		"	<tr>"
-		// Album art
-		"		<td rowspan=\"3\">"
-		"			<img src=\"%1\"/>"
-		"		</td>"
-		// Track icon
-		"		<td>"
-		"			<img src=\"%2\"/>"
-		"		</td>"
-		// Track name
-		"		<td>%3</td>"
-		"	</tr>"
-		"	<tr>"
-		// Artist icon
-		"		<td>"
-		"			<img src=\"%4\"/>"
-		"		</td>"
-		// Artist name
-		"		<td>%5</td>"
-		"	</tr>"
-		"	<tr>"
-		// Album icon
-		"		<td>"
-		"			<img src=\"%6\"/>"
-		"		</td>"
-		// Album name
-		"		<td>%7</td>"
-		"	</tr>"
-		"</table>"
-	);
+	const auto albumPixmap = albumImage.isNull()
+		? Icon::get(QStringLiteral("media-optical-audio"))
+			.pixmap(albumSize, albumSize)
+		: albumImage;
 
 	const auto artists = lib::spt::entity::combine_names(track.artists);
 
-	const auto albumIcon = albumImage.isNull()
-		? icon(QStringLiteral("media-optical-audio"), albumSize)
-		: icon(albumImage);
-
-	return table.arg(albumIcon,
-		icon(QStringLiteral("view-media-track")),
-		QString::fromStdString(track.name),
-		icon(QStringLiteral("view-media-artist")),
-		QString::fromStdString(artists),
-		icon(QStringLiteral("view-media-album-cover")),
-		QString::fromStdString(track.album.name));
+	return tooltip(albumPixmap, {
+		{
+			Icon::get(QStringLiteral("view-media-track")),
+			QString::fromStdString(track.name),
+		},
+		{
+			Icon::get(QStringLiteral("view-media-artist")),
+			QString::fromStdString(artists),
+		},
+		{
+			Icon::get(QStringLiteral("view-media-album-cover")),
+			QString::fromStdString(track.album.name),
+		}
+	});
 }
 
-auto Tooltip::icon(const QString &name, int size) -> QString
+auto Tooltip::icon(const QIcon &iconData, int size) -> QString
 {
-	const auto iconData = Icon::get(name);
 	const auto pixmap = iconData.pixmap(size, size);
 	return icon(pixmap);
 }
