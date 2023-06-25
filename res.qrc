@@ -50,6 +50,7 @@
         <file>res/ic/light/non-starred-symbolic.svg</file>
         <file>res/ic/light/speaker.svg</file>
         <file>res/ic/light/starred-symbolic.svg</file>
+        <file>res/ic/light/view-calendar.svg</file>
         <file>res/ic/light/view-media-album-cover.svg</file>
         <file>res/ic/light/view-media-artist.svg</file>
         <file>res/ic/light/view-media-lyrics.svg</file>
@@ -113,6 +114,7 @@
         <file>res/ic/dark/non-starred-symbolic.svg</file>
         <file>res/ic/dark/speaker.svg</file>
         <file>res/ic/dark/starred-symbolic.svg</file>
+        <file>res/ic/dark/view-calendar.svg</file>
         <file>res/ic/dark/view-media-album-cover.svg</file>
         <file>res/ic/dark/view-media-artist.svg</file>
         <file>res/ic/dark/view-media-lyrics.svg</file>
