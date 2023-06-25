@@ -2,14 +2,17 @@
 
 #include "util/tooltiprow.hpp"
 #include "lib/spotify/track.hpp"
+#include "lib/spotify/album.hpp"
 
 #include <QListWidgetItem>
+#include <QTreeWidgetItem>
 
 class Tooltip
 {
 public:
 	static void set(QListWidgetItem *item, const lib::spt::track &track);
 	static void set(QListWidgetItem *item, const lib::spt::track &track, const QPixmap &albumImage);
+	static void set(QTreeWidgetItem *item, const lib::spt::album &album, const QPixmap &albumImage);
 
 private:
 	static constexpr int iconSize = 16;
@@ -19,7 +22,9 @@ private:
 
 	static auto tooltip(const QPixmap &image, const QList<TooltipRow> &rows) -> QString;
 	static auto tooltip(const lib::spt::track &track, const QPixmap &albumImage) -> QString;
+	static auto tooltip(const lib::spt::album &album, const QPixmap &albumImage) -> QString;
 
 	static auto icon(const QIcon &iconData, int size = iconSize) -> QString;
 	static auto icon(const QPixmap &pixmap) -> QString;
+	static auto albumIcon(const QPixmap &albumPixmap) -> QPixmap;
 };

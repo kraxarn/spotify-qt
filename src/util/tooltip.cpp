@@ -1,5 +1,6 @@
 #include "util/tooltip.hpp"
 #include "util/icon.hpp"
+#include "util/datetime.hpp"
 
 #include <QBuffer>
 
@@ -11,6 +12,11 @@ void Tooltip::set(QListWidgetItem *item, const lib::spt::track &track)
 void Tooltip::set(QListWidgetItem *item, const lib::spt::track &track, const QPixmap &albumImage)
 {
 	item->setToolTip(tooltip(track, albumImage));
+}
+
+void Tooltip::set(QTreeWidgetItem *item, const lib::spt::album &album, const QPixmap &albumImage)
+{
+	item->setToolTip(0, tooltip(album, albumImage));
 }
 
 auto Tooltip::tooltip(const QPixmap &image, const QList<TooltipRow> &rows) -> QString
@@ -41,14 +47,9 @@ auto Tooltip::tooltip(const QPixmap &image, const QList<TooltipRow> &rows) -> QS
 
 auto Tooltip::tooltip(const lib::spt::track &track, const QPixmap &albumImage) -> QString
 {
-	const auto albumPixmap = albumImage.isNull()
-		? Icon::get(QStringLiteral("media-optical-audio"))
-			.pixmap(albumSize, albumSize)
-		: albumImage;
-
 	const auto artists = lib::spt::entity::combine_names(track.artists);
 
-	return tooltip(albumPixmap, {
+	return tooltip(albumIcon(albumImage), {
 		{
 			Icon::get(QStringLiteral("view-media-track")),
 			QString::fromStdString(track.name),
@@ -61,6 +62,27 @@ auto Tooltip::tooltip(const lib::spt::track &track, const QPixmap &albumImage) -
 			Icon::get(QStringLiteral("view-media-album-cover")),
 			QString::fromStdString(track.album.name),
 		}
+	});
+}
+
+auto Tooltip::tooltip(const lib::spt::album &album, const QPixmap &albumImage) -> QString
+{
+	const auto locale = QLocale::system();
+	const auto releaseDate = DateTime::parseIsoDate(album.release_date);
+
+	return tooltip(albumIcon(albumImage), {
+		{
+			Icon::get(QStringLiteral("view-media-album-cover")),
+			QString::fromStdString(album.name),
+		},
+		{
+			Icon::get(QStringLiteral("view-media-artist")),
+			QString::fromStdString(album.artist),
+		},
+		{
+			Icon::get(QStringLiteral("view-calendar")),
+			locale.toString(releaseDate.date()),
+		},
 	});
 }
 
@@ -78,4 +100,15 @@ auto Tooltip::icon(const QPixmap &pixmap) -> QString
 
 	return QString("data:image/png;base64,%1")
 		.arg(QString(data.toBase64()));
+}
+
+auto Tooltip::albumIcon(const QPixmap &albumPixmap) -> QPixmap
+{
+	if (!albumPixmap.isNull())
+	{
+		return albumPixmap;
+	}
+
+	return Icon::get(QStringLiteral("media-optical-audio"))
+		.pixmap(albumSize, albumSize);
 }
