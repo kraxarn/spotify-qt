@@ -22,7 +22,7 @@ Search::View::View(lib::spt::api &spotify, lib::cache &cache, const lib::http_cl
 	artists = new Search::Artists(this);
 	playlists = new Search::Playlists(spotify, cache, this);
 	tracks = new Search::Tracks(spotify, cache, settings, httpClient, this);
-	albums = new Search::Albums(spotify, cache, httpClient, this);
+	albums = new Search::Albums(spotify, cache, httpClient, settings, this);
 	library = new Search::Library(spotify, cache, settings, httpClient, this);
 	shows = new Search::Shows(spotify, this);
 
