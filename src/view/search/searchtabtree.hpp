@@ -13,6 +13,6 @@ namespace Search
 	protected:
 		SearchTabTree(const QStringList &headers, QWidget *parent);
 
-		void resizeEvent(QResizeEvent *event) override;
+		virtual void resizeEvent(QResizeEvent *event) override;
 	};
 }
