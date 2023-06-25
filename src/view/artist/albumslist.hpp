@@ -26,7 +26,7 @@ namespace Artist
 
 		std::map<lib::album_group, QTreeWidgetItem *> groups;
 
-		static auto albumId(QTreeWidgetItem *item) -> std::string;
+		static auto getAlbum(QTreeWidgetItem *item) -> lib::spt::album;
 		static auto groupToString(lib::album_group albumGroup) -> QString;
 
 		void onItemClicked(QTreeWidgetItem *item, int column);

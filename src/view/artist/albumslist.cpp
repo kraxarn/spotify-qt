@@ -35,10 +35,10 @@ Artist::AlbumsList::AlbumsList(lib::spt::api &spotify, lib::cache &cache,
 	}
 }
 
-auto Artist::AlbumsList::albumId(QTreeWidgetItem *item) -> std::string
+auto Artist::AlbumsList::getAlbum(QTreeWidgetItem *item) -> lib::spt::album
 {
-	return item->data(0, static_cast<int>(DataRole::AlbumId))
-		.toString().toStdString();
+	const auto itemData = item->data(0, static_cast<int>(DataRole::Album));
+	return itemData.value<lib::spt::album>();
 }
 
 void Artist::AlbumsList::setAlbums(const std::vector<lib::spt::album> &albums)
@@ -69,8 +69,8 @@ void Artist::AlbumsList::setAlbums(const std::vector<lib::spt::album> &albums)
 			}
 		});
 
-		item->setData(0, static_cast<int>(DataRole::AlbumId),
-			QString::fromStdString(album.id));
+		item->setData(0, static_cast<int>(DataRole::Album),
+			QVariant::fromValue(album));
 
 		// We don't want to show added "-01" in tooltip
 		const auto fullReleaseDate = DateTime::parseIso(album.release_date);
@@ -122,7 +122,7 @@ auto Artist::AlbumsList::groupToString(lib::album_group albumGroup) -> QString
 
 void Artist::AlbumsList::onItemClicked(QTreeWidgetItem *item, int /*column*/)
 {
-	const auto id = albumId(item);
+	const auto id = getAlbum(item).id;
 	if (id.empty())
 	{
 		item->setSelected(false);
@@ -135,7 +135,7 @@ void Artist::AlbumsList::onItemClicked(QTreeWidgetItem *item, int /*column*/)
 
 void Artist::AlbumsList::onItemDoubleClicked(QTreeWidgetItem *item, int /*column*/)
 {
-	const auto id = albumId(item);
+	const auto id = getAlbum(item).id;
 	if (id.empty())
 	{
 		item->setSelected(false);
@@ -158,13 +158,12 @@ void Artist::AlbumsList::onItemDoubleClicked(QTreeWidgetItem *item, int /*column
 void Artist::AlbumsList::onContextMenu(const QPoint &pos)
 {
 	auto *item = itemAt(pos);
-	auto albumId = item->data(0, static_cast<int>(DataRole::AlbumId)).toString();
-	if (albumId.isEmpty())
+	auto albumId = getAlbum(item).id;
+	if (albumId.empty())
 	{
 		return;
 	}
 
-	auto *albumMenu = new Menu::Album(spotify, cache, albumId.toStdString(),
-		parentWidget());
+	auto *albumMenu = new Menu::Album(spotify, cache, albumId, parentWidget());
 	albumMenu->popup(mapToGlobal(pos));
 }

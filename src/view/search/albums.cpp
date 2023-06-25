@@ -34,7 +34,7 @@ void Search::Albums::add(const lib::spt::album &album)
 		}
 	});
 
-	item->setData(0, static_cast<int>(DataRole::AlbumId), id);
+	item->setData(0, static_cast<int>(DataRole::Album), QVariant::fromValue(album));
 	item->setToolTip(0, name);
 	item->setToolTip(1, artist);
 	addTopLevelItem(item);
@@ -42,23 +42,23 @@ void Search::Albums::add(const lib::spt::album &album)
 
 void Search::Albums::onItemClicked(QTreeWidgetItem *item, int /*column*/)
 {
-	const auto albumId = item->data(0, static_cast<int>(DataRole::AlbumId))
-		.toString().toStdString();
+	const auto albumData = item->data(0, static_cast<int>(DataRole::Album));
+	const auto album = albumData.value<lib::spt::album>();
 
 	auto *mainWindow = MainWindow::find(parentWidget());
-	mainWindow->loadAlbum(albumId);
+	mainWindow->loadAlbum(album.id);
 }
 
 void Search::Albums::onContextMenu(const QPoint &pos)
 {
 	auto *item = itemAt(pos);
-	const auto &albumId = item->data(0, static_cast<int>(DataRole::AlbumId)).toString();
-	if (albumId.isEmpty())
+	const auto albumData = item->data(0, static_cast<int>(DataRole::Album));
+	const auto album = albumData.value<lib::spt::album>();
+	if (!album.is_valid())
 	{
 		return;
 	}
 
-	auto *albumMenu = new Menu::Album(spotify, cache,
-		albumId.toStdString(), parentWidget());
+	auto *albumMenu = new Menu::Album(spotify, cache, album.id, parentWidget());
 	albumMenu->popup(mapToGlobal(pos));
 }
