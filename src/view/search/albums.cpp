@@ -76,5 +76,5 @@ void Search::Albums::onItemEntered(QTreeWidgetItem *item, int column)
 
 	const auto albumData = item->data(0, static_cast<int>(DataRole::Album));
 	const auto album = albumData.value<lib::spt::album>();
-	tooltip.set(item, album);
+	tooltip.set(item, album, item->icon(0));
 }

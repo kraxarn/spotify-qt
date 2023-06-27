@@ -16,9 +16,9 @@ public:
 	Tooltip(lib::settings &settings,
 		const lib::http_client &httpClient, lib::cache &cache);
 
-	void set(QListWidgetItem *item, const lib::spt::track &track);
+	void set(QListWidgetItem *item, const lib::spt::track &track, const QIcon &albumIcon);
 	void set(QTreeWidgetItem *item, const lib::spt::track &track);
-	void set(QTreeWidgetItem *item, const lib::spt::album &album);
+	void set(QTreeWidgetItem *item, const lib::spt::album &album, const QIcon &albumIcon);
 
 private:
 	static constexpr int iconSize = 16;

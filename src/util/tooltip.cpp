@@ -14,9 +14,9 @@ Tooltip::Tooltip(lib::settings &settings,
 {
 }
 
-void Tooltip::set(QListWidgetItem *item, const lib::spt::track &track)
+void Tooltip::set(QListWidgetItem *item, const lib::spt::track &track, const QIcon &albumIcon)
 {
-	const auto icon = item->icon().pixmap(albumSize, albumSize);
+	const auto icon = albumIcon.pixmap(albumSize, albumSize);
 	item->setToolTip(tooltip(track, icon));
 }
 
@@ -29,9 +29,9 @@ void Tooltip::set(QTreeWidgetItem *item, const lib::spt::track &track)
 		});
 }
 
-void Tooltip::set(QTreeWidgetItem *item, const lib::spt::album &album)
+void Tooltip::set(QTreeWidgetItem *item, const lib::spt::album &album, const QIcon &albumIcon)
 {
-	const auto icon = item->icon(0).pixmap(albumSize, albumSize);
+	const auto icon = albumIcon.pixmap(albumSize, albumSize);
 	item->setToolTip(0, tooltip(album, icon));
 }
 

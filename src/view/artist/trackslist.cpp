@@ -108,5 +108,5 @@ void Artist::TracksList::onItemEntered(QListWidgetItem *item)
 
 	const auto &trackData = item->data(static_cast<int>(DataRole::Track));
 	const auto &track = trackData.value<lib::spt::track>();
-	tooltip.set(item, track);
+	tooltip.set(item, track, item->icon());
 }

@@ -178,5 +178,5 @@ void Artist::AlbumsList::onItemEntered(QTreeWidgetItem *item, int column)
 	}
 
 	const auto album = getAlbum(item);
-	tooltip.set(item, album);
+	tooltip.set(item, album, item->icon(0));
 }
