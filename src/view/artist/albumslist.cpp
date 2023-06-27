@@ -172,7 +172,7 @@ void Artist::AlbumsList::onContextMenu(const QPoint &pos)
 
 void Artist::AlbumsList::onItemEntered(QTreeWidgetItem *item, int column)
 {
-	if (!item->toolTip(0).isEmpty() || column != 0)
+	if (!item->toolTip(0).isEmpty() || column != 0 || item->parent() == nullptr)
 	{
 		return;
 	}
