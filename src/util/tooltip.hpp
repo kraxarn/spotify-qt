@@ -18,6 +18,7 @@ public:
 
 	void set(QListWidgetItem *item, const lib::spt::track &track, const QIcon &albumIcon);
 	void set(QTreeWidgetItem *item, const lib::spt::track &track);
+	void set(QTreeWidgetItem *item, const lib::spt::album &album);
 	void set(QTreeWidgetItem *item, const lib::spt::album &album, const QIcon &albumIcon);
 
 private:

@@ -30,11 +30,7 @@ auto ListItem::Library::tooltip() const -> QString
 {
 	if (entity.canConvert<lib::spt::album>())
 	{
-		const auto album = entity.value<lib::spt::album>();
-
-		return QString("%1\nBy %2")
-			.arg(QString::fromStdString(album.name),
-				QString::fromStdString(album.artist));
+		return {};
 	}
 
 	return QString::fromStdString(name());

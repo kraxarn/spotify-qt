@@ -29,6 +29,15 @@ void Tooltip::set(QTreeWidgetItem *item, const lib::spt::track &track)
 		});
 }
 
+void Tooltip::set(QTreeWidgetItem *item, const lib::spt::album &album)
+{
+	Http::getAlbumImage(album.image, httpClient, cache,
+		[this, item, album](const QPixmap &pixmap)
+		{
+			item->setToolTip(0, tooltip(album, pixmap));
+		});
+}
+
 void Tooltip::set(QTreeWidgetItem *item, const lib::spt::album &album, const QIcon &albumIcon)
 {
 	const auto icon = albumIcon.pixmap(albumSize, albumSize);

@@ -1,11 +1,15 @@
 #include "list/library.hpp"
 #include "mainwindow.hpp"
 
-List::Library::Library(lib::spt::api &spotify, lib::cache &cache, QWidget *parent)
+List::Library::Library(lib::spt::api &spotify, lib::cache &cache,
+	const lib::http_client &httpClient, lib::settings &settings, QWidget *parent)
 	: QTreeWidget(parent),
 	spotify(spotify),
-	cache(cache)
+	cache(cache),
+	tooltip(settings, httpClient, cache)
 {
+	setMouseTracking(true);
+
 	addTopLevelItems({
 		Tree::itemWithNoChildren(this, recentlyPlayed,
 			"Most recently played tracks from any device"),
@@ -36,6 +40,9 @@ List::Library::Library(lib::spt::api &spotify, lib::cache &cache, QWidget *paren
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested,
 		this, &List::Library::onMenuRequested);
+
+	QTreeWidget::connect(this, &QTreeWidget::itemEntered,
+		this, &List::Library::onItemEntered);
 }
 
 void List::Library::load(QTreeWidgetItem *item)
@@ -303,4 +310,21 @@ void List::Library::onMenuRequested(const QPoint &pos)
 	const auto album = data.value<lib::spt::album>();
 	auto *menu = new Menu::Album(spotify, cache, album.id, this);
 	menu->popup(mapToGlobal(pos));
+}
+
+void List::Library::onItemEntered(QTreeWidgetItem *item, int column)
+{
+	if (!item->toolTip(0).isEmpty() || column != 0 || item->parent() == nullptr)
+	{
+		return;
+	}
+
+	const auto data = item->data(0, dataRole);
+	if (!data.canConvert<lib::spt::album>())
+	{
+		return;
+	}
+
+	const auto album = data.value<lib::spt::album>();
+	tooltip.set(item, album);
 }

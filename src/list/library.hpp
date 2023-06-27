@@ -5,6 +5,7 @@
 
 #include "util/tree.hpp"
 #include "listitem/library.hpp"
+#include "util/tooltip.hpp"
 
 #include <QTreeWidget>
 #include <QHeaderView>
@@ -16,13 +17,15 @@ namespace List
 	Q_OBJECT
 
 	public:
-		Library(lib::spt::api &spotify, lib::cache &cache, QWidget *parent);
+		Library(lib::spt::api &spotify, lib::cache &cache, const lib::http_client &httpClient,
+			lib::settings &settings, QWidget *parent);
 
 		void load(QTreeWidgetItem *item);
 
 	private:
 		lib::spt::api &spotify;
 		lib::cache &cache;
+		Tooltip tooltip;
 
 		static constexpr const int dataRole = 0x100;
 		static constexpr const char *followedArtists = "Followed Artists";
@@ -37,6 +40,7 @@ namespace List
 		void onDoubleClicked(QTreeWidgetItem *item, int column);
 		void onExpanded(QTreeWidgetItem *item);
 		void onMenuRequested(const QPoint &pos);
+		void onItemEntered(QTreeWidgetItem *item, int column);
 
 		void tracksLoaded(const lib::spt::entity &entity, const std::vector<lib::spt::track> &tracks);
 		static void itemsLoaded(std::vector<ListItem::Library> &items, QTreeWidgetItem *item);
