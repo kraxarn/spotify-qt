@@ -22,7 +22,7 @@ public:
 
 private:
 	static constexpr int iconSize = 16;
-	static constexpr int albumSize = 64;
+	static constexpr int albumSize = lib::spt::image::size_small;
 
 	lib::settings &settings;
 	const lib::http_client &httpClient;
