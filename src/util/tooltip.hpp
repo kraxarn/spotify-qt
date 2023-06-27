@@ -18,6 +18,7 @@ public:
 
 	void set(QListWidgetItem *item, const lib::spt::track &track);
 	void set(QTreeWidgetItem *item, const lib::spt::track &track);
+	void set(QTreeWidgetItem *item, const lib::spt::track &track, const QPixmap &albumImage);
 	void set(QTreeWidgetItem *item, const lib::spt::album &album);
 
 private:

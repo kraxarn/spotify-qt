@@ -133,7 +133,11 @@ void Search::Tracks::onItemEntered(QTreeWidgetItem *item, int column)
 		return;
 	}
 
+	const auto icon = item->icon(0);
+	constexpr int size = lib::spt::image::size_small;
+	const auto pixmap = icon.pixmap(size, size);
+
 	const auto trackData = item->data(0, static_cast<int>(DataRole::Track));
 	const auto track = trackData.value<lib::spt::track>();
-	tooltip.set(item, track);
+	tooltip.set(item, track, pixmap);
 }
