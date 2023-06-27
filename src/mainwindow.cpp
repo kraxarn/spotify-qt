@@ -485,7 +485,7 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 auto MainWindow::createCentralWidget() -> QWidget *
 {
 	// All widgets in container
-	mainContent = new MainContent(spotify, settings, cache, this);
+	mainContent = new MainContent(spotify, settings, cache, httpClient, this);
 	sidePanel = new SidePanel::View(spotify, settings, cache, httpClient, this);
 	sidePanel->setVisible(false);
 

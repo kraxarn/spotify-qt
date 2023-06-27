@@ -6,11 +6,12 @@
 #include <QShortcut>
 
 List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
-	QWidget *parent)
+	const lib::http_client &httpClient, QWidget *parent)
 	: QTreeWidget(parent),
 	settings(settings),
 	cache(cache),
-	spotify(spotify)
+	spotify(spotify),
+	tooltip(settings, httpClient, cache)
 {
 	constexpr int emptyPixmapSize = 64;
 	constexpr int columnCount = 5;
@@ -26,6 +27,7 @@ List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache
 	setSortingEnabled(true);
 	setRootIsDecorated(false);
 	setAllColumnsShowFocus(true);
+	setMouseTracking(true);
 	setColumnCount(columnCount);
 	setHeaderLabels({
 		settings.general.track_numbers == lib::spotify_context::all
@@ -89,6 +91,9 @@ List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache
 	auto *mainWindow = MainWindow::find(parent);
 	MainWindow::connect(mainWindow, &MainWindow::playbackRefreshed,
 		this, &List::Tracks::onPlaybackRefreshed);
+
+	QTreeWidget::connect(this, &QTreeWidget::itemEntered,
+		this, &List::Tracks::onItemEntered);
 }
 
 void List::Tracks::onMenu(const QPoint &pos)
@@ -373,6 +378,18 @@ void List::Tracks::onPlaySelectedRow()
 	{
 		onDoubleClicked(items.first(), 0);
 	}
+}
+
+void List::Tracks::onItemEntered(QTreeWidgetItem *item, int column)
+{
+	if (!item->toolTip(0).isEmpty() || column != 0)
+	{
+		return;
+	}
+
+	const auto trackData = item->data(0, static_cast<int>(DataRole::Track));
+	const auto track = trackData.value<lib::spt::track>();
+	tooltip.set(item, track);
 }
 
 void List::Tracks::resizeEvent(QResizeEvent *event)

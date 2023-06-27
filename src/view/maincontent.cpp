@@ -1,7 +1,7 @@
 #include "maincontent.hpp"
 
 MainContent::MainContent(lib::spt::api &spotify, lib::settings &settings,
-	lib::cache &cache, QWidget *parent)
+	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
 	: QWidget(parent)
 {
 	layout = new QVBoxLayout(this);
@@ -11,7 +11,7 @@ MainContent::MainContent(lib::spt::api &spotify, lib::settings &settings,
 	status = new StatusMessage(this);
 	layout->addWidget(status);
 
-	tracks = new List::Tracks(spotify, settings, cache, this);
+	tracks = new List::Tracks(spotify, settings, cache, httpClient, this);
 	layout->addWidget(tracks, 1);
 }
 

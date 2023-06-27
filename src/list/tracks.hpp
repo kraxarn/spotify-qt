@@ -5,6 +5,7 @@
 #include "spotify/current.hpp"
 #include "menu/track.hpp"
 #include "enum/column.hpp"
+#include "util/tooltip.hpp"
 
 #include <QListWidget>
 #include <QTreeWidgetItem>
@@ -17,7 +18,7 @@ namespace List
 
 	public:
 		Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
-			QWidget *parent);
+			const lib::http_client &httpClient, QWidget *parent);
 
 		void updateResizeMode(lib::resize_mode mode);
 		void setPlayingTrackItem(QTreeWidgetItem *item);
@@ -67,6 +68,7 @@ namespace List
 		lib::settings &settings;
 		lib::cache &cache;
 		lib::spt::api &spotify;
+		Tooltip tooltip;
 
 		std::unordered_map<std::string, QTreeWidgetItem *> trackItems;
 
@@ -95,5 +97,6 @@ namespace List
 		void onNewPlaylist();
 		void onDelete();
 		void onPlaySelectedRow();
+		void onItemEntered(QTreeWidgetItem *item, int column);
 	};
 }

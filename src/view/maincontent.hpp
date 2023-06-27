@@ -11,7 +11,7 @@ Q_OBJECT
 
 public:
 	MainContent(lib::spt::api &spotify, lib::settings &settings,
-		lib::cache &cache, QWidget *parent);
+		lib::cache &cache, const lib::http_client &httpClient, QWidget *parent);
 
 	auto getTracksList() const -> List::Tracks *;
 
