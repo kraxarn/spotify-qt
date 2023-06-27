@@ -25,13 +25,8 @@ void Tooltip::set(QTreeWidgetItem *item, const lib::spt::track &track)
 	Http::getAlbumImage(track.image_small(), httpClient, cache,
 		[this, item, track](const QPixmap &pixmap)
 		{
-			set(item, track, pixmap);
+			item->setToolTip(0, tooltip(track, pixmap));
 		});
-}
-
-void Tooltip::set(QTreeWidgetItem *item, const lib::spt::track &track, const QPixmap &albumImage)
-{
-	item->setToolTip(0, tooltip(track, albumImage));
 }
 
 void Tooltip::set(QTreeWidgetItem *item, const lib::spt::album &album)
