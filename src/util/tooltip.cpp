@@ -5,6 +5,7 @@
 #include "util/http.hpp"
 
 #include <QBuffer>
+#include <QTextDocument>
 
 Tooltip::Tooltip(lib::settings &settings,
 	const lib::http_client &httpClient, lib::cache &cache)
@@ -153,9 +154,12 @@ auto Tooltip::tooltip(const lib::spt::playlist &playlist, const QPixmap &image) 
 
 	if (!playlist.description.empty())
 	{
+		QTextDocument document;
+		document.setHtml(QString::fromStdString(playlist.description));
+
 		rows.append({
 			Icon::get(QStringLiteral("description")),
-			QString::fromStdString(playlist.description),
+			document.toPlainText(),
 		});
 	}
 
