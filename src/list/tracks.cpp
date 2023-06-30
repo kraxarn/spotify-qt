@@ -323,10 +323,8 @@ void List::Tracks::onDelete()
 		return;
 	}
 
-	const auto playlistId = playlistItem->data(static_cast<int>(DataRole::PlaylistId))
-		.toString().toStdString();
-
-	if (playlistId.empty())
+	const auto playlist = mainWindow->history()->currentPlaylist();
+	if (!playlist.is_valid())
 	{
 		return;
 	}
@@ -354,21 +352,20 @@ void List::Tracks::onDelete()
 		tracks.emplace_back(index, track.id);
 	}
 
-	spotify.remove_from_playlist(playlistId, tracks,
-		[this, items, playlistId](const std::string &status)
+	spotify.remove_from_playlist(playlist.id, tracks, [this, items](const std::string &status)
+	{
+		if (!status.empty())
 		{
-			if (!status.empty())
-			{
-				StatusMessage::error(QString("Failed to remove track from playlist: %1")
-					.arg(QString::fromStdString(status)));
-				return;
-			}
+			StatusMessage::error(QString("Failed to remove track from playlist: %1")
+				.arg(QString::fromStdString(status)));
+			return;
+		}
 
-			for (auto *item: items)
-			{
-				takeTopLevelItem(indexOfTopLevelItem(item));
-			}
-		});
+		for (auto *item: items)
+		{
+			takeTopLevelItem(indexOfTopLevelItem(item));
+		}
+	});
 }
 
 void List::Tracks::onPlaySelectedRow()

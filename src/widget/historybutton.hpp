@@ -23,6 +23,7 @@ public:
 	void forward();
 
 	auto currentUri() const -> std::string;
+	auto currentPlaylist() const -> lib::spt::playlist;
 
 private:
 	QAction *current = nullptr;

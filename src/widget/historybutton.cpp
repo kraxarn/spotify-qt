@@ -141,6 +141,12 @@ auto HistoryButton::currentUri() const -> std::string
 	return {};
 }
 
+auto HistoryButton::currentPlaylist() const -> lib::spt::playlist
+{
+	const auto &data = current->data();
+	return data.value<lib::spt::playlist>();
+}
+
 auto HistoryButton::getEntityId(QAction *action) -> std::string
 {
 	const auto &data = action->data();
