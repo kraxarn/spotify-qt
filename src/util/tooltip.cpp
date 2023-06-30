@@ -57,7 +57,7 @@ void Tooltip::set(QListWidgetItem *item, const lib::spt::playlist &playlist)
 	httpClient.get(playlist.image, lib::headers(), [this, item, playlist](const std::string &str)
 	{
 		auto data = QByteArray::fromStdString(str);
-		if (lib::image::is_jpeg(std::vector<unsigned char>(data.begin(), data.end())))
+		if (!lib::image::is_jpeg(std::vector<unsigned char>(data.begin(), data.end())))
 		{
 			return;
 		}
