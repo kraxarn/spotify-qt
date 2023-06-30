@@ -197,8 +197,8 @@ void List::Playlist::order(lib::playlist_order order)
 		order = lib::playlist_order::none;
 	}
 
-	QMap<std::string, int> customOrder;
-	QHash<std::string, QDateTime> edited;
+	std::unordered_map<std::string, int> customOrder;
+	std::unordered_map<std::string, QDateTime> edited;
 	MainWindow *mainWindow;
 
 	switch (order)
@@ -245,9 +245,15 @@ void List::Playlist::order(lib::playlist_order order)
 				const auto id1 = data1.value<lib::spt::playlist>().id;
 				const auto id2 = data2.value<lib::spt::playlist>().id;
 
-				const auto date1 = edited.value(id1);
-				const auto date2 = edited.value(id2);
+				const auto iter1 = edited.find(id1);
+				const auto iter2 = edited.find(id2);
+				if (iter1 == edited.end() || iter2 == edited.end())
+				{
+					return false;
+				}
 
+				const auto &date1 = iter1->second;
+				const auto &date2 = iter2->second;
 				return date1.isValid() && date2.isValid() && date1 > date2;
 			});
 			break;
@@ -260,7 +266,7 @@ void List::Playlist::order(lib::playlist_order order)
 			}
 
 			std::sort(items.begin(), items.end(),
-				[customOrder](QListWidgetItem *item1, QListWidgetItem *item2) -> bool
+				[&customOrder](QListWidgetItem *item1, QListWidgetItem *item2) -> bool
 				{
 					const auto &data1 = item1->data(static_cast<int>(DataRole::Playlist));
 					const auto &data2 = item2->data(static_cast<int>(DataRole::Playlist));
@@ -268,9 +274,12 @@ void List::Playlist::order(lib::playlist_order order)
 					const auto id1 = data1.value<lib::spt::playlist>().id;
 					const auto id2 = data2.value<lib::spt::playlist>().id;
 
-					return customOrder.contains(id1)
-						&& customOrder.contains(id2)
-						&& customOrder[id1] < customOrder[id2];
+					const auto iter1 = customOrder.find(id1);
+					const auto iter2 = customOrder.find(id2);
+
+					return iter1 != customOrder.end()
+						&& iter2 != customOrder.end()
+						&& iter1->second < iter2->second;
 				});
 			break;
 	}
