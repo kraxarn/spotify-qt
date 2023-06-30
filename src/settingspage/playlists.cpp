@@ -62,9 +62,10 @@ auto SettingsPage::Playlists::order() -> QWidget *
 	for (auto i = 0; i < mainWindow->getPlaylistItemCount(); i++)
 	{
 		auto *mainItem = mainWindow->getPlaylistItem(i);
+		const auto &mainData = mainItem->data(static_cast<int>(DataRole::Playlist));
+
 		auto *listItem = new QListWidgetItem(mainItem->text());
-		listItem->setData(static_cast<int>(DataRole::PlaylistId),
-			mainItem->data(static_cast<int>(DataRole::PlaylistId)));
+		listItem->setData(static_cast<int>(DataRole::Playlist), mainData);
 		plList->addItem(listItem);
 	}
 
@@ -91,8 +92,9 @@ auto SettingsPage::Playlists::save() -> bool
 		order.reserve(plList->count());
 		for (auto i = 0; i < plList->count(); i++)
 		{
-			order.push_back(plList->item(i)->data(static_cast<int>(DataRole::PlaylistId))
-				.toString().toStdString());
+			const auto &playlistData = plList->item(i)->data(static_cast<int>(DataRole::Playlist));
+			const auto playlist = playlistData.value<lib::spt::playlist>();
+			order.push_back(playlist.id);
 		}
 		settings.general.custom_playlist_order = order;
 	}

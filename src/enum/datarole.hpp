@@ -6,7 +6,7 @@ enum class DataRole: int
 	ArtistId = 0x0101,    // 257
 	Album = 0x0102,       // 258
 	Index = 0x0103,       // 259
-	PlaylistId = 0x0104,  // 260
+	Playlist = 0x0104,    // 260
 	AddedDate = 0x105,    // 261
 	Length = 0x106,       // 262
 	DefaultIndex = 0x107, // 263

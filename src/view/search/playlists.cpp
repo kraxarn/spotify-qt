@@ -23,15 +23,16 @@ void Search::Playlists::add(const lib::spt::playlist &playlist)
 	auto playlistId = QString::fromStdString(playlist.id);
 
 	auto *item = new QListWidgetItem(playlistName, this);
-	item->setData(static_cast<int>(DataRole::PlaylistId), playlistId);
+	item->setData(static_cast<int>(DataRole::Playlist), QVariant::fromValue(playlist));
 	item->setToolTip(playlistName);
 }
 
 void Search::Playlists::onItemClicked(QListWidgetItem *item)
 {
-	auto playlistId = item->data(static_cast<int>(DataRole::PlaylistId))
-		.toString().toStdString();
-	spotify.playlist(playlistId, [this](const lib::spt::playlist &playlist)
+	const auto &playlistData = item->data(static_cast<int>(DataRole::Playlist));
+	const auto playlist = playlistData.value<lib::spt::playlist>();
+
+	spotify.playlist(playlist.id, [this](const lib::spt::playlist &playlist)
 	{
 		auto *mainWindow = MainWindow::find(this->parentWidget());
 		mainWindow->getSongsTree()->load(playlist);
@@ -41,29 +42,25 @@ void Search::Playlists::onItemClicked(QListWidgetItem *item)
 
 void Search::Playlists::onItemDoubleClicked(QListWidgetItem *item)
 {
-	auto playlistId = item->data(static_cast<int>(DataRole::PlaylistId))
-		.toString().toStdString();
+	const auto &playlistData = item->data(static_cast<int>(DataRole::Playlist));
+	const auto playlist = playlistData.value<lib::spt::playlist>();
 
-	spotify.play_tracks(lib::spt::id_to_uri("playlist", playlistId),
-		[](const std::string &result)
+	spotify.play_tracks(lib::spt::id_to_uri("playlist", playlist.id), [](const std::string &result)
+	{
+		if (!result.empty())
 		{
-			if (!result.empty())
-			{
-				StatusMessage::error(QString("Failed to start playlist playback: %1")
-					.arg(QString::fromStdString(result)));
-			}
-		});
+			StatusMessage::error(QString("Failed to start playlist playback: %1")
+				.arg(QString::fromStdString(result)));
+		}
+	});
 }
 
 void Search::Playlists::onContextMenu(const QPoint &pos)
 {
 	auto *item = itemAt(pos);
-	auto playlistId = item->data(static_cast<int>(DataRole::PlaylistId))
-		.toString().toStdString();
+	const auto &playlistData = item->data(static_cast<int>(DataRole::Playlist));
+	const auto playlist = playlistData.value<lib::spt::playlist>();
 
-	spotify.playlist(playlistId, [this, pos](const lib::spt::playlist &playlist)
-	{
-		auto *menu = new Menu::Playlist(spotify, playlist, cache, parentWidget());
-		menu->popup(mapToGlobal(pos));
-	});
+	auto *menu = new Menu::Playlist(spotify, playlist, cache, parentWidget());
+	menu->popup(mapToGlobal(pos));
 }

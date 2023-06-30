@@ -25,7 +25,6 @@ namespace List
 		auto allArtists() -> std::unordered_set<std::string>;
 
 		auto at(int index) -> lib::spt::playlist;
-		auto at(const std::string &playlistId) -> lib::spt::playlist;
 
 	protected:
 		void showEvent(QShowEvent *event) override;
