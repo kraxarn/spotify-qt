@@ -64,7 +64,10 @@ void Tooltip::set(QListWidgetItem *item, const lib::spt::playlist &playlist)
 
 		QPixmap img;
 		img.loadFromData(data, "jpeg");
-		item->setToolTip(tooltip(playlist, img));
+		const auto scaled = img.scaled(albumSize, albumSize,
+			Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+
+		item->setToolTip(tooltip(playlist, scaled));
 	});
 }
 
