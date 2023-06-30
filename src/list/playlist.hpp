@@ -4,6 +4,7 @@
 #include "lib/spotify/api.hpp"
 #include "lib/spotify/playlist.hpp"
 #include "lib/enum/playlistorder.hpp"
+#include "util/tooltip.hpp"
 
 #include <QListWidget>
 
@@ -15,7 +16,7 @@ namespace List
 
 	public:
 		Playlist(lib::spt::api &spotify, lib::settings &settings,
-			lib::cache &cache, QWidget *parent);
+			lib::cache &cache, const lib::http_client &httpClient, QWidget *parent);
 
 		void load(const std::vector<lib::spt::playlist> &items);
 		void refresh();
@@ -33,12 +34,14 @@ namespace List
 		lib::spt::api &spotify;
 		lib::cache &cache;
 		lib::settings &settings;
+		Tooltip tooltip;
 
 		auto getItemIndex(QListWidgetItem *item) -> int;
 
 		void onItemClicked(QListWidgetItem *item);
 		void onItemDoubleClicked(QListWidgetItem *item);
 		void onContextMenuRequested(const QPoint &pos);
+		void onItemEntered(QListWidgetItem *item);
 
 		static auto latestTrack(const std::vector<lib::spt::track> &tracks) -> QDateTime;
 	};

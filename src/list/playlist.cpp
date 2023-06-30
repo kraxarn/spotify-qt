@@ -2,14 +2,17 @@
 #include "mainwindow.hpp"
 
 List::Playlist::Playlist(lib::spt::api &spotify, lib::settings &settings,
-	lib::cache &cache, QWidget *parent)
+	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
 	: QListWidget(parent),
 	spotify(spotify),
 	cache(cache),
-	settings(settings)
+	settings(settings),
+	tooltip(settings, httpClient, cache)
 {
 	// Set default selected playlist
 	setCurrentRow(0);
+
+	setMouseTracking(true);
 
 	QListWidget::connect(this, &QListWidget::itemClicked,
 		this, &List::Playlist::onItemClicked);
@@ -19,6 +22,9 @@ List::Playlist::Playlist(lib::spt::api &spotify, lib::settings &settings,
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested,
 		this, &List::Playlist::onContextMenuRequested);
+
+	QListWidget::connect(this, &QListWidget::itemEntered,
+		this, &List::Playlist::onItemEntered);
 }
 
 void List::Playlist::showEvent(QShowEvent */*event*/)
@@ -84,6 +90,20 @@ void List::Playlist::onContextMenuRequested(const QPoint &pos)
 	menu->popup(mapToGlobal(pos));
 }
 
+void List::Playlist::onItemEntered(QListWidgetItem *item)
+{
+	if (!item->toolTip().isEmpty())
+	{
+		return;
+	}
+
+	// TODO: Save entity in list data
+	const auto &playlistIdData = item->data(static_cast<int>(DataRole::PlaylistId));
+	const auto playlistId = playlistIdData.toString().toStdString();
+	const auto playlist = cache.get_playlist(playlistId);
+	tooltip.set(item, playlist);
+}
+
 void List::Playlist::load(const std::vector<lib::spt::playlist> &playlists)
 {
 	QListWidgetItem *activeItem = nullptr;
@@ -96,14 +116,9 @@ void List::Playlist::load(const std::vector<lib::spt::playlist> &playlists)
 	// Add all playlists
 	clear();
 	auto index = 0;
-	QTextDocument doc;
 	for (const auto &playlist: playlists)
 	{
 		auto *item = new QListWidgetItem(QString::fromStdString(playlist.name), this);
-
-		doc.setHtml(QString::fromStdString(playlist.description));
-		item->setToolTip(doc.toPlainText());
-
 		item->setData(static_cast<int>(DataRole::PlaylistId), QString::fromStdString(playlist.id));
 		item->setData(static_cast<int>(DataRole::DefaultIndex), index);
 		item->setData(static_cast<int>(DataRole::Index), index++);

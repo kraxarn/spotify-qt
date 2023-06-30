@@ -490,7 +490,7 @@ auto MainWindow::createCentralWidget() -> QWidget *
 	sidePanel->setVisible(false);
 
 	libraryList = new List::Library(spotify, cache, httpClient, settings, this);
-	playlistList = new List::Playlist(spotify, settings, cache, this);
+	playlistList = new List::Playlist(spotify, settings, cache, httpClient, this);
 	contextView = new Context::View(spotify, settings, cache, httpClient, this);
 
 	auto *libraryDock = Widget::createDockWidget(libraryList,

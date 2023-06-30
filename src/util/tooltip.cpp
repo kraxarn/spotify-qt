@@ -44,6 +44,30 @@ void Tooltip::set(QTreeWidgetItem *item, const lib::spt::album &album, const QIc
 	item->setToolTip(0, tooltip(album, icon));
 }
 
+void Tooltip::set(QListWidgetItem *item, const lib::spt::playlist &playlist)
+{
+	item->setToolTip(tooltip(playlist, {}));
+
+	if (playlist.image.empty())
+	{
+		return;
+	}
+
+	// TODO: Cache this
+	httpClient.get(playlist.image, lib::headers(), [this, item, playlist](const std::string &str)
+	{
+		auto data = QByteArray::fromStdString(str);
+		if (lib::image::is_jpeg(std::vector<unsigned char>(data.begin(), data.end())))
+		{
+			return;
+		}
+
+		QPixmap img;
+		img.loadFromData(data, "jpeg");
+		item->setToolTip(tooltip(playlist, img));
+	});
+}
+
 auto Tooltip::tooltip(const QPixmap &image, const QList<TooltipRow> &rows) -> QString
 {
 	QString table("<table>");
@@ -111,6 +135,30 @@ auto Tooltip::tooltip(const lib::spt::album &album, const QPixmap &albumImage) -
 	});
 }
 
+auto Tooltip::tooltip(const lib::spt::playlist &playlist, const QPixmap &image) -> QString
+{
+	QList<TooltipRow> rows{
+		{
+			Icon::get(QStringLiteral("view-media-playlist")),
+			QString::fromStdString(playlist.name),
+		},
+		{
+			Icon::get(QStringLiteral("view-media-artist")),
+			QString::fromStdString(playlist.owner_name),
+		},
+	};
+
+	if (!playlist.description.empty())
+	{
+		rows.append({
+			Icon::get(QStringLiteral("description")),
+			QString::fromStdString(playlist.description),
+		});
+	}
+
+	return tooltip(playlistIcon(image), rows);
+}
+
 auto Tooltip::icon(const QIcon &iconData, int size) -> QString
 {
 	const auto pixmap = iconData.pixmap(size, size);
@@ -127,14 +175,24 @@ auto Tooltip::icon(const QPixmap &pixmap) -> QString
 		.arg(QString(data.toBase64()));
 }
 
-auto Tooltip::albumIcon(const QPixmap &albumPixmap) -> QPixmap
+auto Tooltip::icon(const QPixmap &pixmap, const QString &fallback) -> QPixmap
 {
-	if (!albumPixmap.isNull())
+	if (!pixmap.isNull())
 	{
 		const auto shape = settings.qt().album_shape;
-		return Image::mask(albumPixmap, shape);
+		return Image::mask(pixmap, shape);
 	}
 
-	return Icon::get(QStringLiteral("media-optical-audio"))
+	return Icon::get(fallback)
 		.pixmap(albumSize, albumSize);
+}
+
+auto Tooltip::albumIcon(const QPixmap &albumPixmap) -> QPixmap
+{
+	return icon(albumPixmap, QStringLiteral("media-optical-audio"));
+}
+
+auto Tooltip::playlistIcon(const QPixmap &albumPixmap) -> QPixmap
+{
+	return icon(albumPixmap, QStringLiteral("view-media-playlist"));
 }
