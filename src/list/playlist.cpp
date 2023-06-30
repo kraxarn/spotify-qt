@@ -12,13 +12,13 @@ List::Playlist::Playlist(lib::spt::api &spotify, lib::settings &settings,
 	setCurrentRow(0);
 
 	QListWidget::connect(this, &QListWidget::itemClicked,
-		this, &List::Playlist::clicked);
+		this, &List::Playlist::onItemClicked);
 	QListWidget::connect(this, &QListWidget::itemDoubleClicked,
-		this, &List::Playlist::doubleClicked);
+		this, &List::Playlist::onItemDoubleClicked);
 
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	QWidget::connect(this, &QWidget::customContextMenuRequested,
-		this, &List::Playlist::menu);
+		this, &List::Playlist::onContextMenuRequested);
 }
 
 void List::Playlist::showEvent(QShowEvent */*event*/)
@@ -45,7 +45,7 @@ auto List::Playlist::getItemIndex(QListWidgetItem *item) -> int
 		: item->data(static_cast<int>(DataRole::Index)).toInt();
 }
 
-void List::Playlist::clicked(QListWidgetItem *item)
+void List::Playlist::onItemClicked(QListWidgetItem *item)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	if (item != nullptr)
@@ -57,7 +57,7 @@ void List::Playlist::clicked(QListWidgetItem *item)
 	mainWindow->getSongsTree()->load(currentPlaylist);
 }
 
-void List::Playlist::doubleClicked(QListWidgetItem *item)
+void List::Playlist::onItemDoubleClicked(QListWidgetItem *item)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	const auto &currentPlaylist = mainWindow->getPlaylist(getItemIndex(item));
@@ -76,7 +76,7 @@ void List::Playlist::doubleClicked(QListWidgetItem *item)
 		});
 }
 
-void List::Playlist::menu(const QPoint &pos)
+void List::Playlist::onContextMenuRequested(const QPoint &pos)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 	const auto &playlist = mainWindow->getPlaylist(getItemIndex(itemAt(pos)));

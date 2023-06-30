@@ -35,9 +35,10 @@ namespace List
 		lib::settings &settings;
 
 		auto getItemIndex(QListWidgetItem *item) -> int;
-		void clicked(QListWidgetItem *item);
-		void doubleClicked(QListWidgetItem *item);
-		void menu(const QPoint &pos);
+
+		void onItemClicked(QListWidgetItem *item);
+		void onItemDoubleClicked(QListWidgetItem *item);
+		void onContextMenuRequested(const QPoint &pos);
 
 		static auto latestTrack(const std::vector<lib::spt::track> &tracks) -> QDateTime;
 	};
