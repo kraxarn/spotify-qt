@@ -166,9 +166,10 @@ auto Tooltip::tooltip(const lib::spt::playlist &playlist, const QPixmap &image) 
 	return tooltip(playlistIcon(image), rows);
 }
 
-auto Tooltip::icon(const QIcon &iconData, int size) -> QString
+auto Tooltip::icon(const QIcon &iconData) -> QString
 {
-	const auto pixmap = iconData.pixmap(size, size);
+	const QSize size(iconSize, iconSize);
+	const auto pixmap = iconData.pixmap(size);
 	return icon(pixmap);
 }
 

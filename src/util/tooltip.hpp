@@ -38,7 +38,7 @@ private:
 	auto tooltip(const lib::spt::album &album, const QPixmap &albumImage) -> QString;
 	auto tooltip(const lib::spt::playlist &playlist, const QPixmap &image) -> QString;
 
-	static auto icon(const QIcon &iconData, int size = iconSize) -> QString;
+	static auto icon(const QIcon &iconData) -> QString;
 	static auto icon(const QPixmap &pixmap) -> QString;
 
 	auto icon(const QPixmap &pixmap, const QString &fallback) -> QPixmap;
