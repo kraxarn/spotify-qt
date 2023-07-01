@@ -77,7 +77,8 @@ for filename in os.listdir(workflows_dir):
 
 for action_name, action_version in actions.items():
 	repo_name = "/".join(action_name.split("/")[:2])
-	action_latest = get_latest_tag(repo_name, False)[:2]
+	latest_tag = get_latest_tag(repo_name, False)
+	action_latest = latest_tag if latest_tag.startswith("v0") else latest_tag[:2]
 	log(action_name, action_version, action_latest)
 
 # res/ic
