@@ -14,7 +14,7 @@ jobs:
         with:
           operating_system: netbsd
           architecture: x86-64
-          version: '9.2'
+          version: '9.3'
           shell: bash
           run: |
             sudo pkgin -y install cmake git qt6-qtbase qt6-qtsvg || cat /var/db/pkgin/pkg_install-err.log
