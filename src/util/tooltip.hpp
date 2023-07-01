@@ -25,7 +25,7 @@ public:
 	void set(QListWidgetItem *item, const lib::spt::playlist &playlist);
 
 private:
-	static constexpr int iconSize = 16;
+	static constexpr int iconSize = 14;
 	static constexpr int albumSize = lib::spt::image::size_small;
 
 	lib::settings &settings;
