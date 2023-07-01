@@ -53,11 +53,7 @@ void AppMenu::logOut()
 
 void AppMenu::openSettings()
 {
-	if (settingsDialog == nullptr)
-	{
-		auto *mainWindow = MainWindow::find(parent);
-		settingsDialog = new Dialog::Settings(settings, cache, httpClient, mainWindow);
-	}
-
+	auto *mainWindow = MainWindow::find(parent);
+	auto *settingsDialog = new Dialog::Settings(settings, cache, httpClient, mainWindow);
 	settingsDialog->open();
 }

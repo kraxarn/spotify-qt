@@ -16,6 +16,4 @@ private:
 	lib::settings &settings;
 	const lib::http_client &httpClient;
 	lib::cache &cache;
-
-	Dialog::Settings *settingsDialog = nullptr;
 };

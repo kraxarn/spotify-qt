@@ -13,6 +13,8 @@ Dialog::Settings::Settings(lib::settings &settings, lib::cache &cache,
 	: QDialog(parent),
 	settings(settings)
 {
+	setAttribute(Qt::WA_DeleteOnClose);
+
 	// Main layout
 	auto *mainLayout = new QHBoxLayout();
 
