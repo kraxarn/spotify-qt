@@ -14,6 +14,12 @@ auto CommandLine::Processor::process(const QCommandLineParser &parser) -> bool
 	if (parser.isSet(ARG_ENABLE_DEV))
 	{
 		lib::developer_mode::enabled = true;
+
+		if (parser.isSet(ARG_NEW_PAGING))
+		{
+			lib::developer_mode::add_experiment(lib::experiment::new_paging);
+		}
+
 		return false;
 	}
 
