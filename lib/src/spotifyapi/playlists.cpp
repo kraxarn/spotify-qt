@@ -45,36 +45,8 @@ void lib::spt::api::edit_playlist(const std::string &playlist_id,
 void lib::spt::api::playlist_tracks(const lib::spt::playlist &playlist,
 	lib::callback<std::vector<lib::spt::track>> &callback)
 {
-	auto fetch = [this, callback](const std::string &url)
-	{
-		lib::uri uri(url);
-		auto params = uri.get_search_params();
-
-		if (params.find("market") == params.end())
-		{
-			params["market"] = "from_token";
-		}
-
-		if (params.find("limit") == params.end())
-		{
-			params["limit"] = "50";
-		}
-
-		uri.set_search_params(params);
-		get_items(uri.get_url(), callback);
-	};
-
-	if (playlist.tracks_href.empty())
-	{
-		this->playlist(playlist.id, [fetch](const lib::spt::playlist &newPlaylist)
-		{
-			fetch(newPlaylist.tracks_href);
-		});
-	}
-	else
-	{
-		fetch(playlist.tracks_href);
-	}
+	const auto url = lib::fmt::format("playlists/{}/tracks?market=from_token&limit=50", playlist.id);
+	get_items(url, callback);
 }
 
 void lib::spt::api::add_to_playlist(const std::string &playlist_id,

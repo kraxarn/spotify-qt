@@ -47,7 +47,6 @@ void lib::spt::from_json(const nlohmann::json &j, playlist &p)
 		}
 		else if (tracks.is_object())
 		{
-			tracks.at("href").get_to(p.tracks_href);
 			tracks.at("total").get_to(p.tracks_total);
 		}
 	}

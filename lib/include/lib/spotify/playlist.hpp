@@ -60,11 +60,6 @@ namespace lib
 			std::vector<lib::spt::track> tracks;
 
 			/**
-			 * URL to load tracks from
-			 */
-			std::string tracks_href;
-
-			/**
 			 * Number of tracks in playlist
 			 * @note Prefer using track_count()
 			 */
