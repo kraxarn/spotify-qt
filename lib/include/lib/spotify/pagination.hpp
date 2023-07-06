@@ -32,23 +32,34 @@ namespace lib
 				return !next_url.empty();
 			}
 
-			auto success() const -> bool
+			/**
+			 * Set callback on successful page fetch
+			 */
+			void success(std::function<void(const std::vector<T> &)> callback)
 			{
-				return error_message.empty();
+				ok_callback = std::move(callback);
 			}
 
-			void next(lib::callback<lib::result<std::vector<T>>> &callback)
+			/**
+			 * Set callback on failed page fetch
+			 */
+			void error(std::function<void(const std::string &)> callback)
+			{
+				fail_callback = std::move(callback);
+			}
+
+			void next()
 			{
 				if (!has_next())
 				{
 					throw std::runtime_error("No next page exists");
 				}
 
-				request.get(next_url, [this, callback](const lib::result<nlohmann::json> &response)
+				request.get<nlohmann::json>(next_url, [this](const lib::result<nlohmann::json> &response)
 				{
 					if (!response.success())
 					{
-						callback(lib::result<std::vector<T>>::fail(response.message()));
+						fail(response.message());
 						return;
 					}
 
@@ -56,7 +67,7 @@ namespace lib
 					if (!items_key.empty() && !json.contains(items_key))
 					{
 						const auto message = lib::fmt::format("No such key: {}", items_key);
-						callback(lib::result<std::vector<T>>::fail(message));
+						fail(message);
 						return;
 					}
 
@@ -74,15 +85,41 @@ namespace lib
 					}
 
 					const auto &items = content.at("items");
-					callback(lib::result<std::vector<T>>::ok(items));
+					ok(items);
 				});
 			}
 
 		private:
 			std::string next_url;
 			std::string items_key;
-			std::string error_message;
 			request &request;
+
+			std::function<void(const std::vector<T> &)> ok_callback;
+			std::function<void(const std::string &)> fail_callback;
+
+			void ok(std::vector<T> items)
+			{
+				if (!ok_callback)
+				{
+					lib::log::warn("No success callback set, ignoring");
+					return;
+				}
+
+				lib::log::debug("OK: {} items fetched", items.size());
+				ok_callback(std::move(items));
+			}
+
+			void fail(const std::string &message)
+			{
+				if (!fail_callback)
+				{
+					lib::log::error("Failed to fetch page: {}", message);
+					return;
+				}
+
+				lib::log::debug("Fail: {}", message);
+				fail_callback(message);
+			}
 		};
 	}
 }
