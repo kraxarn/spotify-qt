@@ -583,7 +583,7 @@ void List::Tracks::load(const std::vector<lib::spt::track> &tracks, const std::s
 void List::Tracks::load(const lib::spt::playlist &playlist)
 {
 	auto *mainWindow = MainWindow::find(parent());
-	if (mainWindow->history()->currentPlaylist().id == playlist.id)
+	if (mainWindow != nullptr && mainWindow->history()->currentPlaylist().id == playlist.id)
 	{
 		lib::log::debug("Playlist to load already loaded, ignoring");
 		return;
