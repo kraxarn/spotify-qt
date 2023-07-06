@@ -118,6 +118,11 @@ void HistoryButton::forward()
 
 auto HistoryButton::currentUri() const -> std::string
 {
+	if (current == nullptr)
+	{
+		return {};
+	}
+
 	const auto &data = current->data();
 
 	if (data.canConvert<lib::spt::playlist>())
@@ -143,6 +148,11 @@ auto HistoryButton::currentUri() const -> std::string
 
 auto HistoryButton::currentPlaylist() const -> lib::spt::playlist
 {
+	if (current == nullptr)
+	{
+		return {};
+	}
+
 	const auto &data = current->data();
 	return data.value<lib::spt::playlist>();
 }
