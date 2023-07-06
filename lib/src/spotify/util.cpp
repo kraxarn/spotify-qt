@@ -7,6 +7,14 @@ auto lib::spt::to_full_url(const std::string &relative_url) -> std::string
 	return lib::fmt::format("https://api.spotify.com/v1/{}", relative_url);
 }
 
+auto lib::spt::to_relative_url(const std::string &full_url) -> std::string
+{
+	const auto index = full_url.find("/v1/");
+	return index == std::string::npos
+		? full_url
+		: full_url.substr(index + 4);
+}
+
 auto lib::spt::id_to_uri(const std::string &type, const std::string &spotify_id) -> std::string
 {
 	return lib::strings::starts_with(spotify_id, "spotify:")

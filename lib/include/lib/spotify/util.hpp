@@ -14,6 +14,13 @@ namespace lib
 		auto to_full_url(const std::string &relative_url) -> std::string;
 
 		/**
+		 * Get relative URL from absolute URL
+		 * @param full_url Full URL
+		 * @return Relative URL
+		 */
+		auto to_relative_url(const std::string &full_url) -> std::string;
+
+		/**
 		 * Spotify ID (4uLU6hMCjMI75M1A2tKUQC) to Spotify URI
 		 * (spotify:track:4uLU6hMCjMI75M1A2tKUQC)
 		 * @param type URI type, for example artist, album, track, etc.

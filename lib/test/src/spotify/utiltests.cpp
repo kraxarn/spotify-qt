@@ -50,4 +50,15 @@ TEST_CASE("spt::util")
 			base_url), device),
 			lib::fmt::format("{}?device_id={}&offset=0", base_url, device.id));
 	}
+
+	SUBCASE("to_relative_url")
+	{
+		const std::string full1 = "https://api.spotify.com/v1/123/456";
+		const auto relative1 = lib::spt::to_relative_url(full1);
+		CHECK_EQ(relative1, "123/456");
+
+		const std::string full2 = "456/789";
+		const auto relative2 = lib::spt::to_relative_url(full2);
+		CHECK_EQ(relative2, full2);
+	}
 }
