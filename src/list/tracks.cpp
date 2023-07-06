@@ -582,6 +582,13 @@ void List::Tracks::load(const std::vector<lib::spt::track> &tracks, const std::s
 
 void List::Tracks::load(const lib::spt::playlist &playlist)
 {
+	auto *mainWindow = MainWindow::find(parent());
+	if (mainWindow->history()->currentPlaylist().id == playlist.id)
+	{
+		lib::log::debug("Playlist to load already loaded, ignoring");
+		return;
+	}
+
 	const auto &tracks = playlist.tracks.empty()
 		? cache.get_playlist(playlist.id).tracks
 		: playlist.tracks;
@@ -594,8 +601,6 @@ void List::Tracks::load(const lib::spt::playlist &playlist)
 	{
 		setEnabled(false);
 	}
-
-	auto *mainWindow = MainWindow::find(parentWidget());
 
 	const auto &snapshot = playlist.snapshot;
 	spotify.playlist(playlist.id,
