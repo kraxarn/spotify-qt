@@ -493,11 +493,15 @@ auto List::Tracks::getSelectedTrackIds() const -> std::vector<std::string>
 }
 
 void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
-	const std::string &selectedId, const std::string &addedAt)
+	const std::string &selectedId, const std::string &addedAt, bool clearItems)
 {
-	clear();
-	trackItems.clear();
-	playingTrackItem = nullptr;
+	if (clearItems)
+	{
+		clear();
+		trackItems.clear();
+		playingTrackItem = nullptr;
+	}
+
 	auto fieldWidth = static_cast<int>(std::to_string(tracks.size()).size());
 	auto current = getCurrent();
 	auto anyHasDate = false;
@@ -570,14 +574,15 @@ void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
 	});
 }
 
-void List::Tracks::load(const std::vector<lib::spt::track> &tracks)
+void List::Tracks::load(const std::vector<lib::spt::track> &tracks, bool clearItems)
 {
-	load(tracks, std::string());
+	load(tracks, std::string(), clearItems);
 }
 
-void List::Tracks::load(const std::vector<lib::spt::track> &tracks, const std::string &selectedId)
+void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
+	const std::string &selectedId, bool clearItems)
 {
-	load(tracks, selectedId, std::string());
+	load(tracks, selectedId, std::string(), clearItems);
 }
 
 void List::Tracks::load(const lib::spt::playlist &playlist)
@@ -640,27 +645,26 @@ void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 
 	if (lib::developer_mode::is_experiment_enabled(lib::experiment::new_paging))
 	{
-		auto *pagination = spotify.playlist_tracks(playlist);
-		pagination->success([this, mainWindow, playlistUri, &pagination](const std::vector<lib::spt::track> &tracks)
-		{
-			if (playlistUri != mainWindow->history()->currentUri())
+		spotify.playlist_tracks(playlist,
+			[this, mainWindow, playlistUri](const lib::result<lib::spt::page<lib::spt::track>> &result) -> bool
 			{
-				delete pagination;
-				return;
-			}
+				if (playlistUri != mainWindow->history()->currentUri())
+				{
+					return false;
+				}
 
-			load(tracks); // TODO: Clears
-			setEnabled(true);
-			delete pagination;
-		});
-		pagination->error([&pagination](const std::string &message)
-		{
-			StatusMessage::error(QString("Failed to fetch page: %1")
-				.arg(QString::fromStdString(message)));
+				if (!result.success())
+				{
+					StatusMessage::error(QString("Failed to load playlist: %1")
+						.arg(QString::fromStdString(result.message())));
+					return false;
+				}
 
-			delete pagination;
-		});
-		pagination->next();
+				const auto &page = result.value();
+				load(page.items, page.offset == 0);
+				setEnabled(true);
+				return page.has_next();
+			});
 		return;
 	}
 

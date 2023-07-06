@@ -49,11 +49,11 @@ void lib::spt::api::playlist_tracks(const lib::spt::playlist &playlist,
 	get_items(url, callback);
 }
 
-auto lib::spt::api::playlist_tracks(const lib::spt::playlist &playlist) -> lib::spt::pagination<lib::spt::track> *
+void lib::spt::api::playlist_tracks(const lib::spt::playlist &playlist,
+	const std::function<bool(const lib::result<lib::spt::page<lib::spt::track>> &)> &callback)
 {
-	// TODO: pagination is just a temporary object, and thus need heap allocation, find better solution
 	const auto url = lib::fmt::format("playlists/{}/tracks?market=from_token&limit=50", playlist.id);
-	return new lib::spt::pagination<lib::spt::track>(url, request);
+	request.get_page<lib::spt::track>(url, std::string(), callback);
 }
 
 void lib::spt::api::add_to_playlist(const std::string &playlist_id,

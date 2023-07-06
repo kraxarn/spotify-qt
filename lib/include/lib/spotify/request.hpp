@@ -5,6 +5,7 @@
 #include "lib/spotify/error.hpp"
 #include "lib/spotify/util.hpp"
 #include "lib/spotify/deviceselect.hpp"
+#include "lib/spotify/page.hpp"
 
 namespace lib
 {
@@ -45,6 +46,62 @@ namespace lib
 						}
 						callback(parse_json<T>(response.value()));
 					});
+			}
+
+			/**
+			 * Get a paged list of items contained in specified key
+			 * @tparam T Type of item to fetch
+			 * @param url Initial URL to fetch from
+			 * @param key Key to fetch items from
+			 * @param callback Callback with page index, returning true to fetch the next page
+			 */
+			template<typename T>
+			void get_page(const std::string &url, const std::string &key,
+				const std::function<bool(const lib::result<lib::spt::page<T>> &)> &callback)
+			{
+				const auto api_url = lib::strings::starts_with(url, "https://")
+					? lib::spt::to_relative_url(url)
+					: url;
+
+				lib::log::debug("GET: {}", api_url);
+
+				get<nlohmann::json>(api_url, [this, key, callback](const lib::result<nlohmann::json> &result)
+				{
+					if (!result.success())
+					{
+						const auto message = parse_error_message(result.message());
+						callback(lib::result<lib::spt::page<T>>::fail(message));
+						return;
+					}
+
+					const auto &json = result.value();
+					if (!key.empty() && !json.contains(key))
+					{
+						const auto message = lib::fmt::format("No such key: {}", key);
+						callback(lib::result<lib::spt::page<T>>::fail(message));
+						return;
+					}
+
+					lib::spt::page<T> page;
+					try
+					{
+						page = key.empty() ? json : json.at(key);
+					}
+					catch (const std::exception &exception)
+					{
+						const std::string message = exception.what();
+						callback(lib::result<lib::spt::page<T>>::fail(message));
+						return;
+					}
+
+					if (!callback(lib::result<lib::spt::page<T>>::ok(page))
+						|| !page.has_next())
+					{
+						return;
+					}
+
+					get_page(page.next, key, callback);
+				});
 			}
 
 			/**

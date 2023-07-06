@@ -21,7 +21,7 @@
 #include "lib/spotify/callback.hpp"
 #include "lib/spotify/request.hpp"
 #include "lib/spotify/queue.hpp"
-#include "lib/spotify/pagination.hpp"
+#include "lib/spotify/page.hpp"
 #include "lib/httpclient.hpp"
 #include "lib/datetime.hpp"
 
@@ -278,7 +278,11 @@ namespace lib
 			void playlist_tracks(const lib::spt::playlist &playlist,
 				lib::callback<std::vector<lib::spt::track>> &callback);
 
-			auto playlist_tracks(const lib::spt::playlist &playlist) -> lib::spt::pagination<lib::spt::track> *;
+			/**
+			 * @note Experimental
+			 */
+			void playlist_tracks(const lib::spt::playlist &playlist,
+				const std::function<bool(const lib::result<lib::spt::page<lib::spt::track>> &)> &callback);
 
 			void add_to_playlist(const std::string &playlist_id,
 				const std::vector<std::string> &track_uris,
