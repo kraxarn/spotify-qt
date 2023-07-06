@@ -21,6 +21,7 @@
 #include "lib/spotify/callback.hpp"
 #include "lib/spotify/request.hpp"
 #include "lib/spotify/queue.hpp"
+#include "lib/spotify/pagination.hpp"
 #include "lib/httpclient.hpp"
 #include "lib/datetime.hpp"
 
@@ -271,8 +272,13 @@ namespace lib
 				const lib::spt::playlist_details &playlist,
 				lib::callback<std::string> &callback);
 
+			/**
+			 * @deprecated Use with pagination instead
+			 */
 			void playlist_tracks(const lib::spt::playlist &playlist,
 				lib::callback<std::vector<lib::spt::track>> &callback);
+
+			auto playlist_tracks(const lib::spt::playlist &playlist) -> lib::spt::pagination<lib::spt::track> *;
 
 			void add_to_playlist(const std::string &playlist_id,
 				const std::vector<std::string> &track_uris,

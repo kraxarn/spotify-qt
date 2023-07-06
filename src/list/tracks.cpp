@@ -633,6 +633,32 @@ void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 		return;
 	}
 
+	if (lib::developer_mode::is_experiment_enabled(lib::experiment::new_paging))
+	{
+		auto *pagination = spotify.playlist_tracks(playlist);
+		pagination->success([this, mainWindow, playlistUri, &pagination](const std::vector<lib::spt::track> &tracks)
+		{
+			if (playlistUri != mainWindow->history()->currentUri())
+			{
+				delete pagination;
+				return;
+			}
+
+			load(tracks); // TODO: Clears
+			setEnabled(true);
+			delete pagination;
+		});
+		pagination->error([&pagination](const std::string &message)
+		{
+			StatusMessage::error(QString("Failed to fetch page: %1")
+				.arg(QString::fromStdString(message)));
+
+			delete pagination;
+		});
+		pagination->next();
+		return;
+	}
+
 	spotify.playlist_tracks(playlist,
 		[this, playlist](const std::vector<lib::spt::track> &tracks)
 		{
