@@ -638,11 +638,6 @@ void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 	auto *mainWindow = MainWindow::find(parentWidget());
 	const auto playlistUri = lib::spt::id_to_uri("playlist", playlist.id);
 
-	if (playlistUri != mainWindow->history()->currentUri())
-	{
-		return;
-	}
-
 	if (lib::developer_mode::is_experiment_enabled(lib::experiment::new_paging))
 	{
 		spotify.playlist_tracks(playlist,
