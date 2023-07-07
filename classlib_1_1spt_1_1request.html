@@ -95,6 +95,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae7aa8f7e7afe3633f11235a4ee1e0f92"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ae7aa8f7e7afe3633f11235a4ee1e0f92"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1request.html#ae7aa8f7e7afe3633f11235a4ee1e0f92">get</a> (const std::string &amp;url, lib::callback&lt; <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; T &gt; &gt; &amp;callback)</td></tr>
 <tr class="separator:ae7aa8f7e7afe3633f11235a4ee1e0f92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65fd728b7bb7ceff100147afb3aeb371"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a65fd728b7bb7ceff100147afb3aeb371"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1request.html#a65fd728b7bb7ceff100147afb3aeb371">get_page</a> (const std::string &amp;url, const std::string &amp;key, const std::function&lt; bool(const <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; <a class="el" href="classlib_1_1spt_1_1page.html">lib::spt::page</a>&lt; T &gt; &gt; &amp;)&gt; &amp;callback)</td></tr>
+<tr class="separator:a65fd728b7bb7ceff100147afb3aeb371"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb55e1b943d4132fb3d53eb6fdbdb21f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1request.html#abb55e1b943d4132fb3d53eb6fdbdb21f">post</a> (const std::string &amp;url, lib::callback&lt; <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; void * &gt; &gt; &amp;callback)</td></tr>
 <tr class="separator:abb55e1b943d4132fb3d53eb6fdbdb21f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -146,6 +149,64 @@ template&lt;typename T &gt; </div>
   <table class="params">
     <tr><td class="paramname">url</td><td>URL to request </td></tr>
     <tr><td class="paramname">callback</td><td>JSON response if successful, or error message on failure </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a65fd728b7bb7ceff100147afb3aeb371" name="a65fd728b7bb7ceff100147afb3aeb371"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65fd728b7bb7ceff100147afb3aeb371">&#9670;&#160;</a></span>get_page()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::spt::request::get_page </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::function&lt; bool(const <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; <a class="el" href="classlib_1_1spt_1_1page.html">lib::spt::page</a>&lt; T &gt; &gt; &amp;)&gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >Get a paged list of items contained in specified key </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of item to fetch </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>Initial URL to fetch from </td></tr>
+    <tr><td class="paramname">key</td><td>Key to fetch items from </td></tr>
+    <tr><td class="paramname">callback</td><td>Callback with page index, returning true to fetch the next page </td></tr>
   </table>
   </dd>
 </dl>

@@ -11,5 +11,6 @@ var searchData=
   ['is_5fplayable_8',['is_playable',['../classlib_1_1spt_1_1episode.html#a9015eb9a12541c6818aa112ab8924676',1,'lib::spt::episode::is_playable()'],['../classlib_1_1spt_1_1track.html#ad752f55bc9254da0e20cc4aba182c946',1,'lib::spt::track::is_playable()']]],
   ['is_5fplaying_9',['is_playing',['../classlib_1_1spt_1_1playback.html#ad3425f946100fb132fd503069e2cbf35',1,'lib::spt::playback']]],
   ['is_5fpublic_10',['is_public',['../classlib_1_1spt_1_1playlist.html#a0324054ae36cc088df2e6b79ca34956b',1,'lib::spt::playlist::is_public()'],['../classlib_1_1spt_1_1playlist__details.html#ad645d2730feeb6936127df24d97792a8',1,'lib::spt::playlist_details::is_public()']]],
-  ['item_11',['item',['../classlib_1_1spt_1_1playback.html#ae6c4262236734fcaf6c7c8fecc417bab',1,'lib::spt::playback']]]
+  ['item_11',['item',['../classlib_1_1spt_1_1playback.html#ae6c4262236734fcaf6c7c8fecc417bab',1,'lib::spt::playback']]],
+  ['items_12',['items',['../classlib_1_1spt_1_1page.html#ab5b5fb4c230c4d45be2d7a63d96fd439',1,'lib::spt::page']]]
 ];

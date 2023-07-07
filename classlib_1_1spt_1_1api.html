@@ -205,9 +205,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>playlist</b> (const s
 <tr class="memitem:a12083fb7e33a06997baa4d5bd1aa38f5"><td class="memItemLeft" align="right" valign="top"><a id="a12083fb7e33a06997baa4d5bd1aa38f5" name="a12083fb7e33a06997baa4d5bd1aa38f5"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>edit_playlist</b> (const std::string &amp;playlist_id, const <a class="el" href="classlib_1_1spt_1_1playlist__details.html">lib::spt::playlist_details</a> &amp;<a class="el" href="classlib_1_1spt_1_1playlist.html">playlist</a>, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
 <tr class="separator:a12083fb7e33a06997baa4d5bd1aa38f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a8597efa397b0941d4b3a301a3fd9c4"><td class="memItemLeft" align="right" valign="top"><a id="a8a8597efa397b0941d4b3a301a3fd9c4" name="a8a8597efa397b0941d4b3a301a3fd9c4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>playlist_tracks</b> (const <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &amp;<a class="el" href="classlib_1_1spt_1_1playlist.html">playlist</a>, lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;callback)</td></tr>
+<tr class="memitem:a8a8597efa397b0941d4b3a301a3fd9c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a8a8597efa397b0941d4b3a301a3fd9c4">playlist_tracks</a> (const <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &amp;<a class="el" href="classlib_1_1spt_1_1playlist.html">playlist</a>, lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;callback)</td></tr>
 <tr class="separator:a8a8597efa397b0941d4b3a301a3fd9c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a778cbe32b9d7d4adaa829bec2c61e515"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a778cbe32b9d7d4adaa829bec2c61e515">playlist_tracks</a> (const <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &amp;<a class="el" href="classlib_1_1spt_1_1playlist.html">playlist</a>, const std::function&lt; bool(const <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; <a class="el" href="classlib_1_1spt_1_1page.html">lib::spt::page</a>&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;)&gt; &amp;callback)</td></tr>
+<tr class="separator:a778cbe32b9d7d4adaa829bec2c61e515"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a785de2dbae1847aa8bfcc40e15d15a5c"><td class="memItemLeft" align="right" valign="top"><a id="a785de2dbae1847aa8bfcc40e15d15a5c" name="a785de2dbae1847aa8bfcc40e15d15a5c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>add_to_playlist</b> (const std::string &amp;playlist_id, const std::vector&lt; std::string &gt; &amp;track_uris, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
 <tr class="separator:a785de2dbae1847aa8bfcc40e15d15a5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -907,6 +908,64 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
+<a id="a778cbe32b9d7d4adaa829bec2c61e515" name="a778cbe32b9d7d4adaa829bec2c61e515"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a778cbe32b9d7d4adaa829bec2c61e515">&#9670;&#160;</a></span>playlist_tracks() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::spt::api::playlist_tracks </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &amp;&#160;</td>
+          <td class="paramname"><em>playlist</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::function&lt; bool(const <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; <a class="el" href="classlib_1_1spt_1_1page.html">lib::spt::page</a>&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;)&gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>Experimental </dd></dl>
+
+</div>
+</div>
+<a id="a8a8597efa397b0941d4b3a301a3fd9c4" name="a8a8597efa397b0941d4b3a301a3fd9c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a8597efa397b0941d4b3a301a3fd9c4">&#9670;&#160;</a></span>playlist_tracks() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::spt::api::playlist_tracks </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &amp;&#160;</td>
+          <td class="paramname"><em>playlist</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000005">Deprecated:</a></b></dt><dd>Use with pagination instead </dd></dl>
+
+</div>
+</div>
 <a id="aebe2c2e0bfc8f2b3343e41a69d5c610c" name="aebe2c2e0bfc8f2b3343e41a69d5c610c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aebe2c2e0bfc8f2b3343e41a69d5c610c">&#9670;&#160;</a></span>post() <span class="overload">[1/2]</span></h2>
 
@@ -990,7 +1049,7 @@ Temporarily protected </dd></dl>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Convenience method for POST request with no body </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000005">Deprecated:</a></b></dt><dd>Use <code><a class="el" href="classlib_1_1spt_1_1request.html#abb55e1b943d4132fb3d53eb6fdbdb21f">lib::spt::request::post</a></code> instead </dd></dl>
+<p >Convenience method for POST request with no body </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000006">Deprecated:</a></b></dt><dd>Use <code><a class="el" href="classlib_1_1spt_1_1request.html#abb55e1b943d4132fb3d53eb6fdbdb21f">lib::spt::request::post</a></code> instead </dd></dl>
 
 </div>
 </div>
