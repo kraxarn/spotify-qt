@@ -590,7 +590,7 @@ void List::Tracks::load(const lib::spt::playlist &playlist)
 	auto *mainWindow = MainWindow::find(parent());
 	if (mainWindow != nullptr && mainWindow->history()->currentPlaylist().id == playlist.id)
 	{
-		lib::log::debug("Playlist to load already loaded, ignoring");
+		lib::log::debug("Playlist already loaded, ignoring");
 		return;
 	}
 
