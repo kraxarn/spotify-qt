@@ -27,20 +27,19 @@ namespace List
 		/**
 		 * Load tracks directly, without cache, but select an item
 		 */
-		void load(const std::vector<lib::spt::track> &tracks, const std::string &selectedId,
-			bool clearItems = true);
+		void load(const std::vector<lib::spt::track> &tracks, const std::string &selectedId);
 
 		/**
 		 * Load tracks directly, without cache,
 		 * but select an item and provide a fallback added date
 		 */
 		void load(const std::vector<lib::spt::track> &tracks, const std::string &selectedId,
-			const std::string &addedAt, bool clearItems = true);
+			const std::string &addedAt);
 
 		/**
 		 * Load tracks directly, without cache
 		 */
-		void load(const std::vector<lib::spt::track> &tracks, bool clearItems = true);
+		void load(const std::vector<lib::spt::track> &tracks);
 
 		/**
 		 * Load playlist first from cache, then refresh it

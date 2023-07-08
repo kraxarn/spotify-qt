@@ -493,14 +493,11 @@ auto List::Tracks::getSelectedTrackIds() const -> std::vector<std::string>
 }
 
 void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
-	const std::string &selectedId, const std::string &addedAt, bool clearItems)
+	const std::string &selectedId, const std::string &addedAt)
 {
-	if (clearItems)
-	{
-		clear();
-		trackItems.clear();
-		playingTrackItem = nullptr;
-	}
+	clear();
+	trackItems.clear();
+	playingTrackItem = nullptr;
 
 	auto fieldWidth = static_cast<int>(std::to_string(tracks.size()).size());
 	auto current = getCurrent();
@@ -574,15 +571,15 @@ void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
 	});
 }
 
-void List::Tracks::load(const std::vector<lib::spt::track> &tracks, bool clearItems)
+void List::Tracks::load(const std::vector<lib::spt::track> &tracks)
 {
-	load(tracks, std::string(), clearItems);
+	load(tracks, std::string());
 }
 
 void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
-	const std::string &selectedId, bool clearItems)
+	const std::string &selectedId)
 {
-	load(tracks, selectedId, std::string(), clearItems);
+	load(tracks, selectedId, std::string());
 }
 
 void List::Tracks::load(const lib::spt::playlist &playlist)
@@ -656,7 +653,7 @@ void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 				}
 
 				const auto &page = result.value();
-				load(page.items, page.offset == 0);
+				load(page.items);
 				setEnabled(true);
 				return page.has_next();
 			});
