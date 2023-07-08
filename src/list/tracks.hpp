@@ -26,20 +26,33 @@ namespace List
 
 		/**
 		 * Load tracks directly, without cache, but select an item
+		 * @deprecated Use with page instead
 		 */
 		void load(const std::vector<lib::spt::track> &tracks, const std::string &selectedId);
 
 		/**
 		 * Load tracks directly, without cache,
 		 * but select an item and provide a fallback added date
+		 * @deprecated Use with page instead
 		 */
 		void load(const std::vector<lib::spt::track> &tracks, const std::string &selectedId,
 			const std::string &addedAt);
 
 		/**
 		 * Load tracks directly, without cache
+		 * @deprecated Use with page instead
 		 */
 		void load(const std::vector<lib::spt::track> &tracks);
+
+		/**
+		 * Load tracks from page into UI
+		 * @param page Current page
+		 * @param selectedId ID of item to select
+		 * @param addedAt Fallback added date
+		 * @return If next page is needed
+		 */
+		auto load(const lib::spt::page<lib::spt::track> &page,
+			const std::string &selectedId = {}, const std::string &addedAt = {}) -> bool;
 
 		/**
 		 * Load playlist first from cache, then refresh it

@@ -492,42 +492,53 @@ auto List::Tracks::getSelectedTrackIds() const -> std::vector<std::string>
 	return trackIds;
 }
 
-void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
-	const std::string &selectedId, const std::string &addedAt)
+auto List::Tracks::load(const lib::spt::page<lib::spt::track> &page,
+	const std::string &selectedId, const std::string &addedAt) -> bool
 {
-	clear();
-	trackItems.clear();
-	playingTrackItem = nullptr;
-
-	auto fieldWidth = static_cast<int>(std::to_string(tracks.size()).size());
+	auto fieldWidth = static_cast<int>(std::to_string(page.total).size());
 	auto current = getCurrent();
-	auto anyHasDate = false;
+
+	constexpr int addedColumn = static_cast<int>(Column::Added);
+	const auto &hiddenHeaders = settings.general.hidden_song_headers;
+	const auto isAddedHidden = lib::set::contains(hiddenHeaders, addedColumn);
+
+	// Hide until track with date is inserted
+	header()->setSectionHidden(addedColumn, true);
 
 	setSortingEnabled(false);
 
-	for (size_t i = 0; i < tracks.size(); i++)
+	for (size_t i = 0; i < page.items.size(); i++)
 	{
-		const auto index = static_cast<int>(i);
-		const auto &track = tracks.at(i);
+		const auto index = page.offset + static_cast<int>(i);
+		const auto &track = page.items.at(i);
 
 		const auto &added = track.added_at.empty() && !addedAt.empty()
 			? addedAt
 			: track.added_at;
 
-		auto *item = new ListItem::Track({
+		if (!isAddedHidden && !added.empty())
+		{
+			header()->setSectionHidden(addedColumn, false);
+		}
+
+		const QStringList columns{
 			settings.general.track_numbers == lib::spotify_context::all
-				? QString("%1").arg(i + 1, fieldWidth)
+				? QString("%1").arg(index + 1, fieldWidth)
 				: QString(),
 			QString::fromStdString(track.name),
 			QString::fromStdString(lib::spt::entity::combine_names(track.artists)),
 			QString::fromStdString(track.album.name),
 			QString::fromStdString(lib::format::time(track.duration)),
 			getAddedText(added),
-		}, track, emptyIcon, index, QString::fromStdString(addedAt));
+		};
 
-		if (!anyHasDate && !added.empty())
+		auto *item = new ListItem::Track(columns, track, emptyIcon, index,
+			QString::fromStdString(addedAt));
+
+		auto *oldItem = takeTopLevelItem(index);
+		if (oldItem == playingTrackItem)
 		{
-			anyHasDate = true;
+			playingTrackItem = nullptr;
 		}
 
 		if (track.id == current.playback.item.id)
@@ -544,11 +555,12 @@ void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
 		}
 	}
 
-	setSortingEnabled(true);
+	if (page.has_next())
+	{
+		return true;
+	}
 
-	header()->setSectionHidden(static_cast<int>(Column::Added), !anyHasDate
-		|| lib::set::contains(settings.general.hidden_song_headers,
-			static_cast<int>(Column::Added)));
+	setSortingEnabled(true);
 
 	getLikedTracks([this](const std::vector<lib::spt::track> &likedTracks)
 	{
@@ -569,6 +581,22 @@ void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
 			item->setLiked(true);
 		}
 	});
+
+	return false;
+}
+
+void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
+	const std::string &selectedId, const std::string &addedAt)
+{
+	clear();
+	trackItems.clear();
+	playingTrackItem = nullptr;
+
+	lib::spt::page<lib::spt::track> page;
+	page.items = tracks;
+	page.total = static_cast<int>(tracks.size());
+
+	load(page, selectedId, addedAt);
 }
 
 void List::Tracks::load(const std::vector<lib::spt::track> &tracks)
@@ -652,11 +680,9 @@ void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 					return false;
 				}
 
-				const auto &page = result.value();
-				load(page.items);
-				setEnabled(true);
-				return page.has_next();
+				return load(result.value());
 			});
+
 		return;
 	}
 
