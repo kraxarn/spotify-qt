@@ -96,6 +96,8 @@ namespace List
 		void getLikedTracks(const std::function<void(const std::vector<lib::spt::track> &)> &callback);
 		void updateLikedTracks(const std::function<void(const std::vector<lib::spt::track> &)> &callback);
 
+		void saveToCache(const lib::spt::playlist &playlist);
+
 		void onMenu(const QPoint &pos);
 		void onItemClicked(QTreeWidgetItem *item, int column);
 		void onDoubleClicked(QTreeWidgetItem *item, int column);

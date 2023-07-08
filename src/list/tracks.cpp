@@ -656,13 +656,13 @@ void List::Tracks::load(const lib::spt::playlist &playlist)
 void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-	const auto playlistUri = lib::spt::id_to_uri("playlist", playlist.id);
 
 	if (lib::developer_mode::is_experiment_enabled(lib::experiment::new_paging))
 	{
 		spotify.playlist_tracks(playlist,
-			[this, mainWindow, playlistUri](const lib::result<lib::spt::page<lib::spt::track>> &result) -> bool
+			[this, mainWindow, playlist](const lib::result<lib::spt::page<lib::spt::track>> &result) -> bool
 			{
+				const auto playlistUri = lib::spt::id_to_uri("playlist", playlist.id);
 				if (playlistUri != mainWindow->history()->currentUri())
 				{
 					return false;
@@ -675,7 +675,13 @@ void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 					return false;
 				}
 
-				return load(result.value());
+				if (load(result.value()))
+				{
+					return true;
+				}
+
+				saveToCache(playlist);
+				return false;
 			});
 
 		return;
@@ -773,4 +779,24 @@ void List::Tracks::updateLikedTracks(const std::function<void(const std::vector<
 
 		cache.set_tracks("liked_tracks", tracks);
 	});
+}
+
+void List::Tracks::saveToCache(const lib::spt::playlist &playlist)
+{
+	std::vector<lib::spt::track> tracks;
+	tracks.reserve(static_cast<size_t>(topLevelItemCount()));
+
+	for (auto i = 0; i < topLevelItemCount(); i++)
+	{
+		const auto *item = topLevelItem(i);
+		const auto &itemData = item->data(0, static_cast<int>(DataRole::Track));
+		tracks.push_back(itemData.value<lib::spt::track>());
+	}
+
+	lib::log::debug("Saved {} tracks to cache for playlist: {}",
+		tracks.size(), playlist.name);
+
+	lib::spt::playlist newPlaylist = playlist;
+	newPlaylist.tracks = tracks;
+	cache.set_playlist(newPlaylist);
 }
