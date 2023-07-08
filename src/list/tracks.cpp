@@ -613,11 +613,6 @@ void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
 void List::Tracks::load(const lib::spt::playlist &playlist)
 {
 	auto *mainWindow = MainWindow::find(parent());
-	if (mainWindow != nullptr && mainWindow->history()->currentPlaylist().id == playlist.id)
-	{
-		lib::log::debug("Playlist already loaded, ignoring");
-		return;
-	}
 
 	const auto &tracks = playlist.tracks.empty()
 		? cache.get_playlist(playlist.id).tracks
