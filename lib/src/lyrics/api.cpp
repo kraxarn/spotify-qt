@@ -62,7 +62,14 @@ void lib::lrc::api::search(const std::string &query,
 			return;
 		}
 
-		const auto songs = json.at("result").at("songs");
+		const auto &result = json.at("result");
+		if (!result.contains("songs"))
+		{
+			callback(lib::result<std::vector<lib::lrc::search_result>>::fail("No results"));
+			return;
+		}
+
+		const auto &songs = result.at("songs");
 		if (!songs.is_array() || songs.empty())
 		{
 			callback(lib::result<std::vector<lib::lrc::search_result>>::fail("No lyrics found"));
