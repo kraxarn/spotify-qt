@@ -560,6 +560,11 @@ auto List::Tracks::load(const lib::spt::page<lib::spt::track> &page,
 		return true;
 	}
 
+	for (auto i = page.total; i < topLevelItemCount(); i++)
+	{
+		takeTopLevelItem(i);
+	}
+
 	setSortingEnabled(true);
 
 	getLikedTracks([this](const std::vector<lib::spt::track> &likedTracks)
