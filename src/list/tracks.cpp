@@ -788,14 +788,19 @@ void List::Tracks::updateLikedTracks(const std::function<void(const std::vector<
 
 void List::Tracks::saveToCache(const lib::spt::playlist &playlist)
 {
-	std::vector<lib::spt::track> tracks;
-	tracks.reserve(static_cast<size_t>(topLevelItemCount()));
+	std::vector<lib::spt::track> tracks(static_cast<size_t>(topLevelItemCount()));
 
 	for (auto i = 0; i < topLevelItemCount(); i++)
 	{
 		const auto *item = topLevelItem(i);
-		const auto &itemData = item->data(0, static_cast<int>(DataRole::Track));
-		tracks.push_back(itemData.value<lib::spt::track>());
+
+		const auto &indexData = item->data(0, static_cast<int>(DataRole::Index));
+		const auto index = indexData.toInt();
+
+		const auto &trackData = item->data(0, static_cast<int>(DataRole::Track));
+		const auto track = trackData.value<lib::spt::track>();
+
+		tracks.insert(tracks.cbegin() + index, track);
 	}
 
 	lib::log::debug("Saved {} tracks to cache for playlist: {}",
