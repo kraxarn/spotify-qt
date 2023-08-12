@@ -812,7 +812,7 @@ void List::Tracks::saveToCache(const lib::spt::playlist &playlist)
 		const auto &trackData = item->data(0, static_cast<int>(DataRole::Track));
 		const auto track = trackData.value<lib::spt::track>();
 
-		if (!track.is_valid())
+		if (!track.is_valid() || index >= topLevelItemCount())
 		{
 			lib::log::warn("Track at index {} ({}) is invalid, not caching", index, i);
 			continue;
