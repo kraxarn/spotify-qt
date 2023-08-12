@@ -560,7 +560,7 @@ auto List::Tracks::load(const lib::spt::page<lib::spt::track> &page,
 		return true;
 	}
 
-	for (auto i = page.total; i < topLevelItemCount(); i++)
+	for (auto i = topLevelItemCount(); i >= page.total; i--)
 	{
 		takeTopLevelItem(i);
 	}
