@@ -78,6 +78,11 @@ namespace List
 		 */
 		static constexpr int titleOffset = 100;
 
+		/**
+		 * Currently loading tracks from API
+		 */
+		bool refreshing = false;
+
 		lib::settings &settings;
 		lib::cache &cache;
 		lib::spt::api &spotify;

@@ -664,12 +664,21 @@ void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 
 	if (lib::developer_mode::is_experiment_enabled(lib::experiment::new_paging))
 	{
+		const auto playlistUri = lib::spt::id_to_uri("playlist", playlist.id);
+		if (refreshing && playlistUri == mainWindow->history()->currentUri())
+		{
+			return;
+		}
+
+		refreshing = true;
+
 		spotify.playlist_tracks(playlist,
-			[this, mainWindow, playlist](const lib::result<lib::spt::page<lib::spt::track>> &result) -> bool
+			[this, mainWindow, playlist, playlistUri]
+				(const lib::result<lib::spt::page<lib::spt::track>> &result) -> bool
 			{
-				const auto playlistUri = lib::spt::id_to_uri("playlist", playlist.id);
 				if (playlistUri != mainWindow->history()->currentUri())
 				{
+					refreshing = false;
 					return false;
 				}
 
@@ -677,6 +686,8 @@ void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 				{
 					StatusMessage::error(QString("Failed to load playlist: %1")
 						.arg(QString::fromStdString(result.message())));
+
+					refreshing = false;
 					return false;
 				}
 
@@ -685,6 +696,7 @@ void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 					return true;
 				}
 
+				refreshing = false;
 				saveToCache(playlist);
 				return false;
 			});
