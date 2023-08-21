@@ -460,10 +460,11 @@ void MainWindow::refresh()
 
 void MainWindow::refreshed(const lib::spt::playback &playback)
 {
-	emit playbackRefreshed(playback, current.playback);
-
-	const auto trackChange = current.playback.item.id != playback.item.id;
+	const auto previous = current.playback;
+	const auto trackChange = previous.item.id != playback.item.id;
 	current.playback = playback;
+
+	emit playbackRefreshed(playback, previous);
 
 	if (!current.playback.item.is_valid())
 	{
