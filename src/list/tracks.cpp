@@ -818,7 +818,7 @@ void List::Tracks::saveToCache(const lib::spt::playlist &playlist)
 			continue;
 		}
 
-		tracks.insert(tracks.cbegin() + index, track);
+		tracks.at(index) = track;
 	}
 
 	lib::log::debug("Saved {} tracks to cache for playlist: {}",
