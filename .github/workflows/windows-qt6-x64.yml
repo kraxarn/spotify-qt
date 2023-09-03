@@ -4,7 +4,7 @@ on: [ push, pull_request ]
 
 env:
   BUILD_TYPE: Release
-  QT_VERSION: "6.5.1"
+  QT_VERSION: "6.5.2"
   QT_ARCH: "win64_msvc2019_64"
   CMAKE_GENERATOR: "Visual Studio 17 2022"
   CMAKE_ARCH: "x64"
