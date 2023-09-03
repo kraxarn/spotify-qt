@@ -555,6 +555,8 @@ auto List::Tracks::load(const lib::spt::page<lib::spt::track> &page,
 		}
 	}
 
+	setSortingEnabled(true);
+
 	if (page.has_next())
 	{
 		return true;
@@ -564,8 +566,6 @@ auto List::Tracks::load(const lib::spt::page<lib::spt::track> &page,
 	{
 		takeTopLevelItem(i);
 	}
-
-	setSortingEnabled(true);
 
 	getLikedTracks([this](const std::vector<lib::spt::track> &likedTracks)
 	{
