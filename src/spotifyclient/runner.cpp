@@ -111,13 +111,13 @@ void SpotifyClient::Runner::start(const QString &username, const QString &passwo
 			"--cache", QString::fromStdString((paths.cache() / "librespot").string()),
 		});
 
-		if (SpotifyClient::Helper::supportsAutoplay(path))
+		const auto autoplaySupport = SpotifyClient::Helper::getAutoplaySupport(path);
+		if (autoplaySupport != AutoplaySupport::None)
 		{
-			const auto librespotVersion = SpotifyClient::Helper::version(path);
-			// If version 0.4.x or older
-			if (librespotVersion.contains(QRegularExpression("([0]\\.[0-4]\\.[0-9])")))
+			arguments.append(QStringLiteral("--autoplay"));
+			if (autoplaySupport == AutoplaySupport::Option)
 			{
-				arguments.append(QStringLiteral("--autoplay"));
+				arguments.append(QStringLiteral("on"));
 			}
 		}
 	}
