@@ -1,6 +1,7 @@
 #pragma once
 
 #include "lib/enum/clienttype.hpp"
+#include "enum/autoplaysupport.hpp"
 
 #include <QStringList>
 #include <QFileInfo>
@@ -20,11 +21,10 @@ namespace SpotifyClient
 		static auto running(const QString &path) -> bool;
 
 		/**
-		 * Client supports --autoplay argument
-		 * (librespot 0.4.2 and older only)
+		 * What type of autoplay the client supports
 		 * @param path Path to client
 		 */
-		static auto supportsAutoplay(const QString &path) -> bool;
+		static auto getAutoplaySupport(const QString &path) -> AutoplaySupport;
 
 	private:
 		Helper() = default;
