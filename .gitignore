@@ -19,7 +19,7 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
+#*.dll # Temporary for OpenSSL x86
 
 # Fortran module files
 *.mod

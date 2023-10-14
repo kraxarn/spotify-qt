@@ -1,6 +1,6 @@
 name: Windows (Qt 5, x86)
 
-on: workflow_dispatch
+on: [ push, pull_request ]
 
 env:
   BUILD_TYPE: Release
@@ -22,7 +22,6 @@ jobs:
           cache: true
           version: ${{env.QT_VERSION}}
           arch: ${{env.QT_ARCH}}
-          tools: "tools_openssl_x86"
 
       - name: Configure CMake
         run: cmake . -G "${{env.CMAKE_GENERATOR}}" -A ${{env.CMAKE_ARCH}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DUSE_TESTS=ON -DUSE_LTO=ON
@@ -38,8 +37,8 @@ jobs:
 
       - name: Copy OpenSSL
         run: |
-          copy "${{runner.workspace}}\Qt\Tools\OpenSSL\Win_x86\bin\libcrypto-1_1.dll" "${{runner.workspace}}\spotify-qt\${{env.BUILD_TYPE}}"
-          copy "${{runner.workspace}}\Qt\Tools\OpenSSL\Win_x86\bin\libssl-1_1.dll" "${{runner.workspace}}\spotify-qt\${{env.BUILD_TYPE}}"
+          copy "${{runner.workspace}}\spotify-qt\.github\bin\win32\libcrypto-1_1.dll" "${{runner.workspace}}\spotify-qt\${{env.BUILD_TYPE}}"
+          copy "${{runner.workspace}}\spotify-qt\.github\bin\win32\libssl-1_1.dll" "${{runner.workspace}}\spotify-qt\${{env.BUILD_TYPE}}"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
