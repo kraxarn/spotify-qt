@@ -8,6 +8,7 @@ Menu::ArtistLinks::ArtistLinks(const lib::spt::artist &artist,
 {
 	setIcon(Icon::get("edit-find"));
 	setTitle("Links");
+	setToolTipsVisible(true);
 
 	QMenu::connect(this, &QMenu::aboutToShow,
 		this, &Menu::ArtistLinks::onAboutToShow);
@@ -43,6 +44,7 @@ void Menu::ArtistLinks::onDuckDuckGo(bool /*checked*/)
 void Menu::ArtistLinks::addLink(const std::string &title, const std::string &url)
 {
 	auto *action = addAction(QString::fromStdString(title));
+	action->setToolTip(QString::fromStdString(url));
 	QAction::connect(action, &QAction::triggered, [this, url](bool /*checked*/)
 	{
 		Url::open(url, LinkType::Web, this);
