@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build
-        uses: cross-platform-actions/action@v0.19.0
+        uses: cross-platform-actions/action@v0.19.1
         with:
           operating_system: netbsd
           architecture: x86-64
