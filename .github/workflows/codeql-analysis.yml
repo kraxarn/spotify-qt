@@ -24,7 +24,8 @@ jobs:
           languages: 'cpp'
 
       - name: Install dependencies
-        run: sudo apt install build-essential qt6-base-dev libqt6svg6-dev -y
+        # https://doc.qt.io/qt-6/linux.html
+        run: sudo apt install build-essential libgl1-mesa-dev qt6-base-dev libqt6svg6-dev -y
 
       - name: Autobuild
         uses: github/codeql-action/autobuild@v2
