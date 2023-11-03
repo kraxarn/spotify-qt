@@ -31,6 +31,11 @@ namespace lib
 			std::string username;
 
 			/**
+			 * Additional arugments to pass to the spotify client
+			 */
+			std::string additional_arguments;
+
+			/**
 			 * Always start Spotify client on application start
 			 */
 			bool always_start = true;

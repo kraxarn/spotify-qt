@@ -156,6 +156,12 @@ void SpotifyClient::Runner::start(const QString &username, const QString &passwo
 		}
 	}
 
+	auto additional_arguments = QString::fromStdString(settings.spotify.additional_arguments);
+	if (!additional_arguments.isEmpty())
+	{
+		arguments.append(additional_arguments.split(' '));
+	}
+
 	QProcess::connect(process, &QProcess::readyReadStandardOutput,
 		this, &Runner::onReadyReadOutput);
 
