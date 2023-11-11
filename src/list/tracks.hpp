@@ -69,6 +69,12 @@ namespace List
 		 */
 		void load(const lib::spt::album &album, const std::string &trackId = std::string());
 
+		/**
+		 * \brief Update liked tracks in cache
+		 * \param callback Callback on completion
+		 */
+		void updateLikedTracks(const std::function<void(const std::vector<lib::spt::track> &)> &callback);
+
 	protected:
 		void resizeEvent(QResizeEvent *event) override;
 
@@ -101,7 +107,6 @@ namespace List
 
 		void setLikedTracks(const std::vector<lib::spt::track> &tracks);
 		void getLikedTracks(const std::function<void(const std::vector<lib::spt::track> &)> &callback);
-		void updateLikedTracks(const std::function<void(const std::vector<lib::spt::track> &)> &callback);
 
 		void saveToCache(const lib::spt::playlist &playlist);
 

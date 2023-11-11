@@ -104,6 +104,21 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 		debugView->show();
 	});
 
+	addMenuItem(this, QStringLiteral("Update liked tracks"), [this]
+	{
+		const auto *mainWindow = MainWindow::find(parentWidget());
+		auto *tracksList = mainWindow->findChild<List::Tracks *>();
+		if (tracksList == nullptr)
+		{
+			StatusMessage::warn(QStringLiteral("Tracks list not found"));
+			return;
+		}
+		tracksList->updateLikedTracks([](const std::vector<lib::spt::track> &tracks)
+		{
+			StatusMessage::info(QString("Updated %1 tracks").arg(tracks.size()));
+		});
+	});
+
 	addMenu(infoMenu());
 	addMenu(getDialogMenu());
 	addMenu(crashMenu());
