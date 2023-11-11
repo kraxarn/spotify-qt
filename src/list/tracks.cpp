@@ -662,56 +662,41 @@ void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
 
-	if (lib::developer_mode::is_experiment_enabled(lib::experiment::new_paging))
+	const auto playlistUri = lib::spt::id_to_uri("playlist", playlist.id);
+	if (refreshing && playlistUri == mainWindow->history()->currentUri())
 	{
-		const auto playlistUri = lib::spt::id_to_uri("playlist", playlist.id);
-		if (refreshing && playlistUri == mainWindow->history()->currentUri())
-		{
-			return;
-		}
-
-		refreshing = true;
-
-		spotify.playlist_tracks(playlist,
-			[this, mainWindow, playlist, playlistUri]
-				(const lib::result<lib::spt::page<lib::spt::track>> &result) -> bool
-			{
-				if (playlistUri != mainWindow->history()->currentUri())
-				{
-					refreshing = false;
-					return false;
-				}
-
-				if (!result.success())
-				{
-					StatusMessage::error(QString("Failed to load playlist: %1")
-						.arg(QString::fromStdString(result.message())));
-
-					refreshing = false;
-					return false;
-				}
-
-				if (load(result.value()))
-				{
-					return true;
-				}
-
-				refreshing = false;
-				saveToCache(playlist);
-				return false;
-			});
-
 		return;
 	}
 
+	refreshing = true;
+
 	spotify.playlist_tracks(playlist,
-		[this, playlist](const std::vector<lib::spt::track> &tracks)
+		[this, mainWindow, playlist, playlistUri]
+			(const lib::result<lib::spt::page<lib::spt::track>> &result) -> bool
 		{
-			auto newPlaylist = playlist;
-			newPlaylist.tracks = tracks;
-			this->load(newPlaylist.tracks);
-			this->setEnabled(true);
-			this->cache.set_playlist(newPlaylist);
+			if (playlistUri != mainWindow->history()->currentUri())
+			{
+				refreshing = false;
+				return false;
+			}
+
+			if (!result.success())
+			{
+				StatusMessage::error(QString("Failed to load playlist: %1")
+					.arg(QString::fromStdString(result.message())));
+
+				refreshing = false;
+				return false;
+			}
+
+			if (load(result.value()))
+			{
+				return true;
+			}
+
+			refreshing = false;
+			saveToCache(playlist);
+			return false;
 		});
 }
 

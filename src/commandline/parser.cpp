@@ -29,10 +29,6 @@ auto CommandLine::Parser::options() -> QList<QCommandLineOption>
 			ARG_SYSTEM_INFORMATION,
 			QStringLiteral("Print system information"),
 		},
-		{
-			ARG_NEW_PAGING,
-			QStringLiteral("Enable new page loading (experimental)"),
-		},
 		// Playback options
 		{
 			ARG_PLAY_PAUSE,

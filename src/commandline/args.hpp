@@ -39,8 +39,3 @@
  * Print system information
  */
 #define ARG_SYSTEM_INFORMATION QStringLiteral("system-info")
-
-/**
- * Enable new paging experiment with better performance
- */
-#define ARG_NEW_PAGING QStringLiteral("experiment-new-paging")

@@ -7,6 +7,5 @@ namespace lib
 	 */
 	enum class experiment
 	{
-		new_paging = 1,
 	};
 }
