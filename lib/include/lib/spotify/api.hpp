@@ -107,7 +107,12 @@ namespace lib
 
 			void saved_albums(lib::callback<std::vector<lib::spt::saved_album>> &callback);
 
+			/**
+			 * @deprecated Use with pagination instead
+			 */
 			void saved_tracks(lib::callback<std::vector<lib::spt::track>> &callback);
+
+			void saved_tracks(const lib::paged_callback<lib::spt::track> &callback);
 
 			void add_saved_tracks(const std::vector<std::string> &track_ids,
 				lib::callback<std::string> &callback);

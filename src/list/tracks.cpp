@@ -569,22 +569,7 @@ auto List::Tracks::load(const lib::spt::page<lib::spt::track> &page,
 
 	getLikedTracks([this](const std::vector<lib::spt::track> &likedTracks)
 	{
-		for (const auto &likedTrack: likedTracks)
-		{
-			auto trackItem = trackItems.find(likedTrack.id);
-			if (trackItem == trackItems.end())
-			{
-				continue;
-			}
-
-			auto *item = dynamic_cast<ListItem::Track *>(trackItem->second);
-			if (item == nullptr)
-			{
-				continue;
-			}
-
-			item->setLiked(true);
-		}
+		setLikedTracks(likedTracks);
 	});
 
 	return false;
@@ -760,10 +745,10 @@ auto List::Tracks::getCurrent() -> const spt::Current &
 
 void List::Tracks::getLikedTracks(const std::function<void(const std::vector<lib::spt::track> &)> &callback)
 {
-	const auto cachedTracks = cache.get_tracks("liked_tracks");
-	if (!cachedTracks.empty())
+	const auto likedTracks = cache.get_tracks("liked_tracks");
+	if (!likedTracks.empty())
 	{
-		callback(cachedTracks);
+		callback(likedTracks);
 		return;
 	}
 
@@ -772,14 +757,40 @@ void List::Tracks::getLikedTracks(const std::function<void(const std::vector<lib
 
 void List::Tracks::updateLikedTracks(const std::function<void(const std::vector<lib::spt::track> &)> &callback)
 {
-	spotify.saved_tracks([this, callback](const std::vector<lib::spt::track> &tracks)
+	// We're already updating the cache
+	if (cachedTracks)
 	{
-		if (callback)
+		lib::log::debug("Already fetching liked tracks, ignoring");
+		return;
+	}
+
+	cachedTracks.reset(new std::vector<lib::spt::track>());
+
+	spotify.saved_tracks([this, callback](const lib::result<lib::spt::page<lib::spt::track>> &result) -> bool
+	{
+		if (!result.success())
 		{
-			callback(tracks);
+			lib::log::error("Failed to fetch liked tracks: {}", result.message());
+			cachedTracks.reset(nullptr);
+			return false;
 		}
 
-		cache.set_tracks("liked_tracks", tracks);
+		const auto &page = result.value();
+		for (const auto &track: page.items)
+		{
+			cachedTracks->push_back(track);
+		}
+
+		if (page.has_next())
+		{
+			return true;
+		}
+
+		cache.set_tracks("liked_tracks", *cachedTracks);
+		callback(*cachedTracks);
+
+		cachedTracks.reset(nullptr);
+		return false;
 	});
 }
 
@@ -812,4 +823,24 @@ void List::Tracks::saveToCache(const lib::spt::playlist &playlist)
 	lib::spt::playlist newPlaylist = playlist;
 	newPlaylist.tracks = tracks;
 	cache.set_playlist(newPlaylist);
+}
+
+void List::Tracks::setLikedTracks(const std::vector<lib::spt::track> &tracks)
+{
+	for (const auto &track: tracks)
+	{
+		auto trackItem = trackItems.find(track.id);
+		if (trackItem == trackItems.end())
+		{
+			continue;
+		}
+
+		auto *item = dynamic_cast<ListItem::Track *>(trackItem->second);
+		if (item == nullptr)
+		{
+			continue;
+		}
+
+		item->setLiked(true);
+	}
 }

@@ -14,7 +14,7 @@ namespace List
 {
 	class Tracks: public QTreeWidget
 	{
-	Q_OBJECT
+		Q_OBJECT
 
 	public:
 		Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
@@ -89,6 +89,7 @@ namespace List
 		Tooltip tooltip;
 
 		std::unordered_map<std::string, QTreeWidgetItem *> trackItems;
+		std::unique_ptr<std::vector<lib::spt::track>> cachedTracks;
 
 		QTreeWidgetItem *playingTrackItem = nullptr;
 		QIcon emptyIcon;
@@ -98,6 +99,7 @@ namespace List
 		auto getSelectedTrackIds() const -> std::vector<std::string>;
 		void resizeHeaders(const QSize &newSize);
 
+		void setLikedTracks(const std::vector<lib::spt::track> &tracks);
 		void getLikedTracks(const std::function<void(const std::vector<lib::spt::track> &)> &callback);
 		void updateLikedTracks(const std::function<void(const std::vector<lib::spt::track> &)> &callback);
 

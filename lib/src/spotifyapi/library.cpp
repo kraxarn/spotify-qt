@@ -15,6 +15,11 @@ void lib::spt::api::saved_tracks(lib::callback<std::vector<lib::spt::track>> &ca
 	get_items("me/tracks?limit=50", callback);
 }
 
+void lib::spt::api::saved_tracks(const lib::paged_callback<lib::spt::track> &callback)
+{
+	request.get_page<lib::spt::track>("me/tracks?limit=50", {}, callback);
+}
+
 void lib::spt::api::add_saved_tracks(const std::vector<std::string> &track_ids,
 	lib::callback<std::string> &callback)
 {
