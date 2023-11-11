@@ -228,13 +228,20 @@ auto SettingsPage::Spotify::config() -> QWidget *
 	sptDeviceType->addItem(QStringLiteral("Default"));
 	sptLayout->addWidget(sptDeviceType, 3, 1);
 
+	// Additional arguments
+	auto *additionalArgumentsLabel = new QLabel(QStringLiteral("Additional arguments"), sptGroup);
+	sptLayout->addWidget(additionalArgumentsLabel, 4, 0);
+
+	sptAdditionalArguments = new QLineEdit(QString::fromStdString(settings.spotify.additional_arguments), sptGroup);
+	sptLayout->addWidget(sptAdditionalArguments, 4, 1);
+
 	// Clear password
 #ifdef USE_KEYCHAIN
 	auto *clearPasswordText = new QLabel(QStringLiteral("Clear saved password"));
-	sptLayout->addWidget(clearPasswordText, 4, 0);
+	sptLayout->addWidget(clearPasswordText, 5, 0);
 
 	auto *clearPassword = new QPushButton(QStringLiteral("Clear"), this);
-	sptLayout->addWidget(clearPassword, 4, 1, Qt::AlignTrailing);
+	sptLayout->addWidget(clearPassword, 5, 1, Qt::AlignTrailing);
 
 	QAbstractButton::connect(clearPassword, &QAbstractButton::clicked,
 		this, &SettingsPage::Spotify::onClearPassword);
@@ -244,7 +251,7 @@ auto SettingsPage::Spotify::config() -> QWidget *
 	sptDiscovery = new QCheckBox("Enable discovery");
 	sptDiscovery->setToolTip("Enable discovery mode (librespot only)");
 	sptDiscovery->setChecked(!settings.spotify.disable_discovery);
-	sptLayout->addWidget(sptDiscovery, 5, 0);
+	sptLayout->addWidget(sptDiscovery, 6, 0);
 
 	return Widget::layoutToWidget(content, this);
 }
@@ -358,6 +365,11 @@ auto SettingsPage::Spotify::save() -> bool
 			? lib::audio_quality::normal : bitrate == 1
 				? lib::audio_quality::high
 				: lib::audio_quality::very_high;
+	}
+
+	if (sptAdditionalArguments != nullptr)
+	{
+		settings.spotify.additional_arguments = sptAdditionalArguments->text().toStdString();
 	}
 
 	if (sptAlways != nullptr)

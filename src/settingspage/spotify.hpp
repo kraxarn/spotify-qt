@@ -37,6 +37,7 @@ namespace SettingsPage
 		QLineEdit *sptPath = nullptr;
 		QLineEdit *sptUsername = nullptr;
 		QCheckBox *sptDiscovery = nullptr;
+		QLineEdit *sptAdditionalArguments = nullptr;
 
 		QPushButton *startClient = nullptr;
 		QLabel *clientStatus = nullptr;
