@@ -237,58 +237,82 @@ void DeveloperMenu::onDialogMenuAboutToShow()
 	auto *mainWindow = MainWindow::find(parentWidget());
 
 	const QMap<QString, std::function<QDialog *()>> dialogs{
-		{QStringLiteral("Device select"), [mainWindow]()
 		{
-			return new Dialog::DeviceSelect({}, mainWindow);
-		}},
-		{QStringLiteral("Open link"), [mainWindow]()
+			QStringLiteral("Device select"), [mainWindow]
+			{
+				return new Dialog::DeviceSelect({}, mainWindow);
+			}
+		},
 		{
-			return new Dialog::OpenLink(QStringLiteral("/"), LinkType::Path, mainWindow);
-		}},
-		{QStringLiteral("Setup"), [this, mainWindow]
+			QStringLiteral("Open link"), [mainWindow]
+			{
+				return new Dialog::OpenLink(QStringLiteral("/"), LinkType::Path, mainWindow);
+			}
+		},
 		{
-			return new Dialog::Setup(settings, mainWindow);
-		}},
-		{QStringLiteral("Tracks cache"), [this, mainWindow]
+			QStringLiteral("Setup"), [this, mainWindow]
+			{
+				return new Dialog::Setup(settings, mainWindow);
+			}
+		},
 		{
-			auto *dialog = new Dialog::TracksCache(mainWindow);
-			dialog->loadAllTracks(cache);
-			return dialog;
-		}},
-		{QStringLiteral("What's new"), [this, mainWindow]
+			QStringLiteral("Tracks cache"), [this, mainWindow]
+			{
+				auto *dialog = new Dialog::TracksCache(mainWindow);
+				dialog->loadAllTracks(cache);
+				return dialog;
+			}
+		},
 		{
-			return new Dialog::WhatsNew(settings, httpClient, mainWindow);
-		}},
-		{QStringLiteral("Create playlist"), [this, mainWindow]
+			QStringLiteral("What's new"), [this, mainWindow]
+			{
+				return new Dialog::WhatsNew(settings, httpClient, mainWindow);
+			}
+		},
 		{
-			return new Dialog::CreatePlaylist({}, spotify, mainWindow);
-		}},
-		{QStringLiteral("Add to playlist"), [this, mainWindow]
+			QStringLiteral("Create playlist"), [this, mainWindow]
+			{
+				return new Dialog::CreatePlaylist({}, spotify, mainWindow);
+			}
+		},
 		{
-			return new Dialog::AddToPlaylist(spotify, lib::spt::playlist(), {}, {}, mainWindow);
-		}},
-		{QStringLiteral("Password entry"), [this, mainWindow]
+			QStringLiteral("Add to playlist"), [this, mainWindow]
+			{
+				return new Dialog::AddToPlaylist(spotify, lib::spt::playlist(), {}, {}, mainWindow);
+			}
+		},
 		{
-			auto *paths = new QtPaths(this);
-			auto *runner = new SpotifyClient::Runner(settings, *paths, mainWindow);
-			return new Dialog::PasswordEntry(runner, mainWindow);
-		}},
-		{QStringLiteral("Memory"), [mainWindow]
+			QStringLiteral("Password entry"), [this, mainWindow]
+			{
+				auto *paths = new QtPaths(this);
+				auto *runner = new SpotifyClient::Runner(settings, *paths, mainWindow);
+				return new Dialog::PasswordEntry(runner, mainWindow);
+			}
+		},
 		{
-			return new Dialog::Memory(mainWindow);
-		}},
-		{QStringLiteral("Lyrics search"), [this, mainWindow]
+			QStringLiteral("Memory"), [mainWindow]
+			{
+				return new Dialog::Memory(mainWindow);
+			}
+		},
 		{
-			return new Dialog::LyricsSearch(httpClient, mainWindow);
-		}},
-		{QStringLiteral("Disallowed actions"), [mainWindow]
+			QStringLiteral("Lyrics search"), [this, mainWindow]
+			{
+				return new Dialog::LyricsSearch(httpClient, mainWindow);
+			}
+		},
 		{
-			return new Dialog::Disallows(mainWindow);
-		}},
-		{QStringLiteral("Edit playlist"), [this, mainWindow]
+			QStringLiteral("Disallowed actions"), [mainWindow]
+			{
+				return new Dialog::Disallows(mainWindow);
+			}
+		},
 		{
-			return new Dialog::EditPlaylist(spotify, {}, -1, mainWindow);
-		}}
+			QStringLiteral("Edit playlist"), [this, mainWindow]
+			{
+				return new Dialog::EditPlaylist(spotify, {}, -1, mainWindow);
+			}
+		},
 	};
 
 	QMapIterator<QString, std::function<QDialog *()>> iter(dialogs);
