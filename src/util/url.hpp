@@ -22,4 +22,6 @@ public:
 
 private:
 	Url() = default;
+
+	static auto getDefaultScheme(LinkType linkType) -> QString;
 };
