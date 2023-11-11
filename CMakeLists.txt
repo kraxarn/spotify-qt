@@ -129,8 +129,8 @@ set(LIB_QT_IMPL ON)
 add_subdirectory(lib)
 target_link_libraries(spotify-qt PRIVATE spotify-qt-lib)
 
-# Enable all compiler warnings under GCC
-if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+# Enable all compiler warnings under GCC/Clang
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 	target_compile_options(spotify-qt PRIVATE -Wall -Wextra)
 endif ()
 
