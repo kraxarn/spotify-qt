@@ -681,6 +681,7 @@ void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 
 			refreshing = false;
 			saveToCache(playlist);
+			setEnabled(true);
 			return false;
 		});
 }
