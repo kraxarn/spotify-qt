@@ -64,10 +64,18 @@ void Context::TitleInfo::onContextMenuTriggered(bool /*checked*/)
 	}
 	else if (type == "playlist")
 	{
-		spotify.playlist(uri, [mainWindow](const lib::spt::playlist &playlist)
+		spotify.playlist(uri, [mainWindow](const lib::result<lib::spt::playlist> &result)
 		{
+			if (!result.success())
+			{
+				StatusMessage::error(QString("Failed to load playlist: %1")
+					.arg(QString::fromStdString(result.message())));
+
+				return;
+			}
+
 			mainWindow->resetLibraryPlaylist();
-			mainWindow->getSongsTree()->load(playlist);
+			mainWindow->getSongsTree()->load(result.value());
 		});
 	}
 }

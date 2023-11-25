@@ -55,10 +55,16 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	{
 		// playlist id taken from https://github.com/librespot-org/librespot/issues/481
 		this->spotify.playlist("0bQjBPRqy5zReJethJy3aP",
-			[this](const lib::spt::playlist &playlist)
+			[this](const lib::result<lib::spt::playlist> &result)
 			{
+				if (!result.success())
+				{
+					lib::log::error("Fetch failed: {}", result.message());
+					return;
+				}
+
 				auto *mainWindow = MainWindow::find(this->parentWidget());
-				mainWindow->getSongsTree()->load(playlist);
+				mainWindow->getSongsTree()->load(result.value());
 			});
 	});
 

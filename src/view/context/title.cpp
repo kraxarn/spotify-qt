@@ -109,9 +109,9 @@ void Context::Title::playlistName(const std::string &id, lib::callback<std::stri
 	else
 	{
 		spotify.playlist(lib::spt::uri_to_id(id),
-			[callback](const lib::spt::playlist &playlist)
+			[callback](const lib::result<lib::spt::playlist> &result)
 			{
-				callback(playlist.name);
+				callback(result.success() ? result.value().name : std::string());
 			});
 	}
 }

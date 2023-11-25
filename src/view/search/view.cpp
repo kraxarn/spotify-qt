@@ -138,9 +138,17 @@ void Search::View::search()
 			}
 			else if (cat == "playlist")
 			{
-				spotify.playlist(id, [this](const lib::spt::playlist &playlist)
+				spotify.playlist(id, [this](const lib::result<lib::spt::playlist> &result)
 				{
-					this->playlists->add(playlist);
+					if (!result.success())
+					{
+						StatusMessage::error(QString("Failed to find playlist: %1")
+							.arg(QString::fromStdString(result.message())));
+
+						return;
+					}
+
+					this->playlists->add(result.value());
 				});
 				i = SearchTab::Playlists;
 			}

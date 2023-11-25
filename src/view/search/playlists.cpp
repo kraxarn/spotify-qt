@@ -38,10 +38,18 @@ void Search::Playlists::onItemClicked(QListWidgetItem *item)
 	const auto &playlistData = item->data(static_cast<int>(DataRole::Playlist));
 	const auto playlist = playlistData.value<lib::spt::playlist>();
 
-	spotify.playlist(playlist.id, [this](const lib::spt::playlist &playlist)
+	spotify.playlist(playlist.id, [this](const lib::result<lib::spt::playlist> &result)
 	{
+		if (!result.success())
+		{
+			StatusMessage::error(QString("Failed to load playlist: %1")
+				.arg(QString::fromStdString(result.message())));
+
+			return;
+		}
+
 		auto *mainWindow = MainWindow::find(this->parentWidget());
-		mainWindow->getSongsTree()->load(playlist);
+		mainWindow->getSongsTree()->load(result.value());
 		mainWindow->setCurrentPlaylistItem(-1);
 	});
 }

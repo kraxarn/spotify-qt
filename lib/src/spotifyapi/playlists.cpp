@@ -29,12 +29,6 @@ void lib::spt::api::playlists(lib::callback<std::vector<lib::spt::playlist>> &ca
 	get_items("me/playlists?limit=50", callback);
 }
 
-void lib::spt::api::playlist(const std::string &playlist_id,
-	lib::callback<lib::spt::playlist> &callback)
-{
-	get(lib::fmt::format("playlists/{}", playlist_id), callback);
-}
-
 void lib::spt::api::playlist(const std::string &playlist_id, callback<result<spt::playlist>> &callback) const
 {
 	request.get(fmt::format("playlists/{}", playlist_id), callback);
