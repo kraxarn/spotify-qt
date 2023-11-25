@@ -277,7 +277,7 @@ namespace lib
 				lib::callback<lib::spt::playlist> &callback);
 
 			void playlist(const std::string &playlist_id,
-				callback<result<spt::playlist>> &callback) const;
+				callback<result<playlist>> &callback) const;
 
 			void edit_playlist(const std::string &playlist_id,
 				const lib::spt::playlist_details &playlist,
