@@ -35,6 +35,11 @@ void lib::spt::api::playlist(const std::string &playlist_id,
 	get(lib::fmt::format("playlists/{}", playlist_id), callback);
 }
 
+void lib::spt::api::playlist(const std::string &playlist_id, callback<result<spt::playlist>> &callback) const
+{
+	request.get(fmt::format("playlists/{}", playlist_id), callback);
+}
+
 void lib::spt::api::edit_playlist(const std::string &playlist_id,
 	const lib::spt::playlist_details &playlist,
 	lib::callback<std::string> &callback)

@@ -619,8 +619,18 @@ void List::Tracks::load(const lib::spt::playlist &playlist)
 
 	const auto &snapshot = playlist.snapshot;
 	spotify.playlist(playlist.id,
-		[this, snapshot, mainWindow](const lib::spt::playlist &loadedPlaylist)
+		[this, snapshot, mainWindow](const lib::result<lib::spt::playlist> &result)
 		{
+			if (!result.success())
+			{
+				StatusMessage::error(QString("Failed to load playlist: %1")
+					.arg(QString::fromStdString(result.message())));
+
+				return;
+			}
+
+			const auto &loadedPlaylist = result.value();
+
 			const auto &currentUser = mainWindow != nullptr
 				? mainWindow->getCurrentUser()
 				: lib::spt::user();

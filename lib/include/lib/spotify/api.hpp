@@ -270,8 +270,14 @@ namespace lib
 
 			void playlists(lib::callback<std::vector<lib::spt::playlist>> &callback);
 
+			/**
+			 * \deprecated Use with result instead
+			 */
 			void playlist(const std::string &playlist_id,
 				lib::callback<lib::spt::playlist> &callback);
+
+			void playlist(const std::string &playlist_id,
+				callback<result<spt::playlist>> &callback) const;
 
 			void edit_playlist(const std::string &playlist_id,
 				const lib::spt::playlist_details &playlist,
