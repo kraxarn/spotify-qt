@@ -3,6 +3,11 @@
 auto DateTime::toRelative(const QDateTime &date) -> QString
 {
 	auto amount = date.secsTo(QDateTime::currentDateTimeUtc());
+	if (amount <= 0)
+	{
+		return QStringLiteral("Just now");
+	}
+
 	QString unit = "second";
 
 	if (amount >= secsInYear)
