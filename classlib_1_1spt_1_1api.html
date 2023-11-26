@@ -136,9 +136,11 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>is_following_playlist
 <tr class="memitem:aa101a3be1af98d08667bd244843101aa"><td class="memItemLeft" align="right" valign="top"><a id="aa101a3be1af98d08667bd244843101aa" name="aa101a3be1af98d08667bd244843101aa"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>saved_albums</b> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1saved__album.html">lib::spt::saved_album</a> &gt; &gt; &amp;callback)</td></tr>
 <tr class="separator:aa101a3be1af98d08667bd244843101aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a549190fb118ee8b93d953749534624ea"><td class="memItemLeft" align="right" valign="top"><a id="a549190fb118ee8b93d953749534624ea" name="a549190fb118ee8b93d953749534624ea"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>saved_tracks</b> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;callback)</td></tr>
+<tr class="memitem:a549190fb118ee8b93d953749534624ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlib_1_1spt_1_1api.html#a549190fb118ee8b93d953749534624ea">saved_tracks</a> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;callback)</td></tr>
 <tr class="separator:a549190fb118ee8b93d953749534624ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdd115c075570231b1fed37b35846d05"><td class="memItemLeft" align="right" valign="top"><a id="acdd115c075570231b1fed37b35846d05" name="acdd115c075570231b1fed37b35846d05"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>saved_tracks</b> (const lib::paged_callback&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &amp;callback)</td></tr>
+<tr class="separator:acdd115c075570231b1fed37b35846d05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adcaefb99bcfd07a4ecaa91efea82e49b"><td class="memItemLeft" align="right" valign="top"><a id="adcaefb99bcfd07a4ecaa91efea82e49b" name="adcaefb99bcfd07a4ecaa91efea82e49b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>add_saved_tracks</b> (const std::vector&lt; std::string &gt; &amp;track_ids, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
 <tr class="separator:adcaefb99bcfd07a4ecaa91efea82e49b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -199,9 +201,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>top_tracks</b> (lib::
 <tr class="memitem:afb758cfd2014139ab590cfa5dc160272"><td class="memItemLeft" align="right" valign="top"><a id="afb758cfd2014139ab590cfa5dc160272" name="afb758cfd2014139ab590cfa5dc160272"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>playlists</b> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &gt; &gt; &amp;callback)</td></tr>
 <tr class="separator:afb758cfd2014139ab590cfa5dc160272"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d91ac20f7b40920d985560ec69bb7c3"><td class="memItemLeft" align="right" valign="top"><a id="a1d91ac20f7b40920d985560ec69bb7c3" name="a1d91ac20f7b40920d985560ec69bb7c3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>playlist</b> (const std::string &amp;playlist_id, lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &gt; &amp;callback)</td></tr>
-<tr class="separator:a1d91ac20f7b40920d985560ec69bb7c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6384cc6af843cf8ec8a1aae13a4ff264"><td class="memItemLeft" align="right" valign="top"><a id="a6384cc6af843cf8ec8a1aae13a4ff264" name="a6384cc6af843cf8ec8a1aae13a4ff264"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>playlist</b> (const std::string &amp;playlist_id, callback&lt; <a class="el" href="classlib_1_1result.html">result</a>&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">playlist</a> &gt; &gt; &amp;callback) const</td></tr>
+<tr class="separator:a6384cc6af843cf8ec8a1aae13a4ff264"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12083fb7e33a06997baa4d5bd1aa38f5"><td class="memItemLeft" align="right" valign="top"><a id="a12083fb7e33a06997baa4d5bd1aa38f5" name="a12083fb7e33a06997baa4d5bd1aa38f5"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>edit_playlist</b> (const std::string &amp;playlist_id, const <a class="el" href="classlib_1_1spt_1_1playlist__details.html">lib::spt::playlist_details</a> &amp;<a class="el" href="classlib_1_1spt_1_1playlist.html">playlist</a>, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
 <tr class="separator:a12083fb7e33a06997baa4d5bd1aa38f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -962,7 +964,7 @@ Temporarily protected </dd></dl>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000005">Deprecated:</a></b></dt><dd>Use with pagination instead </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000006">Deprecated:</a></b></dt><dd>Use with pagination instead </dd></dl>
 
 </div>
 </div>
@@ -1049,7 +1051,7 @@ Temporarily protected </dd></dl>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Convenience method for POST request with no body </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000006">Deprecated:</a></b></dt><dd>Use <code><a class="el" href="classlib_1_1spt_1_1request.html#abb55e1b943d4132fb3d53eb6fdbdb21f">lib::spt::request::post</a></code> instead </dd></dl>
+<p >Convenience method for POST request with no body </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000007">Deprecated:</a></b></dt><dd>Use <code><a class="el" href="classlib_1_1spt_1_1request.html#abb55e1b943d4132fb3d53eb6fdbdb21f">lib::spt::request::post</a></code> instead </dd></dl>
 
 </div>
 </div>
@@ -1213,6 +1215,25 @@ Temporarily protected </dd></dl>
       </table>
 </div><div class="memdoc">
 <p >Resume playback </p>
+
+</div>
+</div>
+<a id="a549190fb118ee8b93d953749534624ea" name="a549190fb118ee8b93d953749534624ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a549190fb118ee8b93d953749534624ea">&#9670;&#160;</a></span>saved_tracks()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::spt::api::saved_tracks </td>
+          <td>(</td>
+          <td class="paramtype">lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000005">Deprecated:</a></b></dt><dd>Use with pagination instead </dd></dl>
 
 </div>
 </div>
