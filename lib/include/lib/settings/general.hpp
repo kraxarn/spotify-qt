@@ -141,6 +141,11 @@ namespace lib
 #ifdef _WIN32
 			bool media_hotkeys = true;
 #endif
+
+			/**
+			 * \brief Ignore index of unavailable tracks
+			 */
+			bool ignore_unavailable_index = false;
 		};
 
 		void to_json(nlohmann::json &j, const general &g);

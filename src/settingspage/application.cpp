@@ -75,6 +75,12 @@ auto SettingsPage::Application::app() -> QWidget *
 	appUpdates->setChecked(settings.general.check_for_updates);
 	layout->addWidget(appUpdates);
 
+	ignoreUnavailableIndex = new QCheckBox(QStringLiteral("Ignore index of unavailable songs"), this);
+	ignoreUnavailableIndex->setToolTip(QStringLiteral("Ignore index of unavailable tracks, "
+		"required by some clients to properly index playlists with unavailable songs"));
+	ignoreUnavailableIndex->setChecked(settings.general.ignore_unavailable_index);
+	layout->addWidget(ignoreUnavailableIndex);
+
 	return Widget::layoutToWidget(layout, this);
 }
 
@@ -154,6 +160,11 @@ auto SettingsPage::Application::save() -> bool
 	if (appUpdates != nullptr)
 	{
 		settings.general.check_for_updates = appUpdates->isChecked();
+	}
+
+	if (ignoreUnavailableIndex != nullptr)
+	{
+		settings.general.ignore_unavailable_index = ignoreUnavailableIndex->isChecked();
 	}
 
 	return success;

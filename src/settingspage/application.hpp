@@ -23,6 +23,7 @@ namespace SettingsPage
 		QComboBox *appRefresh = nullptr;
 		QComboBox *appMaxQueue = nullptr;
 		QCheckBox *appUpdates = nullptr;
+		QCheckBox *ignoreUnavailableIndex = nullptr;
 
 		static constexpr int minRefreshInterval = 1;
 		static constexpr int maxRefreshInterval = 60;

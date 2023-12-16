@@ -8,6 +8,7 @@ void lib::setting::to_json(nlohmann::json &j, const general &g)
 		{"custom_playlist_order", g.custom_playlist_order},
 		{"fallback_icons", g.fallback_icons},
 		{"hidden_song_headers", g.hidden_song_headers},
+		{"ignore_unavailable_index", g.ignore_unavailable_index},
 		{"last_device", g.last_device},
 		{"last_playlist", g.last_playlist},
 		{"last_version", g.last_version},
@@ -45,6 +46,7 @@ void lib::setting::from_json(const nlohmann::json &j, general &g)
 	lib::json::get(j, "custom_playlist_order", g.custom_playlist_order);
 	lib::json::get(j, "fallback_icons", g.fallback_icons);
 	lib::json::get(j, "hidden_song_headers", g.hidden_song_headers);
+	lib::json::get(j, "ignore_unavailable_index", g.ignore_unavailable_index);
 	lib::json::get(j, "last_device", g.last_device);
 	lib::json::get(j, "last_playlist", g.last_playlist);
 	lib::json::get(j, "last_version", g.last_version);

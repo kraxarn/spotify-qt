@@ -177,6 +177,34 @@ void List::Tracks::onDoubleClicked(QTreeWidgetItem *item, int /*column*/)
 		return;
 	}
 
+	if (settings.general.ignore_unavailable_index)
+	{
+		auto modifier = 0;
+
+		for (auto i = 0; i < topLevelItemCount(); i++)
+		{
+			const auto *disabledItem = topLevelItem(i);
+			if (!disabledItem->isDisabled())
+			{
+				continue;
+			}
+
+			const auto &disabledIndexData = disabledItem->data(0, static_cast<int>(DataRole::Index));
+			const auto disabledIndex = disabledIndexData.toInt();
+
+			if (disabledIndex < trackIndex)
+			{
+				modifier++;
+			}
+		}
+
+		if (modifier > 0)
+		{
+			lib::log::debug("Ignoring {} unavailable tracks", modifier);
+			trackIndex -= modifier;
+		}
+	}
+
 	auto callback = [this, mainWindow, item](const std::string &status)
 	{
 		if (!status.empty())
