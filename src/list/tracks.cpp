@@ -533,8 +533,6 @@ auto List::Tracks::load(const lib::spt::page<lib::spt::track> &page,
 	// Hide until track with date is inserted
 	header()->setSectionHidden(addedColumn, true);
 
-	setSortingEnabled(false);
-
 	for (size_t i = 0; i < page.items.size(); i++)
 	{
 		const auto index = page.offset + static_cast<int>(i);
@@ -583,8 +581,6 @@ auto List::Tracks::load(const lib::spt::page<lib::spt::track> &page,
 		}
 	}
 
-	setSortingEnabled(true);
-
 	if (page.has_next())
 	{
 		return true;
@@ -614,7 +610,9 @@ void List::Tracks::load(const std::vector<lib::spt::track> &tracks,
 	page.items = tracks;
 	page.total = static_cast<int>(tracks.size());
 
+	setSortingEnabled(false);
 	load(page, selectedId, addedAt);
+	setSortingEnabled(true);
 }
 
 void List::Tracks::load(const std::vector<lib::spt::track> &tracks)
@@ -692,6 +690,7 @@ void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 	}
 
 	refreshing = true;
+	setSortingEnabled(false);
 
 	spotify.playlist_tracks(playlist,
 		[this, mainWindow, playlist, playlistUri]
@@ -718,6 +717,7 @@ void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 			}
 
 			refreshing = false;
+			setSortingEnabled(true);
 			saveToCache(playlist);
 			setEnabled(true);
 			return false;
