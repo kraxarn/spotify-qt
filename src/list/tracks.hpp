@@ -45,16 +45,6 @@ namespace List
 		void load(const std::vector<lib::spt::track> &tracks);
 
 		/**
-		 * Load tracks from page into UI
-		 * @param page Current page
-		 * @param selectedId ID of item to select
-		 * @param addedAt Fallback added date
-		 * @return If next page is needed
-		 */
-		auto load(const lib::spt::page<lib::spt::track> &page,
-			const std::string &selectedId = {}, const std::string &addedAt = {}) -> bool;
-
-		/**
 		 * Load playlist first from cache, then refresh it
 		 */
 		void load(const lib::spt::playlist &playlist);
@@ -109,6 +99,16 @@ namespace List
 		void getLikedTracks(const std::function<void(const std::vector<lib::spt::track> &)> &callback);
 
 		void saveToCache(const lib::spt::playlist &playlist);
+
+		/**
+		 * Load tracks from page into UI
+		 * @param page Current page
+		 * @param selectedId ID of item to select
+		 * @param addedAt Fallback added date
+		 * @return If next page is needed
+		 */
+		auto load(const lib::spt::page<lib::spt::track> &page,
+			const std::string &selectedId = {}, const std::string &addedAt = {}) -> bool;
 
 		void onMenu(const QPoint &pos);
 		void onItemClicked(QTreeWidgetItem *item, int column);
