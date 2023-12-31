@@ -4,6 +4,25 @@ Versions use major.minor scheming. New versions are released together with spoti
 * Minor releases contain minor changes and bug fixes and should never require changes to be made.
 * Pre-release and beta releases may contain breaking changes, even if it's a minor release.
 
+## v0.9 (spotify-qt v3.11)
+* `player_action` now implements `std::hash`.
+* `spt::api::saved_tracks`, `spt::api::playlist_tracks` now expects a paged callback.
+* Added `album_shape`, `library_layout`, `position` enums.
+* Added `general.ignore_unavailable_index`.
+* Added `qt.library_layout`.
+* Added `qt.toolbar_position`.
+* Added `qt.album_shape`.
+* Added `spotify.additional_arguments`.
+* Added `spt::api::queue`.
+* Added `paged_callback`.
+* Added `spt::page`.
+* Added `spt::playback::is_valid()`.
+* Added `spt::queue`.
+* Added `spt::request::get_page`.
+* Added `spt::to_relative_url()`.
+* Added `developer_mode::add_experiment` and `developer_mode::is_experiment_enabled`.
+* Removed `spt::playlist::tracks_href`.
+
 ## v0.8 (spotify-qt v3.10)
 * `crash_info::timestamp` is now an `unsigned long`.
 * `account.last_refresh` is now an `unsigned long`.
