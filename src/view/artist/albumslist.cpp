@@ -46,11 +46,11 @@ auto Artist::AlbumsList::getAlbum(QTreeWidgetItem *item) -> lib::spt::album
 	return itemData.value<lib::spt::album>();
 }
 
-void Artist::AlbumsList::setAlbums(const std::vector<lib::spt::album> &albums)
+void Artist::AlbumsList::loadAlbums(const lib::spt::page<lib::spt::album> &page)
 {
 	setEnabled(false);
 
-	for (const auto &album: albums)
+	for (const auto &album: page.items)
 	{
 		const auto releaseDate = DateTime::parseIsoDate(album.release_date);
 		// Extra spacing is intentional so year doesn't overlap with scrollbar
@@ -83,6 +83,11 @@ void Artist::AlbumsList::setAlbums(const std::vector<lib::spt::album> &albums)
 		item->setToolTip(1, releaseDateToolTip);
 
 		group->addChild(item);
+	}
+
+	if (page.has_next())
+	{
+		return;
 	}
 
 	setEnabled(true);

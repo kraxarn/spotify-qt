@@ -98,9 +98,18 @@ void Artist::View::artistLoaded(const lib::spt::artist &loadedArtist)
 	});
 
 	// Albums
-	spotify.albums(artist, [this](const std::vector<lib::spt::album> &albums)
+	spotify.albums(artist, [this](const lib::result<lib::spt::page<lib::spt::album>> &result) -> bool
 	{
-		albumList->setAlbums(albums);
+		if (!result.success())
+		{
+			StatusMessage::error(QString("Failed to fetch artist albums: %1")
+				.arg(QString::fromStdString(result.message())));
+			return false;
+		}
+
+		const auto &page = result.value();
+		albumList->loadAlbums(page);
+		return page.has_next();
 	});
 
 	// Related artists

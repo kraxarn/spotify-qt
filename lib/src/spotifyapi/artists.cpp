@@ -29,9 +29,8 @@ void lib::spt::api::related_artists(const lib::spt::artist &artist,
 	});
 }
 
-void lib::spt::api::albums(const lib::spt::artist &artist,
-	lib::callback<std::vector<lib::spt::album>> &callback)
+void lib::spt::api::albums(const spt::artist &artist, const paged_callback<spt::album> &callback) const
 {
-	get_items(lib::fmt::format("artists/{}/albums?country=from_token",
-		artist.id), callback);
+	const auto url = fmt::format("artists/{}/albums?country=from_token", artist.id);
+	request.get_page<spt::album>(url, {}, callback);
 }

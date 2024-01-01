@@ -18,7 +18,7 @@ namespace Artist
 		AlbumsList(lib::spt::api &spotify, lib::cache &cache,
 			const lib::http_client &httpClient, lib::settings &settings, QWidget *parent);
 
-		void setAlbums(const std::vector<lib::spt::album> &albums);
+		void loadAlbums(const lib::spt::page<lib::spt::album> &page);
 
 	private:
 		lib::spt::api &spotify;
