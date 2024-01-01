@@ -7,7 +7,7 @@ namespace lib
 	/**
 	 * Available player actions, usually in a list of disallowed actions
 	 */
-	enum class player_action
+	enum class player_action: unsigned char
 	{
 		/**
 		 * Invalid action

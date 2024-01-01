@@ -5,7 +5,7 @@ namespace lib
 	/**
 	 * Supported Spotify clients
 	 */
-	enum class client_type
+	enum class client_type: unsigned char
 	{
 		/**
 		 * No client

@@ -5,7 +5,7 @@ namespace lib
 	/**
 	 * Type of log message
 	 */
-	enum class log_type
+	enum class log_type: unsigned char
 	{
 		/**
 		 * Information, only informing the user of something

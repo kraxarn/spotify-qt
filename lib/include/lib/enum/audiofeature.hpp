@@ -5,7 +5,7 @@ namespace lib
 	/**
 	 * Category of audio analysis
 	 */
-	enum class audio_feature
+	enum class audio_feature: unsigned char
 	{
 		/**
 		 * Invalid, or missing, value

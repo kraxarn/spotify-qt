@@ -5,7 +5,7 @@ namespace lib
 	/**
 	 * Position of something, relative to something else
 	 */
-	enum class position: unsigned short
+	enum class position: unsigned char
 	{
 		none = 0,
 		top = 1 << 0,

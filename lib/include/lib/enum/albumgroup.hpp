@@ -5,7 +5,7 @@ namespace lib
 	/**
 	 * Relation between album and artist
 	 */
-	enum class album_group
+	enum class album_group: unsigned char
 	{
 		/**
 		 * Artist's album

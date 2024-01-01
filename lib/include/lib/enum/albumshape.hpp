@@ -5,7 +5,7 @@ namespace lib
 	/**
 	 * Shape to mask album
 	 */
-	enum class album_shape
+	enum class album_shape: unsigned char
 	{
 		/**
 		 * No masking, probably square

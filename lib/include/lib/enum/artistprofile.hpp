@@ -2,7 +2,7 @@
 
 namespace lib
 {
-	enum class artist_profile
+	enum class artist_profile: unsigned char
 	{
 		/**
 		 * Unknown value

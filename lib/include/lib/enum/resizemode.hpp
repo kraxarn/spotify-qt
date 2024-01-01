@@ -5,7 +5,7 @@ namespace lib
 	/**
 	 * How to resize columns in lists
 	 */
-	enum class resize_mode
+	enum class resize_mode: unsigned char
 	{
 		/**
 		 * Resize to fit current size

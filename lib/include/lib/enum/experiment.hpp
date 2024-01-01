@@ -5,7 +5,7 @@ namespace lib
 	/**
 	 * Experimental feature
 	 */
-	enum class experiment
+	enum class experiment: unsigned char
 	{
 	};
 }
