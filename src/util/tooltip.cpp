@@ -76,7 +76,7 @@ auto Tooltip::tooltip(const QPixmap &image, const QList<TooltipRow> &rows) -> QS
 {
 	QString table("<table>");
 
-	for (qsizetype i = 0; i < rows.size(); i++)
+	for (long long i = 0; i < rows.size(); i++)
 	{
 		table.append("<tr>");
 		const auto &row = rows.at(i);
