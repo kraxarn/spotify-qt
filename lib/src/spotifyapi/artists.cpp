@@ -31,6 +31,6 @@ void lib::spt::api::related_artists(const lib::spt::artist &artist,
 
 void lib::spt::api::albums(const spt::artist &artist, const paged_callback<spt::album> &callback) const
 {
-	const auto url = fmt::format("artists/{}/albums?country=from_token", artist.id);
+	const auto url = fmt::format("artists/{}/albums?limit=50&country=from_token", artist.id);
 	request.get_page<spt::album>(url, {}, callback);
 }
