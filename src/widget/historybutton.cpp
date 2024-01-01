@@ -95,7 +95,7 @@ void HistoryButton::push(const lib::spt::entity &entity, const QString &tooltip,
 void HistoryButton::back()
 {
 	const auto &actions = menu()->actions();
-	for (qsizetype i = 0; i < actions.size() - 1; i++)
+	for (long long i = 0; i < actions.size() - 1; i++)
 	{
 		if (actions.at(i) == current)
 		{
@@ -107,7 +107,7 @@ void HistoryButton::back()
 void HistoryButton::forward()
 {
 	const auto &actions = menu()->actions();
-	for (qsizetype i = 0; i < actions.size() - 1; i++)
+	for (long long i = 0; i < actions.size() - 1; i++)
 	{
 		if (actions.at(i + 1) == current)
 		{
