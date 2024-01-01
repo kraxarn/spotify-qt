@@ -3,7 +3,6 @@
 #include "lib/enum/mediatype.hpp"
 #include "lib/enum/devicetype.hpp"
 #include "lib/enum/playeraction.hpp"
-#include "lib/enum/position.hpp"
 #include "lib/enum/albumshape.hpp"
 
 #include <string>
@@ -157,12 +156,6 @@ namespace lib
 					str = "home thing";
 					break;
 			}
-		}
-
-		static void enum_from_string(const std::string &/*str*/, device_type &device_type)
-		{
-			// TODO: Not implemented yet
-			device_type = device_type::unknown;
 		}
 
 		//endregion
