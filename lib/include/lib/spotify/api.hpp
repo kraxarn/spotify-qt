@@ -67,7 +67,7 @@ namespace lib
 			void related_artists(const lib::spt::artist &artist,
 				lib::callback<std::vector<lib::spt::artist>> &callback);
 
-			void albums(const spt::artist &artist,
+			void albums(const spt::artist &artist, const std::vector<album_group> &groups,
 				const paged_callback<spt::album> &callback) const;
 
 			//endregion

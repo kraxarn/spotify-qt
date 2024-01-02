@@ -1,5 +1,6 @@
 #pragma once
 
+#include "lib/enum/albumgroup.hpp"
 #include "lib/enum/mediatype.hpp"
 #include "lib/enum/devicetype.hpp"
 #include "lib/enum/playeraction.hpp"
@@ -282,6 +283,36 @@ namespace lib
 
 				case album_shape::disc:
 					str = "disc";
+					break;
+			}
+		}
+
+		//endregion
+
+		//region album_group
+
+		static void enum_to_string(const album_group album_group, std::string &str)
+		{
+			switch (album_group)
+			{
+				case album_group::album:
+					str = "album";
+					break;
+
+				case album_group::single:
+					str = "single";
+					break;
+
+				case album_group::compilation:
+					str = "compilation";
+					break;
+
+				case album_group::appears_on:
+					str = "appears_on";
+					break;
+
+				case album_group::none:
+					str = "";
 					break;
 			}
 		}

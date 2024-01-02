@@ -58,6 +58,11 @@ Artist::View::View(lib::spt::api &spotify, const std::string &artistId, lib::cac
 	});
 }
 
+auto Artist::View::getArtist() const -> const lib::spt::artist &
+{
+	return artist;
+}
+
 void Artist::View::artistLoaded(const lib::spt::artist &loadedArtist)
 {
 	artist = loadedArtist;
@@ -98,7 +103,13 @@ void Artist::View::artistLoaded(const lib::spt::artist &loadedArtist)
 	});
 
 	// Albums
-	spotify.albums(artist, [this](const lib::result<lib::spt::page<lib::spt::album>> &result) -> bool
+	const std::vector groups{
+		lib::album_group::album,
+		lib::album_group::single,
+		lib::album_group::compilation,
+	};
+
+	spotify.albums(artist, groups, [this](const lib::result<lib::spt::page<lib::spt::album>> &result) -> bool
 	{
 		if (!result.success())
 		{
@@ -111,6 +122,20 @@ void Artist::View::artistLoaded(const lib::spt::artist &loadedArtist)
 		albumList->loadAlbums(page);
 		return page.has_next();
 	});
+
+	spotify.albums(artist, {lib::album_group::appears_on},
+		[this](const lib::result<lib::spt::page<lib::spt::album>> &result) -> bool
+		{
+			if (!result.success())
+			{
+				lib::log::error("Failed to fetch appears on albums: {}", result.message());
+				return false;
+			}
+
+			const auto &page = result.value();
+			albumList->addAlbums(page.items);
+			return false;
+		});
 
 	// Related artists
 	spotify.related_artists(artist, [this](const std::vector<lib::spt::artist> &artists)

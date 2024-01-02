@@ -33,6 +33,8 @@ namespace Artist
 		View(lib::spt::api &spotify, const std::string &artistId, lib::cache &cache,
 			const lib::http_client &httpClient, lib::settings &settings, QWidget *parent);
 
+		auto getArtist() const -> const lib::spt::artist &;
+
 	private:
 		void artistLoaded(const lib::spt::artist &loadedArtist);
 		void topTracksLoaded(const std::vector<lib::spt::track> &tracks);

@@ -1,3 +1,4 @@
+#include "lib/uri.hpp"
 #include "lib/spotify/api.hpp"
 
 // Currently unavailable:
@@ -29,8 +30,27 @@ void lib::spt::api::related_artists(const lib::spt::artist &artist,
 	});
 }
 
-void lib::spt::api::albums(const spt::artist &artist, const paged_callback<spt::album> &callback) const
+void lib::spt::api::albums(const spt::artist &artist, const std::vector<album_group> &groups,
+	const paged_callback<spt::album> &callback) const
 {
-	const auto url = fmt::format("artists/{}/albums?limit=50&country=from_token", artist.id);
-	request.get_page<spt::album>(url, {}, callback);
+	uri uri(to_full_url(fmt::format("artists/{}/albums", artist.id)));
+
+	auto params = uri.get_search_params();
+	params.insert({"limit", "50"});
+
+	if (!groups.empty())
+	{
+		std::vector<std::string> groups_str;
+		groups_str.reserve(groups.size());
+
+		for (const auto &group: groups)
+		{
+			groups_str.push_back(enums<album_group>::to_string(group));
+		}
+
+		params.insert({"include_groups", strings::join(groups_str, ",")});
+	}
+
+	uri.set_search_params(params);
+	request.get_page<spt::album>(uri.get_url(), {}, callback);
 }
