@@ -103,7 +103,7 @@ void Artist::View::artistLoaded(const lib::spt::artist &loadedArtist)
 	});
 
 	// Albums
-	const std::vector groups{
+	const std::vector<lib::album_group> groups{
 		lib::album_group::album,
 		lib::album_group::single,
 		lib::album_group::compilation,
