@@ -2,7 +2,7 @@ var searchData=
 [
   ['time_0',['time',['../classlib_1_1format.html#aee2feab1a2062726968dcd5b0566a578',1,'lib::format']]],
   ['time_5fpretty_1',['time_pretty',['../classlib_1_1format.html#a9a5dcce5ecd63d9e5babf503457d4bf5',1,'lib::format']]],
-  ['title_2',['title',['../classlib_1_1ddg_1_1link.html#a092dbbe4f82e0c9998f9b9b24aa48946',1,'lib::ddg::link::title()'],['../classlib_1_1spt_1_1track.html#a1083e589cd32b2d96a6630491d1d3975',1,'lib::spt::track::title()']]],
+  ['title_2',['title',['../classlib_1_1format.html#afc4d7833010c180e3cc0bae9710b3bba',1,'lib::format::title()'],['../classlib_1_1ddg_1_1link.html#a092dbbe4f82e0c9998f9b9b24aa48946',1,'lib::ddg::link::title()'],['../classlib_1_1spt_1_1track.html#a1083e589cd32b2d96a6630491d1d3975',1,'lib::spt::track::title()']]],
   ['to_5fdate_3',['to_date',['../classlib_1_1date__time.html#a31de4d88ac7f23791f2eadc0be3d1b99',1,'lib::date_time']]],
   ['to_5fiso_5fdate_4',['to_iso_date',['../classlib_1_1date__time.html#ac710c2125b63bc1f878c376db84dee3c',1,'lib::date_time']]],
   ['to_5fiso_5fdate_5ftime_5',['to_iso_date_time',['../classlib_1_1date__time.html#aa44f1acad48523f696408de15b47e297',1,'lib::date_time']]],
