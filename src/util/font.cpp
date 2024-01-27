@@ -9,6 +9,13 @@ auto Font::monospace() -> QFont
 	return QFontDatabase::systemFont(QFontDatabase::FixedFont);
 }
 
+auto Font::italic() -> QFont
+{
+	QFont font;
+	font.setItalic(true);
+	return font;
+}
+
 auto Font::numberWidth() -> int
 {
 	QFont font;

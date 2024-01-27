@@ -1,10 +1,42 @@
 #include "settingspage/application.hpp"
+
+#include <util/font.hpp>
+
 #include "mainwindow.hpp"
 
 SettingsPage::Application::Application(lib::settings &settings, QWidget *parent)
 	: SettingsPage::Base(settings, parent)
 {
 	addTab(app(), "General");
+
+	if (lib::developer_mode::enabled)
+	{
+		addTab(windowTitle(), QStringLiteral("Window title"));
+	}
+}
+
+void SettingsPage::Application::hideEvent(QHideEvent *event)
+{
+	Base::hideEvent(event);
+
+	const auto *mainWindow = MainWindow::find(parent());
+	if (mainWindow != nullptr)
+	{
+		disconnect(mainWindow, &MainWindow::playbackRefreshed,
+			this, &Application::onPlaybackRefreshed);
+	}
+}
+
+void SettingsPage::Application::showEvent(QShowEvent *event)
+{
+	Base::showEvent(event);
+
+	const auto *mainWindow = MainWindow::find(parent());
+	if (mainWindow != nullptr)
+	{
+		connect(mainWindow, &MainWindow::playbackRefreshed,
+			this, &Application::onPlaybackRefreshed);
+	}
 }
 
 auto SettingsPage::Application::app() -> QWidget *
@@ -80,6 +112,60 @@ auto SettingsPage::Application::app() -> QWidget *
 		"required by some clients to properly index playlists with unavailable songs"));
 	ignoreUnavailableIndex->setChecked(settings.general.ignore_unavailable_index);
 	layout->addWidget(ignoreUnavailableIndex);
+
+	return Widget::layoutToWidget(layout, this);
+}
+
+auto SettingsPage::Application::windowTitle() -> QWidget *
+{
+	auto *layout = new QVBoxLayout();
+
+	auto *formatLayout = new QGridLayout();
+	formatLayout->setVerticalSpacing(0);
+
+	auto *titleFormatTitle = new QLabel(QStringLiteral("Format"), this);
+	formatLayout->addWidget(titleFormatTitle, 0, 0);
+
+	titleFormat = new QLineEdit(this);
+	titleFormat->setFont(Font::monospace());
+	titleFormat->setPlaceholderText(QStringLiteral("{artist} - {track}"));
+	formatLayout->addWidget(titleFormat, 0, 1);
+
+	connect(titleFormat, &QLineEdit::textEdited,
+		this, &Application::onTitleFormatEdited);
+
+	titlePreview = new QLabel(this);
+	titlePreview->setFont(Font::italic());
+	formatLayout->addWidget(titlePreview, 1, 1);
+
+	layout->addLayout(formatLayout);
+
+	const QMap<QString, QString> options{
+		{QStringLiteral("{artist}"), QStringLiteral("Name of primary artist")},
+		{QStringLiteral("{artists}"), QStringLiteral("All artists, seperated by commas")},
+		{QStringLiteral("{track}"), QStringLiteral("Name of track")},
+	};
+
+	auto *infoLayout = new QGridLayout();
+	infoLayout->setRowStretch(static_cast<int>(options.size()), 1);
+	QMapIterator<QString, QString> iter(options);
+	auto row = 0;
+
+	while (iter.hasNext())
+	{
+		iter.next();
+
+		auto *key = new QLabel(iter.key(), this);
+		key->setFont(Font::monospace());
+		infoLayout->addWidget(key, row, 0);
+
+		auto *value = new QLabel(iter.value(), this);
+		infoLayout->addWidget(value, row++, 1);
+	}
+
+	auto *infoBox = new QGroupBox(QStringLiteral("Possible values"), this);
+	infoBox->setLayout(infoLayout);
+	layout->addWidget(infoBox, 1);
 
 	return Widget::layoutToWidget(layout, this);
 }
@@ -168,4 +254,38 @@ auto SettingsPage::Application::save() -> bool
 	}
 
 	return success;
+}
+
+void SettingsPage::Application::updatePreview()
+{
+	if (titleFormat == nullptr
+		|| titlePreview == nullptr
+		|| !currentTrack.is_valid())
+	{
+		return;
+	}
+
+	const auto format = titleFormat->text().isEmpty()
+		? titleFormat->placeholderText()
+		: titleFormat->text();
+
+	const auto title = lib::format::title(currentTrack, format.toStdString());
+	titlePreview->setText(QString::fromStdString(title));
+}
+
+void SettingsPage::Application::onPlaybackRefreshed(const lib::spt::playback &current,
+	const lib::spt::playback &/*previous*/)
+{
+	if (currentTrack.id == current.item.id)
+	{
+		return;
+	}
+
+	currentTrack = current.item;
+	updatePreview();
+}
+
+void SettingsPage::Application::onTitleFormatEdited(const QString &/*text*/)
+{
+	updatePreview();
 }

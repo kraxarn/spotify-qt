@@ -7,6 +7,7 @@ class Font
 {
 public:
 	static auto monospace() -> QFont;
+	static auto italic() -> QFont;
 	static auto numberWidth() -> int;
 
 	static void setFontWeight(QAction *action, QFont::Weight weight);
