@@ -30,8 +30,8 @@ namespace SettingsPage
 		QCheckBox *appUpdates = nullptr;
 		QCheckBox *ignoreUnavailableIndex = nullptr;
 
-		QLineEdit *titleFormat;
-		QLabel *titlePreview;
+		QLineEdit *titleFormat = nullptr;
+		QLabel *titlePreview = nullptr;
 
 		lib::spt::track currentTrack;
 
