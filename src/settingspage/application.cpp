@@ -11,7 +11,7 @@ SettingsPage::Application::Application(lib::settings &settings, QWidget *parent)
 
 	if (lib::developer_mode::enabled)
 	{
-		addTab(windowTitle(), QStringLiteral("Window title"));
+		addTab(windowTitle(), QStringLiteral("Title"));
 	}
 }
 
