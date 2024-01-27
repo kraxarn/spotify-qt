@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "lib/spotify/track.hpp"
+
 namespace lib
 {
 	/**
@@ -39,5 +41,13 @@ namespace lib
 		 * @param count Amount
 		 */
 		static auto count(unsigned int count) -> std::string;
+
+		/**
+		 * \brief Format title template
+		 * \param track Track to format for
+		 * \param format Template format
+		 * \return Formatted title
+		 */
+		static auto title(const spt::track &track, const std::string &format) -> std::string;
 	};
 }

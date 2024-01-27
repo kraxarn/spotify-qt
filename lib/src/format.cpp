@@ -64,3 +64,60 @@ auto lib::format::count(unsigned int count) -> std::string
 
 	return lib::fmt::format("{}", count);
 }
+
+auto lib::format::title(const spt::track &track, const std::string &format) -> std::string
+{
+	std::string result;
+	size_t start_index = 0;
+
+	while (true)
+	{
+		const auto prev_start_index = start_index;
+		start_index = format.find('{', start_index);
+		result.append(format.substr(prev_start_index, start_index - prev_start_index));
+
+		if (start_index == std::string::npos)
+		{
+			break;
+		}
+
+		const auto end_index = format.find('}', start_index);
+		if (end_index == std::string::npos)
+		{
+			return format;
+		}
+
+		const auto part = format.substr(start_index, end_index - start_index + 1);
+
+		if (part == "{track}")
+		{
+			result.append(track.name);
+		}
+		else if (part == "{artist}")
+		{
+			if (!track.artists.empty())
+			{
+				result.append(track.artists.at(0).name);
+			}
+		}
+		else if (part == "{artists}")
+		{
+			for (size_t i = 0; i < track.artists.size(); i++)
+			{
+				result.append(track.artists.at(i).name);
+				if (i < track.artists.size() - 1)
+				{
+					result.append(", ");
+				}
+			}
+		}
+		else
+		{
+			result.append(part);
+		}
+
+		start_index = end_index + 1;
+	}
+
+	return result;
+}

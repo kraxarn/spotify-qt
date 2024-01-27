@@ -1,6 +1,5 @@
 #pragma once
 
-#include "lib/format.hpp"
 #include "lib/spotify/entity.hpp"
 #include "lib/spotify/image.hpp"
 

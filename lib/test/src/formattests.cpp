@@ -1,5 +1,7 @@
 #include "thirdparty/doctest.h"
 #include "lib/format.hpp"
+#include "lib/spotify/artist.hpp"
+#include "lib/spotify/track.hpp"
 
 TEST_CASE("fmt::format")
 {
@@ -26,5 +28,28 @@ TEST_CASE("fmt::format")
 		CHECK_EQ(lib::format::size(1000), "1 kB");
 		CHECK_EQ(lib::format::size(1000000), "1 MB");
 		CHECK_EQ(lib::format::size(1000000000), "1 GB");
+	}
+
+	SUBCASE("title")
+	{
+		lib::spt::track track;
+		track.name = "track";
+
+		lib::spt::artist artist1;
+		artist1.name = "artist1";
+		track.artists.push_back(artist1);
+
+		lib::spt::artist artist2;
+		artist2.name = "artist2";
+		track.artists.push_back(artist2);
+
+		CHECK_EQ(lib::format::title(track, "{track}"), "track");
+		CHECK_EQ(lib::format::title(track, "{track"), "{track");
+		CHECK_EQ(lib::format::title(track, "prefix - {track}"), "prefix - track");
+		CHECK_EQ(lib::format::title(track, "{track} - suffix"), "track - suffix");
+		CHECK_EQ(lib::format::title(track, "{track} - {invalid}"), "track - {invalid}");
+
+		CHECK_EQ(lib::format::title(track, "{artist} - {track}"), "artist1 - track");
+		CHECK_EQ(lib::format::title(track, "{artists} - {track}"), "artist1, artist2 - track");
 	}
 }
