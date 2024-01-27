@@ -270,7 +270,7 @@ namespace lib
 			switch (album_shape)
 			{
 				case album_shape::none:
-					str = "none";
+					str = "square";
 					break;
 
 				case album_shape::app:
