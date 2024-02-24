@@ -11,6 +11,12 @@ http = httpx.Client(headers={
 	"Accept": "application/vnd.github.v3+json",
 })
 
+token = os.getenv("GITHUB_TOKEN")
+if token:
+	http.headers.update({
+		"Authorization": f"token {token}"
+	})
+
 
 def log(lib_name: str, current_version: str, latest_version: str):
 	if current_version == latest_version:
