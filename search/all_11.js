@@ -4,7 +4,7 @@ var searchData=
   ['recently_5fplayed_1',['recently_played',['../classlib_1_1spt_1_1api.html#a4181de91367224105534a9976e5f3d43',1,'lib::spt::api']]],
   ['refresh_2',['refresh',['../classlib_1_1spt_1_1request.html#a1f4968f63d0561048dd462ca0b018d53',1,'lib::spt::request']]],
   ['release_3',['release',['../classlib_1_1gh_1_1release.html',1,'lib::gh::release'],['../classlib_1_1gh_1_1api.html#a549f211719ba4289a66651136446163e',1,'lib::gh::api::release()']]],
-  ['release_5fdate_4',['release_date',['../classlib_1_1spt_1_1episode.html#a0d0de9b2cb481e736687378657027601',1,'lib::spt::episode::release_date()'],['../classlib_1_1spt_1_1album.html#a12f19a9ab0139d5033d22a9839e7a73f',1,'lib::spt::album::release_date()']]],
+  ['release_5fdate_4',['release_date',['../classlib_1_1spt_1_1episode.html#a0d0de9b2cb481e736687378657027601',1,'lib::spt::episode::release_date'],['../classlib_1_1spt_1_1album.html#a12f19a9ab0139d5033d22a9839e7a73f',1,'lib::spt::album::release_date']]],
   ['release_5fdate_5fprecision_5',['release_date_precision',['../classlib_1_1spt_1_1episode.html#a95f5dbabcd8082ef5fca20dbd2fda89e',1,'lib::spt::episode']]],
   ['remove_6',['remove',['../classlib_1_1strings.html#ad8106cae3098ed9d40274d1d69328037',1,'lib::strings']]],
   ['remove_5fclient_7',['remove_client',['../classlib_1_1settings.html#ae2330fba54af6807d6a94efc251cd6bf',1,'lib::settings']]],
