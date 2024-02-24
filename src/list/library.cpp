@@ -17,7 +17,7 @@ List::Library::Library(lib::spt::api &spotify, lib::cache &cache,
 			"Liked and saved tracks"),
 		Tree::itemWithNoChildren(this, topTracks,
 			"Most played tracks for the past 6 months"),
-		Tree::itemWithNoChildren(this, newReleases,
+		Tree::itemWithEmptyChild(this, newReleases,
 			"New albums from artists you listen to"),
 		Tree::itemWithEmptyChild(this, savedAlbums,
 			"Liked and saved albums"),
@@ -114,37 +114,6 @@ void List::Library::load(QTreeWidgetItem *item)
 		else if (item->text(0) == topTracks)
 		{
 			spotify.top_tracks(callback);
-		}
-		else if (item->text(0) == newReleases)
-		{
-			spotify.new_releases([this, mainWindow, callback]
-				(const std::vector<lib::spt::album> &releases)
-			{
-				auto all = mainWindow->allArtists();
-				std::vector<lib::spt::track> tracks;
-
-				for (const auto &album: releases)
-				{
-					if (all.find(album.artist) != all.end())
-					{
-						spotify.album_tracks(album,
-							[album, callback](const std::vector<lib::spt::track> &results)
-							{
-								std::vector<lib::spt::track> tracks;
-								tracks.reserve(results.size());
-								for (const auto &result: results)
-								{
-									lib::spt::track track = result;
-									track.added_at = album.release_date;
-									tracks.push_back(track);
-								}
-								callback(tracks);
-							});
-						return;
-					}
-				}
-				callback(tracks);
-			});
 		}
 	}
 }
@@ -255,6 +224,21 @@ void List::Library::onExpanded(QTreeWidgetItem *item)
 				results.emplace_back(artist);
 			}
 			List::Library::itemsLoaded(results, item);
+		});
+	}
+	else if (item->text(0) == newReleases)
+	{
+		spotify.new_releases([item](const std::vector<lib::spt::album> &releases)
+		{
+			std::vector<ListItem::Library> results;
+			results.reserve(releases.size());
+
+			for (const auto &release: releases)
+			{
+				results.emplace_back(release);
+			}
+
+			itemsLoaded(results, item);
 		});
 	}
 }
