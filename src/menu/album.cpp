@@ -1,7 +1,6 @@
 #include "menu/album.hpp"
 
 #include "mainwindow.hpp"
-#include "menu/addtoplaylist.hpp"
 
 Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache,
 	const std::string &albumId, QWidget *parent)
@@ -34,6 +33,10 @@ Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache,
 
 	QAction::connect(shareSongOpen, &QAction::triggered,
 		this, &Menu::Album::onOpenInSpotify);
+
+	addToPlaylist = new AddToPlaylist({}, spotify, cache, this);
+	addToPlaylist->setEnabled(false);
+	addMenu(addToPlaylist);
 
 	album = cache.get_album(albumId);
 	if (album.is_valid())
@@ -104,10 +107,10 @@ void Menu::Album::tracksLoaded(const std::vector<lib::spt::track> &items)
 {
 	tracks = items;
 
-	if (addToPlaylist == nullptr)
+	if (addToPlaylist != nullptr && !addToPlaylist->isEnabled())
 	{
-		addToPlaylist = new Menu::AddToPlaylist(getTrackIds(), spotify, cache, this);
-		addMenu(addToPlaylist);
+		addToPlaylist->addTrackIds(getTrackIds());
+		addToPlaylist->setEnabled(true);
 	}
 
 	auto duration = 0U;

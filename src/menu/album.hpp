@@ -2,6 +2,7 @@
 
 #include "lib/spotify/api.hpp"
 #include "lib/cache.hpp"
+#include "menu/addtoplaylist.hpp"
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -24,7 +25,7 @@ namespace Menu
 		lib::cache &cache;
 
 		QAction *trackCount = nullptr;
-		QMenu *addToPlaylist = nullptr;
+		AddToPlaylist *addToPlaylist = nullptr;
 
 		void tracksLoaded(const std::vector<lib::spt::track> &items);
 		auto getTrackIds() const -> std::vector<std::string>;
