@@ -35,7 +35,12 @@ Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache,
 	QAction::connect(shareSongOpen, &QAction::triggered,
 		this, &Menu::Album::onOpenInSpotify);
 
-	tracksLoaded(cache.get_tracks(albumId));
+	const auto &cached_album = cache.get_tracks(albumId);
+	if (!cached_album.empty())
+	{
+		tracksLoaded(cached_album);
+	}
+
 	spotify.album(albumId, [this](const lib::spt::album &item)
 	{
 		album = item;
@@ -89,7 +94,7 @@ void Menu::Album::onCopyName(bool /*checked*/)
 void Menu::Album::onOpenInSpotify(bool /*checked*/)
 {
 	Url::open(QString("https://open.spotify.com/album/%1")
-			.arg(QString::fromStdString(album.id)), LinkType::Web,
+		.arg(QString::fromStdString(album.id)), LinkType::Web,
 		MainWindow::find(parentWidget()));
 }
 
