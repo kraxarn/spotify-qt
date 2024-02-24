@@ -50,25 +50,28 @@ Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache,
 		spotify.album(albumId, [this](const lib::spt::album &item)
 		{
 			album = item;
-			this->spotify.album_tracks(item, [this](const lib::result<lib::spt::page<lib::spt::track>> &result) -> bool
-			{
-				if (!result.success())
+
+			this->spotify.album_tracks(item,
+				[this](const lib::result<lib::spt::page<lib::spt::track>> &result) -> bool
 				{
-					lib::log::error("Failed to load album tracks: {}", result.message());
+					if (!result.success())
+					{
+						lib::log::error("Failed to load album tracks: {}", result.message());
+						return false;
+					}
+
+					const auto &page = result.value();
+					lib::vector::append(tracks, page.items);
+					tracksLoaded();
+
+					if (page.has_next())
+					{
+						return true;
+					}
+
+					addToPlaylist->setEnabled(true);
 					return false;
-				}
-
-				const auto &page = result.value();
-				lib::vector::append(tracks, page.items);
-
-				if (page.has_next())
-				{
-					return true;
-				}
-
-				addToPlaylist->setEnabled(true);
-				return false;
-			});
+				});
 		});
 	}
 }
