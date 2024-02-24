@@ -63,8 +63,6 @@ namespace lib
 					? lib::spt::to_relative_url(url)
 					: url;
 
-				lib::log::debug("GET: {}", api_url);
-
 				get<nlohmann::json>(api_url, [this, key, callback](const lib::result<nlohmann::json> &result)
 				{
 					if (!result.success())
