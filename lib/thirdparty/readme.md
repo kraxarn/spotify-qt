@@ -1,4 +1,4 @@
-## [doctest](https://github.com/onqtam/doctest)
+## [doctest](https://github.com/doctest/doctest)
 
 v2.4.11, used for unit testing.
 
