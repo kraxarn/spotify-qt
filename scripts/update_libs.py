@@ -3,9 +3,13 @@
 import os
 import typing
 
-import requests
+import httpx
 
 success = True
+
+http = httpx.Client(headers={
+	"Accept": "application/vnd.github.v3+json",
+})
 
 
 def log(lib_name: str, current_version: str, latest_version: str):
@@ -18,7 +22,7 @@ def log(lib_name: str, current_version: str, latest_version: str):
 
 
 def get_latest_tag(repo_name: str, include_prerelease: bool) -> str:
-	tags = requests.get(f"https://api.github.com/repos/{repo_name}/tags").json()
+	tags = http.get(f"https://api.github.com/repos/{repo_name}/tags").json()
 	for tag in tags:
 		if include_prerelease or "-" not in tag["name"]:
 			return tag["name"]
@@ -88,4 +92,5 @@ with open("../res/ic/version", "r") as f:
 	current_ic = f.read()
 log("breeze-icons", current_ic, latest_ic)
 
+http.close()
 exit(0 if success else 1)
