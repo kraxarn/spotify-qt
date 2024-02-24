@@ -51,5 +51,7 @@ TEST_CASE("fmt::format")
 
 		CHECK_EQ(lib::format::title(track, "{artist} - {track}"), "artist1 - track");
 		CHECK_EQ(lib::format::title(track, "{artists} - {track}"), "artist1, artist2 - track");
+
+		CHECK_EQ(lib::format::title(track, ""), track.title());
 	}
 }

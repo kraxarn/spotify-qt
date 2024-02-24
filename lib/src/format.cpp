@@ -70,6 +70,11 @@ auto lib::format::title(const spt::track &track, const std::string &format) -> s
 	std::string result;
 	size_t start_index = 0;
 
+	if (format.empty())
+	{
+		return track.title();
+	}
+
 	while (true)
 	{
 		const auto prev_start_index = start_index;
