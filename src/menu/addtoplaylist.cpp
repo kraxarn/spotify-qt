@@ -24,12 +24,9 @@ Menu::AddToPlaylist::AddToPlaylist(std::vector<std::string> trackIds, lib::spt::
 		this, &Menu::AddToPlaylist::onTriggered);
 }
 
-void Menu::AddToPlaylist::addTrackIds(const std::vector<std::string> &trackIds)
+void Menu::AddToPlaylist::setTrackIds(std::vector<std::string> trackIds)
 {
-	for (const auto &trackId: trackIds)
-	{
-		this->trackIds.push_back(trackId);
-	}
+	this->trackIds = std::move(trackIds);
 }
 
 void Menu::AddToPlaylist::onAboutToShow()

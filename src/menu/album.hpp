@@ -27,7 +27,7 @@ namespace Menu
 		QAction *trackCount = nullptr;
 		AddToPlaylist *addToPlaylist = nullptr;
 
-		void tracksLoaded(const std::vector<lib::spt::track> &items);
+		void tracksLoaded();
 		auto getTrackIds() const -> std::vector<std::string>;
 
 		void onShuffle(bool checked);

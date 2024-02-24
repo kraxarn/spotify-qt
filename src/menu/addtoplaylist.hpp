@@ -15,7 +15,7 @@ namespace Menu
 		AddToPlaylist(std::vector<std::string> trackIds, lib::spt::api &spotify,
 			const lib::cache &cache, QWidget *parent);
 
-		void addTrackIds(const std::vector<std::string> &trackIds);
+		void setTrackIds(std::vector<std::string> trackIds);
 
 	private:
 		std::vector<std::string> trackIds;

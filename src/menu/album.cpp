@@ -41,16 +41,33 @@ Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache,
 	album = cache.get_album(albumId);
 	if (album.is_valid())
 	{
-		tracksLoaded(cache.get_tracks(albumId));
+		tracks = cache.get_tracks(albumId);
+		tracksLoaded();
+		addToPlaylist->setEnabled(true);
 	}
 	else
 	{
 		spotify.album(albumId, [this](const lib::spt::album &item)
 		{
 			album = item;
-			this->spotify.album_tracks(album, [this](const std::vector<lib::spt::track> &items)
+			this->spotify.album_tracks(item, [this](const lib::result<lib::spt::page<lib::spt::track>> &result) -> bool
 			{
-				this->tracksLoaded(items);
+				if (!result.success())
+				{
+					lib::log::error("Failed to load album tracks: {}", result.message());
+					return false;
+				}
+
+				const auto &page = result.value();
+				lib::vector::append(tracks, page.items);
+
+				if (page.has_next())
+				{
+					return true;
+				}
+
+				addToPlaylist->setEnabled(true);
+				return false;
 			});
 		});
 	}
@@ -103,14 +120,11 @@ void Menu::Album::onOpenInSpotify(bool /*checked*/)
 		MainWindow::find(parentWidget()));
 }
 
-void Menu::Album::tracksLoaded(const std::vector<lib::spt::track> &items)
+void Menu::Album::tracksLoaded()
 {
-	tracks = items;
-
-	if (addToPlaylist != nullptr && !addToPlaylist->isEnabled())
+	if (addToPlaylist != nullptr)
 	{
-		addToPlaylist->addTrackIds(getTrackIds());
-		addToPlaylist->setEnabled(true);
+		addToPlaylist->setTrackIds(getTrackIds());
 	}
 
 	auto duration = 0U;
