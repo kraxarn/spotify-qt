@@ -8,11 +8,7 @@ SettingsPage::Application::Application(lib::settings &settings, QWidget *parent)
 	: SettingsPage::Base(settings, parent)
 {
 	addTab(app(), "General");
-
-	if (lib::developer_mode::enabled)
-	{
-		addTab(windowTitle(), QStringLiteral("Title"));
-	}
+	addTab(windowTitle(), QStringLiteral("Title"));
 }
 
 void SettingsPage::Application::hideEvent(QHideEvent *event)
