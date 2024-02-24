@@ -11,6 +11,7 @@ void lib::setting::to_json(nlohmann::json &j, const qt &q)
 		{"mirror_title_bar", q.mirror_title_bar},
 		{"system_title_bar", q.system_title_bar},
 		{"toolbar_position", q.toolbar_position},
+		{"track_title",      q.track_title},
 	};
 }
 
@@ -29,4 +30,5 @@ void lib::setting::from_json(const nlohmann::json &j, qt &q)
 	lib::json::get(j, "mirror_title_bar", q.mirror_title_bar);
 	lib::json::get(j, "system_title_bar", q.system_title_bar);
 	lib::json::get(j, "toolbar_position", q.toolbar_position);
+	lib::json::get(j, "track_title", q.track_title);
 }

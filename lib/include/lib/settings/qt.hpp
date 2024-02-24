@@ -61,6 +61,11 @@ namespace lib
 			 * Shape of album in main window and tray icon
 			 */
 			lib::album_shape album_shape = lib::album_shape::app;
+
+			/**
+			 * \brief Title for track used for window and tray icon
+			 */
+			std::string track_title;
 		};
 
 		void to_json(nlohmann::json &j, const qt &q);

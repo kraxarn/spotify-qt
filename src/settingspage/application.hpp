@@ -46,6 +46,9 @@ namespace SettingsPage
 
 		void updatePreview();
 
+		auto saveGeneral() -> bool;
+		auto saveTitle() const -> bool;
+
 		void onPlaybackRefreshed(const lib::spt::playback &current,
 			const lib::spt::playback &previous);
 

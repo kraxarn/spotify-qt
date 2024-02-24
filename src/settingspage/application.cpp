@@ -118,6 +118,8 @@ auto SettingsPage::Application::app() -> QWidget *
 
 auto SettingsPage::Application::windowTitle() -> QWidget *
 {
+	const auto &qtSettings = settings.qt();
+
 	auto *layout = new QVBoxLayout();
 
 	auto *formatLayout = new QGridLayout();
@@ -128,6 +130,7 @@ auto SettingsPage::Application::windowTitle() -> QWidget *
 
 	titleFormat = new QLineEdit(this);
 	titleFormat->setFont(Font::monospace());
+	titleFormat->setText(QString::fromStdString(qtSettings.track_title));
 	titleFormat->setPlaceholderText(QStringLiteral("{artist} - {track}"));
 	formatLayout->addWidget(titleFormat, 0, 1);
 
@@ -180,7 +183,7 @@ auto SettingsPage::Application::title() -> QString
 	return "Application";
 }
 
-auto SettingsPage::Application::save() -> bool
+auto SettingsPage::Application::saveGeneral() -> bool
 {
 	auto success = true;
 
@@ -254,6 +257,23 @@ auto SettingsPage::Application::save() -> bool
 	}
 
 	return success;
+}
+
+auto SettingsPage::Application::saveTitle() const -> bool
+{
+	auto &qtSettings = settings.qt();
+
+	if (titleFormat != nullptr)
+	{
+		qtSettings.track_title = titleFormat->text().toStdString();
+	}
+
+	return true;
+}
+
+auto SettingsPage::Application::save() -> bool
+{
+	return saveGeneral() && saveTitle();
 }
 
 void SettingsPage::Application::updatePreview()
