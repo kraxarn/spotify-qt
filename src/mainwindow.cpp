@@ -479,7 +479,9 @@ void MainWindow::refreshed(const lib::spt::playback &playback)
 
 	if (trackChange || windowTitle() == APP_NAME)
 	{
-		setWindowTitle(QString::fromStdString(playback.item.title()));
+		const auto &qtSettings = settings.qt();
+		const auto title = lib::format::title(playback.item, qtSettings.track_title);
+		setWindowTitle(QString::fromStdString(title));
 	}
 }
 

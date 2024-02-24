@@ -165,7 +165,9 @@ void TrayIcon::onMenuAboutToShow()
 	auto current = playback();
 	auto isPlaying = current.is_playing;
 
-	currentTrack->setText(QString::fromStdString(current.item.title()));
+	const auto &qtSettings = settings.qt();
+	const auto title = lib::format::title(current.item, qtSettings.track_title);
+	currentTrack->setText(QString::fromStdString(title));
 
 	playPause->setIcon(Icon::get(isPlaying
 		? "media-playback-pause"
