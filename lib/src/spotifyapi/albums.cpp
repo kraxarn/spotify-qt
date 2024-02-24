@@ -22,3 +22,26 @@ void lib::spt::api::album_tracks(const lib::spt::album &album,
 			callback(tracks);
 		});
 }
+
+void lib::spt::api::album_tracks(const spt::album &album, const paged_callback<spt::track> &callback) const
+{
+	const auto albumName = album.name;
+	const auto url = fmt::format("albums/{}/tracks?limit=50", album.id);
+
+	request.get_page<spt::track>(url, {},
+		[callback, albumName](const result<page<spt::track>> &result) -> bool
+		{
+			if (!result.success())
+			{
+				return callback(result);
+			}
+
+			auto &page = result.value();
+			for (auto &item: page.items)
+			{
+				item.album.name = albumName;
+			}
+
+			return callback(result);
+		});
+}

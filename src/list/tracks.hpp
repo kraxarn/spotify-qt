@@ -98,7 +98,9 @@ namespace List
 		void setLikedTracks(const std::vector<lib::spt::track> &tracks);
 		void getLikedTracks(const std::function<void(const std::vector<lib::spt::track> &)> &callback);
 
-		void saveToCache(const lib::spt::playlist &playlist);
+		auto collectTracks() const -> std::vector<lib::spt::track>;
+		void saveToCache(const lib::spt::playlist &playlist) const;
+		void saveToCache(const lib::spt::album &album) const;
 
 		/**
 		 * Load tracks from page into UI

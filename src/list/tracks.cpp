@@ -742,14 +742,28 @@ void List::Tracks::load(const lib::spt::album &album, const std::string &trackId
 		mainWindow->history()->push(album);
 	}
 
-	spotify.album_tracks(album,
-		[this, album, trackId](const std::vector<lib::spt::track> &tracks)
-		{
-			this->load(tracks, trackId, album.release_date);
-			this->setEnabled(true);
+	setSortingEnabled(false);
 
-			cache.set_tracks(album.id, tracks);
-			cache.set_album(album);
+	spotify.album_tracks(album,
+		[this, album, trackId](const lib::result<lib::spt::page<lib::spt::track>> &result) -> bool
+		{
+			if (!result.success())
+			{
+				StatusMessage::error(QString("Failed to load album: %1")
+					.arg(QString::fromStdString(result.message())));
+
+				return false;
+			}
+
+			if (load(result.value(), trackId, album.release_date))
+			{
+				return true;
+			}
+
+			setSortingEnabled(true);
+			saveToCache(album);
+			setEnabled(true);
+			return false;
 		});
 }
 
@@ -833,7 +847,7 @@ void List::Tracks::updateLikedTracks(const std::function<void(const std::vector<
 	});
 }
 
-void List::Tracks::saveToCache(const lib::spt::playlist &playlist)
+auto List::Tracks::collectTracks() const -> std::vector<lib::spt::track>
 {
 	std::vector<lib::spt::track> tracks(static_cast<size_t>(topLevelItemCount()));
 
@@ -856,12 +870,30 @@ void List::Tracks::saveToCache(const lib::spt::playlist &playlist)
 		tracks.at(index) = track;
 	}
 
+	return tracks;
+}
+
+void List::Tracks::saveToCache(const lib::spt::playlist &playlist) const
+{
+	const auto tracks = collectTracks();
+
 	lib::log::debug("Saved {} tracks to cache for playlist: {}",
 		tracks.size(), playlist.name);
 
 	lib::spt::playlist newPlaylist = playlist;
 	newPlaylist.tracks = tracks;
 	cache.set_playlist(newPlaylist);
+}
+
+void List::Tracks::saveToCache(const lib::spt::album &album) const
+{
+	const auto tracks = collectTracks();
+
+	lib::log::debug("Saved {} tracks to cache for album: {}",
+		tracks.size(), album.name);
+
+	cache.set_tracks(album.id, tracks);
+	cache.set_album(album);
 }
 
 void List::Tracks::setLikedTracks(const std::vector<lib::spt::track> &tracks)

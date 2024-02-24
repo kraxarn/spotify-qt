@@ -51,8 +51,14 @@ namespace lib
 			void album(const std::string &id,
 				lib::callback<lib::spt::album> &callback);
 
+			/**
+			 * \deprecated Use with pagination instead
+			 */
 			void album_tracks(const lib::spt::album &album,
 				lib::callback<std::vector<lib::spt::track>> &callback);
+
+			void album_tracks(const spt::album &album,
+				const paged_callback<spt::track> &callback) const;
 
 			//endregion
 
