@@ -35,20 +35,22 @@ Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache,
 	QAction::connect(shareSongOpen, &QAction::triggered,
 		this, &Menu::Album::onOpenInSpotify);
 
-	const auto &cached_album = cache.get_tracks(albumId);
-	if (!cached_album.empty())
+	album = cache.get_album(albumId);
+	if (album.is_valid())
 	{
-		tracksLoaded(cached_album);
+		tracksLoaded(cache.get_tracks(albumId));
 	}
-
-	spotify.album(albumId, [this](const lib::spt::album &item)
+	else
 	{
-		album = item;
-		this->spotify.album_tracks(album, [this](const std::vector<lib::spt::track> &items)
+		spotify.album(albumId, [this](const lib::spt::album &item)
 		{
-			this->tracksLoaded(items);
+			album = item;
+			this->spotify.album_tracks(album, [this](const std::vector<lib::spt::track> &items)
+			{
+				this->tracksLoaded(items);
+			});
 		});
-	});
+	}
 }
 
 void Menu::Album::onShuffle(bool /*checked*/)
