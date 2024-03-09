@@ -255,13 +255,6 @@ void List::Library::onExpanded(QTreeWidgetItem *item)
 
 void List::Library::itemsLoaded(std::vector<ListItem::Library> &items, QTreeWidgetItem *item)
 {
-	std::sort(items.begin(), items.end(),
-		[](const ListItem::Library &item1, const ListItem::Library &item2) -> bool
-		{
-			return item1.name() < item2.name();
-		}
-	);
-
 	// No results
 	if (items.empty())
 	{
@@ -284,6 +277,8 @@ void List::Library::itemsLoaded(std::vector<ListItem::Library> &items, QTreeWidg
 		child->setData(0, dataRole, result.data());
 		item->addChild(child);
 	}
+
+	item->sortChildren(0, Qt::AscendingOrder);
 }
 
 void List::Library::onMenuRequested(const QPoint &pos)
