@@ -8,7 +8,8 @@
 // recommendations
 // recommendations/available-genre-seeds
 
-void lib::spt::api::new_releases(lib::callback<std::vector<lib::spt::album>> &callback)
+void lib::spt::api::new_releases(const paged_callback<spt::album> &callback) const
 {
-	get_items("browse/new-releases?limit=50", "albums", callback);
+	const std::string url("browse/new-releases?limit=50");
+	request.get_page(url, "albums", callback);
 }

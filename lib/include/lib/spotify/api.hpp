@@ -74,7 +74,7 @@ namespace lib
 
 			//region Browse
 
-			void new_releases(lib::callback<std::vector<lib::spt::album>> &callback);
+			void new_releases(const paged_callback<spt::album> &callback) const;
 
 			//endregion
 

@@ -228,17 +228,27 @@ void List::Library::onExpanded(QTreeWidgetItem *item)
 	}
 	else if (item->text(0) == newReleases)
 	{
-		spotify.new_releases([item](const std::vector<lib::spt::album> &releases)
+		spotify.new_releases([item](const lib::result<lib::spt::page<lib::spt::album>> &result)
 		{
-			std::vector<ListItem::Library> results;
-			results.reserve(releases.size());
+			if (!result.success())
+			{
+				StatusMessage::error(QString("Failed to get new releases: %1")
+					.arg(QString::fromStdString(result.message())));
 
-			for (const auto &release: releases)
+				return false;
+			}
+
+			const auto &page = result.value();
+			std::vector<ListItem::Library> results;
+			results.reserve(page.items.size());
+
+			for (const auto &release: page.items)
 			{
 				results.emplace_back(release);
 			}
 
 			itemsLoaded(results, item);
+			return page.has_next();
 		});
 	}
 }
