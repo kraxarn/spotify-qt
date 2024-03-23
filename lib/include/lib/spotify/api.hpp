@@ -100,7 +100,7 @@ namespace lib
 
 			//region Library
 
-			void saved_albums(lib::callback<std::vector<lib::spt::saved_album>> &callback);
+			void saved_albums(const paged_callback<saved_album> &callback) const;
 
 			/**
 			 * @deprecated Use with pagination instead

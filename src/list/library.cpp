@@ -202,15 +202,27 @@ void List::Library::onExpanded(QTreeWidgetItem *item)
 	}
 	else if (item->text(0) == savedAlbums)
 	{
-		spotify.saved_albums([item](const std::vector<lib::spt::saved_album> &savedAlbums)
+		spotify.saved_albums([item](const lib::result<lib::spt::page<lib::spt::saved_album>> &result)
 		{
+			if (!result.success())
+			{
+				StatusMessage::error(QString("Failed to get albums: %1")
+					.arg(QString::fromStdString(result.message())));
+
+				return false;
+			}
+
+			const auto &page = result.value();
 			std::vector<ListItem::Library> results;
-			results.reserve(savedAlbums.size());
-			for (const auto &savedAlbum: savedAlbums)
+			results.reserve(page.items.size());
+
+			for (const auto &savedAlbum: page.items)
 			{
 				results.emplace_back(savedAlbum.album);
 			}
-			List::Library::itemsLoaded(results, item);
+
+			itemsLoaded(results, item);
+			return page.has_next();
 		});
 	}
 	else if (item->text(0) == followedArtists)

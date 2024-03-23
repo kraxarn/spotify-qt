@@ -5,9 +5,9 @@
 // me/shows
 // me/shows/contains
 
-void lib::spt::api::saved_albums(lib::callback<std::vector<lib::spt::saved_album>> &callback)
+void lib::spt::api::saved_albums(const paged_callback<saved_album> &callback) const
 {
-	get_items("me/albums", callback);
+	request.get_page<saved_album>("me/albums", {}, callback);
 }
 
 void lib::spt::api::saved_tracks(lib::callback<std::vector<lib::spt::track>> &callback)
