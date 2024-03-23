@@ -55,8 +55,12 @@ namespace lib
 		{
 			json.at("items").get_to(page.items);
 			json.at("limit").get_to(page.limit);
-			json.at("offset").get_to(page.offset);
 			json.at("total").get_to(page.total);
+
+			if (json.contains("offset"))
+			{
+				json.at("offset").get_to(page.offset);
+			}
 
 			const auto &next = json.at("next");
 			if (next.is_string())
