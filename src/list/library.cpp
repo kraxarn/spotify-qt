@@ -215,15 +215,27 @@ void List::Library::onExpanded(QTreeWidgetItem *item)
 	}
 	else if (item->text(0) == followedArtists)
 	{
-		spotify.followed_artists([item](const std::vector<lib::spt::artist> &artists)
+		spotify.followed_artists([item](const lib::result<lib::spt::page<lib::spt::artist>> &result)
 		{
+			if (!result.success())
+			{
+				StatusMessage::error(QString("Failed to get artists: %1")
+					.arg(QString::fromStdString(result.message())));
+
+				return false;
+			}
+
+			const auto &page = result.value();
 			std::vector<ListItem::Library> results;
-			results.reserve(artists.size());
-			for (const auto &artist: artists)
+			results.reserve(page.items.size());
+
+			for (const auto &artist: page.items)
 			{
 				results.emplace_back(artist);
 			}
-			List::Library::itemsLoaded(results, item);
+
+			itemsLoaded(results, item);
+			return page.has_next();
 		});
 	}
 	else if (item->text(0) == newReleases)

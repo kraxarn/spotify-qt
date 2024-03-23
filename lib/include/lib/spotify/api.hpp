@@ -75,7 +75,7 @@ namespace lib
 
 			//region Follow
 
-			void followed_artists(lib::callback<std::vector<lib::spt::artist>> &callback);
+			void followed_artists(const paged_callback<spt::artist> &callback) const;
 
 			void follow(lib::follow_type type, const std::vector<std::string> &ids,
 				lib::callback<std::string> &callback);

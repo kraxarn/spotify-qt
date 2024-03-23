@@ -1,8 +1,9 @@
 #include "lib/spotify/api.hpp"
 
-void lib::spt::api::followed_artists(lib::callback<std::vector<lib::spt::artist>> &callback)
+void lib::spt::api::followed_artists(const paged_callback<spt::artist> &callback) const
 {
-	get_items("me/following?type=artist&limit=50", "artists", callback);
+	const std::string url("me/following?type=artist&limit=50");
+	request.get_page<spt::artist>(url, "artists", callback);
 }
 
 void lib::spt::api::follow(lib::follow_type type, const std::vector<std::string> &ids,
