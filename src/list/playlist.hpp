@@ -18,13 +18,12 @@ namespace List
 		Playlist(lib::spt::api &spotify, lib::settings &settings,
 			lib::cache &cache, const lib::http_client &httpClient, QWidget *parent);
 
-		void load(const std::vector<lib::spt::playlist> &items);
 		void refresh();
 		void order(lib::playlist_order item1);
 
 		auto allArtists() -> std::unordered_set<std::string>;
 
-		auto at(int index) -> lib::spt::playlist;
+		auto at(int index) const -> lib::spt::playlist;
 
 	protected:
 		void showEvent(QShowEvent *event) override;
@@ -35,7 +34,11 @@ namespace List
 		lib::settings &settings;
 		Tooltip tooltip;
 
+		void load(const std::vector<lib::spt::playlist> &playlists, int offset);
+		void selectActive();
+
 		auto getItemIndex(QListWidgetItem *item) -> int;
+		auto getPlaylists() const -> std::vector<lib::spt::playlist>;
 
 		void onItemClicked(QListWidgetItem *item);
 		void onItemDoubleClicked(QListWidgetItem *item);

@@ -263,7 +263,7 @@ namespace lib
 				const lib::optional<bool> &is_collaborative,
 				lib::callback<lib::spt::playlist> &callback);
 
-			void playlists(lib::callback<std::vector<lib::spt::playlist>> &callback);
+			void playlists(const paged_callback<playlist> &callback) const;
 
 			void playlist(const std::string &playlist_id,
 				callback<result<playlist>> &callback) const;

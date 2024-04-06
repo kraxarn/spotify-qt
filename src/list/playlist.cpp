@@ -38,7 +38,8 @@ void List::Playlist::showEvent(QShowEvent */*event*/)
 	const auto &cached = cache.get_playlists();
 	if (!cached.empty())
 	{
-		load(cached);
+		load(cached, 0);
+		selectActive();
 	}
 
 	refresh();
@@ -49,6 +50,19 @@ auto List::Playlist::getItemIndex(QListWidgetItem *item) -> int
 	return item == nullptr
 		? currentRow()
 		: item->data(static_cast<int>(DataRole::Index)).toInt();
+}
+
+auto List::Playlist::getPlaylists() const -> std::vector<lib::spt::playlist>
+{
+	std::vector<lib::spt::playlist> result;
+	result.reserve(static_cast<size_t>(count()));
+
+	for (auto i = 0; i < count(); i++)
+	{
+		result.push_back(at(i));
+	}
+
+	return result;
 }
 
 void List::Playlist::onItemClicked(QListWidgetItem *item)
@@ -102,10 +116,29 @@ void List::Playlist::onItemEntered(QListWidgetItem *item)
 	tooltip.set(item, playlist);
 }
 
-void List::Playlist::load(const std::vector<lib::spt::playlist> &playlists)
+void List::Playlist::load(const std::vector<lib::spt::playlist> &playlists, const int offset)
+{
+	auto index = offset;
+
+	for (const auto &playlist: playlists)
+	{
+		auto *item = new QListWidgetItem(QString::fromStdString(playlist.name), this);
+		item->setData(static_cast<int>(DataRole::Playlist), QVariant::fromValue(playlist));
+		item->setData(static_cast<int>(DataRole::DefaultIndex), index);
+		item->setData(static_cast<int>(DataRole::Index), index++);
+	}
+
+	// Sort
+	if (settings.general.playlist_order != lib::playlist_order::none)
+	{
+		order(settings.general.playlist_order);
+	}
+}
+
+void List::Playlist::selectActive()
 {
 	QListWidgetItem *activeItem = nullptr;
-	const lib::spt::playlist *activePlaylist = nullptr;
+	lib::spt::playlist activePlaylist;
 
 	std::string currentPlaylistId;
 	if (currentItem() != nullptr)
@@ -119,45 +152,32 @@ void List::Playlist::load(const std::vector<lib::spt::playlist> &playlists)
 		currentPlaylistId = lib::spt::uri_to_id(settings.general.last_playlist);
 	}
 
-	// Add all playlists
-	clear();
-	auto index = 0;
-	for (const auto &playlist: playlists)
+	for (auto i = 0; i < count(); i++)
 	{
-		auto *item = new QListWidgetItem(QString::fromStdString(playlist.name), this);
-		item->setData(static_cast<int>(DataRole::Playlist), QVariant::fromValue(playlist));
-		item->setData(static_cast<int>(DataRole::DefaultIndex), index);
-		item->setData(static_cast<int>(DataRole::Index), index++);
+		auto *listItem = item(i);
+		const auto &playlist = at(i);
 
 		if (playlist.id == currentPlaylistId)
 		{
-			activeItem = item;
-			activePlaylist = &playlist;
+			activeItem = listItem;
+			activePlaylist = playlist;
 		}
 	}
 
-	// Sort
-	if (settings.general.playlist_order != lib::playlist_order::none)
+	if (activeItem == nullptr)
 	{
-		order(settings.general.playlist_order);
+		activeItem = item(0);
 	}
 
-	if (activeItem == nullptr || activePlaylist == nullptr)
+	if (!activePlaylist.is_valid())
 	{
-		if (count() > 0)
-		{
-			activeItem = item(0);
-		}
-		if (!playlists.empty())
-		{
-			activePlaylist = playlists.data();
-		}
+		activePlaylist = at(0);
 	}
 
-	if (currentItem() == nullptr && activePlaylist != nullptr)
+	if (currentItem() == nullptr && activePlaylist.is_valid())
 	{
 		auto *mainWindow = MainWindow::find(parentWidget());
-		mainWindow->getSongsTree()->load(*activePlaylist);
+		mainWindow->getSongsTree()->load(activePlaylist);
 	}
 
 	if (activeItem != nullptr)
@@ -168,10 +188,29 @@ void List::Playlist::load(const std::vector<lib::spt::playlist> &playlists)
 
 void List::Playlist::refresh()
 {
-	spotify.playlists([this](const std::vector<lib::spt::playlist> &items)
+	spotify.playlists([this](const lib::result<lib::spt::page<lib::spt::playlist>> &result)
 	{
-		load(items);
-		cache.set_playlists(items);
+		if (!result.success())
+		{
+			lib::log::error("Failed to get playlists: {}", result.message());
+			return false;
+		}
+
+		const auto &page = result.value();
+		if (page.offset == 0)
+		{
+			clear();
+		}
+
+		load(page.items, page.offset);
+		if (page.has_next())
+		{
+			return true;
+		}
+
+		selectActive();
+		cache.set_playlists(getPlaylists());
+		return false;
 	});
 }
 
@@ -331,9 +370,9 @@ auto List::Playlist::allArtists() -> std::unordered_set<std::string>
 	return artists;
 }
 
-auto List::Playlist::at(int index) -> lib::spt::playlist
+auto List::Playlist::at(const int index) const -> lib::spt::playlist
 {
-	auto *listItem = item(index);
+	const auto *listItem = item(index);
 	if (listItem == nullptr)
 	{
 		return {};
