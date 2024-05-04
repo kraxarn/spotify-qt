@@ -135,6 +135,7 @@ auto SettingsPage::Application::windowTitle() -> QWidget *
 
 	titlePreview = new QLabel(this);
 	titlePreview->setFont(Font::italic());
+	titlePreview->setWordWrap(true);
 	formatLayout->addWidget(titlePreview, 1, 1);
 
 	layout->addLayout(formatLayout);
