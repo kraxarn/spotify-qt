@@ -6,6 +6,10 @@
 #include <QLabel>
 #include <QVBoxLayout>
 
+#include "clickableLabel.hpp"
+#include <string>
+
+
 namespace Context
 {
 	class NowPlaying: public QWidget
@@ -20,6 +24,10 @@ namespace Context
 
 		auto getTextShadow() const -> bool;
 		void setTextShadow(bool value);
+
+        std::string artist_id;
+        std::string album_id;
+        std::string track_id;
 
 	private:
 		static constexpr float nameScale = 1.1F;
@@ -37,5 +45,9 @@ namespace Context
 		static void removeTextShadow(QLabel *label);
 
 		void onMenu(const QPoint &pos);
+
+    public slots:
+        void handleLabelClick(QLabel *clickedLabel);
 	};
 }
+
