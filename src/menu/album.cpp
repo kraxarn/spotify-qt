@@ -13,11 +13,17 @@ Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache,
 	trackCount = addAction("...");
 	trackCount->setEnabled(false);
 	addSeparator();
-
+	
 	auto *playShuffle = addAction(Icon::get("media-playlist-shuffle"), "Shuffle play");
 
 	QAction::connect(playShuffle, &QAction::triggered,
 		this, &Menu::Album::onShuffle);
+
+	toggleLikedAlbum = addAction("Add to liked albums");
+	toggleLikedAlbum->setEnabled(false);
+
+	QAction::connect(toggleLikedAlbum, &QAction::triggered,
+		this, &Menu::Album::onLikeAlbum);
 
 	auto *share = addMenu(Icon::get("document-share"), "Share");
 
@@ -37,6 +43,13 @@ Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache,
 	addToPlaylist = new AddToPlaylist({}, spotify, cache, this);
 	addToPlaylist->setEnabled(false);
 	addMenu(addToPlaylist);
+
+	spotify.is_saved_album({albumId}, [this](const std::vector<bool> &likes)
+	{
+		auto liked = !likes.empty() && likes.front();
+		this->setLikedAlbum(liked);
+		this->toggleLikedAlbum->setEnabled(true);
+	});
 
 	album = cache.get_album(albumId);
 	if (album.is_valid())
@@ -103,6 +116,31 @@ void Menu::Album::onShuffle(bool /*checked*/)
 		});
 }
 
+void Menu::Album::onLikeAlbum(bool /*checked*/)
+{
+	auto callback = [this](const std::string &status)
+	{
+		if (status.empty())
+		{
+			return;
+		}
+		
+		StatusMessage::error(QString("Failed to %1 album: %2")
+			.arg(isLiked ? "unlike" : "like")
+			.arg(QString::fromStdString(status)));
+	};
+
+	std::vector<std::string> albumIds = { album.id };
+
+	if (isLiked) 
+	{
+		spotify.remove_saved_albums(albumIds, callback);
+	} else 
+	{
+		spotify.add_saved_albums(albumIds, callback);
+	}
+}
+
 void Menu::Album::onCopyLink(bool /*checked*/)
 {
 	QApplication::clipboard()->setText(QString("https://open.spotify.com/album/%1")
@@ -121,6 +159,19 @@ void Menu::Album::onOpenInSpotify(bool /*checked*/)
 	Url::open(QString("https://open.spotify.com/album/%1")
 		.arg(QString::fromStdString(album.id)), LinkType::Web,
 		MainWindow::find(parentWidget()));
+}
+
+void Menu::Album::setLikedAlbum(bool liked) 
+{
+	isLiked = liked;
+
+	toggleLikedAlbum->setIcon(Icon::get(liked
+		? QStringLiteral("list-remove")
+		: QStringLiteral("list-add")));
+
+	toggleLikedAlbum->setText(liked
+		? QStringLiteral("Remove from liked albums")
+		: QStringLiteral("Add to liked albums"));
 }
 
 void Menu::Album::tracksLoaded()
