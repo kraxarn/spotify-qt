@@ -1,13 +1,35 @@
 #include "lib/spotify/api.hpp"
 
 // Currently unavailable:
-// me/albums/contains
 // me/shows
 // me/shows/contains
 
 void lib::spt::api::saved_albums(const paged_callback<saved_album> &callback) const
 {
 	request.get_page<saved_album>("me/albums", {}, callback);
+}
+
+void lib::spt::api::add_saved_albums(const std::vector<std::string> &album_ids,
+	lib::callback<std::string> &callback)
+{
+	put("me/albums", {
+		{"ids", album_ids},
+	}, callback);
+}
+
+void lib::spt::api::remove_saved_albums(const std::vector<std::string> &album_ids,
+	lib::callback<std::string> &callback)
+{
+	del("me/albums", {
+		{"ids", album_ids},
+	}, callback);
+}
+
+void lib::spt::api::is_saved_album(const std::vector<std::string> &album_ids,
+	lib::callback<std::vector<bool>> &callback)
+{
+	get(lib::fmt::format("me/albums/contains?ids={}",
+		lib::strings::join(album_ids, ",")), callback);
 }
 
 void lib::spt::api::saved_tracks(lib::callback<std::vector<lib::spt::track>> &callback)
