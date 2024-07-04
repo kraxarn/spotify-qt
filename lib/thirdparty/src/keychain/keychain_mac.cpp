@@ -23,6 +23,7 @@
  *
  */
 
+#include <type_traits>
 #include <vector>
 
 #include <Security/Security.h>
@@ -30,8 +31,6 @@
 #include "keychain.h"
 
 namespace {
-
-const SecKeychainRef defaultUserKeychain = NULL; // NULL means 'default'
 
 /*! \brief Converts a CFString to a std::string
  *
@@ -104,37 +103,104 @@ void updateError(keychain::Error &err, OSStatus status) {
     }
 }
 
-/*! \brief Modify an existing password
+void setGenericError(keychain::Error &err, const std::string &errorMessage) {
+    err = keychain::Error{};
+    err.message = errorMessage;
+    err.type = keychain::ErrorType::GenericError;
+    err.code = -1;
+}
+
+/*! \brief Helper to manage the lifetime of CF-Objects
  *
- * Helper function that tries to find an existing password in the keychain and
- * modifies it.
- */
-OSStatus modifyPassword(const std::string &serviceName, const std::string &user,
-                        const std::string &password) {
-    SecKeychainItemRef item = NULL;
-    OSStatus status = SecKeychainFindGenericPassword(
-        defaultUserKeychain,
-        static_cast<UInt32>(serviceName.length()),
-        serviceName.data(),
-        static_cast<UInt32>(user.length()),
-        user.data(),
-        NULL, // unused output parameter
-        NULL, // unused output parameter
-        &item);
+ * This helper will CFRelease the managed CF-Object when it goes out of scope.
+ * It assumes ownership of the managed object, so users should own the object in
+ * terms of the Core Foundation "Create Rule" when passing it to the
+ * ScopedCFRef. Consequently, the object should also not be released by anyone
+ * else, at least not without calling CFRetain first.
+ * */
+template <typename T,
+          typename = typename std::enable_if<std::is_pointer<T>::value>::type>
+class ScopedCFRef {
+  public:
+    explicit ScopedCFRef(T ref) : _ref(ref) {}
+    ~ScopedCFRef() { _release(); }
 
-    if (status == errSecSuccess) {
-        status =
-            SecKeychainItemModifyContent(item,
-                                         NULL,
-                                         static_cast<UInt32>(password.length()),
-                                         password.data());
+    ScopedCFRef(ScopedCFRef &&other) noexcept : _ref(other._ref) {
+        other._ref = nullptr;
+    }
+    ScopedCFRef &operator=(ScopedCFRef &&other) {
+        if (this != &other) {
+            _release();
+            _ref = other._ref;
+            other._ref = nullptr;
+        }
+        return *this;
     }
 
-    if (item) {
-        CFRelease(item);
+    ScopedCFRef(const ScopedCFRef &) = delete;
+    ScopedCFRef &operator=(const ScopedCFRef &) = delete;
+
+    const T get() const { return _ref; }
+    operator bool() const { return _ref != nullptr; }
+
+  private:
+    void _release() {
+        if (_ref != nullptr) {
+            CFRelease(_ref);
+            _ref = nullptr;
+        }
     }
 
-    return status;
+    T _ref;
+};
+
+ScopedCFRef<CFStringRef> createCFStringWithCString(const std::string &str,
+                                                   keychain::Error &err) {
+    auto result = ScopedCFRef<CFStringRef>(CFStringCreateWithCString(
+        kCFAllocatorDefault, str.c_str(), kCFStringEncodingUTF8));
+    if (!result)
+        setGenericError(err, "Failed to create CFString");
+    return result;
+}
+
+ScopedCFRef<CFMutableDictionaryRef>
+createCFMutableDictionary(keychain::Error &err) {
+    auto result = ScopedCFRef<CFMutableDictionaryRef>(
+        CFDictionaryCreateMutable(kCFAllocatorDefault,
+                                  0,
+                                  &kCFTypeDictionaryKeyCallBacks,
+                                  &kCFTypeDictionaryValueCallBacks));
+    if (!result)
+        setGenericError(err, "Failed to create CFMutableDictionary");
+    return result;
+}
+
+ScopedCFRef<CFDataRef> createCFData(const std::string &data,
+                                    keychain::Error &err) {
+    auto result = ScopedCFRef<CFDataRef>(
+        CFDataCreate(kCFAllocatorDefault,
+                     reinterpret_cast<const UInt8 *>(data.c_str()),
+                     data.length()));
+    if (!result)
+        setGenericError(err, "Failed to create CFData");
+    return result;
+}
+
+ScopedCFRef<CFMutableDictionaryRef> createQuery(const std::string &serviceName,
+                                                const std::string &user,
+                                                keychain::Error &err) {
+    const auto cfServiceName = createCFStringWithCString(serviceName, err);
+    const auto cfUser = createCFStringWithCString(user, err);
+    auto query = createCFMutableDictionary(err);
+
+    if (err.type != keychain::ErrorType::NoError)
+        return query;
+
+    CFDictionaryAddValue(query.get(), kSecClass, kSecClassGenericPassword);
+    CFDictionaryAddValue(query.get(), kSecAttrAccount, cfUser.get());
+    CFDictionaryAddValue(query.get(), kSecAttrService, cfServiceName.get());
+
+    return query;
 }
 
 } // namespace
@@ -146,85 +212,62 @@ void setPassword(const std::string &package, const std::string &service,
                  Error &err) {
     err = Error{};
     const auto serviceName = makeServiceName(package, service);
+    const auto cfPassword = createCFData(password, err);
+    auto query = createQuery(serviceName, user, err);
 
-    OSStatus status =
-        SecKeychainAddGenericPassword(defaultUserKeychain,
-                                      static_cast<UInt32>(serviceName.length()),
-                                      serviceName.data(),
-                                      static_cast<UInt32>(user.length()),
-                                      user.data(),
-                                      static_cast<UInt32>(password.length()),
-                                      password.data(),
-                                      NULL /* unused output parameter */);
+    if (err.type != keychain::ErrorType::NoError)
+        return;
+
+    CFDictionaryAddValue(query.get(), kSecValueData, cfPassword.get());
+    OSStatus status = SecItemAdd(query.get(), NULL);
 
     if (status == errSecDuplicateItem) {
         // password exists -- override
-        status = modifyPassword(serviceName, user, password);
+        auto attributesToUpdate = createCFMutableDictionary(err);
+        if (err.type != keychain::ErrorType::NoError)
+            return;
+
+        CFDictionaryAddValue(
+            attributesToUpdate.get(), kSecValueData, cfPassword.get());
+        status = SecItemUpdate(query.get(), attributesToUpdate.get());
     }
 
-    if (status != errSecSuccess) {
-        updateError(err, status);
-    }
+    updateError(err, status);
 }
 
 std::string getPassword(const std::string &package, const std::string &service,
                         const std::string &user, Error &err) {
     err = Error{};
     const auto serviceName = makeServiceName(package, service);
-    void *data;
-    UInt32 length;
+    auto query = createQuery(serviceName, user, err);
 
-    OSStatus status = SecKeychainFindGenericPassword(
-        defaultUserKeychain,
-        static_cast<UInt32>(serviceName.length()),
-        serviceName.data(),
-        static_cast<UInt32>(user.length()),
-        user.data(),
-        &length,
-        &data,
-        NULL /* unused output parameter */);
+    if (err.type != keychain::ErrorType::NoError)
+        return "";
 
-    std::string password;
+    CFDictionaryAddValue(query.get(), kSecReturnData, kCFBooleanTrue);
 
-    if (status != errSecSuccess) {
-        updateError(err, status);
-    } else if (data != NULL) {
-        password = std::string(reinterpret_cast<const char *>(data), length);
-        SecKeychainItemFreeContent(NULL, data);
-    }
+    CFTypeRef result = nullptr;
+    updateError(err, SecItemCopyMatching(query.get(), &result));
+    const auto cfPassword = ScopedCFRef<CFDataRef>((CFDataRef)result);
 
-    return password;
+    if (!cfPassword || err.type != keychain::ErrorType::NoError)
+        return "";
+
+    return std::string(
+        reinterpret_cast<const char *>(CFDataGetBytePtr(cfPassword.get())),
+        CFDataGetLength(cfPassword.get()));
 }
 
 void deletePassword(const std::string &package, const std::string &service,
                     const std::string &user, Error &err) {
     err = Error{};
     const auto serviceName = makeServiceName(package, service);
-    SecKeychainItemRef item;
+    const auto query = createQuery(serviceName, user, err);
 
-    OSStatus status = SecKeychainFindGenericPassword(
-        defaultUserKeychain,
-        static_cast<UInt32>(serviceName.length()),
-        serviceName.data(),
-        static_cast<UInt32>(user.length()),
-        user.data(),
-        NULL, // unused output parameter
-        NULL, // unused output parameter
-        &item);
+    if (err.type != keychain::ErrorType::NoError)
+        return;
 
-    if (status != errSecSuccess) {
-        updateError(err, status);
-    } else {
-        status = SecKeychainItemDelete(item);
-        if (status != errSecSuccess) {
-            updateError(err, status);
-        }
-    }
-
-    if (!err && item) {
-        CFRelease(item);
-    }
-
+    updateError(err, SecItemDelete(query.get()));
 }
 
 } // namespace keychain
