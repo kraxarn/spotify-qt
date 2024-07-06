@@ -1,5 +1,10 @@
 #include "nowplaying.hpp"
+#include "clickableLabel.hpp"
+#include <QMenu>
 #include <QGraphicsDropShadowEffect>
+
+#include "mainwindow.hpp"
+
 
 Context::NowPlaying::NowPlaying(QWidget *parent)
 	: QWidget(parent)
@@ -23,16 +28,20 @@ void Context::NowPlaying::setTrack(const lib::spt::track &track)
 {
 	if (name != nullptr)
 	{
+        track_id = track.id;
+        album_id = track.album.id;
 		name->setVisible(true);
 		setText(name, track.name);
 	}
 
 	if (artist != nullptr)
 	{
+        artist_id = track.artists[0].id;
 		const auto names = lib::spt::entity::combine_names(track.artists);
 		setText(artist, names);
 	}
 }
+
 
 void Context::NowPlaying::setNoPlaying()
 {
@@ -49,7 +58,7 @@ void Context::NowPlaying::setNoPlaying()
 
 auto Context::NowPlaying::newLabel(float scale) -> QLabel *
 {
-	auto *label = new QLabel(this);
+	auto *label = new ClickableLabel(this);
 	label->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
 
 	auto font = label->font();
@@ -58,8 +67,14 @@ auto Context::NowPlaying::newLabel(float scale) -> QLabel *
 	label->setFont(font);
 
 	layout->addWidget(label);
+
+    connect(label, &ClickableLabel::clicked, this, [this, label](){
+        handleLabelClick(label);
+    });
 	return label;
 }
+
+
 
 void Context::NowPlaying::setText(QLabel *label, const std::string &text)
 {
@@ -127,4 +142,13 @@ void Context::NowPlaying::onMenu(const QPoint &pos)
 	});
 
 	menu->popup(mapToGlobal(pos));
+}
+
+void Context::NowPlaying::handleLabelClick(QLabel *clickedLabel){
+    if(clickedLabel == artist){
+    MainWindow::find(parentWidget())->openArtist(artist_id);
+    }
+    else if(clickedLabel == name){
+        MainWindow::find(parentWidget())->loadAlbum(album_id, track_id);
+    }
 }
