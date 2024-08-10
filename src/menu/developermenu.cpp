@@ -220,6 +220,17 @@ auto DeveloperMenu::statusMenu() -> QMenu *
 		});
 	});
 
+	addMenuItem(menu, QStringLiteral("Information with long message"), []()
+	{
+		const auto text = QStringLiteral(
+			"This is a very long informational message just to make sure that "
+			"messages can be very long without breaking the layout of the "
+			"application or causing other elements to resize"
+		);
+
+		StatusMessage::show(MessageType::Information, text);
+	});
+
 	addMenuItem(menu, "Warning", []()
 	{
 		StatusMessage::show(MessageType::Warning, "Warning");
