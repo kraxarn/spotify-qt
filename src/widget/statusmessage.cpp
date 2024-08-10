@@ -14,6 +14,7 @@ StatusMessage::StatusMessage(QWidget *parent)
 	layout->addWidget(icon);
 
 	message = new QLabel(this);
+	message->setWordWrap(true);
 	layout->addWidget(message, 1, Qt::AlignVCenter);
 
 	action = new QPushButton(this);
