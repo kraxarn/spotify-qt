@@ -4,17 +4,17 @@ on: [ push, pull_request ]
 
 jobs:
   build:
-    runs-on: macos-12
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Build
-        uses: cross-platform-actions/action@v0.24.0
+        uses: cross-platform-actions/action@v0.25.0
         with:
           operating_system: freebsd
           architecture: x86-64
-          version: '13.2'
+          version: '14.1'
           shell: bash
           run: |
             sudo pkg install -y cmake git qt6-base qt6-svg
