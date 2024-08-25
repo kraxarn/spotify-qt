@@ -4,17 +4,17 @@ on: workflow_dispatch
 
 jobs:
   build:
-    runs-on: macos-12
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Build
-        uses: cross-platform-actions/action@v0.24.0
+        uses: cross-platform-actions/action@v0.25.0
         with:
           operating_system: netbsd
           architecture: x86-64
-          version: '9.3'
+          version: '9.4'
           shell: bash
           run: |
             sudo pkgin -y install cmake git qt6-qtbase qt6-qtsvg || cat /var/db/pkgin/pkg_install-err.log
