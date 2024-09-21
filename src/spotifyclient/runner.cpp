@@ -198,18 +198,17 @@ void SpotifyClient::Runner::logOutput(const QByteArray &output, lib::log_type lo
 
 		log.emplace_back(lib::date_time::now(), logType, line.toStdString());
 
-#ifdef USE_KEYCHAIN
 		if (line.contains(QStringLiteral("Bad credentials")))
 		{
+#ifdef USE_KEYCHAIN
 			const auto username = QString::fromStdString(settings.spotify.username);
 			if (Keychain::clearPassword(username))
 			{
 				lib::log::warn("Bad credentials, cleared saved password");
 			}
-
+#endif
 			emit statusChanged(QStringLiteral("Bad credentials, please try again"));
 		}
-#endif
 	}
 }
 
@@ -243,7 +242,36 @@ void SpotifyClient::Runner::onStarted()
 
 void SpotifyClient::Runner::onErrorOccurred(QProcess::ProcessError error)
 {
-	emit statusChanged(QString("Error %1").arg(error));
+	QString message;
+
+	switch (error)
+	{
+		case QProcess::FailedToStart:
+			message = QStringLiteral("Process failed to start");
+			break;
+
+		case QProcess::Crashed:
+			message = QStringLiteral("Process stopped or crashed");
+			break;
+
+		case QProcess::Timedout:
+			message = QStringLiteral("Process timed out");
+			break;
+
+		case QProcess::WriteError:
+			message = QStringLiteral("Process with write error");
+			break;
+
+		case QProcess::ReadError:
+			message = QStringLiteral("Process with read error");
+			break;
+
+		default:
+			message = QStringLiteral("Process with unknown error");
+			break;
+	}
+
+	emit statusChanged(message);
 }
 
 auto SpotifyClient::Runner::getLog() -> const std::vector<lib::log_message> &

@@ -94,6 +94,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	{
 		trayIcon->deleteLater();
 		event->accept();
+		mainContent = nullptr;
 	}
 }
 
@@ -593,8 +594,10 @@ auto MainWindow::startClient() -> const SpotifyClient::Runner *
 
 void MainWindow::stopClient()
 {
-	spotifyRunner->deleteLater();
-	spotifyRunner = nullptr;
+	if (spotifyRunner != nullptr){
+		spotifyRunner->deleteLater();
+		spotifyRunner = nullptr;
+	}
 }
 
 void MainWindow::openLyrics(const lib::spt::track &track)
@@ -830,9 +833,20 @@ void MainWindow::resetLibraryPlaylist() const
 
 void MainWindow::onSpotifyStatusChanged(const QString &status)
 {
+	if (status.isEmpty() || mainContent == nullptr)
+	{
+		return;
+	}
+
+	const auto message = QString("Spotify client error: %1")
+		.arg(status);
+
 	if ((windowState() & Qt::WindowActive) > 0)
 	{
-		QMessageBox::warning(this, QStringLiteral("Client error"),
-			QString("Failed to start Spotify client: %1").arg(status));
+		StatusMessage::warn(message);
+	}
+	else
+	{
+		QMessageBox::warning(this, QStringLiteral("Client error"), message);
 	}
 }
