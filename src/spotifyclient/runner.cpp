@@ -242,29 +242,36 @@ void SpotifyClient::Runner::onStarted()
 
 void SpotifyClient::Runner::onErrorOccurred(QProcess::ProcessError error)
 {
-	std::string_view message;
+	QString message;
+
 	switch (error)
 	{
 		case QProcess::FailedToStart:
-			message = "Process failed to start";
+			message = QStringLiteral("Process failed to start");
 			break;
+
 		case QProcess::Crashed:
-			message = "Process stopped or crashed";
+			message = QStringLiteral("Process stopped or crashed");
 			break;
+
 		case QProcess::Timedout:
-			message = "Process timed out";
+			message = QStringLiteral("Process timed out");
 			break;
+
 		case QProcess::WriteError:
-			message = "Process with write error";
+			message = QStringLiteral("Process with write error");
 			break;
+
 		case QProcess::ReadError:
-			message = "Process with read error";
+			message = QStringLiteral("Process with read error");
 			break;
+
 		default:
-			message = "Process with unknown error";
+			message = QStringLiteral("Process with unknown error");
 			break;
 	}
-	emit statusChanged(QString::fromUtf8(message.data(), message.size()));
+
+	emit statusChanged(message);
 }
 
 auto SpotifyClient::Runner::getLog() -> const std::vector<lib::log_message> &
