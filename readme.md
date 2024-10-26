@@ -56,16 +56,13 @@ If you're running some other Linux distribution, macOS, or Windows, you can inst
 download unstable builds automatically built every day
 from [spotify-qt-nightly](https://kraxarn.github.io/spotify-qt-nightly).
 
-## Configuring
+## Questions?
 
-* open https://developer.spotify.com/dashboard/
-* create a new application
-* goto **edit settings** in the app overview
-* add `http://localhost:8888` in **Redirect URIs** section
+Check the [FAQ on the wiki](https://github.com/kraxarn/spotify-qt/wiki/Frequently-Asked-Questions),
+or the [discussions](https://github.com/kraxarn/spotify-qt/discussions)!
 
-![spotify dashboard](.github/img/spotify_dashboard-redirect_uri.png)
-
-* launch Spotify-qt and copy/paste **Client ID** and **Client Secret**, you should be able to login
+You can also check out the [roadmap](https://github.com/users/kraxarn/projects/2),
+or [issues](https://github.com/kraxarn/spotify-qt/issues), for planned features and known bugs.
 
 ## Building yourself
 
