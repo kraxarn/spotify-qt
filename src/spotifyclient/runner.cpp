@@ -1,6 +1,5 @@
 #include "spotifyclient/runner.hpp"
 #include "mainwindow.hpp"
-#include "dialog/passwordentry.hpp"
 
 std::vector<lib::log_message> SpotifyClient::Runner::log;
 
