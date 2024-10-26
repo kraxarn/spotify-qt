@@ -64,9 +64,5 @@ namespace SettingsPage
 		auto config() -> QWidget *;
 
 		void onSpotifyStatusChanged(const QString &status);
-
-#ifdef USE_KEYCHAIN
-		void onClearPassword(bool checked);
-#endif
 	};
 }

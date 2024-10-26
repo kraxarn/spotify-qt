@@ -28,9 +28,5 @@ namespace Dialog
 
 		QGroupBox *container;
 		QLineEdit *password;
-
-#ifdef USE_KEYCHAIN
-		QCheckBox *rememberMe;
-#endif
 	};
 }

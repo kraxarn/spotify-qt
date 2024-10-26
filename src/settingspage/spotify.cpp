@@ -5,10 +5,6 @@
 
 #include <QStandardPaths>
 
-#ifdef USE_KEYCHAIN
-#include "util/keychain.hpp"
-#endif
-
 SettingsPage::Spotify::Spotify(lib::settings &settings, QWidget *parent)
 	: SettingsPage::Base(settings, parent)
 {
@@ -229,18 +225,6 @@ auto SettingsPage::Spotify::config() -> QWidget *
 
 	sptAdditionalArguments = new QLineEdit(QString::fromStdString(settings.spotify.additional_arguments), sptGroup);
 	sptLayout->addWidget(sptAdditionalArguments, 4, 1);
-
-	// Clear password
-#ifdef USE_KEYCHAIN
-	auto *clearPasswordText = new QLabel(QStringLiteral("Clear saved password"));
-	sptLayout->addWidget(clearPasswordText, 5, 0);
-
-	auto *clearPassword = new QPushButton(QStringLiteral("Clear"), this);
-	sptLayout->addWidget(clearPassword, 5, 1, Qt::AlignTrailing);
-
-	QAbstractButton::connect(clearPassword, &QAbstractButton::clicked,
-		this, &SettingsPage::Spotify::onClearPassword);
-#endif
 
 	// librespot discovery
 	sptDiscovery = new QCheckBox("Enable discovery");
@@ -480,38 +464,3 @@ void SettingsPage::Spotify::onSpotifyStatusChanged(const QString &status)
 			? QStringLiteral("Running")
 			: status);
 }
-
-#ifdef USE_KEYCHAIN
-void SettingsPage::Spotify::onClearPassword(bool /*checked*/)
-{
-	const auto *mainWindow = MainWindow::find(parentWidget());
-	const auto username = mainWindow != nullptr
-		? QString::fromStdString(mainWindow->getCurrentUser().id)
-		: QString();
-
-	if (username.isEmpty())
-	{
-		QMessageBox::information(this, QStringLiteral("No username"),
-			QStringLiteral("No username saved to clear password for."));
-		return;
-	}
-
-	const auto password = Keychain::getPassword(username);
-	if (password.isEmpty())
-	{
-		QMessageBox::information(this, QStringLiteral("No password"),
-			QString("No password saved for user \"%1\".").arg(username));
-		return;
-	}
-
-	if (!Keychain::clearPassword(username))
-	{
-		QMessageBox::warning(this, QStringLiteral("Failed"),
-			QStringLiteral("Failed to clear password, check the log for details."));
-		return;
-	}
-
-	QMessageBox::information(this, QStringLiteral("Cleared"),
-		QString("Password cleared for user \"%1\".").arg(username));
-}
-#endif

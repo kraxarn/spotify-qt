@@ -2,10 +2,6 @@
 #include "mainwindow.hpp"
 #include "dialog/passwordentry.hpp"
 
-#ifdef USE_KEYCHAIN
-#include "util/keychain.hpp"
-#endif
-
 std::vector<lib::log_message> SpotifyClient::Runner::log;
 
 SpotifyClient::Runner::Runner(const lib::settings &settings,
@@ -80,21 +76,8 @@ void SpotifyClient::Runner::start()
 		return;
 	}
 
-	// Try to get password
-	QString password;
-#ifdef USE_KEYCHAIN
-	password = Keychain::getPassword(username);
-#endif
-
-	if (password.isEmpty())
-	{
-		auto *dialog = new Dialog::PasswordEntry(this, parentWidget);
-		dialog->open(username);
-	}
-	else
-	{
-		start(username, password);
-	}
+	auto *dialog = new Dialog::PasswordEntry(this, parentWidget);
+	dialog->open(username);
 }
 
 void SpotifyClient::Runner::start(const QString &username, const QString &password)
@@ -203,13 +186,6 @@ void SpotifyClient::Runner::logOutput(const QByteArray &output, lib::log_type lo
 
 		if (line.contains(QStringLiteral("Bad credentials")))
 		{
-#ifdef USE_KEYCHAIN
-			const auto username = getUsername();
-			if (Keychain::clearPassword(username))
-			{
-				lib::log::warn("Bad credentials, cleared saved password");
-			}
-#endif
 			emit statusChanged(QStringLiteral("Bad credentials, please try again"));
 		}
 	}

@@ -21,12 +21,6 @@ lib::qt::system_info::system_info()
 
 	// Build ABI
 	add("ABI", QSysInfo::buildAbi());
-
-#ifdef USE_KEYCHAIN
-	add(QStringLiteral("Keychain support"), QStringLiteral("Yes"));
-#else
-	add(QStringLiteral("Keychain support"), QStringLiteral("No"));
-#endif
 }
 
 void lib::qt::system_info::add(const QString &key, const QString &value)
