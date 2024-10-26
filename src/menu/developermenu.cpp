@@ -5,7 +5,6 @@
 #include "dialog/createplaylist.hpp"
 #include "dialog/addtoplaylist.hpp"
 #include "dialog/apirequest.hpp"
-#include "dialog/passwordentry.hpp"
 #include "dialog/memory.hpp"
 #include "dialog/lyricssearch.hpp"
 #include "dialog/disallows.hpp"
@@ -296,14 +295,6 @@ void DeveloperMenu::onDialogMenuAboutToShow()
 			QStringLiteral("Add to playlist"), [this, mainWindow]
 			{
 				return new Dialog::AddToPlaylist(spotify, lib::spt::playlist(), {}, {}, mainWindow);
-			}
-		},
-		{
-			QStringLiteral("Password entry"), [this, mainWindow]
-			{
-				auto *paths = new QtPaths(this);
-				auto *runner = new SpotifyClient::Runner(settings, *paths, mainWindow);
-				return new Dialog::PasswordEntry(runner, mainWindow);
 			}
 		},
 		{
