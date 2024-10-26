@@ -7,7 +7,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/http.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/icon.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/image.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/keychain.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/menuaction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/process.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/refresher.cpp
