@@ -28,7 +28,6 @@ namespace SpotifyClient
 		~Runner() override;
 
 		void start();
-		void start(const QString &username, const QString &password);
 
 		static auto getLog() -> const std::vector<lib::log_message> &;
 		auto isRunning() const -> bool;

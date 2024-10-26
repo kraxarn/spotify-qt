@@ -55,11 +55,6 @@ void SpotifyClient::Runner::start()
 		return;
 	}
 
-	start({}, {});
-}
-
-void SpotifyClient::Runner::start(const QString &/*username*/, const QString &/*password*/)
-{
 	// Common arguments
 	QStringList arguments({
 		"--bitrate", QString::number(static_cast<int>(settings.spotify.bitrate)),
