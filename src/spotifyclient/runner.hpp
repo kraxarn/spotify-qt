@@ -49,6 +49,8 @@ namespace SpotifyClient
 		const lib::paths &paths;
 		lib::client_type clientType;
 
+		auto getUsername() const -> QString;
+
 		void logOutput(const QByteArray &output, lib::log_type logType);
 		static auto joinArgs(const QStringList &args) -> QString;
 

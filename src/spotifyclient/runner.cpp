@@ -28,6 +28,18 @@ SpotifyClient::Runner::~Runner()
 	}
 }
 
+auto SpotifyClient::Runner::getUsername() const -> QString
+{
+	const auto *mainWindow = MainWindow::find(parentWidget);
+	if (mainWindow == nullptr)
+	{
+		return {};
+	}
+
+	const auto &userId = mainWindow->getCurrentUser().id;
+	return QString::fromStdString(userId);
+}
+
 void SpotifyClient::Runner::start()
 {
 	// Don't start if already running
@@ -61,7 +73,7 @@ void SpotifyClient::Runner::start()
 	}
 
 	// Check if username exists
-	const auto username = QString::fromStdString(settings.spotify.username);
+	const auto username = getUsername();
 	if (username.isEmpty())
 	{
 		emit statusChanged(QStringLiteral("No username provided"));
@@ -192,7 +204,7 @@ void SpotifyClient::Runner::logOutput(const QByteArray &output, lib::log_type lo
 		if (line.contains(QStringLiteral("Bad credentials")))
 		{
 #ifdef USE_KEYCHAIN
-			const auto username = QString::fromStdString(settings.spotify.username);
+			const auto username = getUsername();
 			if (Keychain::clearPassword(username))
 			{
 				lib::log::warn("Bad credentials, cleared saved password");

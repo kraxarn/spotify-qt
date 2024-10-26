@@ -35,7 +35,6 @@ namespace SettingsPage
 		QGroupBox *sptGroup = nullptr;
 		QLabel *sptVersion = nullptr;
 		QLineEdit *sptPath = nullptr;
-		QLineEdit *sptUsername = nullptr;
 		QCheckBox *sptDiscovery = nullptr;
 		QLineEdit *sptAdditionalArguments = nullptr;
 

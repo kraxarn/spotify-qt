@@ -195,11 +195,6 @@ auto SettingsPage::Spotify::config() -> QWidget *
 	sptGroup->setLayout(sptLayout);
 	content->addWidget(sptGroup);
 
-	// Username
-	sptLayout->addWidget(new QLabel("Username", sptGroup), 0, 0);
-	sptUsername = new QLineEdit(QString::fromStdString(settings.spotify.username), sptGroup);
-	sptLayout->addWidget(sptUsername, 0, 1);
-
 	// Bitrate
 	sptLayout->addWidget(new QLabel("Quality", sptGroup), 1, 0);
 	sptBitrate = new QComboBox(sptGroup);
@@ -353,11 +348,6 @@ auto SettingsPage::Spotify::save() -> bool
 		settings.spotify.start_client = sptAppStart->isChecked();
 	}
 
-	if (sptUsername != nullptr)
-	{
-		settings.spotify.username = sptUsername->text().toStdString();
-	}
-
 	if (sptBitrate != nullptr)
 	{
 		auto bitrate = sptBitrate->currentIndex();
@@ -494,7 +484,11 @@ void SettingsPage::Spotify::onSpotifyStatusChanged(const QString &status)
 #ifdef USE_KEYCHAIN
 void SettingsPage::Spotify::onClearPassword(bool /*checked*/)
 {
-	const auto username = QString::fromStdString(settings.spotify.username);
+	const auto *mainWindow = MainWindow::find(parentWidget());
+	const auto username = mainWindow != nullptr
+		? QString::fromStdString(mainWindow->getCurrentUser().id)
+		: QString();
+
 	if (username.isEmpty())
 	{
 		QMessageBox::information(this, QStringLiteral("No username"),

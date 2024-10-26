@@ -26,11 +26,6 @@ namespace lib
 			std::string path;
 
 			/**
-			 * Spotify username
-			 */
-			std::string username;
-
-			/**
 			 * Additional arugments to pass to the spotify client
 			 */
 			std::string additional_arguments;
