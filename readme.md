@@ -12,7 +12,8 @@ An unofficial Spotify client using Qt as a simpler, lighter alternative to the o
 need an actual Spotify client running, for example [librespot](https://github.com/librespot-org/librespot), which can be
 configured from within the app.
 
-**Note:** Controlling playback requires Spotify Premium.
+> [!NOTE]
+> Controlling playback requires Spotify Premium.
 
 #### Contributions are very welcome!
 
