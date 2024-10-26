@@ -109,17 +109,8 @@ void SpotifyClient::Runner::start(const QString &username, const QString &passwo
 			"--name", QString("%1 (librespot)").arg(APP_NAME),
 			"--initial-volume", initialVolume,
 			"--cache", QString::fromStdString((paths.cache() / "librespot").string()),
+			"--autoplay", "on",
 		});
-
-		const auto autoplaySupport = SpotifyClient::Helper::getAutoplaySupport(path);
-		if (autoplaySupport != AutoplaySupport::None)
-		{
-			arguments.append(QStringLiteral("--autoplay"));
-			if (autoplaySupport == AutoplaySupport::Option)
-			{
-				arguments.append(QStringLiteral("on"));
-			}
-		}
 	}
 	else if (clientType == lib::client_type::spotifyd)
 	{
