@@ -24,18 +24,6 @@ SpotifyClient::Runner::~Runner()
 	}
 }
 
-auto SpotifyClient::Runner::getUsername() const -> QString
-{
-	const auto *mainWindow = MainWindow::find(parentWidget);
-	if (mainWindow == nullptr)
-	{
-		return {};
-	}
-
-	const auto &userId = mainWindow->getCurrentUser().id;
-	return QString::fromStdString(userId);
-}
-
 void SpotifyClient::Runner::start()
 {
 	// Don't start if already running
@@ -68,31 +56,14 @@ void SpotifyClient::Runner::start()
 		return;
 	}
 
-	// Check if username exists
-	const auto username = getUsername();
-	if (username.isEmpty())
-	{
-		emit statusChanged(QStringLiteral("No username provided"));
-		return;
-	}
-
-	auto *dialog = new Dialog::PasswordEntry(this, parentWidget);
-	dialog->open(username);
+	start({}, {});
 }
 
-void SpotifyClient::Runner::start(const QString &username, const QString &password)
+void SpotifyClient::Runner::start(const QString &/*username*/, const QString &/*password*/)
 {
-	if (password.isEmpty())
-	{
-		emit statusChanged(QStringLiteral("No password provided"));
-		return;
-	}
-
 	// Common arguments
 	QStringList arguments({
 		"--bitrate", QString::number(static_cast<int>(settings.spotify.bitrate)),
-		"--username", username,
-		"--password", password
 	});
 
 	const auto initialVolume = QString::number(settings.spotify.volume);
