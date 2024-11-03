@@ -7,7 +7,7 @@ SystemInfo::SystemInfo()
 {
 	// spotify-qt version
 #ifdef GIT_COMMIT
-	add(QStringLiteral("App version"), QString("%1 (%2)")
+	add(QStringLiteral("App version"), QStringLiteral("%1 (%2)")
 		.arg(APP_VERSION, GIT_COMMIT));
 #else
 	add(QStringLiteral("App version"), APP_VERSION);

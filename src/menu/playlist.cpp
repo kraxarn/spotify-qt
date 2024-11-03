@@ -106,7 +106,7 @@ auto Menu::Playlist::devMenu() -> QMenu *
 	menu->setIcon(Icon::get("folder-txt"));
 
 	const auto playlistId = QString::fromStdString(playlist.id);
-	auto *copyId = menu->addAction(QString("Copy ID: %1").arg(playlistId));
+	auto *copyId = menu->addAction(QStringLiteral("Copy ID: %1").arg(playlistId));
 
 	QAction::connect(copyId, &QAction::triggered,
 		this, &Menu::Playlist::onCopyId);
@@ -138,13 +138,13 @@ void Menu::Playlist::tracksLoaded(const std::vector<lib::spt::track> &items)
 
 	if (!tracks.empty())
 	{
-		tracksAction->setText(QString("%1 track%2, %3%4 m")
+		tracksAction->setText(QStringLiteral("%1 track%2, %3%4 m")
 			.arg(tracks.size())
 			.arg(tracks.size() == 1
 					? QString()
 					: QStringLiteral("s"),
 				minutes >= sInMin
-					? QString("%1 h ").arg(minutes / sInMin)
+					? QStringLiteral("%1 h ").arg(minutes / sInMin)
 					: QString())
 			.arg(minutes % sInMin));
 	}
@@ -153,7 +153,7 @@ void Menu::Playlist::tracksLoaded(const std::vector<lib::spt::track> &items)
 	const auto isOwner = playlist.is_owner(window->getCurrentUser());
 	if (!isOwner && !playlist.owner_name.empty())
 	{
-		byAction->setText(QString("By %1")
+		byAction->setText(QStringLiteral("By %1")
 			.arg(QString::fromStdString(playlist.owner_name)));
 		byAction->setVisible(true);
 	}
@@ -186,7 +186,7 @@ void Menu::Playlist::isFollowingLoaded(const std::vector<bool> &follows)
 
 auto Menu::Playlist::playlistUrl() const -> QString
 {
-	return QString("https://open.spotify.com/playlist/%1")
+	return QStringLiteral("https://open.spotify.com/playlist/%1")
 		.arg(QString::fromStdString(playlist.id));
 }
 
@@ -254,7 +254,7 @@ void Menu::Playlist::onFollow(bool /*checked*/)
 	{
 		if (!status.empty())
 		{
-			StatusMessage::error(QString("Failed to %1: %2")
+			StatusMessage::error(QStringLiteral("Failed to %1: %2")
 				.arg(isFollowing
 						? QStringLiteral("unfollow")
 						: QStringLiteral("follow"),

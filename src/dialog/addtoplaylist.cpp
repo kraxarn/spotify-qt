@@ -113,12 +113,12 @@ void Dialog::AddToPlaylist::addTracks(const std::vector<std::string> &trackIds)
 		{
 			if (!result.empty())
 			{
-				StatusMessage::error(QString("Failed to add track to playlist: %1")
+				StatusMessage::error(QStringLiteral("Failed to add track to playlist: %1")
 					.arg(QString::fromStdString(result)));
 				return;
 			}
 
-			StatusMessage::info(QString("Added to %1")
+			StatusMessage::info(QStringLiteral("Added to %1")
 				.arg(QString::fromStdString(playlist.name)));
 		});
 }

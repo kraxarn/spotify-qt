@@ -110,7 +110,7 @@ void TrayIcon::setDefaultPixmap()
 {
 	constexpr int iconSize = 64;
 
-	setIcon(Icon::get(QString("logo:%1-symbolic-%2")
+	setIcon(Icon::get(QStringLiteral("logo:%1-symbolic-%2")
 		.arg(APP_ICON)
 		.arg(settings.general.tray_light_icon ? "light" : "dark"))
 		.pixmap(iconSize, iconSize));

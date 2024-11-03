@@ -56,7 +56,7 @@ void SidePanel::View::openAudioFeatures(const std::vector<lib::spt::track> &trac
 		}
 
 		view = new ::View::AudioFeatures(spotify, trackIds, this);
-		tabTitle = QString("%1 tracks").arg(tracks.size());
+		tabTitle = QStringLiteral("%1 tracks").arg(tracks.size());
 	}
 
 	addTab(view, "view-statistics", tabTitle,

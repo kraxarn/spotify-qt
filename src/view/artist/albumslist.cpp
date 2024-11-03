@@ -165,7 +165,7 @@ void Artist::AlbumsList::onItemDoubleClicked(QTreeWidgetItem *item, int /*column
 				return;
 			}
 
-			StatusMessage::error(QString("Failed to start playback: %1")
+			StatusMessage::error(QStringLiteral("Failed to start playback: %1")
 				.arg(QString::fromStdString(result)));
 		});
 }
@@ -225,7 +225,7 @@ void Artist::AlbumsList::onItemExtended(const QTreeWidgetItem *item) const
 		{
 			if (!result.success())
 			{
-				StatusMessage::error(QString("Failed to load appears on albums: %1")
+				StatusMessage::error(QStringLiteral("Failed to load appears on albums: %1")
 					.arg(QString::fromStdString(result.message())));
 
 				return false;

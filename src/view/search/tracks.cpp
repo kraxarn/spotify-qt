@@ -97,7 +97,7 @@ void Search::Tracks::onItemDoubleClicked(QTreeWidgetItem *item, int /*column*/)
 			return;
 		}
 
-		StatusMessage::error(QString("Failed to play track: %1")
+		StatusMessage::error(QStringLiteral("Failed to play track: %1")
 			.arg(QString::fromStdString(status)));
 	});
 }

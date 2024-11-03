@@ -86,7 +86,7 @@ void Dialog::ApiRequest::sendRequest(bool /*checked*/)
 
 	QNetworkRequest request(urlType->currentText().append(urlPath->text()));
 	request.setRawHeader("Authorization",
-		QString("Bearer %1")
+		QStringLiteral("Bearer %1")
 			.arg(QString::fromStdString(settings.account.access_token)).toUtf8());
 
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -110,7 +110,7 @@ void Dialog::ApiRequest::sendRequest(bool /*checked*/)
 
 	jsonResponse->setPlainText(jsonParseError.error == QJsonParseError::NoError
 		? json.toJson(QJsonDocument::JsonFormat::Indented)
-		: QString("Failed to parse JSON: %1\n%2")
+		: QStringLiteral("Failed to parse JSON: %1\n%2")
 			.arg(jsonParseError.errorString(), QString(replyBody)));
 	tabs->setCurrentIndex(1);
 }

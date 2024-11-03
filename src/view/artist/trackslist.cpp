@@ -70,7 +70,7 @@ void Artist::TracksList::onDoubleClicked(QListWidgetItem *currentItem)
 			return;
 		}
 
-		StatusMessage::error(QString("Failed to start playback: %1")
+		StatusMessage::error(QStringLiteral("Failed to start playback: %1")
 			.arg(QString::fromStdString(result)));
 	});
 }

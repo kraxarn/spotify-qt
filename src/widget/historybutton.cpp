@@ -23,7 +23,7 @@ HistoryButton::HistoryButton(QWidget *parent)
 
 void HistoryButton::push(const lib::spt::playlist &playlist)
 {
-	const auto tooltip = QString("%1 by %2")
+	const auto tooltip = QStringLiteral("%1 by %2")
 		.arg(QString::fromStdString(playlist.name),
 			QString::fromStdString(playlist.owner_name));
 
@@ -32,7 +32,7 @@ void HistoryButton::push(const lib::spt::playlist &playlist)
 
 void HistoryButton::push(const lib::spt::album &album)
 {
-	const auto tooltip = QString("%1 by %2")
+	const auto tooltip = QStringLiteral("%1 by %2")
 		.arg(QString::fromStdString(album.name),
 			QString::fromStdString(album.artist));
 
@@ -41,7 +41,7 @@ void HistoryButton::push(const lib::spt::album &album)
 
 void HistoryButton::push(const lib::spt::show &show)
 {
-	const auto tooltip = QString("%1 by %2")
+	const auto tooltip = QStringLiteral("%1 by %2")
 		.arg(QString::fromStdString(show.name),
 			QString::fromStdString(show.publisher));
 

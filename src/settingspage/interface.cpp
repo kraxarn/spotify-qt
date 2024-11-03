@@ -600,7 +600,7 @@ auto SettingsPage::Interface::albumShapes() -> QList<lib::album_shape>
 
 auto SettingsPage::Interface::getFontName(const QString &family, int pointSize) -> QString
 {
-	return QString("%1 %2pt")
+	return QStringLiteral("%1 %2pt")
 		.arg(family)
 		.arg(pointSize);
 }
@@ -612,7 +612,7 @@ auto SettingsPage::Interface::getFontName(const QFont &font) -> QString
 
 auto SettingsPage::Interface::getDefaultFontName() -> QString
 {
-	return QString("<i>%1</i>")
+	return QStringLiteral("<i>%1</i>")
 		.arg(getFontName(getDefaultFont()));
 }
 

@@ -179,7 +179,7 @@ auto Tooltip::icon(const QPixmap &pixmap) -> QString
 	QBuffer buffer(&data);
 	pixmap.save(&buffer, "PNG");
 
-	return QString("data:image/png;base64,%1")
+	return QStringLiteral("data:image/png;base64,%1")
 		.arg(QString(data.toBase64()));
 }
 

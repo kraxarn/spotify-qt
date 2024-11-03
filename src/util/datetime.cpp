@@ -41,7 +41,7 @@ auto DateTime::toRelative(const QDateTime &date) -> QString
 		unit = "minute";
 	}
 
-	return QString("%1 %2%3 ago")
+	return QStringLiteral("%1 %2%3 ago")
 		.arg(amount)
 		.arg(unit, amount == 1 ? "" : "s");
 }
@@ -73,7 +73,7 @@ auto DateTime::parseIso(const std::string &date) -> QDateTime
 auto DateTime::parseIsoDate(const QString &date) -> QDateTime
 {
 	return parseIso(date
-		+ QString("-01").repeated(2 - date.count('-')));
+		+ QStringLiteral("-01").repeated(2 - date.count('-')));
 }
 
 auto DateTime::parseIsoDate(const std::string &date) -> QDateTime

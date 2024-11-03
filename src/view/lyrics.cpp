@@ -170,7 +170,7 @@ void View::Lyrics::setLyricsIds(const std::vector<lib::lrc::search_result> &resu
 
 	for (const auto &result: results)
 	{
-		lyricIds->addItem(QString("%1 - %2 - %3")
+		lyricIds->addItem(QStringLiteral("%1 - %2 - %3")
 				.arg(QString::fromStdString(lib::strings::join(result.artists, ", ")))
 				.arg(QString::fromStdString(result.track))
 				.arg(QString::fromStdString(result.album)),

@@ -6,7 +6,7 @@ Menu::Show::Show(lib::spt::api &spotify, const lib::spt::show &show, QWidget *pa
 	show(show),
 	spotify(spotify)
 {
-	auto *publisherAction = addAction(QString("By %1")
+	auto *publisherAction = addAction(QStringLiteral("By %1")
 		.arg(QString::fromStdString(show.publisher)));
 	publisherAction->setEnabled(false);
 
@@ -15,7 +15,7 @@ Menu::Show::Show(lib::spt::api &spotify, const lib::spt::show &show, QWidget *pa
 
 auto Menu::Show::showUrl() const -> QString
 {
-	return QString("https://open.spotify.com/show/%1")
+	return QStringLiteral("https://open.spotify.com/show/%1")
 		.arg(QString::fromStdString(show.id));
 }
 

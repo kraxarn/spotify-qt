@@ -8,7 +8,7 @@ Dialog::WhatsNew::WhatsNew(lib::settings &settings,
 	httpClient(httpClient)
 {
 	auto *layout = new QVBoxLayout();
-	auto *title = new QLabel(QString("%1 was updated to version %2")
+	auto *title = new QLabel(QStringLiteral("%1 was updated to version %2")
 		.arg(APP_NAME, APP_VERSION));
 
 	auto titleFont = title->font();
@@ -37,7 +37,7 @@ Dialog::WhatsNew::WhatsNew(lib::settings &settings,
 	layout->addWidget(buttons);
 	setLayout(layout);
 	resize(500, 400);
-	setWindowTitle(QString("%1 %2").arg(APP_NAME, APP_VERSION));
+	setWindowTitle(QStringLiteral("%1 %2").arg(APP_NAME, APP_VERSION));
 }
 
 void Dialog::WhatsNew::onDontShowAgain(bool /*checked*/)
