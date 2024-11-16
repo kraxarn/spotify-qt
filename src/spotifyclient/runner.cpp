@@ -47,6 +47,13 @@ void SpotifyClient::Runner::start()
 		return;
 	}
 
+	// Check if supporting OAuth login
+	if (!isLoggedIn() && !Helper::getOAuthSupport(path))
+	{
+		emit statusChanged(QStringLiteral("Client unsupported, please upgrade and try again"));
+		return;
+	}
+
 	// If using global config, just start
 	if (settings.spotify.global_config && clientType == lib::client_type::spotifyd)
 	{
