@@ -157,7 +157,7 @@ auto SpotifyClient::Helper::getOAuthSupport(const QString &path) -> bool
 	return help.contains(QStringLiteral("--enable-oauth"));
 }
 
-auto SpotifyClient::Helper::processErrorToString(const QProcess::ProcessError error)
+auto SpotifyClient::Helper::processErrorToString(const QProcess::ProcessError error) -> QString
 {
 	switch (error)
 	{

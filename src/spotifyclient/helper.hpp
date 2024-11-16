@@ -19,7 +19,7 @@ namespace SpotifyClient
 		static auto version(const QString &path) -> QString;
 		static auto running(const QString &path) -> bool;
 
-		static auto processErrorToString(QProcess::ProcessError error);
+		static auto processErrorToString(QProcess::ProcessError error) -> QString;
 
 		/**
 		 * If the client supports OAuth authentication
