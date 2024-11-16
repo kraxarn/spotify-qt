@@ -143,26 +143,16 @@ auto SpotifyClient::Helper::running(const QString &path) -> bool
 	return QString(out).contains(path);
 }
 
-auto SpotifyClient::Helper::getAutoplaySupport(const QString &path) -> AutoplaySupport
+auto SpotifyClient::Helper::getOAuthSupport(const QString &path) -> bool
 {
 	if (clientType(path) != lib::client_type::librespot)
 	{
-		return AutoplaySupport::None;
+		return false;
 	}
 
 	const auto help = clientExec(path, {
 		QStringLiteral("--help"),
 	});
 
-	if (help.contains(QStringLiteral("--autoplay OVERRIDE")))
-	{
-		return AutoplaySupport::Option;
-	}
-
-	if (help.contains(QStringLiteral("--autoplay")))
-	{
-		return AutoplaySupport::Flag;
-	}
-
-	return AutoplaySupport::None;
+	return help.contains(QStringLiteral("--enable-oauth"));
 }
