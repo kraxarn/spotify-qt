@@ -47,18 +47,24 @@ void SpotifyClient::Runner::start()
 		return;
 	}
 
-	// Check if supporting OAuth login
-	if (!isLoggedIn() && !Helper::getOAuthSupport(path))
-	{
-		emit statusChanged(QStringLiteral("Client unsupported, please upgrade and try again"));
-		return;
-	}
-
 	// If using global config, just start
 	if (settings.spotify.global_config && clientType == lib::client_type::spotifyd)
 	{
 		process->start(path, QStringList({QStringLiteral("--no-daemon")}));
 		emit statusChanged({});
+		return;
+	}
+
+	// Check if not logged in
+	if (!isLoggedIn())
+	{
+		if (!Helper::getOAuthSupport(path))
+		{
+			emit statusChanged(QStringLiteral("Client unsupported, please upgrade and try again"));
+			return;
+		}
+
+		login();
 		return;
 	}
 
@@ -138,6 +144,25 @@ void SpotifyClient::Runner::start()
 	process->start(path, arguments);
 }
 
+void SpotifyClient::Runner::login()
+{
+	if (loginHelper != nullptr)
+	{
+		loginHelper->deleteLater();
+		loginHelper = nullptr;
+	}
+
+	loginHelper = new Login(parentWidget);
+
+	connect(loginHelper, &Login::loginSuccess,
+		this, &Runner::onLoginSuccess);
+
+	connect(loginHelper, &Login::loginFailed,
+		this, &Runner::onLoginFailed);
+
+	loginHelper->run(path);
+}
+
 auto SpotifyClient::Runner::isRunning() const -> bool
 {
 	return process == nullptr
@@ -206,6 +231,30 @@ void SpotifyClient::Runner::onErrorOccurred(QProcess::ProcessError error)
 {
 	const auto message = Helper::processErrorToString(error);
 	emit statusChanged(message);
+}
+
+void SpotifyClient::Runner::onLoginSuccess()
+{
+	if (!isLoggedIn())
+	{
+		lib::log::warn("Login successful, but not login found");
+		emit statusChanged(QStringLiteral("Unknown error"));
+		return;
+	}
+
+	loginHelper->deleteLater();
+	loginHelper = nullptr;
+
+	start();
+}
+
+void SpotifyClient::Runner::onLoginFailed(const QString &message)
+{
+	lib::log::warn(message.toStdString());
+	emit statusChanged(message);
+
+	loginHelper->deleteLater();
+	loginHelper = nullptr;
 }
 
 auto SpotifyClient::Runner::getLog() -> const std::vector<lib::log_message> &
