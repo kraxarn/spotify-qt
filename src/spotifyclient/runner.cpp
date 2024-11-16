@@ -19,7 +19,8 @@ SpotifyClient::Runner::~Runner()
 {
 	if (process != nullptr)
 	{
-		process->close();
+		process->terminate();
+		process->waitForFinished();
 	}
 }
 
