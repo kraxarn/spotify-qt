@@ -13,9 +13,6 @@ SpotifyClient::Login::Login(QWidget *parent)
 	connect(process, &QProcess::readyReadStandardOutput,
 		this, &Login::onReadyReadOutput);
 
-	connect(process, &QProcess::readyReadStandardError,
-		this, &Login::onReadyReadError);
-
 	connect(process, &QProcess::errorOccurred,
 		this, &Login::onErrorOccurred);
 }
@@ -56,12 +53,6 @@ void SpotifyClient::Login::onReadyReadOutput()
 			return;
 		}
 	}
-}
-
-void SpotifyClient::Login::onReadyReadError()
-{
-	const auto output = process->readAllStandardError();
-	emit loginFailed(QString(output));
 }
 
 void SpotifyClient::Login::onErrorOccurred(const QProcess::ProcessError error)

@@ -23,7 +23,6 @@ namespace SpotifyClient
 		QProcess *process;
 
 		void onReadyReadOutput();
-		void onReadyReadError();
 		void onErrorOccurred(QProcess::ProcessError error);
 	};
 }
