@@ -28,7 +28,6 @@ target_include_directories(spotify-qt-lib PUBLIC
 
 # Third-party libraries
 add_subdirectory(thirdparty)
-target_link_libraries(spotify-qt-lib PUBLIC spotify-qt-lib-third-party)
 
 # Version macros
 target_compile_definitions(spotify-qt-lib PUBLIC LIB_VERSION="v${PROJECT_VERSION}")
