@@ -156,3 +156,27 @@ auto SpotifyClient::Helper::getOAuthSupport(const QString &path) -> bool
 
 	return help.contains(QStringLiteral("--enable-oauth"));
 }
+
+auto SpotifyClient::Helper::processErrorToString(const QProcess::ProcessError error)
+{
+	switch (error)
+	{
+		case QProcess::FailedToStart:
+			return QStringLiteral("Process failed to start");
+
+		case QProcess::Crashed:
+			return QStringLiteral("Process stopped or crashed");
+
+		case QProcess::Timedout:
+			return QStringLiteral("Process timed out");
+
+		case QProcess::WriteError:
+			return QStringLiteral("Process with write error");
+
+		case QProcess::ReadError:
+			return QStringLiteral("Process with read error");
+
+		default:
+			return QStringLiteral("Process with unknown error");
+	}
+}
