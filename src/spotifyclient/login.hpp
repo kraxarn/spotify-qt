@@ -13,7 +13,7 @@ namespace SpotifyClient
 	public:
 		explicit Login(QWidget *parent);
 
-		void run(const QString &path);
+		void run(const QString &clientPath, const QString &cachePath) const;
 
 	signals:
 		void loginSuccess();

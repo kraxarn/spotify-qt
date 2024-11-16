@@ -20,19 +20,14 @@ SpotifyClient::Login::Login(QWidget *parent)
 		this, &Login::onErrorOccurred);
 }
 
-void SpotifyClient::Login::run(const QString &path)
+void SpotifyClient::Login::run(const QString &clientPath, const QString &cachePath) const
 {
-	if (!Helper::getOAuthSupport(path))
-	{
-		emit loginFailed(QStringLiteral("Client unsupported"));
-		return;
-	}
-
 	const QStringList arguments({
-		"--enable-oath"
+		"--enable-oauth",
+		"--cache", cachePath,
 	});
 
-	process->start(path, arguments);
+	process->start(clientPath, arguments);
 }
 
 void SpotifyClient::Login::onReadyReadOutput()

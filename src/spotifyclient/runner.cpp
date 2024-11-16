@@ -160,7 +160,8 @@ void SpotifyClient::Runner::login()
 	connect(loginHelper, &Login::loginFailed,
 		this, &Runner::onLoginFailed);
 
-	loginHelper->run(path);
+	const auto cachePath = QString::fromStdString(getCachePath().string());
+	loginHelper->run(path, cachePath);
 }
 
 auto SpotifyClient::Runner::isRunning() const -> bool
