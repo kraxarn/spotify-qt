@@ -56,6 +56,7 @@ namespace SpotifyClient
 
 		auto getCachePath() const -> ghc::filesystem::path;
 		auto isLoggedIn() const -> bool;
+		auto resetCredentials() const -> bool;
 
 		void onReadyReadOutput();
 		void onReadyReadError();

@@ -184,6 +184,11 @@ void SpotifyClient::Runner::logOutput(const QByteArray &output, lib::log_type lo
 		if (line.contains(QStringLiteral("Bad credentials")))
 		{
 			emit statusChanged(QStringLiteral("Bad credentials, please try again"));
+
+			if (resetCredentials())
+			{
+				lib::log::debug("Credentials reset");
+			}
 		}
 	}
 }
@@ -210,6 +215,12 @@ auto SpotifyClient::Runner::isLoggedIn() const -> bool
 {
 	const auto path = getCachePath() / "credentials.json";
 	return ghc::filesystem::exists(path);
+}
+
+auto SpotifyClient::Runner::resetCredentials() const -> bool
+{
+	const auto path = getCachePath() / "credentials.json";
+	return ghc::filesystem::remove(path);
 }
 
 void SpotifyClient::Runner::onReadyReadOutput()
