@@ -44,7 +44,7 @@ void SpotifyClient::Login::onReadyReadOutput()
 		const auto urlIndex = line.indexOf(QStringLiteral("https://accounts.spotify.com/authorize"));
 		if (urlIndex >= 0)
 		{
-			const auto url = line.right(line.length() - urlIndex - 1);
+			const auto url = line.right(line.length() - urlIndex);
 			auto *parent = qobject_cast<QWidget *>(QObject::parent());
 			Url::open(url, LinkType::Web, parent);
 			continue;
