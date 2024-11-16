@@ -68,7 +68,7 @@ void SpotifyClient::Runner::start()
 		arguments.append({
 			"--name", QString("%1 (librespot)").arg(APP_NAME),
 			"--initial-volume", initialVolume,
-			"--cache", QString::fromStdString((paths.cache() / "librespot").string()),
+			"--cache", QString::fromStdString(getCachePath().string()),
 			"--autoplay", "on",
 		});
 	}
@@ -167,6 +167,17 @@ auto SpotifyClient::Runner::joinArgs(const QStringList &args) -> QString
 				i < args.size() - 1 ? " " : ""));
 	}
 	return result;
+}
+
+auto SpotifyClient::Runner::getCachePath() const -> ghc::filesystem::path
+{
+	return paths.cache() / "librespot";
+}
+
+auto SpotifyClient::Runner::isLoggedIn() const -> bool
+{
+	const auto path = getCachePath() / "credentials.json";
+	return ghc::filesystem::exists(path);
 }
 
 void SpotifyClient::Runner::onReadyReadOutput()
