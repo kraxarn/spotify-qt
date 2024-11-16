@@ -49,6 +49,9 @@ void SpotifyClient::Login::onReadyReadOutput()
 
 		if (line.contains(QStringLiteral("Authenticated")))
 		{
+			process->terminate();
+			process->waitForFinished();
+
 			emit loginSuccess();
 			return;
 		}
