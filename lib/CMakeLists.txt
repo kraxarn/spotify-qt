@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 project(spotify-qt-lib LANGUAGES CXX VERSION 0.9)
 
 set(CMAKE_CXX_STANDARD 11)
