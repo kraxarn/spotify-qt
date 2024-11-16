@@ -171,12 +171,12 @@ auto SpotifyClient::Helper::processErrorToString(const QProcess::ProcessError er
 			return QStringLiteral("Process timed out");
 
 		case QProcess::WriteError:
-			return QStringLiteral("Process with write error");
+			return QStringLiteral("Process write error");
 
 		case QProcess::ReadError:
-			return QStringLiteral("Process with read error");
+			return QStringLiteral("Process read error");
 
 		default:
-			return QStringLiteral("Process with unknown error");
+			return QStringLiteral("Unknown error");
 	}
 }
