@@ -5,7 +5,6 @@
 #include "lib/logmessage.hpp"
 
 #include "spotifyclient/helper.hpp"
-#include "spotifyclient/login.hpp"
 
 #include <QDateTime>
 #include <QFileInfo>
@@ -48,11 +47,9 @@ namespace SpotifyClient
 		const lib::settings &settings;
 		const lib::paths &paths;
 		lib::client_type clientType;
-		Login *loginHelper = nullptr;
 
 		void logOutput(const QByteArray &output, lib::log_type logType);
 		static auto joinArgs(const QStringList &args) -> QString;
-		void login();
 
 		auto getCachePath() const -> ghc::filesystem::path;
 		auto isLoggedIn() const -> bool;
@@ -62,8 +59,5 @@ namespace SpotifyClient
 		void onReadyReadError();
 		void onStarted();
 		void onErrorOccurred(QProcess::ProcessError error);
-
-		void onLoginSuccess();
-		void onLoginFailed(const QString &message);
 	};
 }

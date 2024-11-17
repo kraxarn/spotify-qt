@@ -56,6 +56,11 @@ void SpotifyClient::Runner::start()
 		return;
 	}
 
+	// Common arguments
+	QStringList arguments({
+		"--bitrate", QString::number(static_cast<int>(settings.spotify.bitrate)),
+	});
+
 	// Check if not logged in
 	if (!isLoggedIn())
 	{
@@ -65,14 +70,8 @@ void SpotifyClient::Runner::start()
 			return;
 		}
 
-		login();
-		return;
+		arguments.append(QStringLiteral("--enable-oauth"));
 	}
-
-	// Common arguments
-	QStringList arguments({
-		"--bitrate", QString::number(static_cast<int>(settings.spotify.bitrate)),
-	});
 
 	const auto initialVolume = QString::number(settings.spotify.volume);
 
@@ -145,26 +144,6 @@ void SpotifyClient::Runner::start()
 	process->start(path, arguments);
 }
 
-void SpotifyClient::Runner::login()
-{
-	if (loginHelper != nullptr)
-	{
-		loginHelper->deleteLater();
-		loginHelper = nullptr;
-	}
-
-	loginHelper = new Login(parentWidget);
-
-	connect(loginHelper, &Login::loginSuccess,
-		this, &Runner::onLoginSuccess);
-
-	connect(loginHelper, &Login::loginFailed,
-		this, &Runner::onLoginFailed);
-
-	const auto cachePath = QString::fromStdString(getCachePath().string());
-	loginHelper->run(path, cachePath);
-}
-
 auto SpotifyClient::Runner::isRunning() const -> bool
 {
 	return process == nullptr
@@ -182,6 +161,14 @@ void SpotifyClient::Runner::logOutput(const QByteArray &output, lib::log_type lo
 		}
 
 		log.emplace_back(lib::date_time::now(), logType, line.toStdString());
+
+		const auto urlIndex = line.indexOf(QStringLiteral("https://accounts.spotify.com/authorize"));
+		if (urlIndex >= 0)
+		{
+			const auto url = line.right(line.length() - urlIndex);
+			auto *parent = qobject_cast<QWidget *>(QObject::parent());
+			Url::open(url, LinkType::Web, parent);
+		}
 
 		if (line.contains(QStringLiteral("Bad credentials")))
 		{
@@ -244,30 +231,6 @@ void SpotifyClient::Runner::onErrorOccurred(QProcess::ProcessError error)
 {
 	const auto message = Helper::processErrorToString(error);
 	emit statusChanged(message);
-}
-
-void SpotifyClient::Runner::onLoginSuccess()
-{
-	if (!isLoggedIn())
-	{
-		lib::log::warn("Login successful, but not login found");
-		emit statusChanged(QStringLiteral("Unknown error"));
-		return;
-	}
-
-	loginHelper->deleteLater();
-	loginHelper = nullptr;
-
-	start();
-}
-
-void SpotifyClient::Runner::onLoginFailed(const QString &message)
-{
-	lib::log::warn(message.toStdString());
-	emit statusChanged(message);
-
-	loginHelper->deleteLater();
-	loginHelper = nullptr;
 }
 
 auto SpotifyClient::Runner::getLog() -> const std::vector<lib::log_message> &
