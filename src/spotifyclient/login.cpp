@@ -13,6 +13,9 @@ SpotifyClient::Login::Login(QWidget *parent)
 	connect(process, &QProcess::readyReadStandardOutput,
 		this, &Login::onReadyReadOutput);
 
+	connect(process, &QProcess::readyReadStandardError,
+		this, &Login::onReadyReadError);
+
 	connect(process, &QProcess::errorOccurred,
 		this, &Login::onErrorOccurred);
 }
@@ -27,10 +30,8 @@ void SpotifyClient::Login::run(const QString &clientPath, const QString &cachePa
 	process->start(clientPath, arguments);
 }
 
-void SpotifyClient::Login::onReadyReadOutput()
+void SpotifyClient::Login::onOutput(const QString &output)
 {
-	const auto output = process->readAllStandardOutput();
-
 	for (auto &line: QString(output).split('\n'))
 	{
 		if (line.isEmpty())
@@ -56,6 +57,18 @@ void SpotifyClient::Login::onReadyReadOutput()
 			return;
 		}
 	}
+}
+
+void SpotifyClient::Login::onReadyReadOutput()
+{
+	const auto output = process->readAllStandardOutput();
+	onOutput(QString(output));
+}
+
+void SpotifyClient::Login::onReadyReadError()
+{
+	const auto output = process->readAllStandardError();
+	onOutput(QString(output));
 }
 
 void SpotifyClient::Login::onErrorOccurred(const QProcess::ProcessError error)
