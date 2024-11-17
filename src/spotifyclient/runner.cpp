@@ -1,4 +1,7 @@
 #include "spotifyclient/runner.hpp"
+
+#include "lib/log.hpp"
+
 #include "mainwindow.hpp"
 
 std::vector<lib::log_message> SpotifyClient::Runner::log;
@@ -31,6 +34,11 @@ SpotifyClient::Runner::~Runner()
 {
 	if (process != nullptr)
 	{
+		if (process->disconnect())
+		{
+			lib::log::debug("Disconnected events from client process");
+		}
+
 		process->terminate();
 		process->waitForFinished();
 	}
