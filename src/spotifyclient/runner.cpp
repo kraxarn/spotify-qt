@@ -13,6 +13,18 @@ SpotifyClient::Runner::Runner(const lib::settings &settings,
 	path = QString::fromStdString(settings.spotify.path);
 	process = new QProcess(parent);
 	clientType = SpotifyClient::Helper::clientType(path);
+
+	connect(process, &QProcess::readyReadStandardOutput,
+		this, &Runner::onReadyReadOutput);
+
+	connect(process, &QProcess::readyReadStandardError,
+		this, &Runner::onReadyReadError);
+
+	connect(process, &QProcess::started,
+		this, &Runner::onStarted);
+
+	connect(process, &QProcess::errorOccurred,
+		this, &Runner::onErrorOccurred);
 }
 
 SpotifyClient::Runner::~Runner()
@@ -125,18 +137,6 @@ void SpotifyClient::Runner::start()
 	{
 		arguments.append(additional_arguments.split(' '));
 	}
-
-	QProcess::connect(process, &QProcess::readyReadStandardOutput,
-		this, &Runner::onReadyReadOutput);
-
-	QProcess::connect(process, &QProcess::readyReadStandardError,
-		this, &Runner::onReadyReadError);
-
-	QProcess::connect(process, &QProcess::started,
-		this, &Runner::onStarted);
-
-	QProcess::connect(process, &QProcess::errorOccurred,
-		this, &Runner::onErrorOccurred);
 
 	lib::log::debug("starting: {} {}", path.toStdString(),
 		joinArgs(arguments).toStdString());

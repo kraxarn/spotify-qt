@@ -40,7 +40,7 @@ namespace SpotifyClient
 		void statusChanged(const QString &status);
 
 	private:
-		QProcess *process = nullptr;
+		QProcess *process;
 		QWidget *parentWidget = nullptr;
 		QString path;
 		static std::vector<lib::log_message> log;
