@@ -49,9 +49,7 @@ private:
 	lib::cache &cache;
 	const lib::http_client &httpClient;
 
-#ifdef __APPLE__
 	QAction *showApp = nullptr;
-#endif
 
 	std::function<void(const std::string &result)> callback;
 
