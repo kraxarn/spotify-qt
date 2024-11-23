@@ -41,7 +41,7 @@ TrayIcon::TrayIcon(lib::spt::api &spotify, lib::settings &settings, lib::cache &
 #endif
 
 	auto *quit = contextMenu->addAction(Icon::get("application-exit"), "Quit");
-	QAction::connect(quit, &QAction::triggered, QCoreApplication::quit);
+	QAction::connect(quit, &QAction::triggered, &QCoreApplication::quit);
 
 	setDefaultPixmap();
 	setContextMenu(contextMenu);
