@@ -19,7 +19,6 @@ var searchData=
   ['audio_5ffeatures_16',['audio_features',['../classlib_1_1spt_1_1audio__features.html',1,'lib::spt']]],
   ['audio_5fpreview_5furl_17',['audio_preview_url',['../classlib_1_1spt_1_1episode.html#a786d499202bd420ed08c5738f9d2c3db',1,'lib::spt::episode']]],
   ['auth_18',['auth',['../classlib_1_1spt_1_1auth.html',1,'lib::spt']]],
-  ['available_5fmarkets_19',['available_markets',['../classlib_1_1spt_1_1show.html#abca1196cf12ba895eafe336a35907e06',1,'lib::spt::show']]],
-  ['avatar_5furl_20',['avatar_url',['../classlib_1_1gh_1_1contributor.html#ae443c3911f74c8045c03234eb6a8fad0',1,'lib::gh::contributor']]],
-  ['average_21',['average',['../classlib_1_1vector.html#a63e10932af3ec4fe496dc1d3aa9f3c92',1,'lib::vector']]]
+  ['avatar_5furl_19',['avatar_url',['../classlib_1_1gh_1_1contributor.html#ae443c3911f74c8045c03234eb6a8fad0',1,'lib::gh::contributor']]],
+  ['average_20',['average',['../classlib_1_1vector.html#a63e10932af3ec4fe496dc1d3aa9f3c92',1,'lib::vector']]]
 ];
