@@ -7,7 +7,6 @@ void lib::spt::from_json(const nlohmann::json &j, show &s)
 		return;
 	}
 
-	j.at("available_markets").get_to(s.available_markets);
 	j.at("description").get_to(s.description);
 	j.at("explicit").get_to(s.is_explicit);
 	j.at("external_urls").get_to(s.external_urls);
