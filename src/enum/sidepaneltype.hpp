@@ -16,11 +16,6 @@ enum class SidePanelType: char
 	Search,
 
 	/**
-	 * Audio features, paired with track ID
-	 */
-	AudioFeatures,
-
-	/**
 	 * Lyrics, paired with track ID
 	 */
 	Lyrics,

@@ -5,7 +5,6 @@ add_subdirectory(search)
 add_subdirectory(sidepanel)
 
 target_sources(${PROJECT_NAME} PRIVATE
-	${CMAKE_CURRENT_SOURCE_DIR}/audiofeatures.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/cacheview.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/configview.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/crashes.cpp
