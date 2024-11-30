@@ -70,7 +70,6 @@ namespace Menu
 		/** All tracks have the same album */
 		auto allSameAlbum() const -> bool;
 
-		void onAudioFeatures(bool checked);
 		void onLyrics(bool checked);
 		void onCopySongLink(bool checked);
 		void onCopySongName(bool checked);
