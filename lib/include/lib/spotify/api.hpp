@@ -7,7 +7,6 @@
 #include "lib/enum/repeatstate.hpp"
 #include "lib/spotify/album.hpp"
 #include "lib/spotify/artist.hpp"
-#include "lib/spotify/audiofeatures.hpp"
 #include "lib/spotify/callback.hpp"
 #include "lib/spotify/episode.hpp"
 #include "lib/spotify/page.hpp"
@@ -314,12 +313,6 @@ namespace lib
 
 			void track(const std::string &track_id,
 				lib::callback<lib::spt::track> &callback);
-
-			void track_audio_features(const std::string &track_id,
-				lib::callback<lib::spt::audio_features> &callback);
-
-			void track_audio_features(const std::vector<std::string> &track_ids,
-				lib::callback<std::vector<lib::spt::audio_features>> &callback);
 
 			//endregion
 
