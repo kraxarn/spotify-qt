@@ -45,13 +45,6 @@ Artist::View::View(lib::spt::api &spotify, const std::string &artistId, lib::cac
 	albumList = new Artist::AlbumsList(spotify, cache, httpClient, settings, this);
 	tabs->addTab(albumList, "Discography");
 
-	// Related artists
-	relatedList = new QListWidget(tabs);
-	relatedList->setEnabled(false);
-	QListWidget::connect(relatedList, &QListWidget::itemClicked,
-		this, &Artist::View::relatedClick);
-	tabs->addTab(relatedList, "Related");
-
 	spotify.artist(this->artistId, [this](const lib::spt::artist &loadedArtist)
 	{
 		artistLoaded(loadedArtist);
@@ -155,14 +148,22 @@ void Artist::View::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
 
 void Artist::View::relatedArtistsLoaded(const std::vector<lib::spt::artist> &artists)
 {
+	// Related artists are deprecated and not always available,
+	// lazily load tab instead in case it isn't
+
+	relatedList = new QListWidget(tabs);
+
+	connect(relatedList, &QListWidget::itemClicked,
+		this, &View::relatedClick);
+
+	tabs->addTab(relatedList, "Related");
+
 	for (const auto &related: artists)
 	{
 		auto *item = new QListWidgetItem(QString::fromStdString(related.name), relatedList);
 		item->setData(static_cast<int>(DataRole::ArtistId),
 			QString::fromStdString(related.id));
 	}
-
-	relatedList->setEnabled(true);
 }
 
 void Artist::View::relatedClick(QListWidgetItem *item)
