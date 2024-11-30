@@ -528,7 +528,7 @@ auto List::Tracks::load(const lib::spt::page<lib::spt::track> &page,
 
 	constexpr int addedColumn = static_cast<int>(Column::Added);
 	const auto &hiddenHeaders = settings.general.hidden_song_headers;
-	const auto isAddedHidden = lib::set::contains(hiddenHeaders, addedColumn);
+	const auto isAddedHidden = lib::set::contains(hiddenHeaders, addedColumn - 1);
 
 	// Hide until track with date is inserted
 	header()->setSectionHidden(addedColumn, true);
