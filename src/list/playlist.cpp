@@ -122,6 +122,11 @@ void List::Playlist::load(const std::vector<lib::spt::playlist> &playlists, cons
 
 	for (const auto &playlist: playlists)
 	{
+		if (playlist.id.empty())
+		{
+			continue;
+		}
+
 		auto *item = new QListWidgetItem(QString::fromStdString(playlist.name), this);
 		item->setData(static_cast<int>(DataRole::Playlist), QVariant::fromValue(playlist));
 		item->setData(static_cast<int>(DataRole::DefaultIndex), index);
