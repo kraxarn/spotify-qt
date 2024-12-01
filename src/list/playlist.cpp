@@ -122,7 +122,7 @@ void List::Playlist::load(const std::vector<lib::spt::playlist> &playlists, cons
 
 	for (const auto &playlist: playlists)
 	{
-		if (playlist.id.empty())
+		if (playlist.is_null())
 		{
 			continue;
 		}
