@@ -43,7 +43,7 @@ Menu::Track::Track(const QList<PlaylistTrack> &tracks, lib::spt::api &spotify,
 			duration += track.second.duration;
 		}
 
-		const auto countText = QString("%1 tracks, %2")
+		const auto countText = QStringLiteral("%1 tracks, %2")
 			.arg(tracks.length())
 			.arg(QString::fromStdString(lib::format::time_pretty(duration)));
 
@@ -292,7 +292,7 @@ void Menu::Track::onLike(bool /*checked*/)
 			return;
 		}
 
-		StatusMessage::error(QString("Failed to %1: %2")
+		StatusMessage::error(QStringLiteral("Failed to %1: %2")
 			.arg(isLiked ? "unlike" : "like")
 			.arg(QString::fromStdString(status)));
 	};
@@ -314,7 +314,7 @@ void Menu::Track::addToQueue(const QList<PlaylistTrack>::const_iterator &begin,
 	{
 		StatusMessage::info(tracks.size() == 1
 			? QStringLiteral("Added to queue")
-			: QString("%1 tracks added to queue").arg(tracks.size()));
+			: QStringLiteral("%1 tracks added to queue").arg(tracks.size()));
 
 		return;
 	}
@@ -324,7 +324,7 @@ void Menu::Track::addToQueue(const QList<PlaylistTrack>::const_iterator &begin,
 	{
 		if (!result.success())
 		{
-			StatusMessage::error(QString("Failed to add to queue: %1")
+			StatusMessage::error(QStringLiteral("Failed to add to queue: %1")
 				.arg(QString::fromStdString(result.message())));
 			return;
 		}
@@ -359,7 +359,7 @@ void Menu::Track::onRemoveFromPlaylist(bool /*checked*/)
 			// Remove from Spotify
 			if (!status.empty())
 			{
-				StatusMessage::error(QString("Failed to remove track from playlist: %1")
+				StatusMessage::error(QStringLiteral("Failed to remove track from playlist: %1")
 					.arg(QString::fromStdString(status)));
 				return;
 			}
@@ -396,7 +396,7 @@ void Menu::Track::onRemoveFromPlaylist(bool /*checked*/)
 			// Refresh the playlist automatically to prevent issues with songs being skipped
 			mainWindow->getSongsTree()->refreshPlaylist(currentPlaylist);
 
-			StatusMessage::info(QString("Removed from %1")
+			StatusMessage::info(QStringLiteral("Removed from %1")
 				.arg(QString::fromStdString(currentPlaylist.name)));
 		});
 }

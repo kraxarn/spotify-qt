@@ -3,7 +3,7 @@
 QtPaths::QtPaths(QObject *parent)
 	: QObject(parent)
 {
-	configFile = QString("%1.json").arg(QStandardPaths::writableLocation
+	configFile = QStringLiteral("%1.json").arg(QStandardPaths::writableLocation
 		(QStandardPaths::AppConfigLocation)).toStdString();
 
 	cachePath = QStandardPaths::writableLocation

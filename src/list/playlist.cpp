@@ -91,7 +91,7 @@ void List::Playlist::onItemDoubleClicked(QListWidgetItem *item)
 				return;
 			}
 
-			StatusMessage::error(QString("Failed to start playlist playback: %1")
+			StatusMessage::error(QStringLiteral("Failed to start playlist playback: %1")
 				.arg(QString::fromStdString(result)));
 		});
 }

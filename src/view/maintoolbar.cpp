@@ -36,7 +36,7 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 
 	// Search
 	search = new QAction(Icon::get(QStringLiteral("edit-find")),
-		QString("Search (%1)").arg(QKeySequence(QKeySequence::Find)
+		QStringLiteral("Search (%1)").arg(QKeySequence(QKeySequence::Find)
 			.toString(QKeySequence::NativeText)));
 	search->setCheckable(true);
 	search->setShortcut(QKeySequence::Find);
@@ -199,7 +199,7 @@ auto MainToolBar::createShortcutAction(const QString &iconName, const QString &t
 {
 	auto *action = new QAction(this);
 
-	action->setText(QString("%1 (%2)")
+	action->setText(QStringLiteral("%1 (%2)")
 		.arg(title, shortcut.toString(QKeySequence::NativeText)));
 
 	action->setIcon(Icon::get(iconName));
@@ -242,7 +242,7 @@ void MainToolBar::setPlaying(bool playing)
 		? QStringLiteral("media-playback-pause")
 		: QStringLiteral("media-playback-start")));
 
-	playPause->setText(QString("%1 (%2)")
+	playPause->setText(QStringLiteral("%1 (%2)")
 		.arg(playing ? QStringLiteral("Pause") : QStringLiteral("Play"),
 			Shortcut::playPause().toString(QKeySequence::NativeText)));
 }
@@ -388,7 +388,7 @@ void MainToolBar::onPlayPause(bool /*checked*/)
 			return;
 		}
 
-		StatusMessage::error(QString("Failed to %1 playback: %2")
+		StatusMessage::error(QStringLiteral("Failed to %1 playback: %2")
 			.arg(isPlaying() ? QStringLiteral("pause") : QStringLiteral("resume"),
 				QString::fromStdString(status)));
 	};
@@ -409,7 +409,7 @@ void MainToolBar::onPrevious(bool /*checked*/)
 	{
 		if (!status.empty())
 		{
-			StatusMessage::error(QString("Failed to go to previous track: %1")
+			StatusMessage::error(QStringLiteral("Failed to go to previous track: %1")
 				.arg(QString::fromStdString(status)));
 			return;
 		}
@@ -425,7 +425,7 @@ void MainToolBar::onNext(bool /*checked*/)
 	{
 		if (!status.empty())
 		{
-			StatusMessage::error(QString("Failed to go to next track: %1")
+			StatusMessage::error(QStringLiteral("Failed to go to next track: %1")
 				.arg(QString::fromStdString(status)));
 			return;
 		}
@@ -441,7 +441,7 @@ void MainToolBar::onProgressReleased()
 	{
 		if (!status.empty())
 		{
-			StatusMessage::error(QString("Failed to seek: %1")
+			StatusMessage::error(QStringLiteral("Failed to seek: %1")
 				.arg(QString::fromStdString(status)));
 			return;
 		}
@@ -473,7 +473,7 @@ void MainToolBar::onShuffle(bool checked)
 			return;
 		}
 
-		StatusMessage::error(QString("Failed to toggle shuffle: %1")
+		StatusMessage::error(QStringLiteral("Failed to toggle shuffle: %1")
 			.arg(QString::fromStdString(status)));
 	});
 }
@@ -494,7 +494,7 @@ void MainToolBar::onRepeat(bool /*checked*/)
 			return;
 		}
 
-		StatusMessage::error(QString("Failed to toggle repeat: %1")
+		StatusMessage::error(QStringLiteral("Failed to toggle repeat: %1")
 			.arg(QString::fromStdString(status)));
 	});
 }

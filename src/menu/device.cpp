@@ -58,7 +58,7 @@ void Menu::Device::onTriggered(QAction *action)
 		if (!status.empty())
 		{
 			action->setChecked(false);
-			StatusMessage::error(QString("Failed to set device: %1")
+			StatusMessage::error(QStringLiteral("Failed to set device: %1")
 				.arg(QString::fromStdString(status)));
 			return;
 		}

@@ -209,7 +209,7 @@ void List::Tracks::onDoubleClicked(QTreeWidgetItem *item, int /*column*/)
 	{
 		if (!status.empty())
 		{
-			StatusMessage::error(QString("Failed to start playback: %1")
+			StatusMessage::error(QStringLiteral("Failed to start playback: %1")
 				.arg(QString::fromStdString(status)));
 		}
 		else
@@ -384,7 +384,7 @@ void List::Tracks::onDelete()
 	{
 		if (!status.empty())
 		{
-			StatusMessage::error(QString("Failed to remove track from playlist: %1")
+			StatusMessage::error(QStringLiteral("Failed to remove track from playlist: %1")
 				.arg(QString::fromStdString(status)));
 			return;
 		}
@@ -549,7 +549,7 @@ auto List::Tracks::load(const lib::spt::page<lib::spt::track> &page,
 
 		const QStringList columns{
 			settings.general.track_numbers == lib::spotify_context::all
-				? QString("%1").arg(index + 1, fieldWidth)
+				? QStringLiteral("%1").arg(index + 1, fieldWidth)
 				: QString(),
 			QString::fromStdString(track.name),
 			QString::fromStdString(lib::spt::entity::combine_names(track.artists)),
@@ -649,7 +649,7 @@ void List::Tracks::load(const lib::spt::playlist &playlist)
 		{
 			if (!result.success())
 			{
-				StatusMessage::error(QString("Failed to load playlist: %1")
+				StatusMessage::error(QStringLiteral("Failed to load playlist: %1")
 					.arg(QString::fromStdString(result.message())));
 
 				return;
@@ -704,7 +704,7 @@ void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 
 			if (!result.success())
 			{
-				StatusMessage::error(QString("Failed to load playlist: %1")
+				StatusMessage::error(QStringLiteral("Failed to load playlist: %1")
 					.arg(QString::fromStdString(result.message())));
 
 				refreshing = false;
@@ -749,7 +749,7 @@ void List::Tracks::load(const lib::spt::album &album, const std::string &trackId
 		{
 			if (!result.success())
 			{
-				StatusMessage::error(QString("Failed to load album: %1")
+				StatusMessage::error(QStringLiteral("Failed to load album: %1")
 					.arg(QString::fromStdString(result.message())));
 
 				return false;

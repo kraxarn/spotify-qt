@@ -104,7 +104,7 @@ void Log::Base::onSaveToFile(bool /*checked*/)
 
 	const auto filename = QFileDialog::getSaveFileName(this,
 		QStringLiteral("Select location"),
-		QString("%1/spotify-qt-%2.log").arg(path, date),
+		QStringLiteral("%1/spotify-qt-%2.log").arg(path, date),
 		QStringLiteral("Logs (*.log)"));
 
 	if (filename.isEmpty())
