@@ -1,7 +1,6 @@
 #pragma once
 
 #include "lib/enum/clienttype.hpp"
-#include "enum/autoplaysupport.hpp"
 
 #include <QStringList>
 #include <QFileInfo>
@@ -20,11 +19,13 @@ namespace SpotifyClient
 		static auto version(const QString &path) -> QString;
 		static auto running(const QString &path) -> bool;
 
+		static auto processErrorToString(QProcess::ProcessError error) -> QString;
+
 		/**
-		 * What type of autoplay the client supports
+		 * If the client supports OAuth authentication
 		 * @param path Path to client
 		 */
-		static auto getAutoplaySupport(const QString &path) -> AutoplaySupport;
+		static auto getOAuthSupport(const QString &path) -> bool;
 
 	private:
 		Helper() = default;

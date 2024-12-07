@@ -17,11 +17,6 @@ namespace lib
 		{
 		public:
 			/**
-			 * Countries, in ISO 3166, which show can be played in
-			 */
-			std::vector<std::string> available_markets;
-
-			/**
 			 * Description in plain text
 			 */
 			std::string description;

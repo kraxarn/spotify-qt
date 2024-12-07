@@ -35,22 +35,19 @@ TrayIcon::TrayIcon(lib::spt::api &spotify, lib::settings &settings, lib::cache &
 
 	contextMenu->addSeparator();
 
-#ifdef __APPLE__
 	showApp = contextMenu->addAction(Icon::get("window"), QStringLiteral("Show"));
+	showApp->setVisible(settings.general.close_to_tray);
 	QAction::connect(showApp, &QAction::triggered, this, &TrayIcon::onShowWindow);
-#endif
 
 	auto *quit = contextMenu->addAction(Icon::get("application-exit"), "Quit");
-	QAction::connect(quit, &QAction::triggered, QCoreApplication::quit);
+	QAction::connect(quit, &QAction::triggered, &QCoreApplication::quit);
 
 	setDefaultPixmap();
 	setContextMenu(contextMenu);
 	show();
 
-#ifndef __APPLE__
 	QSystemTrayIcon::connect(this, &QSystemTrayIcon::activated,
 		this, &TrayIcon::onActivated);
-#endif
 
 	QMenu::connect(contextMenu, &QMenu::aboutToShow,
 		this, &TrayIcon::onMenuAboutToShow);

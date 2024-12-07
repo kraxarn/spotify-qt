@@ -40,7 +40,7 @@ namespace SpotifyClient
 		void statusChanged(const QString &status);
 
 	private:
-		QProcess *process = nullptr;
+		QProcess *process;
 		QWidget *parentWidget = nullptr;
 		QString path;
 		static std::vector<lib::log_message> log;
@@ -50,6 +50,10 @@ namespace SpotifyClient
 
 		void logOutput(const QByteArray &output, lib::log_type logType);
 		static auto joinArgs(const QStringList &args) -> QString;
+
+		auto getCachePath() const -> ghc::filesystem::path;
+		auto isLoggedIn() const -> bool;
+		auto resetCredentials() const -> bool;
 
 		void onReadyReadOutput();
 		void onReadyReadError();

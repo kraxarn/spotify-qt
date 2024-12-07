@@ -32,37 +32,6 @@ void SidePanel::View::openArtist(const std::string &artistId)
 		SidePanelType::Artist, QString::fromStdString(artistId));
 }
 
-void SidePanel::View::openAudioFeatures(const std::vector<lib::spt::track> &tracks)
-{
-	QWidget *view;
-	QString tabTitle;
-	QString tabId;
-
-	if (tracks.size() == 1)
-	{
-		const auto &track = tracks.front();
-		view = new ::View::AudioFeatures(spotify, track.id, this);
-		tabTitle = QString::fromStdString(track.title());
-		tabId = QString::fromStdString(track.id);
-	}
-	else
-	{
-		std::vector<std::string> trackIds;
-		trackIds.reserve(tracks.size());
-		for (const auto &track: tracks)
-		{
-			trackIds.push_back(track.id);
-			tabId += QString::fromStdString(track.id);
-		}
-
-		view = new ::View::AudioFeatures(spotify, trackIds, this);
-		tabTitle = QStringLiteral("%1 tracks").arg(tracks.size());
-	}
-
-	addTab(view, "view-statistics", tabTitle,
-		SidePanelType::AudioFeatures, tabId);
-}
-
 void SidePanel::View::openLyrics(const lib::spt::track &track)
 {
 	auto *view = new ::View::Lyrics(httpClient, cache, this);
@@ -110,9 +79,6 @@ auto SidePanel::View::findTab(SidePanelType type, const QString &name) -> QWidge
 
 		case SidePanelType::Search:
 			return nullptr;
-
-		case SidePanelType::AudioFeatures:
-			return find<::View::AudioFeatures *>(name);
 
 		case SidePanelType::Lyrics:
 			return find<::View::Lyrics *>(name);

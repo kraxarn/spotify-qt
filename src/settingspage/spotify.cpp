@@ -121,6 +121,7 @@ auto SettingsPage::Spotify::spotify() -> QWidget *
 
 	clientStatus = new QLabel(this);
 	clientStatus->setEnabled(false);
+	clientStatus->setWordWrap(true);
 	statusLayout->addWidget(clientStatus, 1);
 	content->addLayout(statusLayout);
 	updateClientStatus();

@@ -3,7 +3,6 @@
 #include "lib/spotify/track.hpp"
 #include "view/artist/view.hpp"
 #include "view/search/view.hpp"
-#include "view/audiofeatures.hpp"
 #include "view/lyrics.hpp"
 #include "view/sidepanel/title.hpp"
 #include "enum/sidepaneltype.hpp"
@@ -22,7 +21,6 @@ namespace SidePanel
 			const lib::http_client &httpClient, QWidget *parent);
 
 		void openArtist(const std::string &artistId);
-		void openAudioFeatures(const std::vector<lib::spt::track> &tracks);
 		void openLyrics(const lib::spt::track &track);
 		void openLyrics(int lyricsId);
 

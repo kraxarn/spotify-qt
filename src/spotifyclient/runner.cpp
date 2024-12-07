@@ -1,4 +1,7 @@
 #include "spotifyclient/runner.hpp"
+
+#include "lib/log.hpp"
+
 #include "mainwindow.hpp"
 
 std::vector<lib::log_message> SpotifyClient::Runner::log;
@@ -13,13 +16,31 @@ SpotifyClient::Runner::Runner(const lib::settings &settings,
 	path = QString::fromStdString(settings.spotify.path);
 	process = new QProcess(parent);
 	clientType = SpotifyClient::Helper::clientType(path);
+
+	connect(process, &QProcess::readyReadStandardOutput,
+		this, &Runner::onReadyReadOutput);
+
+	connect(process, &QProcess::readyReadStandardError,
+		this, &Runner::onReadyReadError);
+
+	connect(process, &QProcess::started,
+		this, &Runner::onStarted);
+
+	connect(process, &QProcess::errorOccurred,
+		this, &Runner::onErrorOccurred);
 }
 
 SpotifyClient::Runner::~Runner()
 {
 	if (process != nullptr)
 	{
-		process->close();
+		if (process->disconnect())
+		{
+			lib::log::debug("Disconnected events from client process");
+		}
+
+		process->terminate();
+		process->waitForFinished();
 	}
 }
 
@@ -60,6 +81,18 @@ void SpotifyClient::Runner::start()
 		"--bitrate", QString::number(static_cast<int>(settings.spotify.bitrate)),
 	});
 
+	// Check if not logged in
+	if (!isLoggedIn())
+	{
+		if (!Helper::getOAuthSupport(path))
+		{
+			emit statusChanged(QStringLiteral("Client unsupported, please upgrade and try again"));
+			return;
+		}
+
+		arguments.append(QStringLiteral("--enable-oauth"));
+	}
+
 	const auto initialVolume = QString::number(settings.spotify.volume);
 
 	// librespot specific
@@ -68,7 +101,7 @@ void SpotifyClient::Runner::start()
 		arguments.append({
 			"--name", QStringLiteral("%1 (librespot)").arg(APP_NAME),
 			"--initial-volume", initialVolume,
-			"--cache", QString::fromStdString((paths.cache() / "librespot").string()),
+			"--cache", QString::fromStdString(getCachePath().string()),
 			"--autoplay", "on",
 		});
 	}
@@ -113,18 +146,6 @@ void SpotifyClient::Runner::start()
 		arguments.append(additional_arguments.split(' '));
 	}
 
-	QProcess::connect(process, &QProcess::readyReadStandardOutput,
-		this, &Runner::onReadyReadOutput);
-
-	QProcess::connect(process, &QProcess::readyReadStandardError,
-		this, &Runner::onReadyReadError);
-
-	QProcess::connect(process, &QProcess::started,
-		this, &Runner::onStarted);
-
-	QProcess::connect(process, &QProcess::errorOccurred,
-		this, &Runner::onErrorOccurred);
-
 	lib::log::debug("starting: {} {}", path.toStdString(),
 		joinArgs(arguments).toStdString());
 
@@ -149,9 +170,22 @@ void SpotifyClient::Runner::logOutput(const QByteArray &output, lib::log_type lo
 
 		log.emplace_back(lib::date_time::now(), logType, line.toStdString());
 
+		const auto urlIndex = line.indexOf(QStringLiteral("https://accounts.spotify.com/authorize"));
+		if (urlIndex >= 0)
+		{
+			const auto url = line.right(line.length() - urlIndex);
+			auto *parent = qobject_cast<QWidget *>(QObject::parent());
+			Url::open(url, LinkType::Web, parent);
+		}
+
 		if (line.contains(QStringLiteral("Bad credentials")))
 		{
 			emit statusChanged(QStringLiteral("Bad credentials, please try again"));
+
+			if (resetCredentials())
+			{
+				lib::log::debug("Credentials reset");
+			}
 		}
 	}
 }
@@ -167,6 +201,23 @@ auto SpotifyClient::Runner::joinArgs(const QStringList &args) -> QString
 				i < args.size() - 1 ? " " : ""));
 	}
 	return result;
+}
+
+auto SpotifyClient::Runner::getCachePath() const -> ghc::filesystem::path
+{
+	return paths.cache() / "librespot";
+}
+
+auto SpotifyClient::Runner::isLoggedIn() const -> bool
+{
+	const auto path = getCachePath() / "credentials.json";
+	return ghc::filesystem::exists(path);
+}
+
+auto SpotifyClient::Runner::resetCredentials() const -> bool
+{
+	const auto path = getCachePath() / "credentials.json";
+	return ghc::filesystem::remove(path);
 }
 
 void SpotifyClient::Runner::onReadyReadOutput()
@@ -186,35 +237,7 @@ void SpotifyClient::Runner::onStarted()
 
 void SpotifyClient::Runner::onErrorOccurred(QProcess::ProcessError error)
 {
-	QString message;
-
-	switch (error)
-	{
-		case QProcess::FailedToStart:
-			message = QStringLiteral("Process failed to start");
-			break;
-
-		case QProcess::Crashed:
-			message = QStringLiteral("Process stopped or crashed");
-			break;
-
-		case QProcess::Timedout:
-			message = QStringLiteral("Process timed out");
-			break;
-
-		case QProcess::WriteError:
-			message = QStringLiteral("Process with write error");
-			break;
-
-		case QProcess::ReadError:
-			message = QStringLiteral("Process with read error");
-			break;
-
-		default:
-			message = QStringLiteral("Process with unknown error");
-			break;
-	}
-
+	const auto message = Helper::processErrorToString(error);
 	emit statusChanged(message);
 }
 

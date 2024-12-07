@@ -143,26 +143,40 @@ auto SpotifyClient::Helper::running(const QString &path) -> bool
 	return QString(out).contains(path);
 }
 
-auto SpotifyClient::Helper::getAutoplaySupport(const QString &path) -> AutoplaySupport
+auto SpotifyClient::Helper::getOAuthSupport(const QString &path) -> bool
 {
 	if (clientType(path) != lib::client_type::librespot)
 	{
-		return AutoplaySupport::None;
+		return false;
 	}
 
 	const auto help = clientExec(path, {
 		QStringLiteral("--help"),
 	});
 
-	if (help.contains(QStringLiteral("--autoplay OVERRIDE")))
-	{
-		return AutoplaySupport::Option;
-	}
+	return help.contains(QStringLiteral("--enable-oauth"));
+}
 
-	if (help.contains(QStringLiteral("--autoplay")))
+auto SpotifyClient::Helper::processErrorToString(const QProcess::ProcessError error) -> QString
+{
+	switch (error)
 	{
-		return AutoplaySupport::Flag;
-	}
+		case QProcess::FailedToStart:
+			return QStringLiteral("Process failed to start");
 
-	return AutoplaySupport::None;
+		case QProcess::Crashed:
+			return QStringLiteral("Process stopped or crashed");
+
+		case QProcess::Timedout:
+			return QStringLiteral("Process timed out");
+
+		case QProcess::WriteError:
+			return QStringLiteral("Process write error");
+
+		case QProcess::ReadError:
+			return QStringLiteral("Process read error");
+
+		default:
+			return QStringLiteral("Unknown error");
+	}
 }

@@ -462,6 +462,11 @@ void SettingsPage::Interface::saveTrayIcon()
 
 	if (closeToTray != nullptr)
 	{
+		if (settings.general.close_to_tray != closeToTray->isChecked())
+		{
+			reloadTray = true;
+		}
+
 		settings.general.close_to_tray = closeToTray->isChecked();
 	}
 

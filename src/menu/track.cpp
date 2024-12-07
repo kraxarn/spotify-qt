@@ -52,15 +52,6 @@ Menu::Track::Track(const QList<PlaylistTrack> &tracks, lib::spt::api &spotify,
 		addSeparator();
 	}
 
-	if (tracks.length() <= 100)
-	{
-		const auto icon = Icon::get(QStringLiteral("view-statistics"));
-		const auto text = QStringLiteral("Audio features");
-		auto *trackFeatures = addAction(icon, text);
-		QAction::connect(trackFeatures, &QAction::triggered,
-			this, &Menu::Track::onAudioFeatures);
-	}
-
 	if (isSingle)
 	{
 		auto *lyrics = addAction(Icon::get("view-media-lyrics"), "Lyrics");
@@ -408,22 +399,6 @@ void Menu::Track::onRemoveFromPlaylist(bool /*checked*/)
 			StatusMessage::info(QStringLiteral("Removed from %1")
 				.arg(QString::fromStdString(currentPlaylist.name)));
 		});
-}
-
-void Menu::Track::onAudioFeatures(bool /*checked*/)
-{
-	if (tracks.empty())
-	{
-		return;
-	}
-
-	auto *sidePanel = SidePanel::View::find(this);
-	if (sidePanel == nullptr)
-	{
-		return;
-	}
-
-	sidePanel->openAudioFeatures(getTracks());
 }
 
 void Menu::Track::onLyrics(bool /*checked*/)

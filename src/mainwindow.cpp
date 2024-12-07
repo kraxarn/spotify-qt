@@ -664,7 +664,7 @@ void MainWindow::reloadTrayIcon()
 {
 	if (trayIcon != nullptr)
 	{
-		delete trayIcon;
+		trayIcon->deleteLater();
 		trayIcon = nullptr;
 	}
 
