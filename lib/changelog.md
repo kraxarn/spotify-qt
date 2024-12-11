@@ -4,6 +4,28 @@ Versions use major.minor scheming. New versions are released together with spoti
 * Minor releases contain minor changes and bug fixes and should never require changes to be made.
 * Pre-release and beta releases may contain breaking changes, even if it's a minor release.
 
+## v0.10 (spotify-qt v3.12)
+* `album_group`, `album_shape`, `artist_profile` enums now explicitly uses `unsigned char`.
+* `client_type`, `experiment`, `follow_type` enums now explicitly uses `unsigned char`.
+* `library_layout`, `log_type`, `media_type` enums now explicitly uses `unsigned char`.
+* `player_action`, `position`, `repeat_mode` enums now explicitly uses `unsigned char`.
+* `resize_mode` enum now explicitly uses `unsigned char`.
+* Implemented `enum_to_string` for `album_group`.
+* `spt::api::album_tracks` is now paged.
+* `spt::api::albums` is now paged.
+* `spt::api::new_releases` is now paged.
+* `spt::api::followed_artists` is now paged.
+* `spt::api::saved_albums` is now paged.
+* `spt::api::playlists` is now paged.
+* Added `qt.track_title`.
+* Added `spt::api::add_saved_albums`, `spt::api::removed_saved_album` and `spt::api::is_saved_album`.
+* Removed `audio_feature`, `audio_key`, `audio_mode` enums.
+* Removed `spotify.username`.
+* Removed `spt::api::track_audio_features`.
+* Removed `spt::audio_feature` and `spt::audio_features`.
+* Removed `spt::show::available_markets`.
+* Removed `USE_KEYCHAIN` support.
+
 ## v0.9 (spotify-qt v3.11)
 * `player_action` now implements `std::hash`.
 * `spt::api::saved_tracks`, `spt::api::playlist_tracks` now expects a paged callback.
