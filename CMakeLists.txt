@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(spotify-qt LANGUAGES CXX VERSION 3.11)
+project(spotify-qt LANGUAGES CXX VERSION 3.12)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
