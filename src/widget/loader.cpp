@@ -23,6 +23,6 @@ void Loader::timeout()
 
 	labelText = labelText.length() >= limit
 		? QString()
-		: QString("%1.").arg(label->text());
+		: QStringLiteral("%1.").arg(label->text());
 	label->setText(labelText);
 }

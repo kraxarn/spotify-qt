@@ -163,7 +163,7 @@ void List::Library::onDoubleClicked(QTreeWidgetItem *item, int /*column*/)
 				return;
 			}
 
-			StatusMessage::error(QString("Failed to start playback: %1")
+			StatusMessage::error(QStringLiteral("Failed to start playback: %1")
 				.arg(QString::fromStdString(status)));
 		});
 	};
@@ -206,7 +206,7 @@ void List::Library::onExpanded(QTreeWidgetItem *item)
 		{
 			if (!result.success())
 			{
-				StatusMessage::error(QString("Failed to get albums: %1")
+				StatusMessage::error(QStringLiteral("Failed to get albums: %1")
 					.arg(QString::fromStdString(result.message())));
 
 				return false;
@@ -231,7 +231,7 @@ void List::Library::onExpanded(QTreeWidgetItem *item)
 		{
 			if (!result.success())
 			{
-				StatusMessage::error(QString("Failed to get artists: %1")
+				StatusMessage::error(QStringLiteral("Failed to get artists: %1")
 					.arg(QString::fromStdString(result.message())));
 
 				return false;
@@ -256,7 +256,7 @@ void List::Library::onExpanded(QTreeWidgetItem *item)
 		{
 			if (!result.success())
 			{
-				StatusMessage::error(QString("Failed to get new releases: %1")
+				StatusMessage::error(QStringLiteral("Failed to get new releases: %1")
 					.arg(QString::fromStdString(result.message())));
 
 				return false;

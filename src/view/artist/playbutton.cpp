@@ -36,10 +36,10 @@ auto Artist::PlayButton::contextMenu() -> QMenu *
 
 void Artist::PlayButton::updateFollow(bool isFollowing)
 {
-	follow->setIcon(Icon::get(QString("%1starred-symbolic")
+	follow->setIcon(Icon::get(QStringLiteral("%1starred-symbolic")
 		.arg(isFollowing ? "" : "non-")));
 
-	follow->setText(QString("%1%2")
+	follow->setText(QStringLiteral("%1%2")
 		.arg(isFollowing ? "Unfollow" : "Follow", follow->text()
 			.right(follow->text().length() - follow->text().indexOf(' '))));
 }
@@ -53,7 +53,7 @@ void Artist::PlayButton::setArtist(const lib::spt::artist &loadedArtist)
 		QVariant(artist.popularity));
 
 	popularity->setIcon(QIcon(masked));
-	popularity->setText(QString("%1% popularity").arg(artist.popularity));
+	popularity->setText(QStringLiteral("%1% popularity").arg(artist.popularity));
 
 	auto followers = lib::fmt::format("Follow ({} follower{})",
 		lib::format::count(artist.followers),
@@ -88,7 +88,7 @@ void Artist::PlayButton::onFollow(bool /*checked*/)
 			return;
 		}
 
-		StatusMessage::error(QString("Failed to %1: %2")
+		StatusMessage::error(QStringLiteral("Failed to %1: %2")
 			.arg(isFollowing ? "unfollow" : "follow")
 			.arg(QString::fromStdString(status)));
 	};

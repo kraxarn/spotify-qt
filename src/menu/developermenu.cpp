@@ -46,7 +46,7 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 		catch (const std::exception &e)
 		{
 			QMessageBox::critical(this, "Error",
-				QString("Refresh failed: %1").arg(e.what()));
+				QStringLiteral("Refresh failed: %1").arg(e.what()));
 		}
 	});
 
@@ -120,7 +120,7 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 		}
 		tracksList->updateLikedTracks([](const std::vector<lib::spt::track> &tracks)
 		{
-			StatusMessage::info(QString("Updated %1 tracks").arg(tracks.size()));
+			StatusMessage::info(QStringLiteral("Updated %1 tracks").arg(tracks.size()));
 		});
 	});
 
