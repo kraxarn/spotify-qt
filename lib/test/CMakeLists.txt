@@ -12,7 +12,6 @@ add_executable(spotify-qt-lib-test
 	src/imagetests.cpp
 	src/jsontests.cpp
 	src/logtests.cpp
-	src/optionaltests.cpp
 	src/resulttests.cpp
 	src/settingstests.cpp
 	src/spotify/tracktests.cpp
