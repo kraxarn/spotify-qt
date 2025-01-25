@@ -26,7 +26,7 @@ endif ()
 
 # Set target macOS version
 if (APPLE)
-	set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15")
+	set(CMAKE_OSX_DEPLOYMENT_TARGET "12")
 endif ()
 
 # Find Qt
