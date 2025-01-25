@@ -1,29 +1,19 @@
 # Find requested Qt version
-option(USE_QT6 "Force Qt 6" OFF)
-option(USE_QT5 "Force Qt 5" OFF)
+option(USE_QT5 "Force Qt 5 (legacy)" OFF)
 
 if (USE_QT5)
-	# Forcing Qt 5
-	set(QT_VERSION_MAJOR 5)
-elseif (USE_QT6)
-	# Forcing Qt 6
-	set(QT_VERSION_MAJOR 6)
-else ()
-	# Auto detect, but prefer Qt 5
 	find_package(Qt5 COMPONENTS Core QUIET)
 	if (Qt5Core_FOUND)
 		set(QT_VERSION_MAJOR 5)
+		message(WARNING "Support for Qt 5 is unsupported, and will be removed the next major release")
 	else ()
-		find_package(Qt6 COMPONENTS Core QUIET)
-		if (Qt6Core_FOUND)
-			set(QT_VERSION_MAJOR 6)
-		endif ()
+		message(FATAL_ERROR "Qt 5 not found, install Qt 5, or remove -DUSE_QT5 to use Qt 6")
 	endif ()
-endif ()
-
-# Check if Qt was found
-if (QT_VERSION_MAJOR)
-	message(STATUS "Found Qt ${QT_VERSION_MAJOR}")
 else ()
-	message(FATAL_ERROR "Qt not found, please install Qt 5/6 first")
+	find_package(Qt6 COMPONENTS Core QUIET)
+	if (Qt6Core_FOUND)
+		set(QT_VERSION_MAJOR 6)
+	else ()
+		message(FATAL_ERROR "Qt 6 not found, please install Qt 6 and try again")
+	endif ()
 endif ()
