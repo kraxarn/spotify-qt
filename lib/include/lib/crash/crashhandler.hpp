@@ -13,6 +13,7 @@
 
 #ifdef USE_GCC_CRASH_HANDLER
 #include <execinfo.h>
+#include <csignal>
 #endif
 
 #include <sstream>
