@@ -1,5 +1,5 @@
 #include "lib/spotify/track.hpp"
-
+#include "lib/fmt.hpp"
 #include "lib/json.hpp"
 #include "lib/strings.hpp"
 

@@ -1,5 +1,6 @@
-
 #include "lib/cache/jsoncache.hpp"
+
+#include <fstream>
 
 lib::json_cache::json_cache(const lib::paths &paths)
 	: paths(paths)
@@ -122,12 +123,12 @@ auto lib::json_cache::all_tracks() const -> std::map<std::string, std::vector<li
 	auto dir = paths.cache() / "tracks";
 	std::map<std::string, std::vector<lib::spt::track>> results;
 
-	if (!ghc::filesystem::exists(dir))
+	if (!std::filesystem::exists(dir))
 	{
 		return results;
 	}
 
-	for (const auto &entry: ghc::filesystem::directory_iterator(dir))
+	for (const auto &entry: std::filesystem::directory_iterator(dir))
 	{
 		auto entity_id = entry.path().filename().replace_extension().string();
 		results[entity_id] = get_tracks(entity_id);
@@ -163,15 +164,15 @@ void lib::json_cache::add_crash(const lib::crash_info &info)
 
 auto lib::json_cache::get_all_crashes() const -> std::vector<lib::crash_info>
 {
-	auto dir = ghc::filesystem::path(paths.cache()) / "crash";
+	auto dir = std::filesystem::path(paths.cache()) / "crash";
 	std::vector<lib::crash_info> results;
 
-	if (!ghc::filesystem::exists(dir))
+	if (!std::filesystem::exists(dir))
 	{
 		return results;
 	}
 
-	for (const auto &entry: ghc::filesystem::directory_iterator(dir))
+	for (const auto &entry: std::filesystem::directory_iterator(dir))
 	{
 		results.push_back(lib::json::load<lib::crash_info>(entry.path()));
 	}
@@ -183,13 +184,13 @@ auto lib::json_cache::get_all_crashes() const -> std::vector<lib::crash_info>
 
 //region private
 
-auto lib::json_cache::dir(const std::string &type) const -> ghc::filesystem::path
+auto lib::json_cache::dir(const std::string &type) const -> std::filesystem::path
 {
-	auto file_dir = ghc::filesystem::path(paths.cache()) / type;
+	auto file_dir = std::filesystem::path(paths.cache()) / type;
 
-	if (!ghc::filesystem::exists(file_dir))
+	if (!std::filesystem::exists(file_dir))
 	{
-		ghc::filesystem::create_directories(file_dir);
+		std::filesystem::create_directories(file_dir);
 	}
 
 	return file_dir;
@@ -209,7 +210,7 @@ auto lib::json_cache::path(const std::string &type, const std::string &entity_id
 	return (dir(type) / file(entity_id, extension)).string();
 }
 
-auto lib::json_cache::get_url_id(const ghc::filesystem::path &path) -> std::string
+auto lib::json_cache::get_url_id(const std::filesystem::path &path) -> std::string
 {
 	return path.stem().string();
 }

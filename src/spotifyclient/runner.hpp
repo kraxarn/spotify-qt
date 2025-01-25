@@ -51,7 +51,7 @@ namespace SpotifyClient
 		void logOutput(const QByteArray &output, lib::log_type logType);
 		static auto joinArgs(const QStringList &args) -> QString;
 
-		auto getCachePath() const -> ghc::filesystem::path;
+		auto getCachePath() const -> std::filesystem::path;
 		auto isLoggedIn() const -> bool;
 		auto resetCredentials() const -> bool;
 

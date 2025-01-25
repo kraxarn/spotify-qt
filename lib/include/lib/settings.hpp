@@ -1,17 +1,11 @@
 #pragma once
 
-#include "enum/palette.hpp"
-#include "enum/playlistorder.hpp"
-#include "enum/spotifycontext.hpp"
-#include "log.hpp"
 #include "paths/paths.hpp"
-#include "thirdparty/json.hpp"
-#include "thirdparty/filesystem.hpp"
-#include "settings/general.hpp"
 #include "settings/account.hpp"
-#include "settings/spotify.hpp"
+#include "settings/general.hpp"
 #include "settings/qt.hpp"
-#include "lib/json.hpp"
+#include "settings/spotify.hpp"
+#include "thirdparty/json.hpp"
 
 #include <mutex>
 

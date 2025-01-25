@@ -1,4 +1,6 @@
 #include "lib/search/api.hpp"
+#include "lib/fmt.hpp"
+#include "lib/log.hpp"
 #include "lib/uri.hpp"
 
 lib::ddg::api::api(const lib::http_client &http_client)

@@ -1,5 +1,6 @@
 #include "dialog/memory.hpp"
 #include "lib/format.hpp"
+#include "lib/log.hpp"
 
 #include <QPushButton>
 #include <QIntValidator>

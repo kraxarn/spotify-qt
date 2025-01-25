@@ -1,8 +1,9 @@
 #include "dialog/setup.hpp"
+#include "lib/log.hpp"
 #include "util/url.hpp"
 
-#include <QPushButton>
 #include <QMessageBox>
+#include <QPushButton>
 
 Dialog::Setup::Setup(lib::settings &settings, QWidget *parent)
 	: Base(parent),

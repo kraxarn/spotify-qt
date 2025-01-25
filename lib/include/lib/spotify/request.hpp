@@ -1,11 +1,13 @@
 #pragma once
 
+#include "lib/fmt.hpp"
 #include "lib/httpclient.hpp"
+#include "lib/log.hpp"
 #include "lib/result.hpp"
-#include "lib/spotify/error.hpp"
-#include "lib/spotify/util.hpp"
 #include "lib/spotify/deviceselect.hpp"
+#include "lib/spotify/error.hpp"
 #include "lib/spotify/page.hpp"
+#include "lib/spotify/util.hpp"
 
 namespace lib
 {

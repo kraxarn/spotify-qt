@@ -1,4 +1,5 @@
 #include "statusmessage.hpp"
+#include "lib/log.hpp"
 
 StatusMessage *StatusMessage::instance = nullptr;
 

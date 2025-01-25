@@ -1,4 +1,6 @@
 #include "lib/spotify/auth.hpp"
+#include "lib/fmt.hpp"
+#include "lib/log.hpp"
 
 lib::spt::auth::auth(lib::settings &settings, const lib::http_client &http_client)
 	: settings(settings),

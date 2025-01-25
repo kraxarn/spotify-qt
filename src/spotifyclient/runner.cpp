@@ -203,7 +203,7 @@ auto SpotifyClient::Runner::joinArgs(const QStringList &args) -> QString
 	return result;
 }
 
-auto SpotifyClient::Runner::getCachePath() const -> ghc::filesystem::path
+auto SpotifyClient::Runner::getCachePath() const -> std::filesystem::path
 {
 	return paths.cache() / "librespot";
 }
@@ -211,13 +211,13 @@ auto SpotifyClient::Runner::getCachePath() const -> ghc::filesystem::path
 auto SpotifyClient::Runner::isLoggedIn() const -> bool
 {
 	const auto path = getCachePath() / "credentials.json";
-	return ghc::filesystem::exists(path);
+	return std::filesystem::exists(path);
 }
 
 auto SpotifyClient::Runner::resetCredentials() const -> bool
 {
 	const auto path = getCachePath() / "credentials.json";
-	return ghc::filesystem::remove(path);
+	return std::filesystem::remove(path);
 }
 
 void SpotifyClient::Runner::onReadyReadOutput()

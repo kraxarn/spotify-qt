@@ -1,4 +1,7 @@
 #include "lib/json.hpp"
+#include "lib/log.hpp"
+
+#include <fstream>
 
 auto lib::json::combine(const nlohmann::json &item1, const nlohmann::json &item2) -> nlohmann::json
 {
@@ -16,9 +19,9 @@ auto lib::json::combine(const nlohmann::json &item1, const nlohmann::json &item2
 	return item;
 }
 
-auto lib::json::load(const ghc::filesystem::path &path) -> nlohmann::json
+auto lib::json::load(const std::filesystem::path &path) -> nlohmann::json
 {
-	ghc::filesystem::ifstream file(path);
+	std::ifstream file(path);
 	if (!file.is_open() || file.bad())
 	{
 		// File not found errors fail silently
@@ -40,11 +43,11 @@ auto lib::json::load(const ghc::filesystem::path &path) -> nlohmann::json
 	return {};
 }
 
-void lib::json::save(const ghc::filesystem::path &path, const nlohmann::json &json)
+void lib::json::save(const std::filesystem::path &path, const nlohmann::json &json)
 {
 	try
 	{
-		ghc::filesystem::ofstream file(path);
+		std::ofstream file(path);
 		file << std::setw(4) << json;
 	}
 	catch (const std::exception &e)

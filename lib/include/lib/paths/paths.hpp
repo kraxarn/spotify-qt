@@ -1,8 +1,6 @@
 #pragma once
 
-#include "thirdparty/filesystem.hpp"
-
-#include <string>
+#include <filesystem>
 
 namespace lib
 {
@@ -17,13 +15,13 @@ namespace lib
 		 * Get path to spotify-qt.json
 		 * @return Path, for example ~/.config/kraxarn/spotify-qt.json
 		 */
-		virtual auto config_file() const -> ghc::filesystem::path = 0;
+		virtual auto config_file() const -> std::filesystem::path = 0;
 
 		/**
 		 * Get path where cached files should be
 		 * @return Path, for example ~/.cache/kraxarn/spotify-qt
 		 */
-		virtual auto cache() const -> ghc::filesystem::path = 0;
+		virtual auto cache() const -> std::filesystem::path = 0;
 
 	protected:
 		/**

@@ -10,10 +10,10 @@ class QtPaths: public QObject, public lib::paths
 public:
 	explicit QtPaths(QObject *parent);
 
-	auto config_file() const -> ghc::filesystem::path override;
-	auto cache() const -> ghc::filesystem::path override;
+	auto config_file() const -> std::filesystem::path override;
+	auto cache() const -> std::filesystem::path override;
 
 private:
-	ghc::filesystem::path configFile;
-	ghc::filesystem::path cachePath;
+	std::filesystem::path configFile;
+	std::filesystem::path cachePath;
 };
