@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['track_0',['track',['../classlib_1_1spt_1_1track.html',1,'lib::spt']]],
-  ['track_5finfo_1',['track_info',['../classlib_1_1spt_1_1track__info.html',1,'lib::spt']]]
+  ['uri_0',['uri',['../classlib_1_1uri.html',1,'lib']]],
+  ['user_1',['user',['../classlib_1_1spt_1_1user.html',1,'lib::spt']]]
 ];

@@ -85,69 +85,68 @@ $(document).ready(function() { init_codefold(0); });
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;lib/optional.hpp&quot;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span>lib</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>{</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="classlib_1_1result.html">   13</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classlib_1_1result.html">result</a></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    {</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keyword">public</span>:</div>
-<div class="foldopen" id="foldopen00019" data-start="{" data-end="}">
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="classlib_1_1result.html#aeb689aa457c1ff79bee90c4eedf95f3c">   19</a></span>        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code hl_function" href="classlib_1_1result.html#aeb689aa457c1ff79bee90c4eedf95f3c">ok</a>(<a class="code hl_class" href="classlib_1_1vector.html">T</a> response) -&gt; <a class="code hl_class" href="classlib_1_1result.html">result</a></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        {</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="classlib_1_1vector.html">result&lt;T&gt;</a>(std::string(), <a class="code hl_class" href="classlib_1_1vector.html">lib::optional&lt;T&gt;</a>(response));</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        }</div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;optional&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span>lib</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>{</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00012" data-start="{" data-end="};">
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="classlib_1_1result.html">   12</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classlib_1_1result.html">result</a></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    {</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00018" data-start="{" data-end="}">
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="classlib_1_1result.html#aeb689aa457c1ff79bee90c4eedf95f3c">   18</a></span>        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code hl_function" href="classlib_1_1result.html#aeb689aa457c1ff79bee90c4eedf95f3c">ok</a>(<a class="code hl_class" href="classlib_1_1vector.html">T</a> response) -&gt; <a class="code hl_class" href="classlib_1_1result.html">result</a></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="classlib_1_1vector.html">result&lt;T&gt;</a>(std::string(), std::optional&lt;T&gt;(response));</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        }</div>
 </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="foldopen" id="foldopen00027" data-start="{" data-end="}">
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="classlib_1_1result.html#a9227d5a20285230afe413aee8c66838b">   27</a></span>        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code hl_function" href="classlib_1_1result.html#a9227d5a20285230afe413aee8c66838b">fail</a>(<span class="keyword">const</span> std::string &amp;<a class="code hl_function" href="classlib_1_1result.html#ad6ee5ee2e1f2dae434049ffdc72922cf">message</a>) -&gt; <a class="code hl_class" href="classlib_1_1result.html">result</a></div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        {</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="classlib_1_1vector.html">result&lt;T&gt;</a>(<a class="code hl_function" href="classlib_1_1result.html#ad6ee5ee2e1f2dae434049ffdc72922cf">message</a>, <a class="code hl_class" href="classlib_1_1vector.html">lib::optional&lt;T&gt;</a>());</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        }</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="foldopen" id="foldopen00026" data-start="{" data-end="}">
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="classlib_1_1result.html#a9227d5a20285230afe413aee8c66838b">   26</a></span>        <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code hl_function" href="classlib_1_1result.html#a9227d5a20285230afe413aee8c66838b">fail</a>(<span class="keyword">const</span> std::string &amp;<a class="code hl_function" href="classlib_1_1result.html#ad6ee5ee2e1f2dae434049ffdc72922cf">message</a>) -&gt; <a class="code hl_class" href="classlib_1_1result.html">result</a></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        {</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="classlib_1_1vector.html">result&lt;T&gt;</a>(<a class="code hl_function" href="classlib_1_1result.html#ad6ee5ee2e1f2dae434049ffdc72922cf">message</a>, std::optional&lt;T&gt;());</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        }</div>
 </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="foldopen" id="foldopen00035" data-start="{" data-end="}">
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classlib_1_1result.html#a74b24c938e04338d3caa5268ae709df1">   35</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="classlib_1_1result.html#a74b24c938e04338d3caa5268ae709df1">success</a>() <a class="code hl_class" href="classlib_1_1vector.html">const</a> -&gt; <span class="keywordtype">bool</span></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        {</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            <span class="keywordflow">return</span> response.has_value();</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        }</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="foldopen" id="foldopen00034" data-start="{" data-end="}">
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="classlib_1_1result.html#a74b24c938e04338d3caa5268ae709df1">   34</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="classlib_1_1result.html#a74b24c938e04338d3caa5268ae709df1">success</a>() <a class="code hl_class" href="classlib_1_1vector.html">const</a> -&gt; <span class="keywordtype">bool</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        {</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            <span class="keywordflow">return</span> response.has_value();</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        }</div>
 </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="foldopen" id="foldopen00043" data-start="{" data-end="}">
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="classlib_1_1result.html#ae4a0f125fac55cd6970ebf52b5ec4878">   43</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="classlib_1_1result.html#ae4a0f125fac55cd6970ebf52b5ec4878">value</a>() <a class="code hl_class" href="classlib_1_1vector.html">const</a> -&gt; <a class="code hl_class" href="classlib_1_1vector.html">T</a> &amp;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        {</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            <span class="keywordflow">return</span> response.value();</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        }</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="foldopen" id="foldopen00042" data-start="{" data-end="}">
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classlib_1_1result.html#a9b9c789b6f509a4a963650ca431807e1">   42</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="classlib_1_1result.html#a9b9c789b6f509a4a963650ca431807e1">value</a>() <a class="code hl_class" href="classlib_1_1vector.html">const</a> -&gt; <a class="code hl_class" href="classlib_1_1vector.html">const</a> <a class="code hl_class" href="classlib_1_1vector.html">T</a> &amp;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        {</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            <span class="keywordflow">return</span> response.value();</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        }</div>
 </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="foldopen" id="foldopen00051" data-start="{" data-end="}">
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="classlib_1_1result.html#ad6ee5ee2e1f2dae434049ffdc72922cf">   51</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="classlib_1_1result.html#ad6ee5ee2e1f2dae434049ffdc72922cf">message</a>() <a class="code hl_class" href="classlib_1_1vector.html">const</a> -&gt; std::<span class="keywordtype">string</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        {</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            <span class="keywordflow">return</span> error;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        }</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="foldopen" id="foldopen00050" data-start="{" data-end="}">
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="classlib_1_1result.html#ad6ee5ee2e1f2dae434049ffdc72922cf">   50</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="classlib_1_1result.html#ad6ee5ee2e1f2dae434049ffdc72922cf">message</a>() <a class="code hl_class" href="classlib_1_1vector.html">const</a> -&gt; std::<span class="keywordtype">string</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        {</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <span class="keywordflow">return</span> error;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        }</div>
 </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        std::string error;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <a class="code hl_class" href="classlib_1_1vector.html">lib::optional&lt;T&gt;</a> response;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <a class="code hl_class" href="classlib_1_1result.html">result</a>(std::string <a class="code hl_function" href="classlib_1_1result.html#ad6ee5ee2e1f2dae434049ffdc72922cf">message</a>, <a class="code hl_class" href="classlib_1_1vector.html">lib::optional&lt;T&gt;</a> response)</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            : error(std::<a class="code hl_class" href="classlib_1_1vector.html">move</a>(<a class="code hl_function" href="classlib_1_1result.html#ad6ee5ee2e1f2dae434049ffdc72922cf">message</a>)), response(std::<a class="code hl_class" href="classlib_1_1vector.html">move</a>(response))</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        {</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        }</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    };</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        std::string error;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        std::optional&lt;T&gt; response;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <a class="code hl_class" href="classlib_1_1result.html">result</a>(std::string <a class="code hl_function" href="classlib_1_1result.html#ad6ee5ee2e1f2dae434049ffdc72922cf">message</a>, std::optional&lt;T&gt; response)</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            : error(std::<a class="code hl_class" href="classlib_1_1vector.html">move</a>(<a class="code hl_function" href="classlib_1_1result.html#ad6ee5ee2e1f2dae434049ffdc72922cf">message</a>)), response(std::<a class="code hl_class" href="classlib_1_1vector.html">move</a>(response))</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        {</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        }</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    };</div>
 </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>}</div>
-<div class="ttc" id="aclasslib_1_1result_html"><div class="ttname"><a href="classlib_1_1result.html">lib::result</a></div><div class="ttdef"><b>Definition</b> result.hpp:14</div></div>
-<div class="ttc" id="aclasslib_1_1result_html_a74b24c938e04338d3caa5268ae709df1"><div class="ttname"><a href="classlib_1_1result.html#a74b24c938e04338d3caa5268ae709df1">lib::result::success</a></div><div class="ttdeci">auto success() const -&gt; bool</div><div class="ttdef"><b>Definition</b> result.hpp:35</div></div>
-<div class="ttc" id="aclasslib_1_1result_html_a9227d5a20285230afe413aee8c66838b"><div class="ttname"><a href="classlib_1_1result.html#a9227d5a20285230afe413aee8c66838b">lib::result::fail</a></div><div class="ttdeci">static auto fail(const std::string &amp;message) -&gt; result</div><div class="ttdef"><b>Definition</b> result.hpp:27</div></div>
-<div class="ttc" id="aclasslib_1_1result_html_ad6ee5ee2e1f2dae434049ffdc72922cf"><div class="ttname"><a href="classlib_1_1result.html#ad6ee5ee2e1f2dae434049ffdc72922cf">lib::result::message</a></div><div class="ttdeci">auto message() const -&gt; std::string</div><div class="ttdef"><b>Definition</b> result.hpp:51</div></div>
-<div class="ttc" id="aclasslib_1_1result_html_ae4a0f125fac55cd6970ebf52b5ec4878"><div class="ttname"><a href="classlib_1_1result.html#ae4a0f125fac55cd6970ebf52b5ec4878">lib::result::value</a></div><div class="ttdeci">auto value() const -&gt; T &amp;</div><div class="ttdef"><b>Definition</b> result.hpp:43</div></div>
-<div class="ttc" id="aclasslib_1_1result_html_aeb689aa457c1ff79bee90c4eedf95f3c"><div class="ttname"><a href="classlib_1_1result.html#aeb689aa457c1ff79bee90c4eedf95f3c">lib::result::ok</a></div><div class="ttdeci">static auto ok(T response) -&gt; result</div><div class="ttdef"><b>Definition</b> result.hpp:19</div></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>}</div>
+<div class="ttc" id="aclasslib_1_1result_html"><div class="ttname"><a href="classlib_1_1result.html">lib::result</a></div><div class="ttdef"><b>Definition</b> result.hpp:13</div></div>
+<div class="ttc" id="aclasslib_1_1result_html_a74b24c938e04338d3caa5268ae709df1"><div class="ttname"><a href="classlib_1_1result.html#a74b24c938e04338d3caa5268ae709df1">lib::result::success</a></div><div class="ttdeci">auto success() const -&gt; bool</div><div class="ttdef"><b>Definition</b> result.hpp:34</div></div>
+<div class="ttc" id="aclasslib_1_1result_html_a9227d5a20285230afe413aee8c66838b"><div class="ttname"><a href="classlib_1_1result.html#a9227d5a20285230afe413aee8c66838b">lib::result::fail</a></div><div class="ttdeci">static auto fail(const std::string &amp;message) -&gt; result</div><div class="ttdef"><b>Definition</b> result.hpp:26</div></div>
+<div class="ttc" id="aclasslib_1_1result_html_a9b9c789b6f509a4a963650ca431807e1"><div class="ttname"><a href="classlib_1_1result.html#a9b9c789b6f509a4a963650ca431807e1">lib::result::value</a></div><div class="ttdeci">auto value() const -&gt; const T &amp;</div><div class="ttdef"><b>Definition</b> result.hpp:42</div></div>
+<div class="ttc" id="aclasslib_1_1result_html_ad6ee5ee2e1f2dae434049ffdc72922cf"><div class="ttname"><a href="classlib_1_1result.html#ad6ee5ee2e1f2dae434049ffdc72922cf">lib::result::message</a></div><div class="ttdeci">auto message() const -&gt; std::string</div><div class="ttdef"><b>Definition</b> result.hpp:50</div></div>
+<div class="ttc" id="aclasslib_1_1result_html_aeb689aa457c1ff79bee90c4eedf95f3c"><div class="ttname"><a href="classlib_1_1result.html#aeb689aa457c1ff79bee90c4eedf95f3c">lib::result::ok</a></div><div class="ttdeci">static auto ok(T response) -&gt; result</div><div class="ttdef"><b>Definition</b> result.hpp:18</div></div>
 <div class="ttc" id="aclasslib_1_1vector_html"><div class="ttname"><a href="classlib_1_1vector.html">lib::vector</a></div><div class="ttdef"><b>Definition</b> vector.hpp:10</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
