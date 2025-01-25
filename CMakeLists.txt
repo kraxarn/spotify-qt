@@ -141,7 +141,7 @@ if (Qt${QT_VERSION_MAJOR}DBus_FOUND)
 endif ()
 
 # KCrash support
-if (KF5Crash_FOUND AND NOT USE_QT6)
+if (KF5Crash_FOUND AND USE_QT5)
 	target_compile_definitions(spotify-qt PRIVATE USE_KCRASH)
 	target_link_libraries(spotify-qt PRIVATE KF5::Crash)
 endif ()
