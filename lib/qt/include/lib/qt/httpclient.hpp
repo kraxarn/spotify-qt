@@ -1,11 +1,12 @@
 #pragma once
 
+// https://bugreports.qt.io/browse/QTBUG-73263
+#include <QCoreApplication>
+
 #include "lib/httpclient.hpp"
 
-#include <QObject>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QCoreApplication>
 
 namespace lib
 {
