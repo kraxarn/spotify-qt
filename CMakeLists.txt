@@ -6,8 +6,8 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-# C++11
-set(CMAKE_CXX_STANDARD 11)
+# C++17 is required on some platforms by Qt 6
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Optional D-Bus support

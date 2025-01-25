@@ -27,8 +27,3 @@ if (QT_VERSION_MAJOR)
 else ()
 	message(FATAL_ERROR "Qt not found, please install Qt 5/6 first")
 endif ()
-
-# Qt 6 requires C++17 under MSVC
-if (QT_VERSION_MAJOR EQUAL 6 AND MSVC)
-	set(CMAKE_CXX_STANDARD 17)
-endif ()
