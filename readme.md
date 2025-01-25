@@ -29,7 +29,7 @@ configured from within the app.
 
 ## Supported platforms
 
-Any system with a C++11 compiler and Qt is supported, but only Linux, Windows (x64) and macOS (arm64)
+Any system with a C++17 compiler and Qt 6 is supported, but only Linux (x64) and macOS (arm64)
 are regularly being tested, so if an issue occurs on your favorite platform, please report it.
 
 ## Installing
@@ -65,7 +65,7 @@ or [issues](https://github.com/kraxarn/spotify-qt/issues), for planned features 
 
 ## Building yourself
 
-Make sure you have Qt (5.9+/6.0+) with SVG support, CMake (3.5+) and various build tools like
+Make sure you have Qt (6.0+) with SVG support, CMake (3.16+) and various build tools like
 `make`, `g++` and `git`. Keep in mind that the master branch is unstable at all times. Therefore,
 it's recommended to use the stable branch, which is updated after each new stable release, only
 including important bug fixes, unless you want to try out new features.
