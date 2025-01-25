@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['save_0',['save',['../classlib_1_1settings.html#a8dd0f510173f8faf1aa02b657ad29ff7',1,'lib::settings::save()'],['../classlib_1_1json.html#aa45d39432785ccca3c0157b8e01439b3',1,'lib::json::save()']]],
+  ['save_0',['save',['../classlib_1_1settings.html#a8dd0f510173f8faf1aa02b657ad29ff7',1,'lib::settings::save()'],['../classlib_1_1json.html#af83d7e9c5d9924ba474d21c8bafbea38',1,'lib::json::save()']]],
   ['saved_5falbum_1',['saved_album',['../classlib_1_1spt_1_1saved__album.html',1,'lib::spt']]],
   ['saved_5ftracks_2',['saved_tracks',['../classlib_1_1spt_1_1api.html#a549190fb118ee8b93d953749534624ea',1,'lib::spt::api']]],
   ['search_3',['search',['../classlib_1_1lrc_1_1api.html#a44e5e2e527a89743902d26812b2b201c',1,'lib::lrc::api::search(const std::string &amp;query, lib::callback&lt; lib::result&lt; std::vector&lt; lib::lrc::search_result &gt; &gt; &gt; &amp;callback)'],['../classlib_1_1lrc_1_1api.html#aed1f2595e39cceee74b26a9dbee2090a',1,'lib::lrc::api::search(const lib::spt::track &amp;track, lib::callback&lt; lib::result&lt; std::vector&lt; lib::lrc::search_result &gt; &gt; &gt; &amp;callback)']]],
