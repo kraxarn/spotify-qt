@@ -1,9 +1,9 @@
 #pragma once
 
-#include "lib/optional.hpp"
 #include "thirdparty/json.hpp"
 
 #include <filesystem>
+#include <optional>
 
 namespace lib
 {
@@ -99,7 +99,7 @@ namespace lib
 
 		template<typename T>
 		static void set(nlohmann::json &json, const std::string &key,
-			const lib::optional<T> &value)
+			const std::optional<T> &value)
 		{
 			if (value.has_value())
 			{

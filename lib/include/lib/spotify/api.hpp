@@ -266,9 +266,9 @@ namespace lib
 			 * @param callback Created playlist
 			 */
 			void create_playlist(const std::string &name,
-				const lib::optional<std::string> &description,
-				const lib::optional<bool> &is_public,
-				const lib::optional<bool> &is_collaborative,
+				const std::optional<std::string> &description,
+				const std::optional<bool> &is_public,
+				const std::optional<bool> &is_collaborative,
 				lib::callback<lib::spt::playlist> &callback);
 
 			void playlists(const paged_callback<playlist> &callback) const;

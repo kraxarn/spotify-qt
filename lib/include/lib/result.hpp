@@ -1,7 +1,6 @@
 #pragma once
 
-#include "lib/optional.hpp"
-
+#include <optional>
 #include <string>
 
 namespace lib
@@ -18,7 +17,7 @@ namespace lib
 		 */
 		static auto ok(T response) -> result
 		{
-			return result<T>(std::string(), lib::optional<T>(response));
+			return result<T>(std::string(), std::optional<T>(response));
 		}
 
 		/**
@@ -26,7 +25,7 @@ namespace lib
 		 */
 		static auto fail(const std::string &message) -> result
 		{
-			return result<T>(message, lib::optional<T>());
+			return result<T>(message, std::optional<T>());
 		}
 
 		/**
@@ -40,7 +39,7 @@ namespace lib
 		/**
 		 * Try and get value, throws if not successful result
 		 */
-		auto value() const -> T &
+		auto value() const -> const T &
 		{
 			return response.value();
 		}
@@ -55,9 +54,9 @@ namespace lib
 
 	private:
 		std::string error;
-		lib::optional<T> response;
+		std::optional<T> response;
 
-		result(std::string message, lib::optional<T> response)
+		result(std::string message, std::optional<T> response)
 			: error(std::move(message)), response(std::move(response))
 		{
 		}

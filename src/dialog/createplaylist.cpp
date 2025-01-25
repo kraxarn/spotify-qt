@@ -47,9 +47,9 @@ void Dialog::CreatePlaylist::onOk(bool /*checked*/)
 		return;
 	}
 
-	const auto description = lib::optional<std::string>();
-	const auto isPublic = lib::optional<bool>();
-	const auto isCollaborative = lib::optional<bool>();
+	const auto description = std::optional<std::string>();
+	const auto isPublic = std::optional<bool>();
+	const auto isCollaborative = std::optional<bool>();
 
 	spotify.create_playlist(name, description, isPublic, isCollaborative,
 		[this](const lib::spt::playlist &playlist)
