@@ -8,7 +8,7 @@ var searchData=
   ['link_5',['link',['../classlib_1_1ddg_1_1link.html',1,'lib::ddg']]],
   ['list_6',['Deprecated List',['../deprecated.html',1,'']]],
   ['load_7',['load',['../classlib_1_1json.html#a0d4c607ed7682ea06a63f650d62498de',1,'lib::json::load(const std::filesystem::path &amp;path) -&gt; nlohmann::json'],['../classlib_1_1json.html#a32e64188d77fc8f5d1e911d28c3b2195',1,'lib::json::load(const std::filesystem::path &amp;path) -&gt; T'],['../classlib_1_1settings.html#aed35e74bc89643703e679f0850844da5',1,'lib::settings::load()']]],
-  ['log_8',['log',['../classlib_1_1crash__handler.html#aa9774f6b3516f2695df9f17fb9015584',1,'lib::crash_handler::log()'],['../classlib_1_1log.html',1,'lib::log']]],
+  ['log_8',['log',['../classlib_1_1log.html',1,'lib::log'],['../classlib_1_1crash__handler.html#aa9774f6b3516f2695df9f17fb9015584',1,'lib::crash_handler::log()']]],
   ['log_5fmessage_9',['log_message',['../classlib_1_1log__message.html',1,'lib::log_message'],['../classlib_1_1log__message.html#a25aae8a82e968ea40db10bf459e7c93d',1,'lib::log_message::log_message(const date_time &amp;time, log_type log_type, const std::string &amp;message)'],['../classlib_1_1log__message.html#aa75bf94ccdddb558b2fa2fb0fd8ada5a',1,'lib::log_message::log_message(log_type log_type, const std::string &amp;message)'],['../classlib_1_1log__message.html#a7c503e6174d7549746c628705881a720',1,'lib::log_message::log_message()=default']]],
   ['login_10',['login',['../classlib_1_1gh_1_1contributor.html#a511b29863402493719581aae8604ed52',1,'lib::gh::contributor']]],
   ['lyrics_11',['lyrics',['../classlib_1_1lrc_1_1lyrics.html',1,'lib::lrc::lyrics'],['../classlib_1_1lrc_1_1api.html#a59a3b128a10bc6441e49b4f731dc0212',1,'lib::lrc::api::lyrics()']]],
