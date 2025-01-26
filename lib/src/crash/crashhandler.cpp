@@ -7,7 +7,7 @@ bool lib::crash_handler::initialized = false;
 #ifdef USE_GCC_CRASH_HANDLER
 auto lib::crash_handler::init() -> bool
 {
-	std::array<int, 5> signals{{
+	std::array<int, 5> signal_values{{
 		SIGABRT, // Abnormal termination
 		SIGFPE,  // Erroneous arithmetic operation
 		SIGILL,  // Illegal instruction
@@ -16,7 +16,7 @@ auto lib::crash_handler::init() -> bool
 	}};
 	initialized = true;
 	auto handler = reinterpret_cast<__sighandler_t>(lib::crash_handler::handle);
-	for (const auto s : signals)
+	for (const auto s : signal_values)
 	{
 		if (signal(s, handler) == nullptr)
 		{
