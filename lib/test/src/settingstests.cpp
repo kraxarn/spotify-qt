@@ -1,9 +1,9 @@
+#include "lib/filesystem.hpp"
 #include "lib/log.hpp"
 #include "lib/settings.hpp"
 #include "lib/paths/paths.hpp"
 #include "thirdparty/doctest.h"
 
-#include <filesystem>
 #include <fstream>
 
 class test_paths: public lib::paths
