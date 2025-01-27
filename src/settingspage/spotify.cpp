@@ -4,7 +4,10 @@
 #include "util/process.hpp"
 
 #include <QStandardPaths>
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
 #include <QtVersionChecks>
+#endif
 
 SettingsPage::Spotify::Spotify(lib::settings &settings, QWidget *parent)
 	: SettingsPage::Base(settings, parent)
