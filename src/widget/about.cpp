@@ -16,7 +16,7 @@ About::About(QWidget *parent)
 	auto *mainWindow = MainWindow::find(parentWidget());
 	if (mainWindow != nullptr)
 	{
-		layout->addWidget(new QLabel(QString("Hello %1!")
+		layout->addWidget(new QLabel(QStringLiteral("Hello %1!")
 				.arg(QString::fromStdString(mainWindow->getCurrentUser().display_name))),
 			0, Qt::AlignHCenter);
 	}
@@ -26,7 +26,7 @@ auto About::appLogo() -> QWidget *
 {
 	auto *titleLogo = new QLabel(this);
 
-	const auto icon = Icon::get(QString("logo:%1").arg(APP_ICON));
+	const auto icon = Icon::get(QStringLiteral("logo:%1").arg(APP_ICON));
 	const auto pixmap = icon.pixmap(logoSize, logoSize);
 	titleLogo->setPixmap(pixmap);
 
@@ -41,7 +41,7 @@ auto About::appInfo() -> QWidget *
 	layout->addStretch(1);
 
 	// Title
-	auto *titleAppName = new QLabel(QString("%1 %2")
+	auto *titleAppName = new QLabel(QStringLiteral("%1 %2")
 		.arg(APP_NAME, APP_VERSION));
 	auto appNameFont = titleAppName->font();
 	appNameFont.setPointSize((int) (appNameFont.pointSizeF() * appNameFontMulti));
@@ -49,15 +49,15 @@ auto About::appInfo() -> QWidget *
 	layout->addWidget(titleAppName);
 
 	// Qt version
-	auto *qtVersion = new QLabel(QString("Built using Qt %1").arg(QT_VERSION_STR), this);
+	auto *qtVersion = new QLabel(QStringLiteral("Built using Qt %1").arg(QT_VERSION_STR), this);
 	layout->addWidget(qtVersion);
 
 	// Build info
 #ifdef GIT_COMMIT
-	auto *commit = new QLabel(QString("Commit %1").arg(GIT_COMMIT), this);
+	auto *commit = new QLabel(QStringLiteral("Commit %1").arg(GIT_COMMIT), this);
 	layout->addWidget(commit);
 
-	auto *buildDate = new QLabel(QString("Built on %1").arg(__DATE__), this);
+	auto *buildDate = new QLabel(QStringLiteral("Built on %1").arg(__DATE__), this);
 	layout->addWidget(buildDate);
 #endif
 

@@ -20,7 +20,7 @@ void SettingsPage::Base::info(const QString &title, const QString &message)
 void SettingsPage::Base::applyFail(const QString &setting)
 {
 	warning("Failed to apply settings",
-		QString("Failed to apply setting \"%1\". Check your settings and try again.")
+		QStringLiteral("Failed to apply setting \"%1\". Check your settings and try again.")
 			.arg(setting));
 }
 
@@ -31,7 +31,7 @@ auto SettingsPage::Base::applyWarning(const QString &title, const QString &messa
 		: title;
 
 	const auto result = QMessageBox::warning(parentWidget(), dialogTitle,
-		QString("%1.\nDo you want to save anyway?").arg(message),
+		QStringLiteral("%1.\nDo you want to save anyway?").arg(message),
 		QMessageBox::Ok | QMessageBox::Cancel);
 
 	return result == QMessageBox::Ok;

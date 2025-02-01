@@ -24,14 +24,14 @@ void List::Contributors::showEvent(QShowEvent *event)
 				auto *item = new QListWidgetItem(this);
 				item->setText(QString::fromStdString(contributor.login));
 
-				item->setToolTip(QString("%1 %2")
+				item->setToolTip(QStringLiteral("%1 %2")
 					.arg(contributor.contributions)
 					.arg(contributor.contributions == 1
 						? QStringLiteral("contribution")
 						: QStringLiteral("contributions")));
 
 				item->setData(urlRole,
-					QString("https://github.com/kraxarn/spotify-qt/commits?author=%1")
+					QStringLiteral("https://github.com/kraxarn/spotify-qt/commits?author=%1")
 						.arg(QString::fromStdString(contributor.login)));
 
 				httpClient.get(contributor.avatar_url, lib::headers(),

@@ -65,7 +65,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 	initDevice();
 
 	setWindowTitle(APP_NAME);
-	setWindowIcon(Icon::get(QString("logo:%1").arg(APP_ICON)));
+	setWindowIcon(Icon::get(QStringLiteral("logo:%1").arg(APP_ICON)));
 	resize(defaultSize());
 	setCentralWidget(createCentralWidget());
 	toolBar = new MainToolBar(spotify, settings, httpClient, cache, this);
@@ -140,7 +140,7 @@ bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, long *r
 				{
 					if (!status.empty())
 					{
-						StatusMessage::error(QString("Failed to go to next track: %1")
+						StatusMessage::error(QStringLiteral("Failed to go to next track: %1")
 							.arg(QString::fromStdString(status)));
 						return;
 					}
@@ -155,7 +155,7 @@ bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, long *r
 				{
 					if (!status.empty())
 					{
-						StatusMessage::error(QString("Failed to go to previous track: %1")
+						StatusMessage::error(QStringLiteral("Failed to go to previous track: %1")
 							.arg(QString::fromStdString(status)));
 						return;
 					}
@@ -176,7 +176,7 @@ bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, long *r
 						return;
 					}
 
-					StatusMessage::error(QString("Failed to stop playback: %1")
+					StatusMessage::error(QStringLiteral("Failed to stop playback: %1")
 						.arg(QString::fromStdString(status)));
 				};
 				spotify.pause(callback);
@@ -195,7 +195,7 @@ bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, long *r
 						return;
 					}
 
-					StatusMessage::error(QString("Failed to play/pause playback: %1")
+					StatusMessage::error(QStringLiteral("Failed to play/pause playback: %1")
 						.arg(QString::fromStdString(status)));
 				};
 				if (current.is_playing)
@@ -359,7 +359,7 @@ void MainWindow::checkForUpdates()
 			return;
 		}
 
-		const auto text = QString("%1 %2 is now available")
+		const auto text = QStringLiteral("%1 %2 is now available")
 			.arg(APP_NAME, QString::fromStdString(latest));
 
 		StatusMessage::info(text, QStringLiteral("Open release"), [this]()
@@ -687,7 +687,7 @@ void MainWindow::toggleTrackNumbers(bool enabled)
 	{
 		auto *item = tracksList->topLevelItem(i);
 		item->setText(0, enabled
-			? QString("%1").arg(item->data(0, static_cast<int>(DataRole::Index))
+			? QStringLiteral("%1").arg(item->data(0, static_cast<int>(DataRole::Index))
 				.toInt() + 1, 3)
 			: QString());
 	}
@@ -838,7 +838,7 @@ void MainWindow::onSpotifyStatusChanged(const QString &status)
 		return;
 	}
 
-	const auto message = QString("Spotify client error: %1")
+	const auto message = QStringLiteral("Spotify client error: %1")
 		.arg(status);
 
 	if ((windowState() & Qt::WindowActive) > 0)

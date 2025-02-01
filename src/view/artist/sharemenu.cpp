@@ -19,7 +19,7 @@ Artist::ShareMenu::ShareMenu(const lib::spt::artist &artist, QWidget *parent)
 
 void Artist::ShareMenu::onCopyArtistLink(bool /*checked*/)
 {
-	const auto artistLink = QString("https://open.spotify.com/artist/%1")
+	const auto artistLink = QStringLiteral("https://open.spotify.com/artist/%1")
 		.arg(QString::fromStdString(artist.id));
 
 	QApplication::clipboard()->setText(artistLink);

@@ -125,7 +125,7 @@ void Menu::Album::onLikeAlbum(bool /*checked*/)
 			return;
 		}
 		
-		StatusMessage::error(QString("Failed to %1 album: %2")
+		StatusMessage::error(QStringLiteral("Failed to %1 album: %2")
 			.arg(isLiked ? "unlike" : "like")
 			.arg(QString::fromStdString(status)));
 	};
@@ -143,7 +143,7 @@ void Menu::Album::onLikeAlbum(bool /*checked*/)
 
 void Menu::Album::onCopyLink(bool /*checked*/)
 {
-	QApplication::clipboard()->setText(QString("https://open.spotify.com/album/%1")
+	QApplication::clipboard()->setText(QStringLiteral("https://open.spotify.com/album/%1")
 		.arg(QString::fromStdString(album.id)));
 	StatusMessage::info(QStringLiteral("Link copied to clipboard"));
 }
@@ -156,7 +156,7 @@ void Menu::Album::onCopyName(bool /*checked*/)
 
 void Menu::Album::onOpenInSpotify(bool /*checked*/)
 {
-	Url::open(QString("https://open.spotify.com/album/%1")
+	Url::open(QStringLiteral("https://open.spotify.com/album/%1")
 		.arg(QString::fromStdString(album.id)), LinkType::Web,
 		MainWindow::find(parentWidget()));
 }
@@ -191,13 +191,13 @@ void Menu::Album::tracksLoaded()
 	constexpr unsigned int msToMin = 1000U * secInMin;
 	auto minutes = duration / msToMin;
 
-	trackCount->setText(QString("%1 %2, %3%4 m")
+	trackCount->setText(QStringLiteral("%1 %2, %3%4 m")
 		.arg(tracks.size())
 		.arg(tracks.size() == 1
 			? QStringLiteral("track")
 			: QStringLiteral("tracks"))
 		.arg(minutes >= secInMin
-			? QString("%1 h ").arg(minutes / secInMin)
+			? QStringLiteral("%1 h ").arg(minutes / secInMin)
 			: QString())
 		.arg(minutes % secInMin));
 }

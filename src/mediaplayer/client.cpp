@@ -30,7 +30,7 @@ auto MediaPlayer::Client::callMethod(const QString &name, const QVariant &arg) -
 
 auto MediaPlayer::Client::invalidMessage() -> QString
 {
-	return QString("%1 is not running").arg(APP_NAME);
+	return QStringLiteral("%1 is not running").arg(APP_NAME);
 }
 
 auto MediaPlayer::Client::playPause() -> bool
