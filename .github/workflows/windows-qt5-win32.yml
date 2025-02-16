@@ -1,4 +1,4 @@
-name: Windows (Qt 5, x86)
+name: Windows (legacy)
 
 on: [ push, pull_request ]
 
