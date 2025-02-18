@@ -12,12 +12,12 @@ spt::AuthServer::AuthServer(lib::settings &settings, QObject *parent)
 
 auto spt::AuthServer::listen() -> bool
 {
-	return QTcpServer::listen(QHostAddress::LocalHost, serverPort);
+	return QTcpServer::listen(QHostAddress("127.0.0.1"), serverPort);
 }
 
 auto spt::AuthServer::redirectUrl() -> QString
 {
-	return QString("http://localhost:%1").arg(serverPort);
+	return QString("http://127.0.0.1:%1").arg(serverPort);
 }
 
 void spt::AuthServer::openUrl(QWidget *parent) const
