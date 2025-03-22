@@ -22,7 +22,7 @@ auto Refresher::refresh() -> bool
 	catch (const nlohmann::json::exception &e)
 	{
 		QMessageBox::warning(nullptr, TITLE,
-			QString("Failed to parse response from Spotify:\n%1").arg(e.what()));
+			QStringLiteral("Failed to parse response from Spotify:\n%1").arg(e.what()));
 
 		return false;
 	}
@@ -36,7 +36,7 @@ auto Refresher::refresh() -> bool
 	catch (const std::exception &e)
 	{
 		QMessageBox::warning(nullptr, TITLE,
-			QString("Failed to connect to Spotify, check your connection and try again:\n%1")
+			QStringLiteral("Failed to connect to Spotify, check your connection and try again:\n%1")
 				.arg(e.what()));
 
 		return false;

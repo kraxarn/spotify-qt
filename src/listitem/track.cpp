@@ -45,7 +45,7 @@ ListItem::Track::Track(const QStringList &strings, const lib::spt::track &track,
 	if (length.length() >= 2)
 	{
 		setToolTip(static_cast<int>(strings.length() - 2),
-			QString("%1m %2s (%3s total)")
+			QStringLiteral("%1m %2s (%3s total)")
 				.arg(length.at(0), length.at(1))
 				.arg(track.duration / 1000));
 	}

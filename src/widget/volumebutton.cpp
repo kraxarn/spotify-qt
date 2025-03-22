@@ -86,7 +86,7 @@ auto VolumeButton::getVolumeIcon(int value) -> QIcon
 
 auto VolumeButton::getVolumeInfo(int value) -> QString
 {
-	return QString("%1 %")
+	return QStringLiteral("%1 %")
 		.arg(value * step);
 }
 
@@ -139,7 +139,7 @@ void VolumeButton::setSpotifyVolume(int value)
 	{
 		if (!status.empty())
 		{
-			StatusMessage::error(QString("Failed to set volume: %1")
+			StatusMessage::error(QStringLiteral("Failed to set volume: %1")
 				.arg(QString::fromStdString(status)));
 		}
 	});

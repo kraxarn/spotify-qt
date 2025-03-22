@@ -29,7 +29,7 @@ void Dialog::CreatePlaylist::showEvent(QShowEvent *event)
 	auto *mainWindow = MainWindow::find(parentWidget());
 	if (mainWindow != nullptr)
 	{
-		defaultName = QString("Playlist #%1")
+		defaultName = QStringLiteral("Playlist #%1")
 			.arg(mainWindow->getPlaylistItemCount() + 1);
 
 		playlistNameEdit->setPlaceholderText(defaultName);
@@ -84,7 +84,7 @@ void Dialog::CreatePlaylist::onOk(bool /*checked*/)
 
 					auto *mainWindow = MainWindow::find(parentWidget());
 					mainWindow->refreshPlaylists();
-					StatusMessage::info(QString("Added to %1").arg(playlistName));
+					StatusMessage::info(QStringLiteral("Added to %1").arg(playlistName));
 					Base::onOk({});
 				});
 		});

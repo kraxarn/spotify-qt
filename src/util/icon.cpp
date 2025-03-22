@@ -6,11 +6,11 @@ auto Icon::get(const QString &name) -> QIcon
 {
 	if (name.startsWith("logo:"))
 	{
-		return QIcon(QString(":/res/logo/%1.svg")
-			.arg(name.right(name.length() - QString("logo:").length())));
+		return QIcon(QStringLiteral(":/res/logo/%1.svg")
+			.arg(name.right(name.length() - QStringLiteral("logo:").length())));
 	}
 
-	auto fallback = QString(":/res/ic/%1/%2.svg")
+	auto fallback = QStringLiteral(":/res/ic/%1/%2.svg")
 		.arg(Style::getDarkBackground() ? "dark" : "light", name);
 
 	return useFallbackIcons
@@ -30,6 +30,6 @@ auto Icon::getByType(const std::string &type) -> QIcon
 		return Icon::get(QStringLiteral("view-media-album-cover"));
 	}
 
-	return Icon::get(QString("view-media-%1")
+	return Icon::get(QStringLiteral("view-media-%1")
 		.arg(QString::fromStdString(type)));
 }

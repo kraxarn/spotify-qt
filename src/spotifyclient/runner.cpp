@@ -99,7 +99,7 @@ void SpotifyClient::Runner::start()
 	if (clientType == lib::client_type::librespot)
 	{
 		arguments.append({
-			"--name", QString("%1 (librespot)").arg(APP_NAME),
+			"--name", QStringLiteral("%1 (librespot)").arg(APP_NAME),
 			"--initial-volume", initialVolume,
 			"--cache", QString::fromStdString(getCachePath().string()),
 			"--autoplay", "on",
@@ -110,7 +110,7 @@ void SpotifyClient::Runner::start()
 		arguments.append({
 			"--no-daemon",
 			"--initial-volume", initialVolume,
-			"--device-name", QString("%1 (spotifyd)").arg(APP_NAME),
+			"--device-name", QStringLiteral("%1 (spotifyd)").arg(APP_NAME),
 		});
 	}
 
@@ -196,7 +196,7 @@ auto SpotifyClient::Runner::joinArgs(const QStringList &args) -> QString
 	for (auto i = 0; i < args.size(); i++)
 	{
 		const auto &arg = args.at(i);
-		result.append(QString("%1%2%1%3")
+		result.append(QStringLiteral("%1%2%1%3")
 			.arg(arg.contains(' ') ? "\"" : "", arg,
 				i < args.size() - 1 ? " " : ""));
 	}

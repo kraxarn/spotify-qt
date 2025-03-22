@@ -17,7 +17,7 @@ auto spt::AuthServer::listen() -> bool
 
 auto spt::AuthServer::redirectUrl() -> QString
 {
-	return QString("http://localhost:%1").arg(serverPort);
+	return QStringLiteral("http://localhost:%1").arg(serverPort);
 }
 
 void spt::AuthServer::openUrl(QWidget *parent) const
@@ -51,10 +51,10 @@ void spt::AuthServer::onNewConnection()
 		QString::fromStdString(settings.account.client_secret));
 
 	// Write
-	socket->write(QString("HTTP/1.1 200 OK\r\n\r\n%1")
+	socket->write(QStringLiteral("HTTP/1.1 200 OK\r\n\r\n%1")
 		.arg(status.isEmpty()
-			? QString("Success, you can now return to %1").arg(APP_NAME)
-			: QString("Failed to authenticate: %1").arg(status))
+			? QStringLiteral("Success, you can now return to %1").arg(APP_NAME)
+			: QStringLiteral("Failed to authenticate: %1").arg(status))
 		.toUtf8());
 
 	socket->flush();

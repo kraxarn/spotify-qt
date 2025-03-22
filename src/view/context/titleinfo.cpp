@@ -39,7 +39,7 @@ void Context::TitleInfo::onContextMenu(const QPoint &pos)
 		devContext->setEnabled(false);
 	}
 
-	auto *open = menu->addAction(getIcon(), QString("Open %1")
+	auto *open = menu->addAction(getIcon(), QStringLiteral("Open %1")
 		.arg(QString::fromStdString(playback.context.type)));
 
 	QAction::connect(open, &QAction::triggered,
@@ -68,7 +68,7 @@ void Context::TitleInfo::onContextMenuTriggered(bool /*checked*/)
 		{
 			if (!result.success())
 			{
-				StatusMessage::error(QString("Failed to load playlist: %1")
+				StatusMessage::error(QStringLiteral("Failed to load playlist: %1")
 					.arg(QString::fromStdString(result.message())));
 
 				return;

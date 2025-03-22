@@ -42,7 +42,7 @@ void Search::Playlists::onItemClicked(QListWidgetItem *item)
 	{
 		if (!result.success())
 		{
-			StatusMessage::error(QString("Failed to load playlist: %1")
+			StatusMessage::error(QStringLiteral("Failed to load playlist: %1")
 				.arg(QString::fromStdString(result.message())));
 
 			return;
@@ -63,7 +63,7 @@ void Search::Playlists::onItemDoubleClicked(QListWidgetItem *item)
 	{
 		if (!result.empty())
 		{
-			StatusMessage::error(QString("Failed to start playlist playback: %1")
+			StatusMessage::error(QStringLiteral("Failed to start playlist playback: %1")
 				.arg(QString::fromStdString(result)));
 		}
 	});

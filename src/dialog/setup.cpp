@@ -69,7 +69,7 @@ void Dialog::Setup::onAuthenticate(bool /*checked*/)
 		if (!auth->listen())
 		{
 			QMessageBox::warning(this, QStringLiteral("Server error"),
-				QString("Failed to start a temporary server on port 8888: %1")
+				QStringLiteral("Failed to start a temporary server on port 8888: %1")
 					.arg(auth->errorString()));
 
 			return;

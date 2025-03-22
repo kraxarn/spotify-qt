@@ -286,7 +286,7 @@ auto SettingsPage::Spotify::save() -> bool
 			{
 				message = result.message().empty()
 					? QStringLiteral("Invalid Spotify client")
-					: QString("Invalid Spotify client:\n%1")
+					: QStringLiteral("Invalid Spotify client:\n%1")
 						.arg(QString::fromStdString(result.message()));
 			}
 
@@ -321,7 +321,7 @@ auto SettingsPage::Spotify::save() -> bool
 		if (sptGlobal->isChecked() && !sptConfigExists())
 		{
 			warning("spotifyd config not found",
-				QString("Couldn't find a config file for spotifyd. You may experience issues."));
+				QStringLiteral("Couldn't find a config file for spotifyd. You may experience issues."));
 		}
 		settings.spotify.global_config = sptGlobal->isChecked();
 	}
@@ -403,7 +403,7 @@ auto SettingsPage::Spotify::sptConfigExists() -> bool
 	const auto homeLocation = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
 
 	// Config is either ~/.config/spotifyd/spotifyd.conf or /etc/spotifyd/spotifyd.conf or /etc/xdg/spotifyd/spotifyd.conf or ~\AppData\Roaming\spotifyd\spotifyd.conf
-	return QFile::exists(QString("%1/.config/spotifyd/spotifyd.conf").arg(homeLocation))
+	return QFile::exists(QStringLiteral("%1/.config/spotifyd/spotifyd.conf").arg(homeLocation))
 		|| QFile::exists(QStringLiteral("/etc/spotifyd/spotifyd.conf"))
 		|| QFile::exists(QStringLiteral("/etc/xdg/spotifyd/spotifyd.conf"))
 		|| QFile::exists(QString(R"(%1\AppData\Roaming\spotifyd\spotifyd.conf)").arg(homeLocation));

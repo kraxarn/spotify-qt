@@ -35,7 +35,7 @@ Dialog::OpenLink::OpenLink(const QString &link, LinkType linkType, QWidget *pare
 
 auto Dialog::OpenLink::titleText() -> QString
 {
-	return QString("A default %1 browser could not be found. "
+	return QStringLiteral("A default %1 browser could not be found. "
 				   "Please try copying and pasting the following link in a %1 browser manually.")
 		.arg(linkType == LinkType::Web ? "web" : "file");
 }
