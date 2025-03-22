@@ -35,11 +35,6 @@ jobs:
       - name: Package
         run: windeployqt --no-opengl-sw ${{runner.workspace}}/spotify-qt/${{env.BUILD_TYPE}}/spotify-qt.exe
 
-      - name: Copy OpenSSL
-        run: |
-          copy "${{runner.workspace}}\spotify-qt\.github\bin\win32\libcrypto-1_1.dll" "${{runner.workspace}}\spotify-qt\${{env.BUILD_TYPE}}"
-          copy "${{runner.workspace}}\spotify-qt\.github\bin\win32\libssl-1_1.dll" "${{runner.workspace}}\spotify-qt\${{env.BUILD_TYPE}}"
-
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
