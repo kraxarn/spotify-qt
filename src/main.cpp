@@ -1,24 +1,19 @@
-#include "util/icon.hpp"
-#include "util/appinstalltype.hpp"
 #include "lib/qtpaths.hpp"
 #include "lib/spotify/request.hpp"
 #include "spotify/deviceselect.hpp"
+#include "util/appinstalltype.hpp"
+#include "util/icon.hpp"
 
 #include <QApplication>
 #include <QCoreApplication>
 
 #include "mainwindow.hpp"
-#include "dialog/setup.hpp"
-#include "commandline/parser.hpp"
 #include "commandline/args.hpp"
+#include "commandline/parser.hpp"
 #include "commandline/processor.hpp"
-#include "util/refresher.hpp"
-
-#ifdef USE_KCRASH
-#include <kcrash.h>
-#else
+#include "dialog/setup.hpp"
 #include "lib/crash/crashhandler.hpp"
-#endif
+#include "util/refresher.hpp"
 
 auto main(int argc, char *argv[]) -> int
 {
@@ -41,22 +36,11 @@ auto main(int argc, char *argv[]) -> int
 	QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
 
-#ifndef USE_KCRASH
-	// Custom crash handler if not using KCrash
+	// Custom crash handler
 	lib::crash_handler::init();
-#endif
 
 	// Create Qt application
 	QApplication app(argc, argv);
-
-	// Optional KCrash support
-#if defined USE_KCRASH && defined NDEBUG
-	KCrash::initialize();
-	if (!KCrash::isDrKonqiEnabled())
-	{
-		lib::log::warn("Failed to initialize crash handler");
-	}
-#endif
 
 	// Settings
 	QtPaths paths(nullptr);

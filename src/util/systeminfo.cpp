@@ -20,13 +20,6 @@ SystemInfo::SystemInfo()
 	add(QStringLiteral("D-Bus support"), QStringLiteral("No"));
 #endif
 
-	// KCrash support
-#ifdef USE_KCRASH
-	add(QStringLiteral("KCrash support"), QStringLiteral("Yes"));
-#else
-	add(QStringLiteral("KCrash support"), QStringLiteral("No"));
-#endif
-
 	// App install type
 	if (AppInstallType::get() != InstallType::Unknown)
 	{

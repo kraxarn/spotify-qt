@@ -13,9 +13,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Optional D-Bus support
 option(USE_DBUS "Use D-Bus integration" ON)
 
-# Optional KCrash support
-option(USE_KCRASH "Use KCrash integration" ON)
-
 # LTO support
 option(USE_LTO "Use link time optimization" OFF)
 
@@ -34,11 +31,6 @@ include(cmake/FindQt.cmake)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Widgets Network Gui Svg REQUIRED)
 if (USE_DBUS)
 	find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS DBus QUIET)
-endif ()
-
-# Find KCRash
-if (USE_KCRASH)
-	find_package(KF5Crash QUIET)
 endif ()
 
 # Create main executable
@@ -138,10 +130,4 @@ endif ()
 if (Qt${QT_VERSION_MAJOR}DBus_FOUND)
 	target_compile_definitions(spotify-qt PRIVATE USE_DBUS)
 	target_link_libraries(spotify-qt PRIVATE Qt${QT_VERSION_MAJOR}::DBus)
-endif ()
-
-# KCrash support
-if (KF5Crash_FOUND AND USE_QT5)
-	target_compile_definitions(spotify-qt PRIVATE USE_KCRASH)
-	target_link_libraries(spotify-qt PRIVATE KF5::Crash)
 endif ()
