@@ -1,5 +1,7 @@
 #include "view/artist/trackslist.hpp"
+
 #include "mainwindow.hpp"
+#include "metatypes.hpp"
 
 Artist::TracksList::TracksList(lib::spt::api &spotify, lib::cache &cache, const lib::http_client &httpClient,
 	const lib::spt::artist &artist, lib::settings &settings, QWidget *parent)

@@ -1,4 +1,6 @@
 #include "mainwindow.hpp"
+
+#include "metatypes.hpp"
 #include "dialog/whatsnew.hpp"
 #include "lib/time.hpp"
 #include "lib/crash/crashhandler.hpp"

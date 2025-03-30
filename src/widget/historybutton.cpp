@@ -1,8 +1,9 @@
 #include "widget/historybutton.hpp"
 
-#include "util/font.hpp"
 #include "mainwindow.hpp"
+#include "metatypes.hpp"
 #include "lib/spotify/util.hpp"
+#include "util/font.hpp"
 
 #include <QMenu>
 

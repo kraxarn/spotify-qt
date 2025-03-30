@@ -1,6 +1,7 @@
 #include "view/search/albums.hpp"
 
 #include "mainwindow.hpp"
+#include "metatypes.hpp"
 #include "menu/album.hpp"
 #include "util/http.hpp"
 
