@@ -1,6 +1,7 @@
 #include "view/artist/albumslist.hpp"
 
 #include "mainwindow.hpp"
+#include "metatypes.hpp"
 #include "menu/album.hpp"
 #include "util/datetime.hpp"
 #include "util/http.hpp"
