@@ -15,12 +15,28 @@
 #include "lib/crash/crashhandler.hpp"
 #include "util/refresher.hpp"
 
+auto appVersion() -> QString
+{
+	QString appVersion(APP_VERSION);
+
+#ifdef GIT_COMMIT_COUNT
+	const auto commitCount = QStringLiteral(GIT_COMMIT_COUNT).toInt();
+	if (commitCount > 0)
+	{
+		appVersion.append(QStringLiteral("-dev.%1")
+			.arg(QString::number(commitCount)));
+	}
+#endif
+
+	return appVersion;
+}
+
 auto main(int argc, char *argv[]) -> int
 {
 	// Set name for settings etc.
 	QCoreApplication::setOrganizationName(ORG_NAME);
 	QCoreApplication::setApplicationName(APP_NAME);
-	QCoreApplication::setApplicationVersion(APP_VERSION);
+	QCoreApplication::setApplicationVersion(appVersion());
 
 	// Set installation type
 	if (argc > 0)

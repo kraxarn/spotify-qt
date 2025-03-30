@@ -42,7 +42,7 @@ auto About::appInfo() -> QWidget *
 
 	// Title
 	auto *titleAppName = new QLabel(QString("%1 %2")
-		.arg(APP_NAME, APP_VERSION));
+		.arg(QCoreApplication::applicationName(), QCoreApplication::applicationVersion()));
 	auto appNameFont = titleAppName->font();
 	appNameFont.setPointSize((int) (appNameFont.pointSizeF() * appNameFontMulti));
 	titleAppName->setFont(appNameFont);

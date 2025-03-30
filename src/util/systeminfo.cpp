@@ -8,9 +8,9 @@ SystemInfo::SystemInfo()
 	// spotify-qt version
 #ifdef GIT_COMMIT
 	add(QStringLiteral("App version"), QString("%1 (%2)")
-		.arg(APP_VERSION, GIT_COMMIT));
+		.arg(QCoreApplication::applicationVersion(), GIT_COMMIT));
 #else
-	add(QStringLiteral("App version"), APP_VERSION);
+	add(QStringLiteral("App version"), QCoreApplication::applicationVersion());
 #endif
 
 	// Qt D-Bus support
