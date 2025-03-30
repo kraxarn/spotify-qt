@@ -2,6 +2,7 @@
 
 #include "menu/playlist.hpp"
 #include "mainwindow.hpp"
+#include "metatypes.hpp"
 #include "util/datetime.hpp"
 
 List::Playlist::Playlist(lib::spt::api &spotify, lib::settings &settings,
