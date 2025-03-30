@@ -1,5 +1,7 @@
 #include "view/context/view.hpp"
+
 #include "mainwindow.hpp"
+#include "util/http.hpp"
 
 Context::View::View(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
 	const lib::http_client &httpClient, QWidget *parent)

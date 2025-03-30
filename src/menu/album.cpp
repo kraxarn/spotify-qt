@@ -1,6 +1,10 @@
 #include "menu/album.hpp"
 
 #include "mainwindow.hpp"
+#include "lib/random.hpp"
+#include "util/url.hpp"
+
+#include <QClipboard>
 
 Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache,
 	const std::string &albumId, QWidget *parent)

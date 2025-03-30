@@ -1,16 +1,16 @@
-#include "developermenu.hpp"
-#include "mainwindow.hpp"
-#include "lib/qtpaths.hpp"
+#include "menu/developermenu.hpp"
 
-#include "dialog/createplaylist.hpp"
+#include "mainwindow.hpp"
 #include "dialog/addtoplaylist.hpp"
 #include "dialog/apirequest.hpp"
-#include "dialog/memory.hpp"
-#include "dialog/lyricssearch.hpp"
+#include "dialog/createplaylist.hpp"
 #include "dialog/disallows.hpp"
 #include "dialog/editplaylist.hpp"
 #include "dialog/jsondump.hpp"
+#include "dialog/lyricssearch.hpp"
+#include "dialog/memory.hpp"
 #include "dialog/widgets.hpp"
+#include "util/http.hpp"
 
 DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)

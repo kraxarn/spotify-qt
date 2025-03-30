@@ -1,10 +1,13 @@
 #include "mainwindow.hpp"
+#include "dialog/whatsnew.hpp"
 #include "lib/time.hpp"
-#include "lib/system.hpp"
-#include "util/widget.hpp"
-#include "util/font.hpp"
+#include "lib/crash/crashhandler.hpp"
 #include "menu/mainmenubar.hpp"
 #include "util/appconfig.hpp"
+#include "util/url.hpp"
+#include "util/widget.hpp"
+#include "view/sidepanel/view.hpp"
+#include "widget/hiddensizegrip.hpp"
 
 #ifdef _WIN32
 #include "windows.h"

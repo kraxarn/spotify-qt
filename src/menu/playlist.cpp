@@ -1,8 +1,11 @@
 #include "menu/playlist.hpp"
-#include "mainwindow.hpp"
 
-#include "dialog/trackscache.hpp"
+#include "mainwindow.hpp"
 #include "dialog/jsondump.hpp"
+#include "dialog/trackscache.hpp"
+#include "util/url.hpp"
+
+#include <QClipboard>
 
 Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playlist,
 	lib::cache &cache, QWidget *parent)

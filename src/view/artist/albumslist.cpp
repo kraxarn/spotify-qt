@@ -1,6 +1,11 @@
 #include "view/artist/albumslist.hpp"
-#include "util/tooltip.hpp"
+
 #include "mainwindow.hpp"
+#include "menu/album.hpp"
+#include "util/datetime.hpp"
+#include "util/http.hpp"
+#include "util/tooltip.hpp"
+#include "view/artist/view.hpp"
 
 Artist::AlbumsList::AlbumsList(lib::spt::api &spotify, lib::cache &cache,
 	const lib::http_client &httpClient, lib::settings &settings, QWidget *parent)

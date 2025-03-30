@@ -1,5 +1,7 @@
 #include "list/library.hpp"
+
 #include "mainwindow.hpp"
+#include "view/sidepanel/view.hpp"
 
 List::Library::Library(lib::spt::api &spotify, lib::cache &cache,
 	const lib::http_client &httpClient, lib::settings &settings, QWidget *parent)

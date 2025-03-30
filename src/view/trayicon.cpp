@@ -1,5 +1,7 @@
 #include "trayicon.hpp"
+
 #include "mainwindow.hpp"
+#include "util/http.hpp"
 
 TrayIcon::TrayIcon(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
 	const lib::http_client &httpClient, QWidget *parent)

@@ -2,6 +2,9 @@
 
 #include "mainwindow.hpp"
 #include "menu/addtoplaylist.hpp"
+#include "util/url.hpp"
+
+#include <QClipboard>
 
 Menu::Track::Track(const lib::spt::track &track, lib::spt::api &spotify,
 	const lib::cache &cache, QWidget *parent)

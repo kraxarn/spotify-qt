@@ -1,5 +1,8 @@
 #include "view/search/albums.hpp"
+
 #include "mainwindow.hpp"
+#include "menu/album.hpp"
+#include "util/http.hpp"
 
 Search::Albums::Albums(lib::spt::api &spotify, lib::cache &cache,
 	const lib::http_client &httpClient, lib::settings &settings, QWidget *parent)

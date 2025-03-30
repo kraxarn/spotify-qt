@@ -1,8 +1,8 @@
 #include "spotifyclient/runner.hpp"
 
+#include "lib/enums.hpp"
 #include "lib/log.hpp"
-
-#include "mainwindow.hpp"
+#include "util/url.hpp"
 
 std::vector<lib::log_message> SpotifyClient::Runner::log;
 

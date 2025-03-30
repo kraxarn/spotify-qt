@@ -1,4 +1,6 @@
 #include "view/artist/view.hpp"
+
+#include "view/sidepanel/view.hpp"
 #include "mainwindow.hpp"
 
 Artist::View::View(lib::spt::api &spotify, const std::string &artistId, lib::cache &cache,
