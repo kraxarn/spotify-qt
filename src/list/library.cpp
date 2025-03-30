@@ -1,6 +1,7 @@
 #include "list/library.hpp"
 
 #include "mainwindow.hpp"
+#include "metatypes.hpp"
 #include "view/sidepanel/view.hpp"
 
 List::Library::Library(lib::spt::api &spotify, lib::cache &cache,
