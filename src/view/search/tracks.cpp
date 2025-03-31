@@ -1,5 +1,7 @@
 #include "view/search/tracks.hpp"
+
 #include "mainwindow.hpp"
+#include "metatypes.hpp"
 
 Search::Tracks::Tracks(lib::spt::api &spotify, lib::cache &cache,
 	lib::settings &settings, const lib::http_client &httpClient, QWidget *parent)

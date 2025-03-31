@@ -1,6 +1,7 @@
 #include "view/search/playlists.hpp"
 
 #include "mainwindow.hpp"
+#include "metatypes.hpp"
 #include "menu/playlist.hpp"
 
 Search::Playlists::Playlists(lib::spt::api &spotify, lib::cache &cache, const lib::http_client &httpClient,
