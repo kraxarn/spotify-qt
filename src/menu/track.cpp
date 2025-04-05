@@ -1,6 +1,7 @@
 #include "menu/track.hpp"
 
 #include "mainwindow.hpp"
+#include "metatypes.hpp"
 #include "menu/addtoplaylist.hpp"
 #include "util/url.hpp"
 

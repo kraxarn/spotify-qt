@@ -1,6 +1,7 @@
 #include "list/tracks.hpp"
 
 #include "mainwindow.hpp"
+#include "metatypes.hpp"
 #include "dialog/createplaylist.hpp"
 #include "listitem/track.hpp"
 #include "util/datetime.hpp"
