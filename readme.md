@@ -72,7 +72,7 @@ it's recommended to use the stable branch, which is updated after each new stabl
 including important bug fixes, unless you want to try out new features.
 
 ```
-git clone --branch stable https://github.com/kraxarn/spotify-qt.git
+git clone --branch stable --depth=1 https://github.com/kraxarn/spotify-qt.git
 cd spotify-qt
 mkdir build
 cd build
