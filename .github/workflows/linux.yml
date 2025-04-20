@@ -9,8 +9,9 @@ env:
 
 jobs:
   build:
-    # Qt 6 requires Ubuntu 20.04
-    runs-on: ubuntu-20.04
+    # Qt 6.8 requires Ubuntu 22.04
+    # https://doc.qt.io/qt-6.8/linux.html
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v4
