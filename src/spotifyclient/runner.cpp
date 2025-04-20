@@ -4,6 +4,8 @@
 #include "lib/log.hpp"
 #include "util/url.hpp"
 
+#include <QSysInfo>
+
 std::vector<lib::log_message> SpotifyClient::Runner::log;
 
 SpotifyClient::Runner::Runner(const lib::settings &settings,
@@ -95,11 +97,14 @@ void SpotifyClient::Runner::start()
 
 	const auto initialVolume = QString::number(settings.spotify.volume);
 
+	const auto deviceName = QStringLiteral("%1@%2")
+		.arg(APP_NAME, QSysInfo::machineHostName());
+
 	// librespot specific
 	if (clientType == lib::client_type::librespot)
 	{
 		arguments.append({
-			"--name", QString("%1 (librespot)").arg(APP_NAME),
+			"--name", deviceName,
 			"--initial-volume", initialVolume,
 			"--cache", QString::fromStdString(getCachePath().string()),
 			"--autoplay", "on",
@@ -110,7 +115,7 @@ void SpotifyClient::Runner::start()
 		arguments.append({
 			"--no-daemon",
 			"--initial-volume", initialVolume,
-			"--device-name", QString("%1 (spotifyd)").arg(APP_NAME),
+			"--device-name", deviceName,
 		});
 	}
 
