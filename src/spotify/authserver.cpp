@@ -12,7 +12,7 @@ spt::AuthServer::AuthServer(lib::settings &settings, QObject *parent)
 
 auto spt::AuthServer::listen() -> bool
 {
-	return QTcpServer::listen(QHostAddress("127.0.0.1"), serverPort);
+	return QTcpServer::listen(QHostAddress::LocalHost, serverPort);
 }
 
 auto spt::AuthServer::redirectUrl() -> QString
