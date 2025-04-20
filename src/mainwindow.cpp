@@ -418,12 +418,16 @@ void MainWindow::addSizeGrip(const std::function<QPoint(const QRect &)> &positio
 
 void MainWindow::minimize()
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
 	// HACK: Qt windows that are restored are sometimes still marked minimized
 	// so we have to remove that flag if present before trying to minimize.
 	//
 	// See https://github.com/kraxarn/spotify-qt/issues/103
 	setWindowState(windowState() & ~Qt::WindowMinimized);
 	setWindowState(windowState() | Qt::WindowMinimized);
+#else
+	setWindowState(Qt::WindowMinimized);
+#endif
 }
 
 void MainWindow::refresh()
