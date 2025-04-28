@@ -2,7 +2,15 @@ Versions use major.minor scheming. New versions are released together with spoti
 
 * Major releases contain breaking changes and may require changes to be made.
 * Minor releases contain minor changes and bug fixes and should never require changes to be made.
+* Patch releases contain bug fixes only.
 * Pre-release and beta releases may contain breaking changes, even if it's a minor release.
+
+## v1.0.0 (spotify-qt v4.0.0)
+* Now requires at least CMake 3.16.
+* Now requires C++17.
+* Replaced all instances of `ghc::filesystem` with `std::filesystem`.
+* Replaced all instances of `lib::optional` with `std::optional`.
+* Removed `lib::optional`.
 
 ## v0.10 (spotify-qt v3.12)
 * `album_group`, `album_shape`, `artist_profile` enums now explicitly uses `unsigned char`.
