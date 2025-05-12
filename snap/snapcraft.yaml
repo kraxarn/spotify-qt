@@ -5,7 +5,7 @@ adopt-info: spotify-qt
 license: GPL-3.0
 grade: stable
 confinement: strict
-base: core18
+base: core24
 icon: snap/gui/icon.png
 
 parts:
@@ -13,76 +13,46 @@ parts:
     plugin: cmake
     source: .
     build-packages:
+      - git
       - g++
       - make
       - cmake
-      - qt5-default
-      - libqt5svg5-dev
+      - qt6-svg-dev
     stage-packages:
-      - qt5-default
-      - libqt5svg5-dev
+      - libqt6svg6
     override-pull: |
-      snapcraftctl pull
-      snapcraftctl set-version "$(git describe --tags --abbrev=0)"
-    override-build: |
-            snapcraftctl build
-            sed -i 's|Icon=.*|Icon=${SNAP}/meta/gui/icon.png|g' ${SNAPCRAFT_PART_SRC}/res/app/spotify-qt.desktop
-            mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/
-            cp -rf ${SNAPCRAFT_PART_SRC}/res/app/spotify-qt.desktop ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/spotify-qt.desktop
-    after: [desktop-qt5]
-  # Snapcraft Qt5 desktop launcher
-  desktop-qt5:
-    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
-    source-subdir: qt
-    plugin: make
-    make-parameters: ["FLAVOR=qt5"]
-    build-packages:
-      - build-essential
-      - qtbase5-dev
-      - dpkg-dev
-    stage-packages:
-      - libxkbcommon0
-      - ttf-ubuntu-font-family
-      - dmz-cursor-theme
-      - light-themes
-      - adwaita-icon-theme
-      - gnome-themes-standard
-      - shared-mime-info
-      - libqt5gui5
-      - libgdk-pixbuf2.0-0
-      - libqt5svg5 # for loading icon themes which are svg
-      - try: [appmenu-qt5] # not available on core18
-      - locales-all
-      - xdg-user-dirs
-      - fcitx-frontend-qt5
-      - qt5-gtk-platformtheme #Platform themes plugin
+      craftctl default
+      craftctl set version=$(git describe --tags --abbrev=0)
+    cmake-parameters:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DCMAKE_INSTALL_PREFIX=/usr
+  cleanup:
+    after:
+      - spotify-qt
+    plugin: nil
+    build-snaps:
+      - core24
+      - kf6-core24
+      - qt-common-themes
+    override-prime: |
+      # Remove duplicate files in the dependent snaps from the final snap.
+      for snap in "core24" "kf6-core24" "qt-common-themes"; do
+          cd "/snap/$snap/current" && find . -type f,l ! -xtype d -print | sed "s|^./|$CRAFT_PRIME|" | xargs rm -f
+          cd "/snap/$snap/current" && find . -type f,l ! -xtype d -print | sed "s|^./|$CRAFT_PRIME/usr|" | xargs rm -f
+      done
 
 slots:
   dbus-mpris:
     interface: dbus
     bus: session
     name: org.mpris.MediaPlayer2.spotify-qt
-    
-plugs:
-  gsettings:
-  gtk-3-themes:
-    interface: content
-    target: $SNAP/data-dir/themes
-    default-provider: gtk-common-themes
-  icon-themes:
-    interface: content
-    target: $SNAP/data-dir/icons
-    default-provider: gtk-common-themes
-  sound-themes:
-    interface: content
-    target: $SNAP/data-dir/sounds
-    default-provider: gtk-common-themes
 
 apps:
   spotify-qt:
-    command: bin/desktop-launch spotify-qt
-    environment:
-      DISABLE_WAYLAND: 1
+    command: usr/bin/spotify-qt
+    extensions: [kde-neon-6]
     desktop: usr/share/applications/spotify-qt.desktop
-    plugs: [home, opengl, network, network-bind, unity7, gsettings, desktop, audio-playback]
+    plugs:
+      - home
+      - gsettings
     slots: [dbus-mpris]
