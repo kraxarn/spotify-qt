@@ -48,6 +48,35 @@ void SidePanel::View::openLyrics(int lyricsId)
 	view->load(lyricsId);
 }
 
+void SidePanel::View::openQueue()
+{
+	auto *queueView = findTab(SidePanelType::Queue, QString());
+	if (queueView == nullptr)
+	{
+		queueView = new Queue::View(spotify, settings, this);
+		addTab(queueView, "media-track-show-active", "Queue",
+			SidePanelType::Queue, QString());
+	}
+	else
+	{
+		setCurrentWidget(queueView);
+		setVisible(true);
+	}
+}
+
+void SidePanel::View::refreshQueueFormat()
+{
+	auto *queueView = findTab(SidePanelType::Queue, QString());
+	if (queueView != nullptr)
+	{
+		auto *queue = dynamic_cast<Queue::View *>(queueView);
+		if (queue != nullptr)
+		{
+			queue->refreshFormat();
+		}
+	}
+}
+
 void SidePanel::View::openSearch()
 {
 	if (searchView == nullptr)
@@ -82,6 +111,9 @@ auto SidePanel::View::findTab(SidePanelType type, const QString &name) -> QWidge
 
 		case SidePanelType::Lyrics:
 			return find<::View::Lyrics *>(name);
+
+		case SidePanelType::Queue:
+			return find<Queue::View *>(name);
 
 		default:
 			return nullptr;
@@ -150,6 +182,11 @@ void SidePanel::View::setTabText(QWidget *widget, const QString &text)
 
 	const auto tabText = QString(text).replace('&', QStringLiteral("&&"));
 	title->setTabText(index, tabText);
+}
+
+auto SidePanel::View::currentWidget() -> QWidget *
+{
+	return stack->currentWidget();
 }
 
 void SidePanel::View::onTabMoved(int from, int to)

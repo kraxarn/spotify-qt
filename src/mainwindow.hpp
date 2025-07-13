@@ -13,6 +13,7 @@
 #include "view/maintoolbar.hpp"
 #include "view/trayicon.hpp"
 #include "view/context/view.hpp"
+#include "view/queue/view.hpp"
 #include "widget/historybutton.hpp"
 
 #include <QListWidgetItem>
@@ -53,6 +54,7 @@ public:
 	void toggleTrackNumbers(bool enabled);
 	void toggleExpandableAlbum(lib::album_size albumSize);
 	void setSearchVisible(bool visible);
+	void toggleQueue();
 	void refreshPlaylists();
 	void setCurrentLibraryItem(QTreeWidgetItem *item);
 	lib::spt::playlist getPlaylist(int index);
@@ -122,6 +124,7 @@ private:
 	List::Library *libraryList = nullptr;
 	List::Playlist *playlistList = nullptr;
 	Context::View *contextView = nullptr;
+	Queue::View *queueView = nullptr;
 
 #ifdef USE_DBUS
 	mp::Service *mediaPlayer = nullptr;

@@ -3,6 +3,7 @@
 #include "lib/spotify/track.hpp"
 #include "view/artist/view.hpp"
 #include "view/search/view.hpp"
+#include "view/queue/view.hpp"
 #include "view/lyrics.hpp"
 #include "view/sidepanel/title.hpp"
 #include "enum/sidepaneltype.hpp"
@@ -27,12 +28,18 @@ namespace SidePanel
 		void openSearch();
 		void closeSearch();
 
+		void openQueue();
+
+		void refreshQueueFormat();
+
 		void addTab(QWidget *widget, const QString &icon, const QString &tabTitle,
 			SidePanelType type, const QString &name);
 
 		void removeTab(int index);
 
 		void setTabText(QWidget *widget, const QString &text);
+
+		auto currentWidget() -> QWidget *;
 
 		static auto find(QWidget *widget) -> View *;
 

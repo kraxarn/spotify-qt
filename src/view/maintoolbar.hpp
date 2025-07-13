@@ -57,6 +57,7 @@ private:
 	void onRepeat(bool checked);
 	void onMinimize(bool checked);
 	void onClose(bool checked);
+	void onQueue(bool checked);
 
 	void onPlaybackRefreshed(const lib::spt::playback &current,
 		const lib::spt::playback &previousPlayback);
@@ -65,6 +66,7 @@ private:
 
 	QToolButton *menu;
 	QAction *search;
+	QAction *queue;
 
 	QAction *previous;
 	QAction *playPause;

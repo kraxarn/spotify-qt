@@ -16,6 +16,7 @@ void lib::setting::to_json(nlohmann::json &j, const general &g)
 		{"native_window", g.native_window},
 		{"notify_track_change", g.notify_track_change},
 		{"playlist_order", g.playlist_order},
+		{"queue_swap_name_format", g.queue_swap_name_format},
 		{"refresh_interval", g.refresh_interval},
 		{"relative_added", g.relative_added},
 		{"show_changelog", g.show_changelog},
@@ -54,6 +55,7 @@ void lib::setting::from_json(const nlohmann::json &j, general &g)
 	lib::json::get(j, "native_window", g.native_window);
 	lib::json::get(j, "notify_track_change", g.notify_track_change);
 	lib::json::get(j, "playlist_order", g.playlist_order);
+	lib::json::get(j, "queue_swap_name_format", g.queue_swap_name_format);
 	lib::json::get(j, "refresh_interval", g.refresh_interval);
 	lib::json::get(j, "relative_added", g.relative_added);
 	lib::json::get(j, "show_changelog", g.show_changelog);

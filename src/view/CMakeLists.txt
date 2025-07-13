@@ -1,6 +1,7 @@
 add_subdirectory(artist)
 add_subdirectory(context)
 add_subdirectory(log)
+add_subdirectory(queue)
 add_subdirectory(search)
 add_subdirectory(sidepanel)
 

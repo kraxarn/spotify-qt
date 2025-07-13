@@ -146,6 +146,11 @@ namespace lib
 			 * \brief Ignore index of unavailable tracks
 			 */
 			bool ignore_unavailable_index = false;
+
+			/**
+			 * Swap song name and artist name order in queue (Artist - Song instead of Song - Artist)
+			 */
+			bool queue_swap_name_format = false;
 		};
 
 		void to_json(nlohmann::json &j, const general &g);

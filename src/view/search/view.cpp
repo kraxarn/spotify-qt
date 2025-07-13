@@ -34,9 +34,23 @@ Search::View::View(lib::spt::api &spotify, lib::cache &cache, const lib::http_cl
 	tabs->addTab(shows, "Podcasts");
 	tabs->addTab(library, "Library");
 
-	// Start searching when pressing enter
-	QLineEdit::connect(searchBox, &QLineEdit::returnPressed,
-		this, &Search::View::search);
+	// Set up search timer for debounced live search
+	searchTimer = new QTimer(this);
+	searchTimer->setSingleShot(true);
+	searchTimer->setInterval(250); // 500ms delay after user stops typing
+	QTimer::connect(searchTimer, &QTimer::timeout, this, &Search::View::search);
+
+	// Start searching when pressing enter (immediate search)
+	QLineEdit::connect(searchBox, &QLineEdit::returnPressed, [this]()
+	{
+		// Stop timer and search immediately when Enter is pressed
+		searchTimer->stop();
+		search();
+	});
+
+	// Start live search when text changes
+	QLineEdit::connect(searchBox, &QLineEdit::textChanged,
+		this, &Search::View::onSearchTextChanged);
 
 	// Searching in library is a separate request,
 	// so only actually search once requested
@@ -71,6 +85,9 @@ void Search::View::hideEvent(QHideEvent *event)
 
 void Search::View::search()
 {
+	// Stop any pending timer-based search since we're searching now
+	searchTimer->stop();
+
 	// Empty all previous results
 	tracks->clear();
 	artists->clear();
@@ -79,11 +96,11 @@ void Search::View::search()
 	library->clear();
 	shows->clear();
 
-	// Disable search box while searching
-	searchBox->setEnabled(false);
+	// Get current search text
+	const QString currentSearchText = searchBox->text();
 
 	// Save last searched query
-	searchText = searchBox->text();
+	searchText = currentSearchText;
 
 	// Search in library cache until tab is selected
 	library->searchCache(searchText.toStdString());
@@ -91,9 +108,12 @@ void Search::View::search()
 	// Don't actually search if nothing to search on
 	if (searchText.isEmpty())
 	{
-		searchBox->setEnabled(true);
 		return;
 	}
+
+	// Set placeholder to show searching status
+	const QString originalPlaceholder = searchBox->placeholderText();
+	searchBox->setPlaceholderText("Searching...");
 
 	// Check if spotify uri
 	if (searchText.startsWith("spotify:")
@@ -162,7 +182,7 @@ void Search::View::search()
 			}
 
 			tabs->setCurrentIndex(static_cast<int>(i));
-			searchBox->setEnabled(true);
+			searchBox->setPlaceholderText(QString()); // Restore normal placeholder
 		}
 	}
 	else
@@ -214,8 +234,8 @@ void Search::View::resultsLoaded(const lib::spt::search_results &results)
 		shows->add(show);
 	}
 
-	// Search done
-	searchBox->setEnabled(true);
+	// Search done - restore normal placeholder
+	searchBox->setPlaceholderText(QString());
 }
 
 void Search::View::onIndexChanged(int index)
@@ -223,5 +243,34 @@ void Search::View::onIndexChanged(int index)
 	if (static_cast<SearchTab>(index) == SearchTab::Library)
 	{
 		library->search(searchText.toStdString());
+	}
+}
+
+void Search::View::onSearchTextChanged()
+{
+	// Stop any pending search
+	searchTimer->stop();
+	
+	// Get current text
+	const QString currentText = searchBox->text();
+	
+	// If text is empty, clear results immediately
+	if (currentText.isEmpty())
+	{
+		tracks->clear();
+		artists->clear();
+		albums->clear();
+		playlists->clear();
+		library->clear();
+		shows->clear();
+		searchText.clear();
+		return;
+	}
+	
+	// Only start timer for searches with at least 2 characters
+	// This prevents excessive API calls for single characters
+	if (currentText.length() >= 2)
+	{
+		searchTimer->start();
 	}
 }

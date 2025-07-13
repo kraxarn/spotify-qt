@@ -18,6 +18,7 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QVBoxLayout>
+#include <QTimer>
 
 namespace Search
 {
@@ -32,6 +33,7 @@ namespace Search
 	private:
 		QTabWidget *tabs = nullptr;
 		QLineEdit *searchBox = nullptr;
+		QTimer *searchTimer = nullptr; // Timer for debounced search
 		lib::spt::api &spotify;
 		lib::cache &cache;
 		const lib::http_client &httpClient;
@@ -44,6 +46,7 @@ namespace Search
 		Shows *shows = nullptr;
 
 		void search();
+		void onSearchTextChanged(); // Handle live search input
 
 	protected:
 		void showEvent(QShowEvent *event) override;

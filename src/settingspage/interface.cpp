@@ -1,5 +1,6 @@
 #include "settingspage/interface.hpp"
 #include "mainwindow.hpp"
+#include "view/sidepanel/view.hpp"
 #include "lib/system.hpp"
 #include "util/appconfig.hpp"
 #include "util/widget.hpp"
@@ -97,6 +98,12 @@ auto SettingsPage::Interface::general() -> QWidget *
 	tabbedLibrary->setToolTip(QStringLiteral("Show library and playlists as tabs"));
 	tabbedLibrary->setChecked(qtSettings.library_layout == lib::library_layout::tabbed);
 	layout->addWidget(tabbedLibrary);
+
+	// Queue name format
+	queueSwapNameFormat = new QCheckBox(QStringLiteral("Swap Song Name - Artist Name in Queue"), this);
+	queueSwapNameFormat->setToolTip(QStringLiteral("Show queue items as \"Artist Name - Song Name\" instead of \"Song Name - Artist Name\""));
+	queueSwapNameFormat->setChecked(settings.general.queue_swap_name_format);
+	layout->addWidget(queueSwapNameFormat);
 
 	// Native window handle
 	// (Required to move window under Wayland)
@@ -363,6 +370,24 @@ void SettingsPage::Interface::saveGeneral()
 	if (nativeWindow != nullptr)
 	{
 		settings.general.native_window = nativeWindow->isChecked();
+	}
+
+	if (queueSwapNameFormat != nullptr)
+	{
+		const bool oldValue = settings.general.queue_swap_name_format;
+		const bool newValue = queueSwapNameFormat->isChecked();
+		
+		settings.general.queue_swap_name_format = newValue;
+		
+		// Refresh queue format if setting changed
+		if (oldValue != newValue && mainWindow != nullptr)
+		{
+			auto *sidePanel = mainWindow->findChild<SidePanel::View *>();
+			if (sidePanel != nullptr)
+			{
+				sidePanel->refreshQueueFormat();
+			}
+		}
 	}
 }
 

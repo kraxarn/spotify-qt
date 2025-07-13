@@ -42,6 +42,12 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	search->setShortcut(QKeySequence::Find);
 	QAction::connect(search, &QAction::triggered, mainWindow, &MainWindow::setSearchVisible);
 
+	// Queue
+	queue = new QAction(Icon::get(QStringLiteral("media-track-show-active")),
+		QStringLiteral("Toggle Queue"));
+	queue->setCheckable(true);
+	QAction::connect(queue, &QAction::triggered, this, &MainToolBar::onQueue);
+
 	// Media controls
 	previous = createShortcutAction(QStringLiteral("media-skip-backward"),
 		QStringLiteral("Previous"), Shortcut::previousTrack());
@@ -123,6 +129,7 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	if (isSearchMirrored)
 	{
 		addAction(search);
+		addAction(queue);
 	}
 
 	addSeparator();
@@ -142,6 +149,7 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	if (!isSearchMirrored)
 	{
 		addAction(search);
+		addAction(queue);
 	}
 
 	if (!isMirrored)
@@ -515,6 +523,15 @@ void MainToolBar::onClose(bool /*checked*/)
 	else
 	{
 		QCoreApplication::quit();
+	}
+}
+
+void MainToolBar::onQueue(bool /*checked*/)
+{
+	auto *mainWindow = MainWindow::find(parentWidget());
+	if (mainWindow != nullptr)
+	{
+		mainWindow->toggleQueue();
 	}
 }
 

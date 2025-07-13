@@ -29,6 +29,7 @@ namespace SettingsPage
 		QCheckBox *relativeAdded = nullptr;
 		QCheckBox *nativeWindow = nullptr;
 		QCheckBox *tabbedLibrary = nullptr;
+		QCheckBox *queueSwapNameFormat = nullptr;
 
 		// Appearance
 		QComboBox *qtStyle = nullptr;

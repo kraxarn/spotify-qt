@@ -89,6 +89,8 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 		new MainMenuBar(spotify, settings, httpClient, cache, this);
 	}
 
+	// Queue dock widget is initially hidden and can be toggled via the toolbar button
+
 	QCoreApplication::instance()->installEventFilter(this);
 }
 
@@ -509,6 +511,8 @@ auto MainWindow::createCentralWidget() -> QWidget *
 	libraryList = new List::Library(spotify, cache, httpClient, settings, this);
 	playlistList = new List::Playlist(spotify, settings, cache, httpClient, this);
 	contextView = new Context::View(spotify, settings, cache, httpClient, this);
+	queueView = new Queue::View(spotify, settings, this);
+	queueView->setVisible(false); // Initially hidden
 
 	auto *libraryDock = Widget::createDockWidget(libraryList,
 		QStringLiteral("Library"), DockTitle::margins(), this);
@@ -526,6 +530,7 @@ auto MainWindow::createCentralWidget() -> QWidget *
 
 	addDockWidget(Qt::LeftDockWidgetArea, contextView);
 	addDockWidget(Qt::RightDockWidgetArea, sidePanel);
+	addDockWidget(Qt::RightDockWidgetArea, queueView);
 
 	return mainContent;
 }
@@ -767,6 +772,15 @@ void MainWindow::setSearchVisible(bool visible)
 	else
 	{
 		panel->closeSearch();
+	}
+}
+
+void MainWindow::toggleQueue()
+{
+	if (queueView != nullptr)
+	{
+		// Toggle visibility of the queue dock widget
+		queueView->setVisible(!queueView->isVisible());
 	}
 }
 

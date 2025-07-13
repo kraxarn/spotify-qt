@@ -5,7 +5,7 @@ project(spotify-qt LANGUAGES CXX VERSION 4.0.0)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
-
+list(APPEND CMAKE_PREFIX_PATH "~/Qt/6.3.0/gcc_64")
 # C++17 is required on some platforms by Qt 6
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
