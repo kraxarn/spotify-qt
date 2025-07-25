@@ -5,6 +5,10 @@ Versions use major.minor scheming. New versions are released together with spoti
 * Patch releases contain bug fixes only.
 * Pre-release and beta releases may contain breaking changes, even if it's a minor release.
 
+## v1.0.1 (spotify-qt v4.0.1)
+* Deprecated `client_type`.
+* Deprecated `setting::spotify::global_config`.
+
 ## v1.0.0 (spotify-qt v4.0.0)
 * Now requires at least CMake 3.16.
 * Now requires C++17.
