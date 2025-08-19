@@ -1,44 +1,39 @@
 #include "lib/lyrics/lyrics.hpp"
 #include "lib/strings.hpp"
-#include "lib/vector.hpp"
 
-void lib::lrc::from_json(const nlohmann::json &json, lib::lrc::lyrics &lyrics)
+void lib::lrc::from_json(const nlohmann::json &json, lyrics &lyrics)
 {
-	if (!json.is_string())
+	if (!json.is_object())
 	{
 		return;
 	}
 
-	const auto lines = lib::strings::split(json, '\n');
-	lyrics.lines.reserve(lines.size());
+	json.at("id").get_to(lyrics.id);
+	json.at("trackName").get_to(lyrics.track_name);
+	json.at("artistName").get_to(lyrics.artist_name);
+	json.at("albumName").get_to(lyrics.album_name);
+	json.at("duration").get_to(lyrics.duration);
+	json.at("instrumental").get_to(lyrics.instrumental);
 
-	auto iter = lines.cbegin();
-	while (iter != lines.cend())
+	if (const auto &obj = json.at("plainLyrics"); obj.is_string())
 	{
-		const lib::lrc::line parsed(*iter);
-		if (parsed.text.find(':') == std::string::npos)
+		const auto &plain_lyrics = obj.get<std::string>();
+		lyrics.plain_lyrics = strings::split(plain_lyrics, '\n');
+	}
+
+	if (const auto &obj = json.at("syncedLyrics"); obj.is_string())
+	{
+		const auto synced_lyrics = obj.get<std::string>();
+		const auto lines = strings::split(synced_lyrics, '\n');
+
+		lyrics.synced_lyrics.reserve(lines.size());
+
+		auto iter = lines.cbegin();
+		while (iter != lines.cend())
 		{
-			break;
+			const line parsed(*iter);
+			lyrics.synced_lyrics.push_back(parsed);
+			++iter;
 		}
-		lyrics.credits.emplace_back(parsed.text);
-		iter++;
 	}
-
-	lib::vector::unique(lyrics.credits);
-
-	while (iter != lines.cend())
-	{
-		const lib::lrc::line parsed(*(iter++));
-		lyrics.lines.push_back(parsed);
-	}
-
-	lyrics.credits.emplace_back(":Provided by NetEase");
-}
-
-auto lib::lrc::lyrics::is_synced() const -> bool
-{
-	return std::any_of(lines.cbegin(), lines.cend(), [](const lib::lrc::line &line) -> bool
-	{
-		return line.timestamp >= 0L;
-	});
 }

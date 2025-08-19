@@ -1,9 +1,8 @@
 #include "lyrics.hpp"
 #include "mainwindow.hpp"
 
-#include <QVBoxLayout>
-#include <QList>
 #include <QListWidgetItem>
+#include <QVBoxLayout>
 
 View::Lyrics::Lyrics(const lib::http_client &httpClient,
 	lib::cache &cache, QWidget *parent)
@@ -11,19 +10,15 @@ View::Lyrics::Lyrics(const lib::http_client &httpClient,
 	cache(cache),
 	lyrics(httpClient)
 {
+	lyrics.set_app_info(APP_NAME, APP_VERSION,
+		lib::fmt::format("https://github.com/{}/{}", ORG_NAME, APP_NAME));
+
 	auto *layout = new QVBoxLayout(this);
 
 	status = new QLabel(this);
 	status->setAlignment(Qt::AlignHCenter);
+	status->setWordWrap(true);
 	layout->addWidget(status);
-
-	if (lib::developer_mode::enabled)
-	{
-		lyricIds = new QComboBox(this);
-		lyricIds->setMaximumWidth(250);
-		lyricIds->setVisible(false);
-		layout->addWidget(lyricIds, 0, Qt::AlignHCenter);
-	}
 
 	lyricsList = new QListWidget(this);
 	lyricsList->setWordWrap(true);
@@ -36,65 +31,19 @@ View::Lyrics::Lyrics(const lib::http_client &httpClient,
 	syncWithMusic->setChecked(false);
 	syncWithMusic->setVisible(false);
 	layout->addWidget(syncWithMusic);
+
+	providedBy = new QLabel(this);
+	providedBy->setTextFormat(Qt::RichText);
+	providedBy->setText(QStringLiteral("<i>Lyrics provided by <a href='https://lrclib.net'>lrclib</a></i>"));
+	providedBy->setOpenExternalLinks(true);
+	layout->addWidget(providedBy);
 }
 
 void View::Lyrics::open(const lib::spt::track &track)
 {
-//	const auto &cached = cache.get_track_info(track);
-//	if (cached.is_valid())
-//	{
-//		setPlainText(QString::fromStdString(cached.lyrics));
-//		return;
-//	}
+	status->setText(QStringLiteral("Please wait..."));
 
-	status->setText(QStringLiteral("Searching..."));
-
-	lyrics.search(track,
-		[this, track](const lib::result<std::vector<lib::lrc::search_result>> &result)
-		{
-			if (!result.success())
-			{
-				status->setText(QString::fromStdString(result.message()));
-				return;
-			}
-
-			auto strip = [](const std::string &str) -> std::string
-			{
-				return lib::strings::to_lower(lib::strings::erase_non_alpha(str));
-			};
-
-			size_t index = -1;
-			const auto albumName = strip(track.album.name);
-			const auto &results = result.value();
-
-			for (size_t i = 0; i < results.size(); i++)
-			{
-				if (strip(results[i].album) == albumName)
-				{
-					index = i;
-					break;
-				}
-			}
-
-			if (index >= results.size())
-			{
-				status->setText(QStringLiteral("No results"));
-				return;
-			}
-
-			if (lyricIds != nullptr && results.size() > 1)
-			{
-				setLyricsIds(results, static_cast<int>(index));
-			}
-
-			load(results[index].lyrics_id);
-			currentTrack = track;
-		});
-}
-
-void View::Lyrics::load(int lyricsId)
-{
-	lyrics.lyrics(lyricsId, [this](const lib::result<lib::lrc::lyrics> &result)
+	lyrics.get(track, [this, track](const lib::result<lib::lrc::lyrics> &result)
 	{
 		if (!result.success())
 		{
@@ -104,87 +53,78 @@ void View::Lyrics::load(int lyricsId)
 
 		status->setVisible(false);
 		load(result.value());
+		currentTrack = track;
+	});
+}
+
+void View::Lyrics::open(const unsigned int lyricsId)
+{
+	status->setText(QStringLiteral("Please wait..."));
+
+	lyrics.get(lyricsId, [this](const lib::result<lib::lrc::lyrics> &result)
+	{
+		if (!result.success())
+		{
+			status->setText(QString::fromStdString(result.message()));
+			return;
+		}
+
+		status->setVisible(false);
+		load(result.value());
+		currentTrack = {};
 	});
 }
 
 void View::Lyrics::load(const lib::lrc::lyrics &loaded)
 {
 	lyricsList->clear();
-	if (loaded.lines.empty())
+
+	if (!loaded.synced_lyrics.empty())
+	{
+		for (const auto &line: loaded.synced_lyrics)
+		{
+			auto *item = new QListWidgetItem(lyricsList);
+			item->setText(QString::fromStdString(line.text));
+			item->setData(timestampRole, static_cast<qlonglong>(line.timestamp));
+
+			if (lib::developer_mode::enabled)
+			{
+				item->setToolTip(QString::fromStdString(line.data));
+			}
+		}
+
+		syncWithMusic->setChecked(true);
+		syncWithMusic->setVisible(true);
+	}
+	else if (!loaded.plain_lyrics.empty())
+	{
+		for (const auto &line: loaded.plain_lyrics)
+		{
+			auto *item = new QListWidgetItem(lyricsList);
+			item->setText(QString::fromStdString(line));
+		}
+
+		syncWithMusic->setChecked(false);
+		syncWithMusic->setVisible(false);
+	}
+	else
 	{
 		return;
 	}
 
-	for (const auto &line: loaded.lines)
-	{
-		auto *item = new QListWidgetItem(lyricsList);
-		item->setText(QString::fromStdString(line.text));
-		item->setData(timestampRole, (qlonglong) line.timestamp);
-
-		if (lib::developer_mode::enabled)
-		{
-			item->setToolTip(QString::fromStdString(line.data));
-		}
-	}
-
-	for (const auto &credit: loaded.credits)
-	{
-		auto *item = new QListWidgetItem(lyricsList);
-		item->setText(QString::fromStdString(credit.name));
-		item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
-
-		auto font = item->font();
-		font.setPointSizeF(font.pointSizeF() * creditsFontScale);
-		item->setFont(font);
-	}
-
-	if (loaded.is_synced())
-	{
-		syncWithMusic->setChecked(true);
-		syncWithMusic->setVisible(true);
-	}
-	else
-	{
-		syncWithMusic->setChecked(false);
-		syncWithMusic->setVisible(false);
-	}
-
-	auto *window = MainWindow::find(parentWidget());
+	const auto *window = MainWindow::find(parentWidget());
 	if (window == nullptr)
 	{
 		return;
 	}
 
-	MainWindow::connect(window, &MainWindow::playbackRefreshed,
+	connect(window, &MainWindow::playbackRefreshed,
 		this, &View::Lyrics::onPlaybackRefreshed);
 }
 
 auto View::Lyrics::getTimestamp(const QListWidgetItem *item) -> qlonglong
 {
 	return item->data(timestampRole).toLongLong();
-}
-
-void View::Lyrics::setLyricsIds(const std::vector<lib::lrc::search_result> &results, int index)
-{
-	lyricIds->clear();
-
-	for (const auto &result: results)
-	{
-		lyricIds->addItem(QString("%1 - %2 - %3")
-				.arg(QString::fromStdString(lib::strings::join(result.artists, ", ")))
-				.arg(QString::fromStdString(result.track))
-				.arg(QString::fromStdString(result.album)),
-			result.lyrics_id);
-	}
-
-	lyricIds->setCurrentIndex(index);
-
-	if (!lyricIds->isVisible())
-	{
-		lyricIds->show();
-		QComboBox::connect(lyricIds, QOverload<int>::of(&QComboBox::currentIndexChanged),
-			this, &View::Lyrics::onLyricsIdSelect);
-	}
 }
 
 void View::Lyrics::onPlaybackRefreshed(const lib::spt::playback &playback,
@@ -249,13 +189,4 @@ void View::Lyrics::onPlaybackRefreshed(const lib::spt::playback &playback,
 
 	lyricsList->setCurrentItem(item);
 	emit lyricsList->scrollToItem(item, QAbstractItemView::PositionAtCenter);
-}
-
-void View::Lyrics::onLyricsIdSelect(int index)
-{
-	const auto lyricsId = lyricIds->itemData(index);
-	if (lyricsId.canConvert<int>())
-	{
-		load(lyricsId.toInt());
-	}
 }

@@ -17,13 +17,13 @@ lib::lrc::line::line(const std::string &line)
 		timestamp = parse_timestamp(line.substr(timestamp_start + 1, length));
 	}
 
-	if (line.empty() || timestamp_end == line.size() - 1)
+	if (line.empty() || timestamp_end == line.size() - 2)
 	{
 		text = "♪";
 	}
 	else if (timestamp_end != std::string::npos && timestamp > 0)
 	{
-		text = line.substr(timestamp_end + 1);
+		text = line.substr(timestamp_end + 2);
 	}
 	else
 	{

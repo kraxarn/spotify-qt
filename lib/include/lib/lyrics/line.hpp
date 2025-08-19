@@ -2,32 +2,29 @@
 
 #include <string>
 
-namespace lib
+namespace lib::lrc
 {
-	namespace lrc
+	class line
 	{
-		class line
-		{
-		public:
-			explicit line(const std::string &line);
+	public:
+		explicit line(const std::string &line);
 
-			/**
-			 * Timestamp in milliseconds
-			 */
-			long timestamp;
+		/**
+		 * Timestamp in milliseconds
+		 */
+		long timestamp;
 
-			/**
-			 * Lyrics text
-			 */
-			std::string text;
+		/**
+		 * Lyrics text
+		 */
+		std::string text;
 
-			/**
-			 * Raw line data
-			 */
-			std::string data;
+		/**
+		 * Raw line data
+		 */
+		std::string data;
 
-		private:
-			static auto parse_timestamp(const std::string &timestamp) -> long;
-		};
-	}
+	private:
+		static auto parse_timestamp(const std::string &timestamp) -> long;
+	};
 }

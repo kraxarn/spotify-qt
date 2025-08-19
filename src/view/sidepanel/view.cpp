@@ -45,7 +45,7 @@ void SidePanel::View::openLyrics(int lyricsId)
 	auto *view = new ::View::Lyrics(httpClient, cache, this);
 	const auto name = QString::number(lyricsId);
 	addTab(view, QStringLiteral("view-media-lyrics"), name, SidePanelType::Lyrics, name);
-	view->load(lyricsId);
+	view->open(lyricsId);
 }
 
 void SidePanel::View::openSearch()

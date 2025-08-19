@@ -1,16 +1,16 @@
 #pragma once
 
-#include "lib/httpclient.hpp"
-#include "lib/spotify/track.hpp"
-#include "lib/spotify/playback.hpp"
-#include "lib/lyrics/api.hpp"
 #include "lib/cache.hpp"
+#include "lib/httpclient.hpp"
+#include "lib/lyrics/api.hpp"
+#include "lib/spotify/playback.hpp"
+#include "lib/spotify/track.hpp"
 
+#include <QCheckBox>
+#include <QComboBox>
+#include <QGridLayout>
 #include <QLabel>
 #include <QListWidget>
-#include <QComboBox>
-#include <QCheckBox>
-#include <QGridLayout>
 
 namespace View
 {
@@ -23,7 +23,7 @@ namespace View
 			lib::cache &cache, QWidget *parent);
 
 		void open(const lib::spt::track &track);
-		void load(int lyricsId);
+		void open(unsigned int lyricsId);
 
 	private:
 		static constexpr int timestampRole = 0x100;
@@ -36,15 +36,12 @@ namespace View
 		QLabel *status;
 		QListWidget *lyricsList;
 		QCheckBox *syncWithMusic;
-
-		QComboBox *lyricIds = nullptr;
+		QLabel *providedBy;
 
 		void load(const lib::lrc::lyrics &loaded);
 		static auto getTimestamp(const QListWidgetItem *item) -> qlonglong;
-		void setLyricsIds(const std::vector<lib::lrc::search_result> &results, int index);
 
 		void onPlaybackRefreshed(const lib::spt::playback &playback,
 			const lib::spt::playback &previous);
-		void onLyricsIdSelect(int index);
 	};
 }

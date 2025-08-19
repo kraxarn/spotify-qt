@@ -2,13 +2,16 @@
 #include "view/sidepanel/view.hpp"
 
 #include <QGroupBox>
-#include <QPushButton>
 #include <QMessageBox>
+#include <QPushButton>
 
 Dialog::LyricsSearch::LyricsSearch(const lib::http_client &httpClient, QWidget *parent)
 	: Base(parent),
 	lyrics(httpClient)
 {
+	lyrics.set_app_info(APP_NAME, APP_VERSION,
+		lib::fmt::format("https://github.com/{}/{}", ORG_NAME, APP_NAME));
+
 	auto *layout = Base::layout<QVBoxLayout>();
 
 	searchBox = new QGroupBox(this);

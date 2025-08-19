@@ -1,129 +1,113 @@
 #include "lib/lyrics/api.hpp"
 #include "lib/fmt.hpp"
+#include "lib/log.hpp"
 #include "lib/uri.hpp"
 
-lib::lrc::api::api(const lib::http_client &http_client)
+lib::lrc::api::api(const http_client &http_client)
 	: http(http_client)
 {
 }
 
-auto lib::lrc::api::headers() -> lib::headers
+auto lib::lrc::api::headers() const -> lib::headers
 {
 	return {
 		{"Content-Type", "application/json"},
-		{
-			"User-Agent",
-			"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/102.1",
-		},
+		{"User-Agent", user_agent},
 	};
 }
 
-void lib::lrc::api::search(const lib::spt::track &track,
-	lib::callback<lib::result<std::vector<lib::lrc::search_result>>> &callback)
+void lib::lrc::api::set_app_info(const std::string &name, const std::string &version, const std::string &homepage)
 {
-	const auto query = lib::fmt::format("{} {}",
-		lib::uri::encode(track.name),
-		lib::uri::encode(track.artists.front().name));
-
-	search(query, callback);
+	user_agent = fmt::format("{} {} ({})", name, version, homepage);
 }
 
-void lib::lrc::api::search(const std::string &query,
-	lib::callback<lib::result<std::vector<lib::lrc::search_result>>> &callback)
+void lib::lrc::api::search(const std::string &query, callback<result<std::vector<lyrics>>> &callback) const
 {
-	lib::uri uri("https://music.xianqiao.wang/neteaseapiv2/search");
+	uri uri("https://lrclib.net/api/search");
 	uri.set_search_params({
-		{"limit", "10"},
-		{"type", "1"},
-		{"keywords", query},
+		{"q", query},
 	});
 
 	http.get(uri.get_url(), headers(), [callback](const std::string &response)
 	{
 		if (response.empty())
 		{
-			callback(lib::result<std::vector<lib::lrc::search_result>>::fail("No response"));
+			callback(result<std::vector<lyrics>>::fail("No response"));
 			return;
 		}
 
-		nlohmann::json json;
+		std::vector<lyrics> items;
 		try
 		{
-			json = nlohmann::json::parse(response);
+			items = nlohmann::json::parse(response);
 		}
 		catch (const std::exception &e)
 		{
-			callback(lib::result<std::vector<lib::lrc::search_result>>::fail(e.what()));
+			callback(result<std::vector<lyrics>>::fail(e.what()));
 			return;
 		}
 
-		if (!json.contains("result"))
-		{
-			callback(lib::result<std::vector<lib::lrc::search_result>>::fail("No results"));
-			return;
-		}
-
-		const auto &result = json.at("result");
-		if (!result.contains("songs"))
-		{
-			callback(lib::result<std::vector<lib::lrc::search_result>>::fail("No results"));
-			return;
-		}
-
-		const auto &songs = result.at("songs");
-		if (!songs.is_array() || songs.empty())
-		{
-			callback(lib::result<std::vector<lib::lrc::search_result>>::fail("No lyrics found"));
-			return;
-		}
-
-		std::vector<lib::lrc::search_result> results;
-		results.reserve(songs.size());
-
-		for (const auto &song: songs)
-		{
-			results.push_back(song);
-		}
-
-		callback(lib::result<std::vector<lib::lrc::search_result>>::ok(results));
+		callback(result<std::vector<lyrics>>::ok(items));
 	});
 }
 
-void lib::lrc::api::lyrics(int lyrics_id, lib::callback<lib::result<lib::lrc::lyrics>> &callback)
+void lib::lrc::api::get(const spt::track &track, callback<result<lyrics>> &callback) const
 {
-	lib::uri uri("https://music.xianqiao.wang/neteaseapiv2/lyric");
+	uri uri("https://lrclib.net/api/get");
 	uri.set_search_params({
-		{"id", std::to_string(lyrics_id)},
+		{"track_name", track.name},
+		{"artist_name", track.artists.front().name},
+		{"album_name", track.album.name},
+		{"duration", std::to_string(track.duration / 1000)},
 	});
 
 	http.get(uri.get_url(), headers(), [callback](const std::string &response)
 	{
 		if (response.empty())
 		{
-			callback(lib::result<lib::lrc::lyrics>::fail("No response"));
+			callback(result<lyrics>::fail("No response"));
 			return;
 		}
 
-		nlohmann::json json;
+		lyrics item;
 		try
 		{
-			json = nlohmann::json::parse(response);
+			const auto json = nlohmann::json::parse(response);
+			item = json;
 		}
 		catch (const std::exception &e)
 		{
-			callback(lib::result<lib::lrc::lyrics>::fail(e.what()));
+			callback(result<lyrics>::fail(e.what()));
 			return;
 		}
 
-		if (!json.contains("lrc"))
-		{
-			callback(lib::result<lib::lrc::lyrics>::fail("No lyrics"));
-			return;
-		}
-
-		const auto lyric = json.at("lrc").at("lyric");
-		callback(lib::result<lib::lrc::lyrics>::ok(lyric));
+		callback(result<lyrics>::ok(item));
 	});
 }
 
+void lib::lrc::api::get(unsigned int lyricsId, callback<result<lyrics>> &callback) const
+{
+	const auto url = fmt::format("https://lrclib.net/api/get/{}", lyricsId);
 
+	http.get(url, headers(), [callback](const std::string &response)
+	{
+		if (response.empty())
+		{
+			callback(result<lyrics>::fail("No response"));
+			return;
+		}
+
+		lyrics item;
+		try
+		{
+			item = nlohmann::json::parse(response);
+		}
+		catch (const std::exception &e)
+		{
+			callback(result<lyrics>::fail(e.what()));
+			return;
+		}
+
+		callback(result<lyrics>::ok(item));
+	});
+}
