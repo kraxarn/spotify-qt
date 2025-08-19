@@ -57,7 +57,7 @@ void Dialog::LyricsSearch::onSearchClicked(bool /*checked*/)
 	results->clear();
 
 	const auto query = search->text().toStdString();
-	lyrics.search(query, [this](const lib::result<std::vector<lib::lrc::search_result>> &result)
+	lyrics.search(query, [this](const lib::result<std::vector<lib::lrc::lyrics>> &result)
 	{
 		if (!result.success())
 		{
@@ -66,14 +66,13 @@ void Dialog::LyricsSearch::onSearchClicked(bool /*checked*/)
 		}
 		else
 		{
-			for (const auto &searchResult: result.value())
+			for (const auto &lyrics: result.value())
 			{
-				const auto artists = lib::strings::join(searchResult.artists, ", ");
 				auto *item = new QTreeWidgetItem(results);
-				item->setText(0, QString::number(searchResult.lyrics_id));
-				item->setText(1, QString::fromStdString(searchResult.track));
-				item->setText(2, QString::fromStdString(artists));
-				item->setText(3, QString::fromStdString(searchResult.album));
+				item->setText(0, QString::number(lyrics.id));
+				item->setText(1, QString::fromStdString(lyrics.track_name));
+				item->setText(2, QString::fromStdString(lyrics.artist_name));
+				item->setText(3, QString::fromStdString(lyrics.album_name));
 			}
 		}
 
