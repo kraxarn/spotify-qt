@@ -24,6 +24,10 @@ auto lib::spt::api::error_message(const std::string &url, const std::string &dat
 			json = nlohmann::json::parse(data);
 		}
 	}
+	catch (const nlohmann::json::parse_error &e)
+	{
+		lib::log::error("{} failed to parse: {}", data, e.what());
+	}
 	catch (const std::exception &e)
 	{
 		lib::log::warn("{} failed: {}", url, e.what());
