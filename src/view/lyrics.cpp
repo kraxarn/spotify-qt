@@ -79,7 +79,12 @@ void View::Lyrics::load(const lib::lrc::lyrics &loaded)
 {
 	lyricsList->clear();
 
-	if (!loaded.synced_lyrics.empty())
+	if (loaded.instrumental)
+	{
+		auto *item = new QListWidgetItem(lyricsList);
+		item->setText(QStringLiteral("♪"));
+	}
+	else if (!loaded.synced_lyrics.empty())
 	{
 		for (const auto &line: loaded.synced_lyrics)
 		{
