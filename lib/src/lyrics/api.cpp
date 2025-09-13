@@ -2,6 +2,7 @@
 #include "lib/fmt.hpp"
 #include "lib/log.hpp"
 #include "lib/uri.hpp"
+#include "lib/lyrics/error.hpp"
 
 lib::lrc::api::api(const http_client &http_client)
 	: http(http_client)
@@ -70,14 +71,26 @@ void lib::lrc::api::get(const spt::track &track, callback<result<lyrics>> &callb
 		}
 
 		lyrics item;
+		nlohmann::json json;
+
 		try
 		{
-			const auto json = nlohmann::json::parse(response);
-			item = json;
+			json = nlohmann::json::parse(response);
 		}
 		catch (const std::exception &e)
 		{
 			callback(result<lyrics>::fail(e.what()));
+			return;
+		}
+
+		if (json.contains("id"))
+		{
+			item = json;
+		}
+		else if (json.contains("message"))
+		{
+			const error error = json;
+			callback(result<lyrics>::fail(error.message));
 			return;
 		}
 
