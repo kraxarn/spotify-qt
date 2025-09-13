@@ -62,35 +62,34 @@ void lib::lrc::api::get(const spt::track &track, callback<result<lyrics>> &callb
 		{"duration", std::to_string(track.duration / 1000)},
 	});
 
-	http.get(uri.get_url(), headers(), [callback](const std::string &response)
+	http.get(uri.get_url(), headers(), [callback](const result<std::string> &response)
 	{
-		if (response.empty())
+		if (!response.success())
 		{
-			callback(result<lyrics>::fail("No response"));
+			std::string error_message;
+			try
+			{
+				const error error = nlohmann::json::parse(response.message());
+				error_message = error.message;
+			}
+			catch (nlohmann::json::parse_error &e)
+			{
+				log::error("Failed to parse error message: {}", e.what());
+				error_message = response.message();
+			}
+
+			callback(result<lyrics>::fail(error_message));
 			return;
 		}
 
 		lyrics item;
-		nlohmann::json json;
-
 		try
 		{
-			json = nlohmann::json::parse(response);
+			item = nlohmann::json::parse(response.value());
 		}
 		catch (const std::exception &e)
 		{
 			callback(result<lyrics>::fail(e.what()));
-			return;
-		}
-
-		if (json.contains("id"))
-		{
-			item = json;
-		}
-		else if (json.contains("message"))
-		{
-			const error error = json;
-			callback(result<lyrics>::fail(error.message));
 			return;
 		}
 
