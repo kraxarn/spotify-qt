@@ -844,7 +844,11 @@ void List::Tracks::updateLikedTracks(const std::function<void(const std::vector<
 		}
 
 		cache.set_tracks("liked_tracks", *cachedTracks);
-		callback(*cachedTracks);
+
+		if (callback)
+		{
+			callback(*cachedTracks);
+		}
 
 		cachedTracks.reset(nullptr);
 		return false;
