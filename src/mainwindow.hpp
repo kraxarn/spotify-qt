@@ -69,6 +69,7 @@ public:
 
 	auto startClient() -> const SpotifyClient::Runner *;
 	void stopClient();
+	void jumpToPlaybackContext();
 
 	// Getters for private properties
 	void setSearchChecked(bool checked);

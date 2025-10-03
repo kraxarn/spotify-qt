@@ -4,6 +4,7 @@
 #include "dialog/whatsnew.hpp"
 #include "lib/time.hpp"
 #include "lib/crash/crashhandler.hpp"
+#include "lib/spotify/util.hpp"
 #include "menu/mainmenubar.hpp"
 #include "util/appconfig.hpp"
 #include "util/url.hpp"
@@ -610,6 +611,44 @@ void MainWindow::stopClient()
 	if (spotifyRunner != nullptr){
 		spotifyRunner->deleteLater();
 		spotifyRunner = nullptr;
+	}
+}
+
+void MainWindow::jumpToPlaybackContext()
+{
+	const auto &playbackContext = current.playback.context;
+	const auto &currentTrackId = current.playback.item.id;
+
+	if (playbackContext.type.empty() || playbackContext.uri.empty())
+	{
+		return;
+	}
+
+	const auto contextId = lib::spt::uri_to_id(playbackContext.uri);
+
+	if (playbackContext.type == "album")
+	{
+		loadAlbum(contextId, currentTrackId);
+	}
+	else if (playbackContext.type == "playlist")
+	{
+		spotify.playlist(contextId, [this, currentTrackId](const lib::result<lib::spt::playlist> &result)
+		{
+			if (!result.success())
+			{
+				StatusMessage::error(QString("Failed to load playlist: %1")
+					.arg(QString::fromStdString(result.message())));
+				return;
+			}
+
+			resetLibraryPlaylist();
+			getSongsTree()->load(result.value());
+			getSongsTree()->setPlayingTrackItem(currentTrackId);
+		});
+	}
+	else if (playbackContext.type == "artist")
+	{
+		openArtist(contextId);
 	}
 }
 
