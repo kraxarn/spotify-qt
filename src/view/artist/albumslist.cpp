@@ -114,6 +114,7 @@ void Artist::AlbumsList::addAlbums(const std::vector<lib::spt::album> &albums) c
 		item->setToolTip(1, releaseDateToolTip);
 
 		group->addChild(item);
+		group->sortChildren(1, Qt::DescendingOrder);
 	}
 }
 
