@@ -1,4 +1,5 @@
 #include "view/artist/albumslist.hpp"
+#include "listitem/album.hpp"
 
 #include "mainwindow.hpp"
 #include "metatypes.hpp"
@@ -82,17 +83,8 @@ void Artist::AlbumsList::addAlbums(const std::vector<lib::spt::album> &albums) c
 {
 	for (const auto &album: albums)
 	{
-		const auto releaseDate = DateTime::parseIsoDate(album.release_date);
-		// Extra spacing is intentional so year doesn't overlap with scrollbar
-		const auto year = releaseDate.toString("yyyy    ");
-
-		const auto albumName = QString::fromStdString(album.name);
-
 		auto *group = groups.at(album.album_group);
-		auto *item = new QTreeWidgetItem(group, {
-			albumName,
-			year.isEmpty() ? QString() : year
-		});
+		auto *item = new ListItem::Album(album, group);
 
 		Http::getAlbumImage(album.image, httpClient, cache, [item](const QPixmap &image)
 		{
