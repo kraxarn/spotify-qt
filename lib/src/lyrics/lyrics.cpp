@@ -1,4 +1,6 @@
 #include "lib/lyrics/lyrics.hpp"
+
+#include "lib/log.hpp"
 #include "lib/strings.hpp"
 
 void lib::lrc::from_json(const nlohmann::json &json, lyrics &lyrics)
@@ -31,9 +33,17 @@ void lib::lrc::from_json(const nlohmann::json &json, lyrics &lyrics)
 		auto iter = lines.cbegin();
 		while (iter != lines.cend())
 		{
-			const line parsed(*iter);
-			lyrics.synced_lyrics.push_back(parsed);
-			++iter;
+			try
+			{
+				const line parsed(*iter);
+				lyrics.synced_lyrics.push_back(parsed);
+				++iter;
+			}
+			catch (const std::exception &e)
+			{
+				log::warn("Ignoring invalid line '{}': {}", *iter, e.what());
+				++iter;
+			}
 		}
 	}
 }
