@@ -1,5 +1,4 @@
 #include "lib/lyrics/lyrics.hpp"
-
 #include "lib/log.hpp"
 #include "lib/strings.hpp"
 
