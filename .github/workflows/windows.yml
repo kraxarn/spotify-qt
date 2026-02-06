@@ -59,4 +59,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: spotify-qt-${{matrix.name}}
-          path: ${{runner.workspace}}/spotify-qt/${{env.BUILD_TYPE}}
+          path: ${{runner.workspace}}\spotify-qt\${{env.BUILD_TYPE}}
