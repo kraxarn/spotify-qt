@@ -4,6 +4,7 @@ on: workflow_dispatch
 
 env:
   BUILD_TYPE: Release
+  CMAKE_GENERATOR: "Visual Studio 17 2022"
 
 jobs:
   build:
@@ -18,7 +19,6 @@ jobs:
             qt-version: "5.15.2"
             qt-arch: "win32_msvc2019"
             qt-host: "windows"
-            cmake-generator: "Visual Studio 16 2019"
             cmake-arch: "Win32"
 
           - name: "qt6-win64"
@@ -26,7 +26,6 @@ jobs:
             qt-version: "6.9.2"
             qt-arch: "win64_msvc2022_64"
             qt-host: "windows"
-            cmake-generator: "Visual Studio 17 2022"
             cmake-arch: "x64"
 
           - name: "qt6-arm64"
@@ -34,7 +33,6 @@ jobs:
             qt-version: "6.9.2"
             qt-arch: "win64_msvc2022_arm64"
             qt-host: "windows_arm64"
-            cmake-generator: "Visual Studio 17 2022"
             cmake-arch: "ARM64"
 
     steps:
@@ -49,7 +47,7 @@ jobs:
           host: ${{matrix.qt-host}}
 
       - name: Configure CMake
-        run: cmake . -G "${{matrix.cmake-generator}}" -A ${{matrix.cmake-arch}} -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D USE_TESTS=ON -D USE_LTO=ON
+        run: cmake . -G "${{env.CMAKE_GENERATOR}}" -A ${{matrix.cmake-arch}} -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D USE_TESTS=ON -D USE_LTO=ON
 
       - name: Build
         run: cmake --build .
