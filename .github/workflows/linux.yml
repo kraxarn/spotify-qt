@@ -65,12 +65,6 @@ jobs:
           curl -L "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-${{matrix.arch}}.AppImage" -o ${{runner.workspace}}/linuxdeploy-plugin-qt-${{matrix.arch}}.AppImage
           chmod +x ${{runner.workspace}}/linuxdeploy-*.AppImage
 
-      - name: Copy OpenSSL
-        run: |
-          mkdir -p ${{runner.workspace}}/dist/usr/lib
-          cp /usr/lib/${{matrix.arch}}-linux-gnu/libcrypto.so.1.1 ${{runner.workspace}}/dist/usr/lib/
-          cp /usr/lib/${{matrix.arch}}-linux-gnu/libssl.so.1.1 ${{runner.workspace}}/dist/usr/lib/
-
       - name: Package
         run: |
           export OUTPUT="spotify-qt-$(git rev-parse --short HEAD)-${{matrix.arch}}.AppImage"
