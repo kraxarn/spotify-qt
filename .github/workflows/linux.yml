@@ -16,7 +16,7 @@ jobs:
       matrix:
         include:
 
-          - arch: "x64_64"
+          - arch: "x86_64"
             # Qt 6 requires Ubuntu 22.04 on x86_64
             # https://doc.qt.io/qt-6/linux.html
             os: ubuntu-22.04
