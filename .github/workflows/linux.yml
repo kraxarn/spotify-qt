@@ -24,7 +24,7 @@ jobs:
             qt-host: "linux"
 
           - arch: "aarch64"
-            os: ubuntu-22.04-arm
+            os: ubuntu-24.04-arm
             qt-arch: "linux_gcc_arm64"
             qt-host: "linux_arm64"
 
