@@ -20,6 +20,7 @@ jobs:
             qt-arch: "win32_msvc2019"
             qt-host: "windows"
             cmake-arch: "Win32"
+            use-qt5: "ON"
 
           - name: "qt6-win64"
             os: windows-latest
@@ -27,11 +28,13 @@ jobs:
             qt-arch: "win64_msvc2022_64"
             qt-host: "windows"
             cmake-arch: "x64"
+            use-qt5: "OFF"
 
           - name: "qt6-woa64"
             os: windows-11-arm
             qt-version: "6.9.2"
             cmake-arch: "ARM64"
+            use-qt5: "OFF"
             # Workaround for https://github.com/jurplel/install-qt-action/issues/295
             qt-arch: "win64_msvc2022_arm64_cross_compiled"
             qt-host: "windows"
@@ -48,7 +51,7 @@ jobs:
           host: ${{matrix.qt-host}}
 
       - name: Configure CMake
-        run: cmake . -G "${{env.CMAKE_GENERATOR}}" -A ${{matrix.cmake-arch}} -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D USE_TESTS=ON -D USE_LTO=ON
+        run: cmake . -G "${{env.CMAKE_GENERATOR}}" -A "${{matrix.cmake-arch}}" -D CMAKE_BUILD_TYPE="${{env.BUILD_TYPE}}" -D USE_TESTS=ON -D USE_LTO=ON -D USE_QT5="${{matrix.use-qt5}}"
 
       - name: Build
         run: cmake --build .
