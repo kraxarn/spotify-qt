@@ -31,9 +31,10 @@ jobs:
           - name: "qt6-woa64"
             os: windows-11-arm
             qt-version: "6.9.2"
-            qt-arch: "win64_msvc2022_arm64"
-            qt-host: "windows_arm64"
             cmake-arch: "ARM64"
+            # Workaround for https://github.com/jurplel/install-qt-action/issues/295
+            qt-arch: "win64_msvc2022_arm64_cross_compiled"
+            qt-host: "windows"
 
     steps:
       - uses: actions/checkout@v5
