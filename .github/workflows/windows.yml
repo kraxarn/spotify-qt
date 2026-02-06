@@ -1,0 +1,61 @@
+name: Windows
+
+on: workflow_dispatch
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    name: "${{matrix.name}}"
+    runs-on: ${{matrix.os}}
+
+    strategy:
+      matrix:
+        include:
+          - name: "qt5-win32"
+            os: windows-latest
+            qt-version: "5.15.2"
+            qt-arch: "win32_msvc2019"
+            qt-host: "windows"
+            cmake-generator: "Visual Studio 16 2019"
+            cmake-arch: "Win32"
+
+          - name: "qt6-win64"
+            os: windows-latest
+            qt-version: "6.9.2"
+            qt-arch: "win64_msvc2022_64"
+            qt-host: "windows"
+            cmake-generator: "Visual Studio 17 2022"
+            cmake-arch: "x64"
+
+          - name: "qt6-arm64"
+            os: windows-11-arm
+            qt-version: "6.9.2"
+            qt-arch: "win64_msvc2022_arm64"
+            qt-host: "windows_arm"
+            cmake-generator: "Visual Studio 17 2022"
+            cmake-arch: "ARM64"
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          cache: true
+          version: ${{matrix.qt-version}}
+          arch: ${{matrix.qt-arch}}
+          host: ${{matrix.qt-host}}
+
+      - name: Configure CMake
+        run: cmake . -G "${{matrix.cmake-generator}}" -A ${{matrix.cmake-arch}} -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D USE_TESTS=ON -D USE_LTO=ON
+
+      - name: Build
+        run: cmake --build .
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: spotify-qt-${{matrix.name}}
+          path: ${{runner.workspace}}/spotify-qt/${{env.BUILD_TYPE}}
