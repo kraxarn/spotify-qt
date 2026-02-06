@@ -10,11 +10,11 @@ jobs:
       - uses: actions/checkout@v5
 
       - name: Build
-        uses: cross-platform-actions/action@v0.29.0
+        uses: cross-platform-actions/action@v0.32.0
         with:
           operating_system: netbsd
           architecture: x86-64
-          version: '9.4'
+          version: '10.1'
           shell: bash
           run: |
             sudo pkgin -y install cmake git qt6-qtbase qt6-qtsvg || cat /var/db/pkgin/pkg_install-err.log
