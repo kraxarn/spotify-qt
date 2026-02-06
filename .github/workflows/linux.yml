@@ -72,5 +72,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: spotify-qt
+          name: spotify-qt-linux-${{matrix.arch}}
           path: ${{runner.workspace}}/spotify-qt/spotify-qt-*.AppImage
