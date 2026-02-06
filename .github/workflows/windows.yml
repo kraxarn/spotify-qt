@@ -28,7 +28,7 @@ jobs:
             qt-host: "windows"
             cmake-arch: "x64"
 
-          - name: "qt6-arm64"
+          - name: "qt6-woa64"
             os: windows-11-arm
             qt-version: "6.9.2"
             qt-arch: "win64_msvc2022_arm64"
