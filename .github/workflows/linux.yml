@@ -9,9 +9,24 @@ env:
 
 jobs:
   build:
-    # Qt 6.8 requires Ubuntu 22.04
-    # https://doc.qt.io/qt-6.8/linux.html
-    runs-on: ubuntu-22.04
+    name: "${{matrix.arch}}"
+    runs-on: ${{matrix.os}}
+
+    strategy:
+      matrix:
+        include:
+          # Qt 6 requires Ubuntu 22.04
+          # https://doc.qt.io/qt-6/linux.html
+
+          - arch: "x64_64"
+            os: ubuntu-22.04
+            qt-arch: "linux_gcc_64"
+            qt-host: "linux"
+
+          - arch: "aarch64"
+            os: ubuntu-22.04-arm
+            qt-arch: "linux_gcc_arm64"
+            qt-host: "linux_arm64"
 
     steps:
       - uses: actions/checkout@v5
@@ -23,7 +38,8 @@ jobs:
         with:
           cache: true
           version: ${{env.QT_VERSION}}
-          arch: ${{env.QT_ARCH}}
+          arch: ${{matrix.qt-arch}}
+          host: ${{matrix.qt-host}}
 
       - name: Install Dependencies
         run: sudo apt install libxkbcommon-x11-dev libxcb-cursor-dev -y
@@ -42,21 +58,21 @@ jobs:
 
       - name: Download linuxdeploy
         run: |
-          curl -L "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage" -o ${{runner.workspace}}/linuxdeploy-x86_64.AppImage
-          curl -L "https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppImage" -o ${{runner.workspace}}/linuxdeploy-plugin-appimage-x86_64.AppImage
-          curl -L "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage" -o ${{runner.workspace}}/linuxdeploy-plugin-qt-x86_64.AppImage
+          curl -L "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-${{matrix.arch}}.AppImage" -o ${{runner.workspace}}/linuxdeploy-${{matrix.arch}}.AppImage
+          curl -L "https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-${{matrix.arch}}.AppImage" -o ${{runner.workspace}}/linuxdeploy-plugin-appimage-${{matrix.arch}}.AppImage
+          curl -L "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-${{matrix.arch}}.AppImage" -o ${{runner.workspace}}/linuxdeploy-plugin-qt-${{matrix.arch}}.AppImage
           chmod +x ${{runner.workspace}}/linuxdeploy-*.AppImage
 
       - name: Copy OpenSSL
         run: |
           mkdir -p ${{runner.workspace}}/dist/usr/lib
-          cp /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 ${{runner.workspace}}/dist/usr/lib/
-          cp /usr/lib/x86_64-linux-gnu/libssl.so.1.1 ${{runner.workspace}}/dist/usr/lib/
+          cp /usr/lib/${{matrix.arch}}-linux-gnu/libcrypto.so.1.1 ${{runner.workspace}}/dist/usr/lib/
+          cp /usr/lib/${{matrix.arch}}-linux-gnu/libssl.so.1.1 ${{runner.workspace}}/dist/usr/lib/
 
       - name: Package
         run: |
-          export OUTPUT="spotify-qt-$(git rev-parse --short HEAD)-x86_64.AppImage"
-          ${{runner.workspace}}/linuxdeploy-x86_64.AppImage --appdir ${{runner.workspace}}/dist --output appimage --plugin qt -d ${{runner.workspace}}/dist/usr/share/applications/spotify-qt.desktop
+          export OUTPUT="spotify-qt-$(git rev-parse --short HEAD)-${{matrix.arch}}.AppImage"
+          ${{runner.workspace}}/linuxdeploy-${{matrix.arch}}.AppImage --appdir ${{runner.workspace}}/dist --output appimage --plugin qt -d ${{runner.workspace}}/dist/usr/share/applications/spotify-qt.desktop
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
