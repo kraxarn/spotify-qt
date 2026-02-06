@@ -33,7 +33,7 @@ jobs:
             os: windows-11-arm
             qt-version: "6.9.2"
             qt-arch: "win64_msvc2022_arm64"
-            qt-host: "windows_arm"
+            qt-host: "windows_arm64"
             cmake-generator: "Visual Studio 17 2022"
             cmake-arch: "ARM64"
 
