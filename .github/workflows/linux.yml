@@ -15,15 +15,17 @@ jobs:
     strategy:
       matrix:
         include:
-          # Qt 6 requires Ubuntu 22.04
-          # https://doc.qt.io/qt-6/linux.html
 
           - arch: "x64_64"
+            # Qt 6 requires Ubuntu 22.04 on x86_64
+            # https://doc.qt.io/qt-6/linux.html
             os: ubuntu-22.04
             qt-arch: "linux_gcc_64"
             qt-host: "linux"
 
           - arch: "aarch64"
+            # Qt 6 requires Ubuntu 24.04 on arm64
+            # https://doc.qt.io/qt-6/linux.html
             os: ubuntu-24.04-arm
             qt-arch: "linux_gcc_arm64"
             qt-host: "linux_arm64"
