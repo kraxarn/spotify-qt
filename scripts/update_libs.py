@@ -52,12 +52,14 @@ with open("../lib/thirdparty/readme.md", "r") as file:
 
 # .github/workflows
 
-def get_qt_version_from_workflow(filename: str) -> typing.Optional[str]:
+def get_qt_versions_from_workflow(filename: str) -> typing.Generator[str, typing.Any, None]:
 	with open(filename, "r") as file:
 		for line in file:
-			if "QT_VERSION" in line:
-				return "v{0}".format(line[line.index("\"") + 1:line.rindex("\"")])
-	return None
+			if "QT_VERSION" in line or "qt-version" in line:
+				try:
+					yield "v{0}".format(line[line.index("\"") + 1:line.rindex("\"")])
+				except ValueError:
+					continue
 
 
 latest_qt = get_latest_tag("qt/qtbase", False)
@@ -66,10 +68,10 @@ workflows_dir = os.fsencode("../.github/workflows/")
 for file in os.listdir(workflows_dir):
 	basename = file.decode()
 	file_path = os.path.join(workflows_dir, file).decode()
-	version = get_qt_version_from_workflow(file_path)
-	if version is None or version.startswith("v5"):
-		continue
-	log(f"Qt ({basename})", version, latest_qt)
+	for version in get_qt_versions_from_workflow(file_path):
+		if version is None or version.startswith("v5"):
+			continue
+		log(f"Qt ({basename})", version, latest_qt)
 
 actions = {}
 
