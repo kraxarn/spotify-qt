@@ -5,6 +5,9 @@ Versions use major.minor scheming. New versions are released together with spoti
 * Patch releases contain bug fixes only.
 * Pre-release and beta releases may contain breaking changes, even if it's a minor release.
 
+## v2.0.0 (spotify-qt v4.0.2)
+* Reworked `lrc` API.
+
 ## v1.0.1 (spotify-qt v4.0.1)
 * Deprecated `client_type`.
 * Deprecated `setting::spotify::global_config`.
