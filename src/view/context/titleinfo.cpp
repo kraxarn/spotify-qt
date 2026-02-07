@@ -51,32 +51,9 @@ void Context::TitleInfo::onContextMenu(const QPoint &pos)
 void Context::TitleInfo::onContextMenuTriggered(bool /*checked*/)
 {
 	auto *mainWindow = MainWindow::find(parentWidget());
-	const auto &type = playback.context.type;
-	const auto uri = lib::strings::split(playback.context.uri, ':').back();
-
-	if (type == "album")
+	if (mainWindow != nullptr)
 	{
-		mainWindow->loadAlbum(uri);
-	}
-	else if (type == "artist")
-	{
-		mainWindow->openArtist(uri);
-	}
-	else if (type == "playlist")
-	{
-		spotify.playlist(uri, [mainWindow](const lib::result<lib::spt::playlist> &result)
-		{
-			if (!result.success())
-			{
-				StatusMessage::error(QString("Failed to load playlist: %1")
-					.arg(QString::fromStdString(result.message())));
-
-				return;
-			}
-
-			mainWindow->resetLibraryPlaylist();
-			mainWindow->getSongsTree()->load(result.value());
-		});
+		mainWindow->jumpToPlaybackContext();
 	}
 }
 

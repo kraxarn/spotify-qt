@@ -40,6 +40,8 @@ namespace Context
 
 		virtual auto iconSize() const -> QSize = 0;
 
+		void mouseDoubleClickEvent(QMouseEvent *event) override;
+
 		template<typename T>
 		auto layout() -> T *
 		{

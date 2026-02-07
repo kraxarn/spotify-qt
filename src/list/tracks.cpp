@@ -785,6 +785,10 @@ void List::Tracks::setPlayingTrackItem(QTreeWidgetItem *item)
 	}
 	item->setIcon(0, Icon::get("media-playback-start"));
 	playingTrackItem = item;
+
+	// Scroll to and select the item
+	setCurrentItem(item);
+	scrollToItem(item);
 }
 
 void List::Tracks::setPlayingTrackItem(const std::string &itemId)

@@ -1,6 +1,8 @@
 #include "view/context/abstractcontent.hpp"
 #include "mainwindow.hpp"
 
+#include <QMouseEvent>
+
 Context::AbstractContent::AbstractContent(lib::spt::api &spotify, const lib::cache &cache,
 	lib::settings &settings, QWidget *parent)
 	: QWidget(parent),
@@ -72,4 +74,18 @@ void Context::AbstractContent::setCurrentlyPlaying(const lib::spt::track &track)
 auto Context::AbstractContent::isCurrentlyPlaying() const -> bool
 {
 	return isPlaying;
+}
+
+void Context::AbstractContent::mouseDoubleClickEvent(QMouseEvent *event)
+{
+	if (event->button() == Qt::LeftButton)
+	{
+		auto *mainWindow = MainWindow::find(parent());
+		if (mainWindow != nullptr)
+		{
+			mainWindow->jumpToPlaybackContext();
+		}
+	}
+
+	QWidget::mouseDoubleClickEvent(event);
 }
