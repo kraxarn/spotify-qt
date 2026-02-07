@@ -58,6 +58,9 @@ jobs:
       - name: Test
         run: ${{runner.workspace}}\spotify-qt\lib\test\${{env.BUILD_TYPE}}\spotify-qt-lib-test.exe
 
+      - name: Package
+        run: windeployqt --no-opengl-sw ${{runner.workspace}}\spotify-qt\${{env.BUILD_TYPE}}\spotify-qt.exe
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
