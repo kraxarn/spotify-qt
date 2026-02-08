@@ -5,10 +5,8 @@ project(spotify-qt-lib LANGUAGES CXX VERSION 2.0.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Optional Qt implementations
-if (LIB_QT_IMPL)
-	add_subdirectory(qt)
-endif ()
+# Old Qt stuff, should be moved at some point
+add_subdirectory(qt)
 
 option(USE_TESTS "Build with unit tests" OFF)
 
@@ -46,10 +44,8 @@ if (MSVC)
 	target_compile_definitions(spotify-qt-lib PRIVATE _CRT_SECURE_NO_WARNINGS)
 endif ()
 
-# Link optional libraries
-if (LIB_QT_LIBRARIES)
-	target_link_libraries(spotify-qt-lib PRIVATE ${LIB_QT_LIBRARIES})
-endif ()
+# Link Qt
+target_link_libraries(spotify-qt-lib PRIVATE ${LIB_QT_LIBRARIES})
 
 # Unit testing
 if (USE_TESTS)
