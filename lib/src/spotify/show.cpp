@@ -17,8 +17,12 @@ void lib::spt::from_json(const nlohmann::json &j, show &s)
 	j.at("is_externally_hosted").get_to(s.is_externally_hosted);
 	j.at("languages").get_to(s.languages);
 	j.at("name").get_to(s.name);
-	j.at("publisher").get_to(s.publisher);
 	j.at("uri").get_to(s.uri);
+
+	if (j.contains("publisher"))
+	{
+		j.at("publisher").get_to(s.publisher);
+	}
 
 	const auto &media_type = j.at("media_type").get<std::string>();
 	s.media_type = lib::enums<lib::media_type>::parse(media_type);

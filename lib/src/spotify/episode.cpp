@@ -31,13 +31,16 @@ auto lib::spt::episode::to_track(const lib::spt::show &show) const -> lib::spt::
 
 	track.id = id;
 	track.album.name = show.name;
-	track.artists.emplace_back(std::string(), show.publisher);
 	track.name = name;
 	track.images = show.images;
 	track.duration = duration_ms;
 	track.is_local = false;
 	track.is_playable = is_playable;
 	track.added_at = release_date;
+
+	track.artists.emplace_back(std::string(), show.publisher.empty()
+		? std::string("Unknown")
+		: show.publisher);
 
 	return track;
 }
