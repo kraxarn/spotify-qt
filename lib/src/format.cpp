@@ -32,24 +32,24 @@ auto Format::timePretty(const int milliseconds) -> QString
 		: QStringLiteral("%1 h %2 m").arg(hours).arg(minutes % lib::time::min_in_hour);
 }
 
-auto lib::format::size(unsigned long bytes) -> std::string
+auto Format::size(const unsigned long bytes) -> QString
 {
-	if (bytes >= Format::giga)
+	if (bytes >= giga)
 	{
-		return lib::fmt::format("{} GB", bytes / Format::giga);
+		return QStringLiteral("%1 GB").arg(bytes / giga);
 	}
 
-	if (bytes >= Format::mega)
+	if (bytes >= mega)
 	{
-		return lib::fmt::format("{} MB", bytes / Format::mega);
+		return QStringLiteral("%1 MB").arg(bytes / mega);
 	}
 
-	if (bytes >= Format::kilo)
+	if (bytes >= kilo)
 	{
-		return lib::fmt::format("{} kB", bytes / Format::kilo);
+		return QStringLiteral("%1 kB").arg(bytes / kilo);
 	}
 
-	return lib::fmt::format("{} B", bytes);
+	return QStringLiteral("%1 B").arg(bytes);
 }
 
 auto Format::count(const unsigned int count) -> QString

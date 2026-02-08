@@ -15,12 +15,6 @@ namespace lib
 	{
 	public:
 		/**
-		 * Format size as B, kB, MB or GB (bytes)
-		 * @param bytes Bytes
-		 */
-		static auto size(unsigned long bytes) -> std::string;
-
-		/**
 		 * \brief Format title template
 		 * \param track Track to format for
 		 * \param format Template format
@@ -50,6 +44,12 @@ public:
 	 * Format time as "... h ... m"
 	 */
 	static auto timePretty(int milliseconds) -> QString;
+
+	/**
+	 * Format size as B, kB, MB or GB (bytes)
+	 * @param bytes Bytes
+	 */
+	static auto size(unsigned long bytes) -> QString;
 
 	/**
 	 * Format as k or M
