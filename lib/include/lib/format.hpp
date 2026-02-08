@@ -1,28 +1,8 @@
 #pragma once
 
-#include <string>
-
 #include "lib/spotify/track.hpp"
 
 #include <QString>
-
-namespace lib
-{
-	/**
-	 * Formatting utilities
-	 */
-	class format
-	{
-	public:
-		/**
-		 * \brief Format title template
-		 * \param track Track to format for
-		 * \param format Template format
-		 * \return Formatted title
-		 */
-		static auto title(const spt::track &track, const std::string &format) -> std::string;
-	};
-}
 
 /**
  * Formatting utilities
@@ -56,6 +36,14 @@ public:
 	 * @param count Amount
 	 */
 	static auto count(unsigned int count) -> QString;
+
+	/**
+	 * @brief Format title template
+	 * @param track Track to format for
+	 * @param format Template format
+	 * @return Formatted title
+	 */
+	static auto title(const lib::spt::track &track, const QString &format) -> QString;
 
 private:
 	Format() = default;

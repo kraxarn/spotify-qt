@@ -67,54 +67,54 @@ auto Format::count(const unsigned int count) -> QString
 	return QString::number(count);
 }
 
-auto lib::format::title(const spt::track &track, const std::string &format) -> std::string
+auto Format::title(const lib::spt::track &track, const QString &format) -> QString
 {
-	std::string result;
-	size_t start_index = 0;
+	QString result;
+	qsizetype start_index = 0;
 
-	if (format.empty())
+	if (format.isEmpty())
 	{
-		return track.title();
+		return QString::fromStdString(track.title());
 	}
 
 	while (true)
 	{
-		const auto prev_start_index = start_index;
-		start_index = format.find('{', start_index);
-		result.append(format.substr(prev_start_index, start_index - prev_start_index));
+		const qsizetype prev_start_index = start_index;
+		start_index = format.indexOf(QLatin1Char('{'), start_index);
+		result.append(format.mid(prev_start_index, start_index - prev_start_index));
 
-		if (start_index == std::string::npos)
+		if (start_index < 0)
 		{
 			break;
 		}
 
-		const auto end_index = format.find('}', start_index);
-		if (end_index == std::string::npos)
+		const qsizetype end_index = format.indexOf(QLatin1Char('}'), start_index);
+		if (end_index < 0)
 		{
 			return format;
 		}
 
-		const auto part = format.substr(start_index, end_index - start_index + 1);
+		const QString part = format.mid(start_index, end_index - start_index + 1);
 
 		if (part == "{track}")
 		{
-			result.append(track.name);
+			result.append(QString::fromStdString(track.name));
 		}
 		else if (part == "{artist}")
 		{
 			if (!track.artists.empty())
 			{
-				result.append(track.artists.at(0).name);
+				result.append(QString::fromStdString(track.artists.at(0).name));
 			}
 		}
 		else if (part == "{artists}")
 		{
 			for (size_t i = 0; i < track.artists.size(); i++)
 			{
-				result.append(track.artists.at(i).name);
+				result.append(QString::fromStdString(track.artists.at(i).name));
 				if (i < track.artists.size() - 1)
 				{
-					result.append(", ");
+					result.append(QStringLiteral(", "));
 				}
 			}
 		}

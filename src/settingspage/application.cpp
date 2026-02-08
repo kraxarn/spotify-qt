@@ -285,8 +285,8 @@ void SettingsPage::Application::updatePreview()
 		? titleFormat->placeholderText()
 		: titleFormat->text();
 
-	const auto title = lib::format::title(currentTrack, format.toStdString());
-	titlePreview->setText(QString::fromStdString(title));
+	const QString title = Format::title(currentTrack, format);
+	titlePreview->setText(title);
 }
 
 void SettingsPage::Application::onPlaybackRefreshed(const lib::spt::playback &current,
