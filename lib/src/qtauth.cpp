@@ -1,4 +1,5 @@
-#include "lib/qt/spotify/auth.hpp"
+#include "lib/spotify/qtauth.hpp"
+#include "lib/qthttpclient.hpp"
 
 lib::qt::spt::auth::auth(lib::settings &settings, QObject *parent)
 	: QObject(parent)

@@ -1,4 +1,4 @@
-#include "lib/qt/systeminfo.hpp"
+#include "lib/systeminfo.hpp"
 
 lib::qt::system_info::system_info()
 {

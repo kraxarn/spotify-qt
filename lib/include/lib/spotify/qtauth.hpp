@@ -2,7 +2,7 @@
 
 #include "lib/settings.hpp"
 #include "lib/spotify/auth.hpp"
-#include "lib/qt/httpclient.hpp"
+#include "../httpclient.hpp"
 
 #include <QCoreApplication>
 #include <QJsonDocument>

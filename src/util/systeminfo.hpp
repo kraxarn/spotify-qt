@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/qt/systeminfo.hpp"
+#include "lib/systeminfo.hpp"
 
 class SystemInfo: public lib::qt::system_info
 {

@@ -5,9 +5,6 @@ project(spotify-qt-lib LANGUAGES CXX VERSION 2.0.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Old Qt stuff, should be moved at some point
-add_subdirectory(qt)
-
 option(USE_TESTS "Build with unit tests" OFF)
 
 # Source files
@@ -23,7 +20,7 @@ add_library(spotify-qt-lib STATIC ${MAIN_SRC} ${SUB_SRC} ${MAIN_INC} ${SUB_INC} 
 target_include_directories(spotify-qt-lib PUBLIC
 	"${CMAKE_CURRENT_SOURCE_DIR}/include"
 	"${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/include"
-	${LIB_QT_HEADERS})
+)
 
 # Third-party libraries
 add_subdirectory(thirdparty)
@@ -45,7 +42,10 @@ if (MSVC)
 endif ()
 
 # Link Qt
-target_link_libraries(spotify-qt-lib PRIVATE ${LIB_QT_LIBRARIES})
+target_link_libraries(spotify-qt-lib PRIVATE
+	Qt${QT_VERSION_MAJOR}::Core
+	Qt${QT_VERSION_MAJOR}::Network
+)
 
 # Unit testing
 if (USE_TESTS)

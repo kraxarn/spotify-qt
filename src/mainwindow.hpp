@@ -1,8 +1,8 @@
 #pragma once
 
+#include "lib/qthttpclient.hpp"
 #include "lib/settings.hpp"
 #include "lib/cache/jsoncache.hpp"
-#include "lib/qt/httpclient.hpp"
 #include "lib/spotify/api.hpp"
 #include "list/library.hpp"
 #include "list/playlist.hpp"

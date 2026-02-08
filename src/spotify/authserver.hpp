@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/qt/spotify/auth.hpp"
+#include "lib/spotify/qtauth.hpp"
 
 #include <QTcpServer>
 
