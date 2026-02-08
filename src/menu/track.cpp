@@ -47,9 +47,9 @@ Menu::Track::Track(const QList<PlaylistTrack> &tracks, lib::spt::api &spotify,
 			duration += track.second.duration;
 		}
 
-		const auto countText = QString("%1 tracks, %2")
+		const QString countText = QStringLiteral("%1 tracks, %2")
 			.arg(tracks.length())
-			.arg(QString::fromStdString(lib::format::time_pretty(duration)));
+			.arg(Format::timePretty(duration));
 
 		auto *countAction = addAction(countText);
 		countAction->setEnabled(false);

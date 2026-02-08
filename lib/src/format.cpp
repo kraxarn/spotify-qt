@@ -18,19 +18,18 @@ auto Format::time(const int milliseconds) -> QString
 		.arg(seconds_prefixed);
 }
 
-auto lib::format::time_pretty(int milliseconds) -> std::string
+auto Format::timePretty(const int milliseconds) -> QString
 {
-	const auto minutes = milliseconds / lib::time::ms_in_min;
+	const int minutes = milliseconds / lib::time::ms_in_min;
 	if (minutes < lib::time::min_in_hour)
 	{
-		return lib::fmt::format("{} m", minutes);
+		return QStringLiteral("%1 m").arg(minutes);
 	}
 
-	const auto hours = minutes / lib::time::min_in_hour;
+	const int hours = minutes / lib::time::min_in_hour;
 	return minutes == lib::time::min_in_hour
-		? lib::fmt::format("{} h", hours)
-		: lib::fmt::format("{} h {} m", hours, minutes % lib::time::min_in_hour);
-
+		? QStringLiteral("%1 h").arg(hours)
+		: QStringLiteral("%1 h %2 m").arg(hours).arg(minutes % lib::time::min_in_hour);
 }
 
 auto lib::format::size(unsigned long bytes) -> std::string

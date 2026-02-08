@@ -15,11 +15,6 @@ namespace lib
 	{
 	public:
 		/**
-		 * Format time as "... h ... m"
-		 */
-		static auto time_pretty(int milliseconds) -> std::string;
-
-		/**
 		 * Format size as B, kB, MB or GB (bytes)
 		 * @param bytes Bytes
 		 */
@@ -50,6 +45,11 @@ public:
 	 * @param milliseconds Milliseconds
 	 */
 	static auto time(int milliseconds) -> QString;
+
+	/**
+	 * Format time as "... h ... m"
+	 */
+	static auto timePretty(int milliseconds) -> QString;
 
 	/**
 	 * Format as k or M
