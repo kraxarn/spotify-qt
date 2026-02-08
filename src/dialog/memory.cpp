@@ -28,8 +28,8 @@ Dialog::Memory::Memory(QWidget *parent)
 
 void Dialog::Memory::updateStatus()
 {
-	const auto memory = lib::format::size(data.size());
-	status->setText(QString("Memory: %1").arg(QString::fromStdString(memory)));
+	const QString memory = Format::size(data.size());
+	status->setText(QStringLiteral("Memory: %1").arg(memory));
 }
 
 void Dialog::Memory::onAllocateClicked(bool /*checked*/)
