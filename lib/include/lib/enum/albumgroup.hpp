@@ -28,7 +28,7 @@ namespace lib
 		appears_on,
 
 		/**
-		 * Album is fetched outside of an artist
+		 * Album isn't associated with an artist, or not available from the API
 		 */
 		none,
 	};
