@@ -66,12 +66,6 @@ namespace lib
 
 			//endregion
 
-			//region Browse
-
-			void new_releases(const paged_callback<spt::album> &callback) const;
-
-			//endregion
-
 			//region Follow
 
 			void followed_artists(const paged_callback<spt::artist> &callback) const;

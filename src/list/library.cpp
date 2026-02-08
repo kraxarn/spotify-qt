@@ -20,8 +20,6 @@ List::Library::Library(lib::spt::api &spotify, lib::cache &cache,
 			"Liked and saved tracks"),
 		Tree::itemWithNoChildren(this, topTracks,
 			"Most played tracks for the past 6 months"),
-		Tree::itemWithEmptyChild(this, newReleases,
-			QStringLiteral("New albums from all artists")),
 		Tree::itemWithEmptyChild(this, savedAlbums,
 			"Liked and saved albums"),
 		Tree::itemWithEmptyChild(this, topArtists,
@@ -247,31 +245,6 @@ void List::Library::onExpanded(QTreeWidgetItem *item)
 			for (const auto &artist: page.items)
 			{
 				results.emplace_back(artist);
-			}
-
-			itemsLoaded(results, item);
-			return page.has_next();
-		});
-	}
-	else if (item->text(0) == newReleases)
-	{
-		spotify.new_releases([item](const lib::result<lib::spt::page<lib::spt::album>> &result)
-		{
-			if (!result.success())
-			{
-				StatusMessage::error(QString("Failed to get new releases: %1")
-					.arg(QString::fromStdString(result.message())));
-
-				return false;
-			}
-
-			const auto &page = result.value();
-			std::vector<ListItem::Library> results;
-			results.reserve(page.items.size());
-
-			for (const auto &release: page.items)
-			{
-				results.emplace_back(release);
 			}
 
 			itemsLoaded(results, item);
