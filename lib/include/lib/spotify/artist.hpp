@@ -22,9 +22,9 @@ namespace lib
 			int followers = -1;
 
 			/**
-			 * Popularity from 0-100, 100 being the most popular
+			 * Popularity from 0-100, 100 being the most popular, or -1 if missing
 			 */
-			int popularity = 0;
+			int popularity = -1;
 
 			/**
 			 * List of artist genres

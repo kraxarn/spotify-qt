@@ -59,12 +59,21 @@ void Artist::PlayButton::setArtist(const lib::spt::artist &loadedArtist)
 {
 	artist = loadedArtist;
 
-	const auto iconImage = Icon::get("draw-donut").pixmap(64, 64);
-	const auto masked = Image::mask(iconImage, lib::album_shape::none,
-		QVariant(artist.popularity));
+	if (artist.popularity < 0)
+	{
+		popularity->setVisible(false);
+	}
+	else
+	{
+		const QPixmap iconImage = Icon::get("draw-donut")
+			.pixmap(64, 64);
 
-	popularity->setIcon(QIcon(masked));
-	popularity->setText(QString("%1% popularity").arg(artist.popularity));
+		const QPixmap masked = Image::mask(iconImage, lib::album_shape::none,
+			QVariant(artist.popularity));
+
+		popularity->setIcon(QIcon(masked));
+		popularity->setText(QString("%1% popularity").arg(artist.popularity));
+	}
 
 	updateFollow(false);
 
