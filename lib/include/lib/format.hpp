@@ -31,9 +31,6 @@ namespace lib
 		 */
 		static auto size(unsigned long bytes) -> std::string;
 
-		[[deprecated("Use Format::count instead")]]
-		static auto count(unsigned int count) -> std::string;
-
 		/**
 		 * \brief Format title template
 		 * \param track Track to format for

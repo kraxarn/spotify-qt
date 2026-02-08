@@ -50,19 +50,19 @@ auto lib::format::size(unsigned long bytes) -> std::string
 	return lib::fmt::format("{} B", bytes);
 }
 
-auto lib::format::count(unsigned int count) -> std::string
+auto Format::count(const unsigned int count) -> QString
 {
-	if (count >= Format::mega)
+	if (count >= mega)
 	{
-		return lib::fmt::format("{}M", count / Format::mega);
+		return QStringLiteral("%1M").arg(count / mega);
 	}
 
-	if (count >= Format::kilo)
+	if (count >= kilo)
 	{
-		return lib::fmt::format("{}k", count / Format::kilo);
+		return QStringLiteral("%1k").arg(count / kilo);
 	}
 
-	return lib::fmt::format("{}", count);
+	return QString::number(count);
 }
 
 auto lib::format::title(const spt::track &track, const std::string &format) -> std::string
@@ -125,19 +125,4 @@ auto lib::format::title(const spt::track &track, const std::string &format) -> s
 	}
 
 	return result;
-}
-
-auto Format::count(const unsigned int count) -> QString
-{
-	if (count >= mega)
-	{
-		return QStringLiteral("%1M").arg(count / mega);
-	}
-
-	if (count >= kilo)
-	{
-		return QStringLiteral("%1k").arg(count / kilo);
-	}
-
-	return QString::number(count);
 }
