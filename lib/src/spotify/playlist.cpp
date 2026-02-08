@@ -38,9 +38,12 @@ void lib::spt::from_json(const nlohmann::json &j, playlist &p)
 		"snapshot", "snapshot_id"
 	}, p.snapshot);
 
-	if (j.contains("tracks"))
+	if (j.contains("tracks") || j.contains("items"))
 	{
-		auto tracks = j.at("tracks");
+		const auto tracks = j.contains("tracks")
+			? j.at("tracks")
+			: j.at("items");
+
 		if (tracks.is_array())
 		{
 			tracks.get_to(p.tracks);
