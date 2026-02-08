@@ -76,7 +76,7 @@ void Dialog::Widgets::refresh(int index)
 		// Active window
 		auto *item = new QTreeWidgetItem(tree);
 		const auto *window = QApplication::activeWindow();
-		item->setText(0, window->metaObject()->className());
+		item->setText(0, QString::fromUtf8(window->metaObject()->className()));
 	}
 	else if (index == 1)
 	{
@@ -84,7 +84,7 @@ void Dialog::Widgets::refresh(int index)
 		for (const auto *window: QApplication::topLevelWindows())
 		{
 			auto *item = new QTreeWidgetItem(tree);
-			item->setText(0, window->metaObject()->className());
+			item->setText(0, QString::fromUtf8(window->metaObject()->className()));
 		}
 	}
 	else if (index == 2)
@@ -93,12 +93,12 @@ void Dialog::Widgets::refresh(int index)
 		for (const auto *widget: QApplication::topLevelWidgets())
 		{
 			auto *item = new QTreeWidgetItem(tree);
-			item->setText(0, widget->metaObject()->className());
+			item->setText(0, QString::fromUtf8(widget->metaObject()->className()));
 
 			auto *parent = widget->parent();
 			if (parent != nullptr)
 			{
-				item->setText(1, widget->parent()->metaObject()->className());
+				item->setText(1, QString::fromUtf8(widget->parent()->metaObject()->className()));
 			}
 		}
 	}
