@@ -52,6 +52,6 @@ TEST_CASE("Format")
 		CHECK_EQ(Format::title(track, "{artist} - {track}"), "artist1 - track");
 		CHECK_EQ(Format::title(track, "{artists} - {track}"), "artist1, artist2 - track");
 
-		CHECK_EQ(lib::format::title(track, ""), track.title());
+		CHECK_EQ(Format::title(track, ""), track.title());
 	}
 }
