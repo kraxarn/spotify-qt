@@ -41,16 +41,14 @@ namespace lib
 	};
 }
 
+/**
+ * Formatting utilities
+ */
 class Format
 {
 public:
-	/** Kilo, 1,000 */
 	static constexpr unsigned int kilo = 1'000;
-
-	/** Mega, 1,000,000 */
 	static constexpr unsigned int mega = 1'000'000;
-
-	/** Giga, 1,000,000,000 */
 	static constexpr unsigned int giga = 1'000'000'000;
 
 	/**
