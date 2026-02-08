@@ -15,12 +15,6 @@ namespace lib
 	{
 	public:
 		/**
-		 * Format time as M:SS
-		 * @param milliseconds Milliseconds
-		 */
-		static auto time(int milliseconds) -> std::string;
-
-		/**
 		 * Format time as "... h ... m"
 		 */
 		static auto time_pretty(int milliseconds) -> std::string;
@@ -50,6 +44,12 @@ public:
 	static constexpr unsigned int kilo = 1'000;
 	static constexpr unsigned int mega = 1'000'000;
 	static constexpr unsigned int giga = 1'000'000'000;
+
+	/**
+	 * Format time as M:SS
+	 * @param milliseconds Milliseconds
+	 */
+	static auto time(int milliseconds) -> QString;
 
 	/**
 	 * Format as k or M

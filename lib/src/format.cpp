@@ -2,17 +2,20 @@
 #include "lib/fmt.hpp"
 #include "lib/time.hpp"
 
-auto lib::format::time(int milliseconds) -> std::string
+auto Format::time(const int milliseconds) -> QString
 {
-	const auto total_seconds = milliseconds / lib::time::ms_in_sec;
+	const int total_seconds = milliseconds / lib::time::ms_in_sec;
 
-	const auto minutes = total_seconds / lib::time::secs_in_min;
-	const auto seconds = total_seconds % lib::time::secs_in_min;
+	const int minutes = total_seconds / lib::time::secs_in_min;
+	const int seconds = total_seconds % lib::time::secs_in_min;
 
-	const auto seconds_prefixed = lib::fmt::format("{}{}",
-		seconds < 10 ? "0" : "", seconds);
+	const QString seconds_prefixed = QStringLiteral("%1%2")
+		.arg(seconds < 10 ? QStringLiteral("0") : QString())
+		.arg(seconds);
 
-	return lib::fmt::format("{}:{}", minutes, seconds_prefixed);
+	return QStringLiteral("%1:%2")
+		.arg(minutes)
+		.arg(seconds_prefixed);
 }
 
 auto lib::format::time_pretty(int milliseconds) -> std::string

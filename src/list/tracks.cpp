@@ -558,7 +558,7 @@ auto List::Tracks::load(const lib::spt::page<lib::spt::track> &page,
 			QString::fromStdString(track.name),
 			QString::fromStdString(lib::spt::entity::combine_names(track.artists)),
 			QString::fromStdString(track.album.name),
-			QString::fromStdString(lib::format::time(track.duration)),
+			Format::time(track.duration),
 			getAddedText(added),
 		};
 
