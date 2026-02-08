@@ -27,11 +27,6 @@ namespace lib
 			 * URL to user avatar
 			 */
 			std::string image;
-
-			/**
-			 * Spotify subscription type, like premium, free, etc.
-			 */
-			std::string product;
 		};
 
 		/**
