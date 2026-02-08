@@ -109,8 +109,8 @@ void Dialog::ApiRequest::sendRequest(bool /*checked*/)
 	auto json = QJsonDocument::fromJson(replyBody, &jsonParseError);
 
 	jsonResponse->setPlainText(jsonParseError.error == QJsonParseError::NoError
-		? json.toJson(QJsonDocument::JsonFormat::Indented)
-		: QString("Failed to parse JSON: %1\n%2")
-			.arg(jsonParseError.errorString(), QString(replyBody)));
+		? QString::fromUtf8(json.toJson(QJsonDocument::JsonFormat::Indented))
+		: QStringLiteral("Failed to parse JSON: %1\n%2")
+			.arg(jsonParseError.errorString(), QString::fromUtf8(replyBody)));
 	tabs->setCurrentIndex(1);
 }
