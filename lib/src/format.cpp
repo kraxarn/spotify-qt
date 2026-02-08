@@ -32,19 +32,19 @@ auto lib::format::time_pretty(int milliseconds) -> std::string
 
 auto lib::format::size(unsigned long bytes) -> std::string
 {
-	if (bytes >= giga)
+	if (bytes >= Format::giga)
 	{
-		return lib::fmt::format("{} GB", bytes / giga);
+		return lib::fmt::format("{} GB", bytes / Format::giga);
 	}
 
-	if (bytes >= mega)
+	if (bytes >= Format::mega)
 	{
-		return lib::fmt::format("{} MB", bytes / mega);
+		return lib::fmt::format("{} MB", bytes / Format::mega);
 	}
 
-	if (bytes >= kilo)
+	if (bytes >= Format::kilo)
 	{
-		return lib::fmt::format("{} kB", bytes / kilo);
+		return lib::fmt::format("{} kB", bytes / Format::kilo);
 	}
 
 	return lib::fmt::format("{} B", bytes);
@@ -52,14 +52,14 @@ auto lib::format::size(unsigned long bytes) -> std::string
 
 auto lib::format::count(unsigned int count) -> std::string
 {
-	if (count >= mega)
+	if (count >= Format::mega)
 	{
-		return lib::fmt::format("{}M", count / mega);
+		return lib::fmt::format("{}M", count / Format::mega);
 	}
 
-	if (count >= kilo)
+	if (count >= Format::kilo)
 	{
-		return lib::fmt::format("{}k", count / kilo);
+		return lib::fmt::format("{}k", count / Format::kilo);
 	}
 
 	return lib::fmt::format("{}", count);

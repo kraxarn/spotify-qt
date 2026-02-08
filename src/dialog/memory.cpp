@@ -34,8 +34,8 @@ void Dialog::Memory::updateStatus()
 
 void Dialog::Memory::onAllocateClicked(bool /*checked*/)
 {
-	auto toAllocateMb = allocateMb->text().toInt();
-	auto toAllocateB = toAllocateMb * lib::format::mega;
+	const int toAllocateMb = allocateMb->text().toInt();
+	const int toAllocateB = toAllocateMb * Format::mega;
 	data.append(toAllocateB, '0');
 
 	lib::log::debug("Allocated {} mb", toAllocateMb);

@@ -14,13 +14,6 @@ namespace lib
 	class format
 	{
 	public:
-		/** Kilo, 1,000 */
-		[[deprecated]] static constexpr int kilo = 1000;
-		/** Mega, 1,000,000 */
-		[[deprecated]] static constexpr int mega = 1000000;
-		/** Giga, 1,000,000,000 */
-		[[deprecated]] static constexpr int giga = 1000000000;
-
 		/**
 		 * Format time as M:SS
 		 * @param milliseconds Milliseconds
