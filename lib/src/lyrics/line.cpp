@@ -1,5 +1,7 @@
 #include "lib/lyrics/line.hpp"
 
+#include <cstddef>
+
 lib::lrc::line::line(const std::string &line)
 	: data(line)
 {
@@ -13,7 +15,7 @@ lib::lrc::line::line(const std::string &line)
 	}
 	else
 	{
-		const auto length = timestamp_end - timestamp_start - 2;
+		const std::size_t length = timestamp_end - timestamp_start - 1;
 		timestamp = parse_timestamp(line.substr(timestamp_start + 1, length));
 	}
 
