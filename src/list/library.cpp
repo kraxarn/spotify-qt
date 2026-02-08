@@ -4,6 +4,13 @@
 #include "metatypes.hpp"
 #include "view/sidepanel/view.hpp"
 
+static const auto followedArtists = QStringLiteral("Followed Artists");
+static const auto recentlyPlayed = QStringLiteral("History");
+static const auto savedAlbums = QStringLiteral("Liked Albums");
+static const auto savedTracks = QStringLiteral("Liked Tracks");
+static const auto topArtists = QStringLiteral("Top Artists");
+static const auto topTracks = QStringLiteral("Top Tracks");
+
 List::Library::Library(lib::spt::api &spotify, lib::cache &cache,
 	const lib::http_client &httpClient, lib::settings &settings, QWidget *parent)
 	: QTreeWidget(parent),
