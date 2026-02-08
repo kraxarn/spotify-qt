@@ -4,6 +4,8 @@
 
 #include "lib/spotify/track.hpp"
 
+#include <QString>
+
 namespace lib
 {
 	/**
@@ -13,11 +15,11 @@ namespace lib
 	{
 	public:
 		/** Kilo, 1,000 */
-		static constexpr int kilo = 1000;
+		[[deprecated]] static constexpr int kilo = 1000;
 		/** Mega, 1,000,000 */
-		static constexpr int mega = 1000000;
+		[[deprecated]] static constexpr int mega = 1000000;
 		/** Giga, 1,000,000,000 */
-		static constexpr int giga = 1000000000;
+		[[deprecated]] static constexpr int giga = 1000000000;
 
 		/**
 		 * Format time as M:SS
@@ -36,10 +38,7 @@ namespace lib
 		 */
 		static auto size(unsigned long bytes) -> std::string;
 
-		/**
-		 * Format as k or M
-		 * @param count Amount
-		 */
+		[[deprecated("Use Format::count instead")]]
 		static auto count(unsigned int count) -> std::string;
 
 		/**
@@ -51,3 +50,25 @@ namespace lib
 		static auto title(const spt::track &track, const std::string &format) -> std::string;
 	};
 }
+
+class Format
+{
+public:
+	/** Kilo, 1,000 */
+	static constexpr unsigned int kilo = 1'000;
+
+	/** Mega, 1,000,000 */
+	static constexpr unsigned int mega = 1'000'000;
+
+	/** Giga, 1,000,000,000 */
+	static constexpr unsigned int giga = 1'000'000'000;
+
+	/**
+	 * Format as k or M
+	 * @param count Amount
+	 */
+	static auto count(unsigned int count) -> QString;
+
+private:
+	Format() = default;
+};

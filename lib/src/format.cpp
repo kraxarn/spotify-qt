@@ -126,3 +126,18 @@ auto lib::format::title(const spt::track &track, const std::string &format) -> s
 
 	return result;
 }
+
+auto Format::count(const unsigned int count) -> QString
+{
+	if (count >= mega)
+	{
+		return QStringLiteral("%1M").arg(count / mega);
+	}
+
+	if (count >= kilo)
+	{
+		return QStringLiteral("%1k").arg(count / kilo);
+	}
+
+	return QString::number(count);
+}
