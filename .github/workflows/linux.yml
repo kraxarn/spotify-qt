@@ -70,7 +70,7 @@ jobs:
           ${{runner.workspace}}/linuxdeploy-${{matrix.arch}}.AppImage --appdir ${{runner.workspace}}/dist --output appimage --plugin qt -d ${{runner.workspace}}/dist/usr/share/applications/spotify-qt.desktop
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: spotify-qt-linux-${{matrix.arch}}
           path: ${{runner.workspace}}/spotify-qt/spotify-qt-*.AppImage
