@@ -33,7 +33,7 @@ void mp::Service::signalPropertiesChange(const QObject *adaptor, const QVariantM
 	QDBusMessage msg = QDBusMessage::createSignal("/org/mpris/MediaPlayer2",
 		"org.freedesktop.DBus.Properties", "PropertiesChanged");
 
-	msg << adaptor->metaObject()->classInfo(0).value()
+	msg << QString::fromUtf8(adaptor->metaObject()->classInfo(0).value())
 		<< properties
 		<< QStringList();
 
