@@ -1,6 +1,8 @@
 #include "view/artist/playbutton.hpp"
 #include "mainwindow.hpp"
 
+#include <QString>
+
 Artist::PlayButton::PlayButton(lib::spt::api &spotify,
 	const lib::http_client &httpClient, QWidget *parent)
 	: QToolButton(parent),
@@ -34,14 +36,23 @@ auto Artist::PlayButton::contextMenu() -> QMenu *
 	return menu;
 }
 
-void Artist::PlayButton::updateFollow(bool isFollowing)
+void Artist::PlayButton::updateFollow(const bool isFollowing) const
 {
 	follow->setIcon(Icon::get(QString("%1starred-symbolic")
 		.arg(isFollowing ? "" : "non-")));
 
-	follow->setText(QString("%1%2")
-		.arg(isFollowing ? "Unfollow" : "Follow", follow->text()
-			.right(follow->text().length() - follow->text().indexOf(' '))));
+	QString text(isFollowing ? "Unfollow" : "Follow");
+
+	if (artist.followers >= 0)
+	{
+		text.append(QStringLiteral(" (%1 %2)")
+			.arg(Format::count(artist.followers))
+			.arg(artist.followers == 1
+				? QStringLiteral("follower")
+				: QStringLiteral("followers")));
+	}
+
+	follow->setText(text);
 }
 
 void Artist::PlayButton::setArtist(const lib::spt::artist &loadedArtist)
@@ -55,10 +66,7 @@ void Artist::PlayButton::setArtist(const lib::spt::artist &loadedArtist)
 	popularity->setIcon(QIcon(masked));
 	popularity->setText(QString("%1% popularity").arg(artist.popularity));
 
-	auto followers = lib::fmt::format("Follow ({} follower{})",
-		lib::format::count(artist.followers),
-		artist.followers == 1 ? "" : "s");
-	follow->setText(QString::fromStdString(followers));
+	updateFollow(false);
 
 	spotify.is_following(lib::follow_type::artist, {artist.id},
 		[this](const std::vector<bool> &follows)

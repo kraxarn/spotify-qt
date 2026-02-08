@@ -3,13 +3,17 @@
 void lib::spt::to_json(nlohmann::json &j, const artist &a)
 {
 	j = nlohmann::json{
-		{"followers", a.followers},
 		{"popularity", a.popularity},
 		{"genres", a.genres},
 		{"id", a.id},
 		{"name", a.name},
 		{"image", a.image}
 	};
+
+	if (a.followers >= 0)
+	{
+		j["followers"] = a.followers;
+	}
 }
 
 void lib::spt::from_json(const nlohmann::json &j, artist &a)

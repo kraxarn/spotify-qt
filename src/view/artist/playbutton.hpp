@@ -18,7 +18,7 @@ namespace Artist
 		PlayButton(lib::spt::api &spotify,
 			const lib::http_client &httpClient, QWidget *parent);
 
-		void updateFollow(bool isFollowing);
+		void updateFollow(bool isFollowing) const;
 		void setArtist(const lib::spt::artist &artist);
 
 	private:

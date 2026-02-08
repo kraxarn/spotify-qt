@@ -17,9 +17,9 @@ namespace lib
 			artist() = default;
 
 			/**
-			 * Amount of followers
+			 * Number of followers, or -1 if missing
 			 */
-			int followers = 0;
+			int followers = -1;
 
 			/**
 			 * Popularity from 0-100, 100 being the most popular
