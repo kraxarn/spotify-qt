@@ -57,7 +57,7 @@ auto MediaPlayer::Client::metadata() -> QString
 	}
 
 	const auto json = QJsonObject::fromVariantMap(prop.value<QVariantMap>());
-	return QJsonDocument(json).toJson(QJsonDocument::Compact);
+	return QString::fromUtf8(QJsonDocument(json).toJson(QJsonDocument::Compact));
 }
 
 auto MediaPlayer::Client::openUri(const QString &trackUrl) -> bool
