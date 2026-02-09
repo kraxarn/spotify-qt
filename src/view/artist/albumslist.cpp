@@ -220,7 +220,7 @@ void Artist::AlbumsList::onItemExtended(const QTreeWidgetItem *item) const
 	const auto &artist = view->getArtist();
 
 	spotify.albums(artist, {lib::album_group::appears_on},
-		[this, group](const lib::result<lib::spt::page<lib::spt::album>> &result) -> bool
+		[this, group](const Result<lib::spt::page<lib::spt::album>> &result) -> bool
 		{
 			if (!result.success())
 			{

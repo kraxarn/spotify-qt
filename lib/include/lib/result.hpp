@@ -64,9 +64,3 @@ private:
 	{
 	}
 };
-
-namespace lib
-{
-	template<typename T>
-	using result [[deprecated("Use Result instead")]] = Result<T>;
-}

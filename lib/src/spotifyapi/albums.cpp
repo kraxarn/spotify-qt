@@ -13,7 +13,7 @@ void lib::spt::api::album_tracks(const spt::album &album, const paged_callback<s
 	const auto url = fmt::format("albums/{}/tracks?limit=50", album.id);
 
 	request.get_page<spt::track>(url, {},
-		[callback, albumName](const result<page<spt::track>> &result) -> bool
+		[callback, albumName](const Result<page<spt::track>> &result) -> bool
 		{
 			if (!result.success())
 			{
@@ -26,6 +26,6 @@ void lib::spt::api::album_tracks(const spt::album &album, const paged_callback<s
 				item.album.name = albumName;
 			}
 
-			return callback(lib::result<spt::page<spt::track>>::ok(page));
+			return callback(Result<spt::page<spt::track>>::ok(page));
 		});
 }

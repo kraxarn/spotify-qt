@@ -135,7 +135,7 @@ namespace lib
 			/**
 			 * Get what's currently playing
 			 */
-			void current_playback(lib::callback<lib::result<lib::spt::playback>> &callback);
+			void current_playback(lib::callback<Result<lib::spt::playback>> &callback);
 
 			/**
 			 * Set current active device by device ID

@@ -31,7 +31,7 @@ public:
 	* GET request
 	*/
 	void get(const std::string &url, const lib::headers &headers,
-		lib::callback<lib::result<std::string>> &callback) const;
+		lib::callback<Result<std::string>> &callback) const;
 
 	/**
 	* PUT request with optional JSON body
@@ -47,7 +47,7 @@ public:
 	* POST request without a request body
 	*/
 	void post(const std::string &url, const lib::headers &headers,
-		lib::callback<lib::result<std::string>> &callback) const;
+		lib::callback<Result<std::string>> &callback) const;
 
 	[[deprecated("Use with result callback instead")]]
 	void post(const std::string &url, const std::string &body,
@@ -57,7 +57,7 @@ public:
 	* POST request with a request body
 	*/
 	void post(const std::string &url, const std::string &body,
-		const lib::headers &headers, lib::callback<lib::result<std::string>> &callback) const;
+		const lib::headers &headers, lib::callback<Result<std::string>> &callback) const;
 
 	[[nodiscard]]
 	[[deprecated("Use asynchronous method instead")]]
@@ -78,7 +78,7 @@ private:
 	[[deprecated("Use with result callback instead")]]
 	void await(QNetworkReply *reply, lib::callback<QByteArray> &callback) const;
 
-	void await(QNetworkReply *reply, lib::callback<lib::result<std::string>> &callback) const;
+	void await(QNetworkReply *reply, lib::callback<Result<std::string>> &callback) const;
 };
 
 namespace lib

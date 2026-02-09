@@ -7,7 +7,7 @@
 class Process
 {
 public:
-	static auto exec(const QString &path, const QStringList &args) -> lib::result<QString>;
+	static auto exec(const QString &path, const QStringList &args) -> Result<QString>;
 
 private:
 	Process() = default;

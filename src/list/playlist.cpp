@@ -197,7 +197,7 @@ void List::Playlist::selectActive()
 
 void List::Playlist::refresh()
 {
-	spotify.playlists([this](const lib::result<lib::spt::page<lib::spt::playlist>> &result)
+	spotify.playlists([this](const Result<lib::spt::page<lib::spt::playlist>> &result)
 	{
 		if (!result.success())
 		{

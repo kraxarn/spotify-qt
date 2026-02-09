@@ -43,7 +43,7 @@ void View::Lyrics::open(const lib::spt::track &track)
 {
 	status->setText(QStringLiteral("Please wait..."));
 
-	lyrics.get(track, [this, track](const lib::result<lib::lrc::lyrics> &result)
+	lyrics.get(track, [this, track](const Result<lib::lrc::lyrics> &result)
 	{
 		if (!result.success())
 		{
@@ -61,7 +61,7 @@ void View::Lyrics::open(const unsigned int lyricsId)
 {
 	status->setText(QStringLiteral("Please wait..."));
 
-	lyrics.get(lyricsId, [this](const lib::result<lib::lrc::lyrics> &result)
+	lyrics.get(lyricsId, [this](const Result<lib::lrc::lyrics> &result)
 	{
 		if (!result.success())
 		{

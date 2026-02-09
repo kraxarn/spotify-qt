@@ -22,7 +22,7 @@ void lib::lrc::api::set_app_info(const std::string &name, const std::string &ver
 	user_agent = fmt::format("{} {} ({})", name, version, homepage);
 }
 
-void lib::lrc::api::search(const std::string &query, callback<result<std::vector<lyrics>>> &callback) const
+void lib::lrc::api::search(const std::string &query, callback<Result<std::vector<lyrics>>> &callback) const
 {
 	uri uri("https://lrclib.net/api/search");
 	uri.set_search_params({
@@ -33,7 +33,7 @@ void lib::lrc::api::search(const std::string &query, callback<result<std::vector
 	{
 		if (response.empty())
 		{
-			callback(result<std::vector<lyrics>>::fail("No response"));
+			callback(Result<std::vector<lyrics>>::fail("No response"));
 			return;
 		}
 
@@ -44,15 +44,15 @@ void lib::lrc::api::search(const std::string &query, callback<result<std::vector
 		}
 		catch (const std::exception &e)
 		{
-			callback(result<std::vector<lyrics>>::fail(e.what()));
+			callback(Result<std::vector<lyrics>>::fail(e.what()));
 			return;
 		}
 
-		callback(result<std::vector<lyrics>>::ok(items));
+		callback(Result<std::vector<lyrics>>::ok(items));
 	});
 }
 
-void lib::lrc::api::get(const spt::track &track, callback<result<lyrics>> &callback) const
+void lib::lrc::api::get(const spt::track &track, callback<Result<lyrics>> &callback) const
 {
 	uri uri("https://lrclib.net/api/get");
 	uri.set_search_params({
@@ -62,7 +62,7 @@ void lib::lrc::api::get(const spt::track &track, callback<result<lyrics>> &callb
 		{"duration", std::to_string(track.duration / 1000)},
 	});
 
-	http.get(uri.get_url(), headers(), [callback](const result<std::string> &response)
+	http.get(uri.get_url(), headers(), [callback](const Result<std::string> &response)
 	{
 		if (!response.success())
 		{
@@ -89,15 +89,15 @@ void lib::lrc::api::get(const spt::track &track, callback<result<lyrics>> &callb
 		}
 		catch (const std::exception &e)
 		{
-			callback(result<lyrics>::fail(e.what()));
+			callback(Result<lyrics>::fail(e.what()));
 			return;
 		}
 
-		callback(result<lyrics>::ok(item));
+		callback(Result<lyrics>::ok(item));
 	});
 }
 
-void lib::lrc::api::get(unsigned int lyricsId, callback<result<lyrics>> &callback) const
+void lib::lrc::api::get(const unsigned int lyricsId, callback<Result<lyrics>> &callback) const
 {
 	const auto url = fmt::format("https://lrclib.net/api/get/{}", lyricsId);
 
@@ -105,7 +105,7 @@ void lib::lrc::api::get(unsigned int lyricsId, callback<result<lyrics>> &callbac
 	{
 		if (response.empty())
 		{
-			callback(result<lyrics>::fail("No response"));
+			callback(Result<lyrics>::fail("No response"));
 			return;
 		}
 
@@ -116,10 +116,10 @@ void lib::lrc::api::get(unsigned int lyricsId, callback<result<lyrics>> &callbac
 		}
 		catch (const std::exception &e)
 		{
-			callback(result<lyrics>::fail(e.what()));
+			callback(Result<lyrics>::fail(e.what()));
 			return;
 		}
 
-		callback(result<lyrics>::ok(item));
+		callback(Result<lyrics>::ok(item));
 	});
 }

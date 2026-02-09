@@ -649,7 +649,7 @@ void List::Tracks::load(const lib::spt::playlist &playlist)
 
 	const auto &snapshot = playlist.snapshot;
 	spotify.playlist(playlist.id,
-		[this, snapshot, mainWindow](const lib::result<lib::spt::playlist> &result)
+		[this, snapshot, mainWindow](const Result<lib::spt::playlist> &result)
 		{
 			if (!result.success())
 			{
@@ -698,7 +698,7 @@ void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 
 	spotify.playlist_tracks(playlist,
 		[this, mainWindow, playlist, playlistUri]
-			(const lib::result<lib::spt::page<lib::spt::track>> &result) -> bool
+			(const Result<lib::spt::page<lib::spt::track>> &result) -> bool
 		{
 			if (playlistUri != mainWindow->history()->currentUri())
 			{
@@ -749,7 +749,7 @@ void List::Tracks::load(const lib::spt::album &album, const std::string &trackId
 	setSortingEnabled(false);
 
 	spotify.album_tracks(album,
-		[this, album, trackId](const lib::result<lib::spt::page<lib::spt::track>> &result) -> bool
+		[this, album, trackId](const Result<lib::spt::page<lib::spt::track>> &result) -> bool
 		{
 			if (!result.success())
 			{
@@ -823,7 +823,7 @@ void List::Tracks::updateLikedTracks(const std::function<void(const std::vector<
 
 	cachedTracks.reset(new std::vector<lib::spt::track>());
 
-	spotify.saved_tracks([this, callback](const lib::result<lib::spt::page<lib::spt::track>> &result) -> bool
+	spotify.saved_tracks([this, callback](const Result<lib::spt::page<lib::spt::track>> &result) -> bool
 	{
 		if (!result.success())
 		{

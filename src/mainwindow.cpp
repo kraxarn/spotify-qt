@@ -440,7 +440,7 @@ void MainWindow::refresh()
 		|| ++refreshCount >= settings.general.refresh_interval
 		|| current.playback.progress_ms + lib::time::ms_in_sec > current.playback.item.duration)
 	{
-		spotify.current_playback([this](const lib::result<lib::spt::playback> &result)
+		spotify.current_playback([this](const Result<lib::spt::playback> &result)
 		{
 			if (result.success())
 			{

@@ -35,15 +35,15 @@ namespace lib
 			 * @param callback JSON response if successful, or error message on failure
 			 */
 			template<typename T>
-			void get(const std::string &url, lib::callback<lib::result<T>> &callback)
+			void get(const std::string &url, lib::callback<Result<T>> &callback)
 			{
 				http.get(lib::spt::to_full_url(url), auth_headers(),
-					[url, callback](const lib::result<std::string> &response)
+					[callback](const Result<std::string> &response)
 					{
 						if (!response.success())
 						{
 							const auto message = parseErrorMessage(response.message());
-							callback(lib::result<T>::fail(message));
+							callback(Result<T>::fail(message));
 							return;
 						}
 						callback(parse_json<T>(response.value()));
@@ -59,18 +59,18 @@ namespace lib
 			 */
 			template<typename T>
 			void get_page(const std::string &url, const std::string &key,
-				const std::function<bool(const lib::result<lib::spt::page<T>> &)> &callback)
+				const std::function<bool(const Result<lib::spt::page<T>> &)> &callback)
 			{
 				const auto api_url = lib::strings::starts_with(url, "https://")
 					? lib::spt::to_relative_url(url)
 					: url;
 
-				get<nlohmann::json>(api_url, [this, key, callback](const lib::result<nlohmann::json> &result)
+				get<nlohmann::json>(api_url, [this, key, callback](const Result<nlohmann::json> &result)
 				{
 					if (!result.success())
 					{
 						const QString message = parseErrorMessage(result.message());
-						callback(lib::result<lib::spt::page<T>>::fail(message));
+						callback(Result<lib::spt::page<T>>::fail(message));
 						return;
 					}
 
@@ -94,7 +94,7 @@ namespace lib
 						return;
 					}
 
-					if (!callback(lib::result<lib::spt::page<T>>::ok(page))
+					if (!callback(Result<lib::spt::page<T>>::ok(page))
 						|| !page.has_next())
 					{
 						return;
@@ -107,18 +107,18 @@ namespace lib
 			/**
 			 * POST request without body
 			 */
-			void post(const std::string &url, lib::callback<lib::result<void *>> &callback)
+			void post(const std::string &url, lib::callback<Result<void *>> &callback)
 			{
 				auto headers = auth_headers();
 				headers["Content-Type"] = "application/x-www-form-urlencoded";
 
 				http.post(lib::spt::to_full_url(url), headers,
-					[callback](const lib::result<std::string> &response)
+					[callback](const Result<std::string> &response)
 					{
 						if (!response.success())
 						{
 							const QString message = parseErrorMessage(response.message());
-							callback(lib::result<void *>::fail(message));
+							callback(Result<void *>::fail(message));
 							return;
 						}
 						callback(parse_json(response.value()));
@@ -174,11 +174,11 @@ namespace lib
 			 * @returns Parsed JSON, or fail on error
 			 */
 			template<typename T>
-			static auto parse_json(const std::string &data) -> lib::result<T>
+			static auto parse_json(const std::string &data) -> Result<T>
 			{
 				if (data.empty())
 				{
-					return lib::result<T>::ok({});
+					return Result<T>::ok({});
 				}
 
 				try
@@ -186,7 +186,7 @@ namespace lib
 					const auto json = nlohmann::json::parse(data);
 					if (!lib::spt::error::is(json))
 					{
-						return lib::result<T>::ok(json);
+						return Result<T>::ok(json);
 					}
 
 					const QString message = SpotifyErrorUtil::errorMessage(json);
@@ -195,22 +195,22 @@ namespace lib
 				catch (const nlohmann::json::parse_error &e)
 				{
 					lib::log::debug("JSON: {}", data);
-					return lib::result<T>::fail(e.what());
+					return Result<T>::fail(e.what());
 				}
 				catch (const std::exception &e)
 				{
-					return lib::result<T>::fail(e.what());
+					return Result<T>::fail(e.what());
 				}
 			}
 
 			/**
 			 * Parse error from JSON
 			 */
-			static auto parse_json(const std::string &data) -> lib::result<void *>
+			static auto parse_json(const std::string &data) -> Result<void *>
 			{
 				if (data.empty())
 				{
-					return lib::result<void *>::ok(nullptr);
+					return Result<void *>::ok(nullptr);
 				}
 
 				try
@@ -218,21 +218,21 @@ namespace lib
 					const nlohmann::json json = nlohmann::json::parse(data);
 					if (!lib::spt::error::is(json))
 					{
-						return lib::result<void *>::ok(nullptr);
+						return Result<void *>::ok(nullptr);
 					}
 
 					const auto message = SpotifyErrorUtil::errorMessage(json);
-					return lib::result<void *>::fail(message);
+					return Result<void *>::fail(message);
 				}
 				catch (const nlohmann::json::parse_error &e)
 				{
 					log::debug("Failed to parse json: {}", e.what());
 					log::debug("JSON: {}", data);
-					return result<void *>::ok(nullptr);
+					return Result<void *>::ok(nullptr);
 				}
 				catch (const std::exception &e)
 				{
-					return lib::result<void *>::fail(e.what());
+					return Result<void *>::fail(e.what());
 				}
 			}
 

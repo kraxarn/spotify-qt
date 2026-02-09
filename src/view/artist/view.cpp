@@ -104,7 +104,7 @@ void Artist::View::artistLoaded(const lib::spt::artist &loadedArtist)
 		lib::album_group::compilation,
 	};
 
-	spotify.albums(artist, groups, [this](const lib::result<lib::spt::page<lib::spt::album>> &result) -> bool
+	spotify.albums(artist, groups, [this](const Result<lib::spt::page<lib::spt::album>> &result) -> bool
 	{
 		if (!result.success())
 		{
@@ -120,7 +120,7 @@ void Artist::View::artistLoaded(const lib::spt::artist &loadedArtist)
 	});
 
 	spotify.albums(artist, {lib::album_group::appears_on},
-		[this](const lib::result<lib::spt::page<lib::spt::album>> &result) -> bool
+		[this](const Result<lib::spt::page<lib::spt::album>> &result) -> bool
 		{
 			if (!result.success())
 			{

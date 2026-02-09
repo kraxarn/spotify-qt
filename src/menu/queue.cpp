@@ -20,7 +20,7 @@ Menu::Queue::Queue(lib::spt::api &spotify, QWidget *parent)
 
 void Menu::Queue::refreshQueue()
 {
-	spotify.queue([this](const lib::result<lib::spt::queue> &result)
+	spotify.queue([this](const Result<lib::spt::queue> &result)
 	{
 		for (auto &action: actions())
 		{

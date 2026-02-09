@@ -324,7 +324,7 @@ void Menu::Track::addToQueue(const QList<PlaylistTrack>::const_iterator &begin,
 	}
 
 	const auto uri = lib::spt::id_to_uri("track", begin->second.id);
-	spotify.add_to_queue(uri, [this, begin, end](const lib::result<void *> &result)
+	spotify.add_to_queue(uri, [this, begin, end](const Result<void *> &result)
 	{
 		if (!result.success())
 		{

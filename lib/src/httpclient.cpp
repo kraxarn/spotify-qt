@@ -20,7 +20,7 @@ void HttpClient::get(const std::string &url, const lib::headers &headers,
 }
 
 void HttpClient::get(const std::string &url, const lib::headers &headers,
-	lib::callback<lib::result<std::string>> &callback) const
+	lib::callback<Result<std::string>> &callback) const
 {
 	await(mNetworkManager->get(request(url, headers)), callback);
 }
@@ -46,7 +46,7 @@ void HttpClient::post(const std::string &url, const lib::headers &headers,
 }
 
 void HttpClient::post(const std::string &url, const lib::headers &headers,
-	lib::callback<lib::result<std::string>> &callback) const
+	lib::callback<Result<std::string>> &callback) const
 {
 	post(url, {}, headers, callback);
 }
@@ -81,7 +81,7 @@ auto HttpClient::post(const std::string &url, const lib::headers &headers,
 }
 
 void HttpClient::post(const std::string &url, const std::string &body,
-	const lib::headers &headers, lib::callback<lib::result<std::string>> &callback) const
+	const lib::headers &headers, lib::callback<Result<std::string>> &callback) const
 {
 	const QByteArray data = body.empty()
 		? QByteArray()
@@ -138,7 +138,7 @@ void HttpClient::await(QNetworkReply *reply, lib::callback<QByteArray> &callback
 }
 
 void HttpClient::await(QNetworkReply *reply,
-	lib::callback<lib::result<std::string>> &callback) const
+	lib::callback<Result<std::string>> &callback) const
 {
 	QNetworkReply::connect(reply, &QNetworkReply::finished, this, [reply, callback]()
 	{
@@ -167,16 +167,16 @@ void HttpClient::await(QNetworkReply *reply,
 					statusMessage = QStringLiteral("Error: %1").arg(statusCode);
 				}
 
-				callback(lib::result<std::string>::fail(statusMessage));
+				callback(Result<std::string>::fail(statusMessage));
 			}
 			else
 			{
-				callback(lib::result<std::string>::fail(response));
+				callback(Result<std::string>::fail(response));
 			}
 		}
 		else
 		{
-			callback(lib::result<std::string>::ok(response.toStdString()));
+			callback(Result<std::string>::ok(response.toStdString()));
 		}
 
 		reply->deleteLater();

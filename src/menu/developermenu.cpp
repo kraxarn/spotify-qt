@@ -54,7 +54,7 @@ DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
 	{
 		// playlist id taken from https://github.com/librespot-org/librespot/issues/481
 		this->spotify.playlist("0bQjBPRqy5zReJethJy3aP",
-			[this](const lib::result<lib::spt::playlist> &result)
+			[this](const Result<lib::spt::playlist> &result)
 			{
 				if (!result.success())
 				{

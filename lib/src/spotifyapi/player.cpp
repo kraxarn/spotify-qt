@@ -3,7 +3,7 @@
 // Currently unavailable:
 // me/player/currently-playing
 
-void lib::spt::api::current_playback(lib::callback<lib::result<lib::spt::playback>> &callback)
+void lib::spt::api::current_playback(lib::callback<Result<lib::spt::playback>> &callback)
 {
 	request.get<lib::spt::playback>("me/player?market=from_token", callback);
 }
@@ -170,12 +170,12 @@ void lib::spt::api::recently_played(lib::callback<std::vector<lib::spt::track>> 
 }
 
 void lib::spt::api::add_to_queue(const std::string &uri,
-	lib::callback<lib::result<void *>> &callback)
+	lib::callback<Result<void *>> &callback)
 {
 	request.post(lib::fmt::format("me/player/queue?uri={}", uri), callback);
 }
 
-void lib::spt::api::queue(lib::callback<lib::result<lib::spt::queue>> &callback)
+void lib::spt::api::queue(lib::callback<Result<lib::spt::queue>> &callback)
 {
 	request.get("me/player/queue", callback);
 }

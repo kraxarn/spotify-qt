@@ -210,7 +210,7 @@ void List::Library::onExpanded(QTreeWidgetItem *item)
 	}
 	else if (item->text(0) == savedAlbums)
 	{
-		spotify.saved_albums([item](const lib::result<lib::spt::page<lib::spt::saved_album>> &result)
+		spotify.saved_albums([item](const Result<lib::spt::page<lib::spt::saved_album>> &result)
 		{
 			if (!result.success())
 			{
@@ -235,7 +235,7 @@ void List::Library::onExpanded(QTreeWidgetItem *item)
 	}
 	else if (item->text(0) == followedArtists)
 	{
-		spotify.followed_artists([item](const lib::result<lib::spt::page<lib::spt::artist>> &result)
+		spotify.followed_artists([item](const Result<lib::spt::page<lib::spt::artist>> &result)
 		{
 			if (!result.success())
 			{

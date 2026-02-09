@@ -28,7 +28,7 @@ void lib::spt::api::playlists(const paged_callback<spt::playlist> &callback) con
 	request.get_page<spt::playlist>("me/playlists?limit=50", {}, callback);
 }
 
-void lib::spt::api::playlist(const std::string &playlist_id, callback<result<spt::playlist>> &callback) const
+void lib::spt::api::playlist(const std::string &playlist_id, callback<Result<spt::playlist>> &callback) const
 {
 	request.get(fmt::format("playlists/{}", playlist_id), callback);
 }
@@ -48,7 +48,7 @@ void lib::spt::api::playlist_tracks(const lib::spt::playlist &playlist,
 }
 
 void lib::spt::api::playlist_tracks(const lib::spt::playlist &playlist,
-	const std::function<bool(const lib::result<lib::spt::page<lib::spt::track>> &)> &callback)
+	const std::function<bool(const Result<lib::spt::page<lib::spt::track>> &)> &callback)
 {
 	const auto url = lib::fmt::format("playlists/{}/tracks?market=from_token&limit=50", playlist.id);
 	request.get_page<lib::spt::track>(url, std::string(), callback);

@@ -2,7 +2,7 @@
 
 #include <QProcess>
 
-auto Process::exec(const QString &path, const QStringList &args) -> lib::result<QString>
+auto Process::exec(const QString &path, const QStringList &args) -> Result<QString>
 {
 	QProcess process;
 	process.start(path, args, QIODevice::ReadOnly);
@@ -10,15 +10,15 @@ auto Process::exec(const QString &path, const QStringList &args) -> lib::result<
 
 	if (process.error() != QProcess::UnknownError)
 	{
-		return lib::result<QString>::fail(process.errorString());
+		return Result<QString>::fail(process.errorString());
 	}
 
-	const auto output = process.readAllStandardOutput().trimmed();
+	const QByteArray output = process.readAllStandardOutput().trimmed();
 	if (!output.isEmpty())
 	{
-		return lib::result<QString>::ok(output);
+		return Result<QString>::ok(output);
 	}
 
-	const auto error = process.readAllStandardError().trimmed();
-	return lib::result<QString>::ok(error);
+	const QByteArray error = process.readAllStandardError().trimmed();
+	return Result<QString>::ok(error);
 }

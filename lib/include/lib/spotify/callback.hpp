@@ -17,5 +17,5 @@ namespace lib
 	 * Paged API callback with result
 	 */
 	template<typename T>
-	using paged_callback = std::function<bool(const lib::result<lib::spt::page<T>> &)>;
+	using paged_callback = std::function<bool(const Result<lib::spt::page<T>> &)>;
 }

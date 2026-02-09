@@ -69,7 +69,7 @@ Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache,
 			album = item;
 
 			this->spotify.album_tracks(item,
-				[this](const lib::result<lib::spt::page<lib::spt::track>> &result) -> bool
+				[this](const Result<lib::spt::page<lib::spt::track>> &result) -> bool
 				{
 					if (!result.success())
 					{

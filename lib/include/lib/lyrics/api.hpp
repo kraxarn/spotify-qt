@@ -33,21 +33,21 @@ namespace lib::lrc
 		 * @param query Keyword of title, artist or album
 		 * @param callback Lyrics
 		 */
-		void search(const std::string &query, callback<result<std::vector<lyrics>>> &callback) const;
+		void search(const std::string &query, callback<Result<std::vector<lyrics>>> &callback) const;
 
 		/**
 		 * Fetch lyrics
 		 * @param track Track to fetch lyrics for
 		 * @param callback Lyrics
 		 */
-		void get(const spt::track &track, callback<result<lyrics>> &callback) const;
+		void get(const spt::track &track, callback<Result<lyrics>> &callback) const;
 
 		/**
 		 * Fetch lyrics by ID
 		 * @param lyricsId ID to fetch lyrics for
 		 * @param callback Lyrics
 		 */
-		void get(unsigned int lyricsId, callback<result<lyrics>> &callback) const;
+		void get(unsigned int lyricsId, callback<Result<lyrics>> &callback) const;
 
 	private:
 		const http_client &http;

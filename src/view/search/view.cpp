@@ -138,7 +138,7 @@ void Search::View::search()
 			}
 			else if (cat == "playlist")
 			{
-				spotify.playlist(id, [this](const lib::result<lib::spt::playlist> &result)
+				spotify.playlist(id, [this](const Result<lib::spt::playlist> &result)
 				{
 					if (!result.success())
 					{

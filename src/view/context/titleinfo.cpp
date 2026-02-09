@@ -64,7 +64,7 @@ void Context::TitleInfo::onContextMenuTriggered(bool /*checked*/)
 	}
 	else if (type == "playlist")
 	{
-		spotify.playlist(uri, [mainWindow](const lib::result<lib::spt::playlist> &result)
+		spotify.playlist(uri, [mainWindow](const Result<lib::spt::playlist> &result)
 		{
 			if (!result.success())
 			{

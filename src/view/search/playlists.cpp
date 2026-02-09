@@ -41,7 +41,7 @@ void Search::Playlists::onItemClicked(QListWidgetItem *item)
 	const auto &playlistData = item->data(static_cast<int>(DataRole::Playlist));
 	const auto playlist = playlistData.value<lib::spt::playlist>();
 
-	spotify.playlist(playlist.id, [this](const lib::result<lib::spt::playlist> &result)
+	spotify.playlist(playlist.id, [this](const Result<lib::spt::playlist> &result)
 	{
 		if (!result.success())
 		{

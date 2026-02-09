@@ -57,7 +57,7 @@ void Dialog::LyricsSearch::onSearchClicked(bool /*checked*/)
 	results->clear();
 
 	const auto query = search->text().toStdString();
-	lyrics.search(query, [this](const lib::result<std::vector<lib::lrc::lyrics>> &result)
+	lyrics.search(query, [this](const Result<std::vector<lib::lrc::lyrics>> &result)
 	{
 		if (!result.success())
 		{
