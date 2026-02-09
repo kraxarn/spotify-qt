@@ -3,13 +3,13 @@
 
 #include <QNetworkReply>
 
-lib::http_client::http_client(QObject *parent)
+HttpClient::HttpClient(QObject *parent)
 	: QObject(parent),
 	mNetworkManager(new QNetworkAccessManager(this))
 {
 }
 
-void lib::http_client::get(const std::string &url, const lib::headers &headers,
+void HttpClient::get(const std::string &url, const lib::headers &headers,
 	lib::callback<std::string> &callback) const
 {
 	await(mNetworkManager->get(request(url, headers)),
@@ -19,13 +19,13 @@ void lib::http_client::get(const std::string &url, const lib::headers &headers,
 		});
 }
 
-void lib::http_client::get(const std::string &url, const lib::headers &headers,
+void HttpClient::get(const std::string &url, const lib::headers &headers,
 	lib::callback<lib::result<std::string>> &callback) const
 {
 	await(mNetworkManager->get(request(url, headers)), callback);
 }
 
-void lib::http_client::put(const std::string &url, const std::string &body,
+void HttpClient::put(const std::string &url, const std::string &body,
 	const lib::headers &headers, lib::callback<std::string> &callback) const
 {
 	const QByteArray data = body.empty()
@@ -39,19 +39,19 @@ void lib::http_client::put(const std::string &url, const std::string &body,
 		});
 }
 
-void lib::http_client::post(const std::string &url, const lib::headers &headers,
+void HttpClient::post(const std::string &url, const lib::headers &headers,
 	lib::callback<std::string> &callback) const
 {
 	post(url, std::string(), headers, callback);
 }
 
-void lib::http_client::post(const std::string &url, const headers &headers,
+void HttpClient::post(const std::string &url, const lib::headers &headers,
 	lib::callback<lib::result<std::string>> &callback) const
 {
 	post(url, {}, headers, callback);
 }
 
-void lib::http_client::post(const std::string &url, const std::string &body,
+void HttpClient::post(const std::string &url, const std::string &body,
 	const lib::headers &headers, lib::callback<std::string> &callback) const
 {
 	const QByteArray data = body.empty()
@@ -65,7 +65,7 @@ void lib::http_client::post(const std::string &url, const std::string &body,
 		});
 }
 
-auto lib::http_client::post(const std::string &url, const lib::headers &headers,
+auto HttpClient::post(const std::string &url, const lib::headers &headers,
 	const std::string &post_data) const -> std::string
 {
 	// Send request
@@ -80,7 +80,7 @@ auto lib::http_client::post(const std::string &url, const lib::headers &headers,
 	return reply->readAll().toStdString();
 }
 
-void lib::http_client::post(const std::string &url, const std::string &body,
+void HttpClient::post(const std::string &url, const std::string &body,
 	const lib::headers &headers, lib::callback<lib::result<std::string>> &callback) const
 {
 	const QByteArray data = body.empty()
@@ -90,7 +90,7 @@ void lib::http_client::post(const std::string &url, const std::string &body,
 	await(mNetworkManager->post(request(url, headers), data), callback);
 }
 
-void lib::http_client::del(const std::string &url, const std::string &body,
+void HttpClient::del(const std::string &url, const std::string &body,
 	const lib::headers &headers, lib::callback<std::string> &callback) const
 {
 	auto data = body.empty()
@@ -104,7 +104,7 @@ void lib::http_client::del(const std::string &url, const std::string &body,
 		});
 }
 
-auto lib::http_client::request(const std::string &url,
+auto HttpClient::request(const std::string &url,
 	const lib::headers &headers) -> QNetworkRequest
 {
 	// Prepare request
@@ -121,7 +121,7 @@ auto lib::http_client::request(const std::string &url,
 	return request;
 }
 
-void lib::http_client::await(QNetworkReply *reply, lib::callback<QByteArray> &callback) const
+void HttpClient::await(QNetworkReply *reply, lib::callback<QByteArray> &callback) const
 {
 	QNetworkReply::connect(reply, &QNetworkReply::finished, this,
 		[reply, callback]()
@@ -137,7 +137,7 @@ void lib::http_client::await(QNetworkReply *reply, lib::callback<QByteArray> &ca
 		});
 }
 
-void lib::http_client::await(QNetworkReply *reply,
+void HttpClient::await(QNetworkReply *reply,
 	lib::callback<lib::result<std::string>> &callback) const
 {
 	QNetworkReply::connect(reply, &QNetworkReply::finished, this, [reply, callback]()
