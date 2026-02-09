@@ -90,7 +90,7 @@ auto main(int argc, char *argv[]) -> int
 		}
 	}
 
-	lib::qt::http_client httpClient(nullptr);
+	lib::http_client httpClient(nullptr);
 	const spt::DeviceSelect deviceSelect(nullptr);
 	lib::spt::request request(settings, httpClient, deviceSelect);
 	lib::spt::api spotify(settings, httpClient, request);

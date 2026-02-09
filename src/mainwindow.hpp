@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/qthttpclient.hpp"
+#include "lib/httpclient.hpp"
 #include "lib/settings.hpp"
 #include "lib/cache/jsoncache.hpp"
 #include "lib/spotify/api.hpp"
@@ -25,7 +25,7 @@ Q_OBJECT
 
 public:
 	MainWindow(lib::settings &settings, lib::paths &paths,
-		lib::qt::http_client &httpClient, lib::spt::api &spotify);
+		lib::http_client &httpClient, lib::spt::api &spotify);
 
 	static auto find(QObject *from) -> MainWindow *;
 	static auto defaultSize() -> QSize;

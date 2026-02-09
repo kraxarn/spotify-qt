@@ -6,65 +6,74 @@
 
 #include <string>
 
+#include <QNetworkAccessManager>
+
 namespace lib
 {
 	/**
-	 * Request auth_headers
+	 * Request headers
 	 */
 	using headers = std::map<std::string, std::string>;
 
-	/**
-	 * Abstract HTTP client
-	 */
-	class http_client
+	class http_client final : public QObject
 	{
 	public:
+		explicit http_client(QObject *parent);
+
 		[[deprecated("Use with result callback instead")]]
-		virtual void get(const std::string &url, const headers &headers,
-			lib::callback<std::string> &callback) const = 0;
+		void get(const std::string &url, const headers &headers,
+			lib::callback<std::string> &callback) const;
 
 		/**
 		 * GET request
 		 */
-		virtual void get(const std::string &url, const lib::headers &headers,
-			lib::callback<lib::result<std::string>> &callback) const = 0;
+		void get(const std::string &url, const lib::headers &headers,
+			lib::callback<lib::result<std::string>> &callback) const;
 
 		/**
-		 * PUT request
-		 * @param body JSON body, or empty if none
+		 * PUT request with optional JSON body
 		 */
-		virtual void put(const std::string &url, const std::string &body,
-			const headers &headers, lib::callback<std::string> &callback) const = 0;
+		void put(const std::string &url, const std::string &body,
+			const headers &headers, lib::callback<std::string> &callback) const;
 
 		[[deprecated("Use with result callback instead")]]
 		void post(const std::string &url, const headers &headers,
 			lib::callback<std::string> &callback) const;
 
 		/**
-		 * POST request without request body
+		 * POST request without a request body
 		 */
 		void post(const std::string &url, const headers &headers,
 			lib::callback<lib::result<std::string>> &callback) const;
 
 		[[deprecated("Use with result callback instead")]]
-		virtual void post(const std::string &url, const std::string &body,
-			const headers &headers, lib::callback<std::string> &callback) const = 0;
+		void post(const std::string &url, const std::string &body,
+			const headers &headers, lib::callback<std::string> &callback) const;
 
 		/**
-		 * POST request with request body
+		 * POST request with a request body
 		 */
-		virtual void post(const std::string &url, const std::string &body,
-			const headers &headers, lib::callback<lib::result<std::string>> &callback) const = 0;
+		void post(const std::string &url, const std::string &body,
+			const headers &headers, lib::callback<lib::result<std::string>> &callback) const;
 
 		[[deprecated("Use asynchronous method instead")]]
-		virtual auto post(const std::string &url, const headers &headers,
-			const std::string &post_data) const -> std::string = 0;
+		auto post(const std::string &url, const headers &headers,
+			const std::string &post_data) const -> std::string;
 
 		/**
-		 * DELETE request
-		 * @param body JSON body, or empty if none
+		 * DELETE request with optional JSON body
 		 */
-		virtual void del(const std::string &url, const std::string &body,
-			const headers &headers, lib::callback<std::string> &callback) const = 0;
+		void del(const std::string &url, const std::string &body,
+			const headers &headers, lib::callback<std::string> &callback) const;
+
+	private:
+		QNetworkAccessManager *mNetworkManager;
+
+		static auto request(const std::string &url, const lib::headers &headers) -> QNetworkRequest;
+
+		[[deprecated("Use with result callback instead")]]
+		void await(QNetworkReply *reply, lib::callback<QByteArray> &callback) const;
+
+		void await(QNetworkReply *reply, lib::callback<lib::result<std::string>> &callback) const;
 	};
 }

@@ -16,7 +16,7 @@
 #endif
 
 MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
-	lib::qt::http_client &httpClient, lib::spt::api &spotify)
+	lib::http_client &httpClient, lib::spt::api &spotify)
 	: spotify(spotify),
 	settings(settings),
 	paths(paths),
