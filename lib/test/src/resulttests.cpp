@@ -1,12 +1,12 @@
 #include "thirdparty/doctest.h"
 #include "lib/result.hpp"
 
-TEST_CASE("result")
+TEST_CASE("Result")
 {
 	SUBCASE("ok")
 	{
 		constexpr int value = 1;
-		const auto result = lib::result<int>::ok(value);
+		const auto result = Result<int>::ok(value);
 
 		CHECK(result.success());
 		CHECK_EQ(result.value(), value);
@@ -16,7 +16,7 @@ TEST_CASE("result")
 	SUBCASE("fail")
 	{
 		const std::string message("1");
-		const auto result = lib::result<int>::fail(message);
+		const auto result = Result<int>::fail(message);
 
 		CHECK_FALSE(result.success());
 		CHECK_THROWS(result.value());
