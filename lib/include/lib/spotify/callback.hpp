@@ -5,17 +5,23 @@
 
 #include <functional>
 
+/**
+* API callback
+*/
+template<typename T>
+using ApiCallback = const std::function<void(const T &)>;
+
+/**
+* Paged API callback with a result
+*/
+template<typename T>
+using ApiPagedCallback = std::function<bool(const Result<lib::spt::page<T>> &)>;
+
 namespace lib
 {
-	/**
-	 * API callback
-	 */
 	template<typename T>
-	using callback = const std::function<void(const T &)>;
+	using callback [[deprecated("Use ApiCallback instead")]] = ApiCallback<T>;
 
-	/**
-	 * Paged API callback with result
-	 */
 	template<typename T>
-	using paged_callback = std::function<bool(const Result<lib::spt::page<T>> &)>;
+	using paged_callback [[deprecated("Use ApiPagedCallback instead")]] = ApiPagedCallback<T>;
 }
