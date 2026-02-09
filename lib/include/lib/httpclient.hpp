@@ -1,7 +1,6 @@
 #pragma once
 
 #include "lib/settings.hpp"
-#include "lib/format.hpp"
 #include "lib/spotify/callback.hpp"
 #include "lib/result.hpp"
 
@@ -20,10 +19,7 @@ namespace lib
 	class http_client
 	{
 	public:
-		/**
-		 * GET request
-		 * @deprecated Use with result callback instead
-		 */
+		[[deprecated("Use with result callback instead")]]
 		virtual void get(const std::string &url, const headers &headers,
 			lib::callback<std::string> &callback) const = 0;
 
@@ -40,10 +36,7 @@ namespace lib
 		virtual void put(const std::string &url, const std::string &body,
 			const headers &headers, lib::callback<std::string> &callback) const = 0;
 
-		/**
-		 * POST request without request body
-		 * @deprecated Use with result callback instead
-		 */
+		[[deprecated("Use with result callback instead")]]
 		void post(const std::string &url, const headers &headers,
 			lib::callback<std::string> &callback) const;
 
@@ -53,10 +46,7 @@ namespace lib
 		void post(const std::string &url, const headers &headers,
 			lib::callback<lib::result<std::string>> &callback) const;
 
-		/**
-		 * POST request with request body
-		 * @deprecated Use with result callback instead
-		 */
+		[[deprecated("Use with result callback instead")]]
 		virtual void post(const std::string &url, const std::string &body,
 			const headers &headers, lib::callback<std::string> &callback) const = 0;
 
@@ -66,10 +56,7 @@ namespace lib
 		virtual void post(const std::string &url, const std::string &body,
 			const headers &headers, lib::callback<lib::result<std::string>> &callback) const = 0;
 
-		/**
-		 * Synchronous POST request
-		 * @deprecated Use asynchronous method
-		 */
+		[[deprecated("Use asynchronous method instead")]]
 		virtual auto post(const std::string &url, const headers &headers,
 			const std::string &post_data) const -> std::string = 0;
 
