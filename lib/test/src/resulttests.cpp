@@ -10,12 +10,12 @@ TEST_CASE("Result")
 
 		CHECK(result.success());
 		CHECK_EQ(result.value(), value);
-		CHECK_EQ(result.message(), std::string());
+		CHECK_EQ(result.message(), QString());
 	}
 
 	SUBCASE("fail")
 	{
-		const std::string message("1");
+		const auto message = QStringLiteral("1");
 		const auto result = Result<int>::fail(message);
 
 		CHECK_FALSE(result.success());
