@@ -77,7 +77,9 @@ namespace lib
 					const auto &json = result.value();
 					if (!key.empty() && !json.contains(key))
 					{
-						const QString message = QStringLiteral("No such key: %1").arg(key);
+						const QString message = QStringLiteral("No such key: %1")
+							.arg(QString::fromStdString(key));
+
 						callback(Result<lib::spt::page<T>>::fail(message));
 						return;
 					}
