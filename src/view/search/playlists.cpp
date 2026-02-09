@@ -45,8 +45,8 @@ void Search::Playlists::onItemClicked(QListWidgetItem *item)
 	{
 		if (!result.success())
 		{
-			StatusMessage::error(QString("Failed to load playlist: %1")
-				.arg(QString::fromStdString(result.message())));
+			StatusMessage::error(QStringLiteral("Failed to load playlist: %1")
+				.arg(result.message()));
 
 			return;
 		}

@@ -61,8 +61,7 @@ void Dialog::LyricsSearch::onSearchClicked(bool /*checked*/)
 	{
 		if (!result.success())
 		{
-			QMessageBox::warning(this, QStringLiteral("Error"),
-				QString::fromStdString(result.message()));
+			QMessageBox::warning(this, QStringLiteral("Error"), result.message());
 		}
 		else
 		{

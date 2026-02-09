@@ -1,4 +1,3 @@
-
 #include "lib/spotify/error.hpp"
 
 lib::spt::error::error(const char *what, const char *url)
@@ -17,16 +16,26 @@ auto lib::spt::error::url() -> const char *
 	return request_url;
 }
 
-auto lib::spt::error::is(const nlohmann::json &json) -> bool
+auto SpotifyErrorUtil::isErrorObject(const nlohmann::json &json) -> bool
 {
 	return !json.is_null()
 		&& json.is_object()
 		&& json.contains("error");
 }
 
+auto lib::spt::error::is(const nlohmann::json &json) -> bool
+{
+	return SpotifyErrorUtil::isErrorObject(json);
+}
+
+auto SpotifyErrorUtil::errorMessage(const nlohmann::json &json) -> QString
+{
+	return isErrorObject(json)
+		? QString::fromStdString(json.at("error").at("message").get<std::string>())
+		: QString();
+}
+
 auto lib::spt::error::error_message(const nlohmann::json &json) -> std::string
 {
-	return lib::spt::error::is(json)
-		? json.at("error").at("message").get<std::string>()
-		: std::string();
+	return SpotifyErrorUtil::errorMessage(json).toStdString();
 }

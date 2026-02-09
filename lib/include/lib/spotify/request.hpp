@@ -42,7 +42,7 @@ namespace lib
 					{
 						if (!response.success())
 						{
-							const auto message = parse_error_message(response.message());
+							const auto message = parseErrorMessage(response.message());
 							callback(lib::result<T>::fail(message));
 							return;
 						}
@@ -69,7 +69,7 @@ namespace lib
 				{
 					if (!result.success())
 					{
-						const auto message = parse_error_message(result.message());
+						const QString message = parseErrorMessage(result.message());
 						callback(lib::result<lib::spt::page<T>>::fail(message));
 						return;
 					}
@@ -77,8 +77,8 @@ namespace lib
 					const auto &json = result.value();
 					if (!key.empty() && !json.contains(key))
 					{
-						const auto message = lib::fmt::format("No such key: {}", key);
-						callback(lib::result<lib::spt::page<T>>::fail(message));
+						const QString message = QStringLiteral("No such key: %1").arg(key);
+						callback(Result<lib::spt::page<T>>::fail(message));
 						return;
 					}
 
@@ -89,8 +89,8 @@ namespace lib
 					}
 					catch (const std::exception &exception)
 					{
-						const std::string message = exception.what();
-						callback(lib::result<lib::spt::page<T>>::fail(message));
+						const QString message = QString::fromStdString(exception.what());
+						callback(Result<lib::spt::page<T>>::fail(message));
 						return;
 					}
 
@@ -117,7 +117,7 @@ namespace lib
 					{
 						if (!response.success())
 						{
-							const auto message = parse_error_message(response.message());
+							const QString message = parseErrorMessage(response.message());
 							callback(lib::result<void *>::fail(message));
 							return;
 						}
@@ -189,8 +189,8 @@ namespace lib
 						return lib::result<T>::ok(json);
 					}
 
-					const auto message = lib::spt::error::error_message(json);
-					return lib::result<T>::fail(message);
+					const QString message = SpotifyErrorUtil::errorMessage(json);
+					return Result<T>::fail(message);
 				}
 				catch (const nlohmann::json::parse_error &e)
 				{
@@ -221,7 +221,7 @@ namespace lib
 						return lib::result<void *>::ok(nullptr);
 					}
 
-					const auto message = lib::spt::error::error_message(json);
+					const auto message = SpotifyErrorUtil::errorMessage(json);
 					return lib::result<void *>::fail(message);
 				}
 				catch (const nlohmann::json::parse_error &e)
@@ -236,13 +236,14 @@ namespace lib
 				}
 			}
 
-			static auto parse_error_message(const std::string &data) -> std::string
+			[[nodiscard]]
+			static auto parseErrorMessage(const QString &data) -> QString
 			{
 				try
 				{
-					const nlohmann::json json = nlohmann::json::parse(data);
-					return lib::spt::error::is(json)
-						? lib::spt::error::error_message(json)
+					const nlohmann::json json = nlohmann::json::parse(data.toStdString());
+					return SpotifyErrorUtil::isErrorObject(json)
+						? SpotifyErrorUtil::errorMessage(json)
 						: data;
 				}
 				catch (const std::exception &e)

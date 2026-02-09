@@ -653,8 +653,8 @@ void List::Tracks::load(const lib::spt::playlist &playlist)
 		{
 			if (!result.success())
 			{
-				StatusMessage::error(QString("Failed to load playlist: %1")
-					.arg(QString::fromStdString(result.message())));
+				StatusMessage::error(QStringLiteral("Failed to load playlist: %1")
+					.arg(result.message()));
 
 				return;
 			}
@@ -708,8 +708,8 @@ void List::Tracks::refreshPlaylist(const lib::spt::playlist &playlist)
 
 			if (!result.success())
 			{
-				StatusMessage::error(QString("Failed to load playlist: %1")
-					.arg(QString::fromStdString(result.message())));
+				StatusMessage::error(QStringLiteral("Failed to load playlist: %1")
+					.arg(result.message()));
 
 				refreshing = false;
 				return false;
@@ -753,8 +753,8 @@ void List::Tracks::load(const lib::spt::album &album, const std::string &trackId
 		{
 			if (!result.success())
 			{
-				StatusMessage::error(QString("Failed to load album: %1")
-					.arg(QString::fromStdString(result.message())));
+				StatusMessage::error(QStringLiteral("Failed to load album: %1")
+					.arg(result.message()));
 
 				return false;
 			}

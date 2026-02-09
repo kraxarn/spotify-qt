@@ -29,7 +29,7 @@ void Menu::Queue::refreshQueue()
 
 		if (!result.success())
 		{
-			addMessage(QString::fromStdString(result.message()));
+			addMessage(result.message());
 			return;
 		}
 

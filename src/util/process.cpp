@@ -10,7 +10,7 @@ auto Process::exec(const QString &path, const QStringList &args) -> lib::result<
 
 	if (process.error() != QProcess::UnknownError)
 	{
-		return lib::result<QString>::fail(process.errorString().toStdString());
+		return lib::result<QString>::fail(process.errorString());
 	}
 
 	const auto output = process.readAllStandardOutput().trimmed();

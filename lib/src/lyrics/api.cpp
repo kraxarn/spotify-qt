@@ -66,19 +66,19 @@ void lib::lrc::api::get(const spt::track &track, callback<result<lyrics>> &callb
 	{
 		if (!response.success())
 		{
-			std::string error_message;
+			QString errorMessage;
 			try
 			{
-				const error error = nlohmann::json::parse(response.message());
-				error_message = error.message;
+				const error error = nlohmann::json::parse(response.message().toStdString());
+				errorMessage = QString::fromStdString(error.message);
 			}
 			catch (nlohmann::json::parse_error &e)
 			{
 				log::error("Failed to parse error message: {}", e.what());
-				error_message = response.message();
+				errorMessage = response.message();
 			}
 
-			callback(result<lyrics>::fail(error_message));
+			callback(Result<lyrics>::fail(errorMessage));
 			return;
 		}
 

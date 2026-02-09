@@ -4,6 +4,28 @@
 
 #include <stdexcept>
 
+#include <QString>
+
+class SpotifyErrorUtil
+{
+public:
+	/**
+	 * If JSON is an error object
+	 */
+	[[nodiscard]]
+	static auto isErrorObject(const nlohmann::json &json) -> bool;
+
+	/**
+	 * Get error message from JSON
+	 * @returns Error, or an empty string if no error
+	 */
+	[[nodiscard]]
+	static auto errorMessage(const nlohmann::json &json) -> QString;
+
+private:
+	SpotifyErrorUtil() = default;
+};
+
 namespace lib
 {
 	namespace spt
@@ -11,7 +33,7 @@ namespace lib
 		/**
 		 * Spotify request error
 		 */
-		class error: public std::runtime_error
+		class [[deprecated("Don't use exceptions")]] error : public std::runtime_error
 		{
 		public:
 			/**
@@ -31,15 +53,10 @@ namespace lib
 			 */
 			auto url() -> const char *;
 
-			/**
-			 * If JSON is an error object
-			 */
+			[[deprecated("Use SpotifyErrorUtil::isErrorObject instead")]]
 			static auto is(const nlohmann::json &json) -> bool;
 
-			/**
-			 * Get error message from JSON
-			 * @returns Error, or an empty string if no error
-			 */
+			[[deprecated("Use SpotifyErrorUtil::errorMessage instead")]]
 			static auto error_message(const nlohmann::json &json) -> std::string;
 
 		private:

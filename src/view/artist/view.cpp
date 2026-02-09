@@ -108,8 +108,9 @@ void Artist::View::artistLoaded(const lib::spt::artist &loadedArtist)
 	{
 		if (!result.success())
 		{
-			StatusMessage::error(QString("Failed to fetch artist albums: %1")
-				.arg(QString::fromStdString(result.message())));
+			StatusMessage::error(QStringLiteral("Failed to fetch artist albums: %1")
+				.arg(result.message()));
+
 			return false;
 		}
 

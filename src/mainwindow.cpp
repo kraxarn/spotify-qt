@@ -449,7 +449,7 @@ void MainWindow::refresh()
 				return;
 			}
 
-			if (!result.message().empty())
+			if (!result.message().isEmpty())
 			{
 				lib::log::error("Refresh failed: {}", result.message());
 			}

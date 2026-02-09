@@ -304,10 +304,10 @@ auto SettingsPage::Spotify::save() -> bool
 			}
 			else
 			{
-				message = result.message().empty()
+				message = result.message().isEmpty()
 					? QStringLiteral("Invalid Spotify client")
-					: QString("Invalid Spotify client:\n%1")
-						.arg(QString::fromStdString(result.message()));
+					: QStringLiteral("Invalid Spotify client:\n%1")
+						.arg(result.message());
 			}
 
 			success = applyWarning(title, message);

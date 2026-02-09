@@ -47,7 +47,7 @@ void View::Lyrics::open(const lib::spt::track &track)
 	{
 		if (!result.success())
 		{
-			status->setText(QString::fromStdString(result.message()));
+			status->setText(result.message());
 			return;
 		}
 
@@ -65,7 +65,7 @@ void View::Lyrics::open(const unsigned int lyricsId)
 	{
 		if (!result.success())
 		{
-			status->setText(QString::fromStdString(result.message()));
+			status->setText(result.message());
 			return;
 		}
 

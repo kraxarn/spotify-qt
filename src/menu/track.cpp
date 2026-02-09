@@ -328,8 +328,9 @@ void Menu::Track::addToQueue(const QList<PlaylistTrack>::const_iterator &begin,
 	{
 		if (!result.success())
 		{
-			StatusMessage::error(QString("Failed to add to queue: %1")
-				.arg(QString::fromStdString(result.message())));
+			StatusMessage::error(QStringLiteral("Failed to add to queue: %1")
+				.arg(result.message()));
+
 			return;
 		}
 

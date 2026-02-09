@@ -224,8 +224,8 @@ void Artist::AlbumsList::onItemExtended(const QTreeWidgetItem *item) const
 		{
 			if (!result.success())
 			{
-				StatusMessage::error(QString("Failed to load appears on albums: %1")
-					.arg(QString::fromStdString(result.message())));
+				StatusMessage::error(QStringLiteral("Failed to load appears on albums: %1")
+					.arg(result.message()));
 
 				return false;
 			}

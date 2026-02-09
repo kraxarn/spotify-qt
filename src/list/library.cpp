@@ -214,8 +214,8 @@ void List::Library::onExpanded(QTreeWidgetItem *item)
 		{
 			if (!result.success())
 			{
-				StatusMessage::error(QString("Failed to get albums: %1")
-					.arg(QString::fromStdString(result.message())));
+				StatusMessage::error(QStringLiteral("Failed to get albums: %1")
+					.arg(result.message()));
 
 				return false;
 			}
@@ -239,8 +239,8 @@ void List::Library::onExpanded(QTreeWidgetItem *item)
 		{
 			if (!result.success())
 			{
-				StatusMessage::error(QString("Failed to get artists: %1")
-					.arg(QString::fromStdString(result.message())));
+				StatusMessage::error(QStringLiteral("Failed to get artists: %1")
+					.arg(result.message()));
 
 				return false;
 			}

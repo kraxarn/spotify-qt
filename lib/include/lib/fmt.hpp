@@ -5,6 +5,8 @@
 #include <string>
 #include <sstream>
 
+#include <QString>
+
 namespace lib
 {
 	class fmt
@@ -86,6 +88,12 @@ namespace lib
 		static auto to_string(const nlohmann::json &json) -> std::string
 		{
 			return json.dump();
+		}
+
+		[[nodiscard]]
+		static auto to_string(const QString &arg) -> std::string
+		{
+			return arg.toStdString();
 		}
 	};
 }
