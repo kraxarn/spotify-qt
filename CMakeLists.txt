@@ -16,8 +16,6 @@ option(USE_DBUS "Use D-Bus integration" ON)
 # LTO support
 option(USE_LTO "Use link time optimization" OFF)
 
-option(USE_DEPRECATED_WARNINGS "Enable warnings for deprecated declarations" OFF)
-
 # Prefer new OpenGL
 if (POLICY CMP0072)
 	cmake_policy(SET CMP0072 NEW)
@@ -87,10 +85,6 @@ target_compile_definitions(spotify-qt PRIVATE APP_ICON="${PROJECT_NAME}")
 target_compile_definitions(spotify-qt PRIVATE ORG_NAME="kraxarn")
 target_compile_definitions(spotify-qt PRIVATE PKG_NAME="com.kraxarn")
 target_compile_definitions(spotify-qt PRIVATE BUILD_TYPE="${CMAKE_BUILD_TYPE}")
-
-if (NOT USE_DEPRECATED_WARNINGS)
-	target_compile_options(${PROJECT_NAME} PUBLIC -Wno-deprecated-declarations)
-endif ()
 
 # Install icons and desktop shortcut on unix-like
 if (UNIX)

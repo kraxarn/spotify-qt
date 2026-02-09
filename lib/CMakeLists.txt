@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 option(USE_TESTS "Build with unit tests" OFF)
 
+option(USE_DEPRECATED_WARNINGS "Enable warnings for deprecated declarations" OFF)
+
 # Source files
 file(GLOB MAIN_SRC "src/*.cpp")
 file(GLOB SUB_SRC "src/*/*.cpp")
@@ -27,6 +29,10 @@ add_subdirectory(thirdparty)
 
 # Version macros
 target_compile_definitions(spotify-qt-lib PUBLIC LIB_VERSION="v${PROJECT_VERSION}")
+
+if (NOT USE_DEPRECATED_WARNINGS)
+	target_compile_options(${PROJECT_NAME} PRIVATE -Wno-deprecated-declarations)
+endif ()
 
 # Check if using GCC
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
