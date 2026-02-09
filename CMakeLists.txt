@@ -89,7 +89,7 @@ target_compile_definitions(spotify-qt PRIVATE PKG_NAME="com.kraxarn")
 target_compile_definitions(spotify-qt PRIVATE BUILD_TYPE="${CMAKE_BUILD_TYPE}")
 
 if (NOT USE_DEPRECATED_WARNINGS)
-	target_compile_options(${PROJECT_NAME} PRIVATE -Wno-deprecated-declarations)
+	target_compile_options(${PROJECT_NAME} PUBLIC -Wno-deprecated-declarations)
 endif ()
 
 # Install icons and desktop shortcut on unix-like
