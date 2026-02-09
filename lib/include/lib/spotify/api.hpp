@@ -240,12 +240,12 @@ namespace lib
 			 * @param uri URI of track to add
 			 */
 			void add_to_queue(const std::string &uri,
-				lib::callback<lib::result<void *>> &callback);
+				lib::callback<Result<void *>> &callback);
 
 			/**
 			 * Get all queued tracks
 			 */
-			void queue(lib::callback<lib::result<lib::spt::queue>> &callback);
+			void queue(lib::callback<Result<lib::spt::queue>> &callback);
 
 			//endregion
 
@@ -268,7 +268,7 @@ namespace lib
 			void playlists(const paged_callback<playlist> &callback) const;
 
 			void playlist(const std::string &playlist_id,
-				callback<result<playlist>> &callback) const;
+				callback<Result<playlist>> &callback) const;
 
 			void edit_playlist(const std::string &playlist_id,
 				const lib::spt::playlist_details &playlist,
@@ -284,7 +284,7 @@ namespace lib
 			 * @note Experimental
 			 */
 			void playlist_tracks(const lib::spt::playlist &playlist,
-				const std::function<bool(const lib::result<lib::spt::page<lib::spt::track>> &)> &callback);
+				const std::function<bool(const Result<lib::spt::page<lib::spt::track>> &)> &callback);
 
 			void add_to_playlist(const std::string &playlist_id,
 				const std::vector<std::string> &track_uris,
