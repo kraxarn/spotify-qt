@@ -31,7 +31,9 @@ add_subdirectory(thirdparty)
 target_compile_definitions(spotify-qt-lib PUBLIC LIB_VERSION="v${PROJECT_VERSION}")
 
 if (NOT USE_DEPRECATED_WARNINGS)
-	target_compile_options(${PROJECT_NAME} PRIVATE -Wno-deprecated-declarations)
+	if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+		target_compile_options(${PROJECT_NAME} PRIVATE -Wno-deprecated-declarations)
+	endif ()
 endif ()
 
 # Check if using GCC
