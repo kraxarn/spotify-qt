@@ -19,8 +19,7 @@ namespace View
 	Q_OBJECT
 
 	public:
-		Lyrics(const lib::http_client &httpClient,
-			lib::cache &cache, QWidget *parent);
+		Lyrics(const HttpClient &httpClient, lib::cache &cache, QWidget *parent);
 
 		void open(const lib::spt::track &track);
 		void open(unsigned int lyricsId);
@@ -30,7 +29,7 @@ namespace View
 		static constexpr float creditsFontScale = 0.9F;
 
 		lib::cache &cache;
-		lib::lrc::api lyrics;
+		LyricsApi lyrics;
 		lib::spt::track currentTrack;
 
 		QLabel *status;

@@ -5,12 +5,13 @@
 #include <QMessageBox>
 #include <QPushButton>
 
-Dialog::LyricsSearch::LyricsSearch(const lib::http_client &httpClient, QWidget *parent)
+Dialog::LyricsSearch::LyricsSearch(const HttpClient &httpClient, QWidget *parent)
 	: Base(parent),
 	lyrics(httpClient)
 {
-	lyrics.set_app_info(APP_NAME, APP_VERSION,
-		lib::fmt::format("https://github.com/{}/{}", ORG_NAME, APP_NAME));
+	lyrics.setAppInfo(QStringLiteral(APP_NAME), QStringLiteral(APP_VERSION),
+		QStringLiteral("https://github.com/%1/%2")
+		.arg(QStringLiteral(ORG_NAME), QStringLiteral(APP_NAME)));
 
 	auto *layout = Base::layout<QVBoxLayout>();
 
@@ -56,7 +57,7 @@ void Dialog::LyricsSearch::onSearchClicked(bool /*checked*/)
 	searchBox->setEnabled(false);
 	results->clear();
 
-	const auto query = search->text().toStdString();
+	const QString query = search->text();
 	lyrics.search(query, [this](const Result<std::vector<lib::lrc::lyrics>> &result)
 	{
 		if (!result.success())

@@ -1,13 +1,33 @@
 #include "lib/lyrics/error.hpp"
+#include "lib/json.hpp"
 
-void lib::lrc::from_json(const nlohmann::json &json, error &error)
+LyricsError::LyricsError()
+	: mStatusCode(0)
 {
-	if (!json.is_object())
-	{
-		return;
-	}
+}
 
-	json.at("message").get_to(error.message);
-	json.at("name").get_to(error.name);
-	json.at("statusCode").get_to(error.status_code);
+auto LyricsError::fromJson(const QJsonObject &json) -> LyricsError
+{
+	LyricsError result;
+
+	JsonUtil::getTo(json, QStringLiteral("message"), result.mMessage);
+	JsonUtil::getTo(json, QStringLiteral("name"), result.mName);
+	JsonUtil::getTo(json, QStringLiteral("statusCode"), result.mStatusCode);
+
+	return result;
+}
+
+auto LyricsError::message() const -> const QString &
+{
+	return mMessage;
+}
+
+auto LyricsError::name() const -> const QString &
+{
+	return mName;
+}
+
+auto LyricsError::statusCode() const -> int
+{
+	return mStatusCode;
 }

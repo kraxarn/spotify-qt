@@ -14,7 +14,7 @@ namespace Dialog
 	Q_OBJECT
 
 	public:
-		LyricsSearch(const lib::http_client &httpClient, QWidget *parent);
+		LyricsSearch(const HttpClient &httpClient, QWidget *parent);
 
 	private:
 		static constexpr int width = 700;
@@ -24,7 +24,7 @@ namespace Dialog
 		static constexpr int widthTitle = 200;
 		static constexpr int widthArtist = 180;
 
-		lib::lrc::api lyrics;
+		LyricsApi lyrics;
 
 		QGroupBox *searchBox;
 		QLineEdit *search;

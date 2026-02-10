@@ -1,29 +1,36 @@
 #pragma once
 
-#include <string>
+#include <QJsonObject>
+#include <QString>
 
-#include "thirdparty/json.hpp"
-
-namespace lib::lrc
+class LyricsError
 {
-	class error
-	{
-	public:
-		/**
-		 * Error message
-		 */
-		std::string message;
+public:
+	[[nodiscard]]
+	static auto fromJson(const QJsonObject &json) -> LyricsError;
 
-		/**
-		 * Error type
-		 */
-		std::string name;
+	/**
+	 * Error message
+	 */
+	[[nodiscard]]
+	auto message() const -> const QString &;
 
-		/**
-		 * HTTP status code
-		 */
-		int status_code;
-	};
+	/**
+	 * Error type
+	 */
+	[[nodiscard]]
+	auto name() const -> const QString &;
 
-	void from_json(const nlohmann::json &json, error &error);
-}
+	/**
+	 * HTTP status code
+	 */
+	[[nodiscard]]
+	auto statusCode() const -> int;
+
+private:
+	LyricsError();
+
+	QString mMessage;
+	QString mName;
+	int mStatusCode;
+};

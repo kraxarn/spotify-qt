@@ -6,54 +6,48 @@
 #include "lib/spotify/callback.hpp"
 #include "lib/spotify/track.hpp"
 
-namespace lib::lrc
+class LyricsApi
 {
+public:
 	/**
-		 * Lyrics API
-		 */
-	class api
-	{
-	public:
-		/**
-		 * Instance a new lyrics helper
-		 * @param http_client HTTP client instance
-		 */
-		explicit api(const http_client &http_client);
+	* Instance a new lyrics helper
+	* @param httpClient HTTP client instance
+	*/
+	explicit LyricsApi(const HttpClient &httpClient);
 
-		/**
-		 * Set app info for use in user-agent
-		 * @param name Application name
-		 * @param version Application version
-		 * @param homepage Application homepage
-		 */
-		void set_app_info(const std::string &name, const std::string &version, const std::string &homepage);
+	/**
+	* Set app info for use in user-agent
+	* @param name Application name
+	* @param version Application version
+	* @param homepage Application homepage
+	*/
+	void setAppInfo(const QString &name, const QString &version, const QString &homepage);
 
-		/**
-		 * Search for lyrics
-		 * @param query Keyword of title, artist or album
-		 * @param callback Lyrics
-		 */
-		void search(const std::string &query, callback<Result<std::vector<lyrics>>> &callback) const;
+	/**
+	* Search for lyrics
+	* @param query Keyword of title, artist, or album
+	* @param callback Lyrics
+	*/
+	void search(const QString &query, ApiCallback<Result<std::vector<lib::lrc::lyrics>>> &callback) const;
 
-		/**
-		 * Fetch lyrics
-		 * @param track Track to fetch lyrics for
-		 * @param callback Lyrics
-		 */
-		void get(const spt::track &track, callback<Result<lyrics>> &callback) const;
+	/**
+	* Fetch lyrics
+	* @param track Track to fetch lyrics for
+	* @param callback Lyrics
+	*/
+	void get(const lib::spt::track &track, ApiCallback<Result<lib::lrc::lyrics>> &callback) const;
 
-		/**
-		 * Fetch lyrics by ID
-		 * @param lyricsId ID to fetch lyrics for
-		 * @param callback Lyrics
-		 */
-		void get(unsigned int lyricsId, callback<Result<lyrics>> &callback) const;
+	/**
+	* Fetch lyrics by ID
+	* @param lyricsId ID to fetch lyrics for
+	* @param callback Lyrics
+	*/
+	void get(unsigned int lyricsId, ApiCallback<Result<lib::lrc::lyrics>> &callback) const;
 
-	private:
-		const http_client &http;
-		std::string user_agent;
+private:
+	const HttpClient &mHttp;
+	QString mUserAgent;
 
-		[[nodiscard]]
-		auto headers() const -> headers;
-	};
-}
+	[[nodiscard]]
+	auto headers() const -> RequestHeaders;
+};
