@@ -63,6 +63,12 @@ void Tooltip::set(QListWidgetItem *item, const lib::spt::playlist &playlist)
 			return;
 		}
 
+		// List might've reloaded before the image loaded
+		if (item->listWidget() == nullptr)
+		{
+			return;
+		}
+
 		QPixmap img;
 		img.loadFromData(data, "jpeg");
 		const auto scaled = img.scaled(albumSize, albumSize,
