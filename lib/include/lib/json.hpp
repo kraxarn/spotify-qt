@@ -6,6 +6,7 @@
 
 #include <optional>
 
+#include <QJsonDocument>
 #include <QJsonObject>
 #include <QVariant>
 
