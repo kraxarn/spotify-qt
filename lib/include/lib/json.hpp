@@ -1,9 +1,48 @@
 #pragma once
 
 #include "lib/filesystem.hpp"
+#include "lib/result.hpp"
 #include "thirdparty/json.hpp"
 
 #include <optional>
+
+#include <QJsonObject>
+#include <QVariant>
+
+/**
+ * JSON utilities
+ */
+class JsonUtil
+{
+public:
+	template<typename T>
+	static auto getTo(const QJsonObject &obj, const QString &key, T &value) -> QVariant
+	{
+		const QVariant variant = obj.value(key).toVariant();
+		if (variant.canConvert<T>())
+		{
+			value = variant.value<T>();
+		}
+		return variant;
+	}
+
+	template<typename T>
+	[[nodiscard]]
+	static auto parse(const QByteArray &data) -> Result<T>
+	{
+		QJsonParseError parseError;
+		const QJsonDocument json = QJsonDocument::fromJson(data, &parseError);
+		if (json.isNull())
+		{
+			return Result<T>::fail(parseError.errorString());
+		}
+
+		return Result<T>::ok(T::fromJson(json.object()));
+	}
+
+private:
+	JsonUtil() = default;
+};
 
 namespace lib
 {
