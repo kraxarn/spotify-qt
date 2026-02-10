@@ -1,63 +1,75 @@
 #include "lib/lyrics/line.hpp"
 
-#include <cstddef>
-
-lib::lrc::line::line(const std::string &line)
-	: data(line)
+LyricsLine::LyricsLine(const QString &line)
+	: mTimestamp(0),
+	mData(line)
 {
-	const auto timestamp_start = line.find('[');
-	const auto timestamp_end = line.find(']');
+	const qsizetype timestampStart = line.indexOf(QChar::fromLatin1('['));
+	const qsizetype timestampEnd = line.indexOf(QChar::fromLatin1(']'));
 
-	if (timestamp_start == std::string::npos
-		|| timestamp_end == std::string::npos)
+	if (timestampStart < 0 || timestampEnd < 0)
 	{
-		timestamp = -1L;
+		mTimestamp = -1L;
 	}
 	else
 	{
-		const std::size_t length = timestamp_end - timestamp_start - 1;
-		timestamp = parse_timestamp(line.substr(timestamp_start + 1, length));
+		const qsizetype length = timestampEnd - timestampStart - 1;
+		mTimestamp = parseTimestamp(line.mid(timestampStart + 1, length));
 	}
 
-	if (line.empty() || timestamp_end == line.size() - 2)
+	if (line.isEmpty() || timestampEnd == line.length() - 2)
 	{
-		text = "♪";
+		mText = "♪";
 	}
-	else if (timestamp_end != std::string::npos && timestamp > 0)
+	else if (timestampEnd >= 0 && mTimestamp > 0)
 	{
-		text = line.substr(timestamp_end + 2);
+		mText = line.mid(timestampEnd + 2);
 	}
 	else
 	{
-		text = line;
+		mText = line;
 	}
 }
 
-auto lib::lrc::line::parse_timestamp(const std::string &timestamp) -> long
+auto LyricsLine::timestamp() const -> long
+{
+	return mTimestamp;
+}
+
+auto LyricsLine::text() const -> const QString &
+{
+	return mText;
+}
+
+auto LyricsLine::data() const -> const QString &
+{
+	return mData;
+}
+
+auto LyricsLine::parseTimestamp(const QString &timestamp) -> long
 {
 	// minute:second.millisecond
 
-	const auto second = timestamp.find(':');
-	const auto millisecond = timestamp.find('.');
+	const qsizetype second = timestamp.indexOf(QChar::fromLatin1(':'));
+	const qsizetype millisecond = timestamp.indexOf(QChar::fromLatin1('.'));
 
-	if (second == std::string::npos
-		|| millisecond == std::string::npos)
+	if (second < 0 || millisecond < 0)
 	{
 		return -1L;
 	}
 
-	const auto minutes_str = timestamp.substr(0, 2);
-	const auto seconds_str = timestamp.substr(second + 1, 2);
-	const auto milliseconds_str = timestamp.substr(millisecond + 1, 3);
+	const QString minutesStr = timestamp.mid(0, 2);
+	const QString secondsStr = timestamp.mid(second + 1, 2);
+	const QString millisecondsStr = timestamp.mid(millisecond + 1, 3);
 
-	const auto minutes = minutes_str.empty() ? 0 : std::stoi(minutes_str);
-	const auto seconds = seconds_str.empty() ? 0 : std::stoi(seconds_str);
-	const auto milliseconds = milliseconds_str.empty() ? 0 : std::stoi(milliseconds_str);
+	const int minutes = minutesStr.toInt();
+	const int seconds = secondsStr.toInt();
+	const int milliseconds = millisecondsStr.toInt();
 
-	constexpr int milliseconds_in_second = 1000;
-	constexpr int milliseconds_in_minute = milliseconds_in_second * 60;
+	constexpr int millisecondsInSecond = 1000;
+	constexpr int millisecondsInMinute = millisecondsInSecond * 60;
 
-	return minutes * milliseconds_in_minute
-		+ seconds * milliseconds_in_second
+	return (minutes * millisecondsInMinute)
+		+ (seconds * millisecondsInSecond)
 		+ milliseconds;
 }

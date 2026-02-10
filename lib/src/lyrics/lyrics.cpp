@@ -27,15 +27,15 @@ void lib::lrc::from_json(const nlohmann::json &json, lyrics &lyrics)
 		const auto synced_lyrics = obj.get<std::string>();
 		const auto lines = strings::split(synced_lyrics, '\n');
 
-		lyrics.synced_lyrics.reserve(lines.size());
+		lyrics.syncedLyrics.reserve(static_cast<qsizetype>(lines.size()));
 
 		auto iter = lines.cbegin();
 		while (iter != lines.cend())
 		{
 			try
 			{
-				const line parsed(*iter);
-				lyrics.synced_lyrics.push_back(parsed);
+				const LyricsLine parsed(QString::fromStdString(*iter));
+				lyrics.syncedLyrics.append(parsed);
 				++iter;
 			}
 			catch (const std::exception &e)

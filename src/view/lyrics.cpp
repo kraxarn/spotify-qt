@@ -85,17 +85,17 @@ void View::Lyrics::load(const lib::lrc::lyrics &loaded)
 		auto *item = new QListWidgetItem(lyricsList);
 		item->setText(QStringLiteral("♪"));
 	}
-	else if (!loaded.synced_lyrics.empty())
+	else if (!loaded.syncedLyrics.isEmpty())
 	{
-		for (const auto &line: loaded.synced_lyrics)
+		for (const LyricsLine &line: loaded.syncedLyrics)
 		{
 			auto *item = new QListWidgetItem(lyricsList);
-			item->setText(QString::fromStdString(line.text));
-			item->setData(timestampRole, static_cast<qlonglong>(line.timestamp));
+			item->setText(line.text());
+			item->setData(timestampRole, static_cast<qlonglong>(line.timestamp()));
 
 			if (lib::developer_mode::enabled)
 			{
-				item->setToolTip(QString::fromStdString(line.data));
+				item->setToolTip(line.data());
 			}
 		}
 

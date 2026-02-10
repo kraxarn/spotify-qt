@@ -1,30 +1,35 @@
 #pragma once
 
-#include <string>
+#include <QString>
 
-namespace lib::lrc
+class LyricsLine
 {
-	class line
-	{
-	public:
-		explicit line(const std::string &line);
+public:
+	explicit LyricsLine(const QString &line);
 
-		/**
-		 * Timestamp in milliseconds
-		 */
-		long timestamp;
+	/**
+	 * Timestamp in milliseconds
+	 */
+	[[nodiscard]]
+	auto timestamp() const -> long;
 
-		/**
-		 * Lyrics text
-		 */
-		std::string text;
+	/**
+	 * Lyrics text
+	 */
+	[[nodiscard]]
+	auto text() const -> const QString &;
 
-		/**
-		 * Raw line data
-		 */
-		std::string data;
+	/**
+	 * Raw line data
+	 */
+	[[nodiscard]]
+	auto data() const -> const QString &;
 
-	private:
-		static auto parse_timestamp(const std::string &timestamp) -> long;
-	};
-}
+private:
+	[[nodiscard]]
+	static auto parseTimestamp(const QString &timestamp) -> long;
+
+	long mTimestamp;
+	QString mText;
+	QString mData;
+};

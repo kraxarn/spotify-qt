@@ -4,6 +4,8 @@
 
 #include "thirdparty/json.hpp"
 
+#include <QList>
+
 namespace lib::lrc
 {
 	class lyrics
@@ -24,7 +26,7 @@ namespace lib::lrc
 		/**
 		 * Synced lyrics with timestamps
 		 */
-		std::vector<line> synced_lyrics;
+		QList<LyricsLine> syncedLyrics;
 	};
 
 	void from_json(const nlohmann::json &json, lyrics &lyrics);
