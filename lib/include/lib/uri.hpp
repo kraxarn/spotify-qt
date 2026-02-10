@@ -9,7 +9,7 @@ namespace lib
 	/**
 	 * Basic URI manipulation
 	 */
-	class uri
+	class [[deprecated("Use QUrl instead")]] uri
 	{
 	public:
 		/**
