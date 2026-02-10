@@ -16,22 +16,27 @@ namespace lib
 /**
 * Request headers
 */
-using Headers = QMap<QString, QString>;
+// TODO: Change to QHttpHeaders when we drop Qt 5 support
+using RequestHeaders = QMap<QNetworkRequest::KnownHeaders, QVariant>;
 
 class HttpClient final : public QObject
 {
 public:
 	explicit HttpClient(QObject *parent);
 
-	[[deprecated("Use with result callback instead")]]
+	[[deprecated("Use overload with result callback instead")]]
 	void get(const std::string &url, const lib::headers &headers,
 		lib::callback<std::string> &callback) const;
+
+	[[deprecated("Use overload with QUrl/QByteArray instead")]]
+	void get(const std::string &url, const lib::headers &headers,
+		lib::callback<Result<std::string>> &callback) const;
 
 	/**
 	* GET request
 	*/
-	void get(const std::string &url, const lib::headers &headers,
-		lib::callback<Result<std::string>> &callback) const;
+	void get(const QUrl &url, const RequestHeaders &headers,
+		const ApiCallback<Result<QByteArray>> &callback) const;
 
 	/**
 	* PUT request with optional JSON body
@@ -73,12 +78,19 @@ public:
 private:
 	QNetworkAccessManager *mNetworkManager;
 
+	[[deprecated("Use overload with QUrl/RequestHeaders instead")]]
 	static auto request(const std::string &url, const lib::headers &headers) -> QNetworkRequest;
 
-	[[deprecated("Use with result callback instead")]]
+	[[nodiscard]]
+	static auto request(const QUrl &url, const RequestHeaders &headers) -> QNetworkRequest;
+
+	[[deprecated("Use overload with result callback instead")]]
 	void await(QNetworkReply *reply, lib::callback<QByteArray> &callback) const;
 
+	[[deprecated("Use overload with ApiCallback/QByteArray instead")]]
 	void await(QNetworkReply *reply, lib::callback<Result<std::string>> &callback) const;
+
+	void await(QNetworkReply *reply, ApiCallback<Result<QByteArray>> &callback) const;
 };
 
 namespace lib
