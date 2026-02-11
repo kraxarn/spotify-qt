@@ -19,7 +19,7 @@ LyricsLine::LyricsLine(const QString &line)
 
 	if (line.isEmpty() || timestampEnd == line.length() - 2)
 	{
-		mText = "♪";
+		mText = QStringLiteral("♪");
 	}
 	else if (timestampEnd >= 0 && mTimestamp > 0)
 	{

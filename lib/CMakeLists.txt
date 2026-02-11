@@ -30,6 +30,10 @@ add_subdirectory(thirdparty)
 # Version macros
 target_compile_definitions(spotify-qt-lib PUBLIC LIB_VERSION="v${PROJECT_VERSION}")
 
+# Qt configs
+target_compile_definitions(${PROJECT_NAME} PRIVATE QT_NO_CAST_FROM_ASCII)
+target_compile_definitions(${PROJECT_NAME} PRIVATE QT_NO_CAST_TO_ASCII)
+
 if (NOT USE_DEPRECATED_WARNINGS)
 	if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 		target_compile_options(${PROJECT_NAME} PRIVATE -Wno-deprecated-declarations)

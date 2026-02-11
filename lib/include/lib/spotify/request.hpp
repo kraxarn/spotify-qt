@@ -197,11 +197,11 @@ namespace lib
 				catch (const nlohmann::json::parse_error &e)
 				{
 					lib::log::debug("JSON: {}", data);
-					return Result<T>::fail(e.what());
+					return Result<T>::fail(QString::fromLatin1(e.what(), -1));
 				}
 				catch (const std::exception &e)
 				{
-					return Result<T>::fail(e.what());
+					return Result<T>::fail(QString::fromLatin1(e.what(), -1));
 				}
 			}
 
@@ -234,7 +234,7 @@ namespace lib
 				}
 				catch (const std::exception &e)
 				{
-					return Result<void *>::fail(e.what());
+					return Result<void *>::fail(QString::fromLatin1(e.what(), -1));
 				}
 			}
 

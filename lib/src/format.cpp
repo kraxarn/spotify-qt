@@ -96,18 +96,18 @@ auto Format::title(const lib::spt::track &track, const QString &format) -> QStri
 
 		const QString part = format.mid(start_index, end_index - start_index + 1);
 
-		if (part == "{track}")
+		if (part == QStringLiteral("{track}"))
 		{
 			result.append(QString::fromStdString(track.name));
 		}
-		else if (part == "{artist}")
+		else if (part == QStringLiteral("{artist}"))
 		{
 			if (!track.artists.empty())
 			{
 				result.append(QString::fromStdString(track.artists.at(0).name));
 			}
 		}
-		else if (part == "{artists}")
+		else if (part == QStringLiteral("{artists}"))
 		{
 			for (size_t i = 0; i < track.artists.size(); i++)
 			{

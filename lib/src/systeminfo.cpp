@@ -3,24 +3,24 @@
 lib::qt::system_info::system_info()
 {
 	// Qt version
-	add("Qt version", QT_VERSION_STR);
+	add(QStringLiteral("Qt version"), QStringLiteral(QT_VERSION_STR));
 
 	// Desktop environment
 	if (lib::system::has_env("XDG_CURRENT_DESKTOP"))
 	{
-		add("Current desktop",
+		add(QStringLiteral("Current desktop"),
 			QString::fromStdString(lib::system::env("XDG_CURRENT_DESKTOP")));
 	}
 
 	// Kernel
-	add("Kernel", QString("%1 %2")
+	add(QStringLiteral("Kernel"), QStringLiteral("%1 %2")
 		.arg(QSysInfo::kernelType(), QSysInfo::kernelVersion()));
 
 	// Product
-	add("Product", QSysInfo::prettyProductName());
+	add(QStringLiteral("Product"), QSysInfo::prettyProductName());
 
 	// Build ABI
-	add("ABI", QSysInfo::buildAbi());
+	add(QStringLiteral("ABI"), QSysInfo::buildAbi());
 }
 
 void lib::qt::system_info::add(const QString &key, const QString &value)
@@ -48,7 +48,7 @@ auto lib::qt::system_info::to_text() -> QString
 	while (iter.hasNext())
 	{
 		iter.next();
-		systemInfo += QString("%1: %2\n")
+		systemInfo += QStringLiteral("%1: %2\n")
 			.arg(iter.key(), -max)
 			.arg(iter.value());
 	}
@@ -57,13 +57,13 @@ auto lib::qt::system_info::to_text() -> QString
 
 auto lib::qt::system_info::to_html() -> QString
 {
-	QString systemInfo("<table>");
+	auto systemInfo = QStringLiteral("<table>");
 	QMapIterator<QString, QString> i(info);
 	while (i.hasNext())
 	{
 		i.next();
-		systemInfo += QString("<tr><td>%1:</td> <td>%2</td></tr>")
+		systemInfo += QStringLiteral("<tr><td>%1:</td> <td>%2</td></tr>")
 			.arg(i.key(), i.value());
 	}
-	return QString("%1</table>").arg(systemInfo);
+	return QStringLiteral("%1</table>").arg(systemInfo);
 }
