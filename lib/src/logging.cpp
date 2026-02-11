@@ -1,6 +1,8 @@
 #include "lib/logging.hpp"
 #include "lib/log.hpp"
 
+#include <iostream>
+
 #include <QtMessageHandler>
 
 QtMessageHandler Logging::mDefaultHandler = nullptr;
@@ -36,5 +38,6 @@ void Logging::message(const QtMsgType type, const QMessageLogContext &context, c
 	const lib::log_message message(logType, msg.toStdString());
 	lib::log::messages.push_back(message);
 
-	mDefaultHandler(type, context, msg);
+	(type == QtInfoMsg || type == QtDebugMsg ? std::cout : std::cerr)
+		<< message.to_string() << std::endl;
 }
