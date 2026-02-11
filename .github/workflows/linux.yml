@@ -41,6 +41,7 @@ jobs:
           version: ${{env.QT_VERSION}}
           arch: ${{matrix.qt-arch}}
           host: ${{matrix.qt-host}}
+          modules: "qtwaylandcompositor"
 
       - name: Install Dependencies
         run: sudo apt install libxkbcommon-x11-dev libxcb-cursor-dev -y
