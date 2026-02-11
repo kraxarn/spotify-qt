@@ -1,5 +1,7 @@
 #include "lib/log.hpp"
 
+#include <iostream>
+
 std::vector<lib::log_message> lib::log::messages = std::vector<log_message>();
 
 bool lib::log::log_to_stdout = true;

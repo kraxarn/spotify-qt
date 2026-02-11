@@ -1,3 +1,4 @@
+#include "lib/logging.hpp"
 #include "lib/qtpaths.hpp"
 #include "lib/spotify/request.hpp"
 #include "spotify/deviceselect.hpp"
@@ -33,6 +34,8 @@ auto appVersion() -> QString
 
 auto main(int argc, char *argv[]) -> int
 {
+	Logging::installMessageHandler();
+
 	// Set name for settings etc.
 	QCoreApplication::setOrganizationName(ORG_NAME);
 	QCoreApplication::setApplicationName(APP_NAME);

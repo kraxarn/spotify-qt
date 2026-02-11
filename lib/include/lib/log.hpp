@@ -1,12 +1,13 @@
 #pragma once
 
-#include "lib/enum/logtype.hpp"
+#include "lib/developermode.hpp"
 #include "lib/fmt.hpp"
 #include "lib/logmessage.hpp"
-#include "lib/developermode.hpp"
+#include "lib/enum/logtype.hpp"
 
-#include <iostream>
 #include <regex>
+
+class Logging;
 
 namespace lib
 {
@@ -130,9 +131,11 @@ namespace lib
 
 		/**
 		 * Log a message with the specified type
-		 * @param logType Type of log
+		 * @param log_type Type of log
 		 * @param message Message to log
 		 */
 		static void message(log_type log_type, const std::string &message);
+
+		friend class ::Logging;
 	};
 }
