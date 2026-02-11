@@ -12,7 +12,7 @@ void Logging::installMessageHandler()
 	mDefaultHandler = qInstallMessageHandler(message);
 }
 
-void Logging::message(const QtMsgType type, const QMessageLogContext &context, const QString &msg)
+void Logging::message(const QtMsgType type, [[maybe_unused]] const QMessageLogContext &context, const QString &msg)
 {
 	lib::log_type logType;
 	switch (type)
@@ -39,5 +39,5 @@ void Logging::message(const QtMsgType type, const QMessageLogContext &context, c
 	lib::log::messages.push_back(message);
 
 	(type == QtInfoMsg || type == QtDebugMsg ? std::cout : std::cerr)
-		<< message.to_string() << std::endl;
+		<< message.to_string() << '\n';
 }
