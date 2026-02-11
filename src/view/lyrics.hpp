@@ -37,7 +37,7 @@ namespace View
 		QCheckBox *syncWithMusic;
 		QLabel *providedBy;
 
-		void load(const lib::lrc::lyrics &loaded);
+		void load(const ::Lyrics &loaded);
 		static auto getTimestamp(const QListWidgetItem *item) -> qlonglong;
 
 		void onPlaybackRefreshed(const lib::spt::playback &playback,

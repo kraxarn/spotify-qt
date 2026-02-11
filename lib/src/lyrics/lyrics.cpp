@@ -1,48 +1,85 @@
 #include "lib/lyrics/lyrics.hpp"
+#include "lib/json.hpp"
 #include "lib/log.hpp"
 #include "lib/strings.hpp"
 
-void lib::lrc::from_json(const nlohmann::json &json, lyrics &lyrics)
+Lyrics::Lyrics()
+	: mId(0),
+	mDuration(0),
+	mInstrumental(false)
 {
-	if (!json.is_object())
+}
+
+auto Lyrics::fromJson(const QJsonObject &json) -> Lyrics
+{
+	Lyrics lyrics;
+
+	JsonUtil::getTo(json, QStringLiteral("id"), lyrics.mId);
+	JsonUtil::getTo(json, QStringLiteral("trackName"), lyrics.mTrackName);
+	JsonUtil::getTo(json, QStringLiteral("artistName"), lyrics.mArtistName);
+	JsonUtil::getTo(json, QStringLiteral("albumName"), lyrics.mAlbumName);
+	JsonUtil::getTo(json, QStringLiteral("duration"), lyrics.mDuration);
+	JsonUtil::getTo(json, QStringLiteral("instrumental"), lyrics.mInstrumental);
+
+	if (const QJsonValue &val = json.value(QStringLiteral("plainLyrics")); val.isString())
 	{
-		return;
+		const QString &plainLyrics = val.toString();
+		lyrics.mPlainLyrics = plainLyrics.split(QChar::fromLatin1('\n'));
 	}
 
-	json.at("id").get_to(lyrics.id);
-	json.at("trackName").get_to(lyrics.track_name);
-	json.at("artistName").get_to(lyrics.artist_name);
-	json.at("albumName").get_to(lyrics.album_name);
-	json.at("duration").get_to(lyrics.duration);
-	json.at("instrumental").get_to(lyrics.instrumental);
-
-	if (const auto &obj = json.at("plainLyrics"); obj.is_string())
+	if (const QJsonValue &val = json.value(QStringLiteral("syncedLyrics")); val.isString())
 	{
-		const auto &plain_lyrics = obj.get<std::string>();
-		lyrics.plain_lyrics = strings::split(plain_lyrics, '\n');
-	}
+		const QString &syncedLyrics = val.toString();
+		const QStringList lines = syncedLyrics.split(QChar::fromLatin1('\n'));
 
-	if (const auto &obj = json.at("syncedLyrics"); obj.is_string())
-	{
-		const auto synced_lyrics = obj.get<std::string>();
-		const auto lines = strings::split(synced_lyrics, '\n');
+		lyrics.mSyncedLyrics.reserve(lines.length());
 
-		lyrics.syncedLyrics.reserve(static_cast<qsizetype>(lines.size()));
-
-		auto iter = lines.cbegin();
-		while (iter != lines.cend())
+		for (const QString &line: lines)
 		{
-			try
-			{
-				const LyricsLine parsed(QString::fromStdString(*iter));
-				lyrics.syncedLyrics.append(parsed);
-				++iter;
-			}
-			catch (const std::exception &e)
-			{
-				log::warn("Ignoring invalid line '{}': {}", *iter, e.what());
-				++iter;
-			}
+			const LyricsLine parsed(line);
+			lyrics.mSyncedLyrics.append(parsed);
 		}
 	}
+
+	return lyrics;
+}
+
+auto Lyrics::id() const -> quint32
+{
+	return mId;
+}
+
+auto Lyrics::trackName() const -> const QString &
+{
+	return mTrackName;
+}
+
+auto Lyrics::artistName() const -> const QString &
+{
+	return mArtistName;
+}
+
+auto Lyrics::albumName() const -> const QString &
+{
+	return mAlbumName;
+}
+
+auto Lyrics::duration() const -> quint32
+{
+	return mDuration;
+}
+
+auto Lyrics::instrumental() const -> bool
+{
+	return mInstrumental;
+}
+
+auto Lyrics::plainLyrics() const -> const QStringList &
+{
+	return mPlainLyrics;
+}
+
+auto Lyrics::syncedLyrics() const -> const QList<LyricsLine> &
+{
+	return mSyncedLyrics;
 }

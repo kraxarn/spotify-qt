@@ -44,7 +44,7 @@ void View::Lyrics::open(const lib::spt::track &track)
 {
 	status->setText(QStringLiteral("Please wait..."));
 
-	lyrics.get(track, [this, track](const Result<lib::lrc::lyrics> &result)
+	lyrics.get(track, [this, track](const Result<::Lyrics> &result)
 	{
 		if (!result.success())
 		{
@@ -62,7 +62,7 @@ void View::Lyrics::open(const unsigned int lyricsId)
 {
 	status->setText(QStringLiteral("Please wait..."));
 
-	lyrics.get(lyricsId, [this](const Result<lib::lrc::lyrics> &result)
+	lyrics.get(lyricsId, [this](const Result<::Lyrics> &result)
 	{
 		if (!result.success())
 		{
@@ -76,18 +76,18 @@ void View::Lyrics::open(const unsigned int lyricsId)
 	});
 }
 
-void View::Lyrics::load(const lib::lrc::lyrics &loaded)
+void View::Lyrics::load(const ::Lyrics &loaded)
 {
 	lyricsList->clear();
 
-	if (loaded.instrumental)
+	if (loaded.instrumental())
 	{
 		auto *item = new QListWidgetItem(lyricsList);
 		item->setText(QStringLiteral("♪"));
 	}
-	else if (!loaded.syncedLyrics.isEmpty())
+	else if (!loaded.syncedLyrics().isEmpty())
 	{
-		for (const LyricsLine &line: loaded.syncedLyrics)
+		for (const LyricsLine &line: loaded.syncedLyrics())
 		{
 			auto *item = new QListWidgetItem(lyricsList);
 			item->setText(line.text());
@@ -102,12 +102,12 @@ void View::Lyrics::load(const lib::lrc::lyrics &loaded)
 		syncWithMusic->setChecked(true);
 		syncWithMusic->setVisible(true);
 	}
-	else if (!loaded.plain_lyrics.empty())
+	else if (!loaded.plainLyrics().isEmpty())
 	{
-		for (const auto &line: loaded.plain_lyrics)
+		for (const auto &line: loaded.plainLyrics())
 		{
 			auto *item = new QListWidgetItem(lyricsList);
-			item->setText(QString::fromStdString(line));
+			item->setText(line);
 		}
 
 		syncWithMusic->setChecked(false);

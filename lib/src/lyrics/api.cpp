@@ -24,7 +24,7 @@ void LyricsApi::setAppInfo(const QString &name, const QString &version, const QS
 	mUserAgent = QStringLiteral("%1 %2 (%3)").arg(name, version, homepage);
 }
 
-void LyricsApi::search(const QString &query, ApiCallback<Result<std::vector<lib::lrc::lyrics>>> &callback) const
+void LyricsApi::search(const QString &query, ApiCallback<Result<QList<Lyrics>>> &callback) const
 {
 	QUrl url(QStringLiteral("https://lrclib.net/api/search"));
 	url.setQuery({
@@ -37,33 +37,29 @@ void LyricsApi::search(const QString &query, ApiCallback<Result<std::vector<lib:
 	{
 		if (!result.success())
 		{
-			callback(Result<std::vector<lib::lrc::lyrics>>::fail(result.message()));
+			callback(Result<QList<Lyrics>>::fail(result.message()));
 			return;
 		}
 
 		const QByteArray &response = result.value();
 		if (response.isEmpty())
 		{
-			callback(Result<std::vector<lib::lrc::lyrics>>::fail("No response"));
+			callback(Result<QList<Lyrics>>::fail(QStringLiteral("No response")));
 			return;
 		}
 
-		std::vector<lib::lrc::lyrics> items;
-		try
+		const Result<QList<Lyrics>> lyricsResult = JsonUtil::parseList<Lyrics>(response);
+		if (!lyricsResult.success())
 		{
-			items = nlohmann::json::parse(response.toStdString());
-		}
-		catch (const std::exception &e)
-		{
-			callback(Result<std::vector<lib::lrc::lyrics>>::fail(e.what()));
+			callback(Result<QList<Lyrics>>::fail(lyricsResult.message()));
 			return;
 		}
 
-		callback(Result<std::vector<lib::lrc::lyrics>>::ok(std::move(items)));
+		callback(Result<QList<Lyrics>>::ok(lyricsResult.value()));
 	});
 }
 
-void LyricsApi::get(const lib::spt::track &track, lib::callback<Result<lib::lrc::lyrics>> &callback) const
+void LyricsApi::get(const lib::spt::track &track, ApiCallback<Result<Lyrics>> &callback) const
 {
 	QUrl url(QStringLiteral("https://lrclib.net/api/get"));
 	url.setQuery({
@@ -81,29 +77,25 @@ void LyricsApi::get(const lib::spt::track &track, lib::callback<Result<lib::lrc:
 		{
 			const auto errorResult = JsonUtil::parse<LyricsError>(result.value());
 
-			callback(Result<lib::lrc::lyrics>::fail(errorResult.success()
+			callback(Result<Lyrics>::fail(errorResult.success()
 				? errorResult.value().message()
 				: errorResult.message()));
 
 			return;
 		}
 
-		lib::lrc::lyrics item;
-		try
+		const Result<Lyrics> item = JsonUtil::parse<Lyrics>(result.value());
+		if (!item.success())
 		{
-			item = nlohmann::json::parse(result.value().toStdString());
-		}
-		catch (const std::exception &e)
-		{
-			callback(Result<lib::lrc::lyrics>::fail(e.what()));
+			callback(Result<Lyrics>::fail(item.message()));
 			return;
 		}
 
-		callback(Result<lib::lrc::lyrics>::ok(item));
+		callback(Result<Lyrics>::ok(item.value()));
 	});
 }
 
-void LyricsApi::get(const unsigned int lyricsId, lib::callback<Result<lib::lrc::lyrics>> &callback) const
+void LyricsApi::get(const quint32 lyricsId, ApiCallback<Result<Lyrics>> &callback) const
 {
 	const auto url = QUrl(QStringLiteral("https://lrclib.net/api/get/%1").arg(lyricsId));
 
@@ -111,28 +103,24 @@ void LyricsApi::get(const unsigned int lyricsId, lib::callback<Result<lib::lrc::
 	{
 		if (!result.success())
 		{
-			callback(Result<lib::lrc::lyrics>::fail(result.message()));
+			callback(Result<Lyrics>::fail(result.message()));
 			return;
 		}
 
 		const QByteArray &response = result.value();
 		if (response.isEmpty())
 		{
-			callback(Result<lib::lrc::lyrics>::fail(QStringLiteral("No response")));
+			callback(Result<Lyrics>::fail(QStringLiteral("No response")));
 			return;
 		}
 
-		lib::lrc::lyrics item;
-		try
+		const Result<Lyrics> item = JsonUtil::parse<Lyrics>(response);
+		if (!item.success())
 		{
-			item = nlohmann::json::parse(response);
-		}
-		catch (const std::exception &e)
-		{
-			callback(Result<lib::lrc::lyrics>::fail(QString::fromStdString(e.what())));
+			callback(Result<Lyrics>::fail(item.message()));
 			return;
 		}
 
-		callback(Result<lib::lrc::lyrics>::ok(item));
+		callback(Result<Lyrics>::ok(item.value()));
 	});
 }

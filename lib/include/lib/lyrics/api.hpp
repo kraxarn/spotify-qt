@@ -28,21 +28,21 @@ public:
 	* @param query Keyword of title, artist, or album
 	* @param callback Lyrics
 	*/
-	void search(const QString &query, ApiCallback<Result<std::vector<lib::lrc::lyrics>>> &callback) const;
+	void search(const QString &query, ApiCallback<Result<QList<Lyrics>>> &callback) const;
 
 	/**
 	* Fetch lyrics
 	* @param track Track to fetch lyrics for
 	* @param callback Lyrics
 	*/
-	void get(const lib::spt::track &track, ApiCallback<Result<lib::lrc::lyrics>> &callback) const;
+	void get(const lib::spt::track &track, ApiCallback<Result<Lyrics>> &callback) const;
 
 	/**
 	* Fetch lyrics by ID
 	* @param lyricsId ID to fetch lyrics for
 	* @param callback Lyrics
 	*/
-	void get(unsigned int lyricsId, ApiCallback<Result<lib::lrc::lyrics>> &callback) const;
+	void get(quint32 lyricsId, ApiCallback<Result<Lyrics>> &callback) const;
 
 private:
 	const HttpClient &mHttp;

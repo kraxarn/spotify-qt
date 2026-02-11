@@ -6,6 +6,7 @@
 
 #include <optional>
 
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QVariant>
@@ -39,6 +40,26 @@ public:
 		}
 
 		return Result<T>::ok(T::fromJson(json.object()));
+	}
+
+	template<typename T>
+	[[nodiscard]]
+	static auto parseList(const QByteArray &data) -> Result<QList<T>>
+	{
+		QJsonParseError parseError;
+		const QJsonDocument json = QJsonDocument::fromJson(data, &parseError);
+		if (json.isNull())
+		{
+			return Result<QList<T>>::fail(parseError.errorString());
+		}
+
+		QList<T> items;
+		for (const QJsonValueRef item: json.array())
+		{
+			items.append(T::fromJson(item.toObject()));
+		}
+
+		return Result<QList<T>>::ok(items);
 	}
 
 private:

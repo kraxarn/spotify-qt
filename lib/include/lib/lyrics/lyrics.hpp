@@ -2,32 +2,53 @@
 
 #include "lib/lyrics/line.hpp"
 
-#include "thirdparty/json.hpp"
-
+#include <QJsonObject>
 #include <QList>
 
-namespace lib::lrc
+class Lyrics
 {
-	class lyrics
-	{
-	public:
-		unsigned int id;
-		std::string track_name;
-		std::string artist_name;
-		std::string album_name;
-		unsigned int duration;
-		bool instrumental;
+public:
+	static auto fromJson(const QJsonObject &json) -> Lyrics;
 
-		/**
-		 * Plain text lyrics, one string per line
-		 */
-		std::vector<std::string> plain_lyrics;
+	[[nodiscard]]
+	auto id() const -> quint32;
 
-		/**
-		 * Synced lyrics with timestamps
-		 */
-		QList<LyricsLine> syncedLyrics;
-	};
+	[[nodiscard]]
+	auto trackName() const -> const QString &;
 
-	void from_json(const nlohmann::json &json, lyrics &lyrics);
-}
+	[[nodiscard]]
+	auto artistName() const -> const QString &;
+
+	[[nodiscard]]
+	auto albumName() const -> const QString &;
+
+	[[nodiscard]]
+	auto duration() const -> quint32;
+
+	[[nodiscard]]
+	auto instrumental() const -> bool;
+
+	/**
+	 * Plain text lyrics, one string per line
+	 */
+	[[nodiscard]]
+	auto plainLyrics() const -> const QStringList &;
+
+	/**
+	 * Synced lyrics with timestamps
+	 */
+	[[nodiscard]]
+	auto syncedLyrics() const -> const QList<LyricsLine> &;
+
+private:
+	Lyrics();
+
+	quint32 mId;
+	QString mTrackName;
+	QString mArtistName;
+	QString mAlbumName;
+	quint32 mDuration;
+	bool mInstrumental;
+	QStringList mPlainLyrics;
+	QList<LyricsLine> mSyncedLyrics;
+};
