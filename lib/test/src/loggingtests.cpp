@@ -1,8 +1,9 @@
-#include "thirdparty/doctest.h"
-#include "lib/logging.hpp"
 #include "lib/developermode.hpp"
+#include "lib/logging.hpp"
 
-#include <QtLogging>
+#include "thirdparty/doctest.h"
+
+#include <QtDebug>
 
 TEST_CASE("Logging")
 {

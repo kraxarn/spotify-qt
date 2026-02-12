@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QDateTime>
-#include <QtLogging>
+#include <QtDebug>
 
 class LogMessage
 {

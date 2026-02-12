@@ -1,7 +1,7 @@
 #include "lib/log.hpp"
 #include "lib/logging.hpp"
 
-#include <QtLogging>
+#include <QtDebug>
 
 void lib::log::message(const QtMsgType log_type, const std::string &message)
 {

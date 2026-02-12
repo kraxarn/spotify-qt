@@ -3,7 +3,7 @@
 #include "lib/developermode.hpp"
 #include "lib/fmt.hpp"
 
-#include <QtLogging>
+#include <QtDebug>
 
 namespace lib
 {
