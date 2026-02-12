@@ -6,7 +6,7 @@
 
 #include <QSysInfo>
 
-std::vector<lib::log_message> SpotifyClient::Runner::log;
+QList<LogMessage> SpotifyClient::Runner::log = QList<LogMessage>();
 
 SpotifyClient::Runner::Runner(const lib::settings &settings,
 	const lib::paths &paths, QWidget *parent)
@@ -174,7 +174,7 @@ auto SpotifyClient::Runner::isRunning() const -> bool
 		: process->isOpen();
 }
 
-void SpotifyClient::Runner::logOutput(const QByteArray &output, lib::log_type logType)
+void SpotifyClient::Runner::logOutput(const QByteArray &output, QtMsgType logType)
 {
 	for (auto &line: QString(output).split('\n'))
 	{
@@ -183,7 +183,7 @@ void SpotifyClient::Runner::logOutput(const QByteArray &output, lib::log_type lo
 			continue;
 		}
 
-		log.emplace_back(lib::date_time::now(), logType, line.toStdString());
+		log.append({logType, line});
 
 		const auto urlIndex = line.indexOf(QStringLiteral("https://accounts.spotify.com/authorize"));
 		if (urlIndex >= 0)
@@ -237,12 +237,12 @@ auto SpotifyClient::Runner::resetCredentials() const -> bool
 
 void SpotifyClient::Runner::onReadyReadOutput()
 {
-	logOutput(process->readAllStandardOutput(), lib::log_type::information);
+	logOutput(process->readAllStandardOutput(), QtInfoMsg);
 }
 
 void SpotifyClient::Runner::onReadyReadError()
 {
-	logOutput(process->readAllStandardError(), lib::log_type::error);
+	logOutput(process->readAllStandardError(), QtCriticalMsg);
 }
 
 void SpotifyClient::Runner::onStarted()
@@ -256,7 +256,7 @@ void SpotifyClient::Runner::onErrorOccurred(QProcess::ProcessError error)
 	emit statusChanged(message);
 }
 
-auto SpotifyClient::Runner::getLog() -> const std::vector<lib::log_message> &
+auto SpotifyClient::Runner::getLog() -> const QList<LogMessage> &
 {
 	return log;
 }

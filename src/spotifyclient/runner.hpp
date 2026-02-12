@@ -29,7 +29,7 @@ namespace SpotifyClient
 
 		void start();
 
-		static auto getLog() -> const std::vector<lib::log_message> &;
+		static auto getLog() -> const QList<LogMessage> &;
 		auto isRunning() const -> bool;
 
 	signals:
@@ -43,12 +43,12 @@ namespace SpotifyClient
 		QProcess *process;
 		QWidget *parentWidget = nullptr;
 		QString path;
-		static std::vector<lib::log_message> log;
+		static QList<LogMessage> log;
 		const lib::settings &settings;
 		const lib::paths &paths;
 		lib::client_type clientType;
 
-		void logOutput(const QByteArray &output, lib::log_type logType);
+		void logOutput(const QByteArray &output, QtMsgType logType);
 		static auto joinArgs(const QStringList &args) -> QString;
 
 		auto getCachePath() const -> std::filesystem::path;

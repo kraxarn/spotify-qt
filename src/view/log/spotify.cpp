@@ -6,7 +6,7 @@ Log::Spotify::Spotify(QWidget *parent)
 {
 }
 
-auto Log::Spotify::getMessages() -> const std::vector<lib::log_message> &
+auto Log::Spotify::getMessages() -> const QList<LogMessage> &
 {
 	return SpotifyClient::Runner::getLog();
 }

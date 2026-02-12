@@ -56,9 +56,9 @@ void Log::Base::showEvent(QShowEvent *event)
 	list->clear();
 	for (const auto &logMessage: getMessages())
 	{
-		const auto time = QString::fromStdString(logMessage.get_time());
-		const auto type = QString::fromStdString(logMessage.get_type());
-		const auto message = QString::fromStdString(logMessage.get_message());
+		const QString time = logMessage.timeString();
+		const QString type = logMessage.typeLongString();
+		const QString message = logMessage.message();
 
 		auto *item = new QTreeWidgetItem({
 			time,

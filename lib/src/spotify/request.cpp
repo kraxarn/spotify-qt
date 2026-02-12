@@ -1,7 +1,8 @@
 #include "lib/spotify/request.hpp"
+#include "lib/base64.hpp"
+#include "lib/datetime.hpp"
 #include "lib/fmt.hpp"
 #include "lib/spotify/error.hpp"
-#include "lib/base64.hpp"
 
 lib::spt::request::request(lib::settings &settings, const lib::http_client &http_client,
 	const lib::spt::device_select &device_select)

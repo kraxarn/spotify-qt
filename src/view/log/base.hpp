@@ -11,7 +11,7 @@ namespace Log
 	protected:
 		explicit Base(QWidget *parent);
 
-		virtual auto getMessages() -> const std::vector<lib::log_message> & = 0;
+		virtual auto getMessages() -> const QList<LogMessage> & = 0;
 
 		void showEvent(QShowEvent *event) override;
 

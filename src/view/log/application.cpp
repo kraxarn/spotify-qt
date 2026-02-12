@@ -1,12 +1,12 @@
 #include "view/log/application.hpp"
-#include "lib/log.hpp"
+#include "lib/logging.hpp"
 
 Log::Application::Application(QWidget *parent)
 	: Base(parent)
 {
 }
 
-auto Log::Application::getMessages() -> const std::vector<lib::log_message> &
+auto Log::Application::getMessages() -> const QList<LogMessage> &
 {
-	return lib::log::get_messages();
+	return Logging::messages();
 }

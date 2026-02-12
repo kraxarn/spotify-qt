@@ -1,42 +1,27 @@
 #include "lib/log.hpp"
+#include "lib/logging.hpp"
 
-#include <iostream>
-
-std::vector<lib::log_message> lib::log::messages = std::vector<log_message>();
-
-bool lib::log::log_to_stdout = true;
-
-void lib::log::message(log_type log_type, const std::string &message)
+void lib::log::message(const log_type log_type, const std::string &message)
 {
-	log_message msg(log_type, message);
-	messages.push_back(msg);
-
-	if (!log_to_stdout)
+	QtMsgType msg_type;
+	switch (log_type)
 	{
-		return;
+		case log_type::information:
+			msg_type = QtInfoMsg;
+			break;
+
+		case log_type::warning:
+			msg_type = QtWarningMsg;
+			break;
+
+		case log_type::error:
+			msg_type = QtCriticalMsg;
+			break;
+
+		default:
+			msg_type = QtDebugMsg;
+			break;
 	}
 
-	if (log_type == log_type::information || log_type == log_type::verbose)
-	{
-		std::cout << msg.to_string() << std::endl;
-	}
-	else
-	{
-		std::cerr << msg.to_string() << std::endl;
-	}
-}
-
-auto lib::log::get_messages() -> const std::vector<log_message> &
-{
-	return messages;
-}
-
-void lib::log::clear()
-{
-	messages.clear();
-}
-
-void lib::log::set_log_to_stdout(bool value)
-{
-	log_to_stdout = value;
+	Logging::message(msg_type, {}, QString::fromStdString(message));
 }

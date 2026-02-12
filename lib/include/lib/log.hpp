@@ -2,12 +2,7 @@
 
 #include "lib/developermode.hpp"
 #include "lib/fmt.hpp"
-#include "lib/logmessage.hpp"
 #include "lib/enum/logtype.hpp"
-
-#include <regex>
-
-class Logging;
 
 namespace lib
 {
@@ -96,23 +91,6 @@ namespace lib
 			message(log_type::verbose, fmt);
 		}
 
-		/**
-		 * Get all messages that has been logged since application start
-		 * @return Log messages
-		 */
-		static auto get_messages() -> const std::vector<log_message> &;
-
-		/**
-		 * Clears all messages in the log
-		 */
-		static void clear();
-
-		/**
-		 * Enable or disable logging to standard output/error,
-		 * enabled by default
-		 */
-		static void set_log_to_stdout(bool value);
-
 	private:
 		/**
 		 * Private constructor, this is a static class
@@ -120,22 +98,10 @@ namespace lib
 		log() = default;
 
 		/**
-		 * History of all messages
-		 */
-		static std::vector<log_message> messages;
-
-		/**
-		 * Also print to stdout/stderr
-		 */
-		static bool log_to_stdout;
-
-		/**
 		 * Log a message with the specified type
 		 * @param log_type Type of log
 		 * @param message Message to log
 		 */
 		static void message(log_type log_type, const std::string &message);
-
-		friend class ::Logging;
 	};
 }

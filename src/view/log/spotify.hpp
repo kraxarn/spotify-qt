@@ -10,6 +10,6 @@ namespace Log
 		Spotify(QWidget *parent);
 
 	protected:
-		auto getMessages() -> const std::vector<lib::log_message> & override;
+		auto getMessages() -> const QList<LogMessage> & override;
 	};
 }
