@@ -3,6 +3,7 @@
 #include "lib/spotify/user.hpp"
 #include "lib/spotify/track.hpp"
 #include "lib/json.hpp"
+#include "lib/enum/playlistloadtype.hpp"
 
 #include <string>
 
@@ -58,6 +59,11 @@ namespace lib
 			 * Tracks in playlist
 			 */
 			std::vector<lib::spt::track> tracks;
+
+			/**
+			 * Version of loaded playlist
+			 */
+			PlaylistLoadType load_type;
 
 			/**
 			 * Number of tracks in playlist

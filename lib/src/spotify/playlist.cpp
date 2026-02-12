@@ -43,14 +43,20 @@ void lib::spt::from_json(const nlohmann::json &j, playlist &p)
 		nlohmann::json tracks;
 		if (j.contains("tracks"))
 		{
+			p.load_type = j.contains("href")
+				? PlaylistLoadType::Version1
+				: PlaylistLoadType::Unknown;
+
 			tracks = j.at("tracks");
 		}
 		else if (j.contains("items") && j.at("items").contains("items"))
 		{
+			p.load_type = PlaylistLoadType::Version2;
 			tracks = j.at("items").at("items");
 		}
 		else if (j.contains("items"))
 		{
+			p.load_type = PlaylistLoadType::Version2;
 			tracks = j.at("items");
 		}
 		else
