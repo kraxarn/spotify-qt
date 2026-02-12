@@ -43,5 +43,10 @@ void Logging::message(const QtMsgType type, const QMessageLogContext &context, c
 	const LogMessage message(type, msg);
 	mMessages.push_back(message);
 
+	if (!mLogToStdout)
+	{
+		return;
+	}
+
 	mDefaultHandler(type, context, msg);
 }
