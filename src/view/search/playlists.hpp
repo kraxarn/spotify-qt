@@ -13,7 +13,7 @@ namespace Search
 	Q_OBJECT
 
 	public:
-		Playlists(lib::spt::api &spotify, lib::cache &cache, const lib::http_client &httpClient,
+		Playlists(lib::spt::api &spotify, lib::cache &cache, const HttpClient &httpClient,
 			lib::settings &settings, QWidget *parent);
 
 		void add(const lib::spt::playlist &playlist);

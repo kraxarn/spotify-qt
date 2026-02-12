@@ -13,7 +13,7 @@
 #include "util/http.hpp"
 
 DeveloperMenu::DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
-	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
+	lib::cache &cache, const HttpClient &httpClient, QWidget *parent)
 	: QMenu("Developer", parent),
 	settings(settings),
 	spotify(spotify),

@@ -3,7 +3,7 @@
 #include "lib/log.hpp"
 #include "lib/uri.hpp"
 
-lib::ddg::api::api(const lib::http_client &http_client)
+lib::ddg::api::api(const HttpClient &http_client)
 	: http(http_client)
 {
 }

@@ -6,7 +6,7 @@
 #include "util/datetime.hpp"
 
 List::Playlist::Playlist(lib::spt::api &spotify, lib::settings &settings,
-	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
+	lib::cache &cache, const HttpClient &httpClient, QWidget *parent)
 	: QListWidget(parent),
 	spotify(spotify),
 	cache(cache),

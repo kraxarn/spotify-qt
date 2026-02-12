@@ -4,7 +4,7 @@
 #include "mainwindow.hpp"
 
 Artist::View::View(lib::spt::api &spotify, const std::string &artistId, lib::cache &cache,
-	const lib::http_client &httpClient, lib::settings &settings, QWidget *parent)
+	const HttpClient &httpClient, lib::settings &settings, QWidget *parent)
 	: QWidget(parent),
 	artistId(std::string(artistId)),
 	spotify(spotify),

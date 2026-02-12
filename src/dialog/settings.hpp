@@ -18,7 +18,7 @@ namespace Dialog
 
 	public:
 		Settings(lib::settings &settings, lib::cache &cache,
-			const lib::http_client &httpClient, QWidget *parent);
+			const HttpClient &httpClient, QWidget *parent);
 
 	private:
 		void categoryChanged(int row);

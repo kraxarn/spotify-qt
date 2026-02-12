@@ -6,7 +6,7 @@
 #include <QPushButton>
 
 Dialog::WhatsNew::WhatsNew(lib::settings &settings,
-	const lib::http_client &httpClient, QWidget *parent)
+	const HttpClient &httpClient, QWidget *parent)
 	: QDialog(parent),
 	settings(settings),
 	httpClient(httpClient)

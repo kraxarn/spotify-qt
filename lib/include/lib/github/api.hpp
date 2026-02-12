@@ -14,7 +14,7 @@ namespace lib
 		class api
 		{
 		public:
-			api(const lib::http_client &http_client);
+			api(const HttpClient &http_client);
 
 			/**
 			 * Repository contributors
@@ -36,7 +36,7 @@ namespace lib
 				const std::string &tag, lib::callback<lib::gh::release> &callback) const;
 
 		private:
-			const lib::http_client &http_client;
+			const HttpClient &http_client;
 
 			/**
 			 * Try to parse response from GitHub

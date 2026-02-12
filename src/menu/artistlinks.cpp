@@ -2,7 +2,7 @@
 #include "lib/fmt.hpp"
 
 Menu::ArtistLinks::ArtistLinks(const lib::spt::artist &artist,
-	const lib::http_client &httpClient, QWidget *parent)
+	const HttpClient &httpClient, QWidget *parent)
 	: QMenu(parent),
 	artist(artist),
 	ddg(httpClient)

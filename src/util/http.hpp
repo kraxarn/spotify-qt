@@ -20,13 +20,13 @@ public:
 	 * @param useDefaultIcon If no cache, call callback first with default icon
 	 * @param callback Callback to call one or more times
 	 */
-	static void getAlbumImage(const std::string &url, const lib::http_client &httpClient,
+	static void getAlbumImage(const std::string &url, const HttpClient &httpClient,
 		lib::cache &cache, bool useDefaultIcon, lib::callback<QPixmap> &callback);
 
 	/**
 	 * Get album image from cache or from HTTP, using default icon
 	 */
-	static void getAlbumImage(const std::string &url, const lib::http_client &httpClient,
+	static void getAlbumImage(const std::string &url, const HttpClient &httpClient,
 		lib::cache &cache, lib::callback<QPixmap> &callback);
 
 	/**

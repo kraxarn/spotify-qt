@@ -17,7 +17,7 @@ namespace List
 	Q_OBJECT
 
 	public:
-		Library(lib::spt::api &spotify, lib::cache &cache, const lib::http_client &httpClient,
+		Library(lib::spt::api &spotify, lib::cache &cache, const HttpClient &httpClient,
 			lib::settings &settings, QWidget *parent);
 
 		void load(QTreeWidgetItem *item);

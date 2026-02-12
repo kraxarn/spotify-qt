@@ -10,7 +10,7 @@
 #include "view/artist/view.hpp"
 
 Artist::AlbumsList::AlbumsList(lib::spt::api &spotify, lib::cache &cache,
-	const lib::http_client &httpClient, lib::settings &settings, QWidget *parent)
+	const HttpClient &httpClient, lib::settings &settings, QWidget *parent)
 	: QTreeWidget(parent),
 	spotify(spotify),
 	cache(cache),

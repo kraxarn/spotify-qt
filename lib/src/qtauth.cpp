@@ -4,7 +4,7 @@
 lib::qt::spt::auth::auth(lib::settings &settings, QObject *parent)
 	: QObject(parent)
 {
-	const auto *httpClient = new lib::http_client(this);
+	const auto *httpClient = new HttpClient(this);
 	spt_auth = new lib::spt::auth(settings, *httpClient);
 }
 

@@ -3,7 +3,7 @@
 #include "widget/about.hpp"
 
 SettingsPage::About::About(lib::settings &settings,
-	const lib::http_client &httpClient,
+	const HttpClient &httpClient,
 	QWidget *parent)
 	: SettingsPage::Base(settings, parent)
 {
@@ -16,7 +16,7 @@ auto SettingsPage::About::about() -> QWidget *
 	return new ::About(this);
 }
 
-auto SettingsPage::About::contributors(const lib::http_client &httpClient) -> QWidget *
+auto SettingsPage::About::contributors(const HttpClient &httpClient) -> QWidget *
 {
 	return new List::Contributors(httpClient);
 }

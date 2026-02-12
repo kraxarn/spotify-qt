@@ -15,7 +15,7 @@ namespace Menu
 	{
 	public:
 		ArtistLinks(const lib::spt::artist &artist,
-			const lib::http_client &httpClient, QWidget *parent);
+			const HttpClient &httpClient, QWidget *parent);
 
 	private:
 		const lib::spt::artist &artist;

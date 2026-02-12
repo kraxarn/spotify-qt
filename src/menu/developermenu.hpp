@@ -19,13 +19,13 @@ Q_OBJECT
 
 public:
 	DeveloperMenu(lib::settings &settings, lib::spt::api &spotify,
-		lib::cache &cache, const lib::http_client &httpClient, QWidget *parent);
+		lib::cache &cache, const HttpClient &httpClient, QWidget *parent);
 
 private:
 	lib::settings &settings;
 	lib::spt::api &spotify;
 	lib::cache &cache;
-	const lib::http_client &httpClient;
+	const HttpClient &httpClient;
 
 	QMenu *dialogMenu = nullptr;
 

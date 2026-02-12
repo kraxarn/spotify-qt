@@ -31,7 +31,7 @@ namespace Artist
 
 	public:
 		View(lib::spt::api &spotify, const std::string &artistId, lib::cache &cache,
-			const lib::http_client &httpClient, lib::settings &settings, QWidget *parent);
+			const HttpClient &httpClient, lib::settings &settings, QWidget *parent);
 
 		auto getArtist() const -> const lib::spt::artist &;
 
@@ -46,7 +46,7 @@ namespace Artist
 		lib::spt::artist artist;
 		lib::spt::api &spotify;
 		lib::cache &cache;
-		const lib::http_client &httpClient;
+		const HttpClient &httpClient;
 
 		AlbumsList *albumList;
 		Cover *coverLabel = nullptr;

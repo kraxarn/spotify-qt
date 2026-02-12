@@ -4,7 +4,7 @@
 #include "metatypes.hpp"
 #include "menu/playlist.hpp"
 
-Search::Playlists::Playlists(lib::spt::api &spotify, lib::cache &cache, const lib::http_client &httpClient,
+Search::Playlists::Playlists(lib::spt::api &spotify, lib::cache &cache, const HttpClient &httpClient,
 	lib::settings &settings, QWidget *parent)
 	: QListWidget(parent),
 	spotify(spotify),

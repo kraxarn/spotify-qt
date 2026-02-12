@@ -1,7 +1,7 @@
 #include "maincontent.hpp"
 
 MainContent::MainContent(lib::spt::api &spotify, lib::settings &settings,
-	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
+	lib::cache &cache, const HttpClient &httpClient, QWidget *parent)
 	: QWidget(parent)
 {
 	layout = new QVBoxLayout(this);

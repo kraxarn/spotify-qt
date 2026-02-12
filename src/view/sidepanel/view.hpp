@@ -18,7 +18,7 @@ namespace SidePanel
 
 	public:
 		View(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
-			const lib::http_client &httpClient, QWidget *parent);
+			const HttpClient &httpClient, QWidget *parent);
 
 		void openArtist(const std::string &artistId);
 		void openLyrics(const lib::spt::track &track);
@@ -48,7 +48,7 @@ namespace SidePanel
 		lib::spt::api &spotify;
 		lib::settings &settings;
 		lib::cache &cache;
-		const lib::http_client &httpClient;
+		const HttpClient &httpClient;
 
 		void setCurrentIndex(int index);
 		void setCurrentWidget(QWidget *widget);

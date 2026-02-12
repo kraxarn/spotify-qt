@@ -2,7 +2,7 @@
 #include "mainwindow.hpp"
 
 SidePanel::View::View(lib::spt::api &spotify, lib::settings &settings,
-	lib::cache &cache, const lib::http_client &httpClient, QWidget *parent)
+	lib::cache &cache, const HttpClient &httpClient, QWidget *parent)
 	: QDockWidget(parent),
 	spotify(spotify),
 	settings(settings),

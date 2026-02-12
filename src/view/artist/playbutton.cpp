@@ -4,7 +4,7 @@
 #include <QString>
 
 Artist::PlayButton::PlayButton(lib::spt::api &spotify,
-	const lib::http_client &httpClient, QWidget *parent)
+	const HttpClient &httpClient, QWidget *parent)
 	: QToolButton(parent),
 	spotify(spotify),
 	httpClient(httpClient)

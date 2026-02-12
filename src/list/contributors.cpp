@@ -1,6 +1,6 @@
 #include "list/contributors.hpp"
 
-List::Contributors::Contributors(const lib::http_client &httpClient)
+List::Contributors::Contributors(const HttpClient &httpClient)
 	: httpClient(httpClient)
 {
 	QListWidget::connect(this, &QListWidget::itemDoubleClicked,

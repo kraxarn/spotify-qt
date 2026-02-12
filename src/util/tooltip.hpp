@@ -14,7 +14,7 @@ class Tooltip
 {
 public:
 	Tooltip(lib::settings &settings,
-		const lib::http_client &httpClient, lib::cache &cache);
+		const HttpClient &httpClient, lib::cache &cache);
 
 	void set(QTreeWidgetItem *item, const lib::spt::track &track);
 	void set(QListWidgetItem *item, const lib::spt::track &track, const QIcon &albumIcon);
@@ -29,7 +29,7 @@ private:
 	static constexpr int albumSize = lib::spt::image::size_small;
 
 	lib::settings &settings;
-	const lib::http_client &httpClient;
+	const HttpClient &httpClient;
 	lib::cache &cache;
 
 	static auto tooltip(const QPixmap &image, const QList<TooltipRow> &rows) -> QString;

@@ -2,7 +2,7 @@
 #include "lib/fmt.hpp"
 #include "lib/log.hpp"
 
-lib::spt::auth::auth(lib::settings &settings, const lib::http_client &http_client)
+lib::spt::auth::auth(lib::settings &settings, const HttpClient &http_client)
 	: settings(settings),
 	http_client(http_client)
 {

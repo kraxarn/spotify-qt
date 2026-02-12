@@ -14,14 +14,14 @@ namespace Dialog
 
 	public:
 		WhatsNew(lib::settings &settings,
-			const lib::http_client &httpClient, QWidget *parent);
+			const HttpClient &httpClient, QWidget *parent);
 
 	protected:
 		void showEvent(QShowEvent *event) override;
 
 	private:
 		lib::settings &settings;
-		const lib::http_client &httpClient;
+		const HttpClient &httpClient;
 		QTextEdit *text = nullptr;
 
 		void onReleaseInfo(const lib::gh::release &release);

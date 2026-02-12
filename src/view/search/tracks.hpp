@@ -14,7 +14,7 @@ namespace Search
 
 	public:
 		Tracks(lib::spt::api &spotify, lib::cache &cache, lib::settings &settings,
-			const lib::http_client &httpClient, QWidget *parent);
+			const HttpClient &httpClient, QWidget *parent);
 
 		void add(const lib::spt::track &track);
 

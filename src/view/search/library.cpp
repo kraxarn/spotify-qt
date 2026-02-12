@@ -2,7 +2,7 @@
 #include "view/search/view.hpp"
 
 Search::Library::Library(lib::spt::api &spotify, lib::cache &cache,
-	lib::settings &settings, const lib::http_client &httpClient, QWidget *parent)
+	lib::settings &settings, const HttpClient &httpClient, QWidget *parent)
 	: Search::Tracks(spotify, cache, settings, httpClient, parent),
 	spotify(spotify),
 	cache(cache)

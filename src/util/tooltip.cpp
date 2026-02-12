@@ -8,7 +8,7 @@
 #include <QTextDocument>
 
 Tooltip::Tooltip(lib::settings &settings,
-	const lib::http_client &httpClient, lib::cache &cache)
+	const HttpClient &httpClient, lib::cache &cache)
 	: settings(settings),
 	httpClient(httpClient),
 	cache(cache)

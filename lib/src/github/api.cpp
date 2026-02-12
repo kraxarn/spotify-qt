@@ -2,7 +2,7 @@
 #include "lib/fmt.hpp"
 #include "lib/log.hpp"
 
-lib::gh::api::api(const lib::http_client &http_client)
+lib::gh::api::api(const HttpClient &http_client)
 	: http_client(http_client)
 {
 }

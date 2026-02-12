@@ -37,7 +37,7 @@ namespace lib
 			 * @param http_client HTTP Client for requests
 			 * @param request Request instance for http requests
 			 */
-			api(lib::settings &settings, const lib::http_client &http_client,
+			api(lib::settings &settings, const HttpClient &http_client,
 				lib::spt::request &request);
 
 			//region Albums
@@ -427,7 +427,7 @@ namespace lib
 			static auto follow_type_string(lib::follow_type type) -> std::string;
 
 		private:
-			const lib::http_client &http;
+			const HttpClient &http;
 			lib::spt::request &request;
 
 			/**

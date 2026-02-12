@@ -18,7 +18,7 @@ namespace Artist
 
 	public:
 		AlbumsList(lib::spt::api &spotify, lib::cache &cache,
-			const lib::http_client &httpClient, lib::settings &settings, QWidget *parent);
+			const HttpClient &httpClient, lib::settings &settings, QWidget *parent);
 
 		void loadAlbums(const lib::spt::page<lib::spt::album> &page);
 		void addAlbums(const std::vector<lib::spt::album> &albums) const;
@@ -26,7 +26,7 @@ namespace Artist
 	private:
 		lib::spt::api &spotify;
 		lib::cache &cache;
-		const lib::http_client &httpClient;
+		const HttpClient &httpClient;
 		Tooltip tooltip;
 
 		std::map<lib::album_group, QTreeWidgetItem *> groups;

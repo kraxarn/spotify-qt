@@ -4,7 +4,7 @@
 #include "metatypes.hpp"
 
 Search::Tracks::Tracks(lib::spt::api &spotify, lib::cache &cache,
-	lib::settings &settings, const lib::http_client &httpClient, QWidget *parent)
+	lib::settings &settings, const HttpClient &httpClient, QWidget *parent)
 	: Search::SearchTabTree({"Title", "Artist", "Album"}, parent),
 	spotify(spotify),
 	cache(cache),

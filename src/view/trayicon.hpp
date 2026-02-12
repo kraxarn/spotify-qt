@@ -13,7 +13,7 @@ Q_OBJECT
 
 public:
 	TrayIcon(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
-		const lib::http_client &httpClient, QWidget *parent);
+		const HttpClient &httpClient, QWidget *parent);
 
 	~TrayIcon() override;
 
@@ -47,7 +47,7 @@ private:
 	lib::spt::api &spotify;
 	lib::settings &settings;
 	lib::cache &cache;
-	const lib::http_client &httpClient;
+	const HttpClient &httpClient;
 
 	QAction *showApp = nullptr;
 

@@ -4,7 +4,7 @@
 #include "lib/fmt.hpp"
 #include "lib/spotify/error.hpp"
 
-lib::spt::request::request(lib::settings &settings, const lib::http_client &http_client,
+lib::spt::request::request(lib::settings &settings, const HttpClient &http_client,
 	const lib::spt::device_select &device_select)
 	: settings(settings),
 	http(http_client),

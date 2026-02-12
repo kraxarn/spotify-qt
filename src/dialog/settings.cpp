@@ -9,7 +9,7 @@
 #include "settingspage/logs.hpp"
 
 Dialog::Settings::Settings(lib::settings &settings, lib::cache &cache,
-	const lib::http_client &httpClient, QWidget *parent)
+	const HttpClient &httpClient, QWidget *parent)
 	: QDialog(parent),
 	settings(settings)
 {

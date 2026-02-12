@@ -10,7 +10,7 @@
 #include <QShortcut>
 
 List::Tracks::Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
-	const lib::http_client &httpClient, QWidget *parent)
+	const HttpClient &httpClient, QWidget *parent)
 	: QTreeWidget(parent),
 	settings(settings),
 	cache(cache),

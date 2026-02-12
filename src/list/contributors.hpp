@@ -14,7 +14,7 @@ namespace List
 	Q_OBJECT
 
 	public:
-		Contributors(const lib::http_client &httpClient);
+		Contributors(const HttpClient &httpClient);
 
 	protected:
 		void showEvent(QShowEvent *event) override;
@@ -22,7 +22,7 @@ namespace List
 	private:
 		static constexpr int urlRole = 0x100;
 
-		const lib::http_client &httpClient;
+		const HttpClient &httpClient;
 
 		void onItemDoubleClicked(QListWidgetItem *item);
 	};

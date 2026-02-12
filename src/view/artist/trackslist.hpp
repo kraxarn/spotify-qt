@@ -13,7 +13,7 @@ namespace Artist
 	class TracksList: public QListWidget
 	{
 	public:
-		TracksList(lib::spt::api &spotify, lib::cache &cache, const lib::http_client &httpClient,
+		TracksList(lib::spt::api &spotify, lib::cache &cache, const HttpClient &httpClient,
 			const lib::spt::artist &artist, lib::settings &settings, QWidget *parent);
 
 		void addTrack(const lib::spt::track &track);
@@ -21,7 +21,7 @@ namespace Artist
 	private:
 		lib::spt::api &spotify;
 		lib::cache &cache;
-		const lib::http_client &httpClient;
+		const HttpClient &httpClient;
 		const lib::spt::artist &artist;
 		Tooltip tooltip;
 

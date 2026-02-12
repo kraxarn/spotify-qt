@@ -11,7 +11,7 @@ class MainMenu: public QMenu, AppMenu
 Q_OBJECT
 
 public:
-	MainMenu(lib::spt::api &spotify, lib::settings &settings, const lib::http_client &httpClient,
+	MainMenu(lib::spt::api &spotify, lib::settings &settings, const HttpClient &httpClient,
 		lib::cache &cache, QWidget *parent);
 
 private:

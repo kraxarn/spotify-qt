@@ -5,7 +5,7 @@
 class AppMenu
 {
 protected:
-	explicit AppMenu(lib::settings &settings, const lib::http_client &httpClient,
+	explicit AppMenu(lib::settings &settings, const HttpClient &httpClient,
 		lib::cache &cache, QWidget *parent);
 
 	void logOut();
@@ -14,6 +14,6 @@ protected:
 private:
 	QWidget *parent;
 	lib::settings &settings;
-	const lib::http_client &httpClient;
+	const HttpClient &httpClient;
 	lib::cache &cache;
 };

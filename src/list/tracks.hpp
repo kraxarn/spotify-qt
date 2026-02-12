@@ -18,7 +18,7 @@ namespace List
 
 	public:
 		Tracks(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
-			const lib::http_client &httpClient, QWidget *parent);
+			const HttpClient &httpClient, QWidget *parent);
 
 		void updateResizeMode(lib::resize_mode mode);
 		void setPlayingTrackItem(QTreeWidgetItem *item);

@@ -26,7 +26,7 @@ namespace Search
 	Q_OBJECT
 
 	public:
-		View(lib::spt::api &spotify, lib::cache &cache, const lib::http_client &httpClient,
+		View(lib::spt::api &spotify, lib::cache &cache, const HttpClient &httpClient,
 			lib::settings &settings, QWidget *parent);
 
 	private:
@@ -34,7 +34,7 @@ namespace Search
 		QLineEdit *searchBox = nullptr;
 		lib::spt::api &spotify;
 		lib::cache &cache;
-		const lib::http_client &httpClient;
+		const HttpClient &httpClient;
 
 		Tracks *tracks = nullptr;
 		Artists *artists = nullptr;

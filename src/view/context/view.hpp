@@ -17,7 +17,7 @@ namespace Context
 
 	public:
 		View(lib::spt::api &spotify, lib::settings &settings, lib::cache &cache,
-			const lib::http_client &httpClient, QWidget *parent);
+			const HttpClient &httpClient, QWidget *parent);
 
 		void setAlbumSize(lib::album_size albumSize);
 		void reset();
@@ -26,7 +26,7 @@ namespace Context
 		lib::spt::api &spotify;
 		lib::settings &settings;
 		lib::cache &cache;
-		const lib::http_client &httpClient;
+		const HttpClient &httpClient;
 
 		Title *title = nullptr;
 		AbstractContent *albumContent = nullptr;

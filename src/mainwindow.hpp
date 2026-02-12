@@ -25,7 +25,7 @@ Q_OBJECT
 
 public:
 	MainWindow(lib::settings &settings, lib::paths &paths,
-		lib::http_client &httpClient, lib::spt::api &spotify);
+		HttpClient &httpClient, lib::spt::api &spotify);
 
 	static auto find(QObject *from) -> MainWindow *;
 	static auto defaultSize() -> QSize;
@@ -113,7 +113,7 @@ private:
 	lib::paths &paths;
 	lib::json_cache cache;
 	lib::spt::user currentUser;
-	lib::http_client &httpClient;
+	HttpClient &httpClient;
 
 	TrayIcon *trayIcon = nullptr;
 	int refreshCount = -1;

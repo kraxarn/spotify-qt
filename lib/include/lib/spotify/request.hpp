@@ -19,7 +19,7 @@ namespace lib
 		class request
 		{
 		public:
-			request(lib::settings &settings, const lib::http_client &http_client,
+			request(lib::settings &settings, const HttpClient &http_client,
 				const lib::spt::device_select &device_select);
 
 			/**
@@ -136,7 +136,7 @@ namespace lib
 			static constexpr long secs_in_hour = 60L * 60L;
 
 			lib::settings &settings;
-			const lib::http_client &http;
+			const HttpClient &http;
 			const lib::spt::device_select &device_select;
 
 			/**

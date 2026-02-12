@@ -9,7 +9,7 @@ namespace SettingsPage
 	class About: public Base
 	{
 	public:
-		About(lib::settings &settings, const lib::http_client &httpClient, QWidget *parent);
+		About(lib::settings &settings, const HttpClient &httpClient, QWidget *parent);
 
 		auto icon() -> QIcon override;
 		auto title() -> QString override;
@@ -17,6 +17,6 @@ namespace SettingsPage
 
 	private:
 		auto about() -> QWidget *;
-		auto contributors(const lib::http_client &httpClient) -> QWidget *;
+		auto contributors(const HttpClient &httpClient) -> QWidget *;
 	};
 }

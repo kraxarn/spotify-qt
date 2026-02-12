@@ -2,7 +2,7 @@
 #include "mainwindow.hpp"
 #include <QPushButton>
 
-AppMenu::AppMenu(lib::settings &settings, const lib::http_client &httpClient,
+AppMenu::AppMenu(lib::settings &settings, const HttpClient &httpClient,
 	lib::cache &cache, QWidget *parent)
 	: parent(parent),
 	settings(settings),

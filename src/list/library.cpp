@@ -12,7 +12,7 @@ static const auto topArtists = QStringLiteral("Top Artists");
 static const auto topTracks = QStringLiteral("Top Tracks");
 
 List::Library::Library(lib::spt::api &spotify, lib::cache &cache,
-	const lib::http_client &httpClient, lib::settings &settings, QWidget *parent)
+	const HttpClient &httpClient, lib::settings &settings, QWidget *parent)
 	: QTreeWidget(parent),
 	spotify(spotify),
 	cache(cache),

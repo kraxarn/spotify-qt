@@ -4,7 +4,7 @@
 #include <QListWidgetItem>
 #include <QVBoxLayout>
 
-View::Lyrics::Lyrics(const lib::http_client &httpClient,
+View::Lyrics::Lyrics(const HttpClient &httpClient,
 	lib::cache &cache, QWidget *parent)
 	: QWidget(parent),
 	cache(cache),

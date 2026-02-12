@@ -11,7 +11,7 @@ namespace Search
 
 	public:
 		Library(lib::spt::api &spotify, lib::cache &cache, lib::settings &settings,
-			const lib::http_client &httpClient, QWidget *parent);
+			const HttpClient &httpClient, QWidget *parent);
 
 		/** Searches in cache */
 		void searchCache(const std::string &query);

@@ -6,7 +6,7 @@
 #include "util/http.hpp"
 
 Search::Albums::Albums(lib::spt::api &spotify, lib::cache &cache,
-	const lib::http_client &httpClient, lib::settings &settings, QWidget *parent)
+	const HttpClient &httpClient, lib::settings &settings, QWidget *parent)
 	: Search::SearchTabTree({"Title", "Artist"}, parent),
 	spotify(spotify),
 	cache(cache),

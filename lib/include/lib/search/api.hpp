@@ -11,12 +11,12 @@ namespace lib
 		class api
 		{
 		public:
-			api(const lib::http_client &http_client);
+			api(const HttpClient &http_client);
 
 			void search(const lib::spt::artist &artist, lib::callback<lib::ddg::results> &callback);
 
 		private:
-			const lib::http_client &http;
+			const HttpClient &http;
 		};
 	}
 }

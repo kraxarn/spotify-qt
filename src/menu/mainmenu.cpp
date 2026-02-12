@@ -7,7 +7,7 @@
 #include "menu/queue.hpp"
 
 MainMenu::MainMenu(lib::spt::api &spotify, lib::settings &settings,
-	const lib::http_client &httpClient, lib::cache &cache, QWidget *parent)
+	const HttpClient &httpClient, lib::cache &cache, QWidget *parent)
 	: QMenu(parent),
 	AppMenu(settings, httpClient, cache, parent)
 {

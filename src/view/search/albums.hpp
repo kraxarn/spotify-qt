@@ -12,7 +12,7 @@ namespace Search
 	Q_OBJECT
 
 	public:
-		Albums(lib::spt::api &spotify, lib::cache &cache, const lib::http_client &httpClient,
+		Albums(lib::spt::api &spotify, lib::cache &cache, const HttpClient &httpClient,
 			lib::settings &settings, QWidget *parent);
 
 		void add(const lib::spt::album &album);
@@ -20,7 +20,7 @@ namespace Search
 	private:
 		lib::spt::api &spotify;
 		lib::cache &cache;
-		const lib::http_client &httpClient;
+		const HttpClient &httpClient;
 		Tooltip tooltip;
 
 		void onItemClicked(QTreeWidgetItem *item, int column);

@@ -15,7 +15,7 @@ namespace lib
 		class auth
 		{
 		public:
-			auth(lib::settings &settings, const lib::http_client &http_client);
+			auth(lib::settings &settings, const HttpClient &http_client);
 
 			/**
 			 * Get authentication URL
@@ -38,7 +38,7 @@ namespace lib
 
 		private:
 			lib::settings &settings;
-			const lib::http_client &http_client;
+			const HttpClient &http_client;
 		};
 	}
 }

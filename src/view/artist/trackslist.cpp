@@ -3,7 +3,7 @@
 #include "mainwindow.hpp"
 #include "metatypes.hpp"
 
-Artist::TracksList::TracksList(lib::spt::api &spotify, lib::cache &cache, const lib::http_client &httpClient,
+Artist::TracksList::TracksList(lib::spt::api &spotify, lib::cache &cache, const HttpClient &httpClient,
 	const lib::spt::artist &artist, lib::settings &settings, QWidget *parent)
 	: QListWidget(parent),
 	spotify(spotify),

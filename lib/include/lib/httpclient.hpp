@@ -97,8 +97,3 @@ private:
 
 	void await(QNetworkReply *reply, ApiCallback<Result<QByteArray>> &callback) const;
 };
-
-namespace lib
-{
-	using http_client [[deprecated("Use HttpClient instead")]] = HttpClient;
-}

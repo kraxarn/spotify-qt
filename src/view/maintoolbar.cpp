@@ -5,7 +5,7 @@
 #include "util/appconfig.hpp"
 
 MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
-	const lib::http_client &httpClient, lib::cache &cache, QWidget *parent)
+	const HttpClient &httpClient, lib::cache &cache, QWidget *parent)
 	: QToolBar("Media controls", parent),
 	spotify(spotify),
 	settings(settings)
