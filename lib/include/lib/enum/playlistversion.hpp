@@ -1,6 +1,6 @@
 #pragma once
 
-enum class PlaylistLoadType: unsigned char
+enum class PlaylistVersion: unsigned char
 {
 	/**
 	 * Unknown method,

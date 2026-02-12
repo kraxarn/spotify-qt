@@ -141,7 +141,7 @@ void List::Playlist::load(const std::vector<lib::spt::playlist> &playlists, cons
 		item->setData(static_cast<int>(DataRole::DefaultIndex), index);
 		item->setData(static_cast<int>(DataRole::Index), index++);
 
-		if (playlist.load_type == PlaylistLoadType::Version2
+		if (playlist.version == PlaylistVersion::Version2
 			&& playlist.owner_id != userId)
 		{
 			item->setFlags(item->flags() & ~Qt::ItemIsEnabled);

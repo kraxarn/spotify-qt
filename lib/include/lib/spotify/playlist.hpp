@@ -3,7 +3,7 @@
 #include "lib/spotify/user.hpp"
 #include "lib/spotify/track.hpp"
 #include "lib/json.hpp"
-#include "lib/enum/playlistloadtype.hpp"
+#include "lib/enum/playlistversion.hpp"
 
 #include <string>
 
@@ -62,8 +62,9 @@ namespace lib
 
 			/**
 			 * Version of loaded playlist
+			 * @note Only needed because Spotify's "versioned" API is unversioned
 			 */
-			PlaylistLoadType load_type;
+			PlaylistVersion version;
 
 			/**
 			 * Number of tracks in playlist
