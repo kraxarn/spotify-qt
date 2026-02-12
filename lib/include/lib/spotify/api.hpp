@@ -16,6 +16,7 @@
 #include "lib/spotify/queue.hpp"
 #include "lib/spotify/request.hpp"
 #include "lib/spotify/savedalbum.hpp"
+#include "lib/spotify/saveditems.hpp"
 #include "lib/spotify/searchresults.hpp"
 #include "lib/spotify/track.hpp"
 
@@ -117,8 +118,12 @@ namespace lib
 			void remove_saved_tracks(const std::vector<std::string> &track_ids,
 				ApiCallback<std::string> &callback);
 
+			[[deprecated("Use isSavedItems instead")]]
 			void is_saved_track(const std::vector<std::string> &track_ids,
 				ApiCallback<std::vector<bool>> &callback);
+
+			void isSavedItems(const QList<QString> &uris,
+				ApiCallback<Result<SpotifySavedItems>> &callback) const;
 
 			//endregion
 

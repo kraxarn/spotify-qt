@@ -1,4 +1,5 @@
 #include "lib/spotify/api.hpp"
+#include "lib/spotify/saveditems.hpp"
 
 // Currently unavailable:
 // me/shows
@@ -63,4 +64,13 @@ void lib::spt::api::is_saved_track(const std::vector<std::string> &track_ids,
 {
 	get(lib::fmt::format("me/tracks/contains?ids={}",
 		lib::strings::join(track_ids, ",")), callback);
+}
+
+void lib::spt::api::isSavedItems(const QList<QString> &uris,
+	ApiCallback<Result<SpotifySavedItems>> &callback) const
+{
+	const QString path = QStringLiteral("me/library/contains?uris=%1")
+		.arg(uris.join(QChar::fromLatin1(',')));
+
+	request.get(path, callback);
 }
