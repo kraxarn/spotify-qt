@@ -24,6 +24,8 @@ using RequestHeaders = QMap<QNetworkRequest::KnownHeaders, QVariant>;
 
 class HttpClient final : public QObject
 {
+	Q_OBJECT
+
 public:
 	explicit HttpClient(QObject *parent);
 
