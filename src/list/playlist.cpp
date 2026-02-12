@@ -122,7 +122,12 @@ void List::Playlist::onItemEntered(QListWidgetItem *item)
 
 void List::Playlist::load(const std::vector<lib::spt::playlist> &playlists, const int offset)
 {
-	auto index = offset;
+	int index = offset;
+
+	const MainWindow *mainWindow = MainWindow::find(parentWidget());
+	const std::string userId = mainWindow != nullptr
+		? mainWindow->getCurrentUser().id
+		: std::string();
 
 	for (const auto &playlist: playlists)
 	{
@@ -135,6 +140,13 @@ void List::Playlist::load(const std::vector<lib::spt::playlist> &playlists, cons
 		item->setData(static_cast<int>(DataRole::Playlist), QVariant::fromValue(playlist));
 		item->setData(static_cast<int>(DataRole::DefaultIndex), index);
 		item->setData(static_cast<int>(DataRole::Index), index++);
+
+		if (playlist.load_type == PlaylistLoadType::Version2
+			&& playlist.owner_id != userId)
+		{
+			item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
+			item->setToolTip(QStringLiteral("Unavailable"));
+		}
 	}
 
 	// Sort
