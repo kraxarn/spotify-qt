@@ -98,9 +98,19 @@ void lib::spt::from_json(const nlohmann::json &j, track &t)
 	}
 
 	// Object that contains the actual track object
-	auto track = j.contains("track")
-		? j.at("track")
-		: j;
+	nlohmann::json track;
+	if (j.contains("track"))
+	{
+		track = j.at("track");
+	}
+	else if (j.contains("item"))
+	{
+		track = j.at("item");
+	}
+	else
+	{
+		track = j;
+	}
 
 	lib::json::get(track, "id", t.id);
 	lib::json::get(track, "name", t.name);
