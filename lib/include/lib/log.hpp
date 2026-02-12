@@ -2,7 +2,8 @@
 
 #include "lib/developermode.hpp"
 #include "lib/fmt.hpp"
-#include "lib/enum/logtype.hpp"
+
+#include <QtLogging>
 
 namespace lib
 {
@@ -27,7 +28,7 @@ namespace lib
 		template<typename Format>
 		static void info(const Format &fmt)
 		{
-			message(log_type::information, fmt);
+			message(QtInfoMsg, fmt);
 		}
 
 		/**
@@ -45,7 +46,7 @@ namespace lib
 		template<typename Format>
 		static void warn(const Format &fmt)
 		{
-			message(log_type::warning, fmt);
+			message(QtWarningMsg, fmt);
 		}
 
 		/***
@@ -63,7 +64,7 @@ namespace lib
 		template<typename Format>
 		static void error(const Format &fmt)
 		{
-			message(log_type::error, fmt);
+			message(QtCriticalMsg, fmt);
 		}
 
 		/**
@@ -88,7 +89,7 @@ namespace lib
 				return;
 			}
 
-			message(log_type::verbose, fmt);
+			message(QtDebugMsg, fmt);
 		}
 
 	private:
@@ -102,6 +103,6 @@ namespace lib
 		 * @param log_type Type of log
 		 * @param message Message to log
 		 */
-		static void message(log_type log_type, const std::string &message);
+		static void message(QtMsgType log_type, const std::string &message);
 	};
 }
