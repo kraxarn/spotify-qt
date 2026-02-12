@@ -59,13 +59,6 @@ void lib::spt::api::remove_saved_tracks(const std::vector<std::string> &track_id
 	}, callback);
 }
 
-void lib::spt::api::is_saved_track(const std::vector<std::string> &track_ids,
-	ApiCallback<std::vector<bool>> &callback)
-{
-	get(lib::fmt::format("me/tracks/contains?ids={}",
-		lib::strings::join(track_ids, ",")), callback);
-}
-
 void lib::spt::api::isSavedItems(const QList<QString> &uris,
 	ApiCallback<Result<SpotifySavedItems>> &callback) const
 {

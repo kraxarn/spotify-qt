@@ -88,10 +88,18 @@ Menu::Track::Track(const QList<PlaylistTrack> &tracks, lib::spt::api &spotify,
 
 	if (isSingle)
 	{
-		const auto trackId = lib::spt::uri_to_id(singleTrack.id);
-		spotify.is_saved_track({trackId}, [this](const std::vector<bool> &likes)
+		const QString trackUri = QStringLiteral("spotify:track:%1")
+			.arg(QString::fromStdString(singleTrack.id));
+
+		spotify.isSavedItems({trackUri}, [this](const Result<SpotifySavedItems> &result)
 		{
-			auto liked = !likes.empty() && likes.front();
+			if (!result.success())
+			{
+				return;
+			}
+
+			const QList<bool> &items = result.value().values();
+			const bool liked = !items.isEmpty() && items.first();
 			this->setLiked(liked);
 			this->toggleLiked->setEnabled(true);
 		});
