@@ -10,7 +10,7 @@ HttpClient::HttpClient(QObject *parent)
 }
 
 void HttpClient::get(const std::string &url, const lib::headers &headers,
-	lib::callback<std::string> &callback) const
+	ApiCallback<std::string> &callback) const
 {
 	await(mNetworkManager->get(request(url, headers)),
 		[callback](const QByteArray &data) -> void
@@ -20,7 +20,7 @@ void HttpClient::get(const std::string &url, const lib::headers &headers,
 }
 
 void HttpClient::get(const std::string &url, const lib::headers &headers,
-	lib::callback<Result<std::string>> &callback) const
+	ApiCallback<Result<std::string>> &callback) const
 {
 	await(mNetworkManager->get(request(url, headers)), callback);
 }
@@ -32,7 +32,7 @@ void HttpClient::get(const QUrl &url, const RequestHeaders &headers,
 }
 
 void HttpClient::put(const std::string &url, const std::string &body,
-	const lib::headers &headers, lib::callback<std::string> &callback) const
+	const lib::headers &headers, ApiCallback<std::string> &callback) const
 {
 	const QByteArray data = body.empty()
 		? QByteArray()
@@ -46,19 +46,19 @@ void HttpClient::put(const std::string &url, const std::string &body,
 }
 
 void HttpClient::post(const std::string &url, const lib::headers &headers,
-	lib::callback<std::string> &callback) const
+	ApiCallback<std::string> &callback) const
 {
 	post(url, std::string(), headers, callback);
 }
 
 void HttpClient::post(const std::string &url, const lib::headers &headers,
-	lib::callback<Result<std::string>> &callback) const
+	ApiCallback<Result<std::string>> &callback) const
 {
 	post(url, {}, headers, callback);
 }
 
 void HttpClient::post(const std::string &url, const std::string &body,
-	const lib::headers &headers, lib::callback<std::string> &callback) const
+	const lib::headers &headers, ApiCallback<std::string> &callback) const
 {
 	const QByteArray data = body.empty()
 		? QByteArray()
@@ -87,7 +87,7 @@ auto HttpClient::post(const std::string &url, const lib::headers &headers,
 }
 
 void HttpClient::post(const std::string &url, const std::string &body,
-	const lib::headers &headers, lib::callback<Result<std::string>> &callback) const
+	const lib::headers &headers, ApiCallback<Result<std::string>> &callback) const
 {
 	const QByteArray data = body.empty()
 		? QByteArray()
@@ -97,7 +97,7 @@ void HttpClient::post(const std::string &url, const std::string &body,
 }
 
 void HttpClient::del(const std::string &url, const std::string &body,
-	const lib::headers &headers, lib::callback<std::string> &callback) const
+	const lib::headers &headers, ApiCallback<std::string> &callback) const
 {
 	auto data = body.empty()
 		? QByteArray()
@@ -141,7 +141,7 @@ auto HttpClient::request(const QUrl &url, const RequestHeaders &headers) -> QNet
 	return request;
 }
 
-void HttpClient::await(QNetworkReply *reply, lib::callback<QByteArray> &callback) const
+void HttpClient::await(QNetworkReply *reply, ApiCallback<QByteArray> &callback) const
 {
 	QNetworkReply::connect(reply, &QNetworkReply::finished, this,
 		[reply, callback]()
@@ -157,7 +157,7 @@ void HttpClient::await(QNetworkReply *reply, lib::callback<QByteArray> &callback
 		});
 }
 
-void HttpClient::await(QNetworkReply *reply, lib::callback<Result<std::string>> &callback) const
+void HttpClient::await(QNetworkReply *reply, ApiCallback<Result<std::string>> &callback) const
 {
 	await(reply, [callback](const Result<QByteArray> &result) -> void
 	{

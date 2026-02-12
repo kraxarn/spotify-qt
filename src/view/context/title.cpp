@@ -99,7 +99,7 @@ auto Context::Title::playlistNameFromSaved(const std::string &id) -> std::string
 	return playlist(id).name;
 }
 
-void Context::Title::playlistName(const std::string &id, lib::callback<std::string> &callback)
+void Context::Title::playlistName(const std::string &id, ApiCallback<std::string> &callback)
 {
 	const auto &name = playlistNameFromSaved(id);
 	if (!name.empty())

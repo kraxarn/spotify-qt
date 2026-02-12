@@ -21,13 +21,13 @@ public:
 	 * @param callback Callback to call one or more times
 	 */
 	static void getAlbumImage(const std::string &url, const HttpClient &httpClient,
-		lib::cache &cache, bool useDefaultIcon, lib::callback<QPixmap> &callback);
+		lib::cache &cache, bool useDefaultIcon, ApiCallback<QPixmap> &callback);
 
 	/**
 	 * Get album image from cache or from HTTP, using default icon
 	 */
 	static void getAlbumImage(const std::string &url, const HttpClient &httpClient,
-		lib::cache &cache, lib::callback<QPixmap> &callback);
+		lib::cache &cache, ApiCallback<QPixmap> &callback);
 
 	/**
 	 * Get album from cache or from HTTP
@@ -37,7 +37,7 @@ public:
 	 * @param callback Callback called once when loaded
 	 */
 	static void getAlbum(const std::string &albumId, lib::spt::api &spotify,
-		lib::cache &cache, lib::callback<lib::spt::album> &callback);
+		lib::cache &cache, ApiCallback<lib::spt::album> &callback);
 
 private:
 	Http() = default;

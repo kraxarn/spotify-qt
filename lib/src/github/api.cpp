@@ -38,7 +38,7 @@ auto lib::gh::api::parse(const std::string &response,
 }
 
 void lib::gh::api::contributors(const std::string &owner, const std::string &repo,
-	lib::callback<std::vector<lib::gh::contributor>> &callback) const
+	ApiCallback<std::vector<lib::gh::contributor>> &callback) const
 {
 	http_client.get(lib::fmt::format("https://api.github.com/repos/{}/{}/contributors",
 		owner, repo), lib::headers(), [callback](const std::string &response)
@@ -57,7 +57,7 @@ void lib::gh::api::contributors(const std::string &owner, const std::string &rep
 }
 
 void lib::gh::api::release(const std::string &owner, const std::string &repo,
-	const std::string &tag, lib::callback<lib::gh::release> &callback) const
+	const std::string &tag, ApiCallback<lib::gh::release> &callback) const
 {
 	http_client.get(lib::fmt::format("https://api.github.com/repos/{}/{}/releases/tags/{}",
 			owner, repo, tag), lib::headers(),

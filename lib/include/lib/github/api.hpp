@@ -23,7 +23,7 @@ namespace lib
 			 * @param callback Response callback, empty if failed
 			 */
 			void contributors(const std::string &owner, const std::string &repo,
-				lib::callback<std::vector<lib::gh::contributor>> &callback) const;
+				ApiCallback<std::vector<lib::gh::contributor>> &callback) const;
 
 			/**
 			 * Release information
@@ -33,7 +33,7 @@ namespace lib
 			 * @param callback
 			 */
 			void release(const std::string &owner, const std::string &repo,
-				const std::string &tag, lib::callback<lib::gh::release> &callback) const;
+				const std::string &tag, ApiCallback<lib::gh::release> &callback) const;
 
 		private:
 			const HttpClient &http_client;

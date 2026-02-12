@@ -2,7 +2,7 @@
 
 #include <string>
 
-void lib::spt::api::album(const std::string &id, lib::callback<lib::spt::album> &callback)
+void lib::spt::api::album(const std::string &id, ApiCallback<lib::spt::album> &callback)
 {
 	get(lib::fmt::format("albums/{}", id), callback);
 }

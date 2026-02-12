@@ -18,7 +18,7 @@ namespace lib
 			 * @param callback Selected device
 			 */
 			virtual void get(const std::vector<lib::spt::device> &devices,
-				lib::callback<lib::spt::device> &callback) const = 0;
+				ApiCallback<lib::spt::device> &callback) const = 0;
 		};
 	}
 }

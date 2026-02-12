@@ -3,7 +3,7 @@
 // Currently unavailable:
 // users/{user_id}
 
-void lib::spt::api::me(lib::callback<lib::spt::user> &callback)
+void lib::spt::api::me(ApiCallback<lib::spt::user> &callback)
 {
 	get("me", callback);
 }

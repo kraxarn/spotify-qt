@@ -35,7 +35,7 @@ namespace lib
 			 * @param callback JSON response if successful, or error message on failure
 			 */
 			template<typename T>
-			void get(const std::string &url, lib::callback<Result<T>> &callback)
+			void get(const std::string &url, ApiCallback<Result<T>> &callback)
 			{
 				http.get(lib::spt::to_full_url(url), auth_headers(),
 					[callback](const Result<std::string> &response)
@@ -109,7 +109,7 @@ namespace lib
 			/**
 			 * POST request without body
 			 */
-			void post(const std::string &url, lib::callback<Result<void *>> &callback)
+			void post(const std::string &url, ApiCallback<Result<void *>> &callback)
 			{
 				auto headers = auth_headers();
 				headers["Content-Type"] = "application/x-www-form-urlencoded";

@@ -1,7 +1,7 @@
 #include "util/http.hpp"
 
 void Http::getAlbumImage(const std::string &url, const HttpClient &httpClient,
-	lib::cache &cache, bool useDefaultIcon, lib::callback<QPixmap> &callback)
+	lib::cache &cache, bool useDefaultIcon, ApiCallback<QPixmap> &callback)
 {
 	if (url.empty())
 	{
@@ -43,7 +43,7 @@ void Http::getAlbumImage(const std::string &url, const HttpClient &httpClient,
 }
 
 void Http::getAlbumImage(const std::string &url, const HttpClient &httpClient,
-	lib::cache &cache, lib::callback<QPixmap> &callback)
+	lib::cache &cache, ApiCallback<QPixmap> &callback)
 {
 	getAlbumImage(url, httpClient, cache, true, callback);
 }
@@ -55,7 +55,7 @@ auto Http::defaultIcon() -> QPixmap
 }
 
 void Http::getAlbum(const std::string &albumId, lib::spt::api &spotify,
-	lib::cache &cache, lib::callback<lib::spt::album> &callback)
+	lib::cache &cache, ApiCallback<lib::spt::album> &callback)
 {
 	const auto album = cache.get_album(albumId);
 	if (album.is_valid())

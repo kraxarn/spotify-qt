@@ -9,7 +9,7 @@ lib::ddg::api::api(const HttpClient &http_client)
 }
 
 void lib::ddg::api::search(const lib::spt::artist &artist,
-	lib::callback<lib::ddg::results> &callback)
+	ApiCallback<lib::ddg::results> &callback)
 {
 	const auto query = lib::uri::encode(artist.name);
 

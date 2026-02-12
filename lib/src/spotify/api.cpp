@@ -63,7 +63,7 @@ auto lib::spt::api::follow_type_string(lib::follow_type type) -> std::string
 
 //region GET
 
-void lib::spt::api::get(const std::string &url, lib::callback<nlohmann::json> &callback)
+void lib::spt::api::get(const std::string &url, ApiCallback<nlohmann::json> &callback)
 {
 	http.get(lib::spt::to_full_url(url), request.auth_headers(),
 		[url, callback](const std::string &response)
@@ -87,7 +87,7 @@ void lib::spt::api::get(const std::string &url, lib::callback<nlohmann::json> &c
 }
 
 void lib::spt::api::get_items(const std::string &url, const std::string &key,
-	lib::callback<nlohmann::json> &callback)
+	ApiCallback<nlohmann::json> &callback)
 {
 	constexpr size_t api_prefix_length = 27;
 
@@ -117,7 +117,7 @@ void lib::spt::api::get_items(const std::string &url, const std::string &key,
 	});
 }
 
-void lib::spt::api::get_items(const std::string &url, lib::callback<nlohmann::json> &callback)
+void lib::spt::api::get_items(const std::string &url, ApiCallback<nlohmann::json> &callback)
 {
 	get_items(url, std::string(), callback);
 }
@@ -127,7 +127,7 @@ void lib::spt::api::get_items(const std::string &url, lib::callback<nlohmann::js
 //region PUT
 
 void lib::spt::api::put(const std::string &url, const nlohmann::json &body,
-	lib::callback<std::string> &callback)
+	ApiCallback<std::string> &callback)
 {
 	auto header = request.auth_headers();
 	header["Content-Type"] = "application/json";
@@ -192,7 +192,7 @@ void lib::spt::api::put(const std::string &url, const nlohmann::json &body,
 		});
 }
 
-void lib::spt::api::put(const std::string &url, lib::callback<std::string> &callback)
+void lib::spt::api::put(const std::string &url, ApiCallback<std::string> &callback)
 {
 	put(url, nlohmann::json(), callback);
 }
@@ -201,7 +201,7 @@ void lib::spt::api::put(const std::string &url, lib::callback<std::string> &call
 
 //region POST
 
-void lib::spt::api::post(const std::string &url, lib::callback<std::string> &callback)
+void lib::spt::api::post(const std::string &url, ApiCallback<std::string> &callback)
 {
 	auto headers = request.auth_headers();
 	headers["Content-Type"] = "application/x-www-form-urlencoded";
@@ -214,7 +214,7 @@ void lib::spt::api::post(const std::string &url, lib::callback<std::string> &cal
 }
 
 void lib::spt::api::post(const std::string &url, const nlohmann::json &json,
-	lib::callback<nlohmann::json> &callback)
+	ApiCallback<nlohmann::json> &callback)
 {
 	auto headers = request.auth_headers();
 	headers["Content-Type"] = "application/json";
@@ -250,7 +250,7 @@ void lib::spt::api::post(const std::string &url, const nlohmann::json &json,
 //region DELETE
 
 void lib::spt::api::del(const std::string &url, const nlohmann::json &json,
-	lib::callback<std::string> &callback)
+	ApiCallback<std::string> &callback)
 {
 	auto headers = request.auth_headers();
 	headers["Content-Type"] = "application/json";
@@ -266,7 +266,7 @@ void lib::spt::api::del(const std::string &url, const nlohmann::json &json,
 		});
 }
 
-void lib::spt::api::del(const std::string &url, lib::callback<std::string> &callback)
+void lib::spt::api::del(const std::string &url, ApiCallback<std::string> &callback)
 {
 	del(url, nlohmann::json(), callback);
 }

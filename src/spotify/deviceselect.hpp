@@ -13,6 +13,6 @@ namespace spt
 		explicit DeviceSelect(QObject *parent);
 
 		void get(const std::vector<lib::spt::device> &devices,
-			lib::callback<lib::spt::device> &callback) const override;
+			ApiCallback<lib::spt::device> &callback) const override;
 	};
 }

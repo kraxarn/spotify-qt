@@ -43,7 +43,7 @@ namespace lib
 			//region Albums
 
 			void album(const std::string &id,
-				lib::callback<lib::spt::album> &callback);
+				ApiCallback<lib::spt::album> &callback);
 
 			void album_tracks(const spt::album &album,
 				const paged_callback<spt::track> &callback) const;
@@ -53,13 +53,13 @@ namespace lib
 			//region Artists
 
 			void artist(const std::string &id,
-				lib::callback<lib::spt::artist> &callback);
+				ApiCallback<lib::spt::artist> &callback);
 
 			void top_tracks(const lib::spt::artist &artist,
-				lib::callback<std::vector<lib::spt::track>> &callback);
+				ApiCallback<std::vector<lib::spt::track>> &callback);
 
 			void related_artists(const lib::spt::artist &artist,
-				lib::callback<std::vector<lib::spt::artist>> &callback);
+				ApiCallback<std::vector<lib::spt::artist>> &callback);
 
 			void albums(const spt::artist &artist, const std::vector<album_group> &groups,
 				const paged_callback<spt::album> &callback) const;
@@ -71,23 +71,23 @@ namespace lib
 			void followed_artists(const paged_callback<spt::artist> &callback) const;
 
 			void follow(lib::follow_type type, const std::vector<std::string> &ids,
-				lib::callback<std::string> &callback);
+				ApiCallback<std::string> &callback);
 
 			void unfollow(lib::follow_type type, const std::vector<std::string> &ids,
-				lib::callback<std::string> &callback);
+				ApiCallback<std::string> &callback);
 
 			void is_following(lib::follow_type type, const std::vector<std::string> &ids,
-				lib::callback<std::vector<bool>> &callback);
+				ApiCallback<std::vector<bool>> &callback);
 
 			void follow_playlist(const std::string &playlist_id,
-				lib::callback<std::string> &callback);
+				ApiCallback<std::string> &callback);
 
 			void unfollow_playlist(const std::string &playlist_id,
-				lib::callback<std::string> &callback);
+				ApiCallback<std::string> &callback);
 
 			void is_following_playlist(const std::string &playlist_id,
 				const std::vector<std::string> &user_ids,
-				lib::callback<std::vector<bool>> &callback);
+				ApiCallback<std::vector<bool>> &callback);
 
 			//endregion
 
@@ -96,37 +96,37 @@ namespace lib
 			void saved_albums(const paged_callback<saved_album> &callback) const;
 
 			void add_saved_albums(const std::vector<std::string> &album_ids,
-				lib::callback<std::string> &callback);
+				ApiCallback<std::string> &callback);
 
 			void remove_saved_albums(const std::vector<std::string> &album_ids,
-				lib::callback<std::string> &callback);
+				ApiCallback<std::string> &callback);
 
 			void is_saved_album(const std::vector<std::string> &album_ids,
-				lib::callback<std::vector<bool>> &callback);
+				ApiCallback<std::vector<bool>> &callback);
 
 			/**
 			 * @deprecated Use with pagination instead
 			 */
-			void saved_tracks(lib::callback<std::vector<lib::spt::track>> &callback);
+			void saved_tracks(ApiCallback<std::vector<lib::spt::track>> &callback);
 
 			void saved_tracks(const lib::paged_callback<lib::spt::track> &callback);
 
 			void add_saved_tracks(const std::vector<std::string> &track_ids,
-				lib::callback<std::string> &callback);
+				ApiCallback<std::string> &callback);
 
 			void remove_saved_tracks(const std::vector<std::string> &track_ids,
-				lib::callback<std::string> &callback);
+				ApiCallback<std::string> &callback);
 
 			void is_saved_track(const std::vector<std::string> &track_ids,
-				lib::callback<std::vector<bool>> &callback);
+				ApiCallback<std::vector<bool>> &callback);
 
 			//endregion
 
 			//region Personalization
 
-			void top_artists(lib::callback<std::vector<lib::spt::artist>> &callback);
+			void top_artists(ApiCallback<std::vector<lib::spt::artist>> &callback);
 
-			void top_tracks(lib::callback<std::vector<lib::spt::track>> &callback);
+			void top_tracks(ApiCallback<std::vector<lib::spt::track>> &callback);
 
 			//endregion
 
@@ -135,22 +135,22 @@ namespace lib
 			/**
 			 * Get what's currently playing
 			 */
-			void current_playback(lib::callback<Result<lib::spt::playback>> &callback);
+			void current_playback(ApiCallback<Result<lib::spt::playback>> &callback);
 
 			/**
 			 * Set current active device by device ID
 			 */
-			void set_device(const std::string &device_id, lib::callback<std::string> &callback);
+			void set_device(const std::string &device_id, ApiCallback<std::string> &callback);
 
 			/**
 			 * Set current active device
 			 */
-			void set_device(const lib::spt::device &device, lib::callback<std::string> &callback);
+			void set_device(const lib::spt::device &device, ApiCallback<std::string> &callback);
 
 			/**
 			 * Get all available devices
 			 */
-			void devices(lib::callback<std::vector<lib::spt::device>> &callback);
+			void devices(ApiCallback<std::vector<lib::spt::device>> &callback);
 
 			/**
 			 * Get me/player/play with device_id set if available
@@ -163,7 +163,7 @@ namespace lib
 			 * @param context Context to play from
 			 */
 			void play_tracks(int track_index, const std::string &context,
-				lib::callback<std::string> &callback);
+				ApiCallback<std::string> &callback);
 
 			/**
 			 * Play track from specified set of tracks
@@ -171,81 +171,81 @@ namespace lib
 			 * @param all IDs of all tracks
 			 */
 			void play_tracks(int track_index, const std::vector<std::string> &all,
-				lib::callback<std::string> &callback);
+				ApiCallback<std::string> &callback);
 
 			/**
 			 * Convenience method for playing specified set of tracks
 			 */
 			void play_tracks(int track_index, const std::initializer_list<std::string> &all,
-				lib::callback<std::string> &callback);
+				ApiCallback<std::string> &callback);
 
 			/**
 			 * Play track from specific context
 			 * @param context Context to play from
 			 * @note If shuffle is enabled, a random track is chosen to start playback from
 			 */
-			void play_tracks(const std::string &context, lib::callback<std::string> &callback);
+			void play_tracks(const std::string &context, ApiCallback<std::string> &callback);
 
 			/**
 			 * Resume playback
 			 */
-			void resume(lib::callback<std::string> &callback);
+			void resume(ApiCallback<std::string> &callback);
 
 			/**
 			 * Pause playback
 			 */
-			void pause(lib::callback<std::string> &callback);
+			void pause(ApiCallback<std::string> &callback);
 
 			/**
 			 * Skip to next track
 			 */
-			void next(lib::callback<std::string> &callback);
+			void next(ApiCallback<std::string> &callback);
 
 			/**
 			 * Go to previous track, or restart current
 			 */
-			void previous(lib::callback<std::string> &callback);
+			void previous(ApiCallback<std::string> &callback);
 
 			/**
 			 * Seek in current track
 			 * @param position Position to seek to in milliseconds
 			 */
-			void seek(int position, lib::callback<std::string> &callback);
+			void seek(int position, ApiCallback<std::string> &callback);
 
 			/**
 			 * Change repeat mode
 			 * @param state New repeat mode
 			 */
-			void set_repeat(lib::repeat_state state, lib::callback<std::string> &callback);
+			void set_repeat(lib::repeat_state state, ApiCallback<std::string> &callback);
 
 			/**
 			 * Change player volume
 			 * @param volume Player volume, from 0%-100%
 			 */
-			void set_volume(int volume, lib::callback<std::string> &callback);
+			void set_volume(int volume, ApiCallback<std::string> &callback);
 
 			/**
 			 * Change shuffle mode
 			 * @param enabled Shuffle mode is enabled
 			 */
-			void set_shuffle(bool enabled, lib::callback<std::string> &callback);
+			void set_shuffle(bool enabled, ApiCallback<std::string> &callback);
 
 			/**
 			 * Get all recently played tracks
 			 */
-			void recently_played(lib::callback<std::vector<lib::spt::track>> &callback);
+			void recently_played(ApiCallback<std::vector<lib::spt::track>> &callback);
 
 			/**
 			 * Add specified track to play next
 			 * @param uri URI of track to add
 			 */
 			void add_to_queue(const std::string &uri,
-				lib::callback<Result<void *>> &callback);
+				ApiCallback<Result<void *>> &callback);
 
 			/**
 			 * Get all queued tracks
 			 */
-			void queue(lib::callback<Result<lib::spt::queue>> &callback);
+			void queue(ApiCallback<Result<lib::spt::queue>> &callback);
 
 			//endregion
 
@@ -263,22 +263,22 @@ namespace lib
 				const std::optional<std::string> &description,
 				const std::optional<bool> &is_public,
 				const std::optional<bool> &is_collaborative,
-				lib::callback<lib::spt::playlist> &callback);
+				ApiCallback<lib::spt::playlist> &callback);
 
 			void playlists(const paged_callback<playlist> &callback) const;
 
 			void playlist(const std::string &playlist_id,
-				callback<Result<playlist>> &callback) const;
+				ApiCallback<Result<playlist>> &callback) const;
 
 			void edit_playlist(const std::string &playlist_id,
 				const lib::spt::playlist_details &playlist,
-				lib::callback<std::string> &callback);
+				ApiCallback<std::string> &callback);
 
 			/**
 			 * @deprecated Use with pagination instead
 			 */
 			void playlist_tracks(const lib::spt::playlist &playlist,
-				lib::callback<std::vector<lib::spt::track>> &callback);
+				ApiCallback<std::vector<lib::spt::track>> &callback);
 
 			/**
 			 * @note Experimental
@@ -288,31 +288,31 @@ namespace lib
 
 			void add_to_playlist(const std::string &playlist_id,
 				const std::vector<std::string> &track_uris,
-				lib::callback<std::string> &callback);
+				ApiCallback<std::string> &callback);
 
 			void remove_from_playlist(const std::string &playlist_id,
 				const std::vector<std::pair<int, std::string>> &track_index_uris,
-				lib::callback<std::string> &callback);
+				ApiCallback<std::string> &callback);
 
 			//endregion
 
 			//region Search
 
 			void search(const std::string &query,
-				lib::callback<lib::spt::search_results> &callback);
+				ApiCallback<lib::spt::search_results> &callback);
 
 			//endregion
 
 			//region Tracks
 
 			void track(const std::string &track_id,
-				lib::callback<lib::spt::track> &callback);
+				ApiCallback<lib::spt::track> &callback);
 
 			//endregion
 
 			//region User Profile
 
-			void me(lib::callback<lib::spt::user> &callback);
+			void me(ApiCallback<lib::spt::user> &callback);
 
 			//endregion
 
@@ -320,11 +320,11 @@ namespace lib
 
 			/** Get a show */
 			void show(const std::string &show_id,
-				lib::callback<lib::spt::show> &callback);
+				ApiCallback<lib::spt::show> &callback);
 
 			/** Get episodes in a show */
 			void show_episodes(const lib::spt::show &show,
-				lib::callback<std::vector<lib::spt::episode>> &callback);
+				ApiCallback<std::vector<lib::spt::episode>> &callback);
 
 			//endregion
 
@@ -345,7 +345,7 @@ namespace lib
 			 * @note Temporarily protected
 			 */
 			void get(const std::string &response,
-				lib::callback<nlohmann::json> &callback);
+				ApiCallback<nlohmann::json> &callback);
 
 			/**
 			 * GET a collection of items
@@ -355,13 +355,13 @@ namespace lib
 			 * @throws std::exception
 			 */
 			void get_items(const std::string &url,
-				lib::callback<nlohmann::json> &callback);
+				ApiCallback<nlohmann::json> &callback);
 
 			/**
 			 * Custom get_items when items are contained in a key
 			 */
 			void get_items(const std::string &url, const std::string &key,
-				lib::callback<nlohmann::json> &callback);
+				ApiCallback<nlohmann::json> &callback);
 
 			//endregion
 
@@ -374,12 +374,12 @@ namespace lib
 			 * @param callback Error message, or empty if none
 			 */
 			void put(const std::string &url, const nlohmann::json &body,
-				lib::callback<std::string> &callback);
+				ApiCallback<std::string> &callback);
 
 			/**
 			 * Convenience method for PUT request with no body
 			 */
-			void put(const std::string &url, lib::callback<std::string> &callback);
+			void put(const std::string &url, ApiCallback<std::string> &callback);
 
 			//endregion
 
@@ -392,13 +392,13 @@ namespace lib
 			 * @param callback Error message, or empty if none
 			 */
 			void post(const std::string &url, const nlohmann::json &json,
-				lib::callback<nlohmann::json> &callback);
+				ApiCallback<nlohmann::json> &callback);
 
 			/**
 			 * Convenience method for POST request with no body
 			 * @deprecated Use `lib::spt::request::post` instead
 			 */
-			void post(const std::string &url, lib::callback<std::string> &callback);
+			void post(const std::string &url, ApiCallback<std::string> &callback);
 
 			//endregion
 
@@ -411,12 +411,12 @@ namespace lib
 			 * @param callback Error message, or empty if none
 			 */
 			void del(const std::string &url, const nlohmann::json &json,
-				lib::callback<std::string> &callback);
+				ApiCallback<std::string> &callback);
 
 			/**
 			 * Convenience method for DELETE request with no body
 			 */
-			void del(const std::string &url, lib::callback<std::string> &callback);
+			void del(const std::string &url, ApiCallback<std::string> &callback);
 
 			//endregion
 

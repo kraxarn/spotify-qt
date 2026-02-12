@@ -10,7 +10,7 @@ void lib::spt::api::create_playlist(const std::string &name,
 	const std::optional<std::string> &description,
 	const std::optional<bool> &is_public,
 	const std::optional<bool> &is_collaborative,
-	lib::callback<lib::spt::playlist> &callback)
+	ApiCallback<lib::spt::playlist> &callback)
 {
 	nlohmann::json json{
 		{"name", name},
@@ -28,20 +28,20 @@ void lib::spt::api::playlists(const paged_callback<spt::playlist> &callback) con
 	request.get_page<spt::playlist>("me/playlists?limit=50", {}, callback);
 }
 
-void lib::spt::api::playlist(const std::string &playlist_id, callback<Result<spt::playlist>> &callback) const
+void lib::spt::api::playlist(const std::string &playlist_id, ApiCallback<Result<spt::playlist>> &callback) const
 {
 	request.get(fmt::format("playlists/{}", playlist_id), callback);
 }
 
 void lib::spt::api::edit_playlist(const std::string &playlist_id,
 	const lib::spt::playlist_details &playlist,
-	lib::callback<std::string> &callback)
+	ApiCallback<std::string> &callback)
 {
 	put(lib::fmt::format("playlists/{}", playlist_id), playlist, callback);
 }
 
 void lib::spt::api::playlist_tracks(const lib::spt::playlist &playlist,
-	lib::callback<std::vector<lib::spt::track>> &callback)
+	ApiCallback<std::vector<lib::spt::track>> &callback)
 {
 	const auto url = lib::fmt::format("playlists/{}/tracks?market=from_token&limit=50", playlist.id);
 	get_items(url, callback);
@@ -56,7 +56,7 @@ void lib::spt::api::playlist_tracks(const lib::spt::playlist &playlist,
 
 void lib::spt::api::add_to_playlist(const std::string &playlist_id,
 	const std::vector<std::string> &track_uris,
-	lib::callback<std::string> &callback)
+	ApiCallback<std::string> &callback)
 {
 	post(lib::fmt::format("playlists/{}/tracks?uris={}",
 		playlist_id, lib::strings::join(track_uris, ",")), callback);
@@ -64,7 +64,7 @@ void lib::spt::api::add_to_playlist(const std::string &playlist_id,
 
 void lib::spt::api::remove_from_playlist(const std::string &playlist_id,
 	const std::vector<std::pair<int, std::string>> &track_index_uris,
-	lib::callback<std::string> &callback)
+	ApiCallback<std::string> &callback)
 {
 	auto tracks = nlohmann::json::array();
 

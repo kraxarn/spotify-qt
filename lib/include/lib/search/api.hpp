@@ -13,7 +13,7 @@ namespace lib
 		public:
 			api(const HttpClient &http_client);
 
-			void search(const lib::spt::artist &artist, lib::callback<lib::ddg::results> &callback);
+			void search(const lib::spt::artist &artist, ApiCallback<lib::ddg::results> &callback);
 
 		private:
 			const HttpClient &http;
