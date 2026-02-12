@@ -1,6 +1,7 @@
 #include "lib/spotify/saveditems.hpp"
 
 #include <QJsonArray>
+#include <QJsonDocument>
 
 auto SpotifySavedItems::fromJson(const QJsonDocument &json) -> SpotifySavedItems
 {
