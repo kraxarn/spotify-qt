@@ -1,8 +1,6 @@
 #pragma once
 
-#include <QtTypes>
-
-enum class PlaylistLoadType: quint8
+enum class PlaylistLoadType: unsigned char
 {
 	/**
 	 * Unknown method,
