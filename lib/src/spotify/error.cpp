@@ -16,6 +16,11 @@ auto lib::spt::error::url() -> const char *
 	return request_url;
 }
 
+auto SpotifyErrorUtil::isErrorObject(const QJsonObject &json) -> bool
+{
+	return json.contains(QStringLiteral("error"));
+}
+
 auto SpotifyErrorUtil::isErrorObject(const nlohmann::json &json) -> bool
 {
 	return !json.is_null()
@@ -26,6 +31,13 @@ auto SpotifyErrorUtil::isErrorObject(const nlohmann::json &json) -> bool
 auto lib::spt::error::is(const nlohmann::json &json) -> bool
 {
 	return SpotifyErrorUtil::isErrorObject(json);
+}
+
+auto SpotifyErrorUtil::errorMessage(const QJsonObject &json) -> QString
+{
+	return isErrorObject(json)
+		? json.value(QStringLiteral("error")).toObject().value(QStringLiteral("message")).toString()
+		: QString();
 }
 
 auto SpotifyErrorUtil::errorMessage(const nlohmann::json &json) -> QString

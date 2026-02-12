@@ -4,6 +4,7 @@
 
 #include <stdexcept>
 
+#include <QJsonObject>
 #include <QString>
 
 class SpotifyErrorUtil
@@ -13,6 +14,10 @@ public:
 	 * If JSON is an error object
 	 */
 	[[nodiscard]]
+	static auto isErrorObject(const QJsonObject &json) -> bool;
+
+	[[nodiscard]]
+	[[deprecated("Use overload with QJsonObject instead")]]
 	static auto isErrorObject(const nlohmann::json &json) -> bool;
 
 	/**
@@ -20,6 +25,10 @@ public:
 	 * @returns Error, or an empty string if no error
 	 */
 	[[nodiscard]]
+	static auto errorMessage(const QJsonObject &json) -> QString;
+
+	[[nodiscard]]
+	[[deprecated("Use overload with QJsonObject instead")]]
 	static auto errorMessage(const nlohmann::json &json) -> QString;
 
 private:
