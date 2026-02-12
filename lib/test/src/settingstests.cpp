@@ -1,5 +1,5 @@
 #include "lib/filesystem.hpp"
-#include "lib/log.hpp"
+#include "lib/logging.hpp"
 #include "lib/settings.hpp"
 #include "lib/paths/paths.hpp"
 #include "thirdparty/doctest.h"
@@ -11,7 +11,7 @@ class test_paths: public lib::paths
 public:
 	test_paths()
 	{
-		lib::log::set_log_to_stdout(false);
+		Logging::setLogToStdout(false);
 	}
 
 	~test_paths()
