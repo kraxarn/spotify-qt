@@ -1,4 +1,5 @@
 #include "lib/logging.hpp"
+#include "lib/developermode.hpp"
 #include "lib/log.hpp"
 
 #include <QtMessageHandler>
@@ -40,6 +41,11 @@ void Logging::clear()
 
 void Logging::message(const QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
+	if (type == QtDebugMsg && !lib::developer_mode::enabled)
+	{
+		return;
+	}
+
 	const LogMessage message(type, msg);
 	mMessages.push_back(message);
 
