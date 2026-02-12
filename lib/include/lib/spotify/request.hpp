@@ -33,8 +33,10 @@ namespace lib
 			 * GET request
 			 * @param url URL to request
 			 * @param callback JSON response if successful, or error message on failure
+			 * @deprecated Use overload with QString instead
 			 */
 			template<typename T>
+			[[deprecated]]
 			void get(const std::string &url, ApiCallback<Result<T>> &callback)
 			{
 				http.get(lib::spt::to_full_url(url), auth_headers(),
@@ -47,6 +49,31 @@ namespace lib
 							return;
 						}
 						callback(parse_json<T>(response.value()));
+					});
+			}
+
+			// Only to avoid ambiguous calls
+			template<typename T>
+			[[deprecated]]
+			void get(const char *url, ApiCallback<Result<T>> &callback)
+			{
+				get(std::string(url), callback);
+			}
+
+			template<typename T>
+			void get(const QString &path, ApiCallback<Result<T>> &callback)
+			{
+				http.get(SpotifyUtil::toFullUrl(path), authHeaders(),
+					[callback](const Result<QByteArray> &result)
+					{
+						if (!result.success())
+						{
+							const QString message = parseErrorMessage(result.message());
+							callback(Result<T>::fail(message));
+							return;
+						}
+
+						callback(parseJson<T>(result.value()));
 					});
 			}
 
@@ -177,11 +204,34 @@ namespace lib
 
 			/**
 			 * Parse JSON from string data
-			 * @param url Requested URL (used for error logging)
 			 * @param data JSON data
 			 * @returns Parsed JSON, or fail on error
 			 */
 			template<typename T>
+			static auto parseJson(const QByteArray &data) -> Result<T>
+			{
+				if (data.isEmpty())
+				{
+					return Result<T>::fail(QStringLiteral("No data"));
+				}
+
+				QJsonParseError parseError;
+				const QJsonDocument json = QJsonDocument::fromJson(data, &parseError);
+				if (json.isNull())
+				{
+					return Result<T>::fail(parseError.errorString());
+				}
+
+				if (SpotifyErrorUtil::isErrorObject(json.object()))
+				{
+					return Result<T>::fail(SpotifyErrorUtil::errorMessage(json.object()));
+				}
+
+				return Result<T>::ok(T::fromJson(json));
+			}
+
+			template<typename T>
+			[[deprecated("Use parseJson instead")]]
 			static auto parse_json(const std::string &data) -> Result<T>
 			{
 				if (data.empty())
@@ -247,18 +297,14 @@ namespace lib
 			[[nodiscard]]
 			static auto parseErrorMessage(const QString &data) -> QString
 			{
-				try
+				QJsonParseError parseError;
+				const QJsonDocument json = QJsonDocument::fromJson(data.toUtf8(), &parseError);
+				if (json.isNull())
 				{
-					const nlohmann::json json = nlohmann::json::parse(data.toStdString());
-					return SpotifyErrorUtil::isErrorObject(json)
-						? SpotifyErrorUtil::errorMessage(json)
-						: data;
+					return parseError.errorString();
 				}
-				catch (const std::exception &e)
-				{
-					lib::log::error("Failed to parse error message: {}", e.what());
-					return data;
-				}
+
+				return SpotifyErrorUtil::errorMessage(json.object());
 			}
 
 			// Until all requests are moved to here
