@@ -147,7 +147,13 @@ namespace lib
 			/**
 			 * Get authorization header, and refresh if needed
 			 */
+			[[deprecated("Use authHeaders instead")]]
 			auto auth_headers() -> lib::headers;
+
+			/**
+			 * Get authorisation header and refresh if needed
+			 */
+			auto authHeaders() -> RequestHeaders;
 
 			/**
 			 * Send request to refresh access token

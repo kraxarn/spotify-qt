@@ -12,27 +12,39 @@ lib::spt::request::request(lib::settings &settings, const HttpClient &http_clien
 {
 }
 
-auto lib::spt::request::auth_headers() -> lib::headers
+auto lib::spt::request::authHeaders() -> RequestHeaders
 {
 	// See when last refresh was
 	auto last_refresh = lib::date_time::seconds_since_epoch() - last_auth;
 	if (last_refresh >= secs_in_hour)
 	{
-		lib::log::debug("Access token probably expired, refreshing");
+		qDebug() << "Access token probably expired, refreshing";
+
 		try
 		{
 			refresh();
 		}
 		catch (const std::exception &e)
 		{
-			lib::log::error("Refresh failed: {}", e.what());
+			qCritical() << "Refresh failed:" << e.what();
 		}
 	}
 
 	return {
 		{
-			"Authorization",
-			lib::fmt::format("Bearer {}", settings.account.access_token),
+			QStringLiteral("Authorization"),
+			QStringLiteral("Bearer %1").arg(QString::fromStdString(settings.account.access_token)),
+		},
+	};
+}
+
+auto lib::spt::request::auth_headers() -> lib::headers
+{
+	const RequestHeaders headers = authHeaders();
+	return {
+		{
+			headers.firstKey().toStdString(),
+			headers.first().toStdString(),
 		},
 	};
 }
