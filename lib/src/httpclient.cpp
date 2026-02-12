@@ -135,7 +135,7 @@ auto HttpClient::request(const QUrl &url, const RequestHeaders &headers) -> QNet
 	while (iter.hasNext())
 	{
 		iter.next();
-		request.setHeader(iter.key(), iter.value());
+		request.setRawHeader(iter.key().toUtf8(), iter.value().toUtf8());
 	}
 
 	return request;

@@ -20,7 +20,7 @@ namespace lib
 * Request headers
 */
 // TODO: Change to QHttpHeaders when we drop Qt 5 support
-using RequestHeaders = QMap<QNetworkRequest::KnownHeaders, QVariant>;
+using RequestHeaders = QMap<QString, QString>;
 
 class HttpClient final : public QObject
 {

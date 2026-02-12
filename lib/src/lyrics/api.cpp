@@ -14,8 +14,8 @@ LyricsApi::LyricsApi(const HttpClient &httpClient)
 auto LyricsApi::headers() const -> RequestHeaders
 {
 	return {
-		{QNetworkRequest::ContentTypeHeader, QStringLiteral("application/json")},
-		{QNetworkRequest::UserAgentHeader, mUserAgent},
+		{QStringLiteral("Content-Type"), QStringLiteral("application/json")},
+		{QStringLiteral("User-Agent"), mUserAgent},
 	};
 }
 
