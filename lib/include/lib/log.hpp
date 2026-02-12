@@ -15,6 +15,7 @@ namespace lib
 	public:
 		/**
 		 * Log information with formatting
+		 * @deprecated Use qInfo instead
 		 */
 		template<typename Format, typename Arg, typename... Args>
 		static void info(const Format &fmt, const Arg &arg, Args &&... args)
@@ -24,6 +25,7 @@ namespace lib
 
 		/**
 		 * Log information
+		 * @deprecated Use qInfo instead
 		 */
 		template<typename Format>
 		static void info(const Format &fmt)
@@ -33,6 +35,7 @@ namespace lib
 
 		/**
 		 * Log warning with formatting
+		 * @deprecated Use qWarning instead
 		 */
 		template<typename Format, typename Arg, typename... Args>
 		static void warn(const Format &fmt, const Arg &arg, Args &&... args)
@@ -42,6 +45,7 @@ namespace lib
 
 		/**
 		 * Log warning
+		 * @deprecated Use qWarning instead
 		 */
 		template<typename Format>
 		static void warn(const Format &fmt)
@@ -49,8 +53,9 @@ namespace lib
 			message(QtWarningMsg, fmt);
 		}
 
-		/***
+		/**
 		 * Log error with formatting
+		 * @deprecated Use qCritical instead
 		 */
 		template<typename Format, typename Arg, typename... Args>
 		static void error(const Format &fmt, const Arg &arg, Args &&... args)
@@ -60,6 +65,7 @@ namespace lib
 
 		/**
 		 * Log error
+		 * @deprecated Use qCritical instead
 		 */
 		template<typename Format>
 		static void error(const Format &fmt)
@@ -70,6 +76,7 @@ namespace lib
 		/**
 		 * Log verbose message with formatting
 		 * @note developer_mode needs to be enabled
+		 * @deprecated Use qDebug instead
 		 */
 		template<typename Format, typename Arg, typename... Args>
 		static void debug(const Format &fmt, const Arg &arg, Args &&... args)
@@ -80,6 +87,7 @@ namespace lib
 		/**
 		 * Log verbose message
 		 * @note developer_mode needs to be enabled
+		 * @deprecated Use qDebug instead
 		 */
 		template<typename Format>
 		static void debug(const Format &fmt)
