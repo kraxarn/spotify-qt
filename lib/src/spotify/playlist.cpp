@@ -40,9 +40,23 @@ void lib::spt::from_json(const nlohmann::json &j, playlist &p)
 
 	if (j.contains("tracks") || j.contains("items"))
 	{
-		const auto tracks = j.contains("tracks")
-			? j.at("tracks")
-			: j.at("items");
+		nlohmann::json tracks;
+		if (j.contains("tracks"))
+		{
+			tracks = j.at("tracks");
+		}
+		else if (j.contains("items") && j.at("items").contains("items"))
+		{
+			tracks = j.at("items").at("items");
+		}
+		else if (j.contains("items"))
+		{
+			tracks = j.at("items");
+		}
+		else
+		{
+			qWarning() << "Failed to find tracks key in playlist";
+		}
 
 		if (tracks.is_array())
 		{
