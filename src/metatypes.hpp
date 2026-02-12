@@ -9,7 +9,7 @@
 
 #include <QMetaType>
 
-Q_DECLARE_METATYPE(lib::log_message)
+Q_DECLARE_METATYPE(LogMessage)
 
 Q_DECLARE_METATYPE(lib::spt::track)
 Q_DECLARE_METATYPE(lib::spt::playlist)

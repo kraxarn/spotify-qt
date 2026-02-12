@@ -83,9 +83,9 @@ auto Log::Base::collectLogs() -> QString
 	{
 		auto *item = list->topLevelItem(i);
 		const auto &data = item->data(0, messageRole);
-		const auto &message = data.value<lib::log_message>();
+		const auto &message = data.value<LogMessage>();
 
-		items.append(QString::fromStdString(message.to_string()));
+		items.append(message.toString());
 	}
 
 	return items.join('\n');
@@ -134,9 +134,9 @@ void Log::Base::onMenuRequested(const QPoint &pos)
 	QAction::connect(copyToClipboard, &QAction::triggered, [item](bool /*checked*/)
 	{
 		const auto &data = item->data(0, messageRole);
-		const auto &message = data.value<lib::log_message>();
+		const auto &message = data.value<LogMessage>();
 
-		QApplication::clipboard()->setText(QString::fromStdString(message.to_string()));
+		QApplication::clipboard()->setText(message.toString());
 	});
 
 	menu->popup(list->mapToGlobal(pos));
