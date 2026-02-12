@@ -15,7 +15,7 @@ lib::spt::request::request(lib::settings &settings, const HttpClient &http_clien
 auto lib::spt::request::authHeaders() -> RequestHeaders
 {
 	// See when the last refresh was
-	const unsigned long lastRefresh = lib::date_time::seconds_since_epoch() - last_auth;
+	const qint64 lastRefresh = QDateTime::currentSecsSinceEpoch() - last_auth;
 	if (lastRefresh >= secs_in_hour)
 	{
 		qDebug() << "Access token probably expired, refreshing";
