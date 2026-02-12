@@ -16,9 +16,3 @@ using ApiCallback = const std::function<void(const T &)>;
 */
 template<typename T>
 using ApiPagedCallback = std::function<bool(const Result<lib::spt::page<T>> &)>;
-
-namespace lib
-{
-	template<typename T>
-	using paged_callback [[deprecated("Use ApiPagedCallback instead")]] = ApiPagedCallback<T>;
-}

@@ -46,7 +46,7 @@ namespace lib
 				ApiCallback<lib::spt::album> &callback);
 
 			void album_tracks(const spt::album &album,
-				const paged_callback<spt::track> &callback) const;
+				const ApiPagedCallback<spt::track> &callback) const;
 
 			//endregion
 
@@ -62,13 +62,13 @@ namespace lib
 				ApiCallback<std::vector<lib::spt::artist>> &callback);
 
 			void albums(const spt::artist &artist, const std::vector<album_group> &groups,
-				const paged_callback<spt::album> &callback) const;
+				const ApiPagedCallback<spt::album> &callback) const;
 
 			//endregion
 
 			//region Follow
 
-			void followed_artists(const paged_callback<spt::artist> &callback) const;
+			void followed_artists(const ApiPagedCallback<spt::artist> &callback) const;
 
 			void follow(lib::follow_type type, const std::vector<std::string> &ids,
 				ApiCallback<std::string> &callback);
@@ -93,7 +93,7 @@ namespace lib
 
 			//region Library
 
-			void saved_albums(const paged_callback<saved_album> &callback) const;
+			void saved_albums(const ApiPagedCallback<saved_album> &callback) const;
 
 			void add_saved_albums(const std::vector<std::string> &album_ids,
 				ApiCallback<std::string> &callback);
@@ -109,7 +109,7 @@ namespace lib
 			 */
 			void saved_tracks(ApiCallback<std::vector<lib::spt::track>> &callback);
 
-			void saved_tracks(const lib::paged_callback<lib::spt::track> &callback);
+			void saved_tracks(const ApiPagedCallback<lib::spt::track> &callback);
 
 			void add_saved_tracks(const std::vector<std::string> &track_ids,
 				ApiCallback<std::string> &callback);
@@ -265,7 +265,7 @@ namespace lib
 				const std::optional<bool> &is_collaborative,
 				ApiCallback<lib::spt::playlist> &callback);
 
-			void playlists(const paged_callback<playlist> &callback) const;
+			void playlists(const ApiPagedCallback<playlist> &callback) const;
 
 			void playlist(const std::string &playlist_id,
 				ApiCallback<Result<playlist>> &callback) const;

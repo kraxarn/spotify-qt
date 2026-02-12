@@ -4,7 +4,7 @@
 // me/shows
 // me/shows/contains
 
-void lib::spt::api::saved_albums(const paged_callback<saved_album> &callback) const
+void lib::spt::api::saved_albums(const ApiPagedCallback<saved_album> &callback) const
 {
 	request.get_page<saved_album>("me/albums", {}, callback);
 }
@@ -37,7 +37,7 @@ void lib::spt::api::saved_tracks(ApiCallback<std::vector<lib::spt::track>> &call
 	get_items("me/tracks?limit=50", callback);
 }
 
-void lib::spt::api::saved_tracks(const lib::paged_callback<lib::spt::track> &callback)
+void lib::spt::api::saved_tracks(const ApiPagedCallback<lib::spt::track> &callback)
 {
 	request.get_page<lib::spt::track>("me/tracks?limit=50", {}, callback);
 }

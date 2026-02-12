@@ -23,7 +23,7 @@ void lib::spt::api::create_playlist(const std::string &name,
 	post("me/playlists", json, callback);
 }
 
-void lib::spt::api::playlists(const paged_callback<spt::playlist> &callback) const
+void lib::spt::api::playlists(const ApiPagedCallback<spt::playlist> &callback) const
 {
 	request.get_page<spt::playlist>("me/playlists?limit=50", {}, callback);
 }

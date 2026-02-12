@@ -31,7 +31,7 @@ void lib::spt::api::related_artists(const lib::spt::artist &artist,
 }
 
 void lib::spt::api::albums(const spt::artist &artist, const std::vector<album_group> &groups,
-	const paged_callback<spt::album> &callback) const
+	const ApiPagedCallback<spt::album> &callback) const
 {
 	uri uri(to_full_url(fmt::format("artists/{}/albums", artist.id)));
 

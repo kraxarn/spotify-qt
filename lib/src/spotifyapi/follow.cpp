@@ -1,6 +1,6 @@
 #include "lib/spotify/api.hpp"
 
-void lib::spt::api::followed_artists(const paged_callback<spt::artist> &callback) const
+void lib::spt::api::followed_artists(const ApiPagedCallback<spt::artist> &callback) const
 {
 	const std::string url("me/following?type=artist&limit=50");
 	request.get_page<spt::artist>(url, "artists", callback);

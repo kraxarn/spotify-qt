@@ -7,7 +7,7 @@ void lib::spt::api::album(const std::string &id, ApiCallback<lib::spt::album> &c
 	get(lib::fmt::format("albums/{}", id), callback);
 }
 
-void lib::spt::api::album_tracks(const spt::album &album, const paged_callback<spt::track> &callback) const
+void lib::spt::api::album_tracks(const spt::album &album, const ApiPagedCallback<spt::track> &callback) const
 {
 	const auto albumName = album.name;
 	const auto url = fmt::format("albums/{}/tracks?limit=50", album.id);
