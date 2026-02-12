@@ -2,9 +2,17 @@
 #include "lib/fmt.hpp"
 #include "lib/uri.hpp"
 
+#include <QString>
+#include <QUrl>
+
 auto lib::spt::to_full_url(const std::string &relative_url) -> std::string
 {
 	return lib::fmt::format("https://api.spotify.com/v1/{}", relative_url);
+}
+
+auto SpotifyUtil::toFullUrl(const QString &path) -> QUrl
+{
+	return QUrl(QStringLiteral("https://api.spotify.com/v1/%1").arg(path));
 }
 
 auto lib::spt::to_relative_url(const std::string &full_url) -> std::string

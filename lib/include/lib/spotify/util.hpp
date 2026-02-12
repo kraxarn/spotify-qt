@@ -2,6 +2,17 @@
 
 #include "lib/spotify/device.hpp"
 
+#include <QString>
+#include <QUrl>
+
+namespace SpotifyUtil
+{
+	/**
+	 * Get the full API path from an endpoint path
+	 */
+	auto toFullUrl(const QString &path) -> QUrl;
+}
+
 namespace lib
 {
 	namespace spt
