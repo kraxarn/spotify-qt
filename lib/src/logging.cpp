@@ -1,8 +1,6 @@
 #include "lib/logging.hpp"
 #include "lib/log.hpp"
 
-#include <iostream>
-
 #include <QtMessageHandler>
 
 QtMessageHandler Logging::mDefaultHandler = nullptr;
@@ -12,6 +10,16 @@ bool Logging::mLogToStdout = true;
 
 void Logging::installMessageHandler()
 {
+	qSetMessagePattern(QStringLiteral(
+		"[%{time hh:mm:ss}] ["
+		"%{if-debug}dbg%{endif}"
+		"%{if-info}inf%{endif}"
+		"%{if-warning}wrn%{endif}"
+		"%{if-critical}err%{endif}"
+		"%{if-fatal}ftl%{endif}"
+		"] %{message}"
+	));
+
 	mDefaultHandler = qInstallMessageHandler(message);
 }
 
@@ -30,12 +38,10 @@ void Logging::clear()
 	mMessages.clear();
 }
 
-void Logging::message(const QtMsgType type, [[maybe_unused]] const QMessageLogContext &context, const QString &msg)
+void Logging::message(const QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
 	const LogMessage message(type, msg);
 	mMessages.push_back(message);
 
-	// TODO: Do we want qSetMessagePattern instead?
-	(type == QtInfoMsg || type == QtDebugMsg ? std::cout : std::cerr)
-		<< message.toString().toStdString() << '\n';
+	mDefaultHandler(type, context, msg);
 }
