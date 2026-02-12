@@ -10,7 +10,10 @@
 
 namespace lib
 {
-	using headers [[deprecated("Use RequestHeaders instead")]] = std::map<std::string, std::string>;
+	/**
+	 * @deprecated Use RequestHeaders instead
+	 */
+	using headers = std::map<std::string, std::string>;
 }
 
 /**
