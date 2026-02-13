@@ -133,6 +133,7 @@ void Artist::AlbumsList::addAlbums(const std::vector<lib::spt::album> &albums)
 		else
 		{
 			addTopLevelItem(item);
+			sortByColumn(1, Qt::DescendingOrder);
 		}
 	}
 }
