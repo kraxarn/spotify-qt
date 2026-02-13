@@ -50,7 +50,25 @@ void lib::spt::api::playlist_tracks(const lib::spt::playlist &playlist,
 void lib::spt::api::playlist_tracks(const lib::spt::playlist &playlist,
 	const std::function<bool(const Result<lib::spt::page<lib::spt::track>> &)> &callback)
 {
-	const auto url = lib::fmt::format("playlists/{}/tracks?market=from_token&limit=50", playlist.id);
+	const char *endpoint;
+	switch (playlist.version)
+	{
+		case PlaylistVersion::Version1:
+			endpoint = "tracks";
+			break;
+
+		case PlaylistVersion::Version2:
+			endpoint = "items";
+			break;
+
+		default:
+			callback(Result<page<spt::track>>::fail(QStringLiteral("Unknown playlist version")));
+			return;
+	}
+
+	const std::string url = fmt::format("playlists/{}/{}?market=from_token&limit=50",
+		playlist.id, endpoint);
+
 	request.get_page<lib::spt::track>(url, std::string(), callback);
 }
 
