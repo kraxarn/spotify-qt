@@ -36,7 +36,7 @@ void lib::spt::api::albums(const spt::artist &artist, const std::vector<album_gr
 	uri uri(to_full_url(fmt::format("artists/{}/albums", artist.id)));
 
 	auto params = uri.get_search_params();
-	params.insert({"limit", "50"});
+	params.insert({"limit", "10"});
 
 	if (!groups.empty())
 	{
