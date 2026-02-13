@@ -14,7 +14,8 @@ void lib::spt::to_json(nlohmann::json &j, const playlist &p)
 		{"tracks", p.tracks},
 		{"snapshot", p.snapshot},
 		{"owner_id", p.owner_id},
-		{"owner_name", p.owner_name}
+		{"owner_name", p.owner_name},
+		{"version", p.version},
 	};
 }
 
@@ -44,20 +45,14 @@ void lib::spt::from_json(const nlohmann::json &j, playlist &p)
 		nlohmann::json tracks;
 		if (j.contains("tracks"))
 		{
-			p.version = j.contains("href")
-				? PlaylistVersion::Version1
-				: PlaylistVersion::Unknown;
-
 			tracks = j.at("tracks");
 		}
 		else if (j.contains("items") && j.at("items").contains("items"))
 		{
-			p.version = PlaylistVersion::Version2;
 			tracks = j.at("items").at("items");
 		}
 		else if (j.contains("items"))
 		{
-			p.version = PlaylistVersion::Version2;
 			tracks = j.at("items");
 		}
 		else
@@ -73,6 +68,24 @@ void lib::spt::from_json(const nlohmann::json &j, playlist &p)
 		{
 			tracks.at("total").get_to(p.tracks_total);
 		}
+	}
+
+	if (j.contains("version"))
+	{
+		p.version = j.at("version").get<PlaylistVersion>();
+	}
+	else if (j.contains("items"))
+	{
+		p.version = PlaylistVersion::Version2;
+	}
+	else if (j.contains("href"))
+	{
+		p.version = PlaylistVersion::Version1;
+	}
+	else
+	{
+		// Probably loaded from an old cache
+		p.version = PlaylistVersion::Unknown;
 	}
 
 	if (j.contains("image"))
