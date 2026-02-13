@@ -1,13 +1,13 @@
 #pragma once
 
-#include <QJsonObject>
 #include <QString>
+#include <QVariant>
 
 class LyricsError
 {
 public:
 	[[nodiscard]]
-	static auto fromJson(const QJsonObject &json) -> LyricsError;
+	static auto fromJson(const QVariant &json) -> LyricsError;
 
 	/**
 	 * Error message

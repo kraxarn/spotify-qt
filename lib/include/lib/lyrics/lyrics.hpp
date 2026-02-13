@@ -2,13 +2,13 @@
 
 #include "lib/lyrics/line.hpp"
 
-#include <QJsonObject>
 #include <QList>
+#include <QVariant>
 
 class Lyrics
 {
 public:
-	static auto fromJson(const QJsonObject &json) -> Lyrics;
+	static auto fromJson(const QVariant &json) -> Lyrics;
 
 	[[nodiscard]]
 	auto id() const -> quint32;

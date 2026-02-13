@@ -10,28 +10,27 @@ Lyrics::Lyrics()
 {
 }
 
-auto Lyrics::fromJson(const QJsonObject &json) -> Lyrics
+auto Lyrics::fromJson(const QVariant &json) -> Lyrics
 {
+	const QVariantMap map = json.toMap();
+
 	Lyrics lyrics;
 
-	JsonUtil::getTo(json, QStringLiteral("id"), lyrics.mId);
-	JsonUtil::getTo(json, QStringLiteral("trackName"), lyrics.mTrackName);
-	JsonUtil::getTo(json, QStringLiteral("artistName"), lyrics.mArtistName);
-	JsonUtil::getTo(json, QStringLiteral("albumName"), lyrics.mAlbumName);
-	JsonUtil::getTo(json, QStringLiteral("duration"), lyrics.mDuration);
-	JsonUtil::getTo(json, QStringLiteral("instrumental"), lyrics.mInstrumental);
+	JsonUtil::getTo(map, QStringLiteral("id"), lyrics.mId);
+	JsonUtil::getTo(map, QStringLiteral("trackName"), lyrics.mTrackName);
+	JsonUtil::getTo(map, QStringLiteral("artistName"), lyrics.mArtistName);
+	JsonUtil::getTo(map, QStringLiteral("albumName"), lyrics.mAlbumName);
+	JsonUtil::getTo(map, QStringLiteral("duration"), lyrics.mDuration);
+	JsonUtil::getTo(map, QStringLiteral("instrumental"), lyrics.mInstrumental);
 
-	if (const QJsonValue &val = json.value(QStringLiteral("plainLyrics")); val.isString())
+	if (const QString &str = map.value(QStringLiteral("plainLyrics")).toString(); !str.isEmpty())
 	{
-		const QString &plainLyrics = val.toString();
-		lyrics.mPlainLyrics = plainLyrics.split(QChar::fromLatin1('\n'));
+		lyrics.mPlainLyrics = str.split(QChar::fromLatin1('\n'));
 	}
 
-	if (const QJsonValue &val = json.value(QStringLiteral("syncedLyrics")); val.isString())
+	if (const QString &str = map.value(QStringLiteral("syncedLyrics")).toString(); !str.isEmpty())
 	{
-		const QString &syncedLyrics = val.toString();
-		const QStringList lines = syncedLyrics.split(QChar::fromLatin1('\n'));
-
+		const QStringList lines = str.split(QChar::fromLatin1('\n'));
 		lyrics.mSyncedLyrics.reserve(lines.length());
 
 		for (const QString &line: lines)

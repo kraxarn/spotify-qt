@@ -6,13 +6,15 @@ LyricsError::LyricsError()
 {
 }
 
-auto LyricsError::fromJson(const QJsonObject &json) -> LyricsError
+auto LyricsError::fromJson(const QVariant &json) -> LyricsError
 {
+	const QVariantMap map = json.toMap();
+
 	LyricsError result;
 
-	JsonUtil::getTo(json, QStringLiteral("message"), result.mMessage);
-	JsonUtil::getTo(json, QStringLiteral("name"), result.mName);
-	JsonUtil::getTo(json, QStringLiteral("statusCode"), result.mStatusCode);
+	JsonUtil::getTo(map, QStringLiteral("message"), result.mMessage);
+	JsonUtil::getTo(map, QStringLiteral("name"), result.mName);
+	JsonUtil::getTo(map, QStringLiteral("statusCode"), result.mStatusCode);
 
 	return result;
 }

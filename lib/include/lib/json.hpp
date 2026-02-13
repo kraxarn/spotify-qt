@@ -18,9 +18,9 @@ class JsonUtil
 {
 public:
 	template<typename T>
-	static auto getTo(const QJsonObject &obj, const QString &key, T &value) -> QVariant
+	static auto getTo(const QVariantMap &map, const QString &key, T &value) -> QVariant
 	{
-		const QVariant variant = obj.value(key).toVariant();
+		const QVariant variant = map.value(key);
 		if (variant.canConvert<T>())
 		{
 			value = variant.value<T>();
@@ -39,7 +39,7 @@ public:
 			return Result<T>::fail(parseError.errorString());
 		}
 
-		return Result<T>::ok(T::fromJson(json.object()));
+		return Result<T>::ok(T::fromJson(json.toVariant()));
 	}
 
 	template<typename T>
@@ -56,7 +56,7 @@ public:
 		QList<T> items;
 		for (const QJsonValueRef item: json.array())
 		{
-			items.append(T::fromJson(item.toObject()));
+			items.append(T::fromJson(item.toVariant()));
 		}
 
 		return Result<QList<T>>::ok(items);
