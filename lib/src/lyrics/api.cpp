@@ -75,7 +75,7 @@ void LyricsApi::get(const lib::spt::track &track, ApiCallback<Result<Lyrics>> &c
 	{
 		if (!result.success())
 		{
-			const auto errorResult = JsonUtil::parse<LyricsError>(result.value());
+			const auto errorResult = JsonUtil::parse<LyricsError>(result.message().toUtf8());
 
 			callback(Result<Lyrics>::fail(errorResult.success()
 				? errorResult.value().message()
