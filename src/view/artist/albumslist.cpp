@@ -42,10 +42,11 @@ Artist::AlbumsList::AlbumsList(lib::spt::api &spotify, lib::cache &cache,
 	connect(this, &QTreeWidget::itemExpanded,
 		this, &AlbumsList::onItemExtended);
 
-	for (auto i = lib::album_group::album; i < lib::album_group::none;
+	for (auto i = lib::album_group::album; i <= lib::album_group::none;
 		i = static_cast<lib::album_group>(static_cast<int>(i) + 1))
 	{
 		groups[i] = new QTreeWidgetItem(this, {groupToString(i)});
+		groups[i]->setHidden(true);
 		addTopLevelItem(groups[i]);
 	}
 }
@@ -83,7 +84,9 @@ void Artist::AlbumsList::addAlbums(const std::vector<lib::spt::album> &albums) c
 {
 	for (const auto &album: albums)
 	{
-		auto *group = groups.at(album.album_group);
+		QTreeWidgetItem *group = groups.at(album.album_group);
+		group->setHidden(false);
+
 		auto *item = new ListItem::Album(album, group);
 
 		Http::getAlbumImage(album.image, httpClient, cache, [item](const QPixmap &image)
@@ -127,7 +130,7 @@ auto Artist::AlbumsList::groupToString(lib::album_group albumGroup) -> QString
 			return QStringLiteral("Appears On");
 
 		case lib::album_group::none:
-			return QStringLiteral("Other");
+			return QStringLiteral("All albums");
 
 		default:
 			return {};
