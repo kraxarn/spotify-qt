@@ -28,10 +28,14 @@ void lib::spt::from_json(const nlohmann::json &j, artist &a)
 	}
 
 	j.at("id").get_to(a.id);
-	j.at("popularity").get_to(a.popularity);
 	j.at("genres").get_to(a.genres);
 	j.at("name").get_to(a.name);
 	j.at("external_urls").get_to(a.external_urls);
+
+	if (j.contains("popularity"))
+	{
+		j.at("popularity").get_to(a.popularity);
+	}
 
 	if (j.contains("followers"))
 	{
