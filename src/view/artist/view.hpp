@@ -45,6 +45,7 @@ namespace Artist
 		std::string artistId;
 		lib::spt::artist artist;
 		lib::spt::api &spotify;
+		lib::settings &settings;
 		lib::cache &cache;
 		const HttpClient &httpClient;
 

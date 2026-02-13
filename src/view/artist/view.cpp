@@ -8,6 +8,7 @@ Artist::View::View(lib::spt::api &spotify, const std::string &artistId, lib::cac
 	: QWidget(parent),
 	artistId(std::string(artistId)),
 	spotify(spotify),
+	settings(settings),
 	cache(cache),
 	httpClient(httpClient)
 {
@@ -39,10 +40,6 @@ Artist::View::View(lib::spt::api &spotify, const std::string &artistId, lib::cac
 	// Tabs
 	tabs = new QTabWidget(this);
 	layout->addWidget(tabs);
-
-	// Top tracks
-	topTracksList = new Artist::TracksList(spotify, cache, httpClient, artist, settings, tabs);
-	tabs->addTab(topTracksList, "Popular");
 
 	// Albums
 	albumList = new Artist::AlbumsList(spotify, cache, httpClient, settings, this);
@@ -147,6 +144,15 @@ void Artist::View::artistLoaded(const lib::spt::artist &loadedArtist)
 
 void Artist::View::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
 {
+	// "Top tracks" is deprecated and not always available,
+	// lazily load the tab instead in case it isn't
+
+	topTracksList = new Artist::TracksList(spotify, cache, httpClient, artist, settings, tabs);
+
+	constexpr int tabIndex = 0;
+	tabs->insertTab(tabIndex, topTracksList, QStringLiteral("Popular"));
+	tabs->setCurrentIndex(tabIndex);
+
 	for (const auto &track: tracks)
 	{
 		topTracksList->addTrack(track);
@@ -156,8 +162,8 @@ void Artist::View::topTracksLoaded(const std::vector<lib::spt::track> &tracks)
 
 void Artist::View::relatedArtistsLoaded(const std::vector<lib::spt::artist> &artists)
 {
-	// Related artists are deprecated and not always available,
-	// lazily load tab instead in case it isn't
+	// "Related artists" is deprecated and not always available,
+	// lazily load the tab instead in case it isn't
 
 	relatedList = new QListWidget(tabs);
 
