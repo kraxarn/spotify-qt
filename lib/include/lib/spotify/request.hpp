@@ -301,7 +301,8 @@ namespace lib
 				const QJsonDocument json = QJsonDocument::fromJson(data.toUtf8(), &parseError);
 				if (json.isNull())
 				{
-					return parseError.errorString();
+					qWarning() << "Failed to parse error response:" << parseError.errorString();
+					return data;
 				}
 
 				return SpotifyErrorUtil::errorMessage(json.object());
