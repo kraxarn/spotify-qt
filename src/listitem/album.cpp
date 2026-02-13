@@ -1,8 +1,19 @@
 #include "listitem/album.hpp"
 #include "util/datetime.hpp"
 
+ListItem::Album::Album(const lib::spt::album &album, QTreeWidget *parent)
+	: QTreeWidgetItem(parent)
+{
+	setAlbum(album);
+}
+
 ListItem::Album::Album(const lib::spt::album &album, QTreeWidgetItem *parent)
 	: QTreeWidgetItem(parent)
+{
+	setAlbum(album);
+}
+
+void ListItem::Album::setAlbum(const lib::spt::album &album)
 {
 	const auto albumName = QString::fromStdString(album.name);
 	setText(static_cast<int>(Column::Name), albumName);

@@ -42,11 +42,10 @@ Artist::AlbumsList::AlbumsList(lib::spt::api &spotify, lib::cache &cache,
 	connect(this, &QTreeWidget::itemExpanded,
 		this, &AlbumsList::onItemExtended);
 
-	for (auto i = lib::album_group::album; i <= lib::album_group::none;
+	for (auto i = lib::album_group::album; i < lib::album_group::none;
 		i = static_cast<lib::album_group>(static_cast<int>(i) + 1))
 	{
 		groups[i] = new QTreeWidgetItem(this, {groupToString(i)});
-		groups[i]->setHidden(true);
 		addTopLevelItem(groups[i]);
 	}
 }
@@ -78,16 +77,39 @@ void Artist::AlbumsList::loadAlbums(const lib::spt::page<lib::spt::album> &page)
 			break;
 		}
 	}
+
+	// If any top-level item is not in a group, assume none are and just show everything in a single list
+	for (auto i = 0; i < topLevelItemCount(); i++)
+	{
+		if (topLevelItem(i)->parent() == nullptr)
+		{
+			for (const auto &[group, widget]: groups)
+			{
+				widget->setHidden(group != lib::album_group::none);
+			}
+
+			setRootIsDecorated(false);
+		}
+	}
 }
 
-void Artist::AlbumsList::addAlbums(const std::vector<lib::spt::album> &albums) const
+void Artist::AlbumsList::addAlbums(const std::vector<lib::spt::album> &albums)
 {
 	for (const auto &album: albums)
 	{
-		QTreeWidgetItem *group = groups.at(album.album_group);
-		group->setHidden(false);
+		QTreeWidgetItem *group;
+		ListItem::Album *item;
 
-		auto *item = new ListItem::Album(album, group);
+		if (album.album_group == lib::album_group::none)
+		{
+			group = nullptr;
+			item = new ListItem::Album(album, this);
+		}
+		else
+		{
+			group = groups.at(album.album_group);
+			item = new ListItem::Album(album, group);
+		}
 
 		Http::getAlbumImage(album.image, httpClient, cache, [item](const QPixmap &image)
 		{
@@ -108,8 +130,15 @@ void Artist::AlbumsList::addAlbums(const std::vector<lib::spt::album> &albums) c
 
 		item->setToolTip(1, releaseDateToolTip);
 
-		group->addChild(item);
-		group->sortChildren(1, Qt::DescendingOrder);
+		if (group != nullptr)
+		{
+			group->addChild(item);
+			group->sortChildren(1, Qt::DescendingOrder);
+		}
+		else
+		{
+			addTopLevelItem(item);
+		}
 	}
 }
 
@@ -130,7 +159,7 @@ auto Artist::AlbumsList::groupToString(lib::album_group albumGroup) -> QString
 			return QStringLiteral("Appears On");
 
 		case lib::album_group::none:
-			return QStringLiteral("All albums");
+			return QStringLiteral("Other");
 
 		default:
 			return {};
@@ -196,7 +225,7 @@ void Artist::AlbumsList::onItemEntered(QTreeWidgetItem *item, int column)
 	tooltip.set(item, album, item->icon(0));
 }
 
-void Artist::AlbumsList::onItemExtended(const QTreeWidgetItem *item) const
+void Artist::AlbumsList::onItemExtended(const QTreeWidgetItem *item)
 {
 	constexpr auto pageSize = 50;
 	if (item == nullptr || item->childCount() != pageSize)

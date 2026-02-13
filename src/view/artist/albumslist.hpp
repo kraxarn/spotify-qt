@@ -21,7 +21,7 @@ namespace Artist
 			const HttpClient &httpClient, lib::settings &settings, QWidget *parent);
 
 		void loadAlbums(const lib::spt::page<lib::spt::album> &page);
-		void addAlbums(const std::vector<lib::spt::album> &albums) const;
+		void addAlbums(const std::vector<lib::spt::album> &albums);
 
 	private:
 		lib::spt::api &spotify;
@@ -38,6 +38,6 @@ namespace Artist
 		void onItemDoubleClicked(QTreeWidgetItem *item, int column);
 		void onContextMenu(const QPoint &pos);
 		void onItemEntered(QTreeWidgetItem *item, int column);
-		void onItemExtended(const QTreeWidgetItem *item) const;
+		void onItemExtended(const QTreeWidgetItem *item);
 	};
 }
