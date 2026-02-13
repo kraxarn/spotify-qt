@@ -20,6 +20,7 @@ Artist::AlbumsList::AlbumsList(lib::spt::api &spotify, lib::cache &cache,
 	setEnabled(false);
 	setColumnCount(2);
 	setMouseTracking(true);
+	setRootIsDecorated(false);
 
 	header()->hide();
 	header()->setStretchLastSection(false);
@@ -46,6 +47,8 @@ Artist::AlbumsList::AlbumsList(lib::spt::api &spotify, lib::cache &cache,
 		i = static_cast<lib::album_group>(static_cast<int>(i) + 1))
 	{
 		groups[i] = new QTreeWidgetItem(this, {groupToString(i)});
+		// Hide all groups by default, assuming they aren't available
+		groups[i]->setHidden(true);
 		addTopLevelItem(groups[i]);
 	}
 }
@@ -78,18 +81,10 @@ void Artist::AlbumsList::loadAlbums(const lib::spt::page<lib::spt::album> &page)
 		}
 	}
 
-	// If any top-level item is not in a group, assume none are and just show everything in a single list
-	for (auto i = 0; i < topLevelItemCount(); i++)
+	// Only show groups with items in them
+	for (const auto &[group, item]: groups)
 	{
-		if (topLevelItem(i)->parent() == nullptr)
-		{
-			for (const auto &[group, widget]: groups)
-			{
-				widget->setHidden(group != lib::album_group::none);
-			}
-
-			setRootIsDecorated(false);
-		}
+		item->setHidden(item->childCount() <= 0);
 	}
 }
 
