@@ -33,6 +33,7 @@ Artist::View::View(lib::spt::api &spotify, const std::string &artistId, lib::cac
 	genres = new QLabel(QString(), this);
 	genres->setWordWrap(true);
 	genres->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Minimum);
+	genres->setVisible(false);
 	layout->addWidget(genres);
 
 	// Tabs
@@ -89,7 +90,11 @@ void Artist::View::artistLoaded(const lib::spt::artist &loadedArtist)
 	context->setArtist(artist);
 
 	// Genres
-	genres->setText(QString::fromStdString(lib::strings::join(artist.genres, ", ")));
+	if (!artist.genres.empty())
+	{
+		genres->setText(QString::fromStdString(lib::strings::join(artist.genres, ", ")));
+		genres->setVisible(true);
+	}
 
 	// Top tracks
 	spotify.top_tracks(artist, [this](const std::vector<lib::spt::track> &tracks)
