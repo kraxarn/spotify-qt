@@ -210,15 +210,17 @@ void Artist::AlbumsList::onContextMenu(const QPoint &pos)
 	albumMenu->popup(mapToGlobal(pos));
 }
 
-void Artist::AlbumsList::onItemEntered(QTreeWidgetItem *item, int column)
+void Artist::AlbumsList::onItemEntered(QTreeWidgetItem *item, const int column)
 {
-	if (!item->toolTip(0).isEmpty() || column != 0 || item->parent() == nullptr)
+	if (!item->toolTip(0).isEmpty() || column != 0)
 	{
 		return;
 	}
 
-	const auto album = getAlbum(item);
-	tooltip.set(item, album, item->icon(0));
+	if (const lib::spt::album &album = getAlbum(item); album.is_valid())
+	{
+		tooltip.set(item, album, item->icon(0));
+	}
 }
 
 void Artist::AlbumsList::onItemExtended(const QTreeWidgetItem *item)
