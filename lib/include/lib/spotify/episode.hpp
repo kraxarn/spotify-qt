@@ -16,11 +16,6 @@ namespace lib
 		{
 		public:
 			/**
-			 * 30 second MP3 preview
-			 */
-			std::string audio_preview_url;
-
-			/**
 			 * Description in plain text
 			 */
 			std::string description;

@@ -7,7 +7,6 @@ void lib::spt::from_json(const nlohmann::json &j, episode &e)
 		return;
 	}
 
-	j.at("audio_preview_url").get_to(e.audio_preview_url);
 	j.at("description").get_to(e.description);
 	j.at("duration_ms").get_to(e.duration_ms);
 	j.at("explicit").get_to(e.is_explicit);
