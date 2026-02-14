@@ -6,7 +6,7 @@ void lib::spt::api::search(const std::string &query,
 	get(lib::fmt::format("search"
 						 "?q={}"
 						 "&type=album,artist,playlist,track,show"
-						 "&limit=50"
+						 "&limit=10"
 						 "&market=from_token",
 		query), callback);
 }
