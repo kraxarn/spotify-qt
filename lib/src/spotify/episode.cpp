@@ -7,21 +7,13 @@ void lib::spt::from_json(const nlohmann::json &j, episode &e)
 		return;
 	}
 
-	j.at("description").get_to(e.description);
 	j.at("duration_ms").get_to(e.duration_ms);
-	j.at("explicit").get_to(e.is_explicit);
 	j.at("external_urls").get_to(e.external_urls);
-	j.at("href").get_to(e.href);
-	j.at("html_description").get_to(e.html_description);
 	j.at("id").get_to(e.id);
 	j.at("images").get_to(e.images);
-	j.at("is_externally_hosted").get_to(e.is_externally_hosted);
 	j.at("is_playable").get_to(e.is_playable);
-	j.at("languages").get_to(e.languages);
 	j.at("name").get_to(e.name);
 	j.at("release_date").get_to(e.release_date);
-	j.at("release_date_precision").get_to(e.release_date_precision);
-	j.at("uri").get_to(e.uri);
 }
 
 auto lib::spt::episode::to_track(const lib::spt::show &show) const -> lib::spt::track
