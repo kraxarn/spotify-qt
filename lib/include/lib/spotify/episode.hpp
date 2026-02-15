@@ -21,11 +21,6 @@ namespace lib
 			int duration_ms = 0;
 
 			/**
-			 * External URLs
-			 */
-			std::map<std::string, std::string> external_urls;
-
-			/**
 			 * URLs to cover art
 			 */
 			std::vector<lib::spt::image> images;
