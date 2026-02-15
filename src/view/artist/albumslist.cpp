@@ -84,6 +84,11 @@ void Artist::AlbumsList::loadAlbums(const lib::spt::page<lib::spt::album> &page)
 	// Only show groups with items in them
 	for (const auto &[group, item]: groups)
 	{
+		if (item->childCount() > 0)
+		{
+			setRootIsDecorated(true);
+		}
+
 		item->setHidden(item->childCount() <= 0);
 	}
 }
