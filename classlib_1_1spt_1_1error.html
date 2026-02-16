@@ -98,7 +98,7 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="error_8hpp_source.html">error.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="spotify_2error_8hpp_source.html">error.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for lib::spt::error:</div>
 <div class="dyncontent">
@@ -117,9 +117,11 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ac3d46b191da87ae88b6aae7467722b80" id="r_ac3d46b191da87ae88b6aae7467722b80"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac3d46b191da87ae88b6aae7467722b80">is</a> (const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>) -&gt; bool</td></tr>
+<tr class="memitem:ac3d46b191da87ae88b6aae7467722b80" id="r_ac3d46b191da87ae88b6aae7467722b80"><td class="memItemLeft" align="right" valign="top"><a id="ac3d46b191da87ae88b6aae7467722b80" name="ac3d46b191da87ae88b6aae7467722b80"></a>
+static auto&#160;</td><td class="memItemRight" valign="bottom"><b>is</b> (const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>) -&gt; bool</td></tr>
 <tr class="separator:ac3d46b191da87ae88b6aae7467722b80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac5f0ee9aa261fd7a8cb1b76a499faee" id="r_aac5f0ee9aa261fd7a8cb1b76a499faee"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aac5f0ee9aa261fd7a8cb1b76a499faee">error_message</a> (const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>) -&gt; std::string</td></tr>
+<tr class="memitem:aac5f0ee9aa261fd7a8cb1b76a499faee" id="r_aac5f0ee9aa261fd7a8cb1b76a499faee"><td class="memItemLeft" align="right" valign="top"><a id="aac5f0ee9aa261fd7a8cb1b76a499faee" name="aac5f0ee9aa261fd7a8cb1b76a499faee"></a>
+static auto&#160;</td><td class="memItemRight" valign="bottom"><b>error_message</b> (const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>) -&gt; std::string</td></tr>
 <tr class="separator:aac5f0ee9aa261fd7a8cb1b76a499faee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -176,58 +178,6 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aac5f0ee9aa261fd7a8cb1b76a499faee" name="aac5f0ee9aa261fd7a8cb1b76a499faee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac5f0ee9aa261fd7a8cb1b76a499faee">&#9670;&#160;</a></span>error_message()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static auto lib::spt::error::error_message </td>
-          <td>(</td>
-          <td class="paramtype">const nlohmann::json &amp;</td>          <td class="paramname"><span class="paramname"><em>json</em></span></td><td>)</td>
-          <td> -&gt;  std::string</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Get error message from JSON </p><dl class="section return"><dt>Returns</dt><dd>Error, or an empty string if no error </dd></dl>
-
-</div>
-</div>
-<a id="ac3d46b191da87ae88b6aae7467722b80" name="ac3d46b191da87ae88b6aae7467722b80"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3d46b191da87ae88b6aae7467722b80">&#9670;&#160;</a></span>is()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static auto lib::spt::error::is </td>
-          <td>(</td>
-          <td class="paramtype">const nlohmann::json &amp;</td>          <td class="paramname"><span class="paramname"><em>json</em></span></td><td>)</td>
-          <td> -&gt;  bool</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>If JSON is an error object </p>
-
-</div>
-</div>
 <a id="a19860ef550fb939be1d47ec93f97142c" name="a19860ef550fb939be1d47ec93f97142c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a19860ef550fb939be1d47ec93f97142c">&#9670;&#160;</a></span>url()</h2>
 
@@ -247,7 +197,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/github/workspace/lib/include/lib/spotify/<a class="el" href="error_8hpp_source.html">error.hpp</a></li>
+<li>/github/workspace/lib/include/lib/spotify/<a class="el" href="spotify_2error_8hpp_source.html">error.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

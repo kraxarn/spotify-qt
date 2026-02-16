@@ -95,51 +95,45 @@ $(function(){ initResizable(false); });
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;lib/datetime.hpp&quot;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;lib/enum/logtype.hpp&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;QDateTime&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;QtDebug&gt;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span>lib</div>
+<div class="foldopen" id="foldopen00006" data-start="{" data-end="};">
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="classLogMessage.html">    6</a></span><span class="keyword">class </span><a class="code hl_class" href="classLogMessage.html">LogMessage</a></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>{</div>
-<div class="foldopen" id="foldopen00011" data-start="{" data-end="};">
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="classlib_1_1log__message.html">   11</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classlib_1_1log__message.html">log_message</a></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    {</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classlib_1_1log__message.html#a25aae8a82e968ea40db10bf459e7c93d">   20</a></span>        <a class="code hl_function" href="classlib_1_1log__message.html#a25aae8a82e968ea40db10bf459e7c93d">log_message</a>(<span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1date__time.html">date_time</a> &amp;time, log_type log_type,</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>            <span class="keyword">const</span> std::string &amp;message);</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classlib_1_1log__message.html#aa75bf94ccdddb558b2fa2fb0fd8ada5a">   28</a></span>        <a class="code hl_function" href="classlib_1_1log__message.html#aa75bf94ccdddb558b2fa2fb0fd8ada5a">log_message</a>(log_type log_type, <span class="keyword">const</span> std::string &amp;message);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="classlib_1_1log__message.html#a7c503e6174d7549746c628705881a720">   33</a></span>        <a class="code hl_function" href="classlib_1_1log__message.html#a7c503e6174d7549746c628705881a720">log_message</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="classlib_1_1log__message.html#af2f5249c9d1a5e48d6e345b27970c3f9">   39</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="classlib_1_1log__message.html#af2f5249c9d1a5e48d6e345b27970c3f9">to_string</a>() const -&gt; std::<span class="keywordtype">string</span>;</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classlib_1_1log__message.html#aa2b0e7cdc799bbba74078f32e5e34cd8">   45</a></span>        auto <a class="code hl_function" href="classlib_1_1log__message.html#aa2b0e7cdc799bbba74078f32e5e34cd8">get_type_short</a>() const -&gt; std::<span class="keywordtype">string</span>;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="classlib_1_1log__message.html#a7aa7624ff9782483a7df8d5d1334cce8">   51</a></span>        auto <a class="code hl_function" href="classlib_1_1log__message.html#a7aa7624ff9782483a7df8d5d1334cce8">get_time</a>() const -&gt; std::<span class="keywordtype">string</span>;</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="classlib_1_1log__message.html#abcbc740676cacc4bf432a9a75271fa7b">   57</a></span>        auto <a class="code hl_function" href="classlib_1_1log__message.html#abcbc740676cacc4bf432a9a75271fa7b">get_type</a>() const -&gt; std::<span class="keywordtype">string</span>;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="classlib_1_1log__message.html#ab8eef24470cbefcd6a3091c4346a58df">   63</a></span>        auto <a class="code hl_function" href="classlib_1_1log__message.html#ab8eef24470cbefcd6a3091c4346a58df">get_message</a>() const -&gt; std::<span class="keywordtype">string</span>;</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    private:</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <a class="code hl_class" href="classlib_1_1date__time.html">date_time</a> time;</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        log_type logType;</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        std::<span class="keywordtype">string</span> message;</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    };</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <a class="code hl_class" href="classLogMessage.html">LogMessage</a>();</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <a class="code hl_class" href="classLogMessage.html">LogMessage</a>(QtMsgType type, <span class="keyword">const</span> QString &amp;message);</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    [[nodiscard]]</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">auto</span> dateTime() <span class="keyword">const</span> -&gt; <span class="keyword">const</span> QDateTime &amp;;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    [[nodiscard]]</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">auto</span> type() <span class="keyword">const</span> -&gt; QtMsgType;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    [[nodiscard]]</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keyword">auto</span> message() <span class="keyword">const</span> -&gt; <span class="keyword">const</span> QString &amp;;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    [[nodiscard]]</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keyword">auto</span> timeString() <span class="keyword">const</span> -&gt; QString;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    [[nodiscard]]</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">auto</span> typeShortString() <span class="keyword">const</span> -&gt; QString;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    [[nodiscard]]</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keyword">auto</span> typeLongString() <span class="keyword">const</span> -&gt; QString;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    [[nodiscard]]</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keyword">auto</span> toString() <span class="keyword">const</span> -&gt; QString;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    QDateTime mDateTime;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    QtMsgType mType;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    QString mMessage;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>};</div>
 </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>}</div>
-<div class="ttc" id="aclasslib_1_1date__time_html"><div class="ttname"><a href="classlib_1_1date__time.html">lib::date_time</a></div><div class="ttdef"><b>Definition</b> datetime.hpp:13</div></div>
-<div class="ttc" id="aclasslib_1_1log__message_html"><div class="ttname"><a href="classlib_1_1log__message.html">lib::log_message</a></div><div class="ttdef"><b>Definition</b> logmessage.hpp:12</div></div>
-<div class="ttc" id="aclasslib_1_1log__message_html_a25aae8a82e968ea40db10bf459e7c93d"><div class="ttname"><a href="classlib_1_1log__message.html#a25aae8a82e968ea40db10bf459e7c93d">lib::log_message::log_message</a></div><div class="ttdeci">log_message(const date_time &amp;time, log_type log_type, const std::string &amp;message)</div></div>
-<div class="ttc" id="aclasslib_1_1log__message_html_a7aa7624ff9782483a7df8d5d1334cce8"><div class="ttname"><a href="classlib_1_1log__message.html#a7aa7624ff9782483a7df8d5d1334cce8">lib::log_message::get_time</a></div><div class="ttdeci">auto get_time() const -&gt; std::string</div></div>
-<div class="ttc" id="aclasslib_1_1log__message_html_a7c503e6174d7549746c628705881a720"><div class="ttname"><a href="classlib_1_1log__message.html#a7c503e6174d7549746c628705881a720">lib::log_message::log_message</a></div><div class="ttdeci">log_message()=default</div></div>
-<div class="ttc" id="aclasslib_1_1log__message_html_aa2b0e7cdc799bbba74078f32e5e34cd8"><div class="ttname"><a href="classlib_1_1log__message.html#aa2b0e7cdc799bbba74078f32e5e34cd8">lib::log_message::get_type_short</a></div><div class="ttdeci">auto get_type_short() const -&gt; std::string</div></div>
-<div class="ttc" id="aclasslib_1_1log__message_html_aa75bf94ccdddb558b2fa2fb0fd8ada5a"><div class="ttname"><a href="classlib_1_1log__message.html#aa75bf94ccdddb558b2fa2fb0fd8ada5a">lib::log_message::log_message</a></div><div class="ttdeci">log_message(log_type log_type, const std::string &amp;message)</div></div>
-<div class="ttc" id="aclasslib_1_1log__message_html_ab8eef24470cbefcd6a3091c4346a58df"><div class="ttname"><a href="classlib_1_1log__message.html#ab8eef24470cbefcd6a3091c4346a58df">lib::log_message::get_message</a></div><div class="ttdeci">auto get_message() const -&gt; std::string</div></div>
-<div class="ttc" id="aclasslib_1_1log__message_html_abcbc740676cacc4bf432a9a75271fa7b"><div class="ttname"><a href="classlib_1_1log__message.html#abcbc740676cacc4bf432a9a75271fa7b">lib::log_message::get_type</a></div><div class="ttdeci">auto get_type() const -&gt; std::string</div></div>
-<div class="ttc" id="aclasslib_1_1log__message_html_af2f5249c9d1a5e48d6e345b27970c3f9"><div class="ttname"><a href="classlib_1_1log__message.html#af2f5249c9d1a5e48d6e345b27970c3f9">lib::log_message::to_string</a></div><div class="ttdeci">auto to_string() const -&gt; std::string</div></div>
+<div class="ttc" id="aclassLogMessage_html"><div class="ttname"><a href="classLogMessage.html">LogMessage</a></div><div class="ttdef"><b>Definition</b> logmessage.hpp:7</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -101,19 +101,19 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7278c354d46b5b3a903d5e0796d272d8" id="r_a7278c354d46b5b3a903d5e0796d272d8"><td class="memItemLeft" align="right" valign="top"><a id="a7278c354d46b5b3a903d5e0796d272d8" name="a7278c354d46b5b3a903d5e0796d272d8"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>api</b> (const <a class="el" href="classlib_1_1http__client.html">lib::http_client</a> &amp;<a class="el" href="classlib_1_1http__client.html">http_client</a>)</td></tr>
-<tr class="separator:a7278c354d46b5b3a903d5e0796d272d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36c89ac13bd5f48acb6dcf4007e5417d" id="r_a36c89ac13bd5f48acb6dcf4007e5417d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a36c89ac13bd5f48acb6dcf4007e5417d">contributors</a> (const std::string &amp;owner, const std::string &amp;repo, lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1gh_1_1contributor.html">lib::gh::contributor</a> &gt; &gt; &amp;callback) const</td></tr>
-<tr class="separator:a36c89ac13bd5f48acb6dcf4007e5417d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a549f211719ba4289a66651136446163e" id="r_a549f211719ba4289a66651136446163e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a549f211719ba4289a66651136446163e">release</a> (const std::string &amp;owner, const std::string &amp;repo, const std::string &amp;tag, lib::callback&lt; <a class="el" href="classlib_1_1gh_1_1release.html">lib::gh::release</a> &gt; &amp;callback) const</td></tr>
-<tr class="separator:a549f211719ba4289a66651136446163e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc0bb7cc3cb30a3dac17091f834e5593" id="r_abc0bb7cc3cb30a3dac17091f834e5593"><td class="memItemLeft" align="right" valign="top"><a id="abc0bb7cc3cb30a3dac17091f834e5593" name="abc0bb7cc3cb30a3dac17091f834e5593"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>api</b> (const <a class="el" href="classHttpClient.html">HttpClient</a> &amp;http_client)</td></tr>
+<tr class="separator:abc0bb7cc3cb30a3dac17091f834e5593"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1df981ce2a7ba1335aeadd6d13c2d79f" id="r_a1df981ce2a7ba1335aeadd6d13c2d79f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1df981ce2a7ba1335aeadd6d13c2d79f">contributors</a> (const std::string &amp;owner, const std::string &amp;repo, ApiCallback&lt; std::vector&lt; <a class="el" href="classlib_1_1gh_1_1contributor.html">lib::gh::contributor</a> &gt; &gt; &amp;callback) const</td></tr>
+<tr class="separator:a1df981ce2a7ba1335aeadd6d13c2d79f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd82fc5dab421ea8362635b320ad5eb1" id="r_afd82fc5dab421ea8362635b320ad5eb1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afd82fc5dab421ea8362635b320ad5eb1">release</a> (const std::string &amp;owner, const std::string &amp;repo, const std::string &amp;tag, ApiCallback&lt; <a class="el" href="classlib_1_1gh_1_1release.html">lib::gh::release</a> &gt; &amp;callback) const</td></tr>
+<tr class="separator:afd82fc5dab421ea8362635b320ad5eb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>GitHub API </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a36c89ac13bd5f48acb6dcf4007e5417d" name="a36c89ac13bd5f48acb6dcf4007e5417d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a36c89ac13bd5f48acb6dcf4007e5417d">&#9670;&#160;</a></span>contributors()</h2>
+<a id="a1df981ce2a7ba1335aeadd6d13c2d79f" name="a1df981ce2a7ba1335aeadd6d13c2d79f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1df981ce2a7ba1335aeadd6d13c2d79f">&#9670;&#160;</a></span>contributors()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,7 +131,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1gh_1_1contributor.html">lib::gh::contributor</a> &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;) const</td>
+          <td class="paramtype">ApiCallback&lt; std::vector&lt; <a class="el" href="classlib_1_1gh_1_1contributor.html">lib::gh::contributor</a> &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;) const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -146,8 +146,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a549f211719ba4289a66651136446163e" name="a549f211719ba4289a66651136446163e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a549f211719ba4289a66651136446163e">&#9670;&#160;</a></span>release()</h2>
+<a id="afd82fc5dab421ea8362635b320ad5eb1" name="afd82fc5dab421ea8362635b320ad5eb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd82fc5dab421ea8362635b320ad5eb1">&#9670;&#160;</a></span>release()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -170,7 +170,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; <a class="el" href="classlib_1_1gh_1_1release.html">lib::gh::release</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;) const</td>
+          <td class="paramtype">ApiCallback&lt; <a class="el" href="classlib_1_1gh_1_1release.html">lib::gh::release</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;) const</td>
         </tr>
       </table>
 </div><div class="memdoc">

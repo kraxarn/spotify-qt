@@ -108,7 +108,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1auth.html">   15</a></span>        <span class="keyword">class </span><a class="code hl_class" href="classlib_1_1spt_1_1auth.html">auth</a></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        {</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>            <a class="code hl_class" href="classlib_1_1spt_1_1auth.html">auth</a>(<a class="code hl_class" href="classlib_1_1settings.html">lib::settings</a> &amp;<a class="code hl_class" href="classlib_1_1settings.html">settings</a>, <span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1http__client.html">lib::http_client</a> &amp;<a class="code hl_class" href="classlib_1_1http__client.html">http_client</a>);</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>            <a class="code hl_class" href="classlib_1_1spt_1_1auth.html">auth</a>(<a class="code hl_class" href="classlib_1_1settings.html">lib::settings</a> &amp;<a class="code hl_class" href="classlib_1_1settings.html">settings</a>, <span class="keyword">const</span> <a class="code hl_class" href="classHttpClient.html">HttpClient</a> &amp;http_client);</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="classlib_1_1spt_1_1auth.html#a3f4dd7f6fa15555e5ea65c11d8f50974">   23</a></span>            <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code hl_function" href="classlib_1_1spt_1_1auth.html#a3f4dd7f6fa15555e5ea65c11d8f50974">url</a>(<span class="keyword">const</span> std::string &amp;client_id,</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>                <span class="keyword">const</span> std::string &amp;redirect) -&gt; std::string;</div>
@@ -118,12 +118,12 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            <a class="code hl_class" href="classlib_1_1settings.html">lib::settings</a> &amp;<a class="code hl_class" href="classlib_1_1settings.html">settings</a>;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <span class="keyword">const</span> <a class="code hl_class" href="classlib_1_1http__client.html">lib::http_client</a> &amp;<a class="code hl_class" href="classlib_1_1http__client.html">http_client</a>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <span class="keyword">const</span> <a class="code hl_class" href="classHttpClient.html">HttpClient</a> &amp;http_client;</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        };</div>
 </div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    }</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>}</div>
-<div class="ttc" id="aclasslib_1_1http__client_html"><div class="ttname"><a href="classlib_1_1http__client.html">lib::http_client</a></div><div class="ttdef"><b>Definition</b> httpclient.hpp:21</div></div>
+<div class="ttc" id="aclassHttpClient_html"><div class="ttname"><a href="classHttpClient.html">HttpClient</a></div><div class="ttdef"><b>Definition</b> httpclient.hpp:26</div></div>
 <div class="ttc" id="aclasslib_1_1settings_html"><div class="ttname"><a href="classlib_1_1settings.html">lib::settings</a></div><div class="ttdef"><b>Definition</b> settings.hpp:18</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1auth_html"><div class="ttname"><a href="classlib_1_1spt_1_1auth.html">lib::spt::auth</a></div><div class="ttdef"><b>Definition</b> auth.hpp:16</div></div>
 <div class="ttc" id="aclasslib_1_1spt_1_1auth_html_a3f4dd7f6fa15555e5ea65c11d8f50974"><div class="ttname"><a href="classlib_1_1spt_1_1auth.html#a3f4dd7f6fa15555e5ea65c11d8f50974">lib::spt::auth::url</a></div><div class="ttdeci">static auto url(const std::string &amp;client_id, const std::string &amp;redirect) -&gt; std::string</div></div>

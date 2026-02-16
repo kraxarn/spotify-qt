@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['fail_0',['fail',['../classlib_1_1result.html#a9227d5a20285230afe413aee8c66838b',1,'lib::result']]],
+  ['fail_0',['fail',['../classResult.html#abe4ea817042548c81e2f286466eda067',1,'Result']]],
   ['file_5fname_1',['file_name',['../classlib_1_1settings.html#a56901cc8dda5b45efa71aaa2fcdf65b1',1,'lib::settings']]],
   ['file_5fpath_2',['file_path',['../classlib_1_1settings.html#af93cabb51a449bc1f76fc4303f943663',1,'lib::settings']]],
   ['find_5fitem_3',['find_item',['../classlib_1_1json.html#ab2a176518327d25b2681d7e7ad1a94f8',1,'lib::json']]],

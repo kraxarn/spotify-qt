@@ -113,9 +113,9 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Unit, <span class="keyword">typename</span> Result&gt;</div>
 <div class="foldopen" id="foldopen00042" data-start="{" data-end="}">
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classlib_1_1stopwatch.html#a9bdb323cd68ad46755e4183073caa03e">   42</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="classlib_1_1stopwatch.html#a9bdb323cd68ad46755e4183073caa03e">elapsed</a>() -&gt; Result</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classlib_1_1stopwatch.html#a9bdb323cd68ad46755e4183073caa03e">   42</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="classlib_1_1stopwatch.html#a9bdb323cd68ad46755e4183073caa03e">elapsed</a>() -&gt; <a class="code hl_class" href="classResult.html">Result</a></div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        {</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>Result<span class="keyword">&gt;</span>(std::chrono::duration_cast&lt;Unit&gt;(stopped - started).count());</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code hl_class" href="classResult.html">Result</a><span class="keyword">&gt;</span>(std::chrono::duration_cast&lt;Unit&gt;(stopped - started).count());</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        }</div>
 </div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
@@ -130,6 +130,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    };</div>
 </div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>}</div>
+<div class="ttc" id="aclassResult_html"><div class="ttname"><a href="classResult.html">Result</a></div><div class="ttdef"><b>Definition</b> result.hpp:12</div></div>
 <div class="ttc" id="aclasslib_1_1stopwatch_html"><div class="ttname"><a href="classlib_1_1stopwatch.html">lib::stopwatch</a></div><div class="ttdef"><b>Definition</b> stopwatch.hpp:11</div></div>
 <div class="ttc" id="aclasslib_1_1stopwatch_html_a0fad5dd1ab7332da9497c8e7aa5cb3b6"><div class="ttname"><a href="classlib_1_1stopwatch.html#a0fad5dd1ab7332da9497c8e7aa5cb3b6">lib::stopwatch::stop</a></div><div class="ttdeci">void stop()</div></div>
 <div class="ttc" id="aclasslib_1_1stopwatch_html_a6657f6a36fd336c1a758695cad564033"><div class="ttname"><a href="classlib_1_1stopwatch.html#a6657f6a36fd336c1a758695cad564033">lib::stopwatch::ms</a></div><div class="ttdeci">std::chrono::milliseconds ms</div><div class="ttdef"><b>Definition</b> stopwatch.hpp:16</div></div>

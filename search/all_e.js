@@ -1,8 +1,23 @@
 var searchData=
 [
-  ['offset_0',['offset',['../classlib_1_1spt_1_1page.html#a19320c3493fad44ba4e48dcf2b14512d',1,'lib::spt::page']]],
-  ['ok_1',['ok',['../classlib_1_1result.html#aeb689aa457c1ff79bee90c4eedf95f3c',1,'lib::result']]],
-  ['origin_2',['origin',['../classlib_1_1uri.html#af19c92bb8946ae4843df90647bfb8117',1,'lib::uri']]],
-  ['owner_5fid_3',['owner_id',['../classlib_1_1spt_1_1playlist.html#a59f10ebad47330939b4759c3f0a982ea',1,'lib::spt::playlist']]],
-  ['owner_5fname_4',['owner_name',['../classlib_1_1spt_1_1playlist.html#a9af238a93a7984167540d3b406ca3b86',1,'lib::spt::playlist']]]
+  ['page_0',['page',['../classlib_1_1spt_1_1page.html',1,'lib::spt']]],
+  ['parse_1',['parse',['../classlib_1_1date__time.html#adcdc942ea6db13b86272bcac902f0be3',1,'lib::date_time']]],
+  ['pathname_2',['pathname',['../classlib_1_1uri.html#afb850d1c5c9a7ad9b2175cc6e1c4db4d',1,'lib::uri']]],
+  ['paths_3',['paths',['../classlib_1_1paths.html',1,'lib::paths'],['../classlib_1_1paths.html#a46e8c35ee6f51938d7af982e532acbb2',1,'lib::paths::paths()']]],
+  ['pause_4',['pause',['../classlib_1_1spt_1_1api.html#a1ef30a093f2900b10ca0549b2e688fcd',1,'lib::spt::api']]],
+  ['plainlyrics_5',['plainLyrics',['../classLyrics.html#a877d58baabff49d94962d30cb28b7061',1,'Lyrics']]],
+  ['play_5ftracks_6',['play_tracks',['../classlib_1_1spt_1_1api.html#a52f8c95892df8f313bec0cad22eae8ce',1,'lib::spt::api::play_tracks(int track_index, const std::string &amp;context, ApiCallback&lt; std::string &gt; &amp;callback)'],['../classlib_1_1spt_1_1api.html#a2037c389e84c693cec8df3fd51aa05d7',1,'lib::spt::api::play_tracks(int track_index, const std::vector&lt; std::string &gt; &amp;all, ApiCallback&lt; std::string &gt; &amp;callback)'],['../classlib_1_1spt_1_1api.html#a8097406db67a089b0e480008c71346c2',1,'lib::spt::api::play_tracks(int track_index, const std::initializer_list&lt; std::string &gt; &amp;all, ApiCallback&lt; std::string &gt; &amp;callback)'],['../classlib_1_1spt_1_1api.html#a844729b821d63c9b1271721906443395',1,'lib::spt::api::play_tracks(const std::string &amp;context, ApiCallback&lt; std::string &gt; &amp;callback)']]],
+  ['play_5ftracks_5furl_7',['play_tracks_url',['../classlib_1_1spt_1_1api.html#abca1449ba0890522b37d52ff70be8c15',1,'lib::spt::api']]],
+  ['playback_8',['playback',['../classlib_1_1spt_1_1playback.html',1,'lib::spt']]],
+  ['playlist_9',['playlist',['../classlib_1_1spt_1_1playlist.html',1,'lib::spt']]],
+  ['playlist_5fdetails_10',['playlist_details',['../classlib_1_1spt_1_1playlist__details.html',1,'lib::spt']]],
+  ['playlist_5ftracks_11',['playlist_tracks',['../classlib_1_1spt_1_1api.html#abb40a42f291ed4a4b76f79e2a2082a40',1,'lib::spt::api::playlist_tracks(const lib::spt::playlist &amp;playlist, ApiCallback&lt; std::vector&lt; lib::spt::track &gt; &gt; &amp;callback)'],['../classlib_1_1spt_1_1api.html#a0f9ed7fb4d2d5086dea3ca56a0c31149',1,'lib::spt::api::playlist_tracks(const lib::spt::playlist &amp;playlist, const std::function&lt; bool(const Result&lt; lib::spt::page&lt; lib::spt::track &gt; &gt; &amp;)&gt; &amp;callback)']]],
+  ['playlists_12',['playlists',['../classlib_1_1spt_1_1search__results.html#a1e1b2635d850b087c917cf4d04d054d1',1,'lib::spt::search_results']]],
+  ['popularity_13',['popularity',['../classlib_1_1spt_1_1artist.html#a3edf12f868b693d887b4ba9d4e0f23c7',1,'lib::spt::artist']]],
+  ['post_14',['post',['../classHttpClient.html#a35214c358f0086b1ad1ca37b6df768f1',1,'HttpClient::post(const std::string &amp;url, const lib::headers &amp;headers, ApiCallback&lt; Result&lt; std::string &gt; &gt; &amp;callback) const'],['../classHttpClient.html#aca8229a35e97ed6634c2ab8aa6126c71',1,'HttpClient::post(const std::string &amp;url, const std::string &amp;body, const lib::headers &amp;headers, ApiCallback&lt; Result&lt; std::string &gt; &gt; &amp;callback) const'],['../classlib_1_1spt_1_1api.html#ad83f1406eeb04fa4834974ff771bbfae',1,'lib::spt::api::post(const std::string &amp;url, const nlohmann::json &amp;json, ApiCallback&lt; nlohmann::json &gt; &amp;callback)'],['../classlib_1_1spt_1_1api.html#a4e8232bcca553cfd24652d4e88e29f84',1,'lib::spt::api::post(const std::string &amp;url, ApiCallback&lt; std::string &gt; &amp;callback)'],['../classlib_1_1spt_1_1request.html#afbd6efec0ca1c0b7f15b45cb6f936927',1,'lib::spt::request::post()']]],
+  ['previous_15',['previous',['../classlib_1_1spt_1_1api.html#a6d07151c32195242529125b9cd901a25',1,'lib::spt::api']]],
+  ['progress_5fms_16',['progress_ms',['../classlib_1_1spt_1_1playback.html#a3b8abad8cc302c24f0a07b4b3bca9146',1,'lib::spt::playback']]],
+  ['protocol_17',['protocol',['../classlib_1_1uri.html#a665adf31459eefee7b42a68f0ce05c90',1,'lib::uri']]],
+  ['publisher_18',['publisher',['../classlib_1_1spt_1_1show.html#a85650e0406f127755d22a3152baca8aa',1,'lib::spt::show']]],
+  ['put_19',['put',['../classHttpClient.html#aad3a8a25cf29c9fb17b9d2c65798b98a',1,'HttpClient::put()'],['../classlib_1_1spt_1_1api.html#a1e3e60c08271a749ac16d80d6cdca24b',1,'lib::spt::api::put(const std::string &amp;url, const nlohmann::json &amp;body, ApiCallback&lt; std::string &gt; &amp;callback)'],['../classlib_1_1spt_1_1api.html#a14555d3a40859f034c673697422b2ea4',1,'lib::spt::api::put(const std::string &amp;url, ApiCallback&lt; std::string &gt; &amp;callback)']]]
 ];

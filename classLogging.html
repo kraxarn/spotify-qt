@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>spotify-qt-lib: lib::lrc::credit Class Reference</title>
+<title>spotify-qt-lib: Logging Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -83,60 +83,40 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><b>lib</b></li><li class="navelem"><b>lrc</b></li><li class="navelem"><a class="el" href="classlib_1_1lrc_1_1credit.html">credit</a></li>  </ul>
-</div>
 </div><!-- top -->
 <div id="doc-content">
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="classlib_1_1lrc_1_1credit-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">lib::lrc::credit Class Reference</div></div>
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
+<a href="classLogging-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">Logging Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p><code>#include &lt;<a class="el" href="credit_8hpp_source.html">credit.hpp</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a17acc17babd53068bede1dabb1432183" id="r_a17acc17babd53068bede1dabb1432183"><td class="memItemLeft" align="right" valign="top"><a id="a17acc17babd53068bede1dabb1432183" name="a17acc17babd53068bede1dabb1432183"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>credit</b> (const std::string &amp;<a class="el" href="classlib_1_1lrc_1_1line.html">line</a>)</td></tr>
-<tr class="separator:a17acc17babd53068bede1dabb1432183"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae460e0baa16e9c087522e88bd7253c1d" id="r_ae460e0baa16e9c087522e88bd7253c1d"><td class="memItemLeft" align="right" valign="top"><a id="ae460e0baa16e9c087522e88bd7253c1d" name="ae460e0baa16e9c087522e88bd7253c1d"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;</b> (const <a class="el" href="classlib_1_1lrc_1_1credit.html">credit</a> &amp;rhs) const -&gt; bool</td></tr>
-<tr class="separator:ae460e0baa16e9c087522e88bd7253c1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23afc757dc192376bdbd54e4a9e0e3be" id="r_a23afc757dc192376bdbd54e4a9e0e3be"><td class="memItemLeft" align="right" valign="top"><a id="a23afc757dc192376bdbd54e4a9e0e3be" name="a23afc757dc192376bdbd54e4a9e0e3be"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const <a class="el" href="classlib_1_1lrc_1_1credit.html">credit</a> &amp;rhs) const -&gt; bool</td></tr>
-<tr class="separator:a23afc757dc192376bdbd54e4a9e0e3be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a8f3d495892a275c20a2270af4ab48986" id="r_a8f3d495892a275c20a2270af4ab48986"><td class="memItemLeft" align="right" valign="top"><a id="a8f3d495892a275c20a2270af4ab48986" name="a8f3d495892a275c20a2270af4ab48986"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><b>installMessageHandler</b> ()</td></tr>
+<tr class="separator:a8f3d495892a275c20a2270af4ab48986"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5336c477106a95470867a5713079016" id="r_aa5336c477106a95470867a5713079016"><td class="memItemLeft" align="right" valign="top"><a id="aa5336c477106a95470867a5713079016" name="aa5336c477106a95470867a5713079016"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><b>setLogToStdout</b> (bool value)</td></tr>
+<tr class="separator:aa5336c477106a95470867a5713079016"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a81f44922cfe5505f0a0651e6ea9c55" id="r_a9a81f44922cfe5505f0a0651e6ea9c55"><td class="memItemLeft" align="right" valign="top"><a id="a9a81f44922cfe5505f0a0651e6ea9c55" name="a9a81f44922cfe5505f0a0651e6ea9c55"></a>
+static auto&#160;</td><td class="memItemRight" valign="bottom"><b>messages</b> () -&gt; const QList&lt; <a class="el" href="classLogMessage.html">LogMessage</a> &gt; &amp;</td></tr>
+<tr class="separator:a9a81f44922cfe5505f0a0651e6ea9c55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac752a809771b9028626e8e159e7836a7" id="r_ac752a809771b9028626e8e159e7836a7"><td class="memItemLeft" align="right" valign="top"><a id="ac752a809771b9028626e8e159e7836a7" name="ac752a809771b9028626e8e159e7836a7"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr>
+<tr class="separator:ac752a809771b9028626e8e159e7836a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a3d7b1c7655cb04e9099603986d5576eb" id="r_a3d7b1c7655cb04e9099603986d5576eb"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3d7b1c7655cb04e9099603986d5576eb">name</a></td></tr>
-<tr class="separator:a3d7b1c7655cb04e9099603986d5576eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a4058c023fe8037f26162cbf68ddcd6fe" id="r_a4058c023fe8037f26162cbf68ddcd6fe"><td class="memItemLeft" align="right" valign="top"><a id="a4058c023fe8037f26162cbf68ddcd6fe" name="a4058c023fe8037f26162cbf68ddcd6fe"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>lib::log</b></td></tr>
+<tr class="separator:a4058c023fe8037f26162cbf68ddcd6fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Lyrics credit </p>
-</div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="a3d7b1c7655cb04e9099603986d5576eb" name="a3d7b1c7655cb04e9099603986d5576eb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d7b1c7655cb04e9099603986d5576eb">&#9670;&#160;</a></span>name</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string lib::lrc::credit::name</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Name of credited </p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/github/workspace/lib/include/lib/lyrics/<a class="el" href="credit_8hpp_source.html">credit.hpp</a></li>
+<li>/github/workspace/lib/include/lib/<a class="el" href="logging_8hpp_source.html">logging.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

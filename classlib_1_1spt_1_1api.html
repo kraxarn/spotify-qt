@@ -104,180 +104,177 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae1e3e341b64a75e92bc6715f48ee1960" id="r_ae1e3e341b64a75e92bc6715f48ee1960"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae1e3e341b64a75e92bc6715f48ee1960">api</a> (<a class="el" href="classlib_1_1settings.html">lib::settings</a> &amp;<a class="el" href="classlib_1_1settings.html">settings</a>, const <a class="el" href="classlib_1_1http__client.html">lib::http_client</a> &amp;<a class="el" href="classlib_1_1http__client.html">http_client</a>, <a class="el" href="classlib_1_1spt_1_1request.html">lib::spt::request</a> &amp;<a class="el" href="classlib_1_1spt_1_1request.html">request</a>)</td></tr>
-<tr class="separator:ae1e3e341b64a75e92bc6715f48ee1960"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a320472111e815a50d1a09cec4e830281" id="r_a320472111e815a50d1a09cec4e830281"><td class="memItemLeft" align="right" valign="top"><a id="a320472111e815a50d1a09cec4e830281" name="a320472111e815a50d1a09cec4e830281"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>album</b> (const std::string &amp;id, lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1album.html">lib::spt::album</a> &gt; &amp;callback)</td></tr>
-<tr class="separator:a320472111e815a50d1a09cec4e830281"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa181d0c648e08b93e7d81a6564df8047" id="r_aa181d0c648e08b93e7d81a6564df8047"><td class="memItemLeft" align="right" valign="top"><a id="aa181d0c648e08b93e7d81a6564df8047" name="aa181d0c648e08b93e7d81a6564df8047"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>album_tracks</b> (const <a class="el" href="classlib_1_1spt_1_1album.html">spt::album</a> &amp;<a class="el" href="classlib_1_1spt_1_1album.html">album</a>, const paged_callback&lt; <a class="el" href="classlib_1_1spt_1_1track.html">spt::track</a> &gt; &amp;callback) const</td></tr>
-<tr class="separator:aa181d0c648e08b93e7d81a6564df8047"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66e824d6e16489dfa03bbda3b3dfe0d4" id="r_a66e824d6e16489dfa03bbda3b3dfe0d4"><td class="memItemLeft" align="right" valign="top"><a id="a66e824d6e16489dfa03bbda3b3dfe0d4" name="a66e824d6e16489dfa03bbda3b3dfe0d4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>artist</b> (const std::string &amp;id, lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &gt; &amp;callback)</td></tr>
-<tr class="separator:a66e824d6e16489dfa03bbda3b3dfe0d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab08f92ec0cd49df2b68499e545e753fc" id="r_ab08f92ec0cd49df2b68499e545e753fc"><td class="memItemLeft" align="right" valign="top"><a id="ab08f92ec0cd49df2b68499e545e753fc" name="ab08f92ec0cd49df2b68499e545e753fc"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>top_tracks</b> (const <a class="el" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &amp;<a class="el" href="classlib_1_1spt_1_1artist.html">artist</a>, lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;callback)</td></tr>
-<tr class="separator:ab08f92ec0cd49df2b68499e545e753fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d9043977c91287fe934af3c000d9bad" id="r_a7d9043977c91287fe934af3c000d9bad"><td class="memItemLeft" align="right" valign="top"><a id="a7d9043977c91287fe934af3c000d9bad" name="a7d9043977c91287fe934af3c000d9bad"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>related_artists</b> (const <a class="el" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &amp;<a class="el" href="classlib_1_1spt_1_1artist.html">artist</a>, lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &gt; &gt; &amp;callback)</td></tr>
-<tr class="separator:a7d9043977c91287fe934af3c000d9bad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90f34273063e19fa9c851b1047eee479" id="r_a90f34273063e19fa9c851b1047eee479"><td class="memItemLeft" align="right" valign="top"><a id="a90f34273063e19fa9c851b1047eee479" name="a90f34273063e19fa9c851b1047eee479"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>albums</b> (const <a class="el" href="classlib_1_1spt_1_1artist.html">spt::artist</a> &amp;<a class="el" href="classlib_1_1spt_1_1artist.html">artist</a>, const std::vector&lt; album_group &gt; &amp;groups, const paged_callback&lt; <a class="el" href="classlib_1_1spt_1_1album.html">spt::album</a> &gt; &amp;callback) const</td></tr>
-<tr class="separator:a90f34273063e19fa9c851b1047eee479"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f2fc8252566afaf229a4542231a6134" id="r_a3f2fc8252566afaf229a4542231a6134"><td class="memItemLeft" align="right" valign="top"><a id="a3f2fc8252566afaf229a4542231a6134" name="a3f2fc8252566afaf229a4542231a6134"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>new_releases</b> (const paged_callback&lt; <a class="el" href="classlib_1_1spt_1_1album.html">spt::album</a> &gt; &amp;callback) const</td></tr>
-<tr class="separator:a3f2fc8252566afaf229a4542231a6134"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a141e60120dd6f0d4a15e576a826482af" id="r_a141e60120dd6f0d4a15e576a826482af"><td class="memItemLeft" align="right" valign="top"><a id="a141e60120dd6f0d4a15e576a826482af" name="a141e60120dd6f0d4a15e576a826482af"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>followed_artists</b> (const paged_callback&lt; <a class="el" href="classlib_1_1spt_1_1artist.html">spt::artist</a> &gt; &amp;callback) const</td></tr>
-<tr class="separator:a141e60120dd6f0d4a15e576a826482af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbfacaf097c679f7365a9c8490749b2c" id="r_abbfacaf097c679f7365a9c8490749b2c"><td class="memItemLeft" align="right" valign="top"><a id="abbfacaf097c679f7365a9c8490749b2c" name="abbfacaf097c679f7365a9c8490749b2c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>follow</b> (lib::follow_type type, const std::vector&lt; std::string &gt; &amp;ids, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:abbfacaf097c679f7365a9c8490749b2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a524e41387cbe663e9b0912f2810bc124" id="r_a524e41387cbe663e9b0912f2810bc124"><td class="memItemLeft" align="right" valign="top"><a id="a524e41387cbe663e9b0912f2810bc124" name="a524e41387cbe663e9b0912f2810bc124"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>unfollow</b> (lib::follow_type type, const std::vector&lt; std::string &gt; &amp;ids, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a524e41387cbe663e9b0912f2810bc124"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5867e46273ab2d6c956cbf19ad663ac3" id="r_a5867e46273ab2d6c956cbf19ad663ac3"><td class="memItemLeft" align="right" valign="top"><a id="a5867e46273ab2d6c956cbf19ad663ac3" name="a5867e46273ab2d6c956cbf19ad663ac3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>is_following</b> (lib::follow_type type, const std::vector&lt; std::string &gt; &amp;ids, lib::callback&lt; std::vector&lt; bool &gt; &gt; &amp;callback)</td></tr>
-<tr class="separator:a5867e46273ab2d6c956cbf19ad663ac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbaa7df1b0704c32cdd7c2e454c7baec" id="r_abbaa7df1b0704c32cdd7c2e454c7baec"><td class="memItemLeft" align="right" valign="top"><a id="abbaa7df1b0704c32cdd7c2e454c7baec" name="abbaa7df1b0704c32cdd7c2e454c7baec"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>follow_playlist</b> (const std::string &amp;playlist_id, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:abbaa7df1b0704c32cdd7c2e454c7baec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2b57af41468d1da5a46ec508c6a3c90" id="r_af2b57af41468d1da5a46ec508c6a3c90"><td class="memItemLeft" align="right" valign="top"><a id="af2b57af41468d1da5a46ec508c6a3c90" name="af2b57af41468d1da5a46ec508c6a3c90"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>unfollow_playlist</b> (const std::string &amp;playlist_id, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:af2b57af41468d1da5a46ec508c6a3c90"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af17cfc55f815f15a40e86a298c5bc26a" id="r_af17cfc55f815f15a40e86a298c5bc26a"><td class="memItemLeft" align="right" valign="top"><a id="af17cfc55f815f15a40e86a298c5bc26a" name="af17cfc55f815f15a40e86a298c5bc26a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>is_following_playlist</b> (const std::string &amp;playlist_id, const std::vector&lt; std::string &gt; &amp;user_ids, lib::callback&lt; std::vector&lt; bool &gt; &gt; &amp;callback)</td></tr>
-<tr class="separator:af17cfc55f815f15a40e86a298c5bc26a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93aee74d38b7de88880c77e50368ca60" id="r_a93aee74d38b7de88880c77e50368ca60"><td class="memItemLeft" align="right" valign="top"><a id="a93aee74d38b7de88880c77e50368ca60" name="a93aee74d38b7de88880c77e50368ca60"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>saved_albums</b> (const paged_callback&lt; <a class="el" href="classlib_1_1spt_1_1saved__album.html">saved_album</a> &gt; &amp;callback) const</td></tr>
-<tr class="separator:a93aee74d38b7de88880c77e50368ca60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4653b7fb43a68a46b569a95740ad2b45" id="r_a4653b7fb43a68a46b569a95740ad2b45"><td class="memItemLeft" align="right" valign="top"><a id="a4653b7fb43a68a46b569a95740ad2b45" name="a4653b7fb43a68a46b569a95740ad2b45"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>add_saved_albums</b> (const std::vector&lt; std::string &gt; &amp;album_ids, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a4653b7fb43a68a46b569a95740ad2b45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab86d618e673da78bab836fc85557510c" id="r_ab86d618e673da78bab836fc85557510c"><td class="memItemLeft" align="right" valign="top"><a id="ab86d618e673da78bab836fc85557510c" name="ab86d618e673da78bab836fc85557510c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>remove_saved_albums</b> (const std::vector&lt; std::string &gt; &amp;album_ids, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:ab86d618e673da78bab836fc85557510c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a165ab265dee5107227cfb1bd6c712da7" id="r_a165ab265dee5107227cfb1bd6c712da7"><td class="memItemLeft" align="right" valign="top"><a id="a165ab265dee5107227cfb1bd6c712da7" name="a165ab265dee5107227cfb1bd6c712da7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>is_saved_album</b> (const std::vector&lt; std::string &gt; &amp;album_ids, lib::callback&lt; std::vector&lt; bool &gt; &gt; &amp;callback)</td></tr>
-<tr class="separator:a165ab265dee5107227cfb1bd6c712da7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a549190fb118ee8b93d953749534624ea" id="r_a549190fb118ee8b93d953749534624ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a549190fb118ee8b93d953749534624ea">saved_tracks</a> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;callback)</td></tr>
-<tr class="separator:a549190fb118ee8b93d953749534624ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acdd115c075570231b1fed37b35846d05" id="r_acdd115c075570231b1fed37b35846d05"><td class="memItemLeft" align="right" valign="top"><a id="acdd115c075570231b1fed37b35846d05" name="acdd115c075570231b1fed37b35846d05"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>saved_tracks</b> (const lib::paged_callback&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &amp;callback)</td></tr>
-<tr class="separator:acdd115c075570231b1fed37b35846d05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adcaefb99bcfd07a4ecaa91efea82e49b" id="r_adcaefb99bcfd07a4ecaa91efea82e49b"><td class="memItemLeft" align="right" valign="top"><a id="adcaefb99bcfd07a4ecaa91efea82e49b" name="adcaefb99bcfd07a4ecaa91efea82e49b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>add_saved_tracks</b> (const std::vector&lt; std::string &gt; &amp;track_ids, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:adcaefb99bcfd07a4ecaa91efea82e49b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21fc73a21414699593b44d1e1c17c9b0" id="r_a21fc73a21414699593b44d1e1c17c9b0"><td class="memItemLeft" align="right" valign="top"><a id="a21fc73a21414699593b44d1e1c17c9b0" name="a21fc73a21414699593b44d1e1c17c9b0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>remove_saved_tracks</b> (const std::vector&lt; std::string &gt; &amp;track_ids, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a21fc73a21414699593b44d1e1c17c9b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5ae05de44a4673591aa0b472ab382f6" id="r_aa5ae05de44a4673591aa0b472ab382f6"><td class="memItemLeft" align="right" valign="top"><a id="aa5ae05de44a4673591aa0b472ab382f6" name="aa5ae05de44a4673591aa0b472ab382f6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>is_saved_track</b> (const std::vector&lt; std::string &gt; &amp;track_ids, lib::callback&lt; std::vector&lt; bool &gt; &gt; &amp;callback)</td></tr>
-<tr class="separator:aa5ae05de44a4673591aa0b472ab382f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11ba8d08de29a2016a0ed1aa850a2c53" id="r_a11ba8d08de29a2016a0ed1aa850a2c53"><td class="memItemLeft" align="right" valign="top"><a id="a11ba8d08de29a2016a0ed1aa850a2c53" name="a11ba8d08de29a2016a0ed1aa850a2c53"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>top_artists</b> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &gt; &gt; &amp;callback)</td></tr>
-<tr class="separator:a11ba8d08de29a2016a0ed1aa850a2c53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05b304475678bb8b6a961fbbd926a21d" id="r_a05b304475678bb8b6a961fbbd926a21d"><td class="memItemLeft" align="right" valign="top"><a id="a05b304475678bb8b6a961fbbd926a21d" name="a05b304475678bb8b6a961fbbd926a21d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>top_tracks</b> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;callback)</td></tr>
-<tr class="separator:a05b304475678bb8b6a961fbbd926a21d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00deaf1cbfdcce64b499daf2e3ebb85c" id="r_a00deaf1cbfdcce64b499daf2e3ebb85c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a00deaf1cbfdcce64b499daf2e3ebb85c">current_playback</a> (lib::callback&lt; <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; <a class="el" href="classlib_1_1spt_1_1playback.html">lib::spt::playback</a> &gt; &gt; &amp;callback)</td></tr>
-<tr class="separator:a00deaf1cbfdcce64b499daf2e3ebb85c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72a29c46a82d922524541ea794533102" id="r_a72a29c46a82d922524541ea794533102"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a72a29c46a82d922524541ea794533102">set_device</a> (const std::string &amp;device_id, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a72a29c46a82d922524541ea794533102"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36c1458cde31e74bc4f4486ad4c542b9" id="r_a36c1458cde31e74bc4f4486ad4c542b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a36c1458cde31e74bc4f4486ad4c542b9">set_device</a> (const <a class="el" href="classlib_1_1spt_1_1device.html">lib::spt::device</a> &amp;<a class="el" href="classlib_1_1spt_1_1device.html">device</a>, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a36c1458cde31e74bc4f4486ad4c542b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab71b9c21944c8b1ae9f2c6a78ff99cb6" id="r_ab71b9c21944c8b1ae9f2c6a78ff99cb6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab71b9c21944c8b1ae9f2c6a78ff99cb6">devices</a> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1device.html">lib::spt::device</a> &gt; &gt; &amp;callback)</td></tr>
-<tr class="separator:ab71b9c21944c8b1ae9f2c6a78ff99cb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01a1d5bef586ec3fcaaacdc590be5327" id="r_a01a1d5bef586ec3fcaaacdc590be5327"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a01a1d5bef586ec3fcaaacdc590be5327">api</a> (<a class="el" href="classlib_1_1settings.html">lib::settings</a> &amp;<a class="el" href="classlib_1_1settings.html">settings</a>, const <a class="el" href="classHttpClient.html">HttpClient</a> &amp;http_client, <a class="el" href="classlib_1_1spt_1_1request.html">lib::spt::request</a> &amp;<a class="el" href="classlib_1_1spt_1_1request.html">request</a>)</td></tr>
+<tr class="separator:a01a1d5bef586ec3fcaaacdc590be5327"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afecba9780cd181f3f0c49d79664f2208" id="r_afecba9780cd181f3f0c49d79664f2208"><td class="memItemLeft" align="right" valign="top"><a id="afecba9780cd181f3f0c49d79664f2208" name="afecba9780cd181f3f0c49d79664f2208"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>album</b> (const std::string &amp;id, ApiCallback&lt; <a class="el" href="classlib_1_1spt_1_1album.html">lib::spt::album</a> &gt; &amp;callback)</td></tr>
+<tr class="separator:afecba9780cd181f3f0c49d79664f2208"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ff6f2c6f7078c1ad0256a35932b49e6" id="r_a8ff6f2c6f7078c1ad0256a35932b49e6"><td class="memItemLeft" align="right" valign="top"><a id="a8ff6f2c6f7078c1ad0256a35932b49e6" name="a8ff6f2c6f7078c1ad0256a35932b49e6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>album_tracks</b> (const <a class="el" href="classlib_1_1spt_1_1album.html">spt::album</a> &amp;<a class="el" href="classlib_1_1spt_1_1album.html">album</a>, const ApiPagedCallback&lt; <a class="el" href="classlib_1_1spt_1_1track.html">spt::track</a> &gt; &amp;callback) const</td></tr>
+<tr class="separator:a8ff6f2c6f7078c1ad0256a35932b49e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06afcd1b1e7ca461f9a873dc9f29f129" id="r_a06afcd1b1e7ca461f9a873dc9f29f129"><td class="memItemLeft" align="right" valign="top"><a id="a06afcd1b1e7ca461f9a873dc9f29f129" name="a06afcd1b1e7ca461f9a873dc9f29f129"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>artist</b> (const std::string &amp;id, ApiCallback&lt; <a class="el" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &gt; &amp;callback)</td></tr>
+<tr class="separator:a06afcd1b1e7ca461f9a873dc9f29f129"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4742bc8f8fb9041d8ff71e66b2503d28" id="r_a4742bc8f8fb9041d8ff71e66b2503d28"><td class="memItemLeft" align="right" valign="top"><a id="a4742bc8f8fb9041d8ff71e66b2503d28" name="a4742bc8f8fb9041d8ff71e66b2503d28"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>top_tracks</b> (const <a class="el" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &amp;<a class="el" href="classlib_1_1spt_1_1artist.html">artist</a>, ApiCallback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;callback)</td></tr>
+<tr class="separator:a4742bc8f8fb9041d8ff71e66b2503d28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d6626983ca955ae5dfb1efff20b5860" id="r_a1d6626983ca955ae5dfb1efff20b5860"><td class="memItemLeft" align="right" valign="top"><a id="a1d6626983ca955ae5dfb1efff20b5860" name="a1d6626983ca955ae5dfb1efff20b5860"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>related_artists</b> (const <a class="el" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &amp;<a class="el" href="classlib_1_1spt_1_1artist.html">artist</a>, ApiCallback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &gt; &gt; &amp;callback)</td></tr>
+<tr class="separator:a1d6626983ca955ae5dfb1efff20b5860"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65a33cd71dafdb8228aad6dc9d21e95d" id="r_a65a33cd71dafdb8228aad6dc9d21e95d"><td class="memItemLeft" align="right" valign="top"><a id="a65a33cd71dafdb8228aad6dc9d21e95d" name="a65a33cd71dafdb8228aad6dc9d21e95d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>albums</b> (const <a class="el" href="classlib_1_1spt_1_1artist.html">spt::artist</a> &amp;<a class="el" href="classlib_1_1spt_1_1artist.html">artist</a>, const std::vector&lt; album_group &gt; &amp;groups, const ApiPagedCallback&lt; <a class="el" href="classlib_1_1spt_1_1album.html">spt::album</a> &gt; &amp;callback) const</td></tr>
+<tr class="separator:a65a33cd71dafdb8228aad6dc9d21e95d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22c1758ceb5528117fb279b77ed7f255" id="r_a22c1758ceb5528117fb279b77ed7f255"><td class="memItemLeft" align="right" valign="top"><a id="a22c1758ceb5528117fb279b77ed7f255" name="a22c1758ceb5528117fb279b77ed7f255"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>followed_artists</b> (const ApiPagedCallback&lt; <a class="el" href="classlib_1_1spt_1_1artist.html">spt::artist</a> &gt; &amp;callback) const</td></tr>
+<tr class="separator:a22c1758ceb5528117fb279b77ed7f255"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f828a99ee3d62b9568a4f9a6873a292" id="r_a1f828a99ee3d62b9568a4f9a6873a292"><td class="memItemLeft" align="right" valign="top"><a id="a1f828a99ee3d62b9568a4f9a6873a292" name="a1f828a99ee3d62b9568a4f9a6873a292"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>follow</b> (lib::follow_type type, const std::vector&lt; std::string &gt; &amp;ids, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a1f828a99ee3d62b9568a4f9a6873a292"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a762e3a4a11f68aa9825ae1effccfa8f5" id="r_a762e3a4a11f68aa9825ae1effccfa8f5"><td class="memItemLeft" align="right" valign="top"><a id="a762e3a4a11f68aa9825ae1effccfa8f5" name="a762e3a4a11f68aa9825ae1effccfa8f5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>unfollow</b> (lib::follow_type type, const std::vector&lt; std::string &gt; &amp;ids, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a762e3a4a11f68aa9825ae1effccfa8f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab99554ed09177ec2bd96a1ab1a64faba" id="r_ab99554ed09177ec2bd96a1ab1a64faba"><td class="memItemLeft" align="right" valign="top"><a id="ab99554ed09177ec2bd96a1ab1a64faba" name="ab99554ed09177ec2bd96a1ab1a64faba"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>is_following</b> (lib::follow_type type, const std::vector&lt; std::string &gt; &amp;ids, ApiCallback&lt; std::vector&lt; bool &gt; &gt; &amp;callback)</td></tr>
+<tr class="separator:ab99554ed09177ec2bd96a1ab1a64faba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a657814a4a81c322362abb964f3a966f5" id="r_a657814a4a81c322362abb964f3a966f5"><td class="memItemLeft" align="right" valign="top"><a id="a657814a4a81c322362abb964f3a966f5" name="a657814a4a81c322362abb964f3a966f5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>follow_playlist</b> (const std::string &amp;playlist_id, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a657814a4a81c322362abb964f3a966f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6dd7885927feb8883f81319e7183079" id="r_ae6dd7885927feb8883f81319e7183079"><td class="memItemLeft" align="right" valign="top"><a id="ae6dd7885927feb8883f81319e7183079" name="ae6dd7885927feb8883f81319e7183079"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>unfollow_playlist</b> (const std::string &amp;playlist_id, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:ae6dd7885927feb8883f81319e7183079"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a164b844298fed23df34887f7a44abdb4" id="r_a164b844298fed23df34887f7a44abdb4"><td class="memItemLeft" align="right" valign="top"><a id="a164b844298fed23df34887f7a44abdb4" name="a164b844298fed23df34887f7a44abdb4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>is_following_playlist</b> (const std::string &amp;playlist_id, const std::vector&lt; std::string &gt; &amp;user_ids, ApiCallback&lt; std::vector&lt; bool &gt; &gt; &amp;callback)</td></tr>
+<tr class="separator:a164b844298fed23df34887f7a44abdb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58803ee838b2bc617e1fefa7561a155d" id="r_a58803ee838b2bc617e1fefa7561a155d"><td class="memItemLeft" align="right" valign="top"><a id="a58803ee838b2bc617e1fefa7561a155d" name="a58803ee838b2bc617e1fefa7561a155d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>saved_albums</b> (const ApiPagedCallback&lt; <a class="el" href="classlib_1_1spt_1_1saved__album.html">saved_album</a> &gt; &amp;callback) const</td></tr>
+<tr class="separator:a58803ee838b2bc617e1fefa7561a155d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee852e6ada95942a7399237f6a7769bd" id="r_aee852e6ada95942a7399237f6a7769bd"><td class="memItemLeft" align="right" valign="top"><a id="aee852e6ada95942a7399237f6a7769bd" name="aee852e6ada95942a7399237f6a7769bd"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>add_saved_albums</b> (const std::vector&lt; std::string &gt; &amp;album_ids, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:aee852e6ada95942a7399237f6a7769bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a234e39921a2b181baa53b5f6bd2247dc" id="r_a234e39921a2b181baa53b5f6bd2247dc"><td class="memItemLeft" align="right" valign="top"><a id="a234e39921a2b181baa53b5f6bd2247dc" name="a234e39921a2b181baa53b5f6bd2247dc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>remove_saved_albums</b> (const std::vector&lt; std::string &gt; &amp;album_ids, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a234e39921a2b181baa53b5f6bd2247dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a586d94c5549384992cd79fe6ea5ac71f" id="r_a586d94c5549384992cd79fe6ea5ac71f"><td class="memItemLeft" align="right" valign="top"><a id="a586d94c5549384992cd79fe6ea5ac71f" name="a586d94c5549384992cd79fe6ea5ac71f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>is_saved_album</b> (const std::vector&lt; std::string &gt; &amp;album_ids, ApiCallback&lt; std::vector&lt; bool &gt; &gt; &amp;callback)</td></tr>
+<tr class="separator:a586d94c5549384992cd79fe6ea5ac71f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34329b1e15d8521805afef935acbb2ee" id="r_a34329b1e15d8521805afef935acbb2ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a34329b1e15d8521805afef935acbb2ee">saved_tracks</a> (ApiCallback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;callback)</td></tr>
+<tr class="separator:a34329b1e15d8521805afef935acbb2ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a753f8973cfb31b19ca4515725321e893" id="r_a753f8973cfb31b19ca4515725321e893"><td class="memItemLeft" align="right" valign="top"><a id="a753f8973cfb31b19ca4515725321e893" name="a753f8973cfb31b19ca4515725321e893"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>saved_tracks</b> (const ApiPagedCallback&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &amp;callback)</td></tr>
+<tr class="separator:a753f8973cfb31b19ca4515725321e893"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b481c86092de210c476268a6dfcc185" id="r_a7b481c86092de210c476268a6dfcc185"><td class="memItemLeft" align="right" valign="top"><a id="a7b481c86092de210c476268a6dfcc185" name="a7b481c86092de210c476268a6dfcc185"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>add_saved_tracks</b> (const std::vector&lt; std::string &gt; &amp;track_ids, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a7b481c86092de210c476268a6dfcc185"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbcf6f50bcb540fae290f0ff80a5d559" id="r_adbcf6f50bcb540fae290f0ff80a5d559"><td class="memItemLeft" align="right" valign="top"><a id="adbcf6f50bcb540fae290f0ff80a5d559" name="adbcf6f50bcb540fae290f0ff80a5d559"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>remove_saved_tracks</b> (const std::vector&lt; std::string &gt; &amp;track_ids, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:adbcf6f50bcb540fae290f0ff80a5d559"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d4fda2831d3b4a81c56938b92bf0c7e" id="r_a3d4fda2831d3b4a81c56938b92bf0c7e"><td class="memItemLeft" align="right" valign="top"><a id="a3d4fda2831d3b4a81c56938b92bf0c7e" name="a3d4fda2831d3b4a81c56938b92bf0c7e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>isSavedItems</b> (const QList&lt; QString &gt; &amp;uris, ApiCallback&lt; <a class="el" href="classResult.html">Result</a>&lt; <a class="el" href="classSpotifySavedItems.html">SpotifySavedItems</a> &gt; &gt; &amp;callback) const</td></tr>
+<tr class="separator:a3d4fda2831d3b4a81c56938b92bf0c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1310ac3cfeddf5b1930ce72a66295505" id="r_a1310ac3cfeddf5b1930ce72a66295505"><td class="memItemLeft" align="right" valign="top"><a id="a1310ac3cfeddf5b1930ce72a66295505" name="a1310ac3cfeddf5b1930ce72a66295505"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>top_artists</b> (ApiCallback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1artist.html">lib::spt::artist</a> &gt; &gt; &amp;callback)</td></tr>
+<tr class="separator:a1310ac3cfeddf5b1930ce72a66295505"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19abbdb6ccd14607aa6ef2a2f644757f" id="r_a19abbdb6ccd14607aa6ef2a2f644757f"><td class="memItemLeft" align="right" valign="top"><a id="a19abbdb6ccd14607aa6ef2a2f644757f" name="a19abbdb6ccd14607aa6ef2a2f644757f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>top_tracks</b> (ApiCallback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;callback)</td></tr>
+<tr class="separator:a19abbdb6ccd14607aa6ef2a2f644757f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afac5c8f95f6c39074dcc6823212e8999" id="r_afac5c8f95f6c39074dcc6823212e8999"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afac5c8f95f6c39074dcc6823212e8999">current_playback</a> (ApiCallback&lt; <a class="el" href="classResult.html">Result</a>&lt; <a class="el" href="classlib_1_1spt_1_1playback.html">lib::spt::playback</a> &gt; &gt; &amp;callback)</td></tr>
+<tr class="separator:afac5c8f95f6c39074dcc6823212e8999"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6f9430cb25685355933bd9fd0c12014" id="r_ac6f9430cb25685355933bd9fd0c12014"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6f9430cb25685355933bd9fd0c12014">set_device</a> (const std::string &amp;device_id, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:ac6f9430cb25685355933bd9fd0c12014"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5857b1857b5c79148eea06240c6f3612" id="r_a5857b1857b5c79148eea06240c6f3612"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5857b1857b5c79148eea06240c6f3612">set_device</a> (const <a class="el" href="classlib_1_1spt_1_1device.html">lib::spt::device</a> &amp;<a class="el" href="classlib_1_1spt_1_1device.html">device</a>, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a5857b1857b5c79148eea06240c6f3612"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add873684ed4f9c3f50e19ed4e16a763e" id="r_add873684ed4f9c3f50e19ed4e16a763e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#add873684ed4f9c3f50e19ed4e16a763e">devices</a> (ApiCallback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1device.html">lib::spt::device</a> &gt; &gt; &amp;callback)</td></tr>
+<tr class="separator:add873684ed4f9c3f50e19ed4e16a763e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abca1449ba0890522b37d52ff70be8c15" id="r_abca1449ba0890522b37d52ff70be8c15"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abca1449ba0890522b37d52ff70be8c15">play_tracks_url</a> () -&gt; std::string</td></tr>
 <tr class="separator:abca1449ba0890522b37d52ff70be8c15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aacbb20568d0a95b4bcce20c6440e8f2e" id="r_aacbb20568d0a95b4bcce20c6440e8f2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aacbb20568d0a95b4bcce20c6440e8f2e">play_tracks</a> (int track_index, const std::string &amp;<a class="el" href="classlib_1_1spt_1_1context.html">context</a>, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:aacbb20568d0a95b4bcce20c6440e8f2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d4868cbfad0a9a5dfa545ce181299cc" id="r_a0d4868cbfad0a9a5dfa545ce181299cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0d4868cbfad0a9a5dfa545ce181299cc">play_tracks</a> (int track_index, const std::vector&lt; std::string &gt; &amp;all, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a0d4868cbfad0a9a5dfa545ce181299cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60f5838cd80f0d677fe4dd972dccf0fd" id="r_a60f5838cd80f0d677fe4dd972dccf0fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a60f5838cd80f0d677fe4dd972dccf0fd">play_tracks</a> (int track_index, const std::initializer_list&lt; std::string &gt; &amp;all, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a60f5838cd80f0d677fe4dd972dccf0fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40991941ba40216746d52ff1ae353404" id="r_a40991941ba40216746d52ff1ae353404"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a40991941ba40216746d52ff1ae353404">play_tracks</a> (const std::string &amp;<a class="el" href="classlib_1_1spt_1_1context.html">context</a>, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a40991941ba40216746d52ff1ae353404"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2fb6d5bc3df674e5f7bab48d4ddc5bb" id="r_ab2fb6d5bc3df674e5f7bab48d4ddc5bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab2fb6d5bc3df674e5f7bab48d4ddc5bb">resume</a> (lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:ab2fb6d5bc3df674e5f7bab48d4ddc5bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ea863a1c91a7eb1382541e0c08eea1a" id="r_a7ea863a1c91a7eb1382541e0c08eea1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7ea863a1c91a7eb1382541e0c08eea1a">pause</a> (lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a7ea863a1c91a7eb1382541e0c08eea1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01fc1b68241b86c107b11c9ebc3eeea4" id="r_a01fc1b68241b86c107b11c9ebc3eeea4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a01fc1b68241b86c107b11c9ebc3eeea4">next</a> (lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a01fc1b68241b86c107b11c9ebc3eeea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d5c5e8e938f27f919fcfe4319890058" id="r_a9d5c5e8e938f27f919fcfe4319890058"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d5c5e8e938f27f919fcfe4319890058">previous</a> (lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a9d5c5e8e938f27f919fcfe4319890058"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed68ce4103f82a1ed4dbb61dd8627112" id="r_aed68ce4103f82a1ed4dbb61dd8627112"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed68ce4103f82a1ed4dbb61dd8627112">seek</a> (int position, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:aed68ce4103f82a1ed4dbb61dd8627112"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83a3edd5bf3a5d216ca298b63d346df5" id="r_a83a3edd5bf3a5d216ca298b63d346df5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a83a3edd5bf3a5d216ca298b63d346df5">set_repeat</a> (lib::repeat_state state, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a83a3edd5bf3a5d216ca298b63d346df5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6441af8171fdc04cdc497d3e93a93739" id="r_a6441af8171fdc04cdc497d3e93a93739"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6441af8171fdc04cdc497d3e93a93739">set_volume</a> (int volume, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a6441af8171fdc04cdc497d3e93a93739"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af58d77d78d2f690e1d006be63b946aa0" id="r_af58d77d78d2f690e1d006be63b946aa0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af58d77d78d2f690e1d006be63b946aa0">set_shuffle</a> (bool enabled, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:af58d77d78d2f690e1d006be63b946aa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4181de91367224105534a9976e5f3d43" id="r_a4181de91367224105534a9976e5f3d43"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4181de91367224105534a9976e5f3d43">recently_played</a> (lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;callback)</td></tr>
-<tr class="separator:a4181de91367224105534a9976e5f3d43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc383d7e53ebb44805d706a678cce9a0" id="r_acc383d7e53ebb44805d706a678cce9a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acc383d7e53ebb44805d706a678cce9a0">add_to_queue</a> (const std::string &amp;<a class="el" href="classlib_1_1uri.html">uri</a>, lib::callback&lt; <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; void * &gt; &gt; &amp;callback)</td></tr>
-<tr class="separator:acc383d7e53ebb44805d706a678cce9a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7038f645ad3f9082ae721d844932dbf" id="r_ae7038f645ad3f9082ae721d844932dbf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae7038f645ad3f9082ae721d844932dbf">queue</a> (lib::callback&lt; <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; <a class="el" href="classlib_1_1spt_1_1queue.html">lib::spt::queue</a> &gt; &gt; &amp;callback)</td></tr>
-<tr class="separator:ae7038f645ad3f9082ae721d844932dbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56625f70bfbb51c770e81000628ffbd1" id="r_a56625f70bfbb51c770e81000628ffbd1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a56625f70bfbb51c770e81000628ffbd1">create_playlist</a> (const std::string &amp;name, const std::optional&lt; std::string &gt; &amp;description, const std::optional&lt; bool &gt; &amp;is_public, const std::optional&lt; bool &gt; &amp;is_collaborative, lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &gt; &amp;callback)</td></tr>
-<tr class="separator:a56625f70bfbb51c770e81000628ffbd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a798030e32d658a3d109aff7513790f6b" id="r_a798030e32d658a3d109aff7513790f6b"><td class="memItemLeft" align="right" valign="top"><a id="a798030e32d658a3d109aff7513790f6b" name="a798030e32d658a3d109aff7513790f6b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>playlists</b> (const paged_callback&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">playlist</a> &gt; &amp;callback) const</td></tr>
-<tr class="separator:a798030e32d658a3d109aff7513790f6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6384cc6af843cf8ec8a1aae13a4ff264" id="r_a6384cc6af843cf8ec8a1aae13a4ff264"><td class="memItemLeft" align="right" valign="top"><a id="a6384cc6af843cf8ec8a1aae13a4ff264" name="a6384cc6af843cf8ec8a1aae13a4ff264"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>playlist</b> (const std::string &amp;playlist_id, callback&lt; <a class="el" href="classlib_1_1result.html">result</a>&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">playlist</a> &gt; &gt; &amp;callback) const</td></tr>
-<tr class="separator:a6384cc6af843cf8ec8a1aae13a4ff264"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12083fb7e33a06997baa4d5bd1aa38f5" id="r_a12083fb7e33a06997baa4d5bd1aa38f5"><td class="memItemLeft" align="right" valign="top"><a id="a12083fb7e33a06997baa4d5bd1aa38f5" name="a12083fb7e33a06997baa4d5bd1aa38f5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>edit_playlist</b> (const std::string &amp;playlist_id, const <a class="el" href="classlib_1_1spt_1_1playlist__details.html">lib::spt::playlist_details</a> &amp;<a class="el" href="classlib_1_1spt_1_1playlist.html">playlist</a>, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a12083fb7e33a06997baa4d5bd1aa38f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a8597efa397b0941d4b3a301a3fd9c4" id="r_a8a8597efa397b0941d4b3a301a3fd9c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a8597efa397b0941d4b3a301a3fd9c4">playlist_tracks</a> (const <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &amp;<a class="el" href="classlib_1_1spt_1_1playlist.html">playlist</a>, lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;callback)</td></tr>
-<tr class="separator:a8a8597efa397b0941d4b3a301a3fd9c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a778cbe32b9d7d4adaa829bec2c61e515" id="r_a778cbe32b9d7d4adaa829bec2c61e515"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a778cbe32b9d7d4adaa829bec2c61e515">playlist_tracks</a> (const <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &amp;<a class="el" href="classlib_1_1spt_1_1playlist.html">playlist</a>, const std::function&lt; bool(const <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; <a class="el" href="classlib_1_1spt_1_1page.html">lib::spt::page</a>&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;)&gt; &amp;callback)</td></tr>
-<tr class="separator:a778cbe32b9d7d4adaa829bec2c61e515"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a785de2dbae1847aa8bfcc40e15d15a5c" id="r_a785de2dbae1847aa8bfcc40e15d15a5c"><td class="memItemLeft" align="right" valign="top"><a id="a785de2dbae1847aa8bfcc40e15d15a5c" name="a785de2dbae1847aa8bfcc40e15d15a5c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>add_to_playlist</b> (const std::string &amp;playlist_id, const std::vector&lt; std::string &gt; &amp;track_uris, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a785de2dbae1847aa8bfcc40e15d15a5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4946bcaa782bf1b6408627f5d162eab5" id="r_a4946bcaa782bf1b6408627f5d162eab5"><td class="memItemLeft" align="right" valign="top"><a id="a4946bcaa782bf1b6408627f5d162eab5" name="a4946bcaa782bf1b6408627f5d162eab5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>remove_from_playlist</b> (const std::string &amp;playlist_id, const std::vector&lt; std::pair&lt; int, std::string &gt; &gt; &amp;track_index_uris, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a4946bcaa782bf1b6408627f5d162eab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54577b28fb5db9a3fa466e8626ebf975" id="r_a54577b28fb5db9a3fa466e8626ebf975"><td class="memItemLeft" align="right" valign="top"><a id="a54577b28fb5db9a3fa466e8626ebf975" name="a54577b28fb5db9a3fa466e8626ebf975"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>search</b> (const std::string &amp;query, lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1search__results.html">lib::spt::search_results</a> &gt; &amp;callback)</td></tr>
-<tr class="separator:a54577b28fb5db9a3fa466e8626ebf975"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a028208ea99e0efdd5218f90929798b9d" id="r_a028208ea99e0efdd5218f90929798b9d"><td class="memItemLeft" align="right" valign="top"><a id="a028208ea99e0efdd5218f90929798b9d" name="a028208ea99e0efdd5218f90929798b9d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>track</b> (const std::string &amp;track_id, lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &amp;callback)</td></tr>
-<tr class="separator:a028208ea99e0efdd5218f90929798b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf690e251c98a3e574738559ae73cd85" id="r_adf690e251c98a3e574738559ae73cd85"><td class="memItemLeft" align="right" valign="top"><a id="adf690e251c98a3e574738559ae73cd85" name="adf690e251c98a3e574738559ae73cd85"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>me</b> (lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1user.html">lib::spt::user</a> &gt; &amp;callback)</td></tr>
-<tr class="separator:adf690e251c98a3e574738559ae73cd85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f56416580d89ca435ab3ce15a37fa14" id="r_a0f56416580d89ca435ab3ce15a37fa14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0f56416580d89ca435ab3ce15a37fa14">show</a> (const std::string &amp;show_id, lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1show.html">lib::spt::show</a> &gt; &amp;callback)</td></tr>
-<tr class="separator:a0f56416580d89ca435ab3ce15a37fa14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a275014bf2e6d10d2ab09993ad490089b" id="r_a275014bf2e6d10d2ab09993ad490089b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a275014bf2e6d10d2ab09993ad490089b">show_episodes</a> (const <a class="el" href="classlib_1_1spt_1_1show.html">lib::spt::show</a> &amp;<a class="el" href="classlib_1_1spt_1_1show.html">show</a>, lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1episode.html">lib::spt::episode</a> &gt; &gt; &amp;callback)</td></tr>
-<tr class="separator:a275014bf2e6d10d2ab09993ad490089b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52f8c95892df8f313bec0cad22eae8ce" id="r_a52f8c95892df8f313bec0cad22eae8ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a52f8c95892df8f313bec0cad22eae8ce">play_tracks</a> (int track_index, const std::string &amp;<a class="el" href="classlib_1_1spt_1_1context.html">context</a>, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a52f8c95892df8f313bec0cad22eae8ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2037c389e84c693cec8df3fd51aa05d7" id="r_a2037c389e84c693cec8df3fd51aa05d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2037c389e84c693cec8df3fd51aa05d7">play_tracks</a> (int track_index, const std::vector&lt; std::string &gt; &amp;all, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a2037c389e84c693cec8df3fd51aa05d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8097406db67a089b0e480008c71346c2" id="r_a8097406db67a089b0e480008c71346c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8097406db67a089b0e480008c71346c2">play_tracks</a> (int track_index, const std::initializer_list&lt; std::string &gt; &amp;all, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a8097406db67a089b0e480008c71346c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a844729b821d63c9b1271721906443395" id="r_a844729b821d63c9b1271721906443395"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a844729b821d63c9b1271721906443395">play_tracks</a> (const std::string &amp;<a class="el" href="classlib_1_1spt_1_1context.html">context</a>, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a844729b821d63c9b1271721906443395"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab27203d9fcecbc13a77ad2123ed69391" id="r_ab27203d9fcecbc13a77ad2123ed69391"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab27203d9fcecbc13a77ad2123ed69391">resume</a> (ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:ab27203d9fcecbc13a77ad2123ed69391"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ef30a093f2900b10ca0549b2e688fcd" id="r_a1ef30a093f2900b10ca0549b2e688fcd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1ef30a093f2900b10ca0549b2e688fcd">pause</a> (ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a1ef30a093f2900b10ca0549b2e688fcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad57bb09d195c78d98ad0f97479cdea0a" id="r_ad57bb09d195c78d98ad0f97479cdea0a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad57bb09d195c78d98ad0f97479cdea0a">next</a> (ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:ad57bb09d195c78d98ad0f97479cdea0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d07151c32195242529125b9cd901a25" id="r_a6d07151c32195242529125b9cd901a25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6d07151c32195242529125b9cd901a25">previous</a> (ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a6d07151c32195242529125b9cd901a25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc6088e96900b43c902bf85421aabe36" id="r_afc6088e96900b43c902bf85421aabe36"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc6088e96900b43c902bf85421aabe36">seek</a> (int position, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:afc6088e96900b43c902bf85421aabe36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cdb7917ed54931f04b750b69bcf826e" id="r_a8cdb7917ed54931f04b750b69bcf826e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8cdb7917ed54931f04b750b69bcf826e">set_repeat</a> (lib::repeat_state state, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a8cdb7917ed54931f04b750b69bcf826e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa79be9e9c9512cfa284a96509e258f1a" id="r_aa79be9e9c9512cfa284a96509e258f1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa79be9e9c9512cfa284a96509e258f1a">set_volume</a> (int volume, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:aa79be9e9c9512cfa284a96509e258f1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e357d66414238a3a581e5f2f666744f" id="r_a3e357d66414238a3a581e5f2f666744f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3e357d66414238a3a581e5f2f666744f">set_shuffle</a> (bool enabled, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a3e357d66414238a3a581e5f2f666744f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae06c40a8e0375d5579b02d377d508a5c" id="r_ae06c40a8e0375d5579b02d377d508a5c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae06c40a8e0375d5579b02d377d508a5c">recently_played</a> (ApiCallback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;callback)</td></tr>
+<tr class="separator:ae06c40a8e0375d5579b02d377d508a5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f12d131d79b4cca09068380d0e74716" id="r_a8f12d131d79b4cca09068380d0e74716"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8f12d131d79b4cca09068380d0e74716">add_to_queue</a> (const std::string &amp;<a class="el" href="classlib_1_1uri.html">uri</a>, ApiCallback&lt; <a class="el" href="classResult.html">Result</a>&lt; void * &gt; &gt; &amp;callback)</td></tr>
+<tr class="separator:a8f12d131d79b4cca09068380d0e74716"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad493fbc531968eefd955ee7d279f6ee" id="r_aad493fbc531968eefd955ee7d279f6ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad493fbc531968eefd955ee7d279f6ee">queue</a> (ApiCallback&lt; <a class="el" href="classResult.html">Result</a>&lt; <a class="el" href="classlib_1_1spt_1_1queue.html">lib::spt::queue</a> &gt; &gt; &amp;callback)</td></tr>
+<tr class="separator:aad493fbc531968eefd955ee7d279f6ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bf8cfbf933bf3152699a588e96e272e" id="r_a6bf8cfbf933bf3152699a588e96e272e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6bf8cfbf933bf3152699a588e96e272e">create_playlist</a> (const std::string &amp;name, const std::optional&lt; std::string &gt; &amp;description, const std::optional&lt; bool &gt; &amp;is_public, const std::optional&lt; bool &gt; &amp;is_collaborative, ApiCallback&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &gt; &amp;callback)</td></tr>
+<tr class="separator:a6bf8cfbf933bf3152699a588e96e272e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80dee92e331712859a33a92dfcdcfec9" id="r_a80dee92e331712859a33a92dfcdcfec9"><td class="memItemLeft" align="right" valign="top"><a id="a80dee92e331712859a33a92dfcdcfec9" name="a80dee92e331712859a33a92dfcdcfec9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>playlists</b> (const ApiPagedCallback&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">playlist</a> &gt; &amp;callback) const</td></tr>
+<tr class="separator:a80dee92e331712859a33a92dfcdcfec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f4356ad0cbc58840213bbf77561af6a" id="r_a2f4356ad0cbc58840213bbf77561af6a"><td class="memItemLeft" align="right" valign="top"><a id="a2f4356ad0cbc58840213bbf77561af6a" name="a2f4356ad0cbc58840213bbf77561af6a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>playlist</b> (const std::string &amp;playlist_id, ApiCallback&lt; <a class="el" href="classResult.html">Result</a>&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">playlist</a> &gt; &gt; &amp;callback) const</td></tr>
+<tr class="separator:a2f4356ad0cbc58840213bbf77561af6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa460c5cda55e89867c1651aeac4df47f" id="r_aa460c5cda55e89867c1651aeac4df47f"><td class="memItemLeft" align="right" valign="top"><a id="aa460c5cda55e89867c1651aeac4df47f" name="aa460c5cda55e89867c1651aeac4df47f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>edit_playlist</b> (const std::string &amp;playlist_id, const <a class="el" href="classlib_1_1spt_1_1playlist__details.html">lib::spt::playlist_details</a> &amp;<a class="el" href="classlib_1_1spt_1_1playlist.html">playlist</a>, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:aa460c5cda55e89867c1651aeac4df47f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb40a42f291ed4a4b76f79e2a2082a40" id="r_abb40a42f291ed4a4b76f79e2a2082a40"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abb40a42f291ed4a4b76f79e2a2082a40">playlist_tracks</a> (const <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &amp;<a class="el" href="classlib_1_1spt_1_1playlist.html">playlist</a>, ApiCallback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;callback)</td></tr>
+<tr class="separator:abb40a42f291ed4a4b76f79e2a2082a40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f9ed7fb4d2d5086dea3ca56a0c31149" id="r_a0f9ed7fb4d2d5086dea3ca56a0c31149"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0f9ed7fb4d2d5086dea3ca56a0c31149">playlist_tracks</a> (const <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &amp;<a class="el" href="classlib_1_1spt_1_1playlist.html">playlist</a>, const std::function&lt; bool(const <a class="el" href="classResult.html">Result</a>&lt; <a class="el" href="classlib_1_1spt_1_1page.html">lib::spt::page</a>&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;)&gt; &amp;callback)</td></tr>
+<tr class="separator:a0f9ed7fb4d2d5086dea3ca56a0c31149"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05bd5621d69eb18dadaac4433ade5fc2" id="r_a05bd5621d69eb18dadaac4433ade5fc2"><td class="memItemLeft" align="right" valign="top"><a id="a05bd5621d69eb18dadaac4433ade5fc2" name="a05bd5621d69eb18dadaac4433ade5fc2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>add_to_playlist</b> (const std::string &amp;playlist_id, const std::vector&lt; std::string &gt; &amp;track_uris, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a05bd5621d69eb18dadaac4433ade5fc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fdbb6767b3f4cae08fc5496a090545d" id="r_a4fdbb6767b3f4cae08fc5496a090545d"><td class="memItemLeft" align="right" valign="top"><a id="a4fdbb6767b3f4cae08fc5496a090545d" name="a4fdbb6767b3f4cae08fc5496a090545d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>remove_from_playlist</b> (const std::string &amp;playlist_id, const std::vector&lt; std::pair&lt; int, std::string &gt; &gt; &amp;track_index_uris, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a4fdbb6767b3f4cae08fc5496a090545d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbfbabb9b154c64875f7fb290660a99f" id="r_abbfbabb9b154c64875f7fb290660a99f"><td class="memItemLeft" align="right" valign="top"><a id="abbfbabb9b154c64875f7fb290660a99f" name="abbfbabb9b154c64875f7fb290660a99f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>search</b> (const std::string &amp;query, ApiCallback&lt; <a class="el" href="classlib_1_1spt_1_1search__results.html">lib::spt::search_results</a> &gt; &amp;callback)</td></tr>
+<tr class="separator:abbfbabb9b154c64875f7fb290660a99f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb3eba6167c63f1a2b4cd6351d082a80" id="r_afb3eba6167c63f1a2b4cd6351d082a80"><td class="memItemLeft" align="right" valign="top"><a id="afb3eba6167c63f1a2b4cd6351d082a80" name="afb3eba6167c63f1a2b4cd6351d082a80"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>track</b> (const std::string &amp;track_id, ApiCallback&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &amp;callback)</td></tr>
+<tr class="separator:afb3eba6167c63f1a2b4cd6351d082a80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5d44980211c4b4610fc65c0ae8007d4" id="r_ae5d44980211c4b4610fc65c0ae8007d4"><td class="memItemLeft" align="right" valign="top"><a id="ae5d44980211c4b4610fc65c0ae8007d4" name="ae5d44980211c4b4610fc65c0ae8007d4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>me</b> (ApiCallback&lt; <a class="el" href="classlib_1_1spt_1_1user.html">lib::spt::user</a> &gt; &amp;callback)</td></tr>
+<tr class="separator:ae5d44980211c4b4610fc65c0ae8007d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97260608ff0210edf42342cec3d6287e" id="r_a97260608ff0210edf42342cec3d6287e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a97260608ff0210edf42342cec3d6287e">show</a> (const std::string &amp;show_id, ApiCallback&lt; <a class="el" href="classlib_1_1spt_1_1show.html">lib::spt::show</a> &gt; &amp;callback)</td></tr>
+<tr class="separator:a97260608ff0210edf42342cec3d6287e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22a9cf191121c8d82fbc8ab5f192dd4f" id="r_a22a9cf191121c8d82fbc8ab5f192dd4f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22a9cf191121c8d82fbc8ab5f192dd4f">show_episodes</a> (const <a class="el" href="classlib_1_1spt_1_1show.html">lib::spt::show</a> &amp;<a class="el" href="classlib_1_1spt_1_1show.html">show</a>, ApiCallback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1episode.html">lib::spt::episode</a> &gt; &gt; &amp;callback)</td></tr>
+<tr class="separator:a22a9cf191121c8d82fbc8ab5f192dd4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25b46e56bbe670553eaae3377f7c4ef4" id="r_a25b46e56bbe670553eaae3377f7c4ef4"><td class="memItemLeft" align="right" valign="top"><a id="a25b46e56bbe670553eaae3377f7c4ef4" name="a25b46e56bbe670553eaae3377f7c4ef4"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>refresh</b> (bool force)</td></tr>
 <tr class="separator:a25b46e56bbe670553eaae3377f7c4ef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a8235c4f96e74fa58a5e1f12795b9612d" id="r_a8235c4f96e74fa58a5e1f12795b9612d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8235c4f96e74fa58a5e1f12795b9612d">get</a> (const std::string &amp;response, lib::callback&lt; nlohmann::json &gt; &amp;callback)</td></tr>
-<tr class="separator:a8235c4f96e74fa58a5e1f12795b9612d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8c249ba34558bb06a807f13aace0554" id="r_af8c249ba34558bb06a807f13aace0554"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8c249ba34558bb06a807f13aace0554">get_items</a> (const std::string &amp;url, lib::callback&lt; nlohmann::json &gt; &amp;callback)</td></tr>
-<tr class="separator:af8c249ba34558bb06a807f13aace0554"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a348f5279b629971c0b8e2097b333b5e7" id="r_a348f5279b629971c0b8e2097b333b5e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a348f5279b629971c0b8e2097b333b5e7">get_items</a> (const std::string &amp;url, const std::string &amp;key, lib::callback&lt; nlohmann::json &gt; &amp;callback)</td></tr>
-<tr class="separator:a348f5279b629971c0b8e2097b333b5e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6de5354ebff77d8d21124141dfa8d09" id="r_ae6de5354ebff77d8d21124141dfa8d09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae6de5354ebff77d8d21124141dfa8d09">put</a> (const std::string &amp;url, const nlohmann::json &amp;body, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:ae6de5354ebff77d8d21124141dfa8d09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1370bf233537673881fc2867adc433bf" id="r_a1370bf233537673881fc2867adc433bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1370bf233537673881fc2867adc433bf">put</a> (const std::string &amp;url, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a1370bf233537673881fc2867adc433bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aebe2c2e0bfc8f2b3343e41a69d5c610c" id="r_aebe2c2e0bfc8f2b3343e41a69d5c610c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aebe2c2e0bfc8f2b3343e41a69d5c610c">post</a> (const std::string &amp;url, const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>, lib::callback&lt; nlohmann::json &gt; &amp;callback)</td></tr>
-<tr class="separator:aebe2c2e0bfc8f2b3343e41a69d5c610c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64f1734b8278db05880989f44a70e552" id="r_a64f1734b8278db05880989f44a70e552"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a64f1734b8278db05880989f44a70e552">post</a> (const std::string &amp;url, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a64f1734b8278db05880989f44a70e552"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f97861134a29ce268d5730ef9c251a7" id="r_a3f97861134a29ce268d5730ef9c251a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3f97861134a29ce268d5730ef9c251a7">del</a> (const std::string &amp;url, const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:a3f97861134a29ce268d5730ef9c251a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1c1d6b6d175f6897eee141d502ca313" id="r_ae1c1d6b6d175f6897eee141d502ca313"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae1c1d6b6d175f6897eee141d502ca313">del</a> (const std::string &amp;url, lib::callback&lt; std::string &gt; &amp;callback)</td></tr>
-<tr class="separator:ae1c1d6b6d175f6897eee141d502ca313"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5157163896020ddebd3e1102b5d73bd4" id="r_a5157163896020ddebd3e1102b5d73bd4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5157163896020ddebd3e1102b5d73bd4">get</a> (const std::string &amp;response, ApiCallback&lt; nlohmann::json &gt; &amp;callback)</td></tr>
+<tr class="separator:a5157163896020ddebd3e1102b5d73bd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8439043a39d155320827c0bbde9106b" id="r_ae8439043a39d155320827c0bbde9106b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae8439043a39d155320827c0bbde9106b">get_items</a> (const std::string &amp;url, ApiCallback&lt; nlohmann::json &gt; &amp;callback)</td></tr>
+<tr class="separator:ae8439043a39d155320827c0bbde9106b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4fce7d08edf7de88c349b93d523b235" id="r_ac4fce7d08edf7de88c349b93d523b235"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac4fce7d08edf7de88c349b93d523b235">get_items</a> (const std::string &amp;url, const std::string &amp;key, ApiCallback&lt; nlohmann::json &gt; &amp;callback)</td></tr>
+<tr class="separator:ac4fce7d08edf7de88c349b93d523b235"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e3e60c08271a749ac16d80d6cdca24b" id="r_a1e3e60c08271a749ac16d80d6cdca24b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e3e60c08271a749ac16d80d6cdca24b">put</a> (const std::string &amp;url, const nlohmann::json &amp;body, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a1e3e60c08271a749ac16d80d6cdca24b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14555d3a40859f034c673697422b2ea4" id="r_a14555d3a40859f034c673697422b2ea4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a14555d3a40859f034c673697422b2ea4">put</a> (const std::string &amp;url, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a14555d3a40859f034c673697422b2ea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad83f1406eeb04fa4834974ff771bbfae" id="r_ad83f1406eeb04fa4834974ff771bbfae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad83f1406eeb04fa4834974ff771bbfae">post</a> (const std::string &amp;url, const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>, ApiCallback&lt; nlohmann::json &gt; &amp;callback)</td></tr>
+<tr class="separator:ad83f1406eeb04fa4834974ff771bbfae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e8232bcca553cfd24652d4e88e29f84" id="r_a4e8232bcca553cfd24652d4e88e29f84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e8232bcca553cfd24652d4e88e29f84">post</a> (const std::string &amp;url, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a4e8232bcca553cfd24652d4e88e29f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa77abbae1faaa3ae078f5ef414d986c8" id="r_aa77abbae1faaa3ae078f5ef414d986c8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa77abbae1faaa3ae078f5ef414d986c8">del</a> (const std::string &amp;url, const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:aa77abbae1faaa3ae078f5ef414d986c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a489e1b430c8d921aaf085592e0d8156b" id="r_a489e1b430c8d921aaf085592e0d8156b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a489e1b430c8d921aaf085592e0d8156b">del</a> (const std::string &amp;url, ApiCallback&lt; std::string &gt; &amp;callback)</td></tr>
+<tr class="separator:a489e1b430c8d921aaf085592e0d8156b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-methods" name="pro-static-methods"></a>
 Static Protected Member Functions</h2></td></tr>
@@ -292,8 +289,8 @@ Protected Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Spotify Web API </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ae1e3e341b64a75e92bc6715f48ee1960" name="ae1e3e341b64a75e92bc6715f48ee1960"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae1e3e341b64a75e92bc6715f48ee1960">&#9670;&#160;</a></span>api()</h2>
+<a id="a01a1d5bef586ec3fcaaacdc590be5327" name="a01a1d5bef586ec3fcaaacdc590be5327"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01a1d5bef586ec3fcaaacdc590be5327">&#9670;&#160;</a></span>api()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -306,7 +303,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classlib_1_1http__client.html">lib::http_client</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>http_client</em></span>, </td>
+          <td class="paramtype">const <a class="el" href="classHttpClient.html">HttpClient</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>http_client</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -318,7 +315,7 @@ Protected Attributes</h2></td></tr>
 <p>Construct a new instance and refresh if needed </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">settings</td><td>Settings for access token and refresh token </td></tr>
-    <tr><td class="paramname"><a class="el" href="classlib_1_1http__client.html">http_client</a></td><td>HTTP Client for requests </td></tr>
+    <tr><td class="paramname">http_client</td><td>HTTP Client for requests </td></tr>
     <tr><td class="paramname">request</td><td>Request instance for http requests </td></tr>
   </table>
   </dd>
@@ -327,8 +324,8 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="acc383d7e53ebb44805d706a678cce9a0" name="acc383d7e53ebb44805d706a678cce9a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc383d7e53ebb44805d706a678cce9a0">&#9670;&#160;</a></span>add_to_queue()</h2>
+<a id="a8f12d131d79b4cca09068380d0e74716" name="a8f12d131d79b4cca09068380d0e74716"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f12d131d79b4cca09068380d0e74716">&#9670;&#160;</a></span>add_to_queue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -341,7 +338,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; void * &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; <a class="el" href="classResult.html">Result</a>&lt; void * &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -354,8 +351,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a56625f70bfbb51c770e81000628ffbd1" name="a56625f70bfbb51c770e81000628ffbd1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a56625f70bfbb51c770e81000628ffbd1">&#9670;&#160;</a></span>create_playlist()</h2>
+<a id="a6bf8cfbf933bf3152699a588e96e272e" name="a6bf8cfbf933bf3152699a588e96e272e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bf8cfbf933bf3152699a588e96e272e">&#9670;&#160;</a></span>create_playlist()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -383,7 +380,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -400,8 +397,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a00deaf1cbfdcce64b499daf2e3ebb85c" name="a00deaf1cbfdcce64b499daf2e3ebb85c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a00deaf1cbfdcce64b499daf2e3ebb85c">&#9670;&#160;</a></span>current_playback()</h2>
+<a id="afac5c8f95f6c39074dcc6823212e8999" name="afac5c8f95f6c39074dcc6823212e8999"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afac5c8f95f6c39074dcc6823212e8999">&#9670;&#160;</a></span>current_playback()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -409,7 +406,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">void lib::spt::api::current_playback </td>
           <td>(</td>
-          <td class="paramtype">lib::callback&lt; <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; <a class="el" href="classlib_1_1spt_1_1playback.html">lib::spt::playback</a> &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span></td><td>)</td>
+          <td class="paramtype">ApiCallback&lt; <a class="el" href="classResult.html">Result</a>&lt; <a class="el" href="classlib_1_1spt_1_1playback.html">lib::spt::playback</a> &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -418,8 +415,38 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a3f97861134a29ce268d5730ef9c251a7" name="a3f97861134a29ce268d5730ef9c251a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f97861134a29ce268d5730ef9c251a7">&#9670;&#160;</a></span>del() <span class="overload">[1/2]</span></h2>
+<a id="a489e1b430c8d921aaf085592e0d8156b" name="a489e1b430c8d921aaf085592e0d8156b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a489e1b430c8d921aaf085592e0d8156b">&#9670;&#160;</a></span>del() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::spt::api::del </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ApiCallback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Convenience method for DELETE request with no body </p>
+
+</div>
+</div>
+<a id="aa77abbae1faaa3ae078f5ef414d986c8" name="aa77abbae1faaa3ae078f5ef414d986c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa77abbae1faaa3ae078f5ef414d986c8">&#9670;&#160;</a></span>del() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -440,7 +467,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -460,38 +487,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ae1c1d6b6d175f6897eee141d502ca313" name="ae1c1d6b6d175f6897eee141d502ca313"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae1c1d6b6d175f6897eee141d502ca313">&#9670;&#160;</a></span>del() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void lib::spt::api::del </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Convenience method for DELETE request with no body </p>
-
-</div>
-</div>
-<a id="ab71b9c21944c8b1ae9f2c6a78ff99cb6" name="ab71b9c21944c8b1ae9f2c6a78ff99cb6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab71b9c21944c8b1ae9f2c6a78ff99cb6">&#9670;&#160;</a></span>devices()</h2>
+<a id="add873684ed4f9c3f50e19ed4e16a763e" name="add873684ed4f9c3f50e19ed4e16a763e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add873684ed4f9c3f50e19ed4e16a763e">&#9670;&#160;</a></span>devices()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -499,7 +496,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">void lib::spt::api::devices </td>
           <td>(</td>
-          <td class="paramtype">lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1device.html">lib::spt::device</a> &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span></td><td>)</td>
+          <td class="paramtype">ApiCallback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1device.html">lib::spt::device</a> &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -539,8 +536,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a8235c4f96e74fa58a5e1f12795b9612d" name="a8235c4f96e74fa58a5e1f12795b9612d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8235c4f96e74fa58a5e1f12795b9612d">&#9670;&#160;</a></span>get()</h2>
+<a id="a5157163896020ddebd3e1102b5d73bd4" name="a5157163896020ddebd3e1102b5d73bd4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5157163896020ddebd3e1102b5d73bd4">&#9670;&#160;</a></span>get()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -556,7 +553,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; nlohmann::json &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; nlohmann::json &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -576,8 +573,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a348f5279b629971c0b8e2097b333b5e7" name="a348f5279b629971c0b8e2097b333b5e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a348f5279b629971c0b8e2097b333b5e7">&#9670;&#160;</a></span>get_items() <span class="overload">[1/2]</span></h2>
+<a id="ae8439043a39d155320827c0bbde9106b" name="ae8439043a39d155320827c0bbde9106b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8439043a39d155320827c0bbde9106b">&#9670;&#160;</a></span>get_items() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -593,42 +590,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">lib::callback&lt; nlohmann::json &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Custom get_items when items are contained in a key </p>
-
-</div>
-</div>
-<a id="af8c249ba34558bb06a807f13aace0554" name="af8c249ba34558bb06a807f13aace0554"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af8c249ba34558bb06a807f13aace0554">&#9670;&#160;</a></span>get_items() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void lib::spt::api::get_items </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">lib::callback&lt; nlohmann::json &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; nlohmann::json &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -655,8 +617,43 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a01fc1b68241b86c107b11c9ebc3eeea4" name="a01fc1b68241b86c107b11c9ebc3eeea4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a01fc1b68241b86c107b11c9ebc3eeea4">&#9670;&#160;</a></span>next()</h2>
+<a id="ac4fce7d08edf7de88c349b93d523b235" name="ac4fce7d08edf7de88c349b93d523b235"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4fce7d08edf7de88c349b93d523b235">&#9670;&#160;</a></span>get_items() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::spt::api::get_items </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ApiCallback&lt; nlohmann::json &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Custom get_items when items are contained in a key </p>
+
+</div>
+</div>
+<a id="ad57bb09d195c78d98ad0f97479cdea0a" name="ad57bb09d195c78d98ad0f97479cdea0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad57bb09d195c78d98ad0f97479cdea0a">&#9670;&#160;</a></span>next()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -664,7 +661,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="memname">void lib::spt::api::next </td>
           <td>(</td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span></td><td>)</td>
+          <td class="paramtype">ApiCallback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -673,8 +670,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a7ea863a1c91a7eb1382541e0c08eea1a" name="a7ea863a1c91a7eb1382541e0c08eea1a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ea863a1c91a7eb1382541e0c08eea1a">&#9670;&#160;</a></span>pause()</h2>
+<a id="a1ef30a093f2900b10ca0549b2e688fcd" name="a1ef30a093f2900b10ca0549b2e688fcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ef30a093f2900b10ca0549b2e688fcd">&#9670;&#160;</a></span>pause()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -682,7 +679,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="memname">void lib::spt::api::pause </td>
           <td>(</td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span></td><td>)</td>
+          <td class="paramtype">ApiCallback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -691,8 +688,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a40991941ba40216746d52ff1ae353404" name="a40991941ba40216746d52ff1ae353404"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a40991941ba40216746d52ff1ae353404">&#9670;&#160;</a></span>play_tracks() <span class="overload">[1/4]</span></h2>
+<a id="a844729b821d63c9b1271721906443395" name="a844729b821d63c9b1271721906443395"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a844729b821d63c9b1271721906443395">&#9670;&#160;</a></span>play_tracks() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -705,7 +702,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -719,8 +716,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a60f5838cd80f0d677fe4dd972dccf0fd" name="a60f5838cd80f0d677fe4dd972dccf0fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a60f5838cd80f0d677fe4dd972dccf0fd">&#9670;&#160;</a></span>play_tracks() <span class="overload">[2/4]</span></h2>
+<a id="a8097406db67a089b0e480008c71346c2" name="a8097406db67a089b0e480008c71346c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8097406db67a089b0e480008c71346c2">&#9670;&#160;</a></span>play_tracks() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -738,7 +735,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -746,8 +743,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="aacbb20568d0a95b4bcce20c6440e8f2e" name="aacbb20568d0a95b4bcce20c6440e8f2e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aacbb20568d0a95b4bcce20c6440e8f2e">&#9670;&#160;</a></span>play_tracks() <span class="overload">[3/4]</span></h2>
+<a id="a52f8c95892df8f313bec0cad22eae8ce" name="a52f8c95892df8f313bec0cad22eae8ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52f8c95892df8f313bec0cad22eae8ce">&#9670;&#160;</a></span>play_tracks() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -765,7 +762,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -779,8 +776,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a0d4868cbfad0a9a5dfa545ce181299cc" name="a0d4868cbfad0a9a5dfa545ce181299cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d4868cbfad0a9a5dfa545ce181299cc">&#9670;&#160;</a></span>play_tracks() <span class="overload">[4/4]</span></h2>
+<a id="a2037c389e84c693cec8df3fd51aa05d7" name="a2037c389e84c693cec8df3fd51aa05d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2037c389e84c693cec8df3fd51aa05d7">&#9670;&#160;</a></span>play_tracks() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -798,7 +795,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -830,8 +827,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a778cbe32b9d7d4adaa829bec2c61e515" name="a778cbe32b9d7d4adaa829bec2c61e515"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a778cbe32b9d7d4adaa829bec2c61e515">&#9670;&#160;</a></span>playlist_tracks() <span class="overload">[1/2]</span></h2>
+<a id="abb40a42f291ed4a4b76f79e2a2082a40" name="abb40a42f291ed4a4b76f79e2a2082a40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb40a42f291ed4a4b76f79e2a2082a40">&#9670;&#160;</a></span>playlist_tracks() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -844,7 +841,29 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::function&lt; bool(const <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; <a class="el" href="classlib_1_1spt_1_1page.html">lib::spt::page</a>&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;)&gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000011">Deprecated</a></b></dt><dd>Use with pagination instead </dd></dl>
+
+</div>
+</div>
+<a id="a0f9ed7fb4d2d5086dea3ca56a0c31149" name="a0f9ed7fb4d2d5086dea3ca56a0c31149"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f9ed7fb4d2d5086dea3ca56a0c31149">&#9670;&#160;</a></span>playlist_tracks() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::spt::api::playlist_tracks </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>playlist</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::function&lt; bool(const <a class="el" href="classResult.html">Result</a>&lt; <a class="el" href="classlib_1_1spt_1_1page.html">lib::spt::page</a>&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;)&gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -852,30 +871,38 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a8a8597efa397b0941d4b3a301a3fd9c4" name="a8a8597efa397b0941d4b3a301a3fd9c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a8597efa397b0941d4b3a301a3fd9c4">&#9670;&#160;</a></span>playlist_tracks() <span class="overload">[2/2]</span></h2>
+<a id="a4e8232bcca553cfd24652d4e88e29f84" name="a4e8232bcca553cfd24652d4e88e29f84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e8232bcca553cfd24652d4e88e29f84">&#9670;&#160;</a></span>post() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void lib::spt::api::playlist_tracks </td>
+          <td class="memname">void lib::spt::api::post </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classlib_1_1spt_1_1playlist.html">lib::spt::playlist</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>playlist</em></span>, </td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000006">Deprecated</a></b></dt><dd>Use with pagination instead </dd></dl>
+<p>Convenience method for POST request with no body </p>
 
 </div>
 </div>
-<a id="aebe2c2e0bfc8f2b3343e41a69d5c610c" name="aebe2c2e0bfc8f2b3343e41a69d5c610c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aebe2c2e0bfc8f2b3343e41a69d5c610c">&#9670;&#160;</a></span>post() <span class="overload">[1/2]</span></h2>
+<a id="ad83f1406eeb04fa4834974ff771bbfae" name="ad83f1406eeb04fa4834974ff771bbfae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad83f1406eeb04fa4834974ff771bbfae">&#9670;&#160;</a></span>post() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -896,7 +923,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; nlohmann::json &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; nlohmann::json &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -916,38 +943,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a64f1734b8278db05880989f44a70e552" name="a64f1734b8278db05880989f44a70e552"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64f1734b8278db05880989f44a70e552">&#9670;&#160;</a></span>post() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void lib::spt::api::post </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Convenience method for POST request with no body </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000007">Deprecated</a></b></dt><dd>Use <code><a class="el" href="classlib_1_1spt_1_1request.html#abb55e1b943d4132fb3d53eb6fdbdb21f">lib::spt::request::post</a></code> instead </dd></dl>
-
-</div>
-</div>
-<a id="a9d5c5e8e938f27f919fcfe4319890058" name="a9d5c5e8e938f27f919fcfe4319890058"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9d5c5e8e938f27f919fcfe4319890058">&#9670;&#160;</a></span>previous()</h2>
+<a id="a6d07151c32195242529125b9cd901a25" name="a6d07151c32195242529125b9cd901a25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d07151c32195242529125b9cd901a25">&#9670;&#160;</a></span>previous()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -955,7 +952,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="memname">void lib::spt::api::previous </td>
           <td>(</td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span></td><td>)</td>
+          <td class="paramtype">ApiCallback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -964,8 +961,38 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="ae6de5354ebff77d8d21124141dfa8d09" name="ae6de5354ebff77d8d21124141dfa8d09"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6de5354ebff77d8d21124141dfa8d09">&#9670;&#160;</a></span>put() <span class="overload">[1/2]</span></h2>
+<a id="a14555d3a40859f034c673697422b2ea4" name="a14555d3a40859f034c673697422b2ea4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14555d3a40859f034c673697422b2ea4">&#9670;&#160;</a></span>put() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::spt::api::put </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ApiCallback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Convenience method for PUT request with no body </p>
+
+</div>
+</div>
+<a id="a1e3e60c08271a749ac16d80d6cdca24b" name="a1e3e60c08271a749ac16d80d6cdca24b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e3e60c08271a749ac16d80d6cdca24b">&#9670;&#160;</a></span>put() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -986,7 +1013,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -1006,38 +1033,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a1370bf233537673881fc2867adc433bf" name="a1370bf233537673881fc2867adc433bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1370bf233537673881fc2867adc433bf">&#9670;&#160;</a></span>put() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void lib::spt::api::put </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Convenience method for PUT request with no body </p>
-
-</div>
-</div>
-<a id="ae7038f645ad3f9082ae721d844932dbf" name="ae7038f645ad3f9082ae721d844932dbf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae7038f645ad3f9082ae721d844932dbf">&#9670;&#160;</a></span>queue()</h2>
+<a id="aad493fbc531968eefd955ee7d279f6ee" name="aad493fbc531968eefd955ee7d279f6ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad493fbc531968eefd955ee7d279f6ee">&#9670;&#160;</a></span>queue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1045,7 +1042,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="memname">void lib::spt::api::queue </td>
           <td>(</td>
-          <td class="paramtype">lib::callback&lt; <a class="el" href="classlib_1_1result.html">lib::result</a>&lt; <a class="el" href="classlib_1_1spt_1_1queue.html">lib::spt::queue</a> &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span></td><td>)</td>
+          <td class="paramtype">ApiCallback&lt; <a class="el" href="classResult.html">Result</a>&lt; <a class="el" href="classlib_1_1spt_1_1queue.html">lib::spt::queue</a> &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1054,8 +1051,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a4181de91367224105534a9976e5f3d43" name="a4181de91367224105534a9976e5f3d43"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4181de91367224105534a9976e5f3d43">&#9670;&#160;</a></span>recently_played()</h2>
+<a id="ae06c40a8e0375d5579b02d377d508a5c" name="ae06c40a8e0375d5579b02d377d508a5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae06c40a8e0375d5579b02d377d508a5c">&#9670;&#160;</a></span>recently_played()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1063,7 +1060,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="memname">void lib::spt::api::recently_played </td>
           <td>(</td>
-          <td class="paramtype">lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span></td><td>)</td>
+          <td class="paramtype">ApiCallback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1072,8 +1069,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="ab2fb6d5bc3df674e5f7bab48d4ddc5bb" name="ab2fb6d5bc3df674e5f7bab48d4ddc5bb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2fb6d5bc3df674e5f7bab48d4ddc5bb">&#9670;&#160;</a></span>resume()</h2>
+<a id="ab27203d9fcecbc13a77ad2123ed69391" name="ab27203d9fcecbc13a77ad2123ed69391"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab27203d9fcecbc13a77ad2123ed69391">&#9670;&#160;</a></span>resume()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1081,7 +1078,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="memname">void lib::spt::api::resume </td>
           <td>(</td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span></td><td>)</td>
+          <td class="paramtype">ApiCallback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1090,8 +1087,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a549190fb118ee8b93d953749534624ea" name="a549190fb118ee8b93d953749534624ea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a549190fb118ee8b93d953749534624ea">&#9670;&#160;</a></span>saved_tracks()</h2>
+<a id="a34329b1e15d8521805afef935acbb2ee" name="a34329b1e15d8521805afef935acbb2ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34329b1e15d8521805afef935acbb2ee">&#9670;&#160;</a></span>saved_tracks()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1099,17 +1096,17 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="memname">void lib::spt::api::saved_tracks </td>
           <td>(</td>
-          <td class="paramtype">lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span></td><td>)</td>
+          <td class="paramtype">ApiCallback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1track.html">lib::spt::track</a> &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000005">Deprecated</a></b></dt><dd>Use with pagination instead </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000010">Deprecated</a></b></dt><dd>Use with pagination instead </dd></dl>
 
 </div>
 </div>
-<a id="aed68ce4103f82a1ed4dbb61dd8627112" name="aed68ce4103f82a1ed4dbb61dd8627112"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aed68ce4103f82a1ed4dbb61dd8627112">&#9670;&#160;</a></span>seek()</h2>
+<a id="afc6088e96900b43c902bf85421aabe36" name="afc6088e96900b43c902bf85421aabe36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc6088e96900b43c902bf85421aabe36">&#9670;&#160;</a></span>seek()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1122,7 +1119,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1135,8 +1132,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a36c1458cde31e74bc4f4486ad4c542b9" name="a36c1458cde31e74bc4f4486ad4c542b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a36c1458cde31e74bc4f4486ad4c542b9">&#9670;&#160;</a></span>set_device() <span class="overload">[1/2]</span></h2>
+<a id="a5857b1857b5c79148eea06240c6f3612" name="a5857b1857b5c79148eea06240c6f3612"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5857b1857b5c79148eea06240c6f3612">&#9670;&#160;</a></span>set_device() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1149,7 +1146,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1157,8 +1154,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a72a29c46a82d922524541ea794533102" name="a72a29c46a82d922524541ea794533102"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72a29c46a82d922524541ea794533102">&#9670;&#160;</a></span>set_device() <span class="overload">[2/2]</span></h2>
+<a id="ac6f9430cb25685355933bd9fd0c12014" name="ac6f9430cb25685355933bd9fd0c12014"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6f9430cb25685355933bd9fd0c12014">&#9670;&#160;</a></span>set_device() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1171,7 +1168,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1179,8 +1176,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a83a3edd5bf3a5d216ca298b63d346df5" name="a83a3edd5bf3a5d216ca298b63d346df5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83a3edd5bf3a5d216ca298b63d346df5">&#9670;&#160;</a></span>set_repeat()</h2>
+<a id="a8cdb7917ed54931f04b750b69bcf826e" name="a8cdb7917ed54931f04b750b69bcf826e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cdb7917ed54931f04b750b69bcf826e">&#9670;&#160;</a></span>set_repeat()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1193,7 +1190,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1206,8 +1203,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="af58d77d78d2f690e1d006be63b946aa0" name="af58d77d78d2f690e1d006be63b946aa0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af58d77d78d2f690e1d006be63b946aa0">&#9670;&#160;</a></span>set_shuffle()</h2>
+<a id="a3e357d66414238a3a581e5f2f666744f" name="a3e357d66414238a3a581e5f2f666744f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e357d66414238a3a581e5f2f666744f">&#9670;&#160;</a></span>set_shuffle()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1220,7 +1217,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1233,8 +1230,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a6441af8171fdc04cdc497d3e93a93739" name="a6441af8171fdc04cdc497d3e93a93739"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6441af8171fdc04cdc497d3e93a93739">&#9670;&#160;</a></span>set_volume()</h2>
+<a id="aa79be9e9c9512cfa284a96509e258f1a" name="aa79be9e9c9512cfa284a96509e258f1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa79be9e9c9512cfa284a96509e258f1a">&#9670;&#160;</a></span>set_volume()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1247,7 +1244,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1260,8 +1257,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a0f56416580d89ca435ab3ce15a37fa14" name="a0f56416580d89ca435ab3ce15a37fa14"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0f56416580d89ca435ab3ce15a37fa14">&#9670;&#160;</a></span>show()</h2>
+<a id="a97260608ff0210edf42342cec3d6287e" name="a97260608ff0210edf42342cec3d6287e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97260608ff0210edf42342cec3d6287e">&#9670;&#160;</a></span>show()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1274,7 +1271,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; <a class="el" href="classlib_1_1spt_1_1show.html">lib::spt::show</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; <a class="el" href="classlib_1_1spt_1_1show.html">lib::spt::show</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1282,8 +1279,8 @@ Temporarily protected </dd></dl>
 
 </div>
 </div>
-<a id="a275014bf2e6d10d2ab09993ad490089b" name="a275014bf2e6d10d2ab09993ad490089b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a275014bf2e6d10d2ab09993ad490089b">&#9670;&#160;</a></span>show_episodes()</h2>
+<a id="a22a9cf191121c8d82fbc8ab5f192dd4f" name="a22a9cf191121c8d82fbc8ab5f192dd4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22a9cf191121c8d82fbc8ab5f192dd4f">&#9670;&#160;</a></span>show_episodes()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1296,7 +1293,7 @@ Temporarily protected </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lib::callback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1episode.html">lib::spt::episode</a> &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+          <td class="paramtype">ApiCallback&lt; std::vector&lt; <a class="el" href="classlib_1_1spt_1_1episode.html">lib::spt::episode</a> &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
