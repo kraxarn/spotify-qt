@@ -74,13 +74,13 @@ void lib::spt::from_json(const nlohmann::json &j, playlist &p)
 	{
 		p.version = j.at("version").get<PlaylistVersion>();
 	}
+	else if (j.contains("tracks"))
+	{
+		p.version = PlaylistVersion::Version1;
+	}
 	else if (j.contains("items"))
 	{
 		p.version = PlaylistVersion::Version2;
-	}
-	else if (j.contains("href"))
-	{
-		p.version = PlaylistVersion::Version1;
 	}
 	else
 	{
