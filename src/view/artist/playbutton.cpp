@@ -77,11 +77,21 @@ void Artist::PlayButton::setArtist(const lib::spt::artist &loadedArtist)
 
 	updateFollow(false);
 
-	spotify.is_following(lib::follow_type::artist, {artist.id},
-		[this](const std::vector<bool> &follows)
+	const QString artistUri = QStringLiteral("spotify:artist:%1")
+		.arg(artist.id);
+
+	spotify.isSavedItems({artistUri},
+		[this](const Result<SpotifySavedItems> &result) -> void
 		{
-			this->updateFollow(!follows.empty() && follows.at(0));
-			this->follow->setEnabled(true);
+			if (!result.success())
+			{
+				qWarning() << "Failed to fetch saved items:" << result.message();
+				return;
+			}
+
+			const QList<bool> &follows = result.value().values();
+			updateFollow(!follows.empty() && follows.at(0));
+			follow->setEnabled(true);
 		});
 
 	setEnabled(true);

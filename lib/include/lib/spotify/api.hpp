@@ -77,9 +77,6 @@ namespace lib
 			void unfollow(lib::follow_type type, const std::vector<std::string> &ids,
 				ApiCallback<std::string> &callback);
 
-			void is_following(lib::follow_type type, const std::vector<std::string> &ids,
-				ApiCallback<std::vector<bool>> &callback);
-
 			void follow_playlist(const std::string &playlist_id,
 				ApiCallback<std::string> &callback);
 

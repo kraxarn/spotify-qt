@@ -20,13 +20,6 @@ void lib::spt::api::unfollow(lib::follow_type type, const std::vector<std::strin
 		follow_type_string(type), lib::strings::join(ids, ",")), callback);
 }
 
-void lib::spt::api::is_following(lib::follow_type type, const std::vector<std::string> &ids,
-	ApiCallback<std::vector<bool>> &callback)
-{
-	get(lib::fmt::format("me/following/contains?type={}&ids={}",
-		follow_type_string(type), lib::strings::join(ids, "")), callback);
-}
-
 void lib::spt::api::follow_playlist(const std::string &playlist_id,
 	ApiCallback<std::string> &callback)
 {
