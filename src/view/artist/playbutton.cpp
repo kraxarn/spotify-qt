@@ -78,7 +78,7 @@ void Artist::PlayButton::setArtist(const lib::spt::artist &loadedArtist)
 	updateFollow(false);
 
 	const QString artistUri = QStringLiteral("spotify:artist:%1")
-		.arg(artist.id);
+		.arg(QString::fromStdString(artist.id));
 
 	spotify.isSavedItems({artistUri},
 		[this](const Result<SpotifySavedItems> &result) -> void
