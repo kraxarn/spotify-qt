@@ -29,7 +29,8 @@ void Menu::Queue::refreshQueue()
 
 		if (!result.success())
 		{
-			addMessage(result.message());
+			addMessage(QStringLiteral("Error: %1")
+				.arg(result.message()));
 			return;
 		}
 
