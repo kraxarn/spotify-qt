@@ -46,7 +46,10 @@ auto SettingsPage::Application::app() -> QWidget *
 
 	appRefresh = new QComboBox(this);
 	appRefresh->addItems({
-		"1", "3", "10"
+		QStringLiteral("1"),
+		QStringLiteral("3"),
+		QStringLiteral("5"),
+		QStringLiteral("10"),
 	});
 	appRefresh->setEditable(true);
 	appRefresh->setCurrentIndex(-1);

@@ -97,7 +97,7 @@ namespace lib
 			/**
 			 * How often to refresh in seconds
 			 */
-			int refresh_interval = 3;
+			int refresh_interval = 5;
 
 			/**
 			 * How to resize track list headers
