@@ -452,6 +452,12 @@ void MainWindow::refresh()
 			if (!result.message().isEmpty())
 			{
 				lib::log::error("Refresh failed: {}", result.message());
+
+				if (!StatusMessage::isVisible())
+				{
+					StatusMessage::error(QStringLiteral("Failed to update player status: %1")
+						.arg(result.message()));
+				}
 			}
 
 			if (current.playback.is_playing)

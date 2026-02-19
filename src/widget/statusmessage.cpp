@@ -139,6 +139,13 @@ void StatusMessage::info(const QString &text, const QString &buttonText,
 	StatusMessage::show(MessageType::InformationAction, text);
 }
 
+auto StatusMessage::isVisible() -> bool
+{
+	return instance != nullptr
+		// TODO: I know this is bad, but instance already has a height property
+		&& qobject_cast<QWidget *>(instance)->height() > 0;
+}
+
 auto StatusMessage::getIcon(MessageType messageType) -> QIcon
 {
 	switch (messageType)

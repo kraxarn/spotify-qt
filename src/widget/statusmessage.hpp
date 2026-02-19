@@ -27,6 +27,9 @@ public:
 	static void info(const QString &text, const QString &buttonText,
 		const std::function<void()> &buttonAction);
 
+	[[nodiscard]]
+	static auto isVisible() -> bool;
+
 private:
 	static constexpr int height = 36;
 	static constexpr int iconSize = height * 0.75;
