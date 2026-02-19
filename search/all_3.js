@@ -12,7 +12,7 @@ var searchData=
   ['developer_5fmode_9',['developer_mode',['../classlib_1_1developer__mode.html',1,'lib']]],
   ['device_10',['device',['../classlib_1_1spt_1_1device.html',1,'lib::spt::device'],['../classlib_1_1spt_1_1playback.html#a347a1f37e20750a9ffaaf42cf93780bd',1,'lib::spt::playback::device']]],
   ['device_5fselect_11',['device_select',['../classlib_1_1spt_1_1device__select.html',1,'lib::spt']]],
-  ['devices_12',['devices',['../classlib_1_1spt_1_1api.html#add873684ed4f9c3f50e19ed4e16a763e',1,'lib::spt::api']]],
+  ['devices_12',['devices',['../classlib_1_1spt_1_1api.html#a6e1cc0cacb17a6d89b7d9766c980168a',1,'lib::spt::api']]],
   ['disallowed_5factions_13',['disallowed_actions',['../classlib_1_1spt_1_1playback.html#ac8258bdd52358fde4375827138c58766',1,'lib::spt::playback']]],
   ['display_5fname_14',['display_name',['../classlib_1_1spt_1_1user.html#a015858a71b0d9e7ea1c5fbf4739cea9e',1,'lib::spt::user']]],
   ['duration_15',['duration',['../classlib_1_1spt_1_1track.html#a95db80e3f3255ceebda0e1d3a213166b',1,'lib::spt::track']]],

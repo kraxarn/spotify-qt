@@ -6,5 +6,5 @@ var searchData=
   ['decode_3',['decode',['../classlib_1_1base64.html#a161b6e099d00016a9aed9150b0a70664',1,'lib::base64']]],
   ['del_4',['del',['../classHttpClient.html#aa39a02a58aeabb09a7a09aba0eb269c2',1,'HttpClient::del()'],['../classlib_1_1spt_1_1api.html#aa77abbae1faaa3ae078f5ef414d986c8',1,'lib::spt::api::del(const std::string &amp;url, const nlohmann::json &amp;json, ApiCallback&lt; std::string &gt; &amp;callback)'],['../classlib_1_1spt_1_1api.html#a489e1b430c8d921aaf085592e0d8156b',1,'lib::spt::api::del(const std::string &amp;url, ApiCallback&lt; std::string &gt; &amp;callback)']]],
   ['details_5',['details',['../classlib_1_1spt_1_1track.html#abc6da82e3f541950f2293c7da4ed18b3',1,'lib::spt::track']]],
-  ['devices_6',['devices',['../classlib_1_1spt_1_1api.html#add873684ed4f9c3f50e19ed4e16a763e',1,'lib::spt::api']]]
+  ['devices_6',['devices',['../classlib_1_1spt_1_1api.html#a6e1cc0cacb17a6d89b7d9766c980168a',1,'lib::spt::api']]]
 ];
