@@ -148,7 +148,7 @@ namespace lib
 			/**
 			 * Get all available devices
 			 */
-			void devices(ApiCallback<std::vector<lib::spt::device>> &callback);
+			void devices(ApiCallback<Result<std::vector<device>>> &callback) const;
 
 			/**
 			 * Get me/player/play with device_id set if available

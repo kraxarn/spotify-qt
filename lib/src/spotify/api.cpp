@@ -152,9 +152,9 @@ void lib::spt::api::put(const std::string &url, const nlohmann::json &body,
 				}
 
 				devices([this, url, body, error, callback]
-					(const std::vector<lib::spt::device> &devices)
+					(const Result<std::vector<device>> &result) -> void
 				{
-					if (devices.empty())
+					if (!result.success() || result.value().empty())
 					{
 						if (callback)
 						{
@@ -163,7 +163,7 @@ void lib::spt::api::put(const std::string &url, const nlohmann::json &body,
 					}
 					else
 					{
-						this->request.device_select.get(devices, [this, url, body, callback, error]
+						this->request.device_select.get(result.value(), [this, url, body, callback, error]
 							(const lib::spt::device &device)
 						{
 							if (device.id.empty())

@@ -27,12 +27,20 @@ void lib::spt::api::set_device(const device &device, ApiCallback<std::string> &c
 
 //endregion
 
-void lib::spt::api::devices(ApiCallback<std::vector<lib::spt::device>> &callback)
+void lib::spt::api::devices(ApiCallback<Result<std::vector<device>>> &callback) const
 {
-	get("me/player/devices", [callback](const nlohmann::json &json)
+	const ApiCallback<Result<nlohmann::json>> cb = [callback](const Result<nlohmann::json> &result) -> void
 	{
-		callback(json.at("devices").get<std::vector<lib::spt::device>>());
-	});
+		if (!result.success())
+		{
+			callback(Result<std::vector<device>>::fail(result.message()));
+			return;
+		}
+
+		callback(Result<std::vector<device>>::ok(result.value()
+			.at("devices").get<std::vector<device>>()));
+	};
+	request.get("me/player/devices", cb);
 }
 
 //region play_tracks

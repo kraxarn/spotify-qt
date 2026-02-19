@@ -20,13 +20,22 @@ Menu::Device::Device(lib::spt::api &spotify, QWidget *parent)
 
 void Menu::Device::refreshDevices()
 {
-	spotify.devices([this](const std::vector<lib::spt::device> &devices)
+	spotify.devices([this](const Result<std::vector<lib::spt::device>> &result)
 	{
 		for (auto &action: actions())
 		{
 			removeAction(action);
 		}
 
+		if (!result.success())
+		{
+			auto *action = addAction(QStringLiteral("Error: %1")
+				.arg(result.message()));
+			action->setDisabled(true);
+			return;
+		}
+
+		const std::vector<lib::spt::device> &devices = result.value();
 		if (devices.empty())
 		{
 			auto *action = addAction(QStringLiteral("No devices found"));

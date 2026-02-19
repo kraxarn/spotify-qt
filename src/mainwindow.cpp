@@ -236,9 +236,15 @@ void MainWindow::initClient()
 	}
 	else
 	{
-		spotify.devices([this](const std::vector<lib::spt::device> &devices)
+		spotify.devices([this](const Result<std::vector<lib::spt::device>> &result) -> void
 		{
-			if (devices.empty())
+			if (!result.success())
+			{
+				qCritical() << "Failed to initialise client:" << result.message();
+				return;
+			}
+
+			if (result.value().empty())
 			{
 				this->startClient();
 			}
@@ -311,8 +317,16 @@ void MainWindow::initWhatsNew()
 
 void MainWindow::initDevice()
 {
-	spotify.devices([this](const std::vector<lib::spt::device> &devices)
+	spotify.devices([this](const Result<std::vector<lib::spt::device>> &result)
 	{
+		if (!result.success())
+		{
+			qWarning() << "Failed to initialise device:" << result.message();
+			return;
+		}
+
+		const std::vector<lib::spt::device> &devices = result.value();
+
 		// Don't select a new device if one is currently active
 		for (const auto &device: devices)
 		{
