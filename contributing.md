@@ -2,9 +2,10 @@ All contributions are very welcome, not just code-related contributions!
 
 ## Code style
 
-Code style is different in lib/ application logic and src/ UI logic. lib/ tries to follow a 
-style common with the standard library, see lib/style_guide.md for more details, while src/ tries 
-to follow a style common with Qt.
+Code style is different in lib/ application logic and src/ UI logic. lib/ tries
+to follow a style common with the standard library, see lib/style_guide.md for
+more details, while src/ tries to follow a style common with Qt. Newer code
+in lib/, making heavier use of Qt, tries to follow the same style as src/.
 
 ## Namespaces
 
