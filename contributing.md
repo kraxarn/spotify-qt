@@ -18,7 +18,7 @@ however, the namespace should reflect the name of the sub-folder.
 
 **Pull requests generated fully by generative AI, sometimes known as
 "slop generators", are prohibited and won't be merged.** The simple reason for
-this is that the quality is just way too poor to be maintainable. Please keep
-these changes in your own fork instead. Using AI as a tool is allowed, as
-detecting these pull requests are more or less impossible anyway, just make
-sure to clean up all the rubbish code and comments AI seems to like generating.
+this is that the quality is just way too poor to be maintainable, and because
+it heavily discourages actual learning. Please keep these changes in your own
+fork instead. Using AI as a tool, for example for single-line completion,
+is allowed, as detecting these pull requests are more or less impossible anyway.
