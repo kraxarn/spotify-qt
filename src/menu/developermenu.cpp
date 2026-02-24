@@ -6,6 +6,7 @@
 #include "dialog/createplaylist.hpp"
 #include "dialog/disallows.hpp"
 #include "dialog/editplaylist.hpp"
+#include "dialog/icons.hpp"
 #include "dialog/jsondump.hpp"
 #include "dialog/lyricssearch.hpp"
 #include "dialog/memory.hpp"
@@ -319,6 +320,12 @@ void DeveloperMenu::onDialogMenuAboutToShow()
 			QStringLiteral("Edit playlist"), [this, mainWindow]
 			{
 				return new Dialog::EditPlaylist(spotify, {}, -1, mainWindow);
+			}
+		},
+		{
+			QStringLiteral("Icons"), [mainWindow]() -> Dialog::Icons *
+			{
+				return new Dialog::Icons(mainWindow);
 			}
 		},
 	};
