@@ -1,5 +1,7 @@
 #include "darkpalette.hpp"
 
+#include <QtDebug>
+
 DarkPalette::DarkPalette()
 {
 	constexpr unsigned int backgroundColor = 0x212121;

@@ -2,14 +2,15 @@
 #include "metatypes.hpp"
 #include "util/icon.hpp"
 
-#include <QVBoxLayout>
-#include <QPushButton>
 #include <QApplication>
 #include <QClipboard>
-#include <QStandardPaths>
 #include <QDateTime>
 #include <QFileDialog>
 #include <QMenu>
+#include <QPushButton>
+#include <QStandardPaths>
+#include <QtDebug>
+#include <QVBoxLayout>
 
 Log::Base::Base(QWidget *parent)
 	: QWidget(parent)
