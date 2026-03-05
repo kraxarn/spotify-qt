@@ -64,7 +64,7 @@ public:
 		const lib::headers &headers, ApiCallback<std::string> &callback) const;
 
 	/**
-	* POST request with a request body
+	* @deprecated
 	*/
 	void post(const std::string &url, const std::string &body,
 		const lib::headers &headers, ApiCallback<Result<std::string>> &callback) const;
@@ -73,6 +73,9 @@ public:
 	[[deprecated("Use asynchronous method instead")]]
 	auto post(const std::string &url, const lib::headers &headers,
 		const std::string &post_data) const -> std::string;
+
+	void post(const QUrl &url, const QByteArray &body,
+		const RequestHeaders &headers, ApiCallback<Result<QByteArray>> &callback) const;
 
 	/**
 	* @deprecated Use with result callback instead

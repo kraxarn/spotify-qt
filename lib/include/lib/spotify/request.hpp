@@ -132,8 +132,12 @@ namespace lib
 				});
 			}
 
+			//endregion
+
+			//region POST
+
 			/**
-			 * POST request without body
+			 * @deprecated
 			 */
 			void post(const std::string &url, ApiCallback<Result<void *>> &callback)
 			{
@@ -150,6 +154,28 @@ namespace lib
 							return;
 						}
 						callback(parse_json(response.value()));
+					});
+			}
+
+			template<typename T>
+			void post(const QString &path, const QJsonDocument &body,
+				ApiCallback<Result<T>> &callback)
+			{
+				const QByteArray data = body.isNull()
+					? QByteArray()
+					: body.toJson(QJsonDocument::Compact);
+
+				http.post(SpotifyUtil::toFullUrl(path), data, authHeaders(),
+					[callback](const Result<QByteArray> &result) -> void
+					{
+						if (!result.success())
+						{
+							const QString message = parseErrorMessage(result.message());
+							callback(Result<T>::fail(message));
+							return;
+						}
+
+						callback(parseJson<T>(result.value()));
 					});
 			}
 
@@ -174,6 +200,7 @@ namespace lib
 							callback(Result<T>::fail(message));
 							return;
 						}
+
 						callback(parseJson<T>(result.value()));
 					});
 			}

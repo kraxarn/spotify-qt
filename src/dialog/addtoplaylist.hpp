@@ -30,6 +30,6 @@ namespace Dialog
 		void onAddMissingClicked(bool checked);
 		void onAddAllClicked(bool checked);
 
-		void addTracks(const std::vector<std::string> &trackIds);
+		void addTracks(const std::vector<std::string> &trackIds) const;
 	};
 }

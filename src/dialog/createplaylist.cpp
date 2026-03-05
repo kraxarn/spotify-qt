@@ -73,12 +73,12 @@ void Dialog::CreatePlaylist::onOk(bool /*checked*/)
 
 			const auto playlistName = QString::fromStdString(playlist.name);
 
-			spotify.add_to_playlist(playlist.id, trackUris,
-				[this, playlistName](const std::string &result)
+			spotify.add_to_playlist(playlist, trackUris,
+				[this, playlistName](const Result<PlaylistSnapshot> &result)
 				{
-					if (!result.empty())
+					if (!result.success())
 					{
-						showError(QString::fromStdString(result));
+						showError(result.message());
 						return;
 					}
 

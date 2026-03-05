@@ -86,6 +86,12 @@ auto HttpClient::post(const std::string &url, const lib::headers &headers,
 	return reply->readAll().toStdString();
 }
 
+void HttpClient::post(const QUrl &url, const QByteArray &body, const RequestHeaders &headers,
+	ApiCallback<Result<QByteArray>> &callback) const
+{
+	await(mNetworkManager->post(request(url, headers), body), callback);
+}
+
 void HttpClient::post(const std::string &url, const std::string &body,
 	const lib::headers &headers, ApiCallback<Result<std::string>> &callback) const
 {

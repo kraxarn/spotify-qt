@@ -67,12 +67,23 @@ void lib::spt::api::playlist_tracks(const lib::spt::playlist &playlist,
 	request.get_page<lib::spt::track>(url, std::string(), callback);
 }
 
-void lib::spt::api::add_to_playlist(const std::string &playlist_id,
+void lib::spt::api::add_to_playlist(const spt::playlist &playlist,
 	const std::vector<std::string> &track_uris,
-	ApiCallback<std::string> &callback)
+	ApiCallback<Result<PlaylistSnapshot>> &callback) const
 {
-	post(lib::fmt::format("playlists/{}/tracks?uris={}",
-		playlist_id, lib::strings::join(track_uris, ",")), callback);
+	const QString path = QStringLiteral("playlists/%1/tracks")
+		.arg(QString::fromStdString(playlist.id));
+
+	QJsonArray tracks;
+	for (const std::string &uri: track_uris)
+	{
+		tracks.append(QString::fromStdString(uri));
+	}
+
+	QJsonObject body;
+	body[QStringLiteral("uris")] = tracks;
+
+	request.post(path, QJsonDocument(body), callback);
 }
 
 void lib::spt::api::remove_from_playlist(const spt::playlist &playlist,

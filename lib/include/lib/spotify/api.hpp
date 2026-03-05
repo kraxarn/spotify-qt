@@ -285,9 +285,9 @@ namespace lib
 			void playlist_tracks(const lib::spt::playlist &playlist,
 				const std::function<bool(const Result<lib::spt::page<lib::spt::track>> &)> &callback);
 
-			void add_to_playlist(const std::string &playlist_id,
+			void add_to_playlist(const spt::playlist &playlist,
 				const std::vector<std::string> &track_uris,
-				ApiCallback<std::string> &callback);
+				ApiCallback<Result<PlaylistSnapshot>> &callback) const;
 
 			void remove_from_playlist(const spt::playlist &playlist,
 				const std::vector<std::string> &track_uris,

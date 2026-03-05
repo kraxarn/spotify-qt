@@ -98,7 +98,7 @@ auto Dialog::AddToPlaylist::getTrackIdsNotInPlaylist() -> std::vector<std::strin
 	return results;
 }
 
-void Dialog::AddToPlaylist::addTracks(const std::vector<std::string> &trackIds)
+void Dialog::AddToPlaylist::addTracks(const std::vector<std::string> &trackIds) const
 {
 	std::vector<std::string> trackUris;
 	trackUris.reserve(trackUris.size());
@@ -108,13 +108,14 @@ void Dialog::AddToPlaylist::addTracks(const std::vector<std::string> &trackIds)
 		trackUris.push_back(lib::spt::id_to_uri("track", trackId));
 	}
 
-	spotify.add_to_playlist(playlist.id, trackUris,
-		[this](const std::string &result)
+	spotify.add_to_playlist(playlist, trackUris,
+		[this](const Result<PlaylistSnapshot> &result)
 		{
-			if (!result.empty())
+			if (!result.success())
 			{
-				StatusMessage::error(QString("Failed to add track to playlist: %1")
-					.arg(QString::fromStdString(result)));
+				StatusMessage::error(QString("Failed to add to playlist: %1")
+					.arg(result.message()));
+
 				return;
 			}
 
