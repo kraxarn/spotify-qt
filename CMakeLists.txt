@@ -21,11 +21,6 @@ if (POLICY CMP0072)
 	cmake_policy(SET CMP0072 NEW)
 endif ()
 
-# Set target macOS version
-if (APPLE)
-	set(CMAKE_OSX_DEPLOYMENT_TARGET "12")
-endif ()
-
 # Find Qt
 include(cmake/FindQt.cmake)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Widgets Network Gui Svg REQUIRED)

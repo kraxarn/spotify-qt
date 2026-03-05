@@ -26,7 +26,7 @@ jobs:
 
       - name: Configure CMake
         working-directory: ${{runner.workspace}}/build
-        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DUSE_TESTS=ON -DUSE_LTO=ON -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
+        run: cmake $GITHUB_WORKSPACE -D CMAKE_BUILD_TYPE=$BUILD_TYPE -D USE_TESTS=ON -D USE_LTO=ON -D CMAKE_OSX_DEPLOYMENT_TARGET="12" -D CMAKE_OSX_ARCHITECTURES="x86_64;arm64"
 
       - name: Build
         working-directory: ${{runner.workspace}}/build
