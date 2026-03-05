@@ -16,8 +16,10 @@ public:
 	[[nodiscard]]
 	static auto isErrorObject(const QJsonObject &json) -> bool;
 
+	/**
+	 * @deprecated Use overload with QJsonObject instead
+	 */
 	[[nodiscard]]
-	[[deprecated("Use overload with QJsonObject instead")]]
 	static auto isErrorObject(const nlohmann::json &json) -> bool;
 
 	/**
@@ -27,8 +29,10 @@ public:
 	[[nodiscard]]
 	static auto errorMessage(const QJsonObject &json) -> QString;
 
+	/**
+	 * @deprecated Use overload with QJsonObject instead
+	 */
 	[[nodiscard]]
-	[[deprecated("Use overload with QJsonObject instead")]]
 	static auto errorMessage(const nlohmann::json &json) -> QString;
 
 private:
@@ -41,8 +45,9 @@ namespace lib
 	{
 		/**
 		 * Spotify request error
+		 * @deprecated Don't use exceptions
 		 */
-		class [[deprecated("Don't use exceptions")]] error : public std::runtime_error
+		class error : public std::runtime_error
 		{
 		public:
 			/**
@@ -62,10 +67,14 @@ namespace lib
 			 */
 			auto url() -> const char *;
 
-			[[deprecated("Use SpotifyErrorUtil::isErrorObject instead")]]
+			/**
+			 * @deprecated Use SpotifyErrorUtil::isErrorObject instead
+			 */
 			static auto is(const nlohmann::json &json) -> bool;
 
-			[[deprecated("Use SpotifyErrorUtil::errorMessage instead")]]
+			/**
+			 * @deprecated Use SpotifyErrorUtil::errorMessage instead
+			 */
 			static auto error_message(const nlohmann::json &json) -> std::string;
 
 		private:

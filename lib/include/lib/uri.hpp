@@ -8,8 +8,9 @@ namespace lib
 {
 	/**
 	 * Basic URI manipulation
+	 * @deprecated Use QUrl instead
 	 */
-	class [[deprecated("Use QUrl instead")]] uri
+	class uri
 	{
 	public:
 		/**

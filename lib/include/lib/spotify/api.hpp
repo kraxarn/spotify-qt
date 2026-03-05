@@ -342,26 +342,25 @@ namespace lib
 			 * @param response URL to request
 			 * @param callback Response as JSON
 			 * @note Temporarily protected
+			 * @deprecated Use lib::spt::request instead
 			 */
-			[[deprecated("Use lib::spt::request instead")]]
 			void get(const std::string &response,
 				ApiCallback<nlohmann::json> &callback);
 
 			/**
 			 * GET a collection of items
-			 * @param url URL to request
 			 * @note Automatically handles paging
 			 * @note Temporarily protected
 			 * @throws std::exception
+			 * @deprecated Use lib::spt::request instead
 			 */
-			[[deprecated("Use lib::spt::request instead")]]
 			void get_items(const std::string &url,
 				ApiCallback<nlohmann::json> &callback);
 
 			/**
 			 * Custom get_items when items are contained in a key
+			 * @deprecated Use lib::spt::request instead
 			 */
-			[[deprecated("Use lib::spt::request instead")]]
 			void get_items(const std::string &url, const std::string &key,
 				ApiCallback<nlohmann::json> &callback);
 
@@ -374,15 +373,15 @@ namespace lib
 			 * @param url URL to request
 			 * @param body JSON body or null if no body
 			 * @param callback Error message, or empty if none
+			 * @deprecated Use lib::spt::request instead
 			 */
-			[[deprecated("Use lib::spt::request instead")]]
 			void put(const std::string &url, const nlohmann::json &body,
 				ApiCallback<std::string> &callback);
 
 			/**
 			 * Convenience method for PUT request with no body
+			 * @deprecated Use lib::spt::request instead
 			 */
-			[[deprecated("Use lib::spt::request instead")]]
 			void put(const std::string &url, ApiCallback<std::string> &callback);
 
 			//endregion
@@ -394,15 +393,15 @@ namespace lib
 			 * @param url URL to request
 			 * @param json JSON body or null if no body
 			 * @param callback Error message, or empty if none
+			 * @deprecated Use lib::spt::request instead
 			 */
-			[[deprecated("Use lib::spt::request instead")]]
 			void post(const std::string &url, const nlohmann::json &json,
 				ApiCallback<nlohmann::json> &callback);
 
 			/**
 			 * Convenience method for POST request with no body
+			 * @deprecated Use lib::spt::request instead
 			 */
-			[[deprecated("Use lib::spt::request instead")]]
 			void post(const std::string &url, ApiCallback<std::string> &callback);
 
 			//endregion
@@ -414,15 +413,15 @@ namespace lib
 			 * @param url URL to request
 			 * @param json JSON body or null if no body
 			 * @param callback Error message, or empty if none
+			 * @deprecated Use lib::spt::request instead
 			 */
-			[[deprecated("Use lib::spt::request instead")]]
 			void del(const std::string &url, const nlohmann::json &json,
 				ApiCallback<std::string> &callback);
 
 			/**
 			 * Convenience method for DELETE request with no body
+			 * @deprecated Use lib::spt::request instead
 			 */
-			[[deprecated("Use lib::spt::request instead")]]
 			void del(const std::string &url, ApiCallback<std::string> &callback);
 
 			//endregion

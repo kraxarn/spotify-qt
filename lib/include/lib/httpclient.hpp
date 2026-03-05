@@ -29,11 +29,15 @@ class HttpClient final : public QObject
 public:
 	explicit HttpClient(QObject *parent);
 
-	[[deprecated("Use overload with result callback instead")]]
+	/**
+	 * @deprecated Use overload with result callback instead
+	 */
 	void get(const std::string &url, const lib::headers &headers,
 		ApiCallback<std::string> &callback) const;
 
-	[[deprecated("Use overload with QUrl/QByteArray instead")]]
+	/**
+	 * @deprecated Use overload with QUrl/QByteArray instead
+	 */
 	void get(const std::string &url, const lib::headers &headers,
 		ApiCallback<Result<std::string>> &callback) const;
 
@@ -49,7 +53,9 @@ public:
 	void put(const std::string &url, const std::string &body,
 		const lib::headers &headers, ApiCallback<std::string> &callback) const;
 
-	[[deprecated("Use with result callback instead")]]
+	/**
+	 * @deprecated Use with result callback instead
+	 */
 	void post(const std::string &url, const lib::headers &headers,
 		ApiCallback<std::string> &callback) const;
 
@@ -59,7 +65,9 @@ public:
 	void post(const std::string &url, const lib::headers &headers,
 		ApiCallback<Result<std::string>> &callback) const;
 
-	[[deprecated("Use with result callback instead")]]
+	/**
+	 * @deprecated Use with a result callback instead
+	 */
 	void post(const std::string &url, const std::string &body,
 		const lib::headers &headers, ApiCallback<std::string> &callback) const;
 
@@ -69,8 +77,10 @@ public:
 	void post(const std::string &url, const std::string &body,
 		const lib::headers &headers, ApiCallback<Result<std::string>> &callback) const;
 
+	/**
+	 * @deprecated Use asynchronous method instead
+	 */
 	[[nodiscard]]
-	[[deprecated("Use asynchronous method instead")]]
 	auto post(const std::string &url, const lib::headers &headers,
 		const std::string &post_data) const -> std::string;
 
@@ -78,7 +88,7 @@ public:
 		const RequestHeaders &headers, ApiCallback<Result<QByteArray>> &callback) const;
 
 	/**
-	* @deprecated Use with result callback instead
+	* @deprecated Use with a result callback instead
 	*/
 	void del(const std::string &url, const std::string &body,
 		const lib::headers &headers, ApiCallback<std::string> &callback) const;
@@ -92,16 +102,22 @@ public:
 private:
 	QNetworkAccessManager *mNetworkManager;
 
-	[[deprecated("Use overload with QUrl/RequestHeaders instead")]]
+	/**
+	 * @deprecated Use overload with QUrl/RequestHeaders instead
+	 */
 	static auto request(const std::string &url, const lib::headers &headers) -> QNetworkRequest;
 
 	[[nodiscard]]
 	static auto request(const QUrl &url, const RequestHeaders &headers) -> QNetworkRequest;
 
-	[[deprecated("Use overload with result callback instead")]]
+	/**
+	 * @deprecated Use overload with a result callback instead
+	 */
 	void await(QNetworkReply *reply, ApiCallback<QByteArray> &callback) const;
 
-	[[deprecated("Use overload with ApiCallback/QByteArray instead")]]
+	/**
+	 * @deprecated Use overload with ApiCallback/QByteArray instead
+	 */
 	void await(QNetworkReply *reply, ApiCallback<Result<std::string>> &callback) const;
 
 	void await(QNetworkReply *reply, ApiCallback<Result<QByteArray>> &callback) const;

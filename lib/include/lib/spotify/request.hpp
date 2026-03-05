@@ -249,7 +249,6 @@ namespace lib
 
 			/**
 			 * Set last used device
-			 * @param id Device ID
 			 */
 			void set_current_device(const std::string &device_id);
 
@@ -281,8 +280,10 @@ namespace lib
 				return Result<T>::ok(T::fromJson(json));
 			}
 
+			/**
+			 * @deprecated Use parseJson instead
+			 */
 			template<typename T>
-			[[deprecated("Use parseJson instead")]]
 			static auto parse_json(const std::string &data) -> Result<T>
 			{
 				if (data.empty())
