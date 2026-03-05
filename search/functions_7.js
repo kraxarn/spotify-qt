@@ -7,12 +7,13 @@ var searchData=
   ['init_4',['init',['../classlib_1_1crash__handler.html#a25aebe0cfaa407547794d6fb223291f0',1,'lib::crash_handler']]],
   ['is_5',['is',['../classlib_1_1spt_1_1error.html#ac3d46b191da87ae88b6aae7467722b80',1,'lib::spt::error']]],
   ['is_5fallowed_6',['is_allowed',['../classlib_1_1spt_1_1playback.html#ac30f1e2a3ebbadd0886e15154e5955c8',1,'lib::spt::playback']]],
-  ['is_5fexperiment_5fenabled_7',['is_experiment_enabled',['../classlib_1_1developer__mode.html#afd6d57f139c4870296c4d357e59a7eb1',1,'lib::developer_mode']]],
-  ['is_5finit_8',['is_init',['../classlib_1_1crash__handler.html#a4868650f958b93eae12a82cbea1ad151',1,'lib::crash_handler']]],
-  ['is_5fjpeg_9',['is_jpeg',['../classlib_1_1image.html#ab75e54ca0d172daab6ede85072072603',1,'lib::image']]],
-  ['is_5fnull_10',['is_null',['../classlib_1_1spt_1_1playlist.html#a45528c5a2ce934d3edf40666039ce08b',1,'lib::spt::playlist']]],
-  ['is_5fowner_11',['is_owner',['../classlib_1_1spt_1_1playlist.html#acd763fb869fc30db5ef8eb4d3c85487d',1,'lib::spt::playlist']]],
-  ['is_5fup_5fto_5fdate_12',['is_up_to_date',['../classlib_1_1spt_1_1playlist.html#a844c73bebbc28d2872f0a45def66eb2e',1,'lib::spt::playlist']]],
-  ['is_5fvalid_13',['is_valid',['../classlib_1_1date__time.html#af54ecee574470208dc8263fe77cabac0',1,'lib::date_time::is_valid()'],['../classlib_1_1spt_1_1entity.html#a383b1f0c10936d67639450c7f5a91c1d',1,'lib::spt::entity::is_valid()'],['../classlib_1_1spt_1_1playback.html#a7624d8261fadb599f26cd6cc79438f8f',1,'lib::spt::playback::is_valid()'],['../classlib_1_1spt_1_1track.html#a37d4865150fb6a32cd0e9cb99aca8101',1,'lib::spt::track::is_valid()']]],
-  ['iserrorobject_14',['isErrorObject',['../classSpotifyErrorUtil.html#abc7db6743ae3d16c8f64b3696e0d03bf',1,'SpotifyErrorUtil::isErrorObject(const QJsonObject &amp;json) -&gt; bool'],['../classSpotifyErrorUtil.html#a076d621556e8da4c62cc2a11f4c23965',1,'SpotifyErrorUtil::isErrorObject(const nlohmann::json &amp;json) -&gt; bool']]]
+  ['is_5favailable_7',['is_available',['../classlib_1_1spt_1_1playlist.html#a960a083668185605373f7c6e58980ebf',1,'lib::spt::playlist']]],
+  ['is_5fexperiment_5fenabled_8',['is_experiment_enabled',['../classlib_1_1developer__mode.html#afd6d57f139c4870296c4d357e59a7eb1',1,'lib::developer_mode']]],
+  ['is_5finit_9',['is_init',['../classlib_1_1crash__handler.html#a4868650f958b93eae12a82cbea1ad151',1,'lib::crash_handler']]],
+  ['is_5fjpeg_10',['is_jpeg',['../classlib_1_1image.html#ab75e54ca0d172daab6ede85072072603',1,'lib::image']]],
+  ['is_5fnull_11',['is_null',['../classlib_1_1spt_1_1playlist.html#a45528c5a2ce934d3edf40666039ce08b',1,'lib::spt::playlist']]],
+  ['is_5fowner_12',['is_owner',['../classlib_1_1spt_1_1playlist.html#acd763fb869fc30db5ef8eb4d3c85487d',1,'lib::spt::playlist']]],
+  ['is_5fup_5fto_5fdate_13',['is_up_to_date',['../classlib_1_1spt_1_1playlist.html#a844c73bebbc28d2872f0a45def66eb2e',1,'lib::spt::playlist']]],
+  ['is_5fvalid_14',['is_valid',['../classlib_1_1date__time.html#af54ecee574470208dc8263fe77cabac0',1,'lib::date_time::is_valid()'],['../classlib_1_1spt_1_1entity.html#a383b1f0c10936d67639450c7f5a91c1d',1,'lib::spt::entity::is_valid()'],['../classlib_1_1spt_1_1playback.html#a7624d8261fadb599f26cd6cc79438f8f',1,'lib::spt::playback::is_valid()'],['../classlib_1_1spt_1_1track.html#a37d4865150fb6a32cd0e9cb99aca8101',1,'lib::spt::track::is_valid()']]],
+  ['iserrorobject_15',['isErrorObject',['../classSpotifyErrorUtil.html#abc7db6743ae3d16c8f64b3696e0d03bf',1,'SpotifyErrorUtil::isErrorObject(const QJsonObject &amp;json) -&gt; bool'],['../classSpotifyErrorUtil.html#a076d621556e8da4c62cc2a11f4c23965',1,'SpotifyErrorUtil::isErrorObject(const nlohmann::json &amp;json) -&gt; bool']]]
 ];
