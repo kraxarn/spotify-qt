@@ -288,7 +288,7 @@ namespace lib
 			{
 				if (data.isEmpty())
 				{
-					return Result<T>::fail(QStringLiteral("No data"));
+					return Result<T>::ok(T::fromJson(QJsonDocument()));
 				}
 
 				QJsonParseError parseError;
