@@ -367,37 +367,34 @@ void List::Tracks::onDelete()
 		return;
 	}
 
-	std::vector<std::pair<int, std::string>> tracks;
+	std::vector<std::string> tracks;
 	tracks.reserve(items.size());
 
 	for (const auto *item: items)
 	{
-		const auto data = item->data(0, static_cast<int>(DataRole::Track));
-		const auto track = data.value<lib::spt::track>();
-
-		if (!track.is_valid())
+		const QVariant data = item->data(0, static_cast<int>(DataRole::Track));
+		if (const auto track = data.value<lib::spt::track>(); track.is_valid())
 		{
-			continue;
+			tracks.push_back(track.id);
 		}
-
-		auto index = item->data(0, static_cast<int>(DataRole::Index)).toInt();
-		tracks.emplace_back(index, track.id);
 	}
 
-	spotify.remove_from_playlist(playlist.id, tracks, [this, items](const std::string &status)
-	{
-		if (!status.empty())
+	spotify.remove_from_playlist(playlist, tracks,
+		[this, items](const Result<PlaylistSnapshot> &result) -> void
 		{
-			StatusMessage::error(QString("Failed to remove track from playlist: %1")
-				.arg(QString::fromStdString(status)));
-			return;
-		}
+			if (!result.success())
+			{
+				StatusMessage::error(QStringLiteral("Failed to remove track from playlist: %1")
+					.arg(result.message()));
 
-		for (auto *item: items)
-		{
-			takeTopLevelItem(indexOfTopLevelItem(item));
-		}
-	});
+				return;
+			}
+
+			for (auto *item: items)
+			{
+				takeTopLevelItem(indexOfTopLevelItem(item));
+			}
+		});
 }
 
 void List::Tracks::onPlaySelectedRow()

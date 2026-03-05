@@ -13,6 +13,7 @@
 #include "lib/spotify/playback.hpp"
 #include "lib/spotify/playlist.hpp"
 #include "lib/spotify/playlistdetails.hpp"
+#include "lib/spotify/playlistsnapshot.hpp"
 #include "lib/spotify/queue.hpp"
 #include "lib/spotify/request.hpp"
 #include "lib/spotify/savedalbum.hpp"
@@ -288,9 +289,9 @@ namespace lib
 				const std::vector<std::string> &track_uris,
 				ApiCallback<std::string> &callback);
 
-			void remove_from_playlist(const std::string &playlist_id,
-				const std::vector<std::pair<int, std::string>> &track_index_uris,
-				ApiCallback<std::string> &callback);
+			void remove_from_playlist(const spt::playlist &playlist,
+				const std::vector<std::string> &track_uris,
+				ApiCallback<Result<PlaylistSnapshot>> &callback) const;
 
 			//endregion
 

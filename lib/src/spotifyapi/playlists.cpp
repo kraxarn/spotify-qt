@@ -1,10 +1,5 @@
 #include "lib/spotify/api.hpp"
-
-// Currently unavailable:
-// users/{user_id}/playlists
-// users/{user_id}/playlists
-// playlists/{playlist_id}/tracks
-// playlists/{playlist_id}/images
+#include "lib/spotify/playlistsnapshot.hpp"
 
 void lib::spt::api::create_playlist(const std::string &name,
 	const std::optional<std::string> &description,
@@ -80,23 +75,24 @@ void lib::spt::api::add_to_playlist(const std::string &playlist_id,
 		playlist_id, lib::strings::join(track_uris, ",")), callback);
 }
 
-void lib::spt::api::remove_from_playlist(const std::string &playlist_id,
-	const std::vector<std::pair<int, std::string>> &track_index_uris,
-	ApiCallback<std::string> &callback)
+void lib::spt::api::remove_from_playlist(const spt::playlist &playlist,
+	const std::vector<std::string> &track_uris,
+	ApiCallback<Result<PlaylistSnapshot>> &callback) const
 {
-	auto tracks = nlohmann::json::array();
+	const QString path = QStringLiteral("playlists/%1/tracks")
+		.arg(QString::fromStdString(playlist.id));
 
-	for (const auto &track: track_index_uris)
+	QJsonArray tracks;
+	for (const std::string &uri: track_uris)
 	{
-		tracks.push_back({
-			{"uri", track.second},
-			{"positions", {
-				track.first,
-			}},
-		});
+		QJsonObject track;
+		track[QStringLiteral("uri")] = QString::fromStdString(uri);
+		tracks.append(track);
 	}
 
-	del(lib::fmt::format("playlists/{}/tracks", playlist_id), {
-		{"tracks", tracks},
-	}, callback);
+	QJsonObject body;
+	body[QStringLiteral("tracks")] = tracks;
+	body[QStringLiteral("snapshot_id")] = QString::fromStdString(playlist.snapshot);
+
+	request.deleteResource(path, QJsonDocument(body), callback);
 }

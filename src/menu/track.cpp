@@ -354,7 +354,7 @@ void Menu::Track::onAddToQueue(bool /*checked*/)
 
 void Menu::Track::onRemoveFromPlaylist(bool /*checked*/)
 {
-	std::vector<std::pair<int, std::string>> uris;
+	std::vector<std::string> uris;
 	uris.reserve(tracks.size());
 
 	std::unordered_set<std::string> trackIds;
@@ -362,18 +362,19 @@ void Menu::Track::onRemoveFromPlaylist(bool /*checked*/)
 
 	for (const auto &track: tracks)
 	{
-		uris.emplace_back(track.first, lib::spt::id_to_uri("track", track.second.id));
+		uris.push_back(lib::spt::id_to_uri("track", track.second.id));
 		trackIds.insert(track.second.id);
 	}
 
-	spotify.remove_from_playlist(currentPlaylist.id, uris,
-		[this, trackIds](const std::string &status)
+	spotify.remove_from_playlist(currentPlaylist, uris,
+		[this, trackIds](const Result<PlaylistSnapshot> &result) -> void
 		{
 			// Remove from Spotify
-			if (!status.empty())
+			if (!result.success())
 			{
-				StatusMessage::error(QString("Failed to remove track from playlist: %1")
-					.arg(QString::fromStdString(status)));
+				StatusMessage::error(QStringLiteral("Failed to remove track from playlist: %1")
+					.arg(result.message()));
+
 				return;
 			}
 

@@ -155,6 +155,31 @@ namespace lib
 
 			//endregion
 
+			//region DELETE
+
+			template<typename T>
+			void deleteResource(const QString &path, const QJsonDocument &body,
+				ApiCallback<Result<T>> &callback)
+			{
+				const QByteArray data = body.isNull()
+					? QByteArray()
+					: body.toJson(QJsonDocument::Compact);
+
+				http.deleteResource(SpotifyUtil::toFullUrl(path), data, authHeaders(),
+					[callback](const Result<QByteArray> &result) -> void
+					{
+						if (!result.success())
+						{
+							const QString message = parseErrorMessage(result.message());
+							callback(Result<T>::fail(message));
+							return;
+						}
+						callback(parseJson<T>(result.value()));
+					});
+			}
+
+			//endregion
+
 		private:
 			/**
 			 * Seconds in an hour

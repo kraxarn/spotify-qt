@@ -75,10 +75,16 @@ public:
 		const std::string &post_data) const -> std::string;
 
 	/**
-	* DELETE request with optional JSON body
+	* @deprecated Use with result callback instead
 	*/
 	void del(const std::string &url, const std::string &body,
 		const lib::headers &headers, ApiCallback<std::string> &callback) const;
+
+	/**
+	 * DELETE request with optional request body
+	 */
+	void deleteResource(const QUrl &url, const QByteArray &body,
+		const RequestHeaders &headers, ApiCallback<Result<QByteArray>> &callback) const;
 
 private:
 	QNetworkAccessManager *mNetworkManager;

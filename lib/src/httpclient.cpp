@@ -110,6 +110,13 @@ void HttpClient::del(const std::string &url, const std::string &body,
 		});
 }
 
+void HttpClient::deleteResource(const QUrl &url, const QByteArray &body,
+	const RequestHeaders &headers, ApiCallback<Result<QByteArray>> &callback) const
+{
+	await(mNetworkManager->sendCustomRequest(request(url, headers),
+		"DELETE", body), callback);
+}
+
 auto HttpClient::request(const std::string &url,
 	const lib::headers &headers) -> QNetworkRequest
 {
