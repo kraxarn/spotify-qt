@@ -20,6 +20,7 @@
 #include "lib/spotify/saveditems.hpp"
 #include "lib/spotify/searchresults.hpp"
 #include "lib/spotify/track.hpp"
+#include "lib/spotify/void.hpp"
 
 #include "thirdparty/json.hpp"
 
@@ -114,6 +115,9 @@ namespace lib
 
 			void isSavedItems(const QList<QString> &uris,
 				ApiCallback<Result<SpotifySavedItems>> &callback) const;
+
+			void saveItems(const QList<QString> &uris,
+				ApiCallback<Result<Void>> &callback) const;
 
 			//endregion
 

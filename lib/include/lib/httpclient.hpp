@@ -49,9 +49,13 @@ public:
 
 	/**
 	* PUT request with optional JSON body
+	* @deprecated
 	*/
 	void put(const std::string &url, const std::string &body,
 		const lib::headers &headers, ApiCallback<std::string> &callback) const;
+
+	void put(const QUrl &url, const QByteArray &body,
+		const RequestHeaders &headers, ApiCallback<Result<QByteArray>> &callback) const;
 
 	/**
 	 * @deprecated Use with result callback instead

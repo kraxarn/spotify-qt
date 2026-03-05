@@ -45,6 +45,12 @@ void HttpClient::put(const std::string &url, const std::string &body,
 		});
 }
 
+void HttpClient::put(const QUrl &url, const QByteArray &body, const RequestHeaders &headers,
+	ApiCallback<Result<QByteArray>> &callback) const
+{
+	await(mNetworkManager->put(request(url, headers), body), callback);
+}
+
 void HttpClient::post(const std::string &url, const lib::headers &headers,
 	ApiCallback<std::string> &callback) const
 {

@@ -63,3 +63,12 @@ void lib::spt::api::isSavedItems(const QList<QString> &uris,
 
 	request.get(path, callback);
 }
+
+void lib::spt::api::saveItems(const QList<QString> &uris,
+	ApiCallback<Result<Void>> &callback) const
+{
+	const QString path = QStringLiteral("me/library?uris=%1")
+		.arg(uris.join(QChar::fromLatin1(',')));
+
+	request.put(path, {}, callback);
+}
