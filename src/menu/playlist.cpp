@@ -90,13 +90,28 @@ void Menu::Playlist::showEvent(QShowEvent *event)
 {
 	QWidget::showEvent(event);
 
-	auto *mainWindow = MainWindow::find(parentWidget());
+	const QStringList uris{
+		QStringLiteral("spotify:playlist:%1").arg(playlist.id),
+	};
 
-	spotify.is_following_playlist(playlist.id, {
-		mainWindow->getCurrentUser().id,
-	}, [this](const std::vector<bool> &follows)
+	spotify.isSavedItems(uris, [this](const Result<SpotifySavedItems> &result) -> void
 	{
-		isFollowingLoaded(follows);
+		if (!result.success())
+		{
+			qWarning() << "Failed to fetch saved items:" << result.message();
+			followAction->setVisible(false);
+			return;
+		}
+
+		followAction->setEnabled(true);
+
+		if (!result.value().values().at(0))
+		{
+			return;
+		}
+
+		followAction->setIcon(Icon::get(QStringLiteral("starred-symbolic")));
+		followAction->setText(QStringLiteral("Unfollow"));
 	});
 }
 
@@ -183,24 +198,6 @@ void Menu::Playlist::tracksLoaded(const std::vector<lib::spt::track> &items)
 		playlist.tracks = items;
 		cache.set_playlist(playlist);
 	}
-}
-
-void Menu::Playlist::isFollowingLoaded(const std::vector<bool> &follows)
-{
-	if (follows.empty())
-	{
-		followAction->setVisible(false);
-		return;
-	}
-
-	followAction->setEnabled(true);
-	if (!follows.at(0))
-	{
-		return;
-	}
-
-	followAction->setIcon(Icon::get(QStringLiteral("starred-symbolic")));
-	followAction->setText(QStringLiteral("Unfollow"));
 }
 
 auto Menu::Playlist::playlistUrl() const -> QString

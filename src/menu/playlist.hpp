@@ -37,7 +37,6 @@ namespace Menu
 		QAction *followAction = nullptr;
 
 		void tracksLoaded(const std::vector<lib::spt::track> &items);
-		void isFollowingLoaded(const std::vector<bool> &follows);
 
 		auto playlistUrl() const -> QString;
 		auto playlistName() const -> QString;
