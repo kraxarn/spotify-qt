@@ -6,13 +6,15 @@
 #include "util/url.hpp"
 
 #include <QClipboard>
+#include <QtDebug>
 
 Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playlist,
 	lib::cache &cache, QWidget *parent)
 	: QMenu(parent),
 	playlist(playlist),
 	cache(cache),
-	spotify(spotify)
+	spotify(spotify),
+	tracksDuration(0)
 {
 	tracksAction = addAction("... tracks");
 	tracksAction->setEnabled(false);
@@ -62,10 +64,25 @@ Menu::Playlist::Playlist(lib::spt::api &spotify, const lib::spt::playlist &playl
 
 	if (cached.is_null() || !playlist.is_up_to_date(cached.snapshot, currentUser))
 	{
-		spotify.playlist_tracks(playlist, [this](const std::vector<lib::spt::track> &items)
-		{
-			tracksLoaded(items);
-		});
+		spotify.playlist_tracks(playlist,
+			[this](const Result<lib::spt::page<lib::spt::track>> &result) -> bool
+			{
+				if (!result.success())
+				{
+					qWarning() << "Failed to fetch playlist tracks:" << result.message();
+					return false;
+				}
+
+				const lib::spt::page<lib::spt::track> &page = result.value();
+				if (page.offset == 0)
+				{
+					tracks.clear();
+					tracksDuration = 0;
+				}
+
+				tracksLoaded(page.items);
+				return page.has_next();
+			});
 	}
 }
 
@@ -132,22 +149,21 @@ void Menu::Playlist::tracksLoaded(const std::vector<lib::spt::track> &items)
 
 	tracks = items;
 
-	auto duration = 0U;
 	for (const auto &track: tracks)
 	{
-		duration += track.duration;
+		tracksDuration += track.duration;
 	}
-	const auto minutes = duration / msInMin;
+	const unsigned int minutes = tracksDuration / msInMin;
 
 	if (!tracks.empty())
 	{
-		tracksAction->setText(QString("%1 track%2, %3%4 m")
+		tracksAction->setText(QStringLiteral("%1 track%2, %3%4 m")
 			.arg(tracks.size())
 			.arg(tracks.size() == 1
 					? QString()
 					: QStringLiteral("s"),
 				minutes >= sInMin
-					? QString("%1 h ").arg(minutes / sInMin)
+					? QStringLiteral("%1 h ").arg(minutes / sInMin)
 					: QString())
 			.arg(minutes % sInMin));
 	}

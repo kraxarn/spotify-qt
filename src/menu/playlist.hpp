@@ -27,8 +27,10 @@ namespace Menu
 		lib::cache &cache;
 		lib::spt::api &spotify;
 
-		Dialog::EditPlaylist *editDialog = nullptr;
 		std::vector<lib::spt::track> tracks;
+		unsigned int tracksDuration;
+
+		Dialog::EditPlaylist *editDialog = nullptr;
 		QAction *tracksAction = nullptr;
 		QAction *byAction = nullptr;
 		QAction *editAction = nullptr;
