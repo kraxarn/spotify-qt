@@ -58,22 +58,38 @@ void Dialog::AddToPlaylist::ask(lib::spt::api &spotify, const lib::spt::playlist
 	const std::vector<std::string> &trackIds, QWidget *parent)
 {
 	spotify.playlist_tracks(playlist,
-		[&spotify, playlist, trackIds, parent](const std::vector<lib::spt::track> &playlistTracks)
+		[&spotify, playlist, trackIds, parent](const Result<lib::spt::page<lib::spt::track>> &result) -> bool
 		{
-			auto *dialog = new Dialog::AddToPlaylist(spotify, playlist,
-				playlistTracks, trackIds, parent);
-
-			if (!dialog->shouldAsk())
+			if (!result.success())
 			{
-				dialog->addTracks(trackIds);
-				return;
+				StatusMessage::error(QStringLiteral("Failed to add to playlist: %1")
+					.arg(result.message()));
+
+				return false;
 			}
 
-			dialog->open();
+			const lib::spt::page<lib::spt::track> &page = result.value();
+
+			auto *dialog = new AddToPlaylist(spotify, playlist,
+				page.items, trackIds, parent);
+
+			if (dialog->shouldAsk())
+			{
+				dialog->open();
+				return false;
+			}
+
+			if (!page.has_next())
+			{
+				dialog->addTracks(trackIds);
+				return false;
+			}
+
+			return true;
 		});
 }
 
-auto Dialog::AddToPlaylist::shouldAsk() -> bool
+auto Dialog::AddToPlaylist::shouldAsk() const -> bool
 {
 	// Any of the tracks to add already exists in the playlist
 	return std::any_of(trackIdsToAdd.cbegin(), trackIdsToAdd.cend(),

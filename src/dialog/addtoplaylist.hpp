@@ -5,7 +5,7 @@
 
 namespace Dialog
 {
-	class AddToPlaylist: public Base
+	class AddToPlaylist : public Base
 	{
 	Q_OBJECT
 
@@ -23,11 +23,12 @@ namespace Dialog
 		std::unordered_set<std::string> playlistTrackIds;
 		std::vector<std::string> trackIdsToAdd;
 
-		auto shouldAsk() -> bool;
+		auto shouldAsk() const -> bool;
 
 		auto getTrackIdsNotInPlaylist() -> std::vector<std::string>;
 
 		void onAddMissingClicked(bool checked);
+
 		void onAddAllClicked(bool checked);
 
 		void addTracks(const std::vector<std::string> &trackIds) const;
