@@ -36,7 +36,7 @@ namespace lib
 
 			/**
 			 * Check if entity is valid,
-			 * cam be overridden with custom checks
+			 * can be overridden with custom checks
 			 */
 			virtual auto is_valid() const -> bool;
 

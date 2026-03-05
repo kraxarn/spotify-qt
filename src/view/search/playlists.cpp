@@ -29,6 +29,11 @@ Search::Playlists::Playlists(lib::spt::api &spotify, lib::cache &cache, const Ht
 
 void Search::Playlists::add(const lib::spt::playlist &playlist)
 {
+	if (!playlist.is_valid())
+	{
+		return;
+	}
+
 	const QString playlistName = QString::fromStdString(playlist.name);
 	const QString playlistId = QString::fromStdString(playlist.id);
 
