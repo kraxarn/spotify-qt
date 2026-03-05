@@ -1,10 +1,6 @@
 #include "lib/spotify/api.hpp"
 #include "lib/spotify/saveditems.hpp"
 
-// Currently unavailable:
-// me/shows
-// me/shows/contains
-
 void lib::spt::api::saved_albums(const ApiPagedCallback<saved_album> &callback) const
 {
 	request.get_page<saved_album>("me/albums", {}, callback);

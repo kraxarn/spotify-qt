@@ -1,9 +1,6 @@
 #include "lib/uri.hpp"
 #include "lib/spotify/api.hpp"
 
-// Currently unavailable:
-// artists
-
 void lib::spt::api::artist(const std::string &id,
 	ApiCallback<lib::spt::artist> &callback)
 {

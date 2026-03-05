@@ -1,8 +1,5 @@
 #include "lib/spotify/api.hpp"
 
-// Currently unavailable:
-// me/player/currently-playing
-
 void lib::spt::api::current_playback(ApiCallback<Result<lib::spt::playback>> &callback)
 {
 	request.get<lib::spt::playback>("me/player?market=from_token", callback);

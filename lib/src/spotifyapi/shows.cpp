@@ -1,8 +1,5 @@
 #include "lib/spotify/api.hpp"
 
-// Unavailable:
-// shows
-
 void lib::spt::api::show(const std::string &show_id, ApiCallback<lib::spt::show> &callback)
 {
 	get(lib::fmt::format("shows/{}", show_id), callback);
