@@ -10,7 +10,7 @@ auto PlaylistSnapshot::fromJson(const QVariant &json) -> PlaylistSnapshot
 	return result;
 }
 
-auto PlaylistSnapshot::snapshotId() -> const QString &
+auto PlaylistSnapshot::snapshotId() const -> const QString &
 {
 	return mSnapshotId;
 }
