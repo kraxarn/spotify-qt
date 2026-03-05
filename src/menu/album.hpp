@@ -35,7 +35,7 @@ namespace Menu
 		auto getTrackIds() const -> std::vector<std::string>;
 
 		void onShuffle(bool checked);
-		void onLikeAlbum(bool checked);
+		void onLikeAlbum(bool checked) const;
 		void onCopyLink(bool checked);
 		void onCopyName(bool checked);
 		void onOpenInSpotify(bool checked);

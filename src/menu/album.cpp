@@ -48,11 +48,20 @@ Menu::Album::Album(lib::spt::api &spotify, lib::cache &cache,
 	addToPlaylist->setEnabled(false);
 	addMenu(addToPlaylist);
 
-	spotify.is_saved_album({albumId}, [this](const std::vector<bool> &likes)
+	const QStringList uris{
+		QStringLiteral("spotify:album:%1").arg(QString::fromStdString(albumId)),
+	};
+
+	spotify.isSavedItems(uris, [this](const Result<SpotifySavedItems> &result) -> void
 	{
-		auto liked = !likes.empty() && likes.front();
-		this->setLikedAlbum(liked);
-		this->toggleLikedAlbum->setEnabled(true);
+		if (!result.success())
+		{
+			qWarning() << "Failed to fetch saved items:" << result.message();
+			return;
+		}
+
+		setLikedAlbum(result.value().values().at(0));
+		toggleLikedAlbum->setEnabled(true);
 	});
 
 	album = cache.get_album(albumId);
@@ -120,28 +129,31 @@ void Menu::Album::onShuffle(bool /*checked*/)
 		});
 }
 
-void Menu::Album::onLikeAlbum(bool /*checked*/)
+void Menu::Album::onLikeAlbum([[maybe_unused]] bool checked) const
 {
-	auto callback = [this](const std::string &status)
+	auto callback = [this](const Result<Void> &result) -> void
 	{
-		if (status.empty())
+		if (result.success())
 		{
 			return;
 		}
-		
+
 		StatusMessage::error(QString("Failed to %1 album: %2")
-			.arg(isLiked ? "unlike" : "like")
-			.arg(QString::fromStdString(status)));
+			.arg(isLiked ? QStringLiteral("unlike") : QStringLiteral("like"))
+			.arg(result.message()));
 	};
 
-	std::vector<std::string> albumIds = { album.id };
+	const QStringList uris{
+		QStringLiteral("spotify:album:%1").arg(QString::fromStdString(album.id)),
+	};
 
-	if (isLiked) 
+	if (isLiked)
 	{
-		spotify.remove_saved_albums(albumIds, callback);
-	} else 
+		spotify.removeSavedItems(uris, callback);
+	}
+	else
 	{
-		spotify.add_saved_albums(albumIds, callback);
+		spotify.saveItems(uris, callback);
 	}
 }
 
