@@ -140,26 +140,39 @@ void List::Tracks::onItemClicked(QTreeWidgetItem *item, int column)
 		const auto &likedData = item->data(0, static_cast<int>(DataRole::Liked));
 		const auto &isLiked = likedData.toBool();
 
-		const auto callback = [this, item, isLiked, column](const std::string &response)
+		const auto callback = [this, item, isLiked, column](const Result<Void> &result) -> void
 		{
-			if (response.empty())
+			if (!result.success())
 			{
-				item->setData(0, static_cast<int>(DataRole::Liked), !isLiked);
-				item->setIcon(column, Icon::get(isLiked
-					? QStringLiteral("non-starred-symbolic")
-					: QStringLiteral("starred-symbolic")));
+				const QString action = isLiked
+					? QStringLiteral("unlike")
+					: QStringLiteral("like");
 
-				updateLikedTracks({});
+				StatusMessage::error(QStringLiteral("Failed to %1 track: %2")
+					.arg(action, result.message()));
+
+				return;
 			}
+
+			item->setData(0, static_cast<int>(DataRole::Liked), !isLiked);
+			item->setIcon(column, Icon::get(isLiked
+				? QStringLiteral("non-starred-symbolic")
+				: QStringLiteral("starred-symbolic")));
+
+			updateLikedTracks({});
+		};
+
+		const QStringList uris{
+			QStringLiteral("spotify:track:%1").arg(track.id),
 		};
 
 		if (isLiked)
 		{
-			spotify.remove_saved_tracks({track.id}, callback);
+			spotify.removeSavedItems(uris, callback);
 		}
 		else
 		{
-			spotify.add_saved_tracks({track.id}, callback);
+			spotify.saveItems(uris, callback);
 		}
 	}
 }

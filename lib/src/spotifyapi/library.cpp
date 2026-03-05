@@ -72,3 +72,12 @@ void lib::spt::api::saveItems(const QList<QString> &uris,
 
 	request.put(path, {}, callback);
 }
+
+void lib::spt::api::removeSavedItems(const QList<QString> &uris,
+	ApiCallback<Result<Void>> &callback) const
+{
+	const QString path = QStringLiteral("me/library?uris=%1")
+		.arg(uris.join(QChar::fromLatin1(',')));
+
+	request.deleteResource(path, {}, callback);
+}

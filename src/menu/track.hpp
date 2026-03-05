@@ -62,6 +62,7 @@ namespace Menu
 
 		auto anyInPlaylist() const -> bool;
 		auto getTrackIds() const -> std::vector<std::string>;
+		auto trackUris() const -> QStringList;
 		auto getTracks() const -> std::vector<lib::spt::track>;
 
 		/** All tracks have the same artists */
@@ -74,7 +75,7 @@ namespace Menu
 		void onCopySongLink(bool checked);
 		void onCopySongName(bool checked);
 		void onOpenInSpotify(bool checked);
-		void onLike(bool checked);
+		void onLike(bool checked) const;
 		void onAddToQueue(bool checked);
 		void onRemoveFromPlaylist(bool checked);
 		void onOpenAlbum(bool checked);

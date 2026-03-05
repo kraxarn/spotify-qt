@@ -282,6 +282,20 @@ auto Menu::Track::getTrackIds() const -> std::vector<std::string>
 	return trackIds;
 }
 
+auto Menu::Track::trackUris() const -> QStringList
+{
+	QStringList uris;
+	uris.reserve(tracks.size());
+
+	for (const auto &[index, track]: tracks)
+	{
+		uris.append(QStringLiteral("spotify:track:%1")
+			.arg(QString::fromStdString(track.id)));
+	}
+
+	return uris;
+}
+
 auto Menu::Track::getTracks() const -> std::vector<lib::spt::track>
 {
 	std::vector<lib::spt::track> sptTracks;
@@ -295,27 +309,27 @@ auto Menu::Track::getTracks() const -> std::vector<lib::spt::track>
 	return sptTracks;
 }
 
-void Menu::Track::onLike(bool /*checked*/)
+void Menu::Track::onLike([[maybe_unused]] bool checked) const
 {
-	auto callback = [this](const std::string &status)
+	auto callback = [this](const Result<Void> &result) -> void
 	{
-		if (status.empty())
+		if (result.success())
 		{
 			return;
 		}
 
-		StatusMessage::error(QString("Failed to %1: %2")
-			.arg(isLiked ? "unlike" : "like")
-			.arg(QString::fromStdString(status)));
+		StatusMessage::error(QStringLiteral("Failed to %1: %2")
+			.arg(isLiked ? QStringLiteral("unlike") : QStringLiteral("like"))
+			.arg(result.message()));
 	};
 
 	if (isLiked)
 	{
-		spotify.remove_saved_tracks(getTrackIds(), callback);
+		spotify.removeSavedItems(trackUris(), callback);
 	}
 	else
 	{
-		spotify.add_saved_tracks(getTrackIds(), callback);
+		spotify.saveItems(trackUris(), callback);
 	}
 }
 

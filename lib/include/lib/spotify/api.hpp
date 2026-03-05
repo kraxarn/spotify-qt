@@ -119,6 +119,9 @@ namespace lib
 			void saveItems(const QList<QString> &uris,
 				ApiCallback<Result<Void>> &callback) const;
 
+			void removeSavedItems(const QList<QString> &uris,
+				ApiCallback<Result<Void>> &callback) const;
+
 			//endregion
 
 			//region Personalization
