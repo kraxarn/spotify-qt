@@ -36,7 +36,6 @@ namespace lib
 			 * @deprecated Use overload with QString instead
 			 */
 			template<typename T>
-			[[deprecated]]
 			void get(const std::string &url, ApiCallback<Result<T>> &callback)
 			{
 				http.get(lib::spt::to_full_url(url), auth_headers(),
@@ -53,8 +52,8 @@ namespace lib
 			}
 
 			// Only to avoid ambiguous calls
+			/** @deprecated */
 			template<typename T>
-			[[deprecated]]
 			void get(const char *url, ApiCallback<Result<T>> &callback)
 			{
 				get(std::string(url), callback);
@@ -173,8 +172,8 @@ namespace lib
 
 			/**
 			 * Get authorization header, and refresh if needed
+			 * @deprecated Use authHeaders instead
 			 */
-			[[deprecated("Use authHeaders instead")]]
 			auto auth_headers() -> lib::headers;
 
 			/**
