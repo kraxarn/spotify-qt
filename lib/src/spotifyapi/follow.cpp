@@ -31,10 +31,3 @@ void lib::spt::api::unfollow_playlist(const std::string &playlist_id,
 {
 	del(lib::fmt::format("playlists/{}/followers", playlist_id), callback);
 }
-
-void lib::spt::api::is_following_playlist(const std::string &playlist_id,
-	const std::vector<std::string> &user_ids, ApiCallback<std::vector<bool>> &callback)
-{
-	get(lib::fmt::format("playlists/{}/followers/contains?ids={}",
-		playlist_id, lib::strings::join(user_ids, ",")), callback);
-}

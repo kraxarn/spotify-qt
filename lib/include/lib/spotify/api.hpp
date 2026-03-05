@@ -84,10 +84,6 @@ namespace lib
 			void unfollow_playlist(const std::string &playlist_id,
 				ApiCallback<std::string> &callback);
 
-			void is_following_playlist(const std::string &playlist_id,
-				const std::vector<std::string> &user_ids,
-				ApiCallback<std::vector<bool>> &callback);
-
 			//endregion
 
 			//region Library
