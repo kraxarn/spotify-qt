@@ -91,7 +91,8 @@ void Menu::Playlist::showEvent(QShowEvent *event)
 	QWidget::showEvent(event);
 
 	const QStringList uris{
-		QStringLiteral("spotify:playlist:%1").arg(playlist.id),
+		QStringLiteral("spotify:playlist:%1")
+			.arg(QString::fromStdString(playlist.id)),
 	};
 
 	spotify.isSavedItems(uris, [this](const Result<SpotifySavedItems> &result) -> void
