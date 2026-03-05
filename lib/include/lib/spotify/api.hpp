@@ -107,12 +107,6 @@ namespace lib
 
 			void saved_tracks(const ApiPagedCallback<lib::spt::track> &callback);
 
-			void add_saved_tracks(const std::vector<std::string> &track_ids,
-				ApiCallback<std::string> &callback);
-
-			void remove_saved_tracks(const std::vector<std::string> &track_ids,
-				ApiCallback<std::string> &callback);
-
 			void isSavedItems(const QList<QString> &uris,
 				ApiCallback<Result<SpotifySavedItems>> &callback) const;
 

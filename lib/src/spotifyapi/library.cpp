@@ -39,22 +39,6 @@ void lib::spt::api::saved_tracks(const ApiPagedCallback<lib::spt::track> &callba
 	request.get_page<lib::spt::track>("me/tracks?limit=50", {}, callback);
 }
 
-void lib::spt::api::add_saved_tracks(const std::vector<std::string> &track_ids,
-	ApiCallback<std::string> &callback)
-{
-	put("me/tracks", {
-		{"ids", track_ids},
-	}, callback);
-}
-
-void lib::spt::api::remove_saved_tracks(const std::vector<std::string> &track_ids,
-	ApiCallback<std::string> &callback)
-{
-	del("me/tracks", {
-		{"ids", track_ids},
-	}, callback);
-}
-
 void lib::spt::api::isSavedItems(const QList<QString> &uris,
 	ApiCallback<Result<SpotifySavedItems>> &callback) const
 {
