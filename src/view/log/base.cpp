@@ -113,7 +113,12 @@ void Log::Base::onSaveToFile(bool /*checked*/)
 	}
 
 	QFile out(filename);
-	out.open(QIODevice::WriteOnly);
+	if (!out.open(QIODevice::WriteOnly))
+	{
+		qWarning() << "Failed to open file for writing:" << out.errorString();
+		return;
+	}
+
 	out.write(collectLogs().toUtf8());
 	out.close();
 }

@@ -32,7 +32,12 @@ DarkPalette::DarkPalette()
 auto DarkPalette::getDarkStylesheet() -> QString
 {
 	QFile styleFile(":/res/style/dark.qss");
-	styleFile.open(QFile::ReadOnly | QFile::Text);
+	if (!styleFile.open(QFile::ReadOnly | QFile::Text))
+	{
+		qWarning() << "Failed to open file for reading:" << styleFile.errorString();
+		return {};
+	}
+
 	auto data = QString::fromUtf8(styleFile.readAll());
 	styleFile.close();
 	return data;
