@@ -144,3 +144,9 @@ auto lib::spt::playlist::is_up_to_date(const std::string &playlist_snapshot,
 	return owner_id == current_user.id
 		&& snapshot == playlist_snapshot;
 }
+
+auto lib::spt::playlist::is_available(const std::string &current_user_id) const -> bool
+{
+	return version != PlaylistVersion::Version2
+		|| owner_id == current_user_id;
+}

@@ -87,6 +87,11 @@ namespace lib
 			 */
 			auto is_up_to_date(const std::string &snapshot,
 				const lib::spt::user &current_user) const -> bool;
+
+			/**
+			 * If the playlist is available for the current user
+			 */
+			auto is_available(const std::string &current_user_id) const -> bool;
 		};
 
 		void to_json(nlohmann::json &j, const playlist &p);

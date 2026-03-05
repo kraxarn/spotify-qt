@@ -29,11 +29,22 @@ Search::Playlists::Playlists(lib::spt::api &spotify, lib::cache &cache, const Ht
 
 void Search::Playlists::add(const lib::spt::playlist &playlist)
 {
-	auto playlistName = QString::fromStdString(playlist.name);
-	auto playlistId = QString::fromStdString(playlist.id);
+	const QString playlistName = QString::fromStdString(playlist.name);
+	const QString playlistId = QString::fromStdString(playlist.id);
+
+	const MainWindow *mainWindow = MainWindow::find(parentWidget());
+	const std::string userId = mainWindow != nullptr
+		? mainWindow->getCurrentUser().id
+		: std::string();
 
 	auto *item = new QListWidgetItem(playlistName, this);
 	item->setData(static_cast<int>(DataRole::Playlist), QVariant::fromValue(playlist));
+
+	if (!playlist.is_available(userId))
+	{
+		item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
+		item->setToolTip(QStringLiteral("Unavailable"));
+	}
 }
 
 void Search::Playlists::onItemClicked(QListWidgetItem *item)

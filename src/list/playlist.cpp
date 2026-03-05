@@ -141,8 +141,7 @@ void List::Playlist::load(const std::vector<lib::spt::playlist> &playlists, cons
 		item->setData(static_cast<int>(DataRole::DefaultIndex), index);
 		item->setData(static_cast<int>(DataRole::Index), index++);
 
-		if (playlist.version == PlaylistVersion::Version2
-			&& playlist.owner_id != userId)
+		if (!playlist.is_available(userId))
 		{
 			item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
 			item->setToolTip(QStringLiteral("Unavailable"));
