@@ -64,8 +64,12 @@ void lib::spt::api::add_to_playlist(const spt::playlist &playlist,
 	const std::vector<std::string> &track_uris,
 	ApiCallback<Result<PlaylistSnapshot>> &callback) const
 {
-	const QString path = QStringLiteral("playlists/%1/tracks")
-		.arg(QString::fromStdString(playlist.id));
+	const QString itemType = playlist.version == PlaylistVersion::Version1
+		? QStringLiteral("tracks")
+		: QStringLiteral("items");
+
+	const QString path = QStringLiteral("playlists/%1/%2")
+		.arg(QString::fromStdString(playlist.id), itemType);
 
 	QJsonArray tracks;
 	for (const std::string &uri: track_uris)
