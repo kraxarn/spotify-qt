@@ -163,7 +163,7 @@ void List::Tracks::onItemClicked(QTreeWidgetItem *item, int column)
 		};
 
 		const QStringList uris{
-			QStringLiteral("spotify:track:%1").arg(track.id),
+			QStringLiteral("spotify:track:%1").arg(QString::fromStdString(track.id)),
 		};
 
 		if (isLiked)
