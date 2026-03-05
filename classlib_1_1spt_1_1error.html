@@ -117,15 +117,13 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ac3d46b191da87ae88b6aae7467722b80" id="r_ac3d46b191da87ae88b6aae7467722b80"><td class="memItemLeft" align="right" valign="top"><a id="ac3d46b191da87ae88b6aae7467722b80" name="ac3d46b191da87ae88b6aae7467722b80"></a>
-static auto&#160;</td><td class="memItemRight" valign="bottom"><b>is</b> (const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>) -&gt; bool</td></tr>
+<tr class="memitem:ac3d46b191da87ae88b6aae7467722b80" id="r_ac3d46b191da87ae88b6aae7467722b80"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac3d46b191da87ae88b6aae7467722b80">is</a> (const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>) -&gt; bool</td></tr>
 <tr class="separator:ac3d46b191da87ae88b6aae7467722b80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac5f0ee9aa261fd7a8cb1b76a499faee" id="r_aac5f0ee9aa261fd7a8cb1b76a499faee"><td class="memItemLeft" align="right" valign="top"><a id="aac5f0ee9aa261fd7a8cb1b76a499faee" name="aac5f0ee9aa261fd7a8cb1b76a499faee"></a>
-static auto&#160;</td><td class="memItemRight" valign="bottom"><b>error_message</b> (const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>) -&gt; std::string</td></tr>
+<tr class="memitem:aac5f0ee9aa261fd7a8cb1b76a499faee" id="r_aac5f0ee9aa261fd7a8cb1b76a499faee"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aac5f0ee9aa261fd7a8cb1b76a499faee">error_message</a> (const nlohmann::json &amp;<a class="el" href="classlib_1_1json.html">json</a>) -&gt; std::string</td></tr>
 <tr class="separator:aac5f0ee9aa261fd7a8cb1b76a499faee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Spotify request error </p>
+<div class="textblock"><p>Spotify request error </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000033">Deprecated</a></b></dt><dd>Don't use exceptions </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a582c8784b6b2583f7bdf650c043648a2" name="a582c8784b6b2583f7bdf650c043648a2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a582c8784b6b2583f7bdf650c043648a2">&#9670;&#160;</a></span>error() <span class="overload">[1/2]</span></h2>
@@ -178,6 +176,58 @@ static auto&#160;</td><td class="memItemRight" valign="bottom"><b>error_message<
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="aac5f0ee9aa261fd7a8cb1b76a499faee" name="aac5f0ee9aa261fd7a8cb1b76a499faee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac5f0ee9aa261fd7a8cb1b76a499faee">&#9670;&#160;</a></span>error_message()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static auto lib::spt::error::error_message </td>
+          <td>(</td>
+          <td class="paramtype">const nlohmann::json &amp;</td>          <td class="paramname"><span class="paramname"><em>json</em></span></td><td>)</td>
+          <td> -&gt;  std::string</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000035">Deprecated</a></b></dt><dd>Use <a class="el" href="classSpotifyErrorUtil.html#adbc7aa0526b799f5c03303e0326a5ab6">SpotifyErrorUtil::errorMessage</a> instead </dd></dl>
+
+</div>
+</div>
+<a id="ac3d46b191da87ae88b6aae7467722b80" name="ac3d46b191da87ae88b6aae7467722b80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3d46b191da87ae88b6aae7467722b80">&#9670;&#160;</a></span>is()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static auto lib::spt::error::is </td>
+          <td>(</td>
+          <td class="paramtype">const nlohmann::json &amp;</td>          <td class="paramname"><span class="paramname"><em>json</em></span></td><td>)</td>
+          <td> -&gt;  bool</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000034">Deprecated</a></b></dt><dd>Use <a class="el" href="classSpotifyErrorUtil.html#abc7db6743ae3d16c8f64b3696e0d03bf">SpotifyErrorUtil::isErrorObject</a> instead </dd></dl>
+
+</div>
+</div>
 <a id="a19860ef550fb939be1d47ec93f97142c" name="a19860ef550fb939be1d47ec93f97142c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a19860ef550fb939be1d47ec93f97142c">&#9670;&#160;</a></span>url()</h2>
 

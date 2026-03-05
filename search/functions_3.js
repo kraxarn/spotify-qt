@@ -7,5 +7,6 @@ var searchData=
   ['env_4',['env',['../classlib_1_1system.html#a569afc248641fbeeb5d52e72552c6d2a',1,'lib::system']]],
   ['erase_5fnon_5falpha_5',['erase_non_alpha',['../classlib_1_1strings.html#a9c4cb184ebdf1b92135ef7e4bc971f13',1,'lib::strings']]],
   ['error_6',['error',['../classlib_1_1log.html#afc6275fbd2f1c9c2a0973c54c41f58e6',1,'lib::log::error(const Format &amp;fmt, const Arg &amp;arg, Args &amp;&amp;... args)'],['../classlib_1_1log.html#aa35725a2fb8ba920c940cc019167f35a',1,'lib::log::error(const Format &amp;fmt)'],['../classlib_1_1spt_1_1error.html#a582c8784b6b2583f7bdf650c043648a2',1,'lib::spt::error::error(const char *what, const char *url)'],['../classlib_1_1spt_1_1error.html#a07c459200f2be13e1f3581ebdcf0d39e',1,'lib::spt::error::error(const std::string &amp;what, const std::string &amp;url)']]],
-  ['errormessage_7',['errorMessage',['../classSpotifyErrorUtil.html#adbc7aa0526b799f5c03303e0326a5ab6',1,'SpotifyErrorUtil']]]
+  ['error_5fmessage_7',['error_message',['../classlib_1_1spt_1_1error.html#aac5f0ee9aa261fd7a8cb1b76a499faee',1,'lib::spt::error']]],
+  ['errormessage_8',['errorMessage',['../classSpotifyErrorUtil.html#adbc7aa0526b799f5c03303e0326a5ab6',1,'SpotifyErrorUtil::errorMessage(const QJsonObject &amp;json) -&gt; QString'],['../classSpotifyErrorUtil.html#ae75a40a5c4fed2efe2716c94fb26d78a',1,'SpotifyErrorUtil::errorMessage(const nlohmann::json &amp;json) -&gt; QString']]]
 ];

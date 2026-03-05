@@ -110,9 +110,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0d8a018681f94efe4a9c559ee64bf83c" id="r_a0d8a018681f94efe4a9c559ee64bf83c"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a0d8a018681f94efe4a9c559ee64bf83c"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a0d8a018681f94efe4a9c559ee64bf83c">get</a> (const std::string &amp;url, ApiCallback&lt; <a class="el" href="classResult.html">Result</a>&lt; T &gt; &gt; &amp;callback)</td></tr>
 <tr class="separator:a0d8a018681f94efe4a9c559ee64bf83c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afad6ce967e4ef1913a460cc871fe6697" id="r_afad6ce967e4ef1913a460cc871fe6697"><td class="memTemplParams" colspan="2"><a id="afad6ce967e4ef1913a460cc871fe6697" name="afad6ce967e4ef1913a460cc871fe6697"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:afad6ce967e4ef1913a460cc871fe6697"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>get</b> (const char *url, ApiCallback&lt; <a class="el" href="classResult.html">Result</a>&lt; T &gt; &gt; &amp;callback)</td></tr>
+<tr class="memitem:afad6ce967e4ef1913a460cc871fe6697" id="r_afad6ce967e4ef1913a460cc871fe6697"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:afad6ce967e4ef1913a460cc871fe6697"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#afad6ce967e4ef1913a460cc871fe6697">get</a> (const char *url, ApiCallback&lt; <a class="el" href="classResult.html">Result</a>&lt; T &gt; &gt; &amp;callback)</td></tr>
 <tr class="separator:afad6ce967e4ef1913a460cc871fe6697"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac46ca8605b538e8ebe708f26c63a799d" id="r_ac46ca8605b538e8ebe708f26c63a799d"><td class="memTemplParams" colspan="2"><a id="ac46ca8605b538e8ebe708f26c63a799d" name="ac46ca8605b538e8ebe708f26c63a799d"></a>
 template&lt;typename T &gt; </td></tr>
@@ -123,6 +122,14 @@ template&lt;typename T &gt; </td></tr>
 <tr class="separator:a92f7ae7a73a265ec14bac20afe60f131"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbd6efec0ca1c0b7f15b45cb6f936927" id="r_afbd6efec0ca1c0b7f15b45cb6f936927"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afbd6efec0ca1c0b7f15b45cb6f936927">post</a> (const std::string &amp;url, ApiCallback&lt; <a class="el" href="classResult.html">Result</a>&lt; void * &gt; &gt; &amp;callback)</td></tr>
 <tr class="separator:afbd6efec0ca1c0b7f15b45cb6f936927"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bddd230b2b90f1665e26c1b7d53b1d0" id="r_a7bddd230b2b90f1665e26c1b7d53b1d0"><td class="memTemplParams" colspan="2"><a id="a7bddd230b2b90f1665e26c1b7d53b1d0" name="a7bddd230b2b90f1665e26c1b7d53b1d0"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a7bddd230b2b90f1665e26c1b7d53b1d0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>post</b> (const QString &amp;path, const QJsonDocument &amp;body, ApiCallback&lt; <a class="el" href="classResult.html">Result</a>&lt; T &gt; &gt; &amp;callback)</td></tr>
+<tr class="separator:a7bddd230b2b90f1665e26c1b7d53b1d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a712fbc683baaec65475291dcf8e78d3b" id="r_a712fbc683baaec65475291dcf8e78d3b"><td class="memTemplParams" colspan="2"><a id="a712fbc683baaec65475291dcf8e78d3b" name="a712fbc683baaec65475291dcf8e78d3b"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a712fbc683baaec65475291dcf8e78d3b"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>deleteResource</b> (const QString &amp;path, const QJsonDocument &amp;body, ApiCallback&lt; <a class="el" href="classResult.html">Result</a>&lt; T &gt; &gt; &amp;callback)</td></tr>
+<tr class="separator:a712fbc683baaec65475291dcf8e78d3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
@@ -133,8 +140,40 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>api</b></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Request, and token, manager </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="afad6ce967e4ef1913a460cc871fe6697" name="afad6ce967e4ef1913a460cc871fe6697"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afad6ce967e4ef1913a460cc871fe6697">&#9670;&#160;</a></span>get() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lib::spt::request::get </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ApiCallback&lt; <a class="el" href="classResult.html">Result</a>&lt; T &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000037">Deprecated</a></b></dt><dd></dd></dl>
+
+</div>
+</div>
 <a id="a0d8a018681f94efe4a9c559ee64bf83c" name="a0d8a018681f94efe4a9c559ee64bf83c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d8a018681f94efe4a9c559ee64bf83c">&#9670;&#160;</a></span>get()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d8a018681f94efe4a9c559ee64bf83c">&#9670;&#160;</a></span>get() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -168,7 +207,7 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000012">Deprecated</a></b></dt><dd>Use overload with QString instead </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000036">Deprecated</a></b></dt><dd>Use overload with QString instead </dd></dl>
 
 </div>
 </div>
@@ -248,7 +287,7 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>POST request without body </p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000038">Deprecated</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
