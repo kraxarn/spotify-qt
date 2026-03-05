@@ -273,17 +273,8 @@ namespace lib
 				const lib::spt::playlist_details &playlist,
 				ApiCallback<std::string> &callback);
 
-			/**
-			 * @deprecated Use with pagination instead
-			 */
-			void playlist_tracks(const lib::spt::playlist &playlist,
-				ApiCallback<std::vector<lib::spt::track>> &callback);
-
-			/**
-			 * @note Experimental
-			 */
-			void playlist_tracks(const lib::spt::playlist &playlist,
-				const std::function<bool(const Result<lib::spt::page<lib::spt::track>> &)> &callback);
+			void playlist_tracks(const spt::playlist &playlist,
+				const std::function<bool(const Result<page<track>> &)> &callback) const;
 
 			void add_to_playlist(const spt::playlist &playlist,
 				const std::vector<std::string> &track_uris,

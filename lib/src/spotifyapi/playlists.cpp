@@ -35,15 +35,8 @@ void lib::spt::api::edit_playlist(const std::string &playlist_id,
 	put(lib::fmt::format("playlists/{}", playlist_id), playlist, callback);
 }
 
-void lib::spt::api::playlist_tracks(const lib::spt::playlist &playlist,
-	ApiCallback<std::vector<lib::spt::track>> &callback)
-{
-	const auto url = lib::fmt::format("playlists/{}/tracks?market=from_token&limit=50", playlist.id);
-	get_items(url, callback);
-}
-
-void lib::spt::api::playlist_tracks(const lib::spt::playlist &playlist,
-	const std::function<bool(const Result<lib::spt::page<lib::spt::track>> &)> &callback)
+void lib::spt::api::playlist_tracks(const spt::playlist &playlist,
+	const std::function<bool(const Result<page<spt::track>> &)> &callback) const
 {
 	const char *endpoint;
 	switch (playlist.version)
