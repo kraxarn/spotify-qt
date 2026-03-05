@@ -2,7 +2,7 @@
 
 #include <QString>
 
-class PlaylistSnapshot final
+class PlaylistSnapshot
 {
 public:
 	[[nodiscard]]
