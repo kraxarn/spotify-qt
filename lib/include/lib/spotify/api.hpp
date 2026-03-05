@@ -91,15 +91,6 @@ namespace lib
 
 			void saved_albums(const ApiPagedCallback<saved_album> &callback) const;
 
-			void add_saved_albums(const std::vector<std::string> &album_ids,
-				ApiCallback<std::string> &callback);
-
-			void remove_saved_albums(const std::vector<std::string> &album_ids,
-				ApiCallback<std::string> &callback);
-
-			void is_saved_album(const std::vector<std::string> &album_ids,
-				ApiCallback<std::vector<bool>> &callback);
-
 			/**
 			 * @deprecated Use with pagination instead
 			 */
