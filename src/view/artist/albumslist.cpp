@@ -48,6 +48,7 @@ Artist::AlbumsList::AlbumsList(lib::spt::api &spotify, lib::cache &cache, const 
 		i = static_cast<lib::album_group>(static_cast<int>(i) + 1))
 	{
 		groups[i] = new QTreeWidgetItem(this, {groupToString(i)});
+		groups[i]->setExpanded(i == lib::album_group::album);
 		addTopLevelItem(groups[i]);
 	}
 }
