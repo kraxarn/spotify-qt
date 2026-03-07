@@ -136,7 +136,7 @@ auto Tooltip::tooltip(const lib::spt::album &album, const QPixmap &albumImage) -
 		},
 		{
 			Icon::get(QStringLiteral("view-media-artist")),
-			QString::fromStdString(album.artist),
+			QString::fromStdString(album.artist.name),
 		},
 		{
 			Icon::get(QStringLiteral("view-calendar")),

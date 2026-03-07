@@ -28,8 +28,8 @@ Search::Albums::Albums(lib::spt::api &spotify, lib::cache &cache,
 
 void Search::Albums::add(const lib::spt::album &album)
 {
-	auto name = QString::fromStdString(album.name);
-	auto artist = QString::fromStdString(album.artist);
+	const QString name = QString::fromStdString(album.name);
+	const QString artist = QString::fromStdString(album.artist.name);
 
 	auto *item = new QTreeWidgetItem({
 		name, artist

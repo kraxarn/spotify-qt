@@ -32,7 +32,7 @@ namespace lib
 			/**
 			 * Primary artist
 			 */
-			std::string artist;
+			entity artist;
 
 			/**
 			 * Date when album was released

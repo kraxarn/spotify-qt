@@ -35,7 +35,7 @@ void HistoryButton::push(const lib::spt::album &album)
 {
 	const auto tooltip = QString("%1 by %2")
 		.arg(QString::fromStdString(album.name),
-			QString::fromStdString(album.artist));
+			QString::fromStdString(album.artist.name));
 
 	push(album, tooltip, QVariant::fromValue(album), "album");
 }

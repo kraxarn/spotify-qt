@@ -81,10 +81,21 @@ void lib::spt::from_json(const nlohmann::json &j, album &a)
 
 	if (j.contains("artists"))
 	{
-		j.at("artists").front().at("name").get_to(a.artist);
+		const auto &artist = j.at("artists").front();
+		artist.at("id").get_to(a.artist.id);
+		artist.at("name").get_to(a.artist.name);
 	}
 	else if (j.contains("artist"))
 	{
-		j.at("artist").get_to(a.artist);
+		const auto &artist = j.at("artist");
+		if (artist.contains("id"))
+		{
+			artist.at("id").get_to(a.artist.id);
+			artist.at("name").get_to(a.artist.name);
+		}
+		else
+		{
+			j.at("artist").get_to(a.artist.name);
+		}
 	}
 }
