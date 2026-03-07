@@ -42,7 +42,7 @@ Artist::View::View(lib::spt::api &spotify, const std::string &artistId, lib::cac
 	layout->addWidget(tabs);
 
 	// Albums
-	albumList = new Artist::AlbumsList(spotify, cache, httpClient, settings, this);
+	albumList = new AlbumsList(spotify, cache, {artistId, {}}, httpClient, settings, this);
 	tabs->addTab(albumList, "Discography");
 
 	spotify.artist(this->artistId, [this](const lib::spt::artist &loadedArtist)

@@ -9,18 +9,19 @@
 #include "util/tooltip.hpp"
 #include "view/artist/view.hpp"
 
-Artist::AlbumsList::AlbumsList(lib::spt::api &spotify, lib::cache &cache,
+Artist::AlbumsList::AlbumsList(lib::spt::api &spotify, lib::cache &cache, const lib::spt::entity &artist,
 	const HttpClient &httpClient, lib::settings &settings, QWidget *parent)
 	: QTreeWidget(parent),
 	spotify(spotify),
 	cache(cache),
+	artist(artist),
 	httpClient(httpClient),
 	tooltip(settings, httpClient, cache)
 {
 	setEnabled(false);
 	setColumnCount(2);
 	setMouseTracking(true);
-	setRootIsDecorated(false);
+	setRootIsDecorated(true);
 
 	header()->hide();
 	header()->setStretchLastSection(false);
@@ -47,8 +48,6 @@ Artist::AlbumsList::AlbumsList(lib::spt::api &spotify, lib::cache &cache,
 		i = static_cast<lib::album_group>(static_cast<int>(i) + 1))
 	{
 		groups[i] = new QTreeWidgetItem(this, {groupToString(i)});
-		// Hide all groups by default, assuming they aren't available
-		groups[i]->setHidden(true);
 		addTopLevelItem(groups[i]);
 	}
 }
@@ -84,32 +83,30 @@ void Artist::AlbumsList::loadAlbums(const lib::spt::page<lib::spt::album> &page)
 	// Only show groups with items in them
 	for (const auto &[group, item]: groups)
 	{
-		if (item->childCount() > 0)
-		{
-			setRootIsDecorated(true);
-		}
-
 		item->setHidden(item->childCount() <= 0);
 	}
 }
 
-void Artist::AlbumsList::addAlbums(const std::vector<lib::spt::album> &albums)
+void Artist::AlbumsList::addAlbums(const std::vector<lib::spt::album> &albums) const
 {
 	for (const auto &album: albums)
 	{
-		QTreeWidgetItem *group;
-		ListItem::Album *item;
-
-		if (album.album_group == lib::album_group::none)
+		lib::album_group albumGroup;
+		if (album.album_group != lib::album_group::none)
 		{
-			group = nullptr;
-			item = new ListItem::Album(album, this);
+			albumGroup = album.album_group;
+		}
+		else if (album.artist.id == artist.id)
+		{
+			albumGroup = lib::album_group::album;
 		}
 		else
 		{
-			group = groups.at(album.album_group);
-			item = new ListItem::Album(album, group);
+			albumGroup = lib::album_group::appears_on;
 		}
+
+		QTreeWidgetItem *group = groups.at(albumGroup);
+		auto item = new ListItem::Album(album, group);
 
 		Http::getAlbumImage(album.image, httpClient, cache, [item](const QPixmap &image)
 		{
@@ -130,16 +127,8 @@ void Artist::AlbumsList::addAlbums(const std::vector<lib::spt::album> &albums)
 
 		item->setToolTip(1, releaseDateToolTip);
 
-		if (group != nullptr)
-		{
-			group->addChild(item);
-			group->sortChildren(1, Qt::DescendingOrder);
-		}
-		else
-		{
-			addTopLevelItem(item);
-			sortByColumn(1, Qt::DescendingOrder);
-		}
+		group->addChild(item);
+		group->sortChildren(1, Qt::DescendingOrder);
 	}
 }
 

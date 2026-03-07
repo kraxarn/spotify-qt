@@ -17,15 +17,16 @@ namespace Artist
 	Q_OBJECT
 
 	public:
-		AlbumsList(lib::spt::api &spotify, lib::cache &cache,
+		AlbumsList(lib::spt::api &spotify, lib::cache &cache, const lib::spt::entity &artist,
 			const HttpClient &httpClient, lib::settings &settings, QWidget *parent);
 
 		void loadAlbums(const lib::spt::page<lib::spt::album> &page);
-		void addAlbums(const std::vector<lib::spt::album> &albums);
+		void addAlbums(const std::vector<lib::spt::album> &albums) const;
 
 	private:
 		lib::spt::api &spotify;
 		lib::cache &cache;
+		lib::spt::entity artist;
 		const HttpClient &httpClient;
 		Tooltip tooltip;
 
