@@ -14,7 +14,7 @@ var searchData=
   ['all_5ftracks_11',['all_tracks',['../classlib_1_1cache.html#a55aa495594ab5e605b6f83c602acf285',1,'lib::cache::all_tracks()'],['../classlib_1_1json__cache.html#a3adf7d0bd9b41fbf9a076ed0a4631958',1,'lib::json_cache::all_tracks()']]],
   ['api_12',['api',['../classlib_1_1ddg_1_1api.html',1,'lib::ddg::api'],['../classlib_1_1gh_1_1api.html',1,'lib::gh::api'],['../classlib_1_1spt_1_1api.html',1,'lib::spt::api'],['../classlib_1_1spt_1_1api.html#a01a1d5bef586ec3fcaaacdc590be5327',1,'lib::spt::api::api()']]],
   ['append_13',['append',['../classlib_1_1vector.html#abd6f4bb72d24e728392a4fb104e3b22c',1,'lib::vector']]],
-  ['artist_14',['artist',['../classlib_1_1spt_1_1artist.html',1,'lib::spt::artist'],['../classlib_1_1spt_1_1album.html#a9213de387c38199a913fc9d3ba2a450e',1,'lib::spt::album::artist']]],
+  ['artist_14',['artist',['../classlib_1_1spt_1_1artist.html',1,'lib::spt::artist'],['../classlib_1_1spt_1_1album.html#a0e37a80dd4e632bf141c39da3fbc581e',1,'lib::spt::album::artist']]],
   ['artists_15',['artists',['../classlib_1_1spt_1_1search__results.html#a18a3ef467a3908d0933139378f9c2a31',1,'lib::spt::search_results::artists'],['../classlib_1_1spt_1_1track.html#af73cef429ada1ab45d88e78d218c79be',1,'lib::spt::track::artists']]],
   ['auth_16',['auth',['../classlib_1_1qt_1_1spt_1_1auth.html',1,'lib::qt::spt::auth'],['../classlib_1_1spt_1_1auth.html',1,'lib::spt::auth']]],
   ['avatar_5furl_17',['avatar_url',['../classlib_1_1gh_1_1contributor.html#ae443c3911f74c8045c03234eb6a8fad0',1,'lib::gh::contributor']]],
