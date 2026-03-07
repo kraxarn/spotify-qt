@@ -147,6 +147,11 @@ auto lib::spt::playlist::is_up_to_date(const std::string &playlist_snapshot,
 
 auto lib::spt::playlist::is_available(const std::string &current_user_id) const -> bool
 {
+	if (!is_valid())
+	{
+		return true;
+	}
+
 	return version != PlaylistVersion::Version2
 		|| owner_id == current_user_id;
 }
