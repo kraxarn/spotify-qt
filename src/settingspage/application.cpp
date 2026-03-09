@@ -57,7 +57,13 @@ auto SettingsPage::Application::app() -> QWidget *
 	appRefresh->setValidator(new QIntValidator(minRefreshInterval,
 		maxRefreshInterval, this));
 	comboBoxLayout->addWidget(appRefresh, 0, 1);
-	comboBoxLayout->addWidget(new QLabel("seconds", this), 0, 2);
+
+	appRefreshSuffix = new QLabel(QStringLiteral("seconds"), this);
+	comboBoxLayout->addWidget(appRefreshSuffix, 0, 2);
+
+	updateAppRefreshSuffix(appRefresh->currentText());
+	connect(appRefresh, &QComboBox::currentTextChanged,
+		this, &Application::updateAppRefreshSuffix);
 
 	// Max queue
 	auto *maxQueueLabel = new QLabel("Queue limit", this);
@@ -290,6 +296,14 @@ void SettingsPage::Application::updatePreview()
 
 	const QString title = Format::title(currentTrack, format);
 	titlePreview->setText(title);
+}
+
+void SettingsPage::Application::updateAppRefreshSuffix(const QString &text) const
+{
+	appRefreshSuffix->setText(text.toInt() == 1
+		? QStringLiteral("second")
+		: QStringLiteral("seconds")
+	);
 }
 
 void SettingsPage::Application::onPlaybackRefreshed(const lib::spt::playback &current,

@@ -8,17 +8,20 @@
 
 namespace SettingsPage
 {
-	class Application: public Base
+	class Application : public Base
 	{
 	public:
 		Application(lib::settings &settings, QWidget *parent);
 
 		auto icon() -> QIcon override;
+
 		auto title() -> QString override;
+
 		auto save() -> bool override;
 
 	protected:
 		void hideEvent(QHideEvent *event) override;
+
 		void showEvent(QShowEvent *event) override;
 
 	private:
@@ -29,6 +32,8 @@ namespace SettingsPage
 		QComboBox *appMaxQueue = nullptr;
 		QCheckBox *appUpdates = nullptr;
 		QCheckBox *ignoreUnavailableIndex = nullptr;
+
+		QLabel *appRefreshSuffix = nullptr;
 
 		QLineEdit *titleFormat = nullptr;
 		QLabel *titlePreview = nullptr;
@@ -42,11 +47,15 @@ namespace SettingsPage
 		static constexpr int maxMaxQueue = 1000;
 
 		auto app() -> QWidget *;
+
 		auto windowTitle() -> QWidget *;
 
 		void updatePreview();
 
+		void updateAppRefreshSuffix(const QString &text) const;
+
 		auto saveGeneral() -> bool;
+
 		auto saveTitle() const -> bool;
 
 		void onPlaybackRefreshed(const lib::spt::playback &current,
