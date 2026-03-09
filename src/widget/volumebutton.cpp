@@ -61,7 +61,7 @@ void VolumeButton::wheelEvent(QWheelEvent *event)
 	event->accept();
 }
 
-void VolumeButton::update(int value)
+void VolumeButton::update(const int value)
 {
 	setIcon(getVolumeIcon(value));
 	setToolTip(getVolumeInfo(value));
@@ -70,6 +70,7 @@ void VolumeButton::update(int value)
 	volumeDown->setEnabled(value > minimum);
 
 	settings.spotify.volume = value * step;
+	settings.save();
 }
 
 auto VolumeButton::getVolumeIcon(int value) -> QIcon
