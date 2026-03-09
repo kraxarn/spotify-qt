@@ -140,6 +140,18 @@ auto View::Lyrics::getTimestamp(const QListWidgetItem *item) -> qlonglong
 	return item->data(timestampRole).toLongLong();
 }
 
+void View::Lyrics::setBold(QListWidgetItem *item, const bool enabled)
+{
+	if (item == nullptr)
+	{
+		return;
+	}
+
+	QFont font = item->font();
+	font.setBold(enabled);
+	item->setFont(font);
+}
+
 void View::Lyrics::onPlaybackRefreshed(const lib::spt::playback &playback,
 	const lib::spt::playback &/*previous*/)
 {
@@ -150,6 +162,7 @@ void View::Lyrics::onPlaybackRefreshed(const lib::spt::playback &playback,
 
 	if (playback.item.id != currentTrack.id || !syncWithMusic->isChecked())
 	{
+		setBold(currentLyricsItem, false);
 		currentLyricsItem = nullptr;
 		return;
 	}
@@ -199,16 +212,8 @@ void View::Lyrics::onPlaybackRefreshed(const lib::spt::playback &playback,
 		}
 	}
 
-	if (currentLyricsItem != nullptr)
-	{
-		QFont font = currentLyricsItem->font();
-		font.setBold(false);
-		currentLyricsItem->setFont(font);
-	}
-
-	QFont font = item->font();
-	font.setBold(true);
-	item->setFont(font);
+	setBold(currentLyricsItem, false);
+	setBold(item, true);
 	currentLyricsItem = item;
 
 	emit lyricsList->scrollToItem(item, QAbstractItemView::PositionAtCenter);

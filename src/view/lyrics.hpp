@@ -42,6 +42,8 @@ namespace View
 
 		static auto getTimestamp(const QListWidgetItem *item) -> qlonglong;
 
+		static void setBold(QListWidgetItem *item, bool enabled);
+
 		void onPlaybackRefreshed(const lib::spt::playback &playback,
 			const lib::spt::playback &previous);
 
