@@ -158,7 +158,7 @@ void View::Lyrics::onPlaybackRefreshed(const lib::spt::playback &playback,
 	}
 	else
 	{
-		index = lyricsList->currentRow();
+		index = lyricsList->row(currentLyricsItem);
 		item = currentLyricsItem;
 	}
 
