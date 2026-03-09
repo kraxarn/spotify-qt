@@ -150,7 +150,7 @@ void View::Lyrics::onPlaybackRefreshed(const lib::spt::playback &playback,
 
 	if (playback.item.id != currentTrack.id || !syncWithMusic->isChecked())
 	{
-		lyricsList->setCurrentItem(nullptr);
+		currentLyricsItem = nullptr;
 		return;
 	}
 
