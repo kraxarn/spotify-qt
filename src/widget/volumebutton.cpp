@@ -42,14 +42,17 @@ VolumeButton::VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWid
 	setPopupMode(QToolButton::InstantPopup);
 	setMenu(volumeMenu);
 
-	QAbstractSlider::connect(volume, &QAbstractSlider::valueChanged,
+	connect(volume, &QAbstractSlider::valueChanged,
 		this, &VolumeButton::onVolumeValueChanged);
 
-	QAbstractSlider::connect(volume, &QAbstractSlider::sliderPressed,
-		this, &VolumeButton::onVolumeSliderPressed);
-
-	QAbstractSlider::connect(volume, &QAbstractSlider::sliderReleased,
+	connect(volume, &QAbstractSlider::sliderReleased,
 		this, &VolumeButton::onVolumeSliderReleased);
+
+	connect(volumeMenu, &QMenu::aboutToShow,
+		this, &VolumeButton::onMenuAboutToShow);
+
+	connect(volumeMenu, &QMenu::aboutToHide,
+		this, &VolumeButton::onMenuAboutToHide);
 }
 
 void VolumeButton::wheelEvent(QWheelEvent *event)
@@ -105,14 +108,8 @@ void VolumeButton::onVolumeValueChanged(int value)
 	update(value);
 }
 
-void VolumeButton::onVolumeSliderPressed()
-{
-	changing = true;
-}
-
 void VolumeButton::onVolumeSliderReleased()
 {
-	changing = false;
 	setSpotifyVolume(volume->value());
 }
 
@@ -121,6 +118,16 @@ void VolumeButton::changeVolume(int steps)
 	const auto value = volume->value() + steps;
 	volume->setValue(value);
 	setSpotifyVolume(value);
+}
+
+void VolumeButton::onMenuAboutToShow()
+{
+	changing = true;
+}
+
+void VolumeButton::onMenuAboutToHide()
+{
+	changing = false;
 }
 
 void VolumeButton::onVolumeUp(bool /*checked*/)

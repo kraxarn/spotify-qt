@@ -11,9 +11,9 @@
 #include <QVBoxLayout>
 #include <QWheelEvent>
 
-class VolumeButton: public QToolButton
+class VolumeButton : public QToolButton
 {
-Q_OBJECT
+	Q_OBJECT
 
 public:
 	VolumeButton(lib::settings &settings, lib::spt::api &spotify, QWidget *parent);
@@ -74,10 +74,16 @@ private:
 	 */
 	void changeVolume(int steps);
 
+	void onMenuAboutToShow();
+
+	void onMenuAboutToHide();
+
 	void onVolumeValueChanged(int value);
-	void onVolumeSliderPressed();
+
 	void onVolumeSliderReleased();
+
 	void onVolumeUp(bool checked);
+
 	void onVolumeDown(bool checked);
 
 	auto createButton(const QString &text) -> QPushButton *;
