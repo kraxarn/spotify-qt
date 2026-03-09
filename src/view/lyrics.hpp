@@ -8,20 +8,20 @@
 
 #include <QCheckBox>
 #include <QComboBox>
-#include <QGridLayout>
 #include <QLabel>
 #include <QListWidget>
 
 namespace View
 {
-	class Lyrics: public QWidget
+	class Lyrics : public QWidget
 	{
-	Q_OBJECT
+		Q_OBJECT
 
 	public:
 		Lyrics(const HttpClient &httpClient, lib::cache &cache, QWidget *parent);
 
 		void open(const lib::spt::track &track);
+
 		void open(unsigned int lyricsId);
 
 	private:
@@ -34,10 +34,12 @@ namespace View
 
 		QLabel *status;
 		QListWidget *lyricsList;
+		QListWidgetItem *currentLyricsItem;
 		QCheckBox *syncWithMusic;
 		QLabel *providedBy;
 
 		void load(const ::Lyrics &loaded);
+
 		static auto getTimestamp(const QListWidgetItem *item) -> qlonglong;
 
 		void onPlaybackRefreshed(const lib::spt::playback &playback,

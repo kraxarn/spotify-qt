@@ -8,7 +8,8 @@ View::Lyrics::Lyrics(const HttpClient &httpClient,
 	lib::cache &cache, QWidget *parent)
 	: QWidget(parent),
 	cache(cache),
-	lyrics(httpClient)
+	lyrics(httpClient),
+	currentLyricsItem(nullptr)
 {
 	lyrics.setAppInfo(QStringLiteral(APP_NAME), QStringLiteral(APP_VERSION),
 		QStringLiteral("https://github.com/%1/%2")
@@ -147,11 +148,10 @@ void View::Lyrics::onPlaybackRefreshed(const lib::spt::playback &playback,
 		return;
 	}
 
-	auto *currentItem = lyricsList->currentItem();
 	QListWidgetItem *item;
 	int index;
 
-	if (currentItem == nullptr)
+	if (currentLyricsItem == nullptr)
 	{
 		index = 0;
 		item = lyricsList->item(index);
@@ -159,7 +159,7 @@ void View::Lyrics::onPlaybackRefreshed(const lib::spt::playback &playback,
 	else
 	{
 		index = lyricsList->currentRow();
-		item = currentItem;
+		item = currentLyricsItem;
 	}
 
 	if (getTimestamp(item) < playback.progress_ms)
@@ -193,6 +193,17 @@ void View::Lyrics::onPlaybackRefreshed(const lib::spt::playback &playback,
 		}
 	}
 
-	lyricsList->setCurrentItem(item);
+	if (currentLyricsItem != nullptr)
+	{
+		QFont font = currentLyricsItem->font();
+		font.setBold(false);
+		currentLyricsItem->setFont(font);
+	}
+
+	QFont font = item->font();
+	font.setBold(true);
+	item->setFont(font);
+	currentLyricsItem = item;
+
 	emit lyricsList->scrollToItem(item, QAbstractItemView::PositionAtCenter);
 }
