@@ -44,5 +44,9 @@ namespace View
 
 		void onPlaybackRefreshed(const lib::spt::playback &playback,
 			const lib::spt::playback &previous);
+
+		void onMenuRequested(const QPoint &pos);
+
+		void onCopy(bool checked) const;
 	};
 }

@@ -1,6 +1,7 @@
 #include "lyrics.hpp"
 #include "mainwindow.hpp"
 
+#include <QClipboard>
 #include <QListWidgetItem>
 #include <QVBoxLayout>
 
@@ -25,6 +26,7 @@ View::Lyrics::Lyrics(const HttpClient &httpClient,
 	lyricsList = new QListWidget(this);
 	lyricsList->setWordWrap(true);
 	lyricsList->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+	lyricsList->setSelectionMode(QAbstractItemView::ContiguousSelection);
 	layout->addWidget(lyricsList, 1);
 
 	syncWithMusic = new QCheckBox(this);
@@ -39,6 +41,10 @@ View::Lyrics::Lyrics(const HttpClient &httpClient,
 	providedBy->setText(QStringLiteral("<i>Lyrics provided by <a href='https://lrclib.net'>lrclib</a></i>"));
 	providedBy->setOpenExternalLinks(true);
 	layout->addWidget(providedBy);
+
+	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+	connect(this, &QWidget::customContextMenuRequested,
+		this, &Lyrics::onMenuRequested);
 }
 
 void View::Lyrics::open(const lib::spt::track &track)
@@ -206,4 +212,31 @@ void View::Lyrics::onPlaybackRefreshed(const lib::spt::playback &playback,
 	currentLyricsItem = item;
 
 	emit lyricsList->scrollToItem(item, QAbstractItemView::PositionAtCenter);
+}
+
+void View::Lyrics::onMenuRequested(const QPoint &pos)
+{
+	const auto menu = new QMenu(this);
+
+	const QAction *copy = menu->addAction(QStringLiteral("Copy selection"));
+	connect(copy, &QAction::triggered, this, &Lyrics::onCopy);
+
+	menu->popup(mapToGlobal(pos));
+}
+
+void View::Lyrics::onCopy([[maybe_unused]] bool checked) const
+{
+	QString text;
+
+	for (const QListWidgetItem *item: lyricsList->selectedItems())
+	{
+		text.append(item->text());
+
+		if (item != lyricsList->selectedItems().last())
+		{
+			text.append(QChar::LineSeparator);
+		}
+	}
+
+	QApplication::clipboard()->setText(text);
 }
