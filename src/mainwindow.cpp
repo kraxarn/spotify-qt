@@ -469,7 +469,7 @@ void MainWindow::refresh()
 
 				if (!StatusMessage::isVisible())
 				{
-					StatusMessage::error(QStringLiteral("Failed to update player status: %1")
+					StatusMessage::warn(QStringLiteral("Failed to update player status: %1")
 						.arg(result.message()));
 				}
 			}
