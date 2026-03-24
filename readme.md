@@ -72,7 +72,7 @@ branch is unstable at all times. Therefore, it's recommended to use the stable
 branch, which is updated after each new stable release, only including
 important bug fixes, unless you want to try out new features.
 
-```
+```sh
 git clone --branch stable https://github.com/kraxarn/spotify-qt.git
 cd spotify-qt
 cmake -S . -B build -D CMAKE_BUILD_TYPE=RelWithDebInfo
