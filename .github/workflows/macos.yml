@@ -20,6 +20,7 @@ jobs:
           cache: true
           version: ${{env.QT_VERSION}}
           arch: ${{env.QT_ARCH}}
+          aqtsource: "git+https://github.com/miurahr/aqtinstall.git@refs/pull/1000/head"
 
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}/build

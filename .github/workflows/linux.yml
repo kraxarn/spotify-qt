@@ -42,6 +42,7 @@ jobs:
           arch: ${{matrix.qt-arch}}
           host: ${{matrix.qt-host}}
           modules: "qtwaylandcompositor"
+          aqtsource: "git+https://github.com/miurahr/aqtinstall.git@refs/pull/1000/head"
 
       - name: Install Dependencies
         run: sudo apt install libxkbcommon-x11-dev libxcb-cursor-dev -y
