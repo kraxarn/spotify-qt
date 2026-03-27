@@ -48,7 +48,8 @@ jobs:
           version: ${{matrix.qt-version}}
           arch: ${{matrix.qt-arch}}
           host: ${{matrix.qt-host}}
-          aqtsource: "git+https://github.com/miurahr/aqtinstall.git@refs/pull/1000/head"
+          # See https://github.com/miurahr/aqtinstall/issues/959
+          aqtsource: "git+https://github.com/miurahr/aqtinstall.git"
 
       - name: Configure CMake
         run: cmake . -G "${{env.CMAKE_GENERATOR}}" -A "${{matrix.cmake-arch}}" -D CMAKE_BUILD_TYPE="${{env.BUILD_TYPE}}" -D USE_TESTS=ON -D USE_LTO=ON -D USE_QT5="${{matrix.use-qt5}}"
