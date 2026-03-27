@@ -36,7 +36,8 @@ jobs:
       run: ${{runner.workspace}}/build/lib/test/spotify-qt-lib-test
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: spotify-qt
+        archive: false
         path: ${{runner.workspace}}/build/spotify-qt
