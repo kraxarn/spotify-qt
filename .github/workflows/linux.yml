@@ -4,7 +4,7 @@ on: [ push, pull_request ]
 
 env:
   BUILD_TYPE: Release
-  QT_VERSION: "6.11.0"
+  QT_VERSION: "6.10.3"
   QT_ARCH: "linux_gcc_64"
 
 jobs:

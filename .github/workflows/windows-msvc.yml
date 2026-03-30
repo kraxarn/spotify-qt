@@ -24,7 +24,7 @@ jobs:
 
           - name: "qt6-win64"
             os: windows-2022
-            qt-version: "6.11.0"
+            qt-version: "6.10.3"
             qt-arch: "win64_msvc2022_64"
             qt-host: "windows"
             cmake-arch: "x64"
@@ -32,7 +32,7 @@ jobs:
 
           - name: "qt6-woa64"
             os: windows-11-arm
-            qt-version: "6.11.0"
+            qt-version: "6.10.3"
             qt-arch: "win64_msvc2022_arm64"
             qt-host: "windows_arm64"
             cmake-arch: "ARM64"
