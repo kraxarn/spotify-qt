@@ -70,6 +70,49 @@ void SidePanel::View::closeSearch()
 	removeTab(stack->indexOf(searchView));
 }
 
+void SidePanel::View::openCurrentLyrics()
+{
+	if (currentLyricsView == nullptr)
+	{
+		auto *view = new ::View::Lyrics(httpClient, cache, this);
+		view->setAutoUpdate(true);
+		currentLyricsView = view;
+	}
+
+	if (stack->indexOf(currentLyricsView) < 0)
+	{
+		addTab(currentLyricsView, "view-media-lyrics", "Current Lyrics",
+			SidePanelType::CurrentLyrics, QString());
+	}
+
+	setCurrentWidget(currentLyricsView);
+	setVisible(true);
+
+	auto *mainWindow = MainWindow::find(this);
+	auto *lyricsView = dynamic_cast<::View::Lyrics *>(currentLyricsView);
+	if (mainWindow != nullptr && lyricsView != nullptr)
+	{
+		mainWindow->setCurrentLyricsChecked(true);
+
+		if (lyricsView->getCurrentTrack().id != mainWindow->playback().item.id)
+		{
+			if (mainWindow->playback().item.is_valid())
+			{
+				lyricsView->open(mainWindow->playback().item);
+			}
+			else
+			{
+				lyricsView->clear();
+			}
+		}
+	}
+}
+
+void SidePanel::View::closeCurrentLyrics()
+{
+	removeTab(stack->indexOf(currentLyricsView));
+}
+
 auto SidePanel::View::findTab(SidePanelType type, const QString &name) -> QWidget *
 {
 	switch (type)
@@ -78,6 +121,9 @@ auto SidePanel::View::findTab(SidePanelType type, const QString &name) -> QWidge
 			return find<Artist::View *>(name);
 
 		case SidePanelType::Search:
+			return nullptr;
+
+		case SidePanelType::CurrentLyrics:
 			return nullptr;
 
 		case SidePanelType::Lyrics:
@@ -114,7 +160,15 @@ void SidePanel::View::removeTab(int index)
 	auto *widget = stack->widget(index);
 	stack->removeWidget(widget);
 
-	if (widget != searchView)
+	if (widget == currentLyricsView)
+	{
+		if (auto *mainWindow = MainWindow::find(this))
+		{
+			mainWindow->setCurrentLyricsChecked(false);
+		}
+	}
+
+	if (widget != searchView && widget != currentLyricsView)
 	{
 		widget->deleteLater();
 	}

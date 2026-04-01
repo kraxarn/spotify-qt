@@ -53,6 +53,7 @@ public:
 	void toggleTrackNumbers(bool enabled);
 	void toggleExpandableAlbum(lib::album_size albumSize);
 	void setSearchVisible(bool visible);
+	void setCurrentLyricsVisible(bool visible);
 	void refreshPlaylists();
 	void setCurrentLibraryItem(QTreeWidgetItem *item);
 	lib::spt::playlist getPlaylist(int index);
@@ -72,6 +73,7 @@ public:
 
 	// Getters for private properties
 	void setSearchChecked(bool checked);
+	void setCurrentLyricsChecked(bool checked);
 	List::Tracks *getSongsTree();
 	const spt::Current &getCurrent();
 	auto getSpotifyRunner() -> const SpotifyClient::Runner *;

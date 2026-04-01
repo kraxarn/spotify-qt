@@ -748,6 +748,11 @@ void MainWindow::setSearchChecked(bool checked)
 	toolBar->setSearchChecked(checked);
 }
 
+void MainWindow::setCurrentLyricsChecked(bool checked)
+{
+	toolBar->setCurrentLyricsChecked(checked);
+}
+
 auto MainWindow::getSongsTree() -> List::Tracks *
 {
 	return mainContent->getTracksList();
@@ -787,6 +792,19 @@ void MainWindow::setSearchVisible(bool visible)
 	else
 	{
 		panel->closeSearch();
+	}
+}
+
+void MainWindow::setCurrentLyricsVisible(bool visible)
+{
+	auto *panel = dynamic_cast<SidePanel::View *>(sidePanel);
+	if (visible)
+	{
+		panel->openCurrentLyrics();
+	}
+	else
+	{
+		panel->closeCurrentLyrics();
 	}
 }
 

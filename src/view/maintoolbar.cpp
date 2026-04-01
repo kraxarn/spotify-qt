@@ -42,6 +42,12 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 	search->setShortcut(QKeySequence::Find);
 	QAction::connect(search, &QAction::triggered, mainWindow, &MainWindow::setSearchVisible);
 
+	// Lyrics
+	currentLyrics = new QAction(Icon::get(QStringLiteral("view-media-lyrics")),
+		QStringLiteral("Current Lyrics"));
+	currentLyrics->setCheckable(true);
+	QAction::connect(currentLyrics, &QAction::triggered, mainWindow, &MainWindow::setCurrentLyricsVisible);
+
 	// Media controls
 	previous = createShortcutAction(QStringLiteral("media-skip-backward"),
 		QStringLiteral("Previous"), Shortcut::previousTrack());
@@ -137,10 +143,17 @@ MainToolBar::MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 
 	addAction(shuffle);
 	addAction(repeat);
+
+	if (isSearchMirrored)
+	{
+		addAction(currentLyrics);
+	}
+
 	addWidget(volumeButton);
 
 	if (!isSearchMirrored)
 	{
+		addAction(currentLyrics);
 		addAction(search);
 	}
 
@@ -318,6 +331,11 @@ void MainToolBar::setShuffle(bool value)
 void MainToolBar::setSearchChecked(bool checked)
 {
 	search->setChecked(checked);
+}
+
+void MainToolBar::setCurrentLyricsChecked(bool checked)
+{
+	currentLyrics->setChecked(checked);
 }
 
 auto MainToolBar::toPosition(Qt::ToolBarArea area) -> lib::position

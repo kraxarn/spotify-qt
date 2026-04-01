@@ -29,6 +29,7 @@ public:
 	auto toggleRepeat(const lib::spt::playback &playback) -> lib::repeat_state;
 	void setShuffle(bool shuffle);
 	void setSearchChecked(bool checked);
+	void setCurrentLyricsChecked(bool checked);
 	void toggleActions(const lib::spt::playback &playback);
 
 	static auto toPosition(Qt::ToolBarArea area) -> lib::position;
@@ -64,6 +65,7 @@ private:
 	lib::repeat_state repeatState = lib::repeat_state::off;
 
 	QToolButton *menu;
+	QAction *currentLyrics;
 	QAction *search;
 
 	QAction *previous;
