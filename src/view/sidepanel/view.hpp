@@ -27,6 +27,9 @@ namespace SidePanel
 		void openSearch();
 		void closeSearch();
 
+		void openCurrentLyrics();
+		void closeCurrentLyrics();
+
 		void addTab(QWidget *widget, const QString &icon, const QString &tabTitle,
 			SidePanelType type, const QString &name);
 
@@ -44,6 +47,7 @@ namespace SidePanel
 		QStackedWidget *stack = nullptr;
 
 		QWidget *searchView = nullptr;
+		QWidget *currentLyricsView = nullptr;
 
 		lib::spt::api &spotify;
 		lib::settings &settings;

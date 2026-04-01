@@ -19,4 +19,9 @@ enum class SidePanelType: char
 	 * Lyrics, paired with track ID
 	 */
 	Lyrics,
+
+	/**
+	 * Current lyrics, synced with playback
+	 */
+	CurrentLyrics,
 };

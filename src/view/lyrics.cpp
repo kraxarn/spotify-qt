@@ -45,46 +45,94 @@ View::Lyrics::Lyrics(const HttpClient &httpClient,
 	setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 	connect(this, &QWidget::customContextMenuRequested,
 		this, &Lyrics::onMenuRequested);
+
+	const auto *window = MainWindow::find(parentWidget());
+	if (window != nullptr)
+	{
+		connect(window, &MainWindow::playbackRefreshed,
+			this, &View::Lyrics::onPlaybackRefreshed);
+	}
+}
+
+void View::Lyrics::setAutoUpdate(bool enabled)
+{
+	autoUpdate = enabled;
+}
+
+auto View::Lyrics::getCurrentTrack() const -> lib::spt::track
+{
+	return currentTrack;
+}
+
+void View::Lyrics::clear()
+{
+	lyricsList->clear();
+	currentTrack = {};
+	currentLyricsId = 0;
+	currentLyricsItem = nullptr;
+	status->setText(QStringLiteral("Nothing playing..."));
+	status->setVisible(true);
 }
 
 void View::Lyrics::open(const lib::spt::track &track)
 {
 	status->setText(QStringLiteral("Please wait..."));
+	status->setVisible(true);
+
+	currentTrack = track;
+	currentLyricsId = 0;
+	currentLyricsItem = nullptr;
 
 	lyrics.get(track, [this, track](const Result<::Lyrics> &result)
 	{
+		if (currentTrack.id != track.id)
+		{
+			return;
+		}
+
 		if (!result.success())
 		{
 			status->setText(result.message());
+			status->setVisible(true);
 			return;
 		}
 
 		status->setVisible(false);
 		load(result.value());
-		currentTrack = track;
 	});
 }
 
 void View::Lyrics::open(const unsigned int lyricsId)
 {
 	status->setText(QStringLiteral("Please wait..."));
+	status->setVisible(true);
 
-	lyrics.get(lyricsId, [this](const Result<::Lyrics> &result)
+	currentTrack = {};
+	currentLyricsId = lyricsId;
+	currentLyricsItem = nullptr;
+
+	lyrics.get(lyricsId, [this, lyricsId](const Result<::Lyrics> &result)
 	{
+		if (currentLyricsId != lyricsId)
+		{
+			return;
+		}
+
 		if (!result.success())
 		{
 			status->setText(result.message());
+			status->setVisible(true);
 			return;
 		}
 
 		status->setVisible(false);
 		load(result.value());
-		currentTrack = {};
 	});
 }
 
 void View::Lyrics::load(const ::Lyrics &loaded)
 {
+	currentLyricsItem = nullptr;
 	lyricsList->clear();
 
 	if (loaded.instrumental())
@@ -124,15 +172,6 @@ void View::Lyrics::load(const ::Lyrics &loaded)
 	{
 		return;
 	}
-
-	const auto *window = MainWindow::find(parentWidget());
-	if (window == nullptr)
-	{
-		return;
-	}
-
-	connect(window, &MainWindow::playbackRefreshed,
-		this, &View::Lyrics::onPlaybackRefreshed);
 }
 
 auto View::Lyrics::getTimestamp(const QListWidgetItem *item) -> qlonglong
@@ -155,6 +194,19 @@ void View::Lyrics::setBold(QListWidgetItem *item, const bool enabled)
 void View::Lyrics::onPlaybackRefreshed(const lib::spt::playback &playback,
 	const lib::spt::playback &/*previous*/)
 {
+	if (autoUpdate && playback.item.id != currentTrack.id)
+	{
+		if (playback.item.is_valid())
+		{
+			open(playback.item);
+		}
+		else
+		{
+			clear();
+		}
+		return;
+	}
+
 	if (!playback.is_playing || lyricsList->count() <= 0)
 	{
 		return;
