@@ -222,3 +222,8 @@ build/
 
 # Assorted
 run.sh
+
+# Flatpak
+repo/
+.flatpak-builder/
+build-dir/
