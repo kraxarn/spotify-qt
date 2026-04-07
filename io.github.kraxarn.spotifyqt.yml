@@ -1,0 +1,17 @@
+id: io.github.kraxarn.spotifyqt
+runtime: org.kde.Platform
+runtime-version: '6.10'
+sdk: org.kde.Sdk
+command: spotify-qt
+finish-args:
+  - "--share=network"
+  - "--socket=fallback-x11"
+  - "--socket=wayland"
+
+modules:
+  - name: spotify-qt
+    buildsystem: cmake
+    sources:
+      - type: git
+        url: https://github.com/kraxarn/spotify-qt.git
+        branch: stable
