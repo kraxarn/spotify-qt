@@ -227,3 +227,4 @@ run.sh
 repo/
 .flatpak-builder/
 build-dir/
+*.flatpak
