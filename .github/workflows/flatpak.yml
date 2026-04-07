@@ -28,8 +28,3 @@ jobs:
           cache-key: flatpak-builder-${{ github.sha }}
           arch: ${{ matrix.variant.arch }}
           verbose: true
-      - name: Upload Flatpak Bundle
-        uses: actions/upload-artifact@v7
-        with:
-          name: spotifyqt-${{ matrix.variant.arch }}
-          path: io.github.kraxarn.spotifyqt.flatpak
