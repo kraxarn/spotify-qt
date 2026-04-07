@@ -20,7 +20,7 @@ jobs:
             runner: ubuntu-24.04-arm
     runs-on: ${{ matrix.variant.runner }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
           bundle: io.github.kraxarn.spotifyqt.flatpak
@@ -28,3 +28,8 @@ jobs:
           cache-key: flatpak-builder-${{ github.sha }}
           arch: ${{ matrix.variant.arch }}
           verbose: true
+      - name: Upload Flatpak Bundle
+        uses: actions/upload-artifact@v7
+        with:
+          name: spotifyqt-${{ matrix.variant.arch }}
+          path: io.github.kraxarn.spotifyqt.flatpak
