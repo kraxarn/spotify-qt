@@ -10,11 +10,9 @@ finish-args:
   - "--share=ipc"
   - "--own-name=org.mpris.MediaPlayer2.spotify-qt"
   - "--talk-name=org.freedesktop.Notifications"
-  - "--socket=pulseaudio"
   - "--device=dri"
   - "--talk-name=org.kde.StatusNotifierWatcher"
   - "--filesystem=~/.cargo/bin/librespot:ro"
-  - "--filesystem=xdg-run/pipewire-0:ro"
 
 modules:
   - name: spotify-qt
