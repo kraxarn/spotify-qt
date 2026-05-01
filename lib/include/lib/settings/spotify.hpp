@@ -42,7 +42,6 @@ namespace lib
 
 			/**
 			 * Disable discovery mode
-			 * @note librespot only
 			 */
 			bool disable_discovery = false;
 
