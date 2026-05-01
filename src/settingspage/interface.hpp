@@ -27,7 +27,6 @@ namespace SettingsPage
 		AlbumShapeComboBox *albumShape = nullptr;
 		QCheckBox *trackNumbers = nullptr;
 		QCheckBox *relativeAdded = nullptr;
-		QCheckBox *nativeWindow = nullptr;
 		QCheckBox *tabbedLibrary = nullptr;
 
 		// Appearance

@@ -27,10 +27,7 @@ MainWindow::MainWindow(lib::settings &settings, lib::paths &paths,
 
 	// winId is required for moving the window under Wayland
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-	if (QGuiApplication::platformName() == "wayland" || settings.general.native_window)
-	{
-		winId();
-	}
+	[[maybe_unused]] const WId wId = winId();
 #endif
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 1, 0)

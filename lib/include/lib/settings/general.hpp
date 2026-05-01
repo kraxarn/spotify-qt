@@ -130,12 +130,6 @@ namespace lib
 			bool check_for_updates = true;
 
 			/**
-			 * Create a native window handle
-			 * @note Always enabled under Linux/Wayland
-			 */
-			bool native_window = false;
-
-			/**
 			 * Register media hotkeys under Windows
 			 */
 #ifdef _WIN32

@@ -98,16 +98,6 @@ auto SettingsPage::Interface::general() -> QWidget *
 	tabbedLibrary->setChecked(qtSettings.library_layout == lib::library_layout::tabbed);
 	layout->addWidget(tabbedLibrary);
 
-	// Native window handle
-	// (Required to move window under Wayland)
-	if (QGuiApplication::platformName() != "wayland")
-	{
-		nativeWindow = new QCheckBox(QStringLiteral("Use native window"), this);
-		nativeWindow->setToolTip(QStringLiteral("Create main window with a native handle"));
-		nativeWindow->setChecked(settings.general.native_window);
-		layout->addWidget(nativeWindow);
-	}
-
 	return Widget::layoutToWidget(layout, this);
 }
 
@@ -358,11 +348,6 @@ void SettingsPage::Interface::saveGeneral()
 		}
 
 		qtSettings.album_shape = currentAlbumShape;
-	}
-
-	if (nativeWindow != nullptr)
-	{
-		settings.general.native_window = nativeWindow->isChecked();
 	}
 }
 
