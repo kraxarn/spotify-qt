@@ -230,6 +230,12 @@ auto SettingsPage::Spotify::config() -> QWidget *
 	sptDiscovery->setChecked(!settings.spotify.disable_discovery);
 	content->addWidget(sptDiscovery, 6, 0);
 
+	// Autoplay
+	sptAutoplay = new QCheckBox(QStringLiteral("Enable autoplay"));
+	sptAutoplay->setToolTip(QStringLiteral("Continue playing after the end of the queue"));
+	sptAutoplay->setChecked(settings.spotify.autoplay);
+	content->addWidget(sptAutoplay, 7, 0);
+
 	return Widget::layoutToWidget(content, this);
 }
 
@@ -330,6 +336,11 @@ auto SettingsPage::Spotify::save() -> bool
 	if (sptDiscovery != nullptr)
 	{
 		settings.spotify.disable_discovery = !sptDiscovery->isChecked();
+	}
+
+	if (sptAutoplay != nullptr)
+	{
+		settings.spotify.autoplay = sptAutoplay->isChecked();
 	}
 
 	return success;

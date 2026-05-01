@@ -96,7 +96,7 @@ void SpotifyClient::Runner::start()
 		QStringLiteral("--name"), deviceName,
 		QStringLiteral("--initial-volume"), initialVolume,
 		QStringLiteral("--cache"), QString::fromStdString(getCachePath().string()),
-		QStringLiteral("--autoplay"), QStringLiteral("on"),
+		QStringLiteral("--autoplay"), settings.spotify.autoplay ? QStringLiteral("on") : QStringLiteral("off"),
 	});
 
 	auto backend = QString::fromStdString(settings.spotify.backend);

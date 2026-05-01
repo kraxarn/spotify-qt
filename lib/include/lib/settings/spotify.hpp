@@ -46,6 +46,11 @@ namespace lib
 			bool disable_discovery = false;
 
 			/**
+			 * Enable autoplay
+			 */
+			bool autoplay = true;
+
+			/**
 			 * Bitrate for Spotify client
 			 * @note Required to be normal, high or very_high
 			 */
