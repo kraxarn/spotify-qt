@@ -2,6 +2,7 @@
 #include "mainwindow.hpp"
 #include "util/widget.hpp"
 #include "util/process.hpp"
+#include "spotifyclient/helper.hpp"
 
 #include <QStandardPaths>
 
@@ -31,7 +32,7 @@ void SettingsPage::Spotify::showEvent(QShowEvent *event)
 
 	if (sptDeviceType != nullptr && sptDeviceType->count() <= 1)
 	{
-		for (const auto deviceType: deviceTypes())
+		for (const auto deviceType : deviceTypes())
 		{
 			if (!addDeviceType(deviceType))
 			{
@@ -50,27 +51,6 @@ auto SettingsPage::Spotify::spotify() -> QWidget *
 {
 	auto *content = new QVBoxLayout();
 	content->setAlignment(Qt::AlignTop);
-
-	auto *warningLayout = new QHBoxLayout();
-	warningLayout->setAlignment(Qt::AlignLeft);
-
-	auto *warningIcon = new QLabel(this);
-	const auto warningIconSize = QApplication::style()->pixelMetric(QStyle::PM_LargeIconSize);
-	const auto warningPixmap = Icon::get(QStringLiteral("data-warning")).pixmap(warningIconSize, warningIconSize);
-	warningIcon->setPixmap(warningPixmap);
-	warningLayout->addWidget(warningIcon);
-
-	auto *warningText = new QLabel(this);
-	warningText->setText(QStringLiteral(
-		"spotifyd support is deprecated, please use librespot instead, or start it manually outside %1."
-	).arg(APP_NAME));
-	warningText->setWordWrap(true);
-	warningLayout->addWidget(warningText, 1);
-
-	clientWarning = new QGroupBox(this);
-	clientWarning->setLayout(warningLayout);
-	clientWarning->setVisible(clientType() == lib::client_type::spotifyd);
-	content->addWidget(clientWarning);
 
 	// Executable settings
 	auto *pathBox = new QGroupBox(this);
@@ -204,72 +184,51 @@ void SettingsPage::Spotify::restartClient(bool /*checked*/)
 
 auto SettingsPage::Spotify::config() -> QWidget *
 {
-	auto *content = new QVBoxLayout();
+	auto *content = new QGridLayout();
 	content->setAlignment(Qt::AlignTop);
 
-	// Global config
-	sptGlobal = new QCheckBox("Use global config", this);
-	sptGlobal->setToolTip("Use spotifyd.conf file in ~/.config/spotifyd, /etc or "
-						  "/etc/xdg/spotifyd (spotifyd only)");
-	sptGlobal->setChecked(settings.spotify.global_config);
-
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-	connect(sptGlobal, &QCheckBox::stateChanged,
-		this, &Spotify::globalConfigToggle);
-#else
-	connect(sptGlobal, &QCheckBox::checkStateChanged,
-		this, &Spotify::globalConfigToggle);
-#endif
-
-	content->addWidget(sptGlobal);
-
-	// Box and layout for all app specific settings
-	sptGroup = new QGroupBox("App specific settings", this);
-	sptGroup->setEnabled(!sptGlobal->isChecked());
-	auto *sptLayout = new QGridLayout();
-	sptGroup->setLayout(sptLayout);
-	content->addWidget(sptGroup);
-
 	// Bitrate
-	sptLayout->addWidget(new QLabel("Quality", sptGroup), 1, 0);
+	content->addWidget(new QLabel(QStringLiteral("Quality"), sptGroup), 1, 0);
 	sptBitrate = new QComboBox(sptGroup);
 	sptBitrate->addItems({
-		"Normal (96 kbit/s)", "High (160 kbit/s)", "Very high (320 kbit/s)"
+		QStringLiteral("Normal (96 kbit/s)"),
+		QStringLiteral("High (160 kbit/s)"),
+		QStringLiteral("Very high (320 kbit/s)"),
 	});
-	auto bitrate = settings.spotify.bitrate;
+	const lib::audio_quality bitrate = settings.spotify.bitrate;
 	sptBitrate->setCurrentIndex(bitrate == lib::audio_quality::normal
 		? 0 : bitrate == lib::audio_quality::high
 			? 1 : 2);
-	sptLayout->addWidget(sptBitrate, 1, 1);
+	content->addWidget(sptBitrate, 1, 1);
 
 	// Backend
 	auto *backendLabel = new QLabel(QStringLiteral("Audio backend"), sptGroup);
-	sptLayout->addWidget(backendLabel, 2, 0);
+	content->addWidget(backendLabel, 2, 0);
 
 	sptBackend = new QComboBox(sptGroup);
 	sptBackend->addItem(QStringLiteral("Default"));
-	sptLayout->addWidget(sptBackend, 2, 1);
+	content->addWidget(sptBackend, 2, 1);
 
 	// Device type
 	auto *deviceTypeLabel = new QLabel(QStringLiteral("Device type"), sptGroup);
-	sptLayout->addWidget(deviceTypeLabel, 3, 0);
+	content->addWidget(deviceTypeLabel, 3, 0);
 
 	sptDeviceType = new QComboBox(sptGroup);
 	sptDeviceType->addItem(QStringLiteral("Default"));
-	sptLayout->addWidget(sptDeviceType, 3, 1);
+	content->addWidget(sptDeviceType, 3, 1);
 
 	// Additional arguments
 	auto *additionalArgumentsLabel = new QLabel(QStringLiteral("Additional arguments"), sptGroup);
-	sptLayout->addWidget(additionalArgumentsLabel, 4, 0);
+	content->addWidget(additionalArgumentsLabel, 4, 0);
 
 	sptAdditionalArguments = new QLineEdit(QString::fromStdString(settings.spotify.additional_arguments), sptGroup);
-	sptLayout->addWidget(sptAdditionalArguments, 4, 1);
+	content->addWidget(sptAdditionalArguments, 4, 1);
 
 	// librespot discovery
-	sptDiscovery = new QCheckBox("Enable discovery");
-	sptDiscovery->setToolTip("Enable discovery mode (librespot only)");
+	sptDiscovery = new QCheckBox(QStringLiteral("Enable discovery"));
+	sptDiscovery->setToolTip(QStringLiteral("Enable discovery mode"));
 	sptDiscovery->setChecked(!settings.spotify.disable_discovery);
-	sptLayout->addWidget(sptDiscovery, 6, 0);
+	content->addWidget(sptDiscovery, 6, 0);
 
 	return Widget::layoutToWidget(content, this);
 }
@@ -322,34 +281,6 @@ auto SettingsPage::Spotify::save() -> bool
 		{
 			settings.spotify.path = sptPath->text().toStdString();
 		}
-
-		if (clientWarning != nullptr)
-		{
-			const auto clientType = SpotifyClient::Helper::clientType(sptPath->text());
-			clientWarning->setVisible(clientType == lib::client_type::spotifyd);
-		}
-	}
-
-	// librespot has no global config support
-	if (sptGlobal != nullptr
-		&& sptVersion != nullptr
-		&& sptGlobal->isChecked()
-		&& sptVersion->text() == "librespot")
-	{
-		warning("librespot",
-			"Global config is not available when using librespot");
-		sptGlobal->setChecked(false);
-	}
-
-	// Spotify global config
-	if (sptGlobal != nullptr)
-	{
-		if (sptGlobal->isChecked() && !sptConfigExists())
-		{
-			warning("spotifyd config not found",
-				QString("Couldn't find a config file for spotifyd. You may experience issues."));
-		}
-		settings.spotify.global_config = sptGlobal->isChecked();
 	}
 
 	// Backend
@@ -443,11 +374,6 @@ auto SettingsPage::Spotify::getPath() const -> QString
 auto SettingsPage::Spotify::backends() -> QStringList
 {
 	return SpotifyClient::Helper::availableBackends(getPath());
-}
-
-auto SettingsPage::Spotify::clientType() const -> lib::client_type
-{
-	return SpotifyClient::Helper::clientType(getPath());
 }
 
 auto SettingsPage::Spotify::deviceTypes() -> QList<lib::device_type>

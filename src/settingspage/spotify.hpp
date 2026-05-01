@@ -28,7 +28,6 @@ namespace SettingsPage
 	private:
 		QCheckBox *sptAlways = nullptr;
 		QCheckBox *sptAppStart = nullptr;
-		QCheckBox *sptGlobal = nullptr;
 		QComboBox *sptBackend = nullptr;
 		QComboBox *sptDeviceType = nullptr;
 		QComboBox *sptBitrate = nullptr;
@@ -37,7 +36,6 @@ namespace SettingsPage
 		QLineEdit *sptPath = nullptr;
 		QCheckBox *sptDiscovery = nullptr;
 		QLineEdit *sptAdditionalArguments = nullptr;
-		QWidget *clientWarning = nullptr;
 
 		QPushButton *startClient = nullptr;
 		QLabel *clientStatus = nullptr;
@@ -50,7 +48,6 @@ namespace SettingsPage
 
 		auto getPath() const -> QString;
 		auto backends() -> QStringList;
-		auto clientType() const -> lib::client_type;
 
 		auto deviceTypes() -> QList<lib::device_type>;
 		auto addDeviceType(lib::device_type deviceType) -> bool;

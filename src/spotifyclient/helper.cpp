@@ -3,14 +3,8 @@
 auto SpotifyClient::Helper::clientExec(const QString &path, const QStringList &arguments) -> QString
 {
 	// Check if it exists
-	QFileInfo file(path);
+	const QFileInfo file(path);
 	if (!file.exists())
-	{
-		return {};
-	}
-
-	// Check if either client
-	if (clientType(path) == lib::client_type::none)
 	{
 		return {};
 	}
@@ -26,107 +20,45 @@ auto SpotifyClient::Helper::clientExec(const QString &path, const QStringList &a
 	return process.readAllStandardOutput().trimmed();
 }
 
-auto SpotifyClient::Helper::getSpotifydPossibleValues(const QString &path,
-	const QString &type) -> QStringList
+auto SpotifyClient::Helper::availableBackends(const QString &path) -> QStringList
 {
-	const auto result = clientExec(path, QStringList({
-		QStringLiteral("--help"),
-	}));
+	QStringList items;
 
-	for (auto &line: result.split('\n'))
+	const QString result = clientExec(path, {
+		QStringLiteral("--name"), QString(),
+		QStringLiteral("--backend"), QStringLiteral("?"),
+	});
+
+	for (const QString &line : result.split('\n'))
 	{
-		if (!line.contains(type))
+		if (!line.startsWith("-"))
 		{
 			continue;
 		}
 
-		return line.right(line.length() - line.indexOf('[') - 1)
-			.remove(QStringLiteral("possible values: "))
-			.remove(']')
-			.trimmed()
-			.split(QStringLiteral(", "));
-	}
-
-	return {};
-}
-
-auto SpotifyClient::Helper::availableBackends(const QString &path) -> QStringList
-{
-	QStringList items;
-	auto type = clientType(path);
-
-	if (type == lib::client_type::librespot)
-	{
-		auto result = clientExec(path, QStringList({
-			"--name", "",
-			"--backend", "?"
-		}));
-
-		for (auto &line: result.split('\n'))
-		{
-			if (!line.startsWith("-"))
-			{
-				continue;
-			}
-			items.append(line.right(line.length() - 2)
-				.remove("(default)")
-				.trimmed());
-		}
-	}
-	else if (type == lib::client_type::spotifyd)
-	{
-		items = getSpotifydPossibleValues(path, QStringLiteral("audio backend"));
+		items.append(line.right(line.length() - 2)
+			.remove(QStringLiteral("(default)"))
+			.trimmed());
 	}
 
 	return items;
 }
 
-auto SpotifyClient::Helper::clientType(const QString &path) -> lib::client_type
-{
-	auto baseName = QFileInfo(path).baseName().toLower();
-
-	if (baseName == "spotifyd")
-	{
-		return lib::client_type::spotifyd;
-	}
-
-	if (baseName == "librespot")
-	{
-		return lib::client_type::librespot;
-	}
-
-	return lib::client_type::none;
-}
-
 auto SpotifyClient::Helper::version(const QString &path) -> QString
 {
-	auto type = clientType(path);
+	const QString versionInfo = clientExec(path, {
+		QStringLiteral("--version"),
+	});
 
-	if (type == lib::client_type::spotifyd)
+	if (versionInfo.startsWith(QStringLiteral("error:")))
 	{
-		return clientExec(path, {
-			"--version"
-		});
+		return QStringLiteral("librespot");
 	}
 
-	if (type == lib::client_type::librespot)
-	{
-		const auto versionInfo = clientExec(path, {
-			"--version"
-		});
-
-		if (versionInfo.startsWith(QStringLiteral("error:")))
-		{
-			return QStringLiteral("librespot");
-		}
-
-		const auto stop = versionInfo.indexOf('(');
-		return stop > 0
-			? versionInfo.left(stop - 1)
-			: QStringLiteral("librespot");
-	}
-
-	return {};
+	const qsizetype stop = versionInfo.indexOf(QChar::fromLatin1('('));
+	return stop > 0
+		? versionInfo.left(stop - 1)
+		: QStringLiteral("librespot");
 }
 
 auto SpotifyClient::Helper::running(const QString &path) -> bool
@@ -145,25 +77,11 @@ auto SpotifyClient::Helper::running(const QString &path) -> bool
 
 auto SpotifyClient::Helper::getOAuthSupport(const QString &path) -> bool
 {
-	if (clientType(path) == lib::client_type::spotifyd)
-	{
-		const auto help = clientExec(path, {
-			QStringLiteral("auth"), QStringLiteral("--help"),
-		});
+	const QString help = clientExec(path, {
+		QStringLiteral("--help"),
+	});
 
-		return !help.contains(QStringLiteral("error:"));
-	}
-
-	if (clientType(path) == lib::client_type::librespot)
-	{
-		const auto help = clientExec(path, {
-			QStringLiteral("--help"),
-		});
-
-		return help.contains(QStringLiteral("--enable-oauth"));
-	}
-
-	return false;
+	return help.contains(QStringLiteral("--enable-oauth"));
 }
 
 auto SpotifyClient::Helper::processErrorToString(const QProcess::ProcessError error) -> QString

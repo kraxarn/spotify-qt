@@ -36,12 +36,6 @@ namespace lib
 			bool always_start = true;
 
 			/**
-			 * Use global config instead of config in settings
-			 */
-			[[deprecated("spotifyd only")]]
-			bool global_config = false;
-
-			/**
 			 * Start Spotify client on application start
 			 */
 			bool start_client = false;

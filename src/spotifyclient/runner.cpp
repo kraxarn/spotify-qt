@@ -1,4 +1,5 @@
 #include "spotifyclient/runner.hpp"
+#include "spotifyclient/helper.hpp"
 
 #include "lib/enums.hpp"
 #include "lib/log.hpp"
@@ -17,7 +18,6 @@ SpotifyClient::Runner::Runner(const lib::settings &settings,
 {
 	path = QString::fromStdString(settings.spotify.path);
 	process = new QProcess(parent);
-	clientType = SpotifyClient::Helper::clientType(path);
 
 	connect(process, &QProcess::readyReadStandardOutput,
 		this, &Runner::onReadyReadOutput);
@@ -56,7 +56,7 @@ void SpotifyClient::Runner::start()
 	}
 
 	// Check if empty
-	if (clientType == lib::client_type::none)
+	if (path.isEmpty())
 	{
 		emit statusChanged(QStringLiteral("Client path is empty or invalid"));
 		return;
@@ -67,14 +67,6 @@ void SpotifyClient::Runner::start()
 	if (!info.exists())
 	{
 		emit statusChanged(QStringLiteral("Client path does not exist"));
-		return;
-	}
-
-	// If using global config, just start
-	if (settings.spotify.global_config && clientType == lib::client_type::spotifyd)
-	{
-		process->start(path, QStringList({QStringLiteral("--no-daemon")}));
-		emit statusChanged({});
 		return;
 	}
 
@@ -92,15 +84,6 @@ void SpotifyClient::Runner::start()
 			return;
 		}
 
-		if (clientType == lib::client_type::spotifyd)
-		{
-			emit statusChanged(QStringLiteral(
-				"Logging in with spotifyd is currently not supported, "
-				"please login manually, or with another client to continue"
-			));
-			return;
-		}
-
 		arguments.append(QStringLiteral("--enable-oauth"));
 	}
 
@@ -109,25 +92,12 @@ void SpotifyClient::Runner::start()
 	const auto deviceName = QStringLiteral("%1@%2")
 		.arg(APP_NAME, QSysInfo::machineHostName());
 
-	// librespot specific
-	if (clientType == lib::client_type::librespot)
-	{
-		arguments.append({
-			"--name", deviceName,
-			"--initial-volume", initialVolume,
-			"--cache", QString::fromStdString(getCachePath().string()),
-			"--autoplay", "on",
-		});
-	}
-	else if (clientType == lib::client_type::spotifyd)
-	{
-		arguments.append({
-			"--no-daemon",
-			"--initial-volume", initialVolume,
-			"--device-name", deviceName,
-			"--cache-path", QString::fromStdString(getCachePath().string()),
-		});
-	}
+	arguments.append({
+		QStringLiteral("--name"), deviceName,
+		QStringLiteral("--initial-volume"), initialVolume,
+		QStringLiteral("--cache"), QString::fromStdString(getCachePath().string()),
+		QStringLiteral("--autoplay"), QStringLiteral("on"),
+	});
 
 	auto backend = QString::fromStdString(settings.spotify.backend);
 	if (!backend.isEmpty())
@@ -137,7 +107,7 @@ void SpotifyClient::Runner::start()
 		});
 	}
 
-	if (clientType == lib::client_type::librespot && settings.spotify.disable_discovery)
+	if (settings.spotify.disable_discovery)
 	{
 		arguments.append("--disable-discovery");
 	}
@@ -176,7 +146,7 @@ auto SpotifyClient::Runner::isRunning() const -> bool
 
 void SpotifyClient::Runner::logOutput(const QByteArray &output, QtMsgType logType)
 {
-	for (auto &line: QString(output).split('\n'))
+	for (const QString &line : QString(output).split(QChar::fromLatin1('\n')))
 	{
 		if (line.isEmpty())
 		{
@@ -189,7 +159,7 @@ void SpotifyClient::Runner::logOutput(const QByteArray &output, QtMsgType logTyp
 		if (urlIndex >= 0)
 		{
 			const auto url = line.right(line.length() - urlIndex);
-			auto *parent = qobject_cast<QWidget *>(QObject::parent());
+			auto *parent = qobject_cast<QWidget*>(QObject::parent());
 			Url::open(url, LinkType::Web, parent);
 		}
 

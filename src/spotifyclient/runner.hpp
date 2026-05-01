@@ -1,18 +1,12 @@
 #pragma once
 
-#include "lib/enum/clienttype.hpp"
 #include "lib/settings.hpp"
 #include "lib/logmessage.hpp"
 
-#include "spotifyclient/helper.hpp"
-
-#include <QDateTime>
 #include <QFileInfo>
 #include <QInputDialog>
 #include <QList>
 #include <QProcess>
-#include <QRegularExpression>
-#include <QStringList>
 
 namespace SpotifyClient
 {
@@ -46,7 +40,6 @@ namespace SpotifyClient
 		static QList<LogMessage> log;
 		const lib::settings &settings;
 		const lib::paths &paths;
-		lib::client_type clientType;
 
 		void logOutput(const QByteArray &output, QtMsgType logType);
 		static auto joinArgs(const QStringList &args) -> QString;
