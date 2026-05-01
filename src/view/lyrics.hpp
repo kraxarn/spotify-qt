@@ -24,13 +24,20 @@ namespace View
 
 		void open(unsigned int lyricsId);
 
+		void setAutoUpdate(bool enabled);
+		auto getCurrentTrack() const -> lib::spt::track;
+
+		void clear();
+
 	private:
 		static constexpr int timestampRole = 0x100;
+		bool autoUpdate = false;
 		static constexpr float creditsFontScale = 0.9F;
 
 		lib::cache &cache;
 		LyricsApi lyrics;
 		lib::spt::track currentTrack;
+		unsigned int currentLyricsId = 0;
 
 		QLabel *status;
 		QListWidget *lyricsList;
