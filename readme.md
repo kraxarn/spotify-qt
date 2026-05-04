@@ -29,8 +29,9 @@ configured from within the app.
 
 ## Supported platforms
 
-Any system with a C++17 compiler and Qt 6 is supported, but only Linux (x64) and macOS (arm64)
-are regularly being tested, so if an issue occurs on your favorite platform, please report it.
+Any system with a C++17 compiler and Qt 6 is supported, but only Linux
+(x86-64 and aarch64) is regularly being tested, so if an issue occurs on your
+preferred platform, please report it!
 
 ## Installing
 
