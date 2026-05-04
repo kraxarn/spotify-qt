@@ -53,6 +53,12 @@ void View::Lyrics::open(const lib::spt::track &track)
 
 	lyrics.get(track, [this, track](const Result<::Lyrics> &result)
 	{
+		// Probably closed before it loaded
+		if (!isVisible())
+		{
+			return;
+		}
+
 		if (!result.success())
 		{
 			status->setText(result.message());
