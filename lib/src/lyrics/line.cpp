@@ -23,7 +23,7 @@ LyricsLine::LyricsLine(const QString &line)
 	}
 	else if (timestampEnd >= 0 && mTimestamp > 0)
 	{
-		mText = line.mid(timestampEnd + 2);
+		mText = line.mid(timestampEnd + 1).trimmed();
 	}
 	else
 	{
