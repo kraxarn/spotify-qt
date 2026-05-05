@@ -21,7 +21,7 @@ LyricsLine::LyricsLine(const QString &line)
 	{
 		mText = QStringLiteral("♪");
 	}
-	else if (timestampEnd >= 0 && mTimestamp > 0)
+	else if (timestampEnd >= 0 && mTimestamp >= 0)
 	{
 		mText = line.mid(timestampEnd + 1).trimmed();
 	}
