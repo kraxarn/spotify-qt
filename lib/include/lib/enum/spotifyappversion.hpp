@@ -1,8 +1,6 @@
 #pragma once
 
-#include <QtTypes>
-
-enum struct SpotifyAppVersion: quint8
+enum struct SpotifyAppVersion: unsigned char
 {
 	Unknown = 0,
 
