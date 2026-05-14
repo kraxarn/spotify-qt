@@ -1,21 +1,34 @@
 #pragma once
 
+#include "lib/spotifyappstatus.hpp"
+#include "lib/enum/spotifyappversion.hpp"
 #include "util/systeminfo.hpp"
 
 #include <QFile>
 #include <QLabel>
 #include <QPushButton>
 #include <QTextEdit>
-#include <QVBoxLayout>
 
-class SystemInfoView: public QWidget
+class SystemInfoView : public QWidget
 {
-Q_OBJECT
+	Q_OBJECT
 
 public:
-	explicit SystemInfoView(QWidget *parent = nullptr);
+	SystemInfoView(const lib::settings &settings, QWidget *parent);
+
+protected:
+	void showEvent(QShowEvent *event) override;
 
 private:
-	auto systemInfo() -> lib::qt::system_info;
+	SpotifyAppStatus *appStatus;
+	QTextEdit *textInfo;
+
+	SpotifyAppVersion appVersion;
+
+	[[nodiscard]]
+	auto systemInfo() const -> lib::qt::system_info;
+
 	void copyToClipboard(bool checked);
+
+	void onAppStatusVersionFinished(SpotifyAppVersion version);
 };

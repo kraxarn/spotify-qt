@@ -20,7 +20,7 @@ SettingsPage::Troubleshoot::Troubleshoot(lib::settings &settings,
 
 auto SettingsPage::Troubleshoot::systemInfo() -> QWidget *
 {
-	return new SystemInfoView(this);
+	return new SystemInfoView(settings, this);
 }
 
 auto SettingsPage::Troubleshoot::configPreview() -> QWidget *
