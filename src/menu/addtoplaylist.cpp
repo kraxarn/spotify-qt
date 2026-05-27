@@ -69,13 +69,15 @@ void Menu::AddToPlaylist::onTriggered(QAction *action)
 	}
 }
 
-void Menu::AddToPlaylist::addToNewPlaylist()
+void Menu::AddToPlaylist::addToNewPlaylist() const
 {
-	auto *createPlaylist = new Dialog::CreatePlaylist(trackIds, spotify, window());
+	QWidget *window = MainWindow::find(parent());
+	auto *createPlaylist = new Dialog::CreatePlaylist(trackIds, spotify, window);
 	createPlaylist->open();
 }
 
-void Menu::AddToPlaylist::addToPlaylist(const lib::spt::playlist &playlist)
+void Menu::AddToPlaylist::addToPlaylist(const lib::spt::playlist &playlist) const
 {
-	Dialog::AddToPlaylist::ask(spotify, playlist, trackIds, window());
+	QWidget *window = MainWindow::find(parent());
+	Dialog::AddToPlaylist::ask(spotify, playlist, trackIds, window);
 }

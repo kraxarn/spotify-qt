@@ -25,7 +25,7 @@ namespace Menu
 		void onAboutToShow();
 		void onTriggered(QAction *action);
 
-		void addToNewPlaylist();
-		void addToPlaylist(const lib::spt::playlist &playlist);
+		void addToNewPlaylist() const;
+		void addToPlaylist(const lib::spt::playlist &playlist) const;
 	};
 }
