@@ -2,6 +2,9 @@
 
 #include "mainwindow.hpp"
 #include "util/font.hpp"
+#include <qcheckbox.h>
+#include <qcoreapplication.h>
+#include <qlabel.h>
 
 SettingsPage::Application::Application(lib::settings &settings, QWidget *parent)
 	: SettingsPage::Base(settings, parent)
@@ -117,6 +120,11 @@ auto SettingsPage::Application::app() -> QWidget *
 	ignoreUnavailableIndex->setChecked(settings.general.ignore_unavailable_index);
 	layout->addWidget(ignoreUnavailableIndex);
 
+	refreshWhenActive = new QCheckBox(QStringLiteral("Only refresh when active"), this);
+	refreshWhenActive->setToolTip(QStringLiteral("Only refresh the playback state when the window is active"));
+	refreshWhenActive->setChecked(settings.general.refresh_when_active);
+	layout->addWidget(refreshWhenActive);
+
 	return Widget::layoutToWidget(layout, this);
 }
 
@@ -229,6 +237,12 @@ auto SettingsPage::Application::saveGeneral() -> bool
 			success = false;
 		}
 		settings.general.refresh_interval = interval;
+	}
+
+	// Refresh when active
+	{
+		auto checked = refreshWhenActive->isChecked();
+		settings.general.refresh_when_active = checked;
 	}
 
 	// Max queue

@@ -100,6 +100,11 @@ namespace lib
 			int refresh_interval = 3;
 
 			/**
+			 * Whether to only refresh the window when it's active
+			 */
+			bool refresh_when_active = false;
+
+			/**
 			 * How to resize track list headers
 			 */
 			lib::resize_mode track_list_resize_mode = lib::resize_mode::auto_size;
