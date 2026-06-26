@@ -2,9 +2,6 @@
 
 #include "mainwindow.hpp"
 #include "util/font.hpp"
-#include <qcheckbox.h>
-#include <qcoreapplication.h>
-#include <qlabel.h>
 
 SettingsPage::Application::Application(lib::settings &settings, QWidget *parent)
 	: SettingsPage::Base(settings, parent)
