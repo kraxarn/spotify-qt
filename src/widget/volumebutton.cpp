@@ -68,9 +68,6 @@ void VolumeButton::update(const int value)
 
 	volumeUp->setEnabled(value < maximum);
 	volumeDown->setEnabled(value > minimum);
-
-	settings.spotify.volume = value * step;
-	settings.save();
 }
 
 auto VolumeButton::getVolumeIcon(int value) -> QIcon
@@ -129,6 +126,9 @@ void VolumeButton::onMenuAboutToShow()
 void VolumeButton::onMenuAboutToHide()
 {
 	changing = false;
+
+	settings.spotify.volume = volume->value() * step;
+	settings.save();
 }
 
 void VolumeButton::onVolumeUp(bool /*checked*/)
