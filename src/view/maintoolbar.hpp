@@ -21,7 +21,7 @@ public:
 	MainToolBar(lib::spt::api &spotify, lib::settings &settings,
 		const HttpClient &httpClient, lib::cache &cache, QWidget *parent);
 
-	void showTitleBarButtons(bool show);
+	void showTitleBarButtons(bool show) const;
 	void setPlaying(bool playing);
 	void setProgress(const lib::spt::playback &playback);
 	void setVolume(int volume);
@@ -39,7 +39,7 @@ protected:
 	void showEvent(QShowEvent *event) override;
 
 private:
-	void updateSpacerSizes();
+	void updateSpacerSizes() const;
 	void setProgress(int current, int duration);
 	auto isPlaying() const -> bool;
 

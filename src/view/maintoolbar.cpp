@@ -168,27 +168,19 @@ void MainToolBar::showEvent(QShowEvent */*event*/)
 	updateSpacerSizes();
 }
 
-void MainToolBar::showTitleBarButtons(bool show)
+void MainToolBar::showTitleBarButtons(const bool show) const
 {
 	titleBarSeparator->setVisible(show);
 
 	minimize->setVisible(show);
 	close->setVisible(show);
-
-	leftSpacer->setVisible(show);
-	rightSpacer->setVisible(show);
 }
 
-void MainToolBar::updateSpacerSizes()
+void MainToolBar::updateSpacerSizes() const
 {
-	if (!leftSpacer->isVisible()
-		&& !rightSpacer->isVisible())
-	{
-		return;
-	}
-
-	const auto width = size().width();
-	const auto spacerWidth = width / 6;
+	const int spacerWidth = close->isVisible()
+		? size().width() / 6 // App titlebar
+		: menu->width() / 2; // System titlebar
 
 	leftSpacer->setMinimumWidth(spacerWidth);
 	rightSpacer->setMinimumWidth(spacerWidth);
