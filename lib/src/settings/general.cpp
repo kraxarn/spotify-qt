@@ -26,6 +26,7 @@ void lib::setting::to_json(nlohmann::json &j, const general &g)
 		{"tray_album_art", g.tray_album_art},
 		{"tray_icon", g.tray_icon},
 		{"tray_light_icon", g.tray_light_icon},
+		{"tray_system_icon", g.tray_system_icon},
 	};
 
 #ifdef _WIN32
@@ -63,6 +64,7 @@ void lib::setting::from_json(const nlohmann::json &j, general &g)
 	lib::json::get(j, "tray_album_art", g.tray_album_art);
 	lib::json::get(j, "tray_icon", g.tray_icon);
 	lib::json::get(j, "tray_light_icon", g.tray_light_icon);
+	lib::json::get(j, "tray_system_icon", g.tray_system_icon);
 
 #ifdef _WIN32
 	lib::json::get(j, "media_hotkeys", g.media_hotkeys);

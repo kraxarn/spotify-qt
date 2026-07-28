@@ -95,6 +95,11 @@ namespace lib
 			bool tray_light_icon = false;
 
 			/**
+			 * Use system icon for tray icon
+			 */
+			bool tray_system_icon = false;
+
+			/**
 			 * How often to refresh in seconds
 			 */
 			int refresh_interval = 3;

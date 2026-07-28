@@ -91,7 +91,7 @@ void TrayIcon::message(const lib::spt::track &track, const QPixmap &pixmap)
 
 auto TrayIcon::playback() -> lib::spt::playback
 {
-	auto *mainWindow = qobject_cast<MainWindow *>(this->parent());
+	auto *mainWindow = qobject_cast<MainWindow*>(this->parent());
 	if (mainWindow == nullptr)
 	{
 		return {};
@@ -107,17 +107,30 @@ void TrayIcon::setPixmap(const QPixmap &pixmap)
 
 void TrayIcon::setDefaultPixmap()
 {
-	constexpr int iconSize = 64;
+	QIcon icon;
 
-	setIcon(Icon::get(QString("logo:%1-symbolic-%2")
-		.arg(APP_ICON)
-		.arg(settings.general.tray_light_icon ? "light" : "dark"))
-		.pixmap(iconSize, iconSize));
+	if (settings.general.tray_system_icon)
+	{
+		// Use QIcon directly to avoid automatic fallback
+		icon = QIcon::fromTheme(QStringLiteral("%1-symbolic")
+			.arg(QStringLiteral(APP_NAME)));
+	}
+
+	if (icon.isNull())
+	{
+		icon = Icon::get(QStringLiteral("logo:%1-symbolic-%2")
+			.arg(QStringLiteral(APP_ICON))
+			.arg(settings.general.tray_light_icon
+				? QStringLiteral("light")
+				: QStringLiteral("dark")));
+	}
+
+	setIcon(icon);
 }
 
 void TrayIcon::showWindow()
 {
-	auto *parentWidget = qobject_cast<QWidget *>(parent());
+	auto *parentWidget = qobject_cast<QWidget*>(parent());
 	if (parentWidget != nullptr)
 	{
 		parentWidget->setVisible(!parentWidget->isVisible());
@@ -179,7 +192,7 @@ void TrayIcon::onMenuAboutToShow()
 #ifdef __APPLE__
 	if (showApp != nullptr)
 	{
-		auto *parentWidget = qobject_cast<QWidget *>(parent());
+		auto *parentWidget = qobject_cast<QWidget*>(parent());
 		if (parentWidget != nullptr)
 		{
 			showApp->setText(parentWidget->isVisible()

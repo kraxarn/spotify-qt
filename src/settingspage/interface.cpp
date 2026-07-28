@@ -2,14 +2,18 @@
 #include "mainwindow.hpp"
 #include "lib/system.hpp"
 #include "util/appconfig.hpp"
+#include "util/http.hpp"
 #include "util/widget.hpp"
 
 #include <QFontDialog>
 #include <QSettings>
 #include <QStandardPaths>
 
-SettingsPage::Interface::Interface(lib::settings &settings, QWidget *parent)
-	: SettingsPage::Base(settings, parent)
+SettingsPage::Interface::Interface(lib::settings &settings, const HttpClient &httpClient,
+	lib::cache &cache, QWidget *parent)
+	: Base(settings, parent),
+	httpClient(httpClient),
+	cache(cache)
 {
 	addTab(general(), "General");
 	addTab(appearance(), "Appearance");
@@ -206,31 +210,48 @@ auto SettingsPage::Interface::trayIcon() -> QWidget *
 	content->addWidget(trayEnabled);
 
 	// Container for options
-	auto *trayOptions = new QVBoxLayout();
+	auto *trayOptions = new QGridLayout();
 	trayEnabled->setLayout(trayOptions);
+	int row = -1;
 
-	// Invert tray icon
-	invertTrayIcon = new QCheckBox("Invert icon", this);
-	invertTrayIcon->setToolTip("Invert colors in tray icon to be visible on light backgrounds");
-	invertTrayIcon->setChecked(settings.general.tray_light_icon);
-	trayOptions->addWidget(invertTrayIcon);
+	// Tray icon type
+	auto *trayIconTypeLabel = new QLabel(QStringLiteral("Icon type"), this);
+	trayOptions->addWidget(trayIconTypeLabel, ++row, 0);
 
-	// Album art in tray
-	albumInTray = new QCheckBox("Album art as icon", this);
-	albumInTray->setToolTip("Show album art of current track in tray icon");
-	albumInTray->setChecked(settings.general.tray_album_art);
-	trayOptions->addWidget(albumInTray);
+	trayIconType = new QComboBox(this);
+	trayOptions->addWidget(trayIconType, row, 1);
+
+	const QIcon lightIcon = Icon::get(QStringLiteral("logo:%1-symbolic-dark")
+		.arg(QStringLiteral(APP_NAME)));
+	trayIconType->addItem(lightIcon, QStringLiteral("Light (default)"));
+
+	const QIcon darkIcon = Icon::get(QStringLiteral("logo:%1-symbolic-light")
+		.arg(QStringLiteral(APP_NAME)));
+	trayIconType->addItem(darkIcon, QStringLiteral("Dark"));
+
+	trayIconType->addItem(QStringLiteral("Album art"));
+	albumArtIcon([this](const QIcon &icon) -> void
+	{
+		trayIconType->setItemIcon(2, icon);
+	});
+
+	const QIcon systemIcon = Icon::get(QStringLiteral("%1-symbolic")
+		.arg(QStringLiteral(APP_NAME)));
+	if (!systemIcon.isNull())
+	{
+		trayIconType->addItem(systemIcon, QStringLiteral("System themed icon"));
+	}
 
 	// Notify on track change
 	notifyTrackChange = new QCheckBox("Show notification on track change", this);
 	notifyTrackChange->setToolTip("Show desktop notification when a new track starts playing");
 	notifyTrackChange->setChecked(settings.general.notify_track_change);
-	trayOptions->addWidget(notifyTrackChange);
+	trayOptions->addWidget(notifyTrackChange, ++row, 0, 1, 2);
 
 	closeToTray = new QCheckBox(QStringLiteral("Close to system tray instead of quitting"), this);
 	closeToTray->setToolTip(QStringLiteral("Keep the app running in the tray after closing"));
 	closeToTray->setChecked(settings.general.close_to_tray);
-	trayOptions->addWidget(closeToTray);
+	trayOptions->addWidget(closeToTray, ++row, 0, 1, 2);
 
 	return Widget::layoutToWidget(content, this);
 }
@@ -421,24 +442,38 @@ void SettingsPage::Interface::saveAppearance()
 void SettingsPage::Interface::saveTrayIcon()
 {
 	// Check if tray icon needs to be reloaded
-	auto reloadTray = trayEnabled != nullptr
-		&& invertTrayIcon != nullptr
-		&& (settings.general.tray_icon != trayEnabled->isChecked()
-			|| settings.general.tray_light_icon != invertTrayIcon->isChecked());
+	bool reloadTray = trayEnabled != nullptr
+		&& trayIconType != nullptr
+		&& settings.general.tray_icon != trayEnabled->isChecked();
 
 	if (trayEnabled != nullptr)
 	{
 		settings.general.tray_icon = trayEnabled->isChecked();
 	}
 
-	if (albumInTray != nullptr)
+	if (trayIconType != nullptr)
 	{
-		settings.general.tray_album_art = albumInTray->isChecked();
-	}
+		/*
+		 * [0] Light (dark icon)
+		 * [1] Dark (light icon)
+		 * [2] Album art
+		 * [3] System
+		 */
+		const int iconType = trayIconType->currentIndex();
+		const bool isLightIcon = iconType == 1;
+		const bool isAlbumIcon = iconType == 2;
+		const bool isSystemIcon = iconType == 3;
 
-	if (invertTrayIcon != nullptr)
-	{
-		settings.general.tray_light_icon = invertTrayIcon->isChecked();
+		if (settings.general.tray_light_icon != isLightIcon
+			|| settings.general.tray_album_art != isAlbumIcon
+			|| settings.general.tray_system_icon != isSystemIcon)
+		{
+			reloadTray = true;
+		}
+
+		settings.general.tray_light_icon = isLightIcon;
+		settings.general.tray_album_art = isAlbumIcon;
+		settings.general.tray_system_icon = isSystemIcon;
 	}
 
 	if (notifyTrackChange != nullptr)
@@ -615,4 +650,27 @@ auto SettingsPage::Interface::getDefaultFontName() -> QString
 auto SettingsPage::Interface::getDefaultFont() -> QFont
 {
 	return QFontDatabase::systemFont(QFontDatabase::GeneralFont);
+}
+
+void SettingsPage::Interface::albumArtIcon(ApiCallback<QIcon> &callback) const
+{
+	const MainWindow *mainWindow = MainWindow::find(parent());
+	if (mainWindow == nullptr)
+	{
+		callback({});
+		return;
+	}
+
+	const lib::spt::playback &playback = mainWindow->playback();
+	if (!playback.is_valid())
+	{
+		callback({});
+		return;
+	}
+
+	Http::getAlbumImage(playback.item.image_small(), httpClient,
+		cache, false, [this, callback](const QPixmap &image) -> void
+		{
+			callback(Image::mask(image, settings.qt().album_shape));
+		});
 }

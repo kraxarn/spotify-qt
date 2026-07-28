@@ -21,9 +21,9 @@ Dialog::Settings::Settings(lib::settings &settings, lib::cache &cache,
 	// List of categories
 	stack = new QStackedWidget(this);
 	categories = new QListWidget(this);
-	pages = QList<SettingsPage::Base *>({
+	pages = QList<SettingsPage::Base*>({
 		new SettingsPage::Application(settings, this),
-		new SettingsPage::Interface(settings, this),
+		new SettingsPage::Interface(settings, httpClient, cache, this),
 		new SettingsPage::Spotify(settings, this),
 		new SettingsPage::Playlists(settings, this),
 		new SettingsPage::Logs(settings, this),
@@ -31,7 +31,7 @@ Dialog::Settings::Settings(lib::settings &settings, lib::cache &cache,
 		new SettingsPage::About(settings, httpClient, this),
 	});
 
-	for (auto &page: pages)
+	for (auto &page : pages)
 	{
 		new QListWidgetItem(page->icon(), page->title(), categories);
 		stack->addWidget(page);

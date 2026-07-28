@@ -1,11 +1,14 @@
 #pragma once
 
+#include "lib/cache.hpp"
+#include "lib/httpclient.hpp"
+#include "lib/spotify/callback.hpp"
 #include "settingspage/base.hpp"
 #include "util/icon.hpp"
 #include "widget/albumshapecombobox.hpp"
 
-#include <QStyleFactory>
 #include <QGroupBox>
+#include <QStyleFactory>
 
 namespace SettingsPage
 {
@@ -14,13 +17,17 @@ namespace SettingsPage
 	Q_OBJECT
 
 	public:
-		Interface(lib::settings &settings, QWidget *parent);
+		Interface(lib::settings &settings, const HttpClient &httpClient,
+			lib::cache &cache, QWidget *parent);
 
 		auto icon() -> QIcon override;
 		auto title() -> QString override;
 		auto save() -> bool override;
 
 	private:
+		const HttpClient &httpClient;
+		lib::cache &cache;
+
 		// General
 		QComboBox *resizeMode = nullptr;
 		QComboBox *toolbarPosition = nullptr;
@@ -40,11 +47,10 @@ namespace SettingsPage
 
 		// Tray icon
 		QGroupBox *trayEnabled = nullptr;
-		QCheckBox *albumInTray = nullptr;
-		QCheckBox *invertTrayIcon = nullptr;
 		QCheckBox *notifyTrackChange = nullptr;
 		QCheckBox *expandAlbumCover = nullptr;
 		QCheckBox *closeToTray = nullptr;
+		QComboBox *trayIconType = nullptr;
 
 		// Title bar
 		QGroupBox *appTitleBar = nullptr;
@@ -73,5 +79,6 @@ namespace SettingsPage
 		static auto getFontName(const QFont &font) -> QString;
 		static auto getDefaultFontName() -> QString;
 		static auto getDefaultFont() -> QFont;
+		void albumArtIcon(const ApiCallback<QIcon> &callback) const;
 	};
 }
