@@ -1,6 +1,6 @@
 ## [doctest](https://github.com/doctest/doctest)
 
-v2.5.0, used for unit testing.
+v2.5.3, used for unit testing.
 
 ```
 The MIT License (MIT)
