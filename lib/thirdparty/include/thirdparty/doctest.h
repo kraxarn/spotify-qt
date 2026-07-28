@@ -52,7 +52,7 @@
 // NOLINTBEGIN(cppcoreguidelines-macro-to-enum, modernize-macro-to-enum)
 #define DOCTEST_VERSION_MAJOR 2
 #define DOCTEST_VERSION_MINOR 5
-#define DOCTEST_VERSION_PATCH 0
+#define DOCTEST_VERSION_PATCH 3
 // NOLINTEND(cppcoreguidelines-macro-to-enum, modernize-macro-to-enum)
 
 // util we need here
@@ -256,7 +256,6 @@
     DOCTEST_CLANG_SUPPRESS_WARNING("-Wmissing-field-initializers")                                                     \
     DOCTEST_CLANG_SUPPRESS_WARNING("-Wunused-member-function")                                                         \
     DOCTEST_CLANG_SUPPRESS_WARNING("-Wunused-function")                                                                \
-    DOCTEST_CLANG_SUPPRESS_WARNING("-Wnonportable-system-include-path")                                                \
     DOCTEST_CLANG_SUPPRESS_WARNING("-Wnrvo")                                                                           \
                                                                                                                        \
     DOCTEST_GCC_SUPPRESS_WARNING("-Wconversion")                                                                       \
@@ -283,29 +282,6 @@
     DOCTEST_MSVC_SUPPRESS_WARNING(5245) /* unreferenced function with internal linkage removed */
 
 #define DOCTEST_SUPPRESS_PRIVATE_WARNINGS_POP DOCTEST_SUPPRESS_COMMON_WARNINGS_POP
-
-#define DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN                                                     \
-    DOCTEST_MSVC_SUPPRESS_WARNING_PUSH                                                                                 \
-    DOCTEST_MSVC_SUPPRESS_WARNING(4548) /* before comma no effect; expected side - effect */                           \
-    DOCTEST_MSVC_SUPPRESS_WARNING(4265) /* virtual functions, but destructor is not virtual */                         \
-    DOCTEST_MSVC_SUPPRESS_WARNING(4986) /* exception specification does not match previous */                          \
-    DOCTEST_MSVC_SUPPRESS_WARNING(4350) /* 'member1' called instead of 'member2' */                                    \
-    DOCTEST_MSVC_SUPPRESS_WARNING(4668) /* not defined as a preprocessor macro */                                      \
-    DOCTEST_MSVC_SUPPRESS_WARNING(4365) /* signed/unsigned mismatch */                                                 \
-    DOCTEST_MSVC_SUPPRESS_WARNING(4774) /* format string not a string literal */                                       \
-    DOCTEST_MSVC_SUPPRESS_WARNING(4820) /* padding */                                                                  \
-    DOCTEST_MSVC_SUPPRESS_WARNING(4625) /* copy constructor was implicitly deleted */                                  \
-    DOCTEST_MSVC_SUPPRESS_WARNING(4626) /* assignment operator was implicitly deleted */                               \
-    DOCTEST_MSVC_SUPPRESS_WARNING(5027) /* move assignment operator implicitly deleted */                              \
-    DOCTEST_MSVC_SUPPRESS_WARNING(5026) /* move constructor was implicitly deleted */                                  \
-    DOCTEST_MSVC_SUPPRESS_WARNING(4623) /* default constructor was implicitly deleted */                               \
-    DOCTEST_MSVC_SUPPRESS_WARNING(5039) /* pointer to pot. throwing function passed to extern C */                     \
-    DOCTEST_MSVC_SUPPRESS_WARNING(5045) /* Spectre mitigation for memory load */                                       \
-    DOCTEST_MSVC_SUPPRESS_WARNING(5105) /* macro producing 'defined' has undefined behavior */                         \
-    DOCTEST_MSVC_SUPPRESS_WARNING(4738) /* storing float result in memory, loss of performance */                      \
-    DOCTEST_MSVC_SUPPRESS_WARNING(5262) /* implicit fall-through */
-
-#define DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END DOCTEST_MSVC_SUPPRESS_WARNING_POP
 
 #endif // DOCTEST_PARTS_PUBLIC_WARNINGS
 
@@ -362,14 +338,19 @@ DOCTEST_SUPPRESS_PUBLIC_WARNINGS_PUSH
 
 // Universal Windows Platform support
 #if defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_APP)
+#ifndef DOCTEST_CONFIG_NO_WINDOWS_SEH
 #define DOCTEST_CONFIG_NO_WINDOWS_SEH
-#endif // WINAPI_FAMILY
+#endif
+#ifndef DOCTEST_CONFIG_NO_MULTI_LANE_ATOMICS
+#define DOCTEST_CONFIG_NO_MULTI_LANE_ATOMICS
+#endif
+#endif // defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_APP)
 #if DOCTEST_MSVC && !defined(DOCTEST_CONFIG_WINDOWS_SEH)
 #define DOCTEST_CONFIG_WINDOWS_SEH
-#endif // MSVC
+#endif // DOCTEST_MSVC && !defined(DOCTEST_CONFIG_WINDOWS_SEH)
 #if defined(DOCTEST_CONFIG_NO_WINDOWS_SEH) && defined(DOCTEST_CONFIG_WINDOWS_SEH)
 #undef DOCTEST_CONFIG_WINDOWS_SEH
-#endif // DOCTEST_CONFIG_NO_WINDOWS_SEH
+#endif // defined(DOCTEST_CONFIG_NO_WINDOWS_SEH) && defined(DOCTEST_CONFIG_WINDOWS_SEH)
 
 #if !defined(_WIN32) && !defined(__QNX__) && !defined(DOCTEST_CONFIG_POSIX_SIGNALS) && !defined(__EMSCRIPTEN__) &&     \
     !defined(__wasi__)
@@ -505,13 +486,11 @@ DOCTEST_SUPPRESS_PUBLIC_WARNINGS_PUSH
 // https://github.com/doctest/doctest/issues/126
 // https://github.com/doctest/doctest/issues/356
 #if DOCTEST_CLANG
-DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 #if DOCTEST_CPLUSPLUS >= 201703L && __has_include(<version>)
 #include <version>
 #else
 #include <ciso646>
 #endif
-DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 #endif // clang
 
 #ifdef _LIBCPP_VERSION
@@ -607,9 +586,7 @@ DOCTEST_SUPPRESS_PUBLIC_WARNINGS_POP
 // Break at the location of the failing check if possible
 #define DOCTEST_BREAK_INTO_DEBUGGER() __asm__("int $3\n" ::) // NOLINT(hicpp-no-assembler)
 #else
-DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 #include <signal.h>
-DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 #define DOCTEST_BREAK_INTO_DEBUGGER() raise(SIGTRAP)
 #endif
 
@@ -655,15 +632,14 @@ DOCTEST_INTERFACE bool isDebuggerActive();
 DOCTEST_SUPPRESS_PUBLIC_WARNINGS_PUSH
 
 #ifdef DOCTEST_CONFIG_USE_STD_HEADERS
-DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 #include <cstddef>
 #include <ostream>
 #include <istream>
-DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 #else // DOCTEST_CONFIG_USE_STD_HEADERS
 
-// Forward declaring 'X' in namespace std is not permitted by the C++ Standard.
-DOCTEST_MSVC_SUPPRESS_WARNING_WITH_PUSH(4643)
+DOCTEST_MSVC_SUPPRESS_WARNING_PUSH
+DOCTEST_MSVC_SUPPRESS_WARNING(4643) // Forward declaring 'X' in namespace std is not permitted by the C++ Standard.
+DOCTEST_MSVC_SUPPRESS_WARNING(5285) // Cannot declare a specialization for 'template name': template argument.
 
 // NOLINTBEGIN(bugprone-std-namespace-modification, cert-dcl58-cpp)
 namespace std {
@@ -683,7 +659,9 @@ template <class charT, class traits>
 class basic_istream;
 typedef basic_istream<char, char_traits<char>> istream; // NOLINT(modernize-use-using)
 template <class... Types>
+DOCTEST_MSVC_SUPPRESS_WARNING_WITH_PUSH(5285) // Specializing template std::tuple is forbidden
 class tuple;
+DOCTEST_MSVC_SUPPRESS_WARNING_POP
 #if DOCTEST_MSVC >= DOCTEST_COMPILER(19, 20, 0)
 // see this issue on why this is needed: https://github.com/doctest/doctest/issues/183
 template <class Ty>
@@ -713,9 +691,7 @@ DOCTEST_SUPPRESS_PUBLIC_WARNINGS_POP
 DOCTEST_SUPPRESS_PUBLIC_WARNINGS_PUSH
 
 #ifdef DOCTEST_CONFIG_INCLUDE_TYPE_TRAITS
-DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 #include <type_traits>
-DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 #endif // DOCTEST_CONFIG_INCLUDE_TYPE_TRAITS
 
 namespace doctest {
@@ -1704,6 +1680,24 @@ DOCTEST_SUPPRESS_PUBLIC_WARNINGS_PUSH
 
 #ifndef DOCTEST_CONFIG_DISABLE
 
+#ifndef DOCTEST_CONFIG_NO_COMPARISON_WARNING_SUPPRESSION
+
+DOCTEST_CLANG_SUPPRESS_WARNING_PUSH
+DOCTEST_CLANG_SUPPRESS_WARNING("-Wsign-conversion")
+DOCTEST_CLANG_SUPPRESS_WARNING("-Wsign-compare")
+
+DOCTEST_GCC_SUPPRESS_WARNING_PUSH
+DOCTEST_GCC_SUPPRESS_WARNING("-Wsign-conversion")
+DOCTEST_GCC_SUPPRESS_WARNING("-Wsign-compare")
+
+DOCTEST_MSVC_SUPPRESS_WARNING_PUSH
+// https://stackoverflow.com/questions/39479163 what's the difference between 4018 and 4389
+DOCTEST_MSVC_SUPPRESS_WARNING(4388) // signed/unsigned mismatch
+DOCTEST_MSVC_SUPPRESS_WARNING(4389) // 'operator' : signed/unsigned mismatch
+DOCTEST_MSVC_SUPPRESS_WARNING(4018) // 'expression' : signed/unsigned mismatch
+
+#endif // DOCTEST_CONFIG_NO_COMPARISON_WARNING_SUPPRESSION
+
 namespace doctest {
 namespace detail {
 
@@ -1781,6 +1775,14 @@ DOCTEST_BINARY_RELATIONAL_OP(2, doctest::detail::gt)
 DOCTEST_BINARY_RELATIONAL_OP(3, doctest::detail::lt)
 DOCTEST_BINARY_RELATIONAL_OP(4, doctest::detail::ge)
 DOCTEST_BINARY_RELATIONAL_OP(5, doctest::detail::le)
+
+#ifndef DOCTEST_CONFIG_NO_COMPARISON_WARNING_SUPPRESSION
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+DOCTEST_GCC_SUPPRESS_WARNING_POP
+DOCTEST_MSVC_SUPPRESS_WARNING_POP
+
+#endif // DOCTEST_CONFIG_NO_COMPARISON_WARNING_SUPPRESSION
 
 } // namespace detail
 } // namespace doctest
@@ -3905,8 +3907,6 @@ DOCTEST_CLANG_SUPPRESS_WARNING_POP
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 
-DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
-
 // required includes - will go only in one translation unit!
 #include <ctime>
 #include <cmath>
@@ -3946,9 +3946,6 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 #include <unordered_set>
 #include <exception>
 #include <stdexcept>
-#if defined(DOCTEST_CONFIG_POSIX_SIGNALS) || defined(DOCTEST_CONFIG_WINDOWS_SEH)
-#include <csignal>
-#endif // DOCTEST_CONFIG_POSIX_SIGNALS
 #include <cfloat>
 #include <cctype>
 #include <cstdint>
@@ -3960,49 +3957,10 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 #include <sys/sysctl.h>
 #endif // DOCTEST_PLATFORM_MAC
 
-#ifdef DOCTEST_PLATFORM_WINDOWS
-
-// defines for a leaner windows.h
-#ifndef WIN32_LEAN_AND_MEAN
-#define WIN32_LEAN_AND_MEAN
-#define DOCTEST_UNDEF_WIN32_LEAN_AND_MEAN
-#endif // WIN32_LEAN_AND_MEAN
-#ifndef NOMINMAX
-#define NOMINMAX
-#define DOCTEST_UNDEF_NOMINMAX
-#endif // NOMINMAX
-
-// not sure what AfxWin.h is for - here I do what Catch does
-#ifdef __AFXDLL
-#include <AfxWin.h>
-#else
-#include <windows.h>
-#endif
-#include <io.h>
-
-#ifdef DOCTEST_UNDEF_WIN32_LEAN_AND_MEAN
-#undef WIN32_LEAN_AND_MEAN
-#undef DOCTEST_UNDEF_WIN32_LEAN_AND_MEAN
-#endif // DOCTEST_UNDEF_WIN32_LEAN_AND_MEAN
-#ifdef DOCTEST_UNDEF_NOMINMAX
-#undef NOMINMAX
-#undef DOCTEST_UNDEF_NOMINMAX
-#endif // DOCTEST_UNDEF_NOMINMAX
-
-#else // DOCTEST_PLATFORM_WINDOWS
-
+#ifndef DOCTEST_PLATFORM_WINDOWS
 #include <sys/time.h>
 #include <unistd.h>
-
 #endif // DOCTEST_PLATFORM_WINDOWS
-
-// this is a fix for https://github.com/doctest/doctest/issues/348
-// https://mail.gnome.org/archives/xml/2012-January/msg00000.html
-#if !defined(HAVE_UNISTD_H) && !defined(STDOUT_FILENO)
-#define STDOUT_FILENO fileno(stdout)
-#endif // HAVE_UNISTD_H
-
-DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 // counts the number of elements in a C array
 #define DOCTEST_COUNTOF(x) (sizeof(x) / sizeof(x[0]))
@@ -4029,14 +3987,6 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 #define DOCTEST_MULTI_LANE_ATOMICS_CACHE_LINE_SIZE 64
 #endif
 
-#if defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_APP)
-#define DOCTEST_CONFIG_NO_MULTI_LANE_ATOMICS
-#endif
-
-#ifndef DOCTEST_CDECL
-#define DOCTEST_CDECL __cdecl
-#endif
-
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_POP
 
 #endif // DOCTEST_PARTS_PRIVATE_PRELUDE
@@ -4054,18 +4004,7 @@ DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 namespace doctest {
 namespace detail {
 
-namespace timer_large_integer {
-
-#if defined(DOCTEST_PLATFORM_WINDOWS)
-using type = ULONGLONG;
-#else  // DOCTEST_PLATFORM_WINDOWS
-using type = std::uint64_t;
-#endif // DOCTEST_PLATFORM_WINDOWS
-} // namespace timer_large_integer
-
-using ticks_t = timer_large_integer::type;
-
-ticks_t getCurrentTicks();
+uint64_t getCurrentTicks();
 
 struct Timer {
     void start();
@@ -4073,7 +4012,7 @@ struct Timer {
     double getElapsedSeconds() const;
 
 private:
-    ticks_t m_ticks = 0;
+    uint64_t m_ticks = 0;
 };
 
 } // namespace detail
@@ -4401,10 +4340,6 @@ void addAssert(assertType::Enum at);
 
 void addFailedAssert(assertType::Enum at);
 
-#if defined(DOCTEST_CONFIG_POSIX_SIGNALS) || defined(DOCTEST_CONFIG_WINDOWS_SEH)
-void reportFatal(const std::string &message);
-#endif // DOCTEST_CONFIG_POSIX_SIGNALS || DOCTEST_CONFIG_WINDOWS_SEH
-
 } // namespace detail
 } // namespace doctest
 
@@ -4430,22 +4365,6 @@ void addFailedAssert(assertType::Enum at) {
     if ((at & assertType::is_warn) == 0)
         g_cs->numAssertsFailedCurrentTest_atomic++;
 }
-
-#if defined(DOCTEST_CONFIG_POSIX_SIGNALS) || defined(DOCTEST_CONFIG_WINDOWS_SEH)
-void reportFatal(const std::string &message) {
-    g_cs->failure_flags |= TestCaseFailureReason::Crash;
-
-    DOCTEST_ITERATE_THROUGH_REPORTERS(test_case_exception, {message.c_str(), true});
-
-    for (size_t i = g_cs->traversal.unwindActiveSubcases(); i > 0; --i)
-        DOCTEST_ITERATE_THROUGH_REPORTERS(subcase_end, DOCTEST_EMPTY);
-    g_cs->finalizeTestCaseData();
-
-    DOCTEST_ITERATE_THROUGH_REPORTERS(test_case_end, *g_cs);
-
-    DOCTEST_ITERATE_THROUGH_REPORTERS(test_run_end, *g_cs);
-}
-#endif // DOCTEST_CONFIG_POSIX_SIGNALS || DOCTEST_CONFIG_WINDOWS_SEH
 
 void failed_out_of_a_testing_context(const AssertData &ad) {
     if (g_cs->ah)
@@ -4637,6 +4556,14 @@ DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 namespace doctest {
 namespace detail {
 
+/**
+ * Compatibility wrapper around:
+ *   - std::uncaught_exception
+ *   - std::uncaught_exceptions
+ * ...depending on the availability of each function
+ */
+bool has_uncaught_exceptions();
+
 template <typename Ex>
 DOCTEST_NORETURN void throw_exception(const Ex &e) {
 #ifndef DOCTEST_CONFIG_NO_EXCEPTIONS
@@ -4729,6 +4656,71 @@ const char *failureString(assertType::Enum at) {
 } // namespace doctest
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_POP
+#ifndef DOCTEST_PARTS_PRIVATE_EXT_WINDOWS
+#define DOCTEST_PARTS_PRIVATE_EXT_WINDOWS
+
+
+// TODO: This wrapper should really be applied at the call site, but there's a bug in our Codecov
+//  setup causing conditional guards around includes to conflict with `--remap`.
+#ifdef DOCTEST_PLATFORM_WINDOWS
+
+// Internal windows headers require explicit supressions to handle `-weverything`.
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wnonportable-system-include-path")
+DOCTEST_MSVC_SUPPRESS_WARNING_PUSH
+DOCTEST_MSVC_SUPPRESS_WARNING(4265) // virtual functions, but destructor is not virtual
+DOCTEST_MSVC_SUPPRESS_WARNING(4350) // 'member1' called instead of 'member2'
+DOCTEST_MSVC_SUPPRESS_WARNING(4548) // before comma no effect; expected side - effect
+DOCTEST_MSVC_SUPPRESS_WARNING(4623) // default constructor was implicitly deleted
+DOCTEST_MSVC_SUPPRESS_WARNING(4625) // copy constructor was implicitly deleted
+DOCTEST_MSVC_SUPPRESS_WARNING(4626) // assignment operator was implicitly deleted
+DOCTEST_MSVC_SUPPRESS_WARNING(4668) // not defined as a preprocessor macro
+DOCTEST_MSVC_SUPPRESS_WARNING(4774) // format string not a string literal
+DOCTEST_MSVC_SUPPRESS_WARNING(4820) // padding
+DOCTEST_MSVC_SUPPRESS_WARNING(4865) // the underlying type will change if '/Zc:enumTypes' is passed
+DOCTEST_MSVC_SUPPRESS_WARNING(4986) // exception specification does not match previous
+DOCTEST_MSVC_SUPPRESS_WARNING(5026) // move constructor was implicitly deleted
+DOCTEST_MSVC_SUPPRESS_WARNING(5027) // move assignment operator implicitly deleted
+DOCTEST_MSVC_SUPPRESS_WARNING(5039) // pointer to pot. throwing function passed to extern C
+DOCTEST_MSVC_SUPPRESS_WARNING(5045) // Spectre mitigation for memory load
+DOCTEST_MSVC_SUPPRESS_WARNING(5105) // macro producing 'defined' has undefined behavior
+DOCTEST_MSVC_SUPPRESS_WARNING(5262) // implicit fall-through
+
+// defines for a leaner windows.h
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#define DOCTEST_UNDEF_WIN32_LEAN_AND_MEAN
+#endif
+#ifndef NOMINMAX
+#define NOMINMAX
+#define DOCTEST_UNDEF_NOMINMAX
+#endif
+
+// not sure what AfxWin.h is for - here I do what Catch does
+#ifdef __AFXDLL
+#include <AfxWin.h> // IWYU pragma: export
+#else
+#include <windows.h> // IWYU pragma: export
+#endif
+
+#ifdef DOCTEST_UNDEF_WIN32_LEAN_AND_MEAN
+#undef WIN32_LEAN_AND_MEAN
+#undef DOCTEST_UNDEF_WIN32_LEAN_AND_MEAN
+#endif
+#ifdef DOCTEST_UNDEF_NOMINMAX
+#undef NOMINMAX
+#undef DOCTEST_UNDEF_NOMINMAX
+#endif
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+DOCTEST_MSVC_SUPPRESS_WARNING_POP
+
+#endif // DOCTEST_PLATFORM_WINDOWS
+
+#endif // DOCTEST_PARTS_PRIVATE_EXT_WINDOWS
+
+#ifdef DOCTEST_PLATFORM_WINDOWS
+#include <io.h>
+#endif
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 
@@ -4741,6 +4733,12 @@ DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 #endif // platform
 #endif // DOCTEST_CONFIG_COLORS_WINDOWS && DOCTEST_CONFIG_COLORS_ANSI
 #endif // DOCTEST_CONFIG_COLORS_NONE
+
+// this is a fix for https://github.com/doctest/doctest/issues/348
+// https://mail.gnome.org/archives/xml/2012-January/msg00000.html
+#if !defined(HAVE_UNISTD_H) && !defined(STDOUT_FILENO)
+#define STDOUT_FILENO fileno(stdout)
+#endif // HAVE_UNISTD_H
 
 namespace doctest {
 
@@ -5065,6 +5063,12 @@ DOCTEST_SUPPRESS_PRIVATE_WARNINGS_POP
 #define DOCTEST_PARTS_PRIVATE_SIGNALS
 
 
+#if defined(DOCTEST_CONFIG_POSIX_SIGNALS) || defined(DOCTEST_CONFIG_WINDOWS_SEH)
+#ifndef DOCTEST_PLATFORM_WINDOWS
+#include <csignal>
+#endif
+#endif
+
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 
 #ifndef DOCTEST_CONFIG_DISABLE
@@ -5080,7 +5084,13 @@ struct FatalConditionHandler {
 };
 #else // DOCTEST_CONFIG_POSIX_SIGNALS || DOCTEST_CONFIG_WINDOWS_SEH
 
+void reportFatal(const std::string &message);
+
 #ifdef DOCTEST_PLATFORM_WINDOWS
+
+#ifndef DOCTEST_CDECL
+#define DOCTEST_CDECL __cdecl
+#endif
 
 struct SignalDefs {
     DWORD id;
@@ -6173,28 +6183,18 @@ ContextScopeBase::ContextScopeBase(ContextScopeBase &&other) noexcept {
     g_infoContexts.push_back(this);
 }
 
-DOCTEST_MSVC_SUPPRESS_WARNING_WITH_PUSH(4996) // std::uncaught_exception is deprecated in C++17
-DOCTEST_GCC_SUPPRESS_WARNING_WITH_PUSH("-Wdeprecated-declarations")
-DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wdeprecated-declarations")
 // destroy cannot be inlined into the destructor because that would mean calling stringify after
 // ContextScope has been destroyed (base class destructors run after derived class destructors).
 // Instead, ContextScope calls this method directly from its destructor.
 void ContextScopeBase::destroy() {
-#if defined(__cpp_lib_uncaught_exceptions) && __cpp_lib_uncaught_exceptions >= 201411L &&                              \
-    (!defined(__MAC_OS_X_VERSION_MIN_REQUIRED) || __MAC_OS_X_VERSION_MIN_REQUIRED >= 101200)
-    if (std::uncaught_exceptions() > 0) {
-#else
-    if (std::uncaught_exception()) {
-#endif
+    if (detail::has_uncaught_exceptions()) {
         std::ostringstream s;
         this->stringify(&s);
         g_cs->stringifiedContexts.emplace_back(s.str().c_str());
     }
     g_infoContexts.pop_back();
 }
-DOCTEST_CLANG_SUPPRESS_WARNING_POP
-DOCTEST_GCC_SUPPRESS_WARNING_POP
-DOCTEST_MSVC_SUPPRESS_WARNING_POP
+
 } // namespace detail
 #endif // DOCTEST_CONFIG_DISABLE
 
@@ -6388,7 +6388,9 @@ String translateActiveException() noexcept {
     } catch (std::string &msg) {
         return msg.c_str();
     } catch (const char *msg) {
-        return msg;
+        return msg? msg : "(nullptr)";
+    } catch (std::nullptr_t) {
+        return "(nullptr)";
     } catch (...) {
         return "unknown exception";
     }
@@ -6423,6 +6425,26 @@ bool checkIfShouldThrow(assertType::Enum at) {
 
     return false;
 }
+
+DOCTEST_MSVC_SUPPRESS_WARNING_WITH_PUSH(4996) // std::uncaught_exception is deprecated in C++17
+DOCTEST_GCC_SUPPRESS_WARNING_WITH_PUSH("-Wdeprecated-declarations")
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wdeprecated-declarations")
+
+bool has_uncaught_exceptions() {
+// Derived from https://github.com/uxlfoundation/oneTBB/blob/v2023.0.0/include/oneapi/tbb/detail/_config.h#L342
+#if (defined(_MSC_VER) && _MSC_VER >= 1900) ||                                                                         \
+    (defined(__cpp_lib_uncaught_exceptions) && __cpp_lib_uncaught_exceptions >= 201411L &&                             \
+     (!defined(_LIBCPP_VERSION) || !defined(__MAC_OS_X_VERSION_MIN_REQUIRED) ||                                        \
+      __MAC_OS_X_VERSION_MIN_REQUIRED >= 101200))
+    return (std::uncaught_exceptions() > 0);
+#else
+    return std::uncaught_exception();
+#endif
+}
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+DOCTEST_GCC_SUPPRESS_WARNING_POP
+DOCTEST_MSVC_SUPPRESS_WARNING_POP
 
 #ifndef DOCTEST_CONFIG_NO_EXCEPTIONS
 DOCTEST_NORETURN void throwException() {
@@ -7824,6 +7846,10 @@ void XmlReporter::test_case_skipped(const TestCaseData &in) {
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_POP
 
+#if defined(DOCTEST_CONFIG_POSIX_SIGNALS) || defined(DOCTEST_CONFIG_WINDOWS_SEH)
+#include <csignal>
+#endif
+
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 
 #ifndef DOCTEST_CONFIG_DISABLE
@@ -7836,6 +7862,20 @@ void FatalConditionHandler::reset() {}
 void FatalConditionHandler::allocateAltStackMem() {}
 void FatalConditionHandler::freeAltStackMem() {}
 #else // DOCTEST_CONFIG_POSIX_SIGNALS || DOCTEST_CONFIG_WINDOWS_SEH
+
+void reportFatal(const std::string &message) {
+    g_cs->failure_flags |= TestCaseFailureReason::Crash;
+
+    DOCTEST_ITERATE_THROUGH_REPORTERS(test_case_exception, {message.c_str(), true});
+
+    for (size_t i = g_cs->traversal.unwindActiveSubcases(); i > 0; --i)
+        DOCTEST_ITERATE_THROUGH_REPORTERS(subcase_end, DOCTEST_EMPTY);
+    g_cs->finalizeTestCaseData();
+
+    DOCTEST_ITERATE_THROUGH_REPORTERS(test_case_end, *g_cs);
+
+    DOCTEST_ITERATE_THROUGH_REPORTERS(test_run_end, *g_cs);
+}
 
 #ifdef DOCTEST_PLATFORM_WINDOWS
 
@@ -8067,6 +8107,9 @@ public:
     String pop() {
         if (stack.empty())
             DOCTEST_INTERNAL_ERROR("TLSS was empty when trying to pop!");
+
+        if (ss.fail())
+            DOCTEST_INTERNAL_ERROR("Output stream is bad");
 
         const std::streampos pos = stack.back();
         stack.pop_back();
@@ -8489,21 +8532,11 @@ Subcase::Subcase(const String &name, const char *file, int line)
     DOCTEST_ITERATE_THROUGH_REPORTERS(subcase_start, m_signature);
 }
 
-DOCTEST_MSVC_SUPPRESS_WARNING_WITH_PUSH(4996) // std::uncaught_exception is deprecated in C++17
-DOCTEST_GCC_SUPPRESS_WARNING_WITH_PUSH("-Wdeprecated-declarations")
-DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wdeprecated-declarations")
-
 Subcase::~Subcase() {
     if (m_entered) {
         g_cs->traversal.leaveSubcase();
 
-#if defined(__cpp_lib_uncaught_exceptions) && __cpp_lib_uncaught_exceptions >= 201411L &&                              \
-    (!defined(__MAC_OS_X_VERSION_MIN_REQUIRED) || __MAC_OS_X_VERSION_MIN_REQUIRED >= 101200)
-        if (std::uncaught_exceptions() > 0
-#else
-        if (std::uncaught_exception()
-#endif
-            && g_cs->shouldLogCurrentException) {
+        if (detail::has_uncaught_exceptions() && g_cs->shouldLogCurrentException) {
             DOCTEST_ITERATE_THROUGH_REPORTERS(
                 test_case_exception,
                 {"exception thrown in subcase - will translate later "
@@ -8517,10 +8550,6 @@ Subcase::~Subcase() {
         DOCTEST_ITERATE_THROUGH_REPORTERS(subcase_end, DOCTEST_EMPTY);
     }
 }
-
-DOCTEST_CLANG_SUPPRESS_WARNING_POP
-DOCTEST_GCC_SUPPRESS_WARNING_POP
-DOCTEST_MSVC_SUPPRESS_WARNING_POP
 
 Subcase::operator bool() const {
     return m_entered;
@@ -8663,11 +8692,11 @@ namespace doctest {
 namespace detail {
 
 #ifdef DOCTEST_CONFIG_GETCURRENTTICKS
-ticks_t getCurrentTicks() {
+uint64_t getCurrentTicks() {
     return DOCTEST_CONFIG_GETCURRENTTICKS();
 }
 #elif defined(DOCTEST_PLATFORM_WINDOWS)
-ticks_t getCurrentTicks() {
+uint64_t getCurrentTicks() {
     static LARGE_INTEGER hz = {{0}}, hzo = {{0}};
     if (!hz.QuadPart) {
         QueryPerformanceFrequency(&hz);
@@ -8678,10 +8707,10 @@ ticks_t getCurrentTicks() {
     return ((t.QuadPart - hzo.QuadPart) * LONGLONG(1000000)) / hz.QuadPart;
 }
 #else  // DOCTEST_PLATFORM_WINDOWS
-ticks_t getCurrentTicks() {
+uint64_t getCurrentTicks() {
     timeval t;
     gettimeofday(&t, nullptr);
-    return static_cast<ticks_t>(t.tv_sec) * 1000000 + static_cast<ticks_t>(t.tv_usec);
+    return static_cast<uint64_t>(t.tv_sec) * 1000000 + static_cast<uint64_t>(t.tv_usec);
 }
 #endif // DOCTEST_PLATFORM_WINDOWS
 
