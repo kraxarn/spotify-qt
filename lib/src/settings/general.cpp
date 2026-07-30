@@ -16,6 +16,7 @@ void lib::setting::to_json(nlohmann::json &j, const general &g)
 		{"notify_track_change", g.notify_track_change},
 		{"playlist_order", g.playlist_order},
 		{"refresh_interval", g.refresh_interval},
+		{"refresh_when_active", g.refresh_when_active},
 		{"relative_added", g.relative_added},
 		{"show_changelog", g.show_changelog},
 		{"song_header_sort_by", g.song_header_sort_by},
@@ -54,6 +55,7 @@ void lib::setting::from_json(const nlohmann::json &j, general &g)
 	lib::json::get(j, "notify_track_change", g.notify_track_change);
 	lib::json::get(j, "playlist_order", g.playlist_order);
 	lib::json::get(j, "refresh_interval", g.refresh_interval);
+	lib::json::get(j, "refresh_when_active", g.refresh_when_active);
 	lib::json::get(j, "relative_added", g.relative_added);
 	lib::json::get(j, "show_changelog", g.show_changelog);
 	lib::json::get(j, "song_header_sort_by", g.song_header_sort_by);

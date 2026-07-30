@@ -447,9 +447,10 @@ void MainWindow::minimize()
 
 void MainWindow::refresh()
 {
-	if (refreshCount < 0
+	if ((refreshCount < 0
 		|| ++refreshCount >= settings.general.refresh_interval
 		|| current.playback.progress_ms + lib::time::ms_in_sec > current.playback.item.duration)
+		&& (settings.general.refresh_when_active ? this->isActiveWindow() : true))
 	{
 		spotify.current_playback([this](const Result<lib::spt::playback> &result)
 		{
