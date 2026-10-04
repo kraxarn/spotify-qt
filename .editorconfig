@@ -1,7 +1,7 @@
 # top-most EditorConfig file
 root = true
 
-[*.{cpp,hpp}]
+[*.{cpp,hpp,py}]
 end_of_line = lf
 insert_final_newline = true
 charset = utf-8
