@@ -29,6 +29,7 @@ namespace SettingsPage
 		QCheckBox *appHotkeys = nullptr;
 		QCheckBox *appWhatsNew = nullptr;
 		QComboBox *appRefresh = nullptr;
+		QCheckBox *refreshWhenActive = nullptr;
 		QComboBox *appMaxQueue = nullptr;
 		QCheckBox *appUpdates = nullptr;
 		QCheckBox *ignoreUnavailableIndex = nullptr;
