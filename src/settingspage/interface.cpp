@@ -235,7 +235,8 @@ auto SettingsPage::Interface::trayIcon() -> QWidget *
 		trayIconType->setItemIcon(2, icon);
 	});
 
-	const QIcon systemIcon = Icon::get(QStringLiteral("%1-symbolic")
+	// Use QIcon directly to avoid automatic fallback
+	const QIcon systemIcon = QIcon::fromTheme(QStringLiteral("%1-symbolic")
 		.arg(QStringLiteral(APP_NAME)));
 	if (!systemIcon.isNull())
 	{
