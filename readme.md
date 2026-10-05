@@ -52,10 +52,12 @@ free to, just please open an issue, or get in contact with me, so I can add it t
 | Fedora               | [![Copr](https://repology.org/badge/version-for-repo/aur/spotify-qt.svg?header=Copr)](https://copr.fedorainfracloud.org/coprs/kraxarn/spotify-qt)                                                                                                           | [kraxarn](https://github.com/kraxarn)               |
 | Windows              | [![Scoop extras](https://repology.org/badge/version-for-repo/scoop/spotify-qt.svg?header=Scoop%20extras)](https://github.com/ScoopInstaller/Extras/blob/master/bucket/spotify-qt.json)                                                                      | [brian6932](https://github.com/brian6932)           |
 
-If you're running some other Linux distribution, macOS, or Windows, you can instead download portable binaries from the
-[release page](https://github.com/kraxarn/spotify-qt/releases/latest). If you want to try out new features, you can
-download unstable builds automatically built every day
-from [spotify-qt-nightly](https://kraxarn.github.io/spotify-qt-nightly).
+If you're running some other Linux distribution (glibc 2.34+), macOS (13+), or
+Windows (1809+), you can instead download portable binaries from the
+[release page](https://github.com/kraxarn/spotify-qt/releases/latest). If you
+want to try out new features, you can  download unstable builds automatically
+built every day from
+[spotify-qt-nightly](https://kraxarn.github.io/spotify-qt-nightly).
 
 ## Questions?
 
