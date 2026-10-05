@@ -27,12 +27,15 @@ def log(lib_name: str, current_version: str, latest_version: str):
 		success = False
 
 
-def get_latest_tag(repo_name: str, include_prerelease: bool) -> str:
-	tags = http.get(f"https://api.github.com/repos/{repo_name}/tags").json()
+def get_latest_tag(tag_repo_name: str, include_prerelease: bool, include_first_patch: bool) -> str:
+	tags = http.get(f"https://api.github.com/repos/{tag_repo_name}/tags").json()
 	for tag in tags:
-		if include_prerelease or "-" not in tag["name"]:
-			return tag["name"]
-	return ""
+		if not include_prerelease and "-" in tag["name"]:
+			continue
+		if not include_first_patch and str(tag["name"]).endswith(".0"):
+			continue
+		return tag["name"]
+	raise KeyError(f"No suitable tag found for {tag_repo_name}")
 
 
 # lib/thirdparty
@@ -44,7 +47,7 @@ with open("../lib/thirdparty/readme.md", "r") as file:
 		if line.startswith("##"):
 			name = line[line.index("[") + 1:line.index("]")]
 			repo = line[line.index("(") + 1:line.index(")")].split("/")
-			latest = get_latest_tag(f"{repo[len(repo) - 2]}/{repo[len(repo) - 1]}", False)
+			latest = get_latest_tag(f"{repo[len(repo) - 2]}/{repo[len(repo) - 1]}", False, True)
 		if line.startswith("v"):
 			version = line[:line.index(",")]
 			log(name, version, latest)
@@ -62,7 +65,7 @@ def get_qt_versions_from_workflow(filename: str) -> typing.Generator[str, typing
 					continue
 
 
-latest_qt = get_latest_tag("qt/qtbase", False)
+latest_qt = get_latest_tag("qt/qtbase", False, False)
 workflows_dir = os.fsencode("../.github/workflows/")
 
 for file in os.listdir(workflows_dir):
@@ -89,13 +92,13 @@ for filename in os.listdir(workflows_dir):
 
 for action_name, action_version in actions.items():
 	repo_name = "/".join(action_name.split("/")[:2])
-	latest_tag = get_latest_tag(repo_name, False)
+	latest_tag = get_latest_tag(repo_name, False, True)
 	action_latest = latest_tag if latest_tag.startswith("v0") else latest_tag[:2]
 	log(action_name, action_version, action_latest)
 
 # res/ic
 
-latest_ic = get_latest_tag("KDE/breeze-icons", True)
+latest_ic = get_latest_tag("KDE/breeze-icons", True, True)
 with open("../res/ic/version", "r") as f:
 	current_ic = f.read()
 log("breeze-icons", current_ic, latest_ic)
