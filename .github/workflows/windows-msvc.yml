@@ -20,6 +20,7 @@ jobs:
             qt-arch: "win32_msvc2019"
             qt-host: "windows"
             cmake-arch: "Win32"
+            cmake-generator: "Visual Studio 17 2022"
             use-qt5: "ON"
 
           - name: "qt6-win64"
@@ -28,6 +29,7 @@ jobs:
             qt-arch: "win64_msvc2022_64"
             qt-host: "windows"
             cmake-arch: "x64"
+            cmake-generator: "Visual Studio 17 2022"
             use-qt5: "OFF"
 
           - name: "qt6-woa64"
@@ -36,6 +38,7 @@ jobs:
             qt-arch: "win64_msvc2022_arm64"
             qt-host: "windows_arm64"
             cmake-arch: "ARM64"
+            cmake-generator: "Visual Studio 18 2026"
             use-qt5: "OFF"
 
     steps:
@@ -52,7 +55,7 @@ jobs:
           aqtsource: "git+https://github.com/miurahr/aqtinstall.git"
 
       - name: Configure CMake
-        run: cmake . -G "${{env.CMAKE_GENERATOR}}" -A "${{matrix.cmake-arch}}" -D CMAKE_BUILD_TYPE="${{env.BUILD_TYPE}}" -D USE_TESTS=ON -D USE_LTO=ON -D USE_QT5="${{matrix.use-qt5}}"
+        run: cmake . -G "${{matrix.cmake-generator}}" -A "${{matrix.cmake-arch}}" -D CMAKE_BUILD_TYPE="${{env.BUILD_TYPE}}" -D USE_TESTS=ON -D USE_LTO=ON -D USE_QT5="${{matrix.use-qt5}}"
 
       - name: Build
         run: cmake --build . --config ${{env.BUILD_TYPE}}
