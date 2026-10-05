@@ -180,7 +180,7 @@ void MainToolBar::updateSpacerSizes() const
 {
 	const int spacerWidth = close->isVisible()
 		? size().width() / 6 // App titlebar
-		: menu->width() / 2; // System titlebar
+		: static_cast<QToolButton*>(volumeButton)->width() / 2; // System titlebar
 
 	leftSpacer->setMinimumWidth(spacerWidth);
 	rightSpacer->setMinimumWidth(spacerWidth);
