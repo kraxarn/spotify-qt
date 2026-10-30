@@ -17,9 +17,10 @@ jobs:
     strategy:
       matrix:
         include:
-          # Supported until November 2028
+          # Supported until March 2027
+          # https://www.freebsd.org/releases/15.1R/announce/
           - os-type: 'freebsd'
-            os-version: '14.0'
+            os-version: '15.1'
 
           # Supported until May 2027
           - os-type: 'openbsd'
@@ -27,7 +28,7 @@ jobs:
 
           # Supported until ~2028 (TBD)
           - os-type: 'netbsd'
-            os-version: '10.0'
+            os-version: '10.2'
 
     steps:
       - uses: actions/checkout@v7
@@ -41,7 +42,7 @@ jobs:
 
       - name: Install Dependencies
         if: ${{ matrix.os-type == 'freebsd' }}
-        run: sudo pkg install -y devel/git devel/cmake devel/qt6-base graphics/qt6-svg
+        run: sudo pkg install -y git cmake qt6-base qt6-svg
 
       - name: Install Dependencies
         if: ${{ matrix.os-type == 'openbsd' }}
