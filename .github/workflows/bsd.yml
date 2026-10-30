@@ -19,7 +19,7 @@ jobs:
         include:
           # Supported until November 2028
           - os-type: 'freebsd'
-            os-version: '14.5'
+            os-version: '14.0'
 
           # Supported until May 2027
           - os-type: 'openbsd'
@@ -27,7 +27,7 @@ jobs:
 
           # Supported until ~2028 (TBD)
           - os-type: 'netbsd'
-            os-version: '10.2'
+            os-version: '10.0'
 
     steps:
       - uses: actions/checkout@v7
