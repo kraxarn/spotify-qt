@@ -1,0 +1,61 @@
+name: BSD
+
+on: workflow_dispatch
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    name: '${{ matrix.os-type }}'
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: cpa.sh {0}
+
+    strategy:
+      matrix:
+        include:
+          # Supported until November 2028
+          - os-type: 'freebsd'
+            os-version: '14.5'
+
+          # Supported until May 2027
+          - os-type: 'openbsd'
+            os-version: '7.9'
+
+          # Supported until ~2028 (TBD)
+          - os-type: 'netbsd'
+            os-version: '10.2'
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Start VM
+        uses: cross-platform-actions/action@v1
+        with:
+          operating_system: '${{ matrix.os-type }}'
+          version: '${{ matrix.os-version }}'
+          architecture: 'x86-64'
+
+      - name: Install Dependencies
+        if: ${{ matrix.os-type == 'freebsd' }}
+        run: sudo pkg install -y git cmake qt6-base qt6-svg
+
+      - name: Install Dependencies
+        if: ${{ matrix.os-type == 'openbsd' }}
+        run: sudo pkg_add -I git cmake qt6-qtbase qt6-qtsvg
+
+      - name: Install Dependencies
+        if: ${{ matrix.os-type == 'netbsd' }}
+        run: sudo pkgin -y install git cmake qt6-qtbase qt6-qtsvg
+
+      - name: Configure CMake
+        run: cmake -S . -B build -D CMAKE_BUILD_TYPE=$BUILD_TYPE -D USE_TESTS=ON -D USE_LTO=ON
+
+      - name: Build
+        run: cmake --build build
+
+      - name: Test
+        run: ./lib/test/spotify-qt-lib-test
