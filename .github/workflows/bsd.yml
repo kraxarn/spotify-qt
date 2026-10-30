@@ -17,10 +17,11 @@ jobs:
     strategy:
       matrix:
         include:
-          # Supported until March 2027
-          # https://www.freebsd.org/releases/15.1R/announce/
-          - os-type: 'freebsd'
-            os-version: '15.1'
+          # Supported until June 2027
+          # https://www.freebsd.org/releases/14.5R/announce/
+          # NOTE: Currently broken
+#          - os-type: 'freebsd'
+#            os-version: '14.5'
 
           # Supported until May 2027
           - os-type: 'openbsd'
