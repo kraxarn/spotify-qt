@@ -105,6 +105,11 @@ namespace lib
 			int refresh_interval = 3;
 
 			/**
+			 * How often to refresh in seconds when window is inactive/minimized
+			 */
+			int refresh_interval_inactive = 5;
+
+			/**
 			 * How to resize track list headers
 			 */
 			lib::resize_mode track_list_resize_mode = lib::resize_mode::auto_size;

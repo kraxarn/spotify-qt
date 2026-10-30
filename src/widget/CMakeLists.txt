@@ -1,6 +1,7 @@
 target_sources(${PROJECT_NAME} PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/about.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/albumshapecombobox.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/apprefreshcombobox.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/clickableslider.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/docktitle.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/dragarea.cpp
@@ -10,4 +11,5 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/position.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/statusmessage.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/time.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/volumebutton.cpp)
+	${CMAKE_CURRENT_SOURCE_DIR}/volumebutton.cpp
+)

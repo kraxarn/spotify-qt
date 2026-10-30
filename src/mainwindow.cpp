@@ -447,8 +447,13 @@ void MainWindow::minimize()
 
 void MainWindow::refresh()
 {
+	const int refreshInterval = !isActiveWindow()
+		&& settings.general.refresh_interval_inactive > 0
+			? settings.general.refresh_interval_inactive
+			: settings.general.refresh_interval;
+
 	if (refreshCount < 0
-		|| ++refreshCount >= settings.general.refresh_interval
+		|| ++refreshCount >= refreshInterval
 		|| current.playback.progress_ms + lib::time::ms_in_sec > current.playback.item.duration)
 	{
 		spotify.current_playback([this](const Result<lib::spt::playback> &result)

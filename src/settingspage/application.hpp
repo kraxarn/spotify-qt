@@ -1,10 +1,11 @@
 #pragma once
 
+#include "settingspage/base.hpp"
 #include "util/icon.hpp"
+#include "widget/apprefreshcombobox.hpp"
+
 #include "lib/settings.hpp"
 #include "lib/spotify/playback.hpp"
-#include "settingspage/base.hpp"
-#include "util/widget.hpp"
 
 namespace SettingsPage
 {
@@ -28,20 +29,16 @@ namespace SettingsPage
 		QCheckBox *appMedia = nullptr;
 		QCheckBox *appHotkeys = nullptr;
 		QCheckBox *appWhatsNew = nullptr;
-		QComboBox *appRefresh = nullptr;
+		AppRefreshComboBox *appRefresh = nullptr;
+		AppRefreshComboBox *appRefreshInactive = nullptr;
 		QComboBox *appMaxQueue = nullptr;
 		QCheckBox *appUpdates = nullptr;
 		QCheckBox *ignoreUnavailableIndex = nullptr;
-
-		QLabel *appRefreshSuffix = nullptr;
 
 		QLineEdit *titleFormat = nullptr;
 		QLabel *titlePreview = nullptr;
 
 		lib::spt::track currentTrack;
-
-		static constexpr int minRefreshInterval = 1;
-		static constexpr int maxRefreshInterval = 60;
 
 		static constexpr int minMaxQueue = 1;
 		static constexpr int maxMaxQueue = 1000;
@@ -51,8 +48,6 @@ namespace SettingsPage
 		auto windowTitle() -> QWidget *;
 
 		void updatePreview();
-
-		void updateAppRefreshSuffix(const QString &text) const;
 
 		auto saveGeneral() -> bool;
 

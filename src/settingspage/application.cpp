@@ -1,7 +1,9 @@
 #include "settingspage/application.hpp"
-
 #include "mainwindow.hpp"
 #include "util/font.hpp"
+#include "util/widget.hpp"
+
+#include <QGroupBox>
 
 SettingsPage::Application::Application(lib::settings &settings, QWidget *parent)
 	: SettingsPage::Base(settings, parent)
@@ -39,36 +41,62 @@ auto SettingsPage::Application::app() -> QWidget *
 	auto *layout = tabContent();
 	auto *comboBoxLayout = new QGridLayout();
 
-	// Refresh interval
-	auto *appRefreshLabel = new QLabel("Refresh interval", this);
-	appRefreshLabel->setToolTip("How often to refresh playback status from the Spotify servers");
-	comboBoxLayout->addWidget(appRefreshLabel, 0, 0);
+	auto *appRefreshGroup = new QGroupBox(QStringLiteral("Refresh interval"), this);
+	appRefreshGroup->setToolTip(QStringLiteral("How often to refresh playback status from the Spotify servers"));
+	layout->addWidget(appRefreshGroup);
 
-	appRefresh = new QComboBox(this);
+	auto *appRefreshLayout = new QGridLayout();
+	appRefreshGroup->setLayout(appRefreshLayout);
+
+	// Refresh interval (active)
+	auto *appRefreshLabel = new QLabel(QStringLiteral("While active"), this);
+	appRefreshLabel->setToolTip(QStringLiteral("How often to refresh while the main window is active"));
+	appRefreshLayout->addWidget(appRefreshLabel, 0, 0);
+
+	appRefresh = new AppRefreshComboBox(this);
 	appRefresh->addItems({
 		QStringLiteral("1"),
 		QStringLiteral("3"),
 		QStringLiteral("5"),
 		QStringLiteral("10"),
 	});
-	appRefresh->setEditable(true);
 	appRefresh->setCurrentIndex(-1);
 	appRefresh->setEditText(QString::number(settings.general.refresh_interval));
-	appRefresh->setValidator(new QIntValidator(minRefreshInterval,
-		maxRefreshInterval, this));
-	comboBoxLayout->addWidget(appRefresh, 0, 1);
+	appRefreshLayout->addWidget(appRefresh, 0, 1);
 
-	appRefreshSuffix = new QLabel(QStringLiteral("seconds"), this);
-	comboBoxLayout->addWidget(appRefreshSuffix, 0, 2);
+	auto *appRefreshSuffix = new QLabel(QStringLiteral("seconds"), this);
+	appRefresh->setSuffixLabel(appRefreshSuffix);
+	appRefreshLayout->addWidget(appRefreshSuffix, 0, 2);
 
-	updateAppRefreshSuffix(appRefresh->currentText());
-	connect(appRefresh, &QComboBox::currentTextChanged,
-		this, &Application::updateAppRefreshSuffix);
+	// Refresh interval (inactive)
+	auto *appRefreshInactiveLabel = new QLabel(QStringLiteral("While inactive"), this);
+	appRefreshInactiveLabel->setToolTip(
+		QStringLiteral("How often to refresh while the main window is inactive/minimized"));
+	appRefreshLayout->addWidget(appRefreshInactiveLabel, 1, 0);
+
+	appRefreshInactive = new AppRefreshComboBox(this);
+	appRefreshInactive->addItems({
+		QStringLiteral("Same as active"),
+		QStringLiteral("3"),
+		QStringLiteral("5"),
+		QStringLiteral("10"),
+	});
+	appRefreshInactive->setCurrentIndex(0);
+	appRefreshLayout->addWidget(appRefreshInactive, 1, 1);
+
+	if (settings.general.refresh_interval_inactive > 0)
+	{
+		appRefreshInactive->setEditText(QString::number(settings.general.refresh_interval_inactive));
+	}
+
+	auto *appRefreshInactiveSuffix = new QLabel(QStringLiteral("seconds"), this);
+	appRefreshInactive->setSuffixLabel(appRefreshInactiveSuffix);
+	appRefreshLayout->addWidget(appRefreshInactiveSuffix, 1, 2);
 
 	// Max queue
 	auto *maxQueueLabel = new QLabel("Queue limit", this);
 	maxQueueLabel->setToolTip("Maximum amount of items allowed to be queued at once");
-	comboBoxLayout->addWidget(maxQueueLabel, 1, 0);
+	comboBoxLayout->addWidget(maxQueueLabel, 0, 0);
 
 	appMaxQueue = new QComboBox(this);
 	appMaxQueue->setEditable(true);
@@ -78,8 +106,8 @@ auto SettingsPage::Application::app() -> QWidget *
 		"100", "250", "500"
 	});
 	appMaxQueue->setCurrentText(QString::number(settings.spotify.max_queue));
-	comboBoxLayout->addWidget(appMaxQueue, 1, 1);
-	comboBoxLayout->addWidget(new QLabel("tracks", this), 1, 2);
+	comboBoxLayout->addWidget(appMaxQueue, 0, 1);
+	comboBoxLayout->addWidget(new QLabel("tracks", this), 0, 2);
 
 	layout->addLayout(comboBoxLayout);
 
@@ -188,6 +216,22 @@ auto SettingsPage::Application::title() -> QString
 	return "Application";
 }
 
+static auto parseRefreshInterval(const QComboBox *comboBox, int &value) -> bool
+{
+	auto is_int = false;
+	const int interval = comboBox->currentText().toInt(&is_int);
+
+	if (!is_int
+		|| interval < AppRefreshComboBox::minRefreshInterval
+		|| interval > AppRefreshComboBox::maxRefreshInterval)
+	{
+		return false;
+	}
+
+	value = interval;
+	return true;
+}
+
 auto SettingsPage::Application::saveGeneral() -> bool
 {
 	auto success = true;
@@ -221,14 +265,26 @@ auto SettingsPage::Application::saveGeneral() -> bool
 	// Refresh interval
 	if (appRefresh != nullptr)
 	{
-		auto ok = false;
-		auto interval = appRefresh->currentText().toInt(&ok);
-		if (!ok || interval < minRefreshInterval || interval > maxRefreshInterval)
+		if (!parseRefreshInterval(appRefresh,
+			settings.general.refresh_interval))
 		{
-			applyFail("refresh interval");
+			applyFail(QStringLiteral("refresh interval"));
 			success = false;
 		}
-		settings.general.refresh_interval = interval;
+	}
+	if (appRefreshInactive != nullptr)
+	{
+		// Same as active
+		if (appRefreshInactive->currentIndex() == 0)
+		{
+			settings.general.refresh_interval_inactive = 0;
+		}
+		else if (!parseRefreshInterval(appRefreshInactive,
+			settings.general.refresh_interval_inactive))
+		{
+			applyFail(QStringLiteral("inactive refresh interval"));
+			success = false;
+		}
 	}
 
 	// Max queue
@@ -296,14 +352,6 @@ void SettingsPage::Application::updatePreview()
 
 	const QString title = Format::title(currentTrack, format);
 	titlePreview->setText(title);
-}
-
-void SettingsPage::Application::updateAppRefreshSuffix(const QString &text) const
-{
-	appRefreshSuffix->setText(text.toInt() == 1
-		? QStringLiteral("second")
-		: QStringLiteral("seconds")
-	);
 }
 
 void SettingsPage::Application::onPlaybackRefreshed(const lib::spt::playback &current,
