@@ -41,7 +41,7 @@ jobs:
 
       - name: Install Dependencies
         if: ${{ matrix.os-type == 'freebsd' }}
-        run: sudo pkg install -y git cmake qt6-base qt6-svg
+        run: sudo pkg update -f && sudo pkg install -y git cmake qt6-base qt6-svg
 
       - name: Install Dependencies
         if: ${{ matrix.os-type == 'openbsd' }}
