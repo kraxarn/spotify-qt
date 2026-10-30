@@ -60,4 +60,4 @@ jobs:
         run: cmake --build build
 
       - name: Test
-        run: ./lib/test/spotify-qt-lib-test
+        run: ./build/lib/test/spotify-qt-lib-test
